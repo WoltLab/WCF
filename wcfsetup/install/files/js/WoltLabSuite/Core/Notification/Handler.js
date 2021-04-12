@@ -168,7 +168,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             }
             if (typeof pollData.notification === "object" && typeof pollData.notification.message === "string") {
                 const notification = new window.Notification(pollData.notification.title, {
-                    body: StringUtil.unescapeHTML(pollData.notification.message),
+                    body: StringUtil.unescapeHTML(pollData.notification.message).replace(/&#x202F;/g, "\u202F"),
                     icon: this.icon,
                 });
                 notification.onclick = () => {

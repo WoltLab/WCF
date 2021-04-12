@@ -351,7 +351,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				if (!data.pre && !data.text) {
 					elBySelAll('img', div, (function(img) {
 						var src = img.src;
-						if (src.indexOf('data:image') === 0 && src !== transparentGif) {
+						if ((src.indexOf('data:image') === 0 | src.indexOf("blob:") === 0) && src !== transparentGif) {
 							img.src = transparentGif;
 							
 							var uuid = WCF.getUUID();
@@ -397,10 +397,24 @@ $.Redactor.prototype.WoltLabPaste = function() {
 									img.parentNode.removeChild(img);
 								}
 								else {
-									WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
-										blob: this.utils.dataURItoBlob(imgData.src),
-										replace: img
-									});
+									if (imgData.src.indexOf("blob:") === 0) {
+										window.fetch(imgData.src)
+											.then(function (response) {
+												return response.blob();
+											})
+											.then((function (blob) {
+												WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+													blob: blob,
+													replace: img
+												});
+											}).bind(this));
+									}
+									else {
+										WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+											blob: this.utils.dataURItoBlob(imgData.src),
+											replace: img
+										});
+									}
 								}
 							}
 						}

@@ -1474,7 +1474,19 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			// close dialog
 			if (event !== null) {
-				this._dialog.wcfDialog('close');
+				require(["WoltLabSuite/Core/Environment"], (function (Environment) {
+					var callback = (function () {
+						this._dialog.wcfDialog("close");
+					}).bind(this);
+
+					// Slightly delay the closing of the overlay, preventing some unexpected
+					// changes to the scroll position on iOS.
+					if (Environment.platform() === "ios") {
+						window.setTimeout(callback, 100);
+					} else {
+						callback();
+					}
+				}.bind(this)));
 			}
 		},
 		

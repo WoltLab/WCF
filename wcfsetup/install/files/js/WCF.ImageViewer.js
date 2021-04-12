@@ -188,6 +188,11 @@ $.widget('ui.wcfImageViewer', {
 	 * @var	boolean
 	 */
 	_isOpen: false,
+
+	/**
+	 * @var HTMLElement|null
+	 */
+	_messageSignature: null,
 	
 	/**
 	 * number of total images
@@ -304,6 +309,7 @@ $.widget('ui.wcfImageViewer', {
 			height: document.documentElement.clientHeight,
 			width: document.documentElement.clientWidth
 		};
+		this._messageSignature = null;
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -352,7 +358,16 @@ $.widget('ui.wcfImageViewer', {
 			}, '', '');
 		}
 		
+		this._messageSignature = null;
 		if (this.options.staticViewer) {
+			if (targetImageElementID) {
+				this._messageSignature = document.getElementById(targetImageElementID).closest(".messageSignature");
+			}
+
+			// Reset the internal state because it could refer to a different set of images.
+			this._active = -1;
+			this._activeImage = null;
+
 			var $images = this._getStaticImages();
 			this._initUI();
 			this._createThumbnails($images, true);
@@ -601,14 +616,25 @@ $.widget('ui.wcfImageViewer', {
 			}, this));
 		}
 		else if (targetImageElementID) {
-			var $i = 0;
-			$(this.options.imageSelector).each(function(index, element) {
-				if ($(element).wcfIdentify() == targetImageElementID) {
-					$i = index;
-					
-					return false;
+			var images = [];
+
+			$(this.options.imageSelector).each((function (_index, image) {
+				// If the target image is inside a signature, then only include images within
+				// the same signature. Otherwise this check will exclude images that are within
+				// a user's signature.
+				if (image.closest(".messageSignature") !== this._messageSignature) {
+					return;
 				}
-			});
+
+				images.push(image);
+			}).bind(this));
+
+			var $i = 0;
+			images.forEach(function (image, index) {
+				if (image.id === targetImageElementID) {
+					$i = index;
+				}
+			})
 			
 			var $item = this._ui.imageList.children('li:eq(' + $i + ')');
 			
@@ -1261,8 +1287,15 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_getStaticImages: function() {
 		var $images = [ ];
-		
-		$(this.options.imageSelector).each(function(index, link) {
+
+		$(this.options.imageSelector).each((function(index, link) {
+			// If the target image is inside a signature, then only include images within
+			// the same signature. Otherwise this check will exclude images that are within
+			// a user's signature.
+			if (link.closest(".messageSignature") !== this._messageSignature) {
+				return;
+			}
+
 			var $link = $(link);
 			var $thumbnail = $link.find('> img, .attachmentThumbnailImage > img').first();
 			if (!$thumbnail.length) {
@@ -1282,7 +1315,7 @@ $.widget('ui.wcfImageViewer', {
 				},
 				user: null
 			});
-		});
+		}).bind(this));
 		
 		this._items = $images.length;
 		

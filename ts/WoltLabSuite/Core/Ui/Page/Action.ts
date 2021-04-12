@@ -9,6 +9,7 @@
 
 import * as Core from "../../Core";
 import * as Language from "../../Language";
+import * as UiScreen from "../../Ui/Screen";
 
 const _buttons = new Map<string, HTMLElement>();
 
@@ -17,6 +18,7 @@ let _didInit = false;
 let _lastPosition = -1;
 let _toTopButton: HTMLElement;
 let _wrapper: HTMLElement;
+let _toTopButtonThreshold = 300;
 
 const _resetLastPosition = Core.debounce(() => {
   _lastPosition = -1;
@@ -50,7 +52,7 @@ function onScroll(): void {
     return;
   }
 
-  if (offset >= 300) {
+  if (offset >= _toTopButtonThreshold) {
     if (_toTopButton.classList.contains("initiallyHidden")) {
       _toTopButton.classList.remove("initiallyHidden");
     }
@@ -85,6 +87,12 @@ function renderContainer() {
   });
 
   _container.classList[visibleChild ? "add" : "remove"]("active");
+
+  if (visibleChild) {
+    _wrapper.classList.add("pageActionHasContextButtons");
+  } else {
+    _wrapper.classList.remove("pageActionHasContextButtons");
+  }
 }
 
 /**
@@ -141,6 +149,18 @@ export function setup(): void {
     },
     { passive: true },
   );
+
+  UiScreen.on("screen-sm-down", {
+    match() {
+      _toTopButtonThreshold = 50;
+    },
+    unmatch() {
+      _toTopButtonThreshold = 300;
+    },
+    setup() {
+      _toTopButtonThreshold = 50;
+    },
+  });
 
   onScroll();
 }

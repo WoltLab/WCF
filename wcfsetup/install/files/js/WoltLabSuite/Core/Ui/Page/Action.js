@@ -6,18 +6,20 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Page/Action
  */
-define(["require", "exports", "tslib", "../../Core", "../../Language"], function (require, exports, tslib_1, Core, Language) {
+define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui/Screen"], function (require, exports, tslib_1, Core, Language, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.show = exports.hide = exports.remove = exports.get = exports.has = exports.add = exports.setup = void 0;
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
+    UiScreen = tslib_1.__importStar(UiScreen);
     const _buttons = new Map();
     let _container;
     let _didInit = false;
     let _lastPosition = -1;
     let _toTopButton;
     let _wrapper;
+    let _toTopButtonThreshold = 300;
     const _resetLastPosition = Core.debounce(() => {
         _lastPosition = -1;
     }, 50);
@@ -44,7 +46,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
             _resetLastPosition();
             return;
         }
-        if (offset >= 300) {
+        if (offset >= _toTopButtonThreshold) {
             if (_toTopButton.classList.contains("initiallyHidden")) {
                 _toTopButton.classList.remove("initiallyHidden");
             }
@@ -72,6 +74,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
             return element.getAttribute("aria-hidden") === "false";
         });
         _container.classList[visibleChild ? "add" : "remove"]("active");
+        if (visibleChild) {
+            _wrapper.classList.add("pageActionHasContextButtons");
+        }
+        else {
+            _wrapper.classList.remove("pageActionHasContextButtons");
+        }
     }
     /**
      * Initializes the page action container.
@@ -109,6 +117,17 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
                 _lastPosition = -1;
             }
         }, { passive: true });
+        UiScreen.on("screen-sm-down", {
+            match() {
+                _toTopButtonThreshold = 50;
+            },
+            unmatch() {
+                _toTopButtonThreshold = 300;
+            },
+            setup() {
+                _toTopButtonThreshold = 50;
+            },
+        });
         onScroll();
     }
     exports.setup = setup;

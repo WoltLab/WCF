@@ -29,9 +29,9 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
             formSubmit.classList.add("formSubmit");
             this.dialog.appendChild(formSubmit);
             this.confirmButton = document.createElement("button");
+            this.confirmButton.dataset.type = "submit";
             this.confirmButton.classList.add("buttonPrimary");
             this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
-            this.confirmButton.addEventListener("click", (_ev) => this._confirm());
             formSubmit.appendChild(this.confirmButton);
             const cancelButton = document.createElement("button");
             cancelButton.textContent = Language.get("wcf.global.confirmation.cancel");
@@ -105,6 +105,9 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
                     title: Language.get("wcf.global.confirmation.title"),
                 },
             };
+        }
+        _dialogSubmit() {
+            this._confirm();
         }
     }
     let confirmation;

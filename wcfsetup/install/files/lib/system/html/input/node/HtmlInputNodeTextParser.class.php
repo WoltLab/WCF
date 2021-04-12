@@ -394,7 +394,7 @@ class HtmlInputNodeTextParser
 
                     $offset = $pos + \mb_strlen($marker);
                 }
-            } while ($pos);
+            } while ($pos !== false);
         };
 
         foreach ($users as $userID => $username) {

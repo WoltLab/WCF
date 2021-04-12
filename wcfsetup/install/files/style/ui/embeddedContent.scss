@@ -3,11 +3,21 @@
 	border: 1px solid $wcfContentBorderInner;
 	border-radius: 3px;
 	margin: 10px 0;
+	max-width: 600px;
 }
 
 .embeddedContentLink {
 	display: block;
 	padding: 10px;
+	position: relative;
+}
+
+.embeddedContentLinkShadow {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .embeddedContentCategory {
@@ -32,7 +42,8 @@
 	position: relative;
 }
 .embeddedContentDescription::after {
-	background-image: linear-gradient(to top, $wcfContentBackground, transparent);
+	/* Do not use `transparent` here, because of an ancient iOS rendering bug. */
+	background-image: linear-gradient(to top, $wcfContentBackground, transparentize($wcfContentBackground, 1));
 	bottom: 0;
 	content: "";
 	left: 0;

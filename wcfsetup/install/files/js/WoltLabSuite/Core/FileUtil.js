@@ -106,6 +106,11 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         "application/msword": "doc",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
         "application/vnd.oasis.opendocument.text": "odt",
+        // iOS
+        "public.jpeg": "jpeg",
+        "public.png": "png",
+        "com.compuserve.gif": "gif",
+        "org.webmproject.webp": "webp",
     }));
     /**
      * Formats the given filesize.

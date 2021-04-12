@@ -42,9 +42,9 @@ class UiConfirmation implements DialogCallbackObject {
     this.dialog.appendChild(formSubmit);
 
     this.confirmButton = document.createElement("button");
+    this.confirmButton.dataset.type = "submit";
     this.confirmButton.classList.add("buttonPrimary");
     this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
-    this.confirmButton.addEventListener("click", (_ev) => this._confirm());
     formSubmit.appendChild(this.confirmButton);
 
     const cancelButton = document.createElement("button");
@@ -135,6 +135,10 @@ class UiConfirmation implements DialogCallbackObject {
         title: Language.get("wcf.global.confirmation.title"),
       },
     };
+  }
+
+  _dialogSubmit(): void {
+    this._confirm();
   }
 }
 

@@ -114,6 +114,40 @@ $.Redactor.prototype.WoltLabSource = function() {
 					data.valid = false;
 				}
 			}).bind(this));
+
+			var box = this.core.box()[0];
+			var form = box.closest("form");
+			if (form) {
+				var dl = box.closest("dl");
+
+				form.addEventListener("submit", (function (event) {
+					var message = '';
+					if (this.WoltLabSource.isActive()) {
+						event.preventDefault();
+
+						message = WCF.Language.get('wcf.editor.source.error.active');
+
+						// Enable the submit button again to override the FormGuard's behavior.
+						var submitButton = form.querySelector(".formSubmit input[type=submit]");
+						if (submitButton) {
+							submitButton.disabled = false;
+						}
+
+						require(['WoltLabSuite/Core/Ui/TabMenu'], function(UiTabMenu) {
+							UiTabMenu._selectErroneousTabs();
+						});
+					}
+
+					elInnerError(box, message);
+
+					if (message) {
+						dl.classList.add("formError");
+					}
+					else {
+						dl.classList.remove("formError");
+					}
+				}).bind(this));
+			}
 		},
 		
 		isActive: function () {
