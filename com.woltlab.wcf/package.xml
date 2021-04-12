@@ -106,14 +106,7 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_5.3_packageServer.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.3.4">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
-		
-		<instruction type="mediaProvider" />
-		<instruction type="objectType" />
+	<instructions type="update" fromversion="5.3.5">
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3.3_db.php</instruction>
 	</instructions>
 </package>
