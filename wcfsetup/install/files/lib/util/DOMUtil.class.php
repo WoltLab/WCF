@@ -478,17 +478,24 @@ final class DOMUtil {
 	 * @param	boolean		$preserveChildNodes	preserve child nodes, only supported for elements
 	 */
 	public static function removeNode(\DOMNode $node, $preserveChildNodes = false) {
+		$parent = $node->parentNode ?: $node->ownerDocument;
+
 		if ($preserveChildNodes) {
 			if (!($node instanceof \DOMElement)) {
 				throw new \InvalidArgumentException("Preserving child nodes is only supported for DOMElement.");
 			}
 			
-			while ($node->hasChildNodes()) {
-				self::insertBefore($node->childNodes->item(0), $node);
+			$children = [];
+			foreach ($node->childNodes as $childNode) {
+				$children[] = $childNode;
+			}
+
+			foreach ($children as $child) {
+				$parent->insertBefore($child, $node);
 			}
 		}
 		
-		self::getParentNode($node)->removeChild($node);
+		$parent->removeChild($node);
 	}
 	
 	/**

@@ -91,18 +91,14 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
 		
 		if ($this->getHtmlProcessor()->removeLinks) {
-			$links = $this->getDocument()->getElementsByTagName('a');
-			while ($links->length) {
-				DOMUtil::removeNode($links->item(0), true);
+			foreach ($this->getXPath()->query('//a') as $link) {
+				DOMUtil::removeNode($link, true);
 			}
 		}
 		
 		if ($this->outputType !== 'text/html') {
 			// convert `<p>...</p>` into `...<br><br>`
-			$paragraphs = $this->getDocument()->getElementsByTagName('p');
-			while ($paragraphs->length) {
-				$paragraph = $paragraphs->item(0);
-				
+			foreach ($this->getXPath()->query('//p') as $paragraph) {
 				$isLastNode = true;
 				$sibling = $paragraph;
 				while ($sibling = $sibling->nextSibling) {
@@ -161,10 +157,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 				
 				// insert a trailing newline for certain elements, such as `<br>` or `<li>`
 				foreach (self::$plainTextNewlineTags as $tagName) {
-					$elements = $this->getDocument()->getElementsByTagName($tagName);
-					while ($elements->length) {
-						$element = $elements->item(0);
-						
+					foreach ($this->getXPath()->query("//{$tagName}") as $element) {
 						$newline = $this->getDocument()->createTextNode("\n");
 						$element->parentNode->insertBefore($newline, $element->nextSibling);
 						DOMUtil::removeNode($element, true);
@@ -172,9 +165,8 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 				}
 				
 				// remove all other elements
-				$elements = $this->getDocument()->getElementsByTagName('*');
-				while ($elements->length) {
-					DOMUtil::removeNode($elements->item(0), true);
+				foreach ($this->getXPath()->query('//*') as $element) {
+					DOMUtil::removeNode($element, true);
 				}
 			}
 		}
