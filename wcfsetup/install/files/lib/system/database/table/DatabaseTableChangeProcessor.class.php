@@ -448,6 +448,12 @@ class DatabaseTableChangeProcessor {
 						}
 					}
 					else if ($matchingExistingForeignKey === null) {
+						// If the referenced database table does not already exists, delay the
+						// foreign key creation until after the referenced table has been created.
+						if (!in_array($foreignKey->getReferencedTable(), $this->existingTableNames)) {
+							continue;
+						}
+						
 						if (!isset($this->foreignKeysToAdd[$tableName])) {
 							$this->foreignKeysToAdd[$tableName] = [];
 						}
@@ -648,10 +654,18 @@ class DatabaseTableChangeProcessor {
 		$this->dbEditor->createTable($table->getName(), $columnData, $indexData);
 		
 		foreach ($table->getForeignKeys() as $foreignKey) {
-			$this->dbEditor->addForeignKey($table->getName(), $foreignKey->getName(), $foreignKey->getData());
-			
-			// foreign keys need to be explicitly logged for proper uninstallation
-			$this->createForeignKeyLog($table->getName(), $foreignKey);
+			// Only try to create the foreign key if the referenced database table already exists.
+			// If it will be created later on, delay the foreign key creation until after the
+			// referenced table has been created.
+			if (
+				in_array($foreignKey->getReferencedTable(), $this->existingTableNames)
+				|| $foreignKey->getReferencedTable() === $table->getName()
+			) {
+				$this->dbEditor->addForeignKey($table->getName(), $foreignKey->getName(), $foreignKey->getData());
+				
+				// foreign keys need to be explicitly logged for proper uninstallation
+				$this->createForeignKeyLog($table->getName(), $foreignKey);
+			}
 		}
 	}
 	
