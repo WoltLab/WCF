@@ -49,6 +49,10 @@ class ModerationQueueActivationAction extends ModerationQueueAction {
 	public function validateRemoveContent() {
 		$this->readString('message', true);
 		$this->validateEnableContent();
+		
+		if (!ModerationQueueActivationManager::getInstance()->canRemoveContent($this->queue->getDecoratedObject())) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
