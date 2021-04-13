@@ -1985,6 +1985,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		Der Primärindex {$error[tableName]} ({$error[columnNames]}) enthält die Spalte {$error[columnName]}, deren Werte NULL sein können.
 	{else if $error[type] === 'foreignForeignKeyDrop'}
 		Der Fremdschlüssel {$error[tableName]} ({$error[columnNames]}) gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else if $error[type] === 'unknownTableInForeignKey'}
+		Der Fremdschlüssel {$error[tableName]} ({$error[columnNames]}) referenziert eine unbekannte Tabelle {$error[referencedTableName]}.
 	{else}
 		Unbekannter Fehler.
 	{/if}
