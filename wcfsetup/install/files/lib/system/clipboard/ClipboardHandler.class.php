@@ -390,6 +390,11 @@ class ClipboardHandler extends SingletonFactory
                     'items' => [],
                     'reloadPageOnSuccess' => $clipboardAction->getReloadPageOnSuccess(),
                 ];
+            } else {
+                $editorData[$typeName]['reloadPageOnSuccess'] = array_unique(array_merge(
+                    $editorData[$typeName]['reloadPageOnSuccess'],
+                    $clipboardAction->getReloadPageOnSuccess()
+                ));
             }
 
             foreach ($actionData['actions'] as $actionObject) {

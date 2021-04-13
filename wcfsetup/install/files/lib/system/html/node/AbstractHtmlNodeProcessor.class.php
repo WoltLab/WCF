@@ -309,7 +309,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         }
 
         $elements = [];
-        foreach ($this->getDocument()->getElementsByTagName($tagName) as $element) {
+        foreach ($this->getXPath()->query("//{$tagName}") as $element) {
             $elements[] = $element;
         }
 
@@ -331,7 +331,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
 
         $tags = [];
         /** @var \DOMElement $tag */
-        foreach ($this->getDocument()->getElementsByTagName('*') as $tag) {
+        foreach ($this->getXPath()->query("//*") as $tag) {
             $tagName = $tag->nodeName;
             if (!isset($tags[$tagName])) {
                 $tags[$tagName] = $tagName;
