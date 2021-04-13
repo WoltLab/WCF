@@ -63,8 +63,10 @@ final class FileUtil {
 			if (!is_writable($path)) {
 				throw new SystemException("Temporary folder '".$path."' is not writable. Please check the permissions using your favorite ftp program.");
 			}
-			
-			file_put_contents($path.'/.htaccess', 'deny from all');
+
+			if (md5_file($path . '/.htaccess') !== '5cc8a02be988615b049f5abecba2f3a0') {
+				file_put_contents($path.'/.htaccess', 'deny from all');
+			}
 			
 			return $path;
 		}
