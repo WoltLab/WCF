@@ -120,6 +120,16 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
+     * Returns true, if the current field is already registered.
+     *
+     * @since 5.4
+     */
+    protected function isRegistered(): bool
+    {
+        return $this->isRegistered;
+    }
+
+    /**
      * Builds the UploadField class.
      *
      * @return      UploadField
@@ -148,7 +158,7 @@ class UploadFormField extends AbstractFormField
             throw new \BadMethodCallException("The field must be populated, before calling this method.");
         }
 
-        if (!$this->isRegistered) {
+        if (!$this->isRegistered()) {
             $this->registerField();
         }
 
@@ -168,7 +178,7 @@ class UploadFormField extends AbstractFormField
             throw new \BadMethodCallException("The field must be populated, before calling the method.");
         }
 
-        if (!$this->isRegistered) {
+        if (!$this->isRegistered()) {
             $this->registerField();
         }
 
@@ -293,7 +303,7 @@ class UploadFormField extends AbstractFormField
             throw new \BadMethodCallException("The field must be populated, before calling this method.");
         }
 
-        if (!$this->isRegistered) {
+        if (!$this->isRegistered()) {
             $this->registerField();
         }
 
@@ -310,7 +320,7 @@ class UploadFormField extends AbstractFormField
             throw new \BadMethodCallException("The field must be populated, before calling this method.");
         }
 
-        if (!$this->isRegistered) {
+        if (!$this->isRegistered()) {
             $this->registerField();
         }
 
@@ -390,7 +400,7 @@ class UploadFormField extends AbstractFormField
             }
         }
 
-        if ($this->isRegistered) {
+        if ($this->isRegistered()) {
             UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $value);
         } else {
             $this->values = $value;
@@ -442,7 +452,7 @@ class UploadFormField extends AbstractFormField
      * @since 5.4
      * @throws \BadMethodCallException if the field is already registered
      */
-    private function registerField(): void
+    protected function registerField(): void
     {
         if ($this->isRegistered) {
             throw new \BadMethodCallException("The field is already registered.");
@@ -471,7 +481,7 @@ class UploadFormField extends AbstractFormField
      */
     public function maximum($maximum = null)
     {
-        if ($this->isRegistered) {
+        if ($this->isRegistered()) {
             throw new \LogicException(
                 'The upload field has already been registered. Therefore no modifications are allowed.'
             );
