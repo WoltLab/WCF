@@ -101,12 +101,21 @@ class UploadFormField extends AbstractFormField
     private $cleaned = false;
 
     /**
+     * Flag whether the field is already registered.
+     * @var bool
+     * @since 5.4
+     */
+    private $isRegistered = false;
+
+    /**
      * Unregisters the current field in the upload handler.
      */
     private function unregisterField()
     {
         if (UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId())) {
             UploadHandler::getInstance()->unregisterUploadField($this->getPrefixedId());
+
+            $this->isRegistered = false;
         }
     }
 
@@ -135,7 +144,7 @@ class UploadFormField extends AbstractFormField
      */
     private function isRegistered()
     {
-        return $this->isPopulated;
+        return $this->isRegistered;
     }
 
     /**
@@ -147,6 +156,10 @@ class UploadFormField extends AbstractFormField
     {
         if (!$this->isPopulated) {
             throw new \BadMethodCallException("The field must be populated, before calling this method.");
+        }
+
+        if (!$this->isRegistered) {
+            $this->registerField();
         }
 
         return UploadHandler::getInstance()->getFilesByFieldId($this->getPrefixedId());
@@ -163,6 +176,10 @@ class UploadFormField extends AbstractFormField
     {
         if (!$this->isPopulated) {
             throw new \BadMethodCallException("The field must be populated, before calling the method.");
+        }
+
+        if (!$this->isRegistered) {
+            $this->registerField();
         }
 
         return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getPrefixedId(), $processFiles);
@@ -286,6 +303,10 @@ class UploadFormField extends AbstractFormField
             throw new \BadMethodCallException("The field must be populated, before calling this method.");
         }
 
+        if (!$this->isRegistered) {
+            $this->registerField();
+        }
+
         return parent::getHtml();
     }
 
@@ -297,6 +318,10 @@ class UploadFormField extends AbstractFormField
     {
         if (!$this->isPopulated) {
             throw new \BadMethodCallException("The field must be populated, before calling this method.");
+        }
+
+        if (!$this->isRegistered) {
+            $this->registerField();
         }
 
         return parent::getFieldHtml();
@@ -375,7 +400,7 @@ class UploadFormField extends AbstractFormField
             }
         }
 
-        if ($this->isPopulated) {
+        if ($this->isRegistered) {
             UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $value);
         } else {
             $this->values = $value;
@@ -410,15 +435,6 @@ class UploadFormField extends AbstractFormField
     {
         parent::populate();
 
-        UploadHandler::getInstance()->registerUploadField(
-            $this->buildUploadField(),
-            $this->getDocument()->getRequestData()
-        );
-
-        if (!empty($this->values)) {
-            UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $this->values);
-        }
-
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'upload',
             function (IFormDocument $document, array $parameters) {
@@ -430,6 +446,32 @@ class UploadFormField extends AbstractFormField
         ));
 
         return $this;
+    }
+
+    /**
+     * @since 5.4
+     * @throws \BadMethodCallException if the field is already registered
+     */
+    private function registerField(): void
+    {
+        if ($this->isRegistered) {
+            throw new \BadMethodCallException("The field is already registered.");
+        }
+
+        if (!$this->isPopulated) {
+            throw new \BadMethodCallException("The field is not populated yet.");
+        }
+
+        UploadHandler::getInstance()->registerUploadField(
+            $this->buildUploadField(),
+            $this->getDocument()->getRequestData()
+        );
+
+        if (!empty($this->values)) {
+            UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $this->values);
+        }
+
+        $this->isRegistered = true;
     }
 
     /**
