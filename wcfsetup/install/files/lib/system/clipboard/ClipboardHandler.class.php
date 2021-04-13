@@ -391,7 +391,7 @@ class ClipboardHandler extends SingletonFactory
                     'reloadPageOnSuccess' => $clipboardAction->getReloadPageOnSuccess(),
                 ];
             } else {
-                $editorData[$typeName]['reloadPageOnSuccess'] = array_unique(array_merge(
+                $editorData[$typeName]['reloadPageOnSuccess'] = \array_unique(\array_merge(
                     $editorData[$typeName]['reloadPageOnSuccess'],
                     $clipboardAction->getReloadPageOnSuccess()
                 ));

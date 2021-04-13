@@ -502,7 +502,7 @@ final class DOMUtil
     public static function removeNode(\DOMNode $node, $preserveChildNodes = false)
     {
         $parent = $node->parentNode ?: $node->ownerDocument;
-        
+
         if ($preserveChildNodes) {
             if (!($node instanceof \DOMElement)) {
                 throw new \InvalidArgumentException("Preserving child nodes is only supported for DOMElement.");
