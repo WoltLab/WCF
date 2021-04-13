@@ -51,6 +51,12 @@ class DevtoolsProject extends DatabaseObject
     protected $packageArchive;
 
     /**
+     * @var PackageValidationException
+     * @since   5.4
+     */
+    protected $packageValidationException;
+
+    /**
      * Returns a list of decorated PIPs.
      *
      * @return      DevtoolsPip[]
@@ -123,12 +129,11 @@ class DevtoolsProject extends DatabaseObject
      */
     public function validatePackageXml()
     {
-        $packageXml = $this->getPackageXmlPath();
-        $this->packageArchive = new DevtoolsPackageArchive($packageXml);
-        try {
-            $this->packageArchive->openArchive();
-        } catch (PackageValidationException $e) {
-            return $e->getErrorMessage();
+        // Make sure that the package archive is read and any validation exception while opening the
+        // archive is caught.
+        $this->getPackageArchive();
+        if ($this->packageValidationException) {
+            return $this->packageValidationException->getErrorMessage();
         }
 
         if ($this->getPackage() === null) {
@@ -180,13 +185,12 @@ class DevtoolsProject extends DatabaseObject
     public function getPackageArchive()
     {
         if ($this->packageArchive === null) {
-            $this->packageArchive = new DevtoolsPackageArchive($this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml');
+            $this->packageArchive = new DevtoolsPackageArchive($this->getPackageXmlPath());
 
             try {
                 $this->packageArchive->openArchive();
             } catch (PackageValidationException $e) {
-                // we do not care for errors here, `validatePackageXml()`
-                // takes care of that
+                $this->packageValidationException = $e;
             }
         }
 
