@@ -1149,6 +1149,24 @@ class DatabaseTableChangeProcessor {
 						}
 					}
 				}
+
+				foreach ($table->getForeignKeys() as $foreignKey) {
+					$referencedTableExists = in_array($foreignKey->getReferencedTable(), $this->existingTableNames);
+					foreach ($this->tables as $processedTable) {
+						if ($processedTable->getName() === $foreignKey->getReferencedTable()) {
+							$referencedTableExists = !$processedTable->willBeDropped();
+						}
+					}
+					
+					if (!$referencedTableExists) {
+						$errors[] = [
+							'columnNames' => implode(',', $foreignKey->getColumns()),
+							'referencedTableName' => $foreignKey->getReferencedTable(),
+							'tableName' => $table->getName(),
+							'type' => 'unknownTableInForeignKey',
+						];
+					}
+				}
 			}
 		}
 		
