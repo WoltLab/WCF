@@ -138,16 +138,6 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * Returns true, iff the current field is already registered.
-     *
-     * @return bool
-     */
-    private function isRegistered()
-    {
-        return $this->isRegistered;
-    }
-
-    /**
      * @inheritDoc
      * @return      UploadFile[]
      * @throws      \BadMethodCallException         if the method is called, before the field is populated
@@ -481,7 +471,7 @@ class UploadFormField extends AbstractFormField
      */
     public function maximum($maximum = null)
     {
-        if ($this->isRegistered()) {
+        if ($this->isRegistered) {
             throw new \LogicException(
                 'The upload field has already been registered. Therefore no modifications are allowed.'
             );
