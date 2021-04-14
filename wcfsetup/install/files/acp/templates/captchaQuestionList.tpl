@@ -20,7 +20,7 @@
 	</div>
 {/hascontent}
 
-{hascontent}
+{if $objects|count}
 	<div id="captchaQuestionTabelContainer" class="section tabularBox">
 		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\captcha\question\CaptchaQuestionAction">
 			<thead>
@@ -33,45 +33,43 @@
 			</thead>
 			
 			<tbody class="jsReloadPageWhenEmpty">
-				{content}
-					{foreach from=$objects item='question'}
-						<tr class="jsQuestionRow jsObjectActionObject" data-object-id="{@$question->getObjectID()}">
-							<td class="columnIcon">
-								{objectAction action="toggle" isDisabled=$question->isDisabled}
-								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								{objectAction action="delete" objectTitle=$question->getQuestion()}
-								
-								{event name='rowButtons'}
-							</td>
-							<td class="columnID columnQuestionID">{$question->questionID}</td>
-							<td class="columnText columnQuestion"><a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}">{$question->getQuestion()}</a></td>
+				{foreach from=$objects item='question'}
+					<tr class="jsQuestionRow jsObjectActionObject" data-object-id="{@$question->getObjectID()}">
+						<td class="columnIcon">
+							{objectAction action="toggle" isDisabled=$question->isDisabled}
+							<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							{objectAction action="delete" objectTitle=$question->getQuestion()}
 							
-							{event name='columns'}
-						</tr>
-					{/foreach}
-				{/content}
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID columnQuestionID">{$question->questionID}</td>
+						<td class="columnText columnQuestion"><a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}">{$question->getQuestion()}</a></td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>
-{hascontentelse}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
-{/hascontent}
-
-<footer class="contentFooter">
-	{hascontent}
-		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
-		</div>
-	{/hascontent}
 	
-	<nav class="contentFooterNavigation">
-		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
-			
-			{event name='contentFooterNavigation'}
-		</ul>
-	</nav>
-</footer>
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
+		
+		<nav class="contentFooterNavigation">
+			<ul>
+				<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+				
+				{event name='contentFooterNavigation'}
+			</ul>
+		</nav>
+	</footer>
+{else}
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+{/if}
 
 {include file='footer'}
  
