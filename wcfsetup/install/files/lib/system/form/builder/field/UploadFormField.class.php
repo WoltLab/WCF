@@ -120,7 +120,7 @@ class UploadFormField extends AbstractFormField
     }
 
     /**
-     * Returns true, if the current field is already registered.
+     * Returns `true` if the current field has already registered with the upload handler.
      *
      * @since 5.4
      */
