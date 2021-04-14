@@ -116,7 +116,7 @@ class ModerationQueueActivationAction extends ModerationQueueAction
             }
         }
 
-        $this->parameters['message'] = isset($this->parameters['message']) ? StringUtil::trim($this->parameters['message']) : '';
+        $this->parameters['message'] = StringUtil::trim($this->parameters['message'] ?? '');
     }
 
     /**
