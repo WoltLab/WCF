@@ -114,6 +114,7 @@
 		<instruction type="language" />
 		
 		<instruction type="mediaProvider" />
+		<instruction type="page" />
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3.3_db.php</instruction>
 	</instructions>
