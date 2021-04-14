@@ -12,6 +12,7 @@ import * as Core from "../Core";
 import * as Language from "../Language";
 import UiDialog from "./Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "./Dialog/Data";
+import DomUtil from "../Dom/Util";
 
 class UiConfirmation implements DialogCallbackObject {
   private _active = false;
@@ -60,7 +61,11 @@ class UiConfirmation implements DialogCallbackObject {
   public open(options: ConfirmationOptions): void {
     this.parameters = options.parameters || {};
 
-    this._content.innerHTML = typeof options.template === "string" ? options.template.trim() : "";
+    if (typeof options.template === "string") {
+      DomUtil.setInnerHtml(this._content, options.template.trim());
+    } else {
+      this._content.innerHTML = "";
+    }
     this.text[options.messageIsHtml ? "innerHTML" : "textContent"] = options.message;
 
     if (typeof options.legacyCallback === "function") {

@@ -7,13 +7,14 @@
  * @module  Ui/Confirmation (alias)
  * @module  WoltLabSuite/Core/Ui/Confirmation
  */
-define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], function (require, exports, tslib_1, Core, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog", "../Dom/Util"], function (require, exports, tslib_1, Core, Language, Dialog_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getContentElement = exports.show = void 0;
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class UiConfirmation {
         constructor() {
             this._active = false;
@@ -43,7 +44,12 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
         }
         open(options) {
             this.parameters = options.parameters || {};
-            this._content.innerHTML = typeof options.template === "string" ? options.template.trim() : "";
+            if (typeof options.template === "string") {
+                Util_1.default.setInnerHtml(this._content, options.template.trim());
+            }
+            else {
+                this._content.innerHTML = "";
+            }
             this.text[options.messageIsHtml ? "innerHTML" : "textContent"] = options.message;
             if (typeof options.legacyCallback === "function") {
                 this.callbackCancel = (parameters) => {
