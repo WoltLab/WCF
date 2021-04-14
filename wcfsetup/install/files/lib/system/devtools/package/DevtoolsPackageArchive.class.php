@@ -34,6 +34,10 @@ class DevtoolsPackageArchive extends PackageArchive
      */
     public function openArchive()
     {
+        if ($this->tar) {
+            return;
+        }
+
         $projectDir = FileUtil::addTrailingSlash(
             FileUtil::unifyDirSeparator(\realpath(\dirname($this->packageXmlPath)))
         );
