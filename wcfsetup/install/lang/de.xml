@@ -3446,10 +3446,16 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Inhalte der Benutzer löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.assignUserByClipboard"><![CDATA[Zugewiesenen Benutzer ändern ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.enableContent"><![CDATA[Inhalt freischalten ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeActivationContent"><![CDATA[Freizuschaltenden Inhalt löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeReport"><![CDATA[Meldung schließen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeReportContent"><![CDATA[Gemeldeten Inhalt löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Artikel]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.moderation.queue.marked"><![CDATA[{plural value=$count 1='Ein Moderationseintrag' other='# Moderationseinträge'}]]></item>
 	</category>
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
@@ -4284,7 +4290,7 @@ Dateianhänge:
 		<item name="wcf.moderation.activation.details"><![CDATA[Informationen]]></item>
 		<item name="wcf.moderation.activation.content"><![CDATA[Freizuschaltender Inhalt]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Inhalt freischalten]]></item>
-		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Inhalt wirklich freischalten?]]></item>
+		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if !$moderationQueueCount|isset || $moderationQueueCount == 1}diesen Inhalt{else}diese Inhalte{/if} wirklich freischalten?]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[Neuer Kommentar (Freischaltung)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Freischaltung)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
@@ -4298,7 +4304,7 @@ Dateianhänge:
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$commentAuthor} zum freizuschaltenden Inhalt {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von <strong>{$commentAuthor} zum freizuschaltenden Inhalt <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Inhalt löschen]]></item>
-		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Inhalt wirklich löschen?]]></item>
+		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if !$moderationQueueCount|isset || $moderationQueueCount == 1}diesen Inhalt{else}diese Inhalte{/if} wirklich löschen?]]></item>
 	</category>
 	<category name="wcf.moderation.report">
 		<item name="wcf.moderation.report"><![CDATA[Meldung]]></item>
@@ -4319,10 +4325,10 @@ Dateianhänge:
 		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, aggressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Inhalt löschen]]></item>
-		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den gemeldeten Inhalt wirklich löschen?]]></item>
+		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if !$moderationQueueCount|isset || $moderationQueueCount == 1}den gemeldeten Inhalt{else}die gemeldeten Inhalte{/if} wirklich löschen?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung schließen]]></item>
-		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diese Meldung wirklich schließen?]]></item>
+		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diese Meldung{if $moderationQueueCount|isset && $moderationQueueCount > 1}en{/if} wirklich schließen?]]></item>
 		<item name="wcf.moderation.report.removeReport.markAsJustified"><![CDATA[Meldung zusätzlich als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>

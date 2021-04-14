@@ -19,10 +19,12 @@
 {/hascontent}
 
 {if $objects|count}
-	<div class="section tabularBox messageGroupList moderationList moderationQueueEntryList">
+	<div class="section tabularBox messageGroupList moderationList moderationQueueEntryList jsClipboardContainer" data-type="com.woltlab.wcf.moderation.queue">
 		<ol class="tabularList">
 			<li class="tabularListRow tabularListRowHead">
 				<ol class="tabularListColumns">
+					<li class="columnMark jsOnly"><label><input type="checkbox" class="jsClipboardMarkAll"></label></li>
+					
 					<li class="columnSort">
 						<ul class="inlineList">
 							<li>
@@ -33,7 +35,7 @@
 							<li>
 								<div class="dropdown">
 									<span class="dropdownToggle">{lang}wcf.moderation.{$sortField}{/lang}</span>
-		
+									
 									<ul class="dropdownMenu">
 										{foreach from=$validSortFields item=_sortField}
 											<li{if $_sortField === $sortField} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={$_sortField}&sortOrder={if $sortField == $_sortField && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.{$_sortField}{/lang}</a></li>
@@ -88,7 +90,10 @@
 			
 			{foreach from=$objects item=entry}
 				<li class="tabularListRow">
-					<ol class="tabularListColumns messageGroup moderationQueueEntry{if $entry->isNew()} new{/if}" data-queue-id="{@$entry->queueID}">
+					<ol class="tabularListColumns messageGroup moderationQueueEntry jsClipboardObject{if $entry->isNew()} new{/if}" data-queue-id="{@$entry->queueID}">
+						<li class="columnMark jsOnly">
+							<label><input type="checkbox" class="jsClipboardItem" data-object-id="{@$entry->getObjectID()}"></label>
+						</li>
 						<li class="columnIcon columnAvatar">
 							<div>
 								<p{if $entry->isNew()} title="{lang}wcf.moderation.markAsRead.doubleClick{/lang}"{/if}>{@$entry->getUserProfile()->getAvatar()->getImageTag(48)}</p>
@@ -222,7 +227,30 @@
 </div>
 
 <script data-relocate="true">
-	$(function() {
+	require([
+		'Language',
+		'WoltLabSuite/Core/Controller/Clipboard',
+		'WoltLabSuite/Core/Ui/Moderation/Clipboard/AssignUser'
+	], (
+		Language,
+		ControllerClipboard,
+		UiModerationClipboardAssignUser
+	) => {
+		Language.addObject({
+			'wcf.moderation.assignedUser': '{jslang}wcf.moderation.assignedUser{/jslang}',
+			'wcf.moderation.assignedUser.change': '{jslang}wcf.moderation.assignedUser.change{/jslang}',
+			'wcf.moderation.assignedUser.error.notAffected': '{jslang}wcf.moderation.assignedUser.error.notAffected{/jslang}',
+			'wcf.moderation.assignedUser.nobody': '{jslang}wcf.moderation.assignedUser.nobody{/jslang}',
+			'wcf.user.username.error.notFound': '{jslang __literal=true}wcf.user.username.error.notFound{/jslang}',
+		});
+		
+		ControllerClipboard.setup({
+			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
+			pageClassName: 'wcf\\page\\ModerationListPage',
+		});
+		
+		UiModerationClipboardAssignUser.setup();
+		
 		new WCF.Moderation.Queue.MarkAsRead();
 		new WCF.Moderation.Queue.MarkAllAsRead();
 	});

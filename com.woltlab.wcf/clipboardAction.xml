@@ -180,5 +180,40 @@
 				<page>wcf\acp\page\ArticleListPage</page>
 			</pages>
 		</action>
+		<action name="assignUserByClipboard">
+			<actionclassname>wcf\system\clipboard\action\ModerationQueueClipboardAction</actionclassname>
+			<showorder>1</showorder>
+			<pages>
+				<page>wcf\page\ModerationListPage</page>
+			</pages>
+		</action>
+		<action name="enableContent">
+			<actionclassname>wcf\system\clipboard\action\ModerationQueueActivationClipboardAction</actionclassname>
+			<showorder>2</showorder>
+			<pages>
+				<page>wcf\page\ModerationListPage</page>
+			</pages>
+		</action>
+		<action name="removeActivationContent">
+			<actionclassname>wcf\system\clipboard\action\ModerationQueueActivationClipboardAction</actionclassname>
+			<showorder>3</showorder>
+			<pages>
+				<page>wcf\page\ModerationListPage</page>
+			</pages>
+		</action>
+		<action name="removeReport">
+			<actionclassname>wcf\system\clipboard\action\ModerationQueueReportClipboardAction</actionclassname>
+			<showorder>4</showorder>
+			<pages>
+				<page>wcf\page\ModerationListPage</page>
+			</pages>
+		</action>
+		<action name="removeReportContent">
+			<actionclassname>wcf\system\clipboard\action\ModerationQueueReportClipboardAction</actionclassname>
+			<showorder>5</showorder>
+			<pages>
+				<page>wcf\page\ModerationListPage</page>
+			</pages>
+		</action>
 	</import>
 </data>

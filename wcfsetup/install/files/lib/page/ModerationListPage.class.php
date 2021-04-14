@@ -4,6 +4,7 @@ namespace wcf\page;
 
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueueList;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\request\LinkHandler;
@@ -172,6 +173,9 @@ class ModerationListPage extends SortablePage
             'status' => $this->status,
             'validSortFields' => $this->validSortFields,
             'hasActiveFilter' => $this->hasActiveFilter,
+            'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')
+            ),
         ]);
     }
 }

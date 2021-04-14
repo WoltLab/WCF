@@ -5,9 +5,11 @@ namespace wcf\data\moderation\queue;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
@@ -379,5 +381,110 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     public function validateMarkAllAsRead()
     {
         // does nothing
+    }
+
+    /**
+     * Validates the `assignUserByClipboard` action.
+     *
+     * @since   5.4
+     */
+    public function validateAssignUserByClipboard(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+
+            if (empty($this->objects)) {
+                throw new UserInputException('objectIDs');
+            }
+        }
+
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            if (!$moderationQueueEditor->canEdit()) {
+                throw new PermissionDeniedException();
+            }
+        }
+
+        $this->readInteger('assignedUserID', false);
+
+        if ($this->parameters['assignedUserID'] < -1) {
+            throw new UserInputException('assignedUserID');
+        } elseif ($this->parameters['assignedUserID'] == -1) {
+            $this->readString('assignedUsername', false);
+
+            $this->user = User::getUserByUsername($this->parameters['assignedUsername']);
+            if (!$this->user->userID) {
+                throw new UserInputException('assignedUsername', 'notFound');
+            }
+
+            foreach ($this->getObjects() as $moderationQueueEditor) {
+                /** @var IModerationQueueHandler $processor */
+                $processor = ObjectTypeCache::getInstance()->getObjectType(
+                    $moderationQueueEditor->objectTypeID
+                )->getProcessor();
+
+                $isAffected = $processor->isAffectedUser(
+                    $moderationQueueEditor->getDecoratedObject(),
+                    $this->user->userID
+                );
+                if (!$isAffected) {
+                    throw new UserInputException('assignedUsername', 'notAffected');
+                }
+            }
+
+            $this->parameters['assignedUserID'] = $this->user->userID;
+            $this->parameters['assignedUsername'] = '';
+        } elseif ($this->parameters['assignedUserID'] == WCF::getUser()->userID) {
+            $this->user = WCF::getUser();
+        }
+    }
+
+    /**
+     * Assigns a user to multiple moderation queue entries via clipboard.
+     *
+     * @since   5.4
+     */
+    public function assignUserByClipboard(): void
+    {
+        WCF::getDB()->beginTransaction();
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            $data = [
+                'assignedUserID' => $this->user ? $this->user->userID : null,
+            ];
+            if ($this->user) {
+                if ($moderationQueueEditor->status == ModerationQueue::STATUS_OUTSTANDING) {
+                    $data['status'] = ModerationQueue::STATUS_PROCESSING;
+                }
+            } else {
+                if ($moderationQueueEditor->status == ModerationQueue::STATUS_PROCESSING) {
+                    $data['status'] = ModerationQueue::STATUS_OUTSTANDING;
+                }
+            }
+
+            $moderationQueueEditor->update($data);
+        }
+        WCF::getDB()->commitTransaction();
+
+        $this->unmarkItems();
+    }
+
+    /**
+     * Unmarks the moderation queue entries with the given ids or all currently handled entries if
+     * no argument is given.
+     *
+     * @param   int[]   $queueIDs
+     * @since   5.4
+     */
+    protected function unmarkItems(array $queueIDs = []): void
+    {
+        if (empty($queueIDs)) {
+            $queueIDs = $this->objectIDs;
+        }
+
+        if (!empty($queueIDs)) {
+            ClipboardHandler::getInstance()->unmark(
+                $queueIDs,
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')
+            );
+        }
     }
 }

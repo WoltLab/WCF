@@ -51,6 +51,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
         );
 
         $this->queue->markAsConfirmed();
+
+        $this->unmarkItems();
     }
 
     /**
@@ -58,12 +60,28 @@ class ModerationQueueReportAction extends ModerationQueueAction
      */
     public function validateRemoveReport()
     {
-        $this->queue = $this->getSingleObject();
-        if (!$this->queue->canEdit()) {
-            throw new PermissionDeniedException();
+        if (empty($this->objects)) {
+            $this->readObjects();
+
+            if (empty($this->objects)) {
+                throw new UserInputException('objectIDs');
+            }
         }
 
-        $this->readBoolean('markAsJustified', true);
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            if (!$moderationQueueEditor->canEdit()) {
+                throw new PermissionDeniedException();
+            }
+        }
+
+        if (isset($this->parameters['data']['markAsJustified'])) {
+            $this->readBoolean('markAsJustified', true, 'data');
+
+            // Clipboard passes `markAsJustified` in the `data` array.
+            $this->parameters['markAsJustified'] = $this->parameters['data']['markAsJustified'];
+        } else {
+            $this->readBoolean('markAsJustified', true);
+        }
     }
 
     /**
@@ -71,7 +89,13 @@ class ModerationQueueReportAction extends ModerationQueueAction
      */
     public function removeReport()
     {
-        $this->queue->markAsRejected(($this->parameters['markAsJustified'] ?? false));
+        WCF::getDB()->beginTransaction();
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            $moderationQueueEditor->markAsRejected($this->parameters['markAsJustified'] ?? false);
+        }
+        WCF::getDB()->commitTransaction();
+
+        $this->unmarkItems();
     }
 
     /**
@@ -204,5 +228,53 @@ class ModerationQueueReportAction extends ModerationQueueAction
         $this->queue->update([
             'additionalData' => \serialize($additionalData),
         ]);
+    }
+
+    /**
+     * Validates the `removeReportContent` action.
+     *
+     * @since   5.4
+     */
+    public function validateRemoveReportContent(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+
+            if (empty($this->objects)) {
+                throw new UserInputException('objectIDs');
+            }
+        }
+
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            if (
+                !$moderationQueueEditor->canEdit()
+                || !ModerationQueueReportManager::getInstance()->canRemoveContent($moderationQueueEditor->getDecoratedObject())
+            ) {
+                throw new PermissionDeniedException();
+            }
+        }
+
+        $this->parameters['message'] = StringUtil::trim($this->parameters['message'] ?? '');
+    }
+
+    /**
+     * Deletes reported content via clipboard.
+     *
+     * @since   5.4
+     */
+    public function removeReportContent(): void
+    {
+        WCF::getDB()->beginTransaction();
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            ModerationQueueReportManager::getInstance()->removeContent(
+                $moderationQueueEditor->getDecoratedObject(),
+                $this->parameters['message']
+            );
+
+            $moderationQueueEditor->markAsConfirmed();
+        }
+        WCF::getDB()->commitTransaction();
+
+        $this->unmarkItems();
     }
 }
