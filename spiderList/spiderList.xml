@@ -1092,6 +1092,10 @@
 		<name>SEOkicks</name>
 		<url>https://www.seokicks.de/robot.html</url>
 	</spider>
+	<spider ident="serpstatbot">
+		<name>serpstatbot</name>
+		<url>http://serpstatbot.com/</url>
+	</spider>
 	<spider ident="SeznamBot/3.2">
 		<name>Seznam Bot</name>
 		<url>http://napoveda.seznam.cz/en/seznambot-intro/</url>
