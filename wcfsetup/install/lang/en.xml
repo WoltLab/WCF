@@ -3372,10 +3372,16 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[Confirm Email Address ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Unconfirm Email Address ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Delete User Contents ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.assignUserByClipboard"><![CDATA[Change Assigned User ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.enableContent"><![CDATA[Approve Content ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeActivationContent"><![CDATA[Delete Pending Content ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeReport"><![CDATA[Close Report ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeReportContent"><![CDATA[Delete Repored Content ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}One Article{else}{#$count} Articles{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One User{else}{#$count} Users{/if}]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.moderation.queue.marked"><![CDATA[{plural value=$count 1='One Moderation Item' other='# Moderation Items'}]]></item>
 	</category>
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
@@ -4231,7 +4237,7 @@ Attachments:
 		<item name="wcf.moderation.activation.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.activation.content"><![CDATA[Content awaiting approval]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Approve]]></item>
-		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
+		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve {if !$moderationQueueCount|isset || $moderationQueueCount == 1}this content{else}these contents{/if}?]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[New comment (Approval)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Approval)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
@@ -4245,7 +4251,7 @@ Attachments:
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to {@$commentAuthor}’s comment on {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] waiting for approval{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to <strong>{$commentAuthor}</strong>’s comment on <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>  waiting for approval:</p>]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
-		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Do you really want to delete this content?]]></item>
+		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Do you really want to delete {if !$moderationQueueCount|isset || $moderationQueueCount == 1}this content{else}these contents{/if}?]]></item>
 	</category>
 	<category name="wcf.moderation.report">
 		<item name="wcf.moderation.report"><![CDATA[Report]]></item>
@@ -4266,10 +4272,10 @@ Attachments:
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: spam, advertisement and other questionable (racism, glorification of violence, offending, or sexist) content.]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Content]]></item>
-		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
+		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content{if $moderationQueueCount|isset && $moderationQueueCount > 1}s{/if}?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Close Report]]></item>
-		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to close this report?]]></item>
+		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to close {if !$moderationQueueCount|isset || $moderationQueueCount == 1}this report{else}these reports{/if}?]]></item>
 		<item name="wcf.moderation.report.removeReport.markAsJustified"><![CDATA[Also mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
