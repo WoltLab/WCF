@@ -104,10 +104,12 @@ class UiModerationClipboardAssignUser implements AjaxCallbackObject, DialogCallb
         onShow(content: HTMLElement): void {
           // Reset dialog to initial state.
           const assignedUsername = content.querySelector("input[name=assignedUsername]") as HTMLInputElement;
-          (content.querySelector("input[name=assignedUserID]:checked") as HTMLInputElement).checked = false;
-          (content.querySelector("input[name=assignedUserID]") as HTMLInputElement).checked = true;
+          content
+            .querySelectorAll("input[name=assignedUserID]")
+            .forEach((el: HTMLInputElement) => (el.checked = el.defaultChecked));
 
           assignedUsername.value = "";
+
           DomUtil.innerError(assignedUsername, "");
         },
         title: Language.get("wcf.moderation.assignedUser.change"),

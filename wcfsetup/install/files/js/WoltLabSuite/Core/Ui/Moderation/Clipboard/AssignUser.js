@@ -82,8 +82,9 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notifica
                     onShow(content) {
                         // Reset dialog to initial state.
                         const assignedUsername = content.querySelector("input[name=assignedUsername]");
-                        content.querySelector("input[name=assignedUserID]:checked").checked = false;
-                        content.querySelector("input[name=assignedUserID]").checked = true;
+                        content
+                            .querySelectorAll("input[name=assignedUserID]")
+                            .forEach((el) => (el.checked = el.defaultChecked));
                         assignedUsername.value = "";
                         Util_1.default.innerError(assignedUsername, "");
                     },
