@@ -314,6 +314,14 @@ class ClipboardHandler extends SingletonFactory
     }
 
     /**
+     * Returns `true` if the object with the given data is marked.
+     */
+    public function isMarked(int $objectTypeID, int $objectID): bool
+    {
+        return isset($this->getMarkedItems($objectTypeID)[$objectID]);
+    }
+
+    /**
      * Returns the data of the items for clipboard editor or `null` if no items are marked.
      *
      * @param string|string[] $page
