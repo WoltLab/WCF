@@ -993,6 +993,10 @@
 		<name>Qango</name>
 		<url>http://www.qango.com</url>
 	</spider>
+	<spider ident="Qwant">
+		<name>Qwant</name>
+		<url>https://help.qwant.com/bot/</url>
+	</spider>
 	<spider ident="SBSearch">
 		<name>SecretSearchEngineLabs.com</name>
 		<url>http://www.secretsearchenginelabs.com/secret-web-crawler.php</url>
