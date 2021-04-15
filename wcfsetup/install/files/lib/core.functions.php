@@ -125,6 +125,56 @@ namespace wcf\functions\exception {
 	use wcf\system\exception\SystemException;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
+
+	/**
+	 * If the stacktrace contains a compiled template, the context of the relevant template line
+	 * is returned, otherwise an empty array is returned.
+	 */
+	function getTemplateContextLines(\Throwable $e): array {
+		try {
+			$contextLineCount = 5;
+			foreach ($e->getTrace() as $traceEntry) {
+				if (isset($traceEntry['file']) && \preg_match('~/templates/compiled/.+\.php$~',
+					$traceEntry['file'])) {
+					$startLine = $traceEntry['line'] - $contextLineCount;
+					if ($startLine < 0) {
+						$startLine = 0;
+					}
+					
+					$file = \fopen($traceEntry['file'], 'r');
+					if (!$file) {
+						break;
+					}
+					
+					for ($line = 0; $line < $startLine; $line++) {
+						if (\substr(\fgets($file, 1024), -1) !== "\n") {
+							// We don't want to handle a file where lines exceed 1024 Bytes.
+							break 2;
+						}
+					}
+					
+					$maxLineCount = 2 * $contextLineCount + 1;
+					$lines = [];
+					while (!\feof($file) && \count($lines) < $maxLineCount) {
+						$line = \fgets($file, 1024);
+						if (\substr($line, -1) !== "\n" && !\feof($file)) {
+							// We don't want to handle a file where lines exceed 1024 Bytes.
+							break 2;
+						}
+						
+						$lines[] = $line;
+					}
+					
+					return $lines;
+				}
+			}
+		}
+		catch (\Throwable $e) {
+			// Ignore errors while extracting the template context to be saved in the exception log.
+		}
+		
+		return [];
+	}
 	
 	/**
 	 * Logs the given Throwable.
@@ -138,6 +188,24 @@ namespace wcf\functions\exception {
 		
 		$stripNewlines = function ($item) {
 			return str_replace("\n", ' ', $item);
+		};
+		
+		$getExtraInformation = function (\Throwable $e) {
+			$extraInformation = [];
+			
+			if ($e instanceof IExtraInformationException) {
+				$extraInformation = $e->getExtraInformation();
+			}
+			
+			$templateContextLines = getTemplateContextLines($e);
+			if (!empty($templateContextLines)) {
+				$extraInformation[] = [
+					'Template Context',
+					\implode("", $templateContextLines),
+				];
+			}
+			
+			return !empty($extraInformation) ? base64_encode(serialize($extraInformation)) : "-";
 		};
 		
 		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
@@ -156,7 +224,7 @@ namespace wcf\functions\exception {
 			'Error Message: '.$stripNewlines($prev->getMessage())."\n".
 			'Error Code: '.$stripNewlines($prev->getCode())."\n".
 			'File: '.$stripNewlines($prev->getFile()).' ('.$prev->getLine().')'."\n".
-			'Extra Information: '.($prev instanceof IExtraInformationException ? base64_encode(serialize($prev->getExtraInformation())) : '-')."\n".
+			'Extra Information: ' . $getExtraInformation($prev) . "\n".
 			'Stack Trace: '.json_encode(array_map(function ($item) {
 				$item['args'] = array_map(function ($item) {
 					switch (gettype($item)) {
@@ -341,6 +409,11 @@ EXPLANATION;
 				.exceptionFieldValue {
 					font-size: 18px;
 					min-height: 1.5em;
+				}
+				
+				pre.exceptionFieldValue {
+					font-size: 14px;
+					white-space: pre-wrap;
 				}
 				
 				.exceptionSystemInformation,
@@ -547,6 +620,16 @@ EXPLANATION;
 									</li>
 									<?php
 								}
+							}
+
+							$templateContextLines = getTemplateContextLines($e);
+							if (!empty($templateContextLines)) {
+								?>
+								<li>
+									<p class="exceptionFieldTitle">Template Context<span class="exceptionColon">:</span></p>
+									<pre class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(implode("", $templateContextLines));?></pre>
+								</li>
+								<?php
 							}
 							?>
 							<li>
