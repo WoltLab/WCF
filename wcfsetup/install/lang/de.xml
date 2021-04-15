@@ -3964,7 +3964,7 @@ Dateianhänge:
 		<item name="wcf.global.button.hideMenu"><![CDATA[Menü verbergen]]></item>
 		<item name="wcf.global.rss.copy"><![CDATA[Link kopieren]]></item>
 		<item name="wcf.global.rss.copy.success"><![CDATA[Der Link wurde erfolgreich kopiert.]]></item>
-		<item name="wcf.global.rss.accessToken.info"><![CDATA[Der Link zum anonymen RSS-Feed enthält nur Inhalte, auf die Gäste Zugriff haben. Der Link zum personalisierten RSS-Feed enthält alle Inhalte, auf die {if LANGUAGE_USE_INFORMAL_VARIANT}Du{else}Sie{/if} Zugriff {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}.]]></item>
+		<item name="wcf.global.rss.accessToken.info"><![CDATA[Der Link zum anonymen RSS-Feed enthält nur Inhalte, auf die Gäste Zugriff haben. Der Link zum personalisierten RSS-Feed enthält alle Inhalte, auf die {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Zugriff {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}.]]></item>
 		<item name="wcf.global.rss.withAccessToken"><![CDATA[Personalisierter RSS-Feed]]></item>
 		<item name="wcf.global.rss.withoutAccessToken"><![CDATA[Anonymer RSS-Feed]]></item>
 	</category>
