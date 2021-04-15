@@ -17,6 +17,8 @@ import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
 import * as Ajax from "./Ajax";
 import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
 import * as UiMessageShareProviders from "./Ui/Message/Share/Providers";
+import * as UiFeedDialog from "./Ui/Feed/Dialog";
+import User from "./User";
 
 interface BoostrapOptions {
   backgroundQueue: {
@@ -91,4 +93,8 @@ export function setup(options: BoostrapOptions): void {
 
   UiMessageShareProviders.enableShareProviders(options.shareButtonProviders || []);
   UiMessageShareDialog.setup();
+
+  if (User.userId) {
+    UiFeedDialog.setup();
+  }
 }

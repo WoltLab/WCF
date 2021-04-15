@@ -147,7 +147,13 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.message.share.permalink.html': '{jslang}wcf.message.share.permalink.html{/jslang}',
 			'wcf.message.share.socialMedia': '{jslang}wcf.message.share.socialMedia{/jslang}',
 			'wcf.message.share.copy': '{jslang}wcf.message.share.copy{/jslang}',
-			'wcf.message.share.copy.success': '{jslang}wcf.message.share.copy.success{/jslang}'
+			'wcf.message.share.copy.success': '{jslang}wcf.message.share.copy.success{/jslang}',
+			'wcf.global.button.rss': '{jslang}wcf.global.button.rss{/jslang}',
+			'wcf.global.rss.copy': '{jslang}wcf.global.rss.copy{/jslang}',
+			'wcf.global.rss.copy.success': '{jslang}wcf.global.rss.copy.success{/jslang}',
+			'wcf.global.rss.accessToken.info': '{jslang}wcf.global.rss.accessToken.info{/jslang}',
+			'wcf.global.rss.withoutAccessToken': '{jslang}wcf.global.rss.withoutAccessToken{/jslang}',
+			'wcf.global.rss.withAccessToken': '{jslang}wcf.global.rss.withAccessToken{/jslang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{jslang}wcf.like.button.like{/jslang}',
 				'wcf.like.button.dislike': '{jslang}wcf.like.button.dislike{/jslang}',
@@ -159,6 +165,13 @@ window.addEventListener('pageshow', function(event) {
 			
 			{event name='javascriptLanguageImport'}
 		});
+		
+		User.init(
+			{@$__wcf->user->userID},
+			'{@$__wcf->user->username|encodeJS}',
+			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if},
+			{if $__wcf->user->userID}'{$__wcf->user->accessToken}'{else}''{/if}
+		);
 		
 		BootstrapFrontend.setup({
 			backgroundQueue: {
@@ -172,8 +185,6 @@ window.addEventListener('pageshow', function(event) {
 			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
-		
-		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()
