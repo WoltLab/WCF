@@ -145,13 +145,13 @@ namespace wcf\functions\exception {
 					
 					$file = \fopen($traceEntry['file'], 'r');
 					if (!$file) {
-						break;
+						return [];
 					}
 					
 					for ($line = 0; $line < $startLine; $line++) {
 						if (\substr(\fgets($file, 1024), -1) !== "\n") {
 							// We don't want to handle a file where lines exceed 1024 Bytes.
-							break 2;
+							return [];
 						}
 					}
 					
@@ -161,7 +161,7 @@ namespace wcf\functions\exception {
 						$line = \fgets($file, 1024);
 						if (\substr($line, -1) !== "\n" && !\feof($file)) {
 							// We don't want to handle a file where lines exceed 1024 Bytes.
-							break 2;
+							return [];
 						}
 						
 						if (count($lines) === $relativeErrorLine - 1) {
