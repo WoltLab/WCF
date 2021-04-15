@@ -252,30 +252,32 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		]);
 		$notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
-		// Step 2) Mark the notifications as read.
-		$condition = new PreparedStatementConditionBuilder();
-		$condition->add('notificationID IN (?)', [$notificationIDs]);
-		
-		$sql = "UPDATE	wcf".WCF_N."_user_notification
-			SET	confirmTime = ?
-			{$condition}";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(\array_merge(
-			[TIME_NOW],
-			$condition->getParameters()
-		));
-		
-		// Step 3) Delete notification_to_user assignments (mimic legacy notification system)
-		
-		// This conditions technically is not required, because notificationIDs are unique.
-		// As this is not enforced at the database layer we play safe until this legacy table
-		// finally is removed.
-		$condition->add('userID = ?', [WCF::getUser()->userID]);
-		
-		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
-			{$condition}";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($condition->getParameters());
+		if (!empty($notificationIDs)) {
+			// Step 2) Mark the notifications as read.
+			$condition = new PreparedStatementConditionBuilder();
+			$condition->add('notificationID IN (?)', [$notificationIDs]);
+			
+			$sql = "UPDATE	wcf".WCF_N."_user_notification
+				SET	confirmTime = ?
+				{$condition}";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(\array_merge(
+				[TIME_NOW],
+				$condition->getParameters()
+			));
+			
+			// Step 3) Delete notification_to_user assignments (mimic legacy notification system)
+			
+			// This conditions technically is not required, because notificationIDs are unique.
+			// As this is not enforced at the database layer we play safe until this legacy table
+			// finally is removed.
+			$condition->add('userID = ?', [WCF::getUser()->userID]);
+			
+			$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
+				{$condition}";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($condition->getParameters());
+		}
 		
 		// Step 4) Clear cached values.
 		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
