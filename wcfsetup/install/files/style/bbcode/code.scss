@@ -101,6 +101,15 @@
 			padding: 0 10px;
 
 			@include wcfFontHeadline;
+
+			@include screen-sm-down {
+				overflow: auto;
+				white-space: nowrap;
+			}
+		}
+
+		.icon {
+			flex: 0 0 auto;
 		}
 	}
 

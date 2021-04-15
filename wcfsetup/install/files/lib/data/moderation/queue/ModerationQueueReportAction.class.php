@@ -36,6 +36,10 @@ class ModerationQueueReportAction extends ModerationQueueAction
     {
         $this->validateRemoveReport();
 
+        if (!ModerationQueueReportManager::getInstance()->canRemoveContent($this->queue->getDecoratedObject())) {
+            throw new PermissionDeniedException();
+        }
+
         $this->parameters['message'] = (isset($this->parameters['message']) ? StringUtil::trim($this->parameters['message']) : '');
     }
 
