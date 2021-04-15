@@ -137,8 +137,10 @@ namespace wcf\functions\exception {
 				if (isset($traceEntry['file']) && \preg_match('~/templates/compiled/.+\.php$~',
 					$traceEntry['file'])) {
 					$startLine = $traceEntry['line'] - $contextLineCount;
+					$relativeErrorLine = $contextLineCount;
 					if ($startLine < 0) {
 						$startLine = 0;
+						$relativeErrorLine = $traceEntry['line'] - 1;
 					}
 					
 					$file = \fopen($traceEntry['file'], 'r');
@@ -160,6 +162,10 @@ namespace wcf\functions\exception {
 						if (\substr($line, -1) !== "\n" && !\feof($file)) {
 							// We don't want to handle a file where lines exceed 1024 Bytes.
 							break 2;
+						}
+						
+						if (count($lines) === $relativeErrorLine - 1) {
+							$line = "====> {$line}";
 						}
 						
 						$lines[] = $line;
