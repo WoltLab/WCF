@@ -133,7 +133,7 @@
 						{foreach from=$chain[information] item=extraInformation}
 							<dl>
 								<dt>{$extraInformation[0]}</dt>
-								<dd>{$extraInformation[1]}</dd>
+								<dd style="white-space: pre-wrap;">{$extraInformation[1]}</dd>
 							</dl>
 						{/foreach}
 					{/if}
