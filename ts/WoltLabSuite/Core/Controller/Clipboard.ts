@@ -455,7 +455,7 @@ class ControllerClipboard {
 
     // clear editors
     this.editors.forEach((editor, typeName) => {
-      if (keepEditors.includes(typeName)) {
+      if (!keepEditors.includes(typeName)) {
         UiPageAction.remove(`wcfClipboard-${typeName}`);
 
         this.editorDropdowns.get(typeName)!.innerHTML = "";
