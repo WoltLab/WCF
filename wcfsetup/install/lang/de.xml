@@ -743,7 +743,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
-		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
@@ -896,7 +895,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Kontaktformular]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
-		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
 		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Kann Online-Status verbergen]]></item>
@@ -907,7 +905,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.signature.attachment.canUpload"><![CDATA[Kann Dateianhänge hochladen]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
-		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximale Dateianhänge]]></item>
 		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Mehrfaktor-Authentifizierung erzwingen]]></item>
 		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Benutzer, die Mitglied dieser Benutzergruppe sind, können die Mehrfaktor-Authentifizierung nicht deaktivieren und können besonders geschützte Bereiche erst betreten, wenn sie die Mehrfaktor-Authentifizierung eingerichtet haben.]]></item>

@@ -25,12 +25,11 @@ class LineBreakSeparatedTextOptionType extends TextareaOptionType
     {
         $values = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines($value)));
         \uasort($values, 'strnatcmp');
-        
+
         static $identifiers = [];
         do {
-            $identifier = substr(StringUtil::getRandomID(), 0, 8);
-        }
-        while (in_array($identifier, $identifiers));
+            $identifier = \substr(StringUtil::getRandomID(), 0, 8);
+        } while (\in_array($identifier, $identifiers));
         $identifiers[] = $identifier;
 
         return WCF::getTPL()->fetch('lineBreakSeparatedTextOptionType', 'wcf', [

@@ -720,7 +720,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
-		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount.description"><![CDATA[The maximum number of attachments allowed per message.]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
@@ -874,7 +873,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Contact Form]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
-		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Can edit their profile]]></item>
 		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Can hide their online status]]></item>
@@ -885,7 +883,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.signature.attachment.canUpload"><![CDATA[Can Upload Attachments]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
-		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>
 		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Require Multi-factor Authentication]]></item>
 		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Users that are members of this user group may not disable multi-factor authentication. They will also be required to set up multi-factor authentication before they may enter protected areas.]]></item>
