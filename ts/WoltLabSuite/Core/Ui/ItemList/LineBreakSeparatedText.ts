@@ -21,7 +21,7 @@ export class UiItemListLineBreakSeparatedText {
   protected clearButton?: HTMLAnchorElement = undefined;
   protected itemInput?: HTMLInputElement = undefined;
   protected readonly itemList: HTMLUListElement;
-  protected items = new Set<string>();
+  protected readonly items = new Set<string>();
   protected readonly options: LineBreakSeparatedTextOptions;
 
   constructor(itemList: HTMLUListElement, options: LineBreakSeparatedTextOptions) {
@@ -40,17 +40,18 @@ export class UiItemListLineBreakSeparatedText {
   protected addItem(event: Event): void {
     event.preventDefault();
 
-    const item = this.itemInput!.value.trim();
+    const itemInput = this.itemInput!;
+    const item = itemInput.value.trim();
 
     if (item === "") {
-      DomUtil.innerError(this.itemInput!.parentElement!, Language.get("wcf.global.form.error.empty"));
+      DomUtil.innerError(itemInput.parentElement!, Language.get("wcf.global.form.error.empty"));
     } else if (!this.items.has(item)) {
       this.insertItem(item);
 
       this.resetInput();
     } else {
       DomUtil.innerError(
-        this.itemInput!.parentElement!,
+        itemInput.parentElement!,
         Language.get("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
           item,
         }),
@@ -58,7 +59,7 @@ export class UiItemListLineBreakSeparatedText {
       );
     }
 
-    this.itemInput!.focus();
+    itemInput.focus();
   }
 
   /**

@@ -31,20 +31,21 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
          */
         addItem(event) {
             event.preventDefault();
-            const item = this.itemInput.value.trim();
+            const itemInput = this.itemInput;
+            const item = itemInput.value.trim();
             if (item === "") {
-                Util_1.default.innerError(this.itemInput.parentElement, Language.get("wcf.global.form.error.empty"));
+                Util_1.default.innerError(itemInput.parentElement, Language.get("wcf.global.form.error.empty"));
             }
             else if (!this.items.has(item)) {
                 this.insertItem(item);
                 this.resetInput();
             }
             else {
-                Util_1.default.innerError(this.itemInput.parentElement, Language.get("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
+                Util_1.default.innerError(itemInput.parentElement, Language.get("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
                     item,
                 }), true);
             }
-            this.itemInput.focus();
+            itemInput.focus();
         }
         /**
          * Builds the user interface during setup.

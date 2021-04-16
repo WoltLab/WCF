@@ -11,14 +11,14 @@
 </ul>
 
 <script data-relocate="true">
-    require(['Language', 'WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText'], (Language, UiItemListLineBreakSeparatedText) => {
+    require(['Language', 'WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText'], (Language, { UiItemListLineBreakSeparatedText }) => {
         Language.addObject({
             'wcf.acp.option.type.lineBreakSeparatedText.placeholder': '{jslang}wcf.acp.option.type.lineBreakSeparatedText.placeholder{/jslang}',
             'wcf.acp.option.type.lineBreakSeparatedText.error.duplicate': '{jslang __literal=true}wcf.acp.option.type.lineBreakSeparatedText.error.duplicate{/jslang}',
             'wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage': '{jslang}wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage{/jslang}',
         });
         
-        new UiItemListLineBreakSeparatedText.default(
+        new UiItemListLineBreakSeparatedText(
             document.getElementById("lineBreakSeparatedTextOption_{@$option->optionID}"),
             {
                 submitFieldName: "values[{$option->optionName}]"
