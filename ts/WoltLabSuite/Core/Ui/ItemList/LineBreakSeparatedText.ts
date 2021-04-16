@@ -185,9 +185,7 @@ export class UiItemListLineBreakSeparatedText {
     label.innerText = item;
     itemElement.append(label);
 
-    const nextElement = Array.from(this.itemList.children).find(
-      (el: HTMLElement) => el.dataset.value!.localeCompare(item) === 1,
-    );
+    const nextElement = Array.from(this.itemList.children).find((el: HTMLElement) => el.dataset.value! > item);
 
     if (nextElement) {
       this.itemList.insertBefore(itemElement, nextElement);
