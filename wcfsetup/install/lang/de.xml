@@ -4817,12 +4817,12 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<!-- Administrator Notification -->
 		<item name="wcf.user.register.notification.mail"><![CDATA[Hallo Administrator,
 
-auf der Website {@PAGE_TITLE|language} erfolgte eine neue Benutzeranmeldung durch: {@$user->username}
+auf der Website {@PAGE_TITLE|language} erfolgte eine neue Benutzeranmeldung durch: {@$user->username}.
 
-Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
+Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du erreichst{else}Sie erreichen{/if} das Benutzerprofil des neuen Benutzers, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} folgenden Link {if LANGUAGE_USE_INFORMAL_VARIANT}aufrufst{else}aufrufen{/if}:
-{link controller='User' object=$user isEmail=true}{/link} ]]></item>
+{link controller='User' object=$user isEmail=true}{/link}]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[Neue Benutzeranmeldung auf der Website: {@PAGE_TITLE|language}]]></item>
 		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Akzeptieren]]></item>
