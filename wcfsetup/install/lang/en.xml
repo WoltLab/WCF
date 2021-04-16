@@ -4848,12 +4848,12 @@ A notification will be sent once your account has been approved.]]></item>
 		<!-- Administrator Notification -->
 		<item name="wcf.user.register.notification.mail"><![CDATA[Dear Administrator,
 
-someone registered with your website {@PAGE_TITLE|language}: {@$user->username} 
+someone registered with your website {@PAGE_TITLE|language}: {@$user->username}.
 
-Email address used: {@$user->email} 
+Email address used: {@$user->email}.
 
 Open the link below to access the user profile:
-{link controller='User' object=$user isEmail=true}{/link} ]]></item>
+{link controller='User' object=$user isEmail=true}{/link}]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[New Registration with Your Website: {@PAGE_TITLE|language}]]></item>
 		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>

@@ -4814,7 +4814,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Aktivierung der Registrierung auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if}
+<p>vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} {* this line ends with a space *}
 Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
@@ -4826,7 +4826,7 @@ dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-M
 
 vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}].
 Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, ist es notwendig,
-dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig durch Klicken des folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if}
+dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig durch Klicken des folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} {* this line ends with a space *}
 E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:
 
     {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
@@ -4851,12 +4851,12 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<!-- Administrator Notification -->
 		<item name="wcf.user.register.notification.mail"><![CDATA[Hallo Administrator,
 
-auf der Website {@PAGE_TITLE|language} erfolgte eine neue Benutzeranmeldung durch: {@$user->username}
+auf der Website {@PAGE_TITLE|language} erfolgte eine neue Benutzeranmeldung durch: {@$user->username}.
 
-Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
+Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du erreichst{else}Sie erreichen{/if} das Benutzerprofil des neuen Benutzers, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} folgenden Link {if LANGUAGE_USE_INFORMAL_VARIANT}aufrufst{else}aufrufen{/if}:
-{link controller='User' object=$user isEmail=true}{/link} ]]></item>
+{link controller='User' object=$user isEmail=true}{/link}]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[Neue Benutzeranmeldung auf der Website: {@PAGE_TITLE|language}]]></item>
 		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Akzeptieren]]></item>
