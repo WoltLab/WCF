@@ -20,8 +20,18 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             this.clearButton = undefined;
             this.itemInput = undefined;
             this.items = new Set();
+            this.submitField = undefined;
             this.itemList = itemList;
-            this.options = options;
+            this.options = options || {};
+            if (!this.options.submitFieldName) {
+                const nextElement = this.itemList.nextElementSibling;
+                if (nextElement instanceof HTMLInputElement && nextElement.type === "hidden") {
+                    this.submitField = nextElement;
+                }
+                else {
+                    throw new Error("Missing `submitFieldName` option");
+                }
+            }
             this.itemList.closest("form").addEventListener("submit", () => this.submit());
             this.initValues();
             this.buildUi();
@@ -197,11 +207,17 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
          * Adds a hidden input field with the data to the form before it is submitted.
          */
         submit() {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = this.options.submitFieldName;
-            input.value = Array.from(this.items).join("\n");
-            this.itemList.parentElement.append(input);
+            const value = Array.from(this.items).join("\n");
+            if (this.submitField) {
+                this.submitField.value = value;
+            }
+            else {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = this.options.submitFieldName;
+                input.value = value;
+                this.itemList.parentElement.append(input);
+            }
         }
     }
     exports.UiItemListLineBreakSeparatedText = UiItemListLineBreakSeparatedText;

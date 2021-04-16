@@ -14,7 +14,7 @@ import * as Language from "../../Language";
 import DomUtil from "../../Dom/Util";
 
 export interface LineBreakSeparatedTextOptions {
-  submitFieldName: string;
+  submitFieldName?: string;
 }
 
 export class UiItemListLineBreakSeparatedText {
@@ -23,10 +23,20 @@ export class UiItemListLineBreakSeparatedText {
   protected readonly itemList: HTMLUListElement;
   protected readonly items = new Set<string>();
   protected readonly options: LineBreakSeparatedTextOptions;
+  protected readonly submitField?: HTMLInputElement = undefined;
 
-  constructor(itemList: HTMLUListElement, options: LineBreakSeparatedTextOptions) {
+  constructor(itemList: HTMLUListElement, options?: LineBreakSeparatedTextOptions) {
     this.itemList = itemList;
-    this.options = options;
+    this.options = options || {};
+
+    if (!this.options.submitFieldName) {
+      const nextElement = this.itemList.nextElementSibling;
+      if (nextElement instanceof HTMLInputElement && nextElement.type === "hidden") {
+        this.submitField = nextElement;
+      } else {
+        throw new Error("Missing `submitFieldName` option");
+      }
+    }
 
     this.itemList.closest("form")!.addEventListener("submit", () => this.submit());
 
@@ -241,11 +251,17 @@ export class UiItemListLineBreakSeparatedText {
    * Adds a hidden input field with the data to the form before it is submitted.
    */
   protected submit(): void {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = this.options.submitFieldName;
-    input.value = Array.from(this.items).join("\n");
-    this.itemList.parentElement!.append(input);
+    const value = Array.from(this.items).join("\n");
+
+    if (this.submitField) {
+      this.submitField.value = value;
+    } else {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = this.options.submitFieldName!;
+      input.value = value;
+      this.itemList.parentElement!.append(input);
+    }
   }
 }
 
