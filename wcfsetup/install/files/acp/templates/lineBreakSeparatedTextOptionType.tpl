@@ -18,9 +18,11 @@
             'wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage': '{jslang}wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage{/jslang}',
         });
         
-        new UiItemListLineBreakSeparatedText.default({
-            listItemId: "lineBreakSeparatedTextOption_{@$option->optionID}",
-            submitFieldName: "values[{$option->optionName}]"
-        });
+        new UiItemListLineBreakSeparatedText.default(
+            document.getElementById("lineBreakSeparatedTextOption_{@$option->optionID}"),
+            {
+                submitFieldName: "values[{$option->optionName}]"
+            }
+        );
     });
 </script>

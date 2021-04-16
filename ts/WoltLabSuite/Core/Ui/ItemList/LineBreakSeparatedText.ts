@@ -6,6 +6,7 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText
+ * @since 5.4
  */
 
 import * as UiConfirmation from "../Confirmation";
@@ -13,24 +14,19 @@ import * as Language from "../../Language";
 import DomUtil from "../../Dom/Util";
 
 export interface LineBreakSeparatedTextOptions {
-  listItemId: string;
   submitFieldName: string;
 }
 
 export class UiItemListLineBreakSeparatedText {
   protected clearButton?: HTMLAnchorElement = undefined;
   protected itemInput?: HTMLInputElement = undefined;
-  protected readonly itemList: HTMLElement;
+  protected readonly itemList: HTMLUListElement;
   protected items = new Set<string>();
   protected readonly options: LineBreakSeparatedTextOptions;
 
-  constructor(options: LineBreakSeparatedTextOptions) {
+  constructor(itemList: HTMLUListElement, options: LineBreakSeparatedTextOptions) {
+    this.itemList = itemList;
     this.options = options;
-
-    this.itemList = document.getElementById(this.options.listItemId)!;
-    if (!this.itemList) {
-      throw new Error(`Unknown element with id '${this.options.listItemId}'`);
-    }
 
     this.itemList.closest("form")!.addEventListener("submit", () => this.submit());
 
@@ -44,7 +40,7 @@ export class UiItemListLineBreakSeparatedText {
   protected addItem(event: Event): void {
     event.preventDefault();
 
-    const item = this.itemInput!.value;
+    const item = this.itemInput!.value.trim();
 
     if (item === "") {
       DomUtil.innerError(this.itemInput!.parentElement!, Language.get("wcf.global.form.error.empty"));
@@ -58,6 +54,7 @@ export class UiItemListLineBreakSeparatedText {
         Language.get("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
           item,
         }),
+        true,
       );
     }
 
@@ -188,15 +185,13 @@ export class UiItemListLineBreakSeparatedText {
     label.innerText = item;
     itemElement.append(label);
 
-    Array.from(this.itemList.children).some((el: HTMLElement) => {
-      if (el.dataset.value!.localeCompare(item) === 1) {
-        this.itemList.insertBefore(itemElement, el);
+    const nextElement = Array.from(this.itemList.children).find(
+      (el: HTMLElement) => el.dataset.value!.localeCompare(item) === 1,
+    );
 
-        return true;
-      }
-    });
-
-    if (!itemElement.parentElement) {
+    if (nextElement) {
+      this.itemList.insertBefore(itemElement, nextElement);
+    } else {
       this.itemList.append(itemElement);
     }
 

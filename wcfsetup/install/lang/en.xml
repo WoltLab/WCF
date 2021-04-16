@@ -1755,7 +1755,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.internal_hostnames"><![CDATA[Additional Internal Domains]]></item>
 		<item name="wcf.acp.option.internal_hostnames.description"><![CDATA[The listed domains will be considered as internal domains in addition to the domains in use by installed apps. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.placeholder"><![CDATA[Add new entry]]></item>
-		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[The entry „{$item}“ already exists.]]></item>
+		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[The entry <strong>{$item}</strong> already exists.]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
 	</category>
 	<category name="wcf.acp.customOption">

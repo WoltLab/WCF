@@ -6,6 +6,7 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText
+ * @since 5.4
  */
 define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, UiConfirmation, Language, Util_1) {
     "use strict";
@@ -15,15 +16,12 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiItemListLineBreakSeparatedText {
-        constructor(options) {
+        constructor(itemList, options) {
             this.clearButton = undefined;
             this.itemInput = undefined;
             this.items = new Set();
+            this.itemList = itemList;
             this.options = options;
-            this.itemList = document.getElementById(this.options.listItemId);
-            if (!this.itemList) {
-                throw new Error(`Unknown element with id '${this.options.listItemId}'`);
-            }
             this.itemList.closest("form").addEventListener("submit", () => this.submit());
             this.initValues();
             this.buildUi();
@@ -33,7 +31,7 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
          */
         addItem(event) {
             event.preventDefault();
-            const item = this.itemInput.value;
+            const item = this.itemInput.value.trim();
             if (item === "") {
                 Util_1.default.innerError(this.itemInput.parentElement, Language.get("wcf.global.form.error.empty"));
             }
@@ -44,7 +42,7 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             else {
                 Util_1.default.innerError(this.itemInput.parentElement, Language.get("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
                     item,
-                }));
+                }), true);
             }
             this.itemInput.focus();
         }
@@ -151,13 +149,11 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             const label = document.createElement("span");
             label.innerText = item;
             itemElement.append(label);
-            Array.from(this.itemList.children).some((el) => {
-                if (el.dataset.value.localeCompare(item) === 1) {
-                    this.itemList.insertBefore(itemElement, el);
-                    return true;
-                }
-            });
-            if (!itemElement.parentElement) {
+            const nextElement = Array.from(this.itemList.children).find((el) => el.dataset.value.localeCompare(item) === 1);
+            if (nextElement) {
+                this.itemList.insertBefore(itemElement, nextElement);
+            }
+            else {
                 this.itemList.append(itemElement);
             }
             this.showList();

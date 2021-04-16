@@ -1770,7 +1770,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.internal_hostnames"><![CDATA[Zusätzliche interne Domains]]></item>
 		<item name="wcf.acp.option.internal_hostnames.description"><![CDATA[Die aufgeführten Domains werden, neben den Domains der installierten Apps, als interne Domains angesehen. Der Abgleich erfolgt auf Basis der strikten Übereinstimmung, optional können Subdomains mit einem Platzhalter berücksichtigt werden: <kbd>*.example.com</kbd> umfasst sowohl <kbd>example.com</kbd> als auch Subdomains wie <kbd>foo.example.com</kbd> oder <kbd>www.example.com</kbd>]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.placeholder"><![CDATA[Neuen Eintrag hinzufügen]]></item>
-		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[Der Eintrag „{$item}“ existiert bereits.]]></item>
+		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[Der Eintrag <strong>{$item}</strong> existiert bereits.]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} alle Einträge wirklich löschen?]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
