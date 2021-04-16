@@ -490,7 +490,7 @@
 			</option>
 			<option name="internal_hostnames">
 				<categoryname>general.page</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<option name="head_code">
 				<categoryname>general.page</categoryname>
@@ -514,7 +514,7 @@
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<option name="sitemap_index_time_frame">
 				<categoryname>general.page.sitemap</categoryname>
@@ -1079,7 +1079,7 @@ XING</selectoptions>
 			</option>
 			<option name="image_external_source_whitelist">
 				<categoryname>message.general.image</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<option name="message_force_secure_images">
 				<categoryname>message.general.image</categoryname>
@@ -1113,7 +1113,7 @@ XING</selectoptions>
 			</option>
 			<option name="image_proxy_host_whitelist">
 				<categoryname>message.general.imageProxy</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<!-- /message.general.image -->
 			<!-- message.censorship -->
@@ -1124,7 +1124,7 @@ XING</selectoptions>
 			</option>
 			<option name="censored_words">
 				<categoryname>message.censorship</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<!-- /message.censorship -->
 			<option name="password_min_score">
@@ -1139,15 +1139,15 @@ XING</selectoptions>
 			<!-- user.ban -->
 			<option name="register_forbidden_usernames">
 				<categoryname>user.ban</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<option name="register_forbidden_emails">
 				<categoryname>user.ban</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<option name="register_allowed_emails">
 				<categoryname>user.ban</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<!-- /user.ban -->
 			<!-- user.register -->
@@ -1278,7 +1278,7 @@ retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 			</option>
 			<option name="user_forbidden_titles">
 				<categoryname>user.title</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 				<options>module_user_rank</options>
 			</option>
 			<!-- /user.title -->

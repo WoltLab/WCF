@@ -1401,7 +1401,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.censored_words"><![CDATA[Censored Words]]></item>
-		<item name="wcf.acp.option.censored_words.description"><![CDATA[You can specify which words will be censored. Using at least one of these words within a message causes an immediate rejection. Enter one word per line. Examples:
+		<item name="wcf.acp.option.censored_words.description"><![CDATA[You can specify which words will be censored. Using at least one of these words within a message causes an immediate rejection. Examples:
 <ul class="nativeList">
 <li>“*” to match parts: “wolt*” matches “woltlab”</li>
 <li>“~” to find splitted parts: “wolt~” matches “wolt-lab”</li>
@@ -1454,11 +1454,11 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.password_min_score.1"><![CDATA[1: Very guessable (1 million attempts)]]></item>
 		<item name="wcf.acp.option.password_min_score.2"><![CDATA[2: Somewhat guessable (100 million attempts)]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reserved Usernames]]></item>
-		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[You can specify which usernames are unavailable for registration. Enter one username per line.]]></item>
+		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[You can specify which usernames are unavailable for registration.]]></item>
 		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reserved Email Addresses]]></item>
-		<item name="wcf.acp.option.register_forbidden_emails.description"><![CDATA[You can specify which email addresses are unavailable for registration. Enter one email address per line.]]></item>
+		<item name="wcf.acp.option.register_forbidden_emails.description"><![CDATA[You can specify which email addresses are unavailable for registration.]]></item>
 		<item name="wcf.acp.option.register_allowed_emails"><![CDATA[Allowed Email Addresses]]></item>
-		<item name="wcf.acp.option.register_allowed_emails.description"><![CDATA[You can specify which email addresses are allowed for registration. Enter one email address per line.]]></item>
+		<item name="wcf.acp.option.register_allowed_emails.description"><![CDATA[You can specify which email addresses are allowed for registration.]]></item>
 		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Require ASCII characters for usernames]]></item>
@@ -1478,7 +1478,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.sitemap_index_time_frame.description"><![CDATA[Maximum age of the objects to be included in the sitemap. Use 0 to disable the time frame.]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
-		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[You can specify which user titles are unavailable for users. Enter one user title per line.]]></item>
+		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[You can specify which user titles are unavailable for users.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Display Previous Username]]></item>
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
@@ -1533,7 +1533,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Matomo”.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Display user’s profile visitors in profile sidebar]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL Replacements]]></item>
-		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[You can replace parts of the title within the URL. You could use it to replace special characters or to expand abbreviations. Enter one replacement per line. Examples:
+		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[You can replace parts of the title within the URL. You could use it to replace special characters or to expand abbreviations. Examples:
 <ul class="nativeList">
 <li>“WBB=WoltLab Burning Board”</li>
 <li>“GmbH=Gesellschaft mit beschränkter Haftung”</li>
@@ -1652,7 +1652,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
 		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove Cached Images Regularly]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image proxy whitelist]]></item>
-		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
+		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
 		<item name="wcf.acp.option.show_style_changer"><![CDATA[Enable style changer]]></item>
 		<item name="wcf.acp.option.language_use_informal_variant"><![CDATA[Use informal language variant]]></item>
@@ -1700,7 +1700,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Disabling this option will cause the link to always point to the global landing page instead. This option enforces the behavior known from previous versions when disabled.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
 		<item name="wcf.acp.option.image_external_source_whitelist"><![CDATA[Allowed images from external sites]]></item>
-		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[The listed domains will be exempt from blocking. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
+		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[The listed domains will be exempt from blocking. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Enable the table of contents]]></item>
 		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Articles are searchable]]></item>
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Pages are searchable]]></item>
@@ -1753,7 +1753,10 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be deleted after the entered amount of days. To disable deleting old modification logs, enter “0”.]]></item>
 		<item name="wcf.acp.option.internal_hostnames"><![CDATA[Additional Internal Domains]]></item>
-		<item name="wcf.acp.option.internal_hostnames.description"><![CDATA[The listed domains will be considered as internal domains in addition to the domains in use by installed apps. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
+		<item name="wcf.acp.option.internal_hostnames.description"><![CDATA[The listed domains will be considered as internal domains in addition to the domains in use by installed apps. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
+		<item name="wcf.acp.option.type.lineBreakSeparatedText.placeholder"><![CDATA[Add new entry]]></item>
+		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[The entry „{$item}“ already exists.]]></item>
+		<item name="wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
