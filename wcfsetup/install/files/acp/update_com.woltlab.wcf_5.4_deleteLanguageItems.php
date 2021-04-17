@@ -13,4 +13,4 @@ $languageItemList = new LanguageItemList();
 $languageItemList->getConditionBuilder()->add('languageItem IN (?)', [$languageItems]);
 $languageItemList->readObjects();
 
-(new LanguageItemAction([$languageItemList->getObjects()], 'delete'))->executeAction();
+(new LanguageItemAction($languageItemList->getObjects(), 'delete'))->executeAction();
