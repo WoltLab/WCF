@@ -25,9 +25,9 @@ export class UiItemListLineBreakSeparatedText {
   protected readonly options: LineBreakSeparatedTextOptions;
   protected readonly submitField?: HTMLInputElement = undefined;
 
-  constructor(itemList: HTMLUListElement, options?: LineBreakSeparatedTextOptions) {
+  constructor(itemList: HTMLUListElement, options: LineBreakSeparatedTextOptions = {}) {
     this.itemList = itemList;
-    this.options = options || {};
+    this.options = options;
 
     if (!this.options.submitFieldName) {
       const nextElement = this.itemList.nextElementSibling;

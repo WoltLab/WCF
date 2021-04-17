@@ -16,13 +16,13 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiItemListLineBreakSeparatedText {
-        constructor(itemList, options) {
+        constructor(itemList, options = {}) {
             this.clearButton = undefined;
             this.itemInput = undefined;
             this.items = new Set();
             this.submitField = undefined;
             this.itemList = itemList;
-            this.options = options || {};
+            this.options = options;
             if (!this.options.submitFieldName) {
                 const nextElement = this.itemList.nextElementSibling;
                 if (nextElement instanceof HTMLInputElement && nextElement.type === "hidden") {
