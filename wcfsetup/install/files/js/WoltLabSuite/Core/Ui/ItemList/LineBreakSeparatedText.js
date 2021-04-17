@@ -17,10 +17,12 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiItemListLineBreakSeparatedText {
         constructor(itemList, options = {}) {
+            this.addButton = undefined;
             this.clearButton = undefined;
             this.itemInput = undefined;
             this.items = new Set();
             this.submitField = undefined;
+            this.uiDisabled = false;
             this.itemList = itemList;
             this.options = options;
             if (!this.options.submitFieldName) {
@@ -33,6 +35,21 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
                 }
             }
             this.itemList.closest("form").addEventListener("submit", () => this.submit());
+            // The UI can be used for user group option types which can be enabled/disabled by changing the
+            // `readonly` attribute, which has to be observed to enable/disable the UI.
+            this.mutationObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === "readonly") {
+                        const input = mutation.target;
+                        if (input.readOnly) {
+                            this.disableUi();
+                        }
+                        else {
+                            this.enableUi();
+                        }
+                    }
+                });
+            });
             this.initValues();
             this.buildUi();
         }
@@ -41,6 +58,9 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
          */
         addItem(event) {
             event.preventDefault();
+            if (this.uiDisabled) {
+                return;
+            }
             const itemInput = this.itemInput;
             const item = itemInput.value.trim();
             if (item === "") {
@@ -75,13 +95,16 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             this.itemInput.addEventListener("keydown", (ev) => this.keydown(ev));
             this.itemInput.addEventListener("paste", (ev) => this.paste(ev));
             inputAddon.appendChild(this.itemInput);
-            const addButton = document.createElement("a");
-            addButton.href = "#";
-            addButton.classList.add("button", "inputSuffix", "jsTooltip");
-            addButton.title = Language.get("wcf.global.button.add");
-            addButton.innerHTML = '<span class="icon icon16 fa-plus"></span>';
-            addButton.addEventListener("click", (ev) => this.addItem(ev));
-            inputAddon.appendChild(addButton);
+            this.mutationObserver.observe(this.itemInput, {
+                attributes: true,
+            });
+            this.addButton = document.createElement("a");
+            this.addButton.href = "#";
+            this.addButton.classList.add("button", "inputSuffix", "jsTooltip");
+            this.addButton.title = Language.get("wcf.global.button.add");
+            this.addButton.innerHTML = '<span class="icon icon16 fa-plus"></span>';
+            this.addButton.addEventListener("click", (ev) => this.addItem(ev));
+            inputAddon.appendChild(this.addButton);
             this.clearButton = document.createElement("a");
             this.clearButton.href = "#";
             this.clearButton.classList.add("button", "inputSuffix", "jsTooltip");
@@ -96,8 +119,11 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
         /**
          * Clears the item list after clicking on the clear button.
          */
-        clearList(ev) {
-            ev.preventDefault();
+        clearList(event) {
+            event.preventDefault();
+            if (this.uiDisabled) {
+                return;
+            }
             UiConfirmation.show({
                 confirm: () => {
                     this.itemList.innerHTML = "";
@@ -112,6 +138,9 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
          * Deletes an item from the list after clicking on its delete icon.
          */
         deleteItem(event) {
+            if (this.uiDisabled) {
+                return;
+            }
             const button = event.currentTarget;
             const item = button.closest("li").dataset.value;
             UiConfirmation.show({
@@ -127,6 +156,24 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
                 }),
                 messageIsHtml: true,
             });
+        }
+        /**
+         * Disables the user interface after the input field has been set readonly.
+         */
+        disableUi() {
+            this.addButton.classList.add("disabled");
+            this.clearButton.classList.add("disabled");
+            this.itemList.querySelectorAll(".jsDeleteItem").forEach((button) => button.classList.add("disabled"));
+            this.uiDisabled = true;
+        }
+        /**
+         * Enables the user interface after the input field is no longer readonly.
+         */
+        enableUi() {
+            this.addButton.classList.remove("disabled");
+            this.clearButton.classList.remove("disabled");
+            this.itemList.querySelectorAll(".jsDeleteItem").forEach((button) => button.classList.remove("disabled"));
+            this.uiDisabled = false;
         }
         /**
          * Hides the item list and clear button.
@@ -182,6 +229,9 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
          * field.
          */
         paste(event) {
+            if (this.uiDisabled) {
+                return;
+            }
             const items = event.clipboardData.getData("text/plain").split("\n");
             if (items.length > 1) {
                 event.preventDefault();

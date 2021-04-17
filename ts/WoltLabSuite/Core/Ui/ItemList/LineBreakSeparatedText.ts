@@ -18,12 +18,15 @@ export interface LineBreakSeparatedTextOptions {
 }
 
 export class UiItemListLineBreakSeparatedText {
+  protected addButton?: HTMLAnchorElement = undefined;
   protected clearButton?: HTMLAnchorElement = undefined;
   protected itemInput?: HTMLInputElement = undefined;
   protected readonly itemList: HTMLUListElement;
   protected readonly items = new Set<string>();
+  protected readonly mutationObserver: MutationObserver;
   protected readonly options: LineBreakSeparatedTextOptions;
   protected readonly submitField?: HTMLInputElement = undefined;
+  protected uiDisabled = false;
 
   constructor(itemList: HTMLUListElement, options: LineBreakSeparatedTextOptions = {}) {
     this.itemList = itemList;
@@ -40,6 +43,22 @@ export class UiItemListLineBreakSeparatedText {
 
     this.itemList.closest("form")!.addEventListener("submit", () => this.submit());
 
+    // The UI can be used for user group option types which can be enabled/disabled by changing the
+    // `readonly` attribute, which has to be observed to enable/disable the UI.
+    this.mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "readonly") {
+          const input = mutation.target as HTMLInputElement;
+
+          if (input.readOnly) {
+            this.disableUi();
+          } else {
+            this.enableUi();
+          }
+        }
+      });
+    });
+
     this.initValues();
     this.buildUi();
   }
@@ -49,6 +68,10 @@ export class UiItemListLineBreakSeparatedText {
    */
   protected addItem(event: Event): void {
     event.preventDefault();
+
+    if (this.uiDisabled) {
+      return;
+    }
 
     const itemInput = this.itemInput!;
     const item = itemInput.value.trim();
@@ -93,14 +116,17 @@ export class UiItemListLineBreakSeparatedText {
     this.itemInput.addEventListener("keydown", (ev) => this.keydown(ev));
     this.itemInput.addEventListener("paste", (ev) => this.paste(ev));
     inputAddon.appendChild(this.itemInput);
+    this.mutationObserver.observe(this.itemInput, {
+      attributes: true,
+    });
 
-    const addButton = document.createElement("a");
-    addButton.href = "#";
-    addButton.classList.add("button", "inputSuffix", "jsTooltip");
-    addButton.title = Language.get("wcf.global.button.add");
-    addButton.innerHTML = '<span class="icon icon16 fa-plus"></span>';
-    addButton.addEventListener("click", (ev) => this.addItem(ev));
-    inputAddon.appendChild(addButton);
+    this.addButton = document.createElement("a");
+    this.addButton.href = "#";
+    this.addButton.classList.add("button", "inputSuffix", "jsTooltip");
+    this.addButton.title = Language.get("wcf.global.button.add");
+    this.addButton.innerHTML = '<span class="icon icon16 fa-plus"></span>';
+    this.addButton.addEventListener("click", (ev) => this.addItem(ev));
+    inputAddon.appendChild(this.addButton);
 
     this.clearButton = document.createElement("a");
     this.clearButton.href = "#";
@@ -117,8 +143,12 @@ export class UiItemListLineBreakSeparatedText {
   /**
    * Clears the item list after clicking on the clear button.
    */
-  protected clearList(ev: Event): void {
-    ev.preventDefault();
+  protected clearList(event: Event): void {
+    event.preventDefault();
+
+    if (this.uiDisabled) {
+      return;
+    }
 
     UiConfirmation.show({
       confirm: () => {
@@ -136,6 +166,10 @@ export class UiItemListLineBreakSeparatedText {
    * Deletes an item from the list after clicking on its delete icon.
    */
   protected deleteItem(event: Event): void {
+    if (this.uiDisabled) {
+      return;
+    }
+
     const button = event.currentTarget as HTMLElement;
     const item = button.closest("li")!.dataset.value!;
 
@@ -154,6 +188,30 @@ export class UiItemListLineBreakSeparatedText {
       }),
       messageIsHtml: true,
     });
+  }
+
+  /**
+   * Disables the user interface after the input field has been set readonly.
+   */
+  protected disableUi(): void {
+    this.addButton!.classList.add("disabled");
+    this.clearButton!.classList.add("disabled");
+
+    this.itemList.querySelectorAll(".jsDeleteItem").forEach((button) => button.classList.add("disabled"));
+
+    this.uiDisabled = true;
+  }
+
+  /**
+   * Enables the user interface after the input field is no longer readonly.
+   */
+  protected enableUi(): void {
+    this.addButton!.classList.remove("disabled");
+    this.clearButton!.classList.remove("disabled");
+
+    this.itemList.querySelectorAll(".jsDeleteItem").forEach((button) => button.classList.remove("disabled"));
+
+    this.uiDisabled = false;
   }
 
   /**
@@ -221,6 +279,10 @@ export class UiItemListLineBreakSeparatedText {
    * field.
    */
   protected paste(event: ClipboardEvent): void {
+    if (this.uiDisabled) {
+      return;
+    }
+
     const items = event.clipboardData!.getData("text/plain").split("\n");
     if (items.length > 1) {
       event.preventDefault();
