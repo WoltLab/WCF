@@ -130,5 +130,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 		<!-- Update of the Google Fonts -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_update_google_font.php</instruction>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
 	</instructions>
 </package>

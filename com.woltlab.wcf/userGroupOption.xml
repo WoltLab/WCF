@@ -567,7 +567,7 @@
 			</option>
 			<option name="user.attachment.allowedExtensions">
 				<categoryname>user.message.attachment</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 				<defaultvalue>gif
 jpg
 jpeg
@@ -620,7 +620,7 @@ pdf</defaultvalue>
 			</option>
 			<option name="user.contactForm.attachment.allowedExtensions">
 				<categoryname>user.message.contactForm</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 				<defaultvalue>gif
 jpg
 jpeg
@@ -682,7 +682,7 @@ pdf</defaultvalue>
 			</option>
 			<option name="user.signature.attachment.allowedExtensions">
 				<categoryname>user.signature</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 				<defaultvalue>gif
 jpg
 jpeg
@@ -810,7 +810,7 @@ bmp</defaultvalue>
 			</option>
 			<option name="user.profile.avatar.allowedFileExtensions">
 				<categoryname>user.profile.avatar</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>lineBreakSeparatedText</optiontype>
 				<defaultvalue>gif
 jpg
 jpeg
