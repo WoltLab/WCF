@@ -96,7 +96,7 @@ final class HeaderUtil
 
         // send Permissions-Policy
         if (HTTP_DISABLE_FLOC) {
-            @\header('Permissions-Policy: interest-cohort=()');
+            @\header('permissions-policy: interest-cohort=()');
         }
 
         \ob_start([self::class, 'parseOutput']);
