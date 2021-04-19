@@ -64,6 +64,7 @@ class UserStorageHandler extends SingletonFactory
         foreach ($userIDs as $userID) {
             if (!isset($this->cache[$userID])) {
                 $tmp[] = $userID;
+                $this->cache[$userID] = [];
             }
         }
 
@@ -81,10 +82,6 @@ class UserStorageHandler extends SingletonFactory
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
-            if (!isset($this->cache[$row['userID']])) {
-                $this->cache[$row['userID']] = [];
-            }
-
             if (isset($this->log[$row['userID']])) {
                 if (\array_key_exists($row['field'], $this->log[$row['userID']])) {
                     $logged = $this->log[$row['userID']][$row['field']];

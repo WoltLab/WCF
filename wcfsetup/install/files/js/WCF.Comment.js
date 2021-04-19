@@ -292,6 +292,10 @@ WCF.Comment.Handler = Class.extend({
 				this._loadNextResponses[commentID].children('a').data('commentID', commentID).click($.proxy(this._loadResponses, this));
 				this._commentButtonList[commentID].parent().show();
 			}
+			else {
+				var $difference = $comment.data('responses') - $comment.data('displayedResponses');
+				this._loadNextResponses[commentID][0].querySelector("a").textContent = WCF.Language.get(WCF.Language.get('wcf.comment.response.more', { count: $difference }));
+			}
 		}
 		else if (this._loadNextResponses[commentID] !== undefined) {
 			this._loadNextResponses[commentID].remove();
