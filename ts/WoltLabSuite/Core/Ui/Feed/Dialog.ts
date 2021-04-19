@@ -10,7 +10,6 @@
 import UiDialog from "../Dialog";
 import * as StringUtil from "../../StringUtil";
 import * as Language from "../../Language";
-import User from "../../User";
 import * as DomTraverse from "../../Dom/Traverse";
 import * as Clipboard from "../../Clipboard";
 import * as UiNotification from "../Notification";
@@ -22,7 +21,7 @@ async function copy(event: Event): Promise<void> {
   event.preventDefault();
 
   const target = event.currentTarget as HTMLElement;
-  const input = DomTraverse.prevBySel(target, 'input[type="text"]') as HTMLInputElement;
+  const input = target.parentNode!.querySelector('input[type="text"]') as HTMLInputElement;
 
   await Clipboard.copyTextToClipboard(input.value);
 
@@ -38,9 +37,7 @@ function openDialog(event: Event): void {
   const alternative = event.currentTarget as HTMLAnchorElement;
   const linkWithAccessToken = alternative.href;
 
-  const linkWithoutAccessToken = linkWithAccessToken
-    .replace(`at=${User.userId}-${User.accessToken}&`, "&")
-    .replace(new RegExp(`(\\?|&)at=${User.userId}-${User.accessToken}`), "");
+  const linkWithoutAccessToken = linkWithAccessToken.replace(/at=[^&]*&/, "&").replace(/(\\?|&)at=[^&]*/, "");
 
   UiDialog.openStatic(
     "feedLinkDialog",
@@ -81,9 +78,7 @@ function openDialog(event: Event): void {
 }
 
 export function setup(): void {
-  document.querySelectorAll("a[rel=alternate]").forEach((link: HTMLAnchorElement) => {
-    if (new URL(link.href).searchParams.get("at") === `${User.userId}-${User.accessToken}`) {
-      link.addEventListener("click", (ev) => openDialog(ev));
-    }
+  document.querySelectorAll("a.rssFeed").forEach((link: HTMLAnchorElement) => {
+    link.addEventListener("click", (ev) => openDialog(ev));
   });
 }

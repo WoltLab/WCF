@@ -6,15 +6,13 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Feed/Dialog
  */
-define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../Language", "../../User", "../../Dom/Traverse", "../../Clipboard", "../Notification"], function (require, exports, tslib_1, Dialog_1, StringUtil, Language, User_1, DomTraverse, Clipboard, UiNotification) {
+define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../Language", "../../Clipboard", "../Notification"], function (require, exports, tslib_1, Dialog_1, StringUtil, Language, Clipboard, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     StringUtil = tslib_1.__importStar(StringUtil);
     Language = tslib_1.__importStar(Language);
-    User_1 = tslib_1.__importDefault(User_1);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
     Clipboard = tslib_1.__importStar(Clipboard);
     UiNotification = tslib_1.__importStar(UiNotification);
     /**
@@ -23,7 +21,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
     async function copy(event) {
         event.preventDefault();
         const target = event.currentTarget;
-        const input = DomTraverse.prevBySel(target, 'input[type="text"]');
+        const input = target.parentNode.querySelector('input[type="text"]');
         await Clipboard.copyTextToClipboard(input.value);
         UiNotification.show(Language.get("wcf.global.rss.copy.success"));
     }
@@ -34,9 +32,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
         event.preventDefault();
         const alternative = event.currentTarget;
         const linkWithAccessToken = alternative.href;
-        const linkWithoutAccessToken = linkWithAccessToken
-            .replace(`at=${User_1.default.userId}-${User_1.default.accessToken}&`, "&")
-            .replace(new RegExp(`(\\?|&)at=${User_1.default.userId}-${User_1.default.accessToken}`), "");
+        const linkWithoutAccessToken = linkWithAccessToken.replace(/at=[^&]*&/, "&").replace(/(\\?|&)at=[^&]*/, "");
         Dialog_1.default.openStatic("feedLinkDialog", `
 <p class="info">${Language.get("wcf.global.rss.accessToken.info")}</p>
 <dl>
@@ -67,10 +63,8 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
         });
     }
     function setup() {
-        document.querySelectorAll("a[rel=alternate]").forEach((link) => {
-            if (new URL(link.href).searchParams.get("at") === `${User_1.default.userId}-${User_1.default.accessToken}`) {
-                link.addEventListener("click", (ev) => openDialog(ev));
-            }
+        document.querySelectorAll("a.rssFeed").forEach((link) => {
+            link.addEventListener("click", (ev) => openDialog(ev));
         });
     }
     exports.setup = setup;
