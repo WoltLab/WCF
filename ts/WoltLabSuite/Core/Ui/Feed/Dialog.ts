@@ -36,7 +36,7 @@ function openDialog(event: Event): void {
   const alternative = event.currentTarget as HTMLAnchorElement;
   const linkWithAccessToken = alternative.href;
 
-  const linkWithoutAccessToken = linkWithAccessToken.replace(/at=[^&]*&/, "&").replace(/(\\?|&)at=[^&]*/, "");
+  const linkWithoutAccessToken = linkWithAccessToken.replace(/(\\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
 
   UiDialog.openStatic(
     "feedLinkDialog",

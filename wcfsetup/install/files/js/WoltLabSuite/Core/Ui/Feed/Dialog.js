@@ -32,7 +32,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
         event.preventDefault();
         const alternative = event.currentTarget;
         const linkWithAccessToken = alternative.href;
-        const linkWithoutAccessToken = linkWithAccessToken.replace(/at=[^&]*&/, "&").replace(/(\\?|&)at=[^&]*/, "");
+        const linkWithoutAccessToken = linkWithAccessToken.replace(/(\\?|&)at=[^&]*&?/, "$1").replace(/(\?|&)$/, "");
         Dialog_1.default.openStatic("feedLinkDialog", `
 <p class="info">${Language.get("wcf.global.rss.accessToken.info")}</p>
 <dl>
