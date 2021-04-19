@@ -10,7 +10,6 @@
 import UiDialog from "../Dialog";
 import * as StringUtil from "../../StringUtil";
 import * as Language from "../../Language";
-import * as DomTraverse from "../../Dom/Traverse";
 import * as Clipboard from "../../Clipboard";
 import * as UiNotification from "../Notification";
 
