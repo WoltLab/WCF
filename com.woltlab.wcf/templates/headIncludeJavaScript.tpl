@@ -166,13 +166,6 @@ window.addEventListener('pageshow', function(event) {
 			{event name='javascriptLanguageImport'}
 		});
 		
-		User.init(
-			{@$__wcf->user->userID},
-			'{@$__wcf->user->username|encodeJS}',
-			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if},
-			{if $__wcf->user->userID}'{$__wcf->user->accessToken}'{else}''{/if}
-		);
-		
 		BootstrapFrontend.setup({
 			backgroundQueue: {
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
@@ -185,6 +178,8 @@ window.addEventListener('pageshow', function(event) {
 			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
+		
+		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()

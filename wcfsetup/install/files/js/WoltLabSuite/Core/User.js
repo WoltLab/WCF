@@ -10,11 +10,10 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     class User {
-        constructor(userId, username, link, accessToken) {
+        constructor(userId, username, link) {
             this.userId = userId;
             this.username = username;
             this.link = link;
-            this.accessToken = accessToken;
         }
     }
     let user;
@@ -29,14 +28,11 @@ define(["require", "exports"], function (require, exports) {
         /**
          * Initializes the user object.
          */
-        init(userId, username, link, accessToken) {
+        init(userId, username, link) {
             if (user) {
                 throw new Error("User has already been initialized.");
             }
-            user = new User(userId, username, link, accessToken);
-        },
-        get accessToken() {
-            return user.accessToken;
+            user = new User(userId, username, link);
         },
         get userId() {
             return user.userId;

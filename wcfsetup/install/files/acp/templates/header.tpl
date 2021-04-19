@@ -148,18 +148,13 @@
 				{event name='javascriptLanguageImport'}
 			});
 			
-			User.init(
-				{@$__wcf->user->userID},
-				'{@$__wcf->user->username|encodeJS}',
-				{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if},
-				{if $__wcf->user->userID}'{$__wcf->user->accessToken}'{else}''{/if}
-			);
-			
 			AcpBootstrap.setup({
 				bootstrap: {
 					enableMobileMenu: {if PACKAGE_ID && $__isLogin|empty}true{else}false{/if}
 				}
 			});
+			
+			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 		});
 	</script>
 	

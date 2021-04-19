@@ -9,12 +9,7 @@
  */
 
 class User {
-  constructor(
-    readonly userId: number,
-    readonly username: string,
-    readonly link: string,
-    readonly accessToken: string,
-  ) {}
+  constructor(readonly userId: number, readonly username: string, readonly link: string) {}
 }
 
 let user: User;
@@ -31,16 +26,12 @@ export = {
   /**
    * Initializes the user object.
    */
-  init(userId: number, username: string, link: string, accessToken: string): void {
+  init(userId: number, username: string, link: string): void {
     if (user) {
       throw new Error("User has already been initialized.");
     }
 
-    user = new User(userId, username, link, accessToken);
-  },
-
-  get accessToken(): string {
-    return user.accessToken;
+    user = new User(userId, username, link);
   },
 
   get userId(): number {
