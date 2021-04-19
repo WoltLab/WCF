@@ -936,7 +936,7 @@ class UserNotificationHandler extends SingletonFactory
         ];
         EventHandler::getInstance()->fireAction($this, 'markAsConfirmed', $parameters);
 
-        // Check whether anything was changed. If not we don't need to do anything else.
+        // Check whether anything was changed. If not, we don't need to do anything else.
         if ($affected) {
             // delete notification_to_user assignments (mimic legacy notification system)
             $sql = "DELETE FROM wcf" . WCF_N . "_user_notification_to_user
@@ -948,7 +948,6 @@ class UserNotificationHandler extends SingletonFactory
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([0]);
 
-            // reset storage
             if (!empty($recipientIDs)) {
                 UserStorageHandler::getInstance()->reset($recipientIDs, 'userNotificationCount');
             } else {
@@ -996,7 +995,7 @@ class UserNotificationHandler extends SingletonFactory
         $parameters = ['notificationIDs' => $notificationIDs];
         EventHandler::getInstance()->fireAction($this, 'markAsConfirmedByIDs', $parameters);
 
-        // Check whether anything was changed. If not we don't need to do anything else.
+        // Check whether anything was changed. If not, we don't need to do anything else.
         if ($affected) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("notificationID IN (?)", [$notificationIDs]);
@@ -1007,7 +1006,6 @@ class UserNotificationHandler extends SingletonFactory
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
 
-            // reset user storage
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
         }
     }
