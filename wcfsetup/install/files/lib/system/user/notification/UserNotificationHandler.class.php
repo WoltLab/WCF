@@ -925,7 +925,7 @@ class UserNotificationHandler extends SingletonFactory
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, TIME_NOW);
         $statement->execute($parameters);
-        $affected = $statement->getAffectedRows();
+        $confirmedCount = $statement->getAffectedRows();
 
         $parameters = [
             'event' => $event,
@@ -937,7 +937,7 @@ class UserNotificationHandler extends SingletonFactory
         EventHandler::getInstance()->fireAction($this, 'markAsConfirmed', $parameters);
 
         // Check whether anything was changed. If not, we don't need to do anything else.
-        if ($affected) {
+        if ($confirmedCount) {
             // delete notification_to_user assignments (mimic legacy notification system)
             $sql = "DELETE FROM wcf" . WCF_N . "_user_notification_to_user
                     WHERE       notificationID NOT IN (
@@ -990,13 +990,13 @@ class UserNotificationHandler extends SingletonFactory
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, TIME_NOW);
         $statement->execute($parameters);
-        $affected = $statement->getAffectedRows();
+        $confirmedCount = $statement->getAffectedRows();
 
         $parameters = ['notificationIDs' => $notificationIDs];
         EventHandler::getInstance()->fireAction($this, 'markAsConfirmedByIDs', $parameters);
 
         // Check whether anything was changed. If not, we don't need to do anything else.
-        if ($affected) {
+        if ($confirmedCount) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("notificationID IN (?)", [$notificationIDs]);
 
