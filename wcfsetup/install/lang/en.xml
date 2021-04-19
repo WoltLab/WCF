@@ -3909,6 +3909,11 @@ Attachments:
 		<item name="wcf.global.button.showSidebarRight"><![CDATA[Sidebar Right]]></item>
 		<item name="wcf.global.button.showMenu"><![CDATA[Show Menu]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Hide Menu]]></item>
+		<item name="wcf.global.rss.copy"><![CDATA[Copy Link]]></item>
+		<item name="wcf.global.rss.copy.success"><![CDATA[The link has been copied successfully.]]></item>
+		<item name="wcf.global.rss.accessToken.info"><![CDATA[The link to the anonymous RSS feed only contains contents that guests can access. The link to the personalized RSS feed contains all contents that you can access.]]></item>
+		<item name="wcf.global.rss.withAccessToken"><![CDATA[Personalized RSS Feed]]></item>
+		<item name="wcf.global.rss.withoutAccessToken"><![CDATA[Anonymous RSS Feed]]></item>
 	</category>
 	<category name="wcf.global.form">
 		<item name="wcf.global.form.boolean.no"><![CDATA[No]]></item>

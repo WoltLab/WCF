@@ -147,7 +147,13 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.message.share.permalink.html': '{jslang}wcf.message.share.permalink.html{/jslang}',
 			'wcf.message.share.socialMedia': '{jslang}wcf.message.share.socialMedia{/jslang}',
 			'wcf.message.share.copy': '{jslang}wcf.message.share.copy{/jslang}',
-			'wcf.message.share.copy.success': '{jslang}wcf.message.share.copy.success{/jslang}'
+			'wcf.message.share.copy.success': '{jslang}wcf.message.share.copy.success{/jslang}',
+			'wcf.global.button.rss': '{jslang}wcf.global.button.rss{/jslang}',
+			'wcf.global.rss.copy': '{jslang}wcf.global.rss.copy{/jslang}',
+			'wcf.global.rss.copy.success': '{jslang}wcf.global.rss.copy.success{/jslang}',
+			'wcf.global.rss.accessToken.info': '{jslang}wcf.global.rss.accessToken.info{/jslang}',
+			'wcf.global.rss.withoutAccessToken': '{jslang}wcf.global.rss.withoutAccessToken{/jslang}',
+			'wcf.global.rss.withAccessToken': '{jslang}wcf.global.rss.withAccessToken{/jslang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{jslang}wcf.like.button.like{/jslang}',
 				'wcf.like.button.dislike': '{jslang}wcf.like.button.dislike{/jslang}',
