@@ -16,10 +16,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: phpcs
       uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
-    - name: php-cs-fixer
-      uses: docker://oskarstark/php-cs-fixer-ga
+    - name: Setup PHP with tools
+      uses: shivammathur/setup-php@v2
       with:
-        args: --dry-run --diff-format udiff
+        php-version: '7.4'
+        extensions: ctype, dom, exif, gd, gmp, hash, intl, json, libxml, mbstring, opcache, pcre, pdo, pdo_mysql, zlib
+        tools: php-cs-fixer
+    - name: php-cs-fixer
+      run: php-cs-fixer fix --dry-run --diff-format udiff
   ts:
     name: TS Prettier
     runs-on: ubuntu-latest
