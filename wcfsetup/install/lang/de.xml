@@ -1329,6 +1329,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="https://de.wikipedia.org/wiki/Clickjacking" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
+		<item name="wcf.acp.option.http_disable_floc"><![CDATA[Besucher-Tracking mittels FLoC verhindern]]></item>
+		<item name="wcf.acp.option.http_disable_floc.description"><![CDATA[Verhindert das Tracking mittels des von Google eingeführten <a href="https://de.wikipedia.org/wiki/Federated_Learning_of_Cohorts">„FLoC“</a> durch senden des „Permissions-Policy“ Headers (sendet „interest-cohort=()“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>

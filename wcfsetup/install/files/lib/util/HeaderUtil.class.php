@@ -94,6 +94,11 @@ final class HeaderUtil
             @\header('X-Frame-Options: SAMEORIGIN');
         }
 
+        // send Permissions-Policy
+        if (HTTP_DISABLE_FLOC) {
+            @\header('Permissions-Policy: interest-cohort=()');
+        }
+
         \ob_start([self::class, 'parseOutput']);
     }
 

@@ -1307,6 +1307,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
+		<item name="wcf.acp.option.http_disable_floc"><![CDATA[Disallow user tracking via FLoC]]></item>
+		<item name="wcf.acp.option.http_disable_floc.description"><![CDATA[Prevents tracking using the <a href="https://de.wikipedia.org/wiki/Federated_Learning_of_Cohorts">“FLoC”</a> technique introduced by Google by sending the “Permissions-Policy” header (sends “interest-cohort=()”).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>

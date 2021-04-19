@@ -23,6 +23,7 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 \define('COOKIE_DOMAIN', '');
 
 \define('HTTP_SEND_X_FRAME_OPTIONS', 0);
+\define('HTTP_DISABLE_FLOC', 0);
 
 \define('BLACKLIST_IP_ADDRESSES', '');
 \define('BLACKLIST_USER_AGENTS', '');
