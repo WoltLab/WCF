@@ -90,11 +90,38 @@ WCF::getSession()->register('__SECURITY_TOKEN', $xsrfToken);
 
 // 4) Adjust the SECURITY_TOKEN.
 $container = new GroupFormElementContainer();
-$container->setLabel('Set Cookies'); // TODO
-$container->setDescription('Sets cookies');
+if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+    $container->setLabel("Sitzungs-Vorbereitung");
+    $container->setDescription('');
+} else {
+    $container->setLabel("Session Preparation");
+    $container->setDescription('');
+}
 
 $label = new LabelFormElement($container);
-$label->setLabel('Set Cookies');
+if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+    $label->setLabel('');
+    $label->setText(
+        <<<'EOT'
+WoltLab Suite 5.4 aktualisiert das Sitzungs-System.
+Dieser Schritt des Upgrades bereitet Ihre aktive Sitzung auf die Aktualisierung vor und stellt sicher, dass Sie dauerhaft eingeloggt bleiben.
+Falls Sie dieses Fenster nach dem Fortfahren erneut sehen, konnte Ihre Sitzung nicht vorbereitet werden.
+Bitte leeren Sie in diesem Fall die Cookies in Ihrem Webbrowser, melden sich erneut in der Administrationsoberfläche an und versuchen das Upgrade erneut.
+EOT
+    );
+} else {
+    $label->setLabel('');
+    $label->setText(
+        <<<'EOT'
+WoltLab Suite 5.4 updates the session handling.
+This step of the upgrade prepares your active session for this upgrade and ensures that you will continously stay logged in.
+If you see this window again after proceeding then your session could not be prepared.
+Please clear your web browser's cookies in this case.
+Afterwards log back into the Administrator's Control Panel and restart the upgrade.
+EOT
+    );
+}
+
 $label->setDescription(
     <<<EOT
 <script>(function() {
