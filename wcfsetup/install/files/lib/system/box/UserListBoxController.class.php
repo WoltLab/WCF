@@ -1,11 +1,13 @@
 <?php
 namespace wcf\system\box;
+use wcf\data\condition\Condition;
 use wcf\data\user\UserProfileList;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\MostActiveMembersCacheBuilder;
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
 use wcf\system\cache\builder\NewestMembersCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\condition\IObjectListCondition;
 use wcf\system\event\EventHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -93,9 +95,14 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	protected function getObjectList() {
 		// use specialized cache builders
 		if ($this->sortOrder && $this->sortField && isset($this->cacheBuilders[$this->sortField])) {
+			$conditions = array_filter($this->box->getConditions(), function(Condition $condition) {
+				return $condition->getObjectType()->getProcessor() instanceof IObjectListCondition;
+			});
+			
 			$this->userIDs = call_user_func([$this->cacheBuilders[$this->sortField], 'getInstance'])->getData([
-				'limit' => $this->limit,
-				'sortOrder' => $this->sortOrder
+				'conditions' => $conditions,
+				'limit' => $this->limit, 
+				'sortOrder' => $this->sortOrder,
 			]);
 		}
 		
