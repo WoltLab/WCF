@@ -174,7 +174,14 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         setInnerHtml(element, innerHtml) {
             element.innerHTML = innerHtml;
-            const scripts = element.querySelectorAll("script");
+            let container;
+            if (element instanceof HTMLTemplateElement) {
+                container = element.content;
+            }
+            else {
+                container = element;
+            }
+            const scripts = container.querySelectorAll("script");
             for (let i = 0, length = scripts.length; i < length; i++) {
                 const script = scripts[i];
                 const newScript = document.createElement("script");
@@ -184,7 +191,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 else {
                     newScript.textContent = script.textContent;
                 }
-                element.appendChild(newScript);
+                container.appendChild(newScript);
                 script.remove();
             }
         },
@@ -195,36 +202,30 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          * @param insertMethod
          */
         insertHtml(html, referenceElement, insertMethod) {
-            const element = document.createElement("div");
+            const element = document.createElement("template");
             this.setInnerHtml(element, html);
-            if (!element.childNodes.length) {
-                return;
-            }
-            let node = element.childNodes[0];
+            const fragment = document.importNode(element.content, true);
             switch (insertMethod) {
                 case "append":
-                    referenceElement.appendChild(node);
+                    referenceElement.appendChild(fragment);
                     break;
                 case "after":
-                    this.insertAfter(node, referenceElement);
+                    if (referenceElement.parentNode === null) {
+                        throw new Error("The reference element has no parent, but the insert position was set to 'after'.");
+                    }
+                    referenceElement.parentNode.insertBefore(fragment, referenceElement.nextSibling);
                     break;
                 case "prepend":
-                    this.prepend(node, referenceElement);
+                    referenceElement.insertBefore(fragment, referenceElement.firstChild);
                     break;
                 case "before":
                     if (referenceElement.parentNode === null) {
                         throw new Error("The reference element has no parent, but the insert position was set to 'before'.");
                     }
-                    referenceElement.parentNode.insertBefore(node, referenceElement);
+                    referenceElement.parentNode.insertBefore(fragment, referenceElement);
                     break;
                 default:
                     throw new Error("Unknown insert method '" + insertMethod + "'.");
-            }
-            let tmp;
-            while (element.childNodes.length) {
-                tmp = element.childNodes[0];
-                this.insertAfter(tmp, node);
-                node = tmp;
             }
         },
         /**
