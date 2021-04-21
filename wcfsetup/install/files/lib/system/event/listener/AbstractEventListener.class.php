@@ -29,15 +29,23 @@ use wcf\data\AbstractDatabaseObjectAction;
 abstract class AbstractEventListener implements IParameterizedEventListener
 {
     /**
+     * Names of events of `AbstractDatabaseObjectAction` for which the listener tries to call
+     * specific event handler methods for the executed action.
+     */
+    private const DBOACTION_EVENT_NAMES = [
+        'finalizeAction',
+        'initializeAction',
+        'validateAction',
+    ];
+
+    /**
      * @inheritDoc
      */
     final public function execute($eventObj, $className, $eventName, array &$parameters)
     {
-        static $genericDboActionNames = ['finalizeAction', 'initializeAction', 'validateAction'];
-
         $methodName = 'on' . \ucfirst($eventName);
 
-        if ($eventObj instanceof AbstractDatabaseObjectAction && \in_array($eventName, $genericDboActionNames)) {
+        if ($eventObj instanceof AbstractDatabaseObjectAction && \in_array($eventName, self::DBOACTION_EVENT_NAMES)) {
             $actionMethod = $methodName . \ucfirst($eventObj->getActionName());
             if (\method_exists($this, $actionMethod)) {
                 $this->{$actionMethod}($eventObj, $parameters);
