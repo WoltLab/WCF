@@ -2390,8 +2390,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorB
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextDisabled', 'rgba(165, 165, 165, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorTableBorder', 'rgba(221, 221, 221, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyFallback', '"Segoe UI", "DejaVu Sans", "Lucida Grande", "Helvetica", sans-serif');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyGoogle', 'Open Sans');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyFallback', 'system');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyGoogle', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontLineHeight', '1.48');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontSizeDefault', '14px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontSizeHeadline', '18px');

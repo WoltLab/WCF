@@ -504,7 +504,7 @@ $wcfAcpSubMenuWidth: 300px;
 
 .packageSearchPackage {
 	color: $wcfContentDimmedText;
-	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-family: $wcfFontFamilyMonospace;
 }
 
 .packageSearchAuthor,

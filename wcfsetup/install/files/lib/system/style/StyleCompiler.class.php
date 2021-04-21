@@ -582,12 +582,24 @@ EOT;
         unset($value);
 
         $variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
-        if (!empty($variables['wcfFontFamilyGoogle'])) {
+        if (!empty($variables['wcfFontFamilyGoogle']) && $variables['wcfFontFamilyGoogle'] !== '~""') {
             // The SCSS parser attempts to evaluate the variables, causing issues with font names that
             // include logical operators such as "And" or "Or".
             $variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
 
             $variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
+        }
+
+        // Define the font family set for the OS default fonts. This needs to be happen statically to
+        // allow modifications in the future in case of changes.
+        $variables['wcfFontFamilyMonospace'] = 'ui-monospace, Menlo, Monaco, "Cascadia Mono",
+            "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+            "Fira Mono", "Droid Sans Mono", "Courier New", monospace';
+
+        if ($variables['wcfFontFamily'] === 'system') {
+            $variables['wcfFontFamily'] = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+                "Helvetica Neue", Arial, sans-serif';
         }
 
         // add options as SCSS variables
