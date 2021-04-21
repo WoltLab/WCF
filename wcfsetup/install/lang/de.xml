@@ -1769,6 +1769,9 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.placeholder"><![CDATA[Neuen Eintrag hinzufügen]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.error.duplicate"><![CDATA[Der Eintrag <strong>{$item}</strong> existiert bereits.]]></item>
 		<item name="wcf.acp.option.type.lineBreakSeparatedText.clearList.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} alle Einträge wirklich löschen?]]></item>
+		<item name="wcf.acp.option.category.message.general.unfurl"><![CDATA[Rich Embeds]]></item>
+		<item name="wcf.acp.option.module_url_unfurling"><![CDATA[Rich Embeds aktivieren]]></item>
+		<item name="wcf.acp.option.module_url_unfurling.description"><![CDATA[Erzeugt eine Vorschau mit Titel, Beschreibung und Bild für externe Links in Nachrichten.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>

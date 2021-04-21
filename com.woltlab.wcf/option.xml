@@ -222,6 +222,9 @@
 			<category name="message.general.imageProxy">
 				<parent>message.general</parent>
 			</category>
+			<category name="message.general.unfurl">
+				<parent>message.general</parent>
+			</category>
 			<category name="message.attachment">
 				<parent>message</parent>
 			</category>
@@ -1116,6 +1119,13 @@ XING</selectoptions>
 				<optiontype>lineBreakSeparatedText</optiontype>
 			</option>
 			<!-- /message.general.image -->
+			<!-- message.general.unfurl -->
+			<option name="module_url_unfurling">
+				<categoryname>message.general.unfurl</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /message.general.unfurl -->
 			<!-- message.censorship -->
 			<option name="enable_censorship">
 				<categoryname>message.censorship</categoryname>
