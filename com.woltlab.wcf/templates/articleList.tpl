@@ -24,8 +24,8 @@
 	<li class="dropdown jsOnly">
 		<a href="#" class="button dropdownToggle"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.article.button.sort{/lang}</span></a>
 		<ul class="dropdownMenu">
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
 			
 			{event name='sortOptions'}
 		</ul>
@@ -73,6 +73,7 @@
 {include file='header'}
 
 {assign var='additionalLinkParameters' value=''}
+{if $user}{capture append='additionalLinkParameters'}&userID={@$user->userID}{/capture}{/if}
 {if $labelIDs|count}{capture append='additionalLinkParameters'}{foreach from=$labelIDs key=labelGroupID item=labelID}&labelIDs[{@$labelGroupID}]={@$labelID}{/foreach}{/capture}{/if}
 
 {hascontent}
