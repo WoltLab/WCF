@@ -48,6 +48,8 @@ abstract class AbstractEventListener implements IParameterizedEventListener
 
         if (\method_exists($this, $methodName)) {
             $this->{$methodName}($eventObj, $parameters);
+        } else {
+            throw new \LogicException("Event listener does not handle '{$eventName}' event.");
         }
     }
 }
