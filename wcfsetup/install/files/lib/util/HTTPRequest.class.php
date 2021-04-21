@@ -284,22 +284,27 @@ final class HTTPRequest {
 		}
 		
 		if ($this->replyBody === null) {
-			$bodyLength = 0;
-			while (!$this->response->getBody()->eof()) {
-				$toRead = 8192;
-				if (isset($this->options['maxLength'])) {
-					$toRead = min($toRead, $this->options['maxLength'] - $bodyLength);
-				}
-				
-				$data = $this->response->getBody()->read($toRead);
-				$this->replyBody .= $data;
-				$bodyLength += strlen($data);
-				
-				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
-					$this->response->getBody()->close();
-					break;
-				}
+			try {
+				$bodyLength = 0;
+				while (!$this->response->getBody()->eof()) {
+					$toRead = 8192;
+					if (isset($this->options['maxLength'])) {
+						$toRead = min($toRead, $this->options['maxLength'] - $bodyLength);
+					}
+					
+					$data = $this->response->getBody()->read($toRead);
+					$this->replyBody .= $data;
+					$bodyLength += strlen($data);
+					
+					if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
+						break;
+					}
+				}	
 			}
+			finally {
+				$this->response->getBody()->close();
+			}
+			
 			if (isset($this->options['maxLength'])) {
 				$this->replyBody = substr($this->replyBody, 0, $this->options['maxLength']);
 			}
