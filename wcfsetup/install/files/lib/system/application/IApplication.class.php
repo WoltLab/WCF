@@ -2,6 +2,8 @@
 
 namespace wcf\system\application;
 
+use wcf\system\SingletonFactory;
+
 /**
  * Default interface for all applications for the WoltLab Suite.
  *
@@ -46,6 +48,11 @@ interface IApplication
      * @return  string
      */
     public function getPrimaryController();
+
+    /**
+     * @see SingletonFactory::getInstance()
+     */
+    public static function getInstance();
 
     /**
      * Forwards unknown method calls to WCF.
