@@ -3,7 +3,7 @@
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	border-radius: 2px;
 	color: rgb(68, 68, 68) !important;
-	font-family: Consolas, "Courier New", monospace;
+	font-family: $wcfFontFamilyMonospace;
 	margin: 1em 0;
 	padding: 10px 20px;
 	position: relative;
@@ -120,7 +120,7 @@
 		> code {
 			display: block;
 			overflow-x: auto;
-			font-family: Consolas, "Courier New", monospace;
+			font-family: $wcfFontFamilyMonospace;
 
 			.codeBoxLine {
 				display: block;

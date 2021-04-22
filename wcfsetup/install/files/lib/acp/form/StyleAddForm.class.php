@@ -75,6 +75,7 @@ class StyleAddForm extends AbstractForm
         'Impact, Compacta, Chicago, sans-serif' => 'Impact',
         '"Lucida Sans", "Lucida Grande", Monaco, Geneva, sans-serif' => 'Lucida',
         '"Segoe UI", "DejaVu Sans", "Lucida Grande", Helvetica, sans-serif' => 'Segoe UI',
+        StyleCompiler::SYSTEM_FONT_NAME => 'System',
         'Tahoma, Arial, Helvetica, sans-serif' => 'Tahoma',
         '"Times New Roman", Times, Georgia, serif' => 'Times New Roman',
         '"Trebuchet MS", Arial, sans-serif' => 'Trebuchet MS',
