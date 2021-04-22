@@ -278,7 +278,9 @@ class AjaxRequest {
 
     let showError = true;
     if (typeof options.failure === "function") {
-      showError = options.failure(data || {}, xhr.responseText || "", xhr, options.data!);
+      // undefined might be returned by legacy callbacks and must be treated as 'true'.
+      const result = options.failure(data || {}, xhr.responseText || "", xhr, options.data!) as boolean | undefined;
+      showError = result !== false;
     }
 
     if (options.ignoreError !== true && showError) {

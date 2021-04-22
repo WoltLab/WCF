@@ -233,7 +233,9 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             }
             let showError = true;
             if (typeof options.failure === "function") {
-                showError = options.failure(data || {}, xhr.responseText || "", xhr, options.data);
+                // undefined might be returned by legacy callbacks and must be treated as 'true'.
+                const result = options.failure(data || {}, xhr.responseText || "", xhr, options.data);
+                showError = result !== false;
             }
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
