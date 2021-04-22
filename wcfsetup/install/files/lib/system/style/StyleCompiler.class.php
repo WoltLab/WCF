@@ -52,6 +52,16 @@ final class StyleCompiler extends SingletonFactory
      */
     const REGISTRY_GLOBAL_VALUES = 'styleGlobalValues';
 
+    public const SYSTEM_FONT_NAME = 'system';
+
+    private const SYSTEM_FONT_FAMILY = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", Arial, sans-serif';
+
+    private const SYSTEM_FONT_FAMILY_MONOSPACE = 'ui-monospace, Menlo, Monaco, "Cascadia Mono",
+        "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+        "Fira Mono", "Droid Sans Mono", "Courier New", monospace';
+
     /**
      * @inheritDoc
      */
@@ -592,14 +602,10 @@ EOT;
 
         // Define the font family set for the OS default fonts. This needs to be happen statically to
         // allow modifications in the future in case of changes.
-        $variables['wcfFontFamilyMonospace'] = 'ui-monospace, Menlo, Monaco, "Cascadia Mono",
-            "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-            "Fira Mono", "Droid Sans Mono", "Courier New", monospace';
+        $variables['wcfFontFamilyMonospace'] = self::SYSTEM_FONT_FAMILY_MONOSPACE;
 
-        if ($variables['wcfFontFamily'] === 'system') {
-            $variables['wcfFontFamily'] = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-                "Helvetica Neue", Arial, sans-serif';
+        if ($variables['wcfFontFamily'] === self::SYSTEM_FONT_NAME) {
+            $variables['wcfFontFamily'] = self::SYSTEM_FONT_FAMILY;
         }
 
         // add options as SCSS variables
