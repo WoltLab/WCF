@@ -367,6 +367,46 @@ class WCF
      */
     protected function loadOptions()
     {
+        $this->defineLegacyOptions();
+
+        $filename = WCF_DIR . 'options.inc.php';
+
+        // create options file if doesn't exist
+        if (!\file_exists($filename) || \filemtime($filename) <= 1) {
+            OptionEditor::rebuild();
+        }
+        require($filename);
+
+        // check if option file is complete and writable
+        if (PACKAGE_ID) {
+            if (!\is_writable($filename)) {
+                FileUtil::makeWritable($filename);
+
+                if (!\is_writable($filename)) {
+                    throw new SystemException("The option file '" . $filename . "' is not writable.");
+                }
+            }
+
+            // check if a previous write operation was incomplete and force rebuilding
+            if (!\defined('WCF_OPTION_INC_PHP_SUCCESS')) {
+                OptionEditor::rebuild();
+
+                require($filename);
+            }
+
+            if (ENABLE_DEBUG_MODE) {
+                self::$dbObj->enableDebugMode();
+            }
+        }
+    }
+
+    /**
+     * Defines constants for obsolete options, which were removed.
+     *
+     * @since   5.4
+     */
+    protected function defineLegacyOptions(): void
+    {
         // The attachment module is always enabled since 5.2.
         // https://github.com/WoltLab/WCF/issues/2531
         \define('MODULE_ATTACHMENT', 1);
@@ -426,36 +466,6 @@ class WCF
         // Cover photos are always enabled since 5.4.
         // https://github.com/WoltLab/WCF/issues/3902
         \define('MODULE_USER_COVER_PHOTO', 1);
-
-        $filename = WCF_DIR . 'options.inc.php';
-
-        // create options file if doesn't exist
-        if (!\file_exists($filename) || \filemtime($filename) <= 1) {
-            OptionEditor::rebuild();
-        }
-        require($filename);
-
-        // check if option file is complete and writable
-        if (PACKAGE_ID) {
-            if (!\is_writable($filename)) {
-                FileUtil::makeWritable($filename);
-
-                if (!\is_writable($filename)) {
-                    throw new SystemException("The option file '" . $filename . "' is not writable.");
-                }
-            }
-
-            // check if a previous write operation was incomplete and force rebuilding
-            if (!\defined('WCF_OPTION_INC_PHP_SUCCESS')) {
-                OptionEditor::rebuild();
-
-                require($filename);
-            }
-
-            if (ENABLE_DEBUG_MODE) {
-                self::$dbObj->enableDebugMode();
-            }
-        }
     }
 
     /**
