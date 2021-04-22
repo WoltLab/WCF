@@ -1407,18 +1407,6 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Returns all acp sessions for a specific user.
-     *
-     * @return      Session[]
-     * @throws      \InvalidArgumentException if the given user is a guest.
-     * @since       5.4
-     */
-    public function getAcpSessions(User $user): array
-    {
-        return $this->getSessions($user, true);
-    }
-
-    /**
      * Returns all sessions for a specific user.
      *
      * @return      Session[]
