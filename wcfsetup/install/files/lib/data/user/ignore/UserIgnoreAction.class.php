@@ -187,12 +187,11 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
 
         $this->getForm()->requestData($this->parameters['data'] ?? []);
         $this->getForm()->readValues();
+        $this->getForm()->validate();
     }
 
     public function submitDialog()
     {
-        $this->getForm()->validate();
-
         if ($this->getForm()->hasValidationErrors()) {
             return [
                 'dialog' => $this->getForm()->getHtml(),
