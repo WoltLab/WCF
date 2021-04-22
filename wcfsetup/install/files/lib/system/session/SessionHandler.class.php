@@ -1395,25 +1395,13 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Returns all user sessions for a specific user.
-     *
-     * @return      Session[]
-     * @throws      \InvalidArgumentException if the given user is a guest.
-     * @since       5.4
-     */
-    public function getUserSessions(User $user): array
-    {
-        return $this->getSessions($user, false);
-    }
-
-    /**
      * Returns all sessions for a specific user.
      *
      * @return      Session[]
      * @throws      \InvalidArgumentException if the given user is a guest.
      * @since       5.4
      */
-    private function getSessions(User $user): array
+    public function getUserSessions(User $user): array
     {
         if (!$user->userID) {
             throw new \InvalidArgumentException("The given user is a guest.");
@@ -1434,7 +1422,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Deletes the user sessions for a specific user, except the session with the given session id.
+     * Deletes the sessions for a specific user, except the session with the given session id.
      *
      * If the given session id is `null` or unknown, all sessions of the user will be deleted.
      *
@@ -1467,7 +1455,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Deletes a user session with the given session ID.
+     * Deletes a session with the given session ID.
      *
      * @since       5.4
      */
