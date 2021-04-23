@@ -219,10 +219,10 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
                 'user_activity_event.userID IN (?)',
                 [WCF::getUserProfileHandler()->getFollowingUsers()]
             );
-        } elseif (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+        } elseif (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
             $this->objectList->getConditionBuilder()->add(
                 "user_activity_event.userID NOT IN (?)",
-                [UserProfileHandler::getInstance()->getIgnoredUsers()]
+                [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]
             );
         }
 
