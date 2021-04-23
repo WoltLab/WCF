@@ -98,7 +98,7 @@ class Smiley extends DatabaseObject implements ITitledObject
 
         return [
             'width' => $this->width,
-            'height' => $this->height
+            'height' => $this->height,
         ];
     }
 
