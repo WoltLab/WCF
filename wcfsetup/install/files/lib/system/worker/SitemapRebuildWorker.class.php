@@ -91,8 +91,13 @@ class SitemapRebuildWorker extends AbstractWorker {
 							]);
 						}
 						
-						// modify count, because we handle only one sitemap object per call
-						$this->count += max(1, ceil($list->countObjects() / $this->limit)) * $this->limit;
+						$objectCount = $list->countObjects();
+						$iterations = ceil($objectCount / $this->limit);
+						if (($objectCount % $this->limit) === 0) {
+							// We need an additional iteration to finalize the sitemap.
+							$iterations++;
+						}
+						$this->count += $iterations * $this->limit;
 					}
 					else {
 						$this->deleteSitemaps($sitemapObject->objectType);
