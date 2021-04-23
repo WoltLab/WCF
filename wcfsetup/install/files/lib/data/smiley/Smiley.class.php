@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @property-read   int $packageID  id of the package which delivers the smiley
  * @property-read   int|null $categoryID id of the category the smiley belongs to or `null` if it belongs to the default category
  * @property-read   string $smileyPath path to the smiley file relative to wcf's default path
- * @property-read       string $smileyPath2x   path to the smiley file relative to wcf's default path (2x version)
+ * @property-read   string $smileyPath2x   path to the smiley file relative to wcf's default path (2x version)
  * @property-read   string $smileyTitle    title of the smiley or name of language item that contains the title
  * @property-read   string $smileyCode code used for displaying the smiley
  * @property-read   string $aliases    alternative codes used for displaying the smiley
@@ -28,6 +28,8 @@ use wcf\util\StringUtil;
 class Smiley extends DatabaseObject implements ITitledObject
 {
     protected $height;
+
+    protected $width;
 
     public $smileyCodes;
 
@@ -75,26 +77,54 @@ class Smiley extends DatabaseObject implements ITitledObject
     }
 
     /**
+     * Returns the dimensions of the smiley.
+     *
+     * @since   5.4
+     * @return  int[]
+     */
+    public function getDimensions()
+    {
+        if ($this->height === null && $this->width === null) {
+            $this->height = $this->width = 0;
+
+            $file = WCF_DIR . $this->smileyPath;
+            if (\file_exists($file) && \preg_match('~\.(gif|jpe?g|png)$~', $file)) {
+                $data = \getimagesize($file);
+                if ($data !== false) {
+                    [$this->width, $this->height] = $data;
+                }
+            }
+        }
+
+        return [
+            'width' => $this->width,
+            'height' => $this->height
+        ];
+    }
+
+    /**
      * Returns the height of the smiley.
      *
      * @return  int
      */
     public function getHeight()
     {
-        if ($this->height === null) {
-            $this->height = 0;
+        $dimensions = $this->getDimensions();
 
-            $file = WCF_DIR . $this->smileyPath;
-            if (\file_exists($file) && \preg_match('~\.(gif|jpe?g|png)$~', $file)) {
-                $data = \getimagesize($file);
-                if ($data !== false) {
-                    // index '1' contains the height of the image
-                    $this->height = $data[1];
-                }
-            }
-        }
+        return $dimensions['height'];
+    }
 
-        return $this->height;
+    /**
+     * Returns the width of the smiley.
+     *
+     * @since   5.4
+     * @return  int
+     */
+    public function getWidth()
+    {
+        $dimensions = $this->getDimensions();
+
+        return $dimensions['width'];
     }
 
     /**
@@ -107,10 +137,11 @@ class Smiley extends DatabaseObject implements ITitledObject
     {
         $srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
         $height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
+        $width = ($this->getWidth()) ? ' width="' . $this->getWidth() . '"' : '';
         if ($class !== '') {
             $class = ' ' . $class;
         }
 
-        return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley' . $class . '"' . $srcset . $height . '>';
+        return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley' . $class . '"' . $srcset . $height . $width . '>';
     }
 }
