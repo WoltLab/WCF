@@ -5,6 +5,7 @@ namespace wcf\system\box;
 use wcf\data\comment\ViewableCommentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\ignore\UserIgnore;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
@@ -93,10 +94,10 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 
         $this->applyObjectTypeFilters($commentList);
 
-        if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+        if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
             $commentList->getConditionBuilder()->add(
                 "(comment.userID IS NULL OR comment.userID NOT IN (?))",
-                [UserProfileHandler::getInstance()->getIgnoredUsers()]
+                [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]
             );
         }
 

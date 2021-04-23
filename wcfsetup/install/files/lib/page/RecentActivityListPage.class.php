@@ -3,6 +3,7 @@
 namespace wcf\page;
 
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
+use wcf\data\user\ignore\UserIgnore;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -44,10 +45,10 @@ class RecentActivityListPage extends AbstractPage
 
         $this->eventList = new ViewableUserActivityEventList();
 
-        if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+        if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES))) {
             $this->eventList->getConditionBuilder()->add(
                 "user_activity_event.userID NOT IN (?)",
-                [UserProfileHandler::getInstance()->getIgnoredUsers()]
+                [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]
             );
         }
 

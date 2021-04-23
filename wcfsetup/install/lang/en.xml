@@ -4798,6 +4798,11 @@ not register with us.]]></item>
 		<item name="wcf.user.reauthentication.explanation"><![CDATA[You are entering a security-sensitive area. For security reasons it is required that you re-authenticate yourself by entering your password.]]></item>
 		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Logged in as]]></item>
 		<item name="wcf.user.reauthentication.logoutAndChangeUser"><![CDATA[Not {$__wcf->user->username}? <a href="{link controller='FullLogout' application='wcf'}t={csrfToken type='url'}{/link}">Logout and change user</a>.]]></item>
+		<item name="wcf.user.ignore.type"><![CDATA[Block User]]></item>
+		<item name="wcf.user.ignore.type.noIgnore"><![CDATA[Do Not Block]]></item>
+		<item name="wcf.user.ignore.type.blockDirectContact"><![CDATA[Block Direct Contact]]></item>
+		<item name="wcf.user.ignore.type.hideMessages"><![CDATA[Block Direct Contact and Hide Created Messages]]></item>
+		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[The user cannot be blocked.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

@@ -4800,6 +4800,11 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.reauthentication.explanation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du betrittst einen besonders geschützten Bereich. Aus Sicherheitsgründen ist es notwendig, dass du dich durch Eingabe deines Kennworts erneut authentifizierst.{else}Sie betreten einen besonders geschützten Bereich. Aus Sicherheitsgründen ist es notwendig, dass Sie sich durch Eingabe Ihres Kennworts erneut authentifizieren.{/if}]]></item>
 		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Angemeldet als]]></item>
 		<item name="wcf.user.reauthentication.logoutAndChangeUser"><![CDATA[Nicht {$__wcf->user->username}? <a href="{link controller='FullLogout' application='wcf'}t={csrfToken type='url'}{/link}">Abmelden und Benutzer wechseln</a>.]]></item>
+		<item name="wcf.user.ignore.type"><![CDATA[Benutzer blockieren]]></item>
+		<item name="wcf.user.ignore.type.noIgnore"><![CDATA[Nicht Blockieren]]></item>
+		<item name="wcf.user.ignore.type.blockDirectContact"><![CDATA[Direkten Kontakt blockieren]]></item>
+		<item name="wcf.user.ignore.type.hideMessages"><![CDATA[Direkten Kontakt blockieren und erstellte Inhalte ausblenden]]></item>
+		<item name="wcf.user.ignore.error.cannotBeIgnored"><![CDATA[Der Benutzer kann nicht blockiert werden.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

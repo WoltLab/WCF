@@ -17,9 +17,16 @@ use wcf\system\WCF;
  * @property-read   int $userID         id of the ignoring user
  * @property-read   int $ignoreUserID       id of the ignored user
  * @property-read   int $time           time at which ignore relation has been established
+ * @property-read   int $type           one of the TYPE_* class constants
  */
 class UserIgnore extends DatabaseObject
 {
+    public const TYPE_NO_IGNORE = 0;
+
+    public const TYPE_BLOCK_DIRECT_CONTACT = 1;
+
+    public const TYPE_HIDE_MESSAGES = 2;
+
     /**
      * Returns a UserIgnore object for given ignored user id.
      *

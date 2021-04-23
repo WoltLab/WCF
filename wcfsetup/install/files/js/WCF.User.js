@@ -2310,6 +2310,8 @@ if (COMPILER_TARGET_DEFAULT) {
 	
 	/**
 	 * Handles user ignore and unignore links.
+	 * 
+	 * @deprecated 5.4 Use a FormBuilderDialog for wcf\data\user\ignore\UserIgnoreAction::getDialog()
 	 */
 	WCF.User.Action.Ignore = Class.extend({
 		/**
@@ -2433,6 +2435,9 @@ else {
 		_success: function() {}
 	});
 	
+	/**
+	 * @deprecated
+	 */
 	WCF.User.Action.Ignore = Class.extend({
 		_containerList: {},
 		_ignoreButtonSelector: "",

@@ -12,7 +12,7 @@
 			data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
 			data-responses="{@$comment->responses}" data-last-response-time="{if $commentLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}{@$commentLastResponseTime}{/if}" data-is-disabled="{@$comment->isDisabled}"
 		>
-			<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID)} ignoredUserContent{/if}">
+			<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID, 2)} ignoredUserContent{/if}">
 				{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 				
 				<div class="commentContentContainer" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
