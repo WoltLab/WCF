@@ -84,13 +84,14 @@ class Smiley extends DatabaseObject implements ITitledObject
      */
     public function getDimensions()
     {
-        if ($this->height === null && $this->width === null) {
+        if ($this->height === null) {
             $this->height = $this->width = 0;
 
             $file = WCF_DIR . $this->smileyPath;
             if (\file_exists($file) && \preg_match('~\.(gif|jpe?g|png)$~', $file)) {
                 $data = \getimagesize($file);
                 if ($data !== false) {
+                    // The first two indices of `getimagesize()` represent the image dimensions.
                     [$this->width, $this->height] = $data;
                 }
             }
@@ -109,9 +110,7 @@ class Smiley extends DatabaseObject implements ITitledObject
      */
     public function getHeight()
     {
-        $dimensions = $this->getDimensions();
-
-        return $dimensions['height'];
+        return $this->getDimensions()['height'];
     }
 
     /**
@@ -122,9 +121,7 @@ class Smiley extends DatabaseObject implements ITitledObject
      */
     public function getWidth()
     {
-        $dimensions = $this->getDimensions();
-
-        return $dimensions['width'];
+        return $this->getDimensions()['width'];
     }
 
     /**
