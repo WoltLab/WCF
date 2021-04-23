@@ -238,9 +238,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 						$articleContent->articleContentID,
 						isset($content['content']) ? $content['content'] : $articleContent->content,
 						isset($content['title']) ? $content['title'] : $articleContent->title,
-						$article->time,
-						$article->userID,
-						$article->username, 
+						$this->parameters['data']['time'] ?? $article->time,
+						$this->parameters['data']['userID'] ?? $article->userID,
+						$this->parameters['data']['username'] ?? $article->username,
 						$languageID ?: null,
 						isset($content['teaser']) ? $content['teaser'] : $articleContent->teaser
 					);
@@ -294,7 +294,13 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
 						);
 						
-						UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, $articleEditor->time);
+						UserActivityEventHandler::getInstance()->fireEvent(
+							'com.woltlab.wcf.article.recentActivityEvent',
+							$articleEditor->articleID,
+							null,
+							$this->parameters['data']['userID'] ?? $articleEditor->userID,
+							$this->parameters['data']['time'] ?? $articleEditor->time
+						);
 					}
 					else {
 						$resetArticleIDs[] = $articleEditor->articleID;
