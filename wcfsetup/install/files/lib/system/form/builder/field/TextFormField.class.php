@@ -56,7 +56,7 @@ class TextFormField extends AbstractFormField implements IAutoFocusFormField, II
 			if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
 				$this->addValidationError(new FormFieldValidationError('empty'));
 			}
-			else {
+			else if ($this->getValue() !== null && $this->getValue() !== '') {
 				$this->validateText($this->getValue());
 			}
 		}
