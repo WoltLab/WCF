@@ -97,7 +97,7 @@ class TextFormField extends AbstractFormField implements
         } else {
             if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
-            } else {
+            } elseif ($this->getValue() !== null && $this->getValue() !== '') {
                 $this->validateText($this->getValue());
             }
         }

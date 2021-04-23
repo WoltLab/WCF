@@ -429,17 +429,19 @@ class WysiwygFormField extends AbstractFormField implements
                 ));
             } else {
                 $message = $this->htmlInputProcessor->getTextContent();
-                $this->validateMinimumLength($message);
-                $this->validateMaximumLength($message);
+                if ($message !== '') {
+                    $this->validateMinimumLength($message);
+                    $this->validateMaximumLength($message);
 
-                if (empty($this->getValidationErrors()) && ENABLE_CENSORSHIP) {
-                    $result = Censorship::getInstance()->test($message);
-                    if ($result) {
-                        $this->addValidationError(new FormFieldValidationError(
-                            'censoredWords',
-                            'wcf.message.error.censoredWordsFound',
-                            ['censoredWords' => $result]
-                        ));
+                    if (empty($this->getValidationErrors()) && ENABLE_CENSORSHIP) {
+                        $result = Censorship::getInstance()->test($message);
+                        if ($result) {
+                            $this->addValidationError(new FormFieldValidationError(
+                                'censoredWords',
+                                'wcf.message.error.censoredWordsFound',
+                                ['censoredWords' => $result]
+                            ));
+                        }
                     }
                 }
             }

@@ -262,9 +262,9 @@ class ArticleAction extends AbstractDatabaseObjectAction
                         $articleContent->articleContentID,
                         $content['content'] ?? $articleContent->content,
                         $content['title'] ?? $articleContent->title,
-                        $article->time,
-                        $article->userID,
-                        $article->username,
+                        $this->parameters['data']['time'] ?? $article->time,
+                        $this->parameters['data']['userID'] ?? $article->userID,
+                        $this->parameters['data']['username'] ?? $article->username,
                         $languageID ?: null,
                         $content['teaser'] ?? $articleContent->teaser
                     );
@@ -322,8 +322,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             'com.woltlab.wcf.article.recentActivityEvent',
                             $articleEditor->articleID,
                             null,
-                            $articleEditor->userID,
-                            $articleEditor->time
+                            $this->parameters['data']['userID'] ?? $articleEditor->userID,
+                            $this->parameters['data']['time'] ?? $articleEditor->time
                         );
                     } else {
                         $resetArticleIDs[] = $articleEditor->articleID;
