@@ -134,6 +134,12 @@ class PackageValidationException extends SystemException
     const VOID_ON_INSTALL = 17;
 
     /**
+     * the version of an excluded package is invalid
+     * @var int
+     */
+    const INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER = 18;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code
