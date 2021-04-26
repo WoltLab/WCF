@@ -239,7 +239,7 @@ class DevtoolsPackageXmlWriter
             );
 
             foreach ($this->packageXmlData[$information . '_i18n'] as $languageID => $informationValue) {
-                if ($languageID !== $defaultLanguageID) {
+                if ($languageID !== $defaultLanguageID && $informationValue !== "") {
                     $this->xmlWriter->writeElement(
                         $elementName,
                         $informationValue,
@@ -248,7 +248,10 @@ class DevtoolsPackageXmlWriter
                     );
                 }
             }
-        } else {
+        } else if (
+            isset($this->packageXmlData[$information])
+            && $this->packageXmlData[$information] !== ""
+        ) {
             $this->xmlWriter->writeElement(
                 $elementName,
                 $this->packageXmlData[$information],
