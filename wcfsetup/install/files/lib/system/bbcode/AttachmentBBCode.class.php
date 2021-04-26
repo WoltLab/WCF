@@ -116,7 +116,7 @@ class AttachmentBBCode extends AbstractBBCode
                     if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
                         $result = '<amp-img src="' . $source . '" width="' . $attachment->width . '" height="' . $attachment->height . '" layout="responsive" alt="">';
                     } else {
-                        $result = '<img src="' . $source . '" alt="">';
+                        $result = '<img src="' . $source . '" width="' . $attachment->width . '" height="' . $attachment->height . '" alt="">';
                     }
 
                     if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
