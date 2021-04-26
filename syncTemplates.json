@@ -33,6 +33,7 @@
     "__multipleSelectionFormField",
     "__nonEmptyFormFieldDependency",
     "__numericFormField",
+    "__passwordFormField",
     "__pollOptionsFormField",
     "__radioButtonFormField",
     "__ratingFormField",
