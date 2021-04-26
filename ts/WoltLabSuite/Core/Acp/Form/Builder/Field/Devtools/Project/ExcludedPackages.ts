@@ -69,7 +69,7 @@ class ExcludedPackages<
 
   protected validateVersion(versionElement: HTMLInputElement): boolean {
     const version = versionElement.value;
-    
+
     if (version === "") {
       DomUtil.innerError(versionElement, Language.get("wcf.global.form.error.empty"));
 
