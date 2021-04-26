@@ -51,7 +51,7 @@ class DevtoolsProjectOptionalPackagesFormField extends AbstractFormField
     {
         // everything is already validated by JavaScript thus we skip
         // reporting specific errors and simply remove manipulated values
-        $excludedPackages = [];
+        $optionalPackages = [];
         $packageIdentifiers = [];
         foreach ($this->getValue() as $package) {
             // ensure that all relevant elements are present
@@ -67,10 +67,10 @@ class DevtoolsProjectOptionalPackagesFormField extends AbstractFormField
                 continue;
             }
 
-            $excludedPackages[] = $package;
+            $optionalPackages[] = $package;
         }
 
-        $this->value($excludedPackages);
+        $this->value($optionalPackages);
     }
 
     /**
