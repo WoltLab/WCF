@@ -220,10 +220,10 @@ class Instructions {
     instructionList.appendChild(listItem);
 
     document
-      .getElementById(`${this.formFieldId}_instruction${instructionsId}_deleteButton`)!
+      .getElementById(`${this.formFieldId}_instruction${instructionId}_deleteButton`)!
       .addEventListener("click", (ev) => this.removeInstruction(ev));
     document
-      .getElementById(`${this.formFieldId}_instruction${instructionsId}_editButton`)!
+      .getElementById(`${this.formFieldId}_instruction${instructionId}_editButton`)!
       .addEventListener("click", (ev) => this.editInstruction(ev));
   }
 
