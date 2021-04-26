@@ -13,6 +13,7 @@ import AbstractPackageList from "./AbstractPackageList";
 import * as Core from "../../../../../../Core";
 import * as Language from "../../../../../../Language";
 import { ExcludedPackageData } from "./Data";
+import DomUtil from "../../../../../../Dom/Util";
 
 class ExcludedPackages<
   TPackageData extends ExcludedPackageData = ExcludedPackageData
@@ -64,6 +65,20 @@ class ExcludedPackages<
 
   protected validateInput(): boolean {
     return super.validateInput() && this.validateVersion(this.version);
+  }
+
+  protected validateVersion(versionElement: HTMLInputElement): boolean {
+    const version = versionElement.value;
+    
+    if (version === "") {
+      DomUtil.innerError(versionElement, Language.get("wcf.global.form.error.empty"));
+
+      return false;
+    } else if (version !== "*") {
+      return super.validateVersion(versionElement);
+    }
+
+    return true;
   }
 }
 

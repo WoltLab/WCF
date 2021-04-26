@@ -68,7 +68,11 @@ class DevtoolsProjectExcludedPackagesFormField extends AbstractFormField
             }
 
             // validate version
-            if ($package['version'] !== '' && !Package::isValidVersion($package['version'])) {
+            if (
+                $package['version'] !== ''
+                && $package['version'] !== '*'
+                && !Package::isValidVersion($package['version'])
+            ) {
                 continue;
             }
 
