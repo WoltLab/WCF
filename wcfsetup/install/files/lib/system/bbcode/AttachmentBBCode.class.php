@@ -57,7 +57,7 @@ class AttachmentBBCode extends AbstractBBCode
             }
         }
 
-        // get embedded object
+        /** @var Attachment $attachment */
         $attachment = MessageEmbeddedObjectManager::getInstance()->getObject(
             'com.woltlab.wcf.attachment',
             $attachmentID
