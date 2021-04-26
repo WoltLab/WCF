@@ -48,7 +48,7 @@ class PasswordFormField extends AbstractFormField implements
     protected $templateName = '__passwordFormField';
 
     /**
-     * Creates a new instance of `TextFormField`.
+     * Creates a new instance of `PasswordFormField`.
      */
     public function __construct()
     {
