@@ -173,7 +173,7 @@ class DevtoolsPackageXmlWriter
 
             foreach ($instructions['instructions'] as $instruction) {
                 $attributes = ['type' => $instruction['pip']];
-                if (!empty($instruction['runStandalone'])) {
+                if (!isset($instruction['runStandalone']) && $instruction['runStandalone'] !== "0") {
                     $attributes['run'] = 'standalone';
                 }
                 if (!empty($instruction['application'])) {
@@ -248,7 +248,7 @@ class DevtoolsPackageXmlWriter
                     );
                 }
             }
-        } else if (
+        } elseif (
             isset($this->packageXmlData[$information])
             && $this->packageXmlData[$information] !== ""
         ) {

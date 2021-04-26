@@ -106,7 +106,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             listItem.dataset.instructionId = instructionId.toString();
             listItem.dataset.application = instructionData.application;
             listItem.dataset.pip = instructionData.pip;
-            listItem.dataset.runStandalone = instructionData.runStandalone ? "true" : "false";
+            listItem.dataset.runStandalone = instructionData.runStandalone ? "1" : "0";
             listItem.dataset.value = instructionData.value;
             let content = `
       <div class="sortableNodeLabel">
