@@ -828,6 +828,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
 
                             break;
 
+                        case 'database':
                         case 'script':
                             // only PHP files are supported for file-based pips
                             if (\substr($value, -4) !== '.php') {
