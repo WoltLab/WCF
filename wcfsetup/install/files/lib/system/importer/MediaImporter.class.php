@@ -112,11 +112,6 @@ class MediaImporter extends AbstractImporter {
 			$statement->execute([$media->mediaID, $languageID ?: null, $contentData['title'], $contentData['caption'], $contentData['altText']]);
 		}
 		
-		// create thumbnails
-		if ($media->isImage) {
-			$this->getSaveStrategy()->generateThumbnails($media);
-		}
-		
 		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.media', $oldID, $media->mediaID);
 		return $media->mediaID;
 	}
