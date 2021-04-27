@@ -155,7 +155,7 @@ class AttachmentBBCode extends AbstractBBCode
                         $result = '<img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
                             'Attachment',
                             $linkParameters
-                        )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" alt="">';
+                        )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" alt="" loading="lazy">';
                     }
                     if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
                         $result = '<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(

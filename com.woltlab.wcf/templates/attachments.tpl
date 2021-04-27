@@ -15,9 +15,27 @@
 								<div class="attachmentThumbnailContainer">
 									<span class="attachmentThumbnailImage">
 										{if $attachment->hasThumbnail()}
-											<img src="{$attachment->getThumbnailLink('thumbnail')}" alt="" {if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}>
+											<img
+												src="{$attachment->getThumbnailLink('thumbnail')}"
+												alt=""
+												{if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT}
+													class="attachmentThumbnailImageScalable"
+												{/if}
+												width="{$attachment->thumbnailWidth}"
+												height="{$attachment->thumbnailHeight}"
+												loading="lazy"
+											>
 										{else}
-											<img src="{$attachment->getLink()}" alt="" {if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}>
+											<img
+												src="{$attachment->getLink()}"
+												alt=""
+												{if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT}
+													class="attachmentThumbnailImageScalable"
+												{/if}
+												width="{$attachment->width}"
+												height="{$attachment->height}"
+												loading="lazy"
+											>
 										{/if}
 									</span>
 								
