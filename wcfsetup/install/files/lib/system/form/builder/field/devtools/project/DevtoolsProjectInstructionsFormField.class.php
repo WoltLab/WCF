@@ -137,6 +137,8 @@ class DevtoolsProjectInstructionsFormField extends AbstractFormField
         } else {
             $this->value = [];
         }
+
+        return $this;
     }
 
     /**

@@ -42,6 +42,8 @@ class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
         } else {
             $this->value = [];
         }
+
+        return $this;
     }
 
     /**
