@@ -43,6 +43,8 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
         if ($this->fieldValue != self::NO_SELECTION_VALUE) {
             return [$this->fieldName => $this->fieldValue];
         }
+
+        return null;
     }
 
     /**

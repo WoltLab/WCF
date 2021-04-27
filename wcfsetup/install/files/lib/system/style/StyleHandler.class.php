@@ -243,6 +243,8 @@ class StyleHandler extends SingletonFactory
                 }
             }
         }
+
+        return null;
     }
 
     /**
@@ -292,6 +294,8 @@ class StyleHandler extends SingletonFactory
         if ($styleID) {
             return $this->cache['styles'][$styleID];
         }
+
+        return null;
     }
 
     /**

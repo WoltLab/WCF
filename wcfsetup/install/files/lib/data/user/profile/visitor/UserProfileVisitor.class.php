@@ -38,5 +38,7 @@ class UserProfileVisitor extends DatabaseObject
         if ($row = $statement->fetchArray()) {
             return new self(null, $row);
         }
+
+        return null;
     }
 }

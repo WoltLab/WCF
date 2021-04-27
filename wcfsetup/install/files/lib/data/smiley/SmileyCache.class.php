@@ -88,6 +88,8 @@ class SmileyCache extends SingletonFactory
         if (isset($this->cachedSmileyByCode[$code])) {
             return $this->cachedSmileyByCode[$code];
         }
+
+        return null;
     }
 
     /**

@@ -157,6 +157,8 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**

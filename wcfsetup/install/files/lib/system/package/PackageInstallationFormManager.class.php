@@ -150,5 +150,7 @@ abstract class PackageInstallationFormManager
         if ($row) {
             return \unserialize(\base64_decode($row['document']));
         }
+
+        return null;
     }
 }

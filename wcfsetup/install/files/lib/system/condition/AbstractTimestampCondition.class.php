@@ -131,6 +131,8 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**

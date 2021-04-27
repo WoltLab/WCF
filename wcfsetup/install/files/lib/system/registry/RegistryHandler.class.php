@@ -91,6 +91,8 @@ class RegistryHandler extends SingletonFactory
         if (isset($this->cache[$packageID][$field])) {
             return $this->cache[$packageID][$field];
         }
+
+        return null;
     }
 
     /**

@@ -102,6 +102,8 @@ final class DOMUtil
                 return $parent;
             }
         }
+
+        return null;
     }
 
     /**

@@ -168,6 +168,8 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
         if (isset($this->labels[$labelID])) {
             return $this->labels[$labelID];
         }
+
+        return null;
     }
 
     /**

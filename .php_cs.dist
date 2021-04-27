@@ -101,7 +101,6 @@ return (new PhpCsFixer\Config())
 
         'no_useless_return' => true,
         'return_assignment' => true,
-        'simplified_null_return' => true,
 
         'multiline_whitespace_before_semicolons' => true,
         'no_empty_statement' => true,

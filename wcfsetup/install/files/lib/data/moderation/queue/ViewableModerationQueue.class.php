@@ -128,6 +128,8 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         if ($this->assignedUserID) {
             return UserProfileRuntimeCache::getInstance()->getObject($this->assignedUserID);
         }
+
+        return null;
     }
 
     /**

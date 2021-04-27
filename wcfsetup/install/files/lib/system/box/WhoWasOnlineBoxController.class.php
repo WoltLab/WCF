@@ -52,6 +52,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
      */
     protected function getObjectList()
     {
+        return null;
     }
 
     /**

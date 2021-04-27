@@ -251,13 +251,15 @@ class UserActivityPointHandler extends SingletonFactory
      * null if no such object type exists.
      *
      * @param int $objectTypeID
-     * @return  ObjectType
+     * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
     {
         if (isset($this->objectTypeNames[$objectTypeID])) {
             return $this->getObjectTypeByName($this->objectTypeNames[$objectTypeID]);
         }
+
+        return null;
     }
 
     /**
@@ -265,13 +267,15 @@ class UserActivityPointHandler extends SingletonFactory
      * or null if no such object type exists.
      *
      * @param string $objectType
-     * @return  ObjectType
+     * @return  ObjectType|null
      */
     public function getObjectTypeByName($objectType)
     {
         if (isset($this->objectTypes[$objectType])) {
             return $this->objectTypes[$objectType];
         }
+
+        return null;
     }
 
     /**

@@ -105,7 +105,7 @@ class Style extends DatabaseObject
      *
      * @param string $variableName
      * @param bool $toHex
-     * @return  string
+     * @return  string|null
      */
     public function getVariable($variableName, $toHex = false)
     {
@@ -148,6 +148,8 @@ class Style extends DatabaseObject
 
             return $this->variables[$variableName];
         }
+
+        return null;
     }
 
     /**

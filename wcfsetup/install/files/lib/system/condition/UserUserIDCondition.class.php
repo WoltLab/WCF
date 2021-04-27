@@ -92,6 +92,8 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
         if ($this->userID !== null) {
             return ['userID' => $this->userID];
         }
+
+        return null;
     }
 
     /**

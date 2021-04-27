@@ -63,6 +63,8 @@ abstract class AbstractAcpForm extends AbstractForm
         if (isset($this->i18nValues[$fieldName])) {
             return $this->i18nValues[$fieldName];
         }
+
+        return null;
     }
 
     /**

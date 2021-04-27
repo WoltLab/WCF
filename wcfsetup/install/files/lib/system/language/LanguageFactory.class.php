@@ -108,6 +108,8 @@ class LanguageFactory extends SingletonFactory
         } elseif (isset($this->cache['codes'][$languageCode])) {
             return $this->getLanguage($this->cache['codes'][$languageCode]);
         }
+
+        return null;
     }
 
     /**
@@ -125,26 +127,30 @@ class LanguageFactory extends SingletonFactory
      * Returns the language category with the given name.
      *
      * @param string $categoryName
-     * @return  LanguageCategory
+     * @return  LanguageCategory|null
      */
     public function getCategory($categoryName)
     {
         if (isset($this->cache['categories'][$categoryName])) {
             return $this->cache['categories'][$categoryName];
         }
+
+        return null;
     }
 
     /**
      * Returns language category by id.
      *
      * @param int $languageCategoryID
-     * @return  LanguageCategory
+     * @return  LanguageCategory|null
      */
     public function getCategoryByID($languageCategoryID)
     {
         if (isset($this->cache['categoryIDs'][$languageCategoryID])) {
             return $this->cache['categories'][$this->cache['categoryIDs'][$languageCategoryID]];
         }
+
+        return null;
     }
 
     /**

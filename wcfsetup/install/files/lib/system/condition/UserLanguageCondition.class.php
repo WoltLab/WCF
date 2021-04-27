@@ -75,6 +75,8 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
                 'languageIDs' => $this->languageIDs,
             ];
         }
+
+        return null;
     }
 
     /**

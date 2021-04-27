@@ -51,6 +51,8 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition
         if ($this->fieldValue) {
             return [$this->fieldName => $this->fieldValue];
         }
+
+        return null;
     }
 
     /**

@@ -248,6 +248,8 @@ class ControllerMap extends SingletonFactory
                 ];
             }
         }
+
+        return null;
     }
 
     /**
@@ -418,6 +420,8 @@ class ControllerMap extends SingletonFactory
                 ];
             }
         }
+
+        return null;
     }
 
     /**

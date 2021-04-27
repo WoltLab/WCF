@@ -103,7 +103,7 @@ class BlacklistStatus extends DatabaseObject
             ) {
                 \wcf\functions\exception\logThrowable($e);
 
-                return;
+                return null;
             }
 
             throw $e;
@@ -144,5 +144,7 @@ class BlacklistStatus extends DatabaseObject
                 }
             }
         }
+
+        return null;
     }
 }

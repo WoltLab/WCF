@@ -208,6 +208,8 @@ class PreparedStatement
         if ($row !== false) {
             return new $className(null, $row);
         }
+
+        return null;
     }
 
     /**
@@ -227,6 +229,8 @@ class PreparedStatement
         if ($row !== false) {
             return new $className(null, $row);
         }
+
+        return null;
     }
 
     /**

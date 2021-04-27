@@ -750,6 +750,8 @@ class WCF
         if (isset(self::$applicationObjects[$application->packageID])) {
             return self::$applicationObjects[$application->packageID];
         }
+
+        return null;
     }
 
     /**
@@ -949,13 +951,15 @@ class WCF
      * Searches for cached core object definition.
      *
      * @param string $className
-     * @return  string
+     * @return  string|null
      */
     final protected static function getCoreObject($className)
     {
         if (isset(self::$coreObjectCache[$className])) {
             return self::$coreObjectCache[$className];
         }
+
+        return null;
     }
 
     /**

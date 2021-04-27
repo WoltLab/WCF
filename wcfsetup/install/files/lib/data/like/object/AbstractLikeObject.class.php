@@ -67,5 +67,6 @@ abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILi
      */
     public function getLanguageID()
     {
+        return null;
     }
 }

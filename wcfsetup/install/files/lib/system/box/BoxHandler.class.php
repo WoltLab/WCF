@@ -120,6 +120,8 @@ class BoxHandler extends SingletonFactory
         if (isset($this->boxes[$boxID])) {
             return $this->boxes[$boxID];
         }
+
+        return null;
     }
 
     /**
@@ -148,6 +150,8 @@ class BoxHandler extends SingletonFactory
         if (isset($this->boxesByIdentifier[$identifier])) {
             return $this->boxesByIdentifier[$identifier];
         }
+
+        return null;
     }
 
     /**

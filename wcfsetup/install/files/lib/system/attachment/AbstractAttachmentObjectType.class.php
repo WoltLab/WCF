@@ -62,6 +62,8 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType
         if (isset($this->cachedObjects[$objectID])) {
             return $this->cachedObjects[$objectID];
         }
+
+        return null;
     }
 
     /**

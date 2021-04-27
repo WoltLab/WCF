@@ -166,6 +166,8 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         if ($row !== false) {
             return new PageContent(null, $row);
         }
+
+        return null;
     }
 
     /**

@@ -47,6 +47,8 @@ class PageSearch extends AbstractSearchableObjectType
         if (isset($this->messageCache[$objectID])) {
             return $this->messageCache[$objectID];
         }
+
+        return null;
     }
 
     /**

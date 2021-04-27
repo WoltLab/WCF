@@ -31,6 +31,7 @@ class SearchResultPageContent extends DatabaseObjectDecorator implements ISearch
      */
     public function getUserProfile()
     {
+        return null;
     }
 
     /**

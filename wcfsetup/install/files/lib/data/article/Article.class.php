@@ -250,6 +250,8 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
                 return $this->articleContents[0];
             }
         }
+
+        return null;
     }
 
     /**

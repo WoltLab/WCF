@@ -120,6 +120,8 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**

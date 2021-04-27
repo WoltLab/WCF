@@ -96,6 +96,8 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
         if ($this->isValid($objectID)) {
             return $this->getUser($objectID);
         }
+
+        return null;
     }
 
     /**

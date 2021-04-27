@@ -27,6 +27,7 @@ trait TLengthDatabaseTableColumn
      */
     public function getMaximumLength()
     {
+        return null;
     }
 
     /**
@@ -37,6 +38,7 @@ trait TLengthDatabaseTableColumn
      */
     public function getMinimumLength()
     {
+        return null;
     }
 
     /**

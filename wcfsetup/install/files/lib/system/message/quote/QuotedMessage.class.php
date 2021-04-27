@@ -130,13 +130,15 @@ class QuotedMessage implements \Countable, \Iterator
      * Returns the full quote by quote id.
      *
      * @param string $quoteID
-     * @return  string
+     * @return  string|null
      */
     public function getFullQuote($quoteID)
     {
         if (isset($this->fullQuotes[$quoteID])) {
             return $this->fullQuotes[$quoteID];
         }
+
+        return null;
     }
 
     /**

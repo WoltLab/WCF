@@ -31,6 +31,8 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
         if (!empty($this->fieldValue)) {
             return [$this->fieldName => $this->fieldValue];
         }
+
+        return null;
     }
 
     /**

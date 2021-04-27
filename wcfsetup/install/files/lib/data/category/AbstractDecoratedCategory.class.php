@@ -138,5 +138,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator
         if ($category) {
             return new static($category);
         }
+
+        return null;
     }
 }

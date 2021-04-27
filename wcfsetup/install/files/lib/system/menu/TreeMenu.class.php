@@ -211,13 +211,15 @@ abstract class TreeMenu extends SingletonFactory
      * Returns the active menu item.
      *
      * @param int $level
-     * @return  string
+     * @return  string|null
      */
     public function getActiveMenuItem($level = 0)
     {
         if ($level < \count($this->activeMenuItems)) {
             return $this->activeMenuItems[\count($this->activeMenuItems) - ($level + 1)];
         }
+
+        return null;
     }
 
     /**

@@ -44,26 +44,30 @@ class UserActivityEventHandler extends SingletonFactory
      * Returns an object type by id.
      *
      * @param int $objectTypeID
-     * @return  ObjectType
+     * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
     {
         if (isset($this->objectTypes['objects'][$objectTypeID])) {
             return $this->objectTypes['objects'][$objectTypeID];
         }
+
+        return null;
     }
 
     /**
      * Returns an object type id by object type name.
      *
      * @param string $objectType
-     * @return  int
+     * @return  int|null
      */
     public function getObjectTypeID($objectType)
     {
         if (isset($this->objectTypes['names'][$objectType])) {
             return $this->objectTypes['names'][$objectType];
         }
+
+        return null;
     }
 
     /**

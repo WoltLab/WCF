@@ -136,6 +136,8 @@ class ViewableArticle extends DatabaseObjectDecorator
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getImage();
         }
+
+        return null;
     }
 
     /**
@@ -148,6 +150,8 @@ class ViewableArticle extends DatabaseObjectDecorator
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getTeaserImage();
         }
+
+        return null;
     }
 
     /**

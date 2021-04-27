@@ -126,6 +126,8 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
                 'optionValues' => $data,
             ];
         }
+
+        return null;
     }
 
     /**

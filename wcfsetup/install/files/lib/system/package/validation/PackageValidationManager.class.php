@@ -126,13 +126,15 @@ class PackageValidationManager extends SingletonFactory
      * Returns the version number of a virtual package or null if it doesn't exist.
      *
      * @param string $package
-     * @return  string
+     * @return  string|null
      */
     public function getVirtualPackage($package)
     {
         if (isset($this->virtualPackageList[$package])) {
             return $this->virtualPackageList[$package];
         }
+
+        return null;
     }
 
     /**
@@ -167,7 +169,7 @@ class PackageValidationManager extends SingletonFactory
     /**
      * Recursively traverses the package validation archives and returns the first exception.
      *
-     * @return  \Exception
+     * @return  \Exception|null
      */
     public function getException()
     {
@@ -176,6 +178,8 @@ class PackageValidationManager extends SingletonFactory
                 return $packageArchive->getException();
             }
         }
+
+        return null;
     }
 
     /**
@@ -210,5 +214,7 @@ class PackageValidationManager extends SingletonFactory
         if (isset($this->packageInstallationPlugins[$pip])) {
             return \call_user_func([$this->packageInstallationPlugins[$pip], 'getDefaultFilename']);
         }
+
+        return null;
     }
 }

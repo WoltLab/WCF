@@ -30,6 +30,8 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
         if ($this->birthdayToday) {
             return ['birthdayToday' => 1];
         }
+
+        return null;
     }
 
     /**

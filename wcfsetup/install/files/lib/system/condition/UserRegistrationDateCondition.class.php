@@ -102,6 +102,8 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**

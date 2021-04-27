@@ -28,5 +28,6 @@ abstract class AbstractCombinedTaggable extends AbstractTaggable implements ICom
      */
     public function getObjectListFor(array $tags)
     {
+        return null;
     }
 }

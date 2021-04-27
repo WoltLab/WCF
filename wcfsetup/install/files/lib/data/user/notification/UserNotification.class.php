@@ -64,7 +64,7 @@ class UserNotification extends DatabaseObject
      * @param int $packageID
      * @param int $eventID
      * @param int $objectID
-     * @return  UserNotification
+     * @return  UserNotification|null
      */
     public static function getNotification($packageID, $eventID, $objectID)
     {
@@ -79,5 +79,7 @@ class UserNotification extends DatabaseObject
         if ($row !== false) {
             return new self(null, $row);
         }
+
+        return null;
     }
 }

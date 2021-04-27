@@ -975,6 +975,8 @@ class DatabaseTableChangeProcessor
         } elseif (isset($this->tablePackageIDs[$table->getName()])) {
             return $this->tablePackageIDs[$table->getName()];
         }
+
+        return null;
     }
 
     /**
@@ -1008,6 +1010,8 @@ class DatabaseTableChangeProcessor
         } elseif (isset($this->tablePackageIDs[$table->getName()])) {
             return $this->tablePackageIDs[$table->getName()];
         }
+
+        return null;
     }
 
     /**
@@ -1026,6 +1030,8 @@ class DatabaseTableChangeProcessor
         } elseif (isset($this->tablePackageIDs[$table->getName()])) {
             return $this->tablePackageIDs[$table->getName()];
         }
+
+        return null;
     }
 
     /**
@@ -1305,5 +1311,7 @@ class DatabaseTableChangeProcessor
                 }
             }
         }
+
+        return null;
     }
 }

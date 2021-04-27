@@ -71,6 +71,8 @@ class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler
         if ($this->isValid($objectID)) {
             return $this->getArticle($objectID);
         }
+
+        return null;
     }
 
     /**

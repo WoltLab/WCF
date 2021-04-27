@@ -72,6 +72,8 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
         if (isset($this->availableObjectTypes[$objectTypeName])) {
             return $this->availableObjectTypes[$objectTypeName];
         }
+
+        return null;
     }
 
     /**

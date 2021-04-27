@@ -160,6 +160,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
         if ($this->languageID) {
             return LanguageFactory::getInstance()->getLanguage($this->languageID);
         }
+
+        return null;
     }
 
     /**
@@ -220,5 +222,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
         if (($row = $statement->fetchSingleRow()) !== false) {
             return new self(null, $row);
         }
+
+        return null;
     }
 }

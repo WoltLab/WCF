@@ -60,5 +60,6 @@ trait TDecimalsDatabaseTableColumn
      */
     public function getMaximumDecimals()
     {
+        return null;
     }
 }

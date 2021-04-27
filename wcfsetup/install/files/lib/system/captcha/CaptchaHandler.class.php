@@ -52,6 +52,8 @@ class CaptchaHandler extends SingletonFactory
         if (isset($this->objectTypes[$objectTypeID])) {
             return $this->objectTypes[$objectTypeID];
         }
+
+        return null;
     }
 
     /**

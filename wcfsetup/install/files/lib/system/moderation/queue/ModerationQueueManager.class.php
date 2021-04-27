@@ -101,7 +101,7 @@ class ModerationQueueManager extends SingletonFactory
      * @param string $definitionName
      * @param string $objectType
      * @param int $objectTypeID
-     * @return  object
+     * @return  object|null
      */
     public function getProcessor($definitionName, $objectType, $objectTypeID = null)
     {
@@ -112,6 +112,8 @@ class ModerationQueueManager extends SingletonFactory
         if ($objectTypeID !== null && isset($this->objectTypes[$objectTypeID])) {
             return $this->objectTypes[$objectTypeID]->getProcessor();
         }
+
+        return null;
     }
 
     /**
@@ -137,13 +139,15 @@ class ModerationQueueManager extends SingletonFactory
      *
      * @param string $definitionName
      * @param string $objectType
-     * @return  int
+     * @return  int|null
      */
     public function getObjectTypeID($definitionName, $objectType)
     {
         if ($this->isValid($definitionName, $objectType)) {
             return $this->objectTypeNames[$definitionName][$objectType];
         }
+
+        return null;
     }
 
     /**

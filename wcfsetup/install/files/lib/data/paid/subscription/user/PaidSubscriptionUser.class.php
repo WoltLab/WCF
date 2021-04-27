@@ -99,5 +99,7 @@ class PaidSubscriptionUser extends DatabaseObject
         if ($row !== false) {
             return new self(null, $row);
         }
+
+        return null;
     }
 }

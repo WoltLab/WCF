@@ -339,6 +339,8 @@ trait TXmlGuiPackageInstallationPlugin
                 return $element;
             }
         }
+
+        return null;
     }
 
     /**

@@ -378,7 +378,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      *
      * @param string $embeddedObjectType
      * @param int $objectID
-     * @return  \wcf\data\DatabaseObject
+     * @return  \wcf\data\DatabaseObject|null
      */
     public function getObject($embeddedObjectType, $objectID)
     {
@@ -393,6 +393,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
                 }
             }
         }
+
+        return null;
     }
 
     /**

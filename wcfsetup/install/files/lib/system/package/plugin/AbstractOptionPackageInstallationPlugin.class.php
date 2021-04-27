@@ -958,6 +958,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      */
     protected function getSortOptionHandler()
     {
+        return null;
     }
 
     /**

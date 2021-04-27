@@ -140,7 +140,7 @@ class UserProfileMenu extends SingletonFactory
      * Returns a specific menu item.
      *
      * @param string $menuItem
-     * @return  UserProfileMenuItem
+     * @return  UserProfileMenuItem|null
      */
     public function getMenuItem($menuItem)
     {
@@ -149,5 +149,7 @@ class UserProfileMenu extends SingletonFactory
                 return $item;
             }
         }
+
+        return null;
     }
 }

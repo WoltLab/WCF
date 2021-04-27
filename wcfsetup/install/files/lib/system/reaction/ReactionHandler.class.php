@@ -218,6 +218,8 @@ class ReactionHandler extends SingletonFactory
         if (isset($this->cache[$objectName])) {
             return $this->cache[$objectName];
         }
+
+        return null;
     }
 
     /**
@@ -857,6 +859,8 @@ class ReactionHandler extends SingletonFactory
                 }
             }
         }
+
+        return null;
     }
 
     /**

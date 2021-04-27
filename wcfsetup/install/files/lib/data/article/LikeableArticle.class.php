@@ -75,6 +75,7 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject
      */
     public function getLanguageID()
     {
+        return null;
     }
 
     /**

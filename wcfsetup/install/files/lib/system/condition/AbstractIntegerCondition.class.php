@@ -69,6 +69,8 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**
@@ -152,6 +154,8 @@ HTML;
         if ($this->maxValue !== null) {
             return $this->maxValue;
         }
+
+        return null;
     }
 
     /**
@@ -188,6 +192,8 @@ HTML;
         if ($this->minValue !== null) {
             return $this->minValue;
         }
+
+        return null;
     }
 
     /**

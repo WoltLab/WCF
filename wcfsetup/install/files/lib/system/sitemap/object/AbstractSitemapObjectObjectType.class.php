@@ -38,6 +38,7 @@ abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectTy
      */
     public function getLastModifiedColumn()
     {
+        return null;
     }
 
     /**

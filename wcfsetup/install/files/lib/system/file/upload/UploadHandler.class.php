@@ -277,6 +277,8 @@ class UploadHandler extends SingletonFactory
                 return $file;
             }
         }
+
+        return null;
     }
 
     /**

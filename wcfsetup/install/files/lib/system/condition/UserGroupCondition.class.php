@@ -141,6 +141,8 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**

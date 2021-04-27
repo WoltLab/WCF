@@ -46,6 +46,8 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
                 'usesMobileBrowser' => $this->usesMobileBrowser,
             ];
         }
+
+        return null;
     }
 
     /**

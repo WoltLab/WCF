@@ -70,6 +70,8 @@ class ApplicationHandler extends SingletonFactory
                 return $this->cache['application'][$packageID];
             }
         }
+
+        return null;
     }
 
     /**
@@ -89,6 +91,8 @@ class ApplicationHandler extends SingletonFactory
         if (isset($this->cache['application'][$packageID])) {
             return $this->cache['application'][$packageID];
         }
+
+        return null;
     }
 
     /**
@@ -188,6 +192,8 @@ class ApplicationHandler extends SingletonFactory
                 return $abbreviation;
             }
         }
+
+        return null;
     }
 
     /**

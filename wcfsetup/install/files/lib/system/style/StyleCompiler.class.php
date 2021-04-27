@@ -198,6 +198,8 @@ final class StyleCompiler extends SingletonFactory
         } catch (\Exception $e) {
             return $e;
         }
+
+        return null;
     }
 
     /**

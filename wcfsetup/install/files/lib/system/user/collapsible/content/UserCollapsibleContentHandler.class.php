@@ -71,13 +71,15 @@ class UserCollapsibleContentHandler extends SingletonFactory
      * null, if object type is unknown.
      *
      * @param string $objectType
-     * @return  int
+     * @return  int|null
      */
     public function getObjectTypeID($objectType)
     {
         if (isset($this->cache['objectTypeIDs'][$objectType])) {
             return $this->cache['objectTypeIDs'][$objectType];
         }
+
+        return null;
     }
 
     /**

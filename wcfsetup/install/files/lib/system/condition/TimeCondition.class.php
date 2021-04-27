@@ -65,6 +65,8 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
         if (!empty($data)) {
             return $data;
         }
+
+        return null;
     }
 
     /**

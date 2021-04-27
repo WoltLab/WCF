@@ -139,13 +139,15 @@ class UploadHandler
      * for the identifier.
      *
      * @param string $identifier
-     * @return  UploadHandler
+     * @return  UploadHandler|null
      */
     public static function getUploadHandler($identifier)
     {
         if (isset($_FILES[$identifier]) && \is_array($_FILES[$identifier])) {
             return new self($_FILES[$identifier]);
         }
+
+        return null;
     }
 
     /**

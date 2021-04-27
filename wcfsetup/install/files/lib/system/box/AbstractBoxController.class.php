@@ -74,6 +74,7 @@ abstract class AbstractBoxController implements IBoxController
      */
     public function getImage()
     {
+        return null;
     }
 
     /**
@@ -125,6 +126,7 @@ abstract class AbstractBoxController implements IBoxController
      */
     public function getTitle()
     {
+        return null;
     }
 
     /**

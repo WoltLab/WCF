@@ -77,6 +77,8 @@ class CategoryHandler extends SingletonFactory
         if (isset($this->categories[$categoryID])) {
             return $this->categories[$categoryID];
         }
+
+        return null;
     }
 
     /**
@@ -119,6 +121,8 @@ class CategoryHandler extends SingletonFactory
         if (isset($this->objectTypeIDs[$objectTypeID])) {
             return $this->getObjectTypeByName($this->objectTypeIDs[$objectTypeID]);
         }
+
+        return null;
     }
 
     /**
@@ -132,6 +136,8 @@ class CategoryHandler extends SingletonFactory
         if (isset($this->objectTypes[$objectType])) {
             return $this->objectTypes[$objectType];
         }
+
+        return null;
     }
 
     /**

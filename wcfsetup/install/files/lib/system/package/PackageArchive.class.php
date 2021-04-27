@@ -592,26 +592,30 @@ class PackageArchive
      * Returns information about the author of this package archive.
      *
      * @param string $name name of the requested information
-     * @return  string
+     * @return  string|null
      */
     public function getAuthorInfo($name)
     {
         if (isset($this->authorInfo[$name])) {
             return $this->authorInfo[$name];
         }
+
+        return null;
     }
 
     /**
      * Returns information about this package.
      *
      * @param string $name name of the requested information
-     * @return  mixed
+     * @return  mixed|null
      */
     public function getPackageInfo($name)
     {
         if (isset($this->packageInfo[$name])) {
             return $this->packageInfo[$name];
         }
+
+        return null;
     }
 
     /**
@@ -986,6 +990,8 @@ class PackageArchive
         if (isset($this->instructions[$type])) {
             return $this->instructions[$type];
         }
+
+        return null;
     }
 
     /**

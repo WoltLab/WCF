@@ -34,13 +34,15 @@ class ReactionTypeCache extends SingletonFactory
      * Returns the reaction type with the given reactionTypeID.
      *
      * @param int $reactionTypeID
-     * @return  ReactionType
+     * @return  ReactionType|null
      */
     public function getReactionTypeByID($reactionTypeID)
     {
         if (isset($this->reactionTypes[$reactionTypeID])) {
             return $this->reactionTypes[$reactionTypeID];
         }
+
+        return null;
     }
 
     /**

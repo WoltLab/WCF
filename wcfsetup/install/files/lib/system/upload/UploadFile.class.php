@@ -224,6 +224,8 @@ class UploadFile
                 'mimeType' => $imageData['mime'],
             ];
         }
+
+        return null;
     }
 
     /**

@@ -63,6 +63,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
      */
     protected function getObjectList()
     {
+        return null;
     }
 
     /**

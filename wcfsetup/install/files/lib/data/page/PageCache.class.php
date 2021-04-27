@@ -52,6 +52,8 @@ class PageCache extends SingletonFactory
         if (isset($this->cache['pages'][$pageID])) {
             return $this->cache['pages'][$pageID];
         }
+
+        return null;
     }
 
     /**
@@ -65,6 +67,8 @@ class PageCache extends SingletonFactory
         if (isset($this->cache['controller'][$controller])) {
             return $this->getPage($this->cache['controller'][$controller]);
         }
+
+        return null;
     }
 
     /**
@@ -78,6 +82,8 @@ class PageCache extends SingletonFactory
         if (isset($this->cache['identifier'][$identifier])) {
             return $this->getPage($this->cache['identifier'][$identifier]);
         }
+
+        return null;
     }
 
     /**

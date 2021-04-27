@@ -113,6 +113,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
      */
     public static function getDefaultFilename()
     {
+        return null;
     }
 
     /**

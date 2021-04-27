@@ -38,6 +38,7 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
      */
     public function getConditions(?IForm $form = null)
     {
+        return null;
     }
 
     /**

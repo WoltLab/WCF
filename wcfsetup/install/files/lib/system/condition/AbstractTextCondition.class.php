@@ -35,6 +35,8 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition
         if (\mb_strlen($this->fieldValue)) {
             return [$this->fieldName => $this->fieldValue];
         }
+
+        return null;
     }
 
     /**

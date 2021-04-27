@@ -385,7 +385,7 @@ class MessageQuoteManager extends SingletonFactory
      *
      * @param string $quoteID
      * @param bool $useFullQuote
-     * @return  string
+     * @return  string|null
      */
     public function getQuote($quoteID, $useFullQuote = true)
     {
@@ -394,13 +394,15 @@ class MessageQuoteManager extends SingletonFactory
         } elseif (isset($this->quoteData[$quoteID])) {
             return $this->quoteData[$quoteID];
         }
+
+        return null;
     }
 
     /**
      * Returns the object id by quote id.
      *
      * @param string $quoteID
-     * @return  int
+     * @return  int|null
      */
     public function getObjectID($quoteID)
     {
@@ -413,6 +415,8 @@ class MessageQuoteManager extends SingletonFactory
                 }
             }
         }
+
+        return null;
     }
 
     /**

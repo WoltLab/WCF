@@ -706,6 +706,8 @@ class UserNotificationHandler extends SingletonFactory
         if (isset($this->availableObjectTypes[$objectType])) {
             return $this->availableObjectTypes[$objectType];
         }
+
+        return null;
     }
 
     /**

@@ -51,6 +51,8 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
                 $this->fieldName . '_reverseLogic' => $this->reverseLogic,
             ];
         }
+
+        return null;
     }
 
     /**

@@ -47,13 +47,15 @@ class TrophyCache extends SingletonFactory
      * Returns the trophy with the given trophyID.
      *
      * @param int $trophyID
-     * @return  Trophy
+     * @return  Trophy|null
      */
     public function getTrophyByID($trophyID)
     {
         if (isset($this->trophies[$trophyID])) {
             return $this->trophies[$trophyID];
         }
+
+        return null;
     }
 
     /**

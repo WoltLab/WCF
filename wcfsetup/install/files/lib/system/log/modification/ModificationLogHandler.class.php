@@ -40,7 +40,7 @@ class ModificationLogHandler extends SingletonFactory
      * Returns object type by object type name.
      *
      * @param string $objectType
-     * @return  ObjectType
+     * @return  ObjectType|null
      */
     public function getObjectType($objectType)
     {
@@ -49,6 +49,8 @@ class ModificationLogHandler extends SingletonFactory
                 return $objectTypeObj;
             }
         }
+
+        return null;
     }
 
     /**

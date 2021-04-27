@@ -71,6 +71,8 @@ class BoxContent extends DatabaseObject
         if (($row = $statement->fetchSingleRow()) !== false) {
             return new self(null, $row);
         }
+
+        return null;
     }
 
     /**

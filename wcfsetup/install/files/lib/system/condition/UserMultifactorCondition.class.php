@@ -55,6 +55,8 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements
                 'multifactorActive' => $this->multifactorActive,
             ];
         }
+
+        return null;
     }
 
     /**

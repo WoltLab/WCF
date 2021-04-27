@@ -59,7 +59,7 @@ class LabelHandler extends SingletonFactory
      * no such option exists.
      *
      * @param string $optionName
-     * @return  int
+     * @return  int|null
      */
     public function getOptionID($optionName)
     {
@@ -68,6 +68,8 @@ class LabelHandler extends SingletonFactory
                 return $option->optionID;
             }
         }
+
+        return null;
     }
 
     /**
@@ -75,7 +77,7 @@ class LabelHandler extends SingletonFactory
      * object.
      *
      * @param string $objectType
-     * @return  \wcf\data\object\type\ObjectType
+     * @return  \wcf\data\object\type\ObjectType|null
      */
     public function getObjectType($objectType)
     {
@@ -84,6 +86,8 @@ class LabelHandler extends SingletonFactory
 
             return $this->cache['objectTypes'][$objectTypeID];
         }
+
+        return null;
     }
 
     /**
@@ -399,13 +403,15 @@ class LabelHandler extends SingletonFactory
      * Returns label group by id.
      *
      * @param int $groupID
-     * @return  ViewableLabelGroup
+     * @return  ViewableLabelGroup|null
      */
     public function getLabelGroup($groupID)
     {
         if (isset($this->labelGroups['groups'][$groupID])) {
             return $this->labelGroups['groups'][$groupID];
         }
+
+        return null;
     }
 
     /**

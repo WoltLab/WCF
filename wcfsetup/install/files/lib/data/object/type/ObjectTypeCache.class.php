@@ -68,13 +68,15 @@ class ObjectTypeCache extends SingletonFactory
      * object type definition exists.
      *
      * @param int $definitionID
-     * @return  ObjectTypeDefinition
+     * @return  ObjectTypeDefinition|null
      */
     public function getDefinition($definitionID)
     {
         if (isset($this->definitions[$definitionID])) {
             return $this->definitions[$definitionID];
         }
+
+        return null;
     }
 
     /**
@@ -82,13 +84,15 @@ class ObjectTypeCache extends SingletonFactory
      * such object type definition exists.
      *
      * @param string $definitionName
-     * @return  ObjectTypeDefinition
+     * @return  ObjectTypeDefinition|null
      */
     public function getDefinitionByName($definitionName)
     {
         if (isset($this->definitionsByName[$definitionName])) {
             return $this->definitionsByName[$definitionName];
         }
+
+        return null;
     }
 
     /**
@@ -96,7 +100,7 @@ class ObjectTypeCache extends SingletonFactory
      * category name is invalid.
      *
      * @param string $categoryName
-     * @return  ObjectTypeDefinition[]
+     * @return  ObjectTypeDefinition[]|null
      */
     public function getDefinitionsByCategory($categoryName)
     {
@@ -108,6 +112,8 @@ class ObjectTypeCache extends SingletonFactory
 
             return $definitions;
         }
+
+        return null;
     }
 
     /**
@@ -115,13 +121,15 @@ class ObjectTypeCache extends SingletonFactory
      * exists.
      *
      * @param int $objectTypeID
-     * @return  ObjectType
+     * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
     {
         if (isset($this->objectTypes[$objectTypeID])) {
             return $this->objectTypes[$objectTypeID];
         }
+
+        return null;
     }
 
     /**
@@ -145,7 +153,7 @@ class ObjectTypeCache extends SingletonFactory
      *
      * @param string $definitionName
      * @param string $objectTypeName
-     * @return  ObjectType
+     * @return  ObjectType|null
      */
     public function getObjectTypeByName($definitionName, $objectTypeName)
     {
@@ -155,6 +163,8 @@ class ObjectTypeCache extends SingletonFactory
         ) {
             return $this->groupedObjectTypes[$definitionName][$objectTypeName];
         }
+
+        return null;
     }
 
     /**
@@ -162,7 +172,7 @@ class ObjectTypeCache extends SingletonFactory
      *
      * @param string $definitionName
      * @param string $objectTypeName
-     * @return  int
+     * @return  int|null
      */
     public function getObjectTypeIDByName($definitionName, $objectTypeName)
     {
@@ -170,6 +180,8 @@ class ObjectTypeCache extends SingletonFactory
         if ($objectType !== null) {
             return $objectType->objectTypeID;
         }
+
+        return null;
     }
 
     /**

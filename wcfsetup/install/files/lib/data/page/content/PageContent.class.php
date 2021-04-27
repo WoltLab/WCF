@@ -129,6 +129,8 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
         if (($row = $statement->fetchSingleRow()) !== false) {
             return new self(null, $row);
         }
+
+        return null;
     }
 
     /**

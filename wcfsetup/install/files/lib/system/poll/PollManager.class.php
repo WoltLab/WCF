@@ -448,13 +448,15 @@ class PollManager extends SingletonFactory
      * Returns related object for given poll object.
      *
      * @param Poll $poll
-     * @return  \wcf\data\IPollObject
+     * @return  \wcf\data\IPollObject|null
      */
     public function getRelatedObject(Poll $poll)
     {
         if ($poll->objectID) {
             return $this->getHandler($poll->objectTypeID)->getRelatedObject($poll);
         }
+
+        return null;
     }
 
     /**
