@@ -48,22 +48,11 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     // output as raw code instead
                     $htmlNodeProcessor->replaceElementWithText($element, ' ' . $code . ' ', false);
                 } else {
-                    // enforce database values for src, srcset and style
-                    $element->setAttribute('src', $smiley->getURL());
-
-                    if ($smiley->getHeight()) {
-                        $element->setAttribute('height', (string)$smiley->getHeight());
-                    } else {
-                        $element->removeAttribute('height');
-                    }
-
-                    if ($smiley->smileyPath2x) {
-                        $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
-                    } else {
-                        $element->removeAttribute('srcset');
-                    }
-
-                    $element->setAttribute('title', WCF::getLanguage()->get($smiley->smileyTitle));
+                    // Ensure that the smiley's HTML is up to date.
+                    $doc = new \DOMDocument();
+                    $doc->loadHTML($smiley->getHtml());
+                    $smileyNode = $element->ownerDocument->importNode($doc->getElementsByTagName('img')->item(0), true);
+                    $element->parentNode->replaceChild($smileyNode, $element);
                 }
             } else {
                 $src = $element->getAttribute('src');
