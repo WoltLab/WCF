@@ -14,24 +14,26 @@
 		{/if}
 	{/if}
 	
-	<table class="table table-responsive">
-		<thead>
-			<tr>
-				<th class="columnText">{lang}wcf.user.security.multifactor.totp.deviceName{/lang}</th>
-				<th class="columnText">{lang}wcf.user.security.multifactor.totp.createTime{/lang}</th>
-				<th class="columnText">{lang}wcf.user.security.multifactor.totp.useTime{/lang}</th>
-				<th></th>
-			</tr>
-		</thead>
-		
-		<tbody>
-			{foreach from=$container item='child'}
-				{if $child->isAvailable()}
-					{@$child->getHtml()}
-				{/if}
-			{/foreach}
-		</tbody>
-	</table>
+	<div class="tabularBox">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="columnText">{lang}wcf.user.security.multifactor.totp.deviceName{/lang}</th>
+					<th class="columnText">{lang}wcf.user.security.multifactor.totp.createTime{/lang}</th>
+					<th class="columnText">{lang}wcf.user.security.multifactor.totp.useTime{/lang}</th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{foreach from=$container item='child'}
+					{if $child->isAvailable()}
+						{@$child->getHtml()}
+					{/if}
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
 </section>
 
 {include file='__formContainerDependencies'}
