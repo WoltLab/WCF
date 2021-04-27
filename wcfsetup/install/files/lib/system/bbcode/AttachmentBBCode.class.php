@@ -116,7 +116,7 @@ class AttachmentBBCode extends AbstractBBCode
                     if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
                         $result = '<amp-img src="' . $source . '" width="' . $attachment->width . '" height="' . $attachment->height . '" layout="responsive" alt="">';
                     } else {
-                        $result = '<img src="' . $source . '" alt="">';
+                        $result = '<img src="' . $source . '" width="' . $attachment->width . '" height="' . $attachment->height . '" alt="">';
                     }
 
                     if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
@@ -155,7 +155,7 @@ class AttachmentBBCode extends AbstractBBCode
                         $result = '<img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
                             'Attachment',
                             $linkParameters
-                        )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' style="width: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . 'px; height: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . 'px;" alt="">';
+                        )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" alt="">';
                     }
                     if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
                         $result = '<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
