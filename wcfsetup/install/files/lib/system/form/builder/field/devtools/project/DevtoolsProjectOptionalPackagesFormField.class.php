@@ -36,6 +36,8 @@ class DevtoolsProjectOptionalPackagesFormField extends AbstractFormField {
 		else {
 			$this->value = [];
 		}
+		
+		return $this;
 	}
 	
 	/**
