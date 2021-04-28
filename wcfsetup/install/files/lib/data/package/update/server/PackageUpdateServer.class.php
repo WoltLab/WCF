@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\Url;
@@ -54,11 +55,16 @@ class PackageUpdateServer extends DatabaseObject {
 		parent::handleData($data);
 		
 		$prefix = ENABLE_ENTERPRISE_MODE ? 'cloud/' : '';
+		$officialPath = \wcf\getMinorVersion();
+		if (self::isUpgradeOverrideEnabled()) {
+			$officialPath = WCF::AVAILABLE_UPGRADE_VERSION;
+		}
+
 		if ($this->isWoltLabUpdateServer()) {
-			$this->data['serverURL'] = 'http://update.woltlab.com/'.$prefix.\wcf\getMinorVersion().'/';
+			$this->data['serverURL'] = "http://update.woltlab.com/{$prefix}{$officialPath}/";
 		}
 		if ($this->isWoltLabStoreServer()) {
-			$this->data['serverURL'] = 'http://store.woltlab.com/'.$prefix.\wcf\getMinorVersion().'/';
+			$this->data['serverURL'] = "http://store.woltlab.com/{$prefix}{$officialPath}/";
 		}
 		if ($this->isWoltLabUpdateServer() || $this->isWoltLabStoreServer()) {
 			$this->data['isDisabled'] = 0;
@@ -96,15 +102,20 @@ class PackageUpdateServer extends DatabaseObject {
 			$results[$packageServer->packageUpdateServerID] = $packageServer;
 		}
 		
+		$officialPath = \wcf\getMinorVersion();
+		if (self::isUpgradeOverrideEnabled()) {
+			$officialPath = WCF::AVAILABLE_UPGRADE_VERSION;
+		}
+
 		if (!$woltlabUpdateServer) {
 			$packageServer = PackageUpdateServerEditor::create([
-				'serverURL' => 'http://update.woltlab.com/'.\wcf\getMinorVersion().'/',
+				'serverURL' => "http://update.woltlab.com/{$officialPath}/",
 			]);
 			$results[$packageServer->packageUpdateServerID] = $packageServer;
 		}
 		if (!$woltlabStoreServer) {
 			$packageServer = PackageUpdateServerEditor::create([
-				'serverURL' => 'http://store.woltlab.com/'.\wcf\getMinorVersion().'/',
+				'serverURL' => "http://store.woltlab.com/{$officialPath}/",
 			]);
 			$results[$packageServer->packageUpdateServerID] = $packageServer;
 		}
@@ -344,6 +355,30 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Returns whether the official update servers will point to WCF::AVAILABLE_UPGRADE_VERSION.
+	 *
+	 * @return bool
+	 * @since 5.3
+	 */
+	public static final function isUpgradeOverrideEnabled() {
+		if (WCF::AVAILABLE_UPGRADE_VERSION === null) {
+			return false;
+		}
+		
+		$override = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::class . "\0upgradeOverride");
+		
+		if (!$override) {
+			return false;
+		}
+		
+		if ($override < TIME_NOW - 86400) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
