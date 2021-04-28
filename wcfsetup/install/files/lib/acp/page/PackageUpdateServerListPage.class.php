@@ -1,7 +1,9 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\page\SortablePage;
+use wcf\system\WCF;
 
 /**
  * Shows information about available update package servers.
@@ -46,5 +48,17 @@ class PackageUpdateServerListPage extends SortablePage {
 		$this->sqlOrderBy = ($this->sortField != 'packages' ? 'package_update_server.' : '') . $this->sortField.' '.$this->sortOrder;
 		
 		parent::readObjects();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign([
+			'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
+			'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
+		]);
 	}
 }

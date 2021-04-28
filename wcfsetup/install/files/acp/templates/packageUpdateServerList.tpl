@@ -21,6 +21,16 @@
 	</nav>
 </header>
 
+{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+	{if $availableUpgradeVersion !== null}
+		{if $upgradeOverrideEnabled}
+			<p class="info">{lang}wcf.acp.package.upgradeOverrideEnabled{/lang}</p>
+		{else}
+			<p class="info">{lang}wcf.acp.package.availableUpgradeVersion{/lang}</p>
+		{/if}
+	{/if}
+{/if}
+
 {hascontent}
 	<div class="paginationTop">
 		{content}{pages print=true assign=pagesLinks controller="PackageUpdateServerList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}

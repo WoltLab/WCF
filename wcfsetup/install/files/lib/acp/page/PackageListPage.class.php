@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\package\PackageList;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\SortablePage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -76,6 +77,7 @@ class PackageListPage extends SortablePage {
 			'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
 			'packageID' => $this->packageID,
 			'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
+			'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
 		]);
 	}
 	
