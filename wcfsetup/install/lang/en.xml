@@ -1975,6 +1975,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		Unknown error.
 	{/if}
 {/implode}]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[WoltLab Suite Upgrade]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrade]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[A WoltLab Suite Upgrade is available. <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Check System and Enable Upgrading</a>.]]></item>
+		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The installation of a WoltLab Suite Upgrade was enabled. Applying updates will upgrade your community to a new version of WoltLab Suite. <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Disable the Upgrade</a>.]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
