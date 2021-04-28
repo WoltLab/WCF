@@ -62,6 +62,10 @@
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}
 
+{if $availableUpgradeVersion !== null}
+	<p class="info">{lang}wcf.acp.availableUpgrade{/lang}</p>
+{/if}
+
 {hascontent}
 	<div class="paginationTop">
 		{content}{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
