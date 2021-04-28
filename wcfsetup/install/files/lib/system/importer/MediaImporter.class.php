@@ -9,6 +9,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Imports cms media.
@@ -38,6 +39,24 @@ class MediaImporter extends AbstractImporter
         // check file location
         if (!\is_readable($additionalData['fileLocation'])) {
             return 0;
+        }
+
+        // Extract metadata from the file ourselves, because the
+        // information pulled from the source database might not
+        // be reliable.
+        $data['fileHash'] = \sha1_file($additionalData['fileLocation']);
+        $data['filesize'] = \filesize($additionalData['fileLocation']);
+        $data['fileType'] = FileUtil::getMimeType($additionalData['fileLocation']);
+
+        $imageData = @\getimagesize($additionalData['fileLocation']);
+        if ($imageData !== false) {
+            $data['isImage'] = 1;
+            $data['width'] = $imageData[0];
+            $data['height'] = $imageData[1];
+        } else {
+            $data['isImage'] = 0;
+            $data['width'] = 0;
+            $data['height'] = 0;
         }
 
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
