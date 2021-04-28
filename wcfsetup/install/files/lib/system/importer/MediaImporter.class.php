@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Imports cms media.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Importer
  */
@@ -35,6 +35,11 @@ class MediaImporter extends AbstractImporter
      */
     public function import($oldID, array $data, array $additionalData = [])
     {
+        // check file location
+        if (!\is_readable($additionalData['fileLocation'])) {
+            return 0;
+        }
+
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 
         $contents = [];
