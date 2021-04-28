@@ -5,8 +5,11 @@ use wcf\data\package\Package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
 
 /**
@@ -40,11 +43,51 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 	protected function createForm() {
 		parent::createForm();
 
-		$this->form->appendChildren([
-			BooleanFormField::create('enable')
-				->label('wcf.acp.package.enableUpgradeOverride.enable')
-				->value(PackageUpdateServer::isUpgradeOverrideEnabled()),
-		]);
+		$issues = $this->getIssuesPreventingUpgrade();
+
+		if (empty($issues)) {
+			$this->form->appendChildren([
+				BooleanFormField::create('enable')
+					->label('wcf.acp.package.enableUpgradeOverride.enable')
+					->value(PackageUpdateServer::isUpgradeOverrideEnabled())
+			]);
+		}
+		else {
+			$this->form->addDefaultButton(false);
+			$this->form->appendChildren([
+				TemplateFormNode::create('issues')
+					->templateName('packageEnableUpgradeOverrideIssues')
+					->variables([
+						'issues' => $issues
+					]),
+				new class extends AbstractFormField {
+					// TODO: Replace this with RejectEverythingFormField in 5.4+.
+					public function __construct() {
+						$this->id('rejectEverything');
+					}
+
+					public function getFieldHtml() {
+						return '';
+					}
+
+					public function getHtml() {
+						return '';
+					}
+
+					public function readValue() {
+						return $this;
+					}
+
+					public function validate() {
+						$this->addValidationError(new FormFieldValidationError('rejectEverything'));
+					}
+				}
+			]);
+		}
+	}
+
+	private function getIssuesPreventingUpgrade() {
+		return ['foo'];
 	}
 
 	/**
