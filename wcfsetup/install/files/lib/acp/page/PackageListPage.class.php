@@ -74,7 +74,8 @@ class PackageListPage extends SortablePage {
 		
 		WCF::getTPL()->assign([
 			'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
-			'packageID' => $this->packageID
+			'packageID' => $this->packageID,
+			'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
 		]);
 	}
 	
