@@ -353,7 +353,7 @@ final class StyleCompiler extends SingletonFactory
      */
     private function extractPreloadRequests(string $css): iterable
     {
-        $regex = '/--woltlab-suite-preload:\\s*preload_dummy\\(((?:"(?:\\\\.|[^\\\\"])*"|[^")])+)\\);/';
+        $regex = '/--woltlab-suite-preload:\\s*preload_dummy\\(((?:"(?:\\\\.|[^\\\\"])*"|[^")])+)\\)\\s*[;\\}]/';
         if (!\preg_match_all($regex, $css, $requests)) {
             return [];
         }
