@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 
 use wcf\data\package\Package;
+use wcf\data\package\update\PackageUpdate;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
@@ -145,6 +146,8 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 		else {
 			RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
 		}
+
+		PackageUpdateServer::resetAll();
 
 		$this->saved();
 	}

@@ -375,6 +375,11 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		if ($override < TIME_NOW - 86400) {
+			RegistryHandler::getInstance()->delete('com.woltlab.wcf', self::class . "\0upgradeOverride");
+
+			// Clear package list cache to actually stop the upgrade from happening.
+			self::resetAll();
+			
 			return false;
 		}
 		
