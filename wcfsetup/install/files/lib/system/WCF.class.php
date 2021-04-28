@@ -77,6 +77,12 @@ if (!defined('NO_IMPORTS')) {
  */
 class WCF {
 	/**
+	 * @var ?string
+	 * @since 5.3
+	 */
+	const AVAILABLE_UPGRADE_VERSION = null;
+
+	/**
 	 * list of supported legacy API versions
 	 * @var integer[]
 	 * @deprecated 5.2
