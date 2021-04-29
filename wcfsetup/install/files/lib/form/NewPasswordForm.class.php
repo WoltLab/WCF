@@ -55,7 +55,7 @@ class NewPasswordForm extends AbstractForm
     /**
      * @var mixed[]
      */
-    public $newPasswordStrengtVerdict = [];
+    public $newPasswordStrengthVerdict = [];
 
     /**
      * confirmed new password
