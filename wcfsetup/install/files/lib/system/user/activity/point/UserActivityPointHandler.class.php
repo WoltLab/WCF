@@ -271,11 +271,7 @@ class UserActivityPointHandler extends SingletonFactory
      */
     public function getObjectTypeByName($objectType)
     {
-        if (isset($this->objectTypes[$objectType])) {
-            return $this->objectTypes[$objectType];
-        }
-
-        return null;
+        return $this->objectTypes[$objectType] ?? null;
     }
 
     /**

@@ -48,11 +48,7 @@ class UserActivityEventHandler extends SingletonFactory
      */
     public function getObjectType($objectTypeID)
     {
-        if (isset($this->objectTypes['objects'][$objectTypeID])) {
-            return $this->objectTypes['objects'][$objectTypeID];
-        }
-
-        return null;
+        return $this->objectTypes['objects'][$objectTypeID] ?? null;
     }
 
     /**
@@ -63,11 +59,7 @@ class UserActivityEventHandler extends SingletonFactory
      */
     public function getObjectTypeID($objectType)
     {
-        if (isset($this->objectTypes['names'][$objectType])) {
-            return $this->objectTypes['names'][$objectType];
-        }
-
-        return null;
+        return $this->objectTypes['names'][$objectType] ?? null;
     }
 
     /**

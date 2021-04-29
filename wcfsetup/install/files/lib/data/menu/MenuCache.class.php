@@ -44,11 +44,7 @@ class MenuCache extends SingletonFactory
      */
     public function getMenuByID($menuID)
     {
-        if (isset($this->cachedMenus[$menuID])) {
-            return $this->cachedMenus[$menuID];
-        }
-
-        return null;
+        return $this->cachedMenus[$menuID] ?? null;
     }
 
     /**
@@ -59,11 +55,7 @@ class MenuCache extends SingletonFactory
      */
     public function getMenuItemsByMenuID($menuID)
     {
-        if (isset($this->cachedMenuItems[$menuID])) {
-            return $this->cachedMenuItems[$menuID];
-        }
-
-        return null;
+        return $this->cachedMenuItems[$menuID] ?? null;
     }
 
     /**

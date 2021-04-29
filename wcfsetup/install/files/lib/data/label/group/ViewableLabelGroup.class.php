@@ -165,11 +165,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
      */
     public function getLabel($labelID)
     {
-        if (isset($this->labels[$labelID])) {
-            return $this->labels[$labelID];
-        }
-
-        return null;
+        return $this->labels[$labelID] ?? null;
     }
 
     /**

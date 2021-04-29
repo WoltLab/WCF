@@ -182,11 +182,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
     {
         self::getCache();
 
-        if (isset(self::$cache['groups'][$groupID])) {
-            return self::$cache['groups'][$groupID];
-        }
-
-        return null;
+        return self::$cache['groups'][$groupID] ?? null;
     }
 
     /**

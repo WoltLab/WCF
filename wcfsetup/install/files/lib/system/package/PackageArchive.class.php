@@ -596,11 +596,7 @@ class PackageArchive
      */
     public function getAuthorInfo($name)
     {
-        if (isset($this->authorInfo[$name])) {
-            return $this->authorInfo[$name];
-        }
-
-        return null;
+        return $this->authorInfo[$name] ?? null;
     }
 
     /**
@@ -611,11 +607,7 @@ class PackageArchive
      */
     public function getPackageInfo($name)
     {
-        if (isset($this->packageInfo[$name])) {
-            return $this->packageInfo[$name];
-        }
-
-        return null;
+        return $this->packageInfo[$name] ?? null;
     }
 
     /**
@@ -987,11 +979,7 @@ class PackageArchive
      */
     public function getInstructions($type)
     {
-        if (isset($this->instructions[$type])) {
-            return $this->instructions[$type];
-        }
-
-        return null;
+        return $this->instructions[$type] ?? null;
     }
 
     /**

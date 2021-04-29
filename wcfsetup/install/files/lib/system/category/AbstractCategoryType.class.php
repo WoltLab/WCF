@@ -142,11 +142,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
      */
     public function getObjectTypeName($definitionName)
     {
-        if (isset($this->objectTypes[$definitionName])) {
-            return $this->objectTypes[$definitionName];
-        }
-
-        return null;
+        return $this->objectTypes[$definitionName] ?? null;
     }
 
     /**

@@ -747,11 +747,7 @@ class WCF
      */
     public static function getApplicationObject(Application $application)
     {
-        if (isset(self::$applicationObjects[$application->packageID])) {
-            return self::$applicationObjects[$application->packageID];
-        }
-
-        return null;
+        return self::$applicationObjects[$application->packageID] ?? null;
     }
 
     /**
@@ -955,11 +951,7 @@ class WCF
      */
     final protected static function getCoreObject($className)
     {
-        if (isset(self::$coreObjectCache[$className])) {
-            return self::$coreObjectCache[$className];
-        }
-
-        return null;
+        return self::$coreObjectCache[$className] ?? null;
     }
 
     /**

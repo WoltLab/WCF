@@ -55,11 +55,7 @@ class TrophyCategoryCache extends SingletonFactory
      */
     public function getCategoryByID($categoryID)
     {
-        if (isset($this->categories[$categoryID])) {
-            return $this->categories[$categoryID];
-        }
-
-        return null;
+        return $this->categories[$categoryID] ?? null;
     }
 
     /**

@@ -218,11 +218,7 @@ class ACLHandler extends SingletonFactory
      */
     public function getCategory($objectTypeID, $categoryName)
     {
-        if (isset($this->categories[$objectTypeID][$categoryName])) {
-            return $this->categories[$objectTypeID][$categoryName];
-        }
-
-        return null;
+        return $this->categories[$objectTypeID][$categoryName] ?? null;
     }
 
     /**

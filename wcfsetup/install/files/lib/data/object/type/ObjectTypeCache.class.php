@@ -72,11 +72,7 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getDefinition($definitionID)
     {
-        if (isset($this->definitions[$definitionID])) {
-            return $this->definitions[$definitionID];
-        }
-
-        return null;
+        return $this->definitions[$definitionID] ?? null;
     }
 
     /**
@@ -88,11 +84,7 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getDefinitionByName($definitionName)
     {
-        if (isset($this->definitionsByName[$definitionName])) {
-            return $this->definitionsByName[$definitionName];
-        }
-
-        return null;
+        return $this->definitionsByName[$definitionName] ?? null;
     }
 
     /**
@@ -125,11 +117,7 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getObjectType($objectTypeID)
     {
-        if (isset($this->objectTypes[$objectTypeID])) {
-            return $this->objectTypes[$objectTypeID];
-        }
-
-        return null;
+        return $this->objectTypes[$objectTypeID] ?? null;
     }
 
     /**

@@ -160,11 +160,7 @@ class ClipboardHandler extends SingletonFactory
      */
     public function getObjectTypeID($typeName)
     {
-        if (isset($this->cache['objectTypeNames'][$typeName])) {
-            return $this->cache['objectTypeNames'][$typeName];
-        }
-
-        return null;
+        return $this->cache['objectTypeNames'][$typeName] ?? null;
     }
 
     /**
@@ -176,11 +172,7 @@ class ClipboardHandler extends SingletonFactory
      */
     public function getObjectType($objectTypeID)
     {
-        if (isset($this->cache['objectTypes'][$objectTypeID])) {
-            return $this->cache['objectTypes'][$objectTypeID];
-        }
-
-        return null;
+        return $this->cache['objectTypes'][$objectTypeID] ?? null;
     }
 
     /**

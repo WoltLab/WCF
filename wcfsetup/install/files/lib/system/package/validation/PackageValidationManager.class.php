@@ -130,11 +130,7 @@ class PackageValidationManager extends SingletonFactory
      */
     public function getVirtualPackage($package)
     {
-        if (isset($this->virtualPackageList[$package])) {
-            return $this->virtualPackageList[$package];
-        }
-
-        return null;
+        return $this->virtualPackageList[$package] ?? null;
     }
 
     /**

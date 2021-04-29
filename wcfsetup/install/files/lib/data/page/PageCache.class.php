@@ -49,11 +49,7 @@ class PageCache extends SingletonFactory
      */
     public function getPage($pageID)
     {
-        if (isset($this->cache['pages'][$pageID])) {
-            return $this->cache['pages'][$pageID];
-        }
-
-        return null;
+        return $this->cache['pages'][$pageID] ?? null;
     }
 
     /**

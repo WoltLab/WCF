@@ -407,11 +407,7 @@ class LabelHandler extends SingletonFactory
      */
     public function getLabelGroup($groupID)
     {
-        if (isset($this->labelGroups['groups'][$groupID])) {
-            return $this->labelGroups['groups'][$groupID];
-        }
-
-        return null;
+        return $this->labelGroups['groups'][$groupID] ?? null;
     }
 
     /**
