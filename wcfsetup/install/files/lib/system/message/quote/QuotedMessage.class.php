@@ -134,11 +134,7 @@ class QuotedMessage implements \Countable, \Iterator
      */
     public function getFullQuote($quoteID)
     {
-        if (isset($this->fullQuotes[$quoteID])) {
-            return $this->fullQuotes[$quoteID];
-        }
-
-        return null;
+        return $this->fullQuotes[$quoteID] ?? null;
     }
 
     /**

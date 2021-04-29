@@ -37,11 +37,7 @@ class PackageCache extends SingletonFactory
      */
     public function getPackage($packageID)
     {
-        if (isset($this->packages['packages'][$packageID])) {
-            return $this->packages['packages'][$packageID];
-        }
-
-        return null;
+        return $this->packages['packages'][$packageID] ?? null;
     }
 
     /**
@@ -52,11 +48,7 @@ class PackageCache extends SingletonFactory
      */
     public function getPackageID($package)
     {
-        if (isset($this->packages['packageIDs'][$package])) {
-            return $this->packages['packageIDs'][$package];
-        }
-
-        return null;
+        return $this->packages['packageIDs'][$package] ?? null;
     }
 
     /**

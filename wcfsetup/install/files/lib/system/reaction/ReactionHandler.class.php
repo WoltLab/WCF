@@ -215,11 +215,7 @@ class ReactionHandler extends SingletonFactory
      */
     public function getObjectType($objectName)
     {
-        if (isset($this->cache[$objectName])) {
-            return $this->cache[$objectName];
-        }
-
-        return null;
+        return $this->cache[$objectName] ?? null;
     }
 
     /**

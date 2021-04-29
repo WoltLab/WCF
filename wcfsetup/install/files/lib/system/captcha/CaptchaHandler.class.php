@@ -49,11 +49,7 @@ class CaptchaHandler extends SingletonFactory
      */
     public function getObjectType($objectTypeID)
     {
-        if (isset($this->objectTypes[$objectTypeID])) {
-            return $this->objectTypes[$objectTypeID];
-        }
-
-        return null;
+        return $this->objectTypes[$objectTypeID] ?? null;
     }
 
     /**

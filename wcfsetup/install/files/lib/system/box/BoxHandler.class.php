@@ -117,11 +117,7 @@ class BoxHandler extends SingletonFactory
      */
     public function getBox($boxID)
     {
-        if (isset($this->boxes[$boxID])) {
-            return $this->boxes[$boxID];
-        }
-
-        return null;
+        return $this->boxes[$boxID] ?? null;
     }
 
     /**
@@ -132,11 +128,7 @@ class BoxHandler extends SingletonFactory
      */
     public function getBoxes($position)
     {
-        if (isset($this->boxesByPosition[$position])) {
-            return $this->boxesByPosition[$position];
-        }
-
-        return [];
+        return $this->boxesByPosition[$position] ?? [];
     }
 
     /**
@@ -147,11 +139,7 @@ class BoxHandler extends SingletonFactory
      */
     public function getBoxByIdentifier($identifier)
     {
-        if (isset($this->boxesByIdentifier[$identifier])) {
-            return $this->boxesByIdentifier[$identifier];
-        }
-
-        return null;
+        return $this->boxesByIdentifier[$identifier] ?? null;
     }
 
     /**

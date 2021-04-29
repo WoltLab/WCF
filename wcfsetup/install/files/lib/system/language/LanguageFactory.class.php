@@ -131,11 +131,7 @@ class LanguageFactory extends SingletonFactory
      */
     public function getCategory($categoryName)
     {
-        if (isset($this->cache['categories'][$categoryName])) {
-            return $this->cache['categories'][$categoryName];
-        }
-
-        return null;
+        return $this->cache['categories'][$categoryName] ?? null;
     }
 
     /**

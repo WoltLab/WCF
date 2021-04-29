@@ -69,11 +69,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
      */
     public function getObjectType($objectTypeName)
     {
-        if (isset($this->availableObjectTypes[$objectTypeName])) {
-            return $this->availableObjectTypes[$objectTypeName];
-        }
-
-        return null;
+        return $this->availableObjectTypes[$objectTypeName] ?? null;
     }
 
     /**

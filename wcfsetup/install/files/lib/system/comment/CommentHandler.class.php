@@ -65,11 +65,7 @@ class CommentHandler extends SingletonFactory
      */
     public function getObjectTypeID($objectType)
     {
-        if (isset($this->cache['objectTypeIDs'][$objectType])) {
-            return $this->cache['objectTypeIDs'][$objectType];
-        }
-
-        return null;
+        return $this->cache['objectTypeIDs'][$objectType] ?? null;
     }
 
     /**
@@ -81,11 +77,7 @@ class CommentHandler extends SingletonFactory
      */
     public function getObjectType($objectTypeID)
     {
-        if (isset($this->cache['objectTypes'][$objectTypeID])) {
-            return $this->cache['objectTypes'][$objectTypeID];
-        }
-
-        return null;
+        return $this->cache['objectTypes'][$objectTypeID] ?? null;
     }
 
     /**

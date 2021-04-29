@@ -56,11 +56,7 @@ class BBCodeCache extends SingletonFactory
      */
     public function getBBCodeByTag($tag)
     {
-        if (isset($this->cachedBBCodes[$tag])) {
-            return $this->cachedBBCodes[$tag];
-        }
-
-        return null;
+        return $this->cachedBBCodes[$tag] ?? null;
     }
 
     /**

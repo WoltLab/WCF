@@ -85,11 +85,7 @@ class SmileyCache extends SingletonFactory
      */
     public function getSmileyByCode($code)
     {
-        if (isset($this->cachedSmileyByCode[$code])) {
-            return $this->cachedSmileyByCode[$code];
-        }
-
-        return null;
+        return $this->cachedSmileyByCode[$code] ?? null;
     }
 
     /**
