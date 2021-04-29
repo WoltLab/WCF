@@ -1066,7 +1066,4 @@ webp</defaultvalue>
 			</option>
 		</options>
 	</import>
-	<delete>
-		<option name="user.profile.canMail"/>
-	</delete>
 </data>

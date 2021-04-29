@@ -246,7 +246,4 @@
 			</option>
 		</options>
 	</import>
-	<delete>
-		<option name="canMail" />
-	</delete>
 </data>

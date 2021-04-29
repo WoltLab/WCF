@@ -883,7 +883,4 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 			</content>
 		</page>
 	</import>
-	<delete>
-		<page identifier="com.woltlab.wcf.Mail"/>
-	</delete>
 </data>

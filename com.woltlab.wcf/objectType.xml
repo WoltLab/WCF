@@ -1803,15 +1803,4 @@
 		</type>
 		<!-- /deprecated -->
 	</import>
-	<delete>
-		<type name="com.woltlab.wcf.like.user">
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-		</type>
-		<type name="com.woltlab.wcf.dislike">
-			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
-		</type>
-		<type name="com.woltlab.wcf.databaseConvertEncoding">
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-		</type>
-	</delete>
 </data>
