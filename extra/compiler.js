@@ -1,4 +1,3 @@
-const fs = require("fs");
 const terser = require("terser");
 const merge = require('deepmerge')
 
