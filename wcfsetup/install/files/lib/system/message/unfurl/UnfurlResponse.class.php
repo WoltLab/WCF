@@ -56,6 +56,11 @@ final class UnfurlResponse
     private $response;
 
     /**
+     * @var ?string
+     */
+    private $body;
+
+    /**
      * @var string
      */
     private $responseCharset = "UTF-8";
