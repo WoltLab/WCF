@@ -28,7 +28,8 @@
 					// selectors
 					containerSelector: '#{@$commentContainerID} .commentResponse',
 					summaryListSelector: '.reactionSummaryList',
-					isButtonGroupNavigation: true
+					isButtonGroupNavigation: true,
+					buttonSelector: '.reactButtonCommentResponse'
 				});
 			});
 		{/if}
