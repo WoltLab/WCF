@@ -328,7 +328,7 @@ final class UnfurlResponse
                 RequestOptions::TIMEOUT => 10,
                 RequestOptions::STREAM => true,
                 RequestOptions::HEADERS => [
-                    'user-agent' => HttpFactory::getDefaultUserAgent("UrlUnfurling"),
+                    'user-agent' => HttpFactory::getDefaultUserAgent("URL Unfurling"),
                 ],
                 RequestOptions::ALLOW_REDIRECTS => [
                     'on_redirect' => new RedirectGuard(),
