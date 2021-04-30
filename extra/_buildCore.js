@@ -86,8 +86,20 @@ async function compile(destination, files, overrides) {
 					cwd: process.cwd(),
 					stdio: [0, 1, 2],
 				});
-				const output = await compiler.compile(fs.readFileSync(outFilename, "utf-8"));
+				const sourceMap = JSON.parse(fs.readFileSync(`${outFilename}.map`, "utf-8"));
+
+				const output = await compiler.compile(
+					fs.readFileSync(outFilename, "utf-8"),
+					{
+						sourceMap: {
+							content: JSON.stringify(sourceMap),
+							url: `${outFilename}.map`,
+							includeSources: true,
+						}
+					}
+				);
 				fs.writeFileSync(outFilename, output.code);
+				fs.writeFileSync(`${outFilename}.map`, output.map);
 			}
 			console.timeEnd(outFilename);
 		}

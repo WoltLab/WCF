@@ -3,6 +3,7 @@
 		mainConfigFile: 'require.config.js',
 		name: "WoltLabSuite/_Meta",
 		out: "WoltLabSuite.Core.min.js",
+		generateSourceMaps: true,
 		useStrict: true,
 		preserveLicenseComments: false,
 		optimize: 'none',
