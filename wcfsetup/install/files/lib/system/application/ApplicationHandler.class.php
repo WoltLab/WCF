@@ -88,11 +88,8 @@ class ApplicationHandler extends SingletonFactory
         if ($packageID == 1 && !isset($this->cache['application'][1])) {
             $this->cache['application'][1] = new Application(1);
         }
-        if (isset($this->cache['application'][$packageID])) {
-            return $this->cache['application'][$packageID];
-        }
 
-        return null;
+        return $this->cache['application'][$packageID] ?? null;
     }
 
     /**
