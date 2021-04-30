@@ -441,6 +441,10 @@
 	<spider ident="Freecrawl">
 		<name>Freecrawl</name>
 	</spider>
+	<spider ident="FreshpingBot">
+		<name>Freshping</name>
+		<url>https://freshping.io/</url>
+	</spider>
 	<spider ident="FunnelWeb">
 		<name>FunnelWeb</name>
 	</spider>
