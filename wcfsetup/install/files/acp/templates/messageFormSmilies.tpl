@@ -14,8 +14,8 @@
 {/capture}
 
 <div class="messageTabMenuContent{if $__tabCount} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
+	{assign var='__firstSmileyCategory' value=$smileyCategories|reset}
 	{capture assign=__defaultSmilies}
-		{assign var='__firstSmileyCategory' value=$smileyCategories|reset}
 		{if $__firstSmileyCategory->categoryID}
 			{include file='__messageFormSmilies' smilies=$__wcf->getSmileyCache()->getCategorySmilies($__firstSmileyCategory->categoryID)}
 		{else}
@@ -32,7 +32,7 @@
 		
 		{foreach from=$smileyCategories item=smileyCategory}
 			<div class="messageTabMenuContent" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
-				{if !$smileyCategory->categoryID}{@$__defaultSmilies}{/if}
+				{if $__firstSmileyCategory->categoryID == $smileyCategory->categoryID}{@$__defaultSmilies}{/if}
 			</div>
 		{/foreach}
 		
