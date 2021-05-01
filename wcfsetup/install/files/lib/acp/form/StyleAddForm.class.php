@@ -855,7 +855,7 @@ class StyleAddForm extends AbstractForm {
 		$this->setDefaultValues();
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
-		$this->styleTestFilename = null;
+		$this->styleTestFileDir = null;
 		$this->rebuildUploadFields();
 		
 		I18nHandler::getInstance()->reset();
