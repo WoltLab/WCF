@@ -449,7 +449,7 @@ const DomUtil = {
       }
     }
 
-    let innerError = element.nextElementSibling;
+    let innerError = element.nextElementSibling as HTMLElement | null;
     if (innerError === null || innerError.nodeName !== "SMALL" || !innerError.classList.contains("innerError")) {
       if (errorMessage === "") {
         innerError = null;
@@ -466,10 +466,64 @@ const DomUtil = {
         innerError = null;
       }
     } else {
-      innerError![isHtml ? "innerHTML" : "textContent"] = errorMessage;
+      if (isHtml) {
+        innerError!.innerHTML = errorMessage;
+      } else {
+        innerError!.textContent = errorMessage;
+      }
     }
 
-    return innerError as HTMLElement | null;
+    return innerError;
+  },
+
+  /**
+   * Displays or removes an error message below the provided element.
+   */
+  innerSuccess(element: HTMLElement, message?: string | false | null, isHtml?: boolean): HTMLElement | null {
+    const parent = element.parentNode;
+    if (parent === null) {
+      throw new Error("Only elements that have a parent element or document are valid.");
+    }
+
+    if (typeof message !== "string") {
+      if (!message) {
+        message = "";
+      } else {
+        throw new TypeError(
+          "The message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.",
+        );
+      }
+    }
+
+    let innerSuccess = element.nextElementSibling as HTMLElement | null;
+    if (
+      innerSuccess === null ||
+      innerSuccess.nodeName !== "SMALL" ||
+      !innerSuccess.classList.contains("innerSuccess")
+    ) {
+      if (message === "") {
+        innerSuccess = null;
+      } else {
+        innerSuccess = document.createElement("small");
+        innerSuccess.className = "innerSuccess";
+        parent.insertBefore(innerSuccess, element.nextSibling);
+      }
+    }
+
+    if (message === "") {
+      if (innerSuccess !== null) {
+        innerSuccess.remove();
+        innerSuccess = null;
+      }
+    } else {
+      if (isHtml) {
+        innerSuccess!.innerHTML = message;
+      } else {
+        innerSuccess!.textContent = message;
+      }
+    }
+
+    return innerSuccess;
   },
 
   /**

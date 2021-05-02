@@ -398,9 +398,59 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 }
             }
             else {
-                innerError[isHtml ? "innerHTML" : "textContent"] = errorMessage;
+                if (isHtml) {
+                    innerError.innerHTML = errorMessage;
+                }
+                else {
+                    innerError.textContent = errorMessage;
+                }
             }
             return innerError;
+        },
+        /**
+         * Displays or removes an error message below the provided element.
+         */
+        innerSuccess(element, message, isHtml) {
+            const parent = element.parentNode;
+            if (parent === null) {
+                throw new Error("Only elements that have a parent element or document are valid.");
+            }
+            if (typeof message !== "string") {
+                if (!message) {
+                    message = "";
+                }
+                else {
+                    throw new TypeError("The message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.");
+                }
+            }
+            let innerSuccess = element.nextElementSibling;
+            if (innerSuccess === null ||
+                innerSuccess.nodeName !== "SMALL" ||
+                !innerSuccess.classList.contains("innerSuccess")) {
+                if (message === "") {
+                    innerSuccess = null;
+                }
+                else {
+                    innerSuccess = document.createElement("small");
+                    innerSuccess.className = "innerSuccess";
+                    parent.insertBefore(innerSuccess, element.nextSibling);
+                }
+            }
+            if (message === "") {
+                if (innerSuccess !== null) {
+                    innerSuccess.remove();
+                    innerSuccess = null;
+                }
+            }
+            else {
+                if (isHtml) {
+                    innerSuccess.innerHTML = message;
+                }
+                else {
+                    innerSuccess.textContent = message;
+                }
+            }
+            return innerSuccess;
         },
         /**
          * Finds the closest element that matches the provided selector. This is a helper
