@@ -82,9 +82,15 @@ class ApplicationManagementForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['cookieDomain'])) $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
-        if (isset($_POST['domainName'])) $this->domainName = StringUtil::trim($_POST['domainName']);
-        if (isset($_POST['landingPageID']) && \is_array($_POST['landingPageID'])) $this->landingPageID = ArrayUtil::toIntegerArray($_POST['landingPageID']);
+        if (isset($_POST['cookieDomain'])) {
+            $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
+        }
+        if (isset($_POST['domainName'])) {
+            $this->domainName = StringUtil::trim($_POST['domainName']);
+        }
+        if (isset($_POST['landingPageID']) && \is_array($_POST['landingPageID'])) {
+            $this->landingPageID = ArrayUtil::toIntegerArray($_POST['landingPageID']);
+        }
     }
 
     public function validate()
