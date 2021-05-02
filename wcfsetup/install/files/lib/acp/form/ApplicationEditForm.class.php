@@ -17,6 +17,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -92,6 +93,10 @@ class ApplicationEditForm extends AbstractForm
     public function readParameters()
     {
         parent::readParameters();
+
+        if (!ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+            throw new IllegalLinkException();
+        }
 
         if (isset($_REQUEST['id'])) {
             $this->packageID = \intval($_REQUEST['id']);

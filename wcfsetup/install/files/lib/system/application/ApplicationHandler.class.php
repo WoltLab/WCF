@@ -235,6 +235,7 @@ class ApplicationHandler extends SingletonFactory
      *
      * @return      bool
      * @since       3.1
+     * @deprecated  5.4
      */
     public function isMultiDomainSetup()
     {
