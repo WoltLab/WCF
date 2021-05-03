@@ -14,42 +14,116 @@
 	{/hascontent}
 </header>
 
-<div class="section tabularBox">
-	<table class="table">
-		<thead>
-			<tr>
-				<th class="columnID columnPackageID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
-				<th class="columnText columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
-				<th class="columnText columnDomainName">{lang}wcf.acp.application.domainName{/lang}</th>
-				<th class="columnText columnDomainPath">{lang}wcf.acp.application.domainPath{/lang}</th>
-				<th class="columnText columnLandingPageID">{lang}wcf.acp.application.landingPage{/lang}</th>
+{if $isMultiDomainSetup}
+	<div class="warning">{lang}wcf.acp.application.multiDomain{/lang}</div>
+{/if}
+
+<form method="post" action="{link controller='ApplicationManagement'}{/link}">
+	{if !$isMultiDomainSetup}
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.application.management.domain{/lang}</h2>
+
+			<dl{if $errorField == 'domainName'} class="formError"{/if}>
+				<dt><label for="domainName">{lang}wcf.acp.application.management.domainName{/lang}</label></dt>
+				<dd>
+					<div class="inputAddon">
+						<span class="inputPrefix">https://</span>
+						<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long">
+					</div>
+					{if $errorField == 'domainName'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.application.management.domainName.error.{$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.application.management.domainName.description{/lang}</small>
+				</dd>
+			</dl>
+
+			<dl{if $errorField == 'cookieDomain'} class="formError"{/if}>
+				<dt><label for="cookieDomain">{lang}wcf.acp.application.management.cookieDomain{/lang}</label></dt>
+				<dd>
+					<input type="text" name="cookieDomain" id="cookieDomain" value="{$cookieDomain}" class="long">
+					{if $errorField == 'cookieDomain'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.application.management.cookieDomain.error.{$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.application.management.cookieDomain.description{/lang}</small>
+				</dd>
+			</dl>
+		</section>
+
+		{* Keep the cookie domain in sync if it was previously identical. *}
+		{if $domainName === $cookieDomain}
+			<script>
+				(() => {
+					const domainName = document.getElementById("domainName");
+					const cookieDomain = document.getElementById("cookieDomain");
+
+					domainName.addEventListener("input", () => {
+						cookieDomain.value = domainName.value;
+					});
+				})();
+			</script>
+		{/if}
+	{/if}
+
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.application.landingPage{/lang}</h2>
+
+		<div class="tabularBox">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="columnID columnPackageID">{lang}wcf.global.objectID{/lang}</th>
+						<th class="columnText columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
+						<th class="columnText columnLandingPageID">{lang}wcf.acp.application.landingPage{/lang}</th>
+						
+						{event name='columnHeads'}
+					</tr>
+				</thead>
 				
-				{event name='columnHeads'}
-			</tr>
-		</thead>
-		
-		<tbody>
-			{foreach from=$applicationList item=application}
-				<tr>
-					<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a></td>
-					<td class="columnID columnPackageID">{#$application->packageID}</td>
-					<td class="columnTitle columnPackageName"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a></td>
-					<td class="columnText columnDomainName">{$application->domainName}</td>
-					<td class="columnText columnDomainPath">{$application->domainPath}</td>
-					<td class="columnText columnLandingPageID">
-						{if $application->landingPageID && $pageList[$application->landingPageID]|isset}
-							{$pageList[$application->landingPageID]}
-						{else}
-							{lang}wcf.global.noSelection{/lang}
-						{/if}
-					</td>
-					
-					{event name='columns'}
-				</tr>
-			{/foreach}
-		</tbody>
-	</table>
-</div>
+				<tbody>
+					{foreach from=$applicationList item=application}
+						<tr>
+							<td class="columnID columnPackageID">{#$application->packageID}</td>
+							<td class="columnTitle columnPackageName">
+								<p><strong>{$application->getPackage()}</strong></p>
+								<small>{$application->getPageURL()}</small>
+							</td>
+							<td class="columnText columnLandingPageID">
+								<select name="landingPageID[{$application->packageID}]">
+									<option value="0">{lang}wcf.acp.application.landingPage.default{/lang}</option>
+									
+									{foreach from=$pageNodeList item=pageNode}
+										{if !$pageNode->isDisabled && !$pageNode->requireObjectID && !$pageNode->excludeFromLandingPage}
+											<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $application->landingPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+										{/if}
+									{/foreach}
+								</select>
+							</td>
+							
+							{event name='columns'}
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		{csrfToken}
+	</div>
+</form>
 
 <footer class="contentFooter">
 	{hascontent}
