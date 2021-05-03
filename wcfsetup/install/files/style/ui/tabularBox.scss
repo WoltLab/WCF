@@ -264,7 +264,7 @@
 			background-color: rgb(242, 242, 242);
 		}
 		
-		&:not(:last-child) > td {
+		&:not(:last-child) > td:not(.lastRow) {
 			border-bottom: 1px solid $wcfContentBorderInner;
 		}
 	}
