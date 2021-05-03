@@ -16,6 +16,7 @@ use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
@@ -153,7 +154,7 @@ return [
     DatabaseTable::create('wcf1_user_multifactor_backup')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('setupID'),
-            NotNullVarchar255DatabaseTableColumn::create('identifier'),
+            NotNullVarchar191DatabaseTableColumn::create('identifier'),
             NotNullVarchar255DatabaseTableColumn::create('code'),
             NotNullInt10DatabaseTableColumn::create('createTime'),
             IntDatabaseTableColumn::create('useTime')
@@ -176,7 +177,7 @@ return [
     DatabaseTable::create('wcf1_user_multifactor_email')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('setupID'),
-            NotNullVarchar255DatabaseTableColumn::create('code'),
+            NotNullVarchar191DatabaseTableColumn::create('code'),
             NotNullInt10DatabaseTableColumn::create('createTime'),
         ])
         ->indices([
@@ -195,7 +196,7 @@ return [
     DatabaseTable::create('wcf1_user_multifactor_totp')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('setupID'),
-            NotNullVarchar255DatabaseTableColumn::create('deviceID'),
+            NotNullVarchar191DatabaseTableColumn::create('deviceID'),
             NotNullVarchar255DatabaseTableColumn::create('deviceName'),
             VarbinaryDatabaseTableColumn::create('secret')
                 ->notNull()

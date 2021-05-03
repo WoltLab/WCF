@@ -1722,7 +1722,7 @@ CREATE TABLE wcf1_user_multifactor (
 DROP TABLE IF EXISTS wcf1_user_multifactor_backup;
 CREATE TABLE wcf1_user_multifactor_backup (
 	setupID INT(10) NOT NULL,
-	identifier VARCHAR(255) NOT NULL,
+	identifier VARCHAR(191) NOT NULL,
 	code VARCHAR(255) NOT NULL,
 	createTime INT(10) NOT NULL,
 	useTime INT(10) DEFAULT NULL,
@@ -1733,7 +1733,7 @@ CREATE TABLE wcf1_user_multifactor_backup (
 DROP TABLE IF EXISTS wcf1_user_multifactor_email;
 CREATE TABLE wcf1_user_multifactor_email (
 	setupID INT(10) NOT NULL,
-	code VARCHAR(255) NOT NULL,
+	code VARCHAR(191) NOT NULL,
 	createTime INT(10) NOT NULL,
 
 	UNIQUE KEY (setupID, code)
@@ -1742,7 +1742,7 @@ CREATE TABLE wcf1_user_multifactor_email (
 DROP TABLE IF EXISTS wcf1_user_multifactor_totp;
 CREATE TABLE wcf1_user_multifactor_totp (
 	setupID INT(10) NOT NULL,
-	deviceID VARCHAR(255) NOT NULL,
+	deviceID VARCHAR(191) NOT NULL,
 	deviceName VARCHAR(255) NOT NULL,
 	secret VARBINARY(255) NOT NULL,
 	minCounter INT(10) NOT NULL,
