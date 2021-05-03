@@ -17,7 +17,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**

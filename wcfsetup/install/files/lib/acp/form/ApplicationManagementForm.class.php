@@ -2,7 +2,6 @@
 
 namespace wcf\acp\form;
 
-use Stripe\Exception\PermissionException;
 use wcf\data\application\ViewableApplicationList;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
@@ -11,6 +10,7 @@ use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Form
  */
-class ApplicationManagementForm extends AbstractForm
+final class ApplicationManagementForm extends AbstractForm
 {
     /**
      * @inheritDoc
@@ -100,7 +100,7 @@ class ApplicationManagementForm extends AbstractForm
         if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
             // Changes to the domain for all apps are only possible for setups using the same domain.
             if (!empty($this->cookieDomain) || !empty($this->domainName)) {
-                throw new PermissionException();
+                throw new PermissionDeniedException();
             }
         }
 
@@ -192,8 +192,8 @@ class ApplicationManagementForm extends AbstractForm
             (new Page($this->landingPageID[1]))->setAsLandingPage();
         } else {
             $sql = "UPDATE  wcf" . WCF_N . "_page
-                        SET     isLandingPage = ?
-                        WHERE   isLandingPage = ?";
+                    SET     isLandingPage = ?
+                    WHERE   isLandingPage = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 0,

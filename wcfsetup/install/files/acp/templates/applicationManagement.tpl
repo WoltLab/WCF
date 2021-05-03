@@ -27,7 +27,7 @@
 				<dt><label for="domainName">{lang}wcf.acp.application.management.domainName{/lang}</label></dt>
 				<dd>
 					<div class="inputAddon">
-						<span class="inputPrefix">http(s)://</span>
+						<span class="inputPrefix">https://</span>
 						<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long">
 					</div>
 					{if $errorField == 'domainName'}
@@ -61,19 +61,19 @@
 			</dl>
 		</section>
 
-		<script>
-			(() => {
-				const domainName = document.getElementById("domainName");
-				const cookieDomain = document.getElementById("cookieDomain");
+		{* Keep the cookie domain in sync if it was previously identical. *}
+		{if $domainName === $cookieDomain}
+			<script>
+				(() => {
+					const domainName = document.getElementById("domainName");
+					const cookieDomain = document.getElementById("cookieDomain");
 
-				// Keep the cookie domain in sync if it was previously identical.
-				if (domainName.value === cookieDomain.value) {
 					domainName.addEventListener("input", () => {
 						cookieDomain.value = domainName.value;
 					});
-				}
-			})();
-		</script>
+				})();
+			</script>
+		{/if}
 	{/if}
 
 	<section class="section">

@@ -33,6 +33,7 @@ $files = [
     'acp/update_com.woltlab.wcf_5.3_packageServer.php',
     'acp/update_com.woltlab.wcf_5.3_preUpdate.php',
     'lib/acp/form/UserGroupPromoteOwnerForm.class.php',
+    'lib/acp/page/ApplicationManagementPage.class.php',
     'lib/system/database/table/DatabaseTableUtil.class.php',
 ];
 
