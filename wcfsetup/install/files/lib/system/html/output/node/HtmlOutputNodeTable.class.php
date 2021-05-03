@@ -55,7 +55,7 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode {
 				$parent = $element;
 				while ($parent = $parent->parentNode) {
 					if ($parent->nodeName === 'table') {
-						continue;
+						continue 2;
 					}
 				}
 				
