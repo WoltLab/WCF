@@ -28,11 +28,38 @@ class HtmlOutputNodeTable extends AbstractHtmlOutputNode
         if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
             /** @var \DOMElement $element */
             foreach ($elements as $element) {
+                // Detect cells which are visually in the last row of a table due to their
+                // `rowspan` property.
+                /** @var \DOMElement $td */
+                foreach ($element->getElementsByTagName('td') as $td) {
+                    $rowspan = $td->getAttribute('rowspan');
+                    if ($rowspan) {
+                        $nextTrCount = 0;
+                        $nextSibling = $td->parentNode->nextSibling;
+                        while ($nextSibling) {
+                            if ($nextSibling->nodeType === \XML_ELEMENT_NODE && $nextSibling->tagName === "tr") {
+                                $nextTrCount++;
+                            }
+                            $nextSibling = $nextSibling->nextSibling;
+                        }
+
+                        if ($rowspan - 1 === $nextTrCount) {
+                            $class = $td->getAttribute('class');
+                            if ($class) {
+                                $class .= " ";
+                            }
+                            $class .= "lastRow";
+
+                            $td->setAttribute('class', $class);
+                        }
+                    }
+                }
+
                 // check if table is not contained within another table
                 $parent = $element;
                 while ($parent = $parent->parentNode) {
                     if ($parent->nodeName === 'table') {
-                        continue;
+                        continue 2;
                     }
                 }
 
