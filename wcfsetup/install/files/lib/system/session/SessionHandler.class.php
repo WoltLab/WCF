@@ -637,31 +637,33 @@ final class SessionHandler extends SingletonFactory
             $this->sessionID,
         ]);
 
-        // Fetch legacy session.
-        $condition = new PreparedStatementConditionBuilder();
+        if (!$this->isACP) {
+            // Fetch legacy session.
+            $condition = new PreparedStatementConditionBuilder();
 
-        if ($row['userID']) {
-            // The `userID IS NOT NULL` condition technically is redundant, but is added for
-            // clarity and consistency with the guest case below.
-            $condition->add('userID IS NOT NULL');
-            $condition->add('userID = ?', [$row['userID']]);
-        } else {
-            $condition->add('userID IS NULL');
-            $condition->add('(sessionID = ? OR spiderID = ?)', [
-                $row['sessionID'],
-                $this->getSpiderID(UserUtil::getUserAgent()),
-            ]);
-        }
+            if ($row['userID']) {
+                // The `userID IS NOT NULL` condition technically is redundant, but is added for
+                // clarity and consistency with the guest case below.
+                $condition->add('userID IS NOT NULL');
+                $condition->add('userID = ?', [$row['userID']]);
+            } else {
+                $condition->add('userID IS NULL');
+                $condition->add('(sessionID = ? OR spiderID = ?)', [
+                    $row['sessionID'],
+                    $this->getSpiderID(UserUtil::getUserAgent()),
+                ]);
+            }
 
-        $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_session
-                " . $condition;
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute($condition->getParameters());
-        $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_session
+                    " . $condition;
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute($condition->getParameters());
+            $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
 
-        if (!$this->legacySession) {
-            $this->legacySession = $this->createLegacySession();
+            if (!$this->legacySession) {
+                $this->legacySession = $this->createLegacySession();
+            }
         }
 
         return true;
@@ -705,22 +707,24 @@ final class SessionHandler extends SingletonFactory
         // Maintain legacy session table for users online list.
         $this->legacySession = null;
 
-        // Try to find an existing spider session. Order by lastActivityTime to maintain a
-        // stable selection in case duplicates exist for some reason.
-        $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
-        if ($spiderID) {
-            $sql = "SELECT      *
-                    FROM        wcf" . WCF_N . "_session
-                    WHERE       spiderID = ?
-                            AND userID IS NULL
-                    ORDER BY    lastActivityTime DESC";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([$spiderID]);
-            $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
-        }
+        if (!$this->isACP) {
+            // Try to find an existing spider session. Order by lastActivityTime to maintain a
+            // stable selection in case duplicates exist for some reason.
+            $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+            if ($spiderID) {
+                $sql = "SELECT      *
+                        FROM        wcf" . WCF_N . "_session
+                        WHERE       spiderID = ?
+                                AND userID IS NULL
+                        ORDER BY    lastActivityTime DESC";
+                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement->execute([$spiderID]);
+                $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+            }
 
-        if (!$this->legacySession) {
-            $this->legacySession = $this->createLegacySession();
+            if (!$this->legacySession) {
+                $this->legacySession = $this->createLegacySession();
+            }
         }
     }
 
