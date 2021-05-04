@@ -717,13 +717,13 @@ EXPLANATION;
 			if (!isset($item['args'])) $item['args'] = [];
 
 			if ($item['class']) {
-				$f = new \ReflectionMethod($item['class'], $item['function']);
+				$function = new \ReflectionMethod($item['class'], $item['function']);
 			}
 			else {
-				$f = new \ReflectionFunction($item['function']);
+				$function = new \ReflectionFunction($item['function']);
 			}
 
-			$parameters = $f->getParameters();
+			$parameters = $function->getParameters();
 			$i = 0;
 			foreach ($parameters as $parameter) {
 				$isSensitive = false;
