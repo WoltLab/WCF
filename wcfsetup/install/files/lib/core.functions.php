@@ -116,6 +116,11 @@ namespace wcf {
 	function getMinorVersion(): string {
 		return preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
 	}
+
+	#[Attribute(\Attribute::TARGET_PARAMETER)]
+	class SensitiveArgument
+	{
+	}
 }
 
 namespace wcf\functions\exception {
@@ -710,6 +715,30 @@ EXPLANATION;
 			if (!isset($item['class'])) $item['class'] = '';
 			if (!isset($item['type'])) $item['type'] = '';
 			if (!isset($item['args'])) $item['args'] = [];
+
+			if ($item['class']) {
+				$f = new \ReflectionMethod($item['class'], $item['function']);
+			}
+			else {
+				$f = new \ReflectionFunction($item['function']);
+			}
+
+			$parameters = $f->getParameters();
+			$i = 0;
+			foreach ($parameters as $parameter) {
+				$isSensitive = false;
+				if (
+					\method_exists($parameter, 'getAttributes')
+					&& !empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
+				) {
+					$isSensitive = true;
+				}
+
+				if ($isSensitive && isset($item['args'][$i])) {
+					$item['args'][$i] = '[redacted]';
+				}
+				$i++;
+			}
 			
 			// strip database credentials
 			if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
