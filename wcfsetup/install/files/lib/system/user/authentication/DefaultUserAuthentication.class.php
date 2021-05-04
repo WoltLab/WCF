@@ -34,8 +34,14 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
     /**
      * @inheritDoc
      */
-    public function loginManually($username, $password, $userClassname = User::class)
-    {
+    public function loginManually(
+        $username,
+        // phpcs:disable Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint
+        // https://github.com/squizlabs/PHP_CodeSniffer/pull/3320
+        #[\wcf\SensitiveArgument()]
+        $password,
+        $userClassname = User::class
+    ) {
         $user = $this->getUserByLogin($username);
         $userSession = (\get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
 

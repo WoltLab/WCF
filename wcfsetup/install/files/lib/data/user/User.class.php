@@ -152,8 +152,13 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @param string $password
      * @return  bool        password correct
      */
-    public function checkPassword($password)
-    {
+    public function checkPassword(
+        // phpcs:disable Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint
+        // phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.FirstParamSpacing
+        // https://github.com/squizlabs/PHP_CodeSniffer/pull/3320
+        #[\wcf\SensitiveArgument()]
+        $password
+    ) {
         $isValid = false;
 
         $manager = PasswordAlgorithmManager::getInstance();
