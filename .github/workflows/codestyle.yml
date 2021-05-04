@@ -21,7 +21,7 @@ jobs:
       with:
         php-version: '7.4'
         extensions: ctype, dom, exif, gd, gmp, hash, intl, json, libxml, mbstring, opcache, pcre, pdo, pdo_mysql, zlib
-        tools: php-cs-fixer
+        tools: php-cs-fixer:2.19.0
     - name: php-cs-fixer
       run: php-cs-fixer fix --dry-run --diff-format udiff
   ts:
