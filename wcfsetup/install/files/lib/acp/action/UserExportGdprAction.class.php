@@ -156,9 +156,6 @@ class UserExportGdprAction extends AbstractAction
         $this->ipAddresses = [
             'com.woltlab.blog' => ['blog' . WCF_N . '_entry '],
             'com.woltlab.calendar' => ['calendar' . WCF_N . '_event'],
-            // do not include filebaseN_file_version here, it lacks a userID column and therefore we cannot
-            // reliably determine if that ip address belongs to the file author, or if it was somebody else,
-            // e. g. moderators or other authors
             'com.woltlab.filebase' => [
                 'filebase' . WCF_N . '_file',
                 'filebase' . WCF_N . '_file_download',
@@ -210,7 +207,12 @@ class UserExportGdprAction extends AbstractAction
                 );
             }
 
-            if ($package === 'com.woltlab.gallery') {
+            if ($package === 'com.woltlab.filebase') {
+                $ipAddresses = \array_merge(
+                    $ipAddresses,
+                    $this->exportIpAddresses('filebase' . WCF_N . '_file_version', 'ipAddress', 'uploadTime', 'userID')
+                );
+            } elseif ($package === 'com.woltlab.gallery') {
                 $ipAddresses = \array_merge(
                     $ipAddresses,
                     $this->exportIpAddresses('gallery' . WCF_N . '_image', 'ipAddress', 'uploadTime', 'userID')
