@@ -733,6 +733,12 @@ EXPLANATION;
 				) {
 					$isSensitive = true;
 				}
+				if (\preg_match(
+					'/(?:^(?:password|passphrase|secret)|(?:Password|Passphrase|Secret))/',
+					$parameter->getName()
+				)) {
+					$isSensitive = true;
+				}
 
 				if ($isSensitive && isset($item['args'][$i])) {
 					$item['args'][$i] = '[redacted]';
