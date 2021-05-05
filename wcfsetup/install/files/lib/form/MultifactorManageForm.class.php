@@ -252,6 +252,12 @@ class MultifactorManageForm extends AbstractFormBuilderForm
     {
         $email = new SimpleEmail();
         $email->setRecipient(WCF::getUser());
+        $email->setMessageID(\sprintf(
+            'com.woltlab.wcf.multifactorSetup/%d/%d/%s',
+            WCF::getUser()->userID,
+            TIME_NOW,
+            \bin2hex(\random_bytes(8))
+        ));
 
         $email->setSubject(
             WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.setupEmail.subject', [
