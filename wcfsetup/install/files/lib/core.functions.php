@@ -716,42 +716,44 @@ EXPLANATION;
 			if (!isset($item['type'])) $item['type'] = '';
 			if (!isset($item['args'])) $item['args'] = [];
 
-			if ($item['class']) {
-				$function = new \ReflectionMethod($item['class'], $item['function']);
-			}
-			else {
-				$function = new \ReflectionFunction($item['function']);
-			}
-
-			$parameters = $function->getParameters();
-			$i = 0;
-			foreach ($parameters as $parameter) {
-				$isSensitive = false;
-				if (
-					\method_exists($parameter, 'getAttributes')
-					&& !empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
-				) {
-					$isSensitive = true;
+			if (!empty($item['args'])) {
+				if ($item['class']) {
+					$function = new \ReflectionMethod($item['class'], $item['function']);
 				}
-				if (\preg_match(
-					'/(?:^(?:password|passphrase|secret)|(?:Password|Passphrase|Secret))/',
-					$parameter->getName()
-				)) {
-					$isSensitive = true;
+				else {
+					$function = new \ReflectionFunction($item['function']);
 				}
 
-				if ($isSensitive && isset($item['args'][$i])) {
-					$item['args'][$i] = '[redacted]';
+				$parameters = $function->getParameters();
+				$i = 0;
+				foreach ($parameters as $parameter) {
+					$isSensitive = false;
+					if (
+						\method_exists($parameter, 'getAttributes')
+						&& !empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
+					) {
+						$isSensitive = true;
+					}
+					if (\preg_match(
+						'/(?:^(?:password|passphrase|secret)|(?:Password|Passphrase|Secret))/',
+						$parameter->getName()
+					)) {
+						$isSensitive = true;
+					}
+
+					if ($isSensitive && isset($item['args'][$i])) {
+						$item['args'][$i] = '[redacted]';
+					}
+					$i++;
 				}
-				$i++;
-			}
-			
-			// strip database credentials
-			if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
-				if ($item['function'] === '__construct') {
-					$item['args'] = array_map(function () {
-						return '[redacted]';
-					}, $item['args']);
+				
+				// strip database credentials
+				if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
+					if ($item['function'] === '__construct') {
+						$item['args'] = array_map(function () {
+							return '[redacted]';
+						}, $item['args']);
+					}
 				}
 			}
 			
