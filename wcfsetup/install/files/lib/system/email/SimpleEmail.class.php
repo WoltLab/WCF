@@ -121,6 +121,16 @@ class SimpleEmail
     }
 
     /**
+     * Sets the part left of the at sign (@) in the email's 'Message-Id'.
+     *
+     * @see Email::setMessageID()
+     */
+    public function setMessageID(?string $messageId): void
+    {
+        $this->email->setMessageID($messageId);
+    }
+
+    /**
      * Queues this email for delivery.
      *
      * @see Email::send()
