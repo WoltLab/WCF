@@ -748,7 +748,10 @@ EXPLANATION;
 				}
 				
 				// strip database credentials
-				if (preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class']) || $item['class'] === 'PDO') {
+				if (
+					preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class'])
+					|| $item['class'] === 'PDO'
+				) {
 					if ($item['function'] === '__construct') {
 						$item['args'] = array_map(function () {
 							return '[redacted]';
