@@ -1067,6 +1067,13 @@ final class SessionHandler extends SingletonFactory
             if (!$hasSession) {
                 throw new \LogicException('Unreachable');
             }
+
+            // Replace the session-lived cookie by a long-lived cookie.
+            HeaderUtil::setCookie(
+                'user_session',
+                $this->getCookieValue(),
+                TIME_NOW + (self::USER_SESSION_LIFETIME * 2)
+            );
         }
     }
 
