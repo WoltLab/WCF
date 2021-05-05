@@ -220,7 +220,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 [
                     UserAvatar::AVATAR_SIZE,
                     UserAvatar::AVATAR_SIZE,
-                    1,
+                    0,
                     "gif",
                 ]
             );
