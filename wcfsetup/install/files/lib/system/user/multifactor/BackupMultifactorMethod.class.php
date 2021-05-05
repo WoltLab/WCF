@@ -363,6 +363,12 @@ final class BackupMultifactorMethod implements IMultifactorMethod
 
         $email = new SimpleEmail();
         $email->setRecipient($setup->getUser());
+        $email->setMessageID(\sprintf(
+            'com.woltlab.wcf.multifactor.backup.used/%d/%d/%s',
+            $setup->getUser()->userID,
+            TIME_NOW,
+            \bin2hex(\random_bytes(8))
+        ));
 
         $email->setSubject(
             WCF::getLanguage()->getDynamicVariable(
