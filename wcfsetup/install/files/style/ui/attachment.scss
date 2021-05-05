@@ -53,6 +53,7 @@
 
 		img {
 			backface-visibility: hidden;
+			height: auto;
 			max-width: 100%;
 			opacity: 0.85;
 			transform: translate3d(0, 0, 0);
@@ -192,6 +193,7 @@
 .embeddedImageLink {
 	border: 1px solid $wcfContentBorderInner;
 	display: inline-block;
+	height: auto;
 	margin: 2px 0;
 	max-width: 100%;
 	min-height: 48px;
