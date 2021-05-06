@@ -1,6 +1,6 @@
-require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/IsNotClicked'], function(IsNotClickedFieldDependency) {
+require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/IsNotClicked'], ({ IsNotClicked }) => {
 	// dependency '{@$dependency->getId()}'
-	new IsNotClickedFieldDependency(
+	new IsNotClicked(
 		'{@$dependency->getDependentNode()->getPrefixedId()}Container',
 		'{@$dependency->getField()->getPrefixedId()}'
 	);
