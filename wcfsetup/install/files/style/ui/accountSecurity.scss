@@ -1,10 +1,26 @@
 .accountSecurityContainer {
 	display: flex;
-	flex-wrap: wrap;
+
+	@include screen-sm-down {
+		flex-direction: column;
+	}
 }
 
 .accountSecurityInformation {
-	flex: 1 1 auto;
+	flex: 1 auto;
+}
+
+.accountSecurityButtons {
+	flex: 0 0 auto;
+
+	@include screen-md-up {
+		margin-left: 10px;
+	}
+
+	@include screen-sm-down {
+		align-self: flex-end;
+		margin-top: 5px;
+	}
 }
 
 .multifactorBackupCode {
