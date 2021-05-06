@@ -36,11 +36,13 @@ class ModerationQueueReportAction extends ModerationQueueAction
     {
         $this->validateRemoveReport();
 
-        if (!ModerationQueueReportManager::getInstance()->canRemoveContent($this->queue->getDecoratedObject())) {
-            throw new PermissionDeniedException();
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            if (!ModerationQueueReportManager::getInstance()->canRemoveContent($moderationQueueEditor->getDecoratedObject())) {
+                throw new PermissionDeniedException();
+            }
         }
 
-        $this->parameters['message'] = (isset($this->parameters['message']) ? StringUtil::trim($this->parameters['message']) : '');
+        $this->parameters['message'] = isset($this->parameters['message']) ? StringUtil::trim($this->parameters['message']) : '';
     }
 
     /**
@@ -48,13 +50,14 @@ class ModerationQueueReportAction extends ModerationQueueAction
      */
     public function removeContent()
     {
-        // mark content as deleted
-        ModerationQueueReportManager::getInstance()->removeContent(
-            $this->queue->getDecoratedObject(),
-            $this->parameters['message']
-        );
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            ModerationQueueReportManager::getInstance()->removeContent(
+                $moderationQueueEditor->getDecoratedObject(),
+                $this->parameters['message']
+            );
 
-        $this->queue->markAsConfirmed();
+            $moderationQueueEditor->markAsConfirmed();
+        }
 
         $this->unmarkItems();
     }
