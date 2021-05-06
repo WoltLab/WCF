@@ -154,6 +154,9 @@ class LanguageImportForm extends AbstractForm
         LanguageFactory::getInstance()->deleteLanguageCache();
         $this->saved();
 
+        // reset fields
+        $this->sourceLanguageID = 0;
+
         // show success message
         WCF::getTPL()->assign('success', true);
     }
