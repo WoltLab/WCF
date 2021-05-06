@@ -18,7 +18,7 @@ use wcf\util\XML;
  * Shows the language import form.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Form
  */
@@ -66,6 +66,7 @@ class LanguageImportForm extends AbstractForm
 
     /**
      * @var int
+     * @since   5.4
      */
     public $packageID = 0;
 
@@ -156,6 +157,7 @@ class LanguageImportForm extends AbstractForm
 
         // reset fields
         $this->sourceLanguageID = 0;
+        $this->packageID = 0;
 
         // show success message
         WCF::getTPL()->assign('success', true);
