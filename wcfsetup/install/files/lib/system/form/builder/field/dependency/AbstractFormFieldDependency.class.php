@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field\dependency;
 
+use wcf\system\application\ApplicationHandler;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
@@ -46,6 +47,13 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
      * @var null|string
      */
     protected $templateName;
+
+    /**
+     * abbreviation of the application the template belongs to
+     * @var string
+     * @since   5.4
+     */
+    protected $templateNameApplication = 'wcf';
 
     /**
      * @inheritDoc
@@ -133,8 +141,11 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
         if ($this->templateName === null) {
             throw new \LogicException("Template name is not set.");
         }
+        if (ApplicationHandler::getInstance()->getApplication($this->templateNameApplication) === null) {
+            throw new \LogicException("Unknown application with abbreviation '{$this->templateNameApplication}'.");
+        }
 
-        return WCF::getTPL()->fetch($this->templateName, 'wcf', [
+        return WCF::getTPL()->fetch($this->templateName, $this->templateNameApplication, [
             'dependency' => $this,
         ], true);
     }
