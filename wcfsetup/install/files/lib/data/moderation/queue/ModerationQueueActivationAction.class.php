@@ -75,8 +75,10 @@ class ModerationQueueActivationAction extends ModerationQueueAction
         $this->readString('message', true);
         $this->validateEnableContent();
 
-        if (!ModerationQueueActivationManager::getInstance()->canRemoveContent($this->queue->getDecoratedObject())) {
-            throw new PermissionDeniedException();
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            if (!ModerationQueueActivationManager::getInstance()->canRemoveContent($moderationQueueEditor->getDecoratedObject())) {
+                throw new PermissionDeniedException();
+            }
         }
     }
 
@@ -85,13 +87,14 @@ class ModerationQueueActivationAction extends ModerationQueueAction
      */
     public function removeContent()
     {
-        // mark content as deleted
-        ModerationQueueActivationManager::getInstance()->removeContent(
-            $this->queue->getDecoratedObject(),
-            $this->parameters['message']
-        );
+        foreach ($this->getObjects() as $moderationQueueEditor) {
+            ModerationQueueActivationManager::getInstance()->removeContent(
+                $moderationQueueEditor->getDecoratedObject(),
+                $this->parameters['message']
+            );
 
-        $this->queue->markAsRejected();
+            $moderationQueueEditor->markAsRejected();
+        }
 
         $this->unmarkItems();
     }
