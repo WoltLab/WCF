@@ -21,6 +21,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
     UiMessageShare = tslib_1.__importStar(UiMessageShare);
     UiMessageShareProviders = tslib_1.__importStar(UiMessageShareProviders);
     const shareButtons = new WeakSet();
+    const offerNativeSharing = window.navigator.share !== undefined;
     /**
      * Copies the contents of one of the share dialog's input elements to the clipboard.
      */
@@ -84,6 +85,20 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         return "";
     }
     /**
+     * Opens the native share menu.
+     */
+    async function nativeShare(event) {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const shareOptions = {
+            url: button.dataset.url,
+        };
+        if (button.dataset.title) {
+            shareOptions.title = button.dataset.title;
+        }
+        await window.navigator.share(shareOptions);
+    }
+    /**
      * Opens the share dialog after clicking on the share button.
      */
     function openDialog(event) {
@@ -101,10 +116,22 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         </dl>
       `;
             }
+            let nativeSharingElement = "";
+            if (offerNativeSharing) {
+                nativeSharingElement = `
+        <dl>
+          <dt></dt>
+          <dd>
+              <button class="shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get("wcf.message.share.nativeShare")}</button>
+          </dd>
+        </dl>
+      `;
+            }
             const dialogContent = `
       <div class="shareContentDialog">
         ${getDialogElements(target)}
         ${providerElement}
+        ${nativeSharingElement}
       </div>
     `;
             const dialogData = Dialog_1.default.openStatic(dialogId, dialogContent, {
@@ -114,6 +141,9 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
             dialogData.content
                 .querySelectorAll(".shareDialogCopyButton")
                 .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
+            if (offerNativeSharing) {
+                dialogData.content.querySelector(".shareDialogNativeButton").addEventListener("click", (ev) => nativeShare(ev));
+            }
             if (providerButtons) {
                 UiMessageShare.init();
             }
