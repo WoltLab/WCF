@@ -222,11 +222,6 @@ final class ExifUtil
         if (isset($rawExifData['FocalLength']) && \is_string($rawExifData['FocalLength'])) {
             $exifData['FocalLength'] = self::convertExifRational($rawExifData['FocalLength']);
         }
-        /*if (isset($rawExifData['ShutterSpeedValue']) && is_string($rawExifData['ShutterSpeedValue'])) {
-            // To convert this value to ordinary 'Shutter Speed'; calculate this value's power of 2, then reciprocal.
-            // For example, if value is '4', shutter speed is 1/(2^4)=1/16 second. (signed rational)
-            $exifData['ShutterSpeedValue'] = '1/' . round(pow(2, self::convertExifRational($rawExifData['ShutterSpeedValue'])), 0);
-        }*/
         if (isset($rawExifData['ISOSpeedRatings'])) {
             // CCD sensitivity equivalent to Ag-Hr film speedrate. (unsigned short)
             $exifData['ISOSpeedRatings'] = \intval($rawExifData['ISOSpeedRatings']);

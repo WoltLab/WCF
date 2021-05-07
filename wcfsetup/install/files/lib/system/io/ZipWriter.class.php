@@ -125,11 +125,6 @@ class ZipWriter
         // store the compressed data immediately following the file header
         $header .= $compressedData;
 
-        // complete the file record by adding an additional footer directly following the file data
-        //$header .= pack("V", $crc);
-        //$header .= pack("V", $sizeCompressed);
-        //$header .= pack("V", $sizeUncompressed);
-
         // store the completed file record in the $headers array
         $this->headers[] = $header;
 

@@ -195,7 +195,6 @@ final class FileUtil
         $target = \explode('/', $targetDir);
 
         $relPath = '';
-        //for ($i = max(count($current), count($target)) - 1; $i >= 0; $i--) {
         for ($i = 0, $max = \max(\count($current), \count($target)); $i < $max; $i++) {
             if (isset($current[$i]) && isset($target[$i])) {
                 if ($current[$i] != $target[$i]) {
@@ -505,7 +504,6 @@ final class FileUtil
         }
 
         $sourceFile = new GZipFile($gzipped, 'rb');
-        //$filesize = $sourceFile->getFileSize();
         $targetFile = new File($destination);
         while (!$sourceFile->eof()) {
             $targetFile->write($sourceFile->read(512), 512);

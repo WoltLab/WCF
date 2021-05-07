@@ -1541,7 +1541,7 @@ class TemplateScriptingCompiler
                         break;
 
                     case 'object access':
-                        if (/*strpos($values[$i], '$') !== false || */ \strpos($values[$i], '@@') !== false) {
+                        if (\strpos($values[$i], '@@') !== false) {
                             throw new SystemException(
                                 static::formatSyntaxError(
                                     "unexpected '->" . $values[$i] . "' in tag '" . $tag . "'",
