@@ -45,6 +45,14 @@ a {
 	flex-direction: column;
 }
 
+/* <select> fields placed inside a flexbox parent while containing
+   long select options will cause an invisible page overflow, when
+   one such option is selected. The <select> itself stays within the
+   boundaries, but a scrollbar will appear. */
+html.iOS select {
+	overflow: hidden;
+}
+
 /* COLUMN LAYOUT */
 .pageHeaderContainer,
 .boxesHeaderBoxes,
