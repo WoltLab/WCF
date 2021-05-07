@@ -4221,6 +4221,7 @@ Dateianhänge:
 		<item name="wcf.message.share.socialMedia"><![CDATA[Social Media]]></item>
 		<item name="wcf.message.share.copy"><![CDATA[Code kopieren]]></item>
 		<item name="wcf.message.share.copy.success"><![CDATA[Der Code wurde erfolgreich kopiert.]]></item>
+		<item name="wcf.message.share.nativeShare"><![CDATA[Weitere Optionen]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[Erweiterte Antwort]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>

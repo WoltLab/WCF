@@ -20,6 +20,8 @@ import * as UiMessageShareProviders from "./Providers";
 
 const shareButtons = new WeakSet<HTMLElement>();
 
+const offerNativeSharing = window.navigator.share !== undefined;
+
 /**
  * Copies the contents of one of the share dialog's input elements to the clipboard.
  */
@@ -105,6 +107,24 @@ function getProviderButtons(): string {
 }
 
 /**
+ * Opens the native share menu.
+ */
+async function nativeShare(event: Event): Promise<void> {
+  event.preventDefault();
+
+  const button = event.currentTarget as HTMLButtonElement;
+
+  const shareOptions: ShareData = {
+    url: button.dataset.url!,
+  };
+  if (button.dataset.title) {
+    shareOptions.title = button.dataset.title;
+  }
+
+  await window.navigator.share(shareOptions);
+}
+
+/**
  * Opens the share dialog after clicking on the share button.
  */
 function openDialog(event: MouseEvent): void {
@@ -124,10 +144,27 @@ function openDialog(event: MouseEvent): void {
       `;
     }
 
+    let nativeSharingElement = "";
+    if (offerNativeSharing) {
+      nativeSharingElement = `
+        <dl>
+          <dt></dt>
+          <dd>
+              <button class="shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
+                target.href,
+              )}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get(
+        "wcf.message.share.nativeShare",
+      )}</button>
+          </dd>
+        </dl>
+      `;
+    }
+
     const dialogContent = `
       <div class="shareContentDialog">
         ${getDialogElements(target)}
         ${providerElement}
+        ${nativeSharingElement}
       </div>
     `;
 
@@ -139,6 +176,9 @@ function openDialog(event: MouseEvent): void {
     dialogData.content
       .querySelectorAll(".shareDialogCopyButton")
       .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
+    if (offerNativeSharing) {
+      dialogData.content.querySelector(".shareDialogNativeButton")!.addEventListener("click", (ev) => nativeShare(ev));
+    }
 
     if (providerButtons) {
       UiMessageShare.init();
