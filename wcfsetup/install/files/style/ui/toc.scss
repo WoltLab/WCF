@@ -1,6 +1,7 @@
 .tableOfContentsContainer {
 	border: 1px solid $wcfContentBorderInner;
-	padding: 10px;
+	/* The list numbers extend into the horizontal padding, 10px is not enough for double digit numbers. */
+	padding: 10px 20px;
 
 	&.open .jsTableOfContentsShow {
 		display: none;
