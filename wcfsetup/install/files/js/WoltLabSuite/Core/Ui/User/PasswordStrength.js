@@ -40,6 +40,8 @@ define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], func
     class PasswordStrength {
         constructor(input, options) {
             this.input = input;
+            this.relatedInputs = [];
+            this.staticDictionary = [];
             this.score = document.createElement("span");
             this.verdictResult = document.createElement("input");
             void new Promise((resolve_1, reject_1) => { require(["zxcvbn"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ default: zxcvbn }) => {

@@ -50,8 +50,8 @@ function initializeFeedbacker(Feedback: typeof zxcvbn.Feedback): zxcvbn.Feedback
 
 class PasswordStrength {
   private zxcvbn: typeof zxcvbn;
-  private relatedInputs: HTMLInputElement[];
-  private staticDictionary: StaticDictionary;
+  private relatedInputs: HTMLInputElement[] = [];
+  private staticDictionary: StaticDictionary = [];
   private feedbacker: zxcvbn.Feedback;
 
   private wrapper: HTMLDivElement;
