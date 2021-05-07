@@ -12,9 +12,9 @@
 
 {if $objects|count}
 	<div class="section sectionContainerList">
-		<ol class="containerList userList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\user\ignore\UserIgnoreAction">
+		<ol class="containerList userList jsReloadPageWhenEmpty">
 			{foreach from=$objects item=user}
-				<li class="jsIgnoredUser jsObjectActionObject" data-object-id="{@$user->getObjectID()}">
+				<li class="jsIgnoredUser" data-object-id="{@$user->getObjectID()}">
 					<div class="box48">
 						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
@@ -23,7 +23,12 @@
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
-									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unignore{/lang}" data-object-id="{@$user->ignoreID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
+									<li>
+										<a class="pointer jsTooltip jsEditIgnoreButton" title="{lang}wcf.global.button.edit{/lang}">
+											<span class="icon icon16 fa-pencil"></span>
+											<span class="invisible">{lang}wcf.global.button.edit{/lang}</span>
+										</a>
+									</li>
 									{event name='userButtons'}
 								</ul>
 							</nav>
@@ -53,6 +58,16 @@
 			</nav>
 		{/hascontent}
 	</footer>
+	
+	<script data-relocate="true">
+		require(['Language', 'WoltLabSuite/Core/Ui/User/Ignore/List'], (Language, { UiUserIgnoreList }) => {
+			Language.addObject({
+				'wcf.user.button.ignore': '{jslang}wcf.user.button.ignore{/jslang}',
+			});
+			
+			new UiUserIgnoreList();
+		});
+	</script>
 {else}
 	<p class="info" role="status">{lang}wcf.user.ignoredUsers.noUsers{/lang}</p>
 {/if}
