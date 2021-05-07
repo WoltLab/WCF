@@ -4,6 +4,7 @@
 	border-radius: 2px;
 	color: rgb(68, 68, 68) !important;
 	font-family: $wcfFontFamilyMonospace;
+	font-size: 14px;
 	margin: 1em 0;
 	padding: 10px 20px;
 	position: relative;
@@ -121,6 +122,7 @@
 			display: block;
 			overflow-x: auto;
 			font-family: $wcfFontFamilyMonospace;
+			font-size: 14px;
 
 			.codeBoxLine {
 				display: block;
