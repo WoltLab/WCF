@@ -603,9 +603,6 @@ final class CronjobUtil
         // perform the actual regex pattern matching.
         $range = '(((' . $pattern . ')|(\*\/' . $step . ')?)|(((' . $pattern . ')-(' . $pattern . '))(\/' . $step . ')?))';
 
-        // $longPattern prototype: ^\d+(,\d)*$
-        // $longPattern = '/^(?<!,)'.$range.'+(,'.$range.')*$/i'; // with assertions?
-        // $longPattern = '/^'.$range.'+(,'.$range.')*$/i'; / does not work on some php installations
         $longPattern = '/^' . $range . '(,' . $range . ')*$/i';
 
         if ($value != '*' && !\preg_match($longPattern, $value)) {

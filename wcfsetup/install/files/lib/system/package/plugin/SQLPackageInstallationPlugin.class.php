@@ -104,7 +104,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         // delete or alter tables
         foreach ($entries as $entry) {
             // don't alter table if it should be dropped
-            if (!empty($entry['sqlColumn'])/* || !empty($entry['sqlIndex'])*/) {
+            if (!empty($entry['sqlColumn'])) {
                 $isDropped = false;
                 foreach ($entries as $entry2) {
                     if (
