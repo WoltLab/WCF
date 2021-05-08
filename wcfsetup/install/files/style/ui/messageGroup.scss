@@ -412,7 +412,7 @@
 
 .contentHeader.messageGroupContentHeader {
 	> .contentHeaderIcon {
-		@include screen-lg {
+		@include screen-md-up {
 			position: relative;
 		}
 	}
