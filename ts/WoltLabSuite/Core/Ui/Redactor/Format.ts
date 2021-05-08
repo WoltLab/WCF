@@ -423,9 +423,7 @@ export function removeFormat(editorElement: HTMLElement, property: string): void
   const selectionMarker = getSelectionMarker(editorElement, selection);
 
   document.execCommand(selectionMarker[1]);
-  if (selectionMarker[0] !== "strike") {
-    strikeElements = editorElement.querySelectorAll(selectionMarker[0]);
-  }
+  strikeElements = editorElement.querySelectorAll(selectionMarker[0]);
 
   // Safari 13 sometimes refuses to execute the `strikeThrough` command.
   if (rangeIsCollapsed && helperTextNode !== null && strikeElements.length === 0) {

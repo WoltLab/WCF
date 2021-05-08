@@ -356,9 +356,7 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
         strikeElements.forEach((el) => Util_1.default.unwrapChildNodes(el));
         const selectionMarker = getSelectionMarker(editorElement, selection);
         document.execCommand(selectionMarker[1]);
-        if (selectionMarker[0] !== "strike") {
-            strikeElements = editorElement.querySelectorAll(selectionMarker[0]);
-        }
+        strikeElements = editorElement.querySelectorAll(selectionMarker[0]);
         // Safari 13 sometimes refuses to execute the `strikeThrough` command.
         if (rangeIsCollapsed && helperTextNode !== null && strikeElements.length === 0) {
             // Executing the command again will toggle off the previous command that had no
