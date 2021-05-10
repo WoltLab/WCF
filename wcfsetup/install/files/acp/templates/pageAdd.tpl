@@ -361,6 +361,8 @@
 						</dd>
 					</dl>
 					
+					{event name='informationFields'}
+					
 					<dl{if $errorField == 'content'} class="formError"{/if}>
 						<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
 						<dd>
@@ -382,6 +384,8 @@
 						{include file='messageFormTabs' wysiwygContainerID='content0'}
 					{/if}
 					
+					{event name='messageFields'}
+					
 					<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
 						<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 						<dd>
@@ -397,6 +401,24 @@
 							{/if}
 						</dd>
 					</dl>
+					
+					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
+						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
+						<dd>
+							<input type="text" class="long" name="metaKeywords[0]" id="metaKeywords" value="{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}">
+							{if $errorField == 'metaKeywords'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					{event name='metaFields'}
 				</div>
 			{else}
 				<div class="tabMenuContainer">
@@ -450,11 +472,11 @@
 										</dd>
 									</dl>
 									
-									{event name='messageFieldsMultilingual'}
-									
 									{if $pageType == 'text'}
 										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
 									{/if}
+									
+									{event name='messageFieldsMultilingual'}
 									
 									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
