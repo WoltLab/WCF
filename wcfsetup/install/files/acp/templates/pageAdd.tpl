@@ -361,6 +361,7 @@
 						</dd>
 					</dl>
 					
+					{event name='informationFields'}
 					
 					<dl{if $errorField == 'content'} class="formError"{/if}>
 						<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
@@ -382,6 +383,8 @@
 					{if $pageType == 'text'}
 						{include file='messageFormTabs' wysiwygContainerID='content0'}
 					{/if}
+					
+					{event name='messageFields'}
 					
 					<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
 						<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
@@ -414,6 +417,8 @@
 							{/if}
 						</dd>
 					</dl>
+					
+					{event name='metaFields'}
 				</div>
 			{else}
 				<div class="tabMenuContainer">
