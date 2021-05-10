@@ -238,45 +238,49 @@ function toggleMobileNavigation(message: HTMLElement, quickOptions: HTMLElement,
 function setupLGTouchNavigation(): void {
   _enabledLGTouchNavigation = true;
   document.querySelectorAll(".boxMenuHasChildren > a").forEach((element: HTMLElement) => {
-    element.addEventListener("touchstart", function (event) {
-      if (_enabledLGTouchNavigation && element.getAttribute("aria-expanded") === "false") {
-        event.preventDefault();
+    element.addEventListener(
+      "touchstart",
+      (event) => {
+        if (_enabledLGTouchNavigation && element.getAttribute("aria-expanded") === "false") {
+          event.preventDefault();
 
-        element.setAttribute("aria-expanded", "true");
+          element.setAttribute("aria-expanded", "true");
 
-        // Register an new event listener after the touch ended, which is triggered once when an
-        // element on the page is pressed. This allows us to reset the touch status of the navigation
-        // entry when the entry is no longer open, so that it does not redirect to the page when you
-        // click it again.
-        element.addEventListener(
-          "touchend",
-          () => {
-            document.body.addEventListener(
-              "touchstart",
-              () => {
-                document.body.addEventListener(
-                  "touchend",
-                  (event) => {
-                    const parent = element.parentElement!;
-                    const target = event.target as HTMLElement;
-                    if (!parent.contains(target) && target !== parent) {
-                      element.setAttribute("aria-expanded", "false");
-                    }
-                  },
-                  {
-                    once: true,
-                  },
-                );
-              },
-              {
-                once: true,
-              },
-            );
-          },
-          { once: true },
-        );
-      }
-    });
+          // Register an new event listener after the touch ended, which is triggered once when an
+          // element on the page is pressed. This allows us to reset the touch status of the navigation
+          // entry when the entry is no longer open, so that it does not redirect to the page when you
+          // click it again.
+          element.addEventListener(
+            "touchend",
+            () => {
+              document.body.addEventListener(
+                "touchstart",
+                () => {
+                  document.body.addEventListener(
+                    "touchend",
+                    (event) => {
+                      const parent = element.parentElement!;
+                      const target = event.target as HTMLElement;
+                      if (!parent.contains(target) && target !== parent) {
+                        element.setAttribute("aria-expanded", "false");
+                      }
+                    },
+                    {
+                      once: true,
+                    },
+                  );
+                },
+                {
+                  once: true,
+                },
+              );
+            },
+            { once: true },
+          );
+        }
+      },
+      { passive: false },
+    );
   });
 }
 

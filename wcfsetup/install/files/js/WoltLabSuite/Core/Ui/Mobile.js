@@ -205,7 +205,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     function setupLGTouchNavigation() {
         _enabledLGTouchNavigation = true;
         document.querySelectorAll(".boxMenuHasChildren > a").forEach((element) => {
-            element.addEventListener("touchstart", function (event) {
+            element.addEventListener("touchstart", (event) => {
                 if (_enabledLGTouchNavigation && element.getAttribute("aria-expanded") === "false") {
                     event.preventDefault();
                     element.setAttribute("aria-expanded", "true");
@@ -229,7 +229,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
                         });
                     }, { once: true });
                 }
-            });
+            }, { passive: false });
         });
     }
     function enableLGTouchNavigation() {
