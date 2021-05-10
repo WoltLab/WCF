@@ -89,7 +89,9 @@
 						<td class="columnID columnEntryID">{@$entry->entryID}</td>
 						<td class="columnTitle columnMessageID">
 							{$entry->subject}<br>
-							<small><kbd title="{$entry->messageID}">{$entry->getFormattedMessageId()|truncate:50}</kbd></small>
+							<small>
+								<kbd title="{$entry->messageID}">{$entry->getFormattedMessageId()|truncate:50}</kbd>
+							</small>
 						</td>
 						<td class="columnText columnRecipient">
 							{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
@@ -98,7 +100,10 @@
 								{$entry->getRedactedRecipientAddress()}
 							{/if}
 							{if $entry->getRecipient()}
-								(<a href="{link controller='EmailLogList'}filter[username]={$entry->getRecipient()->username}{/link}">{$entry->getRecipient()->getTitle()}</a>)
+								<br>
+								<small>
+									<a href="{link controller='EmailLogList'}filter[username]={$entry->getRecipient()->username}{/link}">{$entry->getRecipient()->getTitle()}</a>
+								</small>
 							{/if}
 						</td>
 						<td class="columnDate columnTime">{@$entry->time|time}</td>
