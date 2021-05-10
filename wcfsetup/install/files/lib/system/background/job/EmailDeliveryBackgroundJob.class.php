@@ -91,7 +91,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
                     $this->email->getSubject(),
                     20,
                     StringUtil::HELLIP,
-                    false
+                    true
                 ),
                 'recipient' => $this->envelopeTo->getAddress(),
                 'recipientID' => ($this->envelopeTo instanceof UserMailbox) ? $this->envelopeTo->getUser()->userID : null,
