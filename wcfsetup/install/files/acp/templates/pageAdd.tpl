@@ -361,6 +361,7 @@
 						</dd>
 					</dl>
 					
+					
 					<dl{if $errorField == 'content'} class="formError"{/if}>
 						<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
 						<dd>
@@ -466,11 +467,11 @@
 										</dd>
 									</dl>
 									
-									{event name='messageFieldsMultilingual'}
-									
 									{if $pageType == 'text'}
 										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
 									{/if}
+									
+									{event name='messageFieldsMultilingual'}
 									
 									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
