@@ -94,7 +94,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
 
     /**
      * @inheritDoc
-     * @return  Article[]
+     * @return  ArticleUserNotificationObject[]
      */
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {

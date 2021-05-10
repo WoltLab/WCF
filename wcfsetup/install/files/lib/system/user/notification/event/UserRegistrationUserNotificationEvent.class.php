@@ -95,7 +95,7 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
 
     /**
      * @inheritDoc
-     * @return  UserFollowUserNotificationObject[]
+     * @return  UserRegistrationUserNotificationObject[]
      */
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
