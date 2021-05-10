@@ -10,9 +10,12 @@
 	position: relative;
 	width: 600px;
 
+	/* OG images are designed with a 2:1 aspect ratio. */
 	&.unfurlUrlCardCoverImage {
+		width: 600px;
+
 		.unfurlUrlImage {
-			min-height: 150px;
+			height: 200px;
 			position: relative;
 		}
 	}
