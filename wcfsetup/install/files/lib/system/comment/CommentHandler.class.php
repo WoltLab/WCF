@@ -493,7 +493,7 @@ class CommentHandler extends SingletonFactory
         }
 
         if (!empty($commentEvents)) {
-            foreach ($commentEvents as $eventID => $eventData) {
+            foreach ($commentEvents as $eventData) {
                 UserNotificationHandler::getInstance()->markAsConfirmed(
                     $eventData['eventName'],
                     $eventData['objectType'],
@@ -572,7 +572,7 @@ class CommentHandler extends SingletonFactory
             }
 
             if (!empty($responseEvents)) {
-                foreach ($responseEvents as $eventID => $eventData) {
+                foreach ($responseEvents as $eventData) {
                     UserNotificationHandler::getInstance()->markAsConfirmed(
                         $eventData['eventName'],
                         $eventData['objectType'],
@@ -672,7 +672,7 @@ class CommentHandler extends SingletonFactory
         }
 
         if (!empty($responseEvents)) {
-            foreach ($responseEvents as $eventID => $eventData) {
+            foreach ($responseEvents as $eventData) {
                 UserNotificationHandler::getInstance()->markAsConfirmed(
                     $eventData['eventName'],
                     $eventData['objectType'],

@@ -203,7 +203,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         // remove duplicates when there are both versions from trusted and untrusted servers
         foreach ($possiblePackages as $identifier => $packageSources) {
             $hasTrustedSource = false;
-            foreach ($packageSources as $packageUpdateID => $packageUpdateServerID) {
+            foreach ($packageSources as $packageUpdateServerID) {
                 if (\in_array($packageUpdateServerID, $trustedServerIDs)) {
                     $hasTrustedSource = true;
                     break;
@@ -222,7 +222,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         // Sort by the highest version and return all other sources for the same package.
         $validPackageUpdateIDs = [];
-        foreach ($possiblePackages as $identifier => $packageSources) {
+        foreach ($possiblePackages as $packageSources) {
             if (\count($packageSources) > 1) {
                 $packageUpdateVersionIDs = [];
                 foreach (\array_keys($packageSources) as $packageUpdateID) {
@@ -395,7 +395,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         // determine highest versions
         $packageUpdates = [];
-        foreach ($packageVersions as $package => $versionData) {
+        foreach ($packageVersions as $versionData) {
             $accessible = $existing = $versions = [];
 
             foreach ($versionData as $packageUpdateID => $versionTypes) {
@@ -550,7 +550,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
          * @var int $packageUpdateID
          * @var ViewablePackageUpdate $packageUpdate
          */
-        foreach ($packageUpdates as $packageUpdateID => $packageUpdate) {
+        foreach ($packageUpdates as $packageUpdate) {
             $versionIDs = $updateData[$packageUpdate->packageUpdateID];
             $packageUpdate->setAccessibleVersion($updateVersions[$versionIDs['accessible']]);
             $packageUpdate->setLatestVersion($updateVersions[$versionIDs['existing']]);

@@ -331,7 +331,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
                         });
 
                         $iterator = new \RecursiveIteratorIterator($filter, \RecursiveIteratorIterator::SELF_FIRST);
-                        foreach ($iterator as $value => $item) {
+                        foreach ($iterator as $item) {
                             /** @var \SplFileInfo $item */
                             $itemPath = $item->getRealPath();
                             if (\is_dir($itemPath)) {
@@ -410,7 +410,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
                         });
 
                         $iterator = new \RecursiveIteratorIterator($filter, \RecursiveIteratorIterator::SELF_FIRST);
-                        foreach ($iterator as $value => $item) {
+                        foreach ($iterator as $item) {
                             /** @var \SplFileInfo $item */
                             $itemPath = $item->getRealPath();
                             if (\is_dir($itemPath)) {

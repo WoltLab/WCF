@@ -98,8 +98,6 @@ final class StyleCompiler extends SingletonFactory
      */
     public static function getDefaultVariables()
     {
-        $variables = [];
-
         $sql = "SELECT      variable.variableName, variable.defaultValue
                 FROM        wcf" . WCF_N . "_style_variable variable
                 ORDER BY    variable.variableID ASC";

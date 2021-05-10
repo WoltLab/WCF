@@ -199,7 +199,7 @@ class WCFSetup extends WCF
      */
     protected static function getAvailableLanguages()
     {
-        $languages = $match = [];
+        $languages = [];
         foreach (\glob(TMP_DIR . 'setup/lang/*.xml') as $file) {
             $xml = new XML();
             $xml->load($file);

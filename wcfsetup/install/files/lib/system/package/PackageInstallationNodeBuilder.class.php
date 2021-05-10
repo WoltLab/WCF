@@ -645,7 +645,7 @@ class PackageInstallationNodeBuilder
                     VALUES      (?, ?, ?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
-            foreach ($pluginNodes as $index => $nodeData) {
+            foreach ($pluginNodes as $nodeData) {
                 $statement->execute([
                     $this->installation->queue->queueID,
                     $this->installation->queue->processNo,

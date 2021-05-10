@@ -401,7 +401,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             SearchIndexManager::getInstance()->createSearchIndices();
 
             // update search index
-            foreach ($this->pages as $pageID => $page) {
+            foreach ($this->pages as $page) {
                 if ($page->pageType == 'text' || $page->pageType == 'html') {
                     foreach ($page->getPageContents() as $languageID => $pageContent) {
                         SearchIndexManager::getInstance()->set(

@@ -313,7 +313,7 @@ class UserListPage extends SortablePage
             }
 
             // get special columns
-            foreach ($this->users as $key => $user) {
+            foreach ($this->users as $user) {
                 foreach ($this->columns as $column) {
                     switch ($column) {
                         case 'email':

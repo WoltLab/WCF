@@ -129,7 +129,7 @@ final class HTTPRequest
                         new \RecursiveArrayIterator($this->postParameters),
                         \RecursiveIteratorIterator::SELF_FIRST
                     );
-                    foreach ($iterator as $k => $v) {
+                    foreach ($iterator as $v) {
                         /** @noinspection PhpUndefinedMethodInspection */
                         if (!$iterator->hasChildren()) {
                             $key = '';

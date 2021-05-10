@@ -841,7 +841,7 @@ class PackageUpdateDispatcher extends SingletonFactory
 
         // remove requirements of application packages
         if ($removeRequirements) {
-            foreach ($existingPackages as $identifier => $instances) {
+            foreach ($existingPackages as $instances) {
                 foreach ($instances as $instance) {
                     if ($instance['isApplication'] && isset($updates[$instance['packageID']])) {
                         $updates = $this->removeUpdateRequirements(

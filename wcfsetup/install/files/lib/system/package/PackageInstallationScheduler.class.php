@@ -450,7 +450,7 @@ class PackageInstallationScheduler
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
-                foreach ($packageInstallations as $key => $packageInstallation) {
+                foreach ($packageInstallations as $packageInstallation) {
                     if ($packageInstallation['package'] == $row['excludedPackage']) {
                         if (!empty($row['excludedPackageVersion'])) {
                             // check version

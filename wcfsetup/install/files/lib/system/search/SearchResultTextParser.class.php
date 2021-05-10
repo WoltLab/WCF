@@ -142,7 +142,7 @@ class SearchResultTextParser extends SingletonFactory
                     $newText = '';
                     $i = 0;
                     $length = \count($matches);
-                    foreach ($matches as $keyword => $position) {
+                    foreach ($matches as $position) {
                         if ($position['start'] < $start) {
                             $position['end'] += $start - $position['start'];
                             $position['start'] = $start;

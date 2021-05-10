@@ -122,7 +122,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
         WCF::getSession()->disableUpdate();
 
         try {
-            foreach ($this->getObjects() as $key => $cronjob) {
+            foreach ($this->getObjects() as $cronjob) {
                 // mark them as pending
                 $cronjob->update(['state' => Cronjob::PENDING]);
             }

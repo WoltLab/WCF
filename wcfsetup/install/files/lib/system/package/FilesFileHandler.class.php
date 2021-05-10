@@ -40,7 +40,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
 
                 // check delivered files
                 if (!empty($lockedFiles)) {
-                    foreach ($files as $key => $file) {
+                    foreach ($files as $file) {
                         if (isset($lockedFiles[$file])) {
                             $owningPackage = new Package($lockedFiles[$file]);
 

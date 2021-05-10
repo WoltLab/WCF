@@ -40,7 +40,7 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder
             if ($templateListener->options || $templateListener->permissions) {
                 $templateCode = '{if ';
 
-                $options = $permissions = [];
+                $options = [];
                 if ($templateListener->options) {
                     $options = \explode(',', \strtoupper($templateListener->options));
 

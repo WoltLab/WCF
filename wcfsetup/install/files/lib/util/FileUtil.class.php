@@ -339,7 +339,7 @@ final class FileUtil
             $result[] = '';
         }
 
-        foreach ($pathA as $key => $dir) {
+        foreach ($pathA as $dir) {
             if ($dir == '..') {
                 if (\end($result) == '..') {
                     $result[] = '..';

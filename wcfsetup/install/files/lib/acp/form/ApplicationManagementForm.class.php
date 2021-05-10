@@ -129,7 +129,7 @@ final class ApplicationManagementForm extends AbstractForm
             }
         }
 
-        foreach ($this->landingPageID as $packageID => $landingPageID) {
+        foreach ($this->landingPageID as $landingPageID) {
             if (!$landingPageID) {
                 continue;
             }

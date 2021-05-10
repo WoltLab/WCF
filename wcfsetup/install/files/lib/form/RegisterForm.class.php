@@ -452,7 +452,6 @@ class RegisterForm extends UserAddForm
         $result = $this->objectAction->executeAction();
         /** @var User $user */
         $user = $result['returnValues'];
-        $userEditor = new UserEditor($user);
 
         // update session
         WCF::getSession()->changeUser($user);

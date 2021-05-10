@@ -606,7 +606,7 @@ class PackageInstallationDispatcher
                     VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
-            foreach ($requirements as $identifier => $possibleRequirements) {
+            foreach ($requirements as $possibleRequirements) {
                 $requirement = \array_shift($possibleRequirements);
 
                 $statement->execute([
