@@ -175,14 +175,18 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         return $variableNames;
     }
 
-    public function createCoverPhotoVariant(?string $sourceLocation = null): void
+    /**
+     * @return null|bool
+     * @since 5.4
+     */
+    public function createCoverPhotoVariant(?string $sourceLocation = null)
     {
         if ($sourceLocation === null) {
             $sourceLocation = $this->getCoverPhotoLocation(false);
         }
 
         $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $sourceLocation);
-        ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
+        return ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
     }
 
     /**
