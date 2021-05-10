@@ -41,6 +41,16 @@ use wcf\util\ImageUtil;
 class Style extends DatabaseObject
 {
     /**
+     * @since 5.4
+     */
+    protected $pageLogoSmallHeight = 0;
+
+    /**
+     * @since 5.4
+     */
+    protected $pageLogoSmallWidth = 0;
+
+    /**
      * list of style variables
      * @var string[]
      */
@@ -180,6 +190,25 @@ class Style extends DatabaseObject
         if (empty($this->variables['wcfPageThemeColor'])) {
             $this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
         }
+
+        // Fetch the dimensions of the small logo, avoding calls to `getimagesize` with every request.
+        $filename = \WCF_DIR . 'images/default-logo-small.png';
+        if ($this->getVariable('pageLogoMobile')) {
+            $filename = \WCF_DIR;
+            if ($this->imagePath) {
+                $filename .= $this->imagePath;
+            }
+
+            $filename .= $this->getVariable('pageLogoMobile');
+        }
+
+        if (\file_exists($filename)) {
+            $data = \getimagesize($filename);
+            if ($data !== false) {
+                $this->pageLogoSmallWidth = $data[0];
+                $this->pageLogoSmallHeight = $data[1];
+            }
+        }
     }
 
     /**
@@ -294,6 +323,21 @@ class Style extends DatabaseObject
         }
 
         return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
+    }
+
+    /**
+     * @since 5.4
+     */
+    public function getPageLogoSmallHeight(): int {
+        return $this->pageLogoSmallHeight;
+    }
+
+    /**
+     * @since 5.4
+     */
+    public function getPageLogoSmallWidth(): int
+    {
+        return $this->pageLogoSmallWidth;
     }
 
     /**

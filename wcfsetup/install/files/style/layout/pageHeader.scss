@@ -325,9 +325,8 @@
 
 		.pageHeaderLogoSmall {
 			max-height: 30px;
-
-			/* prevent over-sized logos from overlapping the user panel buttons */
 			max-width: 100%;
+			object-fit: contain;
 		}
 	}
 }
