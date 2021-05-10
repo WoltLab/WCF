@@ -87,7 +87,12 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
             'data' => [
                 'time' => \TIME_NOW,
                 'messageID' => $this->email->getMessageID(),
-                'subject' => StringUtil::truncate($this->email->getSubject(), 20),
+                'subject' => StringUtil::truncate(
+                    $this->email->getSubject(),
+                    20,
+                    StringUtil::HELLIP,
+                    false
+                ),
                 'recipient' => $this->envelopeTo->getAddress(),
                 'recipientID' => ($this->envelopeTo instanceof UserMailbox) ? $this->envelopeTo->getUser()->userID : null,
                 'status' => EmailLogEntry::STATUS_NEW,
