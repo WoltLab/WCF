@@ -15,8 +15,12 @@ define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../.
         insert(mediaList, insertType, thumbnailSize) {
             switch (insertType) {
                 case "separate" /* Separate */: {
+                    let sizeArgument = "";
+                    if (thumbnailSize) {
+                        sizeArgument = ` size="${thumbnailSize}"`;
+                    }
                     const content = Array.from(mediaList.values())
-                        .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
+                        .map((item) => `{{ media="${item.mediaID}"${sizeArgument} }}`)
                         .join("");
                     this.element.codemirror.replaceSelection(content);
                 }

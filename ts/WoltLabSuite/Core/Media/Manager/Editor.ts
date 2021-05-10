@@ -216,9 +216,11 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     }
 
     if (this._options.callbackInsert !== null) {
-      this._options.callbackInsert(this._mediaToInsert, MediaInsertType.Separate, thumbnailSize!);
+      this._options.callbackInsert(this._mediaToInsert, MediaInsertType.Separate, thumbnailSize);
     } else {
       this._options.editor!.buffer.set();
+
+      this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
     }
 
     if (this._mediaToInsertByClipboard) {
@@ -237,7 +239,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   /**
    * Inserts a single media item into the editor.
    */
-  protected _insertMediaItem(thumbnailSize: string, media: Media): void {
+  protected _insertMediaItem(thumbnailSize: string | undefined, media: Media): void {
     if (media.isImage) {
       let available = "";
       ["small", "medium", "large", "original"].some((size) => {

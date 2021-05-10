@@ -44,7 +44,7 @@ export const enum MediaInsertType {
 
 export interface MediaManagerEditorOptions extends MediaManagerOptions {
   buttonClass?: string;
-  callbackInsert: (media: Map<number, Media>, insertType: MediaInsertType, thumbnailSize: string) => void;
+  callbackInsert: (media: Map<number, Media>, insertType: MediaInsertType, thumbnailSize?: string) => void;
   editor?: RedactorEditor;
 }
 

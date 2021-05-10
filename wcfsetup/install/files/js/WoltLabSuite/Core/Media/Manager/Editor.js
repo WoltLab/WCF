@@ -169,6 +169,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             }
             else {
                 this._options.editor.buffer.set();
+                this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
             }
             if (this._mediaToInsertByClipboard) {
                 Clipboard.unmark("com.woltlab.wcf.media", Array.from(this._mediaToInsert.keys()));

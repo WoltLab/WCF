@@ -17,11 +17,16 @@ class AcpUiCodeMirrorMedia {
     });
   }
 
-  protected insert(mediaList: Map<number, Media>, insertType: MediaInsertType, thumbnailSize: string): void {
+  protected insert(mediaList: Map<number, Media>, insertType: MediaInsertType, thumbnailSize?: string): void {
     switch (insertType) {
       case MediaInsertType.Separate: {
+        let sizeArgument = "";
+        if (thumbnailSize) {
+          sizeArgument = ` size="${thumbnailSize}"`;
+        }
+
         const content = Array.from(mediaList.values())
-          .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
+          .map((item) => `{{ media="${item.mediaID}"${sizeArgument} }}`)
           .join("");
 
         (this.element as any).codemirror.replaceSelection(content);
