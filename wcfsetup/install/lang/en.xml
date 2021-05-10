@@ -3962,8 +3962,8 @@ Attachments:
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <kbd>{$parentClass}</kbd>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else if $separator === "\n"}newline{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
-		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be less than {#$maximum}.]]></item>
-		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be greater than {#$minimum}.]]></item>
+		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be greater than {#$maximum}.]]></item>
+		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be less than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>
 		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
