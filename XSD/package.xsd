@@ -101,6 +101,15 @@
 			<xs:element name="isapplication" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="version" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
 			<xs:element name="date" type="xs:date" minOccurs="1" maxOccurs="1" />
+			<xs:element name="license" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="language" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 
