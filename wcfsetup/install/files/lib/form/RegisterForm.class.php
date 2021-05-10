@@ -10,7 +10,6 @@ use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\data\user\UserEditor;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;

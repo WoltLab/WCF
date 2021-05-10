@@ -3,7 +3,6 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\data\user\UserProfile;
-use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
 
 /**
