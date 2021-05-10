@@ -145,7 +145,7 @@
 
 {@FOOTER_CODE}
 
-<a id="bottom"></a>
+<span id="bottom"></span>
 
 </body>
 </html>

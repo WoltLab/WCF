@@ -27,7 +27,7 @@
 	{if !$__pageDataAttributes|empty}{@$__pageDataAttributes}{/if}
 	class="{if $__wcf->getActivePage() != null && $__wcf->getActivePage()->cssClassName}{$__wcf->getActivePage()->cssClassName}{/if}{if !$__pageCssClassName|empty} {$__pageCssClassName}{/if}">
 
-<a id="top"></a>
+<span id="top"></span>
 
 <div id="pageContainer" class="pageContainer">
 	{event name='beforePageHeader'}

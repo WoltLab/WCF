@@ -225,7 +225,7 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
-	<a id="top"></a>
+	<span id="top"></span>
 	
 	{assign var=_acpPageSubMenuActive value=false}
 	{if PACKAGE_ID}

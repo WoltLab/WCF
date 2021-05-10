@@ -12,7 +12,7 @@
 
 <!-- JAVASCRIPT_RELOCATE_POSITION -->
 
-<a id="bottom"></a>
+<span id="bottom"></span>
 
 </body>
 </html>
