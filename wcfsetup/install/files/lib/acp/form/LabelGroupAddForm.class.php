@@ -208,7 +208,7 @@ class LabelGroupAddForm extends AbstractForm
         // save object type relations
         $this->saveObjectTypeRelations($returnValues['returnValues']->groupID);
 
-        foreach ($this->labelObjectTypes as $objectTypeID => $labelObjectType) {
+        foreach ($this->labelObjectTypes as $labelObjectType) {
             $labelObjectType->save();
         }
 

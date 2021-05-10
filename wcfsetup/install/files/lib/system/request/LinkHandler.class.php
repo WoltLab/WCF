@@ -116,7 +116,7 @@ class LinkHandler extends SingletonFactory
     {
         $abbreviation = 'wcf';
         $anchor = '';
-        $isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
+        $isACP = RequestHandler::getInstance()->isACPRequest();
         $isRaw = false;
         $encodeTitle = true;
 

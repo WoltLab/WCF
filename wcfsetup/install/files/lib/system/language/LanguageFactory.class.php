@@ -50,13 +50,13 @@ class LanguageFactory extends SingletonFactory
      * Returns a Language object for the language with the given id.
      *
      * @param int $languageID
-     * @return  Language
+     * @return  Language|null
      */
     public function getLanguage($languageID)
     {
         if (!isset($this->languages[$languageID])) {
             if (!isset($this->cache['languages'][$languageID])) {
-                return;
+                return null;
             }
 
             $this->languages[$languageID] = $this->cache['languages'][$languageID];

@@ -5,7 +5,6 @@ namespace wcf\data\user\ignore;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\follow\UserFollow;
 use wcf\data\user\follow\UserFollowEditor;
-use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;

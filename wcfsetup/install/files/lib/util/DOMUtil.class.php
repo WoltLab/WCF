@@ -139,7 +139,7 @@ final class DOMUtil
     public static function getParentBefore(\DOMNode $node, \DOMElement $ancestor)
     {
         if ($node->parentNode === $ancestor) {
-            return;
+            return null;
         }
 
         $parents = self::getParents($node);

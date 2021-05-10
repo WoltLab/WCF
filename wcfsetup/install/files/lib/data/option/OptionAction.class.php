@@ -189,7 +189,7 @@ class OptionAction extends AbstractDatabaseObjectAction
         foreach ($dirs as $dir => $domainPaths) {
             \krsort($domainPaths);
 
-            foreach ($domainPaths as $domainPath => $value) {
+            foreach ($domainPaths as $value) {
                 $htaccess = "{$dir}.htaccess";
                 $path = FileUtil::addTrailingSlash(\substr($value, \strlen($dir)));
                 if ($path == '/') {

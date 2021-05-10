@@ -28,7 +28,7 @@ class UserObjectWatch extends DatabaseObject
      * @param int $objectTypeID
      * @param int $userID
      * @param int $objectID
-     * @return  UserObjectWatch
+     * @return  UserObjectWatch|null
      */
     public static function getUserObjectWatch($objectTypeID, $userID, $objectID)
     {
@@ -41,7 +41,7 @@ class UserObjectWatch extends DatabaseObject
         $statement->execute([$objectTypeID, $userID, $objectID]);
         $row = $statement->fetch();
         if (!$row) {
-            return;
+            return null;
         }
 
         return new self(null, $row);

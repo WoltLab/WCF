@@ -95,7 +95,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
         // update object type relations
         $this->saveObjectTypeRelations($this->groupID);
 
-        foreach ($this->labelObjectTypes as $objectTypeID => $labelObjectType) {
+        foreach ($this->labelObjectTypes as $labelObjectType) {
             $labelObjectType->save();
         }
 

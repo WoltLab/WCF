@@ -139,7 +139,7 @@ trait TSelectionFormField
 
             if ($nestedOptions) {
                 $collectedOptions = [];
-                foreach ($options as $key => $object) {
+                foreach ($options as $object) {
                     if (!($object instanceof IObjectTreeNode)) {
                         throw new \InvalidArgumentException(
                             "Nested traversable options must implement '" . IObjectTreeNode::class . "'."

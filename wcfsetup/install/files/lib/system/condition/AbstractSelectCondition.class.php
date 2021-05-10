@@ -149,7 +149,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
             $options = $this->getOptions();
 
             if (!isset($options[$this->fieldValue])) {
-                foreach ($options as $key => $value) {
+                foreach ($options as $value) {
                     if (\is_array($value) && isset($value[$this->fieldValue])) {
                         return;
                     }

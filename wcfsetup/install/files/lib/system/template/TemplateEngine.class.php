@@ -801,12 +801,12 @@ class TemplateEngine extends SingletonFactory
      *
      * @param string $templateName
      * @param string $filename
-     * @return  array
+     * @return  array|null
      */
     protected function getMetaData($templateName, $filename)
     {
         if (!\file_exists($filename) || !\is_readable($filename)) {
-            return;
+            return null;
         }
 
         // get file contents
@@ -815,7 +815,7 @@ class TemplateEngine extends SingletonFactory
         // find first newline
         $position = \strpos($contents, "\n");
         if ($position === false) {
-            return;
+            return null;
         }
 
         // cut contents
@@ -824,7 +824,7 @@ class TemplateEngine extends SingletonFactory
         // read serializes data
         $data = @\unserialize($contents);
         if ($data === false || !\is_array($data)) {
-            return;
+            return null;
         }
 
         return $data;

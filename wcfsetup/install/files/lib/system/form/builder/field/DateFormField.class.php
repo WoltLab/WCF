@@ -215,7 +215,7 @@ class DateFormField extends AbstractFormField implements
         }
 
         if ($dateTime === false) {
-            return;
+            return null;
         }
 
         return $dateTime;

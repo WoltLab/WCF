@@ -143,7 +143,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 
             return $this->current();
         } catch (SystemException $e) {
-            return;
+            return null;
         }
     }
 

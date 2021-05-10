@@ -410,7 +410,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
         }
 
         if (empty($this->objects)) {
-            return;
+            return null;
         }
 
         return \reset($this->objects);

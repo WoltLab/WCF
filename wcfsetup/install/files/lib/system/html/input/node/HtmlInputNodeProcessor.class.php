@@ -540,7 +540,6 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         }
 
         if (!empty($inlineStyles)) {
-            $styles = [];
             /** @var \DOMElement $element */
             foreach ($this->getXPath()->query('//*[@style]') as $element) {
                 $tmp = \array_filter(\explode(';', $element->getAttribute('style')));

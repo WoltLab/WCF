@@ -253,7 +253,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     protected function groupPairsByName(array $pairs)
     {
         $groups = [];
-        foreach ($pairs as $uuid => $data) {
+        foreach ($pairs as $data) {
             $name = $data['name'];
 
             if (!isset($groups[$name])) {

@@ -482,7 +482,7 @@ class HtmlBBCodeParser extends BBCodeParser
             return $tag['source'];
         }
 
-        $index = (isset($tag['bufferPlaceholder'])) ? $index = $tag['bufferPlaceholder'] : \count($this->openTagIdentifiers);
+        $index = (isset($tag['bufferPlaceholder'])) ? $tag['bufferPlaceholder'] : \count($this->openTagIdentifiers);
 
         $uuid = StringUtil::getUUID();
         $this->openTagIdentifiers[$index] = [

@@ -132,7 +132,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         } catch (DatabaseQueryExecutionException $e) {
             // Error code 23000 = duplicate key
             if ($e->getCode() == '23000' && $e->getDriverCode() == '1062') {
-                return;
+                return null;
             }
 
             throw $e;

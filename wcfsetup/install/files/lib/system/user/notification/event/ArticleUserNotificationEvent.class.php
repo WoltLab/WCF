@@ -2,7 +2,6 @@
 
 namespace wcf\system\user\notification\event;
 
-use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\user\UserProfile;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
@@ -94,7 +93,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
 
     /**
      * @inheritDoc
-     * @return  Article[]
+     * @return  ArticleUserNotificationObject[]
      */
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {

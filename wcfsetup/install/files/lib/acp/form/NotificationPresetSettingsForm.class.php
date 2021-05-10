@@ -184,7 +184,7 @@ class NotificationPresetSettingsForm extends AbstractForm
     {
         parent::save();
 
-        foreach ($this->events as $objectType => $events) {
+        foreach ($this->events as $events) {
             foreach ($events as $event) {
                 $preset = 0;
                 $presetMailNotificationType = 'none';

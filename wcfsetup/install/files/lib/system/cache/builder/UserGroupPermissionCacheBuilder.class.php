@@ -69,7 +69,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             $optionData[$row['groupID']][$row['optionName']] = $row;
         }
 
-        foreach ($optionData as $groupID => $options) {
+        foreach ($optionData as $options) {
             $optionBlacklist = [];
 
             foreach ($options as $option) {

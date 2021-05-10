@@ -386,7 +386,7 @@ class Box extends DatabaseObject
     public function getImage()
     {
         if ($this->boxType === 'menu') {
-            return;
+            return null;
         }
 
         if ($this->image === null) {
@@ -405,7 +405,7 @@ class Box extends DatabaseObject
         }
 
         if ($this->image === null || !$this->image->isAccessible()) {
-            return;
+            return null;
         }
 
         return $this->image;

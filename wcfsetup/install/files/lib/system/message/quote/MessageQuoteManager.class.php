@@ -521,7 +521,7 @@ class MessageQuoteManager extends SingletonFactory
             $objectIDs[$objectType] = [];
             if (isset($this->quotes[$objectType])) {
                 foreach ($this->quotes[$objectType] as $objectID => $quotes) {
-                    foreach ($quotes as $quoteID => $isFullQuote) {
+                    foreach ($quotes as $isFullQuote) {
                         if ($isFullQuote) {
                             $objectIDs[$objectType][] = $objectID;
                             break;

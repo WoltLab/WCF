@@ -645,7 +645,7 @@ class PackageInstallationNodeBuilder
                     VALUES      (?, ?, ?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
-            foreach ($pluginNodes as $index => $nodeData) {
+            foreach ($pluginNodes as $nodeData) {
                 $statement->execute([
                     $this->installation->queue->queueID,
                     $this->installation->queue->processNo,
@@ -813,7 +813,7 @@ class PackageInstallationNodeBuilder
         if ($row === false) {
             // PHP <7.4 _silently_ returns `null` when attempting to read an array index
             // when the source value equals `false`.
-            return;
+            return null;
         }
 
         return $row['queueID'];
