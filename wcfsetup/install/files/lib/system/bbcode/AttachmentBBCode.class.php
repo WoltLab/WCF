@@ -2,6 +2,7 @@
 
 namespace wcf\system\bbcode;
 
+use wcf\data\attachment\Attachment;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
