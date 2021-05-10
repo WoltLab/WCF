@@ -4986,7 +4986,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jeder Anmeldung den zusätzlichen Faktor benötigen.</p>
 <p><br></p>
-<p>Zusätzlich wurden Backup-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
+<p>Zusätzlich wurden Notfall-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
 <p><br></p>
 <p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}Notiere oder speichere dir{else}Notieren oder speichern Sie{/if} sich die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
 		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
