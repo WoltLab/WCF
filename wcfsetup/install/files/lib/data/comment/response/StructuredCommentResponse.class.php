@@ -81,7 +81,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     {
         $response = new CommentResponse($responseID);
         if (!$response->responseID) {
-            return;
+            return null;
         }
 
         // prepare structured response

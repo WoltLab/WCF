@@ -34,7 +34,7 @@ class DevtoolsMissingLanguageItem extends DatabaseObject
     public function getLanguage()
     {
         if ($this->languageID === null) {
-            return;
+            return null;
         }
 
         return LanguageFactory::getInstance()->getLanguage($this->languageID);

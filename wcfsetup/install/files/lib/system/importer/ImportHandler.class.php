@@ -90,12 +90,12 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
      *
      * @param string $type
      * @param mixed $oldID
-     * @return  int     $newID
+     * @return  int|null
      */
     public function getNewID($type, $oldID)
     {
         if (!$oldID) {
-            return;
+            return null;
         }
         $objectTypeID = $this->objectTypes[$type]->objectTypeID;
 

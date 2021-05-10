@@ -214,7 +214,7 @@ class PackageInstallationSQLParser extends SQLParser
      *
      * @param string $tableName
      * @param string $columnName
-     * @return  int     package id
+     * @return  int|null     package id
      */
     protected function getColumnOwnerID($tableName, $columnName)
     {
@@ -233,7 +233,7 @@ class PackageInstallationSQLParser extends SQLParser
         } elseif (isset($this->knownTables[$tableName])) {
             return $this->knownTables[$tableName];
         } else {
-            return;
+            return null;
         }
     }
 

@@ -896,7 +896,7 @@ class PackageInstallationDispatcher
      * Prompts for a text input for package directory (applies for applications only)
      *
      * @param string $applicationDirectory
-     * @return  FormDocument
+     * @return  FormDocument|null
      */
     protected function promptPackageDir($applicationDirectory)
     {
@@ -1031,7 +1031,7 @@ class PackageInstallationDispatcher
                 FileUtil::makeWritable($packageDir);
             }
 
-            return;
+            return null;
         }
     }
 

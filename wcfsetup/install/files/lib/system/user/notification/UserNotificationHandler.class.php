@@ -596,12 +596,12 @@ class UserNotificationHandler extends SingletonFactory
      *
      * @param string $objectType
      * @param string $eventName
-     * @return  IUserNotificationEvent
+     * @return  IUserNotificationEvent|null
      */
     public function getEvent($objectType, $eventName)
     {
         if (!isset($this->availableEvents[$objectType][$eventName])) {
-            return;
+            return null;
         }
 
         return $this->availableEvents[$objectType][$eventName];

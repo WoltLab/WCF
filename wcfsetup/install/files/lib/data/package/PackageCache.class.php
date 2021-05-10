@@ -71,7 +71,7 @@ class PackageCache extends SingletonFactory
     {
         $packageID = $this->getPackageID($package);
         if ($packageID === null) {
-            return;
+            return null;
         }
 
         return $this->getPackage($packageID);

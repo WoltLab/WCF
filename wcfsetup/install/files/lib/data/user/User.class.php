@@ -321,7 +321,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * Returns the id of a user option.
      *
      * @param string $name
-     * @return  int     id
+     * @return  int|null
      */
     public static function getUserOptionID($name)
     {
@@ -331,7 +331,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         }
 
         if (!isset(self::$userOptions[$name])) {
-            return;
+            return null;
         }
 
         return self::$userOptions[$name]->optionID;

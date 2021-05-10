@@ -81,7 +81,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
         }
 
         if ($this->image === null || !$this->image->isAccessible()) {
-            return;
+            return null;
         }
 
         return $this->image;
@@ -113,7 +113,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
         }
 
         if ($this->teaserImage === null || !$this->teaserImage->isAccessible()) {
-            return;
+            return null;
         }
 
         return $this->teaserImage;

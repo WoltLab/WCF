@@ -46,7 +46,7 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject
      * Returns an instance of UserOptionCategory by name.
      *
      * @param string $categoryName
-     * @return  UserOptionCategory
+     * @return  UserOptionCategory|null
      */
     public static function getCategoryByName($categoryName)
     {
@@ -57,7 +57,7 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject
         $statement->execute([$categoryName]);
         $row = $statement->fetchArray();
         if ($row === false) {
-            return;
+            return null;
         }
 
         return new self(null, $row);

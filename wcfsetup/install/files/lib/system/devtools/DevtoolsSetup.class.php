@@ -58,7 +58,7 @@ class DevtoolsSetup extends SingletonFactory
     public function getDatabaseConfig()
     {
         if (!isset($this->configuration['setup']) || !isset($this->configuration['setup']['database'])) {
-            return;
+            return null;
         }
 
         // dirname return a single backslash on Windows if there are no parent directories

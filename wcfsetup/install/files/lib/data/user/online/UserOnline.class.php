@@ -154,12 +154,12 @@ class UserOnline extends UserProfile
     /**
      * Returns the spider object
      *
-     * @return  Spider
+     * @return  Spider|null
      */
     public function getSpider()
     {
         if (!$this->spiderID) {
-            return;
+            return null;
         }
 
         if ($this->spider === null) {

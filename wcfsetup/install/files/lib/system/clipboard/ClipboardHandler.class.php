@@ -340,7 +340,7 @@ class ClipboardHandler extends SingletonFactory
         // get objects
         $this->loadMarkedItems();
         if (empty($this->markedItems)) {
-            return;
+            return null;
         }
 
         $this->pageClasses = $pages;

@@ -257,7 +257,7 @@ class TagEngine extends SingletonFactory
     {
         $existingTags = $this->getObjectTags($objectType, $objectID);
         if (empty($existingTags)) {
-            return;
+            return null;
         }
 
         $languageIDs = [];

@@ -136,12 +136,12 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController
     /**
      * Returns media provider callback instance.
      *
-     * @return      IBBCodeMediaProvider
+     * @return      IBBCodeMediaProvider|null
      */
     public function getCallback()
     {
         if (!$this->className) {
-            return;
+            return null;
         }
 
         if ($this->callback === null) {

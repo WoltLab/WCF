@@ -265,7 +265,7 @@ class ControllerMap extends SingletonFactory
         $controller = $data[1];
 
         if ($application === 'wcf' && empty($controller)) {
-            return;
+            return null;
         } elseif (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
             $cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
             if ($cmsPageData === null) {
@@ -442,17 +442,17 @@ class ControllerMap extends SingletonFactory
             if ($pageType === 'action' && $application !== 'wcf') {
                 $className = 'wcf\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . \ucfirst($pageType);
                 if (!\class_exists($className)) {
-                    return;
+                    return null;
                 }
             } else {
-                return;
+                return null;
             }
         }
 
         // check for abstract classes
         $reflectionClass = new \ReflectionClass($className);
         if ($reflectionClass->isAbstract()) {
-            return;
+            return null;
         }
 
         return [
