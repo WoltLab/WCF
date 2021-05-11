@@ -328,7 +328,8 @@ class Style extends DatabaseObject
     /**
      * @since 5.4
      */
-    public function getPageLogoSmallHeight(): int {
+    public function getPageLogoSmallHeight(): int
+    {
         return $this->pageLogoSmallHeight;
     }
 
