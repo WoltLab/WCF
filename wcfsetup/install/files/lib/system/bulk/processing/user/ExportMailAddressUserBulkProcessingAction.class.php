@@ -4,6 +4,7 @@ namespace wcf\system\bulk\processing\user;
 
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\UserList;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -48,7 +49,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
     public function executeAction(DatabaseObjectList $objectList)
     {
         if (!($objectList instanceof UserList)) {
-            throw new \InvalidArgumentException("Object list is no instance of '" . UserList::class . "', instance of '" . \get_class($objectList) . "' given.");
+            throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
         }
 
         $this->executed = true;
