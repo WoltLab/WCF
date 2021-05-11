@@ -48,6 +48,8 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	public function isAccessible(User $user = null) {
 		if ($this->getObjectType()->objectType != self::OBJECT_TYPE_NAME) return false;
 		
+		if ($this->isDisabled) return false;
+		
 		// check permissions
 		return $this->getPermission('canReadArticle', $user);
 	}
@@ -108,14 +110,17 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	public static function getAccessibleCategoryIDs(array $permissions = ['canReadArticle']) {
 		$categoryIDs = [];
 		foreach (CategoryHandler::getInstance()->getCategories(self::OBJECT_TYPE_NAME) as $category) {
-			$result = true;
 			$category = new ArticleCategory($category);
-			foreach ($permissions as $permission) {
-				$result = $result && $category->getPermission($permission);
-			}
 			
-			if ($result) {
-				$categoryIDs[] = $category->categoryID;
+			if (!$category->isDisabled) {
+				$result = true;
+				foreach ($permissions as $permission) {
+					$result = $result && $category->getPermission($permission);
+				}
+				
+				if ($result) {
+					$categoryIDs[] = $category->categoryID;
+				}
 			}
 		}
 		
