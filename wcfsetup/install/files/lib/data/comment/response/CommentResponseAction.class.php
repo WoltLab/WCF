@@ -13,6 +13,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
+use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -135,7 +136,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		$likeObjectIDs = [];
+		$deletedResponseIDs = [];
 		$notificationObjectTypes = [];
 		foreach ($responseIDs as $objectTypeID => $objectIDs) {
 			// remove activity events
@@ -149,16 +150,21 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 				UserNotificationHandler::getInstance()->removeNotifications($objectType->objectType.'.response.notification', $objectIDs);
 			}
 			
-			$likeObjectIDs = array_merge($likeObjectIDs, $objectIDs);
+			$deletedResponseIDs = array_merge($deletedResponseIDs, $objectIDs);
 			
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.like.notification')) {
 				$notificationObjectTypes[] = $objectType->objectType.'.response.like.notification';
 			}
 		}
 		
-		// remove likes
-		if (!empty($likeObjectIDs)) {
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $likeObjectIDs, $notificationObjectTypes);
+		if (!empty($deletedResponseIDs)) {
+			// remove likes
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $deletedResponseIDs, $notificationObjectTypes);
+			
+			ModerationQueueManager::getInstance()->removeQueues(
+				'com.woltlab.wcf.comment.response',
+				$deletedResponseIDs
+			);
 		}
 		
 		return $count;

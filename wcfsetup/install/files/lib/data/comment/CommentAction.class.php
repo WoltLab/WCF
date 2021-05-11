@@ -19,6 +19,8 @@ use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\moderation\queue\ModerationQueueReportManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
@@ -155,8 +157,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
-		// delete responses
 		if (!empty($commentIDs)) {
+			// delete responses
 			$commentResponseList = new CommentResponseList();
 			$commentResponseList->getConditionBuilder()->add('comment_response.commentID IN (?)', [$commentIDs]);
 			$commentResponseList->readObjectIDs();
@@ -166,6 +168,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 				]);
 				$action->executeAction();
 			}
+			
+			ModerationQueueManager::getInstance()->removeQueues(
+				'com.woltlab.wcf.comment.comment',
+				$commentIDs
+			);
 		}
 		
 		return parent::delete();
