@@ -179,6 +179,17 @@ class UploadFile
     }
 
     /**
+     * Returns the file extension for the original filename. The returned string can be empty, if the
+     * original filename has no file extension.
+     *
+     * @since   5.4
+     */
+    public function getFilenameExtension(): string
+    {
+        return \pathinfo($this->filename, \PATHINFO_EXTENSION);
+    }
+
+    /**
      * Returns the unique file id for the file. It is used to identify the certain file.
      * @return string
      */
