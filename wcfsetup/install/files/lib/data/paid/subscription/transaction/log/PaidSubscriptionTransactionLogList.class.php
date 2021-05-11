@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  PaidSubscriptionTransactionLog      current()
  * @method  PaidSubscriptionTransactionLog[]    getObjects()
- * @method  PaidSubscriptionTransactionLog|null search($objectID)
+ * @method  PaidSubscriptionTransactionLog|null getSingleObject()
+ * @method  PaidSubscriptionTransactionLog|null seach($objectID)
  * @property    PaidSubscriptionTransactionLog[] $objects
  */
 class PaidSubscriptionTransactionLogList extends DatabaseObjectList

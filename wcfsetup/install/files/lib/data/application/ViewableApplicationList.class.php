@@ -12,7 +12,8 @@ namespace wcf\data\application;
  *
  * @method  ViewableApplication     current()
  * @method  ViewableApplication[]       getObjects()
- * @method  ViewableApplication|null    search($objectID)
+ * @method  ViewableApplication|null    getSingleObject()
+ * @method  ViewableApplication|null    seach($objectID)
  * @property    ViewableApplication[] $objects
  */
 class ViewableApplicationList extends ApplicationList

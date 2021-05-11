@@ -20,7 +20,8 @@ use wcf\system\WCF;
  *
  * @method  ViewableArticle     current()
  * @method  ViewableArticle[]   getObjects()
- * @method  ViewableArticle|null    search($objectID)
+ * @method  ViewableArticle|null    getSingleObject()
+ * @method  ViewableArticle|null    seach($objectID)
  * @property    ViewableArticle[] $objects
  */
 class ViewableArticleList extends ArticleList

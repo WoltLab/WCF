@@ -17,7 +17,8 @@ use wcf\system\WCF;
  *
  * @method  ViewableUserActivityEvent       current()
  * @method  ViewableUserActivityEvent[]     getObjects()
- * @method  ViewableUserActivityEvent|null      search($objectID)
+ * @method  ViewableUserActivityEvent|null      getSingleObject()
+ * @method  ViewableUserActivityEvent|null      seach($objectID)
  * @property    ViewableUserActivityEvent[] $objects
  */
 class ViewableUserActivityEventList extends UserActivityEventList

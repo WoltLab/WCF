@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  StyleVariable       current()
  * @method  StyleVariable[]     getObjects()
- * @method  StyleVariable|null  search($objectID)
+ * @method  StyleVariable|null  getSingleObject()
+ * @method  StyleVariable|null  seach($objectID)
  * @property    StyleVariable[] $objects
  */
 class StyleVariableList extends DatabaseObjectList

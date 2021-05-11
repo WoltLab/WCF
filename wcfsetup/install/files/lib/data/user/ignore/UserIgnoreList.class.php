@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  UserIgnore      current()
  * @method  UserIgnore[]        getObjects()
- * @method  UserIgnore|null     search($objectID)
+ * @method  UserIgnore|null     getSingleObject()
+ * @method  UserIgnore|null     seach($objectID)
  * @property    UserIgnore[] $objects
  */
 class UserIgnoreList extends DatabaseObjectList

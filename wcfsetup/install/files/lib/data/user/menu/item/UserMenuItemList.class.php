@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  UserMenuItem        current()
  * @method  UserMenuItem[]      getObjects()
- * @method  UserMenuItem|null   search($objectID)
+ * @method  UserMenuItem|null   getSingleObject()
+ * @method  UserMenuItem|null   seach($objectID)
  * @property    UserMenuItem[] $objects
  */
 class UserMenuItemList extends DatabaseObjectList

@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  OptionCategory      current()
  * @method  OptionCategory[]    getObjects()
- * @method  OptionCategory|null search($objectID)
+ * @method  OptionCategory|null getSingleObject()
+ * @method  OptionCategory|null seach($objectID)
  * @property    OptionCategory[] $objects
  */
 class OptionCategoryList extends DatabaseObjectList

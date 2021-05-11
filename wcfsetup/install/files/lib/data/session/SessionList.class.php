@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  Session     current()
  * @method  Session[]   getObjects()
- * @method  Session|null    search($objectID)
+ * @method  Session|null    getSingleObject()
+ * @method  Session|null    seach($objectID)
  * @property    Session[] $objects
  */
 class SessionList extends DatabaseObjectList

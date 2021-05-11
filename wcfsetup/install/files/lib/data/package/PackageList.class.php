@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  Package     current()
  * @method  Package[]   getObjects()
- * @method  Package|null    search($objectID)
+ * @method  Package|null    getSingleObject()
+ * @method  Package|null    seach($objectID)
  * @property    Package[] $objects
  */
 class PackageList extends DatabaseObjectList

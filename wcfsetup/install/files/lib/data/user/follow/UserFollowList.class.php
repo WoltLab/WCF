@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  UserFollow      current()
  * @method  UserFollow[]        getObjects()
- * @method  UserFollow|null     search($objectID)
+ * @method  UserFollow|null     getSingleObject()
+ * @method  UserFollow|null     seach($objectID)
  * @property    UserFollow[] $objects
  */
 class UserFollowList extends DatabaseObjectList

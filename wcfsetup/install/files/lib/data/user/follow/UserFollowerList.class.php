@@ -15,7 +15,8 @@ use wcf\data\user\UserProfile;
  *
  * @method  UserProfile     current()
  * @method  UserProfile[]       getObjects()
- * @method  UserProfile|null    search($objectID)
+ * @method  UserProfile|null    getSingleObject()
+ * @method  UserProfile|null    seach($objectID)
  * @property    UserProfile[] $objects
  */
 class UserFollowerList extends UserFollowList

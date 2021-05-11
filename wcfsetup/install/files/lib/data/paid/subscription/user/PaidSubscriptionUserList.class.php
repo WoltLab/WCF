@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  PaidSubscriptionUser        current()
  * @method  PaidSubscriptionUser[]      getObjects()
- * @method  PaidSubscriptionUser|null   search($objectID)
+ * @method  PaidSubscriptionUser|null   getSingleObject()
+ * @method  PaidSubscriptionUser|null   seach($objectID)
  * @property    PaidSubscriptionUser[] $objects
  */
 class PaidSubscriptionUserList extends DatabaseObjectList

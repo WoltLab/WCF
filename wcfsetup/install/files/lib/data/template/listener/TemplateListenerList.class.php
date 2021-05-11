@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  TemplateListener        current()
  * @method  TemplateListener[]      getObjects()
- * @method  TemplateListener|null       search($objectID)
+ * @method  TemplateListener|null       getSingleObject()
+ * @method  TemplateListener|null       seach($objectID)
  * @property    TemplateListener[] $objects
  */
 class TemplateListenerList extends DatabaseObjectList

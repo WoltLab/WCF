@@ -15,7 +15,8 @@ use wcf\system\WCF;
  *
  * @method  AdministrativeAttachment    current()
  * @method  AdministrativeAttachment[]  getObjects()
- * @method  AdministrativeAttachment|null   search($objectID)
+ * @method  AdministrativeAttachment|null   getSingleObject()
+ * @method  AdministrativeAttachment|null   seach($objectID)
  * @property    AdministrativeAttachment[] $objects
  */
 class AdministrativeAttachmentList extends AttachmentList

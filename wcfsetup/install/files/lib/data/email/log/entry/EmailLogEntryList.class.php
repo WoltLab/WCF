@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  EmailLogEntry        current()
  * @method  EmailLogEntry[]      getObjects()
- * @method  EmailLogEntry|null       search($objectID)
+ * @method  EmailLogEntry|null       getSingleObject()
+ * @method  EmailLogEntry|null       seach($objectID)
  * @property    EmailLogEntry[] $objects
  */
 class EmailLogEntryList extends DatabaseObjectList

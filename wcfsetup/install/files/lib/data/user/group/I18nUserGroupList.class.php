@@ -15,7 +15,8 @@ use wcf\data\I18nDatabaseObjectList;
  *
  * @method  UserGroup       current()
  * @method  UserGroup[]     getObjects()
- * @method  UserGroup|null      search($objectID)
+ * @method  UserGroup|null      getSingleObject()
+ * @method  UserGroup|null      seach($objectID)
  * @property    UserGroup[] $objects
  */
 class I18nUserGroupList extends I18nDatabaseObjectList

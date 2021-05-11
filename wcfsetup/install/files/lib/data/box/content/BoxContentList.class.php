@@ -17,7 +17,8 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  *
  * @method  BoxContent      current()
  * @method  BoxContent[]            getObjects()
- * @method  BoxContent|null         search($objectID)
+ * @method  BoxContent|null         getSingleObject()
+ * @method  BoxContent|null         seach($objectID)
  * @property    BoxContent[] $objects
  */
 class BoxContentList extends DatabaseObjectList

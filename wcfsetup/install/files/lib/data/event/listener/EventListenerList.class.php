@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  EventListener       current()
  * @method  EventListener[]     getObjects()
- * @method  EventListener|null  search($objectID)
+ * @method  EventListener|null  getSingleObject()
+ * @method  EventListener|null  seach($objectID)
  * @property    EventListener[] $objects
  */
 class EventListenerList extends DatabaseObjectList

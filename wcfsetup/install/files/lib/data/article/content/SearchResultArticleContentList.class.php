@@ -13,7 +13,8 @@ namespace wcf\data\article\content;
  *
  * @method  SearchResultArticleContent      current()
  * @method  SearchResultArticleContent[]        getObjects()
- * @method  SearchResultArticleContent|null     search($objectID)
+ * @method  SearchResultArticleContent|null     getSingleObject()
+ * @method  SearchResultArticleContent|null     seach($objectID)
  * @property    SearchResultArticleContent[] $objects
  */
 class SearchResultArticleContentList extends ViewableArticleContentList

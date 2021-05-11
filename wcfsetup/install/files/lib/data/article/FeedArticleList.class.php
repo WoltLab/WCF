@@ -13,7 +13,8 @@ namespace wcf\data\article;
  *
  * @method  FeedArticle current()
  * @method  FeedArticle[]   getObjects()
- * @method  FeedArticle|null    search($objectID)
+ * @method  FeedArticle|null    getSingleObject()
+ * @method  FeedArticle|null    seach($objectID)
  */
 class FeedArticleList extends CategoryArticleList
 {

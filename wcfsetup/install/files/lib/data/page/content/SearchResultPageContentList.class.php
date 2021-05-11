@@ -13,7 +13,8 @@ namespace wcf\data\page\content;
  *
  * @method  SearchResultPageContent             current()
  * @method  SearchResultPageContent[]       getObjects()
- * @method  SearchResultPageContent|null        search($objectID)
+ * @method  SearchResultPageContent|null        getSingleObject()
+ * @method  SearchResultPageContent|null        seach($objectID)
  * @property    SearchResultPageContent[] $objects
  */
 class SearchResultPageContentList extends PageContentList

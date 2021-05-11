@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  Spider      current()
  * @method  Spider[]    getObjects()
- * @method  Spider|null search($objectID)
+ * @method  Spider|null getSingleObject()
+ * @method  Spider|null seach($objectID)
  * @property    Spider[] $objects
  */
 class SpiderList extends DatabaseObjectList

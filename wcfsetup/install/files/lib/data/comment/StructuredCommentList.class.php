@@ -19,7 +19,8 @@ use wcf\system\reaction\ReactionHandler;
  *
  * @method  StructuredComment       current()
  * @method  StructuredComment[]     getObjects()
- * @method  StructuredComment|null      search($objectID)
+ * @method  StructuredComment|null      getSingleObject()
+ * @method  StructuredComment|null      seach($objectID)
  * @property    StructuredComment[] $objects
  */
 class StructuredCommentList extends CommentList

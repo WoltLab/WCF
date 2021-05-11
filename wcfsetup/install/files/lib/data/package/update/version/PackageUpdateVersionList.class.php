@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  PackageUpdateVersion        current()
  * @method  PackageUpdateVersion[]      getObjects()
- * @method  PackageUpdateVersion|null   search($objectID)
+ * @method  PackageUpdateVersion|null   getSingleObject()
+ * @method  PackageUpdateVersion|null   seach($objectID)
  * @property    PackageUpdateVersion[] $objects
  */
 class PackageUpdateVersionList extends DatabaseObjectList

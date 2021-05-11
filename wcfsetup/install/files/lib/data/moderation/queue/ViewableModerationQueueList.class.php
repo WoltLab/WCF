@@ -20,7 +20,8 @@ use wcf\system\WCF;
  *
  * @method  ViewableModerationQueue     current()
  * @method  ViewableModerationQueue[]   getObjects()
- * @method  ViewableModerationQueue|null    search($objectID)
+ * @method  ViewableModerationQueue|null    getSingleObject()
+ * @method  ViewableModerationQueue|null    seach($objectID)
  * @property    ViewableModerationQueue[] $objects
  */
 class ViewableModerationQueueList extends ModerationQueueList

@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  ACPTemplate     current()
  * @method  ACPTemplate[]       getObjects()
- * @method  ACPTemplate|null    search($objectID)
+ * @method  ACPTemplate|null    getSingleObject()
+ * @method  ACPTemplate|null    seach($objectID)
  * @property    ACPTemplate[] $objects
  */
 class ACPTemplateList extends DatabaseObjectList

@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  UserObjectWatch     current()
  * @method  UserObjectWatch[]   getObjects()
- * @method  UserObjectWatch|null    search($objectID)
+ * @method  UserObjectWatch|null    getSingleObject()
+ * @method  UserObjectWatch|null    seach($objectID)
  * @property    UserObjectWatch[] $objects
  */
 class UserObjectWatchList extends DatabaseObjectList

@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  Attachment      current()
  * @method  Attachment[]        getObjects()
- * @method  Attachment|null     search($objectID)
+ * @method  Attachment|null     getSingleObject()
+ * @method  Attachment|null     seach($objectID)
  * @property    Attachment[] $objects
  */
 class AttachmentList extends DatabaseObjectList

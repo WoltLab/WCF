@@ -15,7 +15,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method      UnfurlUrl           current()
  * @method      UnfurlUrl[]         getObjects()
- * @method      UnfurlUrl|null      search($objectID)
+ * @method      UnfurlUrl|null      getSingleObject()
+ * @method      UnfurlUrl|null      seach($objectID)
  * @property    UnfurlUrl[]         $objects
  */
 class UnfurlUrlList extends DatabaseObjectList

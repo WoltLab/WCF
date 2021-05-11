@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  ACPSessionAccessLog     current()
  * @method  ACPSessionAccessLog[]       getObjects()
- * @method  ACPSessionAccessLog|null    search($objectID)
+ * @method  ACPSessionAccessLog|null    getSingleObject()
+ * @method  ACPSessionAccessLog|null    seach($objectID)
  * @property    ACPSessionAccessLog[] $objects
  */
 class ACPSessionAccessLogList extends DatabaseObjectList

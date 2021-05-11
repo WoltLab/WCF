@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  CoreObject      current()
  * @method  CoreObject[]        getObjects()
- * @method  CoreObject|null     search($objectID)
+ * @method  CoreObject|null     getSingleObject()
+ * @method  CoreObject|null     seach($objectID)
  * @property    CoreObject[] $objects
  */
 class CoreObjectList extends DatabaseObjectList

@@ -17,7 +17,8 @@ use wcf\system\WCF;
  *
  * @method  Box     current()
  * @method  Box[]       getObjects()
- * @method  Box|null    search($objectID)
+ * @method  Box|null    getSingleObject()
+ * @method  Box|null    seach($objectID)
  * @property    Box[] $objects
  */
 class BoxList extends DatabaseObjectList

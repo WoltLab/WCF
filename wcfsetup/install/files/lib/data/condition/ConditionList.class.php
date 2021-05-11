@@ -14,7 +14,8 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  Condition       current()
  * @method  Condition[]     getObjects()
- * @method  Condition|null      search($objectID)
+ * @method  Condition|null      getSingleObject()
+ * @method  Condition|null      seach($objectID)
  * @property    Condition[] $objects
  */
 class ConditionList extends DatabaseObjectList
