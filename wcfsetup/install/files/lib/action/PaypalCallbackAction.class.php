@@ -43,10 +43,12 @@ class PaypalCallbackAction extends AbstractAction
                 $reply = $request->getReply();
                 $content = $reply['body'];
             } catch (SystemException $e) {
+                @\header('HTTP/1.1 500 Internal Server Error');
                 throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
             }
 
             if (\strpos($content, "VERIFIED") === false) {
+                @\header('HTTP/1.1 500 Internal Server Error');
                 throw new SystemException('request not validated');
             }
 
@@ -117,7 +119,6 @@ class PaypalCallbackAction extends AbstractAction
 
             $this->executed();
         } catch (SystemException $e) {
-            @\header('HTTP/1.1 500 Internal Server Error');
             echo $e->getMessage();
             $e->getExceptionID(); // log error
 
