@@ -13,7 +13,7 @@ use wcf\util\ImageUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Cover\Photo
  */
-class UserCoverPhoto implements IUserCoverPhoto
+class UserCoverPhoto implements IWebpUserCoverPhoto
 {
     /**
      * file extension
@@ -103,6 +103,21 @@ class UserCoverPhoto implements IUserCoverPhoto
             0,
             2
         ) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createWebpVariant()
+    {
+        if ($this->coverPhotoHasWebP) {
+            return;
+        }
+
+        $sourceLocation = WCF_DIR . $this->getFilename($this->coverPhotoExtension === 'webp');
+        $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $sourceLocation);
+
+        return ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
     }
 
     /**

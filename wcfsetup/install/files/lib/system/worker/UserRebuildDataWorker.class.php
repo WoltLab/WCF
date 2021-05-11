@@ -6,11 +6,13 @@ use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
+use wcf\data\user\cover\photo\IWebpUserCoverPhoto;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -278,6 +280,17 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                     'width' => $width,
                     'height' => $height,
                 ]);
+            }
+
+            // Create WebP variants of existing cover photos.
+            $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
+            foreach ($userProfiles as $userProfile) {
+                if ($userProfile->coverPhotoHash) {
+                    $coverPhoto = $userProfile->getCoverPhoto(true);
+                    if ($coverPhoto instanceof IWebpUserCoverPhoto) {
+                        $coverPhoto->createWebpVariant();
+                    }
+                }
             }
         }
     }
