@@ -79,7 +79,7 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-			{pages print=true assign='pagesLinks' controller='ArticleList' link="pageNo=%d$additionalLinkParameters"}
+			{pages print=true assign='pagesLinks' controller='ArticleList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$additionalLinkParameters"}
 		{/content}
 	</div>
 {/hascontent}
