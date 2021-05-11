@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  UserGroupOptionCategory     current()
  * @method  UserGroupOptionCategory[]   getObjects()
  * @method  UserGroupOptionCategory|null    getSingleObject()
- * @method  UserGroupOptionCategory|null    seach($objectID)
+ * @method  UserGroupOptionCategory|null    search($objectID)
  * @property    UserGroupOptionCategory[] $objects
  */
 class UserGroupOptionCategoryList extends DatabaseObjectList

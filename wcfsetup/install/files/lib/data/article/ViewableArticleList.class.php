@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @method  ViewableArticle     current()
  * @method  ViewableArticle[]   getObjects()
  * @method  ViewableArticle|null    getSingleObject()
- * @method  ViewableArticle|null    seach($objectID)
+ * @method  ViewableArticle|null    search($objectID)
  * @property    ViewableArticle[] $objects
  */
 class ViewableArticleList extends ArticleList

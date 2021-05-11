@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  StatDaily       current()
  * @method  StatDaily[]     getObjects()
  * @method  StatDaily|null      getSingleObject()
- * @method  StatDaily|null      seach($objectID)
+ * @method  StatDaily|null      search($objectID)
  * @property    StatDaily[] $objects
  */
 class StatDailyList extends DatabaseObjectList

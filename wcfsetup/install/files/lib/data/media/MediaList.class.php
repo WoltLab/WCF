@@ -17,7 +17,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @method  Media       current()
  * @method  Media[]     getObjects()
  * @method  Media|null  getSingleObject()
- * @method  Media|null  seach($objectID)
+ * @method  Media|null  search($objectID)
  * @property    Media[] $objects
  */
 class MediaList extends DatabaseObjectList

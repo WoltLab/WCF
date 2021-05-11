@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * @method  UserOnline      current()
  * @method  UserOnline[]        getObjects()
  * @method  UserOnline|null         getSingleObject()
- * @method  UserOnline|null         seach($objectID)
+ * @method  UserOnline|null         search($objectID)
  * @property    UserOnline[] $objects
  */
 class UsersOnlineList extends SessionList

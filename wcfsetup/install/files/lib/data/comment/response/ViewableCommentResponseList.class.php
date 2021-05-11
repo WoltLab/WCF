@@ -15,7 +15,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @method  ViewableCommentResponse     current()
  * @method  ViewableCommentResponse[]   getObjects()
  * @method  ViewableCommentResponse|null    getSingleObject()
- * @method  ViewableCommentResponse|null    seach($objectID)
+ * @method  ViewableCommentResponse|null    search($objectID)
  * @property    ViewableCommentResponse[] $objects
  */
 class ViewableCommentResponseList extends CommentResponseList

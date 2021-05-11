@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  Category    current()
  * @method  Category[]  getObjects()
  * @method  Category|null   getSingleObject()
- * @method  Category|null   seach($objectID)
+ * @method  Category|null   search($objectID)
  * @property    Category[] $objects
  */
 class CategoryList extends DatabaseObjectList

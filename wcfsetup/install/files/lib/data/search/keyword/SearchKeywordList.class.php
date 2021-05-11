@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  SearchKeyword       current()
  * @method  SearchKeyword[]     getObjects()
  * @method  SearchKeyword|null  getSingleObject()
- * @method  SearchKeyword|null  seach($objectID)
+ * @method  SearchKeyword|null  search($objectID)
  * @property    SearchKeyword[] $objects
  */
 class SearchKeywordList extends DatabaseObjectList

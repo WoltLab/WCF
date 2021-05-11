@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  Label       current()
  * @method  Label[]     getObjects()
  * @method  Label|null  getSingleObject()
- * @method  Label|null  seach($objectID)
+ * @method  Label|null  search($objectID)
  * @property    Label[] $objects
  */
 class LabelList extends DatabaseObjectList

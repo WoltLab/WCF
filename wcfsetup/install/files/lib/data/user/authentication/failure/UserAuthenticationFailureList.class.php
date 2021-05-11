@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  UserAuthenticationFailure       current()
  * @method  UserAuthenticationFailure[]     getObjects()
  * @method  UserAuthenticationFailure|null      getSingleObject()
- * @method  UserAuthenticationFailure|null      seach($objectID)
+ * @method  UserAuthenticationFailure|null      search($objectID)
  * @property    UserAuthenticationFailure[] $objects
  */
 class UserAuthenticationFailureList extends DatabaseObjectList

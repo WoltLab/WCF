@@ -14,7 +14,7 @@ namespace wcf\data\article;
  * @method  FeedArticle current()
  * @method  FeedArticle[]   getObjects()
  * @method  FeedArticle|null    getSingleObject()
- * @method  FeedArticle|null    seach($objectID)
+ * @method  FeedArticle|null    search($objectID)
  */
 class FeedArticleList extends CategoryArticleList
 {

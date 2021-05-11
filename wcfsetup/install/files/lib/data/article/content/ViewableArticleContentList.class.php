@@ -18,7 +18,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * @method  ViewableArticleContent      current()
  * @method  ViewableArticleContent[]    getObjects()
  * @method  ViewableArticleContent|null getSingleObject()
- * @method  ViewableArticleContent|null seach($objectID)
+ * @method  ViewableArticleContent|null search($objectID)
  * @property    ViewableArticleContent[] $objects
  */
 class ViewableArticleContentList extends ArticleContentList

@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  Like        current()
  * @method  Like[]      getObjects()
  * @method  Like|null   getSingleObject()
- * @method  Like|null   seach($objectID)
+ * @method  Like|null   search($objectID)
  * @property    Like[] $objects
  */
 class LikeList extends DatabaseObjectList

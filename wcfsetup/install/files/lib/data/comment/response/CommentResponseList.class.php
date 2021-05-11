@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  CommentResponse     current()
  * @method  CommentResponse[]   getObjects()
  * @method  CommentResponse|null    getSingleObject()
- * @method  CommentResponse|null    seach($objectID)
+ * @method  CommentResponse|null    search($objectID)
  * @property    CommentResponse[] $objects
  */
 class CommentResponseList extends DatabaseObjectList

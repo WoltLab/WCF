@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  UserNotification        current()
  * @method  UserNotification[]      getObjects()
  * @method  UserNotification|null       getSingleObject()
- * @method  UserNotification|null       seach($objectID)
+ * @method  UserNotification|null       search($objectID)
  * @property    UserNotification[] $objects
  */
 class UserNotificationList extends DatabaseObjectList

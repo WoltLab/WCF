@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  UserTrophy      current()
  * @method  UserTrophy[]        getObjects()
  * @method  UserTrophy|null     getSingleObject()
- * @method  UserTrophy|null     seach($objectID)
+ * @method  UserTrophy|null     search($objectID)
  * @property    UserTrophy[] $objects
  */
 class UserTrophyList extends DatabaseObjectList

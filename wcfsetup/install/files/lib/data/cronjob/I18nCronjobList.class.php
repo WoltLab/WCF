@@ -16,7 +16,7 @@ use wcf\data\I18nDatabaseObjectList;
  * @method  Cronjob     current()
  * @method  Cronjob[]   getObjects()
  * @method  Cronjob|null    getSingleObject()
- * @method  Cronjob|null    seach($objectID)
+ * @method  Cronjob|null    search($objectID)
  * @property    Cronjob[] $objects
  */
 class I18nCronjobList extends I18nDatabaseObjectList

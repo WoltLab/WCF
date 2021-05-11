@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  ModerationQueue     current()
  * @method  ModerationQueue[]   getObjects()
  * @method  ModerationQueue|null    getSingleObject()
- * @method  ModerationQueue|null    seach($objectID)
+ * @method  ModerationQueue|null    search($objectID)
  * @property    ModerationQueue[] $objects
  */
 class ModerationQueueList extends DatabaseObjectList

@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  CronjobLog      current()
  * @method  CronjobLog[]        getObjects()
  * @method  CronjobLog|null     getSingleObject()
- * @method  CronjobLog|null     seach($objectID)
+ * @method  CronjobLog|null     search($objectID)
  * @property    CronjobLog[] $objects
  */
 class CronjobLogList extends DatabaseObjectList

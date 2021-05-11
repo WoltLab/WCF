@@ -17,7 +17,7 @@ use wcf\system\application\ApplicationHandler;
  * @method  Template        current()
  * @method  Template[]      getObjects()
  * @method  Template|null       getSingleObject()
- * @method  Template|null       seach($objectID)
+ * @method  Template|null       search($objectID)
  * @property    Template[] $objects
  */
 class TemplateList extends DatabaseObjectList

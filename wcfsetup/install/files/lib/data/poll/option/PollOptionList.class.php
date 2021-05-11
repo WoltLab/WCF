@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  PollOption      current()
  * @method  PollOption[]        getObjects()
  * @method  PollOption|null     getSingleObject()
- * @method  PollOption|null     seach($objectID)
+ * @method  PollOption|null     search($objectID)
  * @property    PollOption[] $objects
  */
 class PollOptionList extends DatabaseObjectList
