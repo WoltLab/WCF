@@ -186,6 +186,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
 
         $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $sourceLocation);
+
         return ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
     }
 
