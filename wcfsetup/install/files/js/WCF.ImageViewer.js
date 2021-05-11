@@ -366,6 +366,9 @@ $.widget('ui.wcfImageViewer', {
 
 			// Reset the internal state because it could refer to a different set of images.
 			this._active = -1;
+			if (this._activeImage !== null) {
+				this._ui.images[this._activeImage].removeClass('active');
+			}
 			this._activeImage = null;
 
 			var $images = this._getStaticImages();
