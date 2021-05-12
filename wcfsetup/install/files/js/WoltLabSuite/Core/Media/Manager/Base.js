@@ -265,8 +265,9 @@ define(
 		 * 
 		 * @param	{object}	media		updated media file data
 		 * @param	{integer}	oldCategoryId	old category id
+		 * @param	{boolean}	closedEditorDialog
 		 */
-		_editorSuccess: function(media, oldCategoryId) {
+		_editorSuccess: function(media, oldCategoryId, closedEditorDialog = true) {
 			// if the category changed of media changed and category
 			// is selected, check if media list needs to be refreshed
 			if (this._mediaCategorySelect) {
@@ -281,7 +282,9 @@ define(
 				}
 			}
 			
-			UiDialog.open(this);
+			if (closedEditorDialog) {
+				UiDialog.open(this);
+			}
 			
 			this._media.set(~~media.mediaID, media);
 			

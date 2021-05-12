@@ -4,7 +4,7 @@
  * @author      Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module      WoltLabSuite/Core/Media/Upload
+ * @module      WoltLabSuite/Core/Media/Replace
  * @since       5.3
  */
 define(

@@ -416,7 +416,7 @@ define(
 		 */
 		updateData: function(data) {
 			if (this._callbackObject._editorSuccess) {
-				this._callbackObject._editorSuccess(data);
+				this._callbackObject._editorSuccess(data, undefined, false);
 			}
 		}
 	};
