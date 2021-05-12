@@ -1227,7 +1227,6 @@ final class SessionHandler extends SingletonFactory
             'requestURI' => $this->requestURI,
             'requestMethod' => $this->requestMethod,
             'lastActivityTime' => TIME_NOW,
-            'userID' => $this->user->userID,
             'sessionID' => $this->sessionID,
         ];
         if (!\class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
