@@ -16,8 +16,8 @@ import { Media, MediaUploadSuccessEventData } from "../../Media/Data";
 import MediaManager from "../../Media/Manager/Base";
 
 const _mediaEditor = new MediaEditor({
-  _editorSuccess: (media: Media, oldCategoryId: number) => {
-    if (media.categoryID != oldCategoryId) {
+  _editorSuccess: (media: Media, oldCategoryId: number, closedEditorDialog = true) => {
+    if (media.categoryID != oldCategoryId || closedEditorDialog) {
       window.setTimeout(() => {
         window.location.reload();
       }, 500);

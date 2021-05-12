@@ -809,9 +809,13 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
         }
 
-        // Delete *old* files using the non-updated local media editor object.
-        if (empty($result['errors'])) {
-            $this->getSingleObject()->deleteFiles();
+        $outdatedMediaFile = $this->getSingleObject();
+        $updatedMediaFile = new Media($this->getSingleObject()->mediaID);
+
+        // Delete *old* files using the non-updated local media editor object if the new file is
+        // stored in a different location.
+        if (empty($result['errors']) && $updatedMediaFile->getLocation() !== $outdatedMediaFile->getLocation()) {
+            $outdatedMediaFile->deleteFiles();
         }
 
         return $result;

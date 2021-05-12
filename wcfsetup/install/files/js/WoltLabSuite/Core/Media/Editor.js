@@ -338,7 +338,7 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
          */
         updateData(media) {
             if (this._callbackObject._editorSuccess) {
-                this._callbackObject._editorSuccess(media);
+                this._callbackObject._editorSuccess(media, undefined, false);
             }
         }
     }

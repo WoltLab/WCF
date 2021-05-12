@@ -16,8 +16,8 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
     Editor_1 = tslib_1.__importDefault(Editor_1);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     const _mediaEditor = new Editor_1.default({
-        _editorSuccess: (media, oldCategoryId) => {
-            if (media.categoryID != oldCategoryId) {
+        _editorSuccess: (media, oldCategoryId, closedEditorDialog = true) => {
+            if (media.categoryID != oldCategoryId || closedEditorDialog) {
                 window.setTimeout(() => {
                     window.location.reload();
                 }, 500);

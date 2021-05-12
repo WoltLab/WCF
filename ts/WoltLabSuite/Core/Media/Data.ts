@@ -54,7 +54,7 @@ export interface MediaManagerSelectOptions extends MediaManagerOptions {
 
 export interface MediaEditorCallbackObject {
   _editorClose?: () => void;
-  _editorSuccess?: (Media, number?) => void;
+  _editorSuccess?: (Media, number?, boolean?) => void;
 }
 
 export interface MediaUploadSuccessEventData {

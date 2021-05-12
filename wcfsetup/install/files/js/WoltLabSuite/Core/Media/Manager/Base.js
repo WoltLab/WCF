@@ -178,7 +178,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
         /**
          * Re-opens the manager dialog and updates the media data after successfully editing a media file.
          */
-        _editorSuccess(media, oldCategoryId) {
+        _editorSuccess(media, oldCategoryId, closedEditorDialog = true) {
             // if the category changed of media changed and category
             // is selected, check if media list needs to be refreshed
             if (this._mediaCategorySelect) {
@@ -191,7 +191,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                     }
                 }
             }
-            UiDialog.open(this);
+            if (closedEditorDialog) {
+                UiDialog.open(this);
+            }
             this._media.set(~~media.mediaID, media);
             const listItem = this._listItems.get(~~media.mediaID);
             const p = listItem.querySelector(".mediaTitle");

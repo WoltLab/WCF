@@ -235,7 +235,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   /**
    * Re-opens the manager dialog and updates the media data after successfully editing a media file.
    */
-  _editorSuccess(media: Media, oldCategoryId?: number): void {
+  _editorSuccess(media: Media, oldCategoryId?: number, closedEditorDialog = true): void {
     // if the category changed of media changed and category
     // is selected, check if media list needs to be refreshed
     if (this._mediaCategorySelect) {
@@ -253,7 +253,9 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       }
     }
 
-    UiDialog.open(this);
+    if (closedEditorDialog) {
+      UiDialog.open(this);
+    }
 
     this._media.set(~~media.mediaID, media);
 

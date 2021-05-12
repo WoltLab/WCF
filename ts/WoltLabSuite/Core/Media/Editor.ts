@@ -403,7 +403,7 @@ class MediaEditor implements AjaxCallbackObject {
    */
   public updateData(media: Media): void {
     if (this._callbackObject._editorSuccess) {
-      this._callbackObject._editorSuccess(media);
+      this._callbackObject._editorSuccess(media, undefined, false);
     }
   }
 }
