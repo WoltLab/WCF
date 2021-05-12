@@ -19,6 +19,11 @@ class CommentResponseModerationQueueReportHandler extends AbstractCommentRespons
     /**
      * @inheritDoc
      */
+    protected $definitionName = 'com.woltlab.wcf.moderation.report';
+
+    /**
+     * @inheritDoc
+     */
     public function canReport($objectID)
     {
         if (!$this->isValid($objectID)) {
