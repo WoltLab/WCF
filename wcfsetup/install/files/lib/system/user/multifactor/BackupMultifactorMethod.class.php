@@ -60,7 +60,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
 
     public function __construct()
     {
-        $this->algorithm = new Bcrypt();
+        $this->algorithm = new Bcrypt(9);
     }
 
     /**
