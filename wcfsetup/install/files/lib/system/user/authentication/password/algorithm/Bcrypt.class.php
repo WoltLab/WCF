@@ -15,9 +15,31 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Bcrypt implements IPasswordAlgorithm
 {
-    private const OPTIONS = [
-        'cost' => 12,
-    ];
+    /**
+     * @var int
+     */
+    private $cost;
+
+    /**
+     * @param int $cost The BCrypt 'cost' option for newly created hashes. It is recommended not to change this option.
+     */
+    public function __construct(int $cost = 12)
+    {
+        if ($cost < 9) {
+            throw new \InvalidArgumentException(\sprintf(
+                "Refusing to accept BCrypt costs lower than '9', '%d' given.",
+                $cost
+            ));
+        }
+        if ($cost > 14) {
+            throw new \InvalidArgumentException(\sprintf(
+                "Refusing to accept BCrypt costs higher than '14', '%d' given.",
+                $cost
+            ));
+        }
+
+        $this->cost = $cost;
+    }
 
     /**
      * @inheritDoc
@@ -32,7 +54,7 @@ final class Bcrypt implements IPasswordAlgorithm
      */
     public function hash(string $password): string
     {
-        return \password_hash($password, \PASSWORD_BCRYPT, self::OPTIONS);
+        return \password_hash($password, \PASSWORD_BCRYPT, $this->getOptions());
     }
 
     /**
@@ -40,6 +62,16 @@ final class Bcrypt implements IPasswordAlgorithm
      */
     public function needsRehash(string $hash): bool
     {
-        return \password_needs_rehash($hash, \PASSWORD_BCRYPT, self::OPTIONS);
+        return \password_needs_rehash($hash, \PASSWORD_BCRYPT, $this->getOptions());
+    }
+
+    /**
+     * Returns the value to be used for password_*'s `$options` parameter.
+     */
+    private function getOptions()
+    {
+        return [
+            'cost' => $this->cost,
+        ];
     }
 }
