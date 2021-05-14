@@ -4,6 +4,7 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
+use wcf\util\JSON;
 
 /**
  * Imports attachments.
@@ -107,6 +108,32 @@ class AbstractAttachmentImporter extends AbstractImporter {
 			$message = str_ireplace('[attach='.$oldID.',', '[attach='.$newID.',', $message);
 			
 			return $message;
+		}
+		else {
+			return \preg_replace_callback(
+				'~<woltlab-metacode data-name="attach" data-attributes="(?<attributes>[^"]+)">~',
+				function (array $matches) use ($oldID, $newID): string {
+					$encodedAttributes = $matches['attributes'];
+					
+					$base64Decoded = \base64_decode($matches['attributes']);
+					if ($base64Decoded) {
+						try {
+							$attributes = JSON::decode($base64Decoded);
+							if ($attributes[0] == $oldID) {
+								$attributes[0] = $newID;
+							}
+							
+							$encodedAttributes = \base64_encode(JSON::encode($attributes));
+						}
+						catch (\Exception $e) {
+							$encodedAttributes = $matches['attributes'];
+						}
+					}
+					
+					return '<woltlab-metacode data-name="attach" data-attributes="' . $encodedAttributes . '">';
+				},
+				$message
+			);
 		}
 		
 		return false;
