@@ -35,7 +35,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * @inheritDoc
      */
-    public function isAllowed(AbstractHtmlNodeProcessor $nodeProcessor)
+    public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
         if (BBCodeHandler::getInstance()->isAvailableBBCode('img')) {
             return [];
@@ -45,7 +45,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
 
         // check if there are only attachments, media or smilies
         /** @var \DOMElement $element */
-        foreach ($nodeProcessor->getDocument()->getElementsByTagName('img') as $element) {
+        foreach ($htmlNodeProcessor->getDocument()->getElementsByTagName('img') as $element) {
             $class = $element->getAttribute('class');
             if (!\preg_match('~\b(?:woltlabAttachment|woltlabSuiteMedia|smiley)\b~', $class)) {
                 $foundImage = true;

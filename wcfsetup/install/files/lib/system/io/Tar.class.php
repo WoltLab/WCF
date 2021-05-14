@@ -147,17 +147,17 @@ class Tar implements IArchive
     /**
      * @inheritDoc
      */
-    public function getFileInfo($fileIndex)
+    public function getFileInfo($index)
     {
-        if (!\is_int($fileIndex)) {
-            $fileIndex = $this->getIndexByFilename($fileIndex);
+        if (!\is_int($index)) {
+            $index = $this->getIndexByFilename($index);
         }
 
-        if (!isset($this->contentList[$fileIndex])) {
-            throw new SystemException("Tar: could find file '" . $fileIndex . "' in archive");
+        if (!isset($this->contentList[$index])) {
+            throw new SystemException("Tar: could find file '" . $index . "' in archive");
         }
 
-        return $this->contentList[$fileIndex];
+        return $this->contentList[$index];
     }
 
     /**

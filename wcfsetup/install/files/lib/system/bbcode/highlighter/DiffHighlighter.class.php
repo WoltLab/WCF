@@ -45,9 +45,9 @@ class DiffHighlighter extends Highlighter
     /**
      * @inheritDoc
      */
-    public function highlight($data)
+    public function highlight($string)
     {
-        $lines = \explode("\n", $data);
+        $lines = \explode("\n", $string);
         foreach ($lines as $key => $val) {
             if (\in_array(\mb_substr($val, 0, 1), $this->info) || \in_array($val, $this->splitter)) {
                 $lines[$key] = '<span class="hlComments">' . StringUtil::encodeHTML($val) . '</span>';

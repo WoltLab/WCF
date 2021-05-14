@@ -41,17 +41,17 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements
     /**
      * @inheritDoc
      */
-    public function checkPermissions(ILikeObject $comment)
+    public function checkPermissions(ILikeObject $object)
     {
-        /** @var Comment $comment */
+        /** @var Comment $object */
 
-        if (!$comment->commentID) {
+        if (!$object->commentID) {
             return false;
         }
 
-        $objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
+        $objectType = CommentHandler::getInstance()->getObjectType($object->objectTypeID);
 
-        return CommentHandler::getInstance()->getCommentManager($objectType->objectType)->isAccessible($comment->objectID);
+        return CommentHandler::getInstance()->getCommentManager($objectType->objectType)->isAccessible($object->objectID);
     }
 
     /**

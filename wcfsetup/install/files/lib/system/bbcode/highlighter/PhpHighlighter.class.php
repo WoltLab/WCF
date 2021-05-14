@@ -40,17 +40,17 @@ class PhpHighlighter extends Highlighter
     /**
      * @inheritDoc
      */
-    public function highlight($code)
+    public function highlight($string)
     {
         // add starting php tag
         $phpTagsAdded = false;
-        if (\mb_strpos($code, '<?') === false) {
+        if (\mb_strpos($string, '<?') === false) {
             $phpTagsAdded = true;
-            $code = '<?php ' . $code . ' ?>';
+            $string = '<?php ' . $string . ' ?>';
         }
 
         // do highlight
-        $highlightedCode = \highlight_string($code, true);
+        $highlightedCode = \highlight_string($string, true);
 
         // clear code
         $highlightedCode = \str_replace('<code>', '', $highlightedCode);

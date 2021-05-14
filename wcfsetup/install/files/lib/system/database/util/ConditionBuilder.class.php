@@ -45,12 +45,13 @@ class ConditionBuilder
     /**
      * Adds a new condition.
      *
-     * @param mixed $conditions
+     * @param mixed $condition
      */
-    public function add($conditions)
+    public function add($condition)
     {
+        $conditions = $condition;
         if (!\is_array($conditions)) {
-            $conditions = [$conditions];
+            $conditions = [$condition];
         }
 
         foreach ($conditions as $condition) {

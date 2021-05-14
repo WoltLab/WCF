@@ -126,7 +126,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
     /**
      * @inheritDoc
      */
-    public static function isValid(PackageArchive $archive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {
             $instruction = static::getDefaultFilename();
@@ -135,7 +135,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         if (\preg_match('~\.(tar(\.gz)?|tgz)$~', $instruction)) {
             // check if file actually exists
             try {
-                if ($archive->getTar()->getIndexByFilename($instruction) === false) {
+                if ($packageArchive->getTar()->getIndexByFilename($instruction) === false) {
                     return false;
                 }
             } catch (SystemException $e) {

@@ -89,9 +89,9 @@ class UserGroupOptionHandler extends OptionHandler
     /**
      * @inheritDoc
      */
-    protected function getClassName($type)
+    protected function getClassName($optionType)
     {
-        $className = 'wcf\system\option\user\group\\' . \ucfirst($type) . 'UserGroupOptionType';
+        $className = 'wcf\system\option\user\group\\' . \ucfirst($optionType) . 'UserGroupOptionType';
 
         // validate class
         if (!\class_exists($className)) {

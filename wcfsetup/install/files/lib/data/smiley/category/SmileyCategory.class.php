@@ -111,9 +111,9 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * @inheritDoc
      */
-    public function seek($index)
+    public function seek($offset)
     {
-        $this->index = $index;
+        $this->index = $offset;
 
         if (!$this->valid()) {
             throw new \OutOfBoundsException();

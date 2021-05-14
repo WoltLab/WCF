@@ -18,8 +18,8 @@ class PlainHighlighter extends Highlighter
     /**
      * @inheritDoc
      */
-    public function highlight($code)
+    public function highlight($string)
     {
-        return StringUtil::encodeHTML($code);
+        return StringUtil::encodeHTML($string);
     }
 }

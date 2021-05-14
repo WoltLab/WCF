@@ -19,9 +19,9 @@ class ObjectIdDatabaseTableColumn extends NotNullInt10DatabaseTableColumn
     /**
      * @inheritDoc
      */
-    public static function create($columnName)
+    public static function create($name)
     {
-        return parent::create($columnName)
+        return parent::create($name)
             ->autoIncrement();
     }
 }

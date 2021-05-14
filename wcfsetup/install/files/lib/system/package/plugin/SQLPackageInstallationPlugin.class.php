@@ -168,7 +168,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
     /**
      * @inheritDoc
      */
-    public static function isValid(PackageArchive $archive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         if (!$instruction) {
             $instruction = static::getDefaultFilename();
@@ -177,7 +177,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         if (\preg_match('~\.sql$~', $instruction)) {
             // check if file actually exists
             try {
-                if ($archive->getTar()->getIndexByFilename($instruction) === false) {
+                if ($packageArchive->getTar()->getIndexByFilename($instruction) === false) {
                     return false;
                 }
             } catch (SystemException $e) {

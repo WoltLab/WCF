@@ -58,13 +58,13 @@ class Zip extends File implements IArchive
     /**
      * @inheritDoc
      */
-    public function getFileInfo($offset)
+    public function getFileInfo($index)
     {
-        if (!\is_int($offset)) {
-            $offset = $this->getIndexByFilename($offset);
+        if (!\is_int($index)) {
+            $index = $this->getIndexByFilename($index);
         }
 
-        $info = $this->readFile($offset);
+        $info = $this->readFile($index);
 
         return $info['header'];
     }
@@ -91,14 +91,14 @@ class Zip extends File implements IArchive
     /**
      * @inheritDoc
      */
-    public function extractToString($offset)
+    public function extractToString($index)
     {
-        if (!\is_int($offset)) {
-            $offset = $this->getIndexByFilename($offset);
+        if (!\is_int($index)) {
+            $index = $this->getIndexByFilename($index);
         }
 
         try {
-            $file = $this->readFile($offset);
+            $file = $this->readFile($index);
         } catch (SystemException $e) {
             return false;
         }
@@ -112,14 +112,14 @@ class Zip extends File implements IArchive
     /**
      * @inheritDoc
      */
-    public function extract($offset, $destination)
+    public function extract($index, $destination)
     {
-        if (!\is_int($offset)) {
-            $offset = $this->getIndexByFilename($offset);
+        if (!\is_int($index)) {
+            $index = $this->getIndexByFilename($index);
         }
 
         try {
-            $file = $this->readFile($offset);
+            $file = $this->readFile($index);
         } catch (SystemException $e) {
             return false;
         }

@@ -119,7 +119,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
     /**
      * @inheritDoc
      */
-    public static function isValid(PackageArchive $archive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         return true;
     }

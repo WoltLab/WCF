@@ -326,7 +326,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     /**
      * @inheritDoc
      */
-    public static function isValid(PackageArchive $archive, $instruction)
+    public static function isValid(PackageArchive $packageArchive, $instruction)
     {
         return true;
     }
