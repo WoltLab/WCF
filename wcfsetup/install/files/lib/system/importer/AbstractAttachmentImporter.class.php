@@ -112,7 +112,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 		else {
 			return \preg_replace_callback(
 				'~<woltlab-metacode data-name="attach" data-attributes="(?<attributes>[^"]+)">~',
-				function (array $matches) use ($oldID, $newID): string {
+				static function (array $matches) use ($oldID, $newID): string {
 					$encodedAttributes = $matches['attributes'];
 					
 					$base64Decoded = \base64_decode($matches['attributes']);
