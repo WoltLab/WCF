@@ -15,8 +15,11 @@
 		width: 400px;
 
 		.unfurlUrlImage {
-			height: 200px;
-			position: relative;
+			/* The `!important` is required because of `.messageBody > .messageText img`. */
+			height: 200px !important;
+			object-fit: cover;
+			object-position: center;
+			width: 600px;
 		}
 	}
 
@@ -26,17 +29,18 @@
 		.unfurlUrlImage {
 			border-radius: 3px;
 			flex: 0 0 auto;
-			height: 128px;
+			/* The `!important` is required because of `.messageBody > .messageText img`. */
+			height: 128px !important;
 			margin: 10px;
 			width: 128px;
 
 			@include screen-sm {
-				height: 64px;
+				height: 64px !important;
 				width: 64px;
 			}
 
 			@include screen-xs {
-				height: 24px;
+				height: 24px !important;
 				position: absolute;
 				width: 24px;
 			}
@@ -54,12 +58,6 @@
 			}
 		}
 	}
-}
-
-.unfurlUrlImage {
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
 }
 
 .unfurlUrlInformation {
