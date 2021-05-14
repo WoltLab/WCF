@@ -235,7 +235,7 @@ export function isHiddenByDependencies(node: HTMLElement): boolean {
 
   let returnValue = false;
   _dependencyHiddenNodes.forEach((hiddenNode) => {
-    if (node.contains(hiddenNode)) {
+    if (hiddenNode.contains(node)) {
       returnValue = true;
     }
   });

@@ -201,7 +201,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
         }
         let returnValue = false;
         _dependencyHiddenNodes.forEach((hiddenNode) => {
-            if (node.contains(hiddenNode)) {
+            if (hiddenNode.contains(node)) {
                 returnValue = true;
             }
         });
