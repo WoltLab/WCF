@@ -917,12 +917,12 @@ final class SessionHandler extends SingletonFactory
         $user = $this->getPendingUserChange();
         $this->clearPendingUserChange();
 
-        if ($user->userID !== $expectedUser->userID) {
-            throw new \RuntimeException('Mismatching expectedUser.');
-        }
-
         if (!$user) {
             throw new \BadMethodCallException('No pending user change.');
+        }
+
+        if ($user->userID !== $expectedUser->userID) {
+            throw new \RuntimeException('Mismatching expectedUser.');
         }
 
         $this->changeUser($user);
