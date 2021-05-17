@@ -156,6 +156,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'bbcode_' + bbcode + '_' + this.$element[0].id, data);
 			
 			if (data.cancel !== true) {
+				const block = this.selection.block();
+				if (block && block.nodeName === "PRE") {
+					return;
+				}
+
 				this.buffer.set();
 				
 				var marker = this.marker.get();
