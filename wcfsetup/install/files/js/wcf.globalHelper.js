@@ -207,7 +207,14 @@
 			}
 		}
 		
-		var innerError = element.nextElementSibling;
+		var insertTarget = parent;
+		var referenceElement = element;
+		if (insertTarget.classList.contains('inputAddon')) {
+			insertTarget = parent.parentElement;
+			referenceElement = parent;
+		}
+		
+		var innerError = referenceElement.nextElementSibling;
 		if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
 			if (errorMessage === '') {
 				innerError = null;
@@ -215,7 +222,7 @@
 			else {
 				innerError = elCreate('small');
 				innerError.className = 'innerError';
-				parent.insertBefore(innerError, element.nextSibling);
+				insertTarget.insertBefore(innerError, referenceElement.nextSibling);
 			}
 		}
 		
