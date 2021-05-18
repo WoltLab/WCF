@@ -1,6 +1,10 @@
 {
   "name": "@woltlab/wcf",
   "version": "5.4.0",
+  "files": [
+    "ts/**/*",
+    "global.d.ts"
+  ],
   "devDependencies": {
     "@types/googlemaps": "^3.43.0",
     "@types/perfect-scrollbar": "^0.6.1",
