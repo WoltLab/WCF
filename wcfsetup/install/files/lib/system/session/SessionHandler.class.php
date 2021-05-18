@@ -11,7 +11,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
-use wcf\system\database\DatabaseException;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
@@ -657,12 +657,28 @@ final class SessionHandler extends SingletonFactory
             $sql = "SELECT  *
                     FROM    wcf" . WCF_N . "_session
                     " . $condition;
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute($condition->getParameters());
-            $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+            $legacySessionStatement = WCF::getDB()->prepareStatement($sql);
+            $legacySessionStatement->execute($condition->getParameters());
+            $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
 
             if (!$this->legacySession) {
-                $this->legacySession = $this->createLegacySession();
+                try {
+                    $this->legacySession = $this->createLegacySession();
+                } catch (DatabaseQueryExecutionException $e) {
+                    // Creation of the legacy session might fail due to duplicate key errors for
+                    // concurrent requests.
+                    if ($e->getCode() == '23000' && $e->getDriverCode() == '1062') {
+                        // Attempt to load the legacy session once again. If the legacy session for some
+                        // reason *still* is null then we simply continue without a legacy session. It is
+                        // not required for proper request processing and consumers of the values stored
+                        // within the legacy session (`page*`) cannot rely on any (valid) values being stored
+                        // anyway.
+                        $legacySessionStatement->execute($condition->getParameters());
+                        $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
+                    } else {
+                        throw $e;
+                    }
+                }
             }
         }
 
