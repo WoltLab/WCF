@@ -4,6 +4,7 @@ namespace wcf\data\style;
 
 use wcf\data\DatabaseObject;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\ImageUtil;
@@ -160,6 +161,18 @@ class Style extends DatabaseObject
         }
 
         return null;
+    }
+
+    /**
+     * @since 5.4
+     */
+    public function getEmailFontFamily(): string {
+        $fontFamily = $this->getVariable('wcfFontFamilyFallback');
+        if ($fontFamily === StyleCompiler::SYSTEM_FONT_NAME) {
+            $fontFamily = StyleCompiler::SYSTEM_FONT_FAMILY;
+        }
+
+        return $fontFamily;
     }
 
     /**

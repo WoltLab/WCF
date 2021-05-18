@@ -12,7 +12,7 @@
 		}
 		
 		body, body * {
-			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
+			font-family: {@$style->getEmailFontFamily()};
 			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
 		

@@ -54,11 +54,11 @@ final class StyleCompiler extends SingletonFactory
 
     public const SYSTEM_FONT_NAME = 'system';
 
-    private const SYSTEM_FONT_FAMILY = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    public const SYSTEM_FONT_FAMILY = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", Arial, sans-serif';
 
-    private const SYSTEM_FONT_FAMILY_MONOSPACE = 'ui-monospace, Menlo, Monaco, "Cascadia Mono",
+    public const SYSTEM_FONT_FAMILY_MONOSPACE = 'ui-monospace, Menlo, Monaco, "Cascadia Mono",
         "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
         "Fira Mono", "Droid Sans Mono", "Courier New", monospace';
 
