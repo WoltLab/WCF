@@ -169,7 +169,7 @@ final class SessionHandler extends SingletonFactory
             case 'pageObjectID':
             case 'parentPageID':
             case 'parentPageObjectID':
-                return $this->legacySession->{$key};
+                return $this->legacySession->{$key} ?? null;
 
             /** @deprecated 5.4 - The below values are deprecated. */
             case 'ipAddress':
