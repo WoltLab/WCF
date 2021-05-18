@@ -747,7 +747,7 @@ final class SessionHandler extends SingletonFactory
             'spiderID' => $spiderID,
         ];
 
-        return SessionEditor::createOrIgnore($sessionData);
+        return SessionEditor::create($sessionData);
     }
 
     /**
