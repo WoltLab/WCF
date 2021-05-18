@@ -380,7 +380,13 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                     throw new TypeError("The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.");
                 }
             }
-            let innerError = element.nextElementSibling;
+            let insertTarget = parent;
+            let referenceElement = element;
+            if (insertTarget.classList.contains('inputAddon')) {
+                insertTarget = parent.parentElement;
+                referenceElement = parent;
+            }
+            let innerError = referenceElement.nextElementSibling;
             if (innerError === null || innerError.nodeName !== "SMALL" || !innerError.classList.contains("innerError")) {
                 if (errorMessage === "") {
                     innerError = null;
@@ -388,7 +394,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 else {
                     innerError = document.createElement("small");
                     innerError.className = "innerError";
-                    parent.insertBefore(innerError, element.nextSibling);
+                    insertTarget.insertBefore(innerError, referenceElement.nextSibling);
                 }
             }
             if (errorMessage === "") {

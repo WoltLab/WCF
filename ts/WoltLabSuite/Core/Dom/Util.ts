@@ -449,14 +449,21 @@ const DomUtil = {
       }
     }
 
-    let innerError = element.nextElementSibling as HTMLElement | null;
+    let insertTarget = parent as HTMLElement;
+    let referenceElement = element;
+    if (insertTarget.classList.contains('inputAddon')) {
+      insertTarget = parent.parentElement as HTMLElement;
+      referenceElement = parent as HTMLElement;
+    }
+
+    let innerError = referenceElement.nextElementSibling as HTMLElement | null;
     if (innerError === null || innerError.nodeName !== "SMALL" || !innerError.classList.contains("innerError")) {
       if (errorMessage === "") {
         innerError = null;
       } else {
         innerError = document.createElement("small");
         innerError.className = "innerError";
-        parent.insertBefore(innerError, element.nextSibling);
+        insertTarget.insertBefore(innerError, referenceElement.nextSibling);
       }
     }
 
