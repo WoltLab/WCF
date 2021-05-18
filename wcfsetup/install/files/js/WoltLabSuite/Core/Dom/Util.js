@@ -382,7 +382,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
             }
             let insertTarget = parent;
             let referenceElement = element;
-            if (insertTarget.classList.contains('inputAddon')) {
+            if (insertTarget.classList.contains("inputAddon")) {
                 insertTarget = parent.parentElement;
                 referenceElement = parent;
             }

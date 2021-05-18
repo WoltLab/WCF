@@ -451,7 +451,7 @@ const DomUtil = {
 
     let insertTarget = parent as HTMLElement;
     let referenceElement = element;
-    if (insertTarget.classList.contains('inputAddon')) {
+    if (insertTarget.classList.contains("inputAddon")) {
       insertTarget = parent.parentElement as HTMLElement;
       referenceElement = parent as HTMLElement;
     }
