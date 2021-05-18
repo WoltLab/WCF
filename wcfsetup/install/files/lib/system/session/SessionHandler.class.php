@@ -184,7 +184,7 @@ final class SessionHandler extends SingletonFactory
                 return TIME_NOW;
 
             default:
-                return;
+                return null;
         }
     }
 
