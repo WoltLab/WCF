@@ -1,3 +1,6 @@
+/**
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports", "tslib", "../../Core", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Core, Language, StringUtil, Listener_1, Util_1, Input_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);

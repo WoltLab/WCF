@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Upload
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "../Dom/Traverse", "../Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, DomTraverse, Language, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
     "use strict";

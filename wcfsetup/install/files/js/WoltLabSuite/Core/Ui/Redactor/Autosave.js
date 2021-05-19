@@ -6,6 +6,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Redactor/Autosave
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Event/Handler", "../../Language", "./Metacode"], function (require, exports, tslib_1, Core, Devtools_1, EventHandler, Language, UiRedactorMetacode) {
     "use strict";

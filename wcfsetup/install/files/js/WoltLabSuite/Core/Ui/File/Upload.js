@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/File/Upload
  * @since  5.2
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util", "../../Language", "../../Upload"], function (require, exports, tslib_1, Core, Delete_1, Util_1, Language, Upload_1) {
     "use strict";

@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Clipboard
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notification", "../Ui/Dialog", "../Event/Handler", "../Language", "../Ajax"], function (require, exports, tslib_1, Clipboard, UiNotification, UiDialog, EventHandler, Language, Ajax) {
     "use strict";

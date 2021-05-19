@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Notice/Dismiss
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Ajax"], function (require, exports, tslib_1, Ajax) {
     "use strict";

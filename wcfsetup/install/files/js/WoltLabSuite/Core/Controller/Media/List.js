@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Media/List
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/Clipboard", "../../Event/Handler", "../../Media/Editor", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Upload_1, MediaClipboard, EventHandler, Editor_1, DomChangeListener) {
     "use strict";

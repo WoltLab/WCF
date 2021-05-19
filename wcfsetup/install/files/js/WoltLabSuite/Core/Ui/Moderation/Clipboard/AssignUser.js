@@ -6,6 +6,7 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Moderation/Clipboard/AssignUser
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notification", "../../../User", "../../../StringUtil", "../../../Language", "../../User/Search/Input", "../../../Dom/Traverse", "../../../Ajax", "../../../Dom/Util", "../../Dialog"], function (require, exports, tslib_1, EventHandler, UiNotification, User_1, StringUtil, Language, Input_1, DomTraverse, Ajax, Util_1, Dialog_1) {
     "use strict";

@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/List/Upload
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Upload", "../../Core"], function (require, exports, tslib_1, Upload_1, Core) {
     "use strict";

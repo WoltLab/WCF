@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Article
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "../Article/Search"], function (require, exports, tslib_1, Core, UiArticleSearch) {
     "use strict";

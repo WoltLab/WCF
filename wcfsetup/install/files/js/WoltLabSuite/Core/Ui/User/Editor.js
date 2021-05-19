@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/Editor
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Util", "../../Language", "../../StringUtil", "../Dialog", "../Notification"], function (require, exports, tslib_1, Ajax, Core, Util_1, Language, StringUtil, Dialog_1, UiNotification) {
     "use strict";

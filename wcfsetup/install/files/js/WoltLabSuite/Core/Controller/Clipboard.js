@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Clipboard
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Event/Handler", "../Language", "../Ui/Confirmation", "../Ui/Dropdown/Simple", "../Ui/Page/Action", "../Ui/Screen"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, Language, UiConfirmation, Simple_1, UiPageAction, UiScreen) {
     "use strict";

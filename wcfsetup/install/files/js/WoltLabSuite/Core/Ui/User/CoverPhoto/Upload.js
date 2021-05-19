@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/CoverPhoto/Upload
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../Dialog", "../../Notification", "../../../Upload"], function (require, exports, tslib_1, Core, Util_1, EventHandler, UiDialog, UiNotification, Upload_1) {
     "use strict";

@@ -7,6 +7,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText
  * @since 5.4
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, UiConfirmation, Language, Util_1) {
     "use strict";

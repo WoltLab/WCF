@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Editor
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "../Language", "../Ajax", "./Replace"], function (require, exports, tslib_1, Core, UiNotification, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language, Ajax, Replace_1) {
     "use strict";
