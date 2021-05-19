@@ -29,7 +29,7 @@ define(['Ajax'], function(Ajax) {
 			if (badge) elRemove(badge);
 			
 			// article list
-			elBySelAll('.articleList .newMessageBadge', undefined, elRemove);
+			elBySelAll('.contentItemList .contentItemBadgeNew', undefined, elRemove);
 		},
 		
 		_ajaxSetup: function() {
