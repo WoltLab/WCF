@@ -28,7 +28,7 @@ define(["require", "exports", "tslib", "../../Ajax"], function (require, exports
             if (badge)
                 badge.remove();
             // article list
-            document.querySelectorAll(".articleList .newMessageBadge").forEach((el) => el.remove());
+            document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
         }
         _ajaxSetup() {
             return {

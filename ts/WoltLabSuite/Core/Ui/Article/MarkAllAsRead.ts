@@ -30,7 +30,7 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
     if (badge) badge.remove();
 
     // article list
-    document.querySelectorAll(".articleList .newMessageBadge").forEach((el) => el.remove());
+    document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
