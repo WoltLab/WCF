@@ -50,10 +50,17 @@ class CategoryArticleList extends AccessibleArticleList
         }
 
         $this->getConditionBuilder()->add('article.categoryID IN (?)', [$categoryIDs]);
-        $this->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);
 
         if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-            $this->getConditionBuilder()->add('article.isDeleted = ?', [0]);
+            if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
+                $this->getConditionBuilder()->add(
+                    '(article.userID = ? OR (article.isDeleted = ? AND article.publicationStatus = ?))',
+                    [WCF::getUser()->userID, 0, Article::PUBLISHED]
+                );
+            } else {
+                $this->getConditionBuilder()->add('article.isDeleted = ?', [0]);
+                $this->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);
+            }
         }
     }
 }
