@@ -85,7 +85,7 @@ final class FloodControl extends SingletonFactory
 
     /**
      * Returns the number of contents a user created of the given type within a certain period
-     * of time `[$time-$interval, $time]` and the earliest time within the period at which
+     * of time `($time-$interval, $time]` and the earliest time within the period at which
      * content was created.
      */
     public function countUserContent(
