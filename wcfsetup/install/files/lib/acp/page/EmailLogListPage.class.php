@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\page\SortablePage;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows email logs.
@@ -61,6 +62,7 @@ class EmailLogListPage extends SortablePage
     public $filter = [
         'username' => null,
         'status' => null,
+        'email' => null,
     ];
 
     /**
@@ -84,7 +86,7 @@ class EmailLogListPage extends SortablePage
         if (isset($_REQUEST['filter']) && \is_array($_REQUEST['filter'])) {
             foreach ($_REQUEST['filter'] as $key => $value) {
                 if (\array_key_exists($key, $this->filter)) {
-                    $this->filter[$key] = $value;
+                    $this->filter[$key] = StringUtil::trim($value);
                 }
             }
         }
@@ -104,6 +106,11 @@ class EmailLogListPage extends SortablePage
         }
         if (!empty($this->filter['status'])) {
             $this->objectList->getConditionBuilder()->add('status = ?', [$this->filter['status']]);
+        }
+        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+            if (!empty($this->filter['email'])) {
+                $this->objectList->getConditionBuilder()->add('recipient = ?', [$this->filter['email']]);
+            }
         }
     }
 
