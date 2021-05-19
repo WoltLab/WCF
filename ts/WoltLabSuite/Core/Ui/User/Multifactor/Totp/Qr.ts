@@ -5,7 +5,7 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/Multifactor/Totp/Qr
- * @woltlabExcludeBundle=all
+ * @woltlabExcludeBundle  all
  */
 
 import QrCreator from "qr-creator";
