@@ -166,7 +166,8 @@ class Style extends DatabaseObject
     /**
      * @since 5.4
      */
-    public function getEmailFontFamily(): string {
+    public function getEmailFontFamily(): string
+    {
         $fontFamily = $this->getVariable('wcfFontFamilyFallback');
         if ($fontFamily === StyleCompiler::SYSTEM_FONT_NAME) {
             $fontFamily = StyleCompiler::SYSTEM_FONT_FAMILY;
