@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
+
 import * as Core from "../../../../../Core";
 import * as Language from "../../../../../Language";
 import * as UiNotification from "../../../../Notification";

@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Manager/Editor
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
     "use strict";

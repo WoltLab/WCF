@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Devtools (alias)
  * @module  WoltLabSuite/Core/Devtools
+ * @woltlabExcludeBundle all
  */
 
 let _settings = {

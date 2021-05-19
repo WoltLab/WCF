@@ -5,6 +5,7 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Manager/Search
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Core, Util_1) {
     "use strict";

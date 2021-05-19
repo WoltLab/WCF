@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Message/Reply
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../Notification", "../../User", "../../Controller/Captcha", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, UiNotification, User_1, Captcha_1, UiScroll) {
     "use strict";

@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./PseudoHeader", "../../prism-meta"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorPseudoHeader, prism_meta_1) {
     "use strict";

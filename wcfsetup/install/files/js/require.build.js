@@ -68,7 +68,7 @@
 					});
 					
 					let matches
-					if ((matches = contents.match(/@woltlabExcludeBundle=(tiny|all)/))) {
+					if ((matches = contents.match(/@woltlabExcludeBundle\s+(tiny|all)/))) {
 						switch (matches[1]) {
 							case 'all':
 								return false;

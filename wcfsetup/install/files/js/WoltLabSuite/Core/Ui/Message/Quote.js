@@ -1,3 +1,6 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/File/Delete
  * @since  5.2
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language) {
     "use strict";

@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Page/Search/Input
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], function (require, exports, tslib_1, Core, Input_1) {
     "use strict";

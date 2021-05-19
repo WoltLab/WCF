@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Map/Route/Planner
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Util_1, Language, Dialog_1) {
     "use strict";

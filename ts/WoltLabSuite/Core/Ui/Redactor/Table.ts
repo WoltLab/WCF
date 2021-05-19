@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
+
 import * as Language from "../../Language";
 import UiDialog from "../Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";

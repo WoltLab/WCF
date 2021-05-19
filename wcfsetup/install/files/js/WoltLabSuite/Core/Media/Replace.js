@@ -6,6 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Replace
  * @since 5.3
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "../Dom/Util", "../Ui/Notification", "../Dom/Change/Listener"], function (require, exports, tslib_1, Core, Upload_1, Language, Util_1, UiNotification, DomChangeListener) {
     "use strict";

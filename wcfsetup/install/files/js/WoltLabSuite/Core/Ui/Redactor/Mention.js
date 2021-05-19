@@ -1,3 +1,6 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../StringUtil", "../CloseOverlay"], function (require, exports, tslib_1, Ajax, Core, StringUtil, CloseOverlay_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);

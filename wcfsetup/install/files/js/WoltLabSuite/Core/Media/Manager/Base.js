@@ -5,6 +5,7 @@
  * @copyright 2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Manager/Base
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Permission", "../../Dom/Change/Listener", "../../Event/Handler", "../../Dom/Traverse", "../../Dom/Util", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Ui/Pagination", "../../Ui/Notification", "../../StringUtil", "./Search", "../Upload", "../Editor", "../Clipboard"], function (require, exports, tslib_1, Core, Language, Permission, DomChangeListener, EventHandler, DomTraverse, DomUtil, UiDialog, Clipboard, Pagination_1, UiNotification, StringUtil, Search_1, Upload_1, Editor_1, MediaClipboard) {
     "use strict";

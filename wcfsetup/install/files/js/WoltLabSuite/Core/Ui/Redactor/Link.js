@@ -1,3 +1,6 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
 define(["require", "exports", "tslib", "../../Dom/Util", "../../Language", "../Dialog"], function (require, exports, tslib_1, Util_1, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

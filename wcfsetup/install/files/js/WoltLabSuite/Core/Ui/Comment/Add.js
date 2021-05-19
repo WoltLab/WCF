@@ -9,6 +9,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Comment/Add
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Controller/Captcha", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../Language", "../Dialog", "../Scroll", "../../User", "../Notification"], function (require, exports, tslib_1, Ajax, Captcha_1, Core, Listener_1, Util_1, EventHandler, Language, Dialog_1, UiScroll, User_1, UiNotification) {
     "use strict";

@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/CoverPhoto/Delete
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../Confirmation", "../../Notification"], function (require, exports, tslib_1, Ajax, Util_1, EventHandler, Language, UiConfirmation, UiNotification) {
     "use strict";

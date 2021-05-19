@@ -6,6 +6,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Notification/Handler
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "../StringUtil"], function (require, exports, tslib_1, Ajax, Core, EventHandler, StringUtil) {
     "use strict";

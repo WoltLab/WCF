@@ -5,6 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Comment/Add
+ * @woltlabExcludeBundle tiny
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Change/Listener", "../../../Dom/Util", "../../../Language", "../Add", "../../Notification"], function (require, exports, tslib_1, Core, Listener_1, Util_1, Language, Add_1, UiNotification) {
     "use strict";
