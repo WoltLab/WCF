@@ -1,8 +1,6 @@
 (function () {
 	var config = {
 		mainConfigFile: 'require.config.js',
-		name: "WoltLabSuite/_Meta",
-		out: "WoltLabSuite.Core.min.js",
 		generateSourceMaps: true,
 		useStrict: true,
 		preserveLicenseComments: false,
@@ -21,17 +19,20 @@
 			"require.linearExecution"
 		],
 		excludeShallow: [
-			'WoltLabSuite/_Meta'
+			'WoltLabSuite.Core.min',
+			'WoltLabSuite.Core.tiny.min',
 		],
 		rawText: {
-			'WoltLabSuite/_Meta': 'define([], function() {});'
+			'WoltLabSuite.Core.min': 'define([], function() {});',
+			'WoltLabSuite.Core.tiny.min': 'define([], function() {});',
 		},
 		onBuildRead: function(moduleName, path, contents) {
 			if (!process.versions.node) {
 				throw new Error('You need to run node.js');
 			}
 			
-			if (moduleName === 'WoltLabSuite/_Meta') {
+			if (moduleName === 'WoltLabSuite.Core.min'
+				|| moduleName === 'WoltLabSuite.Core.tiny.min') {
 				if (global.allModules === undefined) {
 					var fs   = module.require('fs'),
 					    path = module.require('path');

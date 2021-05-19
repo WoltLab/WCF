@@ -70,38 +70,33 @@ async function compile(destination, files, overrides) {
 	process.chdir("../../");
 
 	{
-		let configFile = "require.build.js";
-		let outFilename = require(process.cwd() + `/${configFile}`).out;
+		const configFile = "require.build.js";
 
 		for (const COMPILER_TARGET_DEFAULT of [true, false]) {
-			let overrides = "";
-			if (!COMPILER_TARGET_DEFAULT) {
-				outFilename = outFilename.replace(/\.min\.js$/, ".tiny.min.js");
-				overrides += " out=" + outFilename;
-			}
+			const name = `WoltLabSuite.Core${COMPILER_TARGET_DEFAULT ? '' : '.tiny'}.min`;
 
-			console.time(outFilename);
+			console.time(name);
 			{
-				childProcess.execSync(`${rjsCmd} -o ${configFile} ${overrides}`, {
+				childProcess.execSync(`${rjsCmd} -o ${configFile} name=${name} out=${name}.js`, {
 					cwd: process.cwd(),
 					stdio: [0, 1, 2],
 				});
-				const sourceMap = JSON.parse(fs.readFileSync(`${outFilename}.map`, "utf-8"));
+				const sourceMap = JSON.parse(fs.readFileSync(`${name}.js.map`, "utf-8"));
 
 				const output = await compiler.compile(
-					fs.readFileSync(outFilename, "utf-8"),
+					fs.readFileSync(`${name}.js`, "utf-8"),
 					{
 						sourceMap: {
 							content: JSON.stringify(sourceMap),
-							url: `${outFilename}.map`,
+							url: `${name}.js.map`,
 							includeSources: true,
 						}
 					}
 				);
-				fs.writeFileSync(outFilename, output.code);
-				fs.writeFileSync(`${outFilename}.map`, output.map);
+				fs.writeFileSync(`${name}.js`, output.code);
+				fs.writeFileSync(`${name}.js.map`, output.map);
 			}
-			console.timeEnd(outFilename);
+			console.timeEnd(name);
 		}
 	}
 
