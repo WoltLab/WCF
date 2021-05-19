@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\page\SortablePage;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows email logs.
@@ -85,7 +86,7 @@ class EmailLogListPage extends SortablePage
         if (isset($_REQUEST['filter']) && \is_array($_REQUEST['filter'])) {
             foreach ($_REQUEST['filter'] as $key => $value) {
                 if (\array_key_exists($key, $this->filter)) {
-                    $this->filter[$key] = $value;
+                    $this->filter[$key] = StringUtil::trim($value);
                 }
             }
         }
