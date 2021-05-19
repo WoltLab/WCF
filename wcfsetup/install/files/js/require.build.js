@@ -26,43 +26,66 @@
 			'WoltLabSuite.Core.min': 'define([], function() {});',
 			'WoltLabSuite.Core.tiny.min': 'define([], function() {});',
 		},
-		onBuildRead: function(moduleName, path, contents) {
+		onBuildRead: function(moduleName, _modulePath, moduleContents) {
 			if (!process.versions.node) {
 				throw new Error('You need to run node.js');
 			}
+			const fs   = module.require('fs');
+			const path = module.require('path');
 			
-			if (moduleName === 'WoltLabSuite.Core.min'
-				|| moduleName === 'WoltLabSuite.Core.tiny.min') {
-				if (global.allModules === undefined) {
-					var fs   = module.require('fs'),
-					    path = module.require('path');
-					global.allModules = [
-						// https://github.com/WoltLab/WCF/issues/4198
-						'favico'
-					];
-					
-					var queue = ['WoltLabSuite'];
-					var folder;
-					while (folder = queue.shift()) {
-						var files = fs.readdirSync(folder);
-						for (var i = 0; i < files.length; i++) {
-							var filename = path.join(folder, files[i]).replace(/\\/g, '/');
-							if (filename === 'WoltLabSuite/Core/Acp') continue;
-							
-							if (path.extname(filename) === '.js') {
-								global.allModules.push(filename);
-							}
-							else if (fs.statSync(filename).isDirectory()) {
-								queue.push(filename);
-							}
+			if (global.allModules === undefined) {
+				global.allModules = [
+					// https://github.com/WoltLab/WCF/issues/4198
+					'favico'
+				];
+				
+				var queue = ['WoltLabSuite'];
+				var folder;
+				while (folder = queue.shift()) {
+					var files = fs.readdirSync(folder);
+					for (var i = 0; i < files.length; i++) {
+						var filename = path.join(folder, files[i]).replace(/\\/g, '/');
+						if (filename === 'WoltLabSuite/Core/Acp') continue;
+
+						if (path.extname(filename) === '.js') {
+							global.allModules.push(filename);
+						}
+						else if (fs.statSync(filename).isDirectory()) {
+							queue.push(filename);
 						}
 					}
 				}
-				
-				return 'define([' + global.allModules.map(function (item) { return "'" + item.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\.js$/, '') + "'"; }).join(', ') + '], function() { });';
 			}
 			
-			return contents;
+			if (moduleName === 'WoltLabSuite.Core.min' || moduleName === 'WoltLabSuite.Core.tiny.min') {
+				const includedModules = global.allModules.filter((module) => {
+					if (!fs.existsSync(module)) {
+						return true;
+					}
+					
+					const contents = fs.readFileSync(module, {
+						encoding: 'utf8'
+					});
+					
+					let matches
+					if ((matches = contents.match(/@woltlabExcludeBundle=(tiny|all)/))) {
+						switch (matches[1]) {
+							case 'all':
+								return false;
+							case 'tiny':
+								return moduleName !== 'WoltLabSuite.Core.tiny.min';
+						}
+					}
+
+					return true;
+				});
+
+				return 'define([' + includedModules.map((item) => {
+					return "'" + item.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\.js$/, '') + "'";
+				}).join(', ') + '], function() { });';
+			}
+			
+			return moduleContents;
 		}
 	};
 	
