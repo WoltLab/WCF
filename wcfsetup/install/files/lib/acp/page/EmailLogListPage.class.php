@@ -61,6 +61,7 @@ class EmailLogListPage extends SortablePage
     public $filter = [
         'username' => null,
         'status' => null,
+        'email' => null,
     ];
 
     /**
@@ -104,6 +105,11 @@ class EmailLogListPage extends SortablePage
         }
         if (!empty($this->filter['status'])) {
             $this->objectList->getConditionBuilder()->add('status = ?', [$this->filter['status']]);
+        }
+        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+            if (!empty($this->filter['email'])) {
+                $this->objectList->getConditionBuilder()->add('recipient = ?', [$this->filter['email']]);
+            }
         }
     }
 

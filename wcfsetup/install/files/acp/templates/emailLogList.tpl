@@ -40,6 +40,21 @@
 				</dd>
 			</dl>
 			
+			{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+				<dl class="col-xs-12 col-md-4">
+					<dt></dt>
+					<dd>
+						<input
+							class="long"
+							name="filter[email]"
+							placeholder="{lang}wcf.user.email{/lang}"
+							type="email"
+							value="{$filter[email]}"
+						>
+					</dd>
+				</dl>
+			{/if}
+
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
