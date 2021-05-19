@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
+
 import * as Ajax from "../../Ajax";
 import * as Core from "../../Core";
 import * as EventHandler from "../../Event/Handler";

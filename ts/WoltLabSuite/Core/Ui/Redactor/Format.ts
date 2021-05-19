@@ -7,6 +7,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Redactor/Format
+ * @woltlabExcludeBundle tiny
  */
 
 import DomUtil from "../../Dom/Util";

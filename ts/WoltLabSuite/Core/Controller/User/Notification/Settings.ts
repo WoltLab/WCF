@@ -5,6 +5,7 @@
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Controller/User/Notification/Settings
+ * @woltlabExcludeBundle tiny
  */
 
 import * as Language from "../../../Language";

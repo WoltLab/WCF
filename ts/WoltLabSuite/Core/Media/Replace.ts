@@ -6,6 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Replace
  * @since 5.3
+ * @woltlabExcludeBundle tiny
  */
 
 import * as Core from "../Core";

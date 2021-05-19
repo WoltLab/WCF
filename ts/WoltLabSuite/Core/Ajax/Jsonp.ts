@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  AjaxJsonp (alias)
  * @module  WoltLabSuite/Core/Ajax/Jsonp
+ * @woltlabExcludeBundle all
  */
 
 import * as Core from "../Core";

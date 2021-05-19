@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/File/Upload
  * @since  5.2
+ * @woltlabExcludeBundle tiny
  */
 
 import { ResponseData } from "../../Ajax/Data";

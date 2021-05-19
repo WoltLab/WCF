@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
+
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import UiDialog from "../Dialog";

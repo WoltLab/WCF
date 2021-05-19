@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import * as Core from "../../Core";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
