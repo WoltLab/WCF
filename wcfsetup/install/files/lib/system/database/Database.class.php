@@ -2,6 +2,8 @@
 
 namespace wcf\system\database;
 
+use wcf\data\application\Application;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
@@ -330,6 +332,37 @@ abstract class Database
         } catch (\PDOException $e) {
             throw new DatabaseQueryException("Could not prepare statement '" . $statement . "'", $e);
         }
+    }
+
+    /**
+     * Prepares a statement for execution and returns a statement object.
+     *
+     * In contrast to `prepareStatement()`, for all installed apps, `app1_` is replaced with
+     * `app{WCF_N}_`.
+     *
+     * @since   5.4
+     */
+    public function prepare(string $statement, int $limit = 0, int $offset = 0): PreparedStatement
+    {
+        static $regex = null;
+        if ($regex === null) {
+            $abbreviations = \implode(
+                '|',
+                \array_map(static function (Application $app): string {
+                    return \preg_quote($app->getAbbreviation(), '~');
+                }, ApplicationHandler::getInstance()->getApplications())
+            );
+
+            $regex = "~(\\b(?:{$abbreviations}))1_~";
+        }
+
+        $statement = \preg_replace(
+            $regex,
+            '${1}' . WCF_N . '_',
+            $statement
+        );
+
+        return $this->prepareStatement($statement, $limit, $offset);
     }
 
     /**
