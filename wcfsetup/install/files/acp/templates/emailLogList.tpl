@@ -34,7 +34,7 @@
 
 					<script data-relocate="true">
 						require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
-							new UiUserSearchInput(elBySel('input[name="filter[username]"]'));
+							new UiUserSearchInput(document.querySelector('input[name="filter[username]"]'));
 						});
 					</script>
 				</dd>
