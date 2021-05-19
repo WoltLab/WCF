@@ -116,6 +116,8 @@
 	</script>
 {/if}
 
-{include file='articleAddDialog'}
+{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
+	{include file='articleAddDialog'}
+{/if}
 
 {include file='footer'}
