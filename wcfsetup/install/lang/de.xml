@@ -639,7 +639,7 @@
 		<item name="wcf.acp.email.log.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.email.log.time"><![CDATA[Erzeugt]]></item>
 		<item name="wcf.acp.email.log.status"><![CDATA[Status]]></item>
-		<item name="wcf.acp.email.log.status.success"><![CDATA[Erfolgreich versendet]]></item>
+		<item name="wcf.acp.email.log.status.success"><![CDATA[Versand erfolgt]]></item>
 		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Vorübergehendes Problem]]></item>
 		<item name="wcf.acp.email.log.status.permanent_failure"><![CDATA[Endgültig fehlgeschlagen]]></item>
 		<item name="wcf.acp.email.log.status.new"><![CDATA[Wartend]]></item>

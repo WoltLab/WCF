@@ -616,7 +616,7 @@
 		<item name="wcf.acp.email.log.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.email.log.time"><![CDATA[Created]]></item>
 		<item name="wcf.acp.email.log.status"><![CDATA[Status]]></item>
-		<item name="wcf.acp.email.log.status.success"><![CDATA[Successfully Sent]]></item>
+		<item name="wcf.acp.email.log.status.success"><![CDATA[Sent]]></item>
 		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Transient Failure]]></item>
 		<item name="wcf.acp.email.log.status.permanent_failure"><![CDATA[Ultimately Failed]]></item>
 		<item name="wcf.acp.email.log.status.new"><![CDATA[Pending]]></item>
