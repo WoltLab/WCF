@@ -114,6 +114,7 @@
 			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
 			{if $publicationStatus != -1}{capture append=linkParameters}&publicationStatus={@$publicationStatus}{/capture}{/if}
+			{if $isDeleted != -1}{capture append=linkParameters}&isDeleted=1{/capture}{/if}
 			
 			{pages print=true assign=pagesLinks controller="ArticleList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
