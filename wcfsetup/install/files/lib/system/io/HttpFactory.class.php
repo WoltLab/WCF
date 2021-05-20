@@ -34,7 +34,7 @@ final class HttpFactory
     public static function getDefaultUserAgent(?string $comment = null): string
     {
         if ($comment) {
-            if (!Regex::compile("^[a-zA-Z0-9_:/\\. -]+$")->match($comment)) {
+            if (!Regex::compile("^[a-zA-Z0-9_:;,/\\. -]+$")->match($comment)) {
                 throw new InvalidArgumentException("Invalid comment for user agent given.");
             }
 
