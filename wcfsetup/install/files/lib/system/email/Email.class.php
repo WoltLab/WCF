@@ -672,7 +672,7 @@ class Email
         foreach ($this->recipients as $recipient) {
             $mail = clone $this;
 
-            if ($recipient['mailbox'] instanceof UserMailbox) {
+            if ($recipient['mailbox'] instanceof IUserMailbox) {
                 $mail->addHeader('X-WoltLab-Suite-Recipient', $recipient['mailbox']->getUser()->username);
             }
 
