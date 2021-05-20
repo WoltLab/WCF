@@ -5,10 +5,10 @@ namespace wcf\system\background\job;
 use wcf\data\email\log\entry\EmailLogEntry;
 use wcf\data\email\log\entry\EmailLogEntryAction;
 use wcf\system\email\Email;
+use wcf\system\email\IUserMailbox;
 use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
 use wcf\system\email\transport\IStatusReportingEmailTransport;
-use wcf\system\email\UserMailbox;
 use wcf\util\StringUtil;
 
 /**
@@ -94,7 +94,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
                     true
                 ),
                 'recipient' => $this->envelopeTo->getAddress(),
-                'recipientID' => ($this->envelopeTo instanceof UserMailbox) ? $this->envelopeTo->getUser()->userID : null,
+                'recipientID' => ($this->envelopeTo instanceof IUserMailbox) ? $this->envelopeTo->getUser()->userID : null,
                 'status' => EmailLogEntry::STATUS_NEW,
             ],
         ]))->executeAction()['returnValues'];
