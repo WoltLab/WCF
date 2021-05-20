@@ -333,7 +333,7 @@ final class UnfurlResponse
                 RequestOptions::TIMEOUT => 10,
                 RequestOptions::STREAM => true,
                 RequestOptions::HEADERS => [
-                    'user-agent' => HttpFactory::getDefaultUserAgent("URL Unfurling"),
+                    'user-agent' => HttpFactory::getDefaultUserAgent("URL Unfurling; like Twitterbot"),
                 ],
                 RequestOptions::ALLOW_REDIRECTS => [
                     'on_redirect' => new RedirectGuard(),
