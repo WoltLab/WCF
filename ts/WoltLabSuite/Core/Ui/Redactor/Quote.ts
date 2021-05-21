@@ -31,6 +31,7 @@ let _headerHeight = 0;
 class UiRedactorQuote {
   protected readonly _editor: RedactorEditor;
   protected readonly _elementId: string;
+  protected readonly _knownElements = new WeakSet<HTMLElement>();
   protected _quote: HTMLElement | null = null;
 
   /**
@@ -137,8 +138,12 @@ class UiRedactorQuote {
    */
   protected _observeLoad(): void {
     document.querySelectorAll("woltlab-quote").forEach((quote: HTMLElement) => {
-      quote.addEventListener("mousedown", (ev) => this._edit(ev));
-      this._setTitle(quote);
+      if (!this._knownElements.has(quote)) {
+        quote.addEventListener("mousedown", (ev) => this._edit(ev));
+        this._setTitle(quote);
+
+        this._knownElements.add(quote);
+      }
     });
   }
 

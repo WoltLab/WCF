@@ -23,6 +23,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
          * Initializes the quote management.
          */
         constructor(editor, button) {
+            this._knownElements = new WeakSet();
             this._quote = null;
             this._editor = editor;
             this._elementId = this._editor.$element[0].id;
@@ -102,8 +103,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
          */
         _observeLoad() {
             document.querySelectorAll("woltlab-quote").forEach((quote) => {
-                quote.addEventListener("mousedown", (ev) => this._edit(ev));
-                this._setTitle(quote);
+                if (!this._knownElements.has(quote)) {
+                    quote.addEventListener("mousedown", (ev) => this._edit(ev));
+                    this._setTitle(quote);
+                    this._knownElements.add(quote);
+                }
             });
         }
         /**
