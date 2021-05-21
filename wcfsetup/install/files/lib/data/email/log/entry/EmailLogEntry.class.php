@@ -36,6 +36,8 @@ class EmailLogEntry extends DatabaseObject
 
     public const STATUS_PERMANENT_FAILURE = 'permanent_failure';
 
+    public const STATUS_DISCARDED = 'discarded';
+
     /**
      * Returns the formatted 'Message-ID', stripping useless information.
      */

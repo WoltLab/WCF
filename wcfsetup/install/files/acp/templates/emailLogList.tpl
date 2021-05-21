@@ -64,6 +64,7 @@
 						<option value="success"{if $filter[status] == 'success'} selected{/if}>{lang}wcf.acp.email.log.status.success{/lang}</option>
 						<option value="transient_failure"{if $filter[status] == 'transient_failure'} selected{/if}>{lang}wcf.acp.email.log.status.transient_failure{/lang}</option>
 						<option value="permanent_failure"{if $filter[status] == 'permanent_failure'} selected{/if}>{lang}wcf.acp.email.log.status.permanent_failure{/lang}</option>
+						<option value="discarded"{if $filter[status] == 'discarded'} selected{/if}>{lang}wcf.acp.email.log.status.discarded{/lang}</option>
 					</select>
 				</dd>
 			</dl>
