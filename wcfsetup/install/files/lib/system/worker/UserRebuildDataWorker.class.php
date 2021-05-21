@@ -11,8 +11,8 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
+use wcf\data\user\UserProfileList;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -283,13 +283,14 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             }
 
             // Create WebP variants of existing cover photos.
-            $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
+            $userProfiles = new UserProfileList();
+            $userProfiles->getConditionBuilder()->add("user_table.userID IN (?)", [$userIDs]);
+            $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHash IS NOT NULL");
+            $userProfiles->readObjects();
             foreach ($userProfiles as $userProfile) {
-                if ($userProfile->coverPhotoHash) {
-                    $coverPhoto = $userProfile->getCoverPhoto(true);
-                    if ($coverPhoto instanceof IWebpUserCoverPhoto) {
-                        $coverPhoto->createWebpVariant();
-                    }
+                $coverPhoto = $userProfile->getCoverPhoto(true);
+                if ($coverPhoto instanceof IWebpUserCoverPhoto) {
+                    $coverPhoto->createWebpVariant();
                 }
             }
         }
