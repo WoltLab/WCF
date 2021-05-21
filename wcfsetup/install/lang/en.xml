@@ -620,6 +620,7 @@
 		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Transient Failure]]></item>
 		<item name="wcf.acp.email.log.status.permanent_failure"><![CDATA[Ultimately Failed]]></item>
 		<item name="wcf.acp.email.log.status.new"><![CDATA[Pending]]></item>
+		<item name="wcf.acp.email.log.status.discarded"><![CDATA[Discarded]]></item>
 		<item name="wcf.acp.email.log.statusMessage.title"><![CDATA[Status Message]]></item>
 	</category>
 	<category name="wcf.acp.exceptionLog">

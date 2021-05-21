@@ -643,6 +643,7 @@
 		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Vorübergehendes Problem]]></item>
 		<item name="wcf.acp.email.log.status.permanent_failure"><![CDATA[Endgültig fehlgeschlagen]]></item>
 		<item name="wcf.acp.email.log.status.new"><![CDATA[Wartend]]></item>
+		<item name="wcf.acp.email.log.status.discarded"><![CDATA[Verworfen]]></item>
 		<item name="wcf.acp.email.log.statusMessage.title"><![CDATA[Status-Nachricht]]></item>
 	</category>
 	<category name="wcf.acp.exceptionLog">
