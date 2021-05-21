@@ -133,7 +133,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
             if ($event->isConfirmed()) {
                 $this->job->updateStatus(
                     EmailLogEntry::STATUS_DISCARDED,
-                    'notification is confirmed'
+                    'obsolete, notification is already confirmed'
                 );
 
                 return;
