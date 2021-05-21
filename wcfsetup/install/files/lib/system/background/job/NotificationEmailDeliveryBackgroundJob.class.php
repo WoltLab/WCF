@@ -2,6 +2,7 @@
 
 namespace wcf\system\background\job;
 
+use wcf\data\email\log\entry\EmailLogEntry;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\User;
 use wcf\system\session\SessionHandler;
@@ -105,6 +106,11 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
 
             // Drop email if the processing dropped the notification (most likely due to a lack of permissions).
             if ($processedNotifications['count'] == 0) {
+                $this->job->updateStatus(
+                    EmailLogEntry::STATUS_DISCARDED,
+                    'lack of permissions to see notification'
+                );
+
                 return;
             }
 
@@ -125,6 +131,11 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
 
             // Drop email if the notification is already confirmed.
             if ($event->isConfirmed()) {
+                $this->job->updateStatus(
+                    EmailLogEntry::STATUS_DISCARDED,
+                    'notification is confirmed'
+                );
+
                 return;
             }
         } finally {
