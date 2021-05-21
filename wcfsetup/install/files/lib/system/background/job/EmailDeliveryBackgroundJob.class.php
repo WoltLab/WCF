@@ -103,7 +103,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     /**
      * Updates the status of the log entry.
      */
-    private function updateStatus(string $status, string $message = ''): void
+    public function updateStatus(string $status, string $message = ''): void
     {
         (new EmailLogEntryAction([$this->emailLogEntryId], 'update', [
             'data' => [
