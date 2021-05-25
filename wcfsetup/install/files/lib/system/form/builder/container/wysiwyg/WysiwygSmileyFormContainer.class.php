@@ -40,33 +40,28 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer {
 	public function populate() {
 		parent::populate();
 		
-		$smileyCategories = array_values(SmileyCache::getInstance()->getCategories());
-		
+		$smileyCategories = array_values(SmileyCache::getInstance()->getVisibleCategories());
 		foreach ($smileyCategories as $index => $smileyCategory) {
-			$smileyCategory->loadSmilies();
-			if (count($smileyCategory) > 0) {
-				// all of the smilies not in the first category are loaded via
-				// JavaScript
-				$smilies = [];
-				if (!$index) {
-					$smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
-				}
-				
-				$this->appendChild(
-					TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)
-						->label(StringUtil::encodeHTML($smileyCategory->getTitle()))
-						->removeClass('tabMenuContent')
-						->addClass('messageTabMenuContent')
-						->appendChild(
-							FormContainer::create($this->getId() . '_smileyCategoryContainer' . $smileyCategory->categoryID)
-								->removeClass('section')
-								->appendChild(
-									WysiwygSmileyFormNode::create($this->getId() . '_smileyCategory' . $smileyCategory->categoryID)
-										->smilies($smilies)
-								)
-						)
-				);
+			// All smilies not in the first category are loaded via JavaScript.
+			$smilies = [];
+			if (!$index) {
+				$smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
 			}
+			
+			$this->appendChild(
+				TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)
+					->label(StringUtil::encodeHTML($smileyCategory->getTitle()))
+					->removeClass('tabMenuContent')
+					->addClass('messageTabMenuContent')
+					->appendChild(
+						FormContainer::create($this->getId() . '_smileyCategoryContainer' . $smileyCategory->categoryID)
+							->removeClass('section')
+							->appendChild(
+								WysiwygSmileyFormNode::create($this->getId() . '_smileyCategory' . $smileyCategory->categoryID)
+									->smilies($smilies)
+							)
+					)
+			);
 		}
 		
 		if (count($this->children()) > 1) {
