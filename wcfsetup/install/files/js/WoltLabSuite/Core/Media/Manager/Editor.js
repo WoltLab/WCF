@@ -215,7 +215,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 		 * @return	{string}	insert dialog id
 		 */
 		_getInsertDialogId: function() {
-			var dialogId = 'mediaInsert';
+			var dialogId = this._id + 'Insert';
 			
 			this._mediaToInsert.forEach(function(media, mediaId) {
 				dialogId += '-' + mediaId;
