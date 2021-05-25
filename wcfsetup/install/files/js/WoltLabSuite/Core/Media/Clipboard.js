@@ -45,6 +45,7 @@ define([
 	}
 	
 	var _clipboardObjectIds = [];
+	var _didInit = false;
 	var _mediaManager;
 	
 	/**
@@ -52,14 +53,18 @@ define([
 	 */
 	return {
 		init: function(pageClassName, hasMarkedItems, mediaManager) {
-			Clipboard.setup({
-				hasMarkedItems: hasMarkedItems,
-				pageClassName: pageClassName
-			});
+			if (!_didInit) {
+				Clipboard.setup({
+					hasMarkedItems: hasMarkedItems,
+					pageClassName: pageClassName
+				});
+				
+				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
+				
+				_didInit = true;
+			}
 			
 			_mediaManager = mediaManager;
-			
-			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
 		},
 		
 		/**
@@ -168,6 +173,15 @@ define([
 					categoryID: categoryID
 				}
 			});
+		},
+		
+		/**
+		 * Sets the currently active media manager.
+		 * 
+		 * @param	{WoltLabSuite/Core/Media/Manager/Base}	mediaManager
+		 */
+		setMediaManager: function(mediaManager) {
+			_mediaManager = mediaManager;
 		}
 	}
 });

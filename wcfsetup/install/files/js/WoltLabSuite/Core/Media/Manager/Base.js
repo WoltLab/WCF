@@ -230,6 +230,9 @@ define(
 					this._search.hideSearch();
 				}
 			}
+			else {
+				MediaClipboard.setMediaManager(this);
+			}
 			
 			// only show media clipboard if editor is open
 			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
