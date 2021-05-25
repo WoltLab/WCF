@@ -45,20 +45,16 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer
     {
         parent::populate();
 
-        $smileyCategories = \array_values(SmileyCache::getInstance()->getCategories());
-
+        $smileyCategories = \array_values(SmileyCache::getInstance()->getVisibleCategories());
         foreach ($smileyCategories as $index => $smileyCategory) {
-            $smileyCategory->loadSmilies();
-            if (\count($smileyCategory) > 0) {
-                // all of the smilies not in the first category are loaded via
-                // JavaScript
-                $smilies = [];
-                if (!$index) {
-                    $smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
-                }
+            // All smilies not in the first category are loaded via JavaScript.
+            $smilies = [];
+            if (!$index) {
+                $smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
+            }
 
-                $this->appendChild(
-                    TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)
+            $this->appendChild(
+                TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)
                         ->label(StringUtil::encodeHTML($smileyCategory->getTitle()))
                         ->removeClass('tabMenuContent')
                         ->addClass('messageTabMenuContent')
@@ -74,8 +70,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer
                                         ->smilies($smilies)
                                 )
                         )
-                );
-            }
+            );
         }
 
         if (\count($this->children()) > 1) {
