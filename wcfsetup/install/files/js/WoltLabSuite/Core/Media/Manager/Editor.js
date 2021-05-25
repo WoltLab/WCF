@@ -133,7 +133,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
          * Returns the id of the insert dialog based on the media files to be inserted.
          */
         _getInsertDialogId() {
-            return ["mediaInsert", ...this._mediaToInsert.keys()].join("-");
+            return [this._id + "Insert", ...this._mediaToInsert.keys()].join("-");
         }
         /**
          * Returns the supported thumbnail sizes (excluding `original`) for all media images to be inserted.

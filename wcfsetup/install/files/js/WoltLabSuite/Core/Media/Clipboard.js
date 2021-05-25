@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notification", "../Ui/Dialog", "../Event/Handler", "../Language", "../Ajax"], function (require, exports, tslib_1, Clipboard, UiNotification, UiDialog, EventHandler, Language, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.setMediaManager = exports.init = void 0;
     Clipboard = tslib_1.__importStar(Clipboard);
     UiNotification = tslib_1.__importStar(UiNotification);
     UiDialog = tslib_1.__importStar(UiDialog);
@@ -18,6 +18,7 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
     Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     let _mediaManager;
+    const _didInit = false;
     class MediaClipboard {
         _ajaxSetup() {
             return {
@@ -97,12 +98,18 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
         });
     }
     function init(pageClassName, hasMarkedItems, mediaManager) {
-        Clipboard.setup({
-            hasMarkedItems: hasMarkedItems,
-            pageClassName: pageClassName,
-        });
+        if (!_didInit) {
+            Clipboard.setup({
+                hasMarkedItems: hasMarkedItems,
+                pageClassName: pageClassName,
+            });
+            EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
+        }
         _mediaManager = mediaManager;
-        EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
     }
     exports.init = init;
+    function setMediaManager(mediaManager) {
+        _mediaManager = mediaManager;
+    }
+    exports.setMediaManager = setMediaManager;
 });

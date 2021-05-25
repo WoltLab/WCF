@@ -47,7 +47,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   implements DialogCallbackObject, MediaEditorCallbackObject {
   protected _forceClipboard = false;
   protected _hadInitiallyMarkedItems = false;
-  protected readonly _id;
+  protected readonly _id: string;
   protected readonly _listItems = new Map<number, HTMLLIElement>();
   protected _media = new Map<number, Media>();
   protected _mediaCategorySelect: HTMLSelectElement | null;
@@ -203,6 +203,8 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       if (!listItems.length) {
         this._search.hideSearch();
       }
+    } else {
+      MediaClipboard.setMediaManager(this);
     }
 
     // only show media clipboard if editor is open

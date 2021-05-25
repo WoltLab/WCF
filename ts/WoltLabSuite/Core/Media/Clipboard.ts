@@ -20,6 +20,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup } from "../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Ui/Dialog/Data";
 
 let _mediaManager: MediaManager;
+const _didInit = false;
 
 class MediaClipboard implements AjaxCallbackObject, DialogCallbackObject {
   public _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
@@ -131,12 +132,18 @@ function setCategory(categoryID: number) {
 }
 
 export function init(pageClassName: string, hasMarkedItems: boolean, mediaManager: MediaManager): void {
-  Clipboard.setup({
-    hasMarkedItems: hasMarkedItems,
-    pageClassName: pageClassName,
-  });
+  if (!_didInit) {
+    Clipboard.setup({
+      hasMarkedItems: hasMarkedItems,
+      pageClassName: pageClassName,
+    });
 
+    EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
+  }
+  
   _mediaManager = mediaManager;
+}
 
-  EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
+export function setMediaManager(mediaManager: MediaManager): void {
+  _mediaManager = mediaManager;
 }

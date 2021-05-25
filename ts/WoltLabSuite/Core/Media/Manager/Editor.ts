@@ -178,7 +178,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
    * Returns the id of the insert dialog based on the media files to be inserted.
    */
   protected _getInsertDialogId(): string {
-    return ["mediaInsert", ...this._mediaToInsert.keys()].join("-");
+    return [this._id + "Insert", ...this._mediaToInsert.keys()].join("-");
   }
 
   /**
