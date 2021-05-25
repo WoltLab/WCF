@@ -140,7 +140,7 @@ export function init(pageClassName: string, hasMarkedItems: boolean, mediaManage
 
     EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
   }
-  
+
   _mediaManager = mediaManager;
 }
 
