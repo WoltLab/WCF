@@ -248,10 +248,10 @@ class StyleEditForm extends StyleAddForm
                     $file,
                 ]);
             }
-            if ($this->style->coverPhotoExtension && \file_exists($this->style->getCoverPhotoLocation())) {
+            if ($this->style->coverPhotoExtension && \file_exists($this->style->getCoverPhotoLocation(false))) {
                 $file = new UploadFile(
-                    $this->style->getCoverPhotoLocation(),
-                    $this->style->getCoverPhoto(),
+                    $this->style->getCoverPhotoLocation(false),
+                    $this->style->getCoverPhoto(false),
                     true,
                     true,
                     false
