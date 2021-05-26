@@ -144,38 +144,38 @@ class ArticlePage extends AbstractArticlePage
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',
-                $this->articleContent->getTeaserImage()->getLink(),
+                $this->articleContent->getTeaserImage()->getThumbnailLink('large'),
                 true
             );
             MetaTagHandler::getInstance()->addTag(
                 'og:image:width',
                 'og:image:width',
-                $this->articleContent->getTeaserImage()->width,
+                $this->articleContent->getTeaserImage()->getThumbnailWidth('large'),
                 true
             );
             MetaTagHandler::getInstance()->addTag(
                 'og:image:height',
                 'og:image:height',
-                $this->articleContent->getTeaserImage()->height,
+                $this->articleContent->getTeaserImage()->getThumbnailHeight('large'),
                 true
             );
         } elseif ($this->articleContent->getImage()) {
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',
-                $this->articleContent->getImage()->getLink(),
+                $this->articleContent->getImage()->getThumbnailLink('large'),
                 true
             );
             MetaTagHandler::getInstance()->addTag(
                 'og:image:width',
                 'og:image:width',
-                $this->articleContent->getImage()->width,
+                $this->articleContent->getImage()->getThumbnailWidth('large'),
                 true
             );
             MetaTagHandler::getInstance()->addTag(
                 'og:image:height',
                 'og:image:height',
-                $this->articleContent->getImage()->height,
+                $this->articleContent->getImage()->getThumbnailHeight('large'),
                 true
             );
         }
