@@ -461,7 +461,7 @@ BROWSERCONFIG;
 	}
 	
 	/**
-	 * @since       5.2
+	 * @since       5.3
 	 */
 	protected function updateCustomAssets(Style $style) {
 		$customAssetPath = $style->getAssetPath().'custom/';
