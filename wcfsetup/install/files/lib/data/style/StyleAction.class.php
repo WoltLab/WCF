@@ -446,7 +446,7 @@ BROWSERCONFIG;
             if ($style->coverPhotoExtension && \file_exists($style->getCoverPhotoLocation(false))) {
                 if (!$file || $style->getCoverPhotoLocation(false) !== $file->getLocation()) {
                     \unlink($style->getCoverPhotoLocation(false));
-                    
+
                     // Remove the WebP variant.
                     if (\file_exists($style->getCoverPhotoLocation(true))) {
                         \unlink($style->getCoverPhotoLocation(true));
