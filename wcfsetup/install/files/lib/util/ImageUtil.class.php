@@ -258,7 +258,7 @@ final class ImageUtil
         $image = $imageAdapter->getImage();
 
         // The source file is a webp, create a fallback jpeg instead.
-        if ($imageData[2] === 'webp') {
+        if ($imageData[2] === \IMAGETYPE_WEBP) {
             $imageAdapter->saveImageAs($image, "{$outputFilenameWithoutExtension}.jpg", "jpeg", 80);
 
             return false;
