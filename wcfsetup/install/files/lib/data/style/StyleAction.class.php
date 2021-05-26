@@ -215,6 +215,14 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         foreach ($this->parameters['removedUploads'] as $removedUpload) {
             if (\file_exists($removedUpload->getLocation())) {
                 \unlink($removedUpload->getLocation());
+
+                // Dirty hack to delete the WebP variant of the cover photo
+                if (
+                    $removedUpload->getLocation() === $style->getCoverPhotoLocation(false)
+                    && \file_exists($style->getCoverPhotoLocation(true))
+                ) {
+                    \unlink($style->getCoverPhotoLocation(true));
+                }
             }
         }
 
@@ -435,9 +443,14 @@ BROWSERCONFIG;
             /** @var \wcf\system\file\upload\UploadFile $file */
             $file = $this->parameters['uploads']['coverPhoto'];
 
-            if ($style->coverPhotoExtension && \file_exists($style->getCoverPhotoLocation())) {
-                if (!$file || $style->getCoverPhotoLocation() !== $file->getLocation()) {
-                    \unlink($style->getCoverPhotoLocation());
+            if ($style->coverPhotoExtension && \file_exists($style->getCoverPhotoLocation(false))) {
+                if (!$file || $style->getCoverPhotoLocation(false) !== $file->getLocation()) {
+                    \unlink($style->getCoverPhotoLocation(false));
+                    
+                    // Remove the WebP variant.
+                    if (\file_exists($style->getCoverPhotoLocation(true))) {
+                        \unlink($style->getCoverPhotoLocation(true));
+                    }
                 }
             }
             if ($file !== null) {
