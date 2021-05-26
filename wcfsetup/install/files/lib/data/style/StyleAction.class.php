@@ -197,9 +197,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				else if ($file === null) {
 					$this->parameters['variables'][$type] = '';
 				}
-				else {
-					$this->parameters['variables'][$type] = basename($file->getLocation());
-				}
 			}
 		}
 		
