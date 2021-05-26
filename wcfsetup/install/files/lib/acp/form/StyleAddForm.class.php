@@ -618,6 +618,7 @@ class StyleAddForm extends AbstractForm
                     case \IMAGETYPE_PNG:
                     case \IMAGETYPE_JPEG:
                     case \IMAGETYPE_GIF:
+                    case \IMAGETYPE_WEBP:
                         // fine
                         break;
                     default:
