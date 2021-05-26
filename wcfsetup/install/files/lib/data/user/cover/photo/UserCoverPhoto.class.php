@@ -80,7 +80,7 @@ class UserCoverPhoto implements IWebpUserCoverPhoto
      */
     public function getLocation(?bool $forceWebP = null): string
     {
-        return WCF_DIR . 'images/coverPhotos/' . $this->getFilename();
+        return WCF_DIR . 'images/coverPhotos/' . $this->getFilename($forceWebP);
     }
 
     /**
@@ -88,7 +88,7 @@ class UserCoverPhoto implements IWebpUserCoverPhoto
      */
     public function getURL(?bool $forceWebP = null): string
     {
-        return WCF::getPath() . 'images/coverPhotos/' . $this->getFilename();
+        return WCF::getPath() . 'images/coverPhotos/' . $this->getFilename($forceWebP);
     }
 
     /**
