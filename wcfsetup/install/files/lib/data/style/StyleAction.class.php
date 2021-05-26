@@ -452,8 +452,10 @@ BROWSERCONFIG;
 
                 $result = ImageUtil::createWebpVariant($newLocation, $outputFilenameWithoutExtension);
 
+                $extension = ($result === false) ? 'jpg' : $extension;
+                $newLocation = "{$outputFilenameWithoutExtension}.{$extension}";
                 (new StyleEditor($style))->update([
-                    'coverPhotoExtension' => ($result === false) ? 'jpg' : $extension,
+                    'coverPhotoExtension' => $extension,
                 ]);
 
                 $file->setProcessed($newLocation);
