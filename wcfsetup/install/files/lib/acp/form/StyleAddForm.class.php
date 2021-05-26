@@ -224,12 +224,6 @@ class StyleAddForm extends AbstractForm
     public $uploads = [];
 
     /**
-     * @var (null|UploadField)[]
-     * @since 5.3
-     */
-    public $removedUploads = [];
-
-    /**
      * @var UploadField[]
      * @since 5.3
      */
@@ -438,11 +432,11 @@ class StyleAddForm extends AbstractForm
             $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']);
         }
 
-        $this->uploads = $this->removedUploads = [];
+        $this->uploads = [];
         foreach (\array_keys($this->getUploadFields()) as $field) {
             $removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
             if (!empty($removedFiles)) {
-                $this->removedUploads = \array_merge($this->removedUploads, $removedFiles);
+                $this->uploads[$field] = null;
             }
 
             $files = UploadHandler::getInstance()->getFilesByFieldId($field);
@@ -907,7 +901,6 @@ class StyleAddForm extends AbstractForm
                 'apiVersion' => $this->apiVersion,
             ]),
             'uploads' => $this->uploads,
-            'removedUploads' => $this->removedUploads,
             'customAssets' => $this->customAssets,
             'tmpHash' => $this->tmpHash,
             'variables' => $this->variables,
