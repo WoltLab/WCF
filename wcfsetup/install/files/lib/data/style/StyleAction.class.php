@@ -202,13 +202,15 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 }
 
                 if ($file !== null) {
-                    $fileLocation = $file->getLocation();
-                    $extension = \pathinfo($file->getFilename(), \PATHINFO_EXTENSION);
-                    $newName = $type . '-' . Hex::encode(\random_bytes(4)) . '.' . $extension;
-                    $newLocation = $style->getAssetPath() . $newName;
-                    \rename($fileLocation, $newLocation);
-                    $this->parameters['variables'][$type] = $newName;
-                    $file->setProcessed($newLocation);
+                    if (!$file->isProcessed()) {
+                        $fileLocation = $file->getLocation();
+                        $extension = \pathinfo($file->getFilename(), \PATHINFO_EXTENSION);
+                        $newName = $type . '-' . Hex::encode(\random_bytes(4)) . '.' . $extension;
+                        $newLocation = $style->getAssetPath() . $newName;
+                        \rename($fileLocation, $newLocation);
+                        $this->parameters['variables'][$type] = $newName;
+                        $file->setProcessed($newLocation);
+                    }
                 } else {
                     $this->parameters['variables'][$type] = '';
                 }
