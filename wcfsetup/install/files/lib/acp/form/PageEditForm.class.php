@@ -216,7 +216,7 @@ class PageEditForm extends PageAddForm
                     'customURL' => '',
                     'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
                     'content' => '',
-                    'metaDescription' => '',
+                    'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
                 ];
             }
 
