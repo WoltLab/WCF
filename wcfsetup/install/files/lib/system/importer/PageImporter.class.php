@@ -40,7 +40,7 @@ class PageImporter extends AbstractImporter {
 				'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
 				'content' => (!empty($contentData['content']) ? $contentData['content'] : ''),
 				'metaDescription' => (!empty($contentData['metaDescription']) ? $contentData['metaDescription'] : ''),
-				'metaKeywords' => (!empty($contentData['content']) ? $contentData['content'] : ''),
+				'metaKeywords' => (!empty($contentData['metaKeywords']) ? $contentData['metaKeywords'] : ''),
 				'customURL' => (!empty($contentData['customURL']) ? $contentData['customURL'] : ''),
 				'hasEmbeddedObjects' => (!empty($contentData['hasEmbeddedObjects']) ? $contentData['hasEmbeddedObjects'] : 0)
 			];
