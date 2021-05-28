@@ -104,12 +104,17 @@ function initElement(
 
     const link = document.createElement("a");
     link.className = "box24";
+    link.href = "#";
+    link.addEventListener("click", (event) => event.preventDefault());
     listItem.appendChild(link);
 
     const img = document.createElement("img");
     img.src = language.iconPath;
     img.alt = "";
     img.className = "iconFlag";
+    img.height = 15;
+    img.width = 24;
+    img.loading = "eager";
     link.appendChild(img);
 
     const span = document.createElement("span");
