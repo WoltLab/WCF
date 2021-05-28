@@ -19,7 +19,9 @@
 					<div class="accountSecurityContainer">
 						<div class="containerHeadline accountSecurityInformation">
 							<h3>
-								{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}
+								<a href="{link controller='MultifactorManage' object=$method}{/link}" class="accountSecurityInformationLink">
+									{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}
+								</a>
 								
 								{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
 									<span class="badge green">
