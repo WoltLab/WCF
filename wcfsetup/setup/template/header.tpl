@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
-	
+
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css">
-	
+
 	{if !$lastStep|isset}
 		<style type="text/css">
 				@font-face {
@@ -19,12 +19,22 @@
 				}
 		</style>
 	{/if}
+
+	<style type="text/css">
+		#pageHeaderContainer {
+			height: 100px;
+		}
+
+		#pageHeader {
+			padding: 30px 20px;
+		}
+	</style>
 </head>
 
 <body>
 	<a id="top"></a>
-	
-	<div id="pageContainer" class="pageContainer">
+
+	<div id="pageContainer" class="pageContainer acpPageHiddenMenu">
 		<div id="pageHeaderContainer" class="pageHeaderContainer">
 			<header id="pageHeader" class="pageHeader">
 				<div id="pageHeaderFacade" class="pageHeaderFacade">
@@ -36,7 +46,7 @@
 				</div>
 			</header>
 		</div>
-		
+
 		<section id="main" class="main" role="main">
 			<div class="layoutBoundary">
 				<div id="content" class="content">
