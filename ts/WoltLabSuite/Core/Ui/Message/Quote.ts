@@ -359,6 +359,10 @@ export class UiMessageQuote implements AjaxCallbackObject {
     }
 
     this.copyQuote.classList.add("active");
+    const wasInaccessible = this.copyQuote.classList.contains("touchForceInaccessible");
+    if (wasInaccessible) {
+      this.copyQuote.classList.remove("touchForceInaccessible");
+    }
 
     const coordinates = this.getElementBoundaries(selection)!;
     const dimensions = { height: this.copyQuote.offsetHeight, width: this.copyQuote.offsetWidth };
@@ -375,6 +379,9 @@ export class UiMessageQuote implements AjaxCallbackObject {
     this.copyQuote.style.setProperty("top", `${coordinates.bottom + 7}px`);
     this.copyQuote.style.setProperty("left", `${left}px`);
     this.copyQuote.classList.remove("active");
+    if (wasInaccessible) {
+      this.copyQuote.classList.add("touchForceInaccessible");
+    }
 
     if (!this.timerSelectionChange) {
       // reset containerID
