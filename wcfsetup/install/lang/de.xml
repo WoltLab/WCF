@@ -3319,6 +3319,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.like.notification.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel reagiert]]></item>
 		<item name="wcf.article.like.notification.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.article.bbcode.type"><![CDATA[Artikel]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>

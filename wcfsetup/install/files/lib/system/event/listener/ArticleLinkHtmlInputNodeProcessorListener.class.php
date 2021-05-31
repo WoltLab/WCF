@@ -4,6 +4,7 @@ namespace wcf\system\event\listener;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\content\ArticleContentList;
+use wcf\data\bbcode\BBCodeCache;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\request\LinkHandler;
 
@@ -59,7 +60,20 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
                     }
                 }
 
-                $this->replaceLinks($eventObj, $articleContents);
+                $bbcode = BBCodeCache::getInstance()->getBBCodeByTag('wsa');
+                foreach ($eventObj->plainLinks as $link) {
+                    if (!$link->isPristine()) {
+                        continue;
+                    }
+
+                    if (isset($articleContents[$link->getObjectID()])) {
+                        if (!$link->isStandalone()) {
+                            $link->setTitle($articleContents[$link->getObjectID()]);
+                        } else {
+                            $link->replaceWithBBCode($bbcode, $articleContents[$link->getObjectID()]->fileID);
+                        }
+                    }
+                }
             }
         }
     }

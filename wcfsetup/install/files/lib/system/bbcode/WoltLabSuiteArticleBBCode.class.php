@@ -2,8 +2,10 @@
 
 namespace wcf\system\bbcode;
 
-use wcf\data\article\Article;
+use wcf\data\article\ViewableArticle;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -22,19 +24,26 @@ class WoltLabSuiteArticleBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
     {
-        $articleID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
-        if (!$articleID) {
+        $objectID = 0;
+        if (isset($openingTag['attributes'][0])) {
+            $objectID = \intval($openingTag['attributes'][0]);
+        }
+        if (!$objectID) {
             return '';
         }
 
-        $title = (!empty($openingTag['attributes'][1])) ? StringUtil::trim($openingTag['attributes'][1]) : '';
-
-        /** @var Article $article */
-        $article = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $articleID);
-        if ($article !== null) {
-            return StringUtil::getAnchorTag($article->getLink(), $title ?: $article->getTitle());
+        /** @var ViewableArticle $object */
+        $object = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $objectID);
+        if ($object !== null && $object->canRead() && $parser->getOutputType() == 'text/html') {
+            return WCF::getTPL()->fetch('articleBBCode', 'wcf', [
+                'article' => $object,
+                'articleID' => $object->articleID,
+                'titleHash' => \substr(StringUtil::getRandomID(), 0, 8),
+            ], true);
         }
 
-        return '';
+        return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Article', [
+            'id' => $objectID,
+        ]));
     }
 }
