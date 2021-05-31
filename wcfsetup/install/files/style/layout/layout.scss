@@ -164,3 +164,30 @@ html.iOS select {
 		}
 	}
 }
+
+.inlineItems {
+	display: flex;
+	flex-wrap: wrap;
+
+	.inlineItem {
+		flex: 0 1 auto;
+
+		&:not(:last-child) {
+			margin-right: 5px;
+		}
+	}
+
+	&.commaSeparated {
+		.inlineItem:not(:last-child)::after {
+			content: ",";
+			padding-left: 1px;
+		}
+	}
+
+	&.dotSeparated {
+		.inlineItem:not(:last-child)::after {
+			content: "\00b7";
+			margin-left: 5px;
+		}
+	}
+}
