@@ -5,6 +5,7 @@ on:
     branches:
     - "5.2"
     - "5.3"
+    - "5.4"
     - master
   pull_request:
 

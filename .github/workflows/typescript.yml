@@ -3,6 +3,7 @@ name: TypeScript
 on:
   push:
     branches:
+    - "5.4"
     - master
   pull_request:
 
