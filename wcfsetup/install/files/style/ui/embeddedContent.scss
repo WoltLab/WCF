@@ -1,9 +1,18 @@
 .embeddedContent {
 	background-color: $wcfContentBackground;
-	border: 1px solid $wcfContentBorderInner;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	border-radius: 3px;
 	margin: 10px 0;
-	max-width: 600px;
+	max-width: 400px;
+	overflow: hidden;
+}
+
+.embeddedContentImage {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: -10px -10px 10px -10px;
+	min-height: 150px;
 }
 
 .embeddedContentLink {
@@ -29,17 +38,23 @@
 
 .embeddedContentTitle {
 	color: $wcfContentHeadlineText;
-	margin-bottom: 20px;
+	display: -webkit-box;
+	margin-bottom: 5px;
+	overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
 	@include wcfFontHeadline;
 	@include wcfFontBold;
 }
 
 .embeddedContentDescription {
-	color: $wcfContentText;
-	max-height: 120px;
-	overflow: hidden;
+	color: $wcfContentDimmedText;
+	display: -webkit-box;
+    overflow: hidden;
 	position: relative;
+	-webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 .embeddedContentDescription::after {
 	/* Do not use `transparent` here, because of an ancient iOS rendering bug. */
