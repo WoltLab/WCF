@@ -212,7 +212,7 @@ final class ImageUtil
             $supportsWebP = false;
             if (!empty($_SERVER["HTTP_ACCEPT"])) {
                 $acceptableMimeTypes = \array_map(static function ($acceptableMimeType) {
-                    [$mimeType] = ArrayUtil::trim(\explode(";", $acceptableMimeType));
+                    [$mimeType] = ArrayUtil::trim(\explode(";", $acceptableMimeType), false);
 
                     return $mimeType;
                 }, \explode(",", $_SERVER["HTTP_ACCEPT"]));
