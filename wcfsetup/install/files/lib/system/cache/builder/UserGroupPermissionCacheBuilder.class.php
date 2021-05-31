@@ -58,7 +58,12 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         $conditions->add("option_value.groupID IN (?)", [$parameters]);
 
         $optionData = [];
-        $sql = "SELECT      option_table.optionName, option_table.optionType, option_value.optionValue, option_value.groupID, option_table.enableOptions
+        $sql = "SELECT      option_table.optionName,
+                            option_table.optionType,
+                            option_value.optionValue,
+                            option_value.groupID,
+                            option_table.enableOptions,
+                            option_table.usersOnly
                 FROM        wcf" . WCF_N . "_user_group_option_value option_value
                 LEFT JOIN   wcf" . WCF_N . "_user_group_option option_table
                 ON          option_table.optionID = option_value.optionID
@@ -66,6 +71,13 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
+            if (
+                $row['usersOnly']
+                && UserGroup::getGroupByID($row['groupID'])->groupType == UserGroup::GUESTS
+            ) {
+                continue;
+            }
+
             $optionData[$row['groupID']][$row['optionName']] = $row;
         }
 
