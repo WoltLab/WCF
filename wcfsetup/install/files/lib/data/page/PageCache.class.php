@@ -109,6 +109,32 @@ class PageCache extends SingletonFactory
     }
 
     /**
+     * Returns the localized page meta description by page id, optionally retrieving the description
+     * for given language id if it is a multilingual page (or a system page).
+     *
+     * @param int $pageID page id
+     * @param int $languageID specific value by language id
+     * @since 5.4
+     */
+    public function getPageMetaDescription($pageID, $languageID = null): string
+    {
+        if (isset($this->cache['pageMetaDescriptions'][$pageID])) {
+            $page = $this->getPage($pageID);
+            if ($page->isMultilingual || $page->pageType == 'system') {
+                if ($languageID !== null && isset($this->cache['pageMetaDescriptions'][$pageID][$languageID])) {
+                    return $this->cache['pageMetaDescriptions'][$pageID][$languageID];
+                } elseif (isset($this->cache['pageMetaDescriptions'][$pageID][WCF::getLanguage()->languageID])) {
+                    return $this->cache['pageMetaDescriptions'][$pageID][WCF::getLanguage()->languageID];
+                }
+            } else {
+                return $this->cache['pageMetaDescriptions'][$pageID][0];
+            }
+        }
+
+        return '';
+    }
+
+    /**
      * Returns the global landing page.
      *
      * @return  Page

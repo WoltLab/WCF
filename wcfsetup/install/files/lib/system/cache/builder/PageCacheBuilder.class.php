@@ -28,6 +28,7 @@ class PageCacheBuilder extends AbstractCacheBuilder
             'pages' => [],
             'pageTitles' => [],
             'landingPage' => null,
+            'pageMetaDescriptions' => [],
         ];
 
         $pageList = new PageList();
@@ -35,7 +36,7 @@ class PageCacheBuilder extends AbstractCacheBuilder
         $data['pages'] = $pageList->getObjects();
 
         // get page titles
-        $sql = "SELECT  pageID, languageID, title
+        $sql = "SELECT  pageID, languageID, title, metaDescription
                 FROM    wcf" . WCF_N . "_page_content";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
@@ -47,6 +48,11 @@ class PageCacheBuilder extends AbstractCacheBuilder
             }
 
             $data['pageTitles'][$pageID][$row['languageID'] ?: 0] = $row['title'];
+
+            if (!isset($data['pageMetaDescriptions'])) {
+                $data['pageMetaDescriptions'][$pageID] = [];
+            }
+            $data['pageMetaDescriptions'][$pageID][$row['languageID'] ?: 0] = $row['metaDescription'];
         }
 
         // build lookup table

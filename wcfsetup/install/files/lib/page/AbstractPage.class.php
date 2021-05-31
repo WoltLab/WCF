@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use wcf\data\page\PageCache;
 use wcf\form\DisclaimerForm;
 use wcf\form\EmailActivationForm;
 use wcf\form\EmailNewActivationCodeForm;
@@ -15,6 +16,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\MetaTagHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
@@ -141,6 +143,36 @@ abstract class AbstractPage implements IPage
     {
         // call readData event
         EventHandler::getInstance()->fireAction($this, 'readData');
+
+        $this->addPageDescriptionMetaTag();
+    }
+
+    /**
+     * @since 5.4
+     */
+    private function addPageDescriptionMetaTag(): void
+    {
+        $page = PageCache::getInstance()->getPageByController(static::class);
+        if ($page !== null) {
+            $metaDescription = PageCache::getInstance()->getPageMetaDescription($page->pageID);
+            if (!empty($metaDescription)) {
+                $found = false;
+                foreach (MetaTagHandler::getInstance() as $key => $metaTag) {
+                    if ($key === "og:description") {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                if (!$found) {
+                    MetaTagHandler::getInstance()->addTag(
+                        "og:description",
+                        "og:description",
+                        $metaDescription
+                    );
+                }
+            }
+        }
     }
 
     /**

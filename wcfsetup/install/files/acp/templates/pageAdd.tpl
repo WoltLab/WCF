@@ -14,7 +14,7 @@
 				}
 			}).trigger('change');
 		}
-		
+
 		{if $action != 'edit' || !$page->isLandingPage}
 			$('#isDisabled').change(function(event) {
 				if ($('#isDisabled')[0].checked) {
@@ -36,7 +36,7 @@
 			if (!name) return;
 			name = name.replace(/ /g, '-');
 			name = name.replace(/[^a-z0-9-]/gi, '');
-			
+
 			{if !$isMultilingual}
 				if (elById('customURL').value === '') {
 					elById('customURL').value = name;
@@ -56,7 +56,7 @@
 			Language.addObject({
 				'wcf.acp.page.copy': '{jslang}wcf.acp.page.copy{/jslang}'
 			});
-			
+
 			AcpUiPageCopy.init();
 		});
 	</script>
@@ -64,7 +64,7 @@
 		<div>
 			{lang}wcf.acp.page.copy.description{/lang}
 		</div>
-		
+
 		<div class="formSubmit">
 			<a href="{link controller='PageAdd' presetPageID=$page->pageID}{/link}" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</a>
 		</div>
@@ -75,22 +75,22 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.page.add{/lang}{else}{lang}wcf.acp.page.edit{/lang}{/if}</h1>
 	</div>
-	
+
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
 				{if $page->pageType !== 'system'}
 					<li><a href="#" class="button jsButtonCopyPage"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
 				{/if}
-				
+
 				{if !$page->requireObjectID}
 					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
 				{/if}
-				
+
 				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='PageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
-			
+
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
@@ -109,15 +109,15 @@
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.page.contents{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('boxes')}">{lang}wcf.acp.box.list{/lang}</a></li>
-				
+
 				{if $action != 'edit' || $page->pageType != 'system'}
 					<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
 				{/if}
-				
+
 				{event name='tabMenuTabs'}
 			</ul>
 		</nav>
-		
+
 		<div id="general" class="tabMenuContent">
 			<div class="section">
 				<dl{if $errorField == 'name'} class="formError"{/if}>
@@ -135,13 +135,13 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
 					<dt><label for="parentPageID">{lang}wcf.acp.page.parentPage{/lang}</label></dt>
 					<dd>
 						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->hasFixedParent} disabled{/if}>
 							<option value="0">{lang}wcf.acp.page.parentPage.none{/lang}</option>
-							
+
 							{foreach from=$pageNodeList item=pageNode}
 								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID || ($action === 'edit' && $pageNode->pageID == $page->pageID)} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
@@ -157,7 +157,7 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}{if $action == 'edit' && $page->originIsSystem} style="display: none"{/if}>
 					<dt><label for="applicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
 					<dd>
@@ -177,7 +177,7 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				{if $action === 'edit' && $page->originIsSystem}
 					<dl{if $errorField == 'overrideApplicationPackageID'} class="formError"{/if}>
 						<dt><label for="overrideApplicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
@@ -201,7 +201,7 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				{if !$isMultilingual}
 					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
 						<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
@@ -238,7 +238,7 @@
 						</dl>
 					{/foreach}
 				{/if}
-				
+
 				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 					<dt><label for="cssClassName">{lang}wcf.acp.page.cssClassName{/lang}</label></dt>
 					<dd>
@@ -254,7 +254,7 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				{if $action != 'edit' || (!$page->requireObjectID && !$page->excludeFromLandingPage)}
 					<dl>
 						<dt></dt>
@@ -263,7 +263,7 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				{if $action != 'edit' || $page->pageType != 'system'}
 					<dl>
 						<dt></dt>
@@ -272,27 +272,27 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				<dl>
 					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="availableDuringOfflineMode" name="availableDuringOfflineMode" value="1"{if $availableDuringOfflineMode} checked{/if}> {lang}wcf.acp.page.availableDuringOfflineMode{/lang}</label>
 					</dd>
 				</dl>
-				
+
 				<dl>
 					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="allowSpidersToIndex" name="allowSpidersToIndex" value="1"{if $allowSpidersToIndex} checked{/if}> {lang}wcf.acp.page.allowSpidersToIndex{/lang}</label>
 					</dd>
 				</dl>
-				
+
 				{if $action === 'add'}
 					<dl>
 						<dt></dt>
 						<dd>
 							<label><input type="checkbox" id="addPageToMainMenu" name="addPageToMainMenu" value="1"{if $addPageToMainMenu} checked{/if}> {lang}wcf.acp.page.addPageToMainMenu{/lang}</label>
-							
+
 							<script data-relocate="true">
 								elById('addPageToMainMenu').addEventListener('change', function() {
 									if (this.checked) {
@@ -305,13 +305,13 @@
 							</script>
 						</dd>
 					</dl>
-					
+
 					<dl id="parentMenuItemDl"{if $errorField == 'parentMenuItemID'} class="formError"{/if}{if !$addPageToMainMenu} style="display: none"{/if}>
 						<dt><label for="parentMenuItemID">{lang}wcf.acp.menu.item.parentItem{/lang}</label></dt>
 						<dd>
 							<select name="parentMenuItemID" id="parentMenuItemID">
 								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-								
+
 								{foreach from=$menuItemNodeList item=menuItemNode}
 									<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentMenuItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</option>
 								{/foreach}
@@ -328,7 +328,7 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				{if $pageType !== 'system'}
 					<dl>
 						<dt></dt>
@@ -337,11 +337,11 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				{event name='dataFields'}
 			</div>
 		</div>
-		
+
 		<div id="contents" class="tabMenuContent">
 			{if !$isMultilingual && $pageType != 'system'}
 				<div class="section">
@@ -360,14 +360,14 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					{event name='informationFields'}
-					
+
 					<dl{if $errorField == 'content'} class="formError"{/if}>
 						<dt><label for="content0">{lang}wcf.acp.page.content{/lang}</label></dt>
 						<dd>
 							{include file='__pageAddContent' languageID=0}
-							
+
 							{if $errorField == 'content'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -379,13 +379,13 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					{if $pageType == 'text'}
 						{include file='messageFormTabs' wysiwygContainerID='content0'}
 					{/if}
-					
+
 					{event name='messageFields'}
-					
+
 					<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
 						<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 						<dd>
@@ -401,7 +401,7 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
 						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
 						<dd>
@@ -417,7 +417,7 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					{event name='metaFields'}
 				</div>
 			{else}
@@ -430,7 +430,7 @@
 							{/foreach}
 						</ul>
 					</nav>
-					
+
 					{foreach from=$availableLanguages item=availableLanguage}
 						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
 							<div class="section">
@@ -450,34 +450,8 @@
 										{/if}
 									</dd>
 								</dl>
-								
-								{event name='informationFieldsMultilingual'}
-								
-								{if $pageType != 'system'}
-									{assign var='__errorFieldName' value='content_'|concat:$availableLanguage->languageID}
-									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
-										<dd>
-											{include file='__pageAddContent' languageID=$availableLanguage->languageID}
-											
-											{if $errorField == $__errorFieldName}
-												<small class="innerError">
-													{if $errorType == 'empty'}
-														{lang}wcf.global.form.error.empty{/lang}
-													{else}
-														{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
-													{/if}
-												</small>
-											{/if}
-										</dd>
-									</dl>
-									
-									{if $pageType == 'text'}
-										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
-									{/if}
-									
-									{event name='messageFieldsMultilingual'}
-									
+
+								{if $pageType == 'system'}
 									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
@@ -494,7 +468,54 @@
 											{/if}
 										</dd>
 									</dl>
-									
+
+									{event name='metaFieldsMultilingualSystemPage'}
+								{/if}
+
+								{event name='informationFieldsMultilingual'}
+
+								{if $pageType != 'system'}
+									{assign var='__errorFieldName' value='content_'|concat:$availableLanguage->languageID}
+									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
+										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
+										<dd>
+											{include file='__pageAddContent' languageID=$availableLanguage->languageID}
+
+											{if $errorField == $__errorFieldName}
+												<small class="innerError">
+													{if $errorType == 'empty'}
+														{lang}wcf.global.form.error.empty{/lang}
+													{else}
+														{lang}wcf.acp.page.content.error.{@$errorType}{/lang}
+													{/if}
+												</small>
+											{/if}
+										</dd>
+									</dl>
+
+									{if $pageType == 'text'}
+										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
+									{/if}
+
+									{event name='messageFieldsMultilingual'}
+
+									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
+									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
+										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
+										<dd>
+											<input type="text" class="long" name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
+											{if $errorField == $__errorFieldName}
+												<small class="innerError">
+													{if $errorType == 'empty'}
+														{lang}wcf.global.form.error.empty{/lang}
+													{else}
+														{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+													{/if}
+												</small>
+											{/if}
+										</dd>
+									</dl>
+
 									{event name='metaFieldsMultilingual'}
 								{/if}
 							</div>
@@ -503,11 +524,11 @@
 				</div>
 			{/if}
 		</div>
-		
+
 		<div id="boxes" class="tabMenuContent">
 			<div class="section">
 				<p class="info">{lang}wcf.acp.page.boxOrder.page{@$action|ucfirst}{/lang}</p>
-				
+
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
 					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
 					<dd>
@@ -538,7 +559,7 @@
 									'wcf.global.filter.visibility.highlightActive': '{jslang}wcf.global.filter.visibility.highlightActive{/jslang}',
 									'wcf.global.filter.visibility.showAll': '{jslang}wcf.global.filter.visibility.showAll{/jslang}'
 								});
-								
+
 								new UiItemListFilter('boxVisibilitySettings');
 							});
 						</script>
@@ -546,16 +567,16 @@
 				</dl>
 			</div>
 		</div>
-		
+
 		{if $action != 'edit' || $page->pageType != 'system'}
 			<div id="acl" class="tabMenuContent">
 				{include file='aclSimple' __supportsInvertedPermissions=true}
 			</div>
 		{/if}
-		
+
 		{event name='tabMenuContents'}
 	</div>
-	
+
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
