@@ -48,23 +48,18 @@
 	@include wcfFontBold;
 }
 
+.embeddedContentDetails {
+	margin-top: 5px;
+
+	@include wcfFontSmall;
+}
+
 .embeddedContentDescription {
 	color: $wcfContentDimmedText;
 	display: -webkit-box;
     overflow: hidden;
-	position: relative;
 	-webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-}
-.embeddedContentDescription::after {
-	/* Do not use `transparent` here, because of an ancient iOS rendering bug. */
-	background-image: linear-gradient(to top, $wcfContentBackground, transparentize($wcfContentBackground, 1));
-	bottom: 0;
-	content: "";
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 100px;
 }
 
 .embeddedContentMeta {
