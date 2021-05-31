@@ -4,7 +4,6 @@ namespace wcf\system\message\embedded\object;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleList;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
