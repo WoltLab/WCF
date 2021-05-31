@@ -164,7 +164,7 @@ class SmtpEmailTransport implements IEmailTransport {
 	 */
 	protected function read(array $expectedCodes) {
 		$truncateReply = function ($reply) {
-			return StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply), 80, StringUtil::HELLIP, true);
+			return StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply), 250, StringUtil::HELLIP, true);
 		};
 		
 		$code = null;
