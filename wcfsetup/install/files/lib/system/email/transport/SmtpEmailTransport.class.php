@@ -175,7 +175,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
         $truncateReply = static function ($reply) {
             return StringUtil::truncate(
                 \preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply),
-                80,
+                250,
                 StringUtil::HELLIP,
                 true
             );
