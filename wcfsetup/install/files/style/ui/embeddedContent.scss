@@ -7,12 +7,27 @@
 	overflow: hidden;
 }
 
+/* @deprecated 5.4 Use `<img class="embeddedContentImageElement">` instead */
 .embeddedContentImage {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	margin: -10px -10px 10px -10px;
 	min-height: 150px;
+}
+
+.embeddedContentImageElement {
+	margin: -10px -10px 10px -10px;
+	object-fit: cover;
+	object-position: center;
+}
+
+/* This repetition is required because of `.messageBody > .messageText img`. */
+.embeddedContentImageElement.embeddedContentImageElement.embeddedContentImageElement {
+	height: 150px !important;
+
+	// The `100% + 20px` are the result of the negative margins.
+	max-width: calc(100% + 20px);
 }
 
 .embeddedContentLink {

@@ -1,6 +1,12 @@
 <article class="articleEmbeddedEntry embeddedContent" aria-labelledby="{$titleHash}_entryTitle{@$article->articleID}">
 	<div class="embeddedContentLink">
-		<div class="embeddedContentImage" style="background-image: url({if $article->getTeaserImage()}{$article->getTeaserImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if})"></div>
+		<img
+			class="embeddedContentImageElement"
+			src="{if $article->getTeaserImage()}{$article->getTeaserImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if}"
+			height="{if $article->getTeaserImage()}{@$article->getTeaserImage()->getThumbnailHeight('medium')}{else}{@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoHeight()}{/if}"
+			width="{if $article->getTeaserImage()}{@$article->getTeaserImage()->getThumbnailWidth('medium')}{else}{@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoWidth()}{/if}"
+			loading="lazy"
+			alt="">
 
         <div class="embeddedContentCategory">{lang}wcf.article.bbcode.type{/lang}</div>
 		
