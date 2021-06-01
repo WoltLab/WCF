@@ -15,6 +15,7 @@ use wcf\system\database\table\column\BinaryDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
+use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
@@ -115,6 +116,11 @@ return [
     PartialDatabaseTable::create('wcf1_user_group')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('requireMultifactor'),
+        ]),
+
+    PartialDatabaseTable::create('wcf1_user_option')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('labeledUrl'),
         ]),
 
     PartialDatabaseTable::create('wcf1_user_ignore')
