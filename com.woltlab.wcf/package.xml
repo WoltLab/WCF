@@ -56,5 +56,9 @@
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
+
+		<instruction type="eventListener" />
+
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4.php</instruction>
 	</instructions>
 </package>
