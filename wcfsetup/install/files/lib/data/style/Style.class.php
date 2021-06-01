@@ -44,6 +44,16 @@ class Style extends DatabaseObject
     /**
      * @since 5.4
      */
+    protected $coverPhotoHeight = 0;
+
+    /**
+     * @since 5.4
+     */
+    protected $coverPhotoWidth = 0;
+
+    /**
+     * @since 5.4
+     */
     protected $pageLogoSmallHeight = 0;
 
     /**
@@ -223,6 +233,15 @@ class Style extends DatabaseObject
                 $this->pageLogoSmallHeight = $data[1];
             }
         }
+
+        $coverPhoto = $this->getCoverPhotoLocation();
+        if (\file_exists($coverPhoto)) {
+            $data = \getimagesize($coverPhoto);
+            if ($data !== false) {
+                $this->coverPhotoWidth = $data[0];
+                $this->coverPhotoHeight = $data[1];
+            }
+        }
     }
 
     /**
@@ -337,6 +356,22 @@ class Style extends DatabaseObject
         }
 
         return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
+    }
+
+    /**
+     * @since 5.4
+     */
+    public function getCoverPhotoHeight(): int
+    {
+        return $this->coverPhotoHeight;
+    }
+
+    /**
+     * @since 5.4
+     */
+    public function getCoverPhotoWidth(): int
+    {
+        return $this->coverPhotoWidth;
     }
 
     /**

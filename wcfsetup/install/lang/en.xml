@@ -3245,6 +3245,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.article.like.notification.title.stacked"><![CDATA[{#$count} users reacted to your article]]></item>
 		<item name="wcf.article.like.notification.message"><![CDATA[<strong>{$author}</strong> reacted to your article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.article.bbcode.type"><![CDATA[Article]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>

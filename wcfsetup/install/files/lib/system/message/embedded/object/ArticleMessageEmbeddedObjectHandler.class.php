@@ -2,8 +2,8 @@
 
 namespace wcf\system\message\embedded\object;
 
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleList;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -36,8 +36,8 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
      */
     public function loadObjects(array $objectIDs)
     {
-        $articleList = new ArticleList();
-        $articleList->setObjectIDs($objectIDs);
+        $articleList = new AccessibleArticleList();
+        $articleList->getConditionBuilder()->add('article.articleID IN (?)', [$objectIDs]);
         $articleList->readObjects();
 
         return $articleList->getObjects();
@@ -48,8 +48,8 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
      */
     public function validateValues($objectType, $objectID, array $values)
     {
-        $articleList = new ArticleList();
-        $articleList->setObjectIDs($values);
+        $articleList = new AccessibleArticleList();
+        $articleList->getConditionBuilder()->add('article.articleID IN (?)', [$values]);
         $articleList->readObjects();
         $articles = $articleList->getObjects();
 
