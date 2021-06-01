@@ -41,8 +41,8 @@
 	display: -webkit-box;
 	margin-bottom: 5px;
 	overflow: hidden;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 
 	@include wcfFontHeadline;
 	@include wcfFontBold;
@@ -57,9 +57,9 @@
 .embeddedContentDescription {
 	color: $wcfContentDimmedText;
 	display: -webkit-box;
-    overflow: hidden;
+	overflow: hidden;
 	-webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
+	-webkit-box-orient: vertical;
 }
 
 .embeddedContentMeta {
