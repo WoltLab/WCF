@@ -70,7 +70,7 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
                         if (!$link->isStandalone()) {
                             $link->setTitle($articleContents[$link->getObjectID()]);
                         } else {
-                            $link->replaceWithBBCode($bbcode, $articleContents[$link->getObjectID()]->fileID);
+                            $link->replaceWithBBCode($bbcode, $articleContents[$link->getObjectID()]->articleID);
                         }
                     }
                 }
