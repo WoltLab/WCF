@@ -3,11 +3,9 @@
 namespace wcf\system\importer;
 
 use wcf\data\media\Media;
-use wcf\data\media\MediaAction;
 use wcf\data\media\MediaEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -25,11 +23,6 @@ class MediaImporter extends AbstractImporter
      * @inheritDoc
      */
     protected $className = Media::class;
-
-    /**
-     * @var DefaultUploadFileSaveStrategy
-     */
-    private $saveStrategy;
 
     /**
      * @inheritDoc
@@ -149,17 +142,5 @@ class MediaImporter extends AbstractImporter
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.media', $oldID, $media->mediaID);
 
         return $media->mediaID;
-    }
-
-    /**
-     * @return DefaultUploadFileSaveStrategy
-     */
-    private function getSaveStrategy()
-    {
-        if ($this->saveStrategy === null) {
-            $this->saveStrategy = new DefaultUploadFileSaveStrategy(MediaAction::class);
-        }
-
-        return $this->saveStrategy;
     }
 }
