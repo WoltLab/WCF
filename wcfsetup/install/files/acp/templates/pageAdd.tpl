@@ -402,22 +402,6 @@
 						</dd>
 					</dl>
 
-					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
-						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-						<dd>
-							<input type="text" class="long" name="metaKeywords[0]" id="metaKeywords" value="{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}">
-							{if $errorField == 'metaKeywords'}
-								<small class="innerError">
-									{if $errorType == 'empty'}
-										{lang}wcf.global.form.error.empty{/lang}
-									{else}
-										{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
-									{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-
 					{event name='metaFields'}
 				</div>
 			{else}
