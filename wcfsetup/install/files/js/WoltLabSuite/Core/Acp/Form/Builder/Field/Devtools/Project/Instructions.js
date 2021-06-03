@@ -269,7 +269,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                             listItem.querySelector(".jsDevtoolsProjectInstruction").innerHTML = Language.get("wcf.acp.devtools.project.instruction.instruction", {
                                 application: listItem.dataset.application,
                                 pip: listItem.dataset.pip,
-                                runStandalone: listItem.dataset.runStandalone,
+                                runStandalone: Core.stringToBool(listItem.dataset.runStandalone),
                                 value: listItem.dataset.value,
                             });
                             Listener_1.default.trigger();
