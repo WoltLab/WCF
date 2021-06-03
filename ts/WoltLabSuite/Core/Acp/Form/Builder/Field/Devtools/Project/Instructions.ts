@@ -183,7 +183,7 @@ class Instructions {
 
     const listItem = document.createElement("li");
     listItem.className = "sortableNode";
-    listItem.id = `${this.formFieldId}_instructions${instructionsId}`;
+    listItem.id = `${this.formFieldId}_instruction${instructionId}`;
     listItem.dataset.instructionId = instructionId.toString();
     listItem.dataset.application = instructionData.application;
     listItem.dataset.pip = instructionData.pip;
