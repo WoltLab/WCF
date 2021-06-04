@@ -80,7 +80,7 @@ final class IpAddress
     /**
      * Returns a new IP address with the last $maskX bits masked off.
      */
-    public function mask(int $mask4, int $mask6): self
+    public function toMasked(int $mask4, int $mask6): self
     {
         if ($mask4 < 0 || $mask4 > 32) {
             throw new \InvalidArgumentException('Given $mask4 is not in the interval [0, 32].');
