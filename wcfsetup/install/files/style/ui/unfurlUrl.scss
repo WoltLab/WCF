@@ -61,7 +61,6 @@
 }
 
 .unfurlUrlInformation {
-	position: relative;
 	padding: 10px 10px 25px 10px;
 }
 
@@ -69,11 +68,26 @@
 	@include wcfFontHeadline;
 	@include wcfFontBold;
 
+	color: inherit;
 	display: -webkit-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
+	
+	&::before {
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
 }
 
 .unfurlUrlDescription {
@@ -86,19 +100,10 @@
 
 	bottom: 5px;
 	color: $wcfContentDimmedText;
-	float: right;
 	position: absolute;
 	right: 5px;
 
 	img {
 		height: 12px !important;
 	}
-}
-
-.unfurlUrlLinkShadow {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
 }

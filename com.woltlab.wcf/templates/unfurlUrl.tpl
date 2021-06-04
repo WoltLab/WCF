@@ -10,11 +10,10 @@
 				<img src="{$object->getImageUrl()}" height="{$object->height}" width="{$object->width}" class="unfurlUrlImage" alt="" loading="lazy">
 			{/if}
 			<div class="unfurlUrlInformation">
-				<div class="unfurlUrlTitle">{$object->title}</div>
+				<a class="unfurlUrlTitle" {anchorAttributes url=$object->url appendClassname=false isUgc=$enableUgc}>{$object->title}</a>
 				<div class="unfurlUrlDescription">{$object->description}</div>
 				<div class="unfurlUrlHost">{$object->getHost()}</div>
 			</div>
-			<a class="unfurlUrlLinkShadow" {anchorAttributes url=$object->url appendClassname=false isUgc=$enableUgc}></a>
 		</div>
 	{/if}
 {else}
