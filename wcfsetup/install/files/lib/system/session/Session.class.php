@@ -2,8 +2,8 @@
 
 namespace wcf\system\session;
 
+use wcf\util\IpAddress;
 use wcf\util\UserAgent;
-use wcf\util\UserUtil;
 
 /**
  * Represents a session.
@@ -84,11 +84,13 @@ final class Session
     }
 
     /**
-     * Returns the converted ip address of the session.
+     * Returns the last used ip address of the session.
      */
-    public function getIpAddress(): string
+    public function getIpAddress(): IpAddress
     {
-        return UserUtil::convertIPv6To4($this->data['ipAddress']);
+        $ipAddress = new IpAddress($this->data['ipAddress']);
+
+        return $ipAddress->asV4() ?: $ipAddress;
     }
 
     /**

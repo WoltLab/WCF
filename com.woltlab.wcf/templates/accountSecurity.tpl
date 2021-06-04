@@ -83,7 +83,7 @@
 							<dd>{if $session->isCurrentSession()}{lang}wcf.user.security.currentSession{/lang}{else}{@$session->getLastActivityTime()|time}{/if}</dd>
 							
 							<dt>{lang}wcf.user.security.ipAddress{/lang}</dt>
-							<dd>{$session->getIpAddress()}</dd>
+							<dd title="{$session->getIpAddress()}">{$session->getIpAddress()->toBulletMasked(16, 48)}</dd>
 						</dl>
 					</div>
 					
