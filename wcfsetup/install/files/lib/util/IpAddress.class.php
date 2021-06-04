@@ -109,6 +109,47 @@ final class IpAddress
     }
 
     /**
+     * Returns a masked IP address with the masked parts replaced by bullets.
+     *
+     * @see IpAddress::toMasked()
+     */
+    public function toBulletMasked(int $mask4, int $mask6): string
+    {
+        $masked = $this->toMasked($mask4, $mask6);
+
+        if (($mask4 % 8) !== 0) {
+            throw new \InvalidArgumentException('Given $mask4 is not a multiple of 8.');
+        }
+        if (($mask6 % 4) !== 0) {
+            throw new \InvalidArgumentException('Given $mask6 is not a multiple of 4.');
+        }
+
+        if ($masked->asV4()) {
+            $maskedBlocks = (32 - $mask4) / 8;
+            $replacement = \str_repeat(".\u{2022}\u{2022}\u{2022}", $maskedBlocks);
+
+            return \preg_replace(
+                '/(\.0){' . ($maskedBlocks) . '}$/',
+                $replacement,
+                (string)$masked
+            );
+        } else {
+            $maskedDigits = (128 - $mask6) / 4;
+
+            // Partially masked quadruplet.
+            $replacement = \str_repeat("\u{2022}", ($maskedDigits % 4));
+            // Fully masked quadruplets.
+            $replacement .= \str_repeat(":\u{2022}\u{2022}\u{2022}\u{2022}", ($maskedDigits / 4));
+
+            return \preg_replace(
+                '/.{' . ($maskedDigits % 4) . '}::$/',
+                $replacement,
+                (string)$masked
+            );
+        }
+    }
+
+    /**
      * @see IpAddress::getIpAddress()
      */
     public function __toString(): string
