@@ -78,12 +78,4 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<VIDEO>[0-9]+)]]></regex>
 <script>require(['WoltLabSuite/Core/Wrapper/FacebookSdk'],function(FB){FB.XFBML.parse()})</script>]]></html>
 		</provider>
 	</import>
-	
-	<delete>
-		<provider name="imgur" />
-		<provider name="twitch-channel" />
-		<provider name="twitch-clip" />
-		<provider name="twitch-video" />
-		<provider name="veoh" />
-	</delete>
 </data>
