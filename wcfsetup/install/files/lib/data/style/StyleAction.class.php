@@ -210,6 +210,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                         \rename($fileLocation, $newLocation);
                         $this->parameters['variables'][$type] = $newName;
                         $file->setProcessed($newLocation);
+                    } else {
+                        $this->parameters['variables'][$type] = \basename($file->getLocation());
                     }
                 } else {
                     $this->parameters['variables'][$type] = '';
