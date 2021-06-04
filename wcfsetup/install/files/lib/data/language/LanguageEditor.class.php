@@ -303,6 +303,27 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
     }
 
     /**
+     * Checks the structure of the XML file to ensure that either the old, deprecated structure
+     * with direct `category` children is used or the new structure with `import` and `delete`
+     * children.
+     *
+     * @throws  \InvalidArgumentException   if old and new structure is mixed
+     * @since   5.5
+     */
+    protected function validateXMLStructure(XML $xml): void
+    {
+        $xpath = $xml->xpath();
+
+        $hasImport = $xpath->query('/ns:language/ns:import')->length !== 0;
+        $hasDelete = $xpath->query('/ns:language/ns:delete')->length !== 0;
+        $hasDirectCategories = $xpath->query('/ns:language/ns:category')->length !== 0;
+
+        if (($hasImport || $hasDelete) && $hasDirectCategories) {
+            throw new \InvalidArgumentException("'category' elements cannot be used next to 'import' and 'delete' elements.");
+        }
+    }
+
+    /**
      * Imports language items from an XML file into this language.
      * Updates the relevant language files automatically.
      *
@@ -314,6 +335,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true)
     {
+        $this->validateXMLStructure($xml);
+
         $this->deleteFromXML($xml, $packageID);
 
         $xpath = $xml->xpath();
