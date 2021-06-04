@@ -11,27 +11,27 @@ namespace wcf\util;
  * @package WoltLabSuite\Core\Util
  * @since       5.4
  */
-class UserAgent
+final class UserAgent
 {
     /**
      * @var string
      */
-    protected $userAgent;
+    private $userAgent;
 
     /**
      * @var ?string
      */
-    protected $browser;
+    private $browser;
 
     /**
      * @var ?string
      */
-    protected $browserVersion;
+    private $browserVersion;
 
     /**
      * @var ?string
      */
-    protected $os;
+    private $os;
 
     public function __construct(string $userAgent)
     {
@@ -44,7 +44,7 @@ class UserAgent
     /**
      * Detects the browser on the basis of the user agent.
      */
-    protected function detectBrowser(): void
+    private function detectBrowser(): void
     {
         // lunascape
         if (\preg_match('~lunascape[ /]([\d\.]+)~i', $this->userAgent, $match)) {
@@ -314,7 +314,7 @@ class UserAgent
     /**
      * Detects the OS on the basis of the user agent.
      */
-    protected function detectOs(): void
+    private function detectOs(): void
     {
         // iOS
         if (\preg_match('/iphone/i', $this->userAgent)) {
