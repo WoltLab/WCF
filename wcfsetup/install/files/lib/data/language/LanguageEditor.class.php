@@ -258,6 +258,72 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
     }
 
     /**
+     * Deletes the language items from the given XML document.
+     *
+     * @throws  \InvalidArgumentException   if given XML document is invalid with regard to deleting language items
+     * @since   5.5
+     */
+    protected function deleteFromXML(XML $xml, int $packageID): void
+    {
+        $xpath = $xml->xpath();
+
+        $items = $xpath->query('/ns:language/ns:delete/ns:item');
+        if (empty($items)) {
+            return;
+        }
+
+        $languageItems = [];
+
+        /** @var \DOMElement $item */
+        foreach ($items as $item) {
+            $itemName = $item->getAttribute('name');
+
+            if (empty($itemName)) {
+                throw new \InvalidArgumentException("The 'name' attribute is missing or empty.");
+            }
+
+            if (StringUtil::trim($itemName) !== $itemName) {
+                throw new \InvalidArgumentException("The name '{$itemName}' contains leading or trailing whitespaces.");
+            }
+
+            $languageItems[] = $itemName;
+        }
+
+        if (empty($languageItems)) {
+            return;
+        }
+
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add('packageID = ?', [$packageID]);
+        $conditions->add('languageItem IN (?)', [$languageItems]);
+        $sql = "DELETE FROM wcf1_language_item
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+    }
+
+    /**
+     * Checks the structure of the XML file to ensure that either the old, deprecated structure
+     * with direct `category` children is used or the new structure with `import` and `delete`
+     * children.
+     *
+     * @throws  \InvalidArgumentException   if old and new structure is mixed
+     * @since   5.5
+     */
+    protected function validateXMLStructure(XML $xml): void
+    {
+        $xpath = $xml->xpath();
+
+        $hasImport = $xpath->query('/ns:language/ns:import')->length !== 0;
+        $hasDelete = $xpath->query('/ns:language/ns:delete')->length !== 0;
+        $hasDirectCategories = $xpath->query('/ns:language/ns:category')->length !== 0;
+
+        if (($hasImport || $hasDelete) && $hasDirectCategories) {
+            throw new \InvalidArgumentException("'category' elements cannot be used next to 'import' and 'delete' elements.");
+        }
+    }
+
+    /**
      * Imports language items from an XML file into this language.
      * Updates the relevant language files automatically.
      *
@@ -269,11 +335,19 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true)
     {
+        $this->validateXMLStructure($xml);
+
+        $this->deleteFromXML($xml, $packageID);
+
         $xpath = $xml->xpath();
         $usedCategories = [];
 
         // fetch categories
-        $categories = $xpath->query('/ns:language/ns:category');
+        $categories = $xpath->query('/ns:language/ns:import/ns:category');
+        if ($categories->length === 0) {
+            // Fallback for the old, deprecated version before WSC 5.5, which only supported imports.
+            $categories = $xpath->query('/ns:language/ns:category');
+        }
 
         /** @var \DOMElement $category */
         foreach ($categories as $category) {
