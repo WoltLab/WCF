@@ -2573,6 +2573,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.language.languageItemValue.en.description"><![CDATA[Helpful code fragments: <kbd>“”</kbd>]]></item>
 		<item name="wcf.acp.pip.option.optionName.error.notLowercase"><![CDATA[The option name may not include uppercase letters.]]></item>
 		<item name="wcf.acp.pip.option.optionName.error.pattern"><![CDATA[The option name must consist of lowercase latin letters, digits and underscores only. The first and last character must be letters.]]></item>
+		<item name="wcf.acp.pip.fileDelete.info"><![CDATA[The <kbd>fileDelete</kbd> package installation plugin installs deletes files installed with the <kbd>file</kbd> package installation plugin. You can find more information in the <a href="https://docs.woltlab.com/latest/package/pip/fileDelete/" class="externalURL">developer documentation</a>.]]></item>
+		<item name="wcf.acp.pip.fileDelete.file"><![CDATA[File]]></item>
+		<item name="wcf.acp.pip.fileDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
