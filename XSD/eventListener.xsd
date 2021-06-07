@@ -39,7 +39,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="eventname" type="xs:string" />
+			<xs:element name="eventname" type="xs:string" minOccurs="0" />
 			<xs:element name="listenerclassname">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">

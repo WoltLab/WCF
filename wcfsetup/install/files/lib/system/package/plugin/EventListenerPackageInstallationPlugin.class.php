@@ -9,6 +9,7 @@ use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\event\EventHandler;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -98,10 +99,15 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
             $nice = 127;
         }
 
+        $eventName = EventHandler::DEFAULT_EVENT_NAME;
+        if (!empty($data['elements']['eventname'])) {
+            $eventName = StringUtil::normalizeCsv($data['elements']['eventname']);
+        }
+
         return [
             'environment' => $data['elements']['environment'] ?? 'user',
             'eventClassName' => $data['elements']['eventclassname'],
-            'eventName' => StringUtil::normalizeCsv($data['elements']['eventname']),
+            'eventName' => $eventName,
             'inherit' => isset($data['elements']['inherit']) ? \intval($data['elements']['inherit']) : 0,
             'listenerClassName' => $data['elements']['listenerclassname'],
             'listenerName' => $data['attributes']['name'] ?? '',
@@ -252,8 +258,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
             ItemListFormField::create('eventName')
                 ->objectProperty('eventname')
                 ->label('wcf.acp.pip.eventListener.eventName')
-                ->description('wcf.acp.pip.eventListener.eventName.description')
-                ->required(),
+                ->description('wcf.acp.pip.eventListener.eventName.description'),
 
             ClassNameFormField::create('listenerClassName')
                 ->objectProperty('listenerclassname')
@@ -305,9 +310,15 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
+        $eventName = EventHandler::DEFAULT_EVENT_NAME;
+        $eventNameElements = $element->getElementsByTagName('eventname');
+        if ($eventNameElements->length) {
+            $eventName = StringUtil::normalizeCsv($eventNameElements->item(0)->nodeValue);
+        }
+
         $data = [
             'eventClassName' => $element->getElementsByTagName('eventclassname')->item(0)->nodeValue,
-            'eventName' => StringUtil::normalizeCsv($element->getElementsByTagName('eventname')->item(0)->nodeValue),
+            'eventName' => $eventName,
             'listenerClassName' => $element->getElementsByTagName('listenerclassname')->item(0)->nodeValue,
             'listenerName' => $element->getAttribute('name'),
             'packageID' => $this->installation->getPackage()->packageID,
@@ -382,7 +393,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
             $eventListener,
             [
                 'eventclassname',
-                'eventname',
+                'eventname' => '',
                 'listenerclassname',
                 'environment' => 'user',
                 'inherit' => 0,
