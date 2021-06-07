@@ -33,7 +33,7 @@ function checkVisibility(): void {
       }
     });
 
-    const irrelevantPageIds = checkedPageIds.filter((pageId) => pageIds.includes(pageId));
+    const irrelevantPageIds = checkedPageIds.filter((pageId) => !pageIds.includes(pageId));
 
     if (!checkedPageIds.length || irrelevantPageIds.length) {
       hideDependentElement(dependentElement);
