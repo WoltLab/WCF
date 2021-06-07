@@ -2643,6 +2643,9 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.language.languageItemValue.en.description"><![CDATA[Hilfreiche Code-Fragmente: <kbd>“”</kbd>]]></item>
 		<item name="wcf.acp.pip.option.optionName.error.notLowercase"><![CDATA[Der Optionsname darf keine Großbuchstaben enthalten.]]></item>
 		<item name="wcf.acp.pip.option.optionName.error.pattern"><![CDATA[Der Optionsname darf ausschließlich aus kleinen lateinischen Buchstaben, Ziffern und Unterstrichen bestehen. Das erste und letzte Zeichen muss jeweils ein Buchstabe sein.]]></item>
+		<item name="wcf.acp.pip.fileDelete.info"><![CDATA[Das <kbd>fileDelete</kbd>-Package Installation Plugin löscht Dateien, die mit dem <kbd>file</kbd>-Package Installation Plugin installiert wurden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} mehr Informationen in der <a href="https://docs.woltlab.com/latest/package/pip/fileDelete" class="externalURL">Entwickler-Dokumentation</a> finden.]]></item>
+		<item name="wcf.acp.pip.fileDelete.file"><![CDATA[Datei]]></item>
+		<item name="wcf.acp.pip.fileDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>

@@ -599,10 +599,12 @@ XML;
         if ($oldElement !== null) {
             $sqlData = $this->findExistingItem($this->getElementData($oldElement, true));
 
-            $statement = WCF::getDB()->prepareStatement($sqlData['sql']);
-            $statement->execute($sqlData['parameters']);
+            if ($sqlData !== null) {
+                $statement = WCF::getDB()->prepareStatement($sqlData['sql']);
+                $statement->execute($sqlData['parameters']);
 
-            $existingRow = $statement->fetchArray();
+                $existingRow = $statement->fetchArray();
+            }
         }
 
         $this->import($existingRow, $newElementData);
