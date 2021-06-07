@@ -139,7 +139,7 @@ class Installer
                 }
 
                 // remove leading slash
-                $file['filename'] = FileUtil::removeLeadingSlash($file['filename']);
+                $file['filename'] = FileUtil::getRealPath(FileUtil::removeLeadingSlash($file['filename']));
                 if ($file['type'] == 'folder') {
                     // remove trailing slash
                     $directories[] = FileUtil::removeTrailingSlash($file['filename']);
