@@ -5,11 +5,9 @@ namespace wcf\action;
 use GuzzleHttp\Psr7\Request;
 use wcf\data\user\User;
 use wcf\form\RegisterForm;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\oauth\User as OauthUser;
-use wcf\system\user\authentication\UserLoggedIn;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
@@ -148,7 +146,6 @@ final class GoogleAuthAction extends AbstractOauth2Action
                 // Perform the login.
 
                 WCF::getSession()->changeUser($user);
-                EventHandler::getInstance()->fire(new UserLoggedIn($user));
                 WCF::getSession()->update();
                 HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
 
