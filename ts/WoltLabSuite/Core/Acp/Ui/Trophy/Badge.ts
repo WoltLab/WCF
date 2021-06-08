@@ -125,8 +125,8 @@ class AcpUiTrophyBadge implements DialogCallbackObject {
     this.badgeColorInput.value = badgeColor;
     this.iconColorInput.value = iconColor;
 
-    const iconContainer = document.getElementById("iconContainer")!;
-    const previewIcon = iconContainer.querySelector(".jsTrophyIcon") as HTMLElement;
+    const badgeContainer = document.getElementById("badgeContainer")!;
+    const previewIcon = badgeContainer.querySelector(".jsTrophyIcon") as HTMLElement;
 
     // set icon
     previewIcon.className = previewIcon.className.replace(/\b(fa-[a-z0-9-]+)\b/, "");

@@ -94,8 +94,8 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
             this.iconNameInput.value = icon;
             this.badgeColorInput.value = badgeColor;
             this.iconColorInput.value = iconColor;
-            const iconContainer = document.getElementById("iconContainer");
-            const previewIcon = iconContainer.querySelector(".jsTrophyIcon");
+            const badgeContainer = document.getElementById("badgeContainer");
+            const previewIcon = badgeContainer.querySelector(".jsTrophyIcon");
             // set icon
             previewIcon.className = previewIcon.className.replace(/\b(fa-[a-z0-9-]+)\b/, "");
             previewIcon.classList.add("fa-" + icon);
