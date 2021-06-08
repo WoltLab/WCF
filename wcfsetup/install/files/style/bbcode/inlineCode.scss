@@ -35,6 +35,10 @@ kbd {
 	}
 }
 
+small kbd {
+	@include wcfFontSmall;
+}
+
 @supports (-webkit-overflow-scrolling: touch) {
 	.inlineCode,
 	kbd {
