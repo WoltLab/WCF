@@ -1800,13 +1800,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').appendTo($item);
 					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
 				}
-				
-				// work-around for legacy notifications
-				var details = item.querySelector('.details > p:first-child');
-				details.classList.add("pointer");
-				details.addEventListener('click', function(event) {
-					window.location.href = $item.data('link');
-				});
 			}).bind(this));
 			
 			WCF.DOMNodeInsertedHandler.execute();
