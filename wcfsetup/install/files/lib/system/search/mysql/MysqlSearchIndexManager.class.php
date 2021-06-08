@@ -22,7 +22,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
     /**
      * @inheritDoc
      */
-    public function add(
+    public function set(
         $objectType,
         $objectID,
         $message,
@@ -59,11 +59,44 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
         $languageID = null,
         $metaData = ''
     ) {
-        // delete existing entry
-        $this->delete($objectType, [$objectID]);
+        $this->set(
+            $objectType,
+            $objectID,
+            $message,
+            $subject,
+            $time,
+            $userID,
+            $username,
+            $languageID,
+            $metaData
+        );
+    }
 
-        // save new entry
-        $this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+    /**
+     * @inheritDoc
+     */
+    public function add(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
+        $this->set(
+            $objectType,
+            $objectID,
+            $message,
+            $subject,
+            $time,
+            $userID,
+            $username,
+            $languageID,
+            $metaData
+        );
     }
 
     /**
