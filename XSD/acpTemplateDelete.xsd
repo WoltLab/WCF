@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- This file is used for xml files which delete acp templates. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<xs:include schemaLocation="types.xsd" />
+	
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="template" type="template" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="template">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="application" type="woltlab_varchar"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

@@ -33,5 +33,7 @@
 		<pip name="mediaProvider">wcf\system\package\plugin\MediaProviderPackageInstallationPlugin</pip>
 		<pip name="database">wcf\system\package\plugin\DatabasePackageInstallationPlugin</pip>
 		<pip name="fileDelete">wcf\system\package\plugin\FileDeletePackageInstallationPlugin</pip>
+		<pip name="templateDelete">wcf\system\package\plugin\TemplateDeletePackageInstallationPlugin</pip>
+		<pip name="acpTemplateDelete">wcf\system\package\plugin\AcpTemplateDeletePackageInstallationPlugin</pip>
 	</import>
 </data>
