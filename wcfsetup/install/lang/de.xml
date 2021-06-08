@@ -2646,6 +2646,10 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.fileDelete.info"><![CDATA[Das <kbd>fileDelete</kbd>-Package Installation Plugin löscht Dateien, die mit dem <kbd>file</kbd>-Package Installation Plugin installiert wurden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} mehr Informationen in der <a href="https://docs.woltlab.com/latest/package/pip/fileDelete" class="externalURL">Entwickler-Dokumentation</a> finden.]]></item>
 		<item name="wcf.acp.pip.fileDelete.file"><![CDATA[Datei]]></item>
 		<item name="wcf.acp.pip.fileDelete.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.info"><![CDATA[Das <kbd>acpTemplateDelete</kbd>-Package Installation Plugin löscht Templates, die mit dem <kbd>acpTemplate</kbd>-Package Installation Plugin installiert wurden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} mehr Informationen in der <a href="https://docs.woltlab.com/latest/package/pip/acpTemplateDelete" class="externalURL">Entwickler-Dokumentation</a> finden.]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.template"><![CDATA[Template]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.template.error.tplSuffix"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} nur den Namen des Templates ohne die Dateiendung <kbd>.tpl</kbd> an.]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>

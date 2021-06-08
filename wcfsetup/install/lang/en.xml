@@ -2576,6 +2576,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.fileDelete.info"><![CDATA[The <kbd>fileDelete</kbd> package installation plugin installs deletes files installed with the <kbd>file</kbd> package installation plugin. You can find more information in the <a href="https://docs.woltlab.com/latest/package/pip/fileDelete/" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.fileDelete.file"><![CDATA[File]]></item>
 		<item name="wcf.acp.pip.fileDelete.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.info"><![CDATA[The <kbd>acpTemplateDelete</kbd> package installation plugin installs deletes templates installed with the <kbd>acpTemplate</kbd> package installation plugin. You can find more information in the <a href="https://docs.woltlab.com/latest/package/pip/acpTemplateDelete/" class="externalURL">developer documentation</a>.]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.template"><![CDATA[Template]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.template.error.tplSuffix"><![CDATA[Only enter the name of the template without the file extension <kbd>.tpl</kbd>.]]></item>
+		<item name="wcf.acp.pip.acpTemplateDelete.application"><![CDATA[App]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
