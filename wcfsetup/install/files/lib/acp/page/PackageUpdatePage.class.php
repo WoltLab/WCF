@@ -5,7 +5,6 @@ namespace wcf\acp\page;
 use wcf\page\AbstractPage;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
  * Shows the package update confirmation form.
@@ -53,16 +52,5 @@ class PackageUpdatePage extends AbstractPage
         WCF::getTPL()->assign([
             'availableUpdates' => $this->availableUpdates,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        parent::show();
     }
 }

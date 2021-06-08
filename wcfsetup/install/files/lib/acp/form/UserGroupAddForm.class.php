@@ -9,7 +9,6 @@ use wcf\system\language\I18nHandler;
 use wcf\system\option\user\group\UserGroupOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\StringUtil;
 
 /**
@@ -271,17 +270,5 @@ class UserGroupAddForm extends AbstractOptionListForm
             'allowMention' => $this->allowMention,
             'requireMultifactor' => $this->requireMultifactor,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        // show form
-        parent::show();
     }
 }
