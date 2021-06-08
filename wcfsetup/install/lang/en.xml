@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/language.xsd" languagecode="en" languagename="English" countrycode="gb">
+<import>
 	<category name="wcf.acl">
 		<item name="wcf.acl.access"><![CDATA[Restricted Access]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Allow Access]]></item>
@@ -5532,4 +5533,5 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many files. You can only upload {#$maxFiles} more file{if $maxFiles != 1}s{/if}.]]></item>
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
+</import>
 </language>
