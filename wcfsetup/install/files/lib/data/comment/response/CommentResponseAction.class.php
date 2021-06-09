@@ -14,6 +14,7 @@ use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -179,6 +180,11 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
                 'com.woltlab.wcf.comment.response',
                 $deletedResponseIDs
             );
+
+            MessageEmbeddedObjectManager::getInstance()->removeObjects(
+                'com.woltlab.wcf.comment',
+                $deletedResponseIDs
+            );
         }
 
         return $count;
@@ -312,16 +318,34 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         /** @var HtmlInputProcessor $htmlInputProcessor */
         $htmlInputProcessor = $this->parameters['htmlInputProcessor'];
 
-        $action = new self([$this->response], 'update', [
+        $data = [
+            'message' => $htmlInputProcessor->getHtml(),
+        ];
+
+        $htmlInputProcessor->setObjectID($this->comment->getObjectID());
+        $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor);
+        if ($this->response->hasEmbeddedObjects != $hasEmbeddedObjects) {
+            $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects ? 0 : 1;
+        }
+
+        (new self([$this->response], 'update', [
             'data' => [
                 'message' => $htmlInputProcessor->getHtml(),
             ],
-        ]);
-        $action->executeAction();
+        ]))->executeAction();
+
+        $response = new CommentResponse($this->response->getObjectID());
+
+        if ($response->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment.response',
+                [$response->getObjectID()]
+            );
+        }
 
         return [
             'actionName' => 'save',
-            'message' => (new CommentResponse($this->response->responseID))->getFormattedMessage(),
+            'message' => $response->getFormattedMessage(),
         ];
     }
 
@@ -344,7 +368,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->setDisallowedBBCodes();
         $htmlInputProcessor = $this->getHtmlInputProcessor(
             $this->parameters['data']['message'],
-            ($this->comment !== null ? $this->comment->commentID : 0)
+            $this->response !== null ? $this->response->getObjectID() : 0
         );
 
         // search for disallowed bbcodes
@@ -413,7 +437,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         }
 
         $this->htmlInputProcessor = new HtmlInputProcessor();
-        $this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment', $objectID);
+        $this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment.response', $objectID);
 
         return $this->htmlInputProcessor;
     }
