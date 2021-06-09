@@ -9,7 +9,6 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\StringUtil;
 use wcf\util\Url;
 
@@ -165,16 +164,5 @@ class PackageUpdateServerAddForm extends AbstractForm
             'loginPassword' => $this->loginPassword,
             'action' => 'add',
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        parent::show();
     }
 }

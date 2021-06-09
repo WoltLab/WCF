@@ -11,7 +11,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\XML;
 
 /**
@@ -181,16 +180,5 @@ class LanguageImportForm extends AbstractForm
             'packages' => $packages,
             'packageID' => $this->packageID,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        parent::show();
     }
 }

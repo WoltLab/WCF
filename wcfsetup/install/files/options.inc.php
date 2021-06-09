@@ -29,7 +29,6 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 
 \define('CACHE_SOURCE_TYPE', 'disk');
 \define('IMAGE_ADAPTER_TYPE', 'gd');
-\define('MODULE_MASTER_PASSWORD', 0);
 \define('TIMEZONE', 'Europe/Berlin');
 
 \define('ENABLE_DEBUG_MODE', 1);

@@ -9,7 +9,6 @@ use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
 
 /**
@@ -166,16 +165,5 @@ class LanguageMultilingualismForm extends AbstractForm
             'languageIDs' => $this->languageIDs,
             'languages' => $this->languages,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        parent::show();
     }
 }

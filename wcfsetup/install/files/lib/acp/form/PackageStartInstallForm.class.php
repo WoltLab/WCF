@@ -14,7 +14,6 @@ use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\FileUtil;
 
 /**
@@ -251,9 +250,6 @@ class PackageStartInstallForm extends AbstractForm
         if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage')) {
             throw new PermissionDeniedException();
         }
-
-        // check master password
-        WCFACP::checkMasterPassword();
 
         parent::show();
     }

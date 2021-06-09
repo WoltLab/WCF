@@ -1055,20 +1055,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.language.add.package"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.language.add.package.description"><![CDATA[Die importierten Texte werden dem ausgewählten Paket zugeordnet.]]></item>
 	</category>
-	<category name="wcf.acp.masterPassword">
-		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
-		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
-		<item name="wcf.acp.masterPassword.enter"><![CDATA[Hauptkennwort erforderlich]]></item>
-		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löschst{else}löschen{/if}.]]></item>
-		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
-		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Das Kennwort wurde als unsicher eingestuft. Das Kennwort sollte mindestens acht Zeichen lang sein, große und kleine lateinische Buchstaben, Zahlen und Sonderzeichen enthalten. Es darf nicht mit den Kennwörtern von anderen Administratoren übereinstimmen.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löschst{else}löschen{/if}.]]></item>
-		<item name="wcf.acp.masterPassword.example"><![CDATA[Vorschlag]]></item>
-		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
-		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
-		<item name="wcf.acp.masterPassword.init.description"><![CDATA[Das Hauptkennwort ist ein zusätzlicher Schutz für sicherheitskritische Funktionen. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} ein möglichst sicheres Kennwort verwenden, dass sich von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} regulären Administrator-Kennwort unterscheidet, Dritten nicht bekannt ist und auch nicht auf anderen Internetseiten verwendet wird.]]></item>
-		<item name="wcf.acp.masterPassword.enter.deprecated"><![CDATA[Die Unterstützung für das Hauptkennwort ist obsolet und wird in einer zukünftigen Version ohne weiteren Hinweis entfernt. Die <a href="{link controller='AccountSecurity' forceFrontend=true application='wcf'}#section_multifactor{/link}">Mehrfaktor-Authentifizierung</a> schützt Benutzerkonten zuverlässiger und in allen Bereichen. Falls gewünscht, können einzelne Benutzergruppen verpflichtet werden, die Mehrfaktor-Authentifizierung einzurichten, bevor diese sensible Bereiche, wie beispielsweise die Administrationsoberfläche betreten können.]]></item>
-	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>
@@ -1382,8 +1368,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Standardwert „Open Graph“-Bild]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Pfad zur Bilddatei, die beim Verlinken von Inhalten auf Facebook, Twitter und anderen „Social Media“-Seiten standardmäßig eingebunden wird.]]></item>
-		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren (obsolet)]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Von der Verwendung des Hauptkennworts wird abgeraten. Stattdessen sollte die Mehrfaktor-Authentifizierung genutzt werden. Diese schützt Benutzerkonten zuverlässiger und in allen Bereichen. Die Unterstützung für das Hauptkennwort wird in einer zukünftigen Version ohne weiteren Hinweis entfernt.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
@@ -5541,4 +5525,20 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 	</category>
 </import>
+<delete>
+	<item name="wcf.acp.masterPassword"/>
+	<item name="wcf.acp.masterPassword.confirm"/>
+	<item name="wcf.acp.masterPassword.enter"/>
+	<item name="wcf.acp.masterPassword.enter.description"/>
+	<item name="wcf.acp.masterPassword.error.notEqual"/>
+	<item name="wcf.acp.masterPassword.error.notSecure"/>
+	<item name="wcf.acp.masterPassword.error.invalid"/>
+	<item name="wcf.acp.masterPassword.example"/>
+	<item name="wcf.acp.masterPassword.example.set"/>
+	<item name="wcf.acp.masterPassword.init"/>
+	<item name="wcf.acp.masterPassword.init.description"/>
+	<item name="wcf.acp.masterPassword.enter.deprecated"/>
+	<item name="wcf.acp.option.module_master_password"/>
+	<item name="wcf.acp.option.module_master_password.description"/>
+</delete>
 </language>

@@ -17,7 +17,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\option\user\group\IUserGroupGroupOptionType;
 use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
  * Shows the user group option form to edit a single option.
@@ -312,17 +311,6 @@ class UserGroupOptionForm extends AbstractForm
             'ownerGroupID' => $ownerGroupID,
             'ownerGroupPermissions' => $ownerGroupPermissions,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        parent::show();
     }
 
     /**

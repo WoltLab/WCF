@@ -1033,20 +1033,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.language.add.package"><![CDATA[Package]]></item>
 		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
 	</category>
-	<category name="wcf.acp.masterPassword">
-		<item name="wcf.acp.masterPassword"><![CDATA[Master Password]]></item>
-		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm Master Password]]></item>
-		<item name="wcf.acp.masterPassword.enter"><![CDATA[Master Password Required]]></item>
-		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be remembered for your current session. In case you forgot the password, please reset it by removing the file <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em>.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[The password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em>.]]></item>
-		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[The passwords do not match.]]></item>
-		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[The password is considered unsafe. It should be at least 8 characters, containing uppercase and lowercase letters, numbers, and special symbols.]]></item>
-		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
-		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
-		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
-		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
-		<item name="wcf.acp.masterPassword.enter.deprecated"><![CDATA[Support for the master password is discouraged and will be removed in a future version without further notice. The <a href="{link controller='AccountSecurity' forceFrontend=true application='wcf'}#section_multifactor{/link}">Multi-factor Authentication</a> protects accounts more reliably and in all areas. If desired, specific user groups can be required to set up multi-factor authentication, before they are able to enter sensitive areas, such as the Administration Control Panel.]]></item>
-	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
@@ -1360,8 +1346,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Open Graph Image]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Path to the default image that will be displayed when sharing your site on Facebook, Twitter and other social media sites.]]></item>
-		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password (Not Recommended)]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Use of the master password is discouraged. Instead multi-factor authentication should be set up. Multi-factor authentication protects accounts more reliably and in all areas. Support for the master password will be removed in a future version without further notice.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
@@ -5542,4 +5526,20 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
 </import>
+<delete>
+	<item name="wcf.acp.masterPassword"/>
+	<item name="wcf.acp.masterPassword.confirm"/>
+	<item name="wcf.acp.masterPassword.enter"/>
+	<item name="wcf.acp.masterPassword.enter.description"/>
+	<item name="wcf.acp.masterPassword.error.notEqual"/>
+	<item name="wcf.acp.masterPassword.error.notSecure"/>
+	<item name="wcf.acp.masterPassword.error.invalid"/>
+	<item name="wcf.acp.masterPassword.example"/>
+	<item name="wcf.acp.masterPassword.example.set"/>
+	<item name="wcf.acp.masterPassword.init"/>
+	<item name="wcf.acp.masterPassword.init.description"/>
+	<item name="wcf.acp.masterPassword.enter.deprecated"/>
+	<item name="wcf.acp.option.module_master_password"/>
+	<item name="wcf.acp.option.module_master_password.description"/>
+</delete>
 </language>

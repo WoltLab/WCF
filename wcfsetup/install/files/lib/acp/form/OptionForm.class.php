@@ -9,7 +9,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\StringUtil;
 
 /**
@@ -135,11 +134,6 @@ class OptionForm extends AbstractOptionListForm
 
         // check permission
         WCF::getSession()->checkPermissions(['admin.configuration.canEditOption']);
-
-        if ($this->category->categoryName == 'module') {
-            // check master password
-            WCFACP::checkMasterPassword();
-        }
 
         // show form
         parent::show();

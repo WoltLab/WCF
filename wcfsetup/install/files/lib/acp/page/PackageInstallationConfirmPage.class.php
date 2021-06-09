@@ -8,7 +8,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
  * Shows a confirmation page prior to start installing.
@@ -110,16 +109,5 @@ class PackageInstallationConfirmPage extends AbstractPage
             'validationPassed' => $this->validationPassed,
             'installingImportedStyle' => $this->installingImportedStyle,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // check master password
-        WCFACP::checkMasterPassword();
-
-        parent::show();
     }
 }

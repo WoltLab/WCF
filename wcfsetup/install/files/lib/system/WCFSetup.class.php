@@ -38,7 +38,6 @@ use wcf\util\XML;
 \define('PACKAGE_ID', 0);
 \define('HTTP_SEND_X_FRAME_OPTIONS', 0);
 \define('CACHE_SOURCE_TYPE', 'disk');
-\define('MODULE_MASTER_PASSWORD', 1);
 \define('ENABLE_DEBUG_MODE', 1);
 \define('ENABLE_BENCHMARK', 0);
 \define('ENABLE_ENTERPRISE_MODE', 0);
@@ -1338,7 +1337,6 @@ class WCFSetup extends WCF
         $factory->load();
 
         SessionHandler::getInstance()->changeUser($admin);
-        SessionHandler::getInstance()->register('masterPassword', 1);
         SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
         SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
         SessionHandler::getInstance()->register('__wcfSetup_imagick', ImagickImageAdapter::isSupported());

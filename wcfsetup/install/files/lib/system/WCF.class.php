@@ -466,6 +466,10 @@ class WCF
         // Cover photos are always enabled since 5.4.
         // https://github.com/WoltLab/WCF/issues/3902
         \define('MODULE_USER_COVER_PHOTO', 1);
+
+        // The master password has been removed since 5.5.
+        // https://github.com/WoltLab/WCF/issues/3913
+        \define('MODULE_MASTER_PASSWORD', 0);
     }
 
     /**
