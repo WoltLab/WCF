@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/acpTemplateDelete.xsd">
 	<delete>
+		<template>__dialogForm</template>
+		<template>__formFieldFooter</template>
+		<template>__integerFormField</template>
+		<template>__multifactorBackupCodeField</template>
+		<template>__multifactorEmailCodeField</template>
+		<template>__multifactorTotpCodeField</template>
+		<template>applicationGroupAdd</template>
+		<template>avatarCropDialog</template>
+		<template>categorySelectList</template>
+		<template>dashboardList</template>
+		<template>dashboardOption</template>
+		<template>devtoolsFormBuilderTest</template>
+		<template>languageServerAdd</template>
+		<template>languageServerList</template>
+		<template>mainMenu</template>
+		<template>mainMenuSubMenu</template>
 		<template>masterPassword</template>
 		<template>masterPasswordInit</template>
+		<template>mediaAdd</template>
+		<template>optionImport</template>
+		<template>optionTypeCustomselect</template>
+		<template>optionTypeDate</template>
+		<template>packageAutoUpdateList</template>
+		<template>packageListPlugins</template>
+		<template>packageUninstallationDependencies</template>
+		<template>packageUpdateAuth</template>
+		<template>packageUpdateSearch</template>
+		<template>packageUpdateSearchResult</template>
+		<template>pageLanding</template>
+		<template>pageMenuItemAdd</template>
+		<template>pageMenuItemList</template>
+		<template>reactionTypeIcon</template>
+		<template>setupFooter</template>
+		<template>setupHeader</template>
+		<template>setupWindowFooter</template>
+		<template>setupWindowHeader</template>
+		<template>styleVariableColor</template>
+		<template>styleVariableUnit</template>
+		<template>userBulkProcessing</template>
+		<template>userGroupPromoteOwner</template>
+		<template>usersMassProcessing</template>
+		<template>workerException</template>
+		<template>workerFinish</template>
+		<template>workerNext</template>
 	</delete>
 </data>
