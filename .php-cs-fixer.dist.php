@@ -24,7 +24,6 @@ return (new PhpCsFixer\Config())
         'no_trailing_comma_in_singleline_array' => true,
         'no_whitespace_before_comma_in_array' => true,
         'normalize_index_brace' => true,
-        'trailing_comma_in_multiline_array' => true,
         'whitespace_after_comma_in_array' => true,
 
         'non_printable_character' => ['use_escape_sequences_in_strings' => true],
@@ -50,17 +49,18 @@ return (new PhpCsFixer\Config())
         'no_empty_comment' => true,
         'single_line_comment_style' => ['comment_types' => ['hash']],
 
-        'native_constant_invocation' => true,
+        'native_constant_invocation' => ['strict' => false],
 
         'no_alternative_syntax' => true,
         'no_trailing_comma_in_list_call' => true,
         'no_unneeded_control_parentheses' => ['statements' => ['break', 'clone', 'continue', 'echo_print', 'return', 'switch_case', 'yield', 'yield_from']],
         'no_unneeded_curly_braces' => ['namespaces' => true],
         'switch_continue_to_break' => true,
+        'trailing_comma_in_multiline' => ['elements' => ['arrays']],
 
         'function_typehint_space' => true,
         'lambda_not_used_import' => true,
-        'native_function_invocation' => true,
+        'native_function_invocation' => ['include' => ['@internal']],
         'no_unreachable_default_argument_value' => true,
         'nullable_type_declaration_for_default_null_value' => true,
         'return_type_declaration' => true,
