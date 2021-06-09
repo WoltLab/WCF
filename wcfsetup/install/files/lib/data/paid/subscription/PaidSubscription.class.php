@@ -131,6 +131,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
     {
         $list = new PaidSubscriptionUserList();
         $list->getConditionBuilder()->add('subscriptionID = ?', [$this->subscriptionID]);
+
         return $list->countObjects() ? true : false;
     }
 }
