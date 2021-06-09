@@ -3,6 +3,7 @@
 namespace wcf\data\comment;
 
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Represents a list of decorated comment objects.
@@ -33,15 +34,26 @@ class ViewableCommentList extends CommentList
         parent::readObjects();
 
         if (!empty($this->objects)) {
-            $userIDs = [];
+            $embeddedObjectIDs = $userIDs = [];
             foreach ($this->objects as $comment) {
                 if ($comment->userID) {
                     $userIDs[] = $comment->userID;
+                }
+
+                if ($comment->hasEmbeddedObjects) {
+                    $embeddedObjectIDs[] = $comment->getObjectID();
                 }
             }
 
             if (!empty($userIDs)) {
                 UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
+            }
+
+            if (!empty($embeddedObjectIDs)) {
+                MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                    'com.woltlab.wcf.comment',
+                    $embeddedObjectIDs
+                );
             }
         }
     }
