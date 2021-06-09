@@ -410,6 +410,7 @@ CREATE TABLE wcf1_comment (
 	unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 
 	KEY (objectTypeID, objectID, isDisabled, time),
 	KEY lastCommentTime (userID, time)
@@ -425,6 +426,7 @@ CREATE TABLE wcf1_comment_response (
 	message MEDIUMTEXT NOT NULL,
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 
 	KEY (commentID, isDisabled, time),
 	KEY lastResponseTime (userID, time)

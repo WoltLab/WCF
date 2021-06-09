@@ -31,6 +31,7 @@ use wcf\util\StringUtil;
  * @property-read   string $unfilteredResponseIDs  serialized array with the ids of the five latest comment responses, including disabled ones
  * @property-read       int $enableHtml             is 1 if HTML will rendered in the comment, otherwise 0
  * @property-read   int $isDisabled     is 1 if the comment is disabled, otherwise 0
+ * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the comment, otherwise `0`
  */
 class Comment extends DatabaseObject implements IMessage
 {

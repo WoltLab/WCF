@@ -27,6 +27,7 @@ use wcf\util\StringUtil;
  * @property-read   string $message    comment response message
  * @property-read       int $enableHtml     is 1 if HTML will rendered in the comment response, otherwise 0
  * @property-read   int $isDisabled is 1 if the comment response is disabled, otherwise 0
+ * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the comment response, otherwise `0`
  */
 class CommentResponse extends DatabaseObject implements IMessage
 {
