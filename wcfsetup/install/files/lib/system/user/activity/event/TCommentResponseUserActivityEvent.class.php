@@ -6,9 +6,9 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\user\activity\event\ViewableUserActivityEvent;
 use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\CommentResponseRuntimeCache;
-use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
+use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 
 /**
  * Provides a method to read the comment response, comment, and user objects related to comment
@@ -58,7 +58,7 @@ trait TCommentResponseUserActivityEvent
             $responseIDs[] = $event->objectID;
         }
 
-        $this->responses = CommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
+        $this->responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
         $commentIDs = [];
         foreach ($this->responses as $response) {
@@ -66,7 +66,7 @@ trait TCommentResponseUserActivityEvent
         }
 
         if (!empty($commentIDs)) {
-            $this->comments = CommentRuntimeCache::getInstance()->getObjects($commentIDs);
+            $this->comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
         }
 
         $userIDs = [];
