@@ -51,7 +51,8 @@
 			
 				<ul class="containerList userNotificationItemList">
 		{/if}
-				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-link="{if $notification[event]->isConfirmed()}{$notification[event]->getLink()}{else}{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}{/if}" data-link-replace-all="{if $notification[event]->isConfirmed()}false{else}true{/if}" data-object-id="{@$notification[notificationID]}" data-is-read="{if $notification[event]->isConfirmed()}true{else}false{/if}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
+				{capture assign='__notificationLink'}{if $notification[event]->isConfirmed()}{$notification[event]->getLink()}{else}{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}{/if}{/capture}
+				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-link="{@$__notificationLink}" data-link-replace-all="{if $notification[event]->isConfirmed()}false{else}true{/if}" data-object-id="{@$notification[notificationID]}" data-is-read="{if $notification[event]->isConfirmed()}true{else}false{/if}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
 					<div class="box32">
 						{if $notification[authors] < 2}
 							<div class="jsTooltip" title="{$notification[event]->getAuthor()->username}">
@@ -61,7 +62,7 @@
 							<div class="details">
 								<p>
 									{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
-									{@$notification[event]->getMessage()}
+									<a href="{@$__notificationLink}" class="userNotificationItemLink">{@$notification[event]->getMessage()}</a>
 								</p>
 								<p><small>{@$notification[time]|time}</small></p>
 							</div>
@@ -73,7 +74,7 @@
 							<div class="details">
 								<p>
 									{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
-									{@$notification[event]->getMessage()}
+									<a href="{@$__notificationLink}" class="userNotificationItemLink">{@$notification[event]->getMessage()}</a>
 								</p>
 								<p><small>{@$notification[time]|time}</small></p>
 								
