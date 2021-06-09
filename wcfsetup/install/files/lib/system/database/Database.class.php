@@ -427,7 +427,7 @@ abstract class Database
      */
     public function getDBType()
     {
-        return \get_class($this);
+        return static::class;
     }
 
     /**

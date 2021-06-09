@@ -136,7 +136,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
      */
     public static function getDatabaseTableName()
     {
-        $className = \get_called_class();
+        $className = static::class;
         $classParts = \explode('\\', $className);
 
         if (static::$databaseTableName !== '') {
@@ -168,7 +168,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             return static::$databaseTableName;
         }
 
-        $className = \get_called_class();
+        $className = static::class;
         static $databaseTableAliases = [];
         if (!isset($databaseTableAliases[$className])) {
             $classParts = \explode('\\', $className);
@@ -205,7 +205,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
 
         static $databaseTableIndexName = null;
         if ($databaseTableIndexName === null) {
-            $className = \explode('\\', \get_called_class());
+            $className = \explode('\\', static::class);
             $parts = \preg_split(
                 '~(?=[A-Z](?=[a-z]))~',
                 \array_pop($className),

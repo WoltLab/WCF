@@ -415,7 +415,7 @@ XML;
      */
     protected function getXsdFilename()
     {
-        $classNamePieces = \explode('\\', \get_class($this));
+        $classNamePieces = \explode('\\', static::class);
 
         return \lcfirst(\str_replace('PackageInstallationPlugin', '', \array_pop($classNamePieces)));
     }

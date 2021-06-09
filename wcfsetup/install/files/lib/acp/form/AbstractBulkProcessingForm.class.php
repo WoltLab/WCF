@@ -68,7 +68,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
     {
         parent::assignVariables();
 
-        $classParts = \explode('\\', \get_class($this));
+        $classParts = \explode('\\', static::class);
 
         WCF::getTPL()->assign([
             'actions' => $this->actions,

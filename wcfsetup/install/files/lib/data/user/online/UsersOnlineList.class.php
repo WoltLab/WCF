@@ -218,7 +218,7 @@ class UsersOnlineList extends SessionList
                 break;
         }
 
-        EventHandler::getInstance()->fireAction(\get_called_class(), 'isVisible', $data);
+        EventHandler::getInstance()->fireAction(static::class, 'isVisible', $data);
 
         return $data['result'];
     }
@@ -260,7 +260,7 @@ class UsersOnlineList extends SessionList
                 break;
         }
 
-        EventHandler::getInstance()->fireAction(\get_called_class(), 'isVisibleUser', $data);
+        EventHandler::getInstance()->fireAction(static::class, 'isVisibleUser', $data);
 
         return $data['result'];
     }

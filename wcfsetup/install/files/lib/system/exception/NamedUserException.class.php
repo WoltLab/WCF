@@ -27,7 +27,7 @@ class NamedUserException extends UserException
         }
         SessionHandler::getInstance()->disableTracking();
 
-        $name = \get_class($this);
+        $name = static::class;
         $exceptionClassName = \mb_substr($name, \mb_strrpos($name, '\\') + 1);
 
         WCF::getTPL()->assign([

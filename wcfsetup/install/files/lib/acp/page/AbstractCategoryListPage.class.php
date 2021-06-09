@@ -80,7 +80,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
      */
     public function __run()
     {
-        $classNameParts = \explode('\\', \get_called_class());
+        $classNameParts = \explode('\\', static::class);
         $className = \array_pop($classNameParts);
 
         // autoset controllers

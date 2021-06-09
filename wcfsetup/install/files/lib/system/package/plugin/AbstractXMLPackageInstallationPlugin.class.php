@@ -444,7 +444,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     public static function getDefaultFilename()
     {
-        $classParts = \explode('\\', \get_called_class());
+        $classParts = \explode('\\', static::class);
 
         return \lcfirst(\str_replace('PackageInstallationPlugin', '', \array_pop($classParts))) . '.xml';
     }

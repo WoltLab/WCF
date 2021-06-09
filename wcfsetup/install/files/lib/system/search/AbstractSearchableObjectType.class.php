@@ -28,7 +28,7 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
      */
     public function getApplication()
     {
-        $classParts = \explode('\\', \get_called_class());
+        $classParts = \explode('\\', static::class);
 
         return $classParts[0];
     }

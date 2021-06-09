@@ -345,7 +345,7 @@ abstract class AbstractPage implements IPage
         EventHandler::getInstance()->fireAction($this, 'show');
 
         // try to guess template name
-        $classParts = \explode('\\', \get_class($this));
+        $classParts = \explode('\\', static::class);
         if (empty($this->templateName)) {
             $className = \preg_replace('~(Form|Page)$~', '', \array_pop($classParts));
 
@@ -401,7 +401,7 @@ abstract class AbstractPage implements IPage
             RegisterForm::class,
             RegisterNewActivationCodeForm::class,
         ];
-        if (\in_array(\get_class($this), $allowedControllers)) {
+        if (\in_array(static::class, $allowedControllers)) {
             // controller is allowed
             return;
         }

@@ -38,6 +38,6 @@ abstract class AbstractHtmlNode implements IHtmlNode
      */
     public function replaceTag(array $data)
     {
-        throw new \BadMethodCallException("Method replaceTag() is not supported by " . \get_class($this));
+        throw new \BadMethodCallException("Method replaceTag() is not supported by " . static::class);
     }
 }

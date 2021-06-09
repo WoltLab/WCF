@@ -218,7 +218,7 @@ abstract class MessageForm extends AbstractCaptchaForm
     protected function validateText()
     {
         if (empty($this->messageObjectType)) {
-            throw new \RuntimeException("Expected non-empty message object type for '" . \get_class($this) . "'");
+            throw new \RuntimeException("Expected non-empty message object type for '" . static::class . "'");
         }
 
         if (empty($this->text)) {

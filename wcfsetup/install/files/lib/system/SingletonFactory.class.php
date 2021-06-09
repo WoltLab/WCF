@@ -81,7 +81,7 @@ abstract class SingletonFactory
      */
     final public static function isInitialized()
     {
-        $className = \get_called_class();
+        $className = static::class;
 
         return isset(self::$__singletonObjects[$className]);
     }

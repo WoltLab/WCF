@@ -66,7 +66,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction
 
         $methodName = 'step' . StringUtil::firstCharToUpperCase($this->step);
         if (!\method_exists($this, $methodName)) {
-            throw new AJAXException("Class '" . \get_class($this) . "' does not implement the required method '" . $methodName . "'");
+            throw new AJAXException("Class '" . static::class . "' does not implement the required method '" . $methodName . "'");
         }
 
         // execute step

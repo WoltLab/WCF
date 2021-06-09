@@ -113,7 +113,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm
      */
     protected function createForm()
     {
-        $classNamePieces = \explode('\\', \get_class($this));
+        $classNamePieces = \explode('\\', static::class);
         $controller = \preg_replace('~Form$~', '', \end($classNamePieces));
 
         $this->form = $this->formClassName::create(\lcfirst($controller));

@@ -19,7 +19,7 @@ abstract class AbstractTaggable extends AbstractObjectTypeProcessor implements I
      */
     public function getApplication()
     {
-        $classParts = \explode('\\', \get_called_class());
+        $classParts = \explode('\\', static::class);
 
         return $classParts[0];
     }

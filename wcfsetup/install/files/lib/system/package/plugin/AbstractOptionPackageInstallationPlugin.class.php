@@ -512,7 +512,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 break;
 
             case 'options':
-                $classnamePieces = \explode('\\', \get_class($this));
+                $classnamePieces = \explode('\\', static::class);
                 $pipPrefix = \str_replace('PackageInstallationPlugin', '', \array_pop($classnamePieces));
 
                 $dataContainer->appendChildren([

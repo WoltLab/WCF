@@ -132,7 +132,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
      */
     public function getApplication()
     {
-        $classParts = \explode('\\', \get_called_class());
+        $classParts = \explode('\\', static::class);
 
         return $classParts[0];
     }

@@ -58,7 +58,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
      */
     public function getConditionHTML()
     {
-        return WCF::getTPL()->fetch($this->templateName, \explode('\\', \get_class($this))[0]);
+        return WCF::getTPL()->fetch($this->templateName, \explode('\\', static::class)[0]);
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
     public function getLanguageItemPrefix()
     {
         if (empty($this->languageItemPrefix)) {
-            $application = \explode('\\', \get_class($this))[0];
+            $application = \explode('\\', static::class)[0];
             $objectTypePieces = \explode('.', $this->getDecoratedObject()->objectType);
 
             $this->languageItemPrefix = $application . '.acp.' . \end($objectTypePieces) . '.bulkProcessing';

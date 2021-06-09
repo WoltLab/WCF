@@ -225,7 +225,7 @@ class AJAXInvokeAction extends AbstractSecureAction
         }
 
         // execute request
-        $className = \get_called_class();
+        $className = static::class;
 
         /** @var AJAXInvokeAction $actionObject */
         $actionObject = new $className();
