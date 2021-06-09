@@ -5,11 +5,11 @@ namespace wcf\system\comment\manager;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentList;
-use wcf\data\comment\CommentList;
-use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
+use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
+use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\WCF;
 
@@ -124,10 +124,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         // fetch response
         $userIDs = $responses = [];
         if (!empty($responseIDs)) {
-            $responseList = new CommentResponseList();
-            $responseList->setObjectIDs($responseIDs);
-            $responseList->readObjects();
-            $responses = $responseList->getObjects();
+            $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
@@ -138,10 +135,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
         }
 
         // fetch comments
-        $commentList = new CommentList();
-        $commentList->setObjectIDs($commentIDs);
-        $commentList->readObjects();
-        $comments = $commentList->getObjects();
+        $comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
 
         // fetch users
         $users = [];
