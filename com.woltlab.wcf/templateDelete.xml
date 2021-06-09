@@ -28,6 +28,7 @@
 		<template>dashboardBoxSignedInAs</template>
 		<template>dashboardBoxStatsSidebar</template>
 		<template>email</template>
+		<template>email_mail</template>
 		<template>emailTextPlain</template>
 		<template>footerMenu</template>
 		<template>mail</template>
