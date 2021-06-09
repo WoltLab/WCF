@@ -2,12 +2,12 @@
 
 namespace wcf\system\comment\manager;
 
-use wcf\data\comment\CommentList;
-use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
+use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -118,10 +118,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         // fetch response
         $userIDs = $responses = [];
         if (!empty($responseIDs)) {
-            $responseList = new CommentResponseList();
-            $responseList->setObjectIDs($responseIDs);
-            $responseList->readObjects();
-            $responses = $responseList->getObjects();
+            $responses = ViewableCommentResponseRuntimeCache::getInstance()->getObjects($responseIDs);
 
             foreach ($responses as $response) {
                 $commentIDs[] = $response->commentID;
@@ -132,10 +129,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
         }
 
         // fetch comments
-        $commentList = new CommentList();
-        $commentList->setObjectIDs($commentIDs);
-        $commentList->readObjects();
-        $comments = $commentList->getObjects();
+        $comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
 
         // fetch users
         $users = [];

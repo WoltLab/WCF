@@ -7,6 +7,7 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\reaction\ReactionHandler;
 
 /**
@@ -110,7 +111,7 @@ class StructuredCommentList extends CommentList
         $canModerate = $this->commentManager->canModerate($this->objectTypeID, $this->objectID);
 
         // fetch response ids
-        $responseIDs = $userIDs = [];
+        $embeddedObjectIDs = $responseIDs = $userIDs = [];
         /** @var StructuredComment $comment */
         foreach ($this->objects as $comment) {
             if (!$this->minCommentTime || $comment->time < $this->minCommentTime) {
@@ -129,6 +130,10 @@ class StructuredCommentList extends CommentList
                 $userIDs[] = $comment->userID;
             }
 
+            if ($comment->hasEmbeddedObjects) {
+                $embeddedObjectIDs[] = $comment->getObjectID();
+            }
+
             $comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
             $comment->setIsEditable($this->commentManager->canEditComment($comment->getDecoratedObject()));
         }
@@ -139,6 +144,7 @@ class StructuredCommentList extends CommentList
             $responseList->setObjectIDs(\array_keys($responseIDs));
             $responseList->readObjects();
 
+            $embeddedResponseIDs = [];
             foreach ($responseList as $response) {
                 $response = new StructuredCommentResponse($response);
 
@@ -155,12 +161,30 @@ class StructuredCommentList extends CommentList
                 if ($response->userID) {
                     $userIDs[] = $response->userID;
                 }
+
+                if ($response->hasEmbeddedObjects) {
+                    $embeddedResponseIDs[] = $response->getObjectID();
+                }
+            }
+
+            if (!empty($embeddedResponseIDs)) {
+                MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                    'com.woltlab.wcf.comment.response',
+                    $embeddedResponseIDs
+                );
             }
         }
 
         // cache user ids
         if (!empty($userIDs)) {
             UserProfileRuntimeCache::getInstance()->cacheObjectIDs(\array_unique($userIDs));
+        }
+
+        if (!empty($embeddedObjectIDs)) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment',
+                $embeddedObjectIDs
+            );
         }
     }
 

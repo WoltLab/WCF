@@ -2,8 +2,8 @@
 
 namespace wcf\system\user\activity\event;
 
-use wcf\data\comment\CommentList;
 use wcf\data\page\PageCache;
+use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -29,10 +29,7 @@ class PageCommentUserActivityEvent extends SingletonFactory implements IUserActi
         }
 
         // fetch comments
-        $commentList = new CommentList();
-        $commentList->setObjectIDs($commentIDs);
-        $commentList->readObjects();
-        $comments = $commentList->getObjects();
+        $comments = ViewableCommentRuntimeCache::getInstance()->getObjects($commentIDs);
 
         // set message
         foreach ($events as $event) {

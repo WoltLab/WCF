@@ -21,6 +21,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\flood\FloodControl;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\reaction\ReactionHandler;
@@ -194,6 +195,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
             ModerationQueueManager::getInstance()->removeQueues(
                 'com.woltlab.wcf.comment.comment',
+                $commentIDs
+            );
+
+            MessageEmbeddedObjectManager::getInstance()->removeObjects(
+                'com.woltlab.wcf.comment',
                 $commentIDs
             );
         }
@@ -428,6 +434,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             );
         }
 
+        $htmlInputProcessor->setObjectID($this->createdComment->getObjectID());
+        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
+            (new CommentEditor($this->createdComment))->update([
+                'hasEmbeddedObjects' => 1,
+            ]);
+            $this->createdComment = new Comment($this->createdComment->getObjectID());
+        }
+
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 
         if (!$this->createdComment->userID) {
@@ -539,7 +553,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->validateCaptcha();
         }
 
-        $this->validateMessage();
+        $this->validateMessage(true);
 
         // validate comment id
         $this->validateCommentID();
@@ -593,6 +607,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1,
         ]);
         $this->createdResponse->setComment($this->comment);
+
+        $htmlInputProcessor->setObjectID($this->createdResponse->getObjectID());
+        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
+            (new CommentResponseEditor($this->createdResponse))->update([
+                'hasEmbeddedObjects' => 1,
+            ]);
+            $this->createdResponse = new CommentResponse($this->createdResponse->getObjectID());
+        }
 
         // update response data
         $unfilteredResponseIDs = $this->comment->getUnfilteredResponseIDs();
@@ -1004,10 +1026,18 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         /** @var HtmlInputProcessor $htmlInputProcessor */
         $htmlInputProcessor = $this->parameters['htmlInputProcessor'];
 
+        $data = [
+            'message' => $htmlInputProcessor->getHtml(),
+        ];
+
+        $htmlInputProcessor->setObjectID($this->comment->getObjectID());
+        $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor);
+        if ($this->comment->hasEmbeddedObjects != $hasEmbeddedObjects) {
+            $data['hasEmbeddedObjects'] = $this->comment->hasEmbeddedObjects ? 0 : 1;
+        }
+
         $action = new self([$this->comment], 'update', [
-            'data' => [
-                'message' => $htmlInputProcessor->getHtml(),
-            ],
+            'data' => $data,
         ]);
         $action->executeAction();
 
@@ -1151,6 +1181,19 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
         $comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
 
+        if ($comment->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment',
+                [$comment->getObjectID()]
+            );
+        }
+        if ($response && $response->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment.response',
+                [$response->getObjectID()]
+            );
+        }
+
         if ($response !== null) {
             // check if response is not visible
             /** @var CommentResponse $visibleResponse */
@@ -1233,6 +1276,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         $response->setIsDeletable($this->commentProcessor->canDeleteResponse($response->getDecoratedObject()));
         $response->setIsEditable($this->commentProcessor->canEditResponse($response->getDecoratedObject()));
 
+        if ($response->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment.response',
+                [$response->getObjectID()]
+            );
+        }
+
         // render response
         WCF::getTPL()->assign([
             'responseList' => [$response],
@@ -1251,7 +1301,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws      UserInputException
      */
-    protected function validateMessage()
+    protected function validateMessage(bool $isResponse = false)
     {
         $this->readString('message', false, 'data');
         $this->parameters['data']['message'] = MessageUtil::stripCrap($this->parameters['data']['message']);
@@ -1263,10 +1313,20 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         CommentHandler::enforceCensorship($this->parameters['data']['message']);
 
         $this->setDisallowedBBCodes();
-        $htmlInputProcessor = $this->getHtmlInputProcessor(
-            $this->parameters['data']['message'],
-            ($this->comment !== null ? $this->comment->commentID : 0)
-        );
+
+        $htmlInputProcessor = new HtmlInputProcessor();
+        if ($isResponse) {
+            $htmlInputProcessor->process(
+                $this->parameters['data']['message'],
+                'com.woltlab.wcf.comment.response'
+            );
+        } else {
+            $htmlInputProcessor->process(
+                $this->parameters['data']['message'],
+                'com.woltlab.wcf.comment',
+                $this->comment !== null ? $this->comment->getObjectID() : 0
+            );
+        }
 
         // search for disallowed bbcodes
         $disallowedBBCodes = $htmlInputProcessor->validate();
