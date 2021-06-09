@@ -7,12 +7,13 @@
  * @module  WoltLabSuite/Core/Ui/Redactor/Metacode
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Event/Handler", "../../Dom/Util"], function (require, exports, tslib_1, EventHandler, Util_1) {
+define(["require", "exports", "tslib", "../../Event/Handler", "../../Dom/Util", "../../StringUtil"], function (require, exports, tslib_1, EventHandler, Util_1, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.convertFromHtml = void 0;
     EventHandler = tslib_1.__importStar(EventHandler);
     Util_1 = tslib_1.__importDefault(Util_1);
+    StringUtil = tslib_1.__importStar(StringUtil);
     /**
      * Returns a text node representing the opening bbcode tag.
      */
@@ -20,7 +21,10 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Dom/Util"],
         let buffer = "[" + name;
         if (attributes.length) {
             buffer += "=";
-            buffer += attributes.map((attribute) => `'${attribute}'`).join(",");
+            buffer += attributes
+                .map((attribute) => StringUtil.unescapeHTML(attribute))
+                .map((attribute) => `'${attribute}'`)
+                .join(",");
         }
         return document.createTextNode(buffer + "]");
     }

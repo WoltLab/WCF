@@ -10,6 +10,7 @@
 
 import * as EventHandler from "../../Event/Handler";
 import DomUtil from "../../Dom/Util";
+import * as StringUtil from "../../StringUtil";
 
 type Attributes = string[];
 
@@ -20,7 +21,10 @@ function getOpeningTag(name: string, attributes: Attributes): Text {
   let buffer = "[" + name;
   if (attributes.length) {
     buffer += "=";
-    buffer += attributes.map((attribute) => `'${attribute}'`).join(",");
+    buffer += attributes
+      .map((attribute) => StringUtil.unescapeHTML(attribute))
+      .map((attribute) => `'${attribute}'`)
+      .join(",");
   }
 
   return document.createTextNode(buffer + "]");
