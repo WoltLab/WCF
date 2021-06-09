@@ -78,7 +78,9 @@ class SearchEngineConvertInnoDbWorker extends AbstractRebuildDataWorker
                 $table,
                 WCF::getDB()->getDatabaseName(),
             ]);
-            if ($checkStatement->fetchSingleColumn() !== 'innodb') {
+
+            $engine = $checkStatement->fetchSingleColumn();
+            if ($engine !== false && $engine !== 'innodb') {
                 $sql = "ALTER TABLE " . $table . " ENGINE = InnoDB";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute();
