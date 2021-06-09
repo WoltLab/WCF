@@ -53,6 +53,22 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         parent::readParameters();
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function readFormParameters()
+    {
+        parent::readFormParameters();
+
+        if ($this->subscription->hasActiveSubscriptions()) {
+            $this->cost = $this->subscription->cost;
+            $this->currency = $this->subscription->currency;
+            $this->subscriptionLength = $this->subscription->subscriptionLength;
+            $this->subscriptionLengthUnit = $this->subscription->subscriptionLengthUnit;
+            $this->isRecurring = $this->subscription->isRecurring;
+        }
+    }
+
     protected function getAvailableSubscriptions()
     {
         $subscriptionList = new PaidSubscriptionList();
@@ -157,6 +173,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
             'action' => 'edit',
             'subscriptionID' => $this->subscriptionID,
             'subscription' => $this->subscription,
+            'canChangePaymentOptions' => !$this->subscription->hasActiveSubscriptions(),
         ]);
     }
 }

@@ -110,8 +110,8 @@
 		<dl{if $errorField == 'cost'} class="formError"{/if}>
 			<dt><label for="cost">{lang}wcf.acp.paidSubscription.cost{/lang}</label></dt>
 			<dd>
-				<input type="number" id="cost" name="cost" value="{$cost}" class="tiny" step="0.01" min="0">
-				<select name="currency" id="currency">
+				<input type="number" id="cost" name="cost" value="{$cost}" class="tiny" step="0.01" min="0"{if !$canChangePaymentOptions} readonly{/if}>
+				<select name="currency" id="currency"{if !$canChangePaymentOptions} disabled{/if}>
 					{htmlOptions values=$availableCurrencies output=$availableCurrencies selected=$currency}
 				</select>
 				{if $errorField == 'cost'}
@@ -129,15 +129,15 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" id="subscriptionLengthPermanent" name="subscriptionLengthPermanent" value="1"{if !$subscriptionLength} checked{/if}> {lang}wcf.acp.paidSubscription.subscriptionLength.permanent{/lang}</label>
+				<label><input type="checkbox" id="subscriptionLengthPermanent" name="subscriptionLengthPermanent" value="1"{if !$subscriptionLength} checked{/if}{if !$canChangePaymentOptions} disabled{/if}> {lang}wcf.acp.paidSubscription.subscriptionLength.permanent{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl id="subscriptionLengthDL"{if $errorField == 'subscriptionLength'} class="formError"{/if}>
 			<dt><label for="subscriptionLength">{lang}wcf.acp.paidSubscription.subscriptionLength{/lang}</label></dt>
 			<dd>
-				<input type="number" id="subscriptionLength" name="subscriptionLength" value="{@$subscriptionLength}" class="tiny">
-				<select name="subscriptionLengthUnit" id="subscriptionLengthUnit">
+				<input type="number" id="subscriptionLength" name="subscriptionLength" value="{@$subscriptionLength}" class="tiny"{if !$canChangePaymentOptions} readonly{/if}>
+				<select name="subscriptionLengthUnit" id="subscriptionLengthUnit"{if !$canChangePaymentOptions} disabled{/if}>
 					<option value="D"{if $subscriptionLengthUnit == 'D'} selected{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.D{/lang}</option>
 					<option value="M"{if $subscriptionLengthUnit == 'M'} selected{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.M{/lang}</option>
 					<option value="Y"{if $subscriptionLengthUnit == 'Y'} selected{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.Y{/lang}</option>
@@ -157,7 +157,7 @@
 		<dl id="isRecurringDL">
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isRecurring" value="1"{if $isRecurring} checked{/if}> {lang}wcf.acp.paidSubscription.isRecurring{/lang}</label>
+				<label><input type="checkbox" name="isRecurring" value="1"{if $isRecurring} checked{/if}{if !$canChangePaymentOptions} disabled{/if}> {lang}wcf.acp.paidSubscription.isRecurring{/lang}</label>
 				<small>{lang}wcf.acp.paidSubscription.isRecurring.description{/lang}</small>
 			</dd>
 		</dl>

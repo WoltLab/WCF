@@ -383,6 +383,7 @@ class PaidSubscriptionAddForm extends AbstractForm
             'availableCurrencies' => $this->availableCurrencies,
             'availableUserGroups' => $this->availableUserGroups,
             'availableSubscriptions' => $this->availableSubscriptions,
+            'canChangePaymentOptions' => true,
         ]);
     }
 }

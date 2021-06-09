@@ -5,6 +5,7 @@ namespace wcf\data\paid\subscription;
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;
@@ -121,5 +122,15 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
     public function getTitle()
     {
         return WCF::getLanguage()->get($this->title);
+    }
+
+    /**
+     * @since   5.4
+     */
+    public function hasActiveSubscriptions(): bool
+    {
+        $list = new PaidSubscriptionUserList();
+        $list->getConditionBuilder()->add('subscriptionID = ?', [$this->subscriptionID]);
+        return $list->countObjects() ? true : false;
     }
 }
