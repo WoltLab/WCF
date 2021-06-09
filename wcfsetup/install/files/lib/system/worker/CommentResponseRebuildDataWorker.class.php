@@ -7,6 +7,7 @@ use wcf\data\comment\response\CommentResponseEditor;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 
 /**
@@ -89,6 +90,8 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
                 $this->getBulkUserPermissionValue($userPermissions, $response->userID, 'user.comment.disallowedBBCodes')
             ));
 
+            $data = [];
+
             // update message
             if (!$response->enableHtml) {
                 $this->getHtmlInputProcessor()->process(
@@ -98,18 +101,23 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
                     true
                 );
 
-                $responseEditor->update([
-                    'message' => $this->getHtmlInputProcessor()->getHtml(),
-                    'enableHtml' => 1,
-                ]);
+                $data['enableHtml'] = 1;
             } else {
                 $this->getHtmlInputProcessor()->reprocess(
                     $response->message,
                     'com.woltlab.wcf.comment.response',
                     $response->responseID
                 );
-                $responseEditor->update(['message' => $this->getHtmlInputProcessor()->getHtml()]);
             }
+
+            if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor(), true)) {
+                $data['hasEmbeddedObjects'] = 1;
+            } else {
+                $data['hasEmbeddedObjects'] = 0;
+            }
+
+            $data['message'] = $this->getHtmlInputProcessor()->getHtml();
+            $responseEditor->update($data);
         }
         WCF::getDB()->commitTransaction();
     }
