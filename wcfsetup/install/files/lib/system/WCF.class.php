@@ -470,6 +470,10 @@ class WCF
         // The master password has been removed since 5.5.
         // https://github.com/WoltLab/WCF/issues/3913
         \define('MODULE_MASTER_PASSWORD', 0);
+
+        // The IP address blocklist was removed in 5.5.
+        // https://github.com/WoltLab/WCF/issues/3914
+        \define('BLACKLIST_IP_ADDRESSES', '');
     }
 
     /**
@@ -535,32 +539,6 @@ class WCF
     {
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
-        if (\defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-            if (
-                !StringUtil::executeWordFilter(
-                    UserUtil::convertIPv6To4(UserUtil::getIpAddress()),
-                    BLACKLIST_IP_ADDRESSES
-                )
-            ) {
-                if ($isAjax) {
-                    throw new AJAXException(
-                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    throw new PermissionDeniedException();
-                }
-            } elseif (!StringUtil::executeWordFilter(UserUtil::getIpAddress(), BLACKLIST_IP_ADDRESSES)) {
-                if ($isAjax) {
-                    throw new AJAXException(
-                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    throw new PermissionDeniedException();
-                }
-            }
-        }
         if (\defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
             if (!StringUtil::executeWordFilter(UserUtil::getUserAgent(), BLACKLIST_USER_AGENTS)) {
                 if ($isAjax) {
