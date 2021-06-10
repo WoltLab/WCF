@@ -187,6 +187,7 @@ final class HeaderUtil
             }
         }
 
+        \header('cache-control: private');
         \header('Location: ' . $location);
     }
 
