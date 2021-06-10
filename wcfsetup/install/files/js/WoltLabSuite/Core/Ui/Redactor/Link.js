@@ -65,9 +65,6 @@ define(['Core', 'EventKey', 'Language', 'Ui/Dialog'], function(Core, EventKey, L
 								});
 							});
 						}
-					},
-					onShow: function () {
-						elById('redactor-link-url').focus();
 					}
 				},
 				source: '<dl>'
