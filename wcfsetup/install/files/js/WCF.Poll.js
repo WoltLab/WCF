@@ -282,12 +282,6 @@ if (COMPILER_TARGET_DEFAULT) {
 		},
 		
 		_validate: function (data) {
-			var question = elById('pollQuestion_' + this._editorId);
-			if (question.value.trim() === '') {
-				// no question provided, ignore
-				return;
-			}
-			
 			// get options
 			var count = 0;
 			elBySelAll('li input[type="text"]', this._container[0], function (input) {
@@ -295,6 +289,18 @@ if (COMPILER_TARGET_DEFAULT) {
 					count++;
 				}
 			});
+			
+			var question = elById('pollQuestion_' + this._editorId);
+			if (question.value.trim() === '') {
+				if (count === 0) {
+					// no question and no options provided, ignore
+					return;
+				}
+				else {
+					data.api.throwError(question, WCF.Language.get('wcf.global.form.error.empty'));
+					data.valid = false;
+				}
+			}
 			
 			if (count === 0) {
 				data.api.throwError(this._container[0], WCF.Language.get('wcf.global.form.error.empty'));
