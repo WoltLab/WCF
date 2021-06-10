@@ -713,12 +713,6 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<defaultvalue>disable</defaultvalue>
 			</option>
 			<!-- /security.blacklist.stopforumspam -->
-			<!-- security.blacklist.custom -->
-			<option name="blacklist_user_agents">
-				<categoryname>security.blacklist.custom</categoryname>
-				<optiontype>textarea</optiontype>
-			</option>
-			<!-- /security.blacklist.custom -->
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
@@ -1698,5 +1692,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	<delete>
 		<option name="module_master_password"/>
 		<option name="blacklist_ip_addresses"/>
+		<option name="blacklist_user_agents"/>
 	</delete>
 </data>
