@@ -312,6 +312,18 @@ if (COMPILER_TARGET_DEFAULT) {
 		
 		_handleError: function (data) {
 			switch (data.returnValues.fieldName) {
+				case 'pollQuestion':
+					var questionField = elById('pollQuestion_' + this._editorId);
+					var errorMessage = WCF.Language.get('wcf.global.form.error.empty');
+					if (data.returnValues.errorType !== 'empty') {
+						errorMessage = WCF.Language.get('wcf.poll.pollQuestion.error.' + data.returnValues.errorType);
+					}
+					
+					elInnerError(questionField, errorMessage);
+					
+					data.cancel = true;
+					break;
+					
 				case 'pollEndTime':
 				case 'pollMaxVotes':
 					var fieldName = (data.returnValues.fieldName === 'pollEndTime') ? 'endTime' : 'maxVotes';
