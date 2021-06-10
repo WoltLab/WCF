@@ -289,7 +289,7 @@ class SearchForm extends AbstractCaptchaForm
         }
 
         // build search hash
-        $this->searchHash = StringUtil::getHash(\serialize([
+        $this->searchHash = \sha1(\serialize([
             $this->query,
             $this->selectedObjectTypes,
             !$this->subjectOnly,

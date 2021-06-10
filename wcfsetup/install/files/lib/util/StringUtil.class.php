@@ -37,10 +37,7 @@ final class StringUtil
     const MINUS = "\u{2212}";
 
     /**
-     * Alias to php sha1() function.
-     *
-     * @param string $value
-     * @return  string
+     * @deprecated 5.5 - Use \sha1() directly.
      */
     public static function getHash($value)
     {

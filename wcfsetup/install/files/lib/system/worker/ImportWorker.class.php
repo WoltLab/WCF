@@ -7,7 +7,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exporter\IExporter;
 use wcf\system\importer\ImportHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Worker implementation for data import.
@@ -76,7 +75,7 @@ class ImportWorker extends AbstractWorker
         ImportHandler::getInstance()->setUserMergeMode($this->importData['userMergeMode']);
 
         ImportHandler::getInstance()->setImportHash(\substr(
-            StringUtil::getHash(
+            \sha1(
                 $this->importData['dbHost'] . $this->importData['dbName'] . $this->importData['dbPrefix']
             ),
             0,
