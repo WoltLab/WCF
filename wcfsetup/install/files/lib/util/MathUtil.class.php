@@ -13,11 +13,7 @@ namespace wcf\util;
 final class MathUtil
 {
     /**
-     * Generates a random value.
-     *
-     * @param int $min
-     * @param int $max
-     * @return  int
+     * @deprecated 5.5 - Use `\random_int()` or `\mt_rand()` directly.
      */
     public static function getRandomValue($min = null, $max = null)
     {
