@@ -11,6 +11,11 @@ requirejs.config({
 		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',
 	},
+	packages: [{
+		name: "codemirror",
+		location: "3rdParty/codemirror",
+		main: "lib/codemirror"
+	}],
 	shim: {
 		favico: { exports: 'Favico' },
 		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
