@@ -1041,9 +1041,18 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         ]);
         $action->executeAction();
 
+        $comment = new Comment($this->comment->getObjectID());
+
+        if ($comment->hasEmbeddedObjects) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.comment',
+                [$comment->getObjectID()]
+            );
+        }
+
         return [
             'actionName' => 'save',
-            'message' => (new Comment($this->comment->commentID))->getFormattedMessage(),
+            'message' => $comment->getFormattedMessage(),
         ];
     }
 
