@@ -322,16 +322,14 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             'message' => $htmlInputProcessor->getHtml(),
         ];
 
-        $htmlInputProcessor->setObjectID($this->comment->getObjectID());
+        $htmlInputProcessor->setObjectID($this->response->getObjectID());
         $hasEmbeddedObjects = MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor);
         if ($this->response->hasEmbeddedObjects != $hasEmbeddedObjects) {
             $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects ? 0 : 1;
         }
 
         (new self([$this->response], 'update', [
-            'data' => [
-                'message' => $htmlInputProcessor->getHtml(),
-            ],
+            'data' => $data,
         ]))->executeAction();
 
         $response = new CommentResponse($this->response->getObjectID());
