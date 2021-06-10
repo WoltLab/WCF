@@ -1,57 +1,47 @@
-{if !$codemirrorLoaded|isset}
-	<script data-relocate="true">window.define.amd = undefined;</script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
-	<script data-relocate="true">window.define.amd = window.__require_define_amd;</script>
-{/if}
-{if $codemirrorMode|isset}
-	<script data-relocate="true">window.define.amd = undefined;</script>
-	{if $codemirrorMode != 'smartymixed'}
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{if $codemirrorMode == 'text/x-less'}css/css{else}{$codemirrorMode}/{$codemirrorMode}{/if}.js"></script>
-	{/if}
-	
-	{if $codemirrorMode == 'htmlmixed' || $codemirrorMode == 'smartymixed' || $codemirrorMode == 'php'}
-		{if $codemirrorMode == 'smartymixed'}
-			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/smarty/smarty.js"></script>
-		{elseif $codemirrorMode == 'php'}
-			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/clike/clike.js"></script>
-		{/if}
-		
-		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/css/css.js"></script>
-		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/javascript/javascript.js"></script>
-		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/xml/xml.js"></script>
-	{/if}
-	
-	<script data-relocate="true">window.define.amd = window.__require_define_amd;</script>
-{/if}
 {event name='javascriptIncludes'}
 
 <script data-relocate="true">
-	{if !$codemirrorLoaded|isset}
-		['{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css', '{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.css'].forEach(function(href) {
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = href;
-			document.head.appendChild(link);
-		});
-	{/if}
+	const codemirrorCss = document.head.querySelector('link[href$="codemirror.css"]');
+	if (codemirrorCss === null) {
+		const link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css';
+		document.head.appendChild(link);
+	}
 	
-	require(['EventHandler', 'Dom/Traverse', 'Dom/Util'], function(EventHandler, DomTraverse, DomUtil) {
+	require([
+		'codemirror',
+		{if $codemirrorMode|isset}
+			{if $codemirrorMode === 'smartymixed'}
+				'codemirror/mode/smarty/smarty',
+			{elseif $codemirrorMode === 'text/x-less'}
+				{* deprecated, legacy support *}
+				'codemirror/mode/css/css',
+			{else}
+				'codemirror/mode/{@$codemirrorMode}/{@$codemirrorMode}',
+			{/if}
+		{/if}
+		'EventHandler',
+		'Dom/Traverse',
+		'Dom/Util'
+	], (
+		CodeMirror,
+		CoreMirrorMode,
+		EventHandler,
+		DomTraverse,
+		DomUtil,
+	) => {
 		var elements = document.querySelectorAll('{@$codemirrorSelector|encodeJS}');
 		var config = {
 			{if $codemirrorMode|isset}
-				{if $codemirrorMode == 'smartymixed'}
-				mode: {
-					name: 'smarty',
-					baseMode: 'text/html',
-					version: 3
-				},
+				{if $codemirrorMode === 'smartymixed'}
+					mode: {
+						name: 'smarty',
+						baseMode: 'text/html',
+						version: 3
+					},
 				{else}
-				mode: '{@$codemirrorMode|encodeJS}',
+					mode: '{@$codemirrorMode|encodeJS}',
 				{/if}
 			{/if}
 			lineWrapping: true,
@@ -120,4 +110,3 @@
 		});
 	});
 </script>
-{assign var='codemirrorLoaded' value=true}

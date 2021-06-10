@@ -41,7 +41,7 @@
 				</small>
 			{/if}
 		</dl>
-		{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#styles'}
+		{include file='codemirror' codemirrorMode='scss' codemirrorSelector='#styles'}
 	</div>
 	
 	{event name='sections'}
