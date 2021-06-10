@@ -3,7 +3,6 @@
 namespace wcf\data;
 
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Abstract class for a list of database objects with better sorting of i18n-based columns.
@@ -52,7 +51,7 @@ abstract class I18nDatabaseObjectList extends DatabaseObjectList
                     throw new \DomainException("Array keys and values of '" . $this->className . "::\$i18nFields' must start with a small letter and consist of letters and number only.");
                 }
 
-                $matchTable = 'i18n_' . StringUtil::getHash($key);
+                $matchTable = 'i18n_' . \sha1($key);
 
                 $this->sqlSelects .= (!empty($this->sqlSelects) ? ', ' : '') . "COALESCE(" . $matchTable . ".languageItemValue, " . $this->getDatabaseTableAlias() . "." . $key . ") AS " . $value;
                 $this->sqlJoins .= "
