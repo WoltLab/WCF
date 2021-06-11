@@ -346,12 +346,16 @@ abstract class Database
     {
         static $regex = null;
         if ($regex === null) {
-            $abbreviations = \implode(
-                '|',
-                \array_map(static function (Application $app): string {
-                    return \preg_quote($app->getAbbreviation(), '~');
-                }, ApplicationHandler::getInstance()->getApplications())
-            );
+            if (!PACKAGE_ID) {
+                $abbreviations = 'wcf';
+            } else {
+                $abbreviations = \implode(
+                    '|',
+                    \array_map(static function (Application $app): string {
+                        return \preg_quote($app->getAbbreviation(), '~');
+                    }, ApplicationHandler::getInstance()->getApplications())
+                );
+            }
 
             $regex = "~(\\b(?:{$abbreviations}))1_~";
         }
