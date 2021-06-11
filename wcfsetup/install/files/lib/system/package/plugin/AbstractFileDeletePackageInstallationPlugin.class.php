@@ -140,6 +140,23 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     }
 
     /**
+     * @inheritDoc
+     */
+    public function hasUninstall()
+    {
+        // File deletions cannot be reverted.
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function uninstall()
+    {
+        // File deletions cannot be reverted.
+    }
+
+    /**
      * Returns the language item with the description of the file field or `null` if no description
      * should be shown.
      */
