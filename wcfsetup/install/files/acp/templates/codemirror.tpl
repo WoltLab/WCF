@@ -18,7 +18,9 @@
 		'Dom/Util'
 	], (
 		CodeMirror,
-		CoreMirrorMode,
+		{if $codemirrorMode|isset}
+			CoreMirrorMode,
+		{/if}
 		EventHandler,
 		DomTraverse,
 		DomUtil,
