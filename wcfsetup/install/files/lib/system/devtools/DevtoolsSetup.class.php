@@ -158,6 +158,18 @@ class DevtoolsSetup extends SingletonFactory
     }
 
     /**
+     * Returns the login data for the WoltLab package servers.
+     */
+    public function getPackageServerLogin(): array
+    {
+        if (isset($this->configuration['packageServerLogin']['username']) && $this->configuration['packageServerLogin']['password']) {
+            return $this->configuration['packageServerLogin'];
+        }
+
+        return [];
+    }
+
+    /**
      * Returns the raw configuration data.
      *
      * @return array

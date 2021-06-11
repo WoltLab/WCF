@@ -397,6 +397,20 @@ class PackageInstallationDispatcher
                 'path' => $importPath,
             ]))->executeAction();
         }
+
+        $packageServerLogin = DevtoolsSetup::getInstance()->getPackageServerLogin();
+        if (!empty($packageServerLogin)) {
+            // All update servers installed at this point are only our own servers for which the same
+            // login data can be used.
+            $sql = "UPDATE  wcf1_package_update_server
+                    SET     loginUsername = ?,
+                            loginPassword = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $packageServerLogin['username'],
+                $packageServerLogin['password'],
+            ]);
+        }
     }
 
     /**
