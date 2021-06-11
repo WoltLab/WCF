@@ -18,6 +18,9 @@ define(["require", "exports", "tslib", "./Field", "../../../Language/Input", "..
             const data = {};
             const values = LanguageInput.getValues(this._fieldId);
             if (values.size > 1) {
+                if (!Object.prototype.hasOwnProperty.call(data, this._fieldId + "_i18n")) {
+                    data[this._fieldId + "_i18n"] = {};
+                }
                 values.forEach((value, key) => {
                     data[this._fieldId + "_i18n"][key] = value;
                 });
