@@ -1,14 +1,6 @@
 {event name='javascriptIncludes'}
 
 <script data-relocate="true">
-	const codemirrorCss = document.head.querySelector('link[href$="codemirror.css"]');
-	if (codemirrorCss === null) {
-		const link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css';
-		document.head.appendChild(link);
-	}
-	
 	require([
 		'codemirror',
 		{if $codemirrorMode|isset}
@@ -31,6 +23,14 @@
 		DomTraverse,
 		DomUtil,
 	) => {
+		const codemirrorCss = document.head.querySelector('link[href$="codemirror.css"]');
+		if (codemirrorCss === null) {
+			const link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css';
+			document.head.appendChild(link);
+		}
+		
 		var elements = document.querySelectorAll('{@$codemirrorSelector|encodeJS}');
 		var config = {
 			{if $codemirrorMode|isset}
