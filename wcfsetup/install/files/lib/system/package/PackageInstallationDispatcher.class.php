@@ -261,58 +261,7 @@ class PackageInstallationDispatcher
                     );
 
                     if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
-                        $statement->execute([
-                            1,
-                            'enable_debug_mode',
-                        ]);
-                        $statement->execute([
-                            'public',
-                            'exception_privacy',
-                        ]);
-                        $statement->execute([
-                            'debugFolder',
-                            'mail_send_method',
-                        ]);
-                        $statement->execute([
-                            1,
-                            'enable_developer_tools',
-                        ]);
-                        $statement->execute([
-                            1,
-                            'log_missing_language_items',
-                        ]);
-
-                        foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
-                            $statement->execute([
-                                $optionValue,
-                                $optionName,
-                            ]);
-                        }
-
-                        foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
-                            try {
-                                (new UserAction([], 'create', [
-                                    'data' => [
-                                        'email' => $newUser['email'],
-                                        'password' => $newUser['password'],
-                                        'username' => $newUser['username'],
-                                    ],
-                                    'groups' => [
-                                        1,
-                                        3,
-                                    ],
-                                ]))->executeAction();
-                            } catch (SystemException $e) {
-                                // ignore errors due to event listeners missing at this
-                                // point during installation
-                            }
-                        }
-
-                        if (($importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath()) !== '') {
-                            (new DevtoolsProjectAction([], 'quickSetup', [
-                                'path' => $importPath,
-                            ]))->executeAction();
-                        }
+                        $this->setupDeveloperMode();
                     }
 
                     if (WCF::getSession()->getVar('__wcfSetup_imagick')) {
@@ -383,6 +332,71 @@ class PackageInstallationDispatcher
         }
 
         return $step;
+    }
+
+    /**
+     * @since   5.5
+     */
+    protected function setupDeveloperMode(): void
+    {
+        $sql = "UPDATE  wcf" . WCF_N . "_option
+                SET     optionValue = ?
+                WHERE   optionName = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+
+        $statement->execute([
+            1,
+            'enable_debug_mode',
+        ]);
+        $statement->execute([
+            'public',
+            'exception_privacy',
+        ]);
+        $statement->execute([
+            'debugFolder',
+            'mail_send_method',
+        ]);
+        $statement->execute([
+            1,
+            'enable_developer_tools',
+        ]);
+        $statement->execute([
+            1,
+            'log_missing_language_items',
+        ]);
+
+        foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
+            $statement->execute([
+                $optionValue,
+                $optionName,
+            ]);
+        }
+
+        foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
+            try {
+                (new UserAction([], 'create', [
+                    'data' => [
+                        'email' => $newUser['email'],
+                        'password' => $newUser['password'],
+                        'username' => $newUser['username'],
+                    ],
+                    'groups' => [
+                        1,
+                        3,
+                    ],
+                ]))->executeAction();
+            } catch (SystemException $e) {
+                // ignore errors due to event listeners missing at this
+                // point during installation
+            }
+        }
+
+        $importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath();
+        if ($importPath !== '') {
+            (new DevtoolsProjectAction([], 'quickSetup', [
+                'path' => $importPath,
+            ]))->executeAction();
+        }
     }
 
     /**
