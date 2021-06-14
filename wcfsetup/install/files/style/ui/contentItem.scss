@@ -136,8 +136,8 @@
 }
 
 .contentItemDescription {
-	color: $wcfContentText;
-	margin-top: 10px;
+	color: $wcfContentDimmedText;
+	margin-top: 5px;
 
 	img {
 		height: auto !important;
@@ -182,9 +182,12 @@
 }
 
 .contentItemMetaIcons {
+	align-items: center;
 	display: flex;
 	flex: 0 auto;
 	margin-left: 10px;
+
+	@include wcfFontSmall;
 }
 
 .contentItemMetaIcon {
@@ -192,6 +195,15 @@
 
 	&:not(:first-child) {
 		margin-left: 10px;
+	}
+
+	.topReactionShort {
+		align-items: center;
+		display: flex;
+	}
+
+	.reactionType {
+		margin-right: 3px;
 	}
 }
 
