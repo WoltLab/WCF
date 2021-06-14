@@ -97,7 +97,6 @@ class ApplicationHandler extends SingletonFactory
      * e.g. cross-domain files requestable through the webserver.
      *
      * @return  Application
-     * @deprecated  3.0 please use `getApplication()` instead
      */
     public function getWCF()
     {
