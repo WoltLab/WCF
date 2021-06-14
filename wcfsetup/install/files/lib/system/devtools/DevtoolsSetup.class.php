@@ -22,7 +22,7 @@ class DevtoolsSetup extends SingletonFactory
      * configuration file in the server's document root
      * @var string
      */
-    const CONFIGURATION_FILE = 'wsc-dev-config-54.json';
+    const CONFIGURATION_FILE = 'wsc-dev-config-55.json';
 
     /**
      * configuration data
@@ -155,6 +155,18 @@ class DevtoolsSetup extends SingletonFactory
     public function getDevtoolsImportPath()
     {
         return (isset($this->configuration['configuration']['devtools']) && !empty($this->configuration['configuration']['devtools']['importFromPath'])) ? $this->configuration['configuration']['devtools']['importFromPath'] : '';
+    }
+
+    /**
+     * Returns the login data for the WoltLab package servers.
+     */
+    public function getPackageServerLogin(): array
+    {
+        if (isset($this->configuration['packageServerLogin']['username']) && $this->configuration['packageServerLogin']['password']) {
+            return $this->configuration['packageServerLogin'];
+        }
+
+        return [];
     }
 
     /**
