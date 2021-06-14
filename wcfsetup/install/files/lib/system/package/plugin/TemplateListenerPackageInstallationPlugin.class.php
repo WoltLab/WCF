@@ -16,9 +16,9 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -362,12 +362,12 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         }
 
         $dataContainer->appendChildren([
-            MultilineTextFormField::create('templateCode')
+            SourceCodeFormField::create('templateCode')
                 ->objectProperty('templatecode')
                 ->label('wcf.acp.pip.templateListener.templateCode')
                 ->description('wcf.acp.pip.templateListener.templateCode.description')
                 ->required()
-                ->addFieldClass('monospace'),
+                ->language('smartymixed'),
 
             IntegerFormField::create('niceValue')
                 ->objectProperty('nice')

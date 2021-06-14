@@ -17,9 +17,9 @@ use wcf\system\devtools\pip\TMultiXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -512,10 +512,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             }
 
             $dataContainer->appendChild(
-                MultilineTextFormField::create($language->languageCode)
+                SourceCodeFormField::create($language->languageCode)
                     ->label($language->languageName)
                     ->description($description)
-                    ->addFieldClass('monospace')
+                    ->language('smartymixed')
             );
         }
     }
