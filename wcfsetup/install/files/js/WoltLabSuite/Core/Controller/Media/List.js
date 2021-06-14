@@ -65,7 +65,11 @@ define([
 			deleteAction.setCallback(this._deleteCallback);
 			
 			_mediaEditor = new MediaEditor({
-				_editorSuccess: function(media, oldCategoryId, closedEditorDialog = true) {
+				_editorSuccess: function(media, oldCategoryId, closedEditorDialog) {
+					if (closedEditorDialog === undefined) {
+						closedEditorDialog = true;
+					}
+					
 					if (media.categoryID != oldCategoryId || closedEditorDialog) {
 						window.setTimeout(function() {
 							window.location.reload();

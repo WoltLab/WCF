@@ -270,7 +270,11 @@ define(
 		 * @param	{integer}	oldCategoryId	old category id
 		 * @param	{boolean}	closedEditorDialog
 		 */
-		_editorSuccess: function(media, oldCategoryId, closedEditorDialog = true) {
+		_editorSuccess: function(media, oldCategoryId, closedEditorDialog) {
+			if (closedEditorDialog === undefined) {
+				closedEditorDialog = true;
+			}
+			
 			// if the category changed of media changed and category
 			// is selected, check if media list needs to be refreshed
 			if (this._mediaCategorySelect) {
