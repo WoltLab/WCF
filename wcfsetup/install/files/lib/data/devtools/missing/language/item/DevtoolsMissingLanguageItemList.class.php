@@ -15,7 +15,6 @@ use wcf\data\DatabaseObjectList;
  *
  * @method  DevtoolsMissingLanguageItem     current()
  * @method  DevtoolsMissingLanguageItem[]       getObjects()
- * @method  DevtoolsMissingLanguageItem     getSingleObject()
  * @method  DevtoolsMissingLanguageItem|null    getSingleObject()
  * @method  DevtoolsMissingLanguageItem|null    search($objectID)
  * @property    DevtoolsMissingLanguageItem[] $objects
