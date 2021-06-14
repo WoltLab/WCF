@@ -1320,6 +1320,7 @@
 		<file>lib/form/AbstractSecureForm.class.php</file>
 		<file>lib/form/MailForm.class.php</file>
 		<file>lib/form/MultifactorAuthenticationAbortForm.class.php</file>
+		<file>lib/form/RecaptchaForm.class.php</file>
 		<file>lib/page/CookiePolicyPage.class.php</file>
 		<file>lib/page/DashboardPage.class.php</file>
 		<file>lib/page/LessStylesheetsPage.class.php</file>
@@ -1855,6 +1856,7 @@
 		<file>lib/system/page/location/IPageLocation.class.php</file>
 		<file>lib/system/payment/method/SofortUeberweisungPaymentMethod.class.php</file>
 		<file>lib/system/recaptcha/RecaptchaHandler.class.php</file>
+		<file>lib/system/recaptcha/RecaptchaHandlerV2.class.php</file>
 		<file>lib/system/request/CmsLinkHandler.class.php</file>
 		<file>lib/system/request/FlexibleRoute.class.php</file>
 		<file>lib/system/request/IRoute.class.php</file>
