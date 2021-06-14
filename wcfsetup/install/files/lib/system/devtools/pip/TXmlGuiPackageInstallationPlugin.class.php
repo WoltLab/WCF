@@ -54,12 +54,11 @@ trait TXmlGuiPackageInstallationPlugin
     {
         $document = $element->ownerDocument;
 
-        $data = $document->getElementsByTagName('data')->item(0);
-        $delete = $data->getElementsByTagName('delete')->item(0);
+        $delete = $document->documentElement->getElementsByTagName('delete')->item(0);
 
         if ($delete === null) {
             $delete = $document->createElement('delete');
-            $data->appendChild($delete);
+            $document->documentElement->appendChild($delete);
         }
 
         $delete->appendChild($document->importNode($this->prepareDeleteXmlElement($element)));

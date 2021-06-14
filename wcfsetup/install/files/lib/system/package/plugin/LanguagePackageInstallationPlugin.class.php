@@ -628,7 +628,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function getImportElements(\DOMXPath $xpath)
     {
-        return $xpath->query('/ns:language/ns:category/ns:item');
+        return $xpath->query('/ns:language/ns:import/ns:category/ns:item');
     }
 
     /**
@@ -720,6 +720,9 @@ XML;
             ]);
 
             $existingRow = $statement->fetchArray();
+            if (!$existingRow) {
+                $existingRow = [];
+            }
         }
 
         if (!isset($newElementData['languageCategoryID']) && isset($newElementData['languageCategory'])) {
@@ -817,8 +820,15 @@ XML;
                 throw new \LogicException("Unknown language category mode '{$data['languageCategoryIDMode']}'.");
         }
 
+        /** @var \DOMElement $import */
+        $import = $document->getElementsByTagName('import')->item(0);
+        if ($import === null) {
+            $import = $document->createElement('import');
+            DOMUtil::prepend($import, $document->documentElement);
+        }
+
         /** @var \DOMElement $languageCategory */
-        foreach ($document->documentElement->childNodes as $languageCategory) {
+        foreach ($import->getElementsByTagName('category') as $languageCategory) {
             if ($languageCategory instanceof \DOMElement && $languageCategory->getAttribute('name') === $languageCategoryName) {
                 $languageCategory->appendChild($languageItem);
                 break;
@@ -830,7 +840,7 @@ XML;
             $languageCategory->setAttribute('name', $languageCategoryName);
             $languageCategory->appendChild($languageItem);
 
-            $document->documentElement->appendChild($languageCategory);
+            $import->appendChild($languageCategory);
         }
 
         return $languageItem;
@@ -880,15 +890,6 @@ XML;
             $element->getAttribute('name'),
             $this->installation->getPackageID(),
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     * @since   5.2
-     */
-    public function supportsDeleteInstruction()
-    {
-        return false;
     }
 
     /**
