@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Image\Adapter
  */
-class ImagickImageAdapter implements IImageAdapter
+class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
 {
     /**
      * active color
@@ -526,5 +526,13 @@ class ImagickImageAdapter implements IImageAdapter
     public static function supportsAnimatedGIFs($version)
     {
         return \version_compare($version, '6.3.6') >= 0;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function supportsWebp(): bool
+    {
+        return \in_array('WEBP', \Imagick::queryFormats());
     }
 }
