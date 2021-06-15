@@ -1306,7 +1306,7 @@ class PackageInstallationDispatcher
             foreach ($requirements['functions'] as $function) {
                 $function = \mb_strtolower($function);
 
-                $passed = self::functionExists($function);
+                $passed = \function_exists($function);
                 if (!$passed) {
                     $errors['function'][] = [
                         'function' => $function,
@@ -1341,28 +1341,10 @@ class PackageInstallationDispatcher
     }
 
     /**
-     * Validates if an function exists and is not blacklisted by suhosin extension.
-     *
-     * @param string $function
-     * @return  bool
-     * @see     http://de.php.net/manual/en/function.function-exists.php#77980
+     * @deprecated 5.5 - This used to check against 'suhosin.executor.func.blacklist' but now simply aliases function_exists(). Use function_exists() directly.
      */
     protected static function functionExists($function)
     {
-        if (\extension_loaded('suhosin')) {
-            $blacklist = @\ini_get('suhosin.executor.func.blacklist');
-            if (!empty($blacklist)) {
-                $blacklist = \explode(',', $blacklist);
-                foreach ($blacklist as $disabledFunction) {
-                    $disabledFunction = \mb_strtolower(StringUtil::trim($disabledFunction));
-
-                    if ($function == $disabledFunction) {
-                        return false;
-                    }
-                }
-            }
-        }
-
         return \function_exists($function);
     }
 
