@@ -267,7 +267,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 						var fontSize = span.style.getPropertyValue('font-size');
 						
 						var activeStyles = (color ? 1 : 0) + (fontFamily ? 1 : 0) + (fontSize ? 1 : 0);
-						while (activeStyles > 1) {
+						while (activeStyles > 0) {
 							if (this.opts.pastePlainText) {
 								span.style.removeProperty('color');
 								span.style.removeProperty('font-family');

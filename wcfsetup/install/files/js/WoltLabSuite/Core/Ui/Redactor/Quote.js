@@ -193,7 +193,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
                 id: id,
                 options: {
                     onClose: () => {
-                        this._editor.selection.restore();
+                        window.setTimeout(() => {
+                            this._editor.selection.restore();
+                        }, 100);
                         Dialog_1.default.destroy(this);
                     },
                     onSetup: () => {
