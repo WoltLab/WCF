@@ -32,6 +32,7 @@
 		<item name="wcf.global.systemRequirements.graphicsLibrary.requirement"><![CDATA[GD Library oder ImageMagick]]></item>
 		<item name="wcf.global.systemRequirements.graphicsLibrary.description"><![CDATA[Die Grafikbearbeitungs-Bibliothek ist für die Verarbeitung und dynamische Generierung von Bildern zuständig. Es wird die GD Library oder alternativ ImageMagick benötigt.]]></item>
 		<item name="wcf.global.systemRequirements.graphicsLibrary.notFound"><![CDATA[nicht gefunden]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary.webp"><![CDATA[Unterstützung für WebP-Grafiken fehlt]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[Zur Verfügung stehender Arbeitsspeicher]]></item>

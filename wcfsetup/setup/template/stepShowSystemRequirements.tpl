@@ -76,8 +76,19 @@
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
 					<dd>
-						<span class="badge {if !$system.graphicsLibrary.result}red{else}green{/if}">{if !$system.graphicsLibrary.result}{lang}wcf.global.systemRequirements.graphicsLibrary.notFound{/lang}{else}{$system.graphicsLibrary.value}{/if}</span>
-						{if !$system.graphicsLibrary.result}<small>{lang}wcf.global.systemRequirements.graphicsLibrary.description{/lang}</small>{/if}
+						{if $system.graphicsLibrary.result}
+							<span class="badge green">{$system.graphicsLibrary.value}</span>
+						{else}
+							<span class="badge red">
+								{* If the result is `false`, but the `value` is present, then the library failed the webp check. *}
+								{if $system.graphicsLibrary.value}
+									{lang}wcf.global.systemRequirements.graphicsLibrary.webp{/lang}
+								{else}
+									{lang}wcf.global.systemRequirements.graphicsLibrary.notFound{/lang}
+								{/if}
+							</span>
+							<small>{lang}wcf.global.systemRequirements.graphicsLibrary.description{/lang}</small>
+						{/if}
 					</dd>
 				</dl>
 			</div>
