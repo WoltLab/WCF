@@ -30,3 +30,22 @@ jobs:
           |awk 'BEGIN {m=0} /(.js):[0-9]+$/ {m=1; printf "%s - ",$0} m==1 && /^SyntaxError/ { m=0; print }' \
           |sed "s@$(pwd)@.@" \
           |grep '^'
+  es5:
+    name: "Check ES5 Syntax"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Set up node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12"
+    - uses: actions/checkout@v2
+    - run: npm i es5-validator debug --save-dev
+    - name: Remove files to be ignored
+      run: |
+        rm wcfsetup/install/files/js/3rdParty/prism/build.js
+        rm wcfsetup/install/files/js/3rdParty/zxcvbn.js
+    - run: |
+        ! find wcfsetup/ -type f -name '*.js' -exec node_modules/.bin/es5-validator '{}' \; 2>&1 \
+          |grep 'ECMAScript 5 validate failed'
