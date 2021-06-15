@@ -1235,10 +1235,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP Address (Not Recommended)]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Blocking IP Addresses is more reliably and performant achieved at the web server level. Use of this blocklist is not recommended and this option will be removed in a future version.]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent (Not Recommended)]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[User-Agents are easily faked by an attacker and not a reliable indicator of the client’s identity. If a block based on the User-Agent is desired nonetheless, it is achieve more performant at the web server level. Use of this blocklist is not recommended and this option will be removed in a future version.]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"/>
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
@@ -5541,5 +5537,9 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.masterPassword.enter.deprecated"/>
 	<item name="wcf.acp.option.module_master_password"/>
 	<item name="wcf.acp.option.module_master_password.description"/>
+	<item name="wcf.acp.option.blacklist_ip_addresses"/>
+	<item name="wcf.acp.option.blacklist_ip_addresses.description"/>
+	<item name="wcf.acp.option.blacklist_user_agents"/>
+	<item name="wcf.acp.option.blacklist_user_agents.description"/>
 </delete>
 </language>
