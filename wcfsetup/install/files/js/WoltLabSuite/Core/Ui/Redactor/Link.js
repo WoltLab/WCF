@@ -57,10 +57,6 @@ define(["require", "exports", "tslib", "../../Dom/Util", "../../Language", "../D
                             });
                         }
                     },
-                    onShow: () => {
-                        const url = document.getElementById("redactor-link-url");
-                        url.focus();
-                    },
                 },
                 source: `<dl>
           <dt>

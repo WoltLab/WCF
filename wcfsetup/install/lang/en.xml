@@ -389,7 +389,7 @@
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
-		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
+		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/latest/getting-started/#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[The name is already used by another project.]]></item>

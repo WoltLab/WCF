@@ -71,10 +71,6 @@ class UiRedactorLink implements DialogCallbackObject {
             });
           }
         },
-        onShow: () => {
-          const url = document.getElementById("redactor-link-url") as HTMLInputElement;
-          url.focus();
-        },
       },
       source: `<dl>
           <dt>
