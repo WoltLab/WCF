@@ -7,16 +7,18 @@
  * @module  WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Ajax", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Notification", "../../../Ui/Dropdown/Simple", "../../../Dom/Util"], function (require, exports, tslib_1, Handler_1, Ajax, Core, EventHandler, Language, UiNotification, Simple_1, Util_1) {
+define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Dropdown/Simple", "../../../Dom/Util", "./Action/SendNewPasswordAction", "./Action/ToggleConfirmEmailAction", "./Action/DisableAction", "./Action/BanAction"], function (require, exports, tslib_1, Handler_1, Core, EventHandler, Language, Simple_1, Util_1, SendNewPasswordAction_1, ToggleConfirmEmailAction_1, DisableAction_1, BanAction_1) {
     "use strict";
     Handler_1 = tslib_1.__importDefault(Handler_1);
-    Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
-    UiNotification = tslib_1.__importStar(UiNotification);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     Util_1 = tslib_1.__importDefault(Util_1);
+    SendNewPasswordAction_1 = tslib_1.__importDefault(SendNewPasswordAction_1);
+    ToggleConfirmEmailAction_1 = tslib_1.__importDefault(ToggleConfirmEmailAction_1);
+    DisableAction_1 = tslib_1.__importDefault(DisableAction_1);
+    BanAction_1 = tslib_1.__importDefault(BanAction_1);
     class AcpUiUserEditor {
         /**
          * Initializes the edit dropdown for each user.
@@ -51,67 +53,25 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Aja
                     editLink.click();
                 });
             }
-            const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword");
-            if (sendNewPassword !== null) {
-                sendNewPassword.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    // emulate clipboard selection
-                    EventHandler.fire("com.woltlab.wcf.clipboard", "com.woltlab.wcf.user", {
-                        data: {
-                            actionName: "com.woltlab.wcf.user.sendNewPassword",
-                            parameters: {
-                                confirmMessage: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
-                                objectIDs: [userId],
-                            },
-                        },
-                        responseData: {
-                            actionName: "com.woltlab.wcf.user.sendNewPassword",
-                            objectIDs: [userId],
-                        },
-                    });
-                });
-            }
             const deleteContent = dropdownMenu.querySelector(".jsDeleteContent");
             if (deleteContent !== null) {
                 new Handler_1.default(deleteContent, userId);
             }
+            const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword");
+            if (sendNewPassword !== null) {
+                new SendNewPasswordAction_1.default(sendNewPassword, userId, userRow);
+            }
             const toggleConfirmEmail = dropdownMenu.querySelector(".jsConfirmEmailToggle");
             if (toggleConfirmEmail !== null) {
-                toggleConfirmEmail.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    Ajax.api({
-                        _ajaxSetup: () => {
-                            const isEmailConfirmed = Core.stringToBool(userRow.dataset.emailConfirmed);
-                            return {
-                                data: {
-                                    actionName: (isEmailConfirmed ? "un" : "") + "confirmEmail",
-                                    className: "wcf\\data\\user\\UserAction",
-                                    objectIDs: [userId],
-                                },
-                            };
-                        },
-                    }, undefined, (data) => {
-                        document.querySelectorAll(".jsUserRow").forEach((userRow) => {
-                            const userId = ~~userRow.dataset.objectId;
-                            if (data.objectIDs.includes(userId)) {
-                                const confirmEmailButton = dropdownMenu.querySelector(".jsConfirmEmailToggle");
-                                switch (data.actionName) {
-                                    case "confirmEmail":
-                                        userRow.dataset.emailConfirmed = "true";
-                                        confirmEmailButton.textContent = confirmEmailButton.dataset.unconfirmEmailMessage;
-                                        break;
-                                    case "unconfirmEmail":
-                                        userRow.dataset.emailEonfirmed = "false";
-                                        confirmEmailButton.textContent = confirmEmailButton.dataset.confirmEmailMessage;
-                                        break;
-                                    default:
-                                        throw new Error("Unreachable");
-                                }
-                            }
-                        });
-                        UiNotification.show();
-                    });
-                });
+                new ToggleConfirmEmailAction_1.default(toggleConfirmEmail, userId, userRow);
+            }
+            const enableUser = dropdownMenu.querySelector(".jsEnable");
+            if (enableUser !== null) {
+                new DisableAction_1.default(enableUser, userId, userRow);
+            }
+            const banUser = dropdownMenu.querySelector(".jsBan");
+            if (banUser !== null) {
+                new BanAction_1.default(banUser, userId, userRow);
             }
         }
         /**
