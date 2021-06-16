@@ -1773,6 +1773,7 @@
 		<file>lib/system/cache/builder/PageMenuCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/SitemapCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/TemplateCacheBuilder.class.php</file>
+		<file>lib/system/cache/builder/TemplateListenerCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/VersionCacheBuilder.class.php</file>
 		<file>lib/system/cache/source/ApcCacheSource.class.php</file>
 		<file>lib/system/cache/source/MemcacheAdapter.class.php</file>
