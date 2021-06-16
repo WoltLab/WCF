@@ -36,6 +36,8 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      */
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
+        $isAmp = ($htmlNodeProcessor instanceof AmpHtmlOutputNodeProcessor);
+
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $class = $element->getAttribute('class');
@@ -50,7 +52,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                 } else {
                     // Ensure that the smiley's HTML is up to date.
                     $doc = new \DOMDocument();
-                    $doc->loadHTML($smiley->getHtml());
+                    $doc->loadHTML($smiley->getHtml('', $isAmp));
                     $smileyNode = $element->ownerDocument->importNode($doc->getElementsByTagName('img')->item(0), true);
                     $element->parentNode->replaceChild($smileyNode, $element);
                 }
