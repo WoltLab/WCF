@@ -51,7 +51,7 @@ class FormButton implements IFormButton
             foreach ($splitAccessKey as $accessKey) {
                 if (\mb_strlen($accessKey) !== 1) {
                     throw new \InvalidArgumentException(
-                        "The given access key contains an access key longer than one character: '{$accessKey}'."
+                        "The given access key contains an access key longer than one character: '{$accessKey}' for buttom '{$this->getId()}'."
                     );
                 }
             }

@@ -94,7 +94,7 @@ class PollOptionsFormField extends AbstractFormField
                 ];
             } else {
                 throw new \InvalidArgumentException(
-                    "Given value array contains invalid value of type " . \gettype($pollOption) . "."
+                    "Given value array contains invalid value of type " . \gettype($pollOption) . " for field '{$this->getId()}'."
                 );
             }
         }

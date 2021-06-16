@@ -46,7 +46,7 @@ class LanguageItemFormNode implements IFormChildNode
     public function getLanguageItem(): string
     {
         if ($this->languageItem === null) {
-            throw new \BadMethodCallException("Language item has not been set yet.");
+            throw new \BadMethodCallException("Language item has not been set yet for node '{$this->getId()}'.");
         }
 
         return $this->languageItem;

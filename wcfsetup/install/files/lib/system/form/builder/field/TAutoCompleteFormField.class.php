@@ -29,10 +29,14 @@ trait TAutoCompleteFormField
         if ($autoComplete !== null && $autoComplete !== 'on' && $autoComplete !== 'off') {
             if (\preg_match('~^(?:section-\w+ )?(?:(shipping|billing) )?(?P<token>.+)$~', $autoComplete, $matches)) {
                 if (!\in_array($matches['token'], $this->getValidAutoCompleteTokens())) {
-                    throw new \InvalidArgumentException("Invalid autocomplete attribute '{$autoComplete}'.");
+                    throw new \InvalidArgumentException(
+                        "Invalid autocomplete attribute '{$autoComplete}' for field '{$this->getId()}'."
+                    );
                 }
             } else {
-                throw new \InvalidArgumentException("Invalid autocomplete attribute '{$autoComplete}'.");
+                throw new \InvalidArgumentException(
+                    "Invalid autocomplete attribute '{$autoComplete}' for field '{$this->getId()}'."
+                );
             }
         }
 

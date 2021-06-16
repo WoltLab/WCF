@@ -108,7 +108,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getEndTimeField()
     {
         if ($this->endTimeField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->endTimeField;
@@ -123,7 +125,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getIsChangeableField()
     {
         if ($this->isChangeableField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->isChangeableField;
@@ -138,7 +142,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getIsPublicField()
     {
         if ($this->isPublicField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->isPublicField;
@@ -153,7 +159,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getMaxVotesField()
     {
         if ($this->maxVotesField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->maxVotesField;
@@ -176,7 +184,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getOptionsField()
     {
         if ($this->optionsField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->optionsField;
@@ -191,7 +201,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getQuestionField()
     {
         if ($this->questionField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->questionField;
@@ -206,7 +218,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getResultsRequireVoteField()
     {
         if ($this->resultsRequireVoteField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->resultsRequireVoteField;
@@ -222,7 +236,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     public function getSortByVotesField()
     {
         if ($this->sortByVotesField === null) {
-            throw new \BadMethodCallException("Poll form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Poll form field can only be requested after the form has been built for container '{$this->getId()}'."
+            );
         }
 
         return $this->sortByVotesField;

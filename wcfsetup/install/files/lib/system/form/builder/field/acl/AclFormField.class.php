@@ -65,7 +65,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode
     public function categoryName($categoryName)
     {
         if (!\is_string($categoryName) || !\preg_match('~^[A-z0-9\-\_]+(\.[A-z0-9\-\_]+)+$~', $categoryName)) {
-            throw new \InvalidArgumentException("Invalid category name given.");
+            throw new \InvalidArgumentException("Invalid category name given for field '{$this->getId()}'.");
         }
 
         $this->categoryName = $categoryName;
@@ -136,7 +136,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode
 
         if ($this->objectID === null) {
             throw new \UnexpectedValueException(
-                "Cannot read object id from object of class '" . \get_class($object) . "'."
+                "Cannot read object id from object of class '" . \get_class($object) . "' for field '{$this->getId()}'."
             );
         }
 

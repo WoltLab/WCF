@@ -45,7 +45,7 @@ trait TAttributeFormField
     public function getFieldAttribute(string $name)
     {
         if (!$this->hasFieldAttribute($name)) {
-            throw new \InvalidArgumentException("Unknown attribute '{$name}' requested.");
+            throw new \InvalidArgumentException("Unknown attribute '{$name}' requested for field '{$this->getId()}'.");
         }
 
         return $this->fieldAttributes[$name];

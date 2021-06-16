@@ -119,7 +119,7 @@ class ClassNameFormField extends TextFormField
     public function implementedInterface($interface)
     {
         if (!\interface_exists($interface)) {
-            throw new \InvalidArgumentException("Interface '{$interface}' does not exist.");
+            throw new \InvalidArgumentException("Interface '{$interface}' does not exist for field '{$this->getId()}'.");
         }
 
         $this->implementedInterface = $interface;
@@ -169,7 +169,7 @@ class ClassNameFormField extends TextFormField
     public function parentClass($parentClass)
     {
         if (!\class_exists($parentClass)) {
-            throw new \InvalidArgumentException("Class '{$parentClass}' does not exist.");
+            throw new \InvalidArgumentException("Class '{$parentClass}' does not exist for field '{$this->getId()}'.");
         }
 
         $this->parentClass = $parentClass;

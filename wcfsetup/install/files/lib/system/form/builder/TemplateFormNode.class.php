@@ -49,7 +49,9 @@ class TemplateFormNode implements IFormChildNode
     public function application($application)
     {
         if (ApplicationHandler::getInstance()->getApplication($application) === null) {
-            throw new \InvalidArgumentException("Unknown application with abbreviation '{$application}'.");
+            throw new \InvalidArgumentException(
+                "Unknown application with abbreviation '{$application}' for node '{$this->getId()}'."
+            );
         }
 
         $this->application = $application;
@@ -96,7 +98,9 @@ class TemplateFormNode implements IFormChildNode
     public function getTemplateName()
     {
         if ($this->templateName === null) {
-            throw new \BadMethodCallException("Template name has not been set yet.");
+            throw new \BadMethodCallException(
+                "Template name has not been set yet for node '{$this->getId()}'."
+            );
         }
 
         return $this->templateName;
