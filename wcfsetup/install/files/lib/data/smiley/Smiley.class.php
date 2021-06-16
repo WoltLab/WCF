@@ -128,10 +128,9 @@ class Smiley extends DatabaseObject implements ITitledObject
      * Returns the html code to render the smiley.
      *
      * @param string $class (additional) class(es) of the smiley element
-     * @param bool $isAmp
      * @return  string
      */
-    public function getHtml($class = '', $isAmp = false)
+    public function getHtml($class = '')
     {
         $srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
         $height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
@@ -140,8 +139,6 @@ class Smiley extends DatabaseObject implements ITitledObject
             $class = ' ' . $class;
         }
 
-        $loading = ($isAmp) ? '' : ' loading="eager"';
-
-        return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley' . $class . '"' . $srcset . $height . $width . $loading . '>';
+        return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley' . $class . '"' . $srcset . $height . $width . ' loading="eager">';
     }
 }
