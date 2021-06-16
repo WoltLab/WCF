@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Image\Adapter
  */
-class GDImageAdapter implements IImageAdapter
+class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
 {
     /**
      * active color
@@ -612,5 +612,13 @@ class GDImageAdapter implements IImageAdapter
     public static function isSupported()
     {
         return \function_exists('gd_info');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function supportsWebp(): bool
+    {
+        return !empty(\gd_info()['WebP Support']);
     }
 }
