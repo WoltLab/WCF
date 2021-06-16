@@ -29,24 +29,6 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
     protected $index = 0;
 
     /**
-     * @inheritDoc
-     */
-    protected function init()
-    {
-    }
-
-    /**
-     * Adds a breadcrumb (insertion order is crucial!).
-     *
-     * @param Breadcrumb $item
-     * @deprecated  3.0
-     */
-    public function add(Breadcrumb $item)
-    {
-        throw new \BadMethodCallException("Breadcrumbs::add() is no longer supported, please use " . PageLocationManager::class . " instead.");
-    }
-
-    /**
      * Returns the list of breadcrumbs.
      *
      * @return  Breadcrumb[]
@@ -58,29 +40,6 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
         }
 
         return $this->items;
-    }
-
-    /**
-     * Replaces a breadcrumb, returns true if replacement was successful.
-     *
-     * @param Breadcrumb $item
-     * @param int $index
-     * @deprecated  3.0
-     */
-    public function replace(Breadcrumb $item, $index)
-    {
-        throw new \BadMethodCallException("Breadcrumbs::replace() is no longer supported, please use " . PageLocationManager::class . " instead.");
-    }
-
-    /**
-     * Removes a breadcrumb, returns true if deletion was successful.
-     *
-     * @param int $index
-     * @deprecated  3.0
-     */
-    public function remove($index)
-    {
-        throw new \BadMethodCallException("Breadcrumbs::remove() is no longer supported, please use " . PageLocationManager::class . " instead.");
     }
 
     /**
