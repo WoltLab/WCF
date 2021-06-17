@@ -2372,6 +2372,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Vererbung unterstützen]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit.description"><![CDATA[Wird Vererbung unterstützt, reagiert der Event-Listener nicht nur, wenn das Event von der oben angegebenen Klasse ausgelöst wird, sondern auch wenn es von Kindklassen der angegebenen Klasse ausgelöst wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP-Event-Listener-Klasse]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerClassName.error.noCallable"><![CDATA[Die Klasse <kbd>{$listenerClassName}</kbd> hat keine <kbd>__invoke()</kbd>-Methode.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Bezeichner des Event-Listeners]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Eindeutiger Bezeichner des Event-Listeners, der nur Buchstaben enthalten darf und mit einem Kleinbuchstaben beginnen muss.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>

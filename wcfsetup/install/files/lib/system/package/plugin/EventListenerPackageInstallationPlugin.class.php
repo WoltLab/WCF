@@ -10,6 +10,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\event\EventHandler;
+use wcf\system\event\IEvent;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -264,7 +265,36 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 ->objectProperty('listenerclassname')
                 ->label('wcf.acp.pip.eventListener.listenerClassName')
                 ->required()
-                ->implementedInterface(IParameterizedEventListener::class),
+                ->addValidator(new FormFieldValidator('callable', function (ClassNameFormField $formField) {
+                    $listenerClassName = $formField->getValue();
+                    /** @var TextFormField $eventClassNameField */
+                    $eventClassNameField = $formField->getDocument()->getNodeById('eventClassName');
+                    $eventClassName = $eventClassNameField->getValue();
+                    
+                    if (\is_subclass_of($eventClassName, IEvent::class)) {
+                        if (!is_callable(new $listenerClassName)) {
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'noCallable',
+                                    'wcf.acp.pip.eventListener.listenerClassName.error.noCallable',
+                                    [
+                                        'listenerClassName' => $listenerClassName,
+                                    ]
+                                )
+                            );
+                        }
+                    } elseif (!\is_subclass_of($listenerClassName, IParameterizedEventListener::class)) {
+                        $formField->addValidationError(
+                            new FormFieldValidationError(
+                                'interface',
+                                'wcf.form.field.className.error.interface',
+                                [
+                                    'interface' => IParameterizedEventListener::class,
+                                ]
+                            )
+                        );
+                    }
+                })),
 
             SingleSelectionFormField::create('environment')
                 ->label('wcf.acp.pip.eventListener.environment')
