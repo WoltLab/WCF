@@ -290,13 +290,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<!-- deprecated -->
-			<option name="module_system_recaptcha">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<hidden>1</hidden>
-			</option>
 			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1693,5 +1686,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="module_master_password"/>
 		<option name="blacklist_ip_addresses"/>
 		<option name="blacklist_user_agents"/>
+		<option name="module_system_recaptcha"/>
 	</delete>
 </data>
