@@ -6,7 +6,6 @@ use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
-use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -143,15 +142,6 @@ class EventHandler extends SingletonFactory
         if (!\class_exists($eventListener->listenerClassName)) {
             throw new \LogicException("Unable to find class '" . $eventListener->listenerClassName . "'.");
         }
-        if (
-            !\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)
-            && !\is_subclass_of($eventListener->listenerClassName, IEventListener::class)
-        ) {
-            throw new ImplementationException(
-                $eventListener->listenerClassName,
-                IParameterizedEventListener::class
-            );
-        }
 
         $object = new $eventListener->listenerClassName();
         $this->listenerObjects[$eventListener->listenerClassName] = $object;
@@ -171,14 +161,23 @@ class EventHandler extends SingletonFactory
         array &$parameters
     ): void {
         foreach ($eventListeners as $actionObj) {
-            if ($actionObj instanceof IParameterizedEventListener) {
+            $actionClassName = get_class($actionObj);
+            if ($eventObj instanceof IEvent) {
+                if (!is_callable($actionObj)) {
+                    throw new \LogicException("Event listener object of class '{$actionClassName}' is not callable.");
+                }
+
+                $actionObj($eventObj);
+            } elseif ($actionObj instanceof IParameterizedEventListener) {
                 $actionObj->execute($eventObj, $className, $eventName, $parameters);
 
                 if (!\is_array($parameters)) {
-                    throw new \LogicException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array.");
+                    throw new \LogicException("'{$actionClassName}' breaks the '\$parameters' array.");
                 }
             } elseif ($actionObj instanceof ILegacyEventListener) {
                 $actionObj->execute($eventObj, $className, $eventName);
+            } else {
+                throw new \LogicException("Cannot execute event listener '{$actionClassName}'.");
             }
         }
     }
