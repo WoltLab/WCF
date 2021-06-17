@@ -28,8 +28,7 @@ final class PasswordUtil
     private static $blowfishCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./';
 
     /**
-     * list of supported encryption type by software identifier
-     * @var string[]
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively be empty.
      */
     private static $supportedEncryptionTypes = [
         'argon2',   // vBulletin 5.x
@@ -67,10 +66,7 @@ final class PasswordUtil
     const BCRYPT_TYPE = '2a';
 
     /**
-     * Returns true if given encryption type is supported.
-     *
-     * @param string $type
-     * @return  bool
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively always return false.
      */
     public static function isSupported($type)
     {
@@ -109,13 +105,7 @@ final class PasswordUtil
     }
 
     /**
-     * Validates password against stored hash, encryption type is automatically resolved.
-     *
-     * @param string $username
-     * @param string $password
-     * @param string $dbHash
-     * @return  bool
-     * @throws  SystemException
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively always return false.
      */
     public static function checkPassword($username, $password, $dbHash)
     {
@@ -146,10 +136,7 @@ final class PasswordUtil
     }
 
     /**
-     * Returns encryption type if possible.
-     *
-     * @param string $hash
-     * @return  string
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively always return 'unknown'.
      */
     public static function detectEncryption($hash)
     {
