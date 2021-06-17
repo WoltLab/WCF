@@ -10,6 +10,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
@@ -179,19 +180,25 @@ class WCFACP extends WCF
                 exit;
             } else {
                 $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
-                // work-around for AJAX-requests within ACP
-                if ($isAjax) {
-                    try {
-                        WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
-                    } catch (PermissionDeniedException $e) {
+
+                try {
+                    WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
+                } catch (PermissionDeniedException $e) {
+                    self::getTPL()->assign([
+                        '__isLogin' => true,
+                    ]);
+
+                    if ($isAjax) {
                         throw new AJAXException(
                             self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
                             AJAXException::INSUFFICIENT_PERMISSIONS,
                             $e->getTraceAsString()
                         );
+                    } else {
+                        throw new NamedUserException(
+                            self::getLanguage()->getDynamicVariable('wcf.user.username.error.acpNotAuthorized')
+                        );
                     }
-                } else {
-                    WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
                 }
 
                 if (WCF::getSession()->needsReauthentication()) {
