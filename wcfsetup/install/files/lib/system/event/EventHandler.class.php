@@ -117,42 +117,7 @@ class EventHandler extends SingletonFactory
                                     continue;
                                 }
 
-                                // get class object
-                                if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
-                                    $object = $this->listenerObjects[$eventListener->listenerClassName];
-                                } else {
-                                    $object = null;
-                                    // instance action object
-                                    if (!\class_exists($eventListener->listenerClassName)) {
-                                        throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
-                                    }
-                                    if (
-                                        !\is_subclass_of(
-                                            $eventListener->listenerClassName,
-                                            IParameterizedEventListener::class
-                                        )
-                                    ) {
-                                        // legacy event listeners
-                                        if (
-                                            !\is_subclass_of(
-                                                $eventListener->listenerClassName,
-                                                IEventListener::class
-                                            )
-                                        ) {
-                                            throw new ImplementationException(
-                                                $eventListener->listenerClassName,
-                                                IParameterizedEventListener::class
-                                            );
-                                        }
-                                    }
-
-                                    $object = new $eventListener->listenerClassName();
-                                    $this->listenerObjects[$eventListener->listenerClassName] = $object;
-                                }
-
-                                if ($object !== null) {
-                                    $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $object;
-                                }
+                                $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
                             }
                         }
                     }
@@ -172,6 +137,34 @@ class EventHandler extends SingletonFactory
                 $actionObj->execute($eventObj, $className, $eventName);
             }
         }
+    }
+
+    /**
+     * @since   5.5
+     */
+    protected function getListenerObject(EventListener $eventListener): object
+    {
+        if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
+            return $this->listenerObjects[$eventListener->listenerClassName];
+        }
+
+        if (!\class_exists($eventListener->listenerClassName)) {
+            throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
+        }
+        if (
+            !\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)
+            && !\is_subclass_of($eventListener->listenerClassName, IEventListener::class)
+        ) {
+            throw new ImplementationException(
+                $eventListener->listenerClassName,
+                IParameterizedEventListener::class
+            );
+        }
+
+        $object = new $eventListener->listenerClassName();
+        $this->listenerObjects[$eventListener->listenerClassName] = $object;
+
+        return $object;
     }
 
     /**
@@ -224,29 +217,7 @@ class EventHandler extends SingletonFactory
                         continue;
                     }
 
-                    // get class object
-                    if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
-                        $object = $this->listenerObjects[$eventListener->listenerClassName];
-                    } else {
-                        // instance action object
-                        if (!\class_exists($eventListener->listenerClassName)) {
-                            throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
-                        }
-                        if (!\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
-                            // legacy event listeners
-                            if (!\is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-                                throw new ImplementationException(
-                                    $eventListener->listenerClassName,
-                                    IParameterizedEventListener::class
-                                );
-                            }
-                        }
-
-                        $object = new $eventListener->listenerClassName();
-                        $this->listenerObjects[$eventListener->listenerClassName] = $object;
-                    }
-
-                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $object;
+                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
                 }
             }
         }
