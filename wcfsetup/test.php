@@ -238,6 +238,10 @@ $phrases = [
 		'de' => 'Erweiterung für Bildverarbeitung (GD oder Imagick) fehlt',
 		'en' => 'Extension for image processing (GD or Imagick) missing',
 	],
+	'php_extension_gd_or_imagick_webp_failure' => [
+		'de' => 'Unterstützung für WebP-Grafiken in %s fehlt',
+		'en' => 'Support for WebP images in %s missing',
+	],
 	'php_sha256_success' => [
 		'de' => 'Unterstützung für SHA-256-Hashfunktion vorhanden',
 		'en' => 'Support for SHA-256 algorithm available',
@@ -345,6 +349,14 @@ function checkResult() {
 	}
 	
 	if (!extension_loaded('gd') && !extension_loaded('imagick')) return false;
+
+	if (extension_loaded('imagick') && !\in_array('WEBP', \Imagick::queryFormats())) {
+		return false;
+	}
+
+	if (extension_loaded('gd') && empty(\gd_info()['WebP Support'])) {
+		return false;
+	}
 	
 	return true;
 }
@@ -381,9 +393,17 @@ function checkOpcache() {
 			} ?>
 			
 			<?php if (extension_loaded('imagick')) { ?>
-				<li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
+				<?php if (\in_array('WEBP', \Imagick::queryFormats())) { ?>
+					<li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
+				<?php } else { ?>
+					<li class="failure"><?=getPhrase('php_extension_gd_or_imagick_webp_failure', ['Imagick'])?></li>
+				<?php } ?>
 			<?php } else if (extension_loaded('gd')) { ?>
-				<li class="success"><?=getPhrase('php_extension_success', ['GD'])?></li>
+				<?php if (!empty(\gd_info()['WebP Support'])) { ?>
+					<li class="success"><?=getPhrase('php_extension_success', ['GD'])?></li>
+				<?php } else { ?>
+					<li class="failure"><?=getPhrase('php_extension_gd_or_imagick_webp_failure', ['GD'])?></li>
+				<?php } ?>
 			<?php } else { ?>	
 				<li class="failure"><?=getPhrase('php_extension_gd_or_imagick_failure')?></li>
 			<?php } ?>

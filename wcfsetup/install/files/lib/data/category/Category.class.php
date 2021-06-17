@@ -59,13 +59,6 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     protected $parentCategory;
 
     /**
-     * acl permissions of this category for the active user
-     * @deprecated
-     * @var bool[]
-     */
-    protected $permissions;
-
-    /**
      * acl permissions of this category grouped by the id of the user they
      * belong to
      * @var array
@@ -218,10 +211,6 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         if (!isset($this->userPermissions[$user->userID])) {
             $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()
                 ->getPermissions($this, $user);
-
-            if ($user->userID == WCF::getUser()->userID) {
-                $this->permissions = $this->userPermissions[$user->userID];
-            }
         }
 
         if (isset($this->userPermissions[$user->userID][$permission])) {

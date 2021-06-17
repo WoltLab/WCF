@@ -2,9 +2,12 @@
 
 namespace wcf\system\captcha;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\exception\UserInputException;
+use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
-use wcf\util\HTTPRequest;
 use wcf\util\JSON;
 use wcf\util\UserUtil;
 
@@ -116,35 +119,37 @@ class RecaptchaHandler implements ICaptchaHandler
             throw new UserInputException('recaptchaString', 'false');
         }
 
-        $request = new HTTPRequest(
+        $request = new Request(
+            'GET',
             \sprintf(
-                'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s&remoteip=%s',
-                \rawurlencode($key),
-                \rawurlencode($this->response),
-                \rawurlencode(UserUtil::getIpAddress())
-            ),
-            ['timeout' => 10]
+                'https://www.google.com/recaptcha/api/siteveify?%s',
+                \http_build_query([
+                    'secret' => $key,
+                    'response' => $this->response,
+                    'remoteip' => UserUtil::getIpAddress(),
+                ], '', '&')
+            )
         );
 
         try {
-            $request->execute();
-            $reply = $request->getReply();
-            $data = JSON::decode($reply['body']);
+            $response = $this->getHttpClient()->send($request);
+            $data = JSON::decode((string)$response->getBody());
 
             if ($data['success']) {
                 // yeah
             } else {
                 throw new UserInputException('recaptchaString', 'false');
             }
-        } catch (\Exception $e) {
-            if ($e instanceof UserInputException) {
-                throw $e;
-            }
-
+        } catch (ClientExceptionInterface $e) {
             // log error, but accept captcha
             \wcf\functions\exception\logThrowable($e);
         }
 
         WCF::getSession()->register('recaptchaDone', true);
+    }
+
+    private function getHttpClient(): ClientInterface
+    {
+        return HttpFactory::makeClientWithTimeout(5);
     }
 }

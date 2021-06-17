@@ -92,7 +92,7 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor
                     $attr = $element->attributes->item($i);
 
                     // AMP does not support lazy loading of images.
-                    if ($tag === 'img' && $attr === 'loading') {
+                    if ($tag === 'img' && $attr->localName === 'loading') {
                         continue;
                     }
 

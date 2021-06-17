@@ -7,18 +7,12 @@ use wcf\system\Regex;
 use wcf\util\exception\CryptoException;
 
 /**
- * Provides functions to compute password hashes.
- *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Util
+ * @deprecated 5.5 - All methods within this class are deprecated.
  */
 final class PasswordUtil
 {
     /**
-     * list of possible characters in generated passwords
-     * @var string
+     * @deprecated 5.5 - Generation of random passwords is deprecated.
      */
     const PASSWORD_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -28,8 +22,7 @@ final class PasswordUtil
     private static $blowfishCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./';
 
     /**
-     * list of supported encryption type by software identifier
-     * @var string[]
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively be empty.
      */
     private static $supportedEncryptionTypes = [
         'argon2',   // vBulletin 5.x
@@ -67,10 +60,7 @@ final class PasswordUtil
     const BCRYPT_TYPE = '2a';
 
     /**
-     * Returns true if given encryption type is supported.
-     *
-     * @param string $type
-     * @return  bool
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively always return false.
      */
     public static function isSupported($type)
     {
@@ -109,13 +99,7 @@ final class PasswordUtil
     }
 
     /**
-     * Validates password against stored hash, encryption type is automatically resolved.
-     *
-     * @param string $username
-     * @param string $password
-     * @param string $dbHash
-     * @return  bool
-     * @throws  SystemException
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively always return false.
      */
     public static function checkPassword($username, $password, $dbHash)
     {
@@ -146,10 +130,7 @@ final class PasswordUtil
     }
 
     /**
-     * Returns encryption type if possible.
-     *
-     * @param string $hash
-     * @return  string
+     * @deprecated  5.5 - After the removal of other deprecated methods this would effectively always return 'unknown'.
      */
     public static function detectEncryption($hash)
     {
@@ -202,10 +183,7 @@ final class PasswordUtil
     }
 
     /**
-     * Generates a random alphanumeric user password with the given character length.
-     *
-     * @param int $length
-     * @return  string
+     * @deprecated 5.5 - Use some constant time encoder (e.g. Hex, Base32, or Base64) on the result of `\random_bytes()`.
      */
     public static function getRandomPassword($length = 12)
     {

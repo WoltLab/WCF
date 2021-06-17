@@ -6,8 +6,6 @@ use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
-use wcf\system\exception\ImplementationException;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -90,7 +88,6 @@ class EventHandler extends SingletonFactory
      * @param string $className
      * @param string $name
      * @param array       &$parameters
-     * @throws  SystemException
      */
     protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters)
     {
@@ -107,69 +104,80 @@ class EventHandler extends SingletonFactory
             }
 
             foreach ($familyTree as $member) {
-                if (isset($this->inheritedActions[$member])) {
-                    $actions = $this->inheritedActions[$member];
-                    if (isset($actions[$eventName]) && !empty($actions[$eventName])) {
-                        /** @var EventListener $eventListener */
-                        foreach ($actions[$eventName] as $eventListener) {
-                            if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
-                                if (isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])) {
-                                    continue;
-                                }
+                if (empty($this->inheritedActions[$member][$eventName])) {
+                    continue;
+                }
 
-                                // get class object
-                                if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
-                                    $object = $this->listenerObjects[$eventListener->listenerClassName];
-                                } else {
-                                    $object = null;
-                                    // instance action object
-                                    if (!\class_exists($eventListener->listenerClassName)) {
-                                        throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
-                                    }
-                                    if (
-                                        !\is_subclass_of(
-                                            $eventListener->listenerClassName,
-                                            IParameterizedEventListener::class
-                                        )
-                                    ) {
-                                        // legacy event listeners
-                                        if (
-                                            !\is_subclass_of(
-                                                $eventListener->listenerClassName,
-                                                IEventListener::class
-                                            )
-                                        ) {
-                                            throw new ImplementationException(
-                                                $eventListener->listenerClassName,
-                                                IParameterizedEventListener::class
-                                            );
-                                        }
-                                    }
-
-                                    $object = new $eventListener->listenerClassName();
-                                    $this->listenerObjects[$eventListener->listenerClassName] = $object;
-                                }
-
-                                if ($object !== null) {
-                                    $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $object;
-                                }
-                            }
-                        }
+                /** @var EventListener $eventListener */
+                foreach ($this->inheritedActions[$member][$eventName] as $eventListener) {
+                    if (
+                        $eventListener->validateOptions()
+                        && $eventListener->validatePermissions()
+                        && !isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])
+                    ) {
+                        $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
                     }
                 }
             }
         }
 
-        // execute actions
-        foreach ($this->inheritedActionsObjects[$name] as $actionObj) {
-            if ($actionObj instanceof IParameterizedEventListener) {
+        $this->executeListeners(
+            $this->inheritedActionsObjects[$name],
+            $eventObj,
+            $className,
+            $eventName,
+            $parameters
+        );
+    }
+
+    /**
+     * @since   5.5
+     */
+    protected function getListenerObject(EventListener $eventListener): object
+    {
+        if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
+            return $this->listenerObjects[$eventListener->listenerClassName];
+        }
+
+        if (!\class_exists($eventListener->listenerClassName)) {
+            throw new \LogicException("Unable to find class '" . $eventListener->listenerClassName . "'.");
+        }
+
+        $object = new $eventListener->listenerClassName();
+        $this->listenerObjects[$eventListener->listenerClassName] = $object;
+
+        return $object;
+    }
+
+    /**
+     * @param   EventListener[]     $eventListeners
+     * @since   5.5
+     */
+    protected function executeListeners(
+        array $eventListeners,
+        $eventObj,
+        string $className,
+        string $eventName,
+        array &$parameters
+    ): void {
+        foreach ($eventListeners as $actionObj) {
+            $actionClassName = \get_class($actionObj);
+            if ($eventObj instanceof IEvent) {
+                if (!\is_callable($actionObj)) {
+                    throw new \LogicException("Event listener object of class '{$actionClassName}' is not callable.");
+                }
+
+                $actionObj($eventObj);
+            } elseif ($actionObj instanceof IParameterizedEventListener) {
                 $actionObj->execute($eventObj, $className, $eventName, $parameters);
 
                 if (!\is_array($parameters)) {
-                    throw new SystemException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array!");
+                    throw new \LogicException("'{$actionClassName}' breaks the '\$parameters' array.");
                 }
             } elseif ($actionObj instanceof ILegacyEventListener) {
                 $actionObj->execute($eventObj, $className, $eventName);
+            } else {
+                throw new \LogicException("Cannot execute event listener '{$actionClassName}'.");
             }
         }
     }
@@ -185,7 +193,6 @@ class EventHandler extends SingletonFactory
      * @param mixed $eventObj
      * @param string $eventName
      * @param array       &$parameters
-     * @throws  SystemException
      */
     public function fireAction($eventObj, $eventName, array &$parameters = [])
     {
@@ -219,50 +226,23 @@ class EventHandler extends SingletonFactory
             $this->actionsObjects[$name] = [];
             /** @var EventListener $eventListener */
             foreach ($this->actions[$name] as $eventListener) {
-                if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
-                    if (isset($this->actionsObjects[$name][$eventListener->listenerClassName])) {
-                        continue;
-                    }
-
-                    // get class object
-                    if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
-                        $object = $this->listenerObjects[$eventListener->listenerClassName];
-                    } else {
-                        // instance action object
-                        if (!\class_exists($eventListener->listenerClassName)) {
-                            throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
-                        }
-                        if (!\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
-                            // legacy event listeners
-                            if (!\is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-                                throw new ImplementationException(
-                                    $eventListener->listenerClassName,
-                                    IParameterizedEventListener::class
-                                );
-                            }
-                        }
-
-                        $object = new $eventListener->listenerClassName();
-                        $this->listenerObjects[$eventListener->listenerClassName] = $object;
-                    }
-
-                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $object;
+                if (
+                    $eventListener->validateOptions()
+                    && $eventListener->validatePermissions()
+                    && !isset($this->actionsObjects[$name][$eventListener->listenerClassName])
+                ) {
+                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
                 }
             }
         }
 
-        // execute actions
-        foreach ($this->actionsObjects[$name] as $actionObj) {
-            if ($actionObj instanceof IParameterizedEventListener) {
-                $actionObj->execute($eventObj, $className, $eventName, $parameters);
-
-                if (!\is_array($parameters)) {
-                    throw new SystemException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array!");
-                }
-            } elseif ($actionObj instanceof ILegacyEventListener) {
-                $actionObj->execute($eventObj, $className, $eventName);
-            }
-        }
+        $this->executeListeners(
+            $this->actionsObjects[$name],
+            $eventObj,
+            $className,
+            $eventName,
+            $parameters
+        );
     }
 
     /**

@@ -387,12 +387,12 @@ class WCFSetup extends WCF
             && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
         ) {
             $system['graphicsLibrary'] = [
-                'result' => true,
+                'result' => ImagickImageAdapter::supportsWebp(),
                 'value' => 'ImageMagick',
             ];
         } elseif (GDImageAdapter::isSupported()) {
             $system['graphicsLibrary'] = [
-                'result' => true,
+                'result' => GDImageAdapter::supportsWebp(),
                 'value' => 'GD Library',
             ];
         }
