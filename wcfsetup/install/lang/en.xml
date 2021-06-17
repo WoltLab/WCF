@@ -2358,6 +2358,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Event Names]]></item>
 		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Names of the event of the relevant class the event listener is listening to. Default value: <kbd>:default</kbd>]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP Event Listener Class]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerClassName.error.noCallable"><![CDATA[The class <kbd>{$listenerClassName}</kbd> does not have a <kbd>__invoke()</kbd> method.]]></item>
 		<item name="wcf.acp.pip.eventListener.environment"><![CDATA[Environment]]></item>
 		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[The environment determines whether the event listener is executed in the frontend (<kbd>user</kbd>), the ACP (<kbd>admin</kbd>), or in both (<kbd>all</kbd>).]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Support Inheritance]]></item>
