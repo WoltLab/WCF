@@ -7,7 +7,6 @@ use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\exception\ImplementationException;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -90,7 +89,6 @@ class EventHandler extends SingletonFactory
      * @param string $className
      * @param string $name
      * @param array       &$parameters
-     * @throws  SystemException
      */
     protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters)
     {
@@ -143,7 +141,7 @@ class EventHandler extends SingletonFactory
         }
 
         if (!\class_exists($eventListener->listenerClassName)) {
-            throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
+            throw new \LogicException("Unable to find class '" . $eventListener->listenerClassName . "'.");
         }
         if (
             !\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)
@@ -177,7 +175,7 @@ class EventHandler extends SingletonFactory
                 $actionObj->execute($eventObj, $className, $eventName, $parameters);
 
                 if (!\is_array($parameters)) {
-                    throw new SystemException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array!");
+                    throw new \LogicException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array.");
                 }
             } elseif ($actionObj instanceof ILegacyEventListener) {
                 $actionObj->execute($eventObj, $className, $eventName);
@@ -196,7 +194,6 @@ class EventHandler extends SingletonFactory
      * @param mixed $eventObj
      * @param string $eventName
      * @param array       &$parameters
-     * @throws  SystemException
      */
     public function fireAction($eventObj, $eventName, array &$parameters = [])
     {
