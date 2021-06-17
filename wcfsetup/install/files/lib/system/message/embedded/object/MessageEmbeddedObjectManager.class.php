@@ -475,14 +475,4 @@ class MessageEmbeddedObjectManager extends SingletonFactory
 
         return $this->embeddedObjectHandlers[$objectTypeID];
     }
-
-    /**
-     * @deprecated  3.0
-     */
-    public function parseTemporaryMessage()
-    {
-        throw new \BadMethodCallException(
-            "parseTemporaryMessage() has been removed, please use registerTemporaryMessage() instead."
-        );
-    }
 }
