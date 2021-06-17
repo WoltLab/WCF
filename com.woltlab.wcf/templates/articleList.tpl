@@ -13,29 +13,12 @@
 	{/if}
 {/capture}
 
-{capture assign='headerNavigation'}
-	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed'}{/link}{/if}" title="{lang}wcf.global.button.rss{/lang}" class="rssFeed jsTooltip"><span class="icon icon16 fa-rss"></span> <span class="invisible">{lang}wcf.global.button.rss{/lang}</span></a></li>
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
-	{/if}
-{/capture}
-
 {capture assign='contentHeaderNavigation'}
-	<li class="dropdown jsOnly">
-		<a href="#" class="button dropdownToggle"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.article.button.sort{/lang}</span></a>
-		<ul class="dropdownMenu">
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
-			
-			{event name='sortOptions'}
-		</ul>
-	</li>
-	
 	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 		{if $availableLanguages|count > 1}
-			<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
-			<li><a href="{link controller='ArticleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
 	{/if}
 {/capture}
@@ -70,19 +53,34 @@
 	{/if}
 {/capture}
 
-{include file='header'}
-
 {assign var='additionalLinkParameters' value=''}
 {if $user}{capture append='additionalLinkParameters'}&userID={@$user->userID}{/capture}{/if}
 {if $labelIDs|count}{capture append='additionalLinkParameters'}{foreach from=$labelIDs key=labelGroupID item=labelID}&labelIDs[{@$labelGroupID}]={@$labelID}{/foreach}{/capture}{/if}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{pages print=true assign='pagesLinks' controller='ArticleList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$additionalLinkParameters"}
-		{/content}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign='pagesLinks' controller='ArticleList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$additionalLinkParameters"}
+{/capture}
+
+{capture assign='contentInteractionButtons'}
+	<div class="contentInteractionButton dropdown jsOnly">
+		<a href="#" class="button small dropdownToggle">{lang}wcf.article.button.sort{/lang}</a>
+		<ul class="dropdownMenu">
+			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			
+			{event name='sortOptions'}
+		</ul>
 	</div>
-{/hascontent}
+{/capture}
+
+{capture assign='contentInteractionDropdownItems'}
+	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed'}{/link}{/if}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.article.markAllAsRead{/lang}</a></li>
+	{/if}
+{/capture}
+
+{include file='header'}
 
 {if $objects|count}
 	<div class="section">

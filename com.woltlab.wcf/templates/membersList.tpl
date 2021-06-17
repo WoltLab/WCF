@@ -33,19 +33,15 @@
 	</section>
 {/capture}
 
-{include file='header'}
+{capture assign='contentInteractionPagination'}
+	{if $searchID}
+			{pages print=true assign=pagesLinks controller='MembersList' id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
+		{else}
+			{pages print=true assign=pagesLinks controller='MembersList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
+		{/if}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{if $searchID}
-				{pages print=true assign=pagesLinks controller='MembersList' id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
-			{else}
-				{pages print=true assign=pagesLinks controller='MembersList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&letter=$encodedLetter"}
-			{/if}
-		{/content}
-	</div>
-{/hascontent}
+{include file='header'}
 
 {if $items}
 	<div class="section sectionContainerList">

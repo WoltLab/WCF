@@ -8,7 +8,6 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a class="button jsMarkAllAsConfirmed"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.user.notification.markAllAsConfirmed{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -21,19 +20,18 @@
 	<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">
 {/capture}
 
-{capture assign='headerNavigation'}
-	<li><a rel="alternate" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}" title="{lang}wcf.global.button.rss{/lang}" class="rssFeed jsTooltip"><span class="icon icon16 fa-rss"></span> <span class="invisible">{lang}wcf.global.button.rss{/lang}</span></a></li>
-{/capture}
-
 {include file='userMenuSidebar'}
 
-{include file='header' __sidebarLeftHasMenu=true}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}{/content}
-	</div>
-{/hascontent}
+{capture assign='contentInteractionDropdownItems'}
+	{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a href="#" class="jsMarkAllAsConfirmed">{lang}wcf.user.notification.markAllAsConfirmed{/lang}</a></li>{/if}
+	<li><a rel="alternate" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
+{/capture}
+
+{include file='header' __sidebarLeftHasMenu=true}
 
 {if $notifications[notifications]}
 	{assign var=lastPeriod value=''}

@@ -5447,6 +5447,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
 	</category>
 	<category name="wcf.user.objectWatch">
+		<item name="wcf.user.objectWatch.button.subscribe"><![CDATA[Subscribe]]></item>
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
 		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Watch this category]]></item>
 		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Notify me of new articles.]]></item>
