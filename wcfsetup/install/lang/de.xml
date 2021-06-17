@@ -3993,10 +3993,6 @@ Dateianhänge:
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} eine der angebotenen Optionen aus.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Sitzung ist abgelaufen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sende{else}senden Sie{/if} das Formular erneut ab.]]></item>
 		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximale Anzahl erreicht]]></item>
-		<!-- deprecated since 2.1 -->
-		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
-		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
-		<!-- /deprecated since 2.1 -->
 		<item name="wcf.global.form.required"><![CDATA[Benötigte Angaben]]></item>
 		<item name="wcf.global.form.password.button.hide"><![CDATA[Verbergen]]></item>
 		<item name="wcf.global.form.password.button.show"><![CDATA[Anzeigen]]></item>
@@ -5541,5 +5537,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.option.blacklist_ip_addresses.description"/>
 	<item name="wcf.acp.option.blacklist_user_agents"/>
 	<item name="wcf.acp.option.blacklist_user_agents.description"/>
+	<item name="wcf.global.form.error.lessThan.javaScript"/>
+	<item name="wcf.global.form.error.greaterThan.javaScript"/>
 </delete>
 </language>

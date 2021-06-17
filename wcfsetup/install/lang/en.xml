@@ -3940,10 +3940,6 @@ Attachments:
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Choose one of the available options.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Your session has expired, please submit the form again.]]></item>
 		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximum items reached]]></item>
-		<!-- deprecated since 2.1 -->
-		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>
-		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}The entered value has to be less than {#$lessThan}.{/literal}]]></item>
-		<!-- /deprecated since 2.1 -->
 		<item name="wcf.global.form.required"><![CDATA[Required fields]]></item>
 		<item name="wcf.global.form.password.button.hide"><![CDATA[Hide]]></item>
 		<item name="wcf.global.form.password.button.show"><![CDATA[Show]]></item>
@@ -5542,5 +5538,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.option.blacklist_ip_addresses.description"/>
 	<item name="wcf.acp.option.blacklist_user_agents"/>
 	<item name="wcf.acp.option.blacklist_user_agents.description"/>
+	<item name="wcf.global.form.error.lessThan.javaScript"/>
+	<item name="wcf.global.form.error.greaterThan.javaScript"/>
 </delete>
 </language>
