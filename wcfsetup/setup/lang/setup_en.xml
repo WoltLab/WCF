@@ -32,6 +32,7 @@
 		<item name="wcf.global.systemRequirements.graphicsLibrary.requirement"><![CDATA[GD library or ImageMagick]]></item>
 		<item name="wcf.global.systemRequirements.graphicsLibrary.description"><![CDATA[A graphics library is needed to read images and for the dynamic image generation. The GD library or alternatively ImageMagick is required.]]></item>
 		<item name="wcf.global.systemRequirements.graphicsLibrary.notFound"><![CDATA[not found]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary.webp"><![CDATA[Support for WebP images missing]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[PHP memory limit]]></item>
