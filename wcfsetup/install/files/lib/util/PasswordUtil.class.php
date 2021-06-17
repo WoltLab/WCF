@@ -17,8 +17,7 @@ use wcf\util\exception\CryptoException;
 final class PasswordUtil
 {
     /**
-     * list of possible characters in generated passwords
-     * @var string
+     * @deprecated 5.5 - Generation of random passwords is deprecated.
      */
     const PASSWORD_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -189,10 +188,7 @@ final class PasswordUtil
     }
 
     /**
-     * Generates a random alphanumeric user password with the given character length.
-     *
-     * @param int $length
-     * @return  string
+     * @deprecated 5.5 - Use some constant time encoder (e.g. Hex, Base32, or Base64) on the result of `\random_bytes()`.
      */
     public static function getRandomPassword($length = 12)
     {
