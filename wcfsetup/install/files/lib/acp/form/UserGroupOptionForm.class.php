@@ -2,7 +2,6 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\DatabaseObject;
 use wcf\data\user\group\option\category\UserGroupOptionCategory;
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
 use wcf\data\user\group\option\UserGroupOption;
@@ -311,50 +310,5 @@ class UserGroupOptionForm extends AbstractForm
             'ownerGroupID' => $ownerGroupID,
             'ownerGroupPermissions' => $ownerGroupPermissions,
         ]);
-    }
-
-    /**
-     * Validates object options and permissions.
-     *
-     * @param DatabaseObject $object
-     * @return  boolean
-     *
-     * @deprecated  3.0
-     */
-    protected function verifyPermissions(DatabaseObject $object)
-    {
-        // check the options of this item
-        $hasEnabledOption = true;
-        if ($object->options) {
-            $hasEnabledOption = false;
-            $options = \explode(',', \strtoupper($object->options));
-            foreach ($options as $option) {
-                if (\defined($option) && \constant($option)) {
-                    $hasEnabledOption = true;
-                    break;
-                }
-            }
-        }
-        if (!$hasEnabledOption) {
-            return false;
-        }
-
-        // check the permission of this item for the active user
-        $hasPermission = true;
-        if ($object->permissions) {
-            $hasPermission = false;
-            $permissions = \explode(',', $object->permissions);
-            foreach ($permissions as $permission) {
-                if (WCF::getSession()->getPermission($permission)) {
-                    $hasPermission = true;
-                    break;
-                }
-            }
-        }
-        if (!$hasPermission) {
-            return false;
-        }
-
-        return true;
     }
 }
