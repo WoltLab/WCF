@@ -124,18 +124,13 @@ class EventHandler extends SingletonFactory
             }
         }
 
-        // execute actions
-        foreach ($this->inheritedActionsObjects[$name] as $actionObj) {
-            if ($actionObj instanceof IParameterizedEventListener) {
-                $actionObj->execute($eventObj, $className, $eventName, $parameters);
-
-                if (!\is_array($parameters)) {
-                    throw new SystemException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array!");
-                }
-            } elseif ($actionObj instanceof ILegacyEventListener) {
-                $actionObj->execute($eventObj, $className, $eventName);
-            }
-        }
+        $this->executeListeners(
+            $this->inheritedActionsObjects[$name],
+            $eventObj,
+            $className,
+            $eventName,
+            $parameters
+        );
     }
 
     /**
@@ -164,6 +159,30 @@ class EventHandler extends SingletonFactory
         $this->listenerObjects[$eventListener->listenerClassName] = $object;
 
         return $object;
+    }
+
+    /**
+     * @param   EventListener[]     $eventListeners
+     * @since   5.5
+     */
+    protected function executeListeners(
+        array $eventListeners,
+        $eventObj,
+        string $className,
+        string $eventName,
+        array &$parameters
+    ): void {
+        foreach ($eventListeners as $actionObj) {
+            if ($actionObj instanceof IParameterizedEventListener) {
+                $actionObj->execute($eventObj, $className, $eventName, $parameters);
+
+                if (!\is_array($parameters)) {
+                    throw new SystemException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array!");
+                }
+            } elseif ($actionObj instanceof ILegacyEventListener) {
+                $actionObj->execute($eventObj, $className, $eventName);
+            }
+        }
     }
 
     /**
@@ -221,18 +240,13 @@ class EventHandler extends SingletonFactory
             }
         }
 
-        // execute actions
-        foreach ($this->actionsObjects[$name] as $actionObj) {
-            if ($actionObj instanceof IParameterizedEventListener) {
-                $actionObj->execute($eventObj, $className, $eventName, $parameters);
-
-                if (!\is_array($parameters)) {
-                    throw new SystemException("'" . \get_class($actionObj) . "' breaks the '\$parameters' array!");
-                }
-            } elseif ($actionObj instanceof ILegacyEventListener) {
-                $actionObj->execute($eventObj, $className, $eventName);
-            }
-        }
+        $this->executeListeners(
+            $this->actionsObjects[$name],
+            $eventObj,
+            $className,
+            $eventName,
+            $parameters
+        );
     }
 
     /**
