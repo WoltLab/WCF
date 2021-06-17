@@ -7,12 +7,7 @@ use wcf\system\Regex;
 use wcf\util\exception\CryptoException;
 
 /**
- * Provides functions to compute password hashes.
- *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Util
+ * @deprecated 5.5 - All methods within this class are deprecated.
  */
 final class PasswordUtil
 {
