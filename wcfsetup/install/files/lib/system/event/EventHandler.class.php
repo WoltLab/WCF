@@ -107,19 +107,18 @@ class EventHandler extends SingletonFactory
             }
 
             foreach ($familyTree as $member) {
-                if (isset($this->inheritedActions[$member])) {
-                    $actions = $this->inheritedActions[$member];
-                    if (isset($actions[$eventName]) && !empty($actions[$eventName])) {
-                        /** @var EventListener $eventListener */
-                        foreach ($actions[$eventName] as $eventListener) {
-                            if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
-                                if (isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])) {
-                                    continue;
-                                }
+                if (empty($this->inheritedActions[$member][$eventName])) {
+                    continue;
+                }
 
-                                $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
-                            }
-                        }
+                /** @var EventListener $eventListener */
+                foreach ($this->inheritedActions[$member][$eventName] as $eventListener) {
+                    if (
+                        $eventListener->validateOptions()
+                        && $eventListener->validatePermissions()
+                        && !isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])
+                    ) {
+                        $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
                     }
                 }
             }
@@ -212,11 +211,11 @@ class EventHandler extends SingletonFactory
             $this->actionsObjects[$name] = [];
             /** @var EventListener $eventListener */
             foreach ($this->actions[$name] as $eventListener) {
-                if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
-                    if (isset($this->actionsObjects[$name][$eventListener->listenerClassName])) {
-                        continue;
-                    }
-
+                if (
+                    $eventListener->validateOptions()
+                    && $eventListener->validatePermissions()
+                    && !isset($this->actionsObjects[$name][$eventListener->listenerClassName])
+                ) {
                     $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
                 }
             }
