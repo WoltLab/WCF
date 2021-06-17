@@ -1184,6 +1184,7 @@
 		<file>js/WCF.Core.min.js</file>
 		<file>js/WCF.ImageViewer.min.js</file>
 		<file>js/WCF.Label.min.js</file>
+		<file>js/WCF.Like</file>
 		<file>js/WCF.Like.min.js</file>
 		<file>js/WCF.Location.min.js</file>
 		<file>js/WCF.Message.min.js</file>
