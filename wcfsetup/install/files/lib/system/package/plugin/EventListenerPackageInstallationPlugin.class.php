@@ -265,14 +265,14 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 ->objectProperty('listenerclassname')
                 ->label('wcf.acp.pip.eventListener.listenerClassName')
                 ->required()
-                ->addValidator(new FormFieldValidator('callable', function (ClassNameFormField $formField) {
+                ->addValidator(new FormFieldValidator('callable', static function (ClassNameFormField $formField) {
                     $listenerClassName = $formField->getValue();
                     /** @var TextFormField $eventClassNameField */
                     $eventClassNameField = $formField->getDocument()->getNodeById('eventClassName');
                     $eventClassName = $eventClassNameField->getValue();
-                    
+
                     if (\is_subclass_of($eventClassName, IEvent::class)) {
-                        if (!is_callable(new $listenerClassName)) {
+                        if (!\is_callable(new $listenerClassName())) {
                             $formField->addValidationError(
                                 new FormFieldValidationError(
                                     'noCallable',

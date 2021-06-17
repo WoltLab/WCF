@@ -161,9 +161,9 @@ class EventHandler extends SingletonFactory
         array &$parameters
     ): void {
         foreach ($eventListeners as $actionObj) {
-            $actionClassName = get_class($actionObj);
+            $actionClassName = \get_class($actionObj);
             if ($eventObj instanceof IEvent) {
-                if (!is_callable($actionObj)) {
+                if (!\is_callable($actionObj)) {
                     throw new \LogicException("Event listener object of class '{$actionClassName}' is not callable.");
                 }
 
