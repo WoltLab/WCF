@@ -121,22 +121,6 @@ SVG;
     }
 
     /**
-     * @deprecated  3.0
-     */
-    public function canCrop()
-    {
-        return false;
-    }
-
-    /**
-     * @deprecated  3.0
-     */
-    public function getCropImageTag($size = null)
-    {
-        return '';
-    }
-
-    /**
      * Returns the perceived luminance of the given color.
      *
      * @param int $r
