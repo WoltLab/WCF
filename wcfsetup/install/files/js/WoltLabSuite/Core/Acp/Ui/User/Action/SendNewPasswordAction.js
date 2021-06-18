@@ -1,10 +1,9 @@
-define(["require", "exports", "tslib", "../../../../Event/Handler", "../../../../Language", "./AbstractUserAction"], function (require, exports, tslib_1, EventHandler, Language, AbstractUserAction_1) {
+define(["require", "exports", "tslib", "./AbstractUserAction", "./Handler/SendNewPassword"], function (require, exports, tslib_1, AbstractUserAction_1, SendNewPassword_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SendNewPasswordAction = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
     AbstractUserAction_1 = tslib_1.__importDefault(AbstractUserAction_1);
+    SendNewPassword_1 = tslib_1.__importDefault(SendNewPassword_1);
     /**
      * @author  Joshua Ruesweg
      * @copyright  2001-2021 WoltLab GmbH
@@ -16,20 +15,10 @@ define(["require", "exports", "tslib", "../../../../Event/Handler", "../../../..
         init() {
             this.button.addEventListener("click", (event) => {
                 event.preventDefault();
-                // emulate clipboard selection
-                EventHandler.fire("com.woltlab.wcf.clipboard", "com.woltlab.wcf.user", {
-                    data: {
-                        actionName: "com.woltlab.wcf.user.sendNewPassword",
-                        parameters: {
-                            confirmMessage: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
-                            objectIDs: [this.userId],
-                        },
-                    },
-                    responseData: {
-                        actionName: "com.woltlab.wcf.user.sendNewPassword",
-                        objectIDs: [this.userId],
-                    },
+                const sendNewPasswordHandler = new SendNewPassword_1.default([this.userId], () => {
+                    location.reload();
                 });
+                sendNewPasswordHandler.send();
             });
         }
     }

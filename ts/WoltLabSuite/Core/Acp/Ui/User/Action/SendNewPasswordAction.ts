@@ -1,6 +1,5 @@
-import * as EventHandler from "../../../../Event/Handler";
-import * as Language from "../../../../Language";
 import AbstractUserAction from "./AbstractUserAction";
+import SendNewPassword from "./Handler/SendNewPassword";
 
 /**
  * @author  Joshua Ruesweg
@@ -14,20 +13,10 @@ export class SendNewPasswordAction extends AbstractUserAction {
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
 
-      // emulate clipboard selection
-      EventHandler.fire("com.woltlab.wcf.clipboard", "com.woltlab.wcf.user", {
-        data: {
-          actionName: "com.woltlab.wcf.user.sendNewPassword",
-          parameters: {
-            confirmMessage: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
-            objectIDs: [this.userId],
-          },
-        },
-        responseData: {
-          actionName: "com.woltlab.wcf.user.sendNewPassword",
-          objectIDs: [this.userId],
-        },
+      const sendNewPasswordHandler = new SendNewPassword([this.userId], () => {
+        location.reload();
       });
+      sendNewPasswordHandler.send();
     });
   }
 }
