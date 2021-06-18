@@ -23,10 +23,7 @@ abstract class AbstractSecureAction extends AbstractAction
     {
         parent::readParameters();
 
-        // check security token (unless it is a guest)
-        if (WCF::getSession()->userID) {
-            $this->checkSecurityToken();
-        }
+        $this->checkSecurityToken();
     }
 
     /**
