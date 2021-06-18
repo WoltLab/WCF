@@ -4141,6 +4141,7 @@ Dateianhänge:
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
+		<item name="wcf.media.category.choose.noCategory"><![CDATA[(keine Kategorie)]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Datei auswählen]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>

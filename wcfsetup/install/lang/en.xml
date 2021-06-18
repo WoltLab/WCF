@@ -4088,6 +4088,7 @@ Attachments:
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
+		<item name="wcf.media.category.choose.noCategory"><![CDATA[(no category)]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Select File]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
