@@ -18,22 +18,12 @@
 	{/if}
 {/capture}
 
-{capture assign='headerNavigation'}
-	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed' id=$categoryID}{/link}{/if}" title="{lang}wcf.global.button.rss{/lang}" class="rssFeed jsTooltip"><span class="icon icon16 fa-rss"></span> <span class="invisible">{lang}wcf.global.button.rss{/lang}</span></a></li>
-	{if $__wcf->user->userID}
-		<li class="jsOnly"><a href="#" title="{lang}wcf.user.objectWatch.manageSubscription{/lang}" class="jsSubscribeButton jsTooltip" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}"><span class="icon icon16 fa-bookmark{if !$category->isSubscribed()}-o{/if}"></span> <span class="invisible">{lang}wcf.user.objectWatch.manageSubscription{/lang}</span></a></li>
-	{/if}
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
-	{/if}
-{/capture}
-
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
 	{capture assign='contentHeaderNavigation'}
 		{if $availableLanguages|count > 1}
-			<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
-			<li><a href="{link controller='ArticleAdd'}categoryID={@$category->categoryID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="{link controller='ArticleAdd'}categoryID={@$category->categoryID}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
 	{/capture}
 {/if}
@@ -68,15 +58,24 @@
 	{/if}
 {/capture}
 
-{include file='header'}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign='pagesLinks' controller='CategoryArticleList' object=$category link="pageNo=%d"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{pages print=true assign='pagesLinks' controller='CategoryArticleList' object=$category link="pageNo=%d"}
-		{/content}
-	</div>
-{/hascontent}
+{capture assign='contentInteractionButtons'}
+	{if $__wcf->user->userID}
+		<a href="#" class="jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}">{lang}wcf.user.objectWatch.button.subscribe{/lang}</a>
+	{/if}
+{/capture}
+
+{capture assign='contentInteractionDropdownItems'}
+	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed' id=$categoryID}{/link}{/if}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.article.markAllAsRead{/lang}</a></li>
+	{/if}
+{/capture}
+
+{include file='header'}
 
 {if $objects|count}
 	<div class="section">

@@ -162,3 +162,5 @@
 				{/hascontent}
 				
 				{event name='contents'}
+
+				{include file='contentInteraction'}

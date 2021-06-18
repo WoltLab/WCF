@@ -2942,6 +2942,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			if (data.isSubscribed) {
 				$icon.removeClass('fa-bookmark-o').addClass('fa-bookmark');
 				$button.data('isSubscribed', true);
+				$button.addClass('active');
 			}
 			else {
 				if ($button.data('removeOnUnsubscribe')) {
@@ -2950,6 +2951,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				else {
 					$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
 					$button.data('isSubscribed', false);
+					$button.removeClass('active');
 				}
 				
 				if (this._reloadOnUnsubscribe) {
