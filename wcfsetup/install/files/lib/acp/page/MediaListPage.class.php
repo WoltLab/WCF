@@ -118,7 +118,11 @@ class MediaListPage extends SortablePage
         }
 
         if ($this->categoryID) {
-            $this->objectList->getConditionBuilder()->add('media.categoryID = ?', [$this->categoryID]);
+            if ($this->categoryID === -1) {
+                $this->objectList->getConditionBuilder()->add('media.categoryID IS NULL');
+            } else {
+                $this->objectList->getConditionBuilder()->add('media.categoryID = ?', [$this->categoryID]);
+            }
         }
         if ($this->query) {
             $this->objectList->addSearchConditions($this->query);
