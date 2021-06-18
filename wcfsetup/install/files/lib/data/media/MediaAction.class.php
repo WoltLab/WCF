@@ -547,7 +547,11 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             $mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
         }
         if ($this->parameters['categoryID']) {
-            $mediaList->getConditionBuilder()->add('media.categoryID = ?', [$this->parameters['categoryID']]);
+            if ($this->parameters['categoryID'] == -1) {
+                $mediaList->getConditionBuilder()->add('media.categoryID IS NULL');
+            } else {
+                $mediaList->getConditionBuilder()->add('media.categoryID = ?', [$this->parameters['categoryID']]);
+            }
         }
         $mediaList->sqlOrderBy = 'media.uploadTime DESC, media.mediaID DESC';
         $mediaList->sqlLimit = static::ITEMS_PER_MANAGER_DIALOG_PAGE;
