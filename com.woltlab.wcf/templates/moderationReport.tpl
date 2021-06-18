@@ -35,22 +35,24 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						<li class="jsOnly"><a id="moderationAssignUser" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></a></li>
-						{if !$queue->isDone()}
-							{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
-							<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
-						{/if}
-						{if $queue->canChangeJustifiedStatus()}
-							<li class="jsOnly"><a id="changeJustifiedStatus" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</span></a></li>
-						{/if}
-						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
-						
+						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
 			</nav>
 		{/hascontent}
 	</header>
+{/capture}
+
+{capture assign='contentInteractionButtons'}
+	<a id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.assignedUser.change{/lang}</a>
+	{if !$queue->isDone()}
+		<a id="enableContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.enableContent{/lang}</a>
+		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<a id="removeContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.removeContent{/lang}</a>{/if}
+	{/if}
+	{if $queue->canChangeJustifiedStatus()}
+		<a id="changeJustifiedStatus" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</a>
+	{/if}
 {/capture}
 
 {include file='header'}

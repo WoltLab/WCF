@@ -67,15 +67,11 @@
 	</section>
 {/capture}
 
-{include file='header'}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign=pagesLinks controller='UsersOnlineList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{pages print=true assign=pagesLinks controller='UsersOnlineList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
-		{/content}
-	</div>
-{/hascontent}
+{include file='header'}
 
 {assign var=usersOnlineList value=''}
 {assign var=usersOnline value=0}

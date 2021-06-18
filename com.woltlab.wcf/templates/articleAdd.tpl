@@ -10,25 +10,32 @@
 			</h1>
 		</div>
 		
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{if $action == 'edit'}
-					{if $article->canDelete()}
-						<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
-						<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
-						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
-					{/if}
-					{if $languages|count > 1 || $article->isMultilingual}
-						<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
-					{/if}
-					<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
-				{/if}
-				<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
-				
-				{event name='contentHeaderNavigation'}
-			</ul>
-		</nav>
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul>
+					{content}
+						{if $action == 'edit'}
+							<li><a href="{$article->getLink()}" class="button buttonPrimary"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
+						{/if}
+						{event name='contentHeaderNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
 	</header>
+{/capture}
+
+{capture assign='contentInteractionButtons'}
+	{if $action == 'edit'}
+		{if $article->canDelete()}
+			<a href="#" class="contentInteractionButton button small jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{lang}wcf.global.button.restore{/lang}</a>
+			<a href="#" class="contentInteractionButton button small jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
+			<a href="#" class="contentInteractionButton button small jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{lang}wcf.global.button.trash{/lang}</a>
+		{/if}
+		{if $languages|count > 1 || $article->isMultilingual}
+			<a href="#" class="contentInteractionButton button small jsButtonToggleI18n">{lang}wcf.acp.article.button.toggleI18n{/lang}</a>
+		{/if}
+	{/if}
 {/capture}
 
 {if $articleIsFrontend|empty}

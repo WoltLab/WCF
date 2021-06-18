@@ -6,17 +6,15 @@
 	{event name='sidebarBoxes'}
 {/capture}
 
-{capture assign='headerNavigation'}
-	<li class="jsOnly"><a href="#" title="{lang}wcf.moderation.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.moderation.markAllAsRead{/lang}</span></a></li>
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign=pagesLinks controller='ModerationList' link="definitionID=$definitionID&assignedUserID=$assignedUserID&status=$status&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+{/capture}
+
+{capture assign='contentInteractionDropdownItems'}
+	<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.moderation.markAllAsRead{/lang}</a></li>
 {/capture}
 
 {include file='header'}
-
-{hascontent}
-	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller='ModerationList' link="definitionID=$definitionID&assignedUserID=$assignedUserID&status=$status&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
-	</div>
-{/hascontent}
 
 {if $objects|count}
 	<div class="section tabularBox messageGroupList moderationList moderationQueueEntryList jsClipboardContainer" data-type="com.woltlab.wcf.moderation.queue">
