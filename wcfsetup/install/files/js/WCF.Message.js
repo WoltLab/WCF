@@ -1827,15 +1827,6 @@ WCF.Message.Share.Page = Class.extend({
 });
 
 /**
- * @deprecated 3.0
- */
-WCF.Message.UserMention = Class.extend({
-	init: function() {
-		throw new Error("Support for mentions in Redactor are now enabled by adding the attribute 'data-support-mention=\"true\"' to the textarea element.");
-	}
-});
-
-/**
  * Provides a specialized tab menu used for message options, integrates better into the editor.
  */
 $.widget('wcf.messageTabMenu', {
