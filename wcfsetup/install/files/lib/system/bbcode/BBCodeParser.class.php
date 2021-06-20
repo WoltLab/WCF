@@ -599,19 +599,6 @@ class BBCodeParser extends SingletonFactory
     }
 
     /**
-     * Validates the used BBCodes in the given text by the given allowed
-     * BBCodes and returns a list of used disallowed BBCodes.
-     *
-     * @param string $text
-     * @param string[] $allowedBBCodes
-     * @deprecated  3.0 - please use HtmlInputProcessor::validate() instead
-     */
-    public function validateBBCodes($text, array $allowedBBCodes)
-    {
-        throw new \RuntimeException("validateBBCodes() is no longer supported, please use HtmlInputProcessor::validate() instead.");
-    }
-
-    /**
      * Removes code bbcode occurrences in given message.
      *
      * @param string $message
