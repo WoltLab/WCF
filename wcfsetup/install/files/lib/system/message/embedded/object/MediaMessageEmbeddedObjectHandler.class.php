@@ -93,7 +93,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
     public function replaceSimple($objectType, $objectID, $value, array $attributes)
     {
         /** @var Media $media */
-        $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $value);
+        $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', intval($value));
         if ($media === null) {
             return;
         }

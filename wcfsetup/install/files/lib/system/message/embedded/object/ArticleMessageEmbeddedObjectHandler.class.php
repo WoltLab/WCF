@@ -64,7 +64,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
     public function replaceSimple($objectType, $objectID, $value, array $attributes)
     {
         /** @var Article $article */
-        $article = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', $value);
+        $article = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.article', intval($value));
         if ($article === null) {
             return;
         }
