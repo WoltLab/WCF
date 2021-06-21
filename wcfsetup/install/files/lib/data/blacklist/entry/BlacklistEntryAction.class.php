@@ -2,16 +2,13 @@
 
 namespace wcf\data\blacklist\entry;
 
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\blacklist\status\BlacklistStatus;
 use wcf\data\blacklist\status\BlacklistStatusEditor;
-use wcf\system\exception\HTTPNotFoundException;
-use wcf\system\exception\HTTPServerErrorException;
-use wcf\system\exception\HTTPUnauthorizedException;
-use wcf\system\exception\SystemException;
+use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
-use wcf\util\exception\HTTPException;
-use wcf\util\HTTPRequest;
 use wcf\util\JSON;
 
 /**
@@ -35,64 +32,61 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
 
     public function import()
     {
+        $client = HttpFactory::makeClientWithTimeout(5);
+
         // Check if we need to import any data at all.
         $status = BlacklistStatus::getAll();
-        $nextDelta = BlacklistStatus::getNextDelta($status);
+        $nextDelta = BlacklistStatus::getNextDelta($status, $client);
         if ($nextDelta === null) {
             return;
         }
 
-        $request = new HTTPRequest("https://assets.woltlab.com/blacklist/{$nextDelta}");
+        $request = new Request(
+            'GET',
+            "https://assets.woltlab.com/blacklist/{$nextDelta}"
+        );
         try {
-            $request->execute();
-        } catch (SystemException $e) {
-            if (
-                $e instanceof HTTPNotFoundException
-                || $e instanceof HTTPUnauthorizedException
-                || $e instanceof HTTPServerErrorException
-                || $e instanceof HTTPException
-            ) {
-                \wcf\functions\exception\logThrowable($e);
+            $response = $client->send($request);
+        } catch (ClientExceptionInterface $e) {
+            \wcf\functions\exception\logThrowable($e);
 
-                return;
-            }
-
-            throw $e;
+            return;
         }
 
-        $response = $request->getReply();
-        if ($response['statusCode'] == 200) {
-            $data = JSON::decode($response['body']);
-            if (\is_array($data)) {
-                $sql = "INSERT INTO             wcf" . WCF_N . "_blacklist_entry
-                                                (type, hash, lastSeen, occurrences)
-                        VALUES                  (?, ?, ?, ?)
-                        ON DUPLICATE KEY UPDATE lastSeen = VALUES(lastSeen),
-                                                occurrences = VALUES(occurrences)";
-                $statement = WCF::getDB()->prepareStatement($sql);
+        if ($response->getStatusCode() !== 200) {
+            return;
+        }
 
-                $lastSeen = \preg_replace('~^(.+)T(.+)Z~', '$1 $2', $data['meta']['end']);
+        $data = JSON::decode((string)$response->getBody());
+        if (\is_array($data)) {
+            $sql = "INSERT INTO             wcf" . WCF_N . "_blacklist_entry
+                                            (type, hash, lastSeen, occurrences)
+                    VALUES                  (?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE lastSeen = VALUES(lastSeen),
+                                            occurrences = VALUES(occurrences)";
+            $statement = WCF::getDB()->prepareStatement($sql);
 
-                WCF::getDB()->beginTransaction();
-                foreach (['email', 'ipv4', 'ipv6', 'username'] as $type) {
-                    foreach ($data[$type] as $hash => $occurrences) {
-                        $statement->execute([
-                            $type,
-                            \hex2bin($hash),
-                            $lastSeen,
-                            \min($occurrences, 32767),
-                        ]);
-                    }
+            $lastSeen = \preg_replace('~^(.+)T(.+)Z~', '$1 $2', $data['meta']['end']);
+
+            WCF::getDB()->beginTransaction();
+            foreach (['email', 'ipv4', 'ipv6', 'username'] as $type) {
+                foreach ($data[$type] as $hash => $occurrences) {
+                    $statement->execute([
+                        $type,
+                        \hex2bin($hash),
+                        $lastSeen,
+                        \min($occurrences, 32767),
+                    ]);
                 }
-                WCF::getDB()->commitTransaction();
-
-                $blacklistStatus = new BlacklistStatus($data['meta']['date']);
-                if (!$blacklistStatus->date) {
-                    $blacklistStatus = BlacklistStatusEditor::create(['date' => $data['meta']['date']]);
-                }
-
-                (new BlacklistStatusEditor($blacklistStatus))->update([$data['meta']['type'] => 1]);
             }
+            WCF::getDB()->commitTransaction();
+
+            $blacklistStatus = new BlacklistStatus($data['meta']['date']);
+            if (!$blacklistStatus->date) {
+                $blacklistStatus = BlacklistStatusEditor::create(['date' => $data['meta']['date']]);
+            }
+
+            (new BlacklistStatusEditor($blacklistStatus))->update([$data['meta']['type'] => 1]);
         }
     }
 }
