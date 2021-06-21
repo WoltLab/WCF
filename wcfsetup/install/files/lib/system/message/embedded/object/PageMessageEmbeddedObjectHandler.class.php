@@ -70,7 +70,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
     public function replaceSimple($objectType, $objectID, $value, array $attributes)
     {
         /** @var Page $page */
-        $page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', intval($value));
+        $page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $value);
         if ($page === null) {
             return;
         }
