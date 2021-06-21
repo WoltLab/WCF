@@ -43,7 +43,10 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
 
         $request = new Request(
             'GET',
-            "https://assets.woltlab.com/blacklist/{$nextDelta}"
+            "https://assets.woltlab.com/blacklist/{$nextDelta}",
+            [
+                'accept-encoding' => 'gzip',
+            ]
         );
         try {
             $response = $client->send($request);

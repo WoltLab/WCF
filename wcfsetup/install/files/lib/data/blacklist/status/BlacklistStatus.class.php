@@ -96,7 +96,10 @@ class BlacklistStatus extends DatabaseObject
         // Fetch the index file to determine the oldest possible value that can be retrieved.
         $request = new Request(
             'GET',
-            'https://assets.woltlab.com/blacklist/index.json'
+            'https://assets.woltlab.com/blacklist/index.json',
+            [
+                'accept-encoding' => 'gzip',
+            ]
         );
 
         try {
