@@ -141,20 +141,4 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     {
         return $this->height;
     }
-
-    /**
-     * @deprecated  3.0
-     */
-    public function getCropImageTag($size = null)
-    {
-        return '';
-    }
-
-    /**
-     * @deprecated  3.0
-     */
-    public function canCrop()
-    {
-        return false;
-    }
 }
