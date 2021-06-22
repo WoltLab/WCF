@@ -25,19 +25,6 @@ class ModerationQueueEditor extends DatabaseObjectEditor
     protected static $baseClass = ModerationQueue::class;
 
     /**
-     * Marks this entry as done.
-     *
-     * @deprecated  2.1 - Please use markAsConfirmed() or markAsRejected()
-     */
-    public function markAsDone()
-    {
-        $this->update(['status' => ModerationQueue::STATUS_DONE]);
-
-        // reset moderation count
-        ModerationQueueManager::getInstance()->resetModerationCount();
-    }
-
-    /**
      * Marks this entry as confirmed, e.g. report was justified and content was deleted or
      * content was approved.
      */
