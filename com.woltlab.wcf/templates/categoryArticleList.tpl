@@ -64,7 +64,7 @@
 
 {capture assign='contentInteractionButtons'}
 	{if $__wcf->user->userID}
-		<a href="#" class="jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}">{lang}wcf.user.objectWatch.button.subscribe{/lang}</a>
+		<a href="#" class="contentInteractionButton jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}">{lang}wcf.user.objectWatch.button.subscribe{/lang}</a>
 	{/if}
 {/capture}
 
