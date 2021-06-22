@@ -8,11 +8,11 @@
 			'Language',
 			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Media',
 			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'
-		], function(
+		], (
 			Language,
 			AcpUiCodeMirrorMedia,
 			AcpUiCodeMirrorPage
-		) {
+		) => {
 			Language.addObject({
 				'wcf.page.search': '{jslang}wcf.page.search{/jslang}',
 				'wcf.page.search.error.tooShort': '{jslang}wcf.page.search.error.tooShort{/jslang}',
