@@ -1,37 +1,44 @@
 {if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && $__wcf->user->userID && $__isLogin|empty}
 	<script data-relocate="true">
-		require(['Ajax', 'WoltLabSuite/Core/Language/Chooser'], function(Ajax, LanguageChooser) {
-			var item = elCreate('li');
+		require(['Ajax', 'WoltLabSuite/Core/Language/Chooser'], (Ajax, LanguageChooser) => {
+			const item = elCreate('li');
 			item.id = 'pageLanguageContainer';
-			var userPanelItems = elBySel('.userPanelItems');
+			
+			const userPanelItems = document.querySelector('.userPanelItems');
 			userPanelItems.insertBefore(item, userPanelItems.firstChild);
 			
-			var languages = {
+			const languages = {
 				{implode from=$__wcf->getLanguage()->getLanguages() item=_language}
-				'{@$_language->languageID}': {
-					iconPath: '{@$_language->getIconPath()|encodeJS}',
-					languageName: '{@$_language|encodeJS}',
-					languageCode: '{@$_language->languageCode|encodeJS}'
-				}
+					'{@$_language->languageID}': {
+						iconPath: '{@$_language->getIconPath()|encodeJS}',
+						languageName: '{@$_language|encodeJS}',
+						languageCode: '{@$_language->languageCode|encodeJS}',
+					}
 				{/implode}
 			};
 			
-			var callback = function(listItem) {
+			const callback = (listItem) => {
 				Ajax.apiOnce({
 					data: {
 						actionName: 'devtoolsSetLanguage',
 						className: 'wcf\\data\\user\\UserAction',
 						parameters: {
-							languageID: elData(listItem, 'language-id')
-						}
+							languageID: listItem.dataset.languageId,
+						},
 					},
-					success: function() {
+					success() {
 						window.location.reload();
-					}
+					},
 				});
 			};
 			
-			LanguageChooser.init('pageLanguageContainer', 'pageLanguageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
+			LanguageChooser.init(
+				'pageLanguageContainer',
+				'pageLanguageID',
+				{@$__wcf->getLanguage()->languageID},
+				languages,
+				callback
+			);
 		});
 	</script>
 {/if}
