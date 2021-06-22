@@ -981,15 +981,4 @@ class PackageArchive
     {
         return $this->instructions[$type] ?? null;
     }
-
-    /**
-     * Returns a list of php requirements for current package.
-     *
-     * @return  mixed[][]
-     * @deprecated  3.0
-     */
-    public function getPhpRequirements()
-    {
-        return [];
-    }
 }
