@@ -1864,6 +1864,7 @@
 		<file>lib/system/request/IRoute.class.php</file>
 		<file>lib/system/request/Route.class.php</file>
 		<file>lib/system/request/StaticRoute.class.php</file>
+		<file>lib/system/search/SearchKeywordManager.class.php</file>
 		<file>lib/system/sitemap/ISitemapProvider.class.php</file>
 		<file>lib/system/sitemap/SitemapHandler.class.php</file>
 		<file>lib/system/sitemap/UserAccountSitemapProvider.class.php</file>
