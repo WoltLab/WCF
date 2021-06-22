@@ -26,7 +26,7 @@
 </div>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages'], function(Language, ExcludedPackagesFormField) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages'], (Language, ExcludedPackagesFormField) => {
 		Language.addObject({
 			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/jslang}',
 			'wcf.acp.devtools.project.packageIdentifier.error.format': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.format{/jslang}',
@@ -34,15 +34,15 @@
 			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/jslang}',
 			'wcf.acp.devtools.project.packageVersion.error.format': '{jslang}wcf.acp.devtools.project.packageVersion.error.format{/jslang}',
 			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/jslang}',
-			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}'
+			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}',
 		});
 		
 		new ExcludedPackagesFormField('{@$field->getPrefixedId()}', [
 			{implode from=$field->getValue() item=excludedPackage}
-			{
-				packageIdentifier: '{$excludedPackage[packageIdentifier]}',
-				version: '{$excludedPackage[version]}'
-			}
+				{
+					packageIdentifier: '{$excludedPackage[packageIdentifier]}',
+					version: '{$excludedPackage[version]}',
+				}
 			{/implode}
 		]);
 	});
