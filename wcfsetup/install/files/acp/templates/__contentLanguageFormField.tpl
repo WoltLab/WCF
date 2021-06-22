@@ -10,18 +10,18 @@
 </noscript>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Language/Chooser', 'Dom/Traverse', 'Dom/Util'], function(LanguageChooser, DomTraverse, DomUtil) {
-		var languages = {
+	require(['WoltLabSuite/Core/Language/Chooser', 'Dom/Traverse', 'Dom/Util'], (LanguageChooser, DomTraverse, DomUtil) => {
+		const languages = {
 			{implode from=$field->getContentLanguages() item=contentLanguage}
 				'{@$contentLanguage->languageID}': {
 					iconPath: '{@$contentLanguage->getIconPath()|encodeJS}',
-					languageName: '{@$contentLanguage|encodeJS}'
+					languageName: '{@$contentLanguage|encodeJS}',
 				}
 			{/implode}
 		};
 		
 		LanguageChooser.init(
-			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()}Container'), 'DD')),
+			DomUtil.identify(DomTraverse.childByTag(document.getElementById('{@$field->getPrefixedId()}Container'), 'DD')),
 			'{@$field->getPrefixedId()}',
 			{if $field->getValue()}{@$field->getValue()}{else}0{/if},
 			languages,
