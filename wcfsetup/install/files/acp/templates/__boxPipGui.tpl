@@ -1,25 +1,19 @@
 <script data-relocate="true">
-	require(['Language'], function(Language) {
-		Language.addObject({
-			'wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere': '{jslang}wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere{/jslang}',
-			'wcf.acp.pip.box.visibilityExceptions.visibleEverywhere': '{jslang}wcf.acp.pip.box.visibilityExceptions.visibleEverywhere{/jslang}'
-		});
-		
-		var visibleEverywhere = elById('visibleEverywhere');
-		var visibilityExceptionsLabel = elBySel('#visibilityExceptionsContainer > dt > label');
+	(() => {
+		const visibleEverywhere = document.getElementById('visibleEverywhere');
+		const visibilityExceptionsLabel = document.querySelector('#visibilityExceptionsContainer > dt > label');
 		
 		function updateVisibilityExceptions() {
 			if (visibleEverywhere.checked) {
-				visibilityExceptionsLabel.innerHTML = Language.get('wcf.acp.pip.box.visibilityExceptions.visibleEverywhere');
-			}
-			else {
-				visibilityExceptionsLabel.innerHTML = Language.get('wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere');
+				visibilityExceptionsLabel.innerHTML = '{jslang}wcf.acp.pip.box.visibilityExceptions.visibleEverywhere{/jslang}';
+			} else {
+				visibilityExceptionsLabel.innerHTML = '{jslang}wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere{/jslang}';
 			}
 		}
 		
 		visibleEverywhere.addEventListener('change', updateVisibilityExceptions);
-		elById('visibleEverywhere_no').addEventListener('change', updateVisibilityExceptions);
+		document.getElementById('visibleEverywhere_no').addEventListener('change', updateVisibilityExceptions);
 		
 		updateVisibilityExceptions();
-	});
+	})();
 </script>
