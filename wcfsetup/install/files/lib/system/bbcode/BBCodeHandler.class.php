@@ -115,15 +115,6 @@ class BBCodeHandler extends SingletonFactory
     }
 
     /**
-     * @param string[] $bbcodes
-     * @deprecated 3.0 - please use setDisallowedBBCodes() instead
-     */
-    public function setAllowedBBCodes(array $bbcodes)
-    {
-        throw new \RuntimeException("setAllowedBBCodes() is no longer supported, please use setDisallowedBBCodes() instead.");
-    }
-
-    /**
      * Sets the disallowed BBCodes.
      *
      * @param string[] $bbCodes

@@ -650,6 +650,9 @@ class BoxAddForm extends AbstractForm
         $this->visibleEverywhere = $this->showHeader = 1;
         $this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
         $this->boxController = null;
+        $this->linkType = 'none';
+        $this->linkPageID = 0;
+        $this->linkPageObjectID = 0;
     }
 
     /**
