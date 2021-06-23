@@ -14,6 +14,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -239,13 +240,10 @@ class UserExportGdprAction extends AbstractAction
 
         $this->data['@@generatedAt'] = TIME_NOW;
 
-        // header
         @\header('Content-type: application/json; charset=UTF-8');
         @\header('Content-disposition: attachment; filename="user-export-gdpr-' . $this->user->userID . '.json"');
 
-        // no cache headers
-        @\header('Pragma: no-cache');
-        @\header('Expires: 0');
+        HeaderUtil::sendNoCacheHeaders();
 
         echo \json_encode($this->data, \JSON_PRETTY_PRINT);
 
