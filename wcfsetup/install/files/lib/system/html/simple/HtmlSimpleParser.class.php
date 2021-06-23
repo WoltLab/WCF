@@ -35,7 +35,7 @@ class HtmlSimpleParser extends SingletonFactory
      * regex for simple placeholders
      * @var string
      */
-    protected $regexHandlers = '~{{\ ((?:[a-z][a-zA-Z]+="(?:\\"|[^"])+?"\ ?)*)\ }}~';
+    protected $regexHandlers = '~\{\{ ((?:[a-z][a-zA-Z]+="(?:\\\\"|[^"])+" ?)*) \}\}~';
 
     /**
      * @inheritDoc
@@ -77,7 +77,6 @@ class HtmlSimpleParser extends SingletonFactory
         foreach ($matches[1] as $attributesString) {
             $attributes = $this->parseAttributes($attributesString);
             $handler = $attributes['handler'];
-
             if (!isset($this->handlers[$handler])) {
                 // unknown handler, ignore
                 continue;
@@ -182,7 +181,7 @@ class HtmlSimpleParser extends SingletonFactory
      */
     protected function parseAttributes($attributesString)
     {
-        \preg_match_all('~([a-z][a-zA-Z]+)="((?:\\\\"|[^"])+?)"~', $attributesString, $attributes);
+        \preg_match_all('~([a-z][a-zA-Z]+)="((?:\\\\"|[^"])+)"~', $attributesString, $attributes);
 
         $additionalAttributes = [];
         for ($i = 1, $length = \count($attributes[0]); $i < $length; $i++) {

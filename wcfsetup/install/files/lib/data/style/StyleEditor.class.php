@@ -878,7 +878,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $xml->beginDocument(
             'style',
             'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd'
+            'http://www.woltlab.com/XSD/5.4/style.xsd'
         );
 
         // general block
@@ -937,7 +937,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $xml->beginDocument(
             'variables',
             'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd'
+            'http://www.woltlab.com/XSD/5.4/styleVariables.xsd'
         );
 
         // get variables
@@ -1071,7 +1071,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $xml->beginDocument(
                 'package',
                 'http://www.woltlab.com',
-                'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd',
+                'http://www.woltlab.com/XSD/5.4/package.xsd',
                 ['name' => $packageName]
             );
 

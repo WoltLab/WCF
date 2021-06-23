@@ -382,6 +382,17 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function getObject($embeddedObjectType, $objectID)
     {
+        // `$objectID` might contain non integer values containing a comment, such
+        // as `123#This is a comment`. PHP <8.0 would silently truncate the value
+        // similar to what `intval()` does, making the below comparison work.
+        //
+        // However, in PHP 8.0 it was decided that this behavior is intransparent
+        // and somewhat violates the implicit casting rules, such a comparison
+        // now yields `false` where it was previously true.
+        //
+        // See https://wiki.php.net/rfc/string_to_number_comparison
+        $objectID = \intval($objectID);
+
         $embeddedObjectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
         if (!empty($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID])) {

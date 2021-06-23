@@ -70,7 +70,7 @@ class DevtoolsPackageXmlWriter
         $this->xmlWriter->beginDocument(
             'package',
             'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd',
+            'http://www.woltlab.com/XSD/5.4/package.xsd',
             ['name' => $this->packageXmlData['packageIdentifier']]
         );
 
