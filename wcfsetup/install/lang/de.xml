@@ -4253,7 +4253,7 @@ Dateianhänge:
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
-		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde den Moderatoren gemeldet.]]></item>
+		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde der Moderation gemeldet.]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>
