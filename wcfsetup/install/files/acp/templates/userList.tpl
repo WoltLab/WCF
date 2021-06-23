@@ -135,7 +135,7 @@
 
 									{if $user->deletable}
 										<li class="dropdownDivider"></li>
-										<li><a href="#" class="jsDispatchDelete">{lang}wcf.global.button.delete{/lang}</a></li>
+										<li><a href="#" class="jsDelete" data-confirm-message="{lang __encode=true objectTitle=$user->username}wcf.button.delete.confirmMessage{/lang}">{lang}wcf.global.button.delete{/lang}</a></li>
 										<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.content.removeContent{/lang}</a></li>
 									{/if}
 
@@ -151,10 +151,6 @@
 								   for backwards-compatibility, they're sometimes referenced with JavaScript-
 								   based insert calls. Clicks are forwarded to them anyway, thus there is no
 								   significant downside, other than "just" some more legacy code. *}
-
-								{if $user->deletable}
-									{objectAction action="delete" objectTitle=$user->getTitle()}
-								{/if}
 
 								{event name='rowButtons'}
 							</div>

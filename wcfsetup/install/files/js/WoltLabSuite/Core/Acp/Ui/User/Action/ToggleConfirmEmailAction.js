@@ -28,22 +28,23 @@ define(["require", "exports", "tslib", "./AbstractUserAction", "../../../../Ajax
                             },
                         };
                     },
-                }, undefined, (data) => {
-                    if (data.objectIDs.includes(this.userId)) {
-                        switch (data.actionName) {
-                            case "confirmEmail":
-                                this.userData.dataset.emailConfirmed = "true";
-                                this.button.textContent = this.button.dataset.unconfirmEmailMessage;
-                                break;
-                            case "unconfirmEmail":
-                                this.userData.dataset.emailConfirmed = "false";
-                                this.button.textContent = this.button.dataset.confirmEmailMessage;
-                                break;
-                            default:
-                                throw new Error("Unreachable");
+                    _ajaxSuccess: (data) => {
+                        if (data.objectIDs.includes(this.userId)) {
+                            switch (data.actionName) {
+                                case "confirmEmail":
+                                    this.userData.dataset.emailConfirmed = "true";
+                                    this.button.textContent = this.button.dataset.unconfirmEmailMessage;
+                                    break;
+                                case "unconfirmEmail":
+                                    this.userData.dataset.emailConfirmed = "false";
+                                    this.button.textContent = this.button.dataset.confirmEmailMessage;
+                                    break;
+                                default:
+                                    throw new Error("Unreachable");
+                            }
                         }
-                    }
-                    UiNotification.show();
+                        UiNotification.show();
+                    },
                 });
             });
         }

@@ -29,25 +29,26 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Core", "
                             },
                         };
                     },
-                }, undefined, (data) => {
-                    if (data.objectIDs.includes(this.userId)) {
-                        switch (data.actionName) {
-                            case "enable":
-                                this.userData.dataset.enabled = "true";
-                                this.button.textContent = this.button.dataset.disableMessage;
-                                break;
-                            case "disable":
-                                this.userData.dataset.enabled = "false";
-                                this.button.textContent = this.button.dataset.enableMessage;
-                                break;
-                            default:
-                                throw new Error("Unreachable");
+                    _ajaxSuccess: (data) => {
+                        if (data.objectIDs.includes(this.userId)) {
+                            switch (data.actionName) {
+                                case "enable":
+                                    this.userData.dataset.enabled = "true";
+                                    this.button.textContent = this.button.dataset.disableMessage;
+                                    break;
+                                case "disable":
+                                    this.userData.dataset.enabled = "false";
+                                    this.button.textContent = this.button.dataset.enableMessage;
+                                    break;
+                                default:
+                                    throw new Error("Unreachable");
+                            }
                         }
-                    }
-                    UiNotification.show();
-                    EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
-                        userIds: [this.userId]
-                    });
+                        UiNotification.show();
+                        EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
+                            userIds: [this.userId]
+                        });
+                    },
                 });
             });
         }

@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Dropdown/Simple", "../../../Dom/Util", "./Action/SendNewPasswordAction", "./Action/ToggleConfirmEmailAction", "./Action/DisableAction", "./Action/BanAction"], function (require, exports, tslib_1, Handler_1, Core, EventHandler, Language, Simple_1, Util_1, SendNewPasswordAction_1, ToggleConfirmEmailAction_1, DisableAction_1, BanAction_1) {
+define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Dropdown/Simple", "../../../Dom/Util", "./Action/SendNewPasswordAction", "./Action/ToggleConfirmEmailAction", "./Action/DisableAction", "./Action/BanAction", "./Action/DeleteAction"], function (require, exports, tslib_1, Handler_1, Core, EventHandler, Language, Simple_1, Util_1, SendNewPasswordAction_1, ToggleConfirmEmailAction_1, DisableAction_1, BanAction_1, DeleteAction_1) {
     "use strict";
     Handler_1 = tslib_1.__importDefault(Handler_1);
     Core = tslib_1.__importStar(Core);
@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Cor
     ToggleConfirmEmailAction_1 = tslib_1.__importDefault(ToggleConfirmEmailAction_1);
     DisableAction_1 = tslib_1.__importDefault(DisableAction_1);
     BanAction_1 = tslib_1.__importDefault(BanAction_1);
+    DeleteAction_1 = tslib_1.__importDefault(DeleteAction_1);
     class AcpUiUserEditor {
         /**
          * Initializes the edit dropdown for each user.
@@ -73,6 +74,10 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Cor
             if (banUser !== null) {
                 new BanAction_1.default(banUser, userId, userRow);
             }
+            const deleteUser = dropdownMenu.querySelector(".jsDelete");
+            if (deleteUser !== null) {
+                new DeleteAction_1.default(deleteUser, userId, userRow);
+            }
         }
         /**
          * Rebuilds the dropdown by adding wrapper links for legacy buttons,
@@ -84,10 +89,6 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Cor
             const items = [];
             let deleteButton = null;
             Array.from(legacyButtonContainer.children).forEach((button) => {
-                if (button.classList.contains("jsObjectAction") && button.dataset.objectAction === "delete") {
-                    deleteButton = button;
-                    return;
-                }
                 const item = document.createElement("li");
                 item.className = "jsLegacyItem";
                 item.innerHTML = '<a href="#"></a>';
@@ -108,13 +109,6 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Cor
             items.forEach((item) => {
                 dropdownMenu.insertAdjacentElement("afterbegin", item);
             });
-            if (deleteButton !== null) {
-                const dispatchDeleteButton = dropdownMenu.querySelector(".jsDispatchDelete");
-                dispatchDeleteButton.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    deleteButton.click();
-                });
-            }
             // check if there are visible items before each divider
             const listItems = Array.from(dropdownMenu.children);
             listItems.forEach((element) => Util_1.default.show(element));

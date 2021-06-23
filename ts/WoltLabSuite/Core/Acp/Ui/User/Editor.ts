@@ -18,6 +18,7 @@ import SendNewPasswordAction from "./Action/SendNewPasswordAction";
 import ToggleConfirmEmailAction from "./Action/ToggleConfirmEmailAction";
 import DisableAction from "./Action/DisableAction";
 import BanAction from "./Action/BanAction";
+import DeleteAction from "./Action/DeleteAction";
 
 interface RefreshUsersData {
   userIds: number[];
@@ -89,6 +90,11 @@ class AcpUiUserEditor {
     if (banUser !== null) {
       new BanAction(banUser, userId, userRow);
     }
+
+    const deleteUser = dropdownMenu.querySelector(".jsDelete") as HTMLAnchorElement;
+    if (deleteUser !== null) {
+      new DeleteAction(deleteUser, userId, userRow);
+    }
   }
 
   /**
@@ -102,12 +108,6 @@ class AcpUiUserEditor {
     const items: HTMLLIElement[] = [];
     let deleteButton: HTMLAnchorElement | null = null;
     Array.from(legacyButtonContainer.children).forEach((button: HTMLAnchorElement) => {
-      if (button.classList.contains("jsObjectAction") && button.dataset.objectAction === "delete") {
-        deleteButton = button;
-
-        return;
-      }
-
       const item = document.createElement("li");
       item.className = "jsLegacyItem";
       item.innerHTML = '<a href="#"></a>';
@@ -131,15 +131,6 @@ class AcpUiUserEditor {
     items.forEach((item) => {
       dropdownMenu.insertAdjacentElement("afterbegin", item);
     });
-
-    if (deleteButton !== null) {
-      const dispatchDeleteButton = dropdownMenu.querySelector(".jsDispatchDelete") as HTMLAnchorElement;
-      dispatchDeleteButton.addEventListener("click", (event) => {
-        event.preventDefault();
-
-        deleteButton!.click();
-      });
-    }
 
     // check if there are visible items before each divider
     const listItems = Array.from(dropdownMenu.children) as HTMLElement[];
