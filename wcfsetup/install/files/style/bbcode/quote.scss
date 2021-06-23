@@ -22,6 +22,11 @@ woltlab-quote,
 		}
 	}
 
+	kbd,
+	.codeBoxCode {
+		font-style: normal;
+	}
+
 	@include screen-md-up {
 		padding: 20px;
 	}
