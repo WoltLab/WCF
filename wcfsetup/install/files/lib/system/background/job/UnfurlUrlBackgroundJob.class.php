@@ -3,8 +3,8 @@
 namespace wcf\system\background\job;
 
 use BadMethodCallException;
-use GuzzleHttp\Psr7\Response;
 use LogicException;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\system\message\unfurl\exception\DownloadFailed;
@@ -171,7 +171,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         return $imageID;
     }
 
-    private function downloadImage(Response $imageResponse): string
+    private function downloadImage(ResponseInterface $imageResponse): string
     {
         $image = "";
         try {
