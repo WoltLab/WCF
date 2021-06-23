@@ -36,6 +36,7 @@
 		<file>acp/style/testing-reset.css</file>
 		<file>acp/style/wcf.css</file>
 		<file>acp/style/wcfAcp.css</file>
+		<file>acp/dereferrer.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_2.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_3.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</file>
