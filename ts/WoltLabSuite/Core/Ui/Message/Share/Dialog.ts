@@ -90,7 +90,7 @@ function getProviderButtons(): string {
 
       return `
       <li>
-        <a href="#" role="button" class="button ${provider.cssClass}" title="${label}" aria-label="${label}">
+        <a href="#" role="button" class="button small ${provider.cssClass}" title="${label}" aria-label="${label}">
           <span class="icon icon24 ${provider.iconClassName}"></span>
           <span>${label}</span>
         </a>
