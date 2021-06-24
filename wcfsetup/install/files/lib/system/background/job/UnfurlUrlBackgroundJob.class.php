@@ -111,6 +111,19 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             }
 
             $this->save(UnfurlUrl::STATUS_REJECTED);
+        } catch (DownloadFailed $e) {
+            // Whenever a background job throws an exception on its last attempt the background
+            // queue will log that exception.
+            // The current exception logger does not allow for cleanly ignoring specific types of non-serious
+            // exceptions like this user-triggerable one.
+            //
+            // Work around this issue by pretending the job succeeded, while actually storing a rejection
+            // if the job reached the maximum numbers of failure.
+            if ($this->getFailures() == static::MAX_FAILURES) {
+                $this->save(UnfurlUrl::STATUS_REJECTED);
+            } else {
+                throw $e;
+            }
         }
     }
 
