@@ -76,9 +76,6 @@ final class StyleCompiler extends SingletonFactory
     protected function makeCompiler(): Compiler
     {
         $compiler = new Compiler();
-        // Disable Unicode support because of its horrible performance (7x slowdown)
-        // https://github.com/WoltLab/WCF/pull/2736#issuecomment-416084079
-        $compiler->setEncoding('iso8859-1');
         $compiler->setImportPaths([WCF_DIR]);
 
         if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
