@@ -1831,6 +1831,7 @@
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabSize.class.php</file>
 		<file>lib/system/image/Thumbnail.class.php</file>
 		<file>lib/system/language/LanguageServerProcessor.class.php</file>
+		<file>lib/system/log/modification/ModificationLogHandler.class.php</file>
 		<file>lib/system/mail/DebugMailSender.class.php</file>
 		<file>lib/system/mail/MailSender.class.php</file>
 		<file>lib/system/mail/PHPMailSender.class.php</file>
