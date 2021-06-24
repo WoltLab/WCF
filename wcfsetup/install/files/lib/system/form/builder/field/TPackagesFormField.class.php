@@ -45,7 +45,7 @@ trait TPackagesFormField
     {
         foreach ($packageIDs as $packageID) {
             if (PackageCache::getInstance()->getPackage($packageID) === null) {
-                throw new \InvalidArgumentException("Unknown package with id '{$packageID}'.");
+                throw new \InvalidArgumentException("Unknown package with id '{$packageID}' for field '{$this->getId()}'.");
             }
         }
 

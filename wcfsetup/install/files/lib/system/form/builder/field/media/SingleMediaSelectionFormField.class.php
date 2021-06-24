@@ -55,12 +55,16 @@ class SingleMediaSelectionFormField extends AbstractFormField implements IImmuta
     {
         if ($this->media === null) {
             if (!$this->getValue()) {
-                throw new \BadMethodCallException("Cannot be media object if no valid media id is set as value.");
+                throw new \BadMethodCallException(
+                    "Cannot be media object if no valid media id is set as value for field '{$this->getId()}'."
+                );
             }
 
             $this->media = ViewableMedia::getMedia($this->getValue());
             if ($this->media === null) {
-                throw new \UnexpectedValueException("Cannot load media with id '{$this->getValue()}'.");
+                throw new \UnexpectedValueException(
+                    "Cannot load media with id '{$this->getValue()}' for field '{$this->getId()}'."
+                );
             }
         }
 

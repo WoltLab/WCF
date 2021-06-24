@@ -186,7 +186,9 @@ class SourceCodeFormField extends AbstractFormField implements
     public function language(?string $language): self
     {
         if (!\in_array($language, self::LANGUAGES)) {
-            throw new \InvalidArgumentException("Unsupported language '{$language}' given.");
+            throw new \InvalidArgumentException(
+                "Unsupported language '{$language}' given for field '{$this->getId()}'."
+            );
         }
 
         $this->language = $language;

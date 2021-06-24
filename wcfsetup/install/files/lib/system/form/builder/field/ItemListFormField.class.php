@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\util\ArrayUtil;
@@ -180,7 +181,7 @@ class ItemListFormField extends AbstractFormField implements
     public function saveValueType($saveValueType)
     {
         if ($this->saveValueType !== null) {
-            throw new \BadMethodCallException("Save value type has already been set.");
+            throw new \BadMethodCallException("Save value type has already been set for field '{$this->getId()}'.");
         }
 
         if (
@@ -191,7 +192,7 @@ class ItemListFormField extends AbstractFormField implements
                 self::SAVE_VALUE_TYPE_SSV,
             ])
         ) {
-            throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}'.");
+            throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}' for field '{$this->getId()}'.");
         }
 
         $this->saveValueType = $saveValueType;
@@ -209,7 +210,7 @@ class ItemListFormField extends AbstractFormField implements
                 if (\is_array($value)) {
                     $this->value = $value;
                 } else {
-                    throw new \InvalidArgumentException("Given value is no array, '" . \gettype($value) . "' given.");
+                    throw new InvalidFormFieldValue($this, 'array', \gettype($value));
                 }
 
                 break;
@@ -218,7 +219,7 @@ class ItemListFormField extends AbstractFormField implements
                 if (\is_string($value)) {
                     $this->value = \explode(',', $value);
                 } else {
-                    throw new \InvalidArgumentException("Given value is no string, '" . \gettype($value) . "' given.");
+                    throw new InvalidFormFieldValue($this, 'string', \gettype($value));
                 }
 
                 break;
@@ -227,7 +228,7 @@ class ItemListFormField extends AbstractFormField implements
                 if (\is_string($value)) {
                     $this->value = \explode("\n", $value);
                 } else {
-                    throw new \InvalidArgumentException("Given value is no string, '" . \gettype($value) . "' given.");
+                    throw new InvalidFormFieldValue($this, 'string', \gettype($value));
                 }
 
                 break;
@@ -236,7 +237,7 @@ class ItemListFormField extends AbstractFormField implements
                 if (\is_string($value)) {
                     $this->value = \explode(' ', $value);
                 } else {
-                    throw new \InvalidArgumentException("Given value is no string, '" . \gettype($value) . "' given.");
+                    throw new InvalidFormFieldValue($this, 'string', \gettype($value));
                 }
 
                 break;

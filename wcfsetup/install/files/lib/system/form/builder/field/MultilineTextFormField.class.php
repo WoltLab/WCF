@@ -58,7 +58,7 @@ class MultilineTextFormField extends TextFormField
     public function rows($rows)
     {
         if ($rows <= 0) {
-            throw new \InvalidArgumentException("Given number of rows is not positive.");
+            throw new \InvalidArgumentException("Given number of rows is not positive for field '{$this->getId()}'.");
         }
 
         $this->rows = $rows;

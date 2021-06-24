@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 
@@ -119,12 +120,14 @@ class MultipleSelectionFormField extends AbstractFormField implements
         }
 
         if (!\is_array($value)) {
-            throw new \InvalidArgumentException("Given value is no array, " . \gettype($value) . " given.");
+            throw new InvalidFormFieldValue($this, 'array', \gettype($value));
         }
 
         $unknownValues = \array_diff($value, \array_keys($this->getOptions()));
         if (!empty($unknownValues)) {
-            throw new \InvalidArgumentException("Unknown values '" . \implode("', '", $unknownValues) . "'");
+            throw new \InvalidArgumentException(
+                "Unknown values '" . \implode("', '", $unknownValues) . "' for field '{$this->getId()}'."
+            );
         }
 
         return parent::value($value);

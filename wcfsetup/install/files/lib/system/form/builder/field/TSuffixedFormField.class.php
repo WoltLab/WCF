@@ -54,7 +54,7 @@ trait TSuffixedFormField
         } else {
             if (!\is_string($languageItem)) {
                 throw new \InvalidArgumentException(
-                    "Given suffix language item is no string, " . \gettype($languageItem) . " given."
+                    "Given suffix language item is no string, " . \gettype($languageItem) . " given for field '{$this->getId()}'."
                 );
             }
 

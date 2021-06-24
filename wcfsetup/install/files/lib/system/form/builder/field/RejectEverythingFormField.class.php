@@ -54,7 +54,7 @@ final class RejectEverythingFormField extends AbstractFormField
      */
     public function getSaveValue(): void
     {
-        throw new \BadMethodCallException('This form field rejects everything.');
+        throw new \BadMethodCallException("Form field '{$this->getId()}' rejects everything.");
     }
 
     /**

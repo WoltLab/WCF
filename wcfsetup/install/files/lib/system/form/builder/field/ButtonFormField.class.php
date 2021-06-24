@@ -54,7 +54,7 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
     public function getButtonLabel(): string
     {
         if ($this->buttonLabel === null) {
-            throw new \BadMethodCallException("Button label has not been set.");
+            throw new \BadMethodCallException("Button label has not been set for field '{$this->getId()}'.");
         }
 
         return $this->buttonLabel;

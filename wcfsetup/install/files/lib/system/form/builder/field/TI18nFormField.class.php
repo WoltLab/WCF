@@ -5,6 +5,7 @@ namespace wcf\system\form\builder\field;
 use wcf\data\IStorableObject;
 use wcf\data\language\item\LanguageItemList;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -85,12 +86,12 @@ trait TI18nFormField
     {
         if (!$this->isI18n()) {
             throw new \BadMethodCallException(
-                "You can only get the language item pattern for fields with i18n enabled."
+                "You can only get the language item pattern for fields with i18n enabled for field '{$this->getId()}'."
             );
         }
 
         if ($this->languageItemPattern === null) {
-            throw new \BadMethodCallException("Language item pattern has not been set.");
+            throw new \BadMethodCallException("Language item pattern has not been set for field '{$this->getId()}'.");
         }
 
         return $this->languageItemPattern;
@@ -263,12 +264,12 @@ trait TI18nFormField
     {
         if (!$this->isI18n()) {
             throw new \BadMethodCallException(
-                "The language item pattern can only be set for fields with i18n enabled."
+                "The language item pattern can only be set for fields with i18n enabled for field '{$this->getId()}'."
             );
         }
 
         if (!Regex::compile($pattern)->isValid()) {
-            throw new \InvalidArgumentException("Given pattern is invalid.");
+            throw new \InvalidArgumentException("Given pattern is invalid for field '{$this->getId()}'.");
         }
 
         $this->languageItemPattern = $pattern;
@@ -396,13 +397,11 @@ trait TI18nFormField
                     I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
                 }
             } else {
-                throw new \InvalidArgumentException(
-                    "Given value is neither a nor an array, " . \gettype($value) . " given."
-                );
+                throw new InvalidFormFieldValue($this, 'string/number/array', \gettype($value));
             }
         } else {
             if (!\is_string($value) && !\is_numeric($value)) {
-                throw new \InvalidArgumentException("Given value is no string, " . \gettype($value) . " given.");
+                throw new InvalidFormFieldValue($this, 'string/number', \gettype($value));
             }
 
             return parent::value($value);

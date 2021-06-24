@@ -58,7 +58,7 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
     public function getLabelGroup()
     {
         if ($this->labelGroup === null) {
-            throw new \BadMethodCallException("No label group has been set.");
+            throw new \BadMethodCallException("No label group has been set for field '{$this->getId()}'.");
         }
 
         return $this->labelGroup;

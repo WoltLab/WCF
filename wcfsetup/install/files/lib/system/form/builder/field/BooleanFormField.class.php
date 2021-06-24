@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
@@ -85,7 +86,7 @@ class BooleanFormField extends AbstractFormField implements
         if (\is_int($value) && ($value === 0 || $value === 1)) {
             $value = ($value === 1);
         } elseif (!\is_bool($value)) {
-            throw new \InvalidArgumentException("Given value is no bool, " . \gettype($value) . " given.");
+            throw new InvalidFormFieldValue($this, 'bool', \gettype($value));
         }
 
         return parent::value($value);

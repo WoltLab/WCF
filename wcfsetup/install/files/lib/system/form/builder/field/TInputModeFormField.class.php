@@ -37,7 +37,7 @@ trait TInputModeFormField
     public function inputMode(?string $inputMode)
     {
         if ($inputMode !== null && $inputMode !== 'none' && !\in_array($inputMode, $this->getValidInputModes())) {
-            throw new \InvalidArgumentException("Invalid inputmode attribute '{$inputMode}'.");
+            throw new \InvalidArgumentException("Invalid inputmode attribute '{$inputMode}' for field '{$this->getId()}'.");
         }
 
         $this->inputMode = $inputMode;

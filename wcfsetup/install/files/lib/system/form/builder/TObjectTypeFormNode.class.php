@@ -33,7 +33,7 @@ trait TObjectTypeFormNode
     public function getObjectType()
     {
         if ($this->objectType === null) {
-            throw new \BadMethodCallException("Object type has not been set.");
+            throw new \BadMethodCallException("Object type has not been set for field '{$this->getId()}'.");
         }
 
         return $this->objectType;
@@ -52,11 +52,13 @@ trait TObjectTypeFormNode
     public function objectType($objectType)
     {
         if ($this->objectType !== null) {
-            throw new \BadMethodCallException("Object type has already been set.");
+            throw new \BadMethodCallException("Object type has already been set for field '{$this->getId()}'.");
         }
 
         if (ObjectTypeCache::getInstance()->getDefinitionByName($this->getObjectTypeDefinition()) === null) {
-            throw new \UnexpectedValueException("Unknown definition name '{$this->getObjectTypeDefinition()}'.");
+            throw new \UnexpectedValueException(
+                "Unknown definition name '{$this->getObjectTypeDefinition()}' for field '{$this->getId()}'."
+            );
         }
 
         $this->objectType = ObjectTypeCache::getInstance()

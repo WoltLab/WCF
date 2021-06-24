@@ -40,7 +40,7 @@ class RowFormFieldContainer extends FormContainer
     {
         if ((!$child instanceof IFormField)) {
             throw new \InvalidArgumentException(
-                "'" . static::class . "' only supports '" . IFormField::class . "' instances as children."
+                "'" . static::class . "' only supports '" . IFormField::class . "' instances as children for container '{$this->getId()}'."
             );
         }
 

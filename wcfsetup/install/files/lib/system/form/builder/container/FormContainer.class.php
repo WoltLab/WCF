@@ -92,12 +92,17 @@ class FormContainer implements IFormContainer
 
         if ($this instanceof ITabMenuFormContainer) {
             if (!($child instanceof ITabFormContainer)) {
-                throw new \InvalidArgumentException("Cannot append non-tab container " . \get_class($child) . "('{$child->getId()}') to tab menu container '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot append non-tab container " . \get_class($child)
+                    . "('{$child->getId()}') to container '{$this->getId()}'"
+                );
             }
 
             if ($child instanceof ITabMenuFormContainer) {
                 if ($this->getParent() instanceof ITabMenuFormContainer) {
-                    throw new \InvalidArgumentException("Tab menus can only be nested once.");
+                    throw new \InvalidArgumentException(
+                        "Tab menus can only be nested once for container '{$this->getId()}'."
+                    );
                 }
             }
         } elseif ($child instanceof ITabFormContainer) {
@@ -107,7 +112,10 @@ class FormContainer implements IFormContainer
         }
 
         if ($this instanceof ITabFormContainer && !($child instanceof IFormContainer)) {
-            throw new \InvalidArgumentException("Child " . \get_class($child) . "('{$child->getId()}') has to be a form container to be appended to tab container '{$this->getId()}'.");
+            throw new \InvalidArgumentException(
+                "Child " . \get_class($child)
+                . "('{$child->getId()}') has to be a form container to be appended to tab container '{$this->getId()}'."
+            );
         }
 
         if ($child instanceof ITabMenuFormContainer) {
@@ -117,7 +125,9 @@ class FormContainer implements IFormContainer
                 && $parent = $parent->getParent()
             ) {
                 if ($parent instanceof ITabMenuFormContainer) {
-                    throw new \InvalidArgumentException("A tab menu container may only have another tab menu container as a parent, not as an earlier ancestor.");
+                    throw new \InvalidArgumentException(
+                        "A tab menu container may only have another tab menu container as a parent, not as an earlier ancestor for container '{$this->getId()}'."
+                    );
                 }
             }
         }

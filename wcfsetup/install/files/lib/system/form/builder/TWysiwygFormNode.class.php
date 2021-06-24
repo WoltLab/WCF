@@ -40,7 +40,7 @@ trait TWysiwygFormNode
     public function getWysiwygId()
     {
         if ($this->wysiwygId === null) {
-            throw new \BadMethodCallException("The id of the related 'WysiwygFormField' form field is unknown.");
+            throw new \BadMethodCallException("The id of the related 'WysiwygFormField' form field is unknown for node '{$this->getId()}'.");
         }
 
         return $this->wysiwygId;

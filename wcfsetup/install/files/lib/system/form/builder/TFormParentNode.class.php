@@ -259,7 +259,9 @@ trait TFormParentNode
         }
 
         if (!$didInsertNode) {
-            throw new \InvalidArgumentException("Unknown child node with id '{$referenceNodeId}'.");
+            throw new \InvalidArgumentException(
+                "Unknown child node with id '{$referenceNodeId}' for node '{$this->getId()}'."
+            );
         }
 
         return $this;
@@ -289,7 +291,9 @@ trait TFormParentNode
         }
 
         if (!$didInsertNode) {
-            throw new \InvalidArgumentException("Unknown child node with id '{$referenceNodeId}'.");
+            throw new \InvalidArgumentException(
+                "Unknown child node with id '{$referenceNodeId}' for node '{$this->getId()}'."
+            );
         }
 
         return $this;

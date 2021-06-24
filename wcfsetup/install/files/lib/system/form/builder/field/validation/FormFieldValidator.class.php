@@ -39,7 +39,10 @@ class FormFieldValidator implements IFormFieldValidator
         // validate validation function
         $parameters = (new \ReflectionFunction($validator))->getParameters();
         if (\count($parameters) !== 1) {
-            throw new \InvalidArgumentException("The validation function must expect one parameter, instead " . \count($parameters) . " parameters are expected.");
+            throw new \InvalidArgumentException(
+                "The validation function must expect one parameter, instead " . \count($parameters)
+                . " parameters are expected for validator '{$id}'."
+            );
         }
         /** @var \ReflectionType $parameterType */
         $parameterType = $parameters[0]->getType();
@@ -54,7 +57,7 @@ class FormFieldValidator implements IFormFieldValidator
         ) {
             throw new \InvalidArgumentException(
                 "The validation function's parameter must be an instance of '" . IFormField::class . "', instead "
-                . @($parameterType === null ? 'any' : "'" . $parameterType . "'") . " parameter is expected."
+                . @($parameterType === null ? 'any' : "'" . $parameterType . "'") . " parameter is expected for validator '{$id}'."
             );
         }
 

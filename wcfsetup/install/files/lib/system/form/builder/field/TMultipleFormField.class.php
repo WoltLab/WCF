@@ -101,12 +101,14 @@ trait TMultipleFormField
         if ($maximum !== IMultipleFormField::NO_MAXIMUM_MULTIPLES) {
             if ($maximum <= 0) {
                 throw new \InvalidArgumentException(
-                    "The maximum number of values has to be positive, '{$maximum}' given."
+                    "The maximum number of values has to be positive, '{$maximum}' given for field '{$this->getId()}'."
                 );
             }
 
             if ($this->getMinimumMultiples() !== 0 && $maximum < $this->getMinimumMultiples()) {
-                throw new \InvalidArgumentException("The given maximum number of values '{$maximum}' is less than the set minimum number of values '{$this->getMinimumMultiples()}'.");
+                throw new \InvalidArgumentException(
+                    "The given maximum number of values '{$maximum}' is less than the set minimum number of values '{$this->getMinimumMultiples()}'. for field '{$this->getId()}'"
+                );
             }
         }
 
@@ -129,12 +131,14 @@ trait TMultipleFormField
     {
         if ($minimum < 0) {
             throw new \InvalidArgumentException(
-                "The minimum number of values has to be non-negative, '{$minimum}' given."
+                "The minimum number of values has to be non-negative, '{$minimum}' given for field '{$this->getId()}'."
             );
         }
 
         if ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && $minimum > $this->getMaximumMultiples()) {
-            throw new \InvalidArgumentException("The given minimum number of values '{$minimum}' is greater than the set maximum number of values '{$this->getMaximumMultiples()}'.");
+            throw new \InvalidArgumentException(
+                "The given minimum number of values '{$minimum}' is greater than the set maximum number of values '{$this->getMaximumMultiples()}' for field '{$this->getId()}'."
+            );
         }
 
         $this->minimumMultiples = $minimum;

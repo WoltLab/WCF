@@ -47,19 +47,21 @@ trait TMinimumLengthFormField
         if ($minimumLength !== null) {
             if (!\is_int($minimumLength)) {
                 throw new \InvalidArgumentException(
-                    "Given minimum length is no int, '" . \gettype($minimumLength) . "' given."
+                    "Given minimum length is no int, '" . \gettype($minimumLength) . "' given for field '{$this->getId()}'."
                 );
             }
 
             if ($minimumLength < 0) {
-                throw new \InvalidArgumentException("Minimum length must be non-negative, '{$minimumLength}' given.");
+                throw new \InvalidArgumentException(
+                    "Minimum length must be non-negative, '{$minimumLength}' given for field '{$this->getId()}'."
+                );
             }
 
             if ($this instanceof IMaximumLengthFormField) {
                 $maximumLength = $this->getMaximumLength();
                 if ($maximumLength !== null && $minimumLength > $maximumLength) {
                     throw new \InvalidArgumentException(
-                        "Minimum length ({$minimumLength}) cannot be greater than maximum length ({$maximumLength})."
+                        "Minimum length ({$minimumLength}) cannot be greater than maximum length ({$maximumLength}) for field '{$this->getId()}'."
                     );
                 }
             }

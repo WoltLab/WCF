@@ -5,6 +5,7 @@ namespace wcf\system\form\builder\field\tag;
 use wcf\data\IStorableObject;
 use wcf\data\tag\Tag;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IAttributeFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
@@ -79,12 +80,12 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
 
             if ($objectID === null) {
                 throw new \UnexpectedValueException(
-                    "Cannot read object id from object of class '" . \get_class($object) . "'."
+                    "Cannot read object id from object of class '" . \get_class($object) . "' for field '{$this->getId()}'."
                 );
             }
 
             if ($this->getObjectType() === null) {
-                throw new \UnexpectedValueException("Missing taggable object type.");
+                throw new \UnexpectedValueException("Missing taggable object type for field '{$this->getId()}'.");
             }
 
             $languageIDs = [];
@@ -152,7 +153,7 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
     public function value($value)
     {
         if (!\is_array($value)) {
-            throw new \InvalidArgumentException("Given value is no array, " . \gettype($value) . " given.");
+            throw new InvalidFormFieldValue($this, 'array', \gettype($value));
         }
 
         $stringTags = [];
@@ -165,7 +166,9 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
                 }
 
                 if ($stringValues === false) {
-                    throw new \InvalidArgumentException("Given value array contains mixed values, all values have to be either strings or `" . Tag::class . "` objects.");
+                    throw new \InvalidArgumentException(
+                        "Given value array contains mixed values, all values have to be either strings or `" . Tag::class . "` objects for field '{$this->getId()}'."
+                    );
                 }
 
                 $stringTags[] = $tag;
@@ -175,13 +178,15 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
                 }
 
                 if ($stringValues === true) {
-                    throw new \InvalidArgumentException("Given value array contains mixed values, all values have to be either strings or `" . Tag::class . "` objects.");
+                    throw new \InvalidArgumentException(
+                        "Given value array contains mixed values, all values have to be either strings or `" . Tag::class . "` objects for field '{$this->getId()}'."
+                    );
                 }
 
                 $stringTags[] = $tag->name;
             } else {
                 throw new \InvalidArgumentException(
-                    "Given value array contains invalid value of type " . \gettype($tag) . "."
+                    "Given value array contains invalid value of type " . \gettype($tag) . " for field '{$this->getId()}'."
                 );
             }
         }
