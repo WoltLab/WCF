@@ -2,7 +2,7 @@
  * Flexible message inline editor.
  *
  * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Message/InlineEditor
  */
@@ -565,11 +565,13 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
         poll.parentElement!.remove();
       }
 
-      const pollContainer = document.createElement("div");
-      pollContainer.className = "jsInlineEditorHideContent";
-      DomUtil.setInnerHtml(pollContainer, data.returnValues.poll);
+      if (data.returnValues.poll !== "") {
+        const pollContainer = document.createElement("div");
+        pollContainer.className = "jsInlineEditorHideContent";
+        DomUtil.setInnerHtml(pollContainer, data.returnValues.poll);
 
-      elementData.messageBody.insertAdjacentElement("afterbegin", pollContainer);
+        elementData.messageBody.insertAdjacentElement("afterbegin", pollContainer);
+      }
     }
 
     this._restoreMessage();
