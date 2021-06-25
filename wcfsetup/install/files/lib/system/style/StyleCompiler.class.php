@@ -4,6 +4,7 @@ namespace wcf\system\style;
 
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
+use ScssPhp\ScssPhp\ValueConverter;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
@@ -405,12 +406,7 @@ final class StyleCompiler extends SingletonFactory
         $statement->execute();
         $variables = [];
         while ($row = $statement->fetchArray()) {
-            $value = $row['defaultValue'];
-            if (empty($value)) {
-                $value = '~""';
-            }
-
-            $variables[$row['variableName']] = $value;
+            $variables[$row['variableName']] = $row['defaultValue'];
         }
 
         $variables['style_image_path'] = "'../images/'";
@@ -583,13 +579,13 @@ EOT;
     {
         foreach ($variables as &$value) {
             if (StringUtil::startsWith($value, '../')) {
-                $value = '~"' . $value . '"';
+                $value = '"' . $value . '"';
             }
         }
         unset($value);
 
         $variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
-        if (!empty($variables['wcfFontFamilyGoogle']) && $variables['wcfFontFamilyGoogle'] !== '~""') {
+        if (!empty($variables['wcfFontFamilyGoogle'])) {
             // The SCSS parser attempts to evaluate the variables, causing issues with font names that
             // include logical operators such as "And" or "Or".
             $variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
@@ -619,9 +615,9 @@ EOT;
             }
         } else {
             // workaround during setup
-            $variables['wcf_option_attachment_thumbnail_height'] = '~"210"';
-            $variables['wcf_option_attachment_thumbnail_width'] = '~"280"';
-            $variables['wcf_option_signature_max_image_height'] = '~"150"';
+            $variables['wcf_option_attachment_thumbnail_height'] = 210;
+            $variables['wcf_option_attachment_thumbnail_width'] = 280;
+            $variables['wcf_option_signature_max_image_height'] = 150;
 
             $variables['apiVersion'] = Style::API_VERSION;
         }
@@ -630,10 +626,18 @@ EOT;
         $variables['apiVersion'] = \str_replace('.', '', $variables['apiVersion']);
 
         $compiler = $this->makeCompiler();
-        $compiler->setVariables($variables);
+        $compiler->replaceVariables(\array_map(static function ($value) {
+            if ($value === "" || \is_int($value)) {
+                return ValueConverter::fromPhp($value);
+            }
+
+            return ValueConverter::parseValue($value);
+        }, $variables));
 
         try {
-            return $compiler->compile($scss);
+            $result = $compiler->compileString($scss);
+
+            return $result->getCss();
         } catch (\Exception $e) {
             throw new SystemException("Could not compile SCSS: " . $e->getMessage(), 0, '', $e);
         }
