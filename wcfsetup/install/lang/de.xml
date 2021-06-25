@@ -1991,10 +1991,14 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		Unbekannter Fehler.
 	{/if}
 {/implode}]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[WoltLab Suite-Upgrade]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade freigeben]]></item>
-		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Ein WoltLab Suite-Upgrade steht zur Verfügung. <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">System prüfen und Upgrade freigeben</a>.]]></item>
-		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[Die Installation eines WoltLab Suite-Upgrades wurde freigegeben. Die Durchführung von Updates wird {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Community auf eine neue Version von WoltLab Suite aktualisieren. <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Freigabe zurückziehen</a>.]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Aktualisierung auf WoltLab Suite {$version}]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die Testversion freigeben]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Die neue WoltLab Suite {$version} steht zur Installation bereit. ACHTUNG: Es handelt sich aktuell noch um eine Testversion die nicht für den produktiven Einsatz geeignet ist!<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Systemvoraussetzungen prüfen, um das Upgrade freizugeben</a>]]></item>
+		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[Die Installation der neuen WoltLab Suite {$version} wurde freigegeben. Zur Durchführung des Upgrades klicken Sie bitte auf den Button „Updates suchen“.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Upgrade abbrechen</a>]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>

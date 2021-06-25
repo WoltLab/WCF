@@ -1,15 +1,12 @@
 <?php
 namespace wcf\acp\form;
 
-use wcf\data\package\Package;
-use wcf\data\package\update\PackageUpdate;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
@@ -150,5 +147,16 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 		PackageUpdateServer::resetAll();
 
 		$this->saved();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+
+		WCF::getTPL()->assign([
+			'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
+		]);
 	}
 }

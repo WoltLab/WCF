@@ -1975,10 +1975,14 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		Unknown error.
 	{/if}
 {/implode}]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[WoltLab Suite Upgrade]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrade]]></item>
-		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[A WoltLab Suite Upgrade is available. <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Check System and Enable Upgrading</a>.]]></item>
-		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The installation of a WoltLab Suite Upgrade was enabled. Applying updates will upgrade your community to a new version of WoltLab Suite. <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Disable the Upgrade</a>.]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Upgrade to WoltLab Suite {$version}]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrading to the Evaluation Version]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[The new WoltLab Suite {$version} is available for installation. WARNING: This is an unstable version intended for test purposes only, do not upgrade your production site at this time.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Validate the system requirements to begin the upgrade</a>]]></item>
+		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The upgrade to WoltLab Suite {$version} is now ready. Please click on the button “Search for Updates” to start the upgrade.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Cancel the upgrade</a>]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>

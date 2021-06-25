@@ -1,8 +1,9 @@
-{include file='header' pageTitle='wcf.acp.package.enableUpgradeOverride'}
+{capture assign='pageTitle'}{lang version=$availableUpgradeVersion}wcf.acp.package.enableUpgradeOverride{/lang}{/capture}
+{include file='header' pageTitle=$pageTitle}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.package.enableUpgradeOverride{/lang}</h1>
+		<h1 class="contentTitle">{$pageTitle}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
