@@ -149,12 +149,12 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.4.1',
-            'version' => '1.4.1.0',
+            'pretty_version' => 'v1.5.2',
+            'version' => '1.5.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => 'ba86c963b94ec7ebd6e19d90cdab90d89667dbf7',
+            'reference' => '6fe16f169f55f5e793474fb210aac0a4481619e5',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
