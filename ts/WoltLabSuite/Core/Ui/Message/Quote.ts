@@ -483,8 +483,8 @@ export class UiMessageQuote implements AjaxCallbackObject {
     }
 
     // close navigation on mobile
-    const navigationList = listItem.closest(".buttonGroupNavigation") as HTMLUListElement;
-    if (navigationList.classList.contains("jsMobileButtonGroupNavigation")) {
+    const navigationList = listItem.closest(".buttonGroupNavigation") as HTMLUListElement | null;
+    if (navigationList && navigationList.classList.contains("jsMobileButtonGroupNavigation")) {
       const dropDownLabel = navigationList.querySelector(".dropdownLabel") as HTMLElement;
       dropDownLabel.click();
     }
