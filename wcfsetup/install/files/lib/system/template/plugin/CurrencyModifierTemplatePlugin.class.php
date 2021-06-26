@@ -7,9 +7,13 @@ use wcf\system\WCF;
 
 /**
  * Formats a currency value.
+ * The default number of decimals is `2`.
+ *
+ * Defining the number of decimals is available since version 5.4.
  *
  * Usage:
  *  {$float|currency}
+ *  {$float|currency:$numberOfDecimals}
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
@@ -23,9 +27,11 @@ class CurrencyModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
+        $decimals = \intval($tagArgs[1] ?? 2);
+
         return \number_format(
-            \round($tagArgs[0], 2),
-            2,
+            \round($tagArgs[0], $decimals),
+            $decimals,
             WCF::getLanguage()->get('wcf.global.decimalPoint'),
             WCF::getLanguage()->get('wcf.global.thousandsSeparator')
         );
