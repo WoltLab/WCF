@@ -52,14 +52,8 @@ class CategoryArticleListPage extends ArticleListPage {
 		], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
 		
 		if ($this->category->sortField) {
-			if ($this->category->sortField === 'title') {
-				$this->sortField = 'article_content.title';
-				$this->sortOrder = $this->category->sortOrder;
-			}
-			else {
-				$this->sortField = $this->category->sortField;
-				$this->sortOrder = $this->category->sortOrder;
-			}
+			$this->sortField = $this->category->sortField;
+			$this->sortOrder = $this->category->sortOrder;
 		}
 	}
 	
@@ -80,14 +74,11 @@ class CategoryArticleListPage extends ArticleListPage {
 	 */
 	protected function initObjectList() {
 		$this->objectList = new CategoryArticleList($this->categoryID, true);
-		if ($this->category->sortField === 'title') {
-			$this->objectList->sqlJoins .= ' LEFT JOIN wcf' . WCF_N . '_article_content article_content ON (article_content.articleID = article.articleID AND (
-				article_content.languageID IS NULL
-				OR article_content.languageID = ' . WCF::getLanguage()->languageID . '
-			))';
-		}
-		
 		$this->applyFilters();
+		
+		if ($this->sortField === 'title') {
+			$this->objectList->sqlSelects = "(SELECT title FROM wcf".WCF_N."_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = ".WCF::getLanguage()->languageID.") LIMIT 1) AS title";
+		}
 	}
 	
 	/**
