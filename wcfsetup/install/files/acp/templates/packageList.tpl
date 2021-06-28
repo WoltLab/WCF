@@ -62,6 +62,16 @@
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}
 
+{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+	{if $availableUpgradeVersion !== null}
+		{if $upgradeOverrideEnabled}
+			<p class="info">{lang version=$availableUpgradeVersion}wcf.acp.package.upgradeOverrideEnabled{/lang}</p>
+		{else}
+			<p class="info">{lang version=$availableUpgradeVersion}wcf.acp.package.availableUpgradeVersion{/lang}</p>
+		{/if}
+	{/if}
+{/if}
+
 {hascontent}
 	<div class="paginationTop">
 		{content}{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}

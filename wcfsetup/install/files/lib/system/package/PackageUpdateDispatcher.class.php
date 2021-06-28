@@ -153,6 +153,16 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
 		
+		$requestedVersion = \wcf\getMinorVersion();
+		if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
+			$requestedVersion = WCF::AVAILABLE_UPGRADE_VERSION;
+		}
+		
+		$request->addHeader(
+			'requested-woltlab-suite-version',
+			$requestedVersion
+		);
+		
 		$apiVersion = $updateServer->apiVersion;
 		if (in_array($apiVersion, ['2.1', '3.1'])) {
 			// skip etag check for WoltLab servers when an auth code is provided
