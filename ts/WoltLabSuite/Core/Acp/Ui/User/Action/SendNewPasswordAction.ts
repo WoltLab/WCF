@@ -1,6 +1,3 @@
-import AbstractUserAction from "./AbstractUserAction";
-import SendNewPassword from "./Handler/SendNewPassword";
-
 /**
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
@@ -8,8 +5,12 @@ import SendNewPassword from "./Handler/SendNewPassword";
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
+
+import AbstractUserAction from "./AbstractUserAction";
+import SendNewPassword from "./Handler/SendNewPassword";
+
 export class SendNewPasswordAction extends AbstractUserAction {
-  protected init() {
+  protected init(): void {
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
 

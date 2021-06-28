@@ -1,9 +1,3 @@
-import * as Core from "../../../../Core";
-import AbstractUserAction from "./AbstractUserAction";
-import BanHandler from "./Handler/Ban";
-import * as UiNotification from "../../../../Ui/Notification";
-import * as EventHandler from "../../../../Event/Handler";
-
 /**
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
@@ -11,38 +5,44 @@ import * as EventHandler from "../../../../Event/Handler";
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
+
+import * as Core from "../../../../Core";
+import AbstractUserAction from "./AbstractUserAction";
+import BanHandler from "./Handler/Ban";
+import * as UiNotification from "../../../../Ui/Notification";
+import * as EventHandler from "../../../../Event/Handler";
+
 export class BanAction extends AbstractUserAction {
   private banHandler: BanHandler;
 
-  protected init() {
+  protected init(): void {
     this.banHandler = new BanHandler([this.userId]);
 
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const isBanned = Core.stringToBool(this.userData.dataset.banned!);
+      const isBanned = Core.stringToBool(this.userDataElement.dataset.banned!);
 
       if (isBanned) {
         this.banHandler.unban(() => {
-          this.userData.dataset.banned = "false";
+          this.userDataElement.dataset.banned = "false";
           this.button.textContent = this.button.dataset.banMessage!;
 
           UiNotification.show();
 
           EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
-            userIds: [this.userId]
+            userIds: [this.userId],
           });
         });
-      }
-      else {
+      } else {
         this.banHandler.ban(() => {
-          this.userData.dataset.banned = "true";
+          this.userDataElement.dataset.banned = "true";
           this.button.textContent = this.button.dataset.unbanMessage!;
 
           UiNotification.show();
 
           EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
-            userIds: [this.userId]
+            userIds: [this.userId],
           });
         });
       }

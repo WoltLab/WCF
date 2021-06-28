@@ -1,3 +1,11 @@
+/**
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
+ * @since       5.5
+ */
+
 import * as Language from "../../../../../Language";
 import * as UiConfirmation from "../../../../../Ui/Confirmation";
 import AcpUiWorker from "../../../Worker";
@@ -12,13 +20,6 @@ interface AjaxResponse {
 
 type CallbackSuccess = (data: AjaxResponse) => void;
 
-/**
- * @author  Joshua Ruesweg
- * @copyright  2001-2021 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
- * @since       5.5
- */
 export class SendNewPassword {
   private userIDs: number[];
   private successCallback: CallbackSuccess | null;

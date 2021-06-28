@@ -1,10 +1,3 @@
-import * as Ajax from "../../../../Ajax";
-import * as Core from "../../../../Core";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../../../Ajax/Data";
-import * as UiNotification from "../../../../Ui/Notification";
-import AbstractUserAction from "./AbstractUserAction";
-import * as EventHandler from "../../../../Event/Handler";
-
 /**
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
@@ -12,51 +5,57 @@ import * as EventHandler from "../../../../Event/Handler";
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
-export class DisableAction extends AbstractUserAction {
-  protected init() {
+
+import * as Ajax from "../../../../Ajax";
+import * as Core from "../../../../Core";
+import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../../Ajax/Data";
+import * as UiNotification from "../../../../Ui/Notification";
+import AbstractUserAction from "./AbstractUserAction";
+import * as EventHandler from "../../../../Event/Handler";
+
+export class DisableAction extends AbstractUserAction implements AjaxCallbackObject {
+  protected init(): void {
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
+      const isEnabled = Core.stringToBool(this.userDataElement.dataset.enabled!);
 
-      Ajax.api(
-        {
-          _ajaxSetup: () => {
-            const isEnabled = Core.stringToBool(this.userData.dataset.enabled!);
+      Ajax.api(this, {
+        actionName: isEnabled ? "disable" : "enable",
+      });
+    });
+  }
 
-            return {
-              data: {
-                actionName: (isEnabled ? "disable" : "enable"),
-                className: "wcf\\data\\user\\UserAction",
-                objectIDs: [this.userId],
-              },
-            };
-          },
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
+    return {
+      data: {
+        className: "wcf\\data\\user\\UserAction",
+        objectIDs: [this.userId],
+      },
+    };
+  }
 
-          _ajaxSuccess: (data: DatabaseObjectActionResponse) => {
-            if (data.objectIDs.includes(this.userId)) {
-              switch (data.actionName) {
-                case "enable":
-                  this.userData.dataset.enabled = "true";
-                  this.button.textContent = this.button.dataset.disableMessage!;
-                  break;
+  _ajaxSuccess(data: DatabaseObjectActionResponse): void {
+    if (data.objectIDs.includes(this.userId)) {
+      switch (data.actionName) {
+        case "enable":
+          this.userDataElement.dataset.enabled = "true";
+          this.button.textContent = this.button.dataset.disableMessage!;
+          break;
 
-                case "disable":
-                  this.userData.dataset.enabled = "false";
-                  this.button.textContent = this.button.dataset.enableMessage!;
-                  break;
+        case "disable":
+          this.userDataElement.dataset.enabled = "false";
+          this.button.textContent = this.button.dataset.enableMessage!;
+          break;
 
-                default:
-                  throw new Error("Unreachable");
-              }
-            }
+        default:
+          throw new Error("Unreachable");
+      }
+    }
 
-            UiNotification.show();
+    UiNotification.show();
 
-            EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
-              userIds: [this.userId]
-            });
-          },
-        }
-      );
+    EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
+      userIds: [this.userId],
     });
   }
 }

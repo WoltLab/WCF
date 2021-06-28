@@ -1,3 +1,10 @@
+/**
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
+ * @since       5.5
+ */
 define(["require", "exports", "tslib", "../../../../../Language", "../../../../../Ui/Confirmation", "../../../../../Ajax"], function (require, exports, tslib_1, Language, UiConfirmation, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -5,13 +12,6 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
     Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Ajax = tslib_1.__importStar(Ajax);
-    /**
-     * @author  Joshua Ruesweg
-     * @copyright  2001-2021 WoltLab GmbH
-     * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-     * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
-     * @since       5.5
-     */
     class Delete {
         constructor(userIDs, successCallback, deleteMessage) {
             this.userIDs = userIDs;
@@ -26,17 +26,13 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
         delete() {
             UiConfirmation.show({
                 confirm: () => {
-                    Ajax.api({
-                        _ajaxSetup: () => {
-                            return {
-                                data: {
-                                    actionName: "delete",
-                                    className: "wcf\\data\\user\\UserAction",
-                                    objectIDs: this.userIDs,
-                                },
-                            };
+                    Ajax.apiOnce({
+                        data: {
+                            actionName: "delete",
+                            className: "wcf\\data\\user\\UserAction",
+                            objectIDs: this.userIDs,
                         },
-                        _ajaxSuccess: this.successCallback,
+                        success: this.successCallback,
                     });
                 },
                 message: this.deleteMessage,

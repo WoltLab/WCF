@@ -1,8 +1,3 @@
-import * as Language from "../../../../../Language";
-import * as UiConfirmation from "../../../../../Ui/Confirmation";
-import * as Ajax from "../../../../../Ajax";
-import { CallbackSuccess } from "../../../../../Ajax/Data";
-
 /**
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
@@ -10,6 +5,12 @@ import { CallbackSuccess } from "../../../../../Ajax/Data";
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
  * @since       5.5
  */
+
+import * as Language from "../../../../../Language";
+import * as UiConfirmation from "../../../../../Ui/Confirmation";
+import * as Ajax from "../../../../../Ajax";
+import { CallbackSuccess } from "../../../../../Ajax/Data";
+
 export class Delete {
   private userIDs: number[];
   private successCallback: CallbackSuccess;
@@ -20,29 +21,22 @@ export class Delete {
     this.successCallback = successCallback;
     if (deleteMessage) {
       this.deleteMessage = deleteMessage;
-    }
-    else {
+    } else {
       this.deleteMessage = Language.get("wcf.button.delete.confirmMessage"); // @todo find better variable for a generic message
     }
   }
 
-  delete(): void {
+  public delete(): void {
     UiConfirmation.show({
       confirm: () => {
-        Ajax.api(
-          {
-            _ajaxSetup: () => {
-              return {
-                data: {
-                  actionName: "delete",
-                  className: "wcf\\data\\user\\UserAction",
-                  objectIDs: this.userIDs,
-                },
-              };
-            },
-            _ajaxSuccess: this.successCallback,
-          }
-        );
+        Ajax.apiOnce({
+          data: {
+            actionName: "delete",
+            className: "wcf\\data\\user\\UserAction",
+            objectIDs: this.userIDs,
+          },
+          success: this.successCallback,
+        });
       },
       message: this.deleteMessage,
       messageIsHtml: true,

@@ -1,3 +1,10 @@
+/**
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
+ * @since       5.5
+ */
 define(["require", "exports", "tslib", "../../../../../Language", "../../../../../Ajax", "../../../../../Ui/Dialog"], function (require, exports, tslib_1, Language, Ajax, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -5,13 +12,6 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
     Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    /**
-     * @author  Joshua Ruesweg
-     * @copyright  2001-2021 WoltLab GmbH
-     * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-     * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler
-     * @since       5.5
-     */
     class BanHandler {
         constructor(userIDs) {
             this.userIDs = userIDs;
@@ -45,8 +45,8 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
                             className: "wcf\\data\\user\\UserAction",
                             objectIDs: this.userIDs,
                             parameters: {
-                                'banReason': reason,
-                                'banExpires': userBanExpires,
+                                banReason: reason,
+                                banExpires: userBanExpires,
                             },
                         },
                     };
@@ -58,7 +58,7 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
             return {
                 id: "userBanHandler",
                 options: {
-                    onShow: (content) => {
+                    onSetup: (content) => {
                         const submit = content.querySelector(".formSubmitButton");
                         const neverExpires = content.querySelector("#userBanNeverExpires");
                         const userBanExpiresSettings = content.querySelector("#userBanExpiresSettings");
@@ -84,14 +84,14 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
                             }
                         });
                     },
-                    title: Language.get('wcf.acp.user.ban.sure'),
+                    title: Language.get("wcf.acp.user.ban.sure"),
                 },
                 source: `<div class="section">
             <dl>
-              <dt><label for="userBanReason">${Language.get('wcf.acp.user.banReason')}</label></dt>
+              <dt><label for="userBanReason">${Language.get("wcf.acp.user.banReason")}</label></dt>
               <dd>
                 <textarea id="userBanReason" cols="40" rows="3" class=""></textarea>
-                <small>${Language.get('wcf.acp.user.banReason.description')}</small>
+                <small>${Language.get("wcf.acp.user.banReason.description")}</small>
               </dd>
             </dl>
             <dl>
@@ -99,13 +99,13 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
               <dd>
                 <label for="userBanNeverExpires">
                   <input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="">
-                  ${Language.get('wcf.acp.user.ban.neverExpires')}
+                  ${Language.get("wcf.acp.user.ban.neverExpires")}
                 </label>
               </dd>
             </dl>
             <dl id="userBanExpiresSettings" style="display: none;">
               <dt>
-                <label for="userBanExpires">${Language.get('wcf.acp.user.ban.expires')}</label>
+                <label for="userBanExpires">${Language.get("wcf.acp.user.ban.expires")}</label>
               </dt>
               <dd>
                 <div class="inputAddon">
@@ -117,12 +117,12 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
                           data-ignore-timezone="true"
                   />
                 </div>
-                <small>${Language.get('wcf.acp.user.ban.expires.description')}</small>
+                <small>${Language.get("wcf.acp.user.ban.expires.description")}</small>
               </dd>
             </dl>
           </div>
           <div class="formSubmit dialogFormSubmit">
-            <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get('wcf.global.button.submit')}</button>
+            <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
           </div>`,
             };
         }

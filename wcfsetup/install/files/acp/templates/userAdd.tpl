@@ -10,38 +10,77 @@
 		<ul>
 			{if $action === 'edit'}
 				<li>
-					<div 	class="dropdown"
-							id="userListDropdown{@$user->userID}"
-							data-object-id="{@$user->getObjectID()}"
-							data-banned="{if $user->banned}true{else}false{/if}"
-							data-enabled="{if !$user->activationCode}true{else}false{/if}"
-							data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}"
-					>
-						<a href="#" class="dropdownToggle button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a>
+					<div 	class="dropdown"{*
+							*}id="userListDropdown{@$user->userID}" {*
+							*}data-object-id="{@$user->getObjectID()}" {*
+							*}data-banned="{if $user->banned}true{else}false{/if}" {*
+							*}data-enabled="{if !$user->activationCode}true{else}false{/if}" {*
+							*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
+					*}>
+						<a href="#" class="dropdownToggle button">
+							<span class="icon icon16 fa-pencil"></span>
+							<span>{lang}wcf.global.button.edit{/lang}</span>
+						</a>
 
 						<ul class="dropdownMenu">
 							{event name='dropdownItems'}
 
 							{if $user->userID !== $__wcf->user->userID}
 								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-									<li><a href="#" class="jsEnable" data-enable-message="{lang}wcf.acp.user.enable{/lang}" data-disable-message="{lang}wcf.acp.user.disable{/lang}">{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}</a></li>
+									<li>
+										<a {*
+										*}href="#" {*
+										*}class="jsEnable" {*
+										*}data-enable-message="{lang}wcf.acp.user.enable{/lang}" {*
+										*}data-disable-message="{lang}wcf.acp.user.disable{/lang}"{*
+										*}>
+											{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}
+										</a>
+									</li>
 								{/if}
 
 								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-									<li><a href="#" class="jsConfirmEmailToggle" data-confirm-email-message="{lang}wcf.acp.user.action.confirmEmail{/lang}" data-unconfirm-email-message="{lang}wcf.acp.user.action.unconfirmEmail{/lang}">{lang}wcf.acp.user.action.{if $user->isEmailConfirmed()}un{/if}confirmEmail{/lang}</a></li>
+									<li>
+										<a href="#" {*
+										*}class="jsConfirmEmailToggle" {*
+										*}data-confirm-email-message="{lang}wcf.acp.user.action.confirmEmail{/lang}" {*
+										*}data-unconfirm-email-message="{lang}wcf.acp.user.action.unconfirmEmail{/lang}"{*
+										*}>
+											{lang}wcf.acp.user.action.{if $user->isEmailConfirmed()}un{/if}confirmEmail{/lang}
+										</a>
+									</li>
 								{/if}
 
 								{if $__wcf->session->getPermission('admin.user.canMailUser')}
-									<li><a href="{link controller='UserMail' id=$user->userID}{/link}">{lang}wcf.acp.user.action.sendMail{/lang}</a></li>
+									<li>
+										<a {*
+										*}href="{link controller='UserMail' id=$user->userID}{/link}"{*
+										*}>
+											{lang}wcf.acp.user.action.sendMail{/lang}
+										</a>
+									</li>
 								{/if}
 
 								{if $__wcf->session->getPermission('admin.user.canEditPassword')}
-									<li><a href="#" class="jsSendNewPassword">{lang}wcf.acp.user.action.sendNewPassword{/lang}</a></li>
+									<li>
+										<a {*
+										*}href="#" {*
+										*}class="jsSendNewPassword"{*
+										*}>
+											{lang}wcf.acp.user.action.sendNewPassword{/lang}
+										</a>
+									</li>
 								{/if}
 							{/if}
 
 							{if $__wcf->session->getPermission('admin.user.canExportGdprData')}
-								<li><a href="{link controller='UserExportGdpr' id=$user->userID}{/link}">{lang}wcf.acp.user.exportGdpr{/lang}</a></li>
+								<li
+									<a {*
+										*}href="{link controller='UserExportGdpr' id=$user->userID}{/link}"{*
+										*}>
+										{lang}wcf.acp.user.exportGdpr{/lang}
+									</a>
+								</li>
 							{/if}
 
 							{if $__wcf->session->getPermission('admin.user.canDeleteUser')}

@@ -106,7 +106,6 @@ class AcpUiUserEditor {
 
     // inject buttons
     const items: HTMLLIElement[] = [];
-    let deleteButton: HTMLAnchorElement | null = null;
     Array.from(legacyButtonContainer.children).forEach((button: HTMLAnchorElement) => {
       const item = document.createElement("li");
       item.className = "jsLegacyItem";

@@ -1,7 +1,3 @@
-import AbstractUserAction from "./AbstractUserAction";
-import * as Language from "../../../../Language";
-import Delete from "./Handler/Delete";
-
 /**
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
@@ -9,14 +5,22 @@ import Delete from "./Handler/Delete";
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
+
+import AbstractUserAction from "./AbstractUserAction";
+import Delete from "./Handler/Delete";
+
 export class DeleteAction extends AbstractUserAction {
-  protected init() {
+  protected init(): void {
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
 
-      let deleteHandler = new Delete([this.userId], () => {
-        this.userData.remove();
-      }, this.button.dataset.confirmMessage);
+      const deleteHandler = new Delete(
+        [this.userId],
+        () => {
+          this.userDataElement.remove();
+        },
+        this.button.dataset.confirmMessage,
+      );
       deleteHandler.delete();
     });
   }

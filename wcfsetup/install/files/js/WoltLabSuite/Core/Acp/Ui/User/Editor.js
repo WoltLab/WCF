@@ -87,7 +87,6 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Cor
             dropdownMenu.querySelectorAll(".jsLegacyItem").forEach((element) => element.remove());
             // inject buttons
             const items = [];
-            let deleteButton = null;
             Array.from(legacyButtonContainer.children).forEach((button) => {
                 const item = document.createElement("li");
                 item.className = "jsLegacyItem";
