@@ -3,6 +3,7 @@
 namespace wcf\acp\page;
 
 use wcf\data\package\PackageList;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\SortablePage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
@@ -105,10 +106,18 @@ class PackageListPage extends SortablePage
             $taintedApplications[$application->getPackage()->packageID] = $application;
         }
 
+        $availableUpgradeVersion = WCF::AVAILABLE_UPGRADE_VERSION;
+        // During the RC phase the upgrade should only be offered when the maintenance mode is enabled.
+        if (!\OFFLINE) {
+            $availableUpgradeVersion = null;
+        }
+
         WCF::getTPL()->assign([
             'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
             'packageID' => $this->packageID,
             'taintedApplications' => $taintedApplications,
+            'availableUpgradeVersion' => $availableUpgradeVersion,
+            'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
         ]);
     }
 
