@@ -115,21 +115,17 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
             }
         }
 
-        $sql = "DELETE FROM {$this->getLogTableName()}
-                WHERE       packageID = ?
-                        AND {$this->getFilenameTableColumn()} = ?
-                        AND application = ?";
-        $deleteStatement = WCF::getDB()->prepare($sql);
-
         WCF::getDB()->beginTransaction();
         foreach ($logFiles as $application => $files) {
-            foreach ($files as $file => $packageID) {
-                $deleteStatement->execute([
-                    $packageID,
-                    $file,
-                    $application,
-                ]);
-            }
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("{$this->getFilenameTableColumn()} IN (?)", [array_keys($files)]);
+            $conditions->add('application = ?', [$application]);
+            $conditions->add('packageID = ?', [$this->installation->getPackageID()]);
+
+            $sql = "DELETE FROM {$this->getLogTableName()}
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
         }
         WCF::getDB()->commitTransaction();
     }
