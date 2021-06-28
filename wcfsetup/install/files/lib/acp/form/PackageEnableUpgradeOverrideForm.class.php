@@ -5,9 +5,8 @@ namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
@@ -61,33 +60,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
                     ->variables([
                         'issues' => $issues,
                     ]),
-                new class extends AbstractFormField {
-                    // TODO: Replace this with RejectEverythingFormField in 5.4+.
-                    public function __construct()
-                    {
-                        $this->id('rejectEverything');
-                    }
-
-                    public function getFieldHtml()
-                    {
-                        return '';
-                    }
-
-                    public function getHtml()
-                    {
-                        return '';
-                    }
-
-                    public function readValue()
-                    {
-                        return $this;
-                    }
-
-                    public function validate()
-                    {
-                        $this->addValidationError(new FormFieldValidationError('rejectEverything'));
-                    }
-                },
+                RejectEverythingFormField::create(),
             ]);
         }
     }
