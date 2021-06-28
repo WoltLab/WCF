@@ -123,6 +123,20 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="mediaProvider" />
 		<instruction type="userOption" />
 		
+		<!-- Just XSD adjustments. -->
+		<instruction type="aclOption" />
+		<instruction type="acpSearchProvider" />
+		<instruction type="bbcode" />
+		<instruction type="box" />
+		<instruction type="coreObject" />
+		<instruction type="cronjob" />
+		<instruction type="menu" />
+		<instruction type="menuItem" />
+		<instruction type="smiley" />
+		<instruction type="templateListener" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="userProfileMenu" />
+		
 		<!-- Migration of multi-factor authentication. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_migrate_multifactor.php</instruction>
 		
