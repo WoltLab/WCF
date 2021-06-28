@@ -118,7 +118,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
         WCF::getDB()->beginTransaction();
         foreach ($logFiles as $application => $files) {
             $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("{$this->getFilenameTableColumn()} IN (?)", [array_keys($files)]);
+            $conditions->add("{$this->getFilenameTableColumn()} IN (?)", [\array_keys($files)]);
             $conditions->add('application = ?', [$application]);
             $conditions->add('packageID = ?', [$this->installation->getPackageID()]);
 
