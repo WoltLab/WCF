@@ -1977,6 +1977,14 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	{/if}
 {/implode}]]></item>
 		<item name="wcf.acp.package.application.isTainted"><![CDATA[The app{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} is not fully installed. You need to uninstall and then reinstall the app to be able to use it.]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Upgrade to WoltLab Suite {$version}]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrading to the Evaluation Version]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[The new WoltLab Suite {$version} is available for installation. WARNING: This is an unstable version intended for test purposes only, do not upgrade your production site at this time.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Validate the system requirements to begin the upgrade</a>]]></item>
+		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The upgrade to WoltLab Suite {$version} is now ready. Please click on the button “Search for Updates” to start the upgrade.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Cancel the upgrade</a>]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
