@@ -234,7 +234,11 @@ class TwitterAuthAction extends AbstractAction
             if ($header !== '') {
                 $header .= ', ';
             }
-            $header .= \rawurlencode($key) . '="' . \rawurlencode($val) . '"';
+            $header .= \sprintf(
+                '%s="%s"',
+                \rawurlencode($key),
+                \rawurlencode($val)
+            );
         }
 
         return $header;
