@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
@@ -268,6 +269,6 @@ class TwitterAuthAction extends AbstractAction
         $base = $method . "&" . \rawurlencode($url) . "&" . \rawurlencode($parameterString);
         $key = \rawurlencode(StringUtil::trim(TWITTER_PRIVATE_KEY)) . '&' . \rawurlencode($tokenSecret);
 
-        return \base64_encode(\hash_hmac('sha1', $base, $key, true));
+        return Base64::encode(\hash_hmac('sha1', $base, $key, true));
     }
 }
