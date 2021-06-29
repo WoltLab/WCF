@@ -433,7 +433,7 @@ class ControllerPopover implements AjaxCallbackObject {
   /**
    * Sends an AJAX requests to the server, simple wrapper to reuse the request object.
    */
-  ajaxApi(data: RequestPayload, success: CallbackSuccess, failure: CallbackFailure): void {
+  ajaxApi(data: RequestPayload, success: CallbackSuccess, failure?: CallbackFailure): void {
     if (typeof success !== "function") {
       throw new TypeError("Expected a valid callback for parameter 'success'.");
     }
