@@ -6,6 +6,7 @@ use wcf\data\application\Application;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
@@ -60,18 +61,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
      */
     protected function handleDelete(array $items)
     {
-        $sql = "SELECT  packageID
-                FROM    {$this->getLogTableName()}
-                WHERE   {$this->getFilenameTableColumn()} = ?
-                    AND application = ?
-                    AND packageID = ?";
-        $searchStatement = WCF::getDB()->prepare($sql);
-
-        $sql = "DELETE FROM {$this->getLogTableName()}
-                WHERE       packageID = ?
-                        AND {$this->getFilenameTableColumn()} = ?";
-        $deleteStatement = WCF::getDB()->prepare($sql);
-
+        $groupedFiles = [];
         foreach ($items as $item) {
             $file = $item['value'];
             $application = 'wcf';
@@ -81,30 +71,63 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
                 $application = Package::getAbbreviation($this->installation->getPackage()->package);
             }
 
-            $searchStatement->execute([
-                $file,
-                $application,
-                $this->installation->getPackageID(),
-            ]);
-
-            $filePackageID = $searchStatement->fetchSingleColumn();
-            if ($filePackageID !== false && $filePackageID != $this->installation->getPackageID()) {
-                throw new \UnexpectedValueException(
-                    "'{$file}' does not belong to package '{$this->installation->getPackage()->package}'
-                    but to package '" . PackageCache::getInstance()->getPackage($filePackageID)->package . "'."
-                );
+            if (!isset($groupedFiles[$application])) {
+                $groupedFiles[$application] = [];
             }
-
-            $filePath = $this->getFilePath($file, $application);
-            if (\file_exists($filePath)) {
-                \unlink($filePath);
-            }
-
-            $deleteStatement->execute([
-                $this->installation->getPackageID(),
-                $file,
-            ]);
+            $groupedFiles[$application][] = $file;
         }
+
+        $logFiles = [];
+        foreach ($groupedFiles as $application => $files) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("{$this->getFilenameTableColumn()} IN (?)", [$files]);
+            $conditions->add('application = ?', [$application]);
+            $conditions->add('packageID = ?', [$this->installation->getPackageID()]);
+
+            $sql = "SELECT  packageID, application, {$this->getFilenameTableColumn()}
+                    FROM    {$this->getLogTableName()}
+                    {$conditions}";
+            $searchStatement = WCF::getDB()->prepare($sql);
+            $searchStatement->execute($conditions->getParameters());
+
+            while ($row = $searchStatement->fetchArray()) {
+                if (!isset($logFiles[$row['application']])) {
+                    $logFiles[$row['application']] = [];
+                }
+                $logFiles[$row['application']][$row[$this->getFilenameTableColumn()]] = $row['packageID'];
+            }
+        }
+
+        foreach ($groupedFiles as $application => $files) {
+            foreach ($files as $file) {
+                $filePackageID = $logFiles[$application][$file] ?? null;
+                if ($filePackageID !== null && $filePackageID != $this->installation->getPackageID()) {
+                    throw new \UnexpectedValueException(
+                        "'{$file}' does not belong to package '{$this->installation->getPackage()->package}'
+                        but to package '" . PackageCache::getInstance()->getPackage($filePackageID)->package . "'."
+                    );
+                }
+
+                $filePath = $this->getFilePath($file, $application);
+                if (\file_exists($filePath)) {
+                    \unlink($filePath);
+                }
+            }
+        }
+
+        WCF::getDB()->beginTransaction();
+        foreach ($logFiles as $application => $files) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("{$this->getFilenameTableColumn()} IN (?)", [\array_keys($files)]);
+            $conditions->add('application = ?', [$application]);
+            $conditions->add('packageID = ?', [$this->installation->getPackageID()]);
+
+            $sql = "DELETE FROM {$this->getLogTableName()}
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
+        }
+        WCF::getDB()->commitTransaction();
     }
 
     /**
