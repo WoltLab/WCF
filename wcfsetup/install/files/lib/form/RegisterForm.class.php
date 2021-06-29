@@ -370,24 +370,9 @@ class RegisterForm extends UserAddForm
                 case 'github':
                 case 'facebook':
                 case 'google':
+                case 'twitter':
                     if (($oauthUser = WCF::getSession()->getVar('__oauthUser'))) {
                         $this->additionalFields['authData'] = $provider . ':' . $oauthUser->getId();
-                    }
-                    break;
-                case 'twitter':
-                    // Twitter
-                    if (WCF::getSession()->getVar('__twitterData')) {
-                        $twitterData = WCF::getSession()->getVar('__twitterData');
-                        $this->additionalFields['authData'] = 'twitter:' . ($twitterData['id'] ?? $twitterData['user_id']);
-
-                        WCF::getSession()->unregister('__twitterData');
-
-                        if (
-                            WCF::getSession()->getVar('__email')
-                            && WCF::getSession()->getVar('__email') == $this->email
-                        ) {
-                            $registerVia3rdParty = true;
-                        }
                     }
                     break;
             }
