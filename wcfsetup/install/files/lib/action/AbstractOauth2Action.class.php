@@ -136,7 +136,7 @@ abstract class AbstractOauth2Action extends AbstractAction
             'client_id' => $this->getClientId(),
             'client_secret' => $this->getClientSecret(),
             'redirect_uri' => $this->getCallbackUrl(),
-            'code' => $_GET['code'],
+            'code' => $code,
         ], '', '&', \PHP_QUERY_RFC1738));
 
         try {
