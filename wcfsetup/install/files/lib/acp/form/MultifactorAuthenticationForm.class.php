@@ -2,6 +2,8 @@
 
 namespace wcf\acp\form;
 
+use wcf\system\WCF;
+
 /**
  * Represents the multi-factor authentication form.
  *
@@ -13,4 +15,13 @@ namespace wcf\acp\form;
  */
 class MultifactorAuthenticationForm extends \wcf\form\MultifactorAuthenticationForm
 {
+    /**
+     * @inheritDoc
+     */
+    public function saved()
+    {
+        WCF::getSession()->registerReauthentication();
+
+        parent::saved();
+    }
 }
