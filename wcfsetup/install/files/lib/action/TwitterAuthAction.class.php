@@ -58,7 +58,7 @@ class TwitterAuthAction extends AbstractAction
             }
 
             // validate oauth_token
-            if ($_GET['oauth_token'] !== $initData['oauth_token']) {
+            if (!\hash_equals((string) $initData['oauth_token'], (string)$_GET['oauth_token'])) {
                 throw new IllegalLinkException();
             }
 
