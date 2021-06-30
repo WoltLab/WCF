@@ -189,10 +189,47 @@ export function rgbToHex(r: string | number, g?: number, b?: number): string {
   return rgbComponentToHex(r as number) + rgbComponentToHex(g) + rgbComponentToHex(b!);
 }
 
+/**
+ * @since 5.5
+ */
+function alphaToHex(alpha: number): string {
+  if (alpha < 0 || alpha > 1) {
+    throw new Error(`Invalid alpha value '${alpha}' given.`);
+  }
+
+  return Math.round(alpha * 255)
+    .toString(16)
+    .padStart(2, "0")
+    .toUpperCase();
+}
+
+/**
+ * Converts a RGBA value into a HEX value.
+ *
+ * @since 5.5
+ */
+export function rgbaToHex(rgba: RGBA): string;
+export function rgbaToHex(r: number, g: number, b: number, a: number);
+export function rgbaToHex(r: RGBA | number, g?: number, b?: number, a?: number): string {
+  if (g === undefined) {
+    const rgba = r as RGBA;
+    return rgbToHex(rgba.r, rgba.g, rgba.b) + alphaToHex(rgba.a);
+  }
+
+  return rgbToHex(r as number, g, b!) + alphaToHex(a!);
+}
+
 export interface RGB {
   r: number;
   g: number;
   b: number;
+}
+
+export interface RGBA {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
 }
 
 export interface HSV {
@@ -205,6 +242,7 @@ export interface HSV {
 window.__wcf_bc_colorUtil = {
   hexToRgb,
   hsvToRgb,
+  rgbaToHex,
   rgbToHex,
   rgbToHsv,
 };
