@@ -144,26 +144,27 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.hexToRgb = hexToRgb;
     /**
-     * Converts a RGB into HEX.
-     *
-     * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
+     * @since 5.5
      */
+    function rgbComponentToHex(component) {
+        if (component < 0 || component > 255) {
+            throw new Error(`Invalid RGB component value '${component}' given.`);
+        }
+        return component.toString(16).padStart(2, "0").toUpperCase();
+    }
     function rgbToHex(r, g, b) {
-        const charList = "0123456789ABCDEF";
         if (g === undefined) {
-            if (/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString())) {
-                r = +RegExp.$1;
-                g = +RegExp.$2;
-                b = +RegExp.$3;
+            const match = /^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString());
+            if (match) {
+                r = +match[1];
+                g = +match[2];
+                b = +match[3];
+            }
+            else {
+                throw new Error("Invalid RGB data given.");
             }
         }
-        return (charList.charAt((r - (r % 16)) / 16) +
-            "" +
-            charList.charAt(r % 16) +
-            "" +
-            (charList.charAt((g - (g % 16)) / 16) + "" + charList.charAt(g % 16)) +
-            "" +
-            (charList.charAt((b - (b % 16)) / 16) + "" + charList.charAt(b % 16)));
+        return rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
     }
     exports.rgbToHex = rgbToHex;
     // WCF.ColorPicker compatibility (color format conversion)
