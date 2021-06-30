@@ -262,6 +262,44 @@ export function isValidColor(color: string): boolean {
   return colorChecker.style.color !== "";
 }
 
+/**
+ * Converts the given CSS color value to an RGBA value.
+ *
+ * @since 5.5
+ */
+export function stringToRgba(color: string): RGBA {
+  if (!isValidColor(color)) {
+    throw new Error(`Given string '${color}' is no valid color.`);
+  }
+
+  const colorChecker = getColorChecker();
+  colorChecker.style.color = color;
+
+  const computedColor = window.getComputedStyle(colorChecker).color;
+
+  const rgbMatch = /^rgb\((\d+), ?(\d+), ?(\d+)\)$/.exec(computedColor);
+  if (rgbMatch) {
+    return {
+      r: +rgbMatch[1],
+      g: +rgbMatch[2],
+      b: +rgbMatch[3],
+      a: 1,
+    };
+  } else {
+    const rgbaMatch = /^rgba\((\d+), ?(\d+), ?(\d+), ?([0-9.]+)\)$/.exec(computedColor);
+    if (rgbaMatch) {
+      return {
+        r: +rgbaMatch[1],
+        g: +rgbaMatch[2],
+        b: +rgbaMatch[3],
+        a: +rgbaMatch[4],
+      };
+    }
+  }
+
+  throw new Error(`Cannot process color '${color}'.`);
+}
+
 export interface RGB {
   r: number;
   g: number;
@@ -290,4 +328,5 @@ window.__wcf_bc_colorUtil = {
   rgbaToString,
   rgbToHex,
   rgbToHsv,
+  stringToRgba,
 };

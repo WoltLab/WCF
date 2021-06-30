@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
+    exports.stringToRgba = exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
     /**
      * Converts a HSV color into RGB.
      *
@@ -226,6 +226,41 @@ define(["require", "exports"], function (require, exports) {
         return colorChecker.style.color !== "";
     }
     exports.isValidColor = isValidColor;
+    /**
+     * Converts the given CSS color value to an RGBA value.
+     *
+     * @since 5.5
+     */
+    function stringToRgba(color) {
+        if (!isValidColor(color)) {
+            throw new Error(`Given string '${color}' is no valid color.`);
+        }
+        const colorChecker = getColorChecker();
+        colorChecker.style.color = color;
+        const computedColor = window.getComputedStyle(colorChecker).color;
+        const rgbMatch = /^rgb\((\d+), ?(\d+), ?(\d+)\)$/.exec(computedColor);
+        if (rgbMatch) {
+            return {
+                r: +rgbMatch[1],
+                g: +rgbMatch[2],
+                b: +rgbMatch[3],
+                a: 1,
+            };
+        }
+        else {
+            const rgbaMatch = /^rgba\((\d+), ?(\d+), ?(\d+), ?([0-9.]+)\)$/.exec(computedColor);
+            if (rgbaMatch) {
+                return {
+                    r: +rgbaMatch[1],
+                    g: +rgbaMatch[2],
+                    b: +rgbaMatch[3],
+                    a: +rgbaMatch[4],
+                };
+            }
+        }
+        throw new Error(`Cannot process color '${color}'.`);
+    }
+    exports.stringToRgba = stringToRgba;
     // WCF.ColorPicker compatibility (color format conversion)
     window.__wcf_bc_colorUtil = {
         hexToRgb,
@@ -235,5 +270,6 @@ define(["require", "exports"], function (require, exports) {
         rgbaToString,
         rgbToHex,
         rgbToHsv,
+        stringToRgba,
     };
 });
