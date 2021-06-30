@@ -2,7 +2,7 @@
  * Helper functions to convert between different color formats.
  *
  * @author      Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  ColorUtil (alias)
  * @module      WoltLabSuite/Core/ColorUtil
