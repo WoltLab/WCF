@@ -443,13 +443,17 @@ class AccountManagementForm extends AbstractForm
             $success[] = 'wcf.user.3rdparty.github.disconnect.success';
         }
         if (TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== '') {
-            if ($this->twitterConnect && WCF::getSession()->getVar('__twitterData')) {
-                $twitterData = WCF::getSession()->getVar('__twitterData');
-                $updateParameters['authData'] = 'twitter:' . $twitterData['user_id'];
+            if (
+                $this->twitterConnect
+                && WCF::getSession()->getVar('__3rdPartyProvider') == 'twitter'
+                && ($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+            ) {
+                $updateParameters['authData'] = 'twitter:' . $oauthUser->getId();
+                $updateParameters['password'] = null;
                 $success[] = 'wcf.user.3rdparty.twitter.connect.success';
 
-                WCF::getSession()->unregister('__twitterData');
-                WCF::getSession()->unregister('__twitterUsername');
+                WCF::getSession()->unregister('__3rdPartyProvider');
+                WCF::getSession()->unregister('__oauthUser');
             }
         }
         if ($this->twitterDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'twitter:')) {

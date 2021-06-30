@@ -222,7 +222,7 @@
 						<dl>
 							<dt>{lang}wcf.user.3rdparty.twitter{/lang}</dt>
 							<dd>
-								{if $__wcf->getSession()->getVar('__twitterData')}
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'twitter' && $__wcf->session->getVar('__oauthUser')}
 									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked{/if}> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
 								{else}
 									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton button"><span class="icon icon24 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
