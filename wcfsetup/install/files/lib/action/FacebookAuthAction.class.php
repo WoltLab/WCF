@@ -106,7 +106,9 @@ final class FacebookAuthAction extends AbstractOauth2Action
 
         $parsed['__id'] = $parsed['id'];
         $parsed['__username'] = $parsed['name'];
-        $parsed['__email'] = $parsed['email'];
+        if (!empty($parsed['email'])) {
+            $parsed['__email'] = $parsed['email'];
+        }
         $parsed['accessToken'] = $accessToken;
 
         return new OauthUser($parsed);
