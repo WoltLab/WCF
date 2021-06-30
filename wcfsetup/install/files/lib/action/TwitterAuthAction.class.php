@@ -199,7 +199,7 @@ class TwitterAuthAction extends AbstractAction
         $parsed = JSON::decode((string)$response->getBody());
         $parsed['__id'] = $parsed['id'];
         $parsed['__username'] = $parsed['name'];
-        if ($parsed['email']) {
+        if (!empty($parsed['email'])) {
             $parsed['__email'] = $parsed['email'];
         }
 
