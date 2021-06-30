@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
+    exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
     /**
      * Converts a HSV color into RGB.
      *
@@ -187,11 +187,21 @@ define(["require", "exports"], function (require, exports) {
         return rgbToHex(r, g, b) + alphaToHex(a);
     }
     exports.rgbaToHex = rgbaToHex;
+    /**
+     * Returns the textual representation of a RGBA value.
+     *
+     * @since 5.5
+     */
+    function rgbaToString(rgba) {
+        return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+    }
+    exports.rgbaToString = rgbaToString;
     // WCF.ColorPicker compatibility (color format conversion)
     window.__wcf_bc_colorUtil = {
         hexToRgb,
         hsvToRgb,
         rgbaToHex,
+        rgbaToString,
         rgbToHex,
         rgbToHsv,
     };

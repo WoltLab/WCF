@@ -219,6 +219,15 @@ export function rgbaToHex(r: RGBA | number, g?: number, b?: number, a?: number):
   return rgbToHex(r as number, g, b!) + alphaToHex(a!);
 }
 
+/**
+ * Returns the textual representation of a RGBA value.
+ *
+ * @since 5.5
+ */
+export function rgbaToString(rgba: RGBA): string {
+  return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+}
+
 export interface RGB {
   r: number;
   g: number;
@@ -243,6 +252,7 @@ window.__wcf_bc_colorUtil = {
   hexToRgb,
   hsvToRgb,
   rgbaToHex,
+  rgbaToString,
   rgbToHex,
   rgbToHsv,
 };
