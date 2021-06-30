@@ -228,6 +228,40 @@ export function rgbaToString(rgba: RGBA): string {
   return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
 }
 
+/**
+ * @since 5.5
+ */
+function getColorChecker(): HTMLSpanElement {
+  let colorChecker = document.getElementById("jsColorUtilColorChecker");
+  if (colorChecker === null) {
+    colorChecker = document.createElement("span");
+    colorChecker.id = "jsColorUtilColorChecker";
+    document.body.appendChild(colorChecker);
+  }
+
+  return colorChecker;
+}
+
+/**
+ * Returns `true` if the given string is a valid CSS color argument.
+ *
+ * @since 5.5
+ */
+export function isValidColor(color: string): boolean {
+  const colorChecker = getColorChecker();
+
+  // We let the browser handle the validation of the color by
+  // 1. ensuring that the `color` style property of the test element is empty,
+  // 2. setting the value of the `color` style property to the given value,
+  // 3. checking that the value of the `color` style property is not empty afterwards.
+  //    If the entered value is valid, the `color` style property will not empty (though it also
+  //    does not have to match the entered value due to normalization by the browser)
+  colorChecker.style.color = "";
+  colorChecker.style.color = color;
+
+  return colorChecker.style.color !== "";
+}
+
 export interface RGB {
   r: number;
   g: number;
@@ -251,6 +285,7 @@ export interface HSV {
 window.__wcf_bc_colorUtil = {
   hexToRgb,
   hsvToRgb,
+  isValidColor,
   rgbaToHex,
   rgbaToString,
   rgbToHex,

@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
+    exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
     /**
      * Converts a HSV color into RGB.
      *
@@ -196,10 +196,41 @@ define(["require", "exports"], function (require, exports) {
         return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
     }
     exports.rgbaToString = rgbaToString;
+    /**
+     * @since 5.5
+     */
+    function getColorChecker() {
+        let colorChecker = document.getElementById("jsColorUtilColorChecker");
+        if (colorChecker === null) {
+            colorChecker = document.createElement("span");
+            colorChecker.id = "jsColorUtilColorChecker";
+            document.body.appendChild(colorChecker);
+        }
+        return colorChecker;
+    }
+    /**
+     * Returns `true` if the given string is a valid CSS color argument.
+     *
+     * @since 5.5
+     */
+    function isValidColor(color) {
+        const colorChecker = getColorChecker();
+        // We let the browser handle the validation of the color by
+        // 1. ensuring that the `color` style property of the test element is empty,
+        // 2. setting the value of the `color` style property to the given value,
+        // 3. checking that the value of the `color` style property is not empty afterwards.
+        //    If the entered value is valid, the `color` style property will not empty (though it also
+        //    does not have to match the entered value due to normalization by the browser)
+        colorChecker.style.color = "";
+        colorChecker.style.color = color;
+        return colorChecker.style.color !== "";
+    }
+    exports.isValidColor = isValidColor;
     // WCF.ColorPicker compatibility (color format conversion)
     window.__wcf_bc_colorUtil = {
         hexToRgb,
         hsvToRgb,
+        isValidColor,
         rgbaToHex,
         rgbaToString,
         rgbToHex,
