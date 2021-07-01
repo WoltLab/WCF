@@ -4511,6 +4511,11 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Aktiver Stil]]></item>
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Übernehmen]]></item>
+		<item name="wcf.style.colorPicker.alpha"><![CDATA[Deckkraft]]></item>
+		<item name="wcf.style.colorPicker.hexAlpha"><![CDATA[Hex-Wert mit Alpha-Kanal]]></item>
+		<item name="wcf.style.colorPicker.color"><![CDATA[Farbe]]></item>
+		<item name="wcf.style.colorPicker.button.changeColor"><![CDATA[Farbe ändern]]></item>
+		<item name="wcf.style.colorPicker.error.invalidColor"><![CDATA[Die angegebene Farbe ist ungültig.]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}„{$tag->name}“{/implode}]]></item>
