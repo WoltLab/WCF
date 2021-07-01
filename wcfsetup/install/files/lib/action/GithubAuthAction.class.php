@@ -6,8 +6,10 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\user\User;
 use wcf\form\RegisterForm;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -125,6 +127,10 @@ final class GithubAuthAction extends AbstractOauth2Action
 
                 WCF::getSession()->changeUser($user);
                 WCF::getSession()->update();
+                EventHandler::getInstance()->fire(
+                    new UserLoggedIn($user)
+                );
+
                 HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
 
                 exit;

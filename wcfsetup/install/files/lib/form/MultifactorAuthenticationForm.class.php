@@ -6,10 +6,12 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\multifactor\IMultifactorMethod;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
@@ -144,6 +146,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         WCF::getDB()->commitTransaction();
 
         WCF::getSession()->applyPendingUserChange($this->user);
+        EventHandler::getInstance()->fire(
+            new UserLoggedIn($this->user)
+        );
 
         $this->saved();
     }

@@ -2,7 +2,9 @@
 
 namespace wcf\form;
 
+use wcf\system\event\EventHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
 
 /**
@@ -30,6 +32,12 @@ class LoginForm extends \wcf\acp\form\LoginForm
 
         // change user
         $needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
+
+        if (!$needsMultifactor) {
+            EventHandler::getInstance()->fire(
+                new UserLoggedIn($this->user)
+            );
+        }
 
         $this->saved();
 

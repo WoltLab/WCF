@@ -8,10 +8,12 @@ use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\user\User;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\oauth\exception\StateValidationException;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
@@ -121,6 +123,10 @@ class TwitterAuthAction extends AbstractAction
 
                 WCF::getSession()->changeUser($user);
                 WCF::getSession()->update();
+                EventHandler::getInstance()->fire(
+                    new UserLoggedIn($user)
+                );
+
                 HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
 
                 exit;
