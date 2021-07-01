@@ -39,5 +39,10 @@
 			<listenerclassname>wcf\system\event\listener\UserLinkHtmlInputNodeProcessorListener</listenerclassname>
 			<environment>all</environment>
 		</eventlistener>
+		<eventlistener name="userLoginCancelLostPassword">
+			<eventclassname>wcf\system\user\authentication\event\UserLoggedIn</eventclassname>
+			<listenerclassname>wcf\system\event\listener\UserLoginCancelLostPasswordListener</listenerclassname>
+			<environment>all</environment>
+		</eventlistener>
 	</import>
 </data>
