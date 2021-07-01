@@ -415,21 +415,9 @@ class SystemCheckPage extends AbstractPage
         foreach ($this->directories as $abbreviation => $directories) {
             $basePath = Application::getDirectory($abbreviation);
             foreach ($directories as $directory) {
-                $recursive = false;
-                if (\preg_match('~(.*)/\*$~', $directory, $matches)) {
-                    $recursive = true;
-                    $directory = $matches[1];
-                }
-
-                $path = $basePath . FileUtil::removeLeadingSlash(FileUtil::addTrailingSlash($directory));
-                if ($this->checkDirectory($path) && $recursive) {
-                    $rdi = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
-                    $it = new \RecursiveIteratorIterator($rdi, \RecursiveIteratorIterator::SELF_FIRST);
-                    /** @var \SplFileInfo $item */
-                    foreach ($it as $item) {
-                        if ($item->isDir()) {
-                            $this->makeDirectoryWritable($item->getPathname());
-                        }
+                foreach (\glob($basePath . FileUtil::removeLeadingSlash($directory)) as $file) {
+                    if (\is_dir($file) && !\is_writable($file)) {
+                        $this->makeDirectoryWritable($file);
                     }
                 }
             }
