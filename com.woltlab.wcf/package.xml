@@ -150,8 +150,8 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 	</instructions>
 	
 	<instructions type="update" fromversion="5.4.0 Beta 2">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="acpTemplate" />
 		
 		<instruction type="language" />
 	</instructions>
