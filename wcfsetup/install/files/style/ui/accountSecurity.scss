@@ -65,6 +65,10 @@ input.multifactorBackupCode {
 		canvas {
 			width: 200px;
 			height: 200px;
+			background: #fff;
+			border-radius: 3px;
+			border: 3px solid #fff;
+			box-sizing: content-box;
 		}
 	}
 
