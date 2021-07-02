@@ -7,9 +7,13 @@
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Trophy/Badge'], function (Language, BadgeHandler) {
 		Language.addObject({
 			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
-			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
-			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
+			'wcf.style.colorPicker.alpha': '{jslang}wcf.style.colorPicker.alpha{/jslang}',
 			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
+			'wcf.style.colorPicker.color': '{jslang}wcf.style.colorPicker.color{/jslang}',
+			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
+			'wcf.style.colorPicker.error.invalidColor': '{jslang}wcf.style.colorPicker.error.invalidColor{/jslang}',
+			'wcf.style.colorPicker.hexAlpha': '{jslang}wcf.style.colorPicker.hexAlpha{/jslang}',
+			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
 			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}',
 			'wcf.acp.trophy.badge.edit': '{jslang}wcf.acp.trophy.badge.edit{/jslang}',
 			'wcf.acp.trophy.imageUpload.error.notSquared': '{jslang}wcf.acp.trophy.imageUpload.error.notSquared{/jslang}',

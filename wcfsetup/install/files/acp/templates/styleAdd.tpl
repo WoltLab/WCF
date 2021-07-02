@@ -18,9 +18,13 @@
 		
 		WCF.Language.addObject({
 			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
-			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
+			'wcf.style.colorPicker.alpha': '{jslang}wcf.style.colorPicker.alpha{/jslang}',
+			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
+			'wcf.style.colorPicker.color': '{jslang}wcf.style.colorPicker.color{/jslang}',
 			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
-			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}'
+			'wcf.style.colorPicker.error.invalidColor': '{jslang}wcf.style.colorPicker.error.invalidColor{/jslang}',
+			'wcf.style.colorPicker.hexAlpha': '{jslang}wcf.style.colorPicker.hexAlpha{/jslang}',
+			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
 		});
 		
 		{if $action == 'edit'}

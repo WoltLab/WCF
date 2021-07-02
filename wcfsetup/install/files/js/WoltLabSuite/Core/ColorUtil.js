@@ -2,7 +2,7 @@
  * Helper functions to convert between different color formats.
  *
  * @author      Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  ColorUtil (alias)
  * @module      WoltLabSuite/Core/ColorUtil
@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
+    exports.stringToRgba = exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
     /**
      * Converts a HSV color into RGB.
      *
@@ -144,33 +144,132 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.hexToRgb = hexToRgb;
     /**
-     * Converts a RGB into HEX.
-     *
-     * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
+     * @since 5.5
      */
+    function rgbComponentToHex(component) {
+        if (component < 0 || component > 255) {
+            throw new Error(`Invalid RGB component value '${component}' given.`);
+        }
+        return component.toString(16).padStart(2, "0").toUpperCase();
+    }
     function rgbToHex(r, g, b) {
-        const charList = "0123456789ABCDEF";
         if (g === undefined) {
-            if (/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString())) {
-                r = +RegExp.$1;
-                g = +RegExp.$2;
-                b = +RegExp.$3;
+            const match = /^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString());
+            if (match) {
+                r = +match[1];
+                g = +match[2];
+                b = +match[3];
+            }
+            else {
+                throw new Error("Invalid RGB data given.");
             }
         }
-        return (charList.charAt((r - (r % 16)) / 16) +
-            "" +
-            charList.charAt(r % 16) +
-            "" +
-            (charList.charAt((g - (g % 16)) / 16) + "" + charList.charAt(g % 16)) +
-            "" +
-            (charList.charAt((b - (b % 16)) / 16) + "" + charList.charAt(b % 16)));
+        return rgbComponentToHex(r) + rgbComponentToHex(g) + rgbComponentToHex(b);
     }
     exports.rgbToHex = rgbToHex;
+    /**
+     * @since 5.5
+     */
+    function alphaToHex(alpha) {
+        if (alpha < 0 || alpha > 1) {
+            throw new Error(`Invalid alpha value '${alpha}' given.`);
+        }
+        return Math.round(alpha * 255)
+            .toString(16)
+            .padStart(2, "0")
+            .toUpperCase();
+    }
+    function rgbaToHex(r, g, b, a) {
+        if (g === undefined) {
+            const rgba = r;
+            return rgbToHex(rgba.r, rgba.g, rgba.b) + alphaToHex(rgba.a);
+        }
+        return rgbToHex(r, g, b) + alphaToHex(a);
+    }
+    exports.rgbaToHex = rgbaToHex;
+    /**
+     * Returns the textual representation of a RGBA value.
+     *
+     * @since 5.5
+     */
+    function rgbaToString(rgba) {
+        return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+    }
+    exports.rgbaToString = rgbaToString;
+    /**
+     * @since 5.5
+     */
+    function getColorChecker() {
+        let colorChecker = document.getElementById("jsColorUtilColorChecker");
+        if (colorChecker === null) {
+            colorChecker = document.createElement("span");
+            colorChecker.id = "jsColorUtilColorChecker";
+            document.body.appendChild(colorChecker);
+        }
+        return colorChecker;
+    }
+    /**
+     * Returns `true` if the given string is a valid CSS color argument.
+     *
+     * @since 5.5
+     */
+    function isValidColor(color) {
+        const colorChecker = getColorChecker();
+        // We let the browser handle the validation of the color by
+        // 1. ensuring that the `color` style property of the test element is empty,
+        // 2. setting the value of the `color` style property to the given value,
+        // 3. checking that the value of the `color` style property is not empty afterwards.
+        //    If the entered value is valid, the `color` style property will not empty (though it also
+        //    does not have to match the entered value due to normalization by the browser)
+        colorChecker.style.color = "";
+        colorChecker.style.color = color;
+        return colorChecker.style.color !== "";
+    }
+    exports.isValidColor = isValidColor;
+    /**
+     * Converts the given CSS color value to an RGBA value.
+     *
+     * @since 5.5
+     */
+    function stringToRgba(color) {
+        if (!isValidColor(color)) {
+            throw new Error(`Given string '${color}' is no valid color.`);
+        }
+        const colorChecker = getColorChecker();
+        colorChecker.style.color = color;
+        const computedColor = window.getComputedStyle(colorChecker).color;
+        const rgbMatch = /^rgb\((\d+), ?(\d+), ?(\d+)\)$/.exec(computedColor);
+        if (rgbMatch) {
+            return {
+                r: +rgbMatch[1],
+                g: +rgbMatch[2],
+                b: +rgbMatch[3],
+                a: 1,
+            };
+        }
+        else {
+            const rgbaMatch = /^rgba\((\d+), ?(\d+), ?(\d+), ?([0-9.]+)\)$/.exec(computedColor);
+            if (rgbaMatch) {
+                return {
+                    r: +rgbaMatch[1],
+                    g: +rgbaMatch[2],
+                    b: +rgbaMatch[3],
+                    a: +rgbaMatch[4],
+                };
+            }
+        }
+        throw new Error(`Cannot process color '${color}'.`);
+    }
+    exports.stringToRgba = stringToRgba;
     // WCF.ColorPicker compatibility (color format conversion)
     window.__wcf_bc_colorUtil = {
         hexToRgb,
         hsvToRgb,
+        isValidColor,
+        rgbaToHex,
+        rgbaToString,
         rgbToHex,
         rgbToHsv,
+        stringToRgba,
     };
 });
