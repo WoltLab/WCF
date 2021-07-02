@@ -1235,4 +1235,21 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             'languageID' => $this->parameters['languageID'],
         ]);
     }
+
+    /**
+     * @since   5.5
+     */
+    public function cancelLostPasswordRequest(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
+        foreach ($this->getObjects() as $userEditor) {
+            $userEditor->update([
+                'lastLostPasswordRequestTime' => 0,
+                'lostPasswordKey' => '',
+            ]);
+        }
+    }
 }
