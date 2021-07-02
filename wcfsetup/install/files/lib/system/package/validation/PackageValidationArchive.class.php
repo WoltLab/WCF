@@ -4,6 +4,7 @@ namespace wcf\system\package\validation;
 
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
@@ -94,6 +95,8 @@ class PackageValidationArchive implements \RecursiveIterator
             try {
                 // try to read archive
                 $this->archive->openArchive();
+
+                $this->validateApplication();
 
                 // check if package is installable or suitable for an update
                 $this->validateInstructions($requiredVersion, $validationMode);
@@ -189,6 +192,27 @@ class PackageValidationArchive implements \RecursiveIterator
         }
 
         return true;
+    }
+
+    /**
+     * Validates if the package, if it is an app, can be installed.
+     *
+     * @throws  PackageValidationException
+     * @since   5.5
+     */
+    protected function validateApplication(): void
+    {
+        if ($this->archive->getPackageInfo('isApplication')) {
+            $abbreviation = Package::getAbbreviation($this->archive->getPackageInfo('name'));
+
+            $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+            if ($application !== null) {
+                throw new PackageValidationException(PackageValidationException::DUPLICATE_ABBREVIATION, [
+                    'packageName' => $this->archive->getPackageInfo('name'),
+                    'application' => $application,
+                ]);
+            }
+        }
     }
 
     /**

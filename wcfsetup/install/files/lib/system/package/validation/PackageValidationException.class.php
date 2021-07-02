@@ -134,6 +134,12 @@ class PackageValidationException extends SystemException
     const VOID_ON_INSTALL = 17;
 
     /**
+     * an app with the same abbreviation is already installed
+     * @since   5.5
+     */
+    const DUPLICATE_ABBREVIATION = 18;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code
