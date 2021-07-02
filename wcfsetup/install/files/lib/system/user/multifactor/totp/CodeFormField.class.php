@@ -30,7 +30,7 @@ class CodeFormField extends TextFormField
         $this->maximumLength(Totp::CODE_LENGTH);
         $this->fieldAttribute('size', Totp::CODE_LENGTH);
         $this->addFieldClass('multifactorTotpCode');
-        $this->autoComplete('off');
+        $this->autoComplete('one-time-code');
         $this->inputMode('numeric');
         $this->pattern('[0-9]*');
 
