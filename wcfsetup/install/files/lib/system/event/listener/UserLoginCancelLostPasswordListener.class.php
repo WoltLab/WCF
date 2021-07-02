@@ -23,15 +23,6 @@ final class UserLoginCancelLostPasswordListener
             return;
         }
 
-        (new UserAction(
-            [$user],
-            'update',
-            [
-                'data' => [
-                    'lastLostPasswordRequestTime' => 0,
-                    'lostPasswordKey' => '',
-                ],
-            ]
-        ))->executeAction();
+        (new UserAction([$user], 'cancelLostPasswordRequest'))->executeAction();
     }
 }
