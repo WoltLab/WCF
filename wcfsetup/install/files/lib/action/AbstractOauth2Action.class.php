@@ -48,7 +48,7 @@ abstract class AbstractOauth2Action extends AbstractAction
      * Returns a "static" instance of the HTTP client to use to allow
      * for TCP connection reuse.
      */
-    final protected function getHttpClient(): ClientInterface
+    protected function getHttpClient(): ClientInterface
     {
         if (!$this->httpClient) {
             $this->httpClient = HttpFactory::makeClientWithTimeout(5);
