@@ -417,10 +417,14 @@ class DatabaseTableChangeProcessor
                             $this->deleteColumnLog($tableName, $column);
                         }
                     } elseif (!isset($existingColumns[$column->getName()])) {
-                        if (!isset($this->columnsToAdd[$tableName])) {
-                            $this->columnsToAdd[$tableName] = [];
+                        // It was already checked in `validate()` that for renames, the column either
+                        // exists with the old or new name.
+                        if (!$column->getNewName()) {
+                            if (!isset($this->columnsToAdd[$tableName])) {
+                                $this->columnsToAdd[$tableName] = [];
+                            }
+                            $this->columnsToAdd[$tableName][] = $column;
                         }
-                        $this->columnsToAdd[$tableName][] = $column;
                     } elseif ($this->diffColumns($existingColumns[$column->getName()], $column)) {
                         if (!isset($this->columnsToAlter[$tableName])) {
                             $this->columnsToAlter[$tableName] = [];
@@ -1182,7 +1186,9 @@ class DatabaseTableChangeProcessor
                                         'type' => 'foreignColumnChange',
                                     ];
                                 }
-                            } elseif ($column->getNewName()) {
+                            } elseif ($column->getNewName() && !isset($existingColumns[$column->getNewName()])) {
+                                // Only show error message for a column rename if no column with the
+                                // old or new name exists.
                                 $errors[] = [
                                     'columnName' => $column->getName(),
                                     'tableName' => $table->getName(),
