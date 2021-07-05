@@ -1351,8 +1351,8 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
-		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
+		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
 		<file>lib/system/api/ezyang/htmlpurifier/WHATSNEW</file>
@@ -1420,6 +1420,13 @@
 		<file>lib/system/api/guzzlehttp/promises/phpstan-baseline.neon</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan.neon.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/psalm.xml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/bc.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/ci.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/integration.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/static.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.php_cs.dist</file>
+		<file>lib/system/api/guzzlehttp/psr7/src/functions.php</file>
+		<file>lib/system/api/guzzlehttp/psr7/src/functions_include.php</file>
 		<file>lib/system/api/leafo/scssphp/composer.json</file>
 		<file>lib/system/api/leafo/scssphp/example/Server.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Compiler.php</file>
@@ -1427,8 +1434,8 @@
 		<file>lib/system/api/leafo/scssphp/src/SourceMap/Base64VLQEncoder.php</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
-		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
+		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/lib/random.php</file>
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
