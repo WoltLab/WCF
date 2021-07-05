@@ -72,7 +72,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		$this->validatePassword();
 		
 		// activation state
-		validateActivationState();
+		$this->validateActivationState();
 		
 		// email
 		$this->validateEmail();
