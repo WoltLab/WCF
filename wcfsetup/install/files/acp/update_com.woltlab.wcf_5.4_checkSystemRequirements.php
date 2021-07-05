@@ -46,3 +46,29 @@ if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
 
     throw new \RuntimeException($message);
 }
+
+if (
+    \extension_loaded('imagick')
+    && !\in_array('WEBP', \Imagick::queryFormats())
+) {
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "Unterstützung für WebP-Grafiken in Imagick fehlt";
+    } else {
+        $message = "Support for WebP images in Imagick missing";
+    }
+
+    throw new \RuntimeException($message);
+}
+
+if (
+    \extension_loaded('gd')
+    && empty(\gd_info()['WebP Support'])
+) {
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "Unterstützung für WebP-Grafiken in GD fehlt";
+    } else {
+        $message = "Support for WebP images in GD missing";
+    }
+
+    throw new \RuntimeException($message);
+}
