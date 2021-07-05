@@ -435,7 +435,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
                     $path = "{$project->path}files/{$instructions['value']}";
                     if (!\is_file($path)) {
                         $path = "{$project->path}files_wcf/{$instructions['value']}";
-                        
+
                         if (!isset($instructions['attributes'])) {
                             $instructions['attributes'] = [];
                         }
