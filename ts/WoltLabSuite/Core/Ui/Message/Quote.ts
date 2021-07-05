@@ -28,7 +28,7 @@ interface ElementBoundaries {
 }
 
 // see WCF.Message.Quote.Manager
-interface WCFMessageQuoteManager {
+export interface WCFMessageQuoteManager {
   supportPaste: () => boolean;
   updateCount: (number, object) => void;
 }
