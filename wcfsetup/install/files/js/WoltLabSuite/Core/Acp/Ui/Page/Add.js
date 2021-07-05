@@ -59,7 +59,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
      */
     function init(link, languages) {
         if (!acpUiPageAdd) {
-            acpUiPageAdd = new AcpUiPageAdd(link, languages > 0);
+            acpUiPageAdd = new AcpUiPageAdd(link, languages > 1);
         }
     }
     exports.init = init;
