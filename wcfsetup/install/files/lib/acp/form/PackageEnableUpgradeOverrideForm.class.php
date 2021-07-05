@@ -127,6 +127,32 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 			$issues[] = $message;
 		}
 
+		if (
+			\extension_loaded('imagick')
+			&& !\in_array('WEBP', \Imagick::queryFormats())
+		) {
+			if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+				$message = "Unterstützung für WebP-Grafiken in Imagick fehlt";
+			} else {
+				$message = "Support for WebP images in Imagick missing";
+			}
+
+			$issues[] = $message;
+		}
+
+		if (
+			\extension_loaded('gd')
+			& empty(\gd_info()['WebP Support'])
+		) {
+			if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+				$message = "Unterstützung für WebP-Grafiken in GD fehlt";
+			} else {
+				$message = "Support for WebP images in GD missing";
+			}
+
+			$issues[] = $message;
+		}
+
 		return $issues;
 	}
 
