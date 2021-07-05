@@ -65,12 +65,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '1.8.2',
-            'version' => '1.8.2.0',
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
+            'reference' => '1dc8d9cba3897165e16d12bb13d813afb1eb3fe7',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
@@ -124,6 +124,21 @@
                 0 => '1.0',
             ),
         ),
+        'psr/http-factory' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-factory',
+            'aliases' => array(),
+            'reference' => '12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
+            'dev_requirement' => false,
+        ),
+        'psr/http-factory-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
         'psr/http-message' => array(
             'pretty_version' => '1.0.1',
             'version' => '1.0.1.0',
@@ -149,12 +164,12 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.5.2',
-            'version' => '1.5.2.0',
+            'pretty_version' => 'v1.6.0',
+            'version' => '1.6.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => '6fe16f169f55f5e793474fb210aac0a4481619e5',
+            'reference' => 'b83594e2323c5d6e80785df3f91b9d1d32aad530',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
