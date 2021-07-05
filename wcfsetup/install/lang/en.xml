@@ -490,7 +490,6 @@
 		<item name="wcf.acp.devtools.project.requiredPackages.description"><![CDATA[In order to install this package, the following packages have to be already installed or the versions delivered together with the package have to be installed first.]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages"><![CDATA[Conflicting Packages]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.description"><![CDATA[This package cannot be installed if one of the following packages is already installed (in the specified <strong>or new</strong> version).]]></item>
-		<item name="wcf.acp.devtools.project.compatibility"><![CDATA[API Compatibility]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.excludedPackage"><![CDATA[<kbd>{$packageIdentifier}</kbd>
 {if $version}
 	<dl class="plain inlineDataList small">
@@ -505,8 +504,6 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[The path to the package file has to be <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optional Packages]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[The following packages will be offered to be installed optionally after this package has been installed.]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions"><![CDATA[Compatible API Versions]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[The package is compatible with all of the selected API versions of WoltLab Suite Core.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Requirements]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Conflicts]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optional]]></item>
@@ -5556,5 +5553,8 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.option.blacklist_user_agents.description"/>
 	<item name="wcf.global.form.error.lessThan.javaScript"/>
 	<item name="wcf.global.form.error.greaterThan.javaScript"/>
+	<item name="wcf.acp.devtools.project.compatibility"/>
+	<item name="wcf.acp.devtools.project.apiVersions"/>
+	<item name="wcf.acp.devtools.project.apiVersions.description"/>
 </delete>
 </language>

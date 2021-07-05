@@ -79,7 +79,6 @@ class DevtoolsPackageXmlWriter
         $this->writeRequiredPackages();
         $this->writeOptionalPackages();
         $this->writeExcludedPackages();
-        $this->writeCompatibility();
         $this->writeInstructions();
 
         $this->xmlWriter->endDocument($this->project->getPackageXmlPath());
@@ -105,24 +104,6 @@ class DevtoolsPackageXmlWriter
                 [],
                 $this->requiresCdata($this->packageXmlData['authorUrl'])
             );
-        }
-
-        $this->xmlWriter->endElement();
-    }
-
-    /**
-     * Writes the `compatibility` element.
-     */
-    protected function writeCompatibility()
-    {
-        if (empty($this->packageXmlData['apiVersions'])) {
-            return;
-        }
-
-        $this->xmlWriter->startElement('compatibility');
-
-        foreach ($this->packageXmlData['apiVersions'] as $apiVersion) {
-            $this->xmlWriter->writeElement('api', '', ['version' => $apiVersion]);
         }
 
         $this->xmlWriter->endElement();
