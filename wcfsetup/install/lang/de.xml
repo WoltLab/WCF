@@ -1664,7 +1664,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.module_article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Nur sichere Bilder in Nachrichten erlauben]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Bilder dürfen nur über das verschlüsselte „https“-Protokoll eingebunden werden. Bereits in bestehenden Nachrichten hinterlegte Bilder werden zwangsweise auf dieses Protokoll umgeschrieben.]]></item>
-		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Zwischenspeicherung von externen Bilder aktivieren]]></item>
+		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Zwischenspeicherung von externen Bildern aktivieren]]></item>
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximale Speicherzeit]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Nur Bilder aus unverschlüsselten Quellen zwischenspeichern]]></item>
 		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Zwischengespeicherte Bilder regelmäßig löschen]]></item>
