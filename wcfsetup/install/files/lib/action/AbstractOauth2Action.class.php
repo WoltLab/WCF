@@ -22,6 +22,7 @@ use wcf\util\JSON;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
+ * @since 5.4
  */
 abstract class AbstractOauth2Action extends AbstractAction
 {
@@ -48,7 +49,7 @@ abstract class AbstractOauth2Action extends AbstractAction
      * Returns a "static" instance of the HTTP client to use to allow
      * for TCP connection reuse.
      */
-    final protected function getHttpClient(): ClientInterface
+    protected function getHttpClient(): ClientInterface
     {
         if (!$this->httpClient) {
             $this->httpClient = HttpFactory::makeClientWithTimeout(5);
