@@ -42,7 +42,22 @@ class MessageQuoteAction extends AJAXProxyAction {
 	public function readParameters() {
 		AbstractSecureAction::readParameters();
 		
-		if (isset($_POST['actionName'])) $this->actionName = StringUtil::trim($_POST['actionName']);
+		if (isset($_POST['actionName'])) {
+			$this->actionName = StringUtil::trim($_POST['actionName']);
+			
+			if (
+				!\in_array(
+					$this->actionName,
+					['count', 'getQuotes', 'markForRemoval', 'remove', 'removeMarkedQuotes']
+				)
+			) {
+				throw new UserInputException('actionName', 'invalid');
+			}
+		}
+		else {
+			throw new UserInputException('actionName');
+		}
+
 		if (isset($_POST['getFullQuoteObjectIDs'])) $this->_getFullQuoteObjectIDs = intval($_POST['getFullQuoteObjectIDs']);
 		if (isset($_POST['objectTypes']) && is_array($_POST['objectTypes'])) $this->objectTypes = ArrayUtil::trim($_POST['objectTypes']);
 		if (isset($_POST['quoteIDs'])) {
