@@ -37,7 +37,6 @@ use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 // phpcs:disable PSR1.Files.SideEffects
