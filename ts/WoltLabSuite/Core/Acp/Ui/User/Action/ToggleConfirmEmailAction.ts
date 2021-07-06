@@ -34,22 +34,24 @@ export class ToggleConfirmEmailAction extends AbstractUserAction {
   }
 
   _ajaxSuccess(data: DatabaseObjectActionResponse): void {
-    if (data.objectIDs.includes(this.userId)) {
-      switch (data.actionName) {
-        case "confirmEmail":
-          this.userDataElement.dataset.emailConfirmed = "true";
-          this.button.textContent = this.button.dataset.unconfirmEmailMessage!;
-          break;
+    data.objectIDs.forEach((objectId) => {
+      if (~~objectId == this.userId) {
+        switch (data.actionName) {
+          case "confirmEmail":
+            this.userDataElement.dataset.emailConfirmed = "true";
+            this.button.textContent = this.button.dataset.unconfirmEmailMessage!;
+            break;
 
-        case "unconfirmEmail":
-          this.userDataElement.dataset.emailConfirmed = "false";
-          this.button.textContent = this.button.dataset.confirmEmailMessage!;
-          break;
+          case "unconfirmEmail":
+            this.userDataElement.dataset.emailConfirmed = "false";
+            this.button.textContent = this.button.dataset.confirmEmailMessage!;
+            break;
 
-        default:
-          throw new Error("Unreachable");
+          default:
+            throw new Error("Unreachable");
+        }
       }
-    }
+    });
 
     UiNotification.show();
   }

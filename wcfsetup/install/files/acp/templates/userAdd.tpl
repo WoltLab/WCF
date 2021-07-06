@@ -28,11 +28,10 @@
 							{if $user->userID !== $__wcf->user->userID}
 								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
 									<li>
-										<a {*
-										*}href="#" {*
-										*}class="jsEnable" {*
-										*}data-enable-message="{lang}wcf.acp.user.enable{/lang}" {*
-										*}data-disable-message="{lang}wcf.acp.user.disable{/lang}"{*
+										<a  href="#" {*
+											*}class="jsEnable" {*
+											*}data-enable-message="{lang}wcf.acp.user.enable{/lang}" {*
+											*}data-disable-message="{lang}wcf.acp.user.disable{/lang}"{*
 										*}>
 											{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}
 										</a>
@@ -74,7 +73,7 @@
 							{/if}
 
 							{if $__wcf->session->getPermission('admin.user.canExportGdprData')}
-								<li
+								<li>
 									<a {*
 										*}href="{link controller='UserExportGdpr' id=$user->userID}{/link}"{*
 										*}>
@@ -92,23 +91,23 @@
 					</div>
 				</li>
 				<script data-relocate="true">
-					require(['Language',
-							 'WoltLabSuite/Core/Acp/Ui/User/Editor',
-							 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
-							 'WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction',
-							 'WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction',
-							 'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
-							 'WoltLabSuite/Core/Controller/Clipboard',
-						],
-						function (
-							 Language,
-							 AcpUiUserList,
-							 AcpUserContentRemoveHandler,
-							 DisableAction,
-							 SendNewPasswordAction,
-							 ToggleConfirmEmailAction,
-							 Clipboard
-						) {
+					require([
+						'WoltLabSuite/Core/Language',
+						'WoltLabSuite/Core/Acp/Ui/User/Editor',
+						'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
+						'WoltLabSuite/Core/Controller/Clipboard',
+					], (
+						Language,
+						AcpUiUserList,
+						AcpUserContentRemoveHandler,
+						DisableAction,
+						SendNewPasswordAction,
+						ToggleConfirmEmailAction,
+						Clipboard
+					) => {
 							Language.addObject({
 								'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
 								'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}',

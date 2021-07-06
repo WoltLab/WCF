@@ -35,22 +35,24 @@ export class DisableAction extends AbstractUserAction implements AjaxCallbackObj
   }
 
   _ajaxSuccess(data: DatabaseObjectActionResponse): void {
-    if (data.objectIDs.includes(this.userId)) {
-      switch (data.actionName) {
-        case "enable":
-          this.userDataElement.dataset.enabled = "true";
-          this.button.textContent = this.button.dataset.disableMessage!;
-          break;
+    data.objectIDs.forEach((objectId) => {
+      if (~~objectId == this.userId) {
+        switch (data.actionName) {
+          case "enable":
+            this.userDataElement.dataset.enabled = "true";
+            this.button.textContent = this.button.dataset.disableMessage!;
+            break;
 
-        case "disable":
-          this.userDataElement.dataset.enabled = "false";
-          this.button.textContent = this.button.dataset.enableMessage!;
-          break;
+          case "disable":
+            this.userDataElement.dataset.enabled = "false";
+            this.button.textContent = this.button.dataset.enableMessage!;
+            break;
 
-        default:
-          throw new Error("Unreachable");
+          default:
+            throw new Error("Unreachable");
+        }
       }
-    }
+    });
 
     UiNotification.show();
 

@@ -33,20 +33,22 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Core", "
             };
         }
         _ajaxSuccess(data) {
-            if (data.objectIDs.includes(this.userId)) {
-                switch (data.actionName) {
-                    case "enable":
-                        this.userDataElement.dataset.enabled = "true";
-                        this.button.textContent = this.button.dataset.disableMessage;
-                        break;
-                    case "disable":
-                        this.userDataElement.dataset.enabled = "false";
-                        this.button.textContent = this.button.dataset.enableMessage;
-                        break;
-                    default:
-                        throw new Error("Unreachable");
+            data.objectIDs.forEach((objectId) => {
+                if (~~objectId == this.userId) {
+                    switch (data.actionName) {
+                        case "enable":
+                            this.userDataElement.dataset.enabled = "true";
+                            this.button.textContent = this.button.dataset.disableMessage;
+                            break;
+                        case "disable":
+                            this.userDataElement.dataset.enabled = "false";
+                            this.button.textContent = this.button.dataset.enableMessage;
+                            break;
+                        default:
+                            throw new Error("Unreachable");
+                    }
                 }
-            }
+            });
             UiNotification.show();
             EventHandler.fire("com.woltlab.wcf.acp.user", "refresh", {
                 userIds: [this.userId],

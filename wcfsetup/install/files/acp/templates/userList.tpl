@@ -34,14 +34,14 @@
 			WCF.ACP.User.SendNewPasswordHandler.init();
 		{/if}
 
-		require(['Language', 'WoltLabSuite/Core/Acp/Ui/User/Editor', 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard'], function (Language, AcpUiUserList, AcpUserContentRemoveClipboard) {
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/User/Editor', 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard'], function (Language, AcpUiUserList, { AcpUserContentRemoveClipboard }) {
 			Language.addObject({
 				'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}',
 			});
 
 			new AcpUiUserList();
 
-			new AcpUserContentRemoveClipboard.default();
+			new AcpUserContentRemoveClipboard();
 		});
 
 		{event name='javascriptInit'}
