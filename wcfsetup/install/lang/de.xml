@@ -2975,11 +2975,9 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Versionsnummer eingegeben.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
-		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Breite des Seitenlogos]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Höhe des Seitenlogos]]></item>
 		<item name="wcf.acp.style.globals.pageLogoMobile"><![CDATA[Seitenlogo (mobile Version)]]></item>
-		<item name="wcf.acp.style.globals.pageLogoMobile.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo (mobile Version)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeDefault"><![CDATA[Schriftgröße (Standard)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSmall"><![CDATA[Schriftgröße (klein)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Schriftgröße (Überschrift)]]></item>
@@ -5558,5 +5556,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.devtools.project.compatibility"/>
 	<item name="wcf.acp.devtools.project.apiVersions"/>
 	<item name="wcf.acp.devtools.project.apiVersions.description"/>
+	<item name="wcf.acp.style.globals.pageLogo.description"/>
+	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
 </delete>
 </language>

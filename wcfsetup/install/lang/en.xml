@@ -2906,11 +2906,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[You have provided an invalid date.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Page Logo]]></item>
-		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[The filename of the page logo image.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Page Logo Width]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Page Logo Height]]></item>
 		<item name="wcf.acp.style.globals.pageLogoMobile"><![CDATA[Page Logo (Mobile Version)]]></item>
-		<item name="wcf.acp.style.globals.pageLogoMobile.description"><![CDATA[The filename of the page logo image (mobile version).]]></item>
 		<item name="wcf.acp.style.globals.fontSizeDefault"><![CDATA[Font Size (Default)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSmall"><![CDATA[Font Size (Small)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Font Size (Headline)]]></item>
@@ -5559,5 +5557,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.devtools.project.compatibility"/>
 	<item name="wcf.acp.devtools.project.apiVersions"/>
 	<item name="wcf.acp.devtools.project.apiVersions.description"/>
+	<item name="wcf.acp.style.globals.pageLogo.description"/>
+	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
 </delete>
 </language>
