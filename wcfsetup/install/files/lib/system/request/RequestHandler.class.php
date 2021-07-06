@@ -79,8 +79,8 @@ class RequestHandler extends SingletonFactory
             if (
                 $this->isACPRequest()
                 && ENABLE_ENTERPRISE_MODE
-                && \defined($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
-                && \constant($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+                && \defined($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+                && \constant($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
                 && !WCF::getUser()->hasOwnerAccess()
             ) {
                 throw new IllegalLinkException();
@@ -90,7 +90,7 @@ class RequestHandler extends SingletonFactory
             if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
                 if (
                     !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
-                    && !$this->activeRequest->isAvailableDuringOfflineMode()
+                    && !$this->getActiveRequest()->isAvailableDuringOfflineMode()
                 ) {
                     if (
                         isset($_SERVER['HTTP_X_REQUESTED_WITH'])
@@ -116,7 +116,7 @@ class RequestHandler extends SingletonFactory
             }
 
             // start request
-            $this->activeRequest->execute();
+            $this->getActiveRequest()->execute();
         } catch (NamedUserException $e) {
             $e->show();
 
