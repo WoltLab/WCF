@@ -36,8 +36,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
     protected $evaluationPluginStoreID = 0;
 
     /**
-     * true, if current application is active (directly invoked, not dependent)
-     * @var bool
+     * @deprecated 5.5 - This value is unused and will always be 'false'. The 'active' status is determined live.
      */
     protected $isActiveApplication = false;
 
@@ -71,8 +70,6 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
         }
 
         $this->packageID = $application->packageID;
-
-        $this->rebuildActiveApplication();
     }
 
     /**
@@ -88,7 +85,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
      */
     public function isActiveApplication()
     {
-        return $this->isActiveApplication;
+        return $this->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID;
     }
 
     /**
@@ -127,10 +124,10 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 
     /**
      * @since 5.2
+     * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
     public function rebuildActiveApplication()
     {
-        $this->isActiveApplication = ($this->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID);
     }
 
     /**

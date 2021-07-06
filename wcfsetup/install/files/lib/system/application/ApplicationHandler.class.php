@@ -258,20 +258,10 @@ class ApplicationHandler extends SingletonFactory
 
     /**
      * @since 5.2
+     * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
     public function rebuildActiveApplication()
     {
-        /** @var AbstractApplication $application */
-        foreach ($this->cache['application'] as $application) {
-            if ($application->getPackage()->package === 'com.woltlab.wcf') {
-                continue;
-            }
-
-            $appObject = WCF::getApplicationObject($application);
-            if ($appObject instanceof AbstractApplication) {
-                $appObject->rebuildActiveApplication();
-            }
-        }
     }
 
     /**
