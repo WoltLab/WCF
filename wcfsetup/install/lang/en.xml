@@ -5102,6 +5102,9 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Search Engine Robots]]></item>
 		<item name="wcf.user.usersOnline.record"><![CDATA[Record: {#USERS_ONLINE_RECORD} User{if USERS_ONLINE_RECORD != 1}s{/if} ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 		<item name="wcf.user.usersOnline.users"><![CDATA[Users]]></item>
+		<item name="wcf.user.usersOnline.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.usersOnline.sortField.requestURI"><![CDATA[Location]]></item>
+		<item name="wcf.user.usersOnline.sortField.username"><![CDATA[Username]]></item>
 	</category>
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>

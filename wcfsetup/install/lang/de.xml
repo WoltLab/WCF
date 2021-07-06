@@ -5105,6 +5105,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Suchmaschinen-Roboter]]></item>
 		<item name="wcf.user.usersOnline.record"><![CDATA[Rekord: {#USERS_ONLINE_RECORD} Benutzer ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 		<item name="wcf.user.usersOnline.users"><![CDATA[Benutzer]]></item>
+		<item name="wcf.user.usersOnline.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
+		<item name="wcf.user.usersOnline.sortField.requestURI"><![CDATA[Ort]]></item>
+		<item name="wcf.user.usersOnline.sortField.username"><![CDATA[Benutzername]]></item>
 	</category>
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Letzte Aktivitäten]]></item>
