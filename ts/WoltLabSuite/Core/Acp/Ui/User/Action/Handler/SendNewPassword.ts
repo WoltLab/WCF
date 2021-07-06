@@ -31,7 +31,7 @@ export class SendNewPassword {
 
   send(): void {
     UiConfirmation.show({
-      confirm: () => {
+      confirm() {
         new AcpUiWorker({
           dialogId: "sendingNewPasswords",
           dialogTitle: Language.get("wcf.acp.user.sendNewPassword.workerTitle"),

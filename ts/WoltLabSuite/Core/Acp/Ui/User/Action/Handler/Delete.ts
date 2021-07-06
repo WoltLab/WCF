@@ -28,7 +28,7 @@ export class Delete {
 
   public delete(): void {
     UiConfirmation.show({
-      confirm: () => {
+      confirm() {
         Ajax.apiOnce({
           data: {
             actionName: "delete",
