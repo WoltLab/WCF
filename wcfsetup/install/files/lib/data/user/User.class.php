@@ -742,6 +742,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if the user is a member of a user group that requires
      * multi-factor authentication to be enabled.
+     *
+     * @since   5.4
      */
     public function requiresMultifactor(): bool
     {
