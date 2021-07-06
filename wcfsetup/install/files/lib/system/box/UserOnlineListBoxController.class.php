@@ -31,16 +31,36 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     protected $conditionDefinition = 'com.woltlab.wcf.box.userOnlineList.condition';
 
     /**
+     * @inheritDoc
+     */
+    public $defaultSortField = USERS_ONLINE_DEFAULT_SORT_FIELD;
+
+    /**
+     * @inheritDoc
+     */
+    public $defaultSortOrder = USERS_ONLINE_DEFAULT_SORT_ORDER;
+
+    /**
      * enables the display of the user online record
      * @var bool
      */
     public $showRecord = true;
 
     /**
+     * @inheritDoc
+     */
+    protected $sortFieldLanguageItemPrefix = 'wcf.user.usersOnline.sortField';
+
+    /**
      * phrase that is used for the box title
      * @var string|null
      */
     public $title;
+
+    /**
+     * @inheritDoc
+     */
+    public $validSortFields = ['username', 'lastActivityTime', 'requestURI'];
 
     /**
      * @inheritDoc
@@ -64,6 +84,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
     protected function readObjects()
     {
         EventHandler::getInstance()->fireAction($this, 'readObjects');
+
+        if ($this->sortOrder && $this->sortField === 'lastActivityTime') {
+            $alias = $this->objectList->getDatabaseTableAlias();
+            $this->objectList->sqlOrderBy = "session.{$this->sortField} {$this->sortOrder}, "
+                . ($alias ? $alias . "." : "") . "{$this->objectList->getDatabaseTableIndexName()} {$this->sortOrder}";
+        }
 
         $this->objectList->readStats();
         if ($this->showRecord) {
