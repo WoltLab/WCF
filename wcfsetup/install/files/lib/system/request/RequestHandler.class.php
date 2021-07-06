@@ -86,34 +86,7 @@ class RequestHandler extends SingletonFactory
                 throw new IllegalLinkException();
             }
 
-            // handle offline mode
-            if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
-                if (
-                    !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
-                    && !$this->getActiveRequest()->isAvailableDuringOfflineMode()
-                ) {
-                    if (
-                        isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-                        && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
-                    ) {
-                        throw new AJAXException(
-                            WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                            AJAXException::INSUFFICIENT_PERMISSIONS
-                        );
-                    } else {
-                        @\header('HTTP/1.1 503 Service Unavailable');
-                        BoxHandler::disablePageLayout();
-                        NoticeHandler::disableNotices();
-                        WCF::getTPL()->assign([
-                            'templateName' => 'offline',
-                            'templateNameApplication' => 'wcf',
-                        ]);
-                        WCF::getTPL()->display('offline');
-                    }
-
-                    exit;
-                }
-            }
+            $this->checkOfflineMode();
 
             // start request
             $this->getActiveRequest()->execute();
@@ -281,6 +254,37 @@ class RequestHandler extends SingletonFactory
             }
 
             throw new IllegalLinkException();
+        }
+    }
+
+    protected function checkOfflineMode()
+    {
+        if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
+            if (
+                !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
+                && !$this->getActiveRequest()->isAvailableDuringOfflineMode()
+            ) {
+                if (
+                    isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+                    && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
+                ) {
+                    throw new AJAXException(
+                        WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                        AJAXException::INSUFFICIENT_PERMISSIONS
+                    );
+                } else {
+                    @\header('HTTP/1.1 503 Service Unavailable');
+                    BoxHandler::disablePageLayout();
+                    NoticeHandler::disableNotices();
+                    WCF::getTPL()->assign([
+                        'templateName' => 'offline',
+                        'templateNameApplication' => 'wcf',
+                    ]);
+                    WCF::getTPL()->display('offline');
+                }
+
+                exit;
+            }
         }
     }
 
