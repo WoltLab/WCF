@@ -211,7 +211,7 @@ class RequestHandler extends SingletonFactory
             );
 
             // check if the controller matches an app that has an expired evaluation date
-            [$abbreviation] = \explode('\\', $classData['className'], 2);
+            [$abbreviation] = \explode('\\', $this->getActiveRequest()->getClassName(), 2);
             if ($abbreviation !== 'wcf') {
                 $applicationObject = ApplicationHandler::getInstance()->getApplication($abbreviation);
                 $endDate = WCF::getApplicationObject($applicationObject)->getEvaluationEndDate();
