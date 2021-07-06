@@ -86,6 +86,8 @@ class RequestHandler extends SingletonFactory
                 throw new IllegalLinkException();
             }
 
+            $this->checkAppEvaluation();
+
             $this->checkOfflineMode();
 
             // start request
@@ -209,8 +211,6 @@ class RequestHandler extends SingletonFactory
                 $classData['pageType'],
                 $metaData
             );
-
-            $this->checkAppEvaluation();
 
             if (!$this->isACPRequest()) {
                 // determine if current request matches the landing page
