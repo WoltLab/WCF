@@ -69,7 +69,8 @@ class FontManager extends SingletonFactory
      */
     public function fetchAvailableFamilies()
     {
-        $response = $this->http->send(new Request('GET', 'families.json'));
+        $request = new Request('GET', 'families.json');
+        $response = $this->http->send($request);
 
         return JSON::decode($response->getBody());
     }
@@ -84,7 +85,8 @@ class FontManager extends SingletonFactory
     public function downloadFamily($family)
     {
         try {
-            $response = $this->http->send(new Request('GET', \rawurlencode($family) . '/manifest.json'));
+            $request = new Request('GET', \rawurlencode($family) . '/manifest.json');
+            $response = $this->http->send($request);
             $manifest = JSON::decode($response->getBody());
 
             $familyDirectory = \dirname($this->getCssFilename($family));
@@ -103,7 +105,8 @@ class FontManager extends SingletonFactory
                     throw new \InvalidArgumentException("Invalid filename '" . $filename . "' given.");
                 }
 
-                $response = $this->http->send(new Request('GET', \rawurlencode($family) . '/' . \rawurlencode($filename)));
+                $request = new Request('GET', \rawurlencode($family) . '/' . \rawurlencode($filename));
+                $response = $this->http->send($request);
 
                 $file = new AtomicWriter($familyDirectory . '/' . $filename);
                 while (!$response->getBody()->eof()) {
