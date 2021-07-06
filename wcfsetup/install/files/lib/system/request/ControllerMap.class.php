@@ -97,11 +97,6 @@ class ControllerMap extends SingletonFactory
                 $controller = 'AJAXFileDelete';
             }
 
-            // work-around for package installation during the upgrade 2.1 -> 3.0
-            if ($isAcpRequest && $controller === 'InstallPackage') {
-                $application = 'wcf';
-            }
-
             // Map virtual controllers to their true application
             if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
                 $application = $this->applicationOverrides['lookup'][$application][$controller];
