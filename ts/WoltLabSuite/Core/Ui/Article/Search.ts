@@ -78,9 +78,9 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
     this.resultList!.innerHTML = html;
 
     if (html) {
-      DomUtil.show(this.resultList!);
+      DomUtil.show(this.resultContainer!);
     } else {
-      DomUtil.hide(this.resultList!);
+      DomUtil.hide(this.resultContainer!);
     }
 
     if (html) {
