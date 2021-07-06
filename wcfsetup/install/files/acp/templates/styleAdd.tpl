@@ -426,7 +426,6 @@
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
 						{@$__wcf->getUploadHandler()->renderField('pageLogo')}
-						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
 						<script data-relocate="true">
 						elBySel('#pageLogouploadFileList').addEventListener('change', function (ev) {
 							var img = elBySel('#pageLogouploadFileList img');
@@ -462,7 +461,6 @@
 					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
 					<dd>
 						{@$__wcf->getUploadHandler()->renderField('pageLogoMobile')}
-						<small>{lang}wcf.acp.style.globals.pageLogoMobile.description{/lang}</small>
 					</dd>
 				</dl>
 				
