@@ -218,8 +218,6 @@ class RequestHandler extends SingletonFactory
                     $this->activeRequest->setIsLandingPage();
                 }
             }
-
-            ApplicationHandler::getInstance()->rebuildActiveApplication();
         } catch (SystemException $e) {
             if (
                 \defined('ENABLE_DEBUG_MODE')
