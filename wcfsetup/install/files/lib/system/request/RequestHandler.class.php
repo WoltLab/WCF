@@ -257,6 +257,9 @@ class RequestHandler extends SingletonFactory
         }
     }
 
+    /**
+     * @since 5.5
+     */
     protected function checkOfflineMode()
     {
         if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
