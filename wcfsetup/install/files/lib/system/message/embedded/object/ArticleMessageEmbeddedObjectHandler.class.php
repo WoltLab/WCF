@@ -4,6 +4,8 @@ namespace wcf\system\message\embedded\object;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
+use wcf\data\article\content\ViewableArticleContentList;
+use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\html\input\HtmlInputProcessor;
 
 /**
@@ -36,11 +38,33 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
      */
     public function loadObjects(array $objectIDs)
     {
-        $articleList = new AccessibleArticleList();
-        $articleList->getConditionBuilder()->add('article.articleID IN (?)', [$objectIDs]);
-        $articleList->readObjects();
+        $viewableArticles = ViewableArticleRuntimeCache::getInstance()->getObjects($objectIDs);
+        $contentLanguageID = MessageEmbeddedObjectManager::getInstance()->getContentLanguageID();
+        if ($contentLanguageID !== null) {
+            $articleIDs = [];
+            foreach ($viewableArticles as $article) {
+                if (
+                    $article !== null
+                    && $article->getArticleContent()->languageID
+                    && $article->getArticleContent()->languageID != $contentLanguageID
+                ) {
+                    $articleIDs[] = $article->articleID;
+                }
+            }
 
-        return $articleList->getObjects();
+            if (!empty($articleIDs)) {
+                $list = new ViewableArticleContentList();
+                $list->getConditionBuilder()->add("articleID IN (?)", [$articleIDs]);
+                $list->getConditionBuilder()->add("languageID = ?", [$contentLanguageID]);
+                $list->readObjects();
+
+                foreach ($list->getObjects() as $articleContent) {
+                    $viewableArticles[$articleContent->articleID]->setArticleContent($articleContent);
+                }
+            }
+        }
+
+        return $viewableArticles;
     }
 
     /**
