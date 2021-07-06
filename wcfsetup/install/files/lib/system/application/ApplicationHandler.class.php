@@ -135,7 +135,7 @@ class ApplicationHandler extends SingletonFactory
 
         $request = RequestHandler::getInstance()->getActiveRequest();
         if ($request !== null) {
-            $abbreviation = \substr($request->getClassName(), 0, \mb_strpos($request->getClassName(), '\\'));
+            [$abbreviation] = \explode('\\', $request->getClassName(), 2);
 
             return $this->getApplication($abbreviation);
         }
