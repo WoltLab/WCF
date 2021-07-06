@@ -23,8 +23,7 @@ class PackagePage extends AbstractPage
     public $activeMenuItem = 'wcf.acp.menu.link.package';
 
     /**
-     * list of compatible API versions
-     * @var int[]
+     * @deprecated 5.5 This array is always empty.
      */
     public $compatibleVersions = [];
 
@@ -84,20 +83,6 @@ class PackagePage extends AbstractPage
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->package->package]);
         $this->pluginStoreFileID = \intval($statement->fetchSingleColumn());
-
-        $sql = "SELECT      version
-                FROM        wcf" . WCF_N . "_package_compatibility
-                WHERE       packageID = ?
-                        AND version >= ?
-                ORDER BY    version";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            $this->package->packageID,
-            WSC_API_VERSION,
-        ]);
-        while ($version = $statement->fetchColumn()) {
-            $this->compatibleVersions[] = $version;
-        }
     }
 
     /**
