@@ -63,7 +63,7 @@
 			<section class="section tabularBox tabularBoxTitle">
 				<header>
 					<h2>
-						<a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 fa-chevron-right"></span></a>
+						<a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}"><span class="icon icon16 fa-chevron-right"></span></a>
 						{lang}wcf.acp.cache.type.{$cacheType}{/lang}
 						<span class="badge">{#$files|count}</span>
 					</h2>
