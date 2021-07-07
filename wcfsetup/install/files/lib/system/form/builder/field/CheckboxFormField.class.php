@@ -18,6 +18,16 @@ class CheckboxFormField extends BooleanFormField
     /**
      * @inheritDoc
      */
+    public function readValue()
+    {
+        $this->value = $this->getDocument()->hasRequestData($this->getPrefixedId());
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getHtml()
     {
         if ($this->requiresLabel() && $this->getLabel() === null) {

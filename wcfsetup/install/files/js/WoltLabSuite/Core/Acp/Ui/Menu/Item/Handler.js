@@ -113,7 +113,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Lang
             if (!(handlers instanceof Map)) {
                 map = new Map();
                 handlers.forEach((value, key) => {
-                    map.set(~~~key, value);
+                    map.set(~~key, value);
                 });
             }
             else {

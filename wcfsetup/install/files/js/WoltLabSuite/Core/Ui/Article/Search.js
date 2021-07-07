@@ -57,10 +57,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
                 .join("");
             this.resultList.innerHTML = html;
             if (html) {
-                Util_1.default.show(this.resultList);
+                Util_1.default.show(this.resultContainer);
             }
             else {
-                Util_1.default.hide(this.resultList);
+                Util_1.default.hide(this.resultContainer);
             }
             if (html) {
                 this.resultList.querySelectorAll(".containerHeadline").forEach((item) => {
