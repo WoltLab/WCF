@@ -551,12 +551,6 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->packageID]);
 
-            // delete old compatibility versions
-            $sql = "DELETE FROM wcf" . WCF_N . "_package_compatibility
-                    WHERE       packageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([$this->queue->packageID]);
-
             // delete old requirements and dependencies
             $sql = "DELETE FROM wcf" . WCF_N . "_package_requirement
                     WHERE       packageID = ?";
@@ -607,21 +601,6 @@ class PackageInstallationDispatcher
                     $this->queue->packageID,
                     $excludedPackage['name'],
                     !empty($excludedPackage['version']) ? $excludedPackage['version'] : '',
-                ]);
-            }
-        }
-
-        // save compatible versions
-        if (!empty($this->getArchive()->getCompatibleVersions())) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_compatibility
-                                (packageID, version)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
-
-            foreach ($this->getArchive()->getCompatibleVersions() as $version) {
-                $statement->execute([
-                    $this->queue->packageID,
-                    $version,
                 ]);
             }
         }
