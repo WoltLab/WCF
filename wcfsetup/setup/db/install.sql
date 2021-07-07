@@ -934,6 +934,7 @@ CREATE TABLE wcf1_package (
 	UNIQUE KEY package (package)
 );
 
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_package_compatibility;
 CREATE TABLE wcf1_package_compatibility (
 	packageID INT(10) NOT NULL,
@@ -1786,7 +1787,7 @@ CREATE TABLE wcf1_user_notification_author (
 );
 
 -- notification recipients
--- DEPRECATED
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_user_notification_to_user;
 CREATE TABLE wcf1_user_notification_to_user (
 	notificationID INT(10) NOT NULL,
