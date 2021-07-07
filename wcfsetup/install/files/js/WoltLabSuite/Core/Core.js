@@ -238,12 +238,24 @@ define(["require", "exports"], function (require, exports) {
         };
     }
     exports.debounce = debounce;
+    const defaultFunctions = Object.getOwnPropertyNames(Object.getPrototypeOf({}));
     function enableLegacyInheritance(legacyClass) {
         legacyClass.call = function (thisValue, ...args) {
+            if (window.ENABLE_DEVELOPER_TOOLS) {
+                console.log("Relying on legacy inheritance for ", legacyClass, thisValue);
+            }
             const constructed = Reflect.construct(legacyClass, args, thisValue.constructor);
             Object.entries(constructed).forEach(([key, value]) => {
                 thisValue[key] = value;
             });
+            let object = thisValue;
+            while ((object = Object.getPrototypeOf(object))) {
+                Object.getOwnPropertyNames(object).forEach((name) => {
+                    if (typeof object[name] === "function" && !defaultFunctions.includes(name)) {
+                        object[name] = object[name].bind(thisValue);
+                    }
+                });
+            }
         };
     }
     exports.enableLegacyInheritance = enableLegacyInheritance;
