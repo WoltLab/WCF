@@ -20,7 +20,15 @@ class GroupBBCode extends AbstractBBCode {
 		$groupID = (!empty($openingTag['attributes'][0])) ? intval($openingTag['attributes'][0]) : 0;
 		$group = UserGroup::getGroupByID($groupID);
 		if ($group === null || !$group->canBeMentioned()) {
+			if ($parser->getOutputType() === 'text/plain') {
+				return "@{$content}";
+			}
+
 			return "[group]{$content}[/group]";
+		}
+
+		if ($parser->getOutputType() === 'text/plain') {
+			return "@{$group->getTitle()}";
 		}
 		
 		return WCF::getTPL()->fetch('groupBBCodeTag', 'wcf', [
