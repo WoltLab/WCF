@@ -18,11 +18,9 @@ use wcf\system\exception\SystemException;
 class GZipFile extends File
 {
     /**
-     * checks if gz*64 functions are available instead of gz*
-     * https://bugs.php.net/bug.php?id=53829
-     * @var bool
+     * @deprecated 5.5 The bug this worked around is fixed.
      */
-    protected static $gzopen64 = null;
+    protected static $gzopen64 = false;
 
     /** @noinspection PhpMissingParentConstructorInspection */
 
@@ -35,13 +33,8 @@ class GZipFile extends File
      */
     public function __construct($filename, $mode = 'wb')
     {
-        if (self::$gzopen64 === null) {
-            self::$gzopen64 = \function_exists('gzopen64');
-        }
-
         $this->filename = $filename;
-        /** @noinspection PhpUndefinedFunctionInspection */
-        $this->resource = (self::$gzopen64 ? gzopen64($filename, $mode) : \gzopen($filename, $mode));
+        $this->resource = \gzopen($filename, $mode);
         if ($this->resource === false) {
             throw new SystemException('Can not open file ' . $filename);
         }
@@ -57,11 +50,7 @@ class GZipFile extends File
      */
     public function __call($function, $arguments)
     {
-        if (self::$gzopen64 && \function_exists('gz' . $function . '64')) {
-            \array_unshift($arguments, $this->resource);
-
-            return \call_user_func_array('gz' . $function . '64', $arguments);
-        } elseif (\function_exists('gz' . $function)) {
+        if (\function_exists('gz' . $function)) {
             \array_unshift($arguments, $this->resource);
 
             return \call_user_func_array('gz' . $function, $arguments);
