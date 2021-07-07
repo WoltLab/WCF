@@ -47,10 +47,13 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
         if ($event->preset) {
             $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_event_to_user
                                 (userID, eventID, mailNotificationType)
-                    SELECT      userID, " . $event->eventID . ", '" . WCF::getDB()->escapeString($event->presetMailNotificationType) . "'
+                    SELECT      userID, ?, ?
                     FROM        wcf" . WCF_N . "_user";
             $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute();
+            $statement->execute([
+                $event->eventID,
+                $event->presetMailNotificationType,
+            ]);
         }
 
         return $event;
