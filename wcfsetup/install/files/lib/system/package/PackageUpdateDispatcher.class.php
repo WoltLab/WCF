@@ -524,7 +524,7 @@ class PackageUpdateDispatcher extends SingletonFactory
      */
     protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID)
     {
-        $excludedPackagesParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
+        $excludedPackagesParameters = $optionalInserts = $requirementInserts = [];
         $sql = "INSERT INTO wcf" . WCF_N . "_package_update
                             (packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
                 VALUES      (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -630,45 +630,35 @@ class PackageUpdateDispatcher extends SingletonFactory
                     }
                 }
 
-                // @deprecated 5.2
-                if (isset($versionData['compatibility'])) {
-                    foreach ($versionData['compatibility'] as $version) {
-                        $compatibilityInserts[] = [
-                            'packageUpdateVersionID' => $packageUpdateVersionID,
-                            'version' => $version,
-                        ];
+                // The API compatibility versions are deprecated, any package that exposes them must
+                // exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
+                if (!empty($versionData['compatibility'])) {
+                    if (!isset($versionData['excludedPackages'])) {
+                        $versionData['excludedPackages'] = [];
                     }
+                    $excludeCore60 = '6.0.0 Alpha 1';
 
-                    // The API compatibility versions are deprecated, any package that exposes them must
-                    // exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
-                    if (!empty($compatibilityInserts)) {
-                        if (!isset($versionData['excludedPackages'])) {
-                            $versionData['excludedPackages'] = [];
-                        }
-                        $excludeCore60 = '6.0.0 Alpha 1';
+                    $coreExclude = null;
+                    $versionData['excludedPackages'] = \array_filter(
+                        $versionData['excludedPackages'],
+                        static function ($excludedPackage, $excludedVersion) use (&$coreExclude) {
+                            if ($excludedPackage === 'com.woltlab.wcf') {
+                                $coreExclude = $excludedVersion;
 
-                        $coreExclude = null;
-                        $versionData['excludedPackages'] = \array_filter(
-                            $versionData['excludedPackages'],
-                            static function ($excludedPackage, $excludedVersion) use (&$coreExclude) {
-                                if ($excludedPackage === 'com.woltlab.wcf') {
-                                    $coreExclude = $excludedVersion;
+                                return false;
+                            }
 
-                                    return false;
-                                }
+                            return true;
+                        },
+                        \ARRAY_FILTER_USE_BOTH
+                    );
 
-                                return true;
-                            },
-                            \ARRAY_FILTER_USE_BOTH
-                        );
-
-                        if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
-                            $versionData['excludedPackages'][] = [
-                                'packageUpdateVersionID' => $packageUpdateVersionID,
-                                'excludedPackage' => 'com.woltlab.wcf',
-                                'excludedPackageVersion' => $excludeCore60,
-                            ];
-                        }
+                    if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
+                        $versionData['excludedPackages'][] = [
+                            'packageUpdateVersionID' => $packageUpdateVersionID,
+                            'excludedPackage' => 'com.woltlab.wcf',
+                            'excludedPackageVersion' => $excludeCore60,
+                        ];
                     }
                 }
             }
@@ -731,22 +721,6 @@ class PackageUpdateDispatcher extends SingletonFactory
                 $statement->execute([
                     $fromversion['packageUpdateVersionID'],
                     $fromversion['fromversion'],
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        // @deprecated 5.2
-        if (!empty($compatibilityInserts)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_compatibility
-                                (packageUpdateVersionID, version)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            WCF::getDB()->beginTransaction();
-            foreach ($compatibilityInserts as $versionData) {
-                $statement->execute([
-                    $versionData['packageUpdateVersionID'],
-                    $versionData['version'],
                 ]);
             }
             WCF::getDB()->commitTransaction();
