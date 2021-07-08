@@ -1026,6 +1026,7 @@ CREATE TABLE wcf1_package_update (
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_package_update_compatibility;
 CREATE TABLE wcf1_package_update_compatibility (
 	packageUpdateVersionID INT(10) NOT NULL,
