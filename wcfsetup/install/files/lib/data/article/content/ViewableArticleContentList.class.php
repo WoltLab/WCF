@@ -35,7 +35,7 @@ class ViewableArticleContentList extends ArticleContentList
     {
         parent::readObjects();
 
-        $imageIDs = $embeddedObjectPostIDs = $articleIDs = [];
+        $imageIDs = $embeddedObjectContentIDs = $articleIDs = [];
         foreach ($this->getObjects() as $articleContent) {
             if ($articleContent->imageID) {
                 $imageIDs[] = $articleContent->imageID;
@@ -44,7 +44,7 @@ class ViewableArticleContentList extends ArticleContentList
                 $imageIDs[] = $articleContent->teaserImageID;
             }
             if ($articleContent->hasEmbeddedObjects) {
-                $embeddedObjectPostIDs[] = $articleContent->articleContentID;
+                $embeddedObjectContentIDs[] = $articleContent->articleContentID;
             }
 
             $articleIDs[] = $articleContent->articleID;
@@ -64,10 +64,10 @@ class ViewableArticleContentList extends ArticleContentList
         }
 
         // load embedded objects
-        if (!empty($embeddedObjectPostIDs)) {
+        if (!empty($embeddedObjectContentIDs)) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.article.content',
-                $embeddedObjectPostIDs,
+                $embeddedObjectContentIDs,
                 $contentLanguageID
             );
         }
