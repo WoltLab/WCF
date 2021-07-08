@@ -10,10 +10,13 @@
  */
 
 use wcf\data\style\StyleEditor;
+use wcf\data\style\StyleList;
 use wcf\system\package\SplitNodeException;
-use wcf\system\style\StyleHandler;
 
-foreach (StyleHandler::getInstance()->getStyles() as $style) {
+$styleList = new StyleList();
+$styleList->readObjects();
+
+foreach ($styleList as $style) {
     if (!$style->coverPhotoExtension) {
         continue;
     }
