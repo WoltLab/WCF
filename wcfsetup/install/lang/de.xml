@@ -4951,10 +4951,10 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Einmalcode über E-Mail]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jeder Anmeldung einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jeder Anmeldung einen Einmalcode an Ihre E-Mail-Adresse.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<small>{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jeder Anmeldung einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jeder Anmeldung einen Einmalcode an Ihre E-Mail-Adresse.{/if}</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Einmalcode über E-Mail]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<small>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Schütze dein Benutzerkonto{else}Schützen Sie Ihr Benutzerkonto{/if}, indem bei jeder Anmeldung eine zusätzliche Authentifizierung mit Hilfe eines zweiten Faktors erforderlich ist.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Deaktivieren]]></item>

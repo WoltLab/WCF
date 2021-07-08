@@ -203,10 +203,11 @@ class PackageValidationArchive implements \RecursiveIterator
     protected function validateApplication(): void
     {
         if ($this->archive->getPackageInfo('isApplication')) {
-            $abbreviation = Package::getAbbreviation($this->archive->getPackageInfo('name'));
+            $identifier = $this->archive->getPackageInfo('name');
+            $abbreviation = Package::getAbbreviation($identifier);
 
             $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
-            if ($application !== null) {
+            if ($application !== null && $application->getPackage()->package !== $identifier) {
                 throw new PackageValidationException(PackageValidationException::DUPLICATE_ABBREVIATION, [
                     'packageName' => $this->archive->getPackageInfo('name'),
                     'application' => $application,

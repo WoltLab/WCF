@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.0 RC 1</version>
-		<date>2021-06-30</date>
+		<version>5.4.0 RC 2</version>
+		<date>2021-07-08</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -145,14 +145,25 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 		<!-- Update of the Google Fonts -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_update_google_font.php</instruction>
-		
+
+		<!-- Creation of WebP cover Photos -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_styleCoverPhoto.php</instruction>
+
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.4.0 Beta 2">
+	<instructions type="update" fromversion="5.4.0 RC 1">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
+
+		<!-- The check would make more sense earlier in the process, but since this is intended
+		     to catch some earlier upgrades with broken ImageMagick setups, this should be fine. -->
+		<instruction type="script">acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</instruction>
+
+		<!-- This was missed in the upgrade instructions from 5.3. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_styleCoverPhoto.php</instruction>
 	</instructions>
 </package>
