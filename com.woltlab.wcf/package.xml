@@ -145,7 +145,10 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 		<!-- Update of the Google Fonts -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_update_google_font.php</instruction>
-		
+
+		<!-- Creation of WebP cover Photos -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_styleCoverPhoto.php</instruction>
+
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
 	</instructions>
 	
@@ -159,5 +162,8 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<!-- The check would make more sense earlier in the process, but since this is intended
 		     to catch some earlier upgrades with broken ImageMagick setups, this should be fine. -->
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</instruction>
+
+		<!-- This was missed in the upgrade instructions from 5.3. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_styleCoverPhoto.php</instruction>
 	</instructions>
 </package>
