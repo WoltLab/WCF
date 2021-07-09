@@ -32,9 +32,9 @@ class Mailbox
 
     /**
      * The preferred language of this mailbox.
-     * @var Language
+     * @var int
      */
-    protected $language;
+    protected $languageID;
 
     /**
      * Creates a new Mailbox.
@@ -81,11 +81,10 @@ class Mailbox
         $this->address = $address;
         $this->name = $name;
         if ($language === null) {
-            $language = LanguageFactory::getInstance()->getLanguage(
-                LanguageFactory::getInstance()->getDefaultLanguageID()
-            );
+            $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+        } else {
+            $this->languageID = $language->languageID;
         }
-        $this->language = $language;
     }
 
     /**
@@ -116,7 +115,7 @@ class Mailbox
      */
     public function getLanguage()
     {
-        return $this->language;
+        return LanguageFactory::getInstance()->getLanguage($this->languageID);
     }
 
     /**
