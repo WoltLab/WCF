@@ -154,11 +154,8 @@ class RegisterNewActivationCodeForm extends AbstractForm
     {
         parent::save();
 
-        // generate activation code
-        $activationCode = UserRegistrationUtil::getActivationCode();
-
-        // save user
-        $parameters = ['activationCode' => $activationCode];
+        //  save user
+        $parameters = ['emailConfirmed' => \bin2hex(\random_bytes(20))];
         if (!empty($this->email)) {
             $parameters['email'] = $this->email;
         }
