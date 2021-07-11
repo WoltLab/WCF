@@ -234,7 +234,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                 Hex::encode(\random_bytes(16)),
                 $deviceName,
                 $formData['data']['secret'],
-                $formData['data']['code']['minCounter'],
+                $formData['data']['onetimecode']['minCounter'],
                 \TIME_NOW,
             ]);
 
@@ -377,10 +377,10 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             \TIME_NOW,
-            $formData['data']['code']['minCounter'],
+            $formData['data']['onetimecode']['minCounter'],
             $setup->getId(),
             $formData['data']['deviceID'],
-            $formData['data']['code']['minCounter'],
+            $formData['data']['onetimecode']['minCounter'],
         ]);
 
         if ($statement->getAffectedRows() !== 1) {
