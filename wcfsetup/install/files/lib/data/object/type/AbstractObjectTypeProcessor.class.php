@@ -13,8 +13,9 @@ use wcf\data\IDatabaseObjectProcessor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Object\Type
  *
- * @method  ObjectType  getDecoratedObject()
- * @mixin   ObjectType
+ * @property    ObjectType      $object
+ * @method      ObjectType      getDecoratedObject()
+ * @mixin       ObjectType
  */
 abstract class AbstractObjectTypeProcessor extends DatabaseObjectDecorator implements IDatabaseObjectProcessor
 {
