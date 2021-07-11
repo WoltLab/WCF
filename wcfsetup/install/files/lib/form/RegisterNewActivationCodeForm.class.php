@@ -128,16 +128,16 @@ class RegisterNewActivationCodeForm extends AbstractForm
         }
     }
 
-	/**
-	 * Validates the activation state.
-	 */
-	public function validateActivationState()
+    /**
+     * Validates the activation state.
+     */
+    public function validateActivationState()
     {
-		// check if user is already enabled
-		if ($this->user->isEmailConfirmed()) {
-			throw new UserInputException('username', 'alreadyEnabled');
-		}
-	}
+        // check if user is already enabled
+        if ($this->user->isEmailConfirmed()) {
+            throw new UserInputException('username', 'alreadyEnabled');
+        }
+    }
 
     /**
      * Validates the email address.
