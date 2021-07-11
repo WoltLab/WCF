@@ -83,6 +83,9 @@ class RegisterNewActivationCodeForm extends AbstractForm
         // password
         $this->validatePassword();
 
+        // activation state
+        $this->validateActivationState();
+
         // email
         $this->validateEmail();
     }
@@ -122,6 +125,17 @@ class RegisterNewActivationCodeForm extends AbstractForm
         // check password
         if (!$this->user->checkPassword($this->password)) {
             throw new UserInputException('password', 'false');
+        }
+    }
+
+    /**
+     * Validates the activation state.
+     */
+    public function validateActivationState()
+    {
+        // check if user is already enabled
+        if ($this->user->isEmailConfirmed()) {
+            throw new UserInputException('username', 'alreadyEnabled');
         }
     }
 
