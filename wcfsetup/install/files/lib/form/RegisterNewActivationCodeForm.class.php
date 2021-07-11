@@ -72,6 +72,9 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		// password
 		$this->validatePassword();
 
+		// activation state
+		$this->validateActivationState();
+
 		// email
 		$this->validateEmail();
 	}
@@ -88,11 +91,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		if (!$this->user->userID) {
 			throw new UserInputException('username', 'notFound');
 		}
-
-		if ($this->user->isEmailConfirmed()) {
-			throw new UserInputException('username', 'alreadyEnabled');
-		}
-
+		
 		if (!empty($this->user->getBlacklistMatches())) {
 			throw new PermissionDeniedException();
 		}
@@ -112,6 +111,15 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		}
 	}
 
+	/**
+	 * Validates the activation state.
+	 */
+	public function validateActivationState() {
+		// check if user is already enabled
+		if ($this->user->isEmailConfirmed()) {
+			throw new UserInputException('username', 'alreadyEnabled');
+		}
+	}
 	/**
 	 * Validates the email address.
 	 */
