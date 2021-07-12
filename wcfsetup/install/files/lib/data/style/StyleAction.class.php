@@ -368,6 +368,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     \unlink($style->getAssetPath() . $filename);
                 }
                 \unlink($style->getAssetPath() . "favicon.ico");
+                \unlink($style->getAssetPath() . "manifest.json");
+                \unlink($style->getAssetPath() . "browserconfig.xml");
                 foreach (['png', 'jpg', 'gif'] as $extension) {
                     if (\file_exists($style->getAssetPath() . "favicon-template." . $extension)) {
                         \unlink($style->getAssetPath() . "favicon-template." . $extension);
