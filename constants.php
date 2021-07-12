@@ -101,8 +101,8 @@
 \define('MAIL_SIGNATURE_HTML', '');
 \define('MAIL_SEND_METHOD', 'php');
 \define('MAIL_SMTP_HOST', '');
-\define('MAIL_SMTP_PORT', 25);
-\define('MAIL_SMTP_STARTTLS', 'may');
+\define('MAIL_SMTP_PORT', 587);
+\define('MAIL_SMTP_STARTTLS', 'encrypt');
 \define('MAIL_SMTP_USER', '');
 \define('MAIL_SMTP_PASSWORD', '');
 \define('MAIL_USE_F_PARAM', 1);
