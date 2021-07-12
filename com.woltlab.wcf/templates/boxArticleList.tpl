@@ -36,6 +36,7 @@
 						<div class="articleListImage">
 							<img src="{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}" alt=""
 								style="height: {@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoHeight()}; width: {@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoWidth()}">
+								style="height: {@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoHeight()}px; width: {@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoWidth()}px">
 						</div>
 					{/if}
 					
