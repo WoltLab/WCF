@@ -1327,9 +1327,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP Server]]></item>
 		<item name="wcf.acp.option.mail_smtp_host.description"><![CDATA[The SMTP port 465 requires the host to be prefixed with <kbd>ssl://</kbd>, for example, <kbd>ssl://mail.example.com</kbd> instead of <kbd>mail.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP Port]]></item>
-		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP Encryption]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP Encryption (STARTTLS)]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Disabled]]></item>
-		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[If supported]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Required]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[This option controls the usage of “STARTTLS”. Disable it, if you are using SSL (port 465)!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP Username]]></item>
@@ -5559,5 +5558,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.devtools.project.apiVersions.description"/>
 	<item name="wcf.acp.style.globals.pageLogo.description"/>
 	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
+	<item name="wcf.acp.option.mail_smtp_starttls.may"/>
 </delete>
 </language>
