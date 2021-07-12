@@ -232,7 +232,7 @@ class StyleAddForm extends AbstractForm
     public $supportedApiVersionsCompatibility = [
         '3.0' => '3.0',
         '3.1' => '3.1',
-        '5.2' => '5.2 / 5.3',
+        '5.2' => '5.2, 5.3, 5.4',
     ];
 
     /**
