@@ -331,38 +331,41 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             $file = $this->parameters['uploads']['favicon'];
 
             if ($file !== null) {
-                $fileLocation = $file->getLocation();
-                if (($imageData = \getimagesize($fileLocation)) === false) {
-                    throw new \InvalidArgumentException('The given favicon is not an image');
+                if (!$file->isProcessed()) {
+                    $fileLocation = $file->getLocation();
+                    if (($imageData = \getimagesize($fileLocation)) === false) {
+                        throw new \InvalidArgumentException('The given favicon is not an image');
+                    }
+                    $extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+                    $newName = "favicon-template." . $extension;
+                    $newLocation = $style->getAssetPath() . $newName;
+                    \rename($fileLocation, $newLocation);
+
+                    $file->setProcessed($newLocation);
+
+                    // Create browser specific files.
+                    $adapter = ImageHandler::getInstance()->getAdapter();
+                    $adapter->loadFile($file->getLocation());
+                    foreach ($images as $filename => $length) {
+                        $thumbnail = $adapter->createThumbnail($length, $length);
+                        $adapter->writeImage($thumbnail, $style->getAssetPath() . $filename);
+                        // Clear thumbnail as soon as possible to free up the memory.
+                        $thumbnail = null;
+                    }
+
+                    // Create ICO file.
+                    require(WCF_DIR . 'lib/system/api/chrisjean/php-ico/class-php-ico.php');
+                    (new \PHP_ICO($file->getLocation(), [
+                        [16, 16],
+                        [32, 32],
+                    ]))->save_ico($style->getAssetPath() . "favicon.ico");
+
+                    (new StyleEditor($style))->update([
+                        'hasFavicon' => 1,
+                    ]);
+
+                    $hasFavicon = true;
                 }
-                $extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
-                $newName = "favicon-template." . $extension;
-                $newLocation = $style->getAssetPath() . $newName;
-                \rename($fileLocation, $newLocation);
-
-                // Create browser specific files.
-                $adapter = ImageHandler::getInstance()->getAdapter();
-                $adapter->loadFile($newLocation);
-                foreach ($images as $filename => $length) {
-                    $thumbnail = $adapter->createThumbnail($length, $length);
-                    $adapter->writeImage($thumbnail, $style->getAssetPath() . $filename);
-                    // Clear thumbnail as soon as possible to free up the memory.
-                    $thumbnail = null;
-                }
-
-                // Create ICO file.
-                require(WCF_DIR . 'lib/system/api/chrisjean/php-ico/class-php-ico.php');
-                (new \PHP_ICO($newLocation, [
-                    [16, 16],
-                    [32, 32],
-                ]))->save_ico($style->getAssetPath() . "favicon.ico");
-
-                (new StyleEditor($style))->update([
-                    'hasFavicon' => 1,
-                ]);
-
-                $file->setProcessed($newLocation);
-                $hasFavicon = true;
             } else {
                 foreach ($images as $filename => $length) {
                     \unlink($style->getAssetPath() . $filename);
