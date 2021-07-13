@@ -50,7 +50,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
     public function __run()
     {
         try {
-            parent::__run();
+            return parent::__run();
         } catch (\Throwable $e) {
             if ($e instanceof AJAXException) {
                 throw $e;

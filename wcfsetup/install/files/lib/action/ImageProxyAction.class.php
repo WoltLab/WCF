@@ -6,6 +6,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
@@ -202,9 +203,7 @@ class ImageProxyAction extends AbstractAction
 
             $this->executed();
 
-            HeaderUtil::redirect(WCF::getPath() . $path, true, false);
-
-            exit;
+            return new RedirectResponse(WCF::getPath() . $path, 301);
         } catch (SystemException $e) {
             \wcf\functions\exception\logThrowable($e);
             throw new IllegalLinkException();

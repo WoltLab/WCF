@@ -91,7 +91,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
             $this->editController = \str_replace('ListPage', 'Edit', $className);
         }
 
-        parent::__run();
+        return parent::__run();
     }
 
     /**
