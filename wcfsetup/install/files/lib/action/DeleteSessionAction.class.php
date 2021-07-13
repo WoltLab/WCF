@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
@@ -67,12 +68,8 @@ class DeleteSessionAction extends AbstractAction
 
         $this->executed();
 
-        // send JSON-encoded response
-        \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode([
-            'sessionID' => $this->sessionID,
+        return new JsonResponse([
+            'sessionID' => $this->sessionID
         ]);
-
-        exit;
     }
 }
