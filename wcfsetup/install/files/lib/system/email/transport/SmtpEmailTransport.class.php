@@ -84,7 +84,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
      * @param int $port port to use
      * @param string $username username to use for authentication
      * @param string $password corresponding password
-     * @param string $starttls one of 'none', 'may' and 'encrypt'
+     * @param string $starttls one of 'none' and 'encrypt'
      * @throws  \InvalidArgumentException
      */
     public function __construct(
@@ -101,13 +101,12 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
 
         switch ($starttls) {
             case 'none':
-            case 'may':
             case 'encrypt':
                 $this->starttls = $starttls;
                 break;
             default:
                 throw new \InvalidArgumentException(
-                    "Invalid STARTTLS preference '" . $starttls . "'. Must be one of 'none', 'may' and 'encrypt'."
+                    "Invalid STARTTLS preference '" . $starttls . "'. Must be one of 'none' and 'encrypt'."
                 );
         }
     }
@@ -286,24 +285,6 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                     'strtolower',
                     \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
                 );
-                break;
-            case 'may':
-                if (\in_array('starttls', $this->features)) {
-                    try {
-                        $this->starttls();
-
-                        $this->write('EHLO ' . Email::getHost());
-                        $this->features = \array_map(
-                            'strtolower',
-                            \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
-                        );
-                    } catch (\Exception $e) {
-                        \wcf\functions\exception\logThrowable($e);
-                        $this->disconnect();
-                        $this->starttls = 'none';
-                        $this->connect();
-                    }
-                }
                 break;
             case 'none':
                 // nothing to do here

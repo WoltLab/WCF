@@ -892,7 +892,6 @@ debugFolder:wcf.acp.option.mail_send_method.debugFolder</selectoptions>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>encrypt</defaultvalue>
 				<selectoptions>none:wcf.acp.option.mail_smtp_starttls.none
-may:wcf.acp.option.mail_smtp_starttls.may
 encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 			</option>
 			<option name="mail_smtp_user">
