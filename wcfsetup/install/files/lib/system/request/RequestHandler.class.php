@@ -2,6 +2,7 @@
 
 namespace wcf\system\request;
 
+use Symfony\Component\HttpFoundation\Response;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
@@ -91,7 +92,12 @@ class RequestHandler extends SingletonFactory
             $this->checkOfflineMode();
 
             // start request
-            $this->getActiveRequest()->execute();
+            $result = $this->getActiveRequest()->execute();
+
+            if ($result instanceof Response) {
+                $result->sendHeaders();
+                $result->sendContent();
+            }
         } catch (NamedUserException $e) {
             $e->show();
 
