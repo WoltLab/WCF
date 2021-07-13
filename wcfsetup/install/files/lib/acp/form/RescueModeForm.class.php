@@ -78,7 +78,7 @@ class RescueModeForm extends AbstractCaptchaForm
             exit;
         }
 
-        parent::__run();
+        return parent::__run();
     }
 
     /**

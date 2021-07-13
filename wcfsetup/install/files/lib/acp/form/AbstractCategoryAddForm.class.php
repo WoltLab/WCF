@@ -136,7 +136,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
             $this->listController = \str_replace(['AddForm', 'EditForm'], 'List', $className);
         }
 
-        parent::__run();
+        return parent::__run();
     }
 
     /**
