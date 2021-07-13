@@ -1586,7 +1586,6 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Captcha in Registrierung aktivieren]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Captcha in „Kennwort vergessen“ aktivieren]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Captcha in „E-Mail an Benutzer schicken“ aktivieren]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Captcha in Suchfunktion aktivieren]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[Benutzer-Authentifikation]]></item>
@@ -5557,6 +5556,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.devtools.project.apiVersions.description"/>
 	<item name="wcf.acp.style.globals.pageLogo.description"/>
 	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
+	<item name="wcf.acp.option.profile_mail_use_captcha"/>
 	<item name="wcf.acp.option.mail_smtp_starttls.may"/>
 </delete>
 </language>
