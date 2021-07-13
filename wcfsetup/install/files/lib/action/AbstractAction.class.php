@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Symfony\Component\HttpFoundation\Response;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -48,9 +49,15 @@ abstract class AbstractAction implements IAction
      */
     public function __run()
     {
-        // call default methods
-        $this->readParameters();
-        $this->execute();
+        $result = $this->readParameters();
+        if ($result instanceof Response) {
+            return $result;
+        }
+
+        $result = $this->execute();
+        if ($result instanceof Response) {
+            return $result;
+        }
     }
 
     /**
