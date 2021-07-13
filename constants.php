@@ -79,7 +79,6 @@
 \define('CAPTCHA_TYPE', 'com.woltlab.wcf.recaptcha');
 \define('REGISTER_USE_CAPTCHA', 1);
 \define('LOST_PASSWORD_USE_CAPTCHA', 1);
-\define('PROFILE_MAIL_USE_CAPTCHA', 1);
 \define('SEARCH_USE_CAPTCHA', 1);
 \define('RECAPTCHA_PUBLICKEY', '');
 \define('RECAPTCHA_PRIVATEKEY', '');

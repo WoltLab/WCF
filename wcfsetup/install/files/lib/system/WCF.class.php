@@ -478,6 +478,9 @@ class WCF
         // https://github.com/WoltLab/WCF/issues/3914
         \define('BLACKLIST_IP_ADDRESSES', '');
         \define('BLACKLIST_USER_AGENTS', '');
+
+        // The captcha option related to the removed MailForm was removed in 5.5.
+        \define('PROFILE_MAIL_USE_CAPTCHA', 1);
     }
 
     /**
