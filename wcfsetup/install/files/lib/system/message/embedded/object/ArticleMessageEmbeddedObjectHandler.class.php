@@ -38,11 +38,17 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
      */
     public function loadObjects(array $objectIDs)
     {
-        $viewableArticles = ViewableArticleRuntimeCache::getInstance()->getObjects($objectIDs);
+        // Do not use `ViewableArticleRuntimeCache` to avoid recursively loading embedded objects.
+        $articleList = new AccessibleArticleList();
+        $articleList->enableEmbeddedObjectLoading(false);
+        $articleList->getConditionBuilder()->add('article.articleID IN (?)', [$objectIDs]);
+        $articleList->readObjects();
+        $articles = $articleList->getObjects();
+
         $contentLanguageID = MessageEmbeddedObjectManager::getInstance()->getContentLanguageID();
         if ($contentLanguageID !== null) {
             $articleIDs = [];
-            foreach ($viewableArticles as $article) {
+            foreach ($articles as $article) {
                 if (
                     $article !== null
                     && $article->getArticleContent()->languageID
@@ -59,12 +65,12 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
                 $list->readObjects();
 
                 foreach ($list->getObjects() as $articleContent) {
-                    $viewableArticles[$articleContent->articleID]->setArticleContent($articleContent);
+                    $articles[$articleContent->articleID]->setArticleContent($articleContent);
                 }
             }
         }
 
-        return $viewableArticles;
+        return $articles;
     }
 
     /**
