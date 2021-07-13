@@ -15,7 +15,7 @@ use wcf\system\WCF;
 
 /**
  * Worker implementation for sending mails.
- * 
+ *
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -27,36 +27,36 @@ class MailWorker extends AbstractWorker {
 	 * @var	PreparedStatementConditionBuilder
 	 */
 	protected $conditions = null;
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	protected $limit = 50;
-	
+
 	/**
 	 * mail data
 	 * @var	array
 	 */
 	protected $mailData = null;
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(['admin.user.canMailUser']);
-		
+
 		if (!isset($this->parameters['mailID'])) {
 			throw new SystemException("mailID missing");
 		}
-		
+
 		$userMailData = WCF::getSession()->getVar('userMailData');
 		if (!isset($userMailData[$this->parameters['mailID']])) {
 			throw new SystemException("mailID '" . $this->parameters['mailID'] . "' is invalid");
 		}
-		
+
 		$this->mailData = $userMailData[$this->parameters['mailID']];
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -66,43 +66,43 @@ class MailWorker extends AbstractWorker {
 			$this->conditions->add("user.userID IN (?)", [$this->mailData['userIDs']]);
 		}
 		else {
-			$this->conditions->add("user.activationCode = ?", [0]);
+			$this->conditions->add("user.emailConfirmed IS NULL");
 			$this->conditions->add("user.banned = ?", [0]);
-			
+
 			if ($this->mailData['action'] == 'group') {
 				$this->conditions->add("user.userID IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", [$this->mailData['groupIDs']]);
 			}
 		}
-		
+
 		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user user
 			".$this->conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->conditions->getParameters());
-		
+
 		$this->count = $statement->fetchSingleColumn();
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$progress = parent::getProgress();
-		
+
 		if ($progress == 100) {
 			// clear markings
 			$typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
 			ClipboardHandler::getInstance()->removeItems($typeID);
-			
+
 			// clear session
 			$userMailData = WCF::getSession()->getVar('userMailData');
 			unset($userMailData[$this->parameters['mailID']]);
 			WCF::getSession()->register('userMailData', $userMailData);
 		}
-		
+
 		return $progress;
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -125,7 +125,7 @@ class MailWorker extends AbstractWorker {
 				new RecipientAwareTextMimePart('text/plain', 'email_mailWorker', 'wcf', $variables)
 			]));
 		}
-		
+
 		// get users
 		$sql = "SELECT		user_option.*, user.*
 			FROM		wcf".WCF_N."_user user
@@ -143,10 +143,10 @@ class MailWorker extends AbstractWorker {
 			}
 		}
 	}
-	
+
 	/**
 	 * Sends the given blueprint (Email without recipients) to the given user.
-	 * 
+	 *
 	 * @param	Email	$blueprint
 	 * @param	User	$user
 	 */
@@ -158,7 +158,7 @@ class MailWorker extends AbstractWorker {
 			BackgroundQueueHandler::getInstance()->performJob($job);
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
