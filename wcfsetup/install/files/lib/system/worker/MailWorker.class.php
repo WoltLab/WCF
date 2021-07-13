@@ -79,7 +79,7 @@ class MailWorker extends AbstractWorker
         if ($this->mailData['action'] == '') {
             $this->conditions->add("user.userID IN (?)", [$this->mailData['userIDs']]);
         } else {
-            $this->conditions->add("user.activationCode = ?", [0]);
+            $this->conditions->add("user.emailConfirmed IS NULL");
             $this->conditions->add("user.banned = ?", [0]);
 
             if ($this->mailData['action'] == 'group') {
