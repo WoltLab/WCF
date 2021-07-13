@@ -2,6 +2,7 @@
 
 namespace wcf\acp\action;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use wcf\action\AbstractSecureAction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -33,10 +34,10 @@ class LogoutAction extends AbstractSecureAction
 
         $this->executed();
 
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink(null, [
-            'forceFrontend' => true,
-        ]));
-
-        exit;
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getLink(null, [
+                'forceFrontend' => true,
+            ])
+        );
     }
 }

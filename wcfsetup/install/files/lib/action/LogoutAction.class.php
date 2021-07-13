@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -29,9 +30,8 @@ class LogoutAction extends \wcf\acp\action\LogoutAction
 
         $this->executed();
 
-        // forward to index page
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
-
-        exit;
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getLink()
+        );
     }
 }
