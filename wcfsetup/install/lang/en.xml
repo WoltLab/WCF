@@ -1572,7 +1572,6 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for lost password]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable Captcha protection for send email to user]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable Captcha protection for search]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[User Authentication]]></item>
@@ -5559,5 +5558,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.devtools.project.apiVersions.description"/>
 	<item name="wcf.acp.style.globals.pageLogo.description"/>
 	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
+	<item name="wcf.acp.option.profile_mail_use_captcha"/>
 </delete>
 </language>
