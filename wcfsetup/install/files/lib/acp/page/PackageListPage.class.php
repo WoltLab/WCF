@@ -73,16 +73,10 @@ class PackageListPage extends SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 
-		$availableUpgradeVersion = WCF::AVAILABLE_UPGRADE_VERSION;
-		// During the RC phase the upgrade should only be offered when the maintenance mode is enabled.
-		if (!\OFFLINE) {
-			$availableUpgradeVersion = null;
-		}
-
 		WCF::getTPL()->assign([
 			'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
 			'packageID' => $this->packageID,
-			'availableUpgradeVersion' => $availableUpgradeVersion,
+			'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
 			'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
 		]);
 	}
