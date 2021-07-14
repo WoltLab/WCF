@@ -1,4 +1,3 @@
-{assign var=lastStep value=true}
 {include file='header'}
 
 <section class="section">
