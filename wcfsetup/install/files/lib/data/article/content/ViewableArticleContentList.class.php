@@ -29,6 +29,13 @@ class ViewableArticleContentList extends ArticleContentList
     public $decoratorClassName = ViewableArticleContent::class;
 
     /**
+     * enables/disables the loading of embedded objects in the article contents
+     * @var bool
+     * @since   5.4
+     */
+    protected $embeddedObjectLoading = true;
+
+    /**
      * @inheritDoc
      */
     public function readObjects()
@@ -64,7 +71,7 @@ class ViewableArticleContentList extends ArticleContentList
         }
 
         // load embedded objects
-        if (!empty($embeddedObjectContentIDs)) {
+        if ($this->embeddedObjectLoading && !empty($embeddedObjectContentIDs)) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.article.content',
                 $embeddedObjectContentIDs,
@@ -99,5 +106,16 @@ class ViewableArticleContentList extends ArticleContentList
                 }
             }
         }
+    }
+
+    /**
+     * Enables/disables the loading of embedded objects in the article contents.
+     *
+     * @param bool $enable
+     * @since   5.4
+     */
+    public function enableEmbeddedObjectLoading(bool $enable = true): void
+    {
+        $this->embeddedObjectLoading = $enable;
     }
 }

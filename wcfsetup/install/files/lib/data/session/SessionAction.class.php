@@ -54,11 +54,6 @@ class SessionAction extends AbstractDatabaseObjectAction
      */
     public function keepAlive()
     {
-        // ignore sessions created by this request
-        if (WCF::getSession()->lastActivityTime == TIME_NOW) {
-            return [];
-        }
-
         // update notification counts
         $this->keepAliveData = [
             'userNotificationCount' => UserNotificationHandler::getInstance()->getNotificationCount(true),

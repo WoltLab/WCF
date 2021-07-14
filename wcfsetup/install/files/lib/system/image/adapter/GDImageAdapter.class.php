@@ -402,6 +402,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
         } elseif ($this->type == \IMAGETYPE_PNG) {
             \imagepng($image);
         } elseif ($this->type == \IMAGETYPE_WEBP) {
+            \imagepalettetotruecolor($image);
             \imagewebp($image);
         } elseif (\function_exists('imageJPEG')) {
             \imagejpeg($image, null, 90);
@@ -593,6 +594,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
                 break;
 
             case "webp":
+                \imagepalettetotruecolor($image);
                 \imagewebp($image, null, $quality);
                 break;
 
