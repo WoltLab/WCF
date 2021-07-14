@@ -5,20 +5,16 @@
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="{$setupAssets['WCFSetup.css']}">
 
-	{if !$lastStep|isset}
-		<style type="text/css">
-				@font-face {
-					font-family: 'FontAwesome';
-					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot');
-					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot#iefix') format('embedded-opentype'),
-						url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.ttf') format('truetype');
-					font-weight: normal;
-					font-style: normal;
-				}
-		</style>
-	{/if}
+	<style type="text/css">
+		@font-face {
+			font-family: 'FontAwesome';
+			src: url('{$setupAssets['fontawesome-webfont.woff2']}') format('woff2');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
 
 	<style type="text/css">
 		#pageHeaderContainer {
@@ -40,7 +36,7 @@
 				<div id="pageHeaderFacade" class="pageHeaderFacade">
 					<div class="layoutBoundary">
 						<div id="pageHeaderLogo" class="pageHeaderLogo">
-							<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}woltlabSuite.png" alt="" style="height: 40px; width: 281px;">
+							<img src="{$setupAssets['woltlabSuite.png']}" alt="" style="height: 40px; width: 281px;">
 						</div>
 					</div>
 				</div>

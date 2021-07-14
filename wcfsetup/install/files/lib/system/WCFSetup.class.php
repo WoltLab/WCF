@@ -188,6 +188,21 @@ class WCFSetup extends WCF
             'languageCode' => self::$selectedLanguageCode,
             'directories' => self::$directories,
             'developerMode' => self::$developerMode,
+
+            'setupAssets' => [
+                'WCFSetup.css' => \sprintf(
+                    'data:text/css;base64,%s',
+                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/style/setup/WCFSetup.css'))
+                ),
+                'woltlabSuite.png' => \sprintf(
+                    'data:image/png;base64,%s',
+                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/images/woltlabSuite.png'))
+                ),
+                'fontawesome-webfont.woff2' => \sprintf(
+                    'data:font/woff2;base64,%s',
+                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/font/fontawesome-webfont.woff2'))
+                ),
+            ],
         ]);
     }
 
