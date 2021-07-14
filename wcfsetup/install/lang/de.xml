@@ -1992,7 +1992,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 	{/if}
 {/implode}]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Aktualisierung auf WoltLab Suite {$version}]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die Testversion freigeben]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die neue Version freigeben]]></item>
 		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Neue Version verfügbar!<br><br>Die neue WoltLab Suite {$version} steht zur Installation bereit. Eine Anleitung zur Durchführung des Upgrades steht im <a href="https://manual.woltlab.com/de/updates/#update-von-woltlab-suite-53-auf-54" class="externalURL">Handbuch</a> zur Verfügung.<br>
 <br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Systemvoraussetzungen prüfen, um das Upgrade freizugeben</a>]]></item>
