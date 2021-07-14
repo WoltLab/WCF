@@ -2013,8 +2013,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 {/implode}]]></item>
 		<item name="wcf.acp.package.application.isTainted"><![CDATA[Die App{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} ist nicht vollständig installiert. Für eine weitere Verwendung der App ist eine Deinstallation mit anschließender Neuinstallation von Nöten.]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Aktualisierung auf WoltLab Suite {$version}]]></item>
-		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die Testversion freigeben]]></item>
-		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Die neue WoltLab Suite {$version} steht zur Installation bereit. ACHTUNG: Es handelt sich aktuell noch um eine Testversion die nicht für den produktiven Einsatz geeignet ist!<br>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die neue Version freigeben]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Neue Version verfügbar!<br><br>Die neue WoltLab Suite {$version} steht zur Installation bereit. Eine Anleitung zur Durchführung des Upgrades steht im <a href="https://manual.woltlab.com/de/updates/#update-von-woltlab-suite-53-auf-54" class="externalURL">Handbuch</a> zur Verfügung.<br>
 <br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Systemvoraussetzungen prüfen, um das Upgrade freizugeben</a>]]></item>
 		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[Die Installation der neuen WoltLab Suite {$version} wurde freigegeben. Zur Durchführung des Upgrades klicken Sie bitte auf den Button „Updates suchen“.<br>
