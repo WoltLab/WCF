@@ -54,13 +54,15 @@
 		<!--
 tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php \
-	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php
+	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php \
+	acp/update_com.woltlab.wcf_5.4_fixSqlLog.php
 		-->
 		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
 		
 		<!-- Checks that need to happen before the upgrade starts. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_fixSqlLog.php</instruction>
 
 		<!--
 tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
