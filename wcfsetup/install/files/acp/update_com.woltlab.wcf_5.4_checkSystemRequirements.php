@@ -47,14 +47,25 @@ if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
     throw new \RuntimeException($message);
 }
 
+if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+    $webpRemark = ' Dies ist eine Standardfunktion von %s, die eingesetzte Version dieser PHP-Erweiterung ist aber entweder stark veraltet oder unvollst&auml;ndig. Bitte wenden Sie sich an Ihren Webhoster oder Systemadministrator, um diesen Fehler zu korrigieren.';
+} else {
+    $webpRemark = ' This is a default feature of %s, but the used version of this PHP extension is either heavily outdated or incomplete. Please contact your hosting provider or system administrator to fix this error.';
+}
+
 if (
-    \extension_loaded('imagick')
+    \IMAGE_ADAPTER_TYPE === 'imagick'
+    && \extension_loaded('imagick')
     && !\in_array('WEBP', \Imagick::queryFormats())
 ) {
     if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-        $message = "Unterstützung für WebP-Grafiken in Imagick fehlt";
+        $message = "Unterstützung für WebP-Grafiken in Imagick fehlt"
+            . \sprintf($webpRemark, 'Imagick')
+            . "<br><br>Alternativ stellen Sie bitte die Grafik-Bibliothek in den Optionen auf GD um und versuchen es erneut.";
     } else {
-        $message = "Support for WebP images in Imagick missing";
+        $message = "Support for WebP images in Imagick missing"
+            . \sprintf($webpRemark, 'Imagick')
+            . "<br><br>Alternatively please set the graphics library in the options to GD and retry this process.";
     }
 
     throw new \RuntimeException($message);
@@ -65,9 +76,11 @@ if (
     && empty(\gd_info()['WebP Support'])
 ) {
     if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-        $message = "Unterstützung für WebP-Grafiken in GD fehlt";
+        $message = "Unterstützung für WebP-Grafiken in GD fehlt"
+            . \sprintf($webpRemark, 'GD');
     } else {
-        $message = "Support for WebP images in GD missing";
+        $message = "Support for WebP images in GD missing"
+            . \sprintf($webpRemark, 'GD');
     }
 
     throw new \RuntimeException($message);
