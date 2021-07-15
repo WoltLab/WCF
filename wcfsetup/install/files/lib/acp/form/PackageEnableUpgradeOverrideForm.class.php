@@ -92,13 +92,18 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 		$neededPhpVersion = '7.2.24';
 		if (!\version_compare($phpVersion, $neededPhpVersion, '>=')) {
 			if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-				$message = "Ihre PHP-Version '{$phpVersion}' ist unzureichend f&uuml;r die Installation dieser Software. PHP-Version {$neededPhpVersion} oder h&ouml;her wird ben&ouml;tigt.";
+				$title = 'Veraltete PHP-Version';
+				$description = "Ihre PHP-Version '{$phpVersion}' ist unzureichend f&uuml;r die Installation dieser Software. PHP-Version {$neededPhpVersion} oder h&ouml;her wird ben&ouml;tigt.";
 			}
 			else {
-				$message = "Your PHP version '{$phpVersion}' is insufficient for installation of this software. PHP version {$neededPhpVersion} or greater is required.";
+				$title = 'Outdated PHP Version';
+				$description = "Your PHP version '{$phpVersion}' is insufficient for installation of this software. PHP version {$neededPhpVersion} or greater is required.";
 			}
 
-			$issues[] = $message;
+			$issues[] = [
+				'title' => $title,
+				'description' => $description,
+			];
 		}
 
 		$sqlVersion = WCF::getDB()->getVersion();
@@ -119,25 +124,46 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 
 		if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
 			if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-				$message = "Ihre {$sqlFork}-Version '{$sqlVersion}' ist unzureichend f&uuml;r die Installation dieser Software. {$sqlFork}-Version {$neededSqlVersion} oder h&ouml;her wird ben&ouml;tigt.";
+				$title = "Veraltete {$sqlFork}-Version";
+				$description = "Ihre {$sqlFork}-Version '{$sqlVersion}' ist unzureichend f&uuml;r die Installation dieser Software. {$sqlFork}-Version {$neededSqlVersion} oder h&ouml;her wird ben&ouml;tigt.";
 			} else {
-				$message = "Your {$sqlFork} version '{$sqlVersion}' is insufficient for installation of this software. {$sqlFork} version {$neededSqlVersion} or greater is required.";
+				$title = "Outdated {$sqlFork} Version";
+				$description = "Your {$sqlFork} version '{$sqlVersion}' is insufficient for installation of this software. {$sqlFork} version {$neededSqlVersion} or greater is required.";
 			}
 
-			$issues[] = $message;
+			$issues[] = [
+				'title' => $title,
+				'description' => $description,
+			];
+		}
+
+		if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+			$webpRemark = ' Dies ist eine Standardfunktion von %s, die eingesetzte Version dieser PHP-Erweiterung ist aber entweder stark veraltet oder unvollst&auml;ndig. Bitte wenden Sie sich an Ihren Webhoster oder Systemadministrator, um diesen Fehler zu korrigieren.';
+		} else {
+			$webpRemark = ' This is a default feature of %s, but the used version of this PHP extension is either heavily outdated or incomplete. Please contact your hosting provider or system administrator to fix this error.';
 		}
 
 		if (
-			\extension_loaded('imagick')
+			\IMAGE_ADAPTER_TYPE === 'imagick'
+			&& \extension_loaded('imagick')
 			&& !\in_array('WEBP', \Imagick::queryFormats())
 		) {
+			$title = '';
+			$description = '';
 			if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-				$message = "Unterstützung für WebP-Grafiken in Imagick fehlt";
+				$title = "Unterstützung für WebP-Grafiken in Imagick fehlt";
+				$description = \sprintf($webpRemark, 'Imagick')
+					. "<br><br>Alternativ stellen Sie bitte die Grafik-Bibliothek in den Optionen auf GD um und versuchen es erneut.";
 			} else {
-				$message = "Support for WebP images in Imagick missing";
+				$title = "Support for WebP images in Imagick is missing";
+				$description = \sprintf($webpRemark, 'Imagick')
+					. "<br><br>Alternatively please set the graphics library in the options to GD and retry this process.";
 			}
 
-			$issues[] = $message;
+			$issues[] = [
+				'title' => $title,
+				'description' => $description,
+			];
 		}
 
 		if (
@@ -145,12 +171,17 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm {
 			& empty(\gd_info()['WebP Support'])
 		) {
 			if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-				$message = "Unterstützung für WebP-Grafiken in GD fehlt";
+				$title = "Unterstützung für WebP-Grafiken in GD fehlt";
+				$description = \sprintf($webpRemark, 'GD');
 			} else {
-				$message = "Support for WebP images in GD missing";
+				$title = "Support for WebP images in GD is missing";
+				$description = \sprintf($webpRemark, 'GD');
 			}
 
-			$issues[] = $message;
+			$issues[] = [
+				'title' => $title,
+				'description' => $description,
+			];
 		}
 
 		return $issues;

@@ -1977,6 +1977,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 {/implode}]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Upgrade to WoltLab Suite {$version}]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrading to the New Version]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.issues"><![CDATA[The following issues currently prevent an upgrade:]]></item>
 		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[New Version Available!<br><br>The new WoltLab Suite {$version} is available for installation. We have provided a guide with the instructions for the upgrade in our <a href="https://manual.woltlab.com/en/updates/#upgrading-woltlab-suite-52-to-53" class="externalURL">manual</a>.<br>
 <br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Validate the system requirements to begin the upgrade</a>]]></item>
