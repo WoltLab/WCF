@@ -48,6 +48,10 @@ $sql = "SELECT  DISTINCT userID
                     SELECT  userID
                     FROM    wcf" . WCF_N . "_user_multifactor
                     WHERE   objectTypeID = ?
+                )
+            AND userID IN (
+                    SELECT  userID
+                    FROM    wcf" . WCF_N . "_user
                 )";
 $statement = WCF::getDB()->prepareStatement($sql, 30);
 $statement->execute([
