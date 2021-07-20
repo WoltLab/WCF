@@ -386,9 +386,10 @@ class WCFSetup extends WCF
         if (
             ImagickImageAdapter::isSupported()
             && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
+            && ImagickImageAdapter::supportsWebp()
         ) {
             $system['graphicsLibrary'] = [
-                'result' => ImagickImageAdapter::supportsWebp(),
+                'result' => true,
                 'value' => 'ImageMagick',
             ];
         } elseif (GDImageAdapter::isSupported()) {
@@ -1337,11 +1338,15 @@ class WCFSetup extends WCF
         $factory = new ACPSessionFactory();
         $factory->load();
 
+        $useImagick = ImagickImageAdapter::isSupported()
+            && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
+            && ImagickImageAdapter::supportsWebp();
+
         SessionHandler::getInstance()->changeUser($admin);
         SessionHandler::getInstance()->register('masterPassword', 1);
         SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
         SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
-        SessionHandler::getInstance()->register('__wcfSetup_imagick', ImagickImageAdapter::isSupported());
+        SessionHandler::getInstance()->register('__wcfSetup_imagick', $useImagick);
         SessioNHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
 

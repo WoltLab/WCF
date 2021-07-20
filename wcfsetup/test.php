@@ -347,18 +347,16 @@ function checkResult() {
 	foreach ($requiredExtensions as $extension) {
 		if (!extension_loaded($extension)) return false;
 	}
-	
-	if (!extension_loaded('gd') && !extension_loaded('imagick')) return false;
 
-	if (extension_loaded('imagick') && !\in_array('WEBP', \Imagick::queryFormats())) {
-		return false;
+	if (extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) {
+		return true;
 	}
 
-	if (extension_loaded('gd') && empty(\gd_info()['WebP Support'])) {
-		return false;
+	if (extension_loaded('gd') && !empty(\gd_info()['WebP Support'])) {
+		return true;
 	}
 	
-	return true;
+	return false;
 }
 function checkInstallFile() {
 	return @file_exists('install.php');
@@ -392,12 +390,8 @@ function checkOpcache() {
 				<?php }
 			} ?>
 			
-			<?php if (extension_loaded('imagick')) { ?>
-				<?php if (\in_array('WEBP', \Imagick::queryFormats())) { ?>
-					<li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
-				<?php } else { ?>
-					<li class="failure"><?=getPhrase('php_extension_gd_or_imagick_webp_failure', ['Imagick'])?></li>
-				<?php } ?>
+			<?php if (extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) { ?>
+				<li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
 			<?php } else if (extension_loaded('gd')) { ?>
 				<?php if (!empty(\gd_info()['WebP Support'])) { ?>
 					<li class="success"><?=getPhrase('php_extension_success', ['GD'])?></li>
