@@ -26,6 +26,17 @@ foreach ($styleList as $style) {
     }
 
     $styleEditor = new StyleEditor($style);
+
+    // If the cover photo does not exist ...
+    if (!\file_exists($style->getCoverPhotoLocation(false))) {
+        // ... then the database information is wrong and we clear the cover photo.
+        $styleEditor->update([
+            'coverPhotoExtension' => '',
+        ]);
+
+        continue;
+    }
+
     $result = $styleEditor->createCoverPhotoVariant();
     if ($result === null) {
         continue;
