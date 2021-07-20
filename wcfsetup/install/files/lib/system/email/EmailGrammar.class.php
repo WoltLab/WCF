@@ -86,9 +86,121 @@ final class EmailGrammar
      * @param string $header Header to encode
      * @return  string          Encoded header
      */
-    public static function encodeQuotedPrintableHeader($header)
+    public static function encodeQuotedPrintableHeader($header, bool $isAtom = true)
     {
-        return \mb_encode_mimeheader($header, "UTF-8", "Q", "\r\n");
+        $addChunkHeader = static function ($chunk) {
+            return \sprintf(
+                "=?%s?%s?%s?=",
+                'UTF-8',
+                'Q',
+                $chunk
+            );
+        };
+        $mustBeEncoded = static function ($character) use ($isAtom) {
+            // Check for characters that always must be encoded.
+            if (\ord($character) < 0x20 || \ord($character) >= 0x7f) {
+                return true;
+            }
+            if (\ord($character) == 0x20) {
+                return true;
+            }
+            if (\in_array($character, ["=", "?", "_"])) {
+                return true;
+            }
+
+            // In non-atoms every character is acceptable.
+            if (!$isAtom) {
+                return false;
+            }
+
+            if (\preg_match('/^[a-zA-Z0-9]$/', $character)) {
+                return false;
+            }
+            if (\in_array($character, ["!", "*", "+", "-", "/", "="])) {
+                return false;
+            }
+
+            // Every other character is unacceptable.
+            return true;
+        };
+
+        // RFC 2047#2
+        // > An 'encoded-word' may not be more than 75 characters long, including
+        // > 'charset', 'encoding', 'encoded-text', and delimiters.
+        //
+        // Use 70 as a nice round number that leaves some buffer space.
+        $maximumLength = 70;
+
+        // If the raw data already exceeds the maximum length we always encode
+        // to keep the encoder simple. Otherwise we must carefully handle spaces
+        // across linebreaks without encoding, while the encoder already contains
+        // the necessary logic.
+        $needEncoding = \strlen($header) > $maximumLength;
+
+        if (!$needEncoding) {
+            // Check if the raw data contains characters that need to be encoded.
+            // If it does we simply encode *everything*, instead of attempting to
+            // encode just the words with special characters.
+            //
+            // This keeps the encoder simple with regard to handling of spaces, as
+            // spaces in-between two encoded words will be ignored (and thus must
+            // be part of the encoded data), whereas spaces in other places will
+            // actually result in spaces.
+            $words = \explode(' ', $header);
+            foreach ($words as $word) {
+                for ($i = 0, $characterCount = \strlen($word); $i < $characterCount; $i++) {
+                    $character = $word[$i];
+
+                    if ($mustBeEncoded($character)) {
+                        $needEncoding = true;
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        $result = '';
+        if ($needEncoding) {
+            $line = '';
+            for ($i = 0, $characterCount = \strlen($header); $i < $characterCount; $i++) {
+                $character = $header[$i];
+
+                $encodedCharacter = $character;
+                if ($mustBeEncoded($character)) {
+                    // RFC 2047#4.2
+                    // > The 8-bit hexadecimal value 20 (e.g., ISO-8859-1 SPACE) may be represented
+                    // > as "_" (underscore, ASCII 95.).
+                    if (\ord($character) == 0x20) {
+                        $encodedCharacter = '_';
+                    } else {
+                        $encodedCharacter = \sprintf('=%02X', \ord($character));
+                    }
+                }
+
+                // Check if we would exceed the maximum length after adding the encoded character.
+                // If we do we must insert a line break and start a new line.
+                if (\strlen($addChunkHeader($line . $encodedCharacter)) > $maximumLength) {
+                    if ($result !== '') {
+                        $result .= "\r\n  ";
+                    }
+                    $result .= $addChunkHeader($line);
+                    $line = '';
+                }
+
+                $line .= $encodedCharacter;
+            }
+
+            // Add the final chunk of the encoded data.
+            if ($result !== '') {
+                $result .= "\r\n  ";
+            }
+            $result .= $addChunkHeader($line);
+        } else {
+            // If no encoding is required we can simply pass through the original input.
+            $result = $header;
+        }
+
+        return $result;
     }
 
     /**

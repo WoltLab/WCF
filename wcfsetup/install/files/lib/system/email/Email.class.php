@@ -527,7 +527,7 @@ class Email
             $headers[] = ['cc', \implode(",\r\n   ", $cc)];
         }
         if ($this->getSubject()) {
-            $headers[] = ['subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject())];
+            $headers[] = ['subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject(), false)];
         } else {
             throw new \LogicException("Cannot generate message headers, you must specify a subject.");
         }
