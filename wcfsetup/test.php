@@ -348,15 +348,20 @@ function checkResult() {
 		if (!extension_loaded($extension)) return false;
 	}
 
+	$hasSufficientImageLibrary = false;
 	if (extension_loaded('imagick') && \in_array('WEBP', \Imagick::queryFormats())) {
-		return true;
+		$hasSufficientImageLibrary = true;
 	}
 
 	if (extension_loaded('gd') && !empty(\gd_info()['WebP Support'])) {
-		return true;
+		$hasSufficientImageLibrary = true;
+	}
+
+	if (!$hasSufficientImageLibrary) {
+		return false;
 	}
 	
-	return false;
+	return true;
 }
 function checkInstallFile() {
 	return @file_exists('install.php');
