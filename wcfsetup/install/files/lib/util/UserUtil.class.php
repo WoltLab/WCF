@@ -145,8 +145,8 @@ final class UserUtil
      */
     public static function getIpAddress()
     {
-        $REMOTE_ADDR = '';
-        if (isset($_SERVER['REMOTE_ADDR'])) {
+        $REMOTE_ADDR = '::';
+        if (!empty($_SERVER['REMOTE_ADDR'])) {
             $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
         }
 
