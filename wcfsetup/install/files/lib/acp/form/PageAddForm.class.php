@@ -351,6 +351,12 @@ class PageAddForm extends AbstractForm
         if (isset($_POST['invertPermissions'])) {
             $this->invertPermissions = $_POST['invertPermissions'];
         }
+
+        // If the page is allowed by all, the permission cannot be inverted.
+        $outputAclValues = SimpleAclHandler::getInstance()->getOutputValues($this->aclValues);
+        if ($outputAclValues['allowAll']) {
+            $this->invertPermissions = 0;
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ namespace wcf\system\html\output\node;
 
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
+use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\util\StringUtil;
@@ -36,6 +37,7 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
                 $this->outputType === 'text/html'
                 && !empty($attribute)
                 && MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $attribute) !== null
+                && !($htmlNodeProcessor->getHtmlProcessor() instanceof AmpHtmlOutputProcessor)
             ) {
                 $enableUgc = true;
                 $processor = $htmlNodeProcessor->getHtmlProcessor();

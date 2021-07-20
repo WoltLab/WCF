@@ -126,7 +126,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
             $data['height'] = $imageData['height'];
             $data['fileType'] = $imageData['mimeType'];
 
-            if (\preg_match('~^image/(gif|jpe?g|png)$~i', $data['fileType'])) {
+            if (\preg_match('~^image/(gif|jpe?g|png|webp)$~i', $data['fileType'])) {
                 $data['isImage'] = 1;
             }
         }

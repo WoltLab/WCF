@@ -56,7 +56,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
             }
             const invertPermissionRadioButton = document.getElementById(this.prefix + "invertPermissions");
             if (invertPermissionRadioButton) {
-                this.invertPermissions(!!invertPermissionRadioButton.value);
+                this.invertPermissions(invertPermissionRadioButton.checked);
             }
             Listener_1.default.trigger();
         }
