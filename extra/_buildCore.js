@@ -90,6 +90,11 @@ async function compile(destination, files, overrides) {
 							content: JSON.stringify(sourceMap),
 							url: `${name}.js.map`,
 							includeSources: true,
+						},
+						compress: {
+							global_defs: {
+								COMPILER_TARGET_DEFAULT: COMPILER_TARGET_DEFAULT,
+							},
 						}
 					}
 				);
