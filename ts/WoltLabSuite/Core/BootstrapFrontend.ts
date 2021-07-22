@@ -50,6 +50,8 @@ function _initUserPopover(): void {
   });
 }
 
+declare const COMPILER_TARGET_DEFAULT: boolean;
+
 /**
  * Bootstraps general modules and frontend exclusive ones.
  */
@@ -85,7 +87,7 @@ export function setup(options: BoostrapOptions): void {
     BackgroundQueue.invoke();
   }
 
-  if (globalThis.COMPILER_TARGET_DEFAULT) {
+  if (COMPILER_TARGET_DEFAULT) {
     UiUserIgnore.init();
   }
 

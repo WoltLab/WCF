@@ -68,7 +68,7 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
             // invoke the queue roughly every 10th request or on demand
             BackgroundQueue.invoke();
         }
-        if (globalThis.COMPILER_TARGET_DEFAULT) {
+        if (COMPILER_TARGET_DEFAULT) {
             UiUserIgnore.init();
         }
         UiMessageUserConsent.init();
