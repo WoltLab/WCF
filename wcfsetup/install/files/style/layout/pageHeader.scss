@@ -1,4 +1,5 @@
 .pageHeaderContainer {
+	background-color: $wcfHeaderBackground;
 	color: $wcfHeaderText;
 	z-index: 100;
 
@@ -16,10 +17,6 @@
 
 	/* reserved space for `.pageHeaderPanel` */
 	padding-top: 50px;
-
-	@include screen-lg {
-		background-color: $wcfHeaderBackground;
-	}
 }
 
 .pageHeaderPanel {
