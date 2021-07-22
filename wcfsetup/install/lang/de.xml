@@ -3550,7 +3550,7 @@ Dateianhänge:
 		<item name="wcf.contact.recipientID"><![CDATA[Empfänger]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
-		<item name="wcf.contact.success"><![CDATA[Ihre Nachricht wurde erfolgreich versandt.]]></item>
+		<item name="wcf.contact.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht wurde erfolgreich versandt.]]></item>
 		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich habe die <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a> gelesen und stimme dieser zu. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	<category name="wcf.date">
@@ -4650,7 +4650,7 @@ Dateianhänge:
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Kennwort vergessen auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anders) hat{else}Sie (oder jemand anders) haben{/if} angegeben das Kennwort für das Benutzerkonto
+{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anderes) hat{else}Sie (oder jemand anderes) haben{/if} angegeben, das Kennwort für das Benutzerkonto
 {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] vergessen zu haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein{else}Sie können Ihr{/if} Kennwort
 nach einem Klick auf den folgenden Link ändern:
 
@@ -4660,7 +4660,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Kennwort nicht 
 am {@$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.]]></item>
 		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anders) hat{else}Sie (oder jemand anders) haben{/if} angegeben das
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anderes) hat{else}Sie (oder jemand anderes) haben{/if} angegeben, das
 Kennwort für das Benutzerkonto {$mailbox->getUser()->username} auf der Seite <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> vergessen zu
 haben:</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Kennwort ändern]]></item>
