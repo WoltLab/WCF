@@ -404,7 +404,7 @@ abstract class UiPageMenuAbstract {
       return;
     }
 
-    const isLink = item.getAttribute('href') !== "#";
+    const isLink = item.getAttribute("href") !== "#";
     const parentItemList = parent.parentElement as HTMLOListElement;
     let itemTitle = itemList.dataset.title;
 
