@@ -146,7 +146,7 @@ final class IpAddress
             while (\count($quadruplets) < 8) {
                 $quadruplets[] = '0';
             }
-            
+
             $result = [];
             for ($i = 0; $i < 128; $i += 16) {
                 $quadruplet = \array_shift($quadruplets);
