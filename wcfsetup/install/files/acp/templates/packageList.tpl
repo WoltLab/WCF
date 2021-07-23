@@ -119,7 +119,7 @@
 								></span>
 							{/if}
 						</td>
-						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
+						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$package->author}</a>{else}{$package->author}{/if}</td>
 						<td class="columnText">{$package->packageVersion}</td>
 						<td class="columnDate">{@$package->updateDate|time}</td>
 						
