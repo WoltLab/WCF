@@ -76,8 +76,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Controller/Captcha",
                     },
                 },
             };
-            if (Captcha_1.default.has("commentAdd")) {
-                const data = Captcha_1.default.getData("commentAdd");
+            const captchaId = "commentAdd";
+            if (Captcha_1.default.has(captchaId)) {
+                const data = Captcha_1.default.getData(captchaId);
+                Captcha_1.default.delete(captchaId);
                 if (data instanceof Promise) {
                     void data.then((data) => {
                         parameters = Core.extend(parameters, data);
