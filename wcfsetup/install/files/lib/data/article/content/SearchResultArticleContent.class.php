@@ -3,6 +3,7 @@
 namespace wcf\data\article\content;
 
 use wcf\data\search\ISearchResultObject;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchResultTextParser;
 
@@ -71,7 +72,17 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
      */
     public function getFormattedMessage()
     {
-        $message = SearchResultTextParser::getInstance()->parse($this->getDecoratedObject()->getFormattedContent());
+
+        $processor = new HtmlOutputProcessor();
+        $processor->setOutputType('text/simplified-html');
+        $processor->process(
+            $this->content,
+            'com.woltlab.wcf.article.content',
+            $this->articleContentID,
+            false,
+            $this->languageID
+        );
+        $message = SearchResultTextParser::getInstance()->parse($processor->getHtml());
 
         if ($this->getTeaserImage()) {
             return '<div class="box96">' . $this->getTeaserImage()->getElementTag(96) . '<div>' . $message . '</div></div>';
