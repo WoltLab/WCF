@@ -72,7 +72,6 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
      */
     public function getFormattedMessage()
     {
-
         $processor = new HtmlOutputProcessor();
         $processor->setOutputType('text/simplified-html');
         $processor->process(
