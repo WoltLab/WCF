@@ -2100,6 +2100,14 @@
 						
 						return;
 					}
+					else {
+						var next = this.caret.next(node);
+						if (next && next.nodeName === 'BR') {
+							this.caret.before(next);
+
+							return;
+						}
+					}
 					
 					// inline tag
 					var textNode = document.createTextNode('\u200B');
