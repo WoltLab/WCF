@@ -4691,6 +4691,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und Ähnliches werden nicht gelöscht.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
+		<item name="wcf.user.quit.active"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {$__wcf->user->quitStarted+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung in der <a href="{link controller='AccountManagement'}{/link}">Benutzerkonto-Verwaltung</a> abbrechen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
 		<item name="wcf.user.password.error.notSecure"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wähle{else}wählen Sie{/if} ein sichereres Kennwort aus.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzername wurde erfolgreich geändert.]]></item>

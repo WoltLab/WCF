@@ -4689,6 +4689,7 @@ the website <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|language}</a>.
 		<item name="wcf.user.quit.description"><![CDATA[Note: Posts, attachments, and similar content will remain even after your account has been deleted.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[Your user account will be deleted on {TIME_NOW+7*86400|date}. During this time period you can abort the deletion on this page.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[The account deletion has been aborted.]]></item>
+		<item name="wcf.user.quit.active"><![CDATA[Your user account will be deleted on {$__wcf->user->quitStarted+7*86400|date}. During this time period you can abort the deletion within the <a href="{link controller='AccountManagement'}{/link}">Account Management Form</a>.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Verify New Email Address]]></item>
 		<item name="wcf.user.password.error.notSecure"><![CDATA[Please select a more secure password.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[The username has been changed.]]></item>
