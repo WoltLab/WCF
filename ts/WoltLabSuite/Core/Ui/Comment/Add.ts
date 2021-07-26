@@ -99,8 +99,10 @@ class UiCommentAdd {
       },
     };
 
-    if (ControllerCaptcha.has("commentAdd")) {
-      const data = ControllerCaptcha.getData("commentAdd");
+    const captchaId = "commentAdd";
+    if (ControllerCaptcha.has(captchaId)) {
+      const data = ControllerCaptcha.getData(captchaId);
+      ControllerCaptcha.delete(captchaId);
       if (data instanceof Promise) {
         void data.then((data) => {
           parameters = Core.extend(parameters, data) as ArbitraryObject;
