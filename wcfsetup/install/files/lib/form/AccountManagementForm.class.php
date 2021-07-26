@@ -371,7 +371,7 @@ class AccountManagementForm extends AbstractForm
         $updateParameters = [];
 
         // quit
-        if (WCF::getSession()->getPermission('user.profile.canQuit')) {
+        if (WCF::getUser()->quitStarted || WCF::getSession()->getPermission('user.profile.canQuit')) {
             if (!WCF::getUser()->quitStarted && $this->quit == 1) {
                 $updateParameters['quitStarted'] = TIME_NOW;
                 $this->quitStarted = TIME_NOW;

@@ -167,7 +167,7 @@
 		</section>
 	{/if}
 	
-	{if $__wcf->getSession()->getPermission('user.profile.canQuit')}
+	{if $quitStarted || $__wcf->getSession()->getPermission('user.profile.canQuit')}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.quit{/lang}</h2>
 			
