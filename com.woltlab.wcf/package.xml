@@ -159,7 +159,5 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="file">files_update.tar</instruction>
 		
 		<instruction type="language" />
-
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.2_deleteInvalidSessions.php</instruction>
 	</instructions>
 </package>
