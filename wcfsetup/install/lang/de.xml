@@ -4926,17 +4926,17 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[Das Benutzerkonto <strong>{$user->username}</strong> ist mit der Mehrfaktor-Authentifizierung geschützt, es sind jedoch keine aktiven Verfahren verfügbar. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
 
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfallcode <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
 
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account-Sicherheit</a> verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account-Sicherheit</a> verwalten und dort neue Notfallcodes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Hallo {$setup->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfallcode „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}] verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfall-Code auf {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
-		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}] verwalten und dort neue Notfallcodes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfallcode auf {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfallcode]]></item>
+		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfallcode besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Aktive Notfallcodes]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>Unterhalb {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} den zuletzt generierten Satz an Notfallcodes für die Mehrfaktor-Authentifizierung. Durchgestrichene Notfallcodes wurden bereits verwendet und sind nicht mehr gültig. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} die fettgedruckte Nummer, um die Notfallcodes mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Notizen abzugleichen. {if LANGUAGE_USE_INFORMAL_VARIANT}Generiere neue Codes, falls deine Notizen{else}Generieren Sie neue Codes, falls Ihre Notizen{/if} nicht zu der angezeigten Liste passen.</p>]]></item>
@@ -4948,7 +4948,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 {if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
 </ul>]]></item>
 		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfallcodes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Einmalcode über E-Mail]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<small>{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jeder Anmeldung einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jeder Anmeldung einen Einmalcode an Ihre E-Mail-Adresse.{/if}</small>]]></item>
@@ -4988,9 +4988,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jeder Anmeldung den zusätzlichen Faktor benötigen.</p>
 <p><br></p>
-<p>Zusätzlich wurden Notfall-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
+<p>Zusätzlich wurden Notfallcodes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
 <p><br></p>
-<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}notiere oder speichere dir{else}notieren oder speichern Sie sich{/if} die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
+<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}notiere oder speichere dir{else}notieren oder speichern Sie sich{/if} die unterhalb angezeigten Notfallcodes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
 		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
 		<item name="wcf.user.security.multifactor.methods"><![CDATA[Verfahren]]></item>
 		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>

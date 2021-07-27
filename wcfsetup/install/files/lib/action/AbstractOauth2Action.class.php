@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\exception\NamedUserException;
@@ -27,6 +28,8 @@ use wcf\util\JSON;
 abstract class AbstractOauth2Action extends AbstractAction
 {
     private const STATE = self::class . "\0state_parameter";
+
+    private const PKCE = self::class . "\0pkce";
 
     /**
      * @var ClientInterface
@@ -97,6 +100,14 @@ abstract class AbstractOauth2Action extends AbstractAction
     abstract protected function supportsState(): bool;
 
     /**
+     * Whether to use PKCE (RFC 7636). Defaults to 'false'.
+     */
+    protected function usePkce(): bool
+    {
+        return false;
+    }
+
+    /**
      * Turns the access token response into an oauth user.
      */
     abstract protected function getUser(array $accessToken): OauthUser;
@@ -129,16 +140,26 @@ abstract class AbstractOauth2Action extends AbstractAction
      */
     protected function codeToAccessToken(string $code): array
     {
-        $request = new Request('POST', $this->getTokenEndpoint(), [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/x-www-form-urlencoded',
-        ], \http_build_query([
+        $payload = [
             'grant_type' => 'authorization_code',
             'client_id' => $this->getClientId(),
             'client_secret' => $this->getClientSecret(),
             'redirect_uri' => $this->getCallbackUrl(),
             'code' => $code,
-        ], '', '&', \PHP_QUERY_RFC1738));
+        ];
+
+        if ($this->usePkce()) {
+            if (!($verifier = WCF::getSession()->getVar(self::PKCE))) {
+                throw new StateValidationException('Missing PKCE verifier in session');
+            }
+
+            $payload['code_verifier'] = $verifier;
+        }
+
+        $request = new Request('POST', $this->getTokenEndpoint(), [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ], \http_build_query($payload, '', '&', \PHP_QUERY_RFC1738));
 
         try {
             $response = $this->getHttpClient()->send($request);
@@ -191,6 +212,14 @@ abstract class AbstractOauth2Action extends AbstractAction
             WCF::getSession()->register(self::STATE, $token);
 
             $parameters['state'] = $token;
+        }
+
+        if ($this->usePkce()) {
+            $verifier = Hex::encode(\random_bytes(32));
+            WCF::getSession()->register(self::PKCE, $verifier);
+
+            $parameters['code_challenge'] = Base64UrlSafe::encodeUnpadded(\hash('sha256', $verifier, true));
+            $parameters['code_challenge_method'] = 'S256';
         }
 
         $url = $this->getAuthorizeUrl() . '?' . \http_build_query($parameters, '', '&');
