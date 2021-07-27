@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.1</version>
-		<date>2021-07-15</date>
+		<version>5.4.2</version>
+		<date>2021-07-27</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -154,7 +154,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.4.1">
-		<instruction type="script">acp/update_com.woltlab.wcf_5.4.2_deleteInvalidSessions.php</instruction>
+	<instructions type="update" fromversion="5.4.2">
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</instruction>
 	</instructions>
 </package>

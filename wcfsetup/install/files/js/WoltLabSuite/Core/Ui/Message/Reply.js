@@ -80,6 +80,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             const captchaId = target.dataset.captchaId;
             if (Captcha_1.default.has(captchaId)) {
                 const data = Captcha_1.default.getData(captchaId);
+                Captcha_1.default.delete(captchaId);
                 if (data instanceof Promise) {
                     void data.then((data) => {
                         parameters = Core.extend(parameters, data);
