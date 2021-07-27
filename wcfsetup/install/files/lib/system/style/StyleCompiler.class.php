@@ -592,13 +592,6 @@ EOT;
         unset($value);
 
         $variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
-        if (!empty($variables['wcfFontFamilyGoogle']) && $variables['wcfFontFamilyGoogle'] !== '~""') {
-            // The SCSS parser attempts to evaluate the variables, causing issues with font names that
-            // include logical operators such as "And" or "Or".
-            $variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
-
-            $variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
-        }
 
         // Define the font family set for the OS default fonts. This needs to be happen statically to
         // allow modifications in the future in case of changes.
@@ -606,6 +599,14 @@ EOT;
 
         if ($variables['wcfFontFamily'] === self::SYSTEM_FONT_NAME) {
             $variables['wcfFontFamily'] = self::SYSTEM_FONT_FAMILY;
+        }
+
+        if (!empty($variables['wcfFontFamilyGoogle']) && $variables['wcfFontFamilyGoogle'] !== '~""') {
+            // The SCSS parser attempts to evaluate the variables, causing issues with font names that
+            // include logical operators such as "And" or "Or".
+            $variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
+
+            $variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
         }
 
         // add options as SCSS variables
