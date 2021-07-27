@@ -192,7 +192,15 @@ final class StyleCompiler extends SingletonFactory
                 $variables
             );
 
-            $this->writeCss(FileUtil::addTrailingSlash($testFileDir) . 'style', $css);
+            $preloadManifest = $this->buildPreloadManifest(
+                $this->extractPreloadRequests($css)
+            );
+
+            $this->writeCss(
+                FileUtil::addTrailingSlash($testFileDir) . 'style',
+                $css,
+                $preloadManifest
+            );
         } catch (\Exception $e) {
             return $e;
         }
