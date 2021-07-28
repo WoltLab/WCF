@@ -3447,7 +3447,7 @@ Errors are:
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
 
-„{@$name}“ sent you a message on {@PAGE_TITLE|language} via the contact form:
+“{@$name}” sent you a message on {@PAGE_TITLE|language} via the contact form:
 
 Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
@@ -3464,7 +3464,7 @@ Attachments:
 {/if}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
 
-<p>„{$name}“ sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
+<p>“{$name}” sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
 <p><br></p>
 <p>Email: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
@@ -4004,9 +4004,9 @@ Attachments:
 		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[The entered text is no valid email address.]]></item>
 		<item name="wcf.form.field.email.error.maximumLength"><![CDATA[The entered email address{if $language|isset} for language “{$language}”{/if} contains {#$length} character{if $length !== 1}s{/if} but it may not be longer than {#$maximumLength} character{if $maximumLength !== 1}s{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.maximumFilesize"><![CDATA[The file “{$file->getFilename()}” may have a maximum size of {$maximumFilesize|filesize}.]]></item>
-		<item name="wcf.form.field.upload.error.minimumImageWidth"><![CDATA[The file „{$file->getFilename()}“ may have a minimum width of {#$minimumImageWidth} pixels.]]></item>
+		<item name="wcf.form.field.upload.error.minimumImageWidth"><![CDATA[The file “{$file->getFilename()}” may have a minimum width of {#$minimumImageWidth} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.maximumImageWidth"><![CDATA[The file “{$file->getFilename()}” may have a maximum width of {#$maximumImageWidth} pixels.]]></item>
-		<item name="wcf.form.field.upload.error.minimumImageHeight"><![CDATA[The file „{$file->getFilename()}“ may have a minimum height of {#$minimumImageHeight} pixels.]]></item>
+		<item name="wcf.form.field.upload.error.minimumImageHeight"><![CDATA[The file “{$file->getFilename()}” may have a minimum height of {#$minimumImageHeight} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.maximumImageHeight"><![CDATA[The file “{$file->getFilename()}” may have a maximum height of {#$maximumImageHeight} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.minimum"><![CDATA[You must upload at least {if $minimum > 1}{#$minimum} files{else}one file{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.maximum"><![CDATA[You can upload a maximum of {if $maximum > 1}{#$maximum} files{else}one file{/if}.]]></item>
@@ -5519,7 +5519,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 {@$message}]]></item>
 		<item name="wcf.user.mail.mail.html"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
-<p>„{$username}“ sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
+<p>“{$username}” sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
 
 <p>{@$message|newlineToBreak}</p>]]></item>
 	</category>
