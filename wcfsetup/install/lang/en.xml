@@ -5009,7 +5009,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 <p>You also received a list of emergency codes to use when your second factor becomes unavailable. <b>Did you store these emergency codes securely?</b> If you forgot you can do now by generating new codes in the <a href="{link controller='MultifactorManage' object=$backupMethod isHtmlEmail=true}{/link}">Emergency Code Management</a>.</p>]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.body.plain"><![CDATA[Dear {$user->username},
 
-You successfully enabled multi-factor authentication using the „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ method. Going forward you will need to have your second factor handy for every login.
+You successfully enabled multi-factor authentication using the “{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}” method. Going forward you will need to have your second factor handy for every login.
 
 You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|language}]]></item>
