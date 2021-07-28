@@ -183,7 +183,7 @@
 			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
 				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
 					<li>
-						<a href="{$articleContent->getLink()}" class="button shareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
+						<a href="{$articleContent->getLink()}" class="button wsShareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
 							<span class="icon icon16 fa-share-alt"></span> <span>{lang}wcf.message.share{/lang}</span>
 						</a>
 					</li>

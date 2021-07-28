@@ -153,7 +153,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         }
     }
     function registerButtons() {
-        document.querySelectorAll("a.shareButton").forEach((shareButton) => {
+        document.querySelectorAll("a.wsShareButton").forEach((shareButton) => {
             if (!shareButtons.has(shareButton)) {
                 shareButton.addEventListener("click", (ev) => openDialog(ev));
                 shareButtons.add(shareButton);

@@ -14,7 +14,7 @@
 {capture assign='contentHeaderNavigation'}
 	{if $page->showShareButtons()}
 		<li>
-			<a href="{$content->getLink()}" class="button shareButton jsOnly" data-link-title="{$content->getTitle()}">
+			<a href="{$content->getLink()}" class="button wsShareButton jsOnly" data-link-title="{$content->getTitle()}">
 				<span class="icon icon16 fa-share-alt"></span> <span>{lang}wcf.message.share{/lang}</span>
 			</a>
 		</li>
