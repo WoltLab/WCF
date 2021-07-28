@@ -819,17 +819,13 @@ class TemplateScriptingCompiler {
 		$foreachData['itemVar'] = $itemVar;
 		
 		$phpCode .= "\$this->foreachVars['{$hash}'] = [];\n";
-		$phpCode .= "if (isset({$itemVar})) {\n";
-		$phpCode .= "\$this->foreachVars['{$hash}']['item'] = {$itemVar};\n";
-		$phpCode .= "}\n";
+		$phpCode .= "\$this->foreachVars['{$hash}']['item'] = {$itemVar} ?? null;\n";
 		
 		if (isset($args['key'])) {
 			$keyVar = mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'];
 			$foreachData['keyVar'] = $keyVar;
 			
-			$phpCode .= "if (isset({$keyVar})) {\n";
-			$phpCode .= "\$this->foreachVars['{$hash}']['key'] = {$keyVar};\n";
-			$phpCode .= "}\n";
+			$phpCode .= "\$this->foreachVars['{$hash}']['key'] = {$keyVar} ?? null;\n";
 			
 			$phpCode .= "foreach (".$foreachHash." as {$keyVar} => {$itemVar}) {\n";
 		}
@@ -862,13 +858,11 @@ class TemplateScriptingCompiler {
 		// unset `item` and `key` variables and restore their sandboxed values
 		$phpCode = "<?php }\n";
 		$phpCode .= "unset({$foreachData['itemVar']});";
-		$phpCode .= "if (isset(\$this->foreachVars['{$foreachData['hash']}']['item'])) {\n";
 		$phpCode .= "{$foreachData['itemVar']} = \$this->foreachVars['{$foreachData['hash']}']['item'];\n";
-		$phpCode .= "}\n";
 		
 		if (isset($foreachData['keyVar'])) {
 			$phpCode .= "unset({$foreachData['keyVar']});";
-			$phpCode .= "if (isset(\$this->foreachVars['{$foreachData['hash']}']['key'])) {\n";
+			$phpCode .= "if (array_key_exists('key', \$this->foreachVars['{$foreachData['hash']}'])) {\n";
 			$phpCode .= "{$foreachData['keyVar']} = \$this->foreachVars['{$foreachData['hash']}']['key'];\n";
 			$phpCode .= "}\n";
 		}
