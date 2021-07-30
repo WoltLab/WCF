@@ -8,6 +8,7 @@ use wcf\data\IToggleAction;
 use wcf\data\IToggleContainerAction;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\TDatabaseObjectToggle;
+use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -57,6 +58,17 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
         }
 
         $returnValue = parent::delete();
+
+        // delete acl
+        foreach ($this->getObjects() as $categoryEditor) {
+            $aclObjectTypeName = $categoryEditor->getObjectType()->getProcessor()->getObjectTypeName('com.woltlab.wcf.acl');
+            if ($aclObjectTypeName) {
+                ACLHandler::getInstance()->removeValues(
+                    ACLHandler::getInstance()->getObjectTypeID($aclObjectTypeName),
+                    [$categoryEditor->categoryID]
+                );
+            }
+        }
 
         // delete language items
         if (!empty($this->objects)) {

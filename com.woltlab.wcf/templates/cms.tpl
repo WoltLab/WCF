@@ -17,7 +17,7 @@
 
 {capture assign='contentInteractionButtons'}
 	{if $page->showShareButtons()}
-		<a href="{$content->getLink()}" class="contentInteractionButton button small shareButton jsOnly" data-link-title="{$content->getTitle()}">{lang}wcf.message.share{/lang}</a>
+		<a href="{$content->getLink()}" class="contentInteractionButton button small wsShareButton jsOnly" data-link-title="{$content->getTitle()}">{lang}wcf.message.share{/lang}</a>
 	{/if}
 
 	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}

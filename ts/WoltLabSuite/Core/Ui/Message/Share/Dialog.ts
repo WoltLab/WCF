@@ -189,7 +189,7 @@ function openDialog(event: MouseEvent): void {
 }
 
 function registerButtons(): void {
-  document.querySelectorAll("a.shareButton").forEach((shareButton: HTMLElement) => {
+  document.querySelectorAll("a.shareButton,a.wsShareButton").forEach((shareButton: HTMLElement) => {
     if (!shareButtons.has(shareButton)) {
       shareButton.addEventListener("click", (ev) => openDialog(ev));
 
