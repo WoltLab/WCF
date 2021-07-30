@@ -32,7 +32,7 @@
 		
 		new FormBuilderFieldLabel(
 			'{@$field->getPrefixedId()}',
-			{if $field->getValue()}{@$field->getValue()}{else}null{/if},
+			{if $field->getValue()}'{$field->getValue()|encodeJS}'{else}null{/if},
 			{
 				forceSelection: {if $field->getLabelGroup()->forceSelection}true{else}false{/if}
 			}
