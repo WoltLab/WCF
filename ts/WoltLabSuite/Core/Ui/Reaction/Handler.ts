@@ -43,7 +43,7 @@ interface ElementData {
 
 interface AjaxResponse {
   returnValues: {
-    objectID: number | string;
+    objectID: number | string;
     objectType: string;
     reactions: ReactionStats;
     reactionTypeID: number;
