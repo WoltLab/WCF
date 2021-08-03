@@ -95,6 +95,9 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Dom/Util", 
             return [];
         }
         return attributes.map((attribute) => {
+            if (attribute === null) {
+                return "";
+            }
             return attribute.toString().replace(/^'(.*)'$/, "$1");
         });
     }
