@@ -524,7 +524,7 @@ class PackageUpdateDispatcher extends SingletonFactory
      */
     protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID)
     {
-        $excludedPackagesParameters = $optionalInserts = $requirementInserts = [];
+        $excludedPackagesParameters = $requirementInserts = [];
         $sql = "INSERT INTO wcf" . WCF_N . "_package_update
                             (packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
                 VALUES      (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -602,15 +602,6 @@ class PackageUpdateDispatcher extends SingletonFactory
                     }
                 }
 
-                if (isset($versionData['optionalPackages'])) {
-                    foreach ($versionData['optionalPackages'] as $optionalPackage) {
-                        $optionalInserts[] = [
-                            'packageUpdateVersionID' => $packageUpdateVersionID,
-                            'package' => $optionalPackage,
-                        ];
-                    }
-                }
-
                 if (isset($versionData['excludedPackages'])) {
                     foreach ($versionData['excludedPackages'] as $excludedIdentifier => $exclusion) {
                         $excludedPackagesParameters[] = [
@@ -675,21 +666,6 @@ class PackageUpdateDispatcher extends SingletonFactory
                     $requirement['packageUpdateVersionID'],
                     $requirement['package'],
                     $requirement['minversion'],
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        if (!empty($optionalInserts)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_optional
-                                (packageUpdateVersionID, package)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            WCF::getDB()->beginTransaction();
-            foreach ($optionalInserts as $requirement) {
-                $statement->execute([
-                    $requirement['packageUpdateVersionID'],
-                    $requirement['package'],
                 ]);
             }
             WCF::getDB()->commitTransaction();

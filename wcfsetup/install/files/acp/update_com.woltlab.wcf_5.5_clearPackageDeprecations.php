@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Clear the wcf1_package_(update_)?compatibility table.
+ * Clear the wcf1_package_(update_)?compatibility, wcf1_package_update_optional tables.
  *
  * see https://github.com/WoltLab/WCF/pull/4371
  *
@@ -18,5 +18,9 @@ $statement = WCF::getDB()->prepare($sql);
 $statement->execute();
 
 $sql = "DELETE FROM wcf1_package_update_compatibility";
+$statement = WCF::getDB()->prepare($sql);
+$statement->execute();
+
+$sql = "DELETE FROM wcf1_package_update_optional";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute();
