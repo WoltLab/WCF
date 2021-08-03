@@ -27,14 +27,12 @@
 						</div>
 					{/if}
 					
-					<h2 class="contentItemTitle">{$article->getTitle()}</h2>
+					<h2 class="contentItemTitle"><a href="{$article->getLink()}" class="contentItemTitleLink">{$article->getTitle()}</a></h2>
 					
 					<div class="contentItemDescription">
 						{@$article->getFormattedTeaser()}
 					</div>
 				</div>
-				
-				<a href="{$article->getLink()}" class="contentItemLinkShadow"></a>
 			</div>
 			
 			<div class="contentItemMeta">

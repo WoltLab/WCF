@@ -31,9 +31,27 @@
 
 .contentItemLink {
 	flex: 1 auto;
-	position: relative;
 }
 
+.contentItemTitleLink {
+	color: inherit;
+
+	&::before {
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+/* Deprecated: use contentItemTitleLink instead. */
 .contentItemLinkShadow {
 	bottom: 0;
 	left: 0;
