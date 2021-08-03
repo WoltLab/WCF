@@ -427,7 +427,7 @@ class DatabaseTableChangeProcessor {
 				foreach ($table->getForeignKeys() as $foreignKey) {
 					$matchingExistingForeignKey = null;
 					foreach ($existingForeignKeys as $existingForeignKey) {
-						if (empty(array_diff($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
+						if (empty(array_diff_assoc($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
 							$matchingExistingForeignKey = $existingForeignKey;
 							break;
 						}
