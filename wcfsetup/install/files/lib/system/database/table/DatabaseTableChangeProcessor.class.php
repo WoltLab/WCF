@@ -427,7 +427,7 @@ class DatabaseTableChangeProcessor {
 				foreach ($table->getForeignKeys() as $foreignKey) {
 					$matchingExistingForeignKey = null;
 					foreach ($existingForeignKeys as $existingForeignKey) {
-						if (empty(array_diff($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
+						if (empty(array_diff_assoc($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
 							$matchingExistingForeignKey = $existingForeignKey;
 							break;
 						}
@@ -462,7 +462,7 @@ class DatabaseTableChangeProcessor {
 						$this->splitNodeMessage .= "Added foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
 						break 2;
 					}
-					else if (!empty(array_diff($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
+					else if (!empty(array_diff_assoc($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
 						if (!isset($this->foreignKeysToDrop[$tableName])) {
 							$this->foreignKeysToDrop[$tableName] = [];
 						}
