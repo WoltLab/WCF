@@ -36,13 +36,13 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
      * sort field
      * @var mixed
      */
-    protected static $sortBy = null;
+    protected static $sortBy;
 
     /**
      * sort order
      * @var mixed
      */
-    protected static $sortOrder = null;
+    protected static $sortOrder;
 
     /**
      * object data

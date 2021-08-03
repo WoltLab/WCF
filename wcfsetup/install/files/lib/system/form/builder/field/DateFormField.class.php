@@ -25,6 +25,7 @@ class DateFormField extends AbstractFormField implements
     use TInputAttributeFormField {
         getReservedFieldAttributes as private inputGetReservedFieldAttributes;
     }
+
     use TAutoFocusFormField;
     use TCssClassFormField;
     use TImmutableFormField;

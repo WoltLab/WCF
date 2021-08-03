@@ -54,7 +54,7 @@ class Application extends DatabaseObject
      * list of all available application directories
      * @var string[]
      */
-    protected static $directories = null;
+    protected static $directories;
 
     /**
      * @inheritDoc

@@ -27,6 +27,7 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
     use TTestableLikeUserNotificationEvent {
         TTestableLikeUserNotificationEvent::canBeTriggeredByGuests insteadof TTestableUserNotificationEvent;
     }
+
     use TTestableArticleUserNotificationEvent;
     use TTestableCategorizedUserNotificationEvent;
     use TTestableUserNotificationEvent;

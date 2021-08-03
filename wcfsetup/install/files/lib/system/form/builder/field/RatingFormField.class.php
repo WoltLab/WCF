@@ -36,9 +36,11 @@ class RatingFormField extends AbstractFormField implements
     use TMaximumFormField {
         maximum as protected traitMaximum;
     }
+
     use TMinimumFormField {
         minimum as protected traitMinimum;
     }
+
     use TNullableFormField;
 
     /**

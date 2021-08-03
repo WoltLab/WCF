@@ -21,6 +21,7 @@ trait TTestableCommentResponseLikeUserNotificationEvent
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableLikeUserNotificationEvent {
         TTestableLikeUserNotificationEvent::canBeTriggeredByGuests insteadof TTestableCommentResponseUserNotificationEvent;
+
         TTestableLikeUserNotificationEvent::getTestObjects insteadof TTestableCommentResponseUserNotificationEvent;
     }
 

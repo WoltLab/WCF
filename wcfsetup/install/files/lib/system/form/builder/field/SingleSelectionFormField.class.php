@@ -24,6 +24,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     use TFilterableSelectionFormField {
         filterable as protected traitFilterable;
     }
+
     use TNullableFormField;
 
     /**

@@ -30,6 +30,7 @@ class FormDocument implements IFormDocument
     use TFormNode;
     use TFormParentNode {
         TFormParentNode::cleanup insteadof TFormNode;
+
         hasValidationErrors as protected traitHasValidationErrors;
         readValues as protected traitReadValues;
         validate as protected traitValidate;

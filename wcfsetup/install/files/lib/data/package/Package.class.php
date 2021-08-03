@@ -70,13 +70,13 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * list of ids of packages which are required by another package
      * @var int[]
      */
-    protected static $requiredPackageIDs = null;
+    protected static $requiredPackageIDs;
 
     /**
      * package requirements
      * @var array
      */
-    protected static $requirements = null;
+    protected static $requirements;
 
     /**
      * @inheritDoc

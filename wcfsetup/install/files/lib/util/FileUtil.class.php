@@ -21,19 +21,19 @@ final class FileUtil
      * finfo instance
      * @var \finfo
      */
-    protected static $finfo = null;
+    protected static $finfo;
 
     /**
      * memory limit in bytes
      * @var int
      */
-    protected static $memoryLimit = null;
+    protected static $memoryLimit;
 
     /**
      * chmod mode
      * @var string
      */
-    protected static $mode = null;
+    protected static $mode;
 
     /**
      * Tries to find the temp folder.

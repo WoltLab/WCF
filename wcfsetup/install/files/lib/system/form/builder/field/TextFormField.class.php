@@ -37,6 +37,7 @@ class TextFormField extends AbstractFormField implements
     use TI18nFormField {
         validate as protected i18nValidate;
     }
+
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
     use TPatternFormField;

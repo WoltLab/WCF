@@ -155,19 +155,19 @@ final class DateUtil
      * 1=monday
      * @var int
      */
-    private static $firstDayOfTheWeek = null;
+    private static $firstDayOfTheWeek;
 
     /**
      * order of the week days
      * @var string[]
      */
-    private static $weekDays = null;
+    private static $weekDays;
 
     /**
      * order of the week days (short textual representation)
      * @var string[]
      */
-    private static $shortWeekDays = null;
+    private static $shortWeekDays;
 
     /**
      * Returns a formatted date.
