@@ -801,6 +801,12 @@ class TemplateScriptingCompiler {
 		$phpCode = "<?php\n";
 		$phpCode .= $foreachHash." = ".$args['from'].";\n";
 		
+		$itemVar = mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item'];
+		$foreachData['itemVar'] = $itemVar;
+		
+		$phpCode .= "\$this->foreachVars['{$hash}'] = [];\n";
+		$phpCode .= "\$this->foreachVars['{$hash}']['item'] = {$itemVar} ?? null;\n";
+
 		if (empty($foreachProp)) {
 			$phpCode .= "if ((is_countable(".$foreachHash.") && count(".$foreachHash.") > 0) || (!is_countable(".$foreachHash.") && ".$foreachHash.")) {\n";
 		}
@@ -814,12 +820,6 @@ class TemplateScriptingCompiler {
 			$phpCode .= $foreachProp."['iteration'] = 0;\n";
 			$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		}
-		
-		$itemVar = mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item'];
-		$foreachData['itemVar'] = $itemVar;
-		
-		$phpCode .= "\$this->foreachVars['{$hash}'] = [];\n";
-		$phpCode .= "\$this->foreachVars['{$hash}']['item'] = {$itemVar} ?? null;\n";
 		
 		if (isset($args['key'])) {
 			$keyVar = mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'];
