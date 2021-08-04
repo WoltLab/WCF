@@ -506,7 +506,7 @@ class DatabaseTableChangeProcessor {
 						// updating index type and index columns is supported with an
 						// explicit index name is given (automatically generated index
 						// names are not deterministic)
-						if (!$index->hasGeneratedName() && !empty(array_diff($matchingExistingIndex->getData(), $index->getData()))) {
+						if (!$index->hasGeneratedName() && !empty(array_diff_assoc($matchingExistingIndex->getData(), $index->getData()))) {
 							if (!isset($this->indicesToDrop[$tableName])) {
 								$this->indicesToDrop[$tableName] = [];
 							}
@@ -745,7 +745,7 @@ class DatabaseTableChangeProcessor {
 	 * @return	bool
 	 */
 	protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn) {
-		$diff = array_diff($oldColumn->getData(), $newColumn->getData());
+		$diff = array_diff_assoc($oldColumn->getData(), $newColumn->getData());
 		if (!empty($diff)) {
 			// see https://github.com/WoltLab/WCF/pull/3167
 			if (
