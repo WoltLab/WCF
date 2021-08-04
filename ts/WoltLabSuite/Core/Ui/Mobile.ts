@@ -31,7 +31,7 @@ let _enableMobileMenu = false;
 const _knownMessages = new WeakSet<HTMLElement>();
 let _mobileSidebarEnabled = false;
 let _pageMenuMain: UiPageMenuMain;
-let _pageMenuUser: UiPageMenuUser;
+let _pageMenuUser: UiPageMenuUser | undefined = undefined;
 let _messageGroups: HTMLCollection | null = null;
 const _sidebars: HTMLElement[] = [];
 
@@ -164,7 +164,10 @@ function initMessages(): void {
 function initMobileMenu(): void {
   if (_enableMobileMenu) {
     _pageMenuMain = new UiPageMenuMain();
-    _pageMenuUser = new UiPageMenuUser();
+
+    if (UiPageMenuUser.hasValidMenu()) {
+      _pageMenuUser = new UiPageMenuUser();
+    }
   }
 }
 
@@ -376,7 +379,7 @@ export function enable(): void {
   _enabled = true;
   if (_enableMobileMenu) {
     _pageMenuMain.enable();
-    _pageMenuUser.enable();
+    _pageMenuUser?.enable();
   }
 }
 
@@ -396,7 +399,7 @@ export function disable(): void {
   _enabled = false;
   if (_enableMobileMenu) {
     _pageMenuMain.disable();
-    _pageMenuUser.disable();
+    _pageMenuUser?.disable();
   }
 }
 
