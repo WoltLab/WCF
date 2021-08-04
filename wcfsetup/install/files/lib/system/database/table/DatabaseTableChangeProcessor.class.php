@@ -731,7 +731,7 @@ class DatabaseTableChangeProcessor {
 	 * @return	bool
 	 */
 	protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn) {
-		$diff = array_diff($oldColumn->getData(), $newColumn->getData());
+		$diff = array_diff_assoc($oldColumn->getData(), $newColumn->getData());
 		if (!empty($diff)) {
 			// see https://github.com/WoltLab/WCF/pull/3167
 			if (
