@@ -270,8 +270,6 @@ export function debounce<F extends DebounceCallback>(
   };
 }
 
-const defaultFunctions = Object.getOwnPropertyNames(Object.getPrototypeOf({}));
-
 export function enableLegacyInheritance<T>(legacyClass: T): void {
   (legacyClass as any).call = function (thisValue, ...args) {
     if (window.ENABLE_DEVELOPER_TOOLS) {
@@ -280,16 +278,17 @@ export function enableLegacyInheritance<T>(legacyClass: T): void {
 
     const constructed = Reflect.construct(legacyClass as any, args, thisValue.constructor);
     Object.entries(constructed).forEach(([key, value]) => {
+      if (typeof value === "function") {
+        value = value.bind(thisValue);
+      }
+
       thisValue[key] = value;
     });
 
-    let object = thisValue;
-    while ((object = Object.getPrototypeOf(object))) {
-      Object.getOwnPropertyNames(object).forEach((name) => {
-        if (typeof object[name] === "function" && !defaultFunctions.includes(name)) {
-          object[name] = object[name].bind(thisValue);
-        }
-      });
+    for (const key in thisValue) {
+      if (typeof thisValue[key] === "function") {
+        constructed[key] = thisValue[key].bind(thisValue);
+      }
     }
   };
 }

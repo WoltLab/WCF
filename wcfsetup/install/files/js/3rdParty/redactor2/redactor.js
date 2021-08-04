@@ -489,6 +489,7 @@
 			'details',
 			'menu',
 			'summary',
+			'center',
 			'p'
 		],
 		emptyHtml: '<p>&#x200b;</p>',
