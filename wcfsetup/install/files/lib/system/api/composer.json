@@ -18,6 +18,7 @@
         "scssphp/scssphp": "^1.4",
         "guzzlehttp/guzzle": "^7.3.0",
         "paragonie/constant_time_encoding": "^2.3",
-        "laminas/laminas-diactoros": "^2.4"
+        "laminas/laminas-diactoros": "^2.4",
+        "laminas/laminas-httphandlerrunner": "^1.2"
     }
 }
