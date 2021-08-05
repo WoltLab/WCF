@@ -17,6 +17,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -227,7 +228,10 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 ]
             );
             $avatarList->readObjects();
+            $resetAvatarCache = [];
             foreach ($avatarList as $avatar) {
+                $resetAvatarCache[] = $avatar->userID;
+
                 $editor = new UserAvatarEditor($avatar);
                 if (!\file_exists($avatar->getLocation()) || @\getimagesize($avatar->getLocation()) === false) {
                     // delete avatars that are missing or broken
@@ -280,6 +284,11 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                     'width' => $width,
                     'height' => $height,
                 ]);
+            }
+
+            // Reset the avatar cache for all avatars that had been processed.
+            if (!empty($resetAvatarCache)) {
+                UserStorageHandler::getInstance()->reset($resetAvatarCache, 'avatar');
             }
 
             // Create WebP variants of existing cover photos.

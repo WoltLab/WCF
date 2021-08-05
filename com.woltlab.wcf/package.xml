@@ -156,5 +156,6 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 	<instructions type="update" fromversion="5.4.2">
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_resetAvatarCache.php</instruction>
 	</instructions>
 </package>
