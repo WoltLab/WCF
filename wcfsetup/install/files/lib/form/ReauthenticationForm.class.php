@@ -3,6 +3,7 @@
 namespace wcf\form;
 
 use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -108,11 +109,11 @@ class ReauthenticationForm extends AbstractFormBuilderForm
     }
 
     /**
-     * Returns a RedirectResponse for the redirectUrl.
+     * Returns a response redirecting to the redirectUrl.
      *
      * @see ReauthenticationForm::$redirectUrl
      */
-    protected function getRedirectResponse(): RedirectResponse
+    protected function getRedirectResponse(): ResponseInterface
     {
         return new RedirectResponse($this->redirectUrl);
     }
