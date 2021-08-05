@@ -123,13 +123,16 @@ abstract class AbstractPage implements IPage
      */
     public function __run()
     {
-        $this->readParameters();
+        $this->maybeSetResponse(
+            $this->readParameters()
+        );
         if ($this->getResponse()) {
             return $this->getResponse();
         }
 
-        
-        $this->show();
+        $this->maybeSetResponse(
+            $this->show()
+        );
         if ($this->getResponse()) {
             return $this->getResponse();
         }
@@ -345,7 +348,9 @@ abstract class AbstractPage implements IPage
 
         $this->checkPermissions();
 
-        $this->readData();
+        $this->maybeSetResponse(
+            $this->readData()
+        );
 
         // readData() calls submit() in AbstractForm. It might be desirable to be able
         // to return redirect responses after successfully submitting a form.
@@ -433,6 +438,18 @@ abstract class AbstractPage implements IPage
         );
 
         exit;
+    }
+
+    /**
+     * Calls setResponse() if the parameter implements the ResponseInterface.
+     *
+     * @see AbstractPage::setResponse()
+     */
+    final protected function maybeSetResponse($response): void
+    {
+        if ($response instanceof ResponseInterface) {
+            $this->setResponse($response);
+        }
     }
 
     /**

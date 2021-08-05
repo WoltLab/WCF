@@ -58,13 +58,17 @@ abstract class AbstractForm extends AbstractPage implements IForm
         // call submit event
         EventHandler::getInstance()->fireAction($this, 'submit');
 
-        $this->readFormParameters();
+        $this->maybeSetResponse(
+            $this->readFormParameters()
+        );
         if ($this->getResponse()) {
             return;
         }
 
         try {
-            $this->validate();
+            $this->maybeSetResponse(
+                $this->validate()
+            );
             if ($this->getResponse()) {
                 return;
             }
@@ -72,7 +76,9 @@ abstract class AbstractForm extends AbstractPage implements IForm
             // validate() is expected to throw in case of errors, thus if we reach
             // this point the input is correct.
 
-            $this->save();
+            $this->maybeSetResponse(
+                $this->save()
+            );
             if ($this->getResponse()) {
                 return;
             }
