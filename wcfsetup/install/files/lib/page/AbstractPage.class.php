@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\page\PageCache;
 use wcf\form\DisclaimerForm;
 use wcf\form\EmailActivationForm;
@@ -106,6 +107,11 @@ abstract class AbstractPage implements IPage
     public $useTemplate = true;
 
     /**
+     * @var ?ResponseInterface
+     */
+    private $response;
+
+    /**
      * @inheritDoc
      */
     final public function __construct()
@@ -117,9 +123,16 @@ abstract class AbstractPage implements IPage
      */
     public function __run()
     {
-        // call default methods
         $this->readParameters();
+        if ($this->getResponse()) {
+            return $this->getResponse();
+        }
+
+        
         $this->show();
+        if ($this->getResponse()) {
+            return $this->getResponse();
+        }
     }
 
     /**
@@ -326,22 +339,22 @@ abstract class AbstractPage implements IPage
             }
         }
 
-        // sets the active menu item
         $this->setActiveMenuItem();
 
-        // check modules
         $this->checkModules();
 
-        // check permission
         $this->checkPermissions();
 
-        // read data
         $this->readData();
 
-        // assign variables
+        // readData() calls submit() in AbstractForm. It might be desirable to be able
+        // to return redirect responses after successfully submitting a form.
+        if ($this->getResponse()) {
+            return;
+        }
+
         $this->assignVariables();
 
-        // call show event
         EventHandler::getInstance()->fireAction($this, 'show');
 
         // try to guess template name
@@ -420,5 +433,25 @@ abstract class AbstractPage implements IPage
         );
 
         exit;
+    }
+
+    /**
+     * Sets the PSR-7 response to return. Processing will be aborted after
+     * readParameters(), readData() or show() if the response is non-null
+     * and the response will be returned to the RequestHandler.
+     */
+    final protected function setResponse(?ResponseInterface $response): void
+    {
+        $this->response = $response;
+    }
+
+    /**
+     * Returns the current response as set using setResponse().
+     *
+     * @see AbstractPage::setResponse()
+     */
+    final protected function getResponse(): ?ResponseInterface
+    {
+        return $this->response;
     }
 }
