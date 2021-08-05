@@ -86,7 +86,8 @@ class Request
     {
         if ($this->requestObject === null) {
             $this->requestObject = new $this->className();
-            $this->requestObject->__run();
+
+            return $this->requestObject->__run();
         }
     }
 
