@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use Laminas\Diactoros\Response\EmptyResponse;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -185,9 +186,7 @@ class AttachmentPage extends AbstractPage
 
         // etag caching
         if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"' . $this->eTag . '"') {
-            @\header('HTTP/1.1 304 Not Modified');
-
-            exit;
+            return new EmptyResponse(304);
         }
 
         if (!$this->tiny && !$this->thumbnail) {
