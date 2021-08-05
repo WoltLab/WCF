@@ -94,7 +94,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
     {
         AbstractForm::saved();
 
-        $this->setResponse($this->getRedirectResponse());
+        $this->setPsr7Response($this->getRedirectResponse());
     }
 
     /**

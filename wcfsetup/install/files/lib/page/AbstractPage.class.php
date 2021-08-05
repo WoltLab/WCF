@@ -109,7 +109,7 @@ abstract class AbstractPage implements IPage
     /**
      * @var ?ResponseInterface
      */
-    private $response;
+    private $psr7Response;
 
     /**
      * @inheritDoc
@@ -123,18 +123,18 @@ abstract class AbstractPage implements IPage
      */
     public function __run()
     {
-        $this->maybeSetResponse(
+        $this->maybeSetPsr7Response(
             $this->readParameters()
         );
-        if ($this->getResponse()) {
-            return $this->getResponse();
+        if ($this->getPsr7Response()) {
+            return $this->getPsr7Response();
         }
 
-        $this->maybeSetResponse(
+        $this->maybeSetPsr7Response(
             $this->show()
         );
-        if ($this->getResponse()) {
-            return $this->getResponse();
+        if ($this->getPsr7Response()) {
+            return $this->getPsr7Response();
         }
     }
 
@@ -348,13 +348,13 @@ abstract class AbstractPage implements IPage
 
         $this->checkPermissions();
 
-        $this->maybeSetResponse(
+        $this->maybeSetPsr7Response(
             $this->readData()
         );
 
         // readData() calls submit() in AbstractForm. It might be desirable to be able
         // to return redirect responses after successfully submitting a form.
-        if ($this->getResponse()) {
+        if ($this->getPsr7Response()) {
             return;
         }
 
@@ -443,12 +443,12 @@ abstract class AbstractPage implements IPage
     /**
      * Calls setResponse() if the parameter implements the ResponseInterface.
      *
-     * @see AbstractPage::setResponse()
+     * @see AbstractPage::setPsr7Response()
      */
-    final protected function maybeSetResponse($response): void
+    final protected function maybeSetPsr7Response($response): void
     {
         if ($response instanceof ResponseInterface) {
-            $this->setResponse($response);
+            $this->setPsr7Response($response);
         }
     }
 
@@ -457,18 +457,18 @@ abstract class AbstractPage implements IPage
      * readParameters(), readData() or show() if the response is non-null
      * and the response will be returned to the RequestHandler.
      */
-    final protected function setResponse(?ResponseInterface $response): void
+    final protected function setPsr7Response(?ResponseInterface $response): void
     {
-        $this->response = $response;
+        $this->psr7Response = $response;
     }
 
     /**
      * Returns the current response as set using setResponse().
      *
-     * @see AbstractPage::setResponse()
+     * @see AbstractPage::setPsr7Response()
      */
-    final protected function getResponse(): ?ResponseInterface
+    final protected function getPsr7Response(): ?ResponseInterface
     {
-        return $this->response;
+        return $this->psr7Response;
     }
 }

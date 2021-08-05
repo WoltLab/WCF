@@ -87,7 +87,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
     public function show()
     {
         parent::show();
-        if ($this->getResponse()) {
+        if ($this->getPsr7Response()) {
             return;
         }
 

@@ -114,7 +114,7 @@ abstract class AbstractModerationForm extends AbstractForm
     public function readData()
     {
         parent::readData();
-        if ($this->getResponse()) {
+        if ($this->getPsr7Response()) {
             return;
         }
 
