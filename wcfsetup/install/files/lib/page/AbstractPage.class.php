@@ -126,14 +126,14 @@ abstract class AbstractPage implements IPage
         $this->maybeSetPsr7Response(
             $this->readParameters()
         );
-        if ($this->getPsr7Response()) {
+        if ($this->hasPsr7Response()) {
             return $this->getPsr7Response();
         }
 
         $this->maybeSetPsr7Response(
             $this->show()
         );
-        if ($this->getPsr7Response()) {
+        if ($this->hasPsr7Response()) {
             return $this->getPsr7Response();
         }
     }
@@ -354,7 +354,7 @@ abstract class AbstractPage implements IPage
 
         // readData() calls submit() in AbstractForm. It might be desirable to be able
         // to return redirect responses after successfully submitting a form.
-        if ($this->getPsr7Response()) {
+        if ($this->hasPsr7Response()) {
             return;
         }
 
@@ -470,5 +470,16 @@ abstract class AbstractPage implements IPage
     final protected function getPsr7Response(): ?ResponseInterface
     {
         return $this->psr7Response;
+    }
+
+    /**
+     * Returns whether the current response is non-null.
+     *
+     * @see AbstractPage::getPsr7Response()
+     * @see AbstractPage::setPsr7Response()
+     */
+    final protected function hasPsr7Response(): bool
+    {
+        return $this->psr7Response !== null;
     }
 }

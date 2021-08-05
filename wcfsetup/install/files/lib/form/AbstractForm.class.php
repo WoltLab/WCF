@@ -61,7 +61,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
         $this->maybeSetPsr7Response(
             $this->readFormParameters()
         );
-        if ($this->getPsr7Response()) {
+        if ($this->hasPsr7Response()) {
             return;
         }
 
@@ -69,7 +69,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
             $this->maybeSetPsr7Response(
                 $this->validate()
             );
-            if ($this->getPsr7Response()) {
+            if ($this->hasPsr7Response()) {
                 return;
             }
 
@@ -79,7 +79,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
             $this->maybeSetPsr7Response(
                 $this->save()
             );
-            if ($this->getPsr7Response()) {
+            if ($this->hasPsr7Response()) {
                 return;
             }
         } catch (UserInputException $e) {
