@@ -7,7 +7,7 @@
 	{/if}
 {/capture}
 
-{capture assign='headerNavigation'}>
+{capture assign='headerNavigation'}
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
 		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
 	{/if}
