@@ -2,9 +2,9 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Does the user logout.
@@ -29,9 +29,8 @@ class LogoutAction extends \wcf\acp\action\LogoutAction
 
         $this->executed();
 
-        // forward to index page
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
-
-        exit;
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getLink()
+        );
     }
 }

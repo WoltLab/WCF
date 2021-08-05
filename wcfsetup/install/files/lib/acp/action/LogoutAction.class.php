@@ -2,10 +2,10 @@
 
 namespace wcf\acp\action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\action\AbstractSecureAction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Does the user logout in the admin control panel (clearing reauthentication).
@@ -33,10 +33,10 @@ class LogoutAction extends AbstractSecureAction
 
         $this->executed();
 
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink(null, [
-            'forceFrontend' => true,
-        ]));
-
-        exit;
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getLink(null, [
+                'forceFrontend' => true,
+            ])
+        );
     }
 }
