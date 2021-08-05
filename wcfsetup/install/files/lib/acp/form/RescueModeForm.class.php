@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationEditor;
@@ -73,9 +74,9 @@ class RescueModeForm extends AbstractCaptchaForm
     {
         if (!WCFACP::inRescueMode()) {
             // redirect to currently active application's ACP
-            HeaderUtil::redirect(ApplicationHandler::getInstance()->getActiveApplication()->getPageURL() . 'acp/');
-
-            exit;
+            return new RedirectResponse(
+                ApplicationHandler::getInstance()->getActiveApplication()->getPageURL() . 'acp/'
+            );
         }
 
         return parent::__run();
