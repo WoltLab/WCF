@@ -2,10 +2,10 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -67,12 +67,8 @@ class DeleteSessionAction extends AbstractAction
 
         $this->executed();
 
-        // send JSON-encoded response
-        \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode([
+        return new JsonResponse([
             'sessionID' => $this->sessionID,
         ]);
-
-        exit;
     }
 }
