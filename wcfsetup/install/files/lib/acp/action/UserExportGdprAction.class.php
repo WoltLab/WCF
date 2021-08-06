@@ -2,6 +2,7 @@
 
 namespace wcf\acp\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\action\AbstractAction;
 use wcf\data\package\PackageCache;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
@@ -240,16 +241,16 @@ class UserExportGdprAction extends AbstractAction
 
         $this->data['@@generatedAt'] = TIME_NOW;
 
-        @\header('Content-type: application/json; charset=UTF-8');
-        @\header('Content-disposition: attachment; filename="user-export-gdpr-' . $this->user->userID . '.json"');
-
-        HeaderUtil::sendNoCacheHeaders();
-
-        echo \json_encode($this->data, \JSON_PRETTY_PRINT);
-
         $this->executed();
 
-        exit;
+        return HeaderUtil::withNoCacheHeaders(new JsonResponse(
+            $this->data,
+            200,
+            [
+                'content-disposition' => 'attachment; filename="user-export-gdpr-' . $this->user->userID . '.json"',
+            ],
+            JsonResponse::DEFAULT_JSON_FLAGS | \JSON_PRETTY_PRINT
+        ));
     }
 
     /**
