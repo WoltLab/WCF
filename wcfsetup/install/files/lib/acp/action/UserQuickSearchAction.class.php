@@ -2,6 +2,7 @@
 
 namespace wcf\acp\action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\action\AbstractAction;
 use wcf\data\search\SearchEditor;
 use wcf\data\user\User;
@@ -10,7 +11,6 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Provides special search options.
@@ -203,8 +203,9 @@ class UserQuickSearchAction extends AbstractAction
             ['id' => $search->searchID],
             'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)
         );
-        HeaderUtil::redirect($url);
 
-        exit;
+        return new RedirectResponse(
+            $url
+        );
     }
 }
