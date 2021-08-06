@@ -237,6 +237,11 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
             $statement->execute([
                 $object->showOrder,
             ]);
+
+            // Delete outdated reaction type icon.
+            if (isset($object->iconFile) && \file_exists(WCF_DIR . '/images/reaction/' . $object->iconFile)) {
+                @\unlink(WCF_DIR . '/images/reaction/' . $object->iconFile);
+            }
         }
 
         return $returnValues;
