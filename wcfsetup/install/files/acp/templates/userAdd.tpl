@@ -84,7 +84,7 @@
 
 							{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
 								<li class="dropdownDivider"></li>
-								<li><a href="#" class="jsDispatchDelete">{lang}wcf.global.button.delete{/lang}</a></li>
+								<li><a href="#" class="jsDelete">{lang}wcf.global.button.delete{/lang}</a></li>
 								<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.content.removeContent{/lang}</a></li>
 							{/if}
 						</ul>
@@ -95,18 +95,22 @@
 						'WoltLabSuite/Core/Language',
 						'WoltLabSuite/Core/Acp/Ui/User/Editor',
 						'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete',
 						'WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction',
 						'WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction',
 						'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
 						'WoltLabSuite/Core/Controller/Clipboard',
 					], (
-						Language,
-						AcpUiUserList,
-						AcpUserContentRemoveHandler,
-						DisableAction,
-						SendNewPasswordAction,
-						ToggleConfirmEmailAction,
-						Clipboard
+						{literal}
+							Language,
+							AcpUiUserList,
+							AcpUserContentRemoveHandler,
+							{ Delete },
+							{ DisableAction },
+							{ SendNewPasswordAction },
+							{ ToggleConfirmEmailAction },
+							Clipboard
+						{/literal}
 					) => {
 							Language.addObject({
 								'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
@@ -124,17 +128,30 @@
 
 							const sendNewPassword = document.querySelector(".jsSendNewPassword");
 							if (sendNewPassword !== null) {
-								new SendNewPasswordAction.default(sendNewPassword, {@$user->userID}, dropdownElement);
+								new SendNewPasswordAction(sendNewPassword, {@$user->userID}, dropdownElement);
 							}
 
 							const toggleConfirmEmail = document.querySelector(".jsConfirmEmailToggle");
 							if (toggleConfirmEmail !== null) {
-								new ToggleConfirmEmailAction.default(toggleConfirmEmail, {@$user->userID}, dropdownElement);
+								new ToggleConfirmEmailAction(toggleConfirmEmail, {@$user->userID}, dropdownElement);
 							}
 
 							const enableUser = document.querySelector(".jsEnable");
 							if (enableUser !== null) {
-								new DisableAction.default(enableUser, {@$user->userID}, dropdownElement);
+								new DisableAction(enableUser, {@$user->userID}, dropdownElement);
+							}
+
+							const deleteUser = document.querySelector(".jsDelete");
+							if (deleteUser !== null) {
+								// We cannot use the DeleteAction, because the Delete Action is only usable for
+								// dropdown menues.
+								deleteUser.addEventListener("click", (event) => {
+									const deleteAction = new Delete([{@$user->userID}], () => {
+										window.location.href = "{link controller='UserList'}{/link}";
+									}, '{jslang objectTitle=$user->username}wcf.button.delete.confirmMessage{/jslang}');
+
+									deleteAction.delete();
+								});
 							}
 						});
 				</script>
