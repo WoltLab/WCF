@@ -2,6 +2,7 @@
 
 namespace wcf\util;
 
+use Psr\Http\Message\ResponseInterface;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
@@ -104,6 +105,30 @@ final class HeaderUtil
     {
         @\header('Last-Modified: ' . \gmdate('D, d M Y H:i:s') . ' GMT');
         @\header('Cache-Control: max-age=0, no-cache, no-store, must-revalidate');
+    }
+
+    /**
+     * Returns an response matching the given response with headers preventing in-browser
+     * caching attached.
+     *
+     * @since 5.5
+     */
+    public static function withNoCacheHeaders(ResponseInterface $response): ResponseInterface
+    {
+        return $response
+            ->withHeader(
+                'cache-control',
+                [
+                    'max-age=0',
+                    'no-cache',
+                    'no-store',
+                    'must-revalidate',
+                ]
+            )
+            ->withHeader(
+                'last-modified',
+                \gmdate('D, d M Y H:i:s') . ' GMT'
+            );
     }
 
     /**
