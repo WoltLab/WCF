@@ -2,13 +2,15 @@
 
 namespace wcf\acp\action;
 
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
+use wcf\acp\page\CacheListPage;
 use wcf\action\AbstractAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\cache\CacheHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
-use wcf\util\HeaderUtil;
 
 /**
  * Clears the cache.
@@ -46,10 +48,12 @@ class CacheClearAction extends AbstractAction
 
         $this->executed();
 
-        if (!isset($_POST['noRedirect'])) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('CacheList'));
+        if (isset($_POST['noRedirect'])) {
+            return new EmptyResponse();
+        } else {
+            return new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(CacheListPage::class)
+            );
         }
-
-        exit;
     }
 }
