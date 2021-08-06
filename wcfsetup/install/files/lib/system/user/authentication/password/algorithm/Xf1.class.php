@@ -21,7 +21,9 @@ final class Xf1 implements IPasswordAlgorithm
      */
     public function verify(string $password, string $hash): bool
     {
-        [$hash, $salt] = \explode(':', $hash, 2);
+        $parts = \explode(':', $hash, 2);
+        $hash = $parts[0];
+        $salt = $parts[1] ?? '';
 
         if (\hash_equals($hash, \sha1(\sha1($password) . $salt))) {
             return true;
