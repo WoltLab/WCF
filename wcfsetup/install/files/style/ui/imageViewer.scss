@@ -144,8 +144,8 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 	> header,
 	> div,
 	> footer {
-		box-sizing: border-box;
 		-moz-box-sizing: border-box;
+		box-sizing: border-box;
 		left: 0;
 		position: fixed;
 		right: 0;
@@ -313,8 +313,8 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		padding: 10px;
 
 		&:hover > div > ul > li > img {
-			filter: none;
 			-webkit-filter: none;
+			filter: none;
 		}
 
 		> span {
@@ -377,8 +377,8 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 					}
 
 					&.active > img {
-						filter: none;
 						-webkit-filter: none;
+						filter: none;
 					}
 
 					&.loading {
