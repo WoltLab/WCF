@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\user\User;
 use wcf\form\RegisterForm;
 use wcf\system\event\EventHandler;
@@ -11,7 +12,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -153,9 +153,9 @@ final class GoogleAuthAction extends AbstractOauth2Action
                     new UserLoggedIn($user)
                 );
 
-                HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
-
-                exit;
+                return new RedirectResponse(
+                    LinkHandler::getInstance()->getLink()
+                );
             }
         } else {
             WCF::getSession()->register('__3rdPartyProvider', 'google');
@@ -166,9 +166,9 @@ final class GoogleAuthAction extends AbstractOauth2Action
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
 
-                HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement') . '#3rdParty');
-
-                exit;
+                return new RedirectResponse(
+                    LinkHandler::getInstance()->getLink('AccountManagement') . '#3rdParty'
+                );
             } else {
                 // This account does not belong to anyone and we are not logged in.
                 // Thus we want to connect this account to a newly registered user.
@@ -182,9 +182,10 @@ final class GoogleAuthAction extends AbstractOauth2Action
                 WCF::getSession()->register('noRegistrationCaptcha', true);
 
                 WCF::getSession()->update();
-                HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(RegisterForm::class));
 
-                exit;
+                return new RedirectResponse(
+                    LinkHandler::getInstance()->getControllerLink(RegisterForm::class)
+                );
             }
         }
     }
