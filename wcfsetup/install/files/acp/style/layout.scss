@@ -124,8 +124,12 @@ $wcfAcpSubMenuWidth: 300px;
 	border-width: 0;
 	position: fixed;
 	top: 50px !important;
-	width: 300px;
+	width: 500px;
 	
+	@include screen-xs {
+		width: 100%;
+	}
+
 	&::before,
 	&::after {
 		display: none;
@@ -133,6 +137,11 @@ $wcfAcpSubMenuWidth: 300px;
 	
 	> .dropdownText {
 		color: $wcfContentDimmedText;
+	}
+
+	li > a,
+	li > span {
+		max-width: none;
 	}
 }
 
