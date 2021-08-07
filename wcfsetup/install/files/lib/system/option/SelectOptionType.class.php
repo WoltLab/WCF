@@ -51,6 +51,7 @@ class SelectOptionType extends RadioButtonOptionType
             'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
             'selectOptions' => $this->getSelectOptions($option),
             'value' => $value,
+            'allowEmptyValue' => true,
         ]);
 
         return WCF::getTPL()->fetch('selectSearchableOptionType');
