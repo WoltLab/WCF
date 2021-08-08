@@ -521,8 +521,11 @@ class TemplateEngine extends SingletonFactory {
 	 * Enables execution in sandbox.
 	 */
 	public function enableSandbox() {
-		$index = count($this->sandboxVars);
-		$this->sandboxVars[$index] = $this->v;
+		$index = \count($this->sandboxVars);
+        $this->sandboxVars[$index] = [
+            'foreachVars' => $this->foreachVars,
+            'v' => $this->v,
+        ];
 	}
 	
 	/**
@@ -532,8 +535,10 @@ class TemplateEngine extends SingletonFactory {
 		if (empty($this->sandboxVars)) {
 			throw new SystemException('TemplateEngine is currently not running in a sandbox.');
 		}
-		
-		$this->v = array_pop($this->sandboxVars);
+
+        $values = \array_pop($this->sandboxVars);
+        $this->foreachVars = $values['foreachVars'];
+        $this->v = $values['v'];
 	}
 	
 	/**
