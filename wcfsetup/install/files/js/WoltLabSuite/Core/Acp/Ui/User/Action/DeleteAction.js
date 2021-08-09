@@ -15,6 +15,9 @@ define(["require", "exports", "tslib", "./AbstractUserAction", "./Handler/Delete
         init() {
             this.button.addEventListener("click", (event) => {
                 event.preventDefault();
+                if (!(typeof this.button.dataset.confirmMessage === "string")) {
+                    throw new Error("The button does not provides a confirmMessage.");
+                }
                 const deleteHandler = new Delete_1.default([this.userId], () => {
                     this.userDataElement.remove();
                 }, this.button.dataset.confirmMessage);

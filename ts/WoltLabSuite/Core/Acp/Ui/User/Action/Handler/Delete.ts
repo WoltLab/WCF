@@ -6,7 +6,6 @@
  * @since       5.5
  */
 
-import * as Language from "../../../../../Language";
 import * as UiConfirmation from "../../../../../Ui/Confirmation";
 import * as Ajax from "../../../../../Ajax";
 import { CallbackSuccess } from "../../../../../Ajax/Data";
@@ -16,14 +15,10 @@ export class Delete {
   private successCallback: CallbackSuccess;
   private deleteMessage: string;
 
-  public constructor(userIDs: number[], successCallback: CallbackSuccess, deleteMessage?: string) {
+  public constructor(userIDs: number[], successCallback: CallbackSuccess, deleteMessage: string) {
     this.userIDs = userIDs;
     this.successCallback = successCallback;
-    if (deleteMessage) {
-      this.deleteMessage = deleteMessage;
-    } else {
-      this.deleteMessage = Language.get("wcf.button.delete.confirmMessage"); // @todo find better variable for a generic message
-    }
+    this.deleteMessage = deleteMessage;
   }
 
   public delete(): void {

@@ -14,6 +14,10 @@ export class DeleteAction extends AbstractUserAction {
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
 
+      if (!(typeof this.button.dataset.confirmMessage === "string")) {
+        throw new Error("The button does not provides a confirmMessage.");
+      }
+
       const deleteHandler = new Delete(
         [this.userId],
         () => {
