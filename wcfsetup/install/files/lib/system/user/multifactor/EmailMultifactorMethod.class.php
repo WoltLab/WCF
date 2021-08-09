@@ -7,6 +7,7 @@ use wcf\system\email\SimpleEmail;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
+use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -56,6 +57,7 @@ final class EmailMultifactorMethod implements IMultifactorMethod
                 ->appendChildren([
                     LanguageItemFormNode::create('enabled')
                         ->languageItem('wcf.user.security.multifactor.email.enabled.description'),
+                    RejectEverythingFormField::create(),
                 ]);
             $form->appendChild($statusContainer);
         } else {
