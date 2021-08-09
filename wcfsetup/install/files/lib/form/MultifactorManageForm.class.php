@@ -6,8 +6,10 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserEditor;
 use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\database\exception\DatabaseException;
 use wcf\system\email\SimpleEmail;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\FormDocument;
 use wcf\system\form\builder\IFormDocument;
@@ -134,7 +136,13 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         if ($this->setup) {
             $setup = $this->setup->lock();
         } else {
-            $setup = Setup::allocateSetUpId($this->method, WCF::getUser());
+            try {
+                $setup = Setup::allocateSetUpId($this->method, WCF::getUser());
+            } catch (DatabaseException $e) {
+                WCF::getDB()->rollBackTransaction();
+
+                throw new NamedUserException('wcf.user.security.multifactor.error.setupAllocationFailed');
+            }
         }
 
         if (!$setup) {
