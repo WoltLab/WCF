@@ -1,4 +1,6 @@
 /**
+ * An abstract action, to handle user actions.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -15,11 +17,7 @@ export abstract class AbstractUserAction {
     this.button = button;
     this.userId = userId;
     this.userDataElement = userDataElement;
-
-    this.init();
   }
-
-  protected abstract init(): void;
 }
 
 export default AbstractUserAction;

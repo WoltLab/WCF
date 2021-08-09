@@ -1,4 +1,6 @@
 /**
+ * Handles a send new password action.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

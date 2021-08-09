@@ -1,4 +1,6 @@
 /**
+ * Handles a user ban.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -7,21 +9,22 @@
  */
 
 import * as Ajax from "../../../../../Ajax";
-import BanDialog from "./Dialog/Ban";
+import BanDialog from "./Ban/Dialog";
+
+type Callback = () => void;
 
 export class BanHandler {
   private userIDs: number[];
-  private banCallback: () => void;
 
   public constructor(userIDs: number[]) {
     this.userIDs = userIDs;
   }
 
-  public ban(callback: () => void): void {
+  public ban(callback: Callback): void {
     BanDialog.open(this.userIDs, callback);
   }
 
-  public unban(callback: () => void): void {
+  public unban(callback: Callback): void {
     Ajax.api({
       _ajaxSetup: () => {
         return {
@@ -32,7 +35,7 @@ export class BanHandler {
           },
         };
       },
-      _ajaxSuccess: callback,
+      _ajaxSuccess: () => callback(),
     });
   }
 }

@@ -1,25 +1,28 @@
 /**
+ * Handles a toggle confirm email button.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
-define(["require", "exports", "tslib", "./AbstractUserAction", "../../../../Ajax", "../../../../Core", "../../../../Ui/Notification"], function (require, exports, tslib_1, AbstractUserAction_1, Ajax, Core, UiNotification) {
+define(["require", "exports", "tslib", "./Abstract", "../../../../Ajax", "../../../../Core", "../../../../Ui/Notification"], function (require, exports, tslib_1, Abstract_1, Ajax, Core, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ToggleConfirmEmailAction = void 0;
-    AbstractUserAction_1 = tslib_1.__importDefault(AbstractUserAction_1);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     UiNotification = tslib_1.__importStar(UiNotification);
-    class ToggleConfirmEmailAction extends AbstractUserAction_1.default {
-        init() {
+    class ToggleConfirmEmailAction extends Abstract_1.default {
+        constructor(button, userId, userDataElement) {
+            super(button, userId, userDataElement);
             this.button.addEventListener("click", (event) => {
                 event.preventDefault();
                 const isEmailConfirmed = Core.stringToBool(this.userDataElement.dataset.emailConfirmed);
                 Ajax.api(this, {
-                    actionName: (isEmailConfirmed ? "un" : "") + "confirmEmail",
+                    actionName: isEmailConfirmed ? "unconfirmEmail" : "confirmEmail",
                 });
             });
         }

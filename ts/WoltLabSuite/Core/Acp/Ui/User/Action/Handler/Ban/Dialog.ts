@@ -1,8 +1,10 @@
 /**
+ * Creates and handles the dialog to ban a user.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Dialog
+ * @module  WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Ban
  * @since       5.5
  */
 
@@ -12,17 +14,20 @@ import * as Language from "../../../../../../Language";
 import * as Ajax from "../../../../../../Ajax";
 import DatePicker from "../../../../../../Date/Picker";
 
+type Callback = () => void;
+
 export class BanDialog {
   private static instance: BanDialog;
 
-  private banCallback: () => void;
+  private banCallback: Callback;
   private userIDs: number[];
   private submitElement: HTMLElement;
   private neverExpiresCheckbox: HTMLInputElement;
   private reasonInput: HTMLInputElement;
   private userBanExpiresSettingsElement: HTMLElement;
   private dialogContent: HTMLElement;
-  public static open(userIDs: number[], callback: () => void): void {
+
+  public static open(userIDs: number[], callback: Callback): void {
     if (!BanDialog.instance) {
       BanDialog.instance = new BanDialog();
     }
@@ -36,11 +41,11 @@ export class BanDialog {
     UiDialog.open(this);
   }
 
-  private setCallback(callback: () => void): void {
+  private setCallback(callback: Callback): void {
     this.banCallback = callback;
   }
 
-  private setUserIDs(userIDs: number[]) {
+  private setUserIDs(userIDs: number[]): void {
     this.userIDs = userIDs;
   }
 
@@ -100,44 +105,44 @@ export class BanDialog {
         title: Language.get("wcf.acp.user.ban.sure"),
       },
       source: `
-<div class="section">
-  <dl>
-    <dt><label for="userBanReason">${Language.get("wcf.acp.user.banReason")}</label></dt>
-    <dd>
-      <textarea id="userBanReason" cols="40" rows="3" class=""></textarea>
-      <small>${Language.get("wcf.acp.user.banReason.description")}</small>
-    </dd>
-  </dl>
-  <dl>
-    <dt></dt>
-    <dd>
-      <label for="userBanNeverExpires">
-        <input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="">
-        ${Language.get("wcf.acp.user.ban.neverExpires")}
-      </label>
-    </dd>
-  </dl>
-  <dl id="userBanExpiresSettings" style="display: none;">
-    <dt>
-      <label for="userBanExpires">${Language.get("wcf.acp.user.ban.expires")}</label>
-    </dt>
-    <dd>
-      <div class="inputAddon">
-        <input  type="date"
-                name="userBanExpires"
-                id="userBanExpires"
-                class="medium"
-                min="${new Date(window.TIME_NOW * 1000).toISOString()}"
-                data-ignore-timezone="true"
-        />
-      </div>
-      <small>${Language.get("wcf.acp.user.ban.expires.description")}</small>
-    </dd>
-  </dl>
-</div>
-<div class="formSubmit dialogFormSubmit">
-  <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
-</div>`,
+ <div class="section">
+   <dl>
+     <dt><label for="userBanReason">${Language.get("wcf.acp.user.banReason")}</label></dt>
+     <dd>
+       <textarea id="userBanReason" cols="40" rows="3" class=""></textarea>
+       <small>${Language.get("wcf.acp.user.banReason.description")}</small>
+     </dd>
+   </dl>
+   <dl>
+     <dt></dt>
+     <dd>
+       <label for="userBanNeverExpires">
+         <input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="">
+         ${Language.get("wcf.acp.user.ban.neverExpires")}
+       </label>
+     </dd>
+   </dl>
+   <dl id="userBanExpiresSettings" style="display: none;">
+     <dt>
+       <label for="userBanExpires">${Language.get("wcf.acp.user.ban.expires")}</label>
+     </dt>
+     <dd>
+       <div class="inputAddon">
+         <input  type="date"
+                 name="userBanExpires"
+                 id="userBanExpires"
+                 class="medium"
+                 min="${new Date(window.TIME_NOW * 1000).toISOString()}"
+                 data-ignore-timezone="true"
+         />
+       </div>
+       <small>${Language.get("wcf.acp.user.ban.expires.description")}</small>
+     </dd>
+   </dl>
+ </div>
+ <div class="formSubmit dialogFormSubmit">
+   <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
+ </div>`,
     };
   }
 }

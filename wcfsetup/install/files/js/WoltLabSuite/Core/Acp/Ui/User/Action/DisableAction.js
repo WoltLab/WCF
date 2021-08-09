@@ -1,21 +1,24 @@
 /**
+ * Handles a user disable/enable button.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Core", "../../../../Ui/Notification", "./AbstractUserAction", "../../../../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, UiNotification, AbstractUserAction_1, EventHandler) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Core", "../../../../Ui/Notification", "./Abstract", "../../../../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, UiNotification, Abstract_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DisableAction = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     UiNotification = tslib_1.__importStar(UiNotification);
-    AbstractUserAction_1 = tslib_1.__importDefault(AbstractUserAction_1);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
     EventHandler = tslib_1.__importStar(EventHandler);
-    class DisableAction extends AbstractUserAction_1.default {
-        init() {
+    class DisableAction extends Abstract_1.default {
+        constructor(button, userId, userDataElement) {
+            super(button, userId, userDataElement);
             this.button.addEventListener("click", (event) => {
                 event.preventDefault();
                 const isEnabled = Core.stringToBool(this.userDataElement.dataset.enabled);

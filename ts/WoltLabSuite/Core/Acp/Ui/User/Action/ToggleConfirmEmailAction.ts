@@ -1,4 +1,6 @@
 /**
+ * Handles a toggle confirm email button.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -6,20 +8,22 @@
  * @since       5.5
  */
 
-import AbstractUserAction from "./AbstractUserAction";
+import AbstractUserAction from "./Abstract";
 import * as Ajax from "../../../../Ajax";
 import * as Core from "../../../../Core";
 import { AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../../Ajax/Data";
 import * as UiNotification from "../../../../Ui/Notification";
 
 export class ToggleConfirmEmailAction extends AbstractUserAction {
-  protected init(): void {
+  public constructor(button: HTMLElement, userId: number, userDataElement: HTMLElement) {
+    super(button, userId, userDataElement);
+
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
       const isEmailConfirmed = Core.stringToBool(this.userDataElement.dataset.emailConfirmed!);
 
       Ajax.api(this, {
-        actionName: (isEmailConfirmed ? "un" : "") + "confirmEmail",
+        actionName: isEmailConfirmed ? "unconfirmEmail" : "confirmEmail",
       });
     });
   }

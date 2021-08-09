@@ -1,4 +1,6 @@
 /**
+ * Handles a user ban button.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -7,7 +9,7 @@
  */
 
 import * as Core from "../../../../Core";
-import AbstractUserAction from "./AbstractUserAction";
+import AbstractUserAction from "./Abstract";
 import BanHandler from "./Handler/Ban";
 import * as UiNotification from "../../../../Ui/Notification";
 import * as EventHandler from "../../../../Event/Handler";
@@ -15,7 +17,9 @@ import * as EventHandler from "../../../../Event/Handler";
 export class BanAction extends AbstractUserAction {
   private banHandler: BanHandler;
 
-  protected init(): void {
+  public constructor(button: HTMLElement, userId: number, userDataElement: HTMLElement) {
+    super(button, userId, userDataElement);
+
     this.banHandler = new BanHandler([this.userId]);
 
     this.button.addEventListener("click", (event) => {

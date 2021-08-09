@@ -1,4 +1,6 @@
 /**
+ * Handles a user disable/enable button.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -10,11 +12,13 @@ import * as Ajax from "../../../../Ajax";
 import * as Core from "../../../../Core";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../../Ajax/Data";
 import * as UiNotification from "../../../../Ui/Notification";
-import AbstractUserAction from "./AbstractUserAction";
+import AbstractUserAction from "./Abstract";
 import * as EventHandler from "../../../../Event/Handler";
 
 export class DisableAction extends AbstractUserAction implements AjaxCallbackObject {
-  protected init(): void {
+  public constructor(button: HTMLElement, userId: number, userDataElement: HTMLElement) {
+    super(button, userId, userDataElement);
+
     this.button.addEventListener("click", (event) => {
       event.preventDefault();
       const isEnabled = Core.stringToBool(this.userDataElement.dataset.enabled!);

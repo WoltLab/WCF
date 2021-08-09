@@ -66,34 +66,34 @@ class AcpUiUserEditor {
       });
     }
 
-    const deleteContent = dropdownMenu.querySelector(".jsDeleteContent") as HTMLAnchorElement;
+    const deleteContent = dropdownMenu.querySelector(".jsDeleteContent");
     if (deleteContent !== null) {
-      new AcpUserContentRemoveHandler(deleteContent, userId);
+      new AcpUserContentRemoveHandler(deleteContent as HTMLAnchorElement, userId);
     }
 
-    const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword") as HTMLAnchorElement;
+    const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword");
     if (sendNewPassword !== null) {
-      new SendNewPasswordAction(sendNewPassword, userId, userRow);
+      new SendNewPasswordAction(sendNewPassword as HTMLAnchorElement, userId, userRow);
     }
 
-    const toggleConfirmEmail = dropdownMenu.querySelector(".jsConfirmEmailToggle") as HTMLAnchorElement;
+    const toggleConfirmEmail = dropdownMenu.querySelector(".jsConfirmEmailToggle");
     if (toggleConfirmEmail !== null) {
-      new ToggleConfirmEmailAction(toggleConfirmEmail, userId, userRow);
+      new ToggleConfirmEmailAction(toggleConfirmEmail as HTMLAnchorElement, userId, userRow);
     }
 
-    const enableUser = dropdownMenu.querySelector(".jsEnable") as HTMLAnchorElement;
+    const enableUser = dropdownMenu.querySelector(".jsEnable");
     if (enableUser !== null) {
-      new DisableAction(enableUser, userId, userRow);
+      new DisableAction(enableUser as HTMLAnchorElement, userId, userRow);
     }
 
-    const banUser = dropdownMenu.querySelector(".jsBan") as HTMLAnchorElement;
+    const banUser = dropdownMenu.querySelector(".jsBan");
     if (banUser !== null) {
-      new BanAction(banUser, userId, userRow);
+      new BanAction(banUser as HTMLAnchorElement, userId, userRow);
     }
 
-    const deleteUser = dropdownMenu.querySelector(".jsDelete") as HTMLAnchorElement;
+    const deleteUser = dropdownMenu.querySelector(".jsDelete");
     if (deleteUser !== null) {
-      new DeleteAction(deleteUser, userId, userRow);
+      new DeleteAction(deleteUser as HTMLAnchorElement, userId, userRow);
     }
   }
 

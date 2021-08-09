@@ -1,21 +1,24 @@
 /**
+ * Handles a user ban button.
+ *
  * @author  Joshua Ruesweg
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/User/Action
  * @since       5.5
  */
-define(["require", "exports", "tslib", "../../../../Core", "./AbstractUserAction", "./Handler/Ban", "../../../../Ui/Notification", "../../../../Event/Handler"], function (require, exports, tslib_1, Core, AbstractUserAction_1, Ban_1, UiNotification, EventHandler) {
+define(["require", "exports", "tslib", "../../../../Core", "./Abstract", "./Handler/Ban", "../../../../Ui/Notification", "../../../../Event/Handler"], function (require, exports, tslib_1, Core, Abstract_1, Ban_1, UiNotification, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BanAction = void 0;
     Core = tslib_1.__importStar(Core);
-    AbstractUserAction_1 = tslib_1.__importDefault(AbstractUserAction_1);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
     Ban_1 = tslib_1.__importDefault(Ban_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
-    class BanAction extends AbstractUserAction_1.default {
-        init() {
+    class BanAction extends Abstract_1.default {
+        constructor(button, userId, userDataElement) {
+            super(button, userId, userDataElement);
             this.banHandler = new Ban_1.default([this.userId]);
             this.button.addEventListener("click", (event) => {
                 event.preventDefault();

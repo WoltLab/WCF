@@ -34,12 +34,12 @@ interface AjaxResponse {
 class AcpUserContentRemoveHandler {
   private readonly dialogId: string;
   private readonly userId: number;
-  private readonly callbackSuccess: CallbackSuccess | null | undefined;
+  private readonly callbackSuccess?: CallbackSuccess;
 
   /**
    * Initializes the content remove handler.
    */
-  constructor(element: HTMLElement, userId: number, callbackSuccess?: CallbackSuccess | null) {
+  constructor(element: HTMLElement, userId: number, callbackSuccess?: CallbackSuccess) {
     this.userId = userId;
     this.dialogId = `userRemoveContentHandler-${this.userId}`;
     this.callbackSuccess = callbackSuccess;
