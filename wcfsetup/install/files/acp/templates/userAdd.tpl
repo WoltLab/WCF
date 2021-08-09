@@ -123,7 +123,9 @@
 
 							const deleteContent = document.querySelector(".jsDeleteContent");
 							if (deleteContent !== null) {
-								new AcpUserContentRemoveHandler(deleteContent, {@$user->userID});
+								new AcpUserContentRemoveHandler(deleteContent, {@$user->userID}, (data) => {
+									window.location.reload();
+								});
 							}
 
 							const sendNewPassword = document.querySelector(".jsSendNewPassword");
