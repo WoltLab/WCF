@@ -90,7 +90,7 @@ function getProviderButtons(): string {
 
       return `
       <li>
-        <a href="#" role="button" class="button ${provider.cssClass}" title="${label}" aria-label="${label}">
+        <a href="#" role="button" class="button small ${provider.cssClass}" title="${label}" aria-label="${label}">
           <span class="icon icon24 ${provider.iconClassName}"></span>
           <span>${label}</span>
         </a>
@@ -189,7 +189,7 @@ function openDialog(event: MouseEvent): void {
 }
 
 function registerButtons(): void {
-  document.querySelectorAll("a.shareButton").forEach((shareButton: HTMLElement) => {
+  document.querySelectorAll("a.shareButton,a.wsShareButton").forEach((shareButton: HTMLElement) => {
     if (!shareButtons.has(shareButton)) {
       shareButton.addEventListener("click", (ev) => openDialog(ev));
 

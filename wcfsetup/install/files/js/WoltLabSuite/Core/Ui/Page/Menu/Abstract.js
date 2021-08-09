@@ -322,7 +322,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                 }
                 return;
             }
-            const isLink = item.href !== "#";
+            const isLink = item.getAttribute("href") !== "#";
             const parentItemList = parent.parentElement;
             let itemTitle = itemList.dataset.title;
             this.items.set(item, {

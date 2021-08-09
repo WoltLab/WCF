@@ -28,7 +28,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     const _knownMessages = new WeakSet();
     let _mobileSidebarEnabled = false;
     let _pageMenuMain;
-    let _pageMenuUser;
+    let _pageMenuUser = undefined;
     let _messageGroups = null;
     const _sidebars = [];
     function init() {
@@ -138,7 +138,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     function initMobileMenu() {
         if (_enableMobileMenu) {
             _pageMenuMain = new Main_1.default();
-            _pageMenuUser = new User_1.default();
+            if (User_1.default.hasValidMenu()) {
+                _pageMenuUser = new User_1.default();
+            }
         }
     }
     function closeAllMenus() {
@@ -316,7 +318,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         _enabled = true;
         if (_enableMobileMenu) {
             _pageMenuMain.enable();
-            _pageMenuUser.enable();
+            _pageMenuUser === null || _pageMenuUser === void 0 ? void 0 : _pageMenuUser.enable();
         }
     }
     exports.enable = enable;
@@ -336,7 +338,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         _enabled = false;
         if (_enableMobileMenu) {
             _pageMenuMain.disable();
-            _pageMenuUser.disable();
+            _pageMenuUser === null || _pageMenuUser === void 0 ? void 0 : _pageMenuUser.disable();
         }
     }
     exports.disable = disable;

@@ -29,13 +29,20 @@ class ViewableArticleContentList extends ArticleContentList
     public $decoratorClassName = ViewableArticleContent::class;
 
     /**
+     * enables/disables the loading of embedded objects in the article contents
+     * @var bool
+     * @since   5.4
+     */
+    protected $embeddedObjectLoading = true;
+
+    /**
      * @inheritDoc
      */
     public function readObjects()
     {
         parent::readObjects();
 
-        $imageIDs = $embeddedObjectPostIDs = $articleIDs = [];
+        $imageIDs = $embeddedObjectContentIDs = $articleIDs = [];
         foreach ($this->getObjects() as $articleContent) {
             if ($articleContent->imageID) {
                 $imageIDs[] = $articleContent->imageID;
@@ -44,7 +51,7 @@ class ViewableArticleContentList extends ArticleContentList
                 $imageIDs[] = $articleContent->teaserImageID;
             }
             if ($articleContent->hasEmbeddedObjects) {
-                $embeddedObjectPostIDs[] = $articleContent->articleContentID;
+                $embeddedObjectContentIDs[] = $articleContent->articleContentID;
             }
 
             $articleIDs[] = $articleContent->articleID;
@@ -64,10 +71,10 @@ class ViewableArticleContentList extends ArticleContentList
         }
 
         // load embedded objects
-        if (!empty($embeddedObjectPostIDs)) {
+        if ($this->embeddedObjectLoading && !empty($embeddedObjectContentIDs)) {
             MessageEmbeddedObjectManager::getInstance()->loadObjects(
                 'com.woltlab.wcf.article.content',
-                $embeddedObjectPostIDs,
+                $embeddedObjectContentIDs,
                 $contentLanguageID
             );
         }
@@ -99,5 +106,16 @@ class ViewableArticleContentList extends ArticleContentList
                 }
             }
         }
+    }
+
+    /**
+     * Enables/disables the loading of embedded objects in the article contents.
+     *
+     * @param bool $enable
+     * @since   5.4
+     */
+    public function enableEmbeddedObjectLoading(bool $enable = true): void
+    {
+        $this->embeddedObjectLoading = $enable;
     }
 }

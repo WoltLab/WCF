@@ -334,15 +334,7 @@ class RescueModeForm extends AbstractCaptchaForm
     {
         parent::readData();
 
-        // get preferred username
         if (empty($_POST)) {
-            if (isset($_COOKIE[COOKIE_PREFIX . 'userID'])) {
-                $user = new User(\intval($_COOKIE[COOKIE_PREFIX . 'userID']));
-                if ($user->userID) {
-                    $this->username = $user->username;
-                }
-            }
-
             foreach ($this->applications as $application) {
                 $this->applicationValues[$application->packageID] = [
                     'domainName' => $application->domainName,

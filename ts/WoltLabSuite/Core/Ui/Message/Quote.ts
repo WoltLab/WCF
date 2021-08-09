@@ -28,7 +28,7 @@ interface ElementBoundaries {
 }
 
 // see WCF.Message.Quote.Manager
-interface WCFMessageQuoteManager {
+export interface WCFMessageQuoteManager {
   supportPaste: () => boolean;
   updateCount: (number, object) => void;
 }
@@ -483,8 +483,8 @@ export class UiMessageQuote implements AjaxCallbackObject {
     }
 
     // close navigation on mobile
-    const navigationList = listItem.closest(".buttonGroupNavigation") as HTMLUListElement;
-    if (navigationList.classList.contains("jsMobileButtonGroupNavigation")) {
+    const navigationList: HTMLUListElement | null = listItem.closest(".buttonGroupNavigation");
+    if (navigationList && navigationList.classList.contains("jsMobileButtonGroupNavigation")) {
       const dropDownLabel = navigationList.querySelector(".dropdownLabel") as HTMLElement;
       dropDownLabel.click();
     }

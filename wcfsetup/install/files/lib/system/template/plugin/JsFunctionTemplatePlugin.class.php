@@ -23,8 +23,8 @@ use wcf\util\StringUtil;
  *  {js application='wbb' file='WBB'}
  *  http://example.com/js/WBB.js
  *
- *  {js application='wcf' file='WCF.Like' bundle='WCF.Combined'}
- *  http://example.com/wcf/js/WCF.Like.js (ENABLE_DEBUG_MODE=1)
+ *  {js application='wcf' file='WCF.User' bundle='WCF.Combined'}
+ *  http://example.com/wcf/js/WCF.User.js (ENABLE_DEBUG_MODE=1)
  *  http://example.com/wcf/js/WCF.Combined.min.js (ENABLE_DEBUG_MODE=0)
  *
  *  {js application='wcf' lib='jquery'}
@@ -33,8 +33,8 @@ use wcf\util\StringUtil;
  *  {js application='wcf' lib='jquery-ui' file='awesomeWidget'}
  *  http://example.com/wcf/js/3rdParty/jquery-ui/awesomeWidget.js
  *
- *      {js application='wcf' file='WCF.Like' bundle='WCF.Combined' hasTiny=true}
- *  http://example.com/wcf/js/WCF.Like.js (ENABLE_DEBUG_MODE=1)
+ *      {js application='wcf' file='WCF.User' bundle='WCF.Combined' hasTiny=true}
+ *  http://example.com/wcf/js/WCF.User.js (ENABLE_DEBUG_MODE=1)
  *  http://example.com/wcf/js/WCF.Combined.min.js (ENABLE_DEBUG_MODE=0)
  *      http://example.com/wcf/js/WCF.Combined.tiny.min.js (ENABLE_DEBUG_MODE=0 && VISITOR_USE_TINY_BUILD=1)
  *

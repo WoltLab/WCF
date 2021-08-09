@@ -934,6 +934,7 @@ CREATE TABLE wcf1_package (
 	UNIQUE KEY package (package)
 );
 
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_package_compatibility;
 CREATE TABLE wcf1_package_compatibility (
 	packageID INT(10) NOT NULL,
@@ -1025,6 +1026,7 @@ CREATE TABLE wcf1_package_update (
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_package_update_compatibility;
 CREATE TABLE wcf1_package_update_compatibility (
 	packageUpdateVersionID INT(10) NOT NULL,
@@ -1047,6 +1049,7 @@ CREATE TABLE wcf1_package_update_fromversion (
 	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, fromversion)
 );
 
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_package_update_optional;
 CREATE TABLE wcf1_package_update_optional (
 	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
@@ -1786,7 +1789,7 @@ CREATE TABLE wcf1_user_notification_author (
 );
 
 -- notification recipients
--- DEPRECATED
+-- @deprecated
 DROP TABLE IF EXISTS wcf1_user_notification_to_user;
 CREATE TABLE wcf1_user_notification_to_user (
 	notificationID INT(10) NOT NULL,
@@ -2344,8 +2347,8 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
 
 -- default update servers
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/5.3/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/5.3/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/5.4/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/5.4/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualScss', '');

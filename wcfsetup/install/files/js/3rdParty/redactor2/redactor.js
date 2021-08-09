@@ -489,6 +489,7 @@
 			'details',
 			'menu',
 			'summary',
+			'center',
 			'p'
 		],
 		emptyHtml: '<p>&#x200b;</p>',
@@ -2099,6 +2100,14 @@
 						}
 						
 						return;
+					}
+					else {
+						var next = this.caret.next(node);
+						if (next && next.nodeName === 'BR') {
+							this.caret.before(next);
+
+							return;
+						}
 					}
 					
 					// inline tag
@@ -4752,6 +4761,11 @@
 							leftRange.setEnd(range.startContainer, range.startOffset);
 							leftElement.appendChild(leftRange.extractContents());
 
+							const leftMarker = leftElement.querySelector(".redactor-selection-marker");
+							if (leftMarker) {
+								parentWithTheSameTag.prepend(leftMarker);
+							}
+
 							var rightElement = document.createElement(tag);
 							parentWithTheSameTag.insertAdjacentElement("afterend", rightElement);
 
@@ -4760,12 +4774,49 @@
 							rightRange.setStart(range.endContainer, range.endOffset);
 							rightElement.appendChild(rightRange.extractContents());
 
+							const rightMarker = rightElement.querySelector(".redactor-selection-marker");
+							if (rightMarker) {
+								parentWithTheSameTag.append(rightMarker);
+							}
+
 							// Finally remove the offending parent element.
 							var parentElement = parentWithTheSameTag.parentElement;
 							while (parentWithTheSameTag.childNodes.length) {
 								parentElement.insertBefore(parentWithTheSameTag.childNodes[0], parentWithTheSameTag);
 							}
 							parentWithTheSameTag.remove();
+
+							// Check if the browser range was bad and the selection
+							// only matched the contents of the parent, but not the
+							// parent itself.
+							//
+							// This would cause HTML like this:
+							// <strong>Text</strong>
+							// to become this mess:
+							// <strong></strong>Text<strong></strong>
+							[leftElement, rightElement].forEach((element) => {
+								if (element.childNodes.length === 0) {
+									element.remove();
+									return;
+								}
+
+								if (element.textContent.length !== 0) {
+									return;
+								}
+
+								if (element.querySelector("img, br") !== null) {
+									return;
+								}
+
+								const span = element.querySelector("span");
+								if (span && span.className.length) {
+									return;
+								}
+
+								element.remove();
+							});
+
+							this.selection.restore();
 							
 							return;
 						}

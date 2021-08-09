@@ -88,7 +88,7 @@ class DevtoolsPackageArchive extends PackageArchive
             )
         );
         $readFiles = \array_map(static function (\SplFileInfo $f): string {
-            return $f->getPathname();
+            return FileUtil::unifyDirSeparator($f->getPathname());
         }, \iterator_to_array($it));
 
         $files = [];

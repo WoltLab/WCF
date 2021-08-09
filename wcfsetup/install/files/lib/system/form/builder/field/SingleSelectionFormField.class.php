@@ -24,6 +24,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     use TFilterableSelectionFormField {
         filterable as protected traitFilterable;
     }
+
     use TNullableFormField;
 
     /**
@@ -110,7 +111,7 @@ class SingleSelectionFormField extends AbstractFormField implements
         }
 
         if (!isset($this->getOptions()[$value])) {
-            throw new \InvalidArgumentException("Unknown value '{$value}'");
+            throw new \InvalidArgumentException("Unknown value '{$value}' for field '{$this->getId()}'.");
         }
 
         return parent::value($value);

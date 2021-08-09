@@ -39,11 +39,9 @@
 					<xs:element name="startdom" type="woltlab_varchar" minOccurs="1" />
 					<xs:element name="startmonth" type="woltlab_varchar" minOccurs="1" />
 					<xs:element name="startdow" type="woltlab_varchar" minOccurs="1" />
-					<xs:element name="execmultiple" type="woltlab_boolean" minOccurs="0" default="0" />
 					<xs:element name="canbeedited" type="woltlab_boolean" minOccurs="0" default="1" />
 					<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" default="1" />
 					<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" default="0" />
-					<xs:element name="active" type="woltlab_boolean" minOccurs="0" default="1" />
 					<xs:element name="options" type="xs:string" minOccurs="0" />
 				</xs:choice>
 			</xs:extension>

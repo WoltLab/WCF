@@ -38,6 +38,13 @@ class ViewableArticleList extends ArticleList
     protected $contentLoading = true;
 
     /**
+     * enables/disables the loading of embedded objects in the article contents
+     * @var bool
+     * @since   5.4
+     */
+    protected $embeddedObjectLoading = true;
+
+    /**
      * @inheritDoc
      */
     public function __construct()
@@ -92,6 +99,7 @@ class ViewableArticleList extends ArticleList
         // get article content
         if ($this->contentLoading && !empty($this->objectIDs)) {
             $contentList = new ViewableArticleContentList();
+            $contentList->enableEmbeddedObjectLoading($this->embeddedObjectLoading);
             $contentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectIDs]);
             $contentList->getConditionBuilder()->add(
                 '(article_content.languageID IS NULL OR article_content.languageID = ?)',
@@ -127,5 +135,16 @@ class ViewableArticleList extends ArticleList
     public function enableContentLoading($enable = true)
     {
         $this->contentLoading = $enable;
+    }
+
+    /**
+     * Enables/disables the loading of embedded objects in the article contents.
+     *
+     * @param bool $enable
+     * @since   5.4
+     */
+    public function enableEmbeddedObjectLoading(bool $enable = true): void
+    {
+        $this->embeddedObjectLoading = $enable;
     }
 }

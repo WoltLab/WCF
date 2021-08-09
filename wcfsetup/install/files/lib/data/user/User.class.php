@@ -623,22 +623,6 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * Returns the social network privacy settings of the user.
-     * @return  bool[]
-     * @deprecated 3.0
-     *
-     */
-    public function getSocialNetworkPrivacySettings()
-    {
-        return [
-            'facebook' => false,
-            'google' => false,
-            'reddit' => false,
-            'twitter' => false,
-        ];
-    }
-
-    /**
      * Returns the registration ip address, attempts to convert to IPv4.
      *
      * @return      string
@@ -758,6 +742,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if the user is a member of a user group that requires
      * multi-factor authentication to be enabled.
+     *
+     * @since   5.4
      */
     public function requiresMultifactor(): bool
     {

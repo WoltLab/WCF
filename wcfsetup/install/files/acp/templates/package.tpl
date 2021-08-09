@@ -68,29 +68,17 @@
 			{if $package->packageURL != ''}
 				<dl>
 					<dt>{lang}wcf.acp.package.url{/lang}</dt>
-					<dd><a href="{$package->packageURL}" class="externalURL">{$package->packageURL}</a></dd>
+					<dd><a href="{$package->packageURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$package->packageURL}</a></dd>
 				</dl>
 			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
-				<dd>{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
+				<dd>{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
 			{if $pluginStoreFileID}
 				<dl>
 					<dt>{lang}wcf.acp.pluginStore.file{/lang}</dt>
-					<dd><a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/" class="externalURL">{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
-				</dl>
-			{/if}
-			{if $package->packageID != 1}
-				<dl>
-					<dt>{lang}wcf.acp.package.apiVersions{/lang}</dt>
-					<dd>
-						{if $compatibleVersions|empty}
-							<small>{lang}wcf.acp.package.apiVersions.missing{/lang}</small>
-						{else}
-							{implode from=$compatibleVersions item=version glue=', '}{$version}{/implode}
-						{/if}
-					</dd>
+					<dd><a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
 				</dl>
 			{/if}
 			
@@ -143,7 +131,7 @@
 										</td>
 										<td class="columnID">{@$requiredPackage->packageID}</td>
 										<td class="columnTitle" title="{$requiredPackage->getDescription()}"><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></td>
-										<td class="columnText">{if $requiredPackage->authorURL}<a href="{$requiredPackage->authorURL}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
+										<td class="columnText">{if $requiredPackage->authorURL}<a href="{$requiredPackage->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
 										<td class="columnText">{$requiredPackage->packageVersion}</td>
 										<td class="columnDate">{@$requiredPackage->packageDate|date}</td>
 										
@@ -184,7 +172,7 @@
 										</td>
 										<td class="columnID">{@$dependentPackage->packageID}</td>
 										<td class="columnTitle" title="{$dependentPackage->getDescription()}"><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></td>
-										<td class="columnText">{if $dependentPackage->authorURL}<a href="{$dependentPackage->authorURL}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
+										<td class="columnText">{if $dependentPackage->authorURL}<a href="{$dependentPackage->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
 										<td class="columnText">{$dependentPackage->packageVersion}</td>
 										<td class="columnDate">{@$dependentPackage->packageDate|date}</td>
 										

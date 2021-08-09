@@ -126,7 +126,9 @@ trait TFormNode
         static::validateAttribute($name);
 
         if ($value !== null && !\is_bool($value) && !\is_numeric($value) && !\is_string($value)) {
-            throw new \InvalidArgumentException("Value argument is of invalid type, " . \gettype($value) . ".");
+            throw new \InvalidArgumentException(
+                "Value argument is of invalid type, " . \gettype($value) . " for node '{$this->getId()}'."
+            );
         }
 
         $this->attributes[$name] = $value;
@@ -221,7 +223,7 @@ trait TFormNode
     public function getAttribute($name)
     {
         if (!$this->hasAttribute($name)) {
-            throw new \InvalidArgumentException("Unknown attribute '{$name}' requested.");
+            throw new \InvalidArgumentException("Unknown attribute '{$name}' requested for node '{$this->getId()}'.");
         }
 
         return $this->attributes[$name];
@@ -374,7 +376,7 @@ trait TFormNode
         static::validateId($id);
 
         if ($this->id !== null) {
-            throw new \BadMethodCallException("Id has already been set.");
+            throw new \BadMethodCallException("Id has already been set for node '{$this->getId()}'.");
         }
 
         $this->id = $id;
@@ -420,7 +422,7 @@ trait TFormNode
     public function populate()
     {
         if ($this->isPopulated) {
-            throw new \BadMethodCallException('Node has already been populated');
+            throw new \BadMethodCallException("Node '{$this->getId()}' has already been populated.");
         }
 
         $this->isPopulated = true;
@@ -437,7 +439,9 @@ trait TFormNode
                 /** @var IFormField $field */
                 $field = $this->getDocument()->getNodeById($dependency->getFieldId());
                 if ($field === null) {
-                    throw new \UnexpectedValueException("Unknown field with id '{$dependency->getFieldId()}' for dependency '{$dependency->getId()}'.");
+                    throw new \UnexpectedValueException(
+                        "Unknown field with id '{$dependency->getFieldId()}' for dependency '{$dependency->getId()}' for node '{$this->getId()}'."
+                    );
                 }
 
                 $dependency->field($field);
@@ -508,7 +512,9 @@ trait TFormNode
             }
         }
 
-        throw new \InvalidArgumentException("Unknown dependency with id '{$dependencyId}'.");
+        throw new \InvalidArgumentException(
+            "Unknown dependency with id '{$dependencyId}' for node '{$this->getId()}'."
+        );
     }
 
     /**

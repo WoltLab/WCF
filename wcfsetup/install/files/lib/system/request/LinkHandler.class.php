@@ -120,12 +120,6 @@ class LinkHandler extends SingletonFactory
         $isRaw = false;
         $encodeTitle = true;
 
-        /**
-         * @deprecated 3.0 - no longer required
-         */
-        /** @noinspection PhpUnusedLocalVariableInspection */
-        $appendSession = false;
-
         // enforce a certain level of sanitation and protection for links embedded in emails
         if (isset($parameters['isEmail'])) {
             if ((bool)$parameters['isEmail']) {
@@ -143,6 +137,7 @@ class LinkHandler extends SingletonFactory
             unset($parameters['isRaw']);
         }
         if (isset($parameters['appendSession'])) {
+            /** @deprecated 3.0 */
             unset($parameters['appendSession']);
         }
         if (isset($parameters['isACP'])) {

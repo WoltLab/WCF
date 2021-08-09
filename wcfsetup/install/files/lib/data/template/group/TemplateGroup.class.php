@@ -29,9 +29,9 @@ class TemplateGroup extends DatabaseObject
     /**
      * @var TemplateGroup[][]
      */
-    protected static $templateGroupStructure = null;
+    protected static $templateGroupStructure;
 
-    protected static $selectList = null;
+    protected static $selectList;
 
     /**
      * Returns whether the template group is immutable (i.e. whether it's the email

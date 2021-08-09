@@ -92,7 +92,7 @@ abstract class AbstractFormField implements IFormField
     public function addValidator(IFormFieldValidator $validator)
     {
         if ($this->hasValidator($validator->getId())) {
-            throw new \InvalidArgumentException("Validator with id '{$validator->getId()}' already exists.");
+            throw new \InvalidArgumentException("Validator with id '{$validator->getId()}' already exists for field '{$this->getId()}'.");
         }
 
         $this->validators[$validator->getId()] = $validator;
@@ -249,7 +249,7 @@ abstract class AbstractFormField implements IFormField
     public function removeValidator($validatorId)
     {
         if (!$this->hasValidator($validatorId)) {
-            throw new \InvalidArgumentException("Unknown validator with id '{$validatorId}'");
+            throw new \InvalidArgumentException("Unknown validator with id '{$validatorId}' for field '{$this->getId()}'.");
         }
 
         unset($this->validators[$validatorId]);

@@ -1,9 +1,16 @@
 .accountSecurityContainer {
+	align-items: center;
 	display: flex;
 
 	@include screen-sm-down {
+		align-items: flex-start;
 		flex-direction: column;
 	}
+}
+
+/* The smartphone icon is noticbly smaller than all other icons being used. */
+.accountSecurityInformationIcon.fa-mobile {
+	font-size: 70px;
 }
 
 .accountSecurityInformation {
@@ -65,6 +72,10 @@ input.multifactorBackupCode {
 		canvas {
 			width: 200px;
 			height: 200px;
+			background: #fff;
+			border-radius: 3px;
+			border: 3px solid #fff;
+			box-sizing: content-box;
 		}
 	}
 

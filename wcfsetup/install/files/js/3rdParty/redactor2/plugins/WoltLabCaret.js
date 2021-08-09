@@ -481,6 +481,15 @@ $.Redactor.prototype.WoltLabCaret = function() {
 		},
 		
 		_handleEditorClick: function (event) {
+			var selection = this.selection.get();
+			if (
+				selection.anchorNode
+				&& !this.core.editor()[0].contains(selection.anchorNode)
+			) {
+				// The focus is still outstide of the editor, do nothing here.
+				return;
+			}
+
 			var clientY = event.clientY;
 
 			// Treat this as a collapsed selection instead, because the iOS Safari

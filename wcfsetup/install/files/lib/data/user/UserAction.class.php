@@ -1131,42 +1131,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     }
 
     /**
-     * Validates parameters to retrieve the social network privacy settings.
-     * @deprecated 3.0
-     */
-    public function validateGetSocialNetworkPrivacySettings()
-    {
-        // does nothing
-    }
-
-    /**
-     * Returns the social network privacy settings.
-     * @deprecated 3.0
-     */
-    public function getSocialNetworkPrivacySettings()
-    {
-        // does nothing
-    }
-
-    /**
-     * Validates the 'saveSocialNetworkPrivacySettings' action.
-     * @deprecated 3.0
-     */
-    public function validateSaveSocialNetworkPrivacySettings()
-    {
-        // does nothing
-    }
-
-    /**
-     * Saves the social network privacy settings.
-     * @deprecated 3.0
-     */
-    public function saveSocialNetworkPrivacySettings()
-    {
-        // does nothing
-    }
-
-    /**
      * @since 5.3
      */
     public function validateSaveUserConsent()
@@ -1270,5 +1234,22 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         (new UserEditor(WCF::getUser()))->update([
             'languageID' => $this->parameters['languageID'],
         ]);
+    }
+
+    /**
+     * @since   5.5
+     */
+    public function cancelLostPasswordRequest(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
+        foreach ($this->getObjects() as $userEditor) {
+            $userEditor->update([
+                'lastLostPasswordRequestTime' => 0,
+                'lostPasswordKey' => '',
+            ]);
+        }
     }
 }

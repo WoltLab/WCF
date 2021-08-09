@@ -102,6 +102,7 @@ final class HTTPRequest
             "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . ")"
         );
         $this->addHeader('accept', '*/*');
+        $this->addHeader('accept-encoding', 'identity');
         if ($language) {
             $this->addHeader('accept-language', $language->getFixedLanguageCode());
         }

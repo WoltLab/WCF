@@ -247,6 +247,8 @@ class DataImportForm extends AbstractForm
         // validate selected data
         if (!$this->exporter->validateSelectedData($this->selectedData)) {
             throw new UserInputException('selectedData');
+        } elseif (empty($this->exporter->getQueue())) {
+            throw new UserInputException('selectedData');
         }
 
         // validate file access

@@ -3,6 +3,7 @@
 namespace wcf\acp\page;
 
 use wcf\data\package\PackageList;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\SortablePage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
@@ -109,6 +110,8 @@ class PackageListPage extends SortablePage
             'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
             'packageID' => $this->packageID,
             'taintedApplications' => $taintedApplications,
+            'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
+            'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
         ]);
     }
 

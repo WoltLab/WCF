@@ -187,7 +187,10 @@ class ArticleListPage extends SortablePage
         $this->applyFilters();
 
         if ($this->sortField === 'title') {
-            $this->objectList->sqlSelects = "(
+            if (!empty($this->objectList->sqlSelects)) {
+                $this->objectList->sqlSelects .= ',';
+            }
+            $this->objectList->sqlSelects .= "(
                 SELECT  title
                 FROM    wcf" . WCF_N . "_article_content
                 WHERE   articleID = article.articleID

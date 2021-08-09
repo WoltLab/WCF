@@ -76,7 +76,7 @@ class UiAclSimple {
       this.prefix + "invertPermissions",
     ) as HTMLInputElement | null;
     if (invertPermissionRadioButton) {
-      this.invertPermissions(!!invertPermissionRadioButton.value);
+      this.invertPermissions(invertPermissionRadioButton.checked);
     }
 
     DomChangeListener.trigger();

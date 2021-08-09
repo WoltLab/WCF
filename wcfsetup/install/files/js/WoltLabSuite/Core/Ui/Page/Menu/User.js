@@ -17,13 +17,6 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Event/Handler"
          * Initializes the touch-friendly fullscreen user menu.
          */
         constructor() {
-            // check if user menu is actually empty
-            const menu = document.querySelector("#pageUserMenuMobile > .menuOverlayItemList");
-            if (menu.childElementCount === 1 && menu.children[0].classList.contains("menuOverlayTitle")) {
-                const userPanel = document.querySelector("#pageHeader .userPanel");
-                userPanel.classList.add("hideUserPanel");
-                return;
-            }
             super("com.woltlab.wcf.UserMenuMobile", "pageUserMenuMobile", "#pageHeader .userPanel");
             EventHandler.add("com.woltlab.wcf.userMenu", "updateBadge", (data) => this.updateBadge(data));
             this.button.setAttribute("aria-label", Language.get("wcf.menu.user"));
@@ -63,6 +56,15 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Event/Handler"
                     this.updateButtonState();
                 }
             });
+        }
+        static hasValidMenu() {
+            const menu = document.querySelector("#pageUserMenuMobile > .menuOverlayItemList");
+            if (menu.childElementCount === 1 && menu.children[0].classList.contains("menuOverlayTitle")) {
+                const userPanel = document.querySelector("#pageHeader .userPanel");
+                userPanel.classList.add("hideUserPanel");
+                return false;
+            }
+            return true;
         }
     }
     Core.enableLegacyInheritance(UiPageMenuUser);

@@ -417,10 +417,14 @@ class DatabaseTableChangeProcessor
                             $this->deleteColumnLog($tableName, $column);
                         }
                     } elseif (!isset($existingColumns[$column->getName()])) {
-                        if (!isset($this->columnsToAdd[$tableName])) {
-                            $this->columnsToAdd[$tableName] = [];
+                        // It was already checked in `validate()` that for renames, the column either
+                        // exists with the old or new name.
+                        if (!$column->getNewName()) {
+                            if (!isset($this->columnsToAdd[$tableName])) {
+                                $this->columnsToAdd[$tableName] = [];
+                            }
+                            $this->columnsToAdd[$tableName][] = $column;
                         }
-                        $this->columnsToAdd[$tableName][] = $column;
                     } elseif ($this->diffColumns($existingColumns[$column->getName()], $column)) {
                         if (!isset($this->columnsToAlter[$tableName])) {
                             $this->columnsToAlter[$tableName] = [];
@@ -440,7 +444,7 @@ class DatabaseTableChangeProcessor
                 foreach ($table->getForeignKeys() as $foreignKey) {
                     $matchingExistingForeignKey = null;
                     foreach ($existingForeignKeys as $existingForeignKey) {
-                        if (empty(\array_diff($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
+                        if (empty(\array_diff_assoc($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
                             $matchingExistingForeignKey = $existingForeignKey;
                             break;
                         }
@@ -478,7 +482,7 @@ class DatabaseTableChangeProcessor
                             $foreignKey->getColumns()
                         ) . "'.";
                         break 2;
-                    } elseif (!empty(\array_diff($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
+                    } elseif (!empty(\array_diff_assoc($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
                         if (!isset($this->foreignKeysToDrop[$tableName])) {
                             $this->foreignKeysToDrop[$tableName] = [];
                         }
@@ -528,7 +532,7 @@ class DatabaseTableChangeProcessor
                         // names are not deterministic)
                         if (
                             !$index->hasGeneratedName()
-                            && !empty(\array_diff($matchingExistingIndex->getData(), $index->getData()))
+                            && !empty(\array_diff_assoc($matchingExistingIndex->getData(), $index->getData()))
                         ) {
                             if (!isset($this->indicesToDrop[$tableName])) {
                                 $this->indicesToDrop[$tableName] = [];
@@ -772,7 +776,7 @@ class DatabaseTableChangeProcessor
      */
     protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn)
     {
-        $diff = \array_diff($oldColumn->getData(), $newColumn->getData());
+        $diff = \array_diff_assoc($oldColumn->getData(), $newColumn->getData());
         if (!empty($diff)) {
             // see https://github.com/WoltLab/WCF/pull/3167
             if (
@@ -1182,7 +1186,9 @@ class DatabaseTableChangeProcessor
                                         'type' => 'foreignColumnChange',
                                     ];
                                 }
-                            } elseif ($column->getNewName()) {
+                            } elseif ($column->getNewName() && !isset($existingColumns[$column->getNewName()])) {
+                                // Only show error message for a column rename if no column with the
+                                // old or new name exists.
                                 $errors[] = [
                                     'columnName' => $column->getName(),
                                     'tableName' => $table->getName(),

@@ -36,13 +36,11 @@
 	{/if}
 {/capture}
 
-{include file='header'}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign=pagesLinks controller='Tagged' object=$tag link="objectType=$objectType&pageNo=%d"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller='Tagged' object=$tag link="objectType=$objectType&pageNo=%d"}{/content}
-	</div>
-{/hascontent}
+{include file='header'}
 
 {if $items}
 	{include file=$resultListTemplateName application=$resultListApplication}

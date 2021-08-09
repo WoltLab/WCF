@@ -25,6 +25,7 @@ class UploadFormField extends AbstractFormField
     use TMaximumFormField {
         maximum as traitMaximum;
     }
+
     use TMinimumFormField;
 
     /**
@@ -155,7 +156,9 @@ class UploadFormField extends AbstractFormField
     public function getValue()
     {
         if (!$this->isPopulated) {
-            throw new \BadMethodCallException("The field must be populated, before calling this method.");
+            throw new \BadMethodCallException(
+                "The field '{$this->getId()}' must be populated, before calling this method."
+            );
         }
 
         if (!$this->isRegistered()) {
@@ -175,7 +178,9 @@ class UploadFormField extends AbstractFormField
     public function getRemovedFiles($processFiles = false)
     {
         if (!$this->isPopulated) {
-            throw new \BadMethodCallException("The field must be populated, before calling the method.");
+            throw new \BadMethodCallException(
+                "The field '{$this->getId()}' must be populated, before calling the method."
+            );
         }
 
         if (!$this->isRegistered()) {
@@ -192,7 +197,9 @@ class UploadFormField extends AbstractFormField
     public function readValue()
     {
         if (!$this->isPopulated) {
-            throw new \BadMethodCallException("The field must be populated, before calling this method.");
+            throw new \BadMethodCallException(
+                "The field '{$this->getId()}' must be populated, before calling the method."
+            );
         }
 
         return $this;
@@ -300,7 +307,9 @@ class UploadFormField extends AbstractFormField
     public function getHtml()
     {
         if (!$this->isPopulated) {
-            throw new \BadMethodCallException("The field must be populated, before calling this method.");
+            throw new \BadMethodCallException(
+                "The field '{$this->getId()}' must be populated, before calling the method."
+            );
         }
 
         if (!$this->isRegistered()) {
@@ -317,7 +326,9 @@ class UploadFormField extends AbstractFormField
     public function getFieldHtml()
     {
         if (!$this->isPopulated) {
-            throw new \BadMethodCallException("The field must be populated, before calling this method.");
+            throw new \BadMethodCallException(
+                "The field '{$this->getId()}' must be populated, before calling the method."
+            );
         }
 
         if (!$this->isRegistered()) {
@@ -354,7 +365,7 @@ class UploadFormField extends AbstractFormField
                 $value = \array_map(function ($v) use ($method) {
                     if (!\is_string($v) || !\file_exists($v)) {
                         throw new \InvalidArgumentException(
-                            "The " . $method . " must return an array of strings with the file locations."
+                            "The {$method} must return an array of strings with the file locations for field '{$this->getId()}'."
                         );
                     }
 
@@ -370,7 +381,7 @@ class UploadFormField extends AbstractFormField
                 $this->value($value);
             } else {
                 throw new \InvalidArgumentException(
-                    "The " . $method . " must return an array of strings with the file locations."
+                    "The {$method} must return an array of strings with the file locationsfor field '{$this->getId()}'."
                 );
             }
         }
@@ -389,13 +400,13 @@ class UploadFormField extends AbstractFormField
     public function value($value)
     {
         if (!\is_array($value)) {
-            throw new \InvalidArgumentException('$value must be an array.');
+            throw new \InvalidArgumentException("Given value must be an array for field '{$this->getId()}'.");
         }
 
         foreach ($value as $file) {
             if (!($file instanceof UploadFile)) {
                 throw new \InvalidArgumentException(
-                    'All given files must be an instance of ' . UploadFile::class . '.'
+                    "All given files must be an instance of " . UploadFile::class . " for field '{$this->getId()}'."
                 );
             }
         }
@@ -455,11 +466,11 @@ class UploadFormField extends AbstractFormField
     protected function registerField(): void
     {
         if ($this->isRegistered) {
-            throw new \BadMethodCallException("The field is already registered.");
+            throw new \BadMethodCallException("The field '{$this->getId()}' is already registered.");
         }
 
         if (!$this->isPopulated) {
-            throw new \BadMethodCallException("The field is not populated yet.");
+            throw new \BadMethodCallException("The field '{$this->getId()}' is not populated yet.");
         }
 
         UploadHandler::getInstance()->registerUploadField(
@@ -483,7 +494,7 @@ class UploadFormField extends AbstractFormField
     {
         if ($this->isRegistered()) {
             throw new \LogicException(
-                'The upload field has already been registered. Therefore no modifications are allowed.'
+                "The field '{$this->getId()}' has already been registered. Therefore no modifications are allowed."
             );
         }
 
@@ -504,7 +515,7 @@ class UploadFormField extends AbstractFormField
         if ($maximumFilesize !== null) {
             if (!\is_numeric($maximumFilesize)) {
                 throw new \InvalidArgumentException(
-                    "Given maximum filesize is no int, '" . \gettype($maximumFilesize) . "' given."
+                    "Given maximum filesize is no int, '" . \gettype($maximumFilesize) . "' given for field '{$this->getId()}'."
                 );
             }
         }
@@ -538,19 +549,21 @@ class UploadFormField extends AbstractFormField
     public function minimumImageWidth($minimumImageWidth = null)
     {
         if (!$this->isImageOnly()) {
-            throw new \LogicException("The form field must be image only, to set a minimum image width.");
+            throw new \LogicException("The field '{$this->getId()}' must be image only to set a minimum image width.");
         }
 
         if ($minimumImageWidth !== null) {
             if (!\is_numeric($minimumImageWidth)) {
                 throw new \InvalidArgumentException(
-                    "Given minimum image width is no int, '" . \gettype($minimumImageWidth) . "' given."
+                    "Given minimum image width is no int, '" . \gettype($minimumImageWidth) . "' given for field '{$this->getId()}'."
                 );
             }
 
             $maximumImageWidth = $this->getMaximumImageWidth();
             if ($maximumImageWidth !== null && $minimumImageWidth > $maximumImageWidth) {
-                throw new \InvalidArgumentException("Minimum image width ({$minimumImageWidth}) cannot be greater than maximum image width ({$maximumImageWidth}).");
+                throw new \InvalidArgumentException(
+                    "Minimum image width ({$minimumImageWidth}) cannot be greater than maximum image width ({$maximumImageWidth}) for field '{$this->getId()}'."
+                );
             }
         }
 
@@ -583,19 +596,21 @@ class UploadFormField extends AbstractFormField
     public function maximumImageWidth($maximumImageWidth = null)
     {
         if (!$this->isImageOnly()) {
-            throw new \LogicException("The form field must be image only, to set a maximum image width.");
+            throw new \LogicException("The field '{$this->getId()}' must be image only to set a maximum image width.");
         }
 
         if ($maximumImageWidth !== null) {
             if (!\is_numeric($maximumImageWidth)) {
                 throw new \InvalidArgumentException(
-                    "Given maximum image width is no int, '" . \gettype($maximumImageWidth) . "' given."
+                    "Given maximum image width is no int, '" . \gettype($maximumImageWidth) . "' given for field '{$this->getId()}'."
                 );
             }
 
             $minimumImageWidth = $this->getMinimumImageWidth();
             if ($maximumImageWidth !== null && $minimumImageWidth > $maximumImageWidth) {
-                throw new \InvalidArgumentException("Maximum image width ({$maximumImageWidth}) cannot be smaller than minimum image width ({$minimumImageWidth}).");
+                throw new \InvalidArgumentException(
+                    "Maximum image width ({$maximumImageWidth}) cannot be smaller than minimum image width ({$minimumImageWidth}) for field '{$this->getId()}'."
+                );
             }
         }
 
@@ -628,19 +643,23 @@ class UploadFormField extends AbstractFormField
     public function minimumImageHeight($minimumImageHeight = null)
     {
         if (!$this->isImageOnly()) {
-            throw new \LogicException("The form field must be image only, to set a minimum image height.");
+            throw new \LogicException(
+                "The field '{$this->getId()}' must be image only to set a minimum image height."
+            );
         }
 
         if ($minimumImageHeight !== null) {
             if (!\is_numeric($minimumImageHeight)) {
                 throw new \InvalidArgumentException(
-                    "Given minimum image height is no int, '" . \gettype($minimumImageHeight) . "' given."
+                    "Given minimum image height is no int, '" . \gettype($minimumImageHeight) . "' given for field '{$this->getId()}'."
                 );
             }
 
             $maximumImageHeight = $this->getMaximumImageHeight();
             if ($maximumImageHeight !== null && $minimumImageHeight > $maximumImageHeight) {
-                throw new \InvalidArgumentException("Minimum image height ({$minimumImageHeight}) cannot be greater than maximum image height ({$maximumImageHeight}).");
+                throw new \InvalidArgumentException(
+                    "Minimum image height ({$minimumImageHeight}) cannot be greater than maximum image height ({$maximumImageHeight}) for field '{$this->getId()}'."
+                );
             }
         }
 
@@ -673,19 +692,23 @@ class UploadFormField extends AbstractFormField
     public function maximumImageHeight($maximumImageHeight = null)
     {
         if (!$this->isImageOnly()) {
-            throw new \LogicException("The form field must be image only, to set a maximum image height.");
+            throw new \LogicException(
+                "The field '{$this->getId()}' must be image only to set a maximum image height."
+            );
         }
 
         if ($maximumImageHeight !== null) {
             if (!\is_numeric($maximumImageHeight)) {
                 throw new \InvalidArgumentException(
-                    "Given maximum image height is no int, '" . \gettype($maximumImageHeight) . "' given."
+                    "Given maximum image height is no int, '" . \gettype($maximumImageHeight) . "' given for field '{$this->getId()}'."
                 );
             }
 
             $minimumImageHeight = $this->getMinimumImageHeight();
             if ($minimumImageHeight !== null && $maximumImageHeight > $minimumImageHeight) {
-                throw new \InvalidArgumentException("Maximum image height ({$maximumImageHeight}) cannot be smaller than minimum image height ({$minimumImageHeight}).");
+                throw new \InvalidArgumentException(
+                    "Maximum image height ({$maximumImageHeight}) cannot be smaller than minimum image height ({$minimumImageHeight}) for field '{$this->getId()}'."
+                );
             }
         }
 
@@ -722,25 +745,25 @@ class UploadFormField extends AbstractFormField
         if (!$imageOnly) {
             if ($this->getMinimumImageWidth() !== null) {
                 throw new \InvalidArgumentException(
-                    "The form field must be image only, because a minimum image width is set."
+                    "The field '{$this->getId()}' must be image only, because a minimum image width is set."
                 );
             }
 
             if ($this->getMaximumImageWidth() !== null) {
                 throw new \InvalidArgumentException(
-                    "The form field must be image only, because a maximum image width is set."
+                    "The field '{$this->getId()}' must be image only, because a maximum image width is set."
                 );
             }
 
             if ($this->getMinimumImageHeight() !== null) {
                 throw new \InvalidArgumentException(
-                    "The form field must be image only, because a minimum image height is set."
+                    "The field '{$this->getId()}' must be image only, because a minimum image height is set."
                 );
             }
 
             if ($this->getMaximumImageHeight() !== null) {
                 throw new \InvalidArgumentException(
-                    "The form field must be image only, because a maximum image height is set."
+                    "The field '{$this->getId()}' must be image only, because a maximum image height is set."
                 );
             }
         }
@@ -777,7 +800,7 @@ class UploadFormField extends AbstractFormField
     {
         if (!$this->isImageOnly()) {
             throw new \BadMethodCallException(
-                'Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.'
+                "Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true` for field '{$this->getId()}'."
             );
         }
 

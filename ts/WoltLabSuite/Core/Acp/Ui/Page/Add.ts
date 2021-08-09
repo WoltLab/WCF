@@ -69,7 +69,7 @@ let acpUiPageAdd: AcpUiPageAdd;
  */
 export function init(link: string, languages: number): void {
   if (!acpUiPageAdd) {
-    acpUiPageAdd = new AcpUiPageAdd(link, languages > 0);
+    acpUiPageAdd = new AcpUiPageAdd(link, languages > 1);
   }
 }
 

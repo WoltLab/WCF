@@ -71,13 +71,13 @@ class UserGroup extends DatabaseObject implements ITitledObject
      * group cache
      * @var UserGroup[]
      */
-    protected static $cache = null;
+    protected static $cache;
 
     /**
      * list of accessible groups for active user
      * @var int[]
      */
-    protected static $accessibleGroups = null;
+    protected static $accessibleGroups;
 
     /**
      * @var UserGroup|null

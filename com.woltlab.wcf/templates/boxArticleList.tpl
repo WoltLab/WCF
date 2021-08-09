@@ -32,6 +32,11 @@
 				<a href="{$boxArticle->getLink()}">
 					{if $boxArticle->getTeaserImage() && $boxArticle->getTeaserImage()->hasThumbnail('small')}
 						<div class="articleListImage">{@$boxArticle->getTeaserImage()->getThumbnailTag('small')}</div>
+					{else}
+						<div class="articleListImage">
+							<img src="{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}" alt=""
+								style="height: {@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoHeight()}px; width: {@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoWidth()}px">
+						</div>
 					{/if}
 					
 					<h3 class="articleListTitle">{$boxArticle->getTitle()}</h3>

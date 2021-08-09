@@ -376,6 +376,12 @@ class BoxAddForm extends AbstractForm
             $this->invertPermissions = $_POST['invertPermissions'];
         }
 
+        // If the page is allowed by all, the permission cannot be inverted.
+        $outputAclValues = SimpleAclHandler::getInstance()->getOutputValues($this->aclValues);
+        if ($outputAclValues['allowAll']) {
+            $this->invertPermissions = 0;
+        }
+
         if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
             if (isset($_POST['imageID']) && \is_array($_POST['imageID'])) {
                 $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
@@ -650,6 +656,9 @@ class BoxAddForm extends AbstractForm
         $this->visibleEverywhere = $this->showHeader = 1;
         $this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
         $this->boxController = null;
+        $this->linkType = 'none';
+        $this->linkPageID = 0;
+        $this->linkPageObjectID = 0;
     }
 
     /**

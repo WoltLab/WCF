@@ -154,7 +154,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
         _activeTargetId = "";
         _dropdowns.forEach((dropdown, containerId) => {
             const menu = _menus.get(containerId);
-            let firstListItem = null;
             if (dropdown.classList.contains("dropdownOpen")) {
                 if (!preventToggle) {
                     dropdown.classList.remove("dropdownOpen");
@@ -194,18 +193,16 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                     itemList.classList[itemList.scrollHeight > itemList.clientHeight ? "add" : "remove"]("forceScrollbar");
                 }
                 notifyCallbacks(containerId, "open");
+                let firstListItem = null;
                 if (!disableAutoFocus) {
                     menu.setAttribute("role", "menu");
                     menu.tabIndex = -1;
                     menu.removeEventListener("keydown", dropdownMenuKeyDown);
                     menu.addEventListener("keydown", dropdownMenuKeyDown);
-                    menu.querySelectorAll("li").forEach((listItem) => {
-                        if (!listItem.clientHeight)
-                            return;
-                        if (firstListItem === null)
-                            firstListItem = listItem;
-                        else if (listItem.classList.contains("active"))
-                            firstListItem = listItem;
+                    const nonEmptyListItems = Array.from(menu.querySelectorAll("li")).filter((listItem) => listItem.clientHeight > 0);
+                    const activeListItem = nonEmptyListItems.find((listItem) => listItem.classList.contains("active"));
+                    firstListItem = activeListItem || nonEmptyListItems[0] || null;
+                    nonEmptyListItems.forEach((listItem) => {
                         listItem.setAttribute("role", "menuitem");
                         listItem.tabIndex = -1;
                     });

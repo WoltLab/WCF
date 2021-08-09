@@ -103,6 +103,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         'pre',
         'sub',
         'sup',
+        'strong',
+        'del',
+        'em',
+        'u',
     ];
 
     /**
@@ -489,6 +493,33 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             foreach ($removeElements as $removeElement) {
                 $quote->removeChild($removeElement);
             }
+        }
+
+        // Strip de facto empty text nodes that are the result from quirky formatting, for example:
+        // <p><span style="font-size: 12px"> </span></p>
+        /** @var \DOMElement $paragraph */
+        foreach ($this->getXPath()->query('//p') as $paragraph) {
+            $textContent = StringUtil::trim($paragraph->textContent);
+            if ($textContent !== '') {
+                continue;
+            }
+
+            /** @var \DOMElement $element */
+            foreach ($paragraph->getElementsByTagName('*') as $element) {
+                if (!\in_array($element->nodeName, self::$emptyTags)) {
+                    continue 2;
+                }
+            }
+
+            // Do not strip content that contains non empty spans, such as icons.
+            /** @var \DOMElement $element */
+            foreach ($paragraph->getElementsByTagName('span') as $element) {
+                if ($element->getAttribute('class')) {
+                    continue 2;
+                }
+            }
+
+            $paragraph->parentNode->removeChild($paragraph);
         }
     }
 

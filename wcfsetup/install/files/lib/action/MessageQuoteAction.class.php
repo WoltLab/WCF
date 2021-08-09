@@ -48,6 +48,17 @@ class MessageQuoteAction extends AJAXProxyAction
 
         if (isset($_POST['actionName'])) {
             $this->actionName = StringUtil::trim($_POST['actionName']);
+
+            if (
+                !\in_array(
+                    $this->actionName,
+                    ['count', 'getQuotes', 'markForRemoval', 'remove', 'removeMarkedQuotes']
+                )
+            ) {
+                throw new UserInputException('actionName', 'invalid');
+            }
+        } else {
+            throw new UserInputException('actionName');
         }
         if (isset($_POST['getFullQuoteObjectIDs'])) {
             $this->_getFullQuoteObjectIDs = \intval($_POST['getFullQuoteObjectIDs']);

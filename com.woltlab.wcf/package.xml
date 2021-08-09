@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/package.xsd">
+<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/package.xsd">
 	<packageinformation>
 		<packagename>WoltLab Suite Core</packagename>
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.0 Beta 1</version>
-		<date>2021-06-02</date>
+		<version>5.4.2</version>
+		<date>2021-07-27</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -48,5 +48,114 @@
 		<instruction type="templateListener" />
 		
 		<instruction type="script">acp/post_install.php</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="5.3.*">
+		<!--
+tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
+	acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php \
+	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php \
+	acp/update_com.woltlab.wcf_5.4_fixSqlLog.php
+		-->
+		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
+		
+		<!-- Checks that need to happen before the upgrade starts. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_fixSqlLog.php</instruction>
+
+		<!--
+tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
+	acp/update_com.woltlab.wcf_5.4_session_1_cookies.php \
+	acp/database/update_com.woltlab.wcf_5.4_session_2_user_session.php \
+	acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php \
+	lib/util/HeaderUtil.class.php \
+	lib/system/package/plugin/AbstractPackageInstallationPlugin.class.php \
+	lib/system/package/plugin/DatabasePackageInstallationPlugin.class.php \
+	lib/system/package/plugin/FilePackageInstallationPlugin.class.php \
+	lib/system/package/plugin/ScriptPackageInstallationPlugin.class.php
+		-->
+		<instruction type="file" run="standalone">files_pre.tar</instruction>
+
+		<instruction type="packageInstallationPlugin" />
+
+		<!-- Deploy some of the options before running the upgrade to not brick the login if the upgrade aborts. -->
+		<instruction type="option" run="standalone">option_5.4.xml</instruction>
+
+		<!-- Preparations for the new session system. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_2_user_session.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php</instruction>
+		
+		<!-- New application code. -->
+		<instruction type="file" />
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+		
+		<!-- Make all the new options available as early as possible. -->
+		<instruction type="option" run="standalone" />
+		
+		<!-- Cleanup for the new session system. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_4_drop_virtual.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_5_drop_acp.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_6_clean_session.php</instruction>
+		
+		<!-- Non-critical database adjustments. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4.php</instruction>
+		
+		<!-- Index updates for `wcf1_tag_to_object`. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step1.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</instruction>
+		
+		<!-- Cleanup of the filesystem. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_removeFiles.php</instruction>
+		
+		<!-- Misc. PIPs. -->
+		<instruction type="acpMenu" />
+		<instruction type="clipboardAction" />
+		<instruction type="eventListener" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="userGroupOption" />
+		<instruction type="userMenu" />
+		<instruction type="page" />
+		<instruction type="language" />
+		<instruction type="mediaProvider" />
+		<instruction type="userOption" />
+		
+		<!-- Just XSD adjustments. -->
+		<instruction type="aclOption" />
+		<instruction type="acpSearchProvider" />
+		<instruction type="bbcode" />
+		<instruction type="box" />
+		<instruction type="coreObject" />
+		<instruction type="cronjob" />
+		<instruction type="menu" />
+		<instruction type="menuItem" />
+		<instruction type="smiley" />
+		<instruction type="templateListener" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="userProfileMenu" />
+		
+		<!-- Migration of multi-factor authentication. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_migrate_multifactor.php</instruction>
+		
+		<!-- Migration of the rank images -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_migrate_rank_images.php</instruction>
+
+		<!-- Update of the Google Fonts -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_update_google_font.php</instruction>
+
+		<!-- Creation of WebP cover Photos -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_styleCoverPhoto.php</instruction>
+
+		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="5.4.2">
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_resetAvatarCache.php</instruction>
 	</instructions>
 </package>

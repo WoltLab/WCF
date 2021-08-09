@@ -97,7 +97,6 @@ class ApplicationHandler extends SingletonFactory
      * e.g. cross-domain files requestable through the webserver.
      *
      * @return  Application
-     * @deprecated  3.0 please use `getApplication()` instead
      */
     public function getWCF()
     {
@@ -136,7 +135,7 @@ class ApplicationHandler extends SingletonFactory
 
         $request = RequestHandler::getInstance()->getActiveRequest();
         if ($request !== null) {
-            $abbreviation = \substr($request->getClassName(), 0, \mb_strpos($request->getClassName(), '\\'));
+            [$abbreviation] = \explode('\\', $request->getClassName(), 2);
 
             return $this->getApplication($abbreviation);
         }
@@ -259,20 +258,10 @@ class ApplicationHandler extends SingletonFactory
 
     /**
      * @since 5.2
+     * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
     public function rebuildActiveApplication()
     {
-        /** @var AbstractApplication $application */
-        foreach ($this->cache['application'] as $application) {
-            if ($application->getPackage()->package === 'com.woltlab.wcf') {
-                continue;
-            }
-
-            $appObject = WCF::getApplicationObject($application);
-            if ($appObject instanceof AbstractApplication) {
-                $appObject->rebuildActiveApplication();
-            }
-        }
     }
 
     /**

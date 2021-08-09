@@ -6,6 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImageAdapter;
 use wcf\system\image\adapter\ImagickImageAdapter;
+use wcf\system\image\adapter\IWebpImageAdapter;
 use wcf\system\SingletonFactory;
 
 /**
@@ -43,11 +44,16 @@ class ImageHandler extends SingletonFactory
         }
 
         $imageAdapter = $this->imageAdapters[IMAGE_ADAPTER_TYPE];
-        /** @noinspection PhpUndefinedCallbackInspection */
         $isSupported = \call_user_func([$imageAdapter, 'isSupported']);
+        if ($isSupported) {
+            if (\is_subclass_of($imageAdapter, IWebpImageAdapter::class)) {
+                $isSupported = \call_user_func([$imageAdapter, 'supportsWebp']);
+            } else {
+                $isSupported = false;
+            }
+        }
 
-        // fallback to GD if image adapter is not available
-        if (!$isSupported) {
+        if (\IMAGE_ADAPTER_TYPE !== 'gd' && !$isSupported) {
             $imageAdapter = $this->imageAdapters['gd'];
         }
 

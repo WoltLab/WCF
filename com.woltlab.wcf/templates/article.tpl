@@ -72,28 +72,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $article->isMultilingual && $__wcf->user->userID}
-							<li class="dropdown">
-								<a class="dropdownToggle boxFlag box24 button">
-									<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
-									<span>{$articleContent->getLanguage()->languageName}</span>
-								</a>
-								<ul class="dropdownMenu">
-									{foreach from=$article->getLanguageLinks() item='langArticleContent'}
-										{if $langArticleContent->getLanguage()}
-											<li class="boxFlag">
-												<a class="box24" href="{$langArticleContent->getLink()}">
-													<span><img src="{$langArticleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
-													<span>{$langArticleContent->getLanguage()->languageName}</span>
-												</a>
-											</li>
-										{/if}
-									{/foreach}
-								</ul>
-							</li>
-						{/if}
-					
-						{if $article->canEdit()}<li><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
+						{if $article->canEdit()}<li><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -112,6 +91,29 @@
 	{/if}
 	{if MODULE_AMP}
 		<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
+	{/if}
+{/capture}
+
+{capture assign='contentInteractionButtons'}
+	{if $article->isMultilingual && $__wcf->user->userID}
+		<div class="contentInteractionButton dropdown jsOnly">
+			<a class="dropdownToggle boxFlag box24 button small">
+				<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
+				<span>{$articleContent->getLanguage()->languageName}</span>
+			</a>
+			<ul class="dropdownMenu">
+				{foreach from=$article->getLanguageLinks() item='langArticleContent'}
+					{if $langArticleContent->getLanguage()}
+						<li class="boxFlag">
+							<a class="box24" href="{$langArticleContent->getLink()}">
+								<span><img src="{$langArticleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
+								<span>{$langArticleContent->getLanguage()->languageName}</span>
+							</a>
+						</li>
+					{/if}
+				{/foreach}
+			</ul>
+		</div>
 	{/if}
 {/capture}
 
@@ -183,7 +185,7 @@
 			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
 				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
 					<li>
-						<a href="{$articleContent->getLink()}" class="button shareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
+						<a href="{$articleContent->getLink()}" class="button wsShareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
 							<span class="icon icon16 fa-share-alt"></span> <span>{lang}wcf.message.share{/lang}</span>
 						</a>
 					</li>

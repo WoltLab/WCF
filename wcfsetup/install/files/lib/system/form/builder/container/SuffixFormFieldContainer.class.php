@@ -42,7 +42,7 @@ class SuffixFormFieldContainer extends FormContainer
     public function field(IFormField $formField)
     {
         if ($this->field !== null) {
-            throw new \BadMethodCallException('Field has already been set.');
+            throw new \BadMethodCallException("Field has already been set for container '{$this->getId()}'.");
         }
 
         $this->field = $formField;
@@ -59,7 +59,7 @@ class SuffixFormFieldContainer extends FormContainer
     public function getField()
     {
         if ($this->field === null) {
-            throw new \BadMethodCallException('Field has not been set yet.');
+            throw new \BadMethodCallException("Field has not been set yet for container '{$this->getId()}'.");
         }
 
         return $this->field;
@@ -84,10 +84,14 @@ class SuffixFormFieldContainer extends FormContainer
     public function getSelectedSuffixOption()
     {
         if ($this->getSuffixField() === null) {
-            throw new \BadMethodCallException('There is no suffix field for which a label could be determined.');
+            throw new \BadMethodCallException(
+                "There is no suffix field for which a label could be determined for container '{$this->getId()}'."
+            );
         }
         if (empty($this->getSuffixField()->getOptions())) {
-            throw new \BadMethodCallException('The suffix field has no options.');
+            throw new \BadMethodCallException(
+                "The suffix field has no options for container '{$this->getId()}'."
+            );
         }
 
         foreach ($this->getSuffixField()->getNestedOptions() as $option) {
@@ -107,7 +111,9 @@ class SuffixFormFieldContainer extends FormContainer
             }
         }
 
-        throw new \RuntimeException('Cannot determine selected suffix option.');
+        throw new \RuntimeException(
+            "Cannot determine selected suffix option for container '{$this->getId()}'."
+        );
     }
 
     /**
@@ -129,7 +135,9 @@ class SuffixFormFieldContainer extends FormContainer
     public function getSuffixLabel()
     {
         if ($this->getSuffixField() === null) {
-            throw new \BadMethodCallException('There is no suffix field for which a label could be determined.');
+            throw new \BadMethodCallException(
+                "There is no suffix field for which a label could be determined for container '{$this->getId()}'."
+            );
         }
 
         if (empty($this->getSuffixField()->getOptions())) {
@@ -153,7 +161,9 @@ class SuffixFormFieldContainer extends FormContainer
     public function suffixField(ISelectionFormField $formField)
     {
         if ($this->suffixField !== null) {
-            throw new \BadMethodCallException('Suffix field has already been set.');
+            throw new \BadMethodCallException(
+                "Suffix field has already been set for container '{$this->getId()}'."
+            );
         }
 
         $this->suffixField = $formField;

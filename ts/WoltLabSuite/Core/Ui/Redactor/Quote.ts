@@ -249,7 +249,9 @@ class UiRedactorQuote {
       id: id,
       options: {
         onClose: () => {
-          this._editor.selection.restore();
+          window.setTimeout(() => {
+            this._editor.selection.restore();
+          }, 100);
 
           UiDialog.destroy(this);
         },

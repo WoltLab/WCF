@@ -8,9 +8,14 @@
 
 {event name='javascriptInclude'}
 <script data-relocate="true">
+	require(['WoltLabSuite/Core/Controller/Clipboard'], (ControllerClipboard) => {
+		ControllerClipboard.setup({
+			pageClassName: 'wcf\\acp\\page\\UserListPage',
+			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
+		});
+	});
+	
 	$(function() {
-		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems});
-
 		WCF.Language.addObject({
 			'wcf.acp.user.banReason': '{jslang}wcf.acp.user.banReason{/jslang}',
 			'wcf.acp.user.banReason.description': '{jslang}wcf.acp.user.banReason.description{/jslang}',

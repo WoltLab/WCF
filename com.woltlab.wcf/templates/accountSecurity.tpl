@@ -13,7 +13,7 @@
 			{if $method->objectType !== 'com.woltlab.wcf.multifactor.backup' || $enabledMultifactorMethods[$method->objectTypeID]|isset}
 				<li class="box64">
 					<div>
-						<span class="icon icon64 fa-{if $method->icon}{$method->icon}{else}lock{/if}"></span>
+						<span class="icon icon64 fa-{if $method->icon}{$method->icon}{else}lock{/if} accountSecurityInformationIcon"></span>
 					</div>
 					
 					<div class="accountSecurityContainer">

@@ -6,9 +6,7 @@
 WCF.Search.Message = {};
 
 /**
- * Provides quick search for search keywords.
- * 
- * @see	WCF.Search.Base
+ * @deprecated  5.5 - The base class is deprecated since 3.0 and this code is no longer in use in WoltLab Suite.
  */
 WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 	/**

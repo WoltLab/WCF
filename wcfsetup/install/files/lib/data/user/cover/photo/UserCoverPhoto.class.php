@@ -96,7 +96,7 @@ class UserCoverPhoto implements IWebpUserCoverPhoto
      */
     public function getFilename(?bool $forceWebP = null): string
     {
-        $useWebP = $forceWebP || ($this->coverPhotoHasWebP && $forceWebP === null && ImageUtil::browserSupportsWebP());
+        $useWebP = $forceWebP || ($this->coverPhotoHasWebP && $forceWebP === null && ImageUtil::browserSupportsWebp());
 
         return \substr(
             $this->coverPhotoHash,

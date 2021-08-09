@@ -240,10 +240,21 @@ define(["require", "exports"], function (require, exports) {
     exports.debounce = debounce;
     function enableLegacyInheritance(legacyClass) {
         legacyClass.call = function (thisValue, ...args) {
+            if (window.ENABLE_DEVELOPER_TOOLS) {
+                console.log("Relying on legacy inheritance for ", legacyClass, thisValue);
+            }
             const constructed = Reflect.construct(legacyClass, args, thisValue.constructor);
             Object.entries(constructed).forEach(([key, value]) => {
+                if (typeof value === "function") {
+                    value = value.bind(thisValue);
+                }
                 thisValue[key] = value;
             });
+            for (const key in thisValue) {
+                if (typeof thisValue[key] === "function") {
+                    constructed[key] = thisValue[key].bind(thisValue);
+                }
+            }
         };
     }
     exports.enableLegacyInheritance = enableLegacyInheritance;

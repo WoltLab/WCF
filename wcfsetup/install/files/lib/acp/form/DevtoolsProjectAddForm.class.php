@@ -23,7 +23,6 @@ use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackag
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectInstructionsFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectOptionalPackagesFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectRequiredPackagesFormField;
-use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\UrlFormField;
@@ -329,33 +328,6 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                     ->values(['edit', 'setup'])
             );
         $dataTab->appendChild($authorInformation);
-
-        $compatibility = FormContainer::create('compatibility')
-            ->label('wcf.acp.devtools.project.compatibility')
-            ->appendChildren([
-                MultipleSelectionFormField::create('apiVersions')
-                    ->label('wcf.acp.devtools.project.apiVersions')
-                    ->description('wcf.acp.devtools.project.apiVersions.description')
-                    ->options(static function () {
-                        $apiVersions = \array_filter(\array_merge(
-                            WCF::getSupportedLegacyApiVersions(),
-                            [WSC_API_VERSION]
-                        ), static function ($value) {
-                            return $value !== 2017;
-                        });
-
-                        \sort($apiVersions);
-
-                        return \array_combine($apiVersions, $apiVersions);
-                    })
-                    ->available($this->formObject === null || !$this->formObject->isCore()),
-            ])
-            ->addDependency(
-                ValueFormFieldDependency::create('mode')
-                    ->field($mode)
-                    ->values(['edit', 'setup'])
-            );
-        $dataTab->appendChild($compatibility);
 
         $requiredPackages = FormContainer::create('requiredPackagesContainer')
             ->label('wcf.acp.devtools.project.requiredPackages')

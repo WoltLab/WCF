@@ -5,12 +5,7 @@ namespace wcf\system\io;
 use wcf\system\exception\SystemException;
 
 /**
- * The FTP class handles all ftp operations.
- *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Io
+ * @deprecated 5.5 - This class was used within the package system in WCF 1. It is no longer in use, a slim wrapper around PHP's FTP extension. Use the extension directly.
  */
 class FTP
 {

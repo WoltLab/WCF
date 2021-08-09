@@ -76,12 +76,9 @@
 \define('USER_AUTHENTICATION_FAILURE_USER_CAPTCHA', 3);
 \define('USER_AUTHENTICATION_FAILURE_EXPIRATION', 30);
 \define('SIGNATURE_SECRET', '');
-\define('BLACKLIST_IP_ADDRESSES', '');
-\define('BLACKLIST_USER_AGENTS', '');
 \define('CAPTCHA_TYPE', 'com.woltlab.wcf.recaptcha');
 \define('REGISTER_USE_CAPTCHA', 1);
 \define('LOST_PASSWORD_USE_CAPTCHA', 1);
-\define('PROFILE_MAIL_USE_CAPTCHA', 1);
 \define('SEARCH_USE_CAPTCHA', 1);
 \define('RECAPTCHA_PUBLICKEY', '');
 \define('RECAPTCHA_PRIVATEKEY', '');
@@ -103,8 +100,8 @@
 \define('MAIL_SIGNATURE_HTML', '');
 \define('MAIL_SEND_METHOD', 'php');
 \define('MAIL_SMTP_HOST', '');
-\define('MAIL_SMTP_PORT', 25);
-\define('MAIL_SMTP_STARTTLS', 'may');
+\define('MAIL_SMTP_PORT', 587);
+\define('MAIL_SMTP_STARTTLS', 'encrypt');
 \define('MAIL_SMTP_USER', '');
 \define('MAIL_SMTP_PASSWORD', '');
 \define('MAIL_USE_F_PARAM', 1);

@@ -188,6 +188,21 @@ class WCFSetup extends WCF
             'languageCode' => self::$selectedLanguageCode,
             'directories' => self::$directories,
             'developerMode' => self::$developerMode,
+
+            'setupAssets' => [
+                'WCFSetup.css' => \sprintf(
+                    'data:text/css;base64,%s',
+                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/style/setup/WCFSetup.css'))
+                ),
+                'woltlabSuite.png' => \sprintf(
+                    'data:image/png;base64,%s',
+                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/images/woltlabSuite.png'))
+                ),
+                'fontawesome-webfont.woff2' => \sprintf(
+                    'data:font/woff2;base64,%s',
+                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/font/fontawesome-webfont.woff2'))
+                ),
+            ],
         ]);
     }
 
@@ -385,6 +400,7 @@ class WCFSetup extends WCF
         if (
             ImagickImageAdapter::isSupported()
             && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
+            && ImagickImageAdapter::supportsWebp()
         ) {
             $system['graphicsLibrary'] = [
                 'result' => true,
@@ -392,7 +408,7 @@ class WCFSetup extends WCF
             ];
         } elseif (GDImageAdapter::isSupported()) {
             $system['graphicsLibrary'] = [
-                'result' => true,
+                'result' => GDImageAdapter::supportsWebp(),
                 'value' => 'GD Library',
             ];
         }
@@ -1336,10 +1352,14 @@ class WCFSetup extends WCF
         $factory = new ACPSessionFactory();
         $factory->load();
 
+        $useImagick = ImagickImageAdapter::isSupported()
+            && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
+            && ImagickImageAdapter::supportsWebp();
+
         SessionHandler::getInstance()->changeUser($admin);
         SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
         SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
-        SessionHandler::getInstance()->register('__wcfSetup_imagick', ImagickImageAdapter::isSupported());
+        SessionHandler::getInstance()->register('__wcfSetup_imagick', $useImagick);
         SessioNHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
 

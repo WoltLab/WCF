@@ -119,7 +119,7 @@
 	{/if}
 {else}
 	<form method="post" action="{link controller='DataImport'}{/link}">
-		<section class="section">
+		<section class="section{if $errorField === 'selectedData'} formError{/if}">
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.dataImport.configure.data{/lang}</h2>
 				<p class="sectionDescription">{lang}wcf.acp.dataImport.configure.data.description{/lang}</p>
@@ -138,6 +138,16 @@
 					</dd>
 				</dl>
 			{/foreach}
+			
+			{if $errorField === 'selectedData'}
+				<small class="innerError">
+					{if $errorType === 'empty'}
+						{lang}wcf.global.form.error.empty{/lang}
+					{else}
+						{lang}wcf.acp.dataImport.configure.data.error.{$errorType}{/lang}
+					{/if}
+				</small>
+			{/if}
 			
 			{event name='dataFields'}
 		</section>

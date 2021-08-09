@@ -54,12 +54,11 @@ trait TXmlGuiPackageInstallationPlugin
     {
         $document = $element->ownerDocument;
 
-        $data = $document->getElementsByTagName('data')->item(0);
-        $delete = $data->getElementsByTagName('delete')->item(0);
+        $delete = $document->documentElement->getElementsByTagName('delete')->item(0);
 
         if ($delete === null) {
             $delete = $document->createElement('delete');
-            $data->appendChild($delete);
+            $document->documentElement->appendChild($delete);
         }
 
         $delete->appendChild($document->importNode($this->prepareDeleteXmlElement($element)));
@@ -397,11 +396,10 @@ trait TXmlGuiPackageInstallationPlugin
     protected function getEmptyXml()
     {
         $xsdFilename = $this->getXsdFilename();
-        $apiVersion = WSC_API_VERSION;
 
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/{$apiVersion}/{$xsdFilename}.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/{$xsdFilename}.xsd">
 	<import></import>
 </data>
 XML;

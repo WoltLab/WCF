@@ -17,20 +17,6 @@ use wcf\system\language\LanguageFactory;
 class TagCloud
 {
     /**
-     * max font size
-     * @var int
-     * @deprecated 3.0
-     */
-    const MAX_FONT_SIZE = 170;
-
-    /**
-     * min font size
-     * @var int
-     * @deprecated 3.0
-     */
-    const MIN_FONT_SIZE = 85;
-
-    /**
      * list of tags
      * @var TagCloudTag[]
      */

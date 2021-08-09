@@ -204,7 +204,7 @@ final class ImageUtil
      *
      * @since 5.4
      */
-    public static function browserSupportsWebP(): bool
+    public static function browserSupportsWebp(): bool
     {
         static $supportsWebP = null;
 

@@ -1170,11 +1170,9 @@ class File {
  */
 class GZipFile extends File {
 	/**
-	 * checks if gz*64 functions are available instead of gz*
-	 * https://bugs.php.net/bug.php?id=53829
-	 * @var	bool
+	 * @deprecated 5.5 The bug this worked around is fixed.
 	 */
-	protected static $gzopen64 = null;
+	protected static $gzopen64 = false;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
@@ -1185,13 +1183,8 @@ class GZipFile extends File {
 	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
-		if (self::$gzopen64 === null) {
-			self::$gzopen64 = function_exists('gzopen64');
-		}
-		
 		$this->filename = $filename;
-		/** @noinspection PhpUndefinedFunctionInspection */
-		$this->resource = (self::$gzopen64 ? gzopen64($filename, $mode) : gzopen($filename, $mode));
+		$this->resource = gzopen($filename, $mode);
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename);
 		}
@@ -1206,11 +1199,7 @@ class GZipFile extends File {
 	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
-		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {
-			array_unshift($arguments, $this->resource);
-			return call_user_func_array('gz' . $function . '64', $arguments);
-		}
-		else if (function_exists('gz' . $function)) {
+		if (function_exists('gz' . $function)) {
 			array_unshift($arguments, $this->resource);
 			return call_user_func_array('gz' . $function, $arguments);
 		}
@@ -1264,70 +1253,6 @@ define('TMP_FILE_PREFIX', $prefix);
 
 // try to find the temp folder
 define('TMP_DIR', BasicFileUtil::getInstallTempFolder());
-
-/**
- * Reads a file resource from temp folder.
- * 
- * @param	string		$key
- * @param	string		$directory
- */
-function readFileResource($key, $directory) {
-	if (preg_match('~[\w\-]+\.(css|jpg|png|svg|eot|woff|ttf)~', $_GET[$key], $match)) {
-		switch ($match[1]) {
-			case 'css':
-				header('Content-Type: text/css');
-			break;
-			
-			case 'jpg':
-				header('Content-Type: image/jpg');
-			break;
-			
-			case 'png':
-				header('Content-Type: image/png');
-			break;
-			
-			case 'svg':
-				header('Content-Type: image/svg+xml');
-			break;
-			
-			case 'eot':
-				header('Content-Type: application/vnd.ms-fontobject');
-			break;
-				
-			case 'woff':
-				header('Content-Type: application/font-woff');
-			break;
-					
-			case 'ttf':
-				header('Content-Type: application/octet-stream');
-			break;
-		}
-		
-		header('Expires: '.gmdate('D, d M Y H:i:s', time() + 3600).' GMT');
-		header('Last-Modified: Mon, 26 Jul 1997 05:00:00 GMT');
-		header('Cache-Control: public, max-age=3600');
-		
-		readfile($directory . $_GET[$key]);
-	}
-	exit;
-}
-
-// show image from temp folder
-if (isset($_GET['showImage'])) {
-	readFileResource('showImage', TMP_DIR . 'install/files/acp/images/');
-}
-// show icon from temp folder
-if (isset($_GET['showIcon'])) {
-	readFileResource('showIcon', TMP_DIR . 'install/files/icon/');
-}
-// show css from temp folder
-if (isset($_GET['showCSS'])) {
-	readFileResource('showCSS', TMP_DIR . 'install/files/acp/style/setup/');
-}
-// show fonts from temp folder
-if (isset($_GET['showFont'])) {
-	readFileResource('showFont', TMP_DIR . 'install/files/font/');
-}
 
 // check whether setup files are already unzipped
 if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {

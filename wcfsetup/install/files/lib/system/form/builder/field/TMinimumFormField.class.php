@@ -43,14 +43,16 @@ trait TMinimumFormField
     {
         if ($minimum !== null) {
             if (!\is_numeric($minimum)) {
-                throw new \InvalidArgumentException("Given minimum is no int, '" . \gettype($minimum) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given minimum is no int, '" . \gettype($minimum) . "' given for field '{$this->getId()}'."
+                );
             }
 
             if ($this instanceof IMaximumFormField) {
                 $maximum = $this->getMaximum();
                 if ($maximum !== null && $minimum > $maximum) {
                     throw new \InvalidArgumentException(
-                        "Minimum ({$minimum}) cannot be greater than maximum ({$maximum})."
+                        "Minimum ({$minimum}) cannot be greater than maximum ({$maximum}) for field '{$this->getId()}'."
                     );
                 }
             }

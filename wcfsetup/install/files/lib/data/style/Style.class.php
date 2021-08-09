@@ -402,7 +402,7 @@ class Style extends DatabaseObject
             return false;
         }
 
-        return $forceWebP || ($forceWebP === null && ImageUtil::browserSupportsWebP());
+        return $forceWebP || ($forceWebP === null && ImageUtil::browserSupportsWebp());
     }
 
     /**

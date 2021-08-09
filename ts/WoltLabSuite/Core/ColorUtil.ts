@@ -2,7 +2,7 @@
  * Helper functions to convert between different color formats.
  *
  * @author      Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  ColorUtil (alias)
  * @module      WoltLabSuite/Core/ColorUtil
@@ -159,39 +159,161 @@ export function hexToRgb(hex: string): RGB | typeof Number.NaN {
 }
 
 /**
- * Converts a RGB into HEX.
- *
- * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
+ * @since 5.5
  */
-export function rgbToHex(r: number, g: number, b: number): string {
-  const charList = "0123456789ABCDEF";
+function rgbComponentToHex(component: number): string {
+  if (component < 0 || component > 255) {
+    throw new Error(`Invalid RGB component value '${component}' given.`);
+  }
 
+  return component.toString(16).padStart(2, "0").toUpperCase();
+}
+
+/**
+ * Converts a RGB into HEX.
+ */
+export function rgbToHex(r: string): string;
+export function rgbToHex(r: number, g: number, b: number): string;
+export function rgbToHex(r: string | number, g?: number, b?: number): string {
   if (g === undefined) {
-    if (/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString())) {
-      r = +RegExp.$1;
-      g = +RegExp.$2;
-      b = +RegExp.$3;
+    const match = /^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString());
+    if (match) {
+      r = +match[1];
+      g = +match[2];
+      b = +match[3];
+    } else {
+      throw new Error("Invalid RGB data given.");
     }
   }
 
-  return (
-    charList.charAt((r - (r % 16)) / 16) +
-    "" +
-    charList.charAt(r % 16) +
-    "" +
-    (charList.charAt((g - (g % 16)) / 16) + "" + charList.charAt(g % 16)) +
-    "" +
-    (charList.charAt((b - (b % 16)) / 16) + "" + charList.charAt(b % 16))
-  );
+  return rgbComponentToHex(r as number) + rgbComponentToHex(g) + rgbComponentToHex(b!);
 }
 
-interface RGB {
+/**
+ * @since 5.5
+ */
+function alphaToHex(alpha: number): string {
+  if (alpha < 0 || alpha > 1) {
+    throw new Error(`Invalid alpha value '${alpha}' given.`);
+  }
+
+  return Math.round(alpha * 255)
+    .toString(16)
+    .padStart(2, "0")
+    .toUpperCase();
+}
+
+/**
+ * Converts a RGBA value into a HEX value.
+ *
+ * @since 5.5
+ */
+export function rgbaToHex(rgba: RGBA): string;
+export function rgbaToHex(r: number, g: number, b: number, a: number);
+export function rgbaToHex(r: RGBA | number, g?: number, b?: number, a?: number): string {
+  if (g === undefined) {
+    const rgba = r as RGBA;
+    return rgbToHex(rgba.r, rgba.g, rgba.b) + alphaToHex(rgba.a);
+  }
+
+  return rgbToHex(r as number, g, b!) + alphaToHex(a!);
+}
+
+/**
+ * Returns the textual representation of a RGBA value.
+ *
+ * @since 5.5
+ */
+export function rgbaToString(rgba: RGBA): string {
+  return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+}
+
+/**
+ * @since 5.5
+ */
+function getColorChecker(): HTMLSpanElement {
+  let colorChecker = document.getElementById("jsColorUtilColorChecker");
+  if (colorChecker === null) {
+    colorChecker = document.createElement("span");
+    colorChecker.id = "jsColorUtilColorChecker";
+    document.body.appendChild(colorChecker);
+  }
+
+  return colorChecker;
+}
+
+/**
+ * Returns `true` if the given string is a valid CSS color argument.
+ *
+ * @since 5.5
+ */
+export function isValidColor(color: string): boolean {
+  const colorChecker = getColorChecker();
+
+  // We let the browser handle the validation of the color by
+  // 1. ensuring that the `color` style property of the test element is empty,
+  // 2. setting the value of the `color` style property to the given value,
+  // 3. checking that the value of the `color` style property is not empty afterwards.
+  //    If the entered value is valid, the `color` style property will not empty (though it also
+  //    does not have to match the entered value due to normalization by the browser)
+  colorChecker.style.color = "";
+  colorChecker.style.color = color;
+
+  return colorChecker.style.color !== "";
+}
+
+/**
+ * Converts the given CSS color value to an RGBA value.
+ *
+ * @since 5.5
+ */
+export function stringToRgba(color: string): RGBA {
+  if (!isValidColor(color)) {
+    throw new Error(`Given string '${color}' is no valid color.`);
+  }
+
+  const colorChecker = getColorChecker();
+  colorChecker.style.color = color;
+
+  const computedColor = window.getComputedStyle(colorChecker).color;
+
+  const rgbMatch = /^rgb\((\d+), ?(\d+), ?(\d+)\)$/.exec(computedColor);
+  if (rgbMatch) {
+    return {
+      r: +rgbMatch[1],
+      g: +rgbMatch[2],
+      b: +rgbMatch[3],
+      a: 1,
+    };
+  } else {
+    const rgbaMatch = /^rgba\((\d+), ?(\d+), ?(\d+), ?([0-9.]+)\)$/.exec(computedColor);
+    if (rgbaMatch) {
+      return {
+        r: +rgbaMatch[1],
+        g: +rgbaMatch[2],
+        b: +rgbaMatch[3],
+        a: +rgbaMatch[4],
+      };
+    }
+  }
+
+  throw new Error(`Cannot process color '${color}'.`);
+}
+
+export interface RGB {
   r: number;
   g: number;
   b: number;
 }
 
-interface HSV {
+export interface RGBA {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+export interface HSV {
   h: number;
   s: number;
   v: number;
@@ -201,6 +323,10 @@ interface HSV {
 window.__wcf_bc_colorUtil = {
   hexToRgb,
   hsvToRgb,
+  isValidColor,
+  rgbaToHex,
+  rgbaToString,
   rgbToHex,
   rgbToHsv,
+  stringToRgba,
 };

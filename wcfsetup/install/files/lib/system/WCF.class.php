@@ -23,7 +23,6 @@ use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
@@ -38,9 +37,7 @@ use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
-use wcf\util\UserUtil;
 
 // phpcs:disable PSR1.Files.SideEffects
 
@@ -53,7 +50,7 @@ if (!@\ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-\define('WCF_VERSION', '5.4.0 Beta 1');
+\define('WCF_VERSION', '5.4.2');
 
 // define current API version
 // @deprecated 5.2
@@ -79,6 +76,12 @@ if (!\defined('NO_IMPORTS')) {
  */
 class WCF
 {
+    /**
+     * @var ?string
+     * @since 5.3
+     */
+    public const AVAILABLE_UPGRADE_VERSION = null;
+
     /**
      * list of supported legacy API versions
      * @var int[]
@@ -470,6 +473,14 @@ class WCF
         // The master password has been removed since 5.5.
         // https://github.com/WoltLab/WCF/issues/3913
         \define('MODULE_MASTER_PASSWORD', 0);
+
+        // The IP address and User Agent blocklist was removed in 5.5.
+        // https://github.com/WoltLab/WCF/issues/3914
+        \define('BLACKLIST_IP_ADDRESSES', '');
+        \define('BLACKLIST_USER_AGENTS', '');
+
+        // The captcha option related to the removed MailForm was removed in 5.5.
+        \define('PROFILE_MAIL_USE_CAPTCHA', 1);
     }
 
     /**
@@ -535,45 +546,6 @@ class WCF
     {
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
-        if (\defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-            if (
-                !StringUtil::executeWordFilter(
-                    UserUtil::convertIPv6To4(UserUtil::getIpAddress()),
-                    BLACKLIST_IP_ADDRESSES
-                )
-            ) {
-                if ($isAjax) {
-                    throw new AJAXException(
-                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    throw new PermissionDeniedException();
-                }
-            } elseif (!StringUtil::executeWordFilter(UserUtil::getIpAddress(), BLACKLIST_IP_ADDRESSES)) {
-                if ($isAjax) {
-                    throw new AJAXException(
-                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    throw new PermissionDeniedException();
-                }
-            }
-        }
-        if (\defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
-            if (!StringUtil::executeWordFilter(UserUtil::getUserAgent(), BLACKLIST_USER_AGENTS)) {
-                if ($isAjax) {
-                    throw new AJAXException(
-                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    throw new PermissionDeniedException();
-                }
-            }
-        }
-
         // handle banned users
         if (self::getUser()->userID && self::getUser()->banned && !self::getUser()->hasOwnerAccess()) {
             if ($isAjax) {
@@ -583,14 +555,6 @@ class WCF
                 );
             } else {
                 self::$forceLogout = true;
-
-                // remove cookies
-                if (isset($_COOKIE[COOKIE_PREFIX . 'userID'])) {
-                    HeaderUtil::setCookie('userID', 0);
-                }
-                if (isset($_COOKIE[COOKIE_PREFIX . 'password'])) {
-                    HeaderUtil::setCookie('password', '');
-                }
 
                 throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
             }

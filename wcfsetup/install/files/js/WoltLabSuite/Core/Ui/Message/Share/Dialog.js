@@ -71,7 +71,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
             const label = Language.get(provider.label);
             return `
       <li>
-        <a href="#" role="button" class="button ${provider.cssClass}" title="${label}" aria-label="${label}">
+        <a href="#" role="button" class="button small ${provider.cssClass}" title="${label}" aria-label="${label}">
           <span class="icon icon24 ${provider.iconClassName}"></span>
           <span>${label}</span>
         </a>
@@ -153,7 +153,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         }
     }
     function registerButtons() {
-        document.querySelectorAll("a.shareButton").forEach((shareButton) => {
+        document.querySelectorAll("a.shareButton,a.wsShareButton").forEach((shareButton) => {
             if (!shareButtons.has(shareButton)) {
                 shareButton.addEventListener("click", (ev) => openDialog(ev));
                 shareButtons.add(shareButton);

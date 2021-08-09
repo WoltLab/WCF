@@ -17,9 +17,9 @@ use wcf\system\devtools\pip\TMultiXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -512,10 +512,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             }
 
             $dataContainer->appendChild(
-                MultilineTextFormField::create($language->languageCode)
+                SourceCodeFormField::create($language->languageCode)
                     ->label($language->languageName)
                     ->description($description)
-                    ->addFieldClass('monospace')
+                    ->language('smartymixed')
             );
         }
     }
@@ -628,7 +628,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function getImportElements(\DOMXPath $xpath)
     {
-        return $xpath->query('/ns:language/ns:category/ns:item');
+        return $xpath->query('/ns:language/ns:import/ns:category/ns:item');
     }
 
     /**
@@ -638,7 +638,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     protected function getEmptyXml($languageCode)
     {
         $xsdFilename = $this->getXsdFilename();
-        $apiVersion = WSC_API_VERSION;
 
         $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
         if ($language === null) {
@@ -647,7 +646,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/{$apiVersion}/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
 </language>
 XML;
     }
@@ -720,6 +719,9 @@ XML;
             ]);
 
             $existingRow = $statement->fetchArray();
+            if (!$existingRow) {
+                $existingRow = [];
+            }
         }
 
         if (!isset($newElementData['languageCategoryID']) && isset($newElementData['languageCategory'])) {
@@ -817,8 +819,15 @@ XML;
                 throw new \LogicException("Unknown language category mode '{$data['languageCategoryIDMode']}'.");
         }
 
+        /** @var \DOMElement $import */
+        $import = $document->getElementsByTagName('import')->item(0);
+        if ($import === null) {
+            $import = $document->createElement('import');
+            DOMUtil::prepend($import, $document->documentElement);
+        }
+
         /** @var \DOMElement $languageCategory */
-        foreach ($document->documentElement->childNodes as $languageCategory) {
+        foreach ($import->getElementsByTagName('category') as $languageCategory) {
             if ($languageCategory instanceof \DOMElement && $languageCategory->getAttribute('name') === $languageCategoryName) {
                 $languageCategory->appendChild($languageItem);
                 break;
@@ -830,7 +839,7 @@ XML;
             $languageCategory->setAttribute('name', $languageCategoryName);
             $languageCategory->appendChild($languageItem);
 
-            $document->documentElement->appendChild($languageCategory);
+            $import->appendChild($languageCategory);
         }
 
         return $languageItem;
@@ -880,15 +889,6 @@ XML;
             $element->getAttribute('name'),
             $this->installation->getPackageID(),
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     * @since   5.2
-     */
-    public function supportsDeleteInstruction()
-    {
-        return false;
     }
 
     /**

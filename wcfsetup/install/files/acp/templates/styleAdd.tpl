@@ -18,9 +18,13 @@
 		
 		WCF.Language.addObject({
 			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
-			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
+			'wcf.style.colorPicker.alpha': '{jslang}wcf.style.colorPicker.alpha{/jslang}',
+			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
+			'wcf.style.colorPicker.color': '{jslang}wcf.style.colorPicker.color{/jslang}',
 			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
-			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}'
+			'wcf.style.colorPicker.error.invalidColor': '{jslang}wcf.style.colorPicker.error.invalidColor{/jslang}',
+			'wcf.style.colorPicker.hexAlpha': '{jslang}wcf.style.colorPicker.hexAlpha{/jslang}',
+			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
 		});
 		
 		{if $action == 'edit'}
@@ -432,7 +436,6 @@
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
 						{@$__wcf->getUploadHandler()->renderField('pageLogo')}
-						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
 						<script data-relocate="true">
 						elBySel('#pageLogouploadFileList').addEventListener('change', function (ev) {
 							var img = elBySel('#pageLogouploadFileList img');
@@ -468,7 +471,6 @@
 					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
 					<dd>
 						{@$__wcf->getUploadHandler()->renderField('pageLogoMobile')}
-						<small>{lang}wcf.acp.style.globals.pageLogoMobile.description{/lang}</small>
 					</dd>
 				</dl>
 				

@@ -56,7 +56,9 @@ final class Wcf1e implements IPasswordAlgorithm
      */
     public function verify(string $password, string $hash): bool
     {
-        [$hash, $salt] = \explode(':', $hash, 2);
+        $parts = \explode(':', $hash, 2);
+        $hash = $parts[0];
+        $salt = $parts[1] ?? '';
 
         return \hash_equals($hash, $this->hashWithSalt($password, $salt));
     }

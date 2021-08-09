@@ -56,7 +56,7 @@ trait TPlaceholderFormField
         } else {
             if (!\is_string($languageItem)) {
                 throw new \InvalidArgumentException(
-                    "Given placeholder language item is no string, " . \gettype($languageItem) . " given."
+                    "Given placeholder language item is no string, " . \gettype($languageItem) . " given for field '{$this->getId()}'."
                 );
             }
 

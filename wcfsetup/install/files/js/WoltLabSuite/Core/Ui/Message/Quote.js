@@ -358,7 +358,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             }
             // close navigation on mobile
             const navigationList = listItem.closest(".buttonGroupNavigation");
-            if (navigationList.classList.contains("jsMobileButtonGroupNavigation")) {
+            if (navigationList && navigationList.classList.contains("jsMobileButtonGroupNavigation")) {
                 const dropDownLabel = navigationList.querySelector(".dropdownLabel");
                 dropDownLabel.click();
             }

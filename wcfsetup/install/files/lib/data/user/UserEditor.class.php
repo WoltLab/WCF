@@ -35,7 +35,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
      * list of user options default values
      * @var array
      */
-    protected static $userOptionDefaultValues = null;
+    protected static $userOptionDefaultValues;
 
     /**
      * Returns the encoded password hash + algorithm for the given password.

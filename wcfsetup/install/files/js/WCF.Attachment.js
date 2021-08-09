@@ -520,11 +520,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				elData($li[0], 'object-id', attachmentData.attachmentID);
 				
+				$li.addClass('jsObjectActionObject');
+				
 				// show thumbnail
 				if (attachmentData.tinyURL) {
 					$li.children('.fa-spinner').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
 					
-					$li.addClass('jsObjectActionObject');
 					$li.data('height', attachmentData.height);
 					$li.data('width', attachmentData.width);
 					elData($li[0], 'is-image', attachmentData.isImage);

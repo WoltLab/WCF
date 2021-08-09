@@ -3,6 +3,7 @@
 namespace wcf\system\email;
 
 use wcf\data\user\User;
+use wcf\system\cache\runtime\UserRuntimeCache;
 
 /**
  * Default implementation of the IUserMailbox interface.
@@ -16,10 +17,10 @@ use wcf\data\user\User;
 class UserMailbox extends Mailbox implements IUserMailbox
 {
     /**
-     * User object belonging to this Mailbox
-     * @var User
+     * User belonging to this Mailbox
+     * @var int
      */
-    protected $user;
+    protected $userID;
 
     /**
      * Creates a new Mailbox.
@@ -30,7 +31,7 @@ class UserMailbox extends Mailbox implements IUserMailbox
     {
         parent::__construct($user->email, $user->username, $user->getLanguage());
 
-        $this->user = $user;
+        $this->userID = $user->userID;
     }
 
     /**
@@ -38,6 +39,6 @@ class UserMailbox extends Mailbox implements IUserMailbox
      */
     public function getUser(): User
     {
-        return $this->user;
+        return UserRuntimeCache::getInstance()->getObject($this->userID);
     }
 }

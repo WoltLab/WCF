@@ -9,12 +9,6 @@
 
 {capture assign='contentTitleBadge'}<span class="badge">{#$items}</span>{/capture}
 
-{capture assign='headerNavigation'}
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
-	{/if}
-{/capture}
-
 {capture assign='sidebarRight'}
 	{if !$labelGroups|empty}
 		<form id="sidebarForm" method="post" action="{link application='wcf' controller=$controllerName object=$controllerObject}{/link}">
@@ -45,15 +39,17 @@
 	{/if}
 {/capture}
 
-{include file='header'}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign='pagesLinks' controller='UnreadArticleList' link="pageNo=%d"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{pages print=true assign='pagesLinks' controller='UnreadArticleList' link="pageNo=%d"}
-		{/content}
-	</div>
-{/hascontent}
+{capture assign='contentInteractionDropdownItems'}
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.article.markAllAsRead{/lang}</a></li>
+	{/if}
+{/capture}
+
+{include file='header'}
 
 {if $objects|count}
 	<div class="section">

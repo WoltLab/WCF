@@ -1,10 +1,13 @@
 {include file='header' pageTitle='wcf.acp.tag.list'}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Controller/Clipboard', 'Language'], function(ControllerClipboard, Language) {
+	require(['WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Language'], (ControllerClipboard, Language) => {
 		Language.add('wcf.acp.tag.setAsSynonyms', '{jslang}wcf.acp.tag.setAsSynonyms{/jslang}');
 		
-		WCF.Clipboard.init('wcf\\acp\\page\\TagListPage', {@$hasMarkedItems});
+		ControllerClipboard.setup({
+			pageClassName: 'wcf\\acp\\page\\TagListPage',
+			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
+		});
 		
 		new WCF.ACP.Tag.SetAsSynonymsHandler();
 	});

@@ -261,58 +261,7 @@ class PackageInstallationDispatcher
                     );
 
                     if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
-                        $statement->execute([
-                            1,
-                            'enable_debug_mode',
-                        ]);
-                        $statement->execute([
-                            'public',
-                            'exception_privacy',
-                        ]);
-                        $statement->execute([
-                            'debugFolder',
-                            'mail_send_method',
-                        ]);
-                        $statement->execute([
-                            1,
-                            'enable_developer_tools',
-                        ]);
-                        $statement->execute([
-                            1,
-                            'log_missing_language_items',
-                        ]);
-
-                        foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
-                            $statement->execute([
-                                $optionValue,
-                                $optionName,
-                            ]);
-                        }
-
-                        foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
-                            try {
-                                (new UserAction([], 'create', [
-                                    'data' => [
-                                        'email' => $newUser['email'],
-                                        'password' => $newUser['password'],
-                                        'username' => $newUser['username'],
-                                    ],
-                                    'groups' => [
-                                        1,
-                                        3,
-                                    ],
-                                ]))->executeAction();
-                            } catch (SystemException $e) {
-                                // ignore errors due to event listeners missing at this
-                                // point during installation
-                            }
-                        }
-
-                        if (($importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath()) !== '') {
-                            (new DevtoolsProjectAction([], 'quickSetup', [
-                                'path' => $importPath,
-                            ]))->executeAction();
-                        }
+                        $this->setupDeveloperMode();
                     }
 
                     if (WCF::getSession()->getVar('__wcfSetup_imagick')) {
@@ -383,6 +332,85 @@ class PackageInstallationDispatcher
         }
 
         return $step;
+    }
+
+    /**
+     * @since   5.5
+     */
+    protected function setupDeveloperMode(): void
+    {
+        $sql = "UPDATE  wcf" . WCF_N . "_option
+                SET     optionValue = ?
+                WHERE   optionName = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+
+        $statement->execute([
+            1,
+            'enable_debug_mode',
+        ]);
+        $statement->execute([
+            'public',
+            'exception_privacy',
+        ]);
+        $statement->execute([
+            'debugFolder',
+            'mail_send_method',
+        ]);
+        $statement->execute([
+            1,
+            'enable_developer_tools',
+        ]);
+        $statement->execute([
+            1,
+            'log_missing_language_items',
+        ]);
+
+        foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
+            $statement->execute([
+                $optionValue,
+                $optionName,
+            ]);
+        }
+
+        foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
+            try {
+                (new UserAction([], 'create', [
+                    'data' => [
+                        'email' => $newUser['email'],
+                        'password' => $newUser['password'],
+                        'username' => $newUser['username'],
+                    ],
+                    'groups' => [
+                        1,
+                        3,
+                    ],
+                ]))->executeAction();
+            } catch (SystemException $e) {
+                // ignore errors due to event listeners missing at this
+                // point during installation
+            }
+        }
+
+        $importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath();
+        if ($importPath !== '') {
+            (new DevtoolsProjectAction([], 'quickSetup', [
+                'path' => $importPath,
+            ]))->executeAction();
+        }
+
+        $packageServerLogin = DevtoolsSetup::getInstance()->getPackageServerLogin();
+        if (!empty($packageServerLogin)) {
+            // All update servers installed at this point are only our own servers for which the same
+            // login data can be used.
+            $sql = "UPDATE  wcf1_package_update_server
+                    SET     loginUsername = ?,
+                            loginPassword = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $packageServerLogin['username'],
+                $packageServerLogin['password'],
+            ]);
+        }
     }
 
     /**
@@ -523,12 +551,6 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->packageID]);
 
-            // delete old compatibility versions
-            $sql = "DELETE FROM wcf" . WCF_N . "_package_compatibility
-                    WHERE       packageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([$this->queue->packageID]);
-
             // delete old requirements and dependencies
             $sql = "DELETE FROM wcf" . WCF_N . "_package_requirement
                     WHERE       packageID = ?";
@@ -579,21 +601,6 @@ class PackageInstallationDispatcher
                     $this->queue->packageID,
                     $excludedPackage['name'],
                     !empty($excludedPackage['version']) ? $excludedPackage['version'] : '',
-                ]);
-            }
-        }
-
-        // save compatible versions
-        if (!empty($this->getArchive()->getCompatibleVersions())) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_compatibility
-                                (packageID, version)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
-
-            foreach ($this->getArchive()->getCompatibleVersions() as $version) {
-                $statement->execute([
-                    $this->queue->packageID,
-                    $version,
                 ]);
             }
         }
@@ -1278,7 +1285,7 @@ class PackageInstallationDispatcher
             foreach ($requirements['functions'] as $function) {
                 $function = \mb_strtolower($function);
 
-                $passed = self::functionExists($function);
+                $passed = \function_exists($function);
                 if (!$passed) {
                     $errors['function'][] = [
                         'function' => $function,
@@ -1313,28 +1320,10 @@ class PackageInstallationDispatcher
     }
 
     /**
-     * Validates if an function exists and is not blacklisted by suhosin extension.
-     *
-     * @param string $function
-     * @return  bool
-     * @see     http://de.php.net/manual/en/function.function-exists.php#77980
+     * @deprecated 5.5 - This used to check against 'suhosin.executor.func.blacklist' but now simply aliases function_exists(). Use function_exists() directly.
      */
     protected static function functionExists($function)
     {
-        if (\extension_loaded('suhosin')) {
-            $blacklist = @\ini_get('suhosin.executor.func.blacklist');
-            if (!empty($blacklist)) {
-                $blacklist = \explode(',', $blacklist);
-                foreach ($blacklist as $disabledFunction) {
-                    $disabledFunction = \mb_strtolower(StringUtil::trim($disabledFunction));
-
-                    if ($function == $disabledFunction) {
-                        return false;
-                    }
-                }
-            }
-        }
-
         return \function_exists($function);
     }
 

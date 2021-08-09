@@ -119,7 +119,9 @@ class WysiwygAttachmentFormField extends AbstractFormField
      */
     public function isAvailable()
     {
-        return parent::isAvailable() && $this->getAttachmentHandler() !== null;
+        return parent::isAvailable()
+            && $this->getAttachmentHandler() !== null
+            && $this->getAttachmentHandler()->canUpload();
     }
 
     /**

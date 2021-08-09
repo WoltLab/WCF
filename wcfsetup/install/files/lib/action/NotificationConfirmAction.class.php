@@ -70,7 +70,7 @@ class NotificationConfirmAction extends AbstractAction
         parent::execute();
 
         if (!$this->notification->confirmTime) {
-            UserNotificationHandler::getInstance()->markAsConfirmedByID($this->notification->notificationID);
+            UserNotificationHandler::getInstance()->markAsConfirmedByIDs([$this->notification->notificationID]);
         }
 
         $event = new UserNotificationEvent($this->notification->eventID);

@@ -21,11 +21,6 @@ class DevicesContainer extends FormContainer
     use TDefaultIdFormField;
 
     /**
-     * @var array
-     */
-    protected $devices = [];
-
-    /**
      * @inheritDoc
      */
     protected $templateName = '__multifactorTotpDevicesContainer';

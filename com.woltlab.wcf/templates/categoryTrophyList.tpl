@@ -20,15 +20,11 @@
 	{/if}
 {/capture}
 
-{include file='header'}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign='pagesLinks' controller='CategoryTrophyList' object=$category link="pageNo=%d"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}
-			{pages print=true assign='pagesLinks' controller='CategoryTrophyList' object=$category link="pageNo=%d"}
-		{/content}
-	</div>
-{/hascontent}
+{include file='header'}
 
 {if $objects|count}
 	<div class="section sectionContainerList">

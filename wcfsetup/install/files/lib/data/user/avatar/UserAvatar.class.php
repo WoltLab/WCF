@@ -76,7 +76,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     {
         if (
             $forceWebP === true
-            || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebP())
+            || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebp())
         ) {
             $fileExtension = "webp";
         } else {
@@ -140,21 +140,5 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     public function getHeight()
     {
         return $this->height;
-    }
-
-    /**
-     * @deprecated  3.0
-     */
-    public function getCropImageTag($size = null)
-    {
-        return '';
-    }
-
-    /**
-     * @deprecated  3.0
-     */
-    public function canCrop()
-    {
-        return false;
     }
 }

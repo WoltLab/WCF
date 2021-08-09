@@ -77,46 +77,21 @@ class RequestHandler extends SingletonFactory
 
             // enforce that certain ACP pages are not available for non-owners in enterprise mode
             if (
-                $isACPRequest
+                $this->isACPRequest()
                 && ENABLE_ENTERPRISE_MODE
-                && \defined($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
-                && \constant($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+                && \defined($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+                && \constant($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
                 && !WCF::getUser()->hasOwnerAccess()
             ) {
                 throw new IllegalLinkException();
             }
 
-            // handle offline mode
-            if (!$isACPRequest && \defined('OFFLINE') && OFFLINE) {
-                if (
-                    !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
-                    && !$this->activeRequest->isAvailableDuringOfflineMode()
-                ) {
-                    if (
-                        isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-                        && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
-                    ) {
-                        throw new AJAXException(
-                            WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                            AJAXException::INSUFFICIENT_PERMISSIONS
-                        );
-                    } else {
-                        @\header('HTTP/1.1 503 Service Unavailable');
-                        BoxHandler::disablePageLayout();
-                        NoticeHandler::disableNotices();
-                        WCF::getTPL()->assign([
-                            'templateName' => 'offline',
-                            'templateNameApplication' => 'wcf',
-                        ]);
-                        WCF::getTPL()->display('offline');
-                    }
+            $this->checkAppEvaluation();
 
-                    exit;
-                }
-            }
+            $this->checkOfflineMode();
 
             // start request
-            $this->activeRequest->execute();
+            $this->getActiveRequest()->execute();
         } catch (NamedUserException $e) {
             $e->show();
 
@@ -237,39 +212,12 @@ class RequestHandler extends SingletonFactory
                 $metaData
             );
 
-            // check if the controller matches an app that has an expired evaluation date
-            $abbreviation = \mb_substr($classData['className'], 0, \mb_strpos($classData['className'], '\\'));
-            if ($abbreviation !== 'wcf') {
-                $applicationObject = ApplicationHandler::getInstance()->getApplication($abbreviation);
-                $endDate = WCF::getApplicationObject($applicationObject)->getEvaluationEndDate();
-                if ($endDate && $endDate < TIME_NOW) {
-                    $package = $applicationObject->getPackage();
-
-                    $pluginStoreFileID = WCF::getApplicationObject($applicationObject)->getEvaluationPluginStoreID();
-                    $isWoltLab = false;
-                    if ($pluginStoreFileID === 0 && \strpos($package->package, 'com.woltlab.') === 0) {
-                        $isWoltLab = true;
-                    }
-
-                    throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                        'wcf.acp.package.evaluation.expired',
-                        [
-                            'packageName' => $package->getName(),
-                            'pluginStoreFileID' => $pluginStoreFileID,
-                            'isWoltLab' => $isWoltLab,
-                        ]
-                    ));
-                }
-            }
-
             if (!$this->isACPRequest()) {
                 // determine if current request matches the landing page
                 if (ControllerMap::getInstance()->isLandingPage($classData, $metaData)) {
                     $this->activeRequest->setIsLandingPage();
                 }
             }
-
-            ApplicationHandler::getInstance()->rebuildActiveApplication();
         } catch (SystemException $e) {
             if (
                 \defined('ENABLE_DEBUG_MODE')
@@ -281,6 +229,71 @@ class RequestHandler extends SingletonFactory
             }
 
             throw new IllegalLinkException();
+        }
+    }
+
+    /**
+     * @since 5.5
+     */
+    protected function checkOfflineMode()
+    {
+        if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
+            if (
+                !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
+                && !$this->getActiveRequest()->isAvailableDuringOfflineMode()
+            ) {
+                if (
+                    isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+                    && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
+                ) {
+                    throw new AJAXException(
+                        WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                        AJAXException::INSUFFICIENT_PERMISSIONS
+                    );
+                } else {
+                    @\header('HTTP/1.1 503 Service Unavailable');
+                    BoxHandler::disablePageLayout();
+                    NoticeHandler::disableNotices();
+                    WCF::getTPL()->assign([
+                        'templateName' => 'offline',
+                        'templateNameApplication' => 'wcf',
+                    ]);
+                    WCF::getTPL()->display('offline');
+                }
+
+                exit;
+            }
+        }
+    }
+
+    /**
+     * @since 5.5
+     */
+    protected function checkAppEvaluation()
+    {
+        // check if the controller matches an app that has an expired evaluation date
+        [$abbreviation] = \explode('\\', $this->getActiveRequest()->getClassName(), 2);
+        if ($abbreviation !== 'wcf') {
+            $applicationObject = ApplicationHandler::getInstance()->getApplication($abbreviation);
+            $endDate = WCF::getApplicationObject($applicationObject)->getEvaluationEndDate();
+            if ($endDate && $endDate < TIME_NOW) {
+                $package = $applicationObject->getPackage();
+
+                $pluginStoreFileID = WCF::getApplicationObject($applicationObject)->getEvaluationPluginStoreID();
+                $isWoltLab = false;
+                if ($pluginStoreFileID === 0 && \strpos($package->package, 'com.woltlab.') === 0) {
+                    $isWoltLab = true;
+                }
+
+                throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.package.evaluation.expired',
+                    [
+                        'packageName' => $package->getName(),
+                        'pluginStoreFileID' => $pluginStoreFileID,
+                        'isWoltLab' => $isWoltLab,
+                    ]
+                ));
+            }
         }
     }
 

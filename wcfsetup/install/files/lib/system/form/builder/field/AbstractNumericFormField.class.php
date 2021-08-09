@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
@@ -29,6 +30,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     use TAttributeFormField {
         getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
     }
+
     use TAutoCompleteFormField;
     use TAutoFocusFormField;
     use TCssClassFormField;
@@ -163,13 +165,19 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         if ($step !== null) {
             if ($this->integerValues) {
                 if (!\is_int($step)) {
-                    throw new \InvalidArgumentException("Given step is no int, '" . \gettype($step) . "' given.");
+                    throw new \InvalidArgumentException(
+                        "Given step is no int, '" . \gettype($step) . "' given for field '{$this->getId()}'."
+                    );
                 }
             } else {
                 if (\is_string($step) && $step !== 'any') {
-                    throw new \InvalidArgumentException("The only valid step value is 'any', '" . $step . "' given.");
+                    throw new \InvalidArgumentException(
+                        "The only valid step value is 'any', '" . $step . "' given for field '{$this->getId()}'."
+                    );
                 } elseif (!\is_numeric($step)) {
-                    throw new \InvalidArgumentException("Given step is no number, '" . \gettype($step) . "' given.");
+                    throw new \InvalidArgumentException(
+                        "Given step is no number, '" . \gettype($step) . "' given for field '{$this->getId()}'."
+                    );
                 }
             }
         }
@@ -222,13 +230,9 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
             }
 
             if ($this->integerValues && !\is_int($value)) {
-                throw new \InvalidArgumentException(
-                    "Given value is neither `null` nor an int, " . \gettype($value) . " given."
-                );
+                throw new InvalidFormFieldValue($this, 'int or `null`', \gettype($value));
             } elseif (!$this->integerValues && !\is_numeric($value)) {
-                throw new \InvalidArgumentException(
-                    "Given value is neither `null` nor a number, " . \gettype($value) . " given."
-                );
+                throw new InvalidFormFieldValue($this, 'number or `null`', \gettype($value));
             }
         }
 

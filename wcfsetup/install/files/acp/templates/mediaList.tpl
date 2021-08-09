@@ -45,6 +45,9 @@
 					<dd>
 						<select id="categoryID" name="categoryID">
 							<option value="0">{lang}wcf.media.category.choose{/lang}</option>
+							<option value="-1"{if $categoryID == -1} selected="selected"{/if}>
+								{lang}wcf.media.category.choose.noCategory{/lang}
+							</option>
 							
 							{content}
 								{foreach from=$categoryList item=categoryItem}

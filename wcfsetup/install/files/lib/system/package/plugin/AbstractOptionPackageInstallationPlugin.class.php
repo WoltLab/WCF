@@ -54,6 +54,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     // class
     use TXmlGuiPackageInstallationPlugin {
         addDeleteElement as defaultAddDeleteElement;
+
         sanitizeXmlFileAfterDeleteEntry as defaultSanitizeXmlFileAfterDeleteEntry;
     }
 

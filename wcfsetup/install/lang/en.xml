@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/language.xsd" languagecode="en" languagename="English" countrycode="gb">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="en" languagename="English" countrycode="gb">
 <import>
 	<category name="wcf.acl">
 		<item name="wcf.acl.access"><![CDATA[Restricted Access]]></item>
@@ -390,7 +390,7 @@
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
-		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
+		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/latest/getting-started/#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[The name is already used by another project.]]></item>
@@ -490,7 +490,6 @@
 		<item name="wcf.acp.devtools.project.requiredPackages.description"><![CDATA[In order to install this package, the following packages have to be already installed or the versions delivered together with the package have to be installed first.]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages"><![CDATA[Conflicting Packages]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.description"><![CDATA[This package cannot be installed if one of the following packages is already installed (in the specified <strong>or new</strong> version).]]></item>
-		<item name="wcf.acp.devtools.project.compatibility"><![CDATA[API Compatibility]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.excludedPackage"><![CDATA[<kbd>{$packageIdentifier}</kbd>
 {if $version}
 	<dl class="plain inlineDataList small">
@@ -505,8 +504,6 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[The path to the package file has to be <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optional Packages]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[The following packages will be offered to be installed optionally after this package has been installed.]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions"><![CDATA[Compatible API Versions]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[The package is compatible with all of the selected API versions of WoltLab Suite Core.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Requirements]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Conflicts]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optional]]></item>
@@ -1235,10 +1232,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP Address (Not Recommended)]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Blocking IP Addresses is more reliably and performant achieved at the web server level. Use of this blocklist is not recommended and this option will be removed in a future version.]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent (Not Recommended)]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[User-Agents are easily faked by an attacker and not a reliable indicator of the client’s identity. If a block based on the User-Agent is desired nonetheless, it is achieve more performant at the web server level. Use of this blocklist is not recommended and this option will be removed in a future version.]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"/>
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
@@ -1334,9 +1327,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP Server]]></item>
 		<item name="wcf.acp.option.mail_smtp_host.description"><![CDATA[The SMTP port 465 requires the host to be prefixed with <kbd>ssl://</kbd>, for example, <kbd>ssl://mail.example.com</kbd> instead of <kbd>mail.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP Port]]></item>
-		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP Encryption]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP Encryption (STARTTLS)]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Disabled]]></item>
-		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[If supported]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Required]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[This option controls the usage of “STARTTLS”. Disable it, if you are using SSL (port 465)!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP Username]]></item>
@@ -1579,7 +1571,6 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for lost password]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable Captcha protection for send email to user]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable Captcha protection for search]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[User Authentication]]></item>
@@ -1645,11 +1636,11 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.module_article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Allow secure images only]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Images may only be embedded using the encrypted “https”-protocol. Images in already existing messages will be force-rewritten to use the secure protocol.]]></item>
-		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable image proxy]]></item>
+		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable Image Proxy]]></item>
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximum Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
 		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove Cached Images Regularly]]></item>
-		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image proxy whitelist]]></item>
+		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image Proxy Exception]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
 		<item name="wcf.acp.option.show_style_changer"><![CDATA[Enable style changer]]></item>
@@ -1934,6 +1925,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[This package does not contain any data on API compatibility, the installation is prevented while the developer tools are enabled.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.16"><![CDATA[In addition to the &lt;void/&gt; instruction additional Package Installation Plugins are used.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.17"><![CDATA[The &lt;void/&gt; instruction may not be used in the install-instructions.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.18"><![CDATA[The app “{$application->getPackage()->package}”, which is already installed, uses the same app abbreviation.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[The evaluation period of <strong>{$packageName}</strong> has expired. For a legal use of this software, please update to the latest available version.{if $pluginStoreFileID || $isWoltLab}<br>The latest version can be purchased quickly and securely <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">in the WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/purchase/">on WoltLab.com</a>{/if}</strong>.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[The evaluation period of the apps listed below will expire on <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}). The apps will automatically disable themselves after this date and become unusable, you'll need to install the latest versions of the apps to active them again.
@@ -1981,6 +1973,15 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	{/if}
 {/implode}]]></item>
 		<item name="wcf.acp.package.application.isTainted"><![CDATA[The app{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} is not fully installed. You need to uninstall and then reinstall the app to be able to use it.]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Upgrade to WoltLab Suite {$version}]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrading to the New Version]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.issues"><![CDATA[The following issues currently prevent an upgrade:]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[New Version Available!<br><br>The new WoltLab Suite {$version} is available for installation. We have provided a guide with the instructions for the upgrade in our <a href="https://manual.woltlab.com/en/updates/#upgrading-woltlab-suite-52-to-53" class="externalURL">manual</a>.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Validate the system requirements to begin the upgrade</a>]]></item>
+		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The upgrade to WoltLab Suite {$version} is now ready. Please click on the button “Search for Updates” to start the upgrade.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Cancel the upgrade</a>]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
@@ -2362,6 +2363,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Event Names]]></item>
 		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Names of the event of the relevant class the event listener is listening to. Default value: <kbd>:default</kbd>]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP Event Listener Class]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerClassName.error.noCallable"><![CDATA[The class <kbd>{$listenerClassName}</kbd> does not have a <kbd>__invoke()</kbd> method.]]></item>
 		<item name="wcf.acp.pip.eventListener.environment"><![CDATA[Environment]]></item>
 		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[The environment determines whether the event listener is executed in the frontend (<kbd>user</kbd>), the ACP (<kbd>admin</kbd>), or in both (<kbd>all</kbd>).]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Support Inheritance]]></item>
@@ -2664,7 +2666,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 <p>Instructions for submitting the sitemap:</p>
 <ul class="nativeList">
 	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
-	<li><a href="https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4" class="externalURL">Bing</a></li>
+	<li><a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></li>
 </ul>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Article categories]]></item>
@@ -2717,7 +2719,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Foreign Keys are created with the installation and are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.searchEngine"><![CDATA[Search]]></item>
 		<item name="wcf.acp.systemCheck.mysql.searchEngine.description"><![CDATA[All tables used for the search must be configured with the InnoDB storage engine.]]></item>
-		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[The following tables using an incorrect storage engine (expected storage engine <code>InnoDB</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[The following tables using an incorrect storage engine (expected storage engine <code>InnoDB</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}. Use the <a href="{link controller='RebuildData'}{/link}">Rebuild Data Page</a> to migrate to the correct storage engine.]]></item>
 		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Extensions]]></item>
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[The official PHP extensions provide additional capabilities and features that are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Available Memory (“memory_limit”)]]></item>
@@ -2903,11 +2905,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[You have provided an invalid date.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Page Logo]]></item>
-		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[The filename of the page logo image.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Page Logo Width]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Page Logo Height]]></item>
 		<item name="wcf.acp.style.globals.pageLogoMobile"><![CDATA[Page Logo (Mobile Version)]]></item>
-		<item name="wcf.acp.style.globals.pageLogoMobile.description"><![CDATA[The filename of the page logo image (mobile version).]]></item>
 		<item name="wcf.acp.style.globals.fontSizeDefault"><![CDATA[Font Size (Default)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSmall"><![CDATA[Font Size (Small)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Font Size (Headline)]]></item>
@@ -3162,10 +3162,10 @@ the lost password form <a href="{link controller='LostPassword' isHtmlEmail=true
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
 <p>Your account on the website: <a href="{link}{/link}">{PAGE_TITLE|language}</a> has been approved
-by an administrator. You are now able to use your user account to it’s full extend.</p>]]></item>
+by an administrator. You are now able to use your user account to its full extent.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved by an administrator. You are now able to use your user account to its full extend.]]></item>
+Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved by an administrator. You are now able to use your user account to its full extent.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[You can set the default notification settings for new users, any changes made here will not affect existing users. Users can customize their settings at any time.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users also]]></item>
@@ -3433,7 +3433,7 @@ Errors are:
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
 
-„{@$name}“ sent you a message on {@PAGE_TITLE|language} via the contact form:
+“{@$name}” sent you a message on {@PAGE_TITLE|language} via the contact form:
 
 Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
@@ -3450,7 +3450,7 @@ Attachments:
 {/if}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
 
-<p>„{$name}“ sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
+<p>“{$name}” sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
 <p><br></p>
 <p>Email: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
@@ -3943,10 +3943,6 @@ Attachments:
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Choose one of the available options.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Your session has expired, please submit the form again.]]></item>
 		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximum items reached]]></item>
-		<!-- deprecated since 2.1 -->
-		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>
-		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}The entered value has to be less than {#$lessThan}.{/literal}]]></item>
-		<!-- /deprecated since 2.1 -->
 		<item name="wcf.global.form.required"><![CDATA[Required fields]]></item>
 		<item name="wcf.global.form.password.button.hide"><![CDATA[Hide]]></item>
 		<item name="wcf.global.form.password.button.show"><![CDATA[Show]]></item>
@@ -3990,9 +3986,9 @@ Attachments:
 		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[The entered text is no valid email address.]]></item>
 		<item name="wcf.form.field.email.error.maximumLength"><![CDATA[The entered email address{if $language|isset} for language “{$language}”{/if} contains {#$length} character{if $length !== 1}s{/if} but it may not be longer than {#$maximumLength} character{if $maximumLength !== 1}s{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.maximumFilesize"><![CDATA[The file “{$file->getFilename()}” may have a maximum size of {$maximumFilesize|filesize}.]]></item>
-		<item name="wcf.form.field.upload.error.minimumImageWidth"><![CDATA[The file „{$file->getFilename()}“ may have a minimum width of {#$minimumImageWidth} pixels.]]></item>
+		<item name="wcf.form.field.upload.error.minimumImageWidth"><![CDATA[The file “{$file->getFilename()}” may have a minimum width of {#$minimumImageWidth} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.maximumImageWidth"><![CDATA[The file “{$file->getFilename()}” may have a maximum width of {#$maximumImageWidth} pixels.]]></item>
-		<item name="wcf.form.field.upload.error.minimumImageHeight"><![CDATA[The file „{$file->getFilename()}“ may have a minimum height of {#$minimumImageHeight} pixels.]]></item>
+		<item name="wcf.form.field.upload.error.minimumImageHeight"><![CDATA[The file “{$file->getFilename()}” may have a minimum height of {#$minimumImageHeight} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.maximumImageHeight"><![CDATA[The file “{$file->getFilename()}” may have a maximum height of {#$maximumImageHeight} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.minimum"><![CDATA[You must upload at least {if $minimum > 1}{#$minimum} files{else}one file{/if}.]]></item>
 		<item name="wcf.form.field.upload.error.maximum"><![CDATA[You can upload a maximum of {if $maximum > 1}{#$maximum} files{else}one file{/if}.]]></item>
@@ -4095,6 +4091,7 @@ Attachments:
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
+		<item name="wcf.media.category.choose.noCategory"><![CDATA[(no category)]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Select File]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
@@ -4518,6 +4515,11 @@ Attachments:
 		<item name="wcf.style.colorPicker.current"><![CDATA[current]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Current Style]]></item>
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Apply]]></item>
+		<item name="wcf.style.colorPicker.alpha"><![CDATA[Opacity]]></item>
+		<item name="wcf.style.colorPicker.hexAlpha"><![CDATA[Hex Value with Alpha Channel]]></item>
+		<item name="wcf.style.colorPicker.color"><![CDATA[Color]]></item>
+		<item name="wcf.style.colorPicker.button.changeColor"><![CDATA[Change color]]></item>
+		<item name="wcf.style.colorPicker.error.invalidColor"><![CDATA[The entered color is invalid.]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}“{$tag->name}”{/implode}]]></item>
@@ -4589,7 +4591,7 @@ Attachments:
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Username or Email Address]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
-		<item name="wcf.user.gender.other"><![CDATA[Other]]></item>
+		<item name="wcf.user.gender.other"><![CDATA[Non-Binary]]></item>
 		<item name="wcf.user.members"><![CDATA[Members]]></item>
 		<item name="wcf.user.members.filter"><![CDATA[Filter Members]]></item>
 		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria. <a href="{link controller='MembersList'}{/link}">Reset the applied filters.</a>]]></item>
@@ -4687,6 +4689,7 @@ the website <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|language}</a>.
 		<item name="wcf.user.quit.description"><![CDATA[Note: Posts, attachments, and similar content will remain even after your account has been deleted.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[Your user account will be deleted on {TIME_NOW+7*86400|date}. During this time period you can abort the deletion on this page.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[The account deletion has been aborted.]]></item>
+		<item name="wcf.user.quit.active"><![CDATA[Your user account will be deleted on {$__wcf->user->quitStarted+7*86400|date}. During this time period you can abort the deletion within the <a href="{link controller='AccountManagement'}{/link}">Account Management Form</a>.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Verify New Email Address]]></item>
 		<item name="wcf.user.password.error.notSecure"><![CDATA[Please select a more secure password.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[The username has been changed.]]></item>
@@ -4840,7 +4843,7 @@ not register with us.]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
 <p>Thank you for registering at: <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
-user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
+user account to its full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
 <p>Your activation code is: <kbd>{$mailbox->getUser()->emailConfirmed}</kbd>.</p>
@@ -4850,7 +4853,7 @@ you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
 Thank you for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. Before you are
-able to use your user account to it's full extent it is required that you
+able to use your user account to its full extent it is required that you
 confirm the validity of your email address once:
 
     {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
@@ -4945,10 +4948,10 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Code via Email]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<small>You will receive a one time code via email after logging in.</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Code via Email]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with an app on your smartphone.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<small>Generate one time codes with an app on your smartphone.</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Disable]]></item>
@@ -4980,6 +4983,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The entered code is invalid.]]></item>
+		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Enabling this method failed. Please try again.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
 <p><br></p>
 <p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
@@ -4995,7 +4999,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 <p>You also received a list of emergency codes to use when your second factor becomes unavailable. <b>Did you store these emergency codes securely?</b> If you forgot you can do now by generating new codes in the <a href="{link controller='MultifactorManage' object=$backupMethod isHtmlEmail=true}{/link}">Emergency Code Management</a>.</p>]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.body.plain"><![CDATA[Dear {$user->username},
 
-You successfully enabled multi-factor authentication using the „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ method. Going forward you will need to have your second factor handy for every login.
+You successfully enabled multi-factor authentication using the “{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}” method. Going forward you will need to have your second factor handy for every login.
 
 You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|language}]]></item>
@@ -5094,6 +5098,9 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Search Engine Robots]]></item>
 		<item name="wcf.user.usersOnline.record"><![CDATA[Record: {#USERS_ONLINE_RECORD} User{if USERS_ONLINE_RECORD != 1}s{/if} ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 		<item name="wcf.user.usersOnline.users"><![CDATA[Users]]></item>
+		<item name="wcf.user.usersOnline.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.usersOnline.sortField.requestURI"><![CDATA[Location]]></item>
+		<item name="wcf.user.usersOnline.sortField.username"><![CDATA[Username]]></item>
 	</category>
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>
@@ -5451,6 +5458,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
 	</category>
 	<category name="wcf.user.objectWatch">
+		<item name="wcf.user.objectWatch.button.subscribe"><![CDATA[Subscribe]]></item>
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
 		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Watch this category]]></item>
 		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Notify me of new articles.]]></item>
@@ -5505,7 +5513,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 {@$message}]]></item>
 		<item name="wcf.user.mail.mail.html"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
-<p>„{$username}“ sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
+<p>“{$username}” sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
 
 <p>{@$message|newlineToBreak}</p>]]></item>
 	</category>
@@ -5541,5 +5549,18 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.masterPassword.enter.deprecated"/>
 	<item name="wcf.acp.option.module_master_password"/>
 	<item name="wcf.acp.option.module_master_password.description"/>
+	<item name="wcf.acp.option.blacklist_ip_addresses"/>
+	<item name="wcf.acp.option.blacklist_ip_addresses.description"/>
+	<item name="wcf.acp.option.blacklist_user_agents"/>
+	<item name="wcf.acp.option.blacklist_user_agents.description"/>
+	<item name="wcf.global.form.error.lessThan.javaScript"/>
+	<item name="wcf.global.form.error.greaterThan.javaScript"/>
+	<item name="wcf.acp.devtools.project.compatibility"/>
+	<item name="wcf.acp.devtools.project.apiVersions"/>
+	<item name="wcf.acp.devtools.project.apiVersions.description"/>
+	<item name="wcf.acp.style.globals.pageLogo.description"/>
+	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
+	<item name="wcf.acp.option.profile_mail_use_captcha"/>
+	<item name="wcf.acp.option.mail_smtp_starttls.may"/>
 </delete>
 </language>

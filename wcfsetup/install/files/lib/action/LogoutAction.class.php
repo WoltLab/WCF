@@ -27,14 +27,6 @@ class LogoutAction extends \wcf\acp\action\LogoutAction
 
         WCF::getSession()->delete();
 
-        // remove cookies
-        if (isset($_COOKIE[COOKIE_PREFIX . 'userID'])) {
-            HeaderUtil::setCookie('userID', 0);
-        }
-        if (isset($_COOKIE[COOKIE_PREFIX . 'password'])) {
-            HeaderUtil::setCookie('password', '');
-        }
-
         $this->executed();
 
         // forward to index page

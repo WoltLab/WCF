@@ -184,7 +184,7 @@
 		<section class="section">
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
-				<dd><a href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}" class="externalURL">WoltLab&reg; GmbH</a></dd>
+				<dd><a href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>WoltLab&reg; GmbH</a></dd>
 			</dl>
 			
 			<dl>
@@ -226,7 +226,7 @@
 						<li>Andrea Berg</li>
 						<li>Thorsten Buitkamp</li>
 						<li>
-							<a href="https://github.com/WoltLab/WCF/contributors" class="externalURL">{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
+							<a href="https://github.com/WoltLab/WCF/contributors" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
 						</li>
 					</ul>
 				</dd>

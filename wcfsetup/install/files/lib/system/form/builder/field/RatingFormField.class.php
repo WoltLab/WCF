@@ -36,9 +36,11 @@ class RatingFormField extends AbstractFormField implements
     use TMaximumFormField {
         maximum as protected traitMaximum;
     }
+
     use TMinimumFormField {
         minimum as protected traitMinimum;
     }
+
     use TNullableFormField;
 
     /**
@@ -83,7 +85,7 @@ class RatingFormField extends AbstractFormField implements
     public function activeCssClasses(array $cssClasses)
     {
         if (empty($cssClasses)) {
-            throw new \InvalidArgumentException("No css classes for active state given.");
+            throw new \InvalidArgumentException("No css classes for active state given for field '{$this->getId()}'.");
         }
 
         foreach ($cssClasses as $cssClass) {
@@ -105,7 +107,7 @@ class RatingFormField extends AbstractFormField implements
     public function defaultCssClasses(array $cssClasses)
     {
         if (empty($cssClasses)) {
-            throw new \InvalidArgumentException("No css classes for default state given.");
+            throw new \InvalidArgumentException("No css classes for default state given for field '{$this->getId()}'.");
         }
 
         foreach ($cssClasses as $cssClass) {
@@ -157,7 +159,7 @@ class RatingFormField extends AbstractFormField implements
     public function maximum($maximum = null)
     {
         if ($maximum === null) {
-            throw new \InvalidArgumentException("Cannot unset maximum value.");
+            throw new \InvalidArgumentException("Cannot unset maximum value for field '{$this->getId()}'.");
         }
 
         return $this->traitMaximum($maximum);
@@ -169,7 +171,7 @@ class RatingFormField extends AbstractFormField implements
     public function minimum($minimum = null)
     {
         if ($minimum === null) {
-            throw new \InvalidArgumentException("Cannot unset minimum value.");
+            throw new \InvalidArgumentException("Cannot unset minimum value for field '{$this->getId()}'.");
         }
 
         return $this->traitMinimum($minimum);

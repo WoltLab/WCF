@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
+use Psr\Http\Client\ClientInterface as PsrClientInterface;
 use wcf\system\Regex;
 
 /**
@@ -46,6 +47,8 @@ final class HttpFactory
 
     /**
      * Returns a reference to the default HTTP client.
+     *
+     * @return PsrClientInterface&ClientInterface
      */
     public static function getDefaultClient(): ClientInterface
     {
@@ -62,6 +65,7 @@ final class HttpFactory
      *
      * @since 5.4
      * @see HttpFactory::makeClient()
+     * @return PsrClientInterface&ClientInterface
      */
     public static function makeClientWithTimeout(float $timeout): ClientInterface
     {
@@ -77,6 +81,7 @@ final class HttpFactory
      * specifically removed by passing appropriate options.
      *
      * @see Client
+     * @return PsrClientInterface&ClientInterface
      */
     public static function makeClient(array $options = []): ClientInterface
     {

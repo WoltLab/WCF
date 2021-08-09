@@ -134,18 +134,43 @@ final class IpAddress
                 (string)$masked
             );
         } else {
-            $maskedDigits = (128 - $mask6) / 4;
+            $quadruplets = [];
+            // We need to check whether we have an all-zero IP address, because $quadruplets
+            // will contain an empty entry otherwise.
+            if ((string)$masked !== '::') {
+                $quadruplets = \explode(
+                    ':',
+                    \preg_replace('/::$/', '', (string)$masked)
+                );
+            }
+            while (\count($quadruplets) < 8) {
+                $quadruplets[] = '0';
+            }
 
-            // Partially masked quadruplet.
-            $replacement = \str_repeat("\u{2022}", ($maskedDigits % 4));
-            // Fully masked quadruplets.
-            $replacement .= \str_repeat(":\u{2022}\u{2022}\u{2022}\u{2022}", ($maskedDigits / 4));
+            $result = [];
+            for ($i = 0; $i < 128; $i += 16) {
+                $quadruplet = \array_shift($quadruplets);
+                if ($mask6 >= ($i + 16)) {
+                    // This quadruplet is completely unmasked. This case is special, because we don't
+                    // apply the padding for formatting reasons.
+                    $result[] = $quadruplet;
+                } else {
+                    // This quadruplet is partially or completely masked.
+                    $visibleDigits = \max(($mask6 - $i) / 4, 0);
+                    $paddedQuadruplet = \str_pad(
+                        $quadruplet,
+                        4,
+                        '0',
+                        \STR_PAD_LEFT
+                    );
 
-            return \preg_replace(
-                '/.{' . ($maskedDigits % 4) . '}::$/',
-                $replacement,
-                (string)$masked
-            );
+                    $maskedQuadruplet = \substr($paddedQuadruplet, 0, $visibleDigits);
+                    $maskedQuadruplet .= \str_repeat("\u{2022}", 4 - $visibleDigits);
+                    $result[] = $maskedQuadruplet;
+                }
+            }
+
+            return \implode(':', $result);
         }
     }
 

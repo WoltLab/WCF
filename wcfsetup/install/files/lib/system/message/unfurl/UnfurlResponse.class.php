@@ -92,6 +92,7 @@ final class UnfurlResponse
             $request = new Request('GET', $url, [
                 'accept' => 'text/html',
                 'range' => \sprintf('bytes=%d-%d', 0, self::MAX_SIZE - 1),
+                'accept-encoding' => 'gzip',
             ]);
             $response = self::getHttpClient()->send($request);
 

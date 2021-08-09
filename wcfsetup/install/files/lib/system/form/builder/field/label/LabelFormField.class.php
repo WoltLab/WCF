@@ -58,7 +58,7 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
     public function getLabelGroup()
     {
         if ($this->labelGroup === null) {
-            throw new \BadMethodCallException("No label group has been set.");
+            throw new \BadMethodCallException("No label group has been set for field '{$this->getId()}'.");
         }
 
         return $this->labelGroup;
@@ -142,15 +142,13 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'label',
             function (IFormDocument $document, array $parameters) {
-                $value = $this->getValue();
-
-                // `-1` and `0` are special values that are irrlevent for saving
-                if ($value > 0) {
+                // `-1` and `0` are special values that are irrelevant for saving.
+                if ($this->checkDependencies() && $this->getValue() > 0) {
                     if (!isset($parameters[$this->getObjectProperty()])) {
                         $parameters[$this->getObjectProperty()] = [];
                     }
 
-                    $parameters[$this->getObjectProperty()][$this->getLabelGroup()->groupID] = $value;
+                    $parameters[$this->getObjectProperty()][$this->getLabelGroup()->groupID] = $this->getValue();
                 }
 
                 return $parameters;

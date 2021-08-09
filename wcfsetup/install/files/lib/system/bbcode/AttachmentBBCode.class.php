@@ -24,7 +24,7 @@ class AttachmentBBCode extends AbstractBBCode
      * @var GroupedAttachmentList
      * @deprecated
      */
-    protected static $attachmentList = null;
+    protected static $attachmentList;
 
     /**
      * active object id

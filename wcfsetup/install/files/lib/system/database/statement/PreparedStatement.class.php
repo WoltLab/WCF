@@ -108,6 +108,13 @@ class PreparedStatement
                                 return 'NULL';
                             }
 
+                            if (!\preg_match('//u', $parameter)) {
+                                return \sprintf(
+                                    "UNHEX('%s')",
+                                    \bin2hex(\substr($parameter, 0, 100))
+                                );
+                            }
+
                             return "'" . \substr($parameter, 0, 100) . "'";
                         },
                         $this->query

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/language.xsd" languagecode="de" languagename="Deutsch">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.global">
 		<item name="wcf.global.title"><![CDATA[WoltLab Suite&trade; Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
@@ -32,6 +32,7 @@
 		<item name="wcf.global.systemRequirements.graphicsLibrary.requirement"><![CDATA[GD Library oder ImageMagick]]></item>
 		<item name="wcf.global.systemRequirements.graphicsLibrary.description"><![CDATA[Die Grafikbearbeitungs-Bibliothek ist für die Verarbeitung und dynamische Generierung von Bildern zuständig. Es wird die GD Library oder alternativ ImageMagick benötigt.]]></item>
 		<item name="wcf.global.systemRequirements.graphicsLibrary.notFound"><![CDATA[nicht gefunden]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary.webp"><![CDATA[Unterstützung für WebP-Grafiken fehlt]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[Zur Verfügung stehender Arbeitsspeicher]]></item>

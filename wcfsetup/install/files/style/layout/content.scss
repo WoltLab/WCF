@@ -27,6 +27,9 @@
 }
 
 .contentHeader {
+	display: flex;
+	align-items: flex-start;
+
 	.contentHeaderDescription {
 		color: $wcfContentDimmedText;
 		margin-top: 5px;
@@ -51,6 +54,10 @@
 		}
 	}
 
+	.contentHeaderTitle {
+		flex: 1 1 0%;
+	}
+
 	.contentTitle + .inlineDataList {
 		margin-top: 5px;
 	}
@@ -65,27 +72,29 @@
 		}
 	}
 
-	@include screen-sm {
-		.contentHeaderNavigation > ul {
-			@include inlineList;
+	@include screen-sm-down {
+		.contentHeaderNavigation {
+			flex: 0 auto;
 
-			align-items: flex-start;
-			justify-content: flex-end;
-			margin-top: 20px;
+			ul {
+				margin-left: 5px;
+			}
+
+			li:not(:first-child) {
+				margin-top: 5px;
+			}
+
+			.button {
+				padding: 6px 10px;
+				text-transform: none;
+			}
 		}
 	}
 
 	@include screen-md-up {
-		display: flex;
-		align-items: flex-start;
-
 		.contentHeaderIcon {
 			flex: 0 0 64px;
 			margin-right: 15px;
-		}
-
-		.contentHeaderTitle {
-			flex: 1 1 0%;
 		}
 
 		.contentHeaderNavigation {
@@ -414,24 +423,102 @@ fieldset {
 	}
 }
 
+.contentInteraction {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+
+	@include screen-xs {
+		flex-wrap: wrap;
+	}
+}
+
+.contentInteractionPagination {
+	flex: 0 0 auto;
+
+	&.paginationTop {
+		margin-top: 0;
+	}
+
+	@include screen-xs {
+		flex: 0 0 100%;
+
+		& + .contentInteractionButtonContainer {
+			margin-top: 20px;
+		}
+	}
+}
+
+.contentInteractionButtonContainer {
+	display: flex;
+	margin-left: auto;
+	overflow: auto;
+}
+
+.contentInteractionButtons {
+	display: flex;
+	flex: 0 0 auto;
+}
+
+.contentInteractionButton {
+	flex: 0 0 auto;
+	overflow: hidden;
+
+	.icon {
+		display: none;
+	}
+
+	&:not(:first-child) {
+		&.button,
+		.button {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
+
+	&:not(:last-child) {
+		&.button,
+		.button {
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+}
+
+.contentInteractionButton:not(:first-child) {
+	margin-left: 1px;
+}
+
+.contentInteractionDropdown {
+	display: flex;
+	flex: 0 0 auto;
+	margin-left: 5px;
+
+	.dropdownToggle {
+		align-items: center;
+		display: flex;
+		flex: 0 0 100%;
+		white-space: nowrap;
+	}
+}
+
+.content {
+	.contentInteraction + .section,
+	.contentInteraction + form {
+		margin-top: 20px;
+	}
+}
+
 /* content navigation buttons */
 @include screen-xs {
 	.contentHeader > .contentHeaderNavigation > ul {
-		margin-top: 30px;
+		> .button {
+			display: block;
+			padding: 7px 10px;
+			text-align: center;
 
-		> li {
-			&:not(:first-child) {
-				margin-top: 10px;
-			}
-
-			> .button {
-				display: block;
-				padding: 7px 10px;
-				text-align: center;
-
-				> .invisible {
-					display: inline;
-				}
+			> .invisible {
+				display: inline;
 			}
 		}
 	}

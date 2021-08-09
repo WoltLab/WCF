@@ -12,7 +12,6 @@ use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackag
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectInstructionsFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectOptionalPackagesFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectRequiredPackagesFormField;
-use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -250,10 +249,6 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
             $authorUrl = $this->form->getNodeById('authorUrl');
             $authorUrl->value($packageArchive->getAuthorInfo('authorURL'));
         }
-
-        /** @var MultipleSelectionFormField $apiVersions */
-        $apiVersions = $this->form->getNodeById('apiVersions');
-        $apiVersions->value($packageArchive->getCompatibleVersions());
 
         $requirements = $packageArchive->getRequirements();
         if (!empty($requirements)) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 <import>
 	<category name="wcf.acl">
 		<item name="wcf.acl.access"><![CDATA[Zugangsbeschränkung]]></item>
@@ -413,7 +413,7 @@
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Projekt bearbeiten]]></item>
-		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} die <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
+		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} die <a href="https://docs.woltlab.com/latest/getting-started/#developer-tools" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[Der Name wird bereits von einem anderen Projekt verwendet.]]></item>
@@ -513,7 +513,6 @@
 		<item name="wcf.acp.devtools.project.requiredPackages.description"><![CDATA[Um dieses Paket installieren zu können, müssen die folgenden Paketen bereits installiert sein oder die mitgelieferten Versionen müssen vorher installiert werden.]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages"><![CDATA[Inkompatible Pakete]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.description"><![CDATA[Dieses Paket kann nicht installiert werden, wenn eines der folgenden Pakete (in der angegebenen <strong>oder neueren</strong> Version) bereits installiert ist.]]></item>
-		<item name="wcf.acp.devtools.project.compatibility"><![CDATA[API-Kompatibilität]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.excludedPackage"><![CDATA[<kbd>{$packageIdentifier}</kbd>
 {if $version}
 	<dl class="plain inlineDataList small">
@@ -528,8 +527,6 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions"><![CDATA[Kompatible API-Versionen]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[Das Paket ist mit allen ausgewählten API-Versionen von WoltLab Suite Core kompatibel.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Inkompatibilität]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optionales]]></item>
@@ -1257,10 +1254,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Hinweise angezeigt werden.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[IP-Adresse ausschließen (Obsolet)]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Der Ausschluss einzelner IP-Adressen erfolgt zuverlässiger und leistungsfähiger auf Ebene des Webservers. Diese Option ist obsolet und wird mit einer zukünftigen Version entfernt.]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Browser-Kennung ausschließen (Obsolet)]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Browser-Kennungen können durch Angreifer leicht gefälscht werden und sind kein zuverlässiger Indikator für die Identität des Anfragestellers. Falls ein Ausschluss dennoch gewünscht ist, erfolgt ein Ausschluss von Browser-Kenunngen leistungsfähiger auf Ebene des Webservers. Diese Option ist obsolet und wird mit einer zukünftigen Version entfernt.]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"/>
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
@@ -1356,9 +1349,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP-Server]]></item>
 		<item name="wcf.acp.option.mail_smtp_host.description"><![CDATA[Bei SMTP-Port 465 muss zusätzlich der Präfix <kbd>ssl://</kbd> angegeben werden, etwa <kbd>ssl://mail.example.com</kbd> statt nur <kbd>mail.example.com</kbd>.]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
-		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP-Verschlüsselung]]></item>
+		<item name="wcf.acp.option.mail_smtp_starttls"><![CDATA[SMTP-Verschlüsselung (STARTTLS)]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.none"><![CDATA[Deaktivieren]]></item>
-		<item name="wcf.acp.option.mail_smtp_starttls.may"><![CDATA[Wenn unterstützt]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.encrypt"><![CDATA[Erzwingen]]></item>
 		<item name="wcf.acp.option.mail_smtp_starttls.description"><![CDATA[Diese Einstellung steuert die Verwendung von „STARTTLS“. {if LANGUAGE_USE_INFORMAL_VARIANT}Deaktiviere{else}Deaktivieren Sie{/if} diese Option, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} E-Mails über SSL (Port 465) {if LANGUAGE_USE_INFORMAL_VARIANT}versendest{else}versenden{/if}!]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
@@ -1594,7 +1586,6 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Captcha in Registrierung aktivieren]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Captcha in „Kennwort vergessen“ aktivieren]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Captcha in „E-Mail an Benutzer schicken“ aktivieren]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Captcha in Suchfunktion aktivieren]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[Benutzer-Authentifikation]]></item>
@@ -1656,11 +1647,11 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[Menge an Tags, die für eine Erkennung als verwandter Artikel übereinstimmen müssen.]]></item>
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[„Über den Autor“ anzeigen]]></item>
 		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Bilder]]></item>
-		<item name="wcf.acp.option.category.message.general.imageProxy"><![CDATA[Zwischenspeicherung von externen Bilder]]></item>
+		<item name="wcf.acp.option.category.message.general.imageProxy"><![CDATA[Zwischenspeicherung von externen Bildern]]></item>
 		<item name="wcf.acp.option.module_article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Nur sichere Bilder in Nachrichten erlauben]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Bilder dürfen nur über das verschlüsselte „https“-Protokoll eingebunden werden. Bereits in bestehenden Nachrichten hinterlegte Bilder werden zwangsweise auf dieses Protokoll umgeschrieben.]]></item>
-		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Zwischenspeicherung von externen Bilder aktivieren („Image-Proxy“)]]></item>
+		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Zwischenspeicherung von externen Bildern aktivieren („Image-Proxy“)]]></item>
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximale Speicherzeit]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Nur Bilder aus unverschlüsselten Quellen zwischenspeichern]]></item>
 		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Zwischengespeicherte Bilder regelmäßig löschen]]></item>
@@ -1949,6 +1940,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.16"><![CDATA[Neben der &lt;void/&gt;-Anweisung werden weitere Package Installation Plugins angegeben.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.17"><![CDATA[Die &lt;void/&gt;-Anweisung ist in den Installations-Anweisungen unzulässig.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.18"><![CDATA[Die bereits installierte App „{$application->getPackage()->package}“ verwendet die gleiche App-Abkürzung.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. Bitte aktualisiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} auf die aktuellste Version um diese Software weiterhin legal betreiben zu können.{if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/purchase/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) ablaufen. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
@@ -1996,6 +1988,15 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 	{/if}
 {/implode}]]></item>
 		<item name="wcf.acp.package.application.isTainted"><![CDATA[Die App{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} ist nicht vollständig installiert. Für eine weitere Verwendung der App ist eine Deinstallation mit anschließender Neuinstallation von Nöten.]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Aktualisierung auf WoltLab Suite {$version}]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Upgrade auf die neue Version freigeben]]></item>
+		<item name="wcf.acp.package.enableUpgradeOverride.issues"><![CDATA[Die folgenden Probleme verhindern aktuell eine Aktualisierung:]]></item>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Neue Version verfügbar!<br><br>Die neue WoltLab Suite {$version} steht zur Installation bereit. Eine Anleitung zur Durchführung des Upgrades steht im <a href="https://manual.woltlab.com/de/updates/#update-von-woltlab-suite-53-auf-54" class="externalURL">Handbuch</a> zur Verfügung.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Systemvoraussetzungen prüfen, um das Upgrade freizugeben</a>]]></item>
+		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[Die Installation der neuen WoltLab Suite {$version} wurde freigegeben. Zur Durchführung des Upgrades klicken Sie bitte auf den Button „Updates suchen“.<br>
+<br>
+<a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Upgrade abbrechen</a>]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>
@@ -2123,11 +2124,11 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName"><![CDATA[Database Object List-Klasse]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.description"><![CDATA[Die angegebene Klasse muss von <kbd>wcf\data\DatabaseObjectList</kbd> erben und wird dazu verwendet, die markierten Objekte aus der Datenbank zu lesen, für die dann eine Clipboard-Aktion ausgeführt wird.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName"><![CDATA[Objekttyp-Definition]]></item>
-		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.acl.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registiert, für die Zugangsbeschränkungen erstellt werden können. Zugangsbeschränkung (ACL, <em>access control list</em>) werden verwendet, um Benutzer- und Benutzergruppenberechtigungen für bestimmte Objekte einzustellen.]]></item>
-		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.acl.simple.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registiert, für die einfache Zugangsbeschränkungen erstellt werden können. Einfache Zugangsbeschränkungen (ACL, <em>access control list</em>) werden verwendet, um eine ja/nein-Benutzer- und Benutzergruppenberechtigung für bestimmte Objekte einzustellen.]]></item>
+		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.acl.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registriert, für die Zugangsbeschränkungen erstellt werden können. Zugangsbeschränkung (ACL, <em>access control list</em>) werden verwendet, um Benutzer- und Benutzergruppenberechtigungen für bestimmte Objekte einzustellen.]]></item>
+		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.acl.simple.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registriert, für die einfache Zugangsbeschränkungen erstellt werden können. Einfache Zugangsbeschränkungen (ACL, <em>access control list</em>) werden verwendet, um eine ja/nein-Benutzer- und Benutzergruppenberechtigung für bestimmte Objekte einzustellen.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.adLocation.description"><![CDATA[Mit dieser Objekttyp-Definition werden Positionen registriert, an denen Werbung angezeigt werden kann.]]></item>
-		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.article.discussionProvider.description"><![CDATA[Mit dieser Objekttyp-Definition werden verschiedene Diskussionsanbieter für Artikel registiert.]]></item>
-		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.attachment.objectType.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registiert, die das Anhängen von Dateien unterstützen.]]></item>
+		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.article.discussionProvider.description"><![CDATA[Mit dieser Objekttyp-Definition werden verschiedene Diskussionsanbieter für Artikel registriert.]]></item>
+		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.attachment.objectType.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registriert, die das Anhängen von Dateien unterstützen.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.box.articleList.condition.description"><![CDATA[Mit dieser Objekttyp-Definition werden verfügbare Bedingungen/Einstellungen für Boxen, die Artikel auflisten, registriert um zu steuern, welche Artikel in der Box angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.box.recentActivityList.condition.description"><![CDATA[Mit dieser Objekttyp-Definition werden verfügbare Bedingungen/Einstellungen für Boxen, die Aktivitäten auflisten, registriert um zu steuern, welche Aktivitäten in der Box angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.box.userTrophyList.condition.description"><![CDATA[Mit dieser Objekttyp-Definition werden verfügbare Bedingungen/Einstellungen für Boxen, die Trophäen auflisten, registriert um zu steuern, welche Trophäen in der Box angezeigt werden.]]></item>
@@ -2175,7 +2176,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.recentActivityEvent.description"><![CDATA[Mit dieser Objekttyp-Definition werden Events registriert, für die „Letzte Aktivitäten“-Einträge erstellt werden können.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.versionTracker.objectType.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registriert, von denen verschiedene Versionen mit der Version-Tracker-API nachgehalten werden können.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.visitTracker.objectType.description"><![CDATA[Mit dieser Objekttyp-Definition werden Typen von Objekten registriert, für die festgehalten wird, ob und wann Benutzer sie (zuletzt) angesehen oder auf sie zugegriffen haben.]]></item>
-		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.activityPointEvent.description"><![CDATA[Mit dieser Objekttyp-Definition werden Events registiert, für die Benutzer Aktivitätspunkte erhalten.]]></item>
+		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.user.activityPointEvent.description"><![CDATA[Mit dieser Objekttyp-Definition werden Events registriert, für die Benutzer Aktivitätspunkte erhalten.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType"><![CDATA[Objekttyp-Bezeichner]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.description"><![CDATA[Text-Bezeichner des Objekttyps, der primär in PHP-Code verwendet wird]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einem anderen Objekttypen derselben Objekttyp-Definition verwendet.]]></item>
@@ -2360,7 +2361,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.userGroupOption.options.optionType.description"><![CDATA[Der Optionstyp bestimmt die Art und Weise, wie der Wert der Benutzergruppenberechtigung angegeben werden kann und welche (Arten von) Werte die Einstellung haben kann. Zusätzlich bestimmt der Optionstyp auch wie die der endgültige Wert der Benutzergruppenberechtigung bestimmt wird, wenn ein Benutzer in verschiedenen Benutzergruppen mit verschiedenen Berechtigungswerten ist.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.userDefaultValue"><![CDATA[Standardwert für Benutzer]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.userDefaultValue.description"><![CDATA[Der Standardwert für Benutzer wird für die Benutzergruppe verwendet, die alle registrierten Benutzer enthält.]]></item>
-		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Nur für registierte Benutzer]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Nur für registrierte Benutzer]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[Die Benutzergruppenberechtigung ist nur für Benutzergruppen verfügbar, die ausschließlich registrierte Benutzer enthält.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName"><![CDATA[Anbietername]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[Der Name des ACP-Suchergebnis-Anbieters besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
@@ -2376,6 +2377,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Vererbung unterstützen]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit.description"><![CDATA[Wird Vererbung unterstützt, reagiert der Event-Listener nicht nur, wenn das Event von der oben angegebenen Klasse ausgelöst wird, sondern auch wenn es von Kindklassen der angegebenen Klasse ausgelöst wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP-Event-Listener-Klasse]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerClassName.error.noCallable"><![CDATA[Die Klasse <kbd>{$listenerClassName}</kbd> hat keine <kbd>__invoke()</kbd>-Methode.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Bezeichner des Event-Listeners]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Eindeutiger Bezeichner des Event-Listeners, der nur Buchstaben enthalten darf und mit einem Kleinbuchstaben beginnen muss.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>
@@ -2393,7 +2395,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.mediaProvider.name.error.format"><![CDATA[Der angegebene Name ist ungültig.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.regex"><![CDATA[Reguläre Ausdrücke]]></item>
 		<item name="wcf.acp.pip.mediaProvider.regex.description"><![CDATA[Die angebenen regulären Ausdrücke (ohne Begrenzungszeichen) werden verwendet um zu überprüfen, ob dieser Medienanbieter für einen gegebenen Link verantwortlich ist. Jede Zeile wird als eigenen regulären Ausdruck interpretiert.]]></item>
-		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[Die angegebene Klasse ist bereits als Core-Objekt registiert.]]></item>
+		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[Die angegebene Klasse ist bereits als Core-Objekt registriert.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[Die alternativen Smiley-Codes werden ebenfalls in dieses Smiley umgewandelt.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[Die folgenden alternativen Smiley-Codes werden bereits von anderen Smileys verwendet: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
@@ -2734,7 +2736,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 <p>Anleitung zum Hinterlegen der XML-Sitemaps:</p>
 <ul class="nativeList">
 	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
-	<li><a href="https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4" class="externalURL">Bing</a></li>
+	<li><a href="https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed" class="externalURL">Bing</a></li>
 </ul>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
@@ -2787,7 +2789,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Fremdschlüssel werden mit der Installation in der Datenbank angelegt und werden für einen einwandfreien Betrieb benötigt.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.searchEngine"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.systemCheck.mysql.searchEngine.description"><![CDATA[Alle Tabellen, die für die Suche genutzt werden, müssen mit der Storage-Engine InnoDB betrieben werden.]]></item>
-		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[Die folgenden Tabellen verwenden eine inkorrekte Storage-Engine (erwartete Storage-Engine: <code>InnoDB</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[Die folgenden Tabellen verwenden eine inkorrekte Storage-Engine (erwartete Storage-Engine: <code>InnoDB</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}. <a href="{link controller='RebuildData'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Aktualisiere{else}Aktualisieren Sie{/if} die Anzeigen</a>, um die Storage-Engine umzustellen.]]></item>
 		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Erweiterungen]]></item>
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[Die offiziellen Erweiterungen von PHP stellen zusätzliche Funktionen bereit, die für den Betrieb der Software notwendig sind.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Verfügbarer Arbeitsspeicher („memory_limit“)]]></item>
@@ -2972,11 +2974,9 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Versionsnummer eingegeben.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
-		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Breite des Seitenlogos]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Höhe des Seitenlogos]]></item>
 		<item name="wcf.acp.style.globals.pageLogoMobile"><![CDATA[Seitenlogo (mobile Version)]]></item>
-		<item name="wcf.acp.style.globals.pageLogoMobile.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo (mobile Version)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeDefault"><![CDATA[Schriftgröße (Standard)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSmall"><![CDATA[Schriftgröße (klein)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Schriftgröße (Überschrift)]]></item>
@@ -3550,7 +3550,7 @@ Dateianhänge:
 		<item name="wcf.contact.recipientID"><![CDATA[Empfänger]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
-		<item name="wcf.contact.success"><![CDATA[Ihre Nachricht wurde erfolgreich versandt.]]></item>
+		<item name="wcf.contact.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht wurde erfolgreich versandt.]]></item>
 		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich habe die <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a> gelesen und stimme dieser zu. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	<category name="wcf.date">
@@ -3996,10 +3996,6 @@ Dateianhänge:
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} eine der angebotenen Optionen aus.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Sitzung ist abgelaufen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sende{else}senden Sie{/if} das Formular erneut ab.]]></item>
 		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximale Anzahl erreicht]]></item>
-		<!-- deprecated since 2.1 -->
-		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
-		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
-		<!-- /deprecated since 2.1 -->
 		<item name="wcf.global.form.required"><![CDATA[Benötigte Angaben]]></item>
 		<item name="wcf.global.form.password.button.hide"><![CDATA[Verbergen]]></item>
 		<item name="wcf.global.form.password.button.show"><![CDATA[Anzeigen]]></item>
@@ -4148,6 +4144,7 @@ Dateianhänge:
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
+		<item name="wcf.media.category.choose.noCategory"><![CDATA[(keine Kategorie)]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Datei auswählen]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
@@ -4355,7 +4352,7 @@ Dateianhänge:
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
-		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde den Moderatoren gemeldet.]]></item>
+		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde der Moderation gemeldet.]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[„Berechtigt“-Status ändern]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Meldung als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den „Berechtigt“-Status dieser Meldung wirklich ändern?]]></item>
@@ -4517,6 +4514,11 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Aktiver Stil]]></item>
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Übernehmen]]></item>
+		<item name="wcf.style.colorPicker.alpha"><![CDATA[Deckkraft]]></item>
+		<item name="wcf.style.colorPicker.hexAlpha"><![CDATA[Hex-Wert mit Alpha-Kanal]]></item>
+		<item name="wcf.style.colorPicker.color"><![CDATA[Farbe]]></item>
+		<item name="wcf.style.colorPicker.button.changeColor"><![CDATA[Farbe ändern]]></item>
+		<item name="wcf.style.colorPicker.error.invalidColor"><![CDATA[Die angegebene Farbe ist ungültig.]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}„{$tag->name}“{/implode}]]></item>
@@ -4648,7 +4650,7 @@ Dateianhänge:
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Kennwort vergessen auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anders) hat{else}Sie (oder jemand anders) haben{/if} angegeben das Kennwort für das Benutzerkonto
+{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anderes) hat{else}Sie (oder jemand anderes) haben{/if} angegeben, das Kennwort für das Benutzerkonto
 {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] vergessen zu haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein{else}Sie können Ihr{/if} Kennwort
 nach einem Klick auf den folgenden Link ändern:
 
@@ -4658,7 +4660,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Kennwort nicht 
 am {@$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.]]></item>
 		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anders) hat{else}Sie (oder jemand anders) haben{/if} angegeben das
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anderes) hat{else}Sie (oder jemand anderes) haben{/if} angegeben, das
 Kennwort für das Benutzerkonto {$mailbox->getUser()->username} auf der Seite <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> vergessen zu
 haben:</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Kennwort ändern]]></item>
@@ -4689,6 +4691,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und Ähnliches werden nicht gelöscht.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
+		<item name="wcf.user.quit.active"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {$__wcf->user->quitStarted+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung in der <a href="{link controller='AccountManagement'}{/link}">Benutzerkonto-Verwaltung</a> abbrechen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
 		<item name="wcf.user.password.error.notSecure"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wähle{else}wählen Sie{/if} ein sichereres Kennwort aus.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzername wurde erfolgreich geändert.]]></item>
@@ -4923,35 +4926,35 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[Das Benutzerkonto <strong>{$user->username}</strong> ist mit der Mehrfaktor-Authentifizierung geschützt, es sind jedoch keine aktiven Verfahren verfügbar. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
 
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfallcode <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
 
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account-Sicherheit</a> verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account-Sicherheit</a> verwalten und dort neue Notfallcodes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Hallo {$setup->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfallcode „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}] verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfall-Code auf {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
-		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}] verwalten und dort neue Notfallcodes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfallcode auf {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfallcode]]></item>
+		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfallcode besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Aktive Notfallcodes]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>Unterhalb {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} den zuletzt generierten Satz an Notfallcodes für die Mehrfaktor-Authentifizierung. Durchgestrichene Notfallcodes wurden bereits verwendet und sind nicht mehr gültig. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} die fettgedruckte Nummer, um die Notfallcodes mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Notizen abzugleichen. {if LANGUAGE_USE_INFORMAL_VARIANT}Generiere neue Codes, falls deine Notizen{else}Generieren Sie neue Codes, falls Ihre Notizen{/if} nicht zu der angezeigten Liste passen.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
 		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Neue Notfallcodes generieren]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere{else}Generieren Sie{/if} neue Notfallcodes, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du deinen{else}Sie Ihren{/if} bisherigen Satz verlegt oder verbraucht haben. Die Generierung neuer Notfallcodes wird alle bestehenden Notfallcodes ungültig machen.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere{else}Generieren Sie{/if} neue Notfallcodes, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du deinen{else}Sie Ihren{/if} bisherigen Satz verlegt oder verbraucht {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}. Die Generierung neuer Notfallcodes wird alle bestehenden Notfallcodes ungültig machen.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.status"><![CDATA[<ul class="inlineList small dotSeparated">
 <li>{plural value=$count 0="Keine Codes verbleibend" 1="Ein Code verbleibend" other="# Codes verbleibend"}</li>
 {if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
 </ul>]]></item>
 		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfallcodes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Einmalcode über E-Mail]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jeder Anmeldung einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jeder Anmeldung einen Einmalcode an Ihre E-Mail-Adresse.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<small>{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jeder Anmeldung einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jeder Anmeldung einen Einmalcode an Ihre E-Mail-Adresse.{/if}</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Einmalcode über E-Mail]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<small>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Schütze dein Benutzerkonto{else}Schützen Sie Ihr Benutzerkonto{/if}, indem bei jeder Anmeldung eine zusätzliche Authentifizierung mit Hilfe eines zweiten Faktors erforderlich ist.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Deaktivieren]]></item>
@@ -4983,11 +4986,12 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
+		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Die Aktivierung des Verfahrens ist fehlgeschlagen. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es erneut.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jeder Anmeldung den zusätzlichen Faktor benötigen.</p>
 <p><br></p>
-<p>Zusätzlich wurden Notfall-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
+<p>Zusätzlich wurden Notfallcodes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
 <p><br></p>
-<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}Notiere oder speichere dir{else}Notieren oder speichern Sie{/if} sich die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
+<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}notiere oder speichere dir{else}notieren oder speichern Sie sich{/if} die unterhalb angezeigten Notfallcodes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
 		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
 		<item name="wcf.user.security.multifactor.methods"><![CDATA[Verfahren]]></item>
 		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
@@ -5097,6 +5101,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Suchmaschinen-Roboter]]></item>
 		<item name="wcf.user.usersOnline.record"><![CDATA[Rekord: {#USERS_ONLINE_RECORD} Benutzer ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 		<item name="wcf.user.usersOnline.users"><![CDATA[Benutzer]]></item>
+		<item name="wcf.user.usersOnline.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
+		<item name="wcf.user.usersOnline.sortField.requestURI"><![CDATA[Ort]]></item>
+		<item name="wcf.user.usersOnline.sortField.username"><![CDATA[Benutzername]]></item>
 	</category>
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Letzte Aktivitäten]]></item>
@@ -5450,6 +5457,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.profile.title"><![CDATA[Benutzerprofil von {$user->username}]]></item>
 	</category>
 	<category name="wcf.user.objectWatch">
+		<item name="wcf.user.objectWatch.button.subscribe"><![CDATA[Abonnieren]]></item>
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Abonnement verwalten]]></item>
 		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Kategorie abonnieren]]></item>
 		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Benachrichtigung über neue Artikel aus dieser Kategorie aktivieren]]></item>
@@ -5540,5 +5548,18 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.masterPassword.enter.deprecated"/>
 	<item name="wcf.acp.option.module_master_password"/>
 	<item name="wcf.acp.option.module_master_password.description"/>
+	<item name="wcf.acp.option.blacklist_ip_addresses"/>
+	<item name="wcf.acp.option.blacklist_ip_addresses.description"/>
+	<item name="wcf.acp.option.blacklist_user_agents"/>
+	<item name="wcf.acp.option.blacklist_user_agents.description"/>
+	<item name="wcf.global.form.error.lessThan.javaScript"/>
+	<item name="wcf.global.form.error.greaterThan.javaScript"/>
+	<item name="wcf.acp.devtools.project.compatibility"/>
+	<item name="wcf.acp.devtools.project.apiVersions"/>
+	<item name="wcf.acp.devtools.project.apiVersions.description"/>
+	<item name="wcf.acp.style.globals.pageLogo.description"/>
+	<item name="wcf.acp.style.globals.pageLogoMobile.description"/>
+	<item name="wcf.acp.option.profile_mail_use_captcha"/>
+	<item name="wcf.acp.option.mail_smtp_starttls.may"/>
 </delete>
 </language>

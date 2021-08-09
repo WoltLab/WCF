@@ -8,12 +8,10 @@
 	max-width: 100%;
 	overflow: hidden;
 	position: relative;
-	width: 600px;
+	width: 400px;
 
 	/* OG images are designed with a 2:1 aspect ratio. */
 	&.unfurlUrlCardCoverImage {
-		width: 400px;
-
 		.unfurlUrlImage {
 			/* The `!important` is required because of `.messageBody > .messageText img`. */
 			height: 200px !important;

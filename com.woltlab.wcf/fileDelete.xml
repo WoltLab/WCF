@@ -36,6 +36,7 @@
 		<file>acp/style/testing-reset.css</file>
 		<file>acp/style/wcf.css</file>
 		<file>acp/style/wcfAcp.css</file>
+		<file>acp/dereferrer.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_2.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_3.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</file>
@@ -974,130 +975,28 @@
 		<file>js/3rdParty/codemirror/addon/merge/dep/diff_match_patch.js</file>
 		<file>js/3rdParty/codemirror/keymap/emacs.js</file>
 		<file>js/3rdParty/codemirror/keymap/vim.js</file>
-		<file>js/3rdParty/codemirror/mode/apl/apl.js</file>
-		<file>js/3rdParty/codemirror/mode/apl/index.html</file>
-		<file>js/3rdParty/codemirror/mode/asterisk/asterisk.js</file>
-		<file>js/3rdParty/codemirror/mode/asterisk/index.html</file>
-		<file>js/3rdParty/codemirror/mode/clojure/clojure.js</file>
-		<file>js/3rdParty/codemirror/mode/clojure/index.html</file>
-		<file>js/3rdParty/codemirror/mode/cobol/cobol.js</file>
-		<file>js/3rdParty/codemirror/mode/cobol/index.html</file>
 		<file>js/3rdParty/codemirror/mode/coffeescript/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/commonlisp/commonlisp.js</file>
-		<file>js/3rdParty/codemirror/mode/commonlisp/index.html</file>
-		<file>js/3rdParty/codemirror/mode/d/d.js</file>
-		<file>js/3rdParty/codemirror/mode/d/index.html</file>
-		<file>js/3rdParty/codemirror/mode/ecl/ecl.js</file>
-		<file>js/3rdParty/codemirror/mode/ecl/index.html</file>
-		<file>js/3rdParty/codemirror/mode/erlang/erlang.js</file>
-		<file>js/3rdParty/codemirror/mode/erlang/index.html</file>
-		<file>js/3rdParty/codemirror/mode/gas/gas.js</file>
-		<file>js/3rdParty/codemirror/mode/gas/index.html</file>
-		<file>js/3rdParty/codemirror/mode/gfm/gfm.js</file>
-		<file>js/3rdParty/codemirror/mode/gfm/index.html</file>
-		<file>js/3rdParty/codemirror/mode/gfm/test.js</file>
-		<file>js/3rdParty/codemirror/mode/go/go.js</file>
-		<file>js/3rdParty/codemirror/mode/go/index.html</file>
-		<file>js/3rdParty/codemirror/mode/groovy/groovy.js</file>
-		<file>js/3rdParty/codemirror/mode/groovy/index.html</file>
-		<file>js/3rdParty/codemirror/mode/haml/haml.js</file>
-		<file>js/3rdParty/codemirror/mode/haml/index.html</file>
-		<file>js/3rdParty/codemirror/mode/haml/test.js</file>
-		<file>js/3rdParty/codemirror/mode/haskell/haskell.js</file>
-		<file>js/3rdParty/codemirror/mode/haskell/index.html</file>
-		<file>js/3rdParty/codemirror/mode/haxe/haxe.js</file>
-		<file>js/3rdParty/codemirror/mode/haxe/index.html</file>
-		<file>js/3rdParty/codemirror/mode/http/http.js</file>
-		<file>js/3rdParty/codemirror/mode/http/index.html</file>
-		<file>js/3rdParty/codemirror/mode/jinja2/index.html</file>
-		<file>js/3rdParty/codemirror/mode/jinja2/jinja2.js</file>
 		<file>js/3rdParty/codemirror/mode/less/index.html</file>
 		<file>js/3rdParty/codemirror/mode/less/less.js</file>
 		<file>js/3rdParty/codemirror/mode/livescript/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/livescript/index.html</file>
-		<file>js/3rdParty/codemirror/mode/livescript/livescript.js</file>
 		<file>js/3rdParty/codemirror/mode/livescript/livescript.ls</file>
-		<file>js/3rdParty/codemirror/mode/lua/index.html</file>
-		<file>js/3rdParty/codemirror/mode/lua/lua.js</file>
-		<file>js/3rdParty/codemirror/mode/meta.js</file>
-		<file>js/3rdParty/codemirror/mode/mirc/index.html</file>
-		<file>js/3rdParty/codemirror/mode/mirc/mirc.js</file>
-		<file>js/3rdParty/codemirror/mode/ntriples/index.html</file>
-		<file>js/3rdParty/codemirror/mode/ntriples/ntriples.js</file>
 		<file>js/3rdParty/codemirror/mode/ocaml/index.html</file>
 		<file>js/3rdParty/codemirror/mode/ocaml/ocaml.js</file>
 		<file>js/3rdParty/codemirror/mode/pascal/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/pascal/index.html</file>
-		<file>js/3rdParty/codemirror/mode/pascal/pascal.js</file>
 		<file>js/3rdParty/codemirror/mode/perl/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/perl/index.html</file>
-		<file>js/3rdParty/codemirror/mode/perl/perl.js</file>
-		<file>js/3rdParty/codemirror/mode/pig/index.html</file>
-		<file>js/3rdParty/codemirror/mode/pig/pig.js</file>
-		<file>js/3rdParty/codemirror/mode/properties/index.html</file>
-		<file>js/3rdParty/codemirror/mode/properties/properties.js</file>
 		<file>js/3rdParty/codemirror/mode/python/LICENSE.txt</file>
-		<file>js/3rdParty/codemirror/mode/python/index.html</file>
-		<file>js/3rdParty/codemirror/mode/python/python.js</file>
-		<file>js/3rdParty/codemirror/mode/q/index.html</file>
-		<file>js/3rdParty/codemirror/mode/q/q.js</file>
 		<file>js/3rdParty/codemirror/mode/r/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/r/index.html</file>
-		<file>js/3rdParty/codemirror/mode/r/r.js</file>
 		<file>js/3rdParty/codemirror/mode/rpm/changes/changes.js</file>
-		<file>js/3rdParty/codemirror/mode/rpm/changes/index.html</file>
 		<file>js/3rdParty/codemirror/mode/rpm/spec/index.html</file>
 		<file>js/3rdParty/codemirror/mode/rpm/spec/spec.css</file>
 		<file>js/3rdParty/codemirror/mode/rpm/spec/spec.js</file>
 		<file>js/3rdParty/codemirror/mode/rst/LICENSE.txt</file>
-		<file>js/3rdParty/codemirror/mode/rst/index.html</file>
-		<file>js/3rdParty/codemirror/mode/rst/rst.js</file>
 		<file>js/3rdParty/codemirror/mode/ruby/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/ruby/index.html</file>
-		<file>js/3rdParty/codemirror/mode/ruby/ruby.js</file>
-		<file>js/3rdParty/codemirror/mode/rust/index.html</file>
-		<file>js/3rdParty/codemirror/mode/rust/rust.js</file>
-		<file>js/3rdParty/codemirror/mode/scheme/index.html</file>
-		<file>js/3rdParty/codemirror/mode/scheme/scheme.js</file>
 		<file>js/3rdParty/codemirror/mode/sieve/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/sieve/index.html</file>
-		<file>js/3rdParty/codemirror/mode/sieve/sieve.js</file>
-		<file>js/3rdParty/codemirror/mode/smalltalk/index.html</file>
-		<file>js/3rdParty/codemirror/mode/smalltalk/smalltalk.js</file>
 		<file>js/3rdParty/codemirror/mode/smartymixed/index.html</file>
 		<file>js/3rdParty/codemirror/mode/smartymixed/smartymixed.js</file>
-		<file>js/3rdParty/codemirror/mode/sparql/index.html</file>
-		<file>js/3rdParty/codemirror/mode/sparql/sparql.js</file>
-		<file>js/3rdParty/codemirror/mode/stex/index.html</file>
-		<file>js/3rdParty/codemirror/mode/stex/stex.js</file>
-		<file>js/3rdParty/codemirror/mode/stex/test.js</file>
-		<file>js/3rdParty/codemirror/mode/tcl/index.html</file>
-		<file>js/3rdParty/codemirror/mode/tcl/tcl.js</file>
-		<file>js/3rdParty/codemirror/mode/tiddlywiki/index.html</file>
-		<file>js/3rdParty/codemirror/mode/tiddlywiki/tiddlywiki.css</file>
-		<file>js/3rdParty/codemirror/mode/tiddlywiki/tiddlywiki.js</file>
-		<file>js/3rdParty/codemirror/mode/tiki/index.html</file>
-		<file>js/3rdParty/codemirror/mode/tiki/tiki.css</file>
-		<file>js/3rdParty/codemirror/mode/tiki/tiki.js</file>
-		<file>js/3rdParty/codemirror/mode/turtle/index.html</file>
-		<file>js/3rdParty/codemirror/mode/turtle/turtle.js</file>
 		<file>js/3rdParty/codemirror/mode/vb/LICENSE.txt</file>
-		<file>js/3rdParty/codemirror/mode/vb/index.html</file>
-		<file>js/3rdParty/codemirror/mode/vb/vb.js</file>
-		<file>js/3rdParty/codemirror/mode/vbscript/index.html</file>
-		<file>js/3rdParty/codemirror/mode/vbscript/vbscript.js</file>
-		<file>js/3rdParty/codemirror/mode/velocity/index.html</file>
-		<file>js/3rdParty/codemirror/mode/velocity/velocity.js</file>
-		<file>js/3rdParty/codemirror/mode/verilog/index.html</file>
-		<file>js/3rdParty/codemirror/mode/verilog/verilog.js</file>
 		<file>js/3rdParty/codemirror/mode/xquery/LICENSE</file>
-		<file>js/3rdParty/codemirror/mode/xquery/index.html</file>
-		<file>js/3rdParty/codemirror/mode/xquery/test.js</file>
-		<file>js/3rdParty/codemirror/mode/xquery/xquery.js</file>
-		<file>js/3rdParty/codemirror/mode/yaml/index.html</file>
-		<file>js/3rdParty/codemirror/mode/yaml/yaml.js</file>
-		<file>js/3rdParty/codemirror/mode/z80/index.html</file>
-		<file>js/3rdParty/codemirror/mode/z80/z80.js</file>
 		<file>js/3rdParty/enquire.js</file>
 		<file>js/3rdParty/jquery-ui.timepicker.js</file>
 		<file>js/3rdParty/jquery-ui.timepicker.min.js</file>
@@ -1184,6 +1083,7 @@
 		<file>js/WCF.Core.min.js</file>
 		<file>js/WCF.ImageViewer.min.js</file>
 		<file>js/WCF.Label.min.js</file>
+		<file>js/WCF.Like</file>
 		<file>js/WCF.Like.min.js</file>
 		<file>js/WCF.Location.min.js</file>
 		<file>js/WCF.Message.min.js</file>
@@ -1320,6 +1220,7 @@
 		<file>lib/form/AbstractSecureForm.class.php</file>
 		<file>lib/form/MailForm.class.php</file>
 		<file>lib/form/MultifactorAuthenticationAbortForm.class.php</file>
+		<file>lib/form/RecaptchaForm.class.php</file>
 		<file>lib/page/CookiePolicyPage.class.php</file>
 		<file>lib/page/DashboardPage.class.php</file>
 		<file>lib/page/LessStylesheetsPage.class.php</file>
@@ -1450,8 +1351,8 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
-		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
+		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
 		<file>lib/system/api/ezyang/htmlpurifier/WHATSNEW</file>
@@ -1519,6 +1420,13 @@
 		<file>lib/system/api/guzzlehttp/promises/phpstan-baseline.neon</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan.neon.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/psalm.xml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/bc.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/ci.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/integration.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.github/workflows/static.yml</file>
+		<file>lib/system/api/guzzlehttp/psr7/.php_cs.dist</file>
+		<file>lib/system/api/guzzlehttp/psr7/src/functions.php</file>
+		<file>lib/system/api/guzzlehttp/psr7/src/functions_include.php</file>
 		<file>lib/system/api/leafo/scssphp/composer.json</file>
 		<file>lib/system/api/leafo/scssphp/example/Server.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Compiler.php</file>
@@ -1526,8 +1434,8 @@
 		<file>lib/system/api/leafo/scssphp/src/SourceMap/Base64VLQEncoder.php</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
-		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
+		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/lib/random.php</file>
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
@@ -1772,6 +1680,7 @@
 		<file>lib/system/cache/builder/PageMenuCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/SitemapCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/TemplateCacheBuilder.class.php</file>
+		<file>lib/system/cache/builder/TemplateListenerCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/VersionCacheBuilder.class.php</file>
 		<file>lib/system/cache/source/ApcCacheSource.class.php</file>
 		<file>lib/system/cache/source/MemcacheAdapter.class.php</file>
@@ -1827,6 +1736,7 @@
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabSize.class.php</file>
 		<file>lib/system/image/Thumbnail.class.php</file>
 		<file>lib/system/language/LanguageServerProcessor.class.php</file>
+		<file>lib/system/log/modification/ModificationLogHandler.class.php</file>
 		<file>lib/system/mail/DebugMailSender.class.php</file>
 		<file>lib/system/mail/MailSender.class.php</file>
 		<file>lib/system/mail/PHPMailSender.class.php</file>
@@ -1855,11 +1765,13 @@
 		<file>lib/system/page/location/IPageLocation.class.php</file>
 		<file>lib/system/payment/method/SofortUeberweisungPaymentMethod.class.php</file>
 		<file>lib/system/recaptcha/RecaptchaHandler.class.php</file>
+		<file>lib/system/recaptcha/RecaptchaHandlerV2.class.php</file>
 		<file>lib/system/request/CmsLinkHandler.class.php</file>
 		<file>lib/system/request/FlexibleRoute.class.php</file>
 		<file>lib/system/request/IRoute.class.php</file>
 		<file>lib/system/request/Route.class.php</file>
 		<file>lib/system/request/StaticRoute.class.php</file>
+		<file>lib/system/search/SearchKeywordManager.class.php</file>
 		<file>lib/system/sitemap/ISitemapProvider.class.php</file>
 		<file>lib/system/sitemap/SitemapHandler.class.php</file>
 		<file>lib/system/sitemap/UserAccountSitemapProvider.class.php</file>

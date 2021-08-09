@@ -18,6 +18,7 @@
     "esModuleInterop": true,
     "noImplicitThis": true,
     "strictBindCallApply": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "newLine": "lf"
   }
 }

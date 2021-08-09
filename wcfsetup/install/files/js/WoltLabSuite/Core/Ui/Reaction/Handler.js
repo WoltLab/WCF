@@ -364,8 +364,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             this._closePopover();
         }
         _ajaxSuccess(data) {
-            this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
-            this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
+            const objectId = ~data.returnValues.objectID;
+            this.countButtons.updateCountButtons(objectId, data.returnValues.reactions);
+            this._updateReactButton(objectId, data.returnValues.reactionTypeID);
         }
         _ajaxSetup() {
             return {

@@ -101,7 +101,11 @@ function parseAttributes(attributes: string): Attributes {
     return [];
   }
 
-  return attributes.map((attribute: string | number) => {
+  return attributes.map((attribute: string | number | null) => {
+    if (attribute === null) {
+      return "";
+    }
+
     return attribute.toString().replace(/^'(.*)'$/, "$1");
   });
 }

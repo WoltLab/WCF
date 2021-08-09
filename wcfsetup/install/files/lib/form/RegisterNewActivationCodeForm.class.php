@@ -83,6 +83,9 @@ class RegisterNewActivationCodeForm extends AbstractForm
         // password
         $this->validatePassword();
 
+        // activation state
+        $this->validateActivationState();
+
         // email
         $this->validateEmail();
     }
@@ -126,6 +129,17 @@ class RegisterNewActivationCodeForm extends AbstractForm
     }
 
     /**
+     * Validates the activation state.
+     */
+    public function validateActivationState()
+    {
+        // check if user is already enabled
+        if ($this->user->isEmailConfirmed()) {
+            throw new UserInputException('username', 'alreadyEnabled');
+        }
+    }
+
+    /**
      * Validates the email address.
      */
     public function validateEmail()
@@ -154,11 +168,8 @@ class RegisterNewActivationCodeForm extends AbstractForm
     {
         parent::save();
 
-        // generate activation code
-        $activationCode = UserRegistrationUtil::getActivationCode();
-
-        // save user
-        $parameters = ['activationCode' => $activationCode];
+        //  save user
+        $parameters = ['emailConfirmed' => \bin2hex(\random_bytes(20))];
         if (!empty($this->email)) {
             $parameters['email'] = $this->email;
         }

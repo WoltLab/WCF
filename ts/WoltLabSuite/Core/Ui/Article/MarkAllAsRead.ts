@@ -10,6 +10,7 @@
 
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
+import * as EventHandler from "../../Event/Handler";
 
 class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   constructor() {
@@ -29,9 +30,15 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
     // main menu
     const badge = document.querySelector(".mainMenu .active .badge");
     if (badge) badge.remove();
+    // mobile page menu badge
+    document.querySelectorAll(".pageMainMenuMobile .active").forEach((container) => {
+      container.closest(".menuOverlayItem")?.querySelector(".badge")?.remove();
+    });
 
     // article list
     document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
+
+    EventHandler.fire("com.woltlab.wcf.MainMenuMobile", "updateButtonState");
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {

@@ -69,11 +69,10 @@ class PageImporter extends AbstractImporter
         }
 
         // save page
-        $page = PageEditor::create($data);
+        $page = new PageEditor(PageEditor::create($data));
         if (!$page->identifier) {
             // set generic page identifier
-            $pageEditor = new PageEditor($page);
-            $pageEditor->update([
+            $page->update([
                 'identifier' => 'com.woltlab.wcf.generic' . $page->pageID,
             ]);
         }
@@ -89,6 +88,10 @@ class PageImporter extends AbstractImporter
                 'customURL' => $contentData['customURL'],
                 'hasEmbeddedObjects' => $contentData['hasEmbeddedObjects'],
             ]);
+
+            if ($page->pageType == 'tpl') {
+                $page->updateTemplate($languageID ?: null, $contentData['content']);
+            }
         }
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.page', $oldID, $page->pageID);

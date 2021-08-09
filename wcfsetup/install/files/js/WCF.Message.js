@@ -335,6 +335,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				console.debug("[WCF.Message.Preview] Unable to access Redactor instance of '" + this._messageFieldID + "'");
 				return;
 			}
+
+			if ($message.trim().length === 0) {
+				elInnerError(this._textarea.redactor("core.editor")[0], WCF.Language.get("wcf.global.form.error.empty"));
+				return;
+			}
 			
 			this._proxy.setOption('data', {
 				actionName: 'getMessagePreview',
@@ -1823,15 +1828,6 @@ WCF.Message.Share.Page = Class.extend({
 		require(['WoltLabSuite/Core/Ui/Message/Share'], function(UiMessageShare) {
 			UiMessageShare.init();
 		});
-	}
-});
-
-/**
- * @deprecated 3.0
- */
-WCF.Message.UserMention = Class.extend({
-	init: function() {
-		throw new Error("Support for mentions in Redactor are now enabled by adding the attribute 'data-support-mention=\"true\"' to the textarea element.");
 	}
 });
 

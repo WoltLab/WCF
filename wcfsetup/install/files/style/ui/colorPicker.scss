@@ -148,3 +148,45 @@
 		width: 180px;
 	}
 }
+
+/** updated `WoltLabSuite/Core/Ui/Color/Picker` version since 5.5 */
+
+.colorPickerColorNew,
+.colorPickerColorOld,
+.colorPickerButton {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
+	border: 1px solid rgba(0, 0, 0, 1);
+	box-sizing: content-box;
+	display: block;
+
+	> span {
+		display: block;
+	}
+}
+
+.colorPickerButton {
+	height: 32px;
+	width: 50px;
+
+	> span {
+		height: 32px;
+	}
+}
+
+.colorPickerComparison {
+	text-align: center;
+
+	.colorPickerColorNew,
+	.colorPickerColorOld {
+		height: 72px;
+
+		> span {
+			height: 72px;
+		}
+	}
+
+	.colorPickerColorOld {
+		background-position: 8px 0;
+		border-top-width: 0;
+	}
+}

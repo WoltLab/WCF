@@ -71,10 +71,19 @@
 
 .embeddedContentDescription {
 	color: $wcfContentDimmedText;
-	display: -webkit-box;
+	max-height: calc(5 * #{$wcfFontLineHeight}em);
 	overflow: hidden;
-	-webkit-line-clamp: 4;
-	-webkit-box-orient: vertical;
+	position: relative;
+
+	&::after {
+		background-image: linear-gradient(to top, rgba(250, 250, 250, 1), rgba(250, 250, 250, 0));
+		content: "";
+		left: 0;
+		height: #{$wcfFontLineHeight}em;
+		position: absolute;
+		right: 0;
+		top: calc(4 * #{$wcfFontLineHeight}em);
+	}
 }
 
 .embeddedContentMeta {

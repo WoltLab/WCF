@@ -2,13 +2,12 @@
 
 namespace wcf\data\blacklist\status;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\DatabaseObject;
-use wcf\system\exception\HTTPNotFoundException;
-use wcf\system\exception\HTTPServerErrorException;
-use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
-use wcf\util\exception\HTTPException;
-use wcf\util\HTTPRequest;
+use wcf\system\io\HttpFactory;
 use wcf\util\JSON;
 
 /**
@@ -88,60 +87,63 @@ class BlacklistStatus extends DatabaseObject
      * @return string|null
      * @throws SystemException
      */
-    public static function getNextDelta(array $status)
+    public static function getNextDelta(array $status, ?ClientInterface $client = null)
     {
-        // Fetch the index file to determine the oldest possible value that can be retrieved.
-        $request = new HTTPRequest('https://assets.woltlab.com/blacklist/index.json');
-        try {
-            $request->execute();
-        } catch (SystemException $e) {
-            if (
-                $e instanceof HTTPNotFoundException
-                || $e instanceof HTTPUnauthorizedException
-                || $e instanceof HTTPServerErrorException
-                || $e instanceof HTTPException
-            ) {
-                \wcf\functions\exception\logThrowable($e);
-
-                return null;
-            }
-
-            throw $e;
+        if (!$client) {
+            $client = HttpFactory::makeClientWithTimeout(5);
         }
 
-        $response = $request->getReply();
-        if ($response['statusCode'] == 200) {
-            $data = JSON::decode($response['body']);
-            if (\is_array($data)) {
-                $deltas = ['delta1', 'delta2', 'delta3', 'delta4'];
+        // Fetch the index file to determine the oldest possible value that can be retrieved.
+        $request = new Request(
+            'GET',
+            'https://assets.woltlab.com/blacklist/index.json',
+            [
+                'accept-encoding' => 'gzip',
+            ]
+        );
 
-                // The array is ordered from "now" to "14 days ago".
-                foreach (\array_reverse($data) as $entry) {
-                    $date = $entry['date'];
-                    if (isset($status[$date])) {
-                        $dateStatus = $status[$date];
-                        if ($dateStatus->isComplete()) {
-                            continue;
-                        }
+        try {
+            $response = $client->send($request);
+        } catch (ClientExceptionInterface $e) {
+            \wcf\functions\exception\logThrowable($e);
 
-                        foreach ($deltas as $delta) {
-                            if ($entry['files'][$delta] && !$dateStatus->{$delta}) {
-                                return "{$date}/{$delta}.json";
-                            }
-                        }
-                    } else {
-                        foreach ($deltas as $delta) {
-                            if ($entry['files'][$delta]) {
-                                return "{$date}/{$delta}.json";
-                            }
-                        }
+            return null;
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            return null;
+        }
+
+        $data = JSON::decode((string)$response->getBody());
+        if (\is_array($data)) {
+            $deltas = ['delta1', 'delta2', 'delta3', 'delta4'];
+
+            // The array is ordered from "now" to "14 days ago".
+            foreach (\array_reverse($data) as $entry) {
+                $date = $entry['date'];
+                if (isset($status[$date])) {
+                    $dateStatus = $status[$date];
+                    if ($dateStatus->isComplete()) {
+                        continue;
                     }
 
-                    // The `full.json` file is not considered for now, because it is very unlikely that none of the
-                    // delta files are available. Also, it's significant larger than the delta updates and we cannot
-                    // reliably predict if we're able to import it at all: slow hosts or max_execution_time almost
-                    // exhausted by other cronjobs.
+                    foreach ($deltas as $delta) {
+                        if ($entry['files'][$delta] && !$dateStatus->{$delta}) {
+                            return "{$date}/{$delta}.json";
+                        }
+                    }
+                } else {
+                    foreach ($deltas as $delta) {
+                        if ($entry['files'][$delta]) {
+                            return "{$date}/{$delta}.json";
+                        }
+                    }
                 }
+
+                // The `full.json` file is not considered for now, because it is very unlikely that none of the
+                // delta files are available. Also, it's significant larger than the delta updates and we cannot
+                // reliably predict if we're able to import it at all: slow hosts or max_execution_time almost
+                // exhausted by other cronjobs.
             }
         }
 

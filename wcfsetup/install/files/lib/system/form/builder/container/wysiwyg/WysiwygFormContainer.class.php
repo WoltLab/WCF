@@ -199,7 +199,7 @@ class WysiwygFormContainer extends FormContainer
     public function attachmentData($objectType = null, $parentObjectID = 0)
     {
         if ($this->attachmentField !== null) {
-            throw new \BadMethodCallException("The attachment form field has already been initialized. Use the atatchment form field directly to manipulate attachment data.");
+            throw new \BadMethodCallException("The attachment form field '{$this->getId()}' has already been initialized. Use the atatchment form field directly to manipulate attachment data.");
         }
 
         if ($objectType === null) {
@@ -211,7 +211,7 @@ class WysiwygFormContainer extends FormContainer
                     $objectType
                 ) === null
             ) {
-                throw new \InvalidArgumentException("Unknown attachment object type '{$objectType}'.");
+                throw new \InvalidArgumentException("Unknown attachment object type '{$objectType}' for container '{$this->getId()}'.");
             }
 
             $this->attachmentData = [
@@ -237,7 +237,7 @@ class WysiwygFormContainer extends FormContainer
     {
         if ($this->isPopulated) {
             throw new \BadMethodCallException(
-                'Enabling and disabling the preview button is only possible before the form has been built.'
+                "Enabling and disabling the preview button is only possible before the form has been built for container '{$this->getId()}'."
             );
         }
 
@@ -256,7 +256,7 @@ class WysiwygFormContainer extends FormContainer
     {
         if ($this->attachmentField === null) {
             throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built."
+                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
             );
         }
 
@@ -296,7 +296,7 @@ class WysiwygFormContainer extends FormContainer
     {
         if ($this->pollContainer === null) {
             throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built."
+                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
             );
         }
 
@@ -313,7 +313,7 @@ class WysiwygFormContainer extends FormContainer
     {
         if ($this->settingsContainer === null) {
             throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built."
+                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
             );
         }
 
@@ -330,7 +330,7 @@ class WysiwygFormContainer extends FormContainer
     {
         if ($this->smiliesContainer === null) {
             throw new \BadMethodCallException(
-                "Smilies form field container can only be requested after the form has been built."
+                "Smilies form field container can only be requested after the form has been built for container '{$this->getId()}'."
             );
         }
 
@@ -347,7 +347,7 @@ class WysiwygFormContainer extends FormContainer
     {
         if ($this->wysiwygField === null) {
             throw new \BadMethodCallException(
-                "Wysiwyg form field can only be requested after the form has been built."
+                "Wysiwyg form field can only be requested after the form has been built for container '{$this->getId()}'."
             );
         }
 
@@ -412,7 +412,9 @@ class WysiwygFormContainer extends FormContainer
                 $messageObjectType
             ) === null
         ) {
-            throw new \InvalidArgumentException("Unknown message object type '{$messageObjectType}'.");
+            throw new \InvalidArgumentException(
+                "Unknown message object type '{$messageObjectType}' for container '{$this->getId()}'."
+            );
         }
 
         if ($this->wysiwygField !== null) {
@@ -448,7 +450,9 @@ class WysiwygFormContainer extends FormContainer
     public function pollObjectType($pollObjectType)
     {
         if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $pollObjectType) === null) {
-            throw new \InvalidArgumentException("Unknown poll object type '{$pollObjectType}'.");
+            throw new \InvalidArgumentException(
+                "Unknown poll object type '{$pollObjectType}' for container '{$this->getId()}'."
+            );
         }
 
         if ($this->pollContainer !== null) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/option.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/option.xsd">
 	<import>
 		<categories>
 			<!-- modules -->
@@ -289,13 +289,6 @@
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-			</option>
-			<!-- deprecated -->
-			<option name="module_system_recaptcha">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<hidden>1</hidden>
 			</option>
 			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
@@ -713,22 +706,12 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<defaultvalue>disable</defaultvalue>
 			</option>
 			<!-- /security.blacklist.stopforumspam -->
-			<!-- security.blacklist.custom -->
-			<option name="blacklist_ip_addresses">
-				<categoryname>security.blacklist.custom</categoryname>
-				<optiontype>textarea</optiontype>
-			</option>
-			<option name="blacklist_user_agents">
-				<categoryname>security.blacklist.custom</categoryname>
-				<optiontype>textarea</optiontype>
-			</option>
-			<!-- /security.blacklist.custom -->
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>captchaSelect</optiontype>
 				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!profile_mail_use_captcha,!search_use_captcha</enableoptions>
+				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!search_use_captcha</enableoptions>
 				<allowemptyvalue>1</allowemptyvalue>
 			</option>
 			<option name="register_use_captcha">
@@ -737,11 +720,6 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="lost_password_use_captcha">
-				<categoryname>security.antispam.captcha</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="profile_mail_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -905,16 +883,15 @@ debugFolder:wcf.acp.option.mail_send_method.debugFolder</selectoptions>
 			<option name="mail_smtp_port">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>25</defaultvalue>
+				<defaultvalue>587</defaultvalue>
 				<minvalue>0</minvalue>
 				<maxvalue>65535</maxvalue>
 			</option>
 			<option name="mail_smtp_starttls">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue>may</defaultvalue>
+				<defaultvalue>encrypt</defaultvalue>
 				<selectoptions>none:wcf.acp.option.mail_smtp_starttls.none
-may:wcf.acp.option.mail_smtp_starttls.may
 encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 			</option>
 			<option name="mail_smtp_user">
@@ -1701,5 +1678,9 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	</import>
 	<delete>
 		<option name="module_master_password"/>
+		<option name="blacklist_ip_addresses"/>
+		<option name="blacklist_user_agents"/>
+		<option name="module_system_recaptcha"/>
+		<option name="profile_mail_use_captcha"/>
 	</delete>
 </data>

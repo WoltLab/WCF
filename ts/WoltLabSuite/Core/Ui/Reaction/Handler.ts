@@ -43,7 +43,7 @@ interface ElementData {
 
 interface AjaxResponse {
   returnValues: {
-    objectID: number;
+    objectID: number | string;
     objectType: string;
     reactions: ReactionStats;
     reactionTypeID: number;
@@ -482,9 +482,10 @@ class UiReactionHandler {
   }
 
   _ajaxSuccess(data: AjaxResponse): void {
-    this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
+    const objectId = ~data.returnValues.objectID;
+    this.countButtons.updateCountButtons(objectId, data.returnValues.reactions);
 
-    this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
+    this._updateReactButton(objectId, data.returnValues.reactionTypeID);
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {

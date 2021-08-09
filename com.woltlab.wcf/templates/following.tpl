@@ -2,13 +2,11 @@
 
 {capture assign='contentTitleBadge'}<span class="badge">{#$items}</span>{/capture}
 
-{include file='header' __sidebarLeftHasMenu=true}
+{capture assign='contentInteractionPagination'}
+	{pages print=true assign=pagesLinks controller='Following' link="pageNo=%d"}
+{/capture}
 
-{hascontent}
-	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller='Following' link="pageNo=%d"}{/content}
-	</div>
-{/hascontent}
+{include file='header' __sidebarLeftHasMenu=true}
 
 {if $objects|count}
 	<div class="section sectionContainerList">
