@@ -101,16 +101,14 @@
 						'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
 						'WoltLabSuite/Core/Controller/Clipboard',
 					], (
-						{literal}
-							Language,
-							AcpUiUserList,
-							AcpUserContentRemoveHandler,
-							{ Delete },
-							{ DisableAction },
-							{ SendNewPasswordAction },
-							{ ToggleConfirmEmailAction },
-							Clipboard
-						{/literal}
+						Language,
+						AcpUiUserList,
+						AcpUserContentRemoveHandler,
+						{ Delete },
+						{ DisableAction },
+						{ SendNewPasswordAction },
+						{ ToggleConfirmEmailAction },
+						Clipboard
 					) => {
 							Language.addObject({
 								'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
