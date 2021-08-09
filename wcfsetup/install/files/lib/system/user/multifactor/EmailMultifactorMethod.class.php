@@ -84,7 +84,11 @@ final class EmailMultifactorMethod implements IMultifactorMethod
     public function processManagementForm(IFormDocument $form, Setup $setup): void
     {
         $formData = $form->getData();
-        \assert($formData['action'] === 'enable');
+
+        \assert(
+            !empty($formData['action'])
+            && $formData['action'] === 'enable'
+        );
     }
 
     /**
