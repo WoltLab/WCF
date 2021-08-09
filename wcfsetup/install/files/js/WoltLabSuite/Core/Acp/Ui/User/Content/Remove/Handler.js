@@ -17,9 +17,10 @@ define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax",
         /**
          * Initializes the content remove handler.
          */
-        constructor(element, userId) {
+        constructor(element, userId, callbackSuccess) {
             this.userId = userId;
             this.dialogId = `userRemoveContentHandler-${this.userId}`;
+            this.callbackSuccess = callbackSuccess;
             element.addEventListener("click", (ev) => this.click(ev));
         }
         /**
@@ -43,6 +44,7 @@ define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax",
                     userID: this.userId,
                     contentProvider: objectTypes,
                 },
+                callbackSuccess: this.callbackSuccess,
             });
         }
         /**
