@@ -136,9 +136,7 @@ export class BanDialog {
   </dl>
 </div>
 <div class="formSubmit dialogFormSubmit">
-  <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get(
-    "wcf.global.button.submit",
-  )}</button>
+  <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
 </div>`,
     };
   }
