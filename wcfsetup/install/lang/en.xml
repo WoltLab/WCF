@@ -4994,6 +4994,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The entered code is invalid.]]></item>
+		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Enabling this method failed. Please try again.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
 <p><br></p>
 <p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
