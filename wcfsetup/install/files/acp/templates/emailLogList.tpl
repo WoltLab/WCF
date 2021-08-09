@@ -4,7 +4,7 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.email.log{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
-	
+
 	{hascontent}
 		<nav class="contentHeaderNavigation">
 			<ul>
@@ -19,7 +19,7 @@
 <form method="post" action="{link controller='EmailLogList'}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
-		
+
 		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
@@ -39,7 +39,7 @@
 					</script>
 				</dd>
 			</dl>
-			
+
 			{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 				<dl class="col-xs-12 col-md-4">
 					<dt></dt>
@@ -69,7 +69,7 @@
 				</dd>
 			</dl>
 		</div>
-		
+
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		</div>
@@ -93,12 +93,12 @@
 					<th class="columnTitle columnSubject{if $sortField == 'subject'} active {@$sortOrder}{/if}">{lang}wcf.acp.email.log.subject{/lang}</th>
 					<th class="columnText columnRecipient{if $sortField == 'recipient'} active {@$sortOrder}{/if}">{lang}wcf.user.email{/lang}</th>
 					<th class="columnDate columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&{@$filterParameter}{/link}">{lang}wcf.acp.email.log.time{/lang}</a></th>
-					<th class="columnText columnStatusMessage{if $sortField == 'status'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=status&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&{@$filterParameter}{/link}">{lang}wcf.acp.email.log.status{/lang}</a></th>
-					
+					<th class="columnText columnStatusMessage{if $sortField == 'status'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=status&sortOrder={if $sortField == 'status' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&{@$filterParameter}{/link}">{lang}wcf.acp.email.log.status{/lang}</a></th>
+
 					{event name='columnHeads'}
 				</tr>
 			</thead>
-			
+
 			<tbody>
 				{foreach from=$objects item=entry}
 					<tr class="jsEmailLogEntry">
@@ -123,7 +123,7 @@
 							{/if}
 						</td>
 						<td class="columnDate columnTime">{@$entry->time|time}</td>
-						
+
 						<td class="columnText columnStatusMessage">
 							<span class="
 								badge
@@ -139,21 +139,21 @@
 								</div>
 							{/if}
 						</td>
-						
+
 						{event name='columns'}
 					</tr>
 				{/foreach}
 			</tbody>
 		</table>
 	</div>
-	
+
 	<footer class="contentFooter">
 		{hascontent}
 			<div class="paginationBottom">
 				{content}{@$pagesLinks}{/content}
 			</div>
 		{/hascontent}
-		
+
 		{hascontent}
 			<nav class="contentFooterNavigation">
 				<ul>
