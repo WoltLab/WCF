@@ -2,9 +2,9 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -74,11 +74,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction
 
         $this->executed();
 
-        // send JSON-encoded response
-        \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode($this->data);
-
-        exit;
+        return new JsonResponse($this->data);
     }
 
     /**
