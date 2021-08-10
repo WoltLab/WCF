@@ -1551,7 +1551,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		},
 		
 		/**
-		 * Marks quote ids for removal.
+		 * @deprecated 5.5 This method is no longer used since 3.0.
 		 */
 		markQuotesForRemoval: function () {
 			if (this._removeOnSubmit.length) {
