@@ -162,7 +162,7 @@ class MessageQuoteAction extends AJAXProxyAction
     }
 
     /**
-     * Marks quotes for removal.
+     * @deprecated 5.5 This method is no longer used since 3.0.
      */
     protected function markForRemoval()
     {

@@ -41,7 +41,7 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
         $data = [];
         $results = ACPSearchHandler::getInstance()->search(
             $this->parameters['data']['searchString'],
-            10,
+            20,
             (!empty($this->parameters['data']['providerName']) ? $this->parameters['data']['providerName'] : '')
         );
 

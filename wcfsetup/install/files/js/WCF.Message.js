@@ -335,6 +335,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				console.debug("[WCF.Message.Preview] Unable to access Redactor instance of '" + this._messageFieldID + "'");
 				return;
 			}
+
+			if ($message.trim().length === 0) {
+				elInnerError(this._textarea.redactor("core.editor")[0], WCF.Language.get("wcf.global.form.error.empty"));
+				return;
+			}
 			
 			this._proxy.setOption('data', {
 				actionName: 'getMessagePreview',
@@ -1546,7 +1551,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		},
 		
 		/**
-		 * Marks quote ids for removal.
+		 * @deprecated 5.5 This method is no longer used since 3.0.
 		 */
 		markQuotesForRemoval: function () {
 			if (this._removeOnSubmit.length) {

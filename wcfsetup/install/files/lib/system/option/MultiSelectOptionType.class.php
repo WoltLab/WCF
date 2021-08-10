@@ -103,16 +103,23 @@ class MultiSelectOptionType extends SelectOptionType
         }
         $value = ArrayUtil::trim($value, false);
 
-        $value = \array_map(static function ($value) {
-            return escapeString(\preg_quote($value));
-        }, $value);
-
-        $conditions->add(
-            "option_value.userOption" . $option->optionID . " REGEXP '" . '(^|\n)' . \implode(
-                '\n([^\n]*\n)*',
-                $value
-            ) . '($|\n)' . "'"
-        );
+        foreach ($value as $entry) {
+            $escapedEntry = \addcslashes($entry, '%_');
+            $conditions->add(
+                "(
+                    option_value.userOption" . $option->optionID . " LIKE ?
+                    OR option_value.userOption" . $option->optionID . " LIKE ?
+                    OR option_value.userOption" . $option->optionID . " LIKE ?
+                    OR option_value.userOption" . $option->optionID . " = ?
+                )",
+                [
+                    "%\n{$escapedEntry}\n%",
+                    "%\n{$escapedEntry}",
+                    "{$escapedEntry}\n%",
+                    $entry,
+                ]
+            );
+        }
 
         return true;
     }
@@ -127,16 +134,23 @@ class MultiSelectOptionType extends SelectOptionType
         }
         $value = ArrayUtil::trim($value, false);
 
-        $value = \array_map(static function ($value) {
-            return escapeString(\preg_quote($value));
-        }, $value);
-
-        $userList->getConditionBuilder()->add(
-            "user_option_value.userOption" . $option->optionID . " REGEXP '" . '(^|\n)' . \implode(
-                '\n([^\n]*\n)*',
-                $value
-            ) . '($|\n)' . "'"
-        );
+        foreach ($value as $entry) {
+            $escapedEntry = \addcslashes($entry, '%_');
+            $userList->getConditionBuilder()->add(
+                "(
+                    user_option_value.userOption" . $option->optionID . " LIKE ?
+                    OR user_option_value.userOption" . $option->optionID . " LIKE ?
+                    OR user_option_value.userOption" . $option->optionID . " LIKE ?
+                    OR user_option_value.userOption" . $option->optionID . " = ?
+                )",
+                [
+                    "%\n{$escapedEntry}\n%",
+                    "%\n{$escapedEntry}",
+                    "{$escapedEntry}\n%",
+                    $entry,
+                ]
+            );
+        }
     }
 
     /**

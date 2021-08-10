@@ -34,9 +34,7 @@ class LogoutAction extends AbstractSecureAction
         $this->executed();
 
         return new RedirectResponse(
-            LinkHandler::getInstance()->getLink(null, [
-                'forceFrontend' => true,
-            ])
+            LinkHandler::getInstance()->getLink()
         );
     }
 }
