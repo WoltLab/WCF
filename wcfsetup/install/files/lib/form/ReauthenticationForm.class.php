@@ -112,6 +112,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
      * Returns a response redirecting to the redirectUrl.
      *
      * @see ReauthenticationForm::$redirectUrl
+     * @since 5.5
      */
     protected function getRedirectResponse(): ResponseInterface
     {

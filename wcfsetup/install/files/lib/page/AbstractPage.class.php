@@ -108,6 +108,7 @@ abstract class AbstractPage implements IPage
 
     /**
      * @var ?ResponseInterface
+     * @since 5.5
      */
     private $psr7Response;
 
@@ -444,6 +445,7 @@ abstract class AbstractPage implements IPage
      * Calls setResponse() if the parameter implements the ResponseInterface.
      *
      * @see AbstractPage::setPsr7Response()
+     * @since 5.5
      */
     final protected function maybeSetPsr7Response($response): void
     {
@@ -456,6 +458,8 @@ abstract class AbstractPage implements IPage
      * Sets the PSR-7 response to return. Processing will be aborted after
      * readParameters(), readData() or show() if the response is non-null
      * and the response will be returned to the RequestHandler.
+     *
+     * @since 5.5
      */
     final protected function setPsr7Response(?ResponseInterface $response): void
     {
@@ -466,6 +470,7 @@ abstract class AbstractPage implements IPage
      * Returns the current response as set using setResponse().
      *
      * @see AbstractPage::setPsr7Response()
+     * @since 5.5
      */
     final protected function getPsr7Response(): ?ResponseInterface
     {
@@ -477,6 +482,7 @@ abstract class AbstractPage implements IPage
      *
      * @see AbstractPage::getPsr7Response()
      * @see AbstractPage::setPsr7Response()
+     * @since 5.5
      */
     final protected function hasPsr7Response(): bool
     {
