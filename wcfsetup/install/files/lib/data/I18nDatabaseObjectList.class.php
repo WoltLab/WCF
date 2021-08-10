@@ -39,7 +39,7 @@ abstract class I18nDatabaseObjectList extends DatabaseObjectList
         parent::__construct();
 
         if ($languageID === null) {
-            $languageID = WCF::getUser()->languageID;
+            $languageID = WCF::getLanguage()->languageID;
         }
 
         if (!empty($this->i18nFields)) {
