@@ -96,14 +96,95 @@ class RequestHandler extends SingletonFactory
             $result = $this->getActiveRequest()->execute();
 
             if ($result instanceof ResponseInterface) {
-                $emitter = new SapiEmitter();
-                $emitter->emit($result);
+                $this->sendPsr7Response($result);
             }
         } catch (NamedUserException $e) {
             $e->show();
 
             exit;
         }
+    }
+
+    /**
+     * Splits the given array of cache-control values at commas, while properly
+     * taking into account that each value might itself contain commas within a
+     * quoted string.
+     */
+    private function splitCacheControl(array $values): \Iterator
+    {
+        foreach ($values as $value) {
+            $isQuoted = false;
+            $result = '';
+
+            for ($i = 0, $len = \strlen($value); $i < $len; $i++) {
+                $char = $value[$i];
+                if (!$isQuoted && $char === ',') {
+                    yield \trim($result);
+
+                    $isQuoted = false;
+                    $result = '';
+
+                    continue;
+                }
+
+                if ($isQuoted && $char === '\\') {
+                    $result .= $char;
+                    $i++;
+
+                    if ($i < $len) {
+                        $result .= $value[$i];
+
+                        continue;
+                    }
+                }
+
+                if ($char === '"') {
+                    $isQuoted = !$isQuoted;
+                }
+
+                $result .= $char;
+            }
+
+            if ($result !== '') {
+                yield \trim($result);
+            }
+        }
+    }
+
+    /**
+     * @since 5.5
+     */
+    private function sendPsr7Response(ResponseInterface $response)
+    {
+        // Storing responses in a shared cache is unsafe, because they all contain session specific information.
+        // Add the 'private' value to the cache-control header and remove any 'public' value.
+        $cacheControl = [];
+        foreach ($this->splitCacheControl($response->getHeader('cache-control')) as $value) {
+            [$field] = \explode('=', $value, 2);
+
+            // Prevent duplication of the 'private' field.
+            if ($field === 'private') {
+                continue;
+            }
+
+            // Drop the 'public' field.
+            if ($field === 'public') {
+                continue;
+            }
+
+            $cacheControl[] = $value;
+        }
+        $cacheControl[] = 'private';
+
+        $response = $response->withHeader(
+            'cache-control',
+            // Manually imploding the fields is not required as per strict reading of the HTTP standard,
+            // but having duplicate 'cache-control' headers in the response certainly looks odd.
+            \implode(', ', $cacheControl)
+        );
+
+        $emitter = new SapiEmitter();
+        $emitter->emit($response);
     }
 
     /**
