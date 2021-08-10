@@ -5,7 +5,7 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.3</version>
+		<version>5.4.4</version>
 		<date>2021-08-11</date>
 	</packageinformation>
 	
@@ -149,5 +149,9 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_resetAvatarCache.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="5.4.3">
+		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>
