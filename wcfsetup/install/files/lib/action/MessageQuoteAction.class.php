@@ -2,12 +2,13 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\message\quote\MessageQuoteManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -131,12 +132,10 @@ class MessageQuoteAction extends AJAXProxyAction
         WCF::getSession()->disableUpdate();
 
         if ($returnValues !== null) {
-            // send JSON-encoded response
-            \header('Content-type: application/json; charset=UTF-8');
-            echo JSON::encode($returnValues);
+            return new JsonResponse($returnValues);
+        } else {
+            return new EmptyResponse(200);
         }
-
-        exit;
     }
 
     /**
