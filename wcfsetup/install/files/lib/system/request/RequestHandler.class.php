@@ -2,6 +2,8 @@
 
 namespace wcf\system\request;
 
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Psr\Http\Message\ResponseInterface;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
@@ -91,7 +93,12 @@ class RequestHandler extends SingletonFactory
             $this->checkOfflineMode();
 
             // start request
-            $this->getActiveRequest()->execute();
+            $result = $this->getActiveRequest()->execute();
+
+            if ($result instanceof ResponseInterface) {
+                $emitter = new SapiEmitter();
+                $emitter->emit($result);
+            }
         } catch (NamedUserException $e) {
             $e->show();
 

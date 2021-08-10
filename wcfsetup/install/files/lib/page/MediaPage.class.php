@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use Laminas\Diactoros\Response\EmptyResponse;
 use wcf\data\media\Media;
 use wcf\data\media\MediaEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -154,9 +155,7 @@ class MediaPage extends AbstractPage
 
         // etag caching
         if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"' . $this->eTag . '"') {
-            @\header('HTTP/1.1 304 Not Modified');
-
-            exit;
+            return new EmptyResponse(304);
         }
 
         if (!$this->thumbnail) {

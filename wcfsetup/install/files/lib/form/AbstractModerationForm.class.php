@@ -114,6 +114,9 @@ abstract class AbstractModerationForm extends AbstractForm
     public function readData()
     {
         parent::readData();
+        if ($this->getPsr7Response()) {
+            return;
+        }
 
         if (empty($_POST)) {
             $this->assignedUserID = $this->queue->assignedUserID;
