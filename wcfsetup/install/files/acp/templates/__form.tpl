@@ -49,7 +49,9 @@
 	{if !$form->getButtons()|empty}
 		<div class="formSubmit">
 			{foreach from=$form->getButtons() item=button}
-				{@$button->getHtml()}
+				{if $button->isAvailable()}
+					{@$button->getHtml()}
+				{/if}
 			{/foreach}
 		</div>
 	{/if}
