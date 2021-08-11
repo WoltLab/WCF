@@ -4,6 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
+use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -346,7 +347,16 @@ class StyleEditForm extends StyleAddForm
         }
 
         // save description
-        I18nHandler::getInstance()->save('styleDescription', $this->style->styleDescription, 'wcf.style');
+        I18nHandler::getInstance()->save(
+            'styleDescription',
+            'wcf.style.styleDescription' . $this->style->styleID,
+            'wcf.style'
+        );
+
+        $styleEditor = new StyleEditor($this->style);
+        $styleEditor->update([
+            'styleDescription' => 'wcf.style.styleDescription' . $this->style->styleID,
+        ]);
 
         // call saved event
         $this->saved();
