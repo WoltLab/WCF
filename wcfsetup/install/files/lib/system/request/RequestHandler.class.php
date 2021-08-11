@@ -158,7 +158,9 @@ class RequestHandler extends SingletonFactory
     {
         // Storing responses in a shared cache is unsafe, because they all contain session specific information.
         // Add the 'private' value to the cache-control header and remove any 'public' value.
-        $cacheControl = [];
+        $cacheControl = [
+            'private',
+        ];
         foreach ($this->splitCacheControl($response->getHeader('cache-control')) as $value) {
             [$field] = \explode('=', $value, 2);
 
@@ -174,7 +176,6 @@ class RequestHandler extends SingletonFactory
 
             $cacheControl[] = $value;
         }
-        $cacheControl[] = 'private';
 
         $response = $response->withHeader(
             'cache-control',
