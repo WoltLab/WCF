@@ -14,9 +14,11 @@
 				<input type="text" id="usernameInput" name="username" value="{$username}" class="medium">
 				{if $errorField == 'username'}
 					<small class="innerError">
-						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'notFound'}{lang}wcf.user.username.error.notFound{/lang}{/if}
-						{if $errorType == '3rdParty'}{lang}wcf.user.username.error.3rdParty{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.username.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
@@ -30,8 +32,13 @@
 				<input type="email" id="emailInput" name="email" value="{$email}" class="medium">
 				{if $errorField == 'email'}
 					<small class="innerError">
-						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'notFound'}{lang}wcf.user.lostPassword.email.error.notFound{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{elseif $errorType == 'notFound'}
+							{lang}wcf.user.lostPassword.email.error.notFound{/lang}
+						{else}
+							{lang}wcf.user.email.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>

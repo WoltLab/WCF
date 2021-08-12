@@ -12,7 +12,11 @@
 				<input type="text" id="username" name="username" value="{$username}" required class="medium">
 				{if $errorField == 'username'}
 					<small class="innerError">
-						{if $errorType == 'notFound'}{lang}wcf.user.username.error.notFound{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.username.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
@@ -24,7 +28,11 @@
 				<input type="text" id="activationCode" maxlength="9" name="activationCode" value="{@$activationCode}" required class="medium">
 				{if $errorField == 'activationCode'}
 					<small class="innerError">
-						{if $errorType == 'invalid'}{lang}wcf.user.activationCode.error.invalid{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.activationCode.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 				<small><a href="{link controller='RegisterNewActivationCode'}{/link}">{lang}wcf.user.newActivationCode{/lang}</a></small>
