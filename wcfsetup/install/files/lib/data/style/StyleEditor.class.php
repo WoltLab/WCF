@@ -670,6 +670,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!$skipFontDownload) {
 			// download google fonts
 			$fontManager = FontManager::getInstance();
+			$style->loadVariables();
 			$family = $style->getVariable('wcfFontFamilyGoogle');
 			try {
 				$fontManager->downloadFamily($family);
