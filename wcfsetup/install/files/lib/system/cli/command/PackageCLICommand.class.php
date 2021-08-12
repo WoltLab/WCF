@@ -2,6 +2,8 @@
 
 namespace wcf\system\cli\command;
 
+use Laminas\ProgressBar\Adapter\Console as ConsoleProgressBar;
+use Laminas\ProgressBar\ProgressBar;
 use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -20,8 +22,6 @@ use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
-use Zend\ProgressBar\Adapter\Console as ConsoleProgressBar;
-use Zend\ProgressBar\ProgressBar;
 
 /**
  * Executes package installation.

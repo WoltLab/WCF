@@ -2,6 +2,8 @@
 
 namespace wcf\system\cli\command;
 
+use Laminas\ProgressBar\Adapter\Console as ConsoleProgressBar;
+use Laminas\ProgressBar\ProgressBar;
 use phpline\internal\Log;
 use wcf\system\CLIWCF;
 use wcf\system\io\File;
@@ -13,8 +15,6 @@ use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
-use Zend\ProgressBar\Adapter\Console as ConsoleProgressBar;
-use Zend\ProgressBar\ProgressBar;
 
 /**
  * Executes cronjobs.
