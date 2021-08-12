@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\page\PageCache;
 use wcf\form\DisclaimerForm;
 use wcf\form\EmailActivationForm;
@@ -106,6 +107,12 @@ abstract class AbstractPage implements IPage
     public $useTemplate = true;
 
     /**
+     * @var ?ResponseInterface
+     * @since 5.5
+     */
+    private $psr7Response;
+
+    /**
      * @inheritDoc
      */
     final public function __construct()
@@ -117,9 +124,19 @@ abstract class AbstractPage implements IPage
      */
     public function __run()
     {
-        // call default methods
-        $this->readParameters();
-        $this->show();
+        $this->maybeSetPsr7Response(
+            $this->readParameters()
+        );
+        if ($this->hasPsr7Response()) {
+            return $this->getPsr7Response();
+        }
+
+        $this->maybeSetPsr7Response(
+            $this->show()
+        );
+        if ($this->hasPsr7Response()) {
+            return $this->getPsr7Response();
+        }
     }
 
     /**
@@ -326,22 +343,24 @@ abstract class AbstractPage implements IPage
             }
         }
 
-        // sets the active menu item
         $this->setActiveMenuItem();
 
-        // check modules
         $this->checkModules();
 
-        // check permission
         $this->checkPermissions();
 
-        // read data
-        $this->readData();
+        $this->maybeSetPsr7Response(
+            $this->readData()
+        );
 
-        // assign variables
+        // readData() calls submit() in AbstractForm. It might be desirable to be able
+        // to return redirect responses after successfully submitting a form.
+        if ($this->hasPsr7Response()) {
+            return;
+        }
+
         $this->assignVariables();
 
-        // call show event
         EventHandler::getInstance()->fireAction($this, 'show');
 
         // try to guess template name
@@ -420,5 +439,53 @@ abstract class AbstractPage implements IPage
         );
 
         exit;
+    }
+
+    /**
+     * Calls setResponse() if the parameter implements the ResponseInterface.
+     *
+     * @see AbstractPage::setPsr7Response()
+     * @since 5.5
+     */
+    final protected function maybeSetPsr7Response($response): void
+    {
+        if ($response instanceof ResponseInterface) {
+            $this->setPsr7Response($response);
+        }
+    }
+
+    /**
+     * Sets the PSR-7 response to return. Processing will be aborted after
+     * readParameters(), readData() or show() if the response is non-null
+     * and the response will be returned to the RequestHandler.
+     *
+     * @since 5.5
+     */
+    final protected function setPsr7Response(?ResponseInterface $response): void
+    {
+        $this->psr7Response = $response;
+    }
+
+    /**
+     * Returns the current response as set using setResponse().
+     *
+     * @see AbstractPage::setPsr7Response()
+     * @since 5.5
+     */
+    final protected function getPsr7Response(): ?ResponseInterface
+    {
+        return $this->psr7Response;
+    }
+
+    /**
+     * Returns whether the current response is non-null.
+     *
+     * @see AbstractPage::getPsr7Response()
+     * @see AbstractPage::setPsr7Response()
+     * @since 5.5
+     */
+    final protected function hasPsr7Response(): bool
+    {
+        return $this->psr7Response !== null;
     }
 }

@@ -6,6 +6,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
@@ -15,7 +16,6 @@ use wcf\system\WCF;
 use wcf\util\CryptoUtil;
 use wcf\util\exception\CryptoException;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\Url;
 
@@ -202,9 +202,7 @@ class ImageProxyAction extends AbstractAction
 
             $this->executed();
 
-            HeaderUtil::redirect(WCF::getPath() . $path, true, false);
-
-            exit;
+            return new RedirectResponse(WCF::getPath() . $path, 301);
         } catch (SystemException $e) {
             \wcf\functions\exception\logThrowable($e);
             throw new IllegalLinkException();

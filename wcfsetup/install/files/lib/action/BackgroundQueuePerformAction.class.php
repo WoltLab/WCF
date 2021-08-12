@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\WCF;
 
@@ -29,16 +30,17 @@ class BackgroundQueuePerformAction extends AbstractAction
     {
         parent::execute();
 
-        \header('Content-type: application/json; charset=UTF-8');
         for ($i = 0; $i < self::$jobsPerRun; $i++) {
             if (BackgroundQueueHandler::getInstance()->performNextJob() === false) {
                 // there were no more jobs
                 break;
             }
         }
-        echo BackgroundQueueHandler::getInstance()->getRunnableCount();
+
         WCF::getSession()->deleteIfNew();
 
-        exit;
+        return new JsonResponse(
+            BackgroundQueueHandler::getInstance()->getRunnableCount()
+        );
     }
 }

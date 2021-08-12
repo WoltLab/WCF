@@ -2,6 +2,8 @@
 
 namespace wcf\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -52,7 +54,7 @@ class ReauthenticationForm extends AbstractFormBuilderForm
         }
 
         if (!WCF::getSession()->needsReauthentication()) {
-            $this->performRedirect();
+            return $this->getRedirectResponse();
         }
     }
 
@@ -93,17 +95,28 @@ class ReauthenticationForm extends AbstractFormBuilderForm
     {
         AbstractForm::saved();
 
-        $this->performRedirect();
+        $this->setPsr7Response($this->getRedirectResponse());
     }
 
     /**
-     * Returns to the redirectUrl.
+     * @deprecated 5.5 Use `getRedirectResponse()` and the PSR-7 layer instead.
      */
     protected function performRedirect()
     {
         HeaderUtil::redirect($this->redirectUrl);
 
         exit;
+    }
+
+    /**
+     * Returns a response redirecting to the redirectUrl.
+     *
+     * @see ReauthenticationForm::$redirectUrl
+     * @since 5.5
+     */
+    protected function getRedirectResponse(): ResponseInterface
+    {
+        return new RedirectResponse($this->redirectUrl);
     }
 
     /**

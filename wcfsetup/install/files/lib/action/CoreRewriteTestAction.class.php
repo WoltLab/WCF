@@ -2,8 +2,8 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\exception\IllegalLinkException;
-use wcf\util\JSON;
 
 /**
  * Internal action used to run a test for url rewriting.
@@ -39,10 +39,14 @@ class CoreRewriteTestAction extends AbstractAction
     {
         parent::execute();
 
-        \header('Access-Control-Allow-Origin: *');
-        \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode(['core_rewrite_test' => 'passed']);
-
-        exit;
+        return new JsonResponse(
+            [
+                'core_rewrite_test' => 'passed',
+            ],
+            200,
+            [
+                'access-control-allow-origin' => '*',
+            ]
+        );
     }
 }

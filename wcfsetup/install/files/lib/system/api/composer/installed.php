@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
@@ -71,6 +71,33 @@
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
             'reference' => '1dc8d9cba3897165e16d12bb13d813afb1eb3fe7',
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-diactoros' => array(
+            'pretty_version' => '2.4.1',
+            'version' => '2.4.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
+            'aliases' => array(),
+            'reference' => '36ef09b73e884135d2059cc498c938e90821bb57',
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-httphandlerrunner' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-httphandlerrunner',
+            'aliases' => array(),
+            'reference' => 'e1a5dad040e0043135e8095ee27d1fbf6fb640e1',
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-zendframework-bridge' => array(
+            'pretty_version' => '1.1.1',
+            'version' => '1.1.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-zendframework-bridge',
+            'aliases' => array(),
+            'reference' => '6ede70583e101030bcace4dcddd648f760ddf642',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
@@ -154,6 +181,15 @@
                 0 => '1.0',
             ),
         ),
+        'psr/http-server-handler' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-server-handler',
+            'aliases' => array(),
+            'reference' => 'aff2f80e33b7f026ec96bb42f63242dc50ffcae7',
+            'dev_requirement' => false,
+        ),
         'ralouphie/getallheaders' => array(
             'pretty_version' => '3.0.3',
             'version' => '3.0.3.0',
@@ -198,6 +234,18 @@
             'aliases' => array(),
             'reference' => 'a4d0c11a36dd7f4e7cd7096076cab6d3378a071e',
             'dev_requirement' => false,
+        ),
+        'zendframework/zend-diactoros' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '^2.2.1',
+            ),
+        ),
+        'zendframework/zend-httphandlerrunner' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '^1.1.0',
+            ),
         ),
     ),
 );

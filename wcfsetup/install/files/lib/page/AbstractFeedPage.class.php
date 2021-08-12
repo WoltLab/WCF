@@ -87,6 +87,9 @@ abstract class AbstractFeedPage extends AbstractAuthedPage
     public function show()
     {
         parent::show();
+        if ($this->getPsr7Response()) {
+            return;
+        }
 
         // set correct content-type
         @\header('Content-Type: application/rss+xml; charset=UTF-8');

@@ -2,9 +2,9 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\form\NotificationUnsubscribeForm;
 use wcf\system\request\LinkHandler;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -53,12 +53,15 @@ class NotificationDisableAction extends AbstractAction
             $this->token = StringUtil::trim($_REQUEST['token']);
         }
 
-        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(NotificationUnsubscribeForm::class, [
-            'userID' => $this->userID,
-            'eventID' => $this->eventID,
-            'token' => $this->token,
-        ]));
-
-        exit;
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getControllerLink(
+                NotificationUnsubscribeForm::class,
+                [
+                    'userID' => $this->userID,
+                    'eventID' => $this->eventID,
+                    'token' => $this->token,
+                ]
+            )
+        );
     }
 }

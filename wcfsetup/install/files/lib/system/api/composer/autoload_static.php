@@ -7,8 +7,25 @@ namespace Composer\Autoload;
 class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
 {
     public static $files = array (
+        '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '07d7f1a47144818725fd8d91a907ac57' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.php',
+        'da94ac5d3ca7d2dbab84ce561ce72bfd' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.php',
+        '3d97c8dcdfba8cb85d3b34f116bb248b' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.php',
+        'e6f3bc6883e449ab367280b34158c05b' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_protocol_version_from_sapi.php',
+        'd59fbae42019aedf227094ac49a46f50' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_uri_from_sapi.php',
+        'de95e0ac670b27c84ef8c5ac41fc1b34' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.php',
+        'b6c2870932b0250c10334a86dcb33c7f' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.php',
+        'd02cf21124526632320d6f20b1bbf905' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.php',
+        'd919fc9d5ad52cfb7f322f7fe36458ab' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.legacy.php',
+        'e397f74f8af3b1e56166a6e99f216ee7' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.legacy.php',
+        'd154b49fab8e4da34fb553a2d644918c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.legacy.php',
+        '9d3db23ca418094bcf0b641a0c9559ed' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_protocol_version_from_sapi.legacy.php',
+        'b0b88a3b89caae681462c58ff19a7059' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_uri_from_sapi.legacy.php',
+        'cc8e14526dc240491e17a838cb78508c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php',
+        '786bf90caabc9e09b6ad4cc5ca8f0e30' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php',
+        '751a5a3f463e4be759be31748b61737c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
@@ -27,10 +44,17 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         ),
         'P' => 
         array (
+            'Psr\\Http\\Server\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
             'Pelago\\Emogrifier\\' => 18,
             'ParagonIE\\ConstantTime\\' => 23,
+        ),
+        'L' => 
+        array (
+            'Laminas\\ZendFrameworkBridge\\' => 28,
+            'Laminas\\HttpHandlerRunner\\' => 26,
+            'Laminas\\Diactoros\\' => 18,
         ),
         'G' => 
         array (
@@ -57,6 +81,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         array (
             0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
         ),
+        'Psr\\Http\\Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
@@ -73,6 +101,18 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'ParagonIE\\ConstantTime\\' => 
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'Laminas\\ZendFrameworkBridge\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src',
+        ),
+        'Laminas\\HttpHandlerRunner\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src',
+        ),
+        'Laminas\\Diactoros\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-diactoros/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -428,6 +468,66 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'HTMLPurifier_VarParser_Flexible' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier/VarParser/Flexible.php',
         'HTMLPurifier_VarParser_Native' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier/VarParser/Native.php',
         'HTMLPurifier_Zipper' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier/Zipper.php',
+        'Laminas\\Diactoros\\AbstractSerializer' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/AbstractSerializer.php',
+        'Laminas\\Diactoros\\CallbackStream' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/CallbackStream.php',
+        'Laminas\\Diactoros\\ConfigProvider' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/ConfigProvider.php',
+        'Laminas\\Diactoros\\Exception\\DeserializationException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/DeserializationException.php',
+        'Laminas\\Diactoros\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/ExceptionInterface.php',
+        'Laminas\\Diactoros\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/InvalidArgumentException.php',
+        'Laminas\\Diactoros\\Exception\\InvalidStreamPointerPositionException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/InvalidStreamPointerPositionException.php',
+        'Laminas\\Diactoros\\Exception\\SerializationException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/SerializationException.php',
+        'Laminas\\Diactoros\\Exception\\UnreadableStreamException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UnreadableStreamException.php',
+        'Laminas\\Diactoros\\Exception\\UnrecognizedProtocolVersionException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UnrecognizedProtocolVersionException.php',
+        'Laminas\\Diactoros\\Exception\\UnrewindableStreamException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UnrewindableStreamException.php',
+        'Laminas\\Diactoros\\Exception\\UnseekableStreamException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UnseekableStreamException.php',
+        'Laminas\\Diactoros\\Exception\\UntellableStreamException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UntellableStreamException.php',
+        'Laminas\\Diactoros\\Exception\\UnwritableStreamException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UnwritableStreamException.php',
+        'Laminas\\Diactoros\\Exception\\UploadedFileAlreadyMovedException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UploadedFileAlreadyMovedException.php',
+        'Laminas\\Diactoros\\Exception\\UploadedFileErrorException' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Exception/UploadedFileErrorException.php',
+        'Laminas\\Diactoros\\HeaderSecurity' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/HeaderSecurity.php',
+        'Laminas\\Diactoros\\MessageTrait' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/MessageTrait.php',
+        'Laminas\\Diactoros\\Module' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Module.php',
+        'Laminas\\Diactoros\\PhpInputStream' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/PhpInputStream.php',
+        'Laminas\\Diactoros\\RelativeStream' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/RelativeStream.php',
+        'Laminas\\Diactoros\\Request' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Request.php',
+        'Laminas\\Diactoros\\RequestFactory' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/RequestFactory.php',
+        'Laminas\\Diactoros\\RequestTrait' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/RequestTrait.php',
+        'Laminas\\Diactoros\\Request\\ArraySerializer' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Request/ArraySerializer.php',
+        'Laminas\\Diactoros\\Request\\Serializer' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Request/Serializer.php',
+        'Laminas\\Diactoros\\Response' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response.php',
+        'Laminas\\Diactoros\\ResponseFactory' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/ResponseFactory.php',
+        'Laminas\\Diactoros\\Response\\ArraySerializer' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/ArraySerializer.php',
+        'Laminas\\Diactoros\\Response\\EmptyResponse' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/EmptyResponse.php',
+        'Laminas\\Diactoros\\Response\\HtmlResponse' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/HtmlResponse.php',
+        'Laminas\\Diactoros\\Response\\InjectContentTypeTrait' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/InjectContentTypeTrait.php',
+        'Laminas\\Diactoros\\Response\\JsonResponse' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/JsonResponse.php',
+        'Laminas\\Diactoros\\Response\\RedirectResponse' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/RedirectResponse.php',
+        'Laminas\\Diactoros\\Response\\Serializer' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/Serializer.php',
+        'Laminas\\Diactoros\\Response\\TextResponse' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/TextResponse.php',
+        'Laminas\\Diactoros\\Response\\XmlResponse' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Response/XmlResponse.php',
+        'Laminas\\Diactoros\\ServerRequest' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/ServerRequest.php',
+        'Laminas\\Diactoros\\ServerRequestFactory' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/ServerRequestFactory.php',
+        'Laminas\\Diactoros\\Stream' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Stream.php',
+        'Laminas\\Diactoros\\StreamFactory' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/StreamFactory.php',
+        'Laminas\\Diactoros\\UploadedFile' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/UploadedFile.php',
+        'Laminas\\Diactoros\\UploadedFileFactory' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/UploadedFileFactory.php',
+        'Laminas\\Diactoros\\Uri' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/Uri.php',
+        'Laminas\\Diactoros\\UriFactory' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/UriFactory.php',
+        'Laminas\\HttpHandlerRunner\\ConfigProvider' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/ConfigProvider.php',
+        'Laminas\\HttpHandlerRunner\\Emitter\\EmitterInterface' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Emitter/EmitterInterface.php',
+        'Laminas\\HttpHandlerRunner\\Emitter\\EmitterStack' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Emitter/EmitterStack.php',
+        'Laminas\\HttpHandlerRunner\\Emitter\\SapiEmitter' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Emitter/SapiEmitter.php',
+        'Laminas\\HttpHandlerRunner\\Emitter\\SapiEmitterTrait' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Emitter/SapiEmitterTrait.php',
+        'Laminas\\HttpHandlerRunner\\Emitter\\SapiStreamEmitter' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Emitter/SapiStreamEmitter.php',
+        'Laminas\\HttpHandlerRunner\\Exception\\EmitterException' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Exception/EmitterException.php',
+        'Laminas\\HttpHandlerRunner\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Exception/ExceptionInterface.php',
+        'Laminas\\HttpHandlerRunner\\Exception\\InvalidEmitterException' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/Exception/InvalidEmitterException.php',
+        'Laminas\\HttpHandlerRunner\\RequestHandlerRunner' => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src/RequestHandlerRunner.php',
+        'Laminas\\ZendFrameworkBridge\\Autoloader' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Autoloader.php',
+        'Laminas\\ZendFrameworkBridge\\ConfigPostProcessor' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/ConfigPostProcessor.php',
+        'Laminas\\ZendFrameworkBridge\\Module' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Module.php',
+        'Laminas\\ZendFrameworkBridge\\Replacements' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Replacements.php',
+        'Laminas\\ZendFrameworkBridge\\RewriteRules' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/RewriteRules.php',
         'Net_IDNA2' => __DIR__ . '/..' . '/pear/net_idna2/Net/IDNA2.php',
         'Net_IDNA2_Exception' => __DIR__ . '/..' . '/pear/net_idna2/Net/IDNA2/Exception.php',
         'Net_IDNA2_Exception_Nameprep' => __DIR__ . '/..' . '/pear/net_idna2/Net/IDNA2/Exception/Nameprep.php',
@@ -469,6 +569,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
+        'Psr\\Http\\Server\\RequestHandlerInterface' => __DIR__ . '/..' . '/psr/http-server-handler/src/RequestHandlerInterface.php',
         'ScssPhp\\ScssPhp\\Base\\Range' => __DIR__ . '/..' . '/scssphp/scssphp/src/Base/Range.php',
         'ScssPhp\\ScssPhp\\Block' => __DIR__ . '/..' . '/scssphp/scssphp/src/Block.php',
         'ScssPhp\\ScssPhp\\Cache' => __DIR__ . '/..' . '/scssphp/scssphp/src/Cache.php',

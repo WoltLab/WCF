@@ -9,10 +9,12 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\RequestOptions;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\TextResponse;
+use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -79,31 +81,13 @@ function getMapFromQuery(string $query)
         if (!\preg_match('/^[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*\\/[a-f0-9]{64}$/', $map)) {
             // This should be unreachable in real world, because an invalid map is not
             // going to be correctly signed.
-            return new Response(
-                400,
-                [
-                    'content-type' => 'text/plain',
-                    'cache-control' => [
-                        'public',
-                    ],
-                ],
-                'Invalid map.'
-            );
+            return new TextResponse('Invalid map.', 400);
         }
 
         // Step 4: Return the extracted map name.
         return $map;
     } catch (\UnexpectedValueException | \RangeException $e) {
-        return new Response(
-            400,
-            [
-                'content-type' => 'text/plain',
-                'cache-control' => [
-                    'public',
-                ],
-            ],
-            'Invalid signature.'
-        );
+        return new TextResponse('Invalid signature.', 400);
     }
 }
 
@@ -165,66 +149,42 @@ function handle(ServerRequestInterface $request): ResponseInterface
     $body = new Stream(\fopen($cacheFilename, 'r'));
 
     if ($body->getSize() === 0) {
-        return new Response(
-            503,
-            [
-                'content-type' => 'text/plain',
-                'cache-control' => [
-                    'public',
-                ],
-            ],
-            'Failed to download the source map.'
-        );
+        return new TextResponse('Failed to download the source map.', 503);
     }
 
     return new Response(
+        $body,
         200,
         [
             'content-type' => 'application/json',
             'cache-control' => [
-                'public',
                 'immutable',
                 'max-age=2592000',
             ],
             'etag' => \sprintf('"%s"', $map),
-        ],
-        $body
+        ]
     );
 }
 
 // Below this point the actual request handling is performed.
 
 try {
-    $request = ServerRequest::fromGlobals();
+    $request = ServerRequestFactory::fromGlobals();
 
     try {
         require_once(__DIR__ . '/options.inc.php');
 
-        $response = handle($request);
+        $response = handle($request)
+            ->withAddedHeader('cache-control', 'public');
     } catch (\Exception $e) {
-        $response = new Response(
-            500,
-            [],
-            'Internal Server Error'
+        $response = new TextResponse(
+            'Internal Server Error',
+            500
         );
     }
 
-    \http_response_code($response->getStatusCode());
-
-    foreach ($response->getHeaders() as $name => $values) {
-        $isFirst = true;
-        foreach ($values as $value) {
-            \header(
-                \sprintf('%s: %s', $name, $value),
-                $isFirst
-            );
-            $isFirst = false;
-        }
-    }
-
-    while (!$response->getBody()->eof()) {
-        echo $response->getBody()->read(8192);
-    }
+    $emitter = new SapiStreamEmitter();
+    $emitter->emit($response);
 } catch (\Exception $e) {
     echo 'Unhandled exception';
 }
