@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\user\User;
+use wcf\form\AccountManagementForm;
 use wcf\form\RegisterForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
@@ -145,7 +146,11 @@ final class GithubAuthAction extends AbstractOauth2Action
                 WCF::getSession()->register('__oauthUser', $oauthUser);
 
                 return new RedirectResponse(
-                    LinkHandler::getInstance()->getLink('AccountManagement') . '#3rdParty'
+                    LinkHandler::getInstance()->getControllerLink(
+                        AccountManagementForm::class,
+                        [],
+                        '#3rdParty'
+                    )
                 );
             } else {
                 // This account does not belong to anyone and we are not logged in.
