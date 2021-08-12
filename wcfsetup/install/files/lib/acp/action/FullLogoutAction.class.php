@@ -2,10 +2,10 @@
 
 namespace wcf\acp\action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\action\AbstractSecureAction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Does a full user logout in the admin control panel (deleting the session).
@@ -28,8 +28,8 @@ class FullLogoutAction extends LogoutAction
 
         $this->executed();
 
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
-
-        exit;
+        return new RedirectResponse(
+            LinkHandler::getInstance()->getLink()
+        );
     }
 }

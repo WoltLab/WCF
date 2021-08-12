@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Message\ResponseInterface;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
@@ -241,11 +242,15 @@ abstract class AbstractOauth2Action extends AbstractAction
                 $accessToken = $this->codeToAccessToken($_GET['code']);
                 $oauthUser = $this->getUser($accessToken);
 
-                $this->processUser($oauthUser);
+                $result = $this->processUser($oauthUser);
             } elseif (isset($_GET['error'])) {
-                $this->handleError($_GET['error']);
+                $result = $this->handleError($_GET['error']);
             } else {
-                $this->initiate();
+                $result = $this->initiate();
+            }
+
+            if ($result instanceof ResponseInterface) {
+                return $result;
             }
         } catch (NamedUserException | PermissionDeniedException $e) {
             throw $e;

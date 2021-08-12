@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
@@ -12,7 +13,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Marks target notification as confirmed and forwards to the notification URL.
@@ -98,8 +98,8 @@ class NotificationConfirmAction extends AbstractAction
             $this->notification->additionalData
         );
 
-        HeaderUtil::redirect($notificationEvent->getLink());
-
-        exit;
+        return new RedirectResponse(
+            $notificationEvent->getLink()
+        );
     }
 }

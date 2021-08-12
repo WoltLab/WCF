@@ -5,12 +5,7 @@ namespace wcf\action;
 use wcf\util\JSON;
 
 /**
- * Provides method to send JSON-encoded responses.
- *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
+ * @deprecated 5.5 Use PSR-7 responses (e.g. Laminas' JsonResponse).
  */
 class AbstractAjaxAction extends AbstractAction
 {

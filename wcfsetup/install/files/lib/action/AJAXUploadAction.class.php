@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\upload\UploadHandler;
 use wcf\util\JSON;
 
@@ -34,10 +35,10 @@ class AJAXUploadAction extends AJAXProxyAction
             parent::sendResponse();
         }
 
+        $response = new JsonResponse($this->response);
         // IE9 is mad if iframe response is application/json
-        \header('Content-type: text/plain');
-        echo JSON::encode($this->response);
+        $response = $response->withHeader('content-type', 'text/plain');
 
-        exit;
+        return $response;
     }
 }
