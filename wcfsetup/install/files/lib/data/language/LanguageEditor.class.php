@@ -435,24 +435,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 foreach ($elements as $element) {
                     $itemName = $element->getAttribute('name');
 
-                    // Safeguard against malformed phrases, an empty name has a strange side effect.
-                    if (empty($itemName)) {
-                        throw new \InvalidArgumentException("The name attribute is missing or empty.");
-                    }
-
-                    if ($itemName !== $categoryName && \strpos($itemName, $categoryName . '.') !== 0) {
-                        throw new \InvalidArgumentException(WCF::getLanguage()->getDynamicVariable(
-                            'wcf.acp.language.import.error.categoryMismatch',
-                            [
-                                'categoryName' => $categoryName,
-                                'languageItem' => $itemName,
-                            ]
-                        ));
-                    }
-
-                    if (StringUtil::trim($itemName) !== $itemName) {
-                        throw new \InvalidArgumentException("The name '{$itemName}' contains leading or trailing whitespaces.");
-                    }
+                    self::validateItemName($itemName, $categoryName);
 
                     $itemValue = $element->nodeValue;
 
@@ -682,6 +665,34 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
         // delete relevant template compilations
         $this->deleteCompiledTemplates();
+    }
+
+    /**
+     * Verifies that the given variable is a valid variable within the given category.
+     * Throws an exception otherwise.
+     *
+     * @since 5.4
+     */
+    final public static function validateItemName(string $itemName, string $categoryName): void
+    {
+        // Safeguard against malformed phrases, an empty name has a strange side effect.
+        if (empty($itemName)) {
+            throw new \InvalidArgumentException("The name attribute is missing or empty.");
+        }
+
+        if ($itemName !== $categoryName && \strpos($itemName, $categoryName . '.') !== 0) {
+            throw new \InvalidArgumentException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.language.import.error.categoryMismatch',
+                [
+                    'categoryName' => $categoryName,
+                    'languageItem' => $itemName,
+                ]
+            ));
+        }
+
+        if (StringUtil::trim($itemName) !== $itemName) {
+            throw new \InvalidArgumentException("The name '{$itemName}' contains leading or trailing whitespaces.");
+        }
     }
 
     /**

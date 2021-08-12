@@ -140,18 +140,8 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.4.2">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
-
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4.3_resetAvatarCache.php</instruction>
-	</instructions>
-
-	<instructions type="update" fromversion="5.4.3">
-		<instruction type="file">files_update.tar</instruction>
+	<instructions type="update" fromversion="5.4.4">
+		<!-- Delete the empty phrase once again. It might have been re-injected using the I18n functionality. -->
+		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
 	</instructions>
 </package>

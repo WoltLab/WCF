@@ -3,6 +3,7 @@
 namespace wcf\system\language;
 
 use wcf\data\language\Language;
+use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
@@ -305,6 +306,8 @@ class I18nHandler extends SingletonFactory
      */
     public function save($elementID, $languageVariable, $languageCategory, $packageID = PACKAGE_ID)
     {
+        LanguageEditor::validateItemName($languageVariable, $languageCategory);
+
         // get language category id
         $sql = "SELECT  languageCategoryID
                 FROM    wcf" . WCF_N . "_language_category

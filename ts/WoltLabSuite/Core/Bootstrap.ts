@@ -29,7 +29,7 @@ import * as UiPassword from "./Ui/Password";
 import * as UiEmpty from "./Ui/Empty";
 import * as UiObjectAction from "./Ui/Object/Action";
 import * as UiObjectActionDelete from "./Ui/Object/Action/Delete";
-import * as UiObjectActionToggle from "./Ui/Object/Action/Toogle";
+import * as UiObjectActionToggle from "./Ui/Object/Action/Toggle";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";

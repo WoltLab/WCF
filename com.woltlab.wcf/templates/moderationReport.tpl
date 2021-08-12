@@ -68,7 +68,11 @@
 		<div>
 			<div class="containerHeadline">
 				<h3>
-					{user object=$reportUser}
+					{if $reportUser->userID}
+						{user object=$reportUser}
+					{else}
+						{lang}wcf.user.guest{/lang}
+					{/if}
 					<small class="separatorLeft">{@$queue->time|time}</small>
 				</h3>
 			</div>
