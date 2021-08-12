@@ -1648,6 +1648,19 @@
 		<file>lib/system/api/symfony/polyfill-php72/README.md</file>
 		<file>lib/system/api/symfony/polyfill-php72/bootstrap.php</file>
 		<file>lib/system/api/symfony/polyfill-php72/composer.json</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/AbstractAdapter.php</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/Console.php</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/Exception/ExceptionInterface.php</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/Exception/InvalidArgumentException.php</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/Exception/RuntimeException.php</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/JsPull.php</file>
+		<file>lib/system/api/zend/ProgressBar/Adapter/JsPush.php</file>
+		<file>lib/system/api/zend/ProgressBar/Exception/ExceptionInterface.php</file>
+		<file>lib/system/api/zend/ProgressBar/Exception/InvalidArgumentException.php</file>
+		<file>lib/system/api/zend/ProgressBar/Exception/OutOfRangeException.php</file>
+		<file>lib/system/api/zend/ProgressBar/Exception/RuntimeException.php</file>
+		<file>lib/system/api/zend/ProgressBar/ProgressBar.php</file>
+		<file>lib/system/api/zend/ProgressBar/composer.json</file>
 		<file>lib/system/auth/UserAuth.class.php</file>
 		<file>lib/system/auth/UserAuthEmail.class.php</file>
 		<file>lib/system/background/job/DownloadRankImageJob.class.php</file>
