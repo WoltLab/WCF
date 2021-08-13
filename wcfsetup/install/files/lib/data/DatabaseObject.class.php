@@ -203,19 +203,20 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
             return static::$databaseTableIndexName;
         }
 
-        static $databaseTableIndexName = null;
-        if ($databaseTableIndexName === null) {
-            $className = \explode('\\', static::class);
+        $className = static::class;
+        static $databaseTableIndexNames = [];
+        if (!isset($databaseTableIndexNames[$className])) {
+            $classParts = \explode('\\', $className);
             $parts = \preg_split(
                 '~(?=[A-Z](?=[a-z]))~',
-                \array_pop($className),
+                \array_pop($classParts),
                 -1,
                 \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
             );
-            $databaseTableIndexName = \strtolower(\array_pop($parts)) . 'ID';
+            $databaseTableIndexNames[$className] = \strtolower(\array_pop($parts)) . 'ID';
         }
 
-        return $databaseTableIndexName;
+        return $databaseTableIndexNames[$className];
     }
 
     /**
