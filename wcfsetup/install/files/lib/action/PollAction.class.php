@@ -10,7 +10,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\poll\PollManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
