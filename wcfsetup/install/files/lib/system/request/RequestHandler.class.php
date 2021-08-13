@@ -324,7 +324,7 @@ class RequestHandler extends SingletonFactory
     /**
      * @since 5.5
      */
-    protected function checkOfflineMode()
+    private function checkOfflineMode()
     {
         if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
             if (
@@ -358,7 +358,7 @@ class RequestHandler extends SingletonFactory
     /**
      * @since 5.5
      */
-    protected function checkAppEvaluation()
+    private function checkAppEvaluation()
     {
         // check if the controller matches an app that has an expired evaluation date
         [$abbreviation] = \explode('\\', $this->getActiveRequest()->getClassName(), 2);
