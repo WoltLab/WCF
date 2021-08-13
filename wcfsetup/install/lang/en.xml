@@ -3243,7 +3243,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
-		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{@$label->render()}</li>{/foreach}</ul> {/if}<a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sort]]></item>
 		<item name="wcf.article.search"><![CDATA[Search Articles]]></item>
 		<item name="wcf.article.search.error.noResults"><![CDATA[The search returned no results.]]></item>
