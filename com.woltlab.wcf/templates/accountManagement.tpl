@@ -27,8 +27,11 @@
 					<input type="password" id="password" name="password" value="" required class="medium" autocomplete="current-password">
 					{if $errorField == 'password'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'false'}{lang}wcf.user.password.error.false{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.password.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small>{lang}wcf.user.accountManagement.password.description{/lang}</small>
@@ -51,10 +54,11 @@
 						
 					{if $errorField == 'username'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'invalid'}{lang}wcf.user.username.error.invalid{/lang}{/if}
-							{if $errorType == 'notUnique'}{lang}wcf.user.username.error.notUnique{/lang}{/if}
-							{if $errorType == 'alreadyRenamed'}{lang}wcf.user.username.error.alreadyRenamed{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.username.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					{if $renamePeriod > 0}
@@ -78,8 +82,11 @@
 						
 					{if $errorField == 'newPassword'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notSecure'}{lang}wcf.user.password.error.notSecure{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.password.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>
@@ -92,8 +99,11 @@
 						
 					{if $errorField == 'confirmNewPassword'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.confirmPassword.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>
@@ -111,12 +121,13 @@
 				<dt><label for="email">{lang}wcf.user.newEmail{/lang}</label></dt>
 				<dd>
 					<input type="email" id="email" name="email" value="{$email}" class="medium">
-						
 					{if $errorField == 'email'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'invalid'}{lang}wcf.user.email.error.invalid{/lang}{/if}
-							{if $errorType == 'notUnique'}{lang}wcf.user.email.error.notUnique{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.email.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>
@@ -129,7 +140,11 @@
 						
 					{if $errorField == 'confirmEmail'}
 						<small class="innerError">
-							{if $errorType == 'notEqual'}{lang}wcf.user.confirmEmail.error.notEqual{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.confirmEmail.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>
