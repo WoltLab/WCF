@@ -91,6 +91,24 @@
             'reference' => 'e1a5dad040e0043135e8095ee27d1fbf6fb640e1',
             'dev_requirement' => false,
         ),
+        'laminas/laminas-progressbar' => array(
+            'pretty_version' => '2.7.0',
+            'version' => '2.7.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-progressbar',
+            'aliases' => array(),
+            'reference' => '15f9e983276462f30d7d38660dc7488c6e3df34b',
+            'dev_requirement' => false,
+        ),
+        'laminas/laminas-stdlib' => array(
+            'pretty_version' => '3.2.1',
+            'version' => '3.2.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
+            'aliases' => array(),
+            'reference' => '2b18347625a2f06a1a485acfbc870f699dbe51c6',
+            'dev_requirement' => false,
+        ),
         'laminas/laminas-zendframework-bridge' => array(
             'pretty_version' => '1.1.1',
             'version' => '1.1.1.0',
@@ -245,6 +263,18 @@
             'dev_requirement' => false,
             'replaced' => array(
                 0 => '^1.1.0',
+            ),
+        ),
+        'zendframework/zend-progressbar' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '2.7.0',
+            ),
+        ),
+        'zendframework/zend-stdlib' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '3.2.1',
             ),
         ),
     ),
