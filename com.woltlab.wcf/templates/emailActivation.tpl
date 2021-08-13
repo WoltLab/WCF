@@ -10,7 +10,11 @@
 				<input type="text" id="userID" name="u" value="{@$u}" required class="medium">
 				{if $errorField == 'u'}
 					<small class="innerError">
-						{if $errorType == 'invalid'}{lang}wcf.user.userID.error.invalid{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.userID.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
@@ -22,7 +26,11 @@
 				<input type="text" id="activationCode" maxlength="9" name="a" value="{@$a}" required class="medium">
 				{if $errorField == 'a'}
 					<small class="innerError">
-						{if $errorType == 'invalid'}{lang}wcf.user.activationCode.error.invalid{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.activationCode.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 				<small><a href="{link controller='EmailNewActivationCode'}{/link}">{lang}wcf.user.newActivationCode{/lang}</a></small>

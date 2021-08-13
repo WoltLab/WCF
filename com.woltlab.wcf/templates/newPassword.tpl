@@ -13,8 +13,11 @@
 					
 				{if $errorField == 'newPassword'}
 					<small class="innerError">
-						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'notSecure'}{lang}wcf.user.password.error.notSecure{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.password.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
@@ -27,8 +30,11 @@
 					
 				{if $errorField == 'confirmNewPassword'}
 					<small class="innerError">
-						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.confirmPassword.error.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
