@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -152,11 +153,7 @@ class PollAction extends AJAXProxyAction
 
         $this->executed();
 
-        // send JSON-encoded response
-        \header('Content-type: application/json; charset=UTF-8');
-        echo JSON::encode($returnValues);
-
-        exit;
+        return new JsonResponse($returnValues);
     }
 
     /**
