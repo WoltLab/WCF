@@ -63,6 +63,7 @@ class EmailLogListPage extends SortablePage
         'username' => null,
         'status' => null,
         'email' => null,
+        'messageId' => null,
     ];
 
     /**
@@ -111,6 +112,12 @@ class EmailLogListPage extends SortablePage
             if (!empty($this->filter['email'])) {
                 $this->objectList->getConditionBuilder()->add('recipient = ?', [$this->filter['email']]);
             }
+        }
+        if (!empty($this->filter['messageId'])) {
+            $this->objectList->getConditionBuilder()->add(
+                'messageID LIKE ?',
+                ['%' . $this->filter['messageId'] . '%']
+            );
         }
     }
 
