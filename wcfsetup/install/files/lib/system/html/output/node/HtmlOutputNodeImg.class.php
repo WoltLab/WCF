@@ -50,7 +50,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                 } else {
                     // Ensure that the smiley's HTML is up to date.
                     $doc = new \DOMDocument();
-                    $doc->loadHTML($smiley->getHtml());
+                    $doc->loadHTML(\sprintf(
+                        '<?xml version="1.0" encoding="UTF-8"?><html><body>%s</body></html>',
+                        $smiley->getHtml()
+                    ));
                     $smileyNode = $element->ownerDocument->importNode($doc->getElementsByTagName('img')->item(0), true);
                     $element->parentNode->replaceChild($smileyNode, $element);
                 }
