@@ -56,6 +56,7 @@ class TemplateScriptingCompiler
      * @var string[]
      */
     protected $enterpriseFunctions = [
+        'abs',
         'addslashes',
         'array_diff',
         'array_fill',
