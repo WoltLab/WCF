@@ -70,6 +70,21 @@
 			</dl>
 		</div>
 
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-8">
+				<dt></dt>
+				<dd>
+					<input
+						class="long"
+						name="filter[messageId]"
+						placeholder="{lang}wcf.acp.email.log.messageId{/lang}"
+						type="text"
+						value="{$filter[messageId]}"
+					>
+				</dd>
+			</dl>
+		</div>
+
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		</div>
