@@ -4994,7 +4994,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Die Mehrfaktor-Authentifizierung über E-Mail ist aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} bei jeder Anmeldung eine E-Mail mit einem einmal gültigen Code.</p>
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.</p>]]></item>
-		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode für {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
 		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Die Aktivierung des Verfahrens ist fehlgeschlagen. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es erneut.]]></item>
