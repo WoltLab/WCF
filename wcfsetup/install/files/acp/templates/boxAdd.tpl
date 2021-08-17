@@ -469,6 +469,8 @@
 						{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
 					</dd>
 				</dl>
+
+				{event name='pagesTabMenuContent'}
 			</div>
 		</div>
 
