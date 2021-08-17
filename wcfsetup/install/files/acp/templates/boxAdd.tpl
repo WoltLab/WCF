@@ -2,13 +2,13 @@
 
 <script data-relocate="true">
 	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}{include file='mediaJavaScript'}{/if}
-	
+
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
 			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
 		});
 	{/if}
-	
+
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
 		Language.addObject({
 			'wcf.page.pageObjectID': '{jslang}wcf.page.pageObjectID{/jslang}',
@@ -26,15 +26,15 @@
 			'wcf.page.pageObjectID.search.results': '{jslang}wcf.page.pageObjectID.search.results{/jslang}',
 			'wcf.page.pageObjectID.search.terms': '{jslang}wcf.page.pageObjectID.search.terms{/jslang}'
 		});
-		
+
 		var handlers = new Dictionary();
 		{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
 			handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
 		{/foreach}
-		
+
 		AcpUiBoxHandler.init(handlers, '{$boxType}');
 	});
-	
+
 	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
 			new MediaManagerSelect({
@@ -43,13 +43,13 @@
 			});
 		});
 	{/if}
-	
+
 	{if $action === 'edit'}
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Copy'], function (Language, AcpUiBoxCopy) {
 			Language.addObject({
 				'wcf.acp.box.copy': '{jslang}wcf.acp.box.copy{/jslang}'
 			});
-			
+
 			AcpUiBoxCopy.init();
 		});
 	{/if}
@@ -60,7 +60,7 @@
 		<div>
 			{lang}wcf.acp.box.copy.description{/lang}
 		</div>
-		
+
 		<div class="formSubmit">
 			<a href="{link controller='BoxAdd' presetBoxID=$box->boxID}{/link}" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</a>
 		</div>
@@ -71,14 +71,14 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.box.add{/lang}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
 	</div>
-	
+
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action === 'edit'}
 				<li><a href="#" class="button jsButtonCopyBox"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.box.button.copyBox{/lang}</a></li>
 			{/if}
 			<li><a href="{link controller='BoxList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
-			
+
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
@@ -98,11 +98,11 @@
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.box.contents{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.page.list{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
-				
+
 				{event name='tabMenuTabs'}
 			</ul>
 		</nav>
-		
+
 		<div id="general" class="tabMenuContent">
 			<div class="section">
 				<dl{if $errorField == 'name'} class="formError"{/if}>
@@ -120,7 +120,7 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				{if $boxType == 'system'}
 					<dl id="boxControllerContainer"{if $errorField == 'boxControllerID'} class="formError"{/if}{if !$boxController} style="display: none;"{/if}>
 						<dt><label for="boxControllerID">{lang}wcf.acp.box.boxController{/lang}</label></dt>
@@ -130,7 +130,7 @@
 									<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
 								{/foreach}
 							</select>
-							
+
 							{if $errorField == 'boxType'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -143,7 +143,7 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				<dl{if $errorField == 'position'} class="formError"{/if}>
 					<dt><label for="position">{lang}wcf.acp.box.position{/lang}</label></dt>
 					<dd>
@@ -152,7 +152,7 @@
 								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 							{/foreach}
 						</select>
-						
+
 						{if $errorField == 'position'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -164,14 +164,14 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				<dl>
 					<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 					<dd>
 						<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
 					</dd>
 				</dl>
-				
+
 				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 					<dt><label for="cssClassName">{lang}wcf.acp.box.cssClassName{/lang}</label></dt>
 					<dd>
@@ -187,7 +187,7 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				<dl>
 					<dt></dt>
 					<dd>
@@ -201,16 +201,16 @@
 						<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.box.isDisabled{/lang}</label>
 					</dd>
 				</dl>
-				
+
 				{event name='dataFields'}
 			</div>
-			
+
 			{if $boxType === 'system'}
 				<input type="hidden" name="linkType" value="none">
 			{else}
 				<section class="section">
 					<h2 class="sectionTitle">{lang}wcf.acp.box.link{/lang}</h2>
-					
+
 					<dl>
 						<dt></dt>
 						<dd class="floated">
@@ -219,13 +219,13 @@
 							<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked{/if}> {lang}wcf.acp.box.linkType.external{/lang}</label>
 						</dd>
 					</dl>
-					
+
 					<dl id="linkPageIDContainer"{if $errorField == 'linkPageID'} class="formError"{/if}{if $linkType != 'internal'} style="display: none;"{/if}>
 						<dt><label for="linkPageID">{lang}wcf.acp.page.page{/lang}</label></dt>
 						<dd>
 							<select name="linkPageID" id="linkPageID">
 								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-								
+
 								{foreach from=$pageNodeList item=pageNode}
 									<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 								{/foreach}
@@ -241,7 +241,7 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					<dl id="linkPageObjectIDContainer"{if $errorField == 'linkPageObjectID'} class="formError"{/if}{if !$linkPageID || !$pageHandler[$linkPageID]|isset} style="display: none;"{/if}>
 						<dt><label for="linkPageObjectID">{lang}wcf.page.pageObjectID{/lang}</label></dt>
 						<dd>
@@ -260,7 +260,7 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
 						<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
 						<dd>
@@ -276,18 +276,18 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					{event name='linkFields'}
 				</section>
 			{/if}
-			
+
 			<div id="boxConditions">
 				{if $boxController && $boxController->getProcessor()|is_subclass_of:'wcf\system\box\IConditionBoxController'}
 					{@$boxController->getProcessor()->getConditionsTemplate()}
 				{/if}
 			</div>
 		</div>
-		
+
 		<div id="contents" class="tabMenuContent">
 			{if !$isMultilingual && $boxType != 'system'}
 				<div class="section">
@@ -315,7 +315,7 @@
 							</dd>
 						</dl>
 					{/if}
-					
+
 					<dl{if $errorField == 'title'} class="formError"{/if}>
 						<dt><label for="title0">{lang}wcf.global.title{/lang}</label></dt>
 						<dd>
@@ -331,12 +331,12 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					<dl{if $errorField == 'content'} class="formError"{/if}>
 						<dt><label for="content0">{lang}wcf.acp.box.content{/lang}</label></dt>
 						<dd>
 							{include file='__boxAddContent' languageID=0}
-							
+
 							{if $errorField == 'content'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -349,7 +349,7 @@
 						</dd>
 					</dl>
 				</div>
-				
+
 				{if $boxType == 'text'}
 					{include file='messageFormTabs' wysiwygContainerID='content0'}
 				{/if}
@@ -363,7 +363,7 @@
 							{/foreach}
 						</ul>
 					</nav>
-					
+
 					{foreach from=$availableLanguages item=availableLanguage}
 						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
 							<div class="section">
@@ -393,7 +393,7 @@
 										</dl>
 									{/if}
 								{/if}
-								
+
 								<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 									<dd>
@@ -409,13 +409,13 @@
 										{/if}
 									</dd>
 								</dl>
-								
+
 								{if $boxType != 'system'}
 									<dl{if $errorField == 'content'|concat:$availableLanguage->languageID} class="formError"{/if}>
 										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.box.content{/lang}</label></dt>
 										<dd>
 											{include file='__boxAddContent' languageID=$availableLanguage->languageID}
-											
+
 											{if $errorField == 'content'|concat:$availableLanguage->languageID}
 												<small class="innerError">
 													{if $errorType == 'empty'}
@@ -427,7 +427,7 @@
 											{/if}
 										</dd>
 									</dl>
-									
+
 									{if $boxType == 'text'}
 										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
 									{/if}
@@ -438,7 +438,7 @@
 				</div>
 			{/if}
 		</div>
-		
+
 		<div id="pages" class="tabMenuContent">
 			<div class="section">
 				<dl>
@@ -450,7 +450,7 @@
 								// visibility toggle
 								var visibilityExceptionHidden = elById('visibilityExceptionHidden');
 								var visibilityExceptionVisible = elById('visibilityExceptionVisible');
-								
+
 								elById('visibleEverywhere').addEventListener('change', function() {
 									window[this.checked ? 'elShow' : 'elHide'](visibilityExceptionHidden);
 									window[this.checked ? 'elHide' : 'elShow'](visibilityExceptionVisible);
@@ -459,7 +459,7 @@
 						</script>
 					</dd>
 				</dl>
-				
+
 				<dl>
 					<dt>
 						<span id="visibilityExceptionVisible"{if $visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.visible{/lang}</span>
@@ -471,14 +471,14 @@
 				</dl>
 			</div>
 		</div>
-		
+
 		<div id="acl" class="tabMenuContent">
 			{include file='aclSimple' __supportsInvertedPermissions=true}
 		</div>
-		
+
 		{event name='tabMenuContents'}
 	</div>
-	
+
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
