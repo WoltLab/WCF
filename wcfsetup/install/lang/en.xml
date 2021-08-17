@@ -614,6 +614,7 @@
 		<item name="wcf.acp.email.log"><![CDATA[Emails Sent]]></item>
 		<item name="wcf.acp.email.log.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.email.log.time"><![CDATA[Created]]></item>
+		<item name="wcf.acp.email.log.messageId"><![CDATA[Message-ID]]></item>
 		<item name="wcf.acp.email.log.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.email.log.status.success"><![CDATA[Sent]]></item>
 		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Transient Failure]]></item>
