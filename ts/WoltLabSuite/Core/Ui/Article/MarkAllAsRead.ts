@@ -28,8 +28,7 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   _ajaxSuccess(): void {
     /* remove obsolete badges */
     // main menu
-    const badge = document.querySelector(".mainMenu .active .badge");
-    if (badge) badge.remove();
+    document.querySelectorAll(".mainMenu .active .badge").forEach((badge) => badge.remove());
     // mobile page menu badge
     document.querySelectorAll(".pageMainMenuMobile .active").forEach((container) => {
       container.closest(".menuOverlayItem")?.querySelector(".badge")?.remove();

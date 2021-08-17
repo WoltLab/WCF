@@ -3303,7 +3303,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
-		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{@$label->render()}</li>{/foreach}</ul> {/if}<a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sortieren]]></item>
 		<item name="wcf.article.search"><![CDATA[Artikel durchsuchen]]></item>
 		<item name="wcf.article.search.error.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
@@ -4983,7 +4983,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Die Mehrfaktor-Authentifizierung über E-Mail ist aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} bei jeder Anmeldung eine E-Mail mit einem einmal gültigen Code.</p>
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.</p>]]></item>
-		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode für {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
 		<item name="wcf.user.security.multifactor.error.setupAllocationFailed"><![CDATA[Die Aktivierung des Verfahrens ist fehlgeschlagen. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es erneut.]]></item>
@@ -5015,7 +5015,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[Smartphone von {$__wcf->user->username}]]></item>
 		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Aktive Smartphones]]></item>
 		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
-		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn Sie Ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein Smartphone wechseln möchtest, füge bitte zunächst dein neues Smartphone hinzu, bevor du dein letztes Gerät <strong>{$deviceName}</strong> entfernst{else}Sie Ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen{/if}. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
 		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Letztes Gerät]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Smartphone hinzufügen]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Authentifiziere dich mit Hilfe einer App auf deinem Smartphone.{else}Authentifizieren Sie sich mit Hilfe einer App auf Ihrem Smartphone.{/if}</p>
