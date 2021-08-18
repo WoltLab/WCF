@@ -14,12 +14,12 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+    - uses: actions/checkout@v2
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
         node-version: "14"
         cache: "npm"
-    - uses: actions/checkout@v2
     - run: npm install
     - run: npx tsc --noEmit
     - name: Check that tslib is in sync.
@@ -30,12 +30,12 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+    - uses: actions/checkout@v2
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
         node-version: "14"
         cache: "npm"
-    - uses: actions/checkout@v2
     - run: npm install
     - run: npx eslint .
   javascript_sync:
@@ -45,12 +45,12 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+    - uses: actions/checkout@v2
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
         node-version: "14"
         cache: "npm"
-    - uses: actions/checkout@v2
     - run: npm install
     - run: npx tsc
     - run: echo "::add-matcher::.github/diff.json"
