@@ -88,7 +88,7 @@
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.management.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Domain-Namen ohne Protokoll und Pfad ein, beispielsweise „www.example.com“.]]></item>
 		<item name="wcf.acp.application.management.cookieDomain"><![CDATA[Cookie-Domain]]></item>
-		<item name="wcf.acp.application.management.cookieDomain.description"><![CDATA[Die Cookie-Domain muss zur eingegebenen Domain passen, die Eingabe erfolgt ohne Protokoll und Pfad. Sollten {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} unsicher sein, {if LANGUAGE_USE_INFORMAL_VARIANT}trage{else}tragen Sie{/if} hier bitte den identischen Wert wie für „Domain“ ein.]]></item>
+		<item name="wcf.acp.application.management.cookieDomain.description"><![CDATA[Die Cookie-Domain muss zur eingegebenen Domain passen, die Eingabe erfolgt ohne Protokoll und Pfad. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du dir{else}Sollten Sie sich{/if} unsicher sein, {if LANGUAGE_USE_INFORMAL_VARIANT}trage{else}tragen Sie{/if} hier bitte den identischen Wert wie für „Domain“ ein.]]></item>
 	</category>
 	<category name="wcf.acp.article">
 		<item name="wcf.acp.article.add"><![CDATA[Artikel hinzufügen]]></item>
