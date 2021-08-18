@@ -241,7 +241,7 @@ final class SessionHandler extends SingletonFactory
                     $length
                 ));
             }
-            $data = \unpack('Cversion/A20sessionId/Ctimestep', $value);
+            $data = \unpack('Cversion/a20sessionId/Ctimestep', $value);
             $data['sessionId'] = Hex::encode($data['sessionId']);
 
             return $data;
