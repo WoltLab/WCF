@@ -19,7 +19,6 @@ use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\oauth\exception\StateValidationException;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
