@@ -85,7 +85,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                 dboAction: options.dboAction,
                 legacy: options.legacy,
                 loadCallback: options.loadCallback,
-                selector,
+                selector: selector,
             });
             this.initHandler(options.identifier);
         }

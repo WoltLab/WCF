@@ -142,7 +142,7 @@ class ControllerPopover implements AjaxCallbackObject {
       dboAction: options.dboAction,
       legacy: options.legacy,
       loadCallback: options.loadCallback,
-      selector,
+      selector: selector,
     });
 
     this.initHandler(options.identifier);
