@@ -4,10 +4,12 @@ namespace wcf\action;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Response\RedirectResponse;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\user\User;
+use wcf\form\RegisterForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -17,7 +19,6 @@ use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\oauth\exception\StateValidationException;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -69,13 +70,13 @@ class TwitterAuthAction extends AbstractAction
 
                 $oauthUser = $this->getUser($token);
 
-                $this->processUser($oauthUser);
+                return $this->processUser($oauthUser);
             } elseif (isset($_GET['denied'])) {
                 throw new NamedUserException(
                     WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.denied')
                 );
             } else {
-                $this->initiate();
+                return $this->initiate();
             }
         } catch (NamedUserException | PermissionDeniedException $e) {
             throw $e;
@@ -99,7 +100,7 @@ class TwitterAuthAction extends AbstractAction
             ));
         }
 
-        exit;
+        throw new \LogicException("Unreachable");
     }
 
     /**
@@ -127,9 +128,9 @@ class TwitterAuthAction extends AbstractAction
                     new UserLoggedIn($user)
                 );
 
-                HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
-
-                exit;
+                return new RedirectResponse(
+                    LinkHandler::getInstance()->getLink()
+                );
             }
         } else {
             WCF::getSession()->register('__3rdPartyProvider', 'twitter');
@@ -140,9 +141,13 @@ class TwitterAuthAction extends AbstractAction
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
 
-                HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement') . '#3rdParty');
-
-                exit;
+                return new RedirectResponse(
+                    LinkHandler::getInstance()->getControllerLink(
+                        AccountManagementForm::class,
+                        [],
+                        '#3rdParty'
+                    )
+                );
             } else {
                 // This account does not belong to anyone and we are not logged in.
                 // Thus we want to connect this account to a newly registered user.
@@ -156,9 +161,10 @@ class TwitterAuthAction extends AbstractAction
                 WCF::getSession()->register('noRegistrationCaptcha', true);
 
                 WCF::getSession()->update();
-                HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(RegisterForm::class));
 
-                exit;
+                return new RedirectResponse(
+                    LinkHandler::getInstance()->getControllerLink(RegisterForm::class)
+                );
             }
         }
     }
@@ -322,14 +328,15 @@ class TwitterAuthAction extends AbstractAction
         $data = $this->getRequestToken();
 
         WCF::getSession()->register('__twitterInit', $data);
-        HeaderUtil::redirect(\sprintf(
-            'https://api.twitter.com/oauth/authenticate?%s',
-            \http_build_query([
-                'oauth_token' => $data['oauth_token'],
-            ], '', '&')
-        ));
 
-        exit;
+        return new RedirectResponse(
+            \sprintf(
+                'https://api.twitter.com/oauth/authenticate?%s',
+                \http_build_query([
+                    'oauth_token' => $data['oauth_token'],
+                ], '', '&')
+            )
+        );
     }
 
     /**
