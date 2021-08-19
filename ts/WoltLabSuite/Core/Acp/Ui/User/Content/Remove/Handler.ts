@@ -15,6 +15,16 @@ import UiDialog from "../../../../../Ui/Dialog";
 import { AjaxCallbackSetup } from "../../../../../Ajax/Data";
 import { DialogCallbackSetup } from "../../../../../Ui/Dialog/Data";
 
+type CallbackSuccess = (data: AjaxResponseSuccess) => void;
+
+interface AjaxResponseSuccess {
+  loopCount: number;
+  parameters: ArbitraryObject;
+  proceedURL: string;
+  progress: number;
+  template?: string;
+}
+
 interface AjaxResponse {
   returnValues: {
     template: string;
@@ -24,13 +34,15 @@ interface AjaxResponse {
 class AcpUserContentRemoveHandler {
   private readonly dialogId: string;
   private readonly userId: number;
+  private readonly callbackSuccess?: CallbackSuccess;
 
   /**
    * Initializes the content remove handler.
    */
-  constructor(element: HTMLElement, userId: number) {
+  constructor(element: HTMLElement, userId: number, callbackSuccess?: CallbackSuccess) {
     this.userId = userId;
     this.dialogId = `userRemoveContentHandler-${this.userId}`;
+    this.callbackSuccess = callbackSuccess;
 
     element.addEventListener("click", (ev) => this.click(ev));
   }
@@ -59,6 +71,7 @@ class AcpUserContentRemoveHandler {
         userID: this.userId,
         contentProvider: objectTypes,
       },
+      callbackSuccess: this.callbackSuccess,
     });
   }
 

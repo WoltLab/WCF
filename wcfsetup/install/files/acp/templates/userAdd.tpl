@@ -5,11 +5,160 @@
 		<h1 class="contentTitle">{lang}wcf.acp.user.{@$action}{/lang}</h1>
 		{if $action == 'edit'}<p class="contentHeaderDescription">{$user->username}</p>{/if}
 	</div>
-	
+
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if $action === 'edit'}
+				<li>
+					<div 	class="dropdown"{*
+							*}id="userListDropdown{@$user->userID}" {*
+							*}data-object-id="{@$user->getObjectID()}" {*
+							*}data-banned="{if $user->banned}true{else}false{/if}" {*
+							*}data-enabled="{if !$user->activationCode}true{else}false{/if}" {*
+							*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
+					*}>
+						<a href="#" class="dropdownToggle button">
+							<span class="icon icon16 fa-pencil"></span>
+							<span>{lang}wcf.global.button.edit{/lang}</span>
+						</a>
+
+						<ul class="dropdownMenu">
+							{event name='dropdownItems'}
+
+							{if $user->userID !== $__wcf->user->userID}
+								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+									<li>
+										<a  href="#" {*
+											*}class="jsEnable" {*
+											*}data-enable-message="{lang}wcf.acp.user.enable{/lang}" {*
+											*}data-disable-message="{lang}wcf.acp.user.disable{/lang}"{*
+										*}>
+											{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}
+										</a>
+									</li>
+								{/if}
+
+								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+									<li>
+										<a href="#" {*
+										*}class="jsConfirmEmailToggle" {*
+										*}data-confirm-email-message="{lang}wcf.acp.user.action.confirmEmail{/lang}" {*
+										*}data-unconfirm-email-message="{lang}wcf.acp.user.action.unconfirmEmail{/lang}"{*
+										*}>
+											{lang}wcf.acp.user.action.{if $user->isEmailConfirmed()}un{/if}confirmEmail{/lang}
+										</a>
+									</li>
+								{/if}
+
+								{if $__wcf->session->getPermission('admin.user.canMailUser')}
+									<li>
+										<a {*
+										*}href="{link controller='UserMail' id=$user->userID}{/link}"{*
+										*}>
+											{lang}wcf.acp.user.action.sendMail{/lang}
+										</a>
+									</li>
+								{/if}
+
+								{if $__wcf->session->getPermission('admin.user.canEditPassword')}
+									<li>
+										<a {*
+										*}href="#" {*
+										*}class="jsSendNewPassword"{*
+										*}>
+											{lang}wcf.acp.user.action.sendNewPassword{/lang}
+										</a>
+									</li>
+								{/if}
+							{/if}
+
+							{if $__wcf->session->getPermission('admin.user.canExportGdprData')}
+								<li>
+									<a {*
+										*}href="{link controller='UserExportGdpr' id=$user->userID}{/link}"{*
+										*}>
+										{lang}wcf.acp.user.exportGdpr{/lang}
+									</a>
+								</li>
+							{/if}
+
+							{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
+								<li class="dropdownDivider"></li>
+								<li><a href="#" class="jsDelete">{lang}wcf.global.button.delete{/lang}</a></li>
+								<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.content.removeContent{/lang}</a></li>
+							{/if}
+						</ul>
+					</div>
+				</li>
+				<script data-relocate="true">
+					require([
+						'WoltLabSuite/Core/Language',
+						'WoltLabSuite/Core/Acp/Ui/User/Editor',
+						'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction',
+						'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
+						'WoltLabSuite/Core/Controller/Clipboard',
+					], (
+						Language,
+						AcpUiUserList,
+						AcpUserContentRemoveHandler,
+						{ Delete },
+						{ DisableAction },
+						{ SendNewPasswordAction },
+						{ ToggleConfirmEmailAction },
+						Clipboard
+					) => {
+							Language.addObject({
+								'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
+								'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}',
+								'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
+								'wcf.acp.content.removeContent': '{jslang}wcf.acp.content.removeContent{/jslang}',
+							});
+
+							const dropdownElement = document.querySelector("#userListDropdown{@$user->userID}");
+
+							const deleteContent = document.querySelector(".jsDeleteContent");
+							if (deleteContent !== null) {
+								new AcpUserContentRemoveHandler(deleteContent, {@$user->userID}, (data) => {
+									window.location.reload();
+								});
+							}
+
+							const sendNewPassword = document.querySelector(".jsSendNewPassword");
+							if (sendNewPassword !== null) {
+								new SendNewPasswordAction(sendNewPassword, {@$user->userID}, dropdownElement);
+							}
+
+							const toggleConfirmEmail = document.querySelector(".jsConfirmEmailToggle");
+							if (toggleConfirmEmail !== null) {
+								new ToggleConfirmEmailAction(toggleConfirmEmail, {@$user->userID}, dropdownElement);
+							}
+
+							const enableUser = document.querySelector(".jsEnable");
+							if (enableUser !== null) {
+								new DisableAction(enableUser, {@$user->userID}, dropdownElement);
+							}
+
+							const deleteUser = document.querySelector(".jsDelete");
+							if (deleteUser !== null) {
+								// We cannot use the DeleteAction, because the Delete Action is only usable for
+								// dropdown menues.
+								deleteUser.addEventListener("click", (event) => {
+									const deleteAction = new Delete([{@$user->userID}], () => {
+										window.location.href = "{link controller='UserList'}{/link}";
+									}, '{jslang objectTitle=$user->username}wcf.button.delete.confirmMessage{/jslang}');
+
+									deleteAction.delete();
+								});
+							}
+						});
+				</script>
+			{/if}
+
 			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			
+
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
@@ -26,24 +175,24 @@
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('__essentials')}">{lang}wcf.global.form.data{/lang}</a></li>
-				
+
 				{foreach from=$optionTree item=categoryLevel1}
 					<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
-				
+
 				{if MODULE_USER_SIGNATURE}
 					<li><a href="{@$__wcf->getAnchor('signatureManagement')}">{lang}wcf.user.signature{/lang}</a></li>
 				{/if}
-				
+
 				{if $action === 'edit'}
 					<li><a href="{@$__wcf->getAnchor('avatarForm')}">{lang}wcf.user.avatar{/lang}</a></li>
 					<li><a href="{@$__wcf->getAnchor('coverPhotoForm')}">{lang}wcf.user.coverPhoto{/lang}</a></li>
 				{/if}
-				
+
 				{event name='tabMenuTabs'}
 			</ul>
 		</nav>
-		
+
 		<div id="__essentials" class="tabMenuContent hidden">
 			<div class="section">
 				<dl{if $errorType.username|isset} class="formError"{/if}>
@@ -61,7 +210,7 @@
 						{/if}
 					</dd>
 				</dl>
-				
+
 				{if $availableGroups|count}
 					<dl>
 						<dt>
@@ -72,14 +221,14 @@
 						</dd>
 					</dl>
 				{/if}
-				
+
 				{event name='generalFields'}
 			</div>
-			
+
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 				<section class="section">
 					<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
-					
+
 					<dl{if $errorType.email|isset} class="formError"{/if}>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 						<dd>
@@ -95,7 +244,7 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
 						<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
 						<dd>
@@ -107,18 +256,18 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					{event name='emailFields'}
 				</section>
 			{/if}
-			
+
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
 				{if $action == 'edit' && !$user->authData|empty}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.user.3rdparty{/lang}</h2>
-						
+
 						<div class="info">{lang}wcf.user.3rdparty.connect.info{/lang}</div>
-						
+
 						<dl>
 							<dt></dt>
 							<dd>
@@ -129,7 +278,7 @@
 				{else}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
-						
+
 						<dl{if $errorType.password|isset} class="formError"{/if}>
 							<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 							<dd>
@@ -145,7 +294,7 @@
 								{/if}
 							</dd>
 						</dl>
-						
+
 						<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 							<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 							<dd>
@@ -157,15 +306,15 @@
 								{/if}
 							</dd>
 						</dl>
-						
+
 						<script data-relocate="true">
 							require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
 								{include file='passwordStrengthLanguage'}
-								
+
 								var relatedInputs = [];
 								if (elById('username')) relatedInputs.push(elById('username'));
 								if (elById('email')) relatedInputs.push(elById('email'));
-								
+
 								new PasswordStrength(elById('password'), {
 									relatedInputs: relatedInputs,
 									staticDictionary: [
@@ -179,15 +328,15 @@
 								});
 							})
 						</script>
-						
+
 						{event name='passwordFields'}
 					</section>
 				{/if}
-				
+
 				{if $action == 'edit' && $user->multifactorActive}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.acp.user.security.multifactor{/lang}</h2>
-						
+
 						<dl>
 							<dt>{lang}wcf.acp.user.security.multifactor{/lang}</dt>
 							<dd>
@@ -195,7 +344,7 @@
 								<small>{lang}wcf.acp.user.security.multifactor.active.description{/lang}</small>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt></dt>
 							<dd>
@@ -210,11 +359,11 @@
 					</section>
 				{/if}
 			{/if}
-			
+
 			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser') && $__wcf->user->userID != $userID}
 				<section class="section">
 					<h2 class="sectionTitle">{lang}wcf.acp.user.banUser{/lang}</h2>
-					
+
 					<dl>
 						<dt></dt>
 						<dd>
@@ -222,7 +371,7 @@
 							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>
 						</dd>
 					</dl>
-					
+
 					<dl>
 						<dt><label for="banReason">{lang}wcf.acp.user.banReason{/lang}</label></dt>
 						<dd>
@@ -230,12 +379,12 @@
 							<small>{lang}wcf.acp.user.banReason.description{/lang}</small>
 						</dd>
 					</dl>
-					
+
 					<dl>
 						<dt></dt>
 						<dd><label><input type="checkbox" id="banNeverExpires" name="banNeverExpires" value="1"{if !$banExpires} checked{/if}> {lang}wcf.acp.user.ban.neverExpires{/lang}</label></dd>
 					</dl>
-					
+
 					<dl id="banExpiresSetting">
 						<dt><label for="banExpires">{lang}wcf.acp.user.ban.expires{/lang}</label></dt>
 						<dd>
@@ -243,10 +392,10 @@
 							<small>{lang}wcf.acp.user.ban.expires.description{/lang}</small>
 						</dd>
 					</dl>
-					
+
 					{event name='banFields'}
 				</section>
-				
+
 				<script data-relocate="true">
 					$('#banned').change(function() {
 						if ($('#banned').is(':checked')) {
@@ -260,9 +409,9 @@
 							$('#banReason, #banNeverExpires, #banExpires').parents('dl').addClass('disabled');
 						}
 					});
-					
+
 					$('#banned').change();
-					
+
 					$('#banNeverExpires').change(function() {
 						if ($('#banNeverExpires').is(':checked')) {
 							$('#banExpiresSetting').hide();
@@ -271,20 +420,20 @@
 							$('#banExpiresSetting').show();
 						}
 					});
-					
+
 					$('#banNeverExpires').change();
 				</script>
 			{/if}
-			
+
 			{event name='sections'}
 		</div>
-		
+
 		{foreach from=$optionTree item=categoryLevel1}
 			<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContent hidden">
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
-						
+
 						{if $categoryLevel2[object]->categoryName == 'settings.general'}
 							{if $availableLanguages|count > 1}
 								<dl>
@@ -293,7 +442,7 @@
 										{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
 									</dd>
 								</dl>
-								
+
 								{if $availableContentLanguages|count > 1}
 									<dl>
 										<dt>
@@ -307,7 +456,7 @@
 									</dl>
 								{/if}
 							{/if}
-							
+
 							{if $action === 'edit' && $availableStyles|count > 1}
 								<dl>
 									<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
@@ -332,7 +481,7 @@
 								</dl>
 							{/if}
 						{/if}
-						
+
 						{if $categoryLevel2[object]->categoryName == 'profile.personal' && MODULE_USER_RANK}
 							<dl>
 								<dt><label for="userTitle">{lang}wcf.user.userTitle{/lang}</label></dt>
@@ -347,11 +496,11 @@
 								</dd>
 							</dl>
 						{/if}
-						
+
 						{event name='categoryFields'}
-						
+
 						{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.user.option.'}
-						
+
 						{if $categoryLevel2[categories]|count}
 							{foreach from=$categoryLevel2[categories] item=categoryLevel3}
 								{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.user.option.'}
@@ -361,12 +510,12 @@
 				{/foreach}
 			</div>
 		{/foreach}
-		
+
 		{if MODULE_USER_SIGNATURE}
 			<div id="signatureManagement" class="tabMenuContent hidden">
 				<section class="section">
 					<h2 class="sectionTitle">{lang}wcf.user.signature{/lang}</h2>
-					
+
 					<dl>
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
@@ -386,37 +535,37 @@
 									{/if}
 								</small>
 							{/if}
-							
+
 							{include file='wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>
-					
+
 					{event name='signatureFields'}
 				</section>
-				
+
 				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.acp.user.disableSignature{/lang}</h2>
-						
+
 						<dl>
 							<dt></dt>
 							<dd>
 								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1"{if $disableSignature == 1} checked{/if}> {lang}wcf.acp.user.disableSignature{/lang}</label>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt><label for="disableSignatureReason">{lang}wcf.acp.user.disableSignatureReason{/lang}</label></dt>
 							<dd>
 								<textarea name="disableSignatureReason" id="disableSignatureReason" cols="40" rows="10">{$disableSignatureReason}</textarea>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt></dt>
 							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1"{if !$disableSignatureExpires} checked{/if}> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
 						</dl>
-						
+
 						<dl id="disableSignatureExpiresSetting">
 							<dt><label for="disableSignatureExpiresExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
 							<dd>
@@ -424,10 +573,10 @@
 								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
 							</dd>
 						</dl>
-						
+
 						{event name='disableSignatureFields'}
 					</section>
-					
+
 					<script data-relocate="true">
 						$('#disableSignature').change(function() {
 							if ($('#disableSignature').is(':checked')) {
@@ -441,9 +590,9 @@
 								$('#disableSignatureReason, #disableSignatureNeverExpires, #disableSignatureExpires').parents('dl').addClass('disabled');
 							}
 						});
-						
+
 						$('#disableSignature').change();
-						
+
 						$('#disableSignatureNeverExpires').change(function() {
 							if ($('#disableSignatureNeverExpires').is(':checked')) {
 								$('#disableSignatureExpiresSetting').hide();
@@ -452,7 +601,7 @@
 								$('#disableSignatureExpiresSetting').show();
 							}
 						});
-						
+
 						$('#disableSignatureNeverExpires').change();
 					</script>
 				{/if}
@@ -460,19 +609,19 @@
 				{event name='signatureFieldsets'}
 			</div>
 		{/if}
-		
+
 		{if $action == 'edit'}
 			<div id="avatarForm" class="tabMenuContent hidden">
 				<section class="section avatarEdit">
 					<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
-					
+
 					<dl class="avatarType">
 						<dt></dt>
 						<dd>
 							<label><input type="radio" name="avatarType" value="none"{if $avatarType == 'none'} checked{/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
 						</dd>
 					</dl>
-					
+
 					<dl class="avatarType jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
 						<dt>
 							{if $avatarType == 'custom'}
@@ -483,10 +632,10 @@
 						</dt>
 						<dd>
 							<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
-							
+
 							{* placeholder for upload button: *}
 							<div class="avatarUploadButtonContainer"></div>
-							
+
 							{if $errorType[customAvatar]|isset}
 								<small class="innerError">
 									{if $errorType[customAvatar] == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -494,13 +643,13 @@
 							{/if}
 						</dd>
 					</dl>
-					
+
 					{if MODULE_GRAVATAR}
 						<dl class="avatarType{if $errorType[gravatar]|isset} formError{/if}">
 							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
 							<dd>
 								<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
-								
+
 								{if $errorType[gravatar]|isset}
 									<small class="innerError">
 										{if $errorType[gravatar] == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}
@@ -509,33 +658,33 @@
 							</dd>
 						</dl>
 					{/if}
-					
+
 					{event name='avatarFields'}
 				</section>
-				
+
 				{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.acp.user.disableAvatar{/lang}</h2>
-						
+
 						<dl>
 							<dt></dt>
 							<dd>
 								<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1"{if $disableAvatar == 1} checked{/if}> {lang}wcf.acp.user.disableAvatar{/lang}</label>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt><label for="disableAvatarReason">{lang}wcf.acp.user.disableAvatarReason{/lang}</label></dt>
 							<dd>
 								<textarea name="disableAvatarReason" id="disableAvatarReason" cols="40" rows="10">{$disableAvatarReason}</textarea>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt></dt>
 							<dd><label><input type="checkbox" id="disableAvatarNeverExpires" name="disableAvatarNeverExpires" value="1"{if !$disableAvatarExpires} checked{/if}> {lang}wcf.acp.user.disableAvatar.neverExpires{/lang}</label></dd>
 						</dl>
-						
+
 						<dl id="disableAvatarExpiresSetting">
 							<dt><label for="disableAvatarExpiresExpires">{lang}wcf.acp.user.disableAvatar.expires{/lang}</label></dt>
 							<dd>
@@ -543,10 +692,10 @@
 								<small>{lang}wcf.acp.user.disableAvatar.expires.description{/lang}</small>
 							</dd>
 						</dl>
-						
+
 						{event name='disableAvatarFields'}
 					</section>
-					
+
 					<script data-relocate="true">
 						$('#disableAvatar').change(function() {
 							if ($('#disableAvatar').is(':checked')) {
@@ -560,9 +709,9 @@
 								$('#disableAvatarReason, #disableAvatarNeverExpires, #disableAvatarExpires').parents('dl').addClass('disabled');
 							}
 						});
-						
+
 						$('#disableAvatar').change();
-						
+
 						$('#disableAvatarNeverExpires').change(function() {
 							if ($('#disableAvatarNeverExpires').is(':checked')) {
 								$('#disableAvatarExpiresSetting').hide();
@@ -571,11 +720,11 @@
 								$('#disableAvatarExpiresSetting').show();
 							}
 						});
-						
+
 						$('#disableAvatarNeverExpires').change();
 					</script>
 				{/if}
-				
+
 				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true">
@@ -588,21 +737,21 @@
 							'wcf.user.avatar.upload.error.badImage': '{jslang}wcf.user.avatar.upload.error.badImage{/jslang}',
 							'wcf.user.avatar.upload.success': '{jslang}wcf.user.avatar.upload.success{/jslang}'
 						});
-						
+
 						new WCF.User.Avatar.Upload({@$user->userID});
 					});
 				</script>
-				
+
 				{event name='avatarFieldsets'}
 			</div>
-			
+
 			<div id="coverPhotoForm" class="tabMenuContent hidden">
 				<section class="section">
 					<header class="sectionHeader">
 						<h2 class="sectionTitle">{lang}wcf.user.coverPhoto{/lang}</h2>
 						<p class="sectionDescription">{lang}wcf.acp.user.coverPhoto.description{/lang}</p>
 					</header>
-					
+
 					{if $userCoverPhoto}
 						<dl>
 							<dt></dt>
@@ -610,7 +759,7 @@
 								<div id="coverPhotoPreview" style="background-image: url({$userCoverPhoto->getURL()})"></div>
 							</dd>
 						</dl>
-					
+
 						{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
 							<dl>
 								<dt></dt>
@@ -622,33 +771,33 @@
 					{else}
 						<p class="info">{lang}wcf.user.coverPhoto.noImage{/lang}</p>
 					{/if}
-					
+
 					{event name='coverPhotoFields'}
 				</section>
-				
+
 				{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.acp.user.disableCoverPhoto{/lang}</h2>
-						
+
 						<dl>
 							<dt></dt>
 							<dd>
 								<label><input type="checkbox" id="disableCoverPhoto" name="disableCoverPhoto" value="1"{if $disableCoverPhoto == 1} checked{/if}> {lang}wcf.acp.user.disableCoverPhoto{/lang}</label>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt><label for="disableCoverPhotoReason">{lang}wcf.acp.user.disableCoverPhoto.reason{/lang}</label></dt>
 							<dd>
 								<textarea name="disableCoverPhotoReason" id="disableCoverPhotoReason" cols="40" rows="10">{$disableCoverPhotoReason}</textarea>
 							</dd>
 						</dl>
-						
+
 						<dl>
 							<dt></dt>
 							<dd><label><input type="checkbox" id="disableCoverPhotoNeverExpires" name="disableCoverPhotoNeverExpires" value="1"{if !$disableCoverPhotoExpires} checked{/if}> {lang}wcf.acp.user.disableCoverPhoto.neverExpires{/lang}</label></dd>
 						</dl>
-						
+
 						<dl id="disableCoverPhotoExpiresSetting">
 							<dt><label for="disableCoverPhotoExpires">{lang}wcf.acp.user.disableCoverPhoto.expires{/lang}</label></dt>
 							<dd>
@@ -656,10 +805,10 @@
 								<small>{lang}wcf.acp.user.disableCoverPhoto.expires.description{/lang}</small>
 							</dd>
 						</dl>
-						
+
 						{event name='disableAvatarFields'}
 					</section>
-					
+
 					<script data-relocate="true">
 						$('#disableCoverPhoto').change(function() {
 							if ($('#disableCoverPhoto').is(':checked')) {
@@ -673,9 +822,9 @@
 								$('#disableCoverPhotoReason, #disableCoverPhotoNeverExpires, #disableCoverPhotoExpires').parents('dl').addClass('disabled');
 							}
 						});
-						
+
 						$('#disableCoverPhoto').change();
-						
+
 						$('#disableCoverPhotoNeverExpires').change(function() {
 							if ($('#disableCoverPhotoNeverExpires').is(':checked')) {
 								$('#disableCoverPhotoExpiresSetting').hide();
@@ -684,19 +833,19 @@
 								$('#disableCoverPhotoExpiresSetting').show();
 							}
 						});
-						
+
 						$('#disableCoverPhotoNeverExpires').change();
 					</script>
 				{/if}
-				
+
 				{event name='coverPhotoFieldsets'}
 			</div>
 		{/if}
-		
+
 		{event name='tabMenuContent'} {* deprecated event *}
 		{event name='tabMenuContents'}
 	</div>
-	
+
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{csrfToken}
@@ -712,13 +861,13 @@
 				icon.className = 'icon icon16 fa-shield jsTooltip';
 				icon.title = '{jslang}wcf.acp.group.type.owner{/jslang}';
 				input.parentNode.appendChild(icon);
-				
+
 				{if $user->userID == $__wcf->user->userID}
 					var shadow = elCreate('input');
 					shadow.name = input.name;
 					shadow.type = 'hidden';
 					shadow.value = input.value;
-					
+
 					input.parentNode.appendChild(shadow);
 					input.disabled = true;
 				{/if}

@@ -9,14 +9,16 @@
  */
 
 import AcpUserContentRemoveHandler from "./Content/Remove/Handler";
-import * as Ajax from "../../../Ajax";
 import * as Core from "../../../Core";
 import * as EventHandler from "../../../Event/Handler";
 import * as Language from "../../../Language";
-import * as UiNotification from "../../../Ui/Notification";
 import UiDropdownSimple from "../../../Ui/Dropdown/Simple";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../../Ajax/Data";
 import DomUtil from "../../../Dom/Util";
+import SendNewPasswordAction from "./Action/SendNewPasswordAction";
+import ToggleConfirmEmailAction from "./Action/ToggleConfirmEmailAction";
+import DisableAction from "./Action/DisableAction";
+import BanAction from "./Action/BanAction";
+import DeleteAction from "./Action/DeleteAction";
 
 interface RefreshUsersData {
   userIds: number[];
@@ -64,80 +66,34 @@ class AcpUiUserEditor {
       });
     }
 
-    const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword") as HTMLAnchorElement;
-    if (sendNewPassword !== null) {
-      sendNewPassword.addEventListener("click", (event) => {
-        event.preventDefault();
-
-        // emulate clipboard selection
-        EventHandler.fire("com.woltlab.wcf.clipboard", "com.woltlab.wcf.user", {
-          data: {
-            actionName: "com.woltlab.wcf.user.sendNewPassword",
-            parameters: {
-              confirmMessage: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
-              objectIDs: [userId],
-            },
-          },
-          responseData: {
-            actionName: "com.woltlab.wcf.user.sendNewPassword",
-            objectIDs: [userId],
-          },
-        });
-      });
-    }
-
-    const deleteContent = dropdownMenu.querySelector(".jsDeleteContent") as HTMLAnchorElement;
+    const deleteContent = dropdownMenu.querySelector(".jsDeleteContent");
     if (deleteContent !== null) {
-      new AcpUserContentRemoveHandler(deleteContent, userId);
+      new AcpUserContentRemoveHandler(deleteContent as HTMLAnchorElement, userId);
     }
 
-    const toggleConfirmEmail = dropdownMenu.querySelector(".jsConfirmEmailToggle") as HTMLAnchorElement;
+    const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword");
+    if (sendNewPassword !== null) {
+      new SendNewPasswordAction(sendNewPassword as HTMLAnchorElement, userId, userRow);
+    }
+
+    const toggleConfirmEmail = dropdownMenu.querySelector(".jsConfirmEmailToggle");
     if (toggleConfirmEmail !== null) {
-      toggleConfirmEmail.addEventListener("click", (event) => {
-        event.preventDefault();
+      new ToggleConfirmEmailAction(toggleConfirmEmail as HTMLAnchorElement, userId, userRow);
+    }
 
-        Ajax.api(
-          {
-            _ajaxSetup: () => {
-              const isEmailConfirmed = Core.stringToBool(userRow.dataset.emailConfirmed!);
+    const enableUser = dropdownMenu.querySelector(".jsEnable");
+    if (enableUser !== null) {
+      new DisableAction(enableUser as HTMLAnchorElement, userId, userRow);
+    }
 
-              return {
-                data: {
-                  actionName: (isEmailConfirmed ? "un" : "") + "confirmEmail",
-                  className: "wcf\\data\\user\\UserAction",
-                  objectIDs: [userId],
-                },
-              };
-            },
-          } as AjaxCallbackObject,
-          undefined,
-          (data: DatabaseObjectActionResponse) => {
-            document.querySelectorAll(".jsUserRow").forEach((userRow: HTMLTableRowElement) => {
-              const userId = ~~userRow.dataset.objectId!;
-              if (data.objectIDs.includes(userId)) {
-                const confirmEmailButton = dropdownMenu.querySelector(".jsConfirmEmailToggle") as HTMLAnchorElement;
+    const banUser = dropdownMenu.querySelector(".jsBan");
+    if (banUser !== null) {
+      new BanAction(banUser as HTMLAnchorElement, userId, userRow);
+    }
 
-                switch (data.actionName) {
-                  case "confirmEmail":
-                    userRow.dataset.emailConfirmed = "true";
-                    confirmEmailButton.textContent = confirmEmailButton.dataset.unconfirmEmailMessage!;
-                    break;
-
-                  case "unconfirmEmail":
-                    userRow.dataset.emailEonfirmed = "false";
-                    confirmEmailButton.textContent = confirmEmailButton.dataset.confirmEmailMessage!;
-                    break;
-
-                  default:
-                    throw new Error("Unreachable");
-                }
-              }
-            });
-
-            UiNotification.show();
-          },
-        );
-      });
+    const deleteUser = dropdownMenu.querySelector(".jsDelete");
+    if (deleteUser !== null) {
+      new DeleteAction(deleteUser as HTMLAnchorElement, userId, userRow);
     }
   }
 
@@ -150,14 +106,7 @@ class AcpUiUserEditor {
 
     // inject buttons
     const items: HTMLLIElement[] = [];
-    let deleteButton: HTMLAnchorElement | null = null;
     Array.from(legacyButtonContainer.children).forEach((button: HTMLAnchorElement) => {
-      if (button.classList.contains("jsObjectAction") && button.dataset.objectAction === "delete") {
-        deleteButton = button;
-
-        return;
-      }
-
       const item = document.createElement("li");
       item.className = "jsLegacyItem";
       item.innerHTML = '<a href="#"></a>';
@@ -181,15 +130,6 @@ class AcpUiUserEditor {
     items.forEach((item) => {
       dropdownMenu.insertAdjacentElement("afterbegin", item);
     });
-
-    if (deleteButton !== null) {
-      const dispatchDeleteButton = dropdownMenu.querySelector(".jsDispatchDelete") as HTMLAnchorElement;
-      dispatchDeleteButton.addEventListener("click", (event) => {
-        event.preventDefault();
-
-        deleteButton!.click();
-      });
-    }
 
     // check if there are visible items before each divider
     const listItems = Array.from(dropdownMenu.children) as HTMLElement[];
