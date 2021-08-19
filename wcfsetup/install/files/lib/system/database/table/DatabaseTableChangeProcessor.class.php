@@ -1199,7 +1199,7 @@ class DatabaseTableChangeProcessor
 
                         foreach ($table->getIndices() as $index) {
                             foreach ($existingIndices as $existingIndex) {
-                                if (empty(\array_diff($index->getData(), $existingIndex->getData()))) {
+                                if (empty(\array_diff_assoc($index->getData(), $existingIndex->getData()))) {
                                     if ($index->willBeDropped()) {
                                         if ($this->getIndexPackageID($table, $index) !== $this->package->packageID) {
                                             $errors[] = [
