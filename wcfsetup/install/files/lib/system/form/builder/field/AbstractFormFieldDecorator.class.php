@@ -9,7 +9,8 @@ use wcf\system\form\builder\field\validation\IFormFieldValidator;
 use wcf\system\form\builder\IFormParentNode;
 
 /**
- * Decorator for form field objects.
+ * Default implementation of a decorator for an `IFormField` that forwards all methods defined
+ * in the interface to the implementation of the decorated field.
  *
  * @author  Peter Lohse
  * @copyright   2001-2021 WoltLab GmbH
@@ -20,18 +21,10 @@ use wcf\system\form\builder\IFormParentNode;
 abstract class AbstractFormFieldDecorator implements IFormField
 {
     /**
-     * decorated field
-     *
      * @var IFormField
      */
     protected $field;
 
-    /**
-     * Creates a decorator object for form fields
-     *
-     * @param  IFormField $field
-     * @return void
-     */
     public function __construct(IFormField $field)
     {
         $this->field = $field;
@@ -446,7 +439,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     /**
-     * @inheritDoc
+     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
      */
     public static function create($id)
     {
@@ -454,7 +447,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     /**
-     * @inheritDoc
+     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
      */
     public static function validateAttribute($name)
     {
@@ -462,7 +455,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     /**
-     * @inheritDoc
+     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
      */
     public static function validateClass($class)
     {
@@ -470,7 +463,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     /**
-     * @inheritDoc
+     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
      */
     public static function validateId($id)
     {
