@@ -88,8 +88,10 @@
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain Configuration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.management.domainName.description"><![CDATA[Provide the domain name excluding any protocol or path, for example “www.example.com”.]]></item>
+		<item name="wcf.acp.application.management.domainName.error.containsPath"><![CDATA[Please only provide the domain without protocol or path.]]></item>
 		<item name="wcf.acp.application.management.cookieDomain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.application.management.cookieDomain.description"><![CDATA[The cookie domain must match the provided domain. When in doubt simply provide the same value that you have entered for “Domain”.]]></item>
+		<item name="wcf.acp.application.management.cookieDomain.error.containsPath"><![CDATA[Please only provide the domain without protocol or path.]]></item>
 	</category>
 	<category name="wcf.acp.article">
 		<item name="wcf.acp.article.add"><![CDATA[Add Article]]></item>

@@ -123,17 +123,19 @@ abstract class AbstractOauth2Action extends AbstractAction
      */
     protected function validateState()
     {
-        if (!isset($_GET['state'])) {
-            throw new StateValidationException('Missing state parameter');
+        try {
+            if (!isset($_GET['state'])) {
+                throw new StateValidationException('Missing state parameter');
+            }
+            if (!($sessionState = WCF::getSession()->getVar(self::STATE))) {
+                throw new StateValidationException('Missing state in session');
+            }
+            if (!\hash_equals($sessionState, (string)$_GET['state'])) {
+                throw new StateValidationException('Mismatching state');
+            }
+        } finally {
+            WCF::getSession()->unregister(self::STATE);
         }
-        if (!($sessionState = WCF::getSession()->getVar(self::STATE))) {
-            throw new StateValidationException('Missing state in session');
-        }
-        if (!\hash_equals($sessionState, (string)$_GET['state'])) {
-            throw new StateValidationException('Mismatching state');
-        }
-
-        WCF::getSession()->unregister(self::STATE);
     }
 
     /**

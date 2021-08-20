@@ -295,11 +295,31 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             $userProfiles = new UserProfileList();
             $userProfiles->getConditionBuilder()->add("user_table.userID IN (?)", [$userIDs]);
             $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHash IS NOT NULL");
+            $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHasWebP = ?", [0]);
             $userProfiles->readObjects();
             foreach ($userProfiles as $userProfile) {
+                $editor = new UserEditor($userProfile->getDecoratedObject());
                 $coverPhoto = $userProfile->getCoverPhoto(true);
+
+                // If neither the regular, nor the WebP variant is readable then the
+                // cover photo is missing and we must clear the database information.
+                if (
+                    !\is_readable($coverPhoto->getLocation(false))
+                    && !\is_readable($coverPhoto->getLocation(true))
+                ) {
+                    $editor->update([
+                        'coverPhotoHash' => null,
+                        'coverPhotoExtension' => '',
+                    ]);
+
+                    continue;
+                }
+
                 if ($coverPhoto instanceof IWebpUserCoverPhoto) {
                     $coverPhoto->createWebpVariant();
+                    $editor->update([
+                        'coverPhotoHasWebP' => 1,
+                    ]);
                 }
             }
         }
