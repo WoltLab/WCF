@@ -115,10 +115,6 @@ class UserCoverPhoto implements IWebpUserCoverPhoto
         }
 
         $sourceLocation = $this->getLocation($this->coverPhotoExtension === 'webp');
-        if (!\is_readable($sourceLocation)) {
-            return;
-        }
-        
         $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $sourceLocation);
 
         return ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
