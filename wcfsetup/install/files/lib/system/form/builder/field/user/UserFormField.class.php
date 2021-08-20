@@ -151,7 +151,7 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 					]
 				));
 			}
-			else {
+			else if ($this->getValue() !== null) {
 				// validate users
 				$this->users = UserProfile::getUserProfilesByUsername($this->getValue());
 				
@@ -171,7 +171,7 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 				}
 			}
 		}
-		else if ($this->getValue() !== '') {
+		else if ($this->getValue() !== null && $this->getValue() !== '') {
 			$user = UserProfile::getUserProfileByUsername($this->getValue());
 			
 			if ($user === null) {
