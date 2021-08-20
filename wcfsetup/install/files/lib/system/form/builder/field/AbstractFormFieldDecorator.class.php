@@ -25,7 +25,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
      * @var IFormField
      */
     protected $field;
-    
+
     /**
      * Creates a decorator object for form fields
      *
