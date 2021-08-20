@@ -297,9 +297,13 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHash IS NOT NULL");
             $userProfiles->readObjects();
             foreach ($userProfiles as $userProfile) {
+                $editor = new UserEditor($userProfile->getDecoratedObject());
                 $coverPhoto = $userProfile->getCoverPhoto(true);
                 if ($coverPhoto instanceof IWebpUserCoverPhoto) {
                     $coverPhoto->createWebpVariant();
+                    $editor->update([
+                        'coverPhotoHasWebP' => 1,
+                    ]);
                 }
             }
         }
