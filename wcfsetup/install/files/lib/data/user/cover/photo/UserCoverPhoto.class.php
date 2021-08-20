@@ -114,7 +114,7 @@ class UserCoverPhoto implements IWebpUserCoverPhoto
             return;
         }
 
-        $sourceLocation = WCF_DIR . 'images/coverPhotos/' . $this->getFilename($this->coverPhotoExtension === 'webp');
+        $sourceLocation = $this->getLocation($this->coverPhotoExtension === 'webp');
         $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $sourceLocation);
 
         return ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
