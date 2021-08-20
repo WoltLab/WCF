@@ -295,6 +295,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             $userProfiles = new UserProfileList();
             $userProfiles->getConditionBuilder()->add("user_table.userID IN (?)", [$userIDs]);
             $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHash IS NOT NULL");
+            $userProfiles->getConditionBuilder()->add("user_table.coverPhotoHasWebP = ?", [0]);
             $userProfiles->readObjects();
             foreach ($userProfiles as $userProfile) {
                 $editor = new UserEditor($userProfile->getDecoratedObject());
