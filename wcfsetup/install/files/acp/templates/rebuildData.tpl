@@ -32,6 +32,10 @@
 	</nav>
 </header>
 
+{if !OFFLINE}
+	<p class="warning">{lang}wcf.acp.rebuildData.offline{/lang}</p>
+{/if}
+
 {event name='afterContentHeader'}
 
 <section class="section">

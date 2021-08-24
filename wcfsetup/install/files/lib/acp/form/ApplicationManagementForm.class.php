@@ -9,6 +9,7 @@ use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -205,6 +206,7 @@ final class ApplicationManagementForm extends AbstractForm
 
         // Reset caches to reflect the new landing pages.
         ApplicationCacheBuilder::getInstance()->reset();
+        PageCacheBuilder::getInstance()->reset();
         RoutingCacheBuilder::getInstance()->reset();
 
         // Reload the applications to update the selected landing page id.
