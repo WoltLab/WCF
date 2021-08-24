@@ -199,10 +199,6 @@ class HtmlInputNodeTextParser
             $node = $nodes[$i];
             $oldValue = $value = $node->textContent;
 
-            if (!empty($users) || !empty($groups)) {
-                $value = $this->parseMention($node, $value, $users, $groups);
-            }
-
             if ($allowURL || $allowMedia) {
                 $value = $this->parseURL($node, $value, $allowURL, $allowMedia);
             }
@@ -213,6 +209,10 @@ class HtmlInputNodeTextParser
 
             if (MODULE_SMILEY && $this->smileyCount !== 50) {
                 $value = $this->parseSmiley($node, $value);
+            }
+
+            if (!empty($users) || !empty($groups)) {
+                $value = $this->parseMention($node, $value, $users, $groups);
             }
 
             if ($value !== $oldValue) {
