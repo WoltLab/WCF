@@ -1304,8 +1304,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Under the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLong"><![CDATA[The entered text is too long.]]></item>
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame (deprecated)]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[The option to control embedding within a frame is deprecated, will be removed in a future version and embedding will be prevented in all cases. Allowing embedding reduces security by allowing <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking attacks</a> to happen. In addition certain security features for cookies are not available within frames.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
