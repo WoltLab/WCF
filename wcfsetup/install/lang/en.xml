@@ -356,8 +356,8 @@
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Unable to find a valid installation located at the path you have provided.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Behavior for colliding user accounts]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[Merge users with same email address]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.5"><![CDATA[Merge users with same username or same email address]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[Merge user accounts with same email address]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.5"><![CDATA[Merge user accounts with same username or same email address]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[User profile fields]]></item>
@@ -3497,7 +3497,7 @@ Attachments:
 	<category name="wcf.acp.content">
 		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User’s Content]]></item>
 		<item name="wcf.acp.content.provider.removeContentSectionTitle"><![CDATA[Content]]></item>
-		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Select which types of content created by {if $users|count == 1}“<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>”{else}{#$users|count} users{/if} should be deleted.]]></item>
+		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Select which content of {if $users|count == 1}“<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>”{else}{#$users|count} users{/if} should be deleted.]]></item>
 		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Attention</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.comment"><![CDATA[Comments]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Responses]]></item>

@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
     const objectSelector = ".jsObjectActionObject[data-object-id]";
     const actionSelector = ".jsObjectAction[data-object-action]";
     function executeAction(event) {
+        event.preventDefault();
         const actionElement = event.currentTarget;
         const objectAction = actionElement.dataset.objectAction;
         // To support additional actions added by plugins, action elements can override the default object

@@ -8,6 +8,7 @@ use wcf\data\menu\Menu;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
@@ -66,6 +67,18 @@ class MenuItemEditForm extends MenuItemAddForm
                     $this->pageHandlers[$pageNode->pageID] = $pageNode->requireObjectID;
                 }
             }
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validate()
+    {
+        parent::validate();
+
+        if ($this->parentItemID == $this->itemID) {
+            throw new UserInputException('parentItemID');
         }
     }
 
