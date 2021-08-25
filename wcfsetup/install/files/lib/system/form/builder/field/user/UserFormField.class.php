@@ -137,13 +137,14 @@ class UserFormField extends AbstractFormField implements
      */
     public function validate()
     {
-        if (
-            $this->isRequired() && (
-                ($this->getValue() === null || $this->getValue() === '')
+        if ($this->isRequired()) {
+            if (
+                $this->getValue() === null
+                || $this->getValue() === ''
                 || (\is_array($this->getValue()) && empty($this->getValue()))
-            )
-        ) {
-            $this->addValidationError(new FormFieldValidationError('empty'));
+            ) {
+                $this->addValidationError(new FormFieldValidationError('empty'));
+            }
         }
 
         if ($this->allowsMultiple()) {
