@@ -22,7 +22,7 @@ const actionSelector = ".jsObjectAction[data-object-action]";
 
 function executeAction(event: Event): void {
   event.preventDefault();
-  
+
   const actionElement = event.currentTarget as HTMLElement;
   const objectAction = actionElement.dataset.objectAction!;
 
