@@ -95,11 +95,7 @@ class UserFormField extends AbstractFormField implements
                 'multipleUsers',
                 function (IFormDocument $document, array $parameters) {
                     if ($this->checkDependencies()) {
-                        $parameters[$this->getObjectProperty()] = \array_values(
-                            \array_map(static function (UserProfile $user) {
-                                return $user->userID;
-                            }, $this->getUsers())
-                        );
+                        $parameters[$this->getObjectProperty()] = \array_column($this->getUsers(), 'userID');
                     }
 
                     return $parameters;
