@@ -10,6 +10,7 @@
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
+		<file>acp/dereferrer.php</file>
 		<file>acp/images/acpLogo.png</file>
 		<file>acp/images/blueTemptation/blueTemptationHeader.png</file>
 		<file>acp/images/wcfLogo-small.png</file>
@@ -36,11 +37,12 @@
 		<file>acp/style/testing-reset.css</file>
 		<file>acp/style/wcf.css</file>
 		<file>acp/style/wcfAcp.css</file>
-		<file>acp/dereferrer.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_2.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_3.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</file>
 		<file>acp/update_4.0.0_b1.php</file>
+		<file>acp/update_5.4_db.php</file>
+		<file>acp/update_5.4_removeFiles.php</file>
 		<file>acp/update_accessibleGroups_com.woltlab.wcf_2.1.0_rc_2.php</file>
 		<file>acp/update_b4.php</file>
 		<file>acp/update_b5.php</file>
@@ -91,17 +93,33 @@
 		<file>acp/update_com.woltlab.wcf_5.3_preUpdate.php</file>
 		<file>acp/update_com.woltlab.wcf_5.3_sitemaps.php</file>
 		<file>acp/update_com.woltlab.wcf_5.3_style.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4.2_deleteInvalidSessions.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_db.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_migrate_multifactor.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_migrate_rank_images.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_removeFiles.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_2_user_session.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_3_drop_virtual.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_4_clean_acp_session.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_4_clean_session.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_4_drop_acp.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_4_drop_virtual.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_5_clean_session.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_5_drop_acp.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_session_6_clean_session.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_styleCoverPhoto.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_updateStyle.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_update_google_font.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step1.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_clearPackageCompatibility.php</file>
 		<file>acp/update_com.woltlab.wcf_beta1_to_beta2.php</file>
 		<file>acp/update_com.woltlab.wcf_embeddedObjectOrphans.php</file>
 		<file>acp/update_com.woltlab.wcf_preventMailAbuse.php</file>
@@ -109,16 +127,6 @@
 		<file>acp/update_rc1.php</file>
 		<file>acp/update_rc3.php</file>
 		<file>cache/templateListener/.htaccess</file>
-		<file>font/families/Open Sans/OpenSans-Bold.woff2</file>
-		<file>font/families/Open Sans/OpenSans-BoldItalic.woff2</file>
-		<file>font/families/Open Sans/OpenSans-ExtraBold.woff2</file>
-		<file>font/families/Open Sans/OpenSans-ExtraBoldItalic.woff2</file>
-		<file>font/families/Open Sans/OpenSans-Italic.woff2</file>
-		<file>font/families/Open Sans/OpenSans-Light.woff2</file>
-		<file>font/families/Open Sans/OpenSans-LightItalic.woff2</file>
-		<file>font/families/Open Sans/OpenSans-Regular.woff2</file>
-		<file>font/families/Open Sans/OpenSans-SemiBold.woff2</file>
-		<file>font/families/Open Sans/OpenSans-SemiBoldItalic.woff2</file>
 		<file>font/fontawesome-webfont.svg</file>
 		<file>icon/add.svg</file>
 		<file>icon/add1.svg</file>
@@ -1083,8 +1091,9 @@
 		<file>js/WCF.Core.min.js</file>
 		<file>js/WCF.ImageViewer.min.js</file>
 		<file>js/WCF.Label.min.js</file>
-		<file>js/WCF.Like</file>
+		<file>js/WCF.Like.js</file>
 		<file>js/WCF.Like.min.js</file>
+		<file>js/WCF.Like</file>
 		<file>js/WCF.Location.min.js</file>
 		<file>js/WCF.Message.min.js</file>
 		<file>js/WCF.Moderation.min.js</file>
@@ -1101,9 +1110,11 @@
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Image/Upload.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Dialog/Ban.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
+		<file>js/WoltLabSuite/Core/Controller/ClipboardData.js</file>
 		<file>js/WoltLabSuite/Core/Core.ts</file>
 		<file>js/WoltLabSuite/Core/Dictionary.ts</file>
 		<file>js/WoltLabSuite/Core/File/Util.js</file>
@@ -1417,6 +1428,7 @@
 		<file>lib/system/api/guzzlehttp/guzzle/Dockerfile</file>
 		<file>lib/system/api/guzzlehttp/guzzle/src/Exception/SeekException.php</file>
 		<file>lib/system/api/guzzlehttp/guzzle/src/UriTemplate.php</file>
+		<file>lib/system/api/guzzlehttp/promises/.php_cs.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan-baseline.neon</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan.neon.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/psalm.xml</file>
@@ -1427,11 +1439,40 @@
 		<file>lib/system/api/guzzlehttp/psr7/.php_cs.dist</file>
 		<file>lib/system/api/guzzlehttp/psr7/src/functions.php</file>
 		<file>lib/system/api/guzzlehttp/psr7/src/functions_include.php</file>
+		<file>lib/system/api/leafo/scssphp/LICENSE.md</file>
+		<file>lib/system/api/leafo/scssphp/README.md</file>
+		<file>lib/system/api/leafo/scssphp/bin/pscss</file>
 		<file>lib/system/api/leafo/scssphp/composer.json</file>
 		<file>lib/system/api/leafo/scssphp/example/Server.php</file>
+		<file>lib/system/api/leafo/scssphp/scss.inc.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Base/Range.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Block.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Colors.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Compiler.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Compiler/Environment.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Exception/CompilerException.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Exception/ParserException.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Exception/RangeException.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Exception/ServerException.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter/Compact.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter/Compressed.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter/Crunched.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter/Debug.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter/Expanded.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Formatter/Nested.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Formatter/OutputBlock.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Node.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Node/Number.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Parser.php</file>
+		<file>lib/system/api/leafo/scssphp/src/SourceMap/Base64.php</file>
+		<file>lib/system/api/leafo/scssphp/src/SourceMap/Base64VLQ.php</file>
 		<file>lib/system/api/leafo/scssphp/src/SourceMap/Base64VLQEncoder.php</file>
+		<file>lib/system/api/leafo/scssphp/src/SourceMap/SourceMapGenerator.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Type.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Util.php</file>
+		<file>lib/system/api/leafo/scssphp/src/Version.php</file>
+		<file>lib/system/api/paragonie/random_compat/LICENSE</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
@@ -1453,7 +1494,11 @@
 		<file>lib/system/api/pelago/emogrifier/config/phpmd.xml</file>
 		<file>lib/system/api/pelago/emogrifier/phpcs.xml.dist</file>
 		<file>lib/system/api/pelago/emogrifier/src/Emogrifier.php</file>
+		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/CssConcatenator.php</file>
+		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/CssInliner.php</file>
 		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/HtmlProcessor/AbstractHtmlProcessor.php</file>
+		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/HtmlProcessor/CssToAttributeConverter.php</file>
+		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/HtmlProcessor/HtmlNormalizer.php</file>
 		<file>lib/system/api/pelago/emogrifier/tests/Support/Traits/AssertCss.php</file>
 		<file>lib/system/api/pelago/emogrifier/tests/Unit/CssInlinerTest.php</file>
 		<file>lib/system/api/pelago/emogrifier/tests/Unit/Emogrifier/CssConcatenatorTest.php</file>
@@ -1665,6 +1710,7 @@
 		<file>lib/system/auth/UserAuthEmail.class.php</file>
 		<file>lib/system/background/job/DownloadRankImageJob.class.php</file>
 		<file>lib/system/background/job/DownloadStyleLogoJob.class.php</file>
+		<file>lib/system/background/job/UnfurlUrlJob.class.php</file>
 		<file>lib/system/bbcode/CodeBBCode.class.php</file>
 		<file>lib/system/bbcode/HtmlBBCode.class.php</file>
 		<file>lib/system/bbcode/ImageBBCode.class.php</file>
@@ -1758,6 +1804,9 @@
 		<file>lib/system/menu/page/IPageMenuItemProvider.class.php</file>
 		<file>lib/system/menu/page/PageMenu.class.php</file>
 		<file>lib/system/message/MessageFormSettingsHandler.class.php</file>
+		<file>lib/system/message/unfurl/DownloadFailed.class.php</file>
+		<file>lib/system/message/unfurl/ParsingFailed.class.php</file>
+		<file>lib/system/message/unfurl/UrlInaccessible.class.php</file>
 		<file>lib/system/option/CustomselectOptionType.class.php</file>
 		<file>lib/system/option/PageMultiSelectOptionType.class.php</file>
 		<file>lib/system/option/PageSelectOptionType.class.php</file>
@@ -1827,6 +1876,7 @@
 		<file>lib/system/user/authentication/UserLoggedIn.class.php</file>
 		<file>lib/system/user/authentication/UserMultifactorRequested.class.php</file>
 		<file>lib/system/user/authentication/UserMultifactorSucceeded.class.php</file>
+		<file>lib/system/user/authentication/password/algorithm/Invalid.php</file>
 		<file>lib/system/user/collapsible/content/ICollapsibleContentAction.class.php</file>
 		<file>lib/system/user/collapsible/content/UserCollapsibleSidebarHandler.class.php</file>
 		<file>lib/system/user/notification/object/CommentResponseLikeUserNotificationObject.class.php</file>
@@ -1938,5 +1988,425 @@
 		<file>style/variables.less</file>
 		<file>style/wbb.less</file>
 		<file>style/wcf.less</file>
+		<file>ts/WoltLabSuite/Core/Acp/Bootstrap.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Bootstrap.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Instructions.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Instructions.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/RequiredPackages.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/RequiredPackages.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Article/Add.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Article/Add.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Article/InlineEditor.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Article/InlineEditor.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Add.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Add.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Copy.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Copy.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Box/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/CodeMirror/Media.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/CodeMirror/Media.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/CodeMirror/Page.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/CodeMirror/Page.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Notification/Test.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Notification/Test.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/Installation/Confirmation.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/Installation/Confirmation.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/Sync.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Devtools/Project/Sync.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Option/EmailSmtpTest.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Option/EmailSmtpTest.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Option/RewriteGenerator.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Option/RewriteGenerator.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Option/RewriteTest.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Option/RewriteTest.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Package/Search.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Package/Search.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/Add.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/Add.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/BoxOrder.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/BoxOrder.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/Copy.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/Copy.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/Menu.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Page/Menu.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Style/Editor.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Style/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Template/Group/Copy.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Template/Group/Copy.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Trophy/Badge.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Trophy/Badge.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Trophy/Upload.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Trophy/Upload.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/User/Editor.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/User/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Worker.js</file>
+		<file>ts/WoltLabSuite/Core/Acp/Ui/Worker.ts</file>
+		<file>ts/WoltLabSuite/Core/Ajax.ts</file>
+		<file>ts/WoltLabSuite/Core/Ajax/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Ajax/Jsonp.ts</file>
+		<file>ts/WoltLabSuite/Core/Ajax/Request.ts</file>
+		<file>ts/WoltLabSuite/Core/Ajax/Status.ts</file>
+		<file>ts/WoltLabSuite/Core/BackgroundQueue.ts</file>
+		<file>ts/WoltLabSuite/Core/Bbcode/Code.js</file>
+		<file>ts/WoltLabSuite/Core/Bbcode/Code.ts</file>
+		<file>ts/WoltLabSuite/Core/Bbcode/Collapsible.js</file>
+		<file>ts/WoltLabSuite/Core/Bbcode/Collapsible.ts</file>
+		<file>ts/WoltLabSuite/Core/Bbcode/Spoiler.js</file>
+		<file>ts/WoltLabSuite/Core/Bbcode/Spoiler.ts</file>
+		<file>ts/WoltLabSuite/Core/Bootstrap.js</file>
+		<file>ts/WoltLabSuite/Core/Bootstrap.ts</file>
+		<file>ts/WoltLabSuite/Core/BootstrapFrontend.js</file>
+		<file>ts/WoltLabSuite/Core/BootstrapFrontend.ts</file>
+		<file>ts/WoltLabSuite/Core/CallbackList.ts</file>
+		<file>ts/WoltLabSuite/Core/Clipboard.ts</file>
+		<file>ts/WoltLabSuite/Core/ColorUtil.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Captcha.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Captcha.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Clipboard.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Clipboard.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Condition/Page/Dependence.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Condition/Page/Dependence.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Map/Route/Planner.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Map/Route/Planner.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Media/List.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Media/List.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Notice/Dismiss.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Notice/Dismiss.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Popover.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Popover.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/Style/Changer.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/Style/Changer.ts</file>
+		<file>ts/WoltLabSuite/Core/Controller/User/Notification/Settings.js</file>
+		<file>ts/WoltLabSuite/Core/Controller/User/Notification/Settings.ts</file>
+		<file>ts/WoltLabSuite/Core/Core.ts</file>
+		<file>ts/WoltLabSuite/Core/Date/Picker.js</file>
+		<file>ts/WoltLabSuite/Core/Date/Picker.ts</file>
+		<file>ts/WoltLabSuite/Core/Date/Time/Relative.js</file>
+		<file>ts/WoltLabSuite/Core/Date/Time/Relative.ts</file>
+		<file>ts/WoltLabSuite/Core/Date/Util.js</file>
+		<file>ts/WoltLabSuite/Core/Date/Util.ts</file>
+		<file>ts/WoltLabSuite/Core/Devtools.ts</file>
+		<file>ts/WoltLabSuite/Core/Dictionary.ts</file>
+		<file>ts/WoltLabSuite/Core/Dom/Change/Listener.ts</file>
+		<file>ts/WoltLabSuite/Core/Dom/Traverse.ts</file>
+		<file>ts/WoltLabSuite/Core/Dom/Util.ts</file>
+		<file>ts/WoltLabSuite/Core/Environment.ts</file>
+		<file>ts/WoltLabSuite/Core/Event/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Event/Key.ts</file>
+		<file>ts/WoltLabSuite/Core/FileUtil.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Container/SuffixFormField.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Container/SuffixFormField.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Dialog.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Dialog.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Acl.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Acl.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Button.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Button.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Captcha.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Captcha.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Checkboxes.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Checkboxes.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Checked.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Checked.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Controller/Label.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Controller/Label.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Controller/Rating.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Controller/Rating.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Date.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Date.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Abstract.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Abstract.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Tab.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Tab.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/TabMenu.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/TabMenu.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Empty.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Empty.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/IsNotClicked.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/IsNotClicked.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/NonEmpty.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/NonEmpty.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Value.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Dependency/Value.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Field.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Field.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/ItemList.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/ItemList.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Language/ContentLanguage.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Language/ContentLanguage.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/RadioButton.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/RadioButton.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/SimpleAcl.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/SimpleAcl.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Tag.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Tag.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/User.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/User.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Value.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Value.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/ValueI18n.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/ValueI18n.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Wysiwyg/Attachment.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Wysiwyg/Attachment.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Field/Wysiwyg/Poll.ts</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Manager.js</file>
+		<file>ts/WoltLabSuite/Core/Form/Builder/Manager.ts</file>
+		<file>ts/WoltLabSuite/Core/I18n/Plural.ts</file>
+		<file>ts/WoltLabSuite/Core/Image/ExifUtil.ts</file>
+		<file>ts/WoltLabSuite/Core/Image/ImageUtil.ts</file>
+		<file>ts/WoltLabSuite/Core/Image/Resizer.ts</file>
+		<file>ts/WoltLabSuite/Core/Language.ts</file>
+		<file>ts/WoltLabSuite/Core/Language/Chooser.js</file>
+		<file>ts/WoltLabSuite/Core/Language/Chooser.ts</file>
+		<file>ts/WoltLabSuite/Core/Language/Input.js</file>
+		<file>ts/WoltLabSuite/Core/Language/Input.ts</file>
+		<file>ts/WoltLabSuite/Core/Language/Text.js</file>
+		<file>ts/WoltLabSuite/Core/Language/Text.ts</file>
+		<file>ts/WoltLabSuite/Core/List.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Clipboard.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Clipboard.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Editor.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/List/Upload.js</file>
+		<file>ts/WoltLabSuite/Core/Media/List/Upload.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Base.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Base.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Editor.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Search.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Search.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Select.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Manager/Select.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Replace.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Replace.ts</file>
+		<file>ts/WoltLabSuite/Core/Media/Upload.js</file>
+		<file>ts/WoltLabSuite/Core/Media/Upload.ts</file>
+		<file>ts/WoltLabSuite/Core/Notification/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Notification/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/NumberUtil.ts</file>
+		<file>ts/WoltLabSuite/Core/ObjectMap.ts</file>
+		<file>ts/WoltLabSuite/Core/Permission.ts</file>
+		<file>ts/WoltLabSuite/Core/Prism.d.ts</file>
+		<file>ts/WoltLabSuite/Core/Prism.js</file>
+		<file>ts/WoltLabSuite/Core/Prism/Helper.ts</file>
+		<file>ts/WoltLabSuite/Core/StringUtil.ts</file>
+		<file>ts/WoltLabSuite/Core/Template.grammar.d.ts</file>
+		<file>ts/WoltLabSuite/Core/Template.grammar.jison</file>
+		<file>ts/WoltLabSuite/Core/Template.grammar.js</file>
+		<file>ts/WoltLabSuite/Core/Template.ts</file>
+		<file>ts/WoltLabSuite/Core/Timer/Repeating.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Acl/Simple.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Acl/Simple.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Alignment.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Alignment.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Article/MarkAllAsRead.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Article/MarkAllAsRead.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Article/Search.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Article/Search.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/CloseOverlay.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/CloseOverlay.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Color/Picker.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Color/Picker.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Add.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Add.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Edit.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Edit.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Response/Add.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Response/Add.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Response/Edit.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Comment/Response/Edit.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Confirmation.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Confirmation.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dialog.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dialog/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/DragAndDrop.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/DragAndDrop.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Builder.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Builder.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Reusable.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Reusable.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Simple.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Dropdown/Simple.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/File/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/File/Delete.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/File/Delete.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/File/Upload.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/File/Upload.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/FlexibleMenu.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/FlexibleMenu.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList/Filter.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList/Filter.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList/Static.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList/Static.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList/User.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/ItemList/User.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Like/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Like/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/InlineEditor.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/InlineEditor.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Manager.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Manager.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Quote.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Reply.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Reply.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Share.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/Share.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/TwitterEmbed.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/TwitterEmbed.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/UserConsent.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Message/UserConsent.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Mobile.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Mobile.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Notification.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Notification.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Action.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Action.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Header/Fixed.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Header/Menu.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Header/Menu.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/JumpTo.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/JumpTo.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Menu/Abstract.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Menu/Abstract.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Menu/Main.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Menu/Main.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Menu/User.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Menu/User.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Search.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Search.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Search/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Search/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Search/Input.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Page/Search/Input.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Pagination.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Pagination.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Poll/Editor.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Poll/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/CountButtons.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/CountButtons.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/Handler.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/Handler.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/Profile/Loader.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Reaction/Profile/Loader.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Article.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Article.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Autosave.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Autosave.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Code.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Code.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/DragAndDrop.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/DragAndDrop.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Format.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Format.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Html.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Html.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Link.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Link.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Mention.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Mention.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Metacode.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Metacode.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Page.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Page.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/PseudoHeader.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/PseudoHeader.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Quote.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Quote.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Spoiler.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Spoiler.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Table.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Redactor/Table.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Screen.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Scroll.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Scroll.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Search/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Search/Input.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Search/Input.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Search/Page.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Search/Page.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Smiley/Insert.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Smiley/Insert.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Sortable/List.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Sortable/List.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Style/FontAwesome.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Style/FontAwesome.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Suggestion.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Suggestion.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/TabMenu.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/TabMenu.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/TabMenu/Simple.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/TabMenu/Simple.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Toggle/Input.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Toggle/Input.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/Tooltip.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/Tooltip.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Activity/Recent.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Activity/Recent.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/CoverPhoto/Delete.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/CoverPhoto/Delete.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/CoverPhoto/Upload.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/CoverPhoto/Upload.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Editor.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Editor.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Ignore.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Ignore.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/List.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/List.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Multifactor/Totp/Qr.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/PasswordStrength.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/PasswordStrength.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Abstract.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Abstract.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Follow.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Follow.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Ignore.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Ignore.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Search/Input.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Search/Input.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Session/Delete.ts</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Trophy/List.js</file>
+		<file>ts/WoltLabSuite/Core/Ui/User/Trophy/List.ts</file>
+		<file>ts/WoltLabSuite/Core/Upload.js</file>
+		<file>ts/WoltLabSuite/Core/Upload.ts</file>
+		<file>ts/WoltLabSuite/Core/Upload/Data.ts</file>
+		<file>ts/WoltLabSuite/Core/User.ts</file>
+		<file>ts/WoltLabSuite/Core/Wrapper/FacebookSdk.js</file>
+		<file>ts/WoltLabSuite/Core/Wrapper/FacebookSdk.ts</file>
+		<file>ts/WoltLabSuite/Core/prism-meta.ts</file>
 	</delete>
 </data>
