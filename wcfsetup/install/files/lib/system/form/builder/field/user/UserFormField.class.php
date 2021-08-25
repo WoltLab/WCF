@@ -74,7 +74,7 @@ class UserFormField extends AbstractFormField implements
     {
         if (empty($this->getUsers())) {
             if ($this->isNullable()) {
-                return;
+                return null;
             }
 
             return 0;
@@ -95,11 +95,7 @@ class UserFormField extends AbstractFormField implements
                 'multipleUsers',
                 function (IFormDocument $document, array $parameters) {
                     if ($this->checkDependencies()) {
-                        $parameters[$this->getObjectProperty()] = \array_values(
-                            \array_map(static function (UserProfile $user) {
-                                return $user->userID;
-                            }, $this->getUsers())
-                        );
+                        $parameters[$this->getObjectProperty()] = \array_column($this->getUsers(), 'userID');
                     }
 
                     return $parameters;
@@ -137,66 +133,78 @@ class UserFormField extends AbstractFormField implements
      */
     public function validate()
     {
-        if (
-            $this->isRequired() && (
-                ($this->getValue() === null || $this->getValue() === '')
+        if ($this->isRequired()) {
+            if (
+                $this->getValue() === null
+                || $this->getValue() === ''
                 || (\is_array($this->getValue()) && empty($this->getValue()))
-            )
-        ) {
-            $this->addValidationError(new FormFieldValidationError('empty'));
+            ) {
+                $this->addValidationError(new FormFieldValidationError('empty'));
+            }
         }
 
-        if ($this->allowsMultiple()) {
-            if ($this->getMinimumMultiples() > 0 && \count($this->getValue()) < $this->getMinimumMultiples()) {
-                $this->addValidationError(new FormFieldValidationError(
-                    'minimumMultiples',
-                    'wcf.form.field.user.error.minimumMultiples',
-                    [
-                        'minimumCount' => $this->getMinimumMultiples(),
-                        'count' => \count($this->getValue()),
-                    ]
-                ));
-            } elseif (
-                $this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES
-                && \count($this->getValue()) > $this->getMaximumMultiples()
-            ) {
-                $this->addValidationError(new FormFieldValidationError(
-                    'maximumMultiples',
-                    'wcf.form.field.user.error.maximumMultiples',
-                    [
-                        'maximumCount' => $this->getMaximumMultiples(),
-                        'count' => \count($this->getValue()),
-                    ]
-                ));
-            } else {
-                // validate users
-                $this->users = UserProfile::getUserProfilesByUsername($this->getValue());
+        if ($this->getValue() !== null) {
+            $usernames = [];
+            if ($this->allowsMultiple()) {
+                $usernames = $this->getValue();
+            } elseif ($this->getValue() !== '') {
+                $usernames = [$this->getValue()];
+            }
 
-                $nonExistentUsernames = [];
-                foreach ($this->getValue() as $username) {
-                    if (!isset($this->users[$username])) {
-                        $nonExistentUsernames[] = $username;
-                    }
+            // Validate usernames.
+            $this->users = UserProfile::getUserProfilesByUsername($usernames);
+
+            $nonExistentUsernames = [];
+            foreach ($usernames as $username) {
+                if (!isset($this->users[$username])) {
+                    $nonExistentUsernames[] = $username;
                 }
+            }
 
-                if (!empty($nonExistentUsernames)) {
+            if (!empty($nonExistentUsernames)) {
+                if ($this->allowsMultiple()) {
                     $this->addValidationError(new FormFieldValidationError(
                         'nonExistent',
                         'wcf.form.field.user.error.nonExistent',
                         ['nonExistentUsernames' => $nonExistentUsernames]
                     ));
+                } else {
+                    $this->addValidationError(new FormFieldValidationError(
+                        'nonExistent',
+                        'wcf.form.field.user.error.nonExistent'
+                    ));
                 }
             }
-        } elseif ($this->getValue() !== '') {
-            $user = UserProfile::getUserProfileByUsername($this->getValue());
 
-            if ($user === null) {
-                $this->addValidationError(new FormFieldValidationError(
-                    'nonExistent',
-                    'wcf.form.field.user.error.invalid'
-                ));
-            } else {
-                $this->users[] = $user;
+            // Validate the number of multiples.
+            if ($this->allowsMultiple()) {
+                if (
+                    $this->getMinimumMultiples() > 0
+                    && \count($usernames) < $this->getMinimumMultiples()
+                ) {
+                    $this->addValidationError(new FormFieldValidationError(
+                        'minimumMultiples',
+                        'wcf.form.field.user.error.minimumMultiples',
+                        [
+                            'minimumCount' => $this->getMinimumMultiples(),
+                            'count' => \count($usernames),
+                        ]
+                    ));
+                }
+
+                if (
+                    $this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES
+                    && \count($usernames) > $this->getMaximumMultiples()
+                ) {
+                    $this->addValidationError(new FormFieldValidationError(
+                        'maximumMultiples',
+                        'wcf.form.field.user.error.maximumMultiples',
+                        [
+                            'maximumCount' => $this->getMaximumMultiples(),
+                            'count' => \count($usernames),
+                        ]
+                    ));
+                }
             }
         }
 
