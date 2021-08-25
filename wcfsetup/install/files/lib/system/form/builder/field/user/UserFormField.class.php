@@ -144,57 +144,66 @@ class UserFormField extends AbstractFormField implements
         }
 
         if ($this->getValue() !== null) {
+            $usernames = [];
             if ($this->allowsMultiple()) {
-                if ($this->getMinimumMultiples() > 0 && \count($this->getValue()) < $this->getMinimumMultiples()) {
+                $usernames = $this->getValue();
+            } elseif ($this->getValue() !== '') {
+                $usernames = [$this->getValue()];
+            }
+
+            // Validate usernames.
+            $this->users = UserProfile::getUserProfilesByUsername($usernames);
+
+            $nonExistentUsernames = [];
+            foreach ($usernames as $username) {
+                if (!isset($this->users[$username])) {
+                    $nonExistentUsernames[] = $username;
+                }
+            }
+
+            if (!empty($nonExistentUsernames)) {
+                if ($this->allowsMultiple()) {
+                    $this->addValidationError(new FormFieldValidationError(
+                        'nonExistent',
+                        'wcf.form.field.user.error.nonExistent',
+                        ['nonExistentUsernames' => $nonExistentUsernames]
+                    ));
+                } else {
+                    $this->addValidationError(new FormFieldValidationError(
+                        'nonExistent',
+                        'wcf.form.field.user.error.nonExistent'
+                    ));
+                }
+            }
+
+            // Validate the number of multiples.
+            if ($this->allowsMultiple()) {
+                if (
+                    $this->getMinimumMultiples() > 0
+                    && \count($usernames) < $this->getMinimumMultiples()
+                ) {
                     $this->addValidationError(new FormFieldValidationError(
                         'minimumMultiples',
                         'wcf.form.field.user.error.minimumMultiples',
                         [
                             'minimumCount' => $this->getMinimumMultiples(),
-                            'count' => \count($this->getValue()),
+                            'count' => \count($usernames),
                         ]
                     ));
-                } elseif (
+                }
+
+                if (
                     $this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES
-                    && \count($this->getValue()) > $this->getMaximumMultiples()
+                    && \count($usernames) > $this->getMaximumMultiples()
                 ) {
                     $this->addValidationError(new FormFieldValidationError(
                         'maximumMultiples',
                         'wcf.form.field.user.error.maximumMultiples',
                         [
                             'maximumCount' => $this->getMaximumMultiples(),
-                            'count' => \count($this->getValue()),
+                            'count' => \count($usernames),
                         ]
                     ));
-                } else {
-                    // validate users
-                    $this->users = UserProfile::getUserProfilesByUsername($this->getValue());
-
-                    $nonExistentUsernames = [];
-                    foreach ($this->getValue() as $username) {
-                        if (!isset($this->users[$username])) {
-                            $nonExistentUsernames[] = $username;
-                        }
-                    }
-
-                    if (!empty($nonExistentUsernames)) {
-                        $this->addValidationError(new FormFieldValidationError(
-                            'nonExistent',
-                            'wcf.form.field.user.error.nonExistent',
-                            ['nonExistentUsernames' => $nonExistentUsernames]
-                        ));
-                    }
-                }
-            } elseif ($this->getValue() !== '') {
-                $user = UserProfile::getUserProfileByUsername($this->getValue());
-
-                if ($user === null) {
-                    $this->addValidationError(new FormFieldValidationError(
-                        'nonExistent',
-                        'wcf.form.field.user.error.nonExistent'
-                    ));
-                } else {
-                    $this->users[] = $user;
                 }
             }
         }
