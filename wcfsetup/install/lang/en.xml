@@ -3988,7 +3988,7 @@ Attachments:
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} only contains {#$length} character{if $length !== 1}s{/if} but it may not be shorter than {#$minimumLength} character{if $minimumLength !== 1}s{/if}.]]></item>
 		<item name="wcf.form.field.user.error.maximumMultiples"><![CDATA[You may not enter more than {#$maximumCount} user{if $maximumCount != 1}s{/if} but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} user{if $minimumCount != 1}s{/if} but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
-		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>
+		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exist.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Permissions]]></item>
 		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[The following permissions do not exist: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.username.error.invalid"><![CDATA[The entered username is invalid.]]></item>
