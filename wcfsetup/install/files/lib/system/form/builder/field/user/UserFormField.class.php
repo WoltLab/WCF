@@ -74,7 +74,7 @@ class UserFormField extends AbstractFormField implements
     {
         if (empty($this->getUsers())) {
             if ($this->isNullable()) {
-                return;
+                return null;
             }
 
             return 0;
