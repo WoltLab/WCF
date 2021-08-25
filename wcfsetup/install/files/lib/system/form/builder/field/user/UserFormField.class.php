@@ -191,7 +191,7 @@ class UserFormField extends AbstractFormField implements
                 if ($user === null) {
                     $this->addValidationError(new FormFieldValidationError(
                         'nonExistent',
-                        'wcf.form.field.user.error.invalid'
+                        'wcf.form.field.user.error.nonExistent'
                     ));
                 } else {
                     $this->users[] = $user;
