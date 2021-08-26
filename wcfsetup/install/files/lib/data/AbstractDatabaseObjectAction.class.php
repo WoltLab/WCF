@@ -405,7 +405,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Returns a single object and throws an UserInputException if no or more than one object is given.
 	 * 
-	 * @return	DatabaseObject
+	 * @return	DatabaseObjectEditor
 	 * @throws	UserInputException
 	 */
 	protected function getSingleObject() {
