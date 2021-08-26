@@ -122,6 +122,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
         if (["both", "horizontal", "vertical", "none"].indexOf(options.allowFlip) === -1) {
             options.allowFlip = "both";
         }
+        let savedDisplayValue = undefined;
+        if (window.getComputedStyle(element).display === "none") {
+            savedDisplayValue = element.style.getPropertyValue("display");
+            element.style.setProperty("display", "block");
+        }
         // Place the element in the upper left corner to prevent calculation issues due to possible scrollbars.
         Util_1.default.setStyles(element, {
             bottom: "auto !important",
@@ -214,6 +219,14 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
         });
         Util_1.default.show(element);
         element.style.removeProperty("visibility");
+        if (savedDisplayValue !== undefined) {
+            if (savedDisplayValue === "") {
+                element.style.removeProperty("display");
+            }
+            else {
+                element.style.setProperty("display", savedDisplayValue);
+            }
+        }
     }
     exports.set = set;
 });
