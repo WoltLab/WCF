@@ -176,6 +176,13 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     options.allowFlip = "both";
   }
 
+  let savedDisplayValue: string | undefined = undefined;
+  if (window.getComputedStyle(element).display === "none") {
+    savedDisplayValue = element.style.getPropertyValue("display");
+
+    element.style.setProperty("display", "block");
+  }
+
   // Place the element in the upper left corner to prevent calculation issues due to possible scrollbars.
   DomUtil.setStyles(element, {
     bottom: "auto !important",
@@ -295,6 +302,14 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
 
   DomUtil.show(element);
   element.style.removeProperty("visibility");
+
+  if (savedDisplayValue !== undefined) {
+    if (savedDisplayValue === "") {
+      element.style.removeProperty("display");
+    } else {
+      element.style.setProperty("display", savedDisplayValue);
+    }
+  }
 }
 
 export type AllowFlip = "both" | "horizontal" | "none" | "vertical";

@@ -98,6 +98,14 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
     /**
      * @inheritDoc
      */
+    public static function getDefaultFilename()
+    {
+        return static::SCRIPT_DIR . '*.php';
+    }
+
+    /**
+     * @inheritDoc
+     */
     public static function getSyncDependencies()
     {
         return ['file'];
