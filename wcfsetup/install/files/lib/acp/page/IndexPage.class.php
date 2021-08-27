@@ -95,22 +95,30 @@ class IndexPage extends AbstractPage
             $usersAwaitingApproval = $statement->fetchSingleColumn();
         }
 
+        $optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
         $recaptchaWithoutKey = false;
         $recaptchaKeyLink = '';
         if (CAPTCHA_TYPE == 'com.woltlab.wcf.recaptcha' && (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY)) {
             $recaptchaWithoutKey = true;
 
-            $optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
-            $categorySecurity = $optionCategories['security'];
             $recaptchaKeyLink = LinkHandler::getInstance()->getLink(
                 'Option',
                 [
-                    'id' => $categorySecurity->categoryID,
+                    'id' => $optionCategories['security']->categoryID,
                     'optionName' => 'recaptcha_publickey',
                 ],
                 '#category_security.antispam'
             );
         }
+
+        $xFrameOptionsLink = LinkHandler::getInstance()->getLink(
+            'Option',
+            [
+                'id' => $optionCategories['general']->categoryID,
+                'optionName' => 'http_send_x_frame_options',
+            ],
+            '#category_general.system'
+        );
 
         $evaluationExpired = $evaluationPending = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
@@ -177,6 +185,7 @@ class IndexPage extends AbstractPage
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
+            'xFrameOptionsLink' => $xFrameOptionsLink,
             'server' => $this->server,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,
