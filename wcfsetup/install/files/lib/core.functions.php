@@ -254,13 +254,17 @@ namespace wcf\functions\exception {
 		file_put_contents($logFile, $entry, FILE_APPEND);
 
 		// let the Exception know it has been logged
-		if (
-			$e instanceof ILoggingAwareException
-			|| (method_exists($e, 'finalizeLog') && is_callable([$e, 'finalizeLog']))
-		) {
-			/** @var ILoggingAwareException $e */
-			$e->finalizeLog($exceptionID, $logFile);
+		$prev = $e;
+		do {
+			if (
+				$prev instanceof ILoggingAwareException
+				|| (method_exists($prev, 'finalizeLog') && is_callable([$prev, 'finalizeLog']))
+			) {
+				/** @var ILoggingAwareException $prev */
+				$prev->finalizeLog($exceptionID, $logFile);
+			}
 		}
+		while ($prev = $prev->getPrevious());
 
 		return $exceptionID;
 	}
