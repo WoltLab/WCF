@@ -11,7 +11,7 @@ namespace wcf\system\exception;
  * @package     WoltLabSuite\Core\System\Exception
  * @since       5.4
  */
-interface ILoggingAwareException
+interface ILoggingAwareException extends \Throwable
 {
     /**
      * Called if the exception was logged into $logFile with ID $exceptionID.
