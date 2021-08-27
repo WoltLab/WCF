@@ -139,6 +139,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
 
                 TextFormField::create('path')
                     ->label('wcf.acp.devtools.project.path')
+                    ->description('wcf.acp.devtools.project.path.description')
                     ->required()
                     ->addValidator(new FormFieldValidator('validPath', function (TextFormField $formField) {
                         // ensure that unified directory separators are used
