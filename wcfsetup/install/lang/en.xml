@@ -945,6 +945,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[The accelerated guest view improves the page responsiveness and loading times for both visitors and search engines alike, please consider <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">enabling it</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using reCAPTCHA without an individual website key is no longer supported by Google.<br><br>For further use you need to <a href="{$recaptchaKeyLink}">provide a key in your options</a>, please follow the instructions below the input field to obtain a key.]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">list of missing phrases</a> for more information.]]></item>
+		<item name="wcf.acp.index.allowsFrameEmbedding"><![CDATA[The <a href="{$xFrameOptionsLink}">option to prevent embedding of WoltLab Suite within a frame</a> is disabled. This option is deprecated, will be removed in a future version and embedding will be prevented in all cases. Allowing embedding reduces security by allowing <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking attacks</a> to happen. In addition certain security features for cookies are not available within frames.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
@@ -1304,8 +1305,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Under the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLong"><![CDATA[The entered text is too long.]]></item>
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame (deprecated)]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[The option to control embedding within a frame is deprecated, will be removed in a future version and embedding will be prevented in all cases. Allowing embedding reduces security by allowing <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking attacks</a> to happen. In addition certain security features for cookies are not available within frames.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
