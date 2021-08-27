@@ -3,7 +3,6 @@
 namespace wcf\acp\page;
 
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
@@ -12,7 +11,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
-use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 
 /**
@@ -114,23 +112,6 @@ class IndexPage extends AbstractPage
             );
         }
 
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
-        $tableNames = [];
-        foreach ($objectTypes as $objectType) {
-            $tableNames[] = SearchIndexManager::getTableName($objectType->objectType);
-        }
-        $conditionBuilder = new PreparedStatementConditionBuilder(true);
-        $conditionBuilder->add('TABLE_NAME IN (?)', [$tableNames]);
-        $conditionBuilder->add('TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
-        $conditionBuilder->add('ENGINE <> ?', ['InnoDB']);
-
-        $sql = "SELECT  COUNT(*)
-                FROM    INFORMATION_SCHEMA.TABLES
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute($conditionBuilder->getParameters());
-        $nonInnoDbSearch = $statement->fetchSingleColumn() > 0;
-
         $evaluationExpired = $evaluationPending = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
             if ($application->isTainted) {
@@ -196,7 +177,6 @@ class IndexPage extends AbstractPage
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
-            'nonInnoDbSearch' => $nonInnoDbSearch,
             'server' => $this->server,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,
