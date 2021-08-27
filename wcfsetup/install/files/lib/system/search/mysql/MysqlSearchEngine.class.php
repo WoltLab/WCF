@@ -5,7 +5,6 @@ namespace wcf\system\search\mysql;
 use wcf\system\database\DatabaseException as LegacyDatabaseException;
 use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
 use wcf\system\search\AbstractSearchEngine;
 use wcf\system\search\exception\SearchFailed;
 use wcf\system\search\SearchEngine;
@@ -45,6 +44,10 @@ class MysqlSearchEngine extends AbstractSearchEngine
         $orderBy = 'time DESC',
         $limit = 1000
     ) {
+        if (empty($objectTypes)) {
+            throw new \InvalidArgumentException('The $objectTypes parameter must not be empty.');
+        }
+
         // build search query
         $sql = '';
         $parameters = [];
@@ -97,9 +100,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
 
             $sql .= $query;
         }
-        if (empty($sql)) {
-            throw new SystemException('no object types given');
-        }
+        \assert(!empty($sql));
 
         if (!empty($orderBy)) {
             $sql .= " ORDER BY " . $orderBy;
