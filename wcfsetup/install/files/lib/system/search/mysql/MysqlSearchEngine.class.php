@@ -2,10 +2,11 @@
 
 namespace wcf\system\search\mysql;
 
-use wcf\system\database\DatabaseException;
+use wcf\system\database\DatabaseException as LegacyDatabaseException;
+use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
 use wcf\system\search\AbstractSearchEngine;
+use wcf\system\search\exception\SearchFailed;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -43,6 +44,10 @@ class MysqlSearchEngine extends AbstractSearchEngine
         $orderBy = 'time DESC',
         $limit = 1000
     ) {
+        if (empty($objectTypes)) {
+            throw new \InvalidArgumentException('The $objectTypes parameter must not be empty.');
+        }
+
         // build search query
         $sql = '';
         $parameters = [];
@@ -95,23 +100,24 @@ class MysqlSearchEngine extends AbstractSearchEngine
 
             $sql .= $query;
         }
-        if (empty($sql)) {
-            throw new SystemException('no object types given');
-        }
+        \assert(!empty($sql));
 
         if (!empty($orderBy)) {
             $sql .= " ORDER BY " . $orderBy;
         }
 
-        // send search query
-        $messages = [];
-        $statement = WCF::getDB()->prepareStatement($sql, $limit);
-        $statement->execute($parameters);
-        while ($row = $statement->fetchArray()) {
-            $messages[] = [
-                'objectID' => $row['objectID'],
-                'objectType' => $row['objectType'],
-            ];
+        try {
+            $messages = [];
+            $statement = WCF::getDB()->prepareStatement($sql, $limit);
+            $statement->execute($parameters);
+            while ($row = $statement->fetchArray()) {
+                $messages[] = [
+                    'objectID' => $row['objectID'],
+                    'objectType' => $row['objectType'],
+                ];
+            }
+        } catch (DatabaseException $e) {
+            throw new SearchFailed('MySQL search query failed.', $e);
         }
 
         return $messages;
@@ -467,7 +473,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute();
                 $row = $statement->fetchArray();
-            } catch (DatabaseException $e) {
+            } catch (LegacyDatabaseException $e) {
                 // fallback if user is disallowed to issue 'SHOW VARIABLES'
                 $row = ['Value' => 3];
             }
