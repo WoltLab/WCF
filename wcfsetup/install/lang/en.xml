@@ -397,6 +397,7 @@
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[The name is already used by another project.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
+		<item name="wcf.acp.devtools.project.path.description"><![CDATA[The absolute path to the package within the filesystem. The placeholder shows the absolute path of WoltLab Suite Core of this installation.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package has not been installed yet. <a href="#" {if $project->getPackageArchive()->getOpenRequirements()|empty}class="jsDevtoolsInstallPackage"{else}class="jsStaticDialog" data-dialog-id="openPackageRequirements"{/if}>Do you want to install the package?</a>]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[The path is invalid.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[The path is already used by another project.]]></item>
