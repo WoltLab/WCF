@@ -92,9 +92,7 @@ class Request
     }
 
     /**
-     * Returns true if this request has already been executed.
-     *
-     * @return  bool
+     * @deprecated 5.5 This method is of questionable value, currently unused and might not play nicely along with the future PSR-7 evaluation.
      */
     public function isExecuted()
     {
