@@ -166,6 +166,24 @@ class BoxEditForm extends BoxAddForm
 
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->box->boxID, $this->aclValues);
 
+        // transform conditions array into one-dimensional array
+        $conditions = [];
+        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
+            foreach ($groupedObjectTypes as $objectTypes) {
+                if (\is_array($objectTypes)) {
+                    $conditions = \array_merge($conditions, $objectTypes);
+                } else {
+                    $conditions[] = $objectTypes;
+                }
+            }
+        }
+
+        ConditionHandler::getInstance()->updateConditions(
+            $this->box->boxID,
+            $this->box->getConditions2(),
+            $conditions
+        );
+
         // call saved event
         $this->saved();
 
@@ -239,6 +257,26 @@ class BoxEditForm extends BoxAddForm
             $this->invertPermissions = $this->box->invertPermissions;
 
             $this->readBoxImages();
+
+            $conditions = $this->box->getConditions2();
+            $conditionsByObjectTypeID = [];
+            foreach ($conditions as $condition) {
+                $conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
+            }
+
+            foreach ($this->groupedConditionObjectTypes as $objectTypes1) {
+                foreach ($objectTypes1 as $objectTypes2) {
+                    if (\is_array($objectTypes2)) {
+                        foreach ($objectTypes2 as $objectType) {
+                            if (isset($conditionsByObjectTypeID[$objectType->objectTypeID])) {
+                                $conditionsByObjectTypeID[$objectType->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
+                            }
+                        }
+                    } elseif (isset($conditionsByObjectTypeID[$objectTypes2->objectTypeID])) {
+                        $conditionsByObjectTypeID[$objectTypes2->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectTypes2->objectTypeID]);
+                    }
+                }
+            }
         }
     }
 

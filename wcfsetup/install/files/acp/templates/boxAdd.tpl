@@ -97,6 +97,7 @@
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.box.contents{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.page.list{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('conditions')}">{lang}wcf.acp.box.conditions{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
 
 				{event name='tabMenuTabs'}
@@ -476,6 +477,42 @@
 
 		<div id="acl" class="tabMenuContent">
 			{include file='aclSimple' __supportsInvertedPermissions=true}
+		</div>
+
+		<div id="conditions" class="tabMenuContent">
+			<section class="section">
+				<header class="sectionHeader">
+					<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.page{/lang}</h2>
+				</header>
+
+				{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
+					{@$pageConditionObjectType->getProcessor()->getHtml()}
+				{/foreach}
+			</section>
+
+			{if $groupedConditionObjectTypes['com.woltlab.wcf.pointInTime']|isset}
+				<section class="section">
+					<header class="sectionHeader">
+						<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.pointInTime{/lang}</h2>
+					</header>
+
+					{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
+						{@$pointInTimeConditionObjectType->getProcessor()->getHtml()}
+					{/foreach}
+				</section>
+			{/if}
+
+			{if $groupedConditionObjectTypes['com.woltlab.wcf.user']|isset}
+				<section class="section">
+					<header class="sectionHeader">
+						<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.user{/lang}</h2>
+					</header>
+
+					{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
+				</section>
+			{/if}
+
+			{event name='conditionContainers'}
 		</div>
 
 		{event name='tabMenuContents'}

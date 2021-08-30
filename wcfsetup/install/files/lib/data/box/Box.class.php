@@ -549,6 +549,32 @@ class Box extends DatabaseObject
     }
 
     /**
+     * @TODO
+     *
+     * @return  Condition[]
+     * @since   5.5
+     */
+    public function getConditions2(): array // @TODO name
+    {
+        return ConditionHandler::getInstance()->getConditions(
+            'com.woltlab.wcf.condition.box', // @TODO make const
+            $this->boxID
+        );
+    }
+
+    public function isVisible(): bool
+    {
+        $conditions = $this->getConditions2();
+        foreach ($conditions as $condition) {
+            if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Returns true if this box is accessible by current user.
      *
      * @return  bool

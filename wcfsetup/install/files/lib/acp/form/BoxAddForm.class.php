@@ -16,6 +16,7 @@ use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
+use wcf\system\condition\ConditionHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -223,6 +224,12 @@ class BoxAddForm extends AbstractForm
     public $invertPermissions;
 
     /**
+     * grouped boxes condition object types
+     * @var ObjectType[][]
+     */
+    public $groupedConditionObjectTypes = [];
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -393,6 +400,18 @@ class BoxAddForm extends AbstractForm
         if ($this->boxType === 'system') {
             $this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
         }
+
+        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
+            foreach ($groupedObjectTypes as $objectTypes) {
+                if (\is_array($objectTypes)) {
+                    foreach ($objectTypes as $objectType) {
+                        $objectType->getProcessor()->readFormParameters();
+                    }
+                } else {
+                    $objectTypes->getProcessor()->readFormParameters();
+                }
+            }
+        }
     }
 
     /**
@@ -532,6 +551,18 @@ class BoxAddForm extends AbstractForm
             $statement->execute($conditionBuilder->getParameters());
             $this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
         }
+
+        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
+            foreach ($groupedObjectTypes as $objectTypes) {
+                if (\is_array($objectTypes)) {
+                    foreach ($objectTypes as $objectType) {
+                        $objectType->getProcessor()->validate();
+                    }
+                } else {
+                    $objectTypes->getProcessor()->validate();
+                }
+            }
+        }
     }
 
     /**
@@ -637,6 +668,19 @@ class BoxAddForm extends AbstractForm
         // save acl
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $box->boxID, $this->aclValues);
 
+        // transform conditions array into one-dimensional array
+        $conditions = [];
+        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
+            foreach ($groupedObjectTypes as $objectTypes) {
+                if (\is_array($objectTypes)) {
+                    $conditions = \array_merge($conditions, $objectTypes);
+                } else {
+                    $conditions[] = $objectTypes;
+                }
+            }
+        }
+        ConditionHandler::getInstance()->createConditions($box->boxID, $conditions);
+
         // call saved event
         $this->saved();
 
@@ -659,6 +703,10 @@ class BoxAddForm extends AbstractForm
         $this->linkType = 'none';
         $this->linkPageID = 0;
         $this->linkPageObjectID = 0;
+
+        foreach ($conditions as $condition) {
+            $condition->getProcessor()->reset();
+        }
     }
 
     /**
@@ -666,6 +714,27 @@ class BoxAddForm extends AbstractForm
      */
     public function readData()
     {
+        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.box');
+        foreach ($objectTypes as $objectType) {
+            if (!$objectType->conditionobject) {
+                continue;
+            }
+
+            if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
+                $this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
+            }
+
+            if ($objectType->conditiongroup) {
+                if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
+                    $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
+                }
+
+                $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
+            } else {
+                $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->objectTypeID] = $objectType;
+            }
+        }
+
         parent::readData();
 
         if (empty($_POST) && $this->presetBox) {
@@ -758,6 +827,7 @@ class BoxAddForm extends AbstractForm
             'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
             'availableBoxPositions' => $this->availableBoxPositions,
             'invertPermissions' => $this->invertPermissions,
+            'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
         ]);
     }
 }

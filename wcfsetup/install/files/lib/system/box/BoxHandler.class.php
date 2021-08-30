@@ -270,7 +270,7 @@ class BoxHandler extends SingletonFactory
 
         $boxes = [];
         foreach ($boxList as $box) {
-            if (!$forDisplay || $box->isAccessible()) {
+            if (!$forDisplay || ($box->isAccessible() && $box->isVisible())) {
                 $virtualShowOrder = (isset($showOrders[$box->boxID])) ? $showOrders[$box->boxID] : ($box->showOrder + 1000);
                 $box->setVirtualShowOrder($virtualShowOrder);
 
