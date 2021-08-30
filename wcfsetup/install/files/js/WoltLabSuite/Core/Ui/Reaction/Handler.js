@@ -129,11 +129,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         }
         _markReactionAsActive() {
             let reactionTypeID = null;
-            this._objects.get(this._popoverCurrentObjectId).forEach((element) => {
+            for (const element of this._objects.get(this._popoverCurrentObjectId)) {
                 if (element.reactButton !== null) {
                     reactionTypeID = ~~element.reactButton.dataset.reactionTypeId;
                 }
-            });
+            }
             if (reactionTypeID === null) {
                 throw new Error("Unable to find react button for current popover.");
             }

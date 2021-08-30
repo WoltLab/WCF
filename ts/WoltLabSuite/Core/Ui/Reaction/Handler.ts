@@ -200,11 +200,11 @@ class UiReactionHandler {
 
   protected _markReactionAsActive(): void {
     let reactionTypeID: number | null = null;
-    this._objects.get(this._popoverCurrentObjectId)!.forEach((element) => {
+    for (const element of this._objects.get(this._popoverCurrentObjectId)!) {
       if (element.reactButton !== null) {
         reactionTypeID = ~~element.reactButton.dataset.reactionTypeId!;
       }
-    });
+    }
 
     if (reactionTypeID === null) {
       throw new Error("Unable to find react button for current popover.");
@@ -220,7 +220,7 @@ class UiReactionHandler {
     const scrollableContainer = popover.querySelector(".reactionPopoverContent") as HTMLElement;
     if (reactionTypeID) {
       const reactionTypeButton = popover.querySelector(
-        `.reactionTypeButton[data-reaction-type-id="${reactionTypeID!}"]`,
+        `.reactionTypeButton[data-reaction-type-id="${reactionTypeID}"]`,
       ) as HTMLElement;
       reactionTypeButton.classList.add("active");
       reactionTypeButton.setAttribute("aria-selected", "true");

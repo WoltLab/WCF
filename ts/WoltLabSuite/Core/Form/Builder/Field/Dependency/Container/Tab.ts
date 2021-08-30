@@ -31,11 +31,11 @@ class Tab extends Abstract {
     if (containerIsVisible !== containerShouldBeVisible) {
       const tabMenuListItem = this._container.parentNode!.parentNode!.querySelector(
         "#" +
-          DomUtil.identify(this._container.parentNode! as HTMLElement) +
+          DomUtil.identify(this._container.parentNode as HTMLElement) +
           " > nav > ul > li[data-name=" +
           this._container.id +
           "]",
-      )! as HTMLElement;
+      ) as HTMLElement;
       if (tabMenuListItem === null) {
         throw new Error("Cannot find tab menu entry for tab '" + this._container.id + "'.");
       }

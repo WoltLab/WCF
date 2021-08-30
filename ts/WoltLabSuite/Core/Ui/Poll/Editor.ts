@@ -378,7 +378,7 @@ class UiPollEditor {
   public getOptions(): string[] {
     const options: string[] = [];
     Array.from(this.optionList.children).forEach((listItem: HTMLLIElement) => {
-      const optionValue = (listItem.querySelector("input[type=text]")! as HTMLInputElement).value.trim();
+      const optionValue = (listItem.querySelector("input[type=text]") as HTMLInputElement).value.trim();
 
       if (optionValue !== "") {
         options.push(`${listItem.dataset.optionId!}_${optionValue}`);
