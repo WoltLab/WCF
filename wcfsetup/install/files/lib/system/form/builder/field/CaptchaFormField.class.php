@@ -49,6 +49,14 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode
     /**
      * @inheritDoc
      */
+    public function __construct()
+    {
+        $this->objectType(CAPTCHA_TYPE);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function cleanup()
     {
         try {
