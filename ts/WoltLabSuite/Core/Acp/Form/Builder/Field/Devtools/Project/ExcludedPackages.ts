@@ -16,7 +16,7 @@ import { ExcludedPackageData } from "./Data";
 import DomUtil from "../../../../../../Dom/Util";
 
 class ExcludedPackages<
-  TPackageData extends ExcludedPackageData = ExcludedPackageData
+  TPackageData extends ExcludedPackageData = ExcludedPackageData,
 > extends AbstractPackageList<TPackageData> {
   protected readonly version: HTMLInputElement;
 

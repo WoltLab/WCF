@@ -64,9 +64,10 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                     else if (cell.classList.contains("columnIcon")) {
                         cell.querySelectorAll("[data-object-id]").forEach((el) => DomUtil.hide(el));
                         cell.querySelector(".mediaEditButton").classList.add("jsMediaEditButton");
-                        cell.querySelector(".jsObjectAction[data-object-action='delete']").dataset.confirmMessage = Language.get("wcf.media.delete.confirmMessage", {
-                            title: file.name,
-                        });
+                        cell.querySelector(".jsObjectAction[data-object-action='delete']").dataset.confirmMessage =
+                            Language.get("wcf.media.delete.confirmMessage", {
+                                title: file.name,
+                            });
                     }
                     else if (cell.classList.contains("columnFilename")) {
                         // replace copied image with spinner
