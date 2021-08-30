@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Environment = tslib_1.__importStar(Environment);
-    Language = tslib_1.__importStar(Language);
-    UiScreen = tslib_1.__importStar(UiScreen);
+    Environment = (0, tslib_1.__importStar)(Environment);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _enabled = false;
     let _buttonShowNext;
     let _buttonShowPrevious;

@@ -12,7 +12,7 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.send = void 0;
-    Core = tslib_1.__importStar(Core);
+    Core = (0, tslib_1.__importStar)(Core);
     /**
      * Dispatch a JSONP request, the `url` must not contain a callback parameter.
      */

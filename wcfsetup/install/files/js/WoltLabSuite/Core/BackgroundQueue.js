@@ -10,7 +10,7 @@ define(["require", "exports", "tslib", "./Ajax"], function (require, exports, ts
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.invoke = exports.setUrl = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
     class BackgroundQueue {
         constructor(url) {
             this._invocations = 0;

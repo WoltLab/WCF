@@ -2,10 +2,10 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     class AcpUiDevtoolsProjectSync {
         constructor(projectId) {
             this.buttons = new Map();

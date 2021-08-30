@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Dom/Util", 
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.convertFromHtml = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    StringUtil = tslib_1.__importStar(StringUtil);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
     /**
      * Returns a text node representing the opening bbcode tag.
      */

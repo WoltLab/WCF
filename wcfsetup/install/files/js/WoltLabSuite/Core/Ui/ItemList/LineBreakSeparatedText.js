@@ -13,9 +13,9 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiItemListLineBreakSeparatedText = void 0;
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Language = tslib_1.__importStar(Language);
-    Util_1 = tslib_1.__importDefault(Util_1);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Language = (0, tslib_1.__importStar)(Language);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class UiItemListLineBreakSeparatedText {
         constructor(itemList, options = {}) {
             this.addButton = undefined;

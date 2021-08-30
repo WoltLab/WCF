@@ -9,9 +9,9 @@
  */
 define(["require", "exports", "tslib", "./Field", "../../../Ui/ItemList/Static", "../../../Core"], function (require, exports, tslib_1, Field_1, UiItemListStatic, Core) {
     "use strict";
-    Field_1 = tslib_1.__importDefault(Field_1);
-    UiItemListStatic = tslib_1.__importStar(UiItemListStatic);
-    Core = tslib_1.__importStar(Core);
+    Field_1 = (0, tslib_1.__importDefault)(Field_1);
+    UiItemListStatic = (0, tslib_1.__importStar)(UiItemListStatic);
+    Core = (0, tslib_1.__importStar)(Core);
     class ItemList extends Field_1.default {
         _getData() {
             const values = [];

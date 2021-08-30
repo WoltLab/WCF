@@ -8,11 +8,11 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Util", "../Dialog", "../Pagination"], function (require, exports, tslib_1, Ajax, Core, Util_1, Dialog_1, Pagination_1) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Pagination_1 = tslib_1.__importDefault(Pagination_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Pagination_1 = (0, tslib_1.__importDefault)(Pagination_1);
     /**
      * @constructor
      */

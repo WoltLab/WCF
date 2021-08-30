@@ -8,9 +8,9 @@
  */
 define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax", "../../../Core"], function (require, exports, tslib_1, PrepareInstallation_1, Ajax, Core) {
     "use strict";
-    PrepareInstallation_1 = tslib_1.__importDefault(PrepareInstallation_1);
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
+    PrepareInstallation_1 = (0, tslib_1.__importDefault)(PrepareInstallation_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
     class AcpUiPackageSearch {
         constructor() {
             this.isBusy = false;

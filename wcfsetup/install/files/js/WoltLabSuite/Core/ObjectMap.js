@@ -11,7 +11,7 @@
  */
 define(["require", "exports", "tslib", "./Core"], function (require, exports, tslib_1, Core) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
+    Core = (0, tslib_1.__importStar)(Core);
     /** @deprecated 5.4 Use a `WeakMap` instead. */
     class ObjectMap {
         constructor() {

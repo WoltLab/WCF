@@ -57,7 +57,7 @@ export function setup(): void {
   _editor = "redactor";
   _touch =
     "ontouchstart" in window ||
-    ("msMaxTouchPoints" in window.navigator && window.navigator.msMaxTouchPoints > 0) ||
+    ("msMaxTouchPoints" in window.navigator && (window.navigator as any).msMaxTouchPoints > 0) ||
     ((window as any).DocumentTouch && document instanceof (window as any).DocumentTouch);
 
   // The iPad Pro 12.9" masquerades as a desktop browser.

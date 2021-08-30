@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], function (require, exports, tslib_1, Core, Input_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Input_1 = tslib_1.__importDefault(Input_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Input_1 = (0, tslib_1.__importDefault)(Input_1);
     class UiPageSearchInput extends Input_1.default {
         constructor(element, options) {
             if (typeof options.callbackSuccess !== "function") {

@@ -10,18 +10,18 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    BackgroundQueue = tslib_1.__importStar(BackgroundQueue);
-    Bootstrap = tslib_1.__importStar(Bootstrap);
-    ControllerStyleChanger = tslib_1.__importStar(ControllerStyleChanger);
-    ControllerPopover = tslib_1.__importStar(ControllerPopover);
-    UiUserIgnore = tslib_1.__importStar(UiUserIgnore);
-    UiPageHeaderMenu = tslib_1.__importStar(UiPageHeaderMenu);
-    UiMessageUserConsent = tslib_1.__importStar(UiMessageUserConsent);
-    Ajax = tslib_1.__importStar(Ajax);
-    UiMessageShareDialog = tslib_1.__importStar(UiMessageShareDialog);
-    UiMessageShareProviders = tslib_1.__importStar(UiMessageShareProviders);
-    UiFeedDialog = tslib_1.__importStar(UiFeedDialog);
-    User_1 = tslib_1.__importDefault(User_1);
+    BackgroundQueue = (0, tslib_1.__importStar)(BackgroundQueue);
+    Bootstrap = (0, tslib_1.__importStar)(Bootstrap);
+    ControllerStyleChanger = (0, tslib_1.__importStar)(ControllerStyleChanger);
+    ControllerPopover = (0, tslib_1.__importStar)(ControllerPopover);
+    UiUserIgnore = (0, tslib_1.__importStar)(UiUserIgnore);
+    UiPageHeaderMenu = (0, tslib_1.__importStar)(UiPageHeaderMenu);
+    UiMessageUserConsent = (0, tslib_1.__importStar)(UiMessageUserConsent);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    UiMessageShareDialog = (0, tslib_1.__importStar)(UiMessageShareDialog);
+    UiMessageShareProviders = (0, tslib_1.__importStar)(UiMessageShareProviders);
+    UiFeedDialog = (0, tslib_1.__importStar)(UiFeedDialog);
+    User_1 = (0, tslib_1.__importDefault)(User_1);
     /**
      * Initializes user profile popover.
      */

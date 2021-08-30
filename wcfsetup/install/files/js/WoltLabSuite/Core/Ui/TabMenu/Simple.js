@@ -8,11 +8,11 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../../Environment", "../../Event/Handler"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Environment, EventHandler) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Environment = tslib_1.__importStar(Environment);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Core = (0, tslib_1.__importStar)(Core);
+    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Environment = (0, tslib_1.__importStar)(Environment);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class TabMenuSimple {
         constructor(container) {
             this.containers = new Map();

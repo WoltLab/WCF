@@ -9,10 +9,10 @@
  */
 define(["require", "exports", "tslib", "../Core", "../FileUtil", "./ExifUtil", "pica"], function (require, exports, tslib_1, Core, FileUtil, ExifUtil, pica_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    FileUtil = tslib_1.__importStar(FileUtil);
-    ExifUtil = tslib_1.__importStar(ExifUtil);
-    pica_1 = tslib_1.__importDefault(pica_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    FileUtil = (0, tslib_1.__importStar)(FileUtil);
+    ExifUtil = (0, tslib_1.__importStar)(ExifUtil);
+    pica_1 = (0, tslib_1.__importDefault)(pica_1);
     const pica = new pica_1.default({ features: ["js", "wasm", "ww"] });
     const DEFAULT_WIDTH = 800;
     const DEFAULT_HEIGHT = 600;

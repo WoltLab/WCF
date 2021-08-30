@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
-    UiAlignment = tslib_1.__importStar(UiAlignment);
-    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
-    UiScreen = tslib_1.__importStar(UiScreen);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
+    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _isMobile = false;
     let _pageHeader;
     let _pageHeaderPanel;

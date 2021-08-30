@@ -11,16 +11,16 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unmark = exports.showEditor = exports.hideEditor = exports.reload = exports.setup = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
-    UiPageAction = tslib_1.__importStar(UiPageAction);
-    UiScreen = tslib_1.__importStar(UiScreen);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    UiPageAction = (0, tslib_1.__importStar)(UiPageAction);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     const _specialCheckboxSelector = '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
     class ControllerClipboard {
         constructor() {

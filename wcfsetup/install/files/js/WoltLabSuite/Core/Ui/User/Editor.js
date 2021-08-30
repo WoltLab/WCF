@@ -11,13 +11,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     class UserEditor {
         constructor() {
             this.actionName = "";

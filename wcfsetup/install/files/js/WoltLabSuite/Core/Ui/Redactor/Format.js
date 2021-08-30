@@ -13,7 +13,7 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeFormat = exports.format = void 0;
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     function isValidSelection(editorElement) {
         let element = window.getSelection().anchorNode;
         while (element) {
