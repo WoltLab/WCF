@@ -63,7 +63,8 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", 
                 travelMode: google.maps.TravelMode[this.travelMode.value.toUpperCase()],
             };
             AjaxStatus.show();
-            this.directionsService.route(request, (result, status) => this.setRoute(result, status));
+            // .route() returns a promise, but we rely on the callback API for compatibility reasons.
+            void this.directionsService.route(request, (result, status) => this.setRoute(result, status));
             this.googleLink.href = this.getGoogleMapsLink(data.location, this.travelMode.value);
             this.lastOrigin = data.location;
         }
