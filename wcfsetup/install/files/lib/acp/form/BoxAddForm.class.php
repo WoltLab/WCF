@@ -17,6 +17,7 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\page\MultiPageCondition;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -338,9 +339,6 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['showOrder'])) {
             $this->showOrder = \intval($_POST['showOrder']);
         }
-        if (isset($_POST['visibleEverywhere'])) {
-            $this->visibleEverywhere = \intval($_POST['visibleEverywhere']);
-        }
         if (isset($_POST['cssClassName'])) {
             $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
         }
@@ -350,10 +348,6 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;
         }
-        if (isset($_POST['pageIDs']) && \is_array($_POST['pageIDs'])) {
-            $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
-        }
-
         if (isset($_POST['linkType'])) {
             $this->linkType = $_POST['linkType'];
         }
@@ -366,7 +360,6 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['externalURL'])) {
             $this->externalURL = StringUtil::trim($_POST['externalURL']);
         }
-
         if (isset($_POST['title']) && \is_array($_POST['title'])) {
             $this->title = ArrayUtil::trim($_POST['title']);
         }
@@ -401,14 +394,33 @@ class BoxAddForm extends AbstractForm
             $this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
         }
 
+        $this->readConditions();
+    }
+
+    private function readConditions(): void
+    {
         foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
             foreach ($groupedObjectTypes as $objectTypes) {
                 if (\is_array($objectTypes)) {
                     foreach ($objectTypes as $objectType) {
                         $objectType->getProcessor()->readFormParameters();
+                        if ($objectType->getProcessor() instanceof MultiPageCondition) {
+                            $data = $objectType->getProcessor()->getData();
+                            if ($data !== null) {
+                                $this->pageIDs = $data['pageIDs'];
+                                $this->visibleEverywhere = !$data['pageIDs_reverseLogic'];
+                            }
+                        }
                     }
                 } else {
                     $objectTypes->getProcessor()->readFormParameters();
+                    if ($objectTypes->getProcessor() instanceof MultiPageCondition) {
+                        $data = $objectTypes->getProcessor()->getData();
+                        if ($data !== null) {
+                            $this->pageIDs = $data['pageIDs'];
+                            $this->visibleEverywhere = !$data['pageIDs_reverseLogic'];
+                        }
+                    }
                 }
             }
         }
