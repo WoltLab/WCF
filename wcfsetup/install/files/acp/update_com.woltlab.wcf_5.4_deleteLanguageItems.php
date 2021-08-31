@@ -16,3 +16,5 @@ $languageItemList->getConditionBuilder()->add('languageItem IN (?)', [$languageI
 $languageItemList->readObjects();
 
 (new LanguageItemAction($languageItemList->getObjects(), 'delete'))->executeAction();
+
+// Dummy comment to force-include this in the update 5.4.6.
