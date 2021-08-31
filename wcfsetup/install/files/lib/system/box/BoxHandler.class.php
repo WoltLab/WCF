@@ -195,7 +195,7 @@ class BoxHandler extends SingletonFactory
             'com.woltlab.wcf.page'
         );
         $oldCondition = [];
-        foreach ($box->getConditions2() as $condition) {
+        foreach ($box->getVisibilityConditions() as $condition) {
             if ($condition->objectTypeID === $conditionObjectTypeID) {
                 $oldCondition[] = $condition;
                 break;

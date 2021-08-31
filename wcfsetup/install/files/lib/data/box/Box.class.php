@@ -530,11 +530,24 @@ class Box extends DatabaseObject
     }
 
     /**
-     * Returns the conditions of the notice.
+     * Returns the conditions for the box controller.
      *
      * @return  Condition[]
+     * @deprecated since 5.5 - use self::getControllerConditions() instead
      */
     public function getConditions()
+    {
+        return $this->getControllerConditions();
+    }
+
+    /**
+     * Returns the conditions for the box controller.
+     * The conditions are intended for the contents of the box.
+     *
+     * @return  Condition[]
+     * @since   5.5
+     */
+    public function getControllerConditions()
     {
         /** @noinspection PhpUndefinedMethodInspection */
         if ($this->boxType === 'system' && $this->getController() instanceof IConditionBoxController && $this->getController()->getConditionDefinition()) {
@@ -549,12 +562,12 @@ class Box extends DatabaseObject
     }
 
     /**
-     * @TODO
+     * Returns the conditions for the visibility of the box.
      *
      * @return  Condition[]
      * @since   5.5
      */
-    public function getConditions2(): array // @TODO name
+    public function getVisibilityConditions(): array
     {
         return ConditionHandler::getInstance()->getConditions(
             'com.woltlab.wcf.condition.box', // @TODO make const
@@ -564,7 +577,7 @@ class Box extends DatabaseObject
 
     public function isVisible(): bool
     {
-        $conditions = $this->getConditions2();
+        $conditions = $this->getVisibilityConditions();
         foreach ($conditions as $condition) {
             if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
                 return false;

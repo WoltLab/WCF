@@ -180,7 +180,7 @@ class BoxEditForm extends BoxAddForm
 
         ConditionHandler::getInstance()->updateConditions(
             $this->box->boxID,
-            $this->box->getConditions2(),
+            $this->box->getVisibilityConditions(),
             $conditions
         );
 
@@ -258,7 +258,7 @@ class BoxEditForm extends BoxAddForm
 
             $this->readBoxImages();
 
-            $conditions = $this->box->getConditions2();
+            $conditions = $this->box->getVisibilityConditions();
             $conditionsByObjectTypeID = [];
             foreach ($conditions as $condition) {
                 $conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
