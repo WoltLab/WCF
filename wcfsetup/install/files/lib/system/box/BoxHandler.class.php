@@ -191,7 +191,7 @@ class BoxHandler extends SingletonFactory
         }
 
         $conditionObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
-            'com.woltlab.wcf.condition.box',
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
             'com.woltlab.wcf.page'
         );
         $oldCondition = [];
@@ -219,13 +219,14 @@ class BoxHandler extends SingletonFactory
     private function createPageConditions(array $pages, bool $reverseLogic, Box $box): array
     {
         $pageCondition = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.condition.box',
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
             'com.woltlab.wcf.page'
         );
 
-        $pageIDs = \array_merge($box->getPageIDs(), \array_map(static function ($page) {
-            return $page->pageID;
-        }, $pages));
+        $pageIDs = \array_merge(
+            $box->getPageIDs(),
+            \array_column($pages, 'pageID')
+        );
 
         \assert($pageCondition->getProcessor() instanceof MultiPageCondition);
 

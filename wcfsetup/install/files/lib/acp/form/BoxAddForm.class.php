@@ -399,30 +399,56 @@ class BoxAddForm extends AbstractForm
 
     private function readConditions(): void
     {
+        $pageConditionObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            'com.woltlab.wcf.page'
+        );
+
+        $this->pageIDs = $this->visibleEverywhere = null;
         foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
             foreach ($groupedObjectTypes as $objectTypes) {
                 if (\is_array($objectTypes)) {
                     foreach ($objectTypes as $objectType) {
                         $objectType->getProcessor()->readFormParameters();
-                        if ($objectType->getProcessor() instanceof MultiPageCondition) {
+                        if ($objectType->objectTypeID == $pageConditionObjectTypeID) {
+                            \assert($objectTypes->getProcessor() instanceof MultiPageCondition);
+
                             $data = $objectType->getProcessor()->getData();
                             if ($data !== null) {
                                 $this->pageIDs = $data['pageIDs'];
-                                $this->visibleEverywhere = !$data['pageIDs_reverseLogic'];
+                                $this->visibleEverywhere = !$data['pageIDs_reverseLogic'] ? 1 : 0;
+                            } else {
+                                $this->pageIDs = [];
+                                $this->visibleEverywhere = 1;
                             }
                         }
                     }
                 } else {
                     $objectTypes->getProcessor()->readFormParameters();
-                    if ($objectTypes->getProcessor() instanceof MultiPageCondition) {
+                    if ($objectTypes->objectTypeID == $pageConditionObjectTypeID) {
+                        \assert($objectTypes->getProcessor() instanceof MultiPageCondition);
+
                         $data = $objectTypes->getProcessor()->getData();
                         if ($data !== null) {
                             $this->pageIDs = $data['pageIDs'];
-                            $this->visibleEverywhere = !$data['pageIDs_reverseLogic'];
+                            $this->visibleEverywhere = !$data['pageIDs_reverseLogic'] ? 1 : 0;
+                        } else {
+                            $this->pageIDs = [];
+                            $this->visibleEverywhere = 1;
                         }
                     }
                 }
             }
+        }
+
+        if ($this->pageIDs === null || $this->visibleEverywhere === null) {
+            throw new \LogicException(
+                \sprintf(
+                    "The '%d' condition for the definition '%d' is missing.",
+                    'com.woltlab.wcf.page',
+                    Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME
+                )
+            );
         }
     }
 
@@ -726,7 +752,7 @@ class BoxAddForm extends AbstractForm
      */
     public function readData()
     {
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.box');
+        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME);
         foreach ($objectTypes as $objectType) {
             if (!$objectType->conditionobject) {
                 continue;

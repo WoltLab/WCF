@@ -57,6 +57,11 @@ use wcf\system\WCF;
 class Box extends DatabaseObject
 {
     /**
+     * @since 5.5
+     */
+    public const VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME = 'com.woltlab.wcf.condition.box';
+
+    /**
      * image media object
      * @var ViewableMedia
      */
@@ -570,7 +575,7 @@ class Box extends DatabaseObject
     public function getVisibilityConditions(): array
     {
         return ConditionHandler::getInstance()->getConditions(
-            'com.woltlab.wcf.condition.box', // @TODO make const
+            self::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
             $this->boxID
         );
     }
