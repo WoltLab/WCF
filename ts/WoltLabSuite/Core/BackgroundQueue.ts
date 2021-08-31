@@ -31,7 +31,7 @@ class BackgroundQueue implements AjaxCallbackObject {
     this._invocations++;
 
     // invoke the queue up to 5 times in a row
-    if (((data as unknown) as number) > 0 && this._invocations < 5) {
+    if ((data as unknown as number) > 0 && this._invocations < 5) {
       window.setTimeout(() => {
         this._isBusy = false;
         this.invoke();

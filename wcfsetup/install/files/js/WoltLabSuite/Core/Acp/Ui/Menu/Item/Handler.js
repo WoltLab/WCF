@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Lang
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    UiPageSearchHandler = tslib_1.__importStar(UiPageSearchHandler);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiPageSearchHandler = (0, tslib_1.__importStar)(UiPageSearchHandler);
     class AcpUiMenuItemHandler {
         /**
          * Initializes the interface logic.

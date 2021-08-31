@@ -10,9 +10,9 @@
  */
 define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../Core"], function (require, exports, tslib_1, Abstract_1, DependencyManager, Core) {
     "use strict";
-    Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    DependencyManager = tslib_1.__importStar(DependencyManager);
-    Core = tslib_1.__importStar(Core);
+    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
+    DependencyManager = (0, tslib_1.__importStar)(DependencyManager);
+    Core = (0, tslib_1.__importStar)(Core);
     class Value extends Abstract_1.default {
         constructor() {
             super(...arguments);

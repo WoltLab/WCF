@@ -10,12 +10,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Language = tslib_1.__importStar(Language);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Language = (0, tslib_1.__importStar)(Language);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     const containerSelector = ".jsObjectActionContainer[data-object-action-class-name]";
     const objectSelector = ".jsObjectActionObject[data-object-id]";
     const actionSelector = ".jsObjectAction[data-object-action]";

@@ -2,7 +2,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.element = void 0;
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     let _callback = null;
     let _offset = null;
     let _timeoutScroll = null;

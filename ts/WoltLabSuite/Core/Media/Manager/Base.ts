@@ -44,7 +44,8 @@ interface SetMediaAdditionalData {
 }
 
 abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerOptions>
-  implements DialogCallbackObject, MediaEditorCallbackObject {
+  implements DialogCallbackObject, MediaEditorCallbackObject
+{
   protected _forceClipboard = false;
   protected _hadInitiallyMarkedItems = false;
   protected readonly _id: string;

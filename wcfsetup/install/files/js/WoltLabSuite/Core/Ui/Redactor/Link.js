@@ -5,9 +5,9 @@ define(["require", "exports", "tslib", "../../Dom/Util", "../../Language", "../D
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.showDialog = void 0;
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
     class UiRedactorLink {
         constructor() {
             this.boundListener = false;

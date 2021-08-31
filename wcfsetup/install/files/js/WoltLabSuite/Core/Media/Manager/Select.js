@@ -9,13 +9,13 @@
  */
 define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog, Util_1) {
     "use strict";
-    Base_1 = tslib_1.__importDefault(Base_1);
-    Core = tslib_1.__importStar(Core);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
-    FileUtil = tslib_1.__importStar(FileUtil);
-    Language = tslib_1.__importStar(Language);
-    UiDialog = tslib_1.__importStar(UiDialog);
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Base_1 = (0, tslib_1.__importDefault)(Base_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
+    FileUtil = (0, tslib_1.__importStar)(FileUtil);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiDialog = (0, tslib_1.__importStar)(UiDialog);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class MediaManagerSelect extends Base_1.default {
         constructor(options) {
             super(options);

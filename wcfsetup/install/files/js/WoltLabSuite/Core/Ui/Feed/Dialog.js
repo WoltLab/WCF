@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Language = tslib_1.__importStar(Language);
-    Clipboard = tslib_1.__importStar(Clipboard);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Language = (0, tslib_1.__importStar)(Language);
+    Clipboard = (0, tslib_1.__importStar)(Clipboard);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     /**
      * Copies one of links to the clipboard.
      */

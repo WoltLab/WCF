@@ -8,7 +8,7 @@
  */
 define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
+    Core = (0, tslib_1.__importStar)(Core);
     class RepeatingTimer {
         /**
          * Creates a new timer that executes the given `callback` every `delta` milliseconds.

@@ -8,10 +8,10 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Core, Language, Dialog_1) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
     class AcpUiWorker {
         /**
          * Creates a new worker instance.

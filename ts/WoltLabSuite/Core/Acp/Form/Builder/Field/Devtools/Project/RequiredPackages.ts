@@ -15,7 +15,7 @@ import * as Language from "../../../../../../Language";
 import { RequiredPackageData } from "./Data";
 
 class RequiredPackages<
-  TPackageData extends RequiredPackageData = RequiredPackageData
+  TPackageData extends RequiredPackageData = RequiredPackageData,
 > extends AbstractPackageList<TPackageData> {
   protected readonly file: HTMLInputElement;
   protected readonly minVersion: HTMLInputElement;

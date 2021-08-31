@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.divider = exports.attach = exports.setItems = exports.appendItems = exports.appendItem = exports.buildItem = exports.create = void 0;
-    Core = tslib_1.__importStar(Core);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     const _validIconSizes = [16, 24, 32, 48, 64, 96, 144];
     function validateList(list) {
         if (!(list instanceof HTMLUListElement)) {

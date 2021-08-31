@@ -313,7 +313,7 @@ export class UiMessageQuote implements AjaxCallbackObject {
     const container = this.containers.get(this.activeMessageId)!;
     const objectId = ~~container.dataset.objectId!;
     const content = this.messageBodySelector
-      ? (container.querySelector(this.messageBodySelector)! as HTMLElement)
+      ? (container.querySelector(this.messageBodySelector) as HTMLElement)
       : container;
 
     let anchorNode = selection.anchorNode;

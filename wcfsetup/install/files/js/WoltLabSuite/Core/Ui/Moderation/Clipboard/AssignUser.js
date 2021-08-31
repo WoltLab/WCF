@@ -12,16 +12,16 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notifica
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    User_1 = tslib_1.__importDefault(User_1);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Language = tslib_1.__importStar(Language);
-    Input_1 = tslib_1.__importDefault(Input_1);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
-    Ajax = tslib_1.__importStar(Ajax);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    User_1 = (0, tslib_1.__importDefault)(User_1);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Language = (0, tslib_1.__importStar)(Language);
+    Input_1 = (0, tslib_1.__importDefault)(Input_1);
+    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
     class UiModerationClipboardAssignUser {
         constructor() {
             /**

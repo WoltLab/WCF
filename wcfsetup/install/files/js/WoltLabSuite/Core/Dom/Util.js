@@ -9,7 +9,7 @@
  */
 define(["require", "exports", "tslib", "../StringUtil"], function (require, exports, tslib_1, StringUtil) {
     "use strict";
-    StringUtil = tslib_1.__importStar(StringUtil);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
     function _isBoundaryNode(element, ancestor, position) {
         if (!ancestor.contains(element)) {
             throw new Error("Ancestor element does not contain target element.");

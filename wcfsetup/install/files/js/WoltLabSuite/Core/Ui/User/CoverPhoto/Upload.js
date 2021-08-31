@@ -9,12 +9,12 @@
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../Dialog", "../../Notification", "../../../Upload"], function (require, exports, tslib_1, Core, Util_1, EventHandler, UiDialog, UiNotification, Upload_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    UiDialog = tslib_1.__importStar(UiDialog);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    Upload_1 = tslib_1.__importDefault(Upload_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    UiDialog = (0, tslib_1.__importStar)(UiDialog);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
     /**
      * @constructor
      */

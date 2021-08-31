@@ -9,10 +9,10 @@
  */
 define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax", "../../../../../Language", "../../../../../Ui/Dialog"], function (require, exports, tslib_1, Worker_1, Ajax, Language, Dialog_1) {
     "use strict";
-    Worker_1 = tslib_1.__importDefault(Worker_1);
-    Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Worker_1 = (0, tslib_1.__importDefault)(Worker_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
     class AcpUserContentRemoveHandler {
         /**
          * Initializes the content remove handler.

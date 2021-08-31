@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.add = exports.addObject = exports.get = void 0;
-    Template_1 = tslib_1.__importDefault(Template_1);
+    Template_1 = (0, tslib_1.__importDefault)(Template_1);
     Object.defineProperty(exports, "get", { enumerable: true, get: function () { return Store_2.get; } });
     /**
      * Adds all the language items in the given object to the store.
@@ -27,7 +27,7 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
      */
     function add(key, value) {
         if (typeof value === "string") {
-            Store_1.add(key, compile(value));
+            (0, Store_1.add)(key, compile(value));
         }
         else {
             // Historically a few items that are added to the language store do not represent actual phrases, but
@@ -36,7 +36,7 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
             //
             // Despite this method technically only taking `string`s as the `value` we need to correctly handle
             // them which we do by simply storing a function that returns the value as-is.
-            Store_1.add(key, function () {
+            (0, Store_1.add)(key, function () {
                 return value;
             });
         }

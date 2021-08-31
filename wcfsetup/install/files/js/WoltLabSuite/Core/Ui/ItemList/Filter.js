@@ -9,11 +9,11 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Language", "../../StringUtil", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, Util_1, Language, StringUtil, Simple_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     class UiItemListFilter {
         /**
          * Creates a new filter input.

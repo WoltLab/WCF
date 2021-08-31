@@ -10,12 +10,12 @@
  */
 define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "../Dom/Util", "../Ui/Notification", "../Dom/Change/Listener"], function (require, exports, tslib_1, Core, Upload_1, Language, Util_1, UiNotification, DomChangeListener) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Upload_1 = tslib_1.__importDefault(Upload_1);
-    Language = tslib_1.__importStar(Language);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    DomChangeListener = tslib_1.__importStar(DomChangeListener);
+    Core = (0, tslib_1.__importStar)(Core);
+    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
     class MediaReplace extends Upload_1.default {
         constructor(mediaID, buttonContainerId, targetId, options) {
             super(buttonContainerId, targetId, Core.extend(options, {

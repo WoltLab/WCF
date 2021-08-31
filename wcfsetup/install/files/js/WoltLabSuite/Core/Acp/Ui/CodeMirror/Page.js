@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../../../Core", "../../../Ui/Page/Search"], function (require, exports, tslib_1, Core, UiPageSearch) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    UiPageSearch = tslib_1.__importStar(UiPageSearch);
+    Core = (0, tslib_1.__importStar)(Core);
+    UiPageSearch = (0, tslib_1.__importStar)(UiPageSearch);
     class AcpUiCodeMirrorPage {
         constructor(elementId) {
             this.element = document.getElementById(elementId);

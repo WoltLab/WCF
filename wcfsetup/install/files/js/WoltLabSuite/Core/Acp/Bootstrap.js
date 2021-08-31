@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Core = tslib_1.__importStar(Core);
-    UiPageMenu = tslib_1.__importStar(UiPageMenu);
+    Core = (0, tslib_1.__importStar)(Core);
+    UiPageMenu = (0, tslib_1.__importStar)(UiPageMenu);
     /**
      * Bootstraps general modules and frontend exclusive ones.
      *
@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
                 enableMobileMenu: true,
             },
         }, options);
-        Bootstrap_1.setup(options.bootstrap);
+        (0, Bootstrap_1.setup)(options.bootstrap);
         UiPageMenu.init();
     }
     exports.setup = setup;

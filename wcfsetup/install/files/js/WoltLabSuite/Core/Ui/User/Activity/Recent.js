@@ -1,9 +1,9 @@
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Util_1) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Language = (0, tslib_1.__importStar)(Language);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class UiUserActivityRecent {
         constructor(containerId) {
             this.containerId = containerId;

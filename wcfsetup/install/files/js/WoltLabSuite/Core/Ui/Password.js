@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Language = (0, tslib_1.__importStar)(Language);
     const _knownElements = new WeakSet();
     function setup() {
         initElements();

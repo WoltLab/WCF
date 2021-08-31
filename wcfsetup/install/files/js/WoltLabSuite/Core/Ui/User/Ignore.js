@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener"], function (r
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     const _availableMessages = document.getElementsByClassName("ignoredUserMessage");
     const _knownMessages = new Set();
     /**

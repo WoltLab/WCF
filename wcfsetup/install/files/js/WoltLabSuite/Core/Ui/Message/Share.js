@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../StringUtil"
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    EventHandler = tslib_1.__importStar(EventHandler);
-    StringUtil = tslib_1.__importStar(StringUtil);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
     let _pageDescription = "";
     let _pageUrl = "";
     function share(objectName, url, appendUrl, pageUrl) {

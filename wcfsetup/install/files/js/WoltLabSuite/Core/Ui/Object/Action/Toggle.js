@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../../../Language", "./Handler"], functi
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Language = tslib_1.__importStar(Language);
-    Handler_1 = tslib_1.__importDefault(Handler_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    Handler_1 = (0, tslib_1.__importDefault)(Handler_1);
     function toggleObject(data) {
         const actionElement = data.objectElement.querySelector('.jsObjectAction[data-object-action="toggle"]');
         if (!actionElement || actionElement.dataset.objectActionHandler) {

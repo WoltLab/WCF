@@ -9,11 +9,11 @@
  */
 define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Util_1, Language, Dialog_1) {
     "use strict";
-    AjaxStatus = tslib_1.__importStar(AjaxStatus);
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    AjaxStatus = (0, tslib_1.__importStar)(AjaxStatus);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
     class ControllerMapRoutePlanner {
         constructor(buttonId, destination) {
             this.didInitDialog = false;
@@ -63,7 +63,8 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", 
                 travelMode: google.maps.TravelMode[this.travelMode.value.toUpperCase()],
             };
             AjaxStatus.show();
-            this.directionsService.route(request, (result, status) => this.setRoute(result, status));
+            // .route() returns a promise, but we rely on the callback API for compatibility reasons.
+            void this.directionsService.route(request, (result, status) => this.setRoute(result, status));
             this.googleLink.href = this.getGoogleMapsLink(data.location, this.travelMode.value);
             this.lastOrigin = data.location;
         }

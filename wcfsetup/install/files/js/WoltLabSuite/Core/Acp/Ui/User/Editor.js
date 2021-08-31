@@ -9,14 +9,14 @@
  */
 define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Ajax", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Notification", "../../../Ui/Dropdown/Simple", "../../../Dom/Util"], function (require, exports, tslib_1, Handler_1, Ajax, Core, EventHandler, Language, UiNotification, Simple_1, Util_1) {
     "use strict";
-    Handler_1 = tslib_1.__importDefault(Handler_1);
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Handler_1 = (0, tslib_1.__importDefault)(Handler_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class AcpUiUserEditor {
         /**
          * Initializes the edit dropdown for each user.

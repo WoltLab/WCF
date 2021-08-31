@@ -11,11 +11,11 @@ define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax",
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AcpUserContentRemoveClipboard = void 0;
-    Worker_1 = tslib_1.__importDefault(Worker_1);
-    Ajax = tslib_1.__importStar(Ajax);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Worker_1 = (0, tslib_1.__importDefault)(Worker_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class AcpUserContentRemoveClipboard {
         /**
          * Initializes the content remove handler.

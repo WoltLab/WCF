@@ -12,11 +12,11 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.open = void 0;
-    Language = tslib_1.__importStar(Language);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Input_1 = tslib_1.__importDefault(Input_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Input_1 = (0, tslib_1.__importDefault)(Input_1);
     class UiPageSearchHandler {
         constructor() {
             this.callbackSuccess = undefined;

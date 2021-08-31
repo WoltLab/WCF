@@ -10,7 +10,7 @@
  */
 define(["require", "exports", "tslib", "../../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
+    Core = (0, tslib_1.__importStar)(Core);
     let _marshal = (element, options) => {
         if (typeof window.WCF === "object" && typeof window.WCF.ColorPicker === "function") {
             _marshal = (element, options) => {

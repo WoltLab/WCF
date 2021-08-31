@@ -3,12 +3,12 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Core, Language, StringUtil, Listener_1, Util_1, Input_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Input_1 = tslib_1.__importDefault(Input_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Language = (0, tslib_1.__importStar)(Language);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Input_1 = (0, tslib_1.__importDefault)(Input_1);
     class UiAclSimple {
         constructor(prefix, inputName) {
             this.prefix = prefix || "";

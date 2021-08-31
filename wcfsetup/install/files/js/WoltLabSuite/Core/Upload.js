@@ -10,10 +10,10 @@
  */
 define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change/Listener", "./Language"], function (require, exports, tslib_1, Request_1, Core, Listener_1, Language) {
     "use strict";
-    Request_1 = tslib_1.__importDefault(Request_1);
-    Core = tslib_1.__importStar(Core);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
+    Request_1 = (0, tslib_1.__importDefault)(Request_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Language = (0, tslib_1.__importStar)(Language);
     class Upload {
         constructor(buttonContainerId, targetId, options) {
             this._button = document.createElement("p");

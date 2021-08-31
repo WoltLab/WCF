@@ -13,17 +13,17 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Controller/Captcha", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../Language", "../Dialog", "../Scroll", "../../User", "../Notification"], function (require, exports, tslib_1, Ajax, Captcha_1, Core, Listener_1, Util_1, EventHandler, Language, Dialog_1, UiScroll, User_1, UiNotification) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Captcha_1 = tslib_1.__importDefault(Captcha_1);
-    Core = tslib_1.__importStar(Core);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    UiScroll = tslib_1.__importStar(UiScroll);
-    User_1 = tslib_1.__importDefault(User_1);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Captcha_1 = (0, tslib_1.__importDefault)(Captcha_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    UiScroll = (0, tslib_1.__importStar)(UiScroll);
+    User_1 = (0, tslib_1.__importDefault)(User_1);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     class UiCommentAdd {
         /**
          * Initializes a new quick reply field.

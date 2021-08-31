@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../../../../Core", "../../../../Environment"], function (require, exports, tslib_1, Core, Environment) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Environment = tslib_1.__importStar(Environment);
+    Core = (0, tslib_1.__importStar)(Core);
+    Environment = (0, tslib_1.__importStar)(Environment);
     class Rating {
         constructor(fieldId, value, activeCssClasses, defaultCssClasses) {
             this._field = document.getElementById(fieldId + "Container");
