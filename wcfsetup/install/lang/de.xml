@@ -4581,7 +4581,7 @@ Dateianhänge:
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Benutzernamen ein]]></item>
-		<item name="wcf.user.username.error.acpNotAuthorized"><![CDATA[Dieser Benutzer ist nicht berechtigt sich an der Administrationsoberfläche anzumelden.]]></item>
+		<item name="wcf.user.username.error.acpNotAuthorized"><![CDATA[Dieser Benutzer ist nicht berechtigt, sich an der Administrationsoberfläche anzumelden.]]></item>
 		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername {$username} konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzernamen eingegeben.]]></item>
