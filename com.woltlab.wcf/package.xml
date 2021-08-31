@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.5 RC 1</version>
-		<date>2021-08-27</date>
+		<version>5.4.5</version>
+		<date>2021-08-31</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -149,5 +149,9 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 		<!-- Delete the empty phrase once again. It might have been re-injected using the I18n functionality. -->
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4_deleteLanguageItems.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="5.4.5 RC 1">
+		<void/>
 	</instructions>
 </package>
