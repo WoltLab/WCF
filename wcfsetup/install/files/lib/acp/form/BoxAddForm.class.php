@@ -416,7 +416,7 @@ class BoxAddForm extends AbstractForm
                             $data = $objectType->getProcessor()->getData();
                             if ($data !== null) {
                                 $this->pageIDs = $data['pageIDs'];
-                                $this->visibleEverywhere = !$data['pageIDs_reverseLogic'] ? 1 : 0;
+                                $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
                             } else {
                                 $this->pageIDs = [];
                                 $this->visibleEverywhere = 1;
@@ -431,7 +431,7 @@ class BoxAddForm extends AbstractForm
                         $data = $objectTypes->getProcessor()->getData();
                         if ($data !== null) {
                             $this->pageIDs = $data['pageIDs'];
-                            $this->visibleEverywhere = !$data['pageIDs_reverseLogic'] ? 1 : 0;
+                            $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
                         } else {
                             $this->pageIDs = [];
                             $this->visibleEverywhere = 1;
