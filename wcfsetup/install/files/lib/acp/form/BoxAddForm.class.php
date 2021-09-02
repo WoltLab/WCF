@@ -405,38 +405,18 @@ class BoxAddForm extends AbstractForm
         );
 
         $this->pageIDs = $this->visibleEverywhere = null;
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    foreach ($objectTypes as $objectType) {
-                        $objectType->getProcessor()->readFormParameters();
-                        if ($objectType->objectTypeID == $pageConditionObjectTypeID) {
-                            \assert($objectTypes->getProcessor() instanceof MultiPageCondition);
+        foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
+            $objectType->getProcessor()->readFormParameters();
+            if ($objectType->objectTypeID == $pageConditionObjectTypeID) {
+                \assert($objectType->getProcessor() instanceof MultiPageCondition);
 
-                            $data = $objectType->getProcessor()->getData();
-                            if ($data !== null) {
-                                $this->pageIDs = $data['pageIDs'];
-                                $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
-                            } else {
-                                $this->pageIDs = [];
-                                $this->visibleEverywhere = 1;
-                            }
-                        }
-                    }
+                $data = $objectType->getProcessor()->getData();
+                if ($data !== null) {
+                    $this->pageIDs = $data['pageIDs'];
+                    $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
                 } else {
-                    $objectTypes->getProcessor()->readFormParameters();
-                    if ($objectTypes->objectTypeID == $pageConditionObjectTypeID) {
-                        \assert($objectTypes->getProcessor() instanceof MultiPageCondition);
-
-                        $data = $objectTypes->getProcessor()->getData();
-                        if ($data !== null) {
-                            $this->pageIDs = $data['pageIDs'];
-                            $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
-                        } else {
-                            $this->pageIDs = [];
-                            $this->visibleEverywhere = 1;
-                        }
-                    }
+                    $this->pageIDs = [];
+                    $this->visibleEverywhere = 1;
                 }
             }
         }
@@ -590,16 +570,8 @@ class BoxAddForm extends AbstractForm
             $this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
         }
 
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    foreach ($objectTypes as $objectType) {
-                        $objectType->getProcessor()->validate();
-                    }
-                } else {
-                    $objectTypes->getProcessor()->validate();
-                }
-            }
+        foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
+            $objectType->getProcessor()->validate();
         }
     }
 
@@ -706,18 +678,10 @@ class BoxAddForm extends AbstractForm
         // save acl
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $box->boxID, $this->aclValues);
 
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    $conditions = \array_merge($conditions, $objectTypes);
-                } else {
-                    $conditions[] = $objectTypes;
-                }
-            }
-        }
-        ConditionHandler::getInstance()->createConditions($box->boxID, $conditions);
+        ConditionHandler::getInstance()->createConditions(
+            $box->boxID,
+            $this->toFlatList($this->groupedConditionObjectTypes)
+        );
 
         // call saved event
         $this->saved();
@@ -742,7 +706,7 @@ class BoxAddForm extends AbstractForm
         $this->linkPageID = 0;
         $this->linkPageObjectID = 0;
 
-        foreach ($conditions as $condition) {
+        foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $condition) {
             $condition->getProcessor()->reset();
         }
     }
@@ -824,6 +788,27 @@ class BoxAddForm extends AbstractForm
 
             $this->readBoxImages();
         }
+    }
+
+    /**
+     * This is a helper method to convert groupedConditionObjectTypes to a flat list.
+     * This method should not be used for any other purpose!
+     *
+     * @since 5.5
+     */
+    protected function toFlatList(array $array): array
+    {
+        $returnList = [];
+
+        foreach ($array as $element) {
+            if (\is_array($element)) {
+                $returnList = \array_merge($returnList, $this->toFlatList($element));
+            } else {
+                $returnList[] = $element;
+            }
+        }
+
+        return $returnList;
     }
 
     /**

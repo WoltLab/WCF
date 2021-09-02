@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Creates for all boxes own conditions.
+ * Create conditions for all boxes that use the legacy page filter.
  *
  * @author Joshua Ruesweg
  * @copyright 2001-2021 WoltLab GmbH

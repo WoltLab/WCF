@@ -538,7 +538,7 @@ class Box extends DatabaseObject
      * Returns the conditions for the box controller.
      *
      * @return  Condition[]
-     * @deprecated since 5.5 - use self::getControllerConditions() instead
+     * @deprecated 5.5 - use self::getControllerConditions() instead
      */
     public function getConditions()
     {
@@ -552,7 +552,7 @@ class Box extends DatabaseObject
      * @return  Condition[]
      * @since   5.5
      */
-    public function getControllerConditions()
+    public function getControllerConditions(): array
     {
         /** @noinspection PhpUndefinedMethodInspection */
         if ($this->boxType === 'system' && $this->getController() instanceof IConditionBoxController && $this->getController()->getConditionDefinition()) {
