@@ -1884,6 +1884,7 @@
 		<file>lib/system/user/online/location/UserLocation.class.php</file>
 		<file>lib/system/version/VersionHandler.class.php</file>
 		<file>lib/system/worker/DatabaseConvertEncodingWorker.class.php</file>
+		<file>lib/system/worker/LikeUserRebuildDataWorker.class.php</file>
 		<file>lib/system/worker/SearchEngineConvertInnoDbWorker.class.php</file>
 		<file>lib/system/worker/UserActivityPointUpdateCacheWorker.class.php</file>
 		<file>lib/system/worker/UserRankUpdateWorker.class.php</file>
