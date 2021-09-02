@@ -1402,7 +1402,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen Websiteschlüssel für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Geheimer Schlüssel (reCAPTCHA, Version 2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey_invisible"><![CDATA[Websiteschlüssel (Unsichtbares reCAPTCHA)]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Tragen Sie hier, <strong>zusätzlich</strong> zu den obigen Schlüsseln, Schlüssel für das unsichtbare reCAPTCHA ein, wenn Sie diese Variante nutzen möchten.]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Tragen Sie hier, <strong>zusätzlich</strong> zu den obigen Schlüsseln, den Schlüssel für das unsichtbare reCAPTCHA ein, wenn Sie diese Variante nutzen möchten.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Geheimer Schlüssel (Unsichtbares reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Seitenverhältnis beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
