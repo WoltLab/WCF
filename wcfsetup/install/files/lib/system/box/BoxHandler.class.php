@@ -4,8 +4,12 @@ namespace wcf\system\box;
 
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
+use wcf\data\condition\Condition;
 use wcf\data\condition\ConditionAction;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
+use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\page\MultiPageCondition;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
@@ -185,6 +189,57 @@ class BoxHandler extends SingletonFactory
                 $statement->execute([$box->boxID, $page->pageID, $visible ? 1 : 0]);
             }
         }
+
+        $conditionObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            'com.woltlab.wcf.page'
+        );
+        $oldCondition = [];
+        foreach ($box->getVisibilityConditions() as $condition) {
+            if ($condition->objectTypeID === $conditionObjectTypeID) {
+                $oldCondition[] = $condition;
+                break;
+            }
+        }
+
+        // Create matching conditions.
+        $pageConditions = $this->createPageConditions(
+            $pages,
+            $box->visibleEverywhere,
+            $box
+        );
+
+        ConditionHandler::getInstance()->updateConditions(
+            $box->boxID,
+            $oldCondition,
+            $pageConditions
+        );
+    }
+
+    private function createPageConditions(array $pages, bool $reverseLogic, Box $box): array
+    {
+        $pageCondition = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            'com.woltlab.wcf.page'
+        );
+
+        $pageIDs = \array_merge(
+            $box->getPageIDs(),
+            \array_column($pages, 'pageID')
+        );
+
+        \assert($pageCondition->getProcessor() instanceof MultiPageCondition);
+
+        $pageCondition->getProcessor()->setData(new Condition(null, [
+            'conditionData' => \serialize([
+                'pageIDs' => \array_unique($pageIDs),
+                'pageIDs_reverseLogic' => $reverseLogic,
+            ]),
+        ]));
+
+        return [
+            $pageCondition,
+        ];
     }
 
     /**
@@ -270,7 +325,7 @@ class BoxHandler extends SingletonFactory
 
         $boxes = [];
         foreach ($boxList as $box) {
-            if (!$forDisplay || $box->isAccessible()) {
+            if (!$forDisplay || ($box->isAccessible() && $box->isVisible())) {
                 $virtualShowOrder = (isset($showOrders[$box->boxID])) ? $showOrders[$box->boxID] : ($box->showOrder + 1000);
                 $box->setVirtualShowOrder($virtualShowOrder);
 

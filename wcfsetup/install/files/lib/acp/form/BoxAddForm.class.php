@@ -16,6 +16,8 @@ use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
+use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\page\MultiPageCondition;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -223,6 +225,12 @@ class BoxAddForm extends AbstractForm
     public $invertPermissions;
 
     /**
+     * grouped boxes condition object types
+     * @var ObjectType[][]
+     */
+    public $groupedConditionObjectTypes = [];
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -331,9 +339,6 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['showOrder'])) {
             $this->showOrder = \intval($_POST['showOrder']);
         }
-        if (isset($_POST['visibleEverywhere'])) {
-            $this->visibleEverywhere = \intval($_POST['visibleEverywhere']);
-        }
         if (isset($_POST['cssClassName'])) {
             $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
         }
@@ -343,10 +348,6 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;
         }
-        if (isset($_POST['pageIDs']) && \is_array($_POST['pageIDs'])) {
-            $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
-        }
-
         if (isset($_POST['linkType'])) {
             $this->linkType = $_POST['linkType'];
         }
@@ -359,7 +360,6 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['externalURL'])) {
             $this->externalURL = StringUtil::trim($_POST['externalURL']);
         }
-
         if (isset($_POST['title']) && \is_array($_POST['title'])) {
             $this->title = ArrayUtil::trim($_POST['title']);
         }
@@ -392,6 +392,43 @@ class BoxAddForm extends AbstractForm
 
         if ($this->boxType === 'system') {
             $this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
+        }
+
+        $this->readConditions();
+    }
+
+    private function readConditions(): void
+    {
+        $pageConditionObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            'com.woltlab.wcf.page'
+        );
+
+        $this->pageIDs = $this->visibleEverywhere = null;
+        foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
+            $objectType->getProcessor()->readFormParameters();
+            if ($objectType->objectTypeID == $pageConditionObjectTypeID) {
+                \assert($objectType->getProcessor() instanceof MultiPageCondition);
+
+                $data = $objectType->getProcessor()->getData();
+                if ($data !== null) {
+                    $this->pageIDs = $data['pageIDs'];
+                    $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
+                } else {
+                    $this->pageIDs = [];
+                    $this->visibleEverywhere = 1;
+                }
+            }
+        }
+
+        if ($this->pageIDs === null || $this->visibleEverywhere === null) {
+            throw new \LogicException(
+                \sprintf(
+                    "The '%d' condition for the definition '%d' is missing.",
+                    'com.woltlab.wcf.page',
+                    Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME
+                )
+            );
         }
     }
 
@@ -532,6 +569,10 @@ class BoxAddForm extends AbstractForm
             $statement->execute($conditionBuilder->getParameters());
             $this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
         }
+
+        foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
+            $objectType->getProcessor()->validate();
+        }
     }
 
     /**
@@ -637,6 +678,11 @@ class BoxAddForm extends AbstractForm
         // save acl
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $box->boxID, $this->aclValues);
 
+        ConditionHandler::getInstance()->createConditions(
+            $box->boxID,
+            $this->toFlatList($this->groupedConditionObjectTypes)
+        );
+
         // call saved event
         $this->saved();
 
@@ -659,6 +705,10 @@ class BoxAddForm extends AbstractForm
         $this->linkType = 'none';
         $this->linkPageID = 0;
         $this->linkPageObjectID = 0;
+
+        foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $condition) {
+            $condition->getProcessor()->reset();
+        }
     }
 
     /**
@@ -666,6 +716,27 @@ class BoxAddForm extends AbstractForm
      */
     public function readData()
     {
+        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes(Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME);
+        foreach ($objectTypes as $objectType) {
+            if (!$objectType->conditionobject) {
+                continue;
+            }
+
+            if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
+                $this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
+            }
+
+            if ($objectType->conditiongroup) {
+                if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
+                    $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
+                }
+
+                $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
+            } else {
+                $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->objectTypeID] = $objectType;
+            }
+        }
+
         parent::readData();
 
         if (empty($_POST) && $this->presetBox) {
@@ -720,6 +791,27 @@ class BoxAddForm extends AbstractForm
     }
 
     /**
+     * This is a helper method to convert groupedConditionObjectTypes to a flat list.
+     * This method should not be used for any other purpose!
+     *
+     * @since 5.5
+     */
+    protected function toFlatList(array $array): array
+    {
+        $returnList = [];
+
+        foreach ($array as $element) {
+            if (\is_array($element)) {
+                $returnList = \array_merge($returnList, $this->toFlatList($element));
+            } else {
+                $returnList[] = $element;
+            }
+        }
+
+        return $returnList;
+    }
+
+    /**
      * @inheritDoc
      */
     public function assignVariables()
@@ -758,6 +850,7 @@ class BoxAddForm extends AbstractForm
             'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
             'availableBoxPositions' => $this->availableBoxPositions,
             'invertPermissions' => $this->invertPermissions,
+            'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
         ]);
     }
 }

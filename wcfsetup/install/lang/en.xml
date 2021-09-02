@@ -262,6 +262,10 @@
 		<item name="wcf.acp.box.controller.sortField"><![CDATA[Sort By]]></item>
 		<item name="wcf.acp.box.controller.sortField.description"><![CDATA[The selected object property is used for sorting.]]></item>
 		<item name="wcf.acp.box.controller.limit"><![CDATA[Maximum Number of Items]]></item>
+		<item name="wcf.acp.box.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.box.conditions.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.box.conditions.pointInTime"><![CDATA[Time]]></item>
+		<item name="wcf.acp.box.conditions.user"><![CDATA[Active user]]></item>
 	</category>
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Clear Cache]]></item>

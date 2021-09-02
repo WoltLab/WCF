@@ -57,6 +57,11 @@ use wcf\system\WCF;
 class Box extends DatabaseObject
 {
     /**
+     * @since 5.5
+     */
+    public const VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME = 'com.woltlab.wcf.condition.box';
+
+    /**
      * image media object
      * @var ViewableMedia
      */
@@ -530,11 +535,24 @@ class Box extends DatabaseObject
     }
 
     /**
-     * Returns the conditions of the notice.
+     * Returns the conditions for the box controller.
      *
      * @return  Condition[]
+     * @deprecated 5.5 - use self::getControllerConditions() instead
      */
     public function getConditions()
+    {
+        return $this->getControllerConditions();
+    }
+
+    /**
+     * Returns the conditions for the box controller.
+     * The conditions are intended for the contents of the box.
+     *
+     * @return  Condition[]
+     * @since   5.5
+     */
+    public function getControllerConditions(): array
     {
         /** @noinspection PhpUndefinedMethodInspection */
         if ($this->boxType === 'system' && $this->getController() instanceof IConditionBoxController && $this->getController()->getConditionDefinition()) {
@@ -546,6 +564,32 @@ class Box extends DatabaseObject
         }
 
         return [];
+    }
+
+    /**
+     * Returns the conditions for the visibility of the box.
+     *
+     * @return  Condition[]
+     * @since   5.5
+     */
+    public function getVisibilityConditions(): array
+    {
+        return ConditionHandler::getInstance()->getConditions(
+            self::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            $this->boxID
+        );
+    }
+
+    public function isVisible(): bool
+    {
+        $conditions = $this->getVisibilityConditions();
+        foreach ($conditions as $condition) {
+            if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

@@ -96,7 +96,7 @@
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.box.contents{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.page.list{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('conditions')}">{lang}wcf.acp.box.conditions{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
 
 				{event name='tabMenuTabs'}
@@ -439,43 +439,44 @@
 			{/if}
 		</div>
 
-		<div id="pages" class="tabMenuContent">
-			<div class="section">
-				<dl>
-					<dt></dt>
-					<dd>
-						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
-						<script data-relocate="true">
-							require([], function() {
-								// visibility toggle
-								var visibilityExceptionHidden = elById('visibilityExceptionHidden');
-								var visibilityExceptionVisible = elById('visibilityExceptionVisible');
-
-								elById('visibleEverywhere').addEventListener('change', function() {
-									window[this.checked ? 'elShow' : 'elHide'](visibilityExceptionHidden);
-									window[this.checked ? 'elHide' : 'elShow'](visibilityExceptionVisible);
-								});
-							});
-						</script>
-					</dd>
-				</dl>
-
-				<dl>
-					<dt>
-						<span id="visibilityExceptionVisible"{if $visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.visible{/lang}</span>
-						<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
-					</dt>
-					<dd>
-						{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
-					</dd>
-				</dl>
-
-				{event name='pagesTabMenuContent'}
-			</div>
-		</div>
-
 		<div id="acl" class="tabMenuContent">
 			{include file='aclSimple' __supportsInvertedPermissions=true}
+		</div>
+
+		<div id="conditions" class="tabMenuContent">
+			<section class="section">
+				<header class="sectionHeader">
+					<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.page{/lang}</h2>
+				</header>
+
+				{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
+					{@$pageConditionObjectType->getProcessor()->getHtml()}
+				{/foreach}
+			</section>
+
+			{if $groupedConditionObjectTypes['com.woltlab.wcf.pointInTime']|isset}
+				<section class="section">
+					<header class="sectionHeader">
+						<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.pointInTime{/lang}</h2>
+					</header>
+
+					{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
+						{@$pointInTimeConditionObjectType->getProcessor()->getHtml()}
+					{/foreach}
+				</section>
+			{/if}
+
+			{if $groupedConditionObjectTypes['com.woltlab.wcf.user']|isset}
+				<section class="section">
+					<header class="sectionHeader">
+						<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.user{/lang}</h2>
+					</header>
+
+					{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}
+				</section>
+			{/if}
+
+			{event name='conditionContainers'}
 		</div>
 
 		{event name='tabMenuContents'}

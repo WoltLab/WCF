@@ -956,6 +956,14 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<!-- /notice conditions -->
+		<!-- box conditions -->
+		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.condition.box</definitionname>
+			<classname>wcf\system\condition\page\MultiPageCondition</classname>
+			<conditionobject>com.woltlab.wcf.page</conditionobject>
+		</type>
+		<!-- /box conditions -->
 		<!-- ad locations -->
 		<type>
 			<name>com.woltlab.wcf.logo</name>

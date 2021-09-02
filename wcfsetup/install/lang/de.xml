@@ -263,6 +263,10 @@
 		<item name="wcf.acp.box.controller.limit"><![CDATA[Maximale Anzahl an Einträgen]]></item>
 		<item name="wcf.acp.box.controller.sortField"><![CDATA[Sortierung nach]]></item>
 		<item name="wcf.acp.box.controller.sortField.description"><![CDATA[Die ausgewählte Objekteigenschaft wird für die Sortierung der Einträge verwendet.]]></item>
+		<item name="wcf.acp.box.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.box.conditions.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.box.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
+		<item name="wcf.acp.box.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 	</category>
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>

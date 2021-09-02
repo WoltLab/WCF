@@ -166,6 +166,12 @@ class BoxEditForm extends BoxAddForm
 
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->box->boxID, $this->aclValues);
 
+        ConditionHandler::getInstance()->updateConditions(
+            $this->box->boxID,
+            $this->box->getVisibilityConditions(),
+            $this->toFlatList($this->groupedConditionObjectTypes)
+        );
+
         // call saved event
         $this->saved();
 
@@ -239,6 +245,18 @@ class BoxEditForm extends BoxAddForm
             $this->invertPermissions = $this->box->invertPermissions;
 
             $this->readBoxImages();
+
+            $conditions = $this->box->getVisibilityConditions();
+            $conditionsByObjectTypeID = [];
+            foreach ($conditions as $condition) {
+                $conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
+            }
+
+            foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
+                if (isset($conditionsByObjectTypeID[$objectType->objectTypeID])) {
+                    $conditionsByObjectTypeID[$objectType->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
+                }
+            }
         }
     }
 

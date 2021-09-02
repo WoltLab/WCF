@@ -116,6 +116,10 @@
 			<interfacename>wcf\system\stat\IStatDailyHandler</interfacename>
 		</definition>
 		<definition>
+			<name>com.woltlab.wcf.condition.box</name>
+			<interfacename>wcf\system\condition\IContentCondition</interfacename>
+		</definition>
+		<definition>
 			<name>com.woltlab.wcf.condition.userGroupAssignment</name>
 			<interfacename>wcf\system\condition\IUserCondition</interfacename>
 		</definition>
