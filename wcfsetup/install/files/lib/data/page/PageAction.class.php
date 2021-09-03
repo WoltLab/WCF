@@ -4,13 +4,17 @@ namespace wcf\data\page;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\box\Box;
+use wcf\data\condition\Condition;
 use wcf\data\ISearchAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentEditor;
 use wcf\data\TDatabaseObjectToggle;
 use wcf\system\comment\CommentHandler;
+use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\page\MultiPageCondition;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -148,6 +152,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     $boxData['visible'],
                 ]);
             }
+        }
+
+        // update box conditions
+        foreach ($this->parameters['boxToPage'] as $boxData) {
+            $this->createPageConditionForBox($boxData['boxID'], [$page]);
         }
 
         // save template
@@ -289,6 +298,67 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                 }
             }
         }
+
+        // update box conditions
+        foreach ($this->parameters['boxToPage'] as $boxData) {
+            $this->createPageConditionForBox($boxData['boxID'], $this->getObjects());
+        }
+    }
+
+    private function createPageConditionForBox(int $boxID, array $pages): void
+    {
+        $box = new Box($boxID);
+
+        // Create matching conditions.
+        $pageConditions = $this->createPageConditions(
+            \array_column($pages, 'pageID'),
+            $box->visibleEverywhere,
+            $box
+        );
+
+        $conditionObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            'com.woltlab.wcf.page'
+        );
+        $oldCondition = [];
+        foreach ($box->getVisibilityConditions() as $condition) {
+            if ($condition->objectTypeID === $conditionObjectTypeID) {
+                $oldCondition[] = $condition;
+                break;
+            }
+        }
+
+        ConditionHandler::getInstance()->updateConditions(
+            $box->boxID,
+            $oldCondition,
+            $pageConditions
+        );
+    }
+
+    private function createPageConditions(array $pages, bool $reverseLogic, Box $box): array
+    {
+        $pageCondition = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
+            'com.woltlab.wcf.page'
+        );
+
+        $pageIDs = \array_merge(
+            $box->getPageIDs(),
+            \array_column($pages, 'pageID')
+        );
+
+        \assert($pageCondition->getProcessor() instanceof MultiPageCondition);
+
+        $pageCondition->getProcessor()->setData(new Condition(null, [
+            'conditionData' => \serialize([
+                'pageIDs' => \array_unique($pageIDs),
+                'pageIDs_reverseLogic' => $reverseLogic,
+            ]),
+        ]));
+
+        return [
+            $pageCondition,
+        ];
     }
 
     /**
