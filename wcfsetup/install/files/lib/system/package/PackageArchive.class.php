@@ -329,6 +329,16 @@ class PackageArchive
                 $data[$attribute->name] = $attribute->value;
             }
 
+            if (!isset($data['version']) || !Package::isValidVersion($data['version'])) {
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER,
+                    [
+                        'version' => $data['version'] ?? '',
+                        'packageName' => $element->nodeValue,
+                    ]
+                );
+            }
+
             $this->excludedPackages[] = $data;
         }
 
@@ -958,7 +968,13 @@ class PackageArchive
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 if (!empty($excludedPackages[$row['package']])) {
-                    if (Package::compareVersion($row['packageVersion'], $excludedPackages[$row['package']], '<')) {
+                    if (
+                        Package::compareVersion(
+                            $row['packageVersion'],
+                            $excludedPackages[$row['package']],
+                            '<'
+                        )
+                    ) {
                         continue;
                     }
                     $row['excludedPackageVersion'] = $excludedPackages[$row['package']];

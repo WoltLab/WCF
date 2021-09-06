@@ -140,6 +140,12 @@ class PackageValidationException extends SystemException
     const DUPLICATE_ABBREVIATION = 18;
 
     /**
+     * the version of an excluded package is invalid
+     * @var int
+     */
+    const INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER = 19;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code
