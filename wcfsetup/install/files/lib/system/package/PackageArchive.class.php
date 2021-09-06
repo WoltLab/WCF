@@ -329,7 +329,10 @@ class PackageArchive
                 $data[$attribute->name] = $attribute->value;
             }
 
-            if (!isset($data['version']) || !Package::isValidVersion($data['version'])) {
+            if (
+                !isset($data['version'])
+                || (!Package::isValidVersion($data['version']) && $data['version'] !== '*')
+            ) {
                 throw new PackageValidationException(
                     PackageValidationException::INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER,
                     [
@@ -969,7 +972,8 @@ class PackageArchive
             while ($row = $statement->fetchArray()) {
                 if (!empty($excludedPackages[$row['package']])) {
                     if (
-                        Package::compareVersion(
+                        $excludedPackages[$row['package']] !== '*'
+                        && Package::compareVersion(
                             $row['packageVersion'],
                             $excludedPackages[$row['package']],
                             '<'
