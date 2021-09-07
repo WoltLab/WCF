@@ -70,7 +70,7 @@
 	position: relative;
 
 	&::after {
-		background-image: linear-gradient(to top, $wcfContentBackground, transparent);
+		background-image: linear-gradient(to top, $wcfContentBackground, transparentize($wcfContentBackground, 100%));
 		bottom: 0;
 		content: "";
 		height: 30px;
