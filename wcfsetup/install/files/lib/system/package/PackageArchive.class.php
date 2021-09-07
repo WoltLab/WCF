@@ -331,7 +331,7 @@ class PackageArchive
 
             if (
                 !isset($data['version'])
-                || (!Package::isValidVersion($data['version']) && $data['version'] !== '*')
+                || ($data['version'] !== '*' && !Package::isValidVersion($data['version']))
             ) {
                 throw new PackageValidationException(
                     PackageValidationException::INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER,
