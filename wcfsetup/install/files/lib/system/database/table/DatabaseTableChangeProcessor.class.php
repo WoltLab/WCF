@@ -3,6 +3,7 @@
 namespace wcf\system\database\table;
 
 use wcf\data\package\Package;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\table\column\AbstractIntDatabaseTableColumn;
 use wcf\system\database\table\column\IDatabaseTableColumn;
@@ -144,6 +145,14 @@ class DatabaseTableChangeProcessor
     protected $tablesToDrop = [];
 
     /**
+     * database tables, that are unknown (but belongs theoretically to the WoltLab Suite)
+     * and must be dropped before installation
+     * @var DatabaseTable[]
+     * @since 5.5
+     */
+    protected $tablesToCleanup = [];
+
+    /**
      * Creates a new instance of `DatabaseTableChangeProcessor`.
      *
      * @param Package $package
@@ -221,6 +230,10 @@ class DatabaseTableChangeProcessor
     protected function applyChanges()
     {
         $appliedAnyChange = false;
+
+        foreach ($this->tablesToCleanup as $table) {
+            $this->dropTable($table);
+        }
 
         foreach ($this->tablesToCreate as $table) {
             $appliedAnyChange = true;
@@ -392,6 +405,22 @@ class DatabaseTableChangeProcessor
                 } elseif (isset($this->tablePackageIDs[$tableName])) {
                     $this->deleteTableLog($table);
                 }
+            } elseif (
+                \in_array($tableName, $this->existingTableNames)
+                && !isset($this->tablePackageIDs[$table->getName()])
+            ) {
+                if ($table instanceof PartialDatabaseTable) {
+                    throw new \LogicException("Partial table '{$tableName}' cannot be created (table exists but is unknown).");
+                }
+
+                // The table is currently unknown to the system and should be removed,
+                // before it will be created again. This protect us from havely outdated
+                // tables.
+                $this->tablesToCleanup[] = $table;
+                $this->splitNodeMessage .= "Clean up table '{$tableName}'.";
+
+                $this->tablesToCreate[] = $table;
+                $this->splitNodeMessage .= "Created table '{$tableName}'.";
             } elseif (!\in_array($tableName, $this->existingTableNames)) {
                 if ($table instanceof PartialDatabaseTable) {
                     throw new \LogicException("Partial table '{$tableName}' cannot be created.");
@@ -1158,10 +1187,29 @@ class DatabaseTableChangeProcessor
                 $existingTable = null;
                 if (\in_array($table->getName(), $this->existingTableNames)) {
                     if (!isset($this->tablePackageIDs[$table->getName()])) {
-                        $errors[] = [
-                            'tableName' => $table->getName(),
-                            'type' => 'unregisteredTableChange',
-                        ];
+                        $abbreviationWithWcfNumber = \explode('_', $table->getName(), 2)[0];
+
+                        // Remove the \WCF_N from the table prafix.
+                        $abbreviation = \substr(
+                            $abbreviationWithWcfNumber,
+                            0,
+                            \strlen($abbreviationWithWcfNumber) - \strlen(\WCF_N)
+                        );
+
+                        // Throws an error only if the table has an unknown prefix.
+                        // If the prefix is known, the unknown table is deleted
+                        // before it is created again (this is registered in self::calculateChanges()).
+                        if (
+                            !\in_array(
+                                $abbreviation,
+                                ApplicationHandler::getInstance()->getAbbreviations()
+                            )
+                        ) {
+                            $errors[] = [
+                                'tableName' => $table->getName(),
+                                'type' => 'unregisteredTableChange',
+                            ];
+                        }
                     } else {
                         $existingTable = DatabaseTable::createFromExistingTable($this->dbEditor, $table->getName());
                         $existingColumns = $existingTable->getColumns();
