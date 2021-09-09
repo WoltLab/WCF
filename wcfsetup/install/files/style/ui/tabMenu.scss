@@ -135,11 +135,7 @@
 }
 
 .tabMenuOverlayRight {
-	background: linear-gradient(
-		to right,
-		transparentize($wcfContentBackground, 100%) 0%,
-		$wcfContentBackground 50%
-	);
+	background: linear-gradient(to right, transparentize($wcfContentBackground, 100%) 0%, $wcfContentBackground 50%);
 	justify-content: flex-end;
 	right: 0;
 }
