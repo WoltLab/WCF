@@ -77,10 +77,10 @@ export class BanDialog {
       options: {
         onSetup: (content: HTMLElement): void => {
           this.dialogContent = content;
-          this.submitElement = content.querySelector(".formSubmitButton")! as HTMLElement;
-          this.reasonInput = content.querySelector("#userBanReason")! as HTMLInputElement;
-          this.neverExpiresCheckbox = content.querySelector("#userBanNeverExpires")! as HTMLInputElement;
-          this.userBanExpiresSettingsElement = content.querySelector("#userBanExpiresSettings")! as HTMLElement;
+          this.submitElement = content.querySelector(".formSubmitButton")!;
+          this.reasonInput = content.querySelector("#userBanReason") as HTMLInputElement;
+          this.neverExpiresCheckbox = content.querySelector("#userBanNeverExpires") as HTMLInputElement;
+          this.userBanExpiresSettingsElement = content.querySelector("#userBanExpiresSettings")!;
 
           this.submitElement.addEventListener("click", (event) => {
             event.preventDefault();
