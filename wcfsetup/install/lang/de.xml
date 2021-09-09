@@ -2618,7 +2618,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits von einer anderen Seite verwendet.]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.page.name"><![CDATA[Name]]></item>
-		<item name="wcf.acp.pip.page.name.description"><![CDATA[Der Boxnamen wird in der Seitenliste in der Administrationsoberfläche angezeigt.]]></item>
+		<item name="wcf.acp.pip.page.name.description"><![CDATA[Der Seitenname wird in der Seitenliste in der Administrationsoberfläche angezeigt.]]></item>
 		<item name="wcf.acp.pip.page.options.description"><![CDATA[Mindestens eine der angebenen Optionen muss aktiviert sein, damit <strong>Menüpunkte</strong>, die auf diese Seite verlinken, angezeigt werden. Optionen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
 		<item name="wcf.acp.pip.page.pageType"><![CDATA[Seiten-Typ]]></item>
 		<item name="wcf.acp.pip.page.pageType.description"><![CDATA[Der Inhalt von „text“-Seiten können vom Administrator mit dem eingebauten WYSIWYG-Editor bearbeitet werden. „html“-Seiten erlaubten zusätzlich HTML-Code und „tpl“-Seiten auch Template Scripting. Der Inhalt von „system“-Seiten kann nicht vom Administrator bearbeitet werden, da ihr Inhalt vom Seiten-Controller bereitgestellt wird.]]></item>
