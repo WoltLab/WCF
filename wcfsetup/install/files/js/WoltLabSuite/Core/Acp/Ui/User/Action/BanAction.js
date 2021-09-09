@@ -11,11 +11,11 @@ define(["require", "exports", "tslib", "../../../../Core", "./Abstract", "./Hand
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BanAction = void 0;
-    Core = tslib_1.__importStar(Core);
-    Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    Ban_1 = tslib_1.__importDefault(Ban_1);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Core = (0, tslib_1.__importStar)(Core);
+    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
+    Ban_1 = (0, tslib_1.__importDefault)(Ban_1);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class BanAction extends Abstract_1.default {
         constructor(button, userId, userDataElement) {
             super(button, userId, userDataElement);

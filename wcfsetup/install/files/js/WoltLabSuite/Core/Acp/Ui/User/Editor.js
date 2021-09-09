@@ -9,17 +9,17 @@
  */
 define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Dropdown/Simple", "../../../Dom/Util", "./Action/SendNewPasswordAction", "./Action/ToggleConfirmEmailAction", "./Action/DisableAction", "./Action/BanAction", "./Action/DeleteAction"], function (require, exports, tslib_1, Handler_1, Core, EventHandler, Language, Simple_1, Util_1, SendNewPasswordAction_1, ToggleConfirmEmailAction_1, DisableAction_1, BanAction_1, DeleteAction_1) {
     "use strict";
-    Handler_1 = tslib_1.__importDefault(Handler_1);
-    Core = tslib_1.__importStar(Core);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    Language = tslib_1.__importStar(Language);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    SendNewPasswordAction_1 = tslib_1.__importDefault(SendNewPasswordAction_1);
-    ToggleConfirmEmailAction_1 = tslib_1.__importDefault(ToggleConfirmEmailAction_1);
-    DisableAction_1 = tslib_1.__importDefault(DisableAction_1);
-    BanAction_1 = tslib_1.__importDefault(BanAction_1);
-    DeleteAction_1 = tslib_1.__importDefault(DeleteAction_1);
+    Handler_1 = (0, tslib_1.__importDefault)(Handler_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Language = (0, tslib_1.__importStar)(Language);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    SendNewPasswordAction_1 = (0, tslib_1.__importDefault)(SendNewPasswordAction_1);
+    ToggleConfirmEmailAction_1 = (0, tslib_1.__importDefault)(ToggleConfirmEmailAction_1);
+    DisableAction_1 = (0, tslib_1.__importDefault)(DisableAction_1);
+    BanAction_1 = (0, tslib_1.__importDefault)(BanAction_1);
+    DeleteAction_1 = (0, tslib_1.__importDefault)(DeleteAction_1);
     class AcpUiUserEditor {
         /**
          * Initializes the edit dropdown for each user.

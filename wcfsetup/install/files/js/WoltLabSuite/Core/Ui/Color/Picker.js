@@ -10,11 +10,11 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Util", "../../Language", "../../ColorUtil"], function (require, exports, tslib_1, Core, Dialog_1, Util_1, Language, ColorUtil) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    ColorUtil = tslib_1.__importStar(ColorUtil);
+    Core = (0, tslib_1.__importStar)(Core);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    ColorUtil = (0, tslib_1.__importStar)(ColorUtil);
     class UiColorPicker {
         /**
          * Initializes a new color picker instance.

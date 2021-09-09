@@ -13,8 +13,8 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager"], function (req
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ValueInterval = void 0;
-    Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    DependencyManager = tslib_1.__importStar(DependencyManager);
+    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
+    DependencyManager = (0, tslib_1.__importStar)(DependencyManager);
     class ValueInterval extends Abstract_1.default {
         constructor() {
             super(...arguments);

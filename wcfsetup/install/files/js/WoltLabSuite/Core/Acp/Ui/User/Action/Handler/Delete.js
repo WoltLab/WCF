@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../../../Ui/Confirmation", "../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Delete = void 0;
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Ajax = tslib_1.__importStar(Ajax);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
     class Delete {
         constructor(userIDs, successCallback, deleteMessage) {
             this.userIDs = userIDs;

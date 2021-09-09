@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "./Abstract", "../../../../Ajax", "../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ToggleConfirmEmailAction = void 0;
-    Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     class ToggleConfirmEmailAction extends Abstract_1.default {
         constructor(button, userId, userDataElement) {
             super(button, userId, userDataElement);

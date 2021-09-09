@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SendNewPassword = void 0;
-    Language = tslib_1.__importStar(Language);
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Worker_1 = tslib_1.__importDefault(Worker_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Worker_1 = (0, tslib_1.__importDefault)(Worker_1);
     class SendNewPassword {
         constructor(userIDs, successCallback) {
             this.userIDs = userIDs;

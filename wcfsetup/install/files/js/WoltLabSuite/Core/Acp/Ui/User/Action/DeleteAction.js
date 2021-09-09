@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "./Abstract", "./Handler/Delete"], functi
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DeleteAction = void 0;
-    Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    Delete_1 = tslib_1.__importDefault(Delete_1);
+    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
+    Delete_1 = (0, tslib_1.__importDefault)(Delete_1);
     class DeleteAction extends Abstract_1.default {
         constructor(button, userId, userDataElement) {
             super(button, userId, userDataElement);
