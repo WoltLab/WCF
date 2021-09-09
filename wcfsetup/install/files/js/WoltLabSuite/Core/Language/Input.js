@@ -10,10 +10,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.validate = exports.isEnabled = exports.enable = exports.disable = exports.setValues = exports.getValues = exports.unregister = exports.registerCallback = exports.init = void 0;
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
-    StringUtil = tslib_1.__importStar(StringUtil);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
     const _elements = new Map();
     const _forms = new WeakMap();
     const _values = new Map();

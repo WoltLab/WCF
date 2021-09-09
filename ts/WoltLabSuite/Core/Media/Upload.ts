@@ -88,11 +88,10 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           cell.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => DomUtil.hide(el));
 
           cell.querySelector(".mediaEditButton")!.classList.add("jsMediaEditButton");
-          (cell.querySelector(
-            ".jsObjectAction[data-object-action='delete']",
-          ) as HTMLElement).dataset.confirmMessage = Language.get("wcf.media.delete.confirmMessage", {
-            title: file.name,
-          });
+          (cell.querySelector(".jsObjectAction[data-object-action='delete']") as HTMLElement).dataset.confirmMessage =
+            Language.get("wcf.media.delete.confirmMessage", {
+              title: file.name,
+            });
         } else if (cell.classList.contains("columnFilename")) {
           // replace copied image with spinner
           let image = cell.querySelector("img");

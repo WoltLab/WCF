@@ -9,12 +9,12 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener", "../../Language", "../../StringUtil", "../Reaction/Handler", "../../User"], function (require, exports, tslib_1, Core, Listener_1, Language, StringUtil, Handler_1, User_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Language = tslib_1.__importStar(Language);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Handler_1 = tslib_1.__importDefault(Handler_1);
-    User_1 = tslib_1.__importDefault(User_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Handler_1 = (0, tslib_1.__importDefault)(Handler_1);
+    User_1 = (0, tslib_1.__importDefault)(User_1);
     const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
     class UiLikeHandler {
         /**

@@ -163,9 +163,8 @@ class Instructions {
     valueField.value = "";
     runStandaloneField.checked = false;
     applicationField.value = "";
-    document.getElementById(
-      `${this.formFieldId}_instructions${instructionsId}_valueDescription`,
-    )!.innerHTML = Language.get("wcf.acp.devtools.project.instruction.value.description");
+    document.getElementById(`${this.formFieldId}_instructions${instructionsId}_valueDescription`)!.innerHTML =
+      Language.get("wcf.acp.devtools.project.instruction.value.description");
     this.toggleApplicationFormField(instructionsId);
 
     DomChangeListener.trigger();

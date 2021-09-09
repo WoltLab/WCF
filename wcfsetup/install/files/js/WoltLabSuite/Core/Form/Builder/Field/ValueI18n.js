@@ -10,9 +10,9 @@
  */
 define(["require", "exports", "tslib", "./Field", "../../../Language/Input", "../../../Core"], function (require, exports, tslib_1, Field_1, LanguageInput, Core) {
     "use strict";
-    Field_1 = tslib_1.__importDefault(Field_1);
-    LanguageInput = tslib_1.__importStar(LanguageInput);
-    Core = tslib_1.__importStar(Core);
+    Field_1 = (0, tslib_1.__importDefault)(Field_1);
+    LanguageInput = (0, tslib_1.__importStar)(LanguageInput);
+    Core = (0, tslib_1.__importStar)(Core);
     class ValueI18n extends Field_1.default {
         _getData() {
             const data = {};

@@ -154,7 +154,7 @@ class DevtoolsPackageXmlWriter
 
             foreach ($instructions['instructions'] as $instruction) {
                 $attributes = ['type' => $instruction['pip']];
-                if (!isset($instruction['runStandalone']) && $instruction['runStandalone'] !== "0") {
+                if (isset($instruction['runStandalone']) && $instruction['runStandalone'] !== "0") {
                     $attributes['run'] = 'standalone';
                 }
                 if (!empty($instruction['application'])) {

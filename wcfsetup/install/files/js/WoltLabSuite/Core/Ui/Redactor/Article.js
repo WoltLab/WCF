@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../Article/Search"], function (require, exports, tslib_1, Core, UiArticleSearch) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    UiArticleSearch = tslib_1.__importStar(UiArticleSearch);
+    Core = (0, tslib_1.__importStar)(Core);
+    UiArticleSearch = (0, tslib_1.__importStar)(UiArticleSearch);
     class UiRedactorArticle {
         constructor(editor, button) {
             this._editor = editor;

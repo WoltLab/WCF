@@ -74,7 +74,7 @@
 						<option
 							value="{@$menuItemNode->itemID}"
 							{if $menuItemNode->itemID == $parentItemID} selected{/if}
-							{if $menuItemNode->itemID == $itemID} disabled{/if}
+							{if $action === 'edit' && $menuItemNode->itemID == $itemID} disabled{/if}
 						>
 							{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}
 						</option>

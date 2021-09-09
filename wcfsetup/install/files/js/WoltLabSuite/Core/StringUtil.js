@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupI18n = exports.toCamelCase = exports.shortUnit = exports.unescapeHTML = exports.ucfirst = exports.lcfirst = exports.formatNumeric = exports.escapeRegExp = exports.escapeHTML = exports.addThousandsSeparator = void 0;
-    NumberUtil = tslib_1.__importStar(NumberUtil);
+    NumberUtil = (0, tslib_1.__importStar)(NumberUtil);
     let _decimalPoint = ".";
     let _thousandsSeparator = ",";
     /**

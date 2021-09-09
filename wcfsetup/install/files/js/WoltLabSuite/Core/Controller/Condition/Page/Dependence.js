@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Event/Hand
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.register = void 0;
-    Util_1 = tslib_1.__importDefault(Util_1);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     const _pages = Array.from(document.querySelectorAll('input[name="pageIDs[]"]'));
     const _dependentElements = [];
     const _pageIds = new WeakMap();

@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Ui
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.show = exports.hide = exports.remove = exports.get = exports.has = exports.add = exports.setup = void 0;
-    Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
-    UiScreen = tslib_1.__importStar(UiScreen);
+    Core = (0, tslib_1.__importStar)(Core);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     const _buttons = new Map();
     let _container;
     let _didInit = false;

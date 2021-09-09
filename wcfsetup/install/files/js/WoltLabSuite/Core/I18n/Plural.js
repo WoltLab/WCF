@@ -8,7 +8,7 @@
  */
 define(["require", "exports", "tslib", "../StringUtil"], function (require, exports, tslib_1, StringUtil) {
     "use strict";
-    StringUtil = tslib_1.__importStar(StringUtil);
+    StringUtil = (0, tslib_1.__importStar)(StringUtil);
     const Languages = {
         // Afrikaans
         af(n) {

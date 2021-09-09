@@ -82,7 +82,8 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
     };
 
     AjaxStatus.show();
-    this.directionsService!.route(request, (result, status) => this.setRoute(result, status));
+    // .route() returns a promise, but we rely on the callback API for compatibility reasons.
+    void this.directionsService!.route(request, (result, status) => this.setRoute(result, status));
 
     this.googleLink!.href = this.getGoogleMapsLink(data.location, this.travelMode!.value);
 
@@ -137,13 +138,13 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
   /**
    * Handles the response of the direction service.
    */
-  private setRoute(result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus): void {
+  private setRoute(result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus): void {
     AjaxStatus.hide();
 
     if (status === "OK") {
       DomUtil.show(this.map!.getDiv().parentElement!);
 
-      google.maps.event.trigger(this.map, "resize");
+      google.maps.event.trigger(this.map!, "resize");
 
       this.directionsRenderer!.setDirections(result);
 

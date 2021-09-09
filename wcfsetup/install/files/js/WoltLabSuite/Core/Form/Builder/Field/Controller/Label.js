@@ -9,10 +9,10 @@
  */
 define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DomUtil, Language, Simple_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    DomUtil = tslib_1.__importStar(DomUtil);
-    Language = tslib_1.__importStar(Language);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    DomUtil = (0, tslib_1.__importStar)(DomUtil);
+    Language = (0, tslib_1.__importStar)(Language);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     class Label {
         constructor(fieldId, labelId, options) {
             this._formFieldContainer = document.getElementById(fieldId + "Container");

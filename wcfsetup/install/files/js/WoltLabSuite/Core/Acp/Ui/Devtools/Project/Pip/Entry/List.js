@@ -8,10 +8,10 @@
  */
 define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../../../Core", "../../../../../../Language", "../../../../../../Ui/Confirmation", "../../../../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Core, Language, Confirmation_1, UiNotification) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Language = tslib_1.__importStar(Language);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     class DevtoolsProjectPipEntryList {
         /**
          * Initializes the devtools project pip entry list handler.
@@ -79,7 +79,7 @@ define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../..
   </dd>
 </dl>`;
             }
-            Confirmation_1.show({
+            (0, Confirmation_1.show)({
                 confirm: (parameters, content) => this.deletePipEntry(parameters, content),
                 message: Language.get("wcf.acp.devtools.project.pip.entry.delete.confirmMessage"),
                 template,

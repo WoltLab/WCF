@@ -9,12 +9,12 @@
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Change/Listener", "../../../Dom/Util", "../Edit", "../../Notification"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Edit_1, UiNotification) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Edit_1 = tslib_1.__importDefault(Edit_1);
-    UiNotification = tslib_1.__importStar(UiNotification);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Edit_1 = (0, tslib_1.__importDefault)(Edit_1);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
     class UiCommentResponseEdit extends Edit_1.default {
         /**
          * Initializes the comment edit manager.

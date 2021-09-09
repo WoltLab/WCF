@@ -10,10 +10,10 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Langua
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Request_1 = tslib_1.__importDefault(Request_1);
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Request_1 = (0, tslib_1.__importDefault)(Request_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class RewriteTest {
         /**
          * Initializes the rewrite test, but aborts early if URL rewriting was

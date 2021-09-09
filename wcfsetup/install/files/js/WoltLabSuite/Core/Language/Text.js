@@ -10,7 +10,7 @@ define(["require", "exports", "tslib", "./Input"], function (require, exports, t
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    LanguageInput = tslib_1.__importStar(LanguageInput);
+    LanguageInput = (0, tslib_1.__importStar)(LanguageInput);
     /**
      * Refreshes the editor content on language switch.
      */

@@ -8,11 +8,11 @@
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Language", "../../../Ui/Notification", "../../../Upload"], function (require, exports, tslib_1, Core, Util_1, Language, UiNotification, Upload_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    Language = tslib_1.__importStar(Language);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    Upload_1 = tslib_1.__importDefault(Upload_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = (0, tslib_1.__importStar)(Language);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
     class TrophyUpload extends Upload_1.default {
         constructor(trophyId, tmpHash, options) {
             super("uploadIconFileButton", "uploadIconFileContent", Core.extend({

@@ -10,12 +10,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setValues = exports.getValues = exports.init = void 0;
-    Core = tslib_1.__importStar(Core);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
-    Suggestion_1 = tslib_1.__importDefault(Suggestion_1);
-    Simple_1 = tslib_1.__importDefault(Simple_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
+    Language = (0, tslib_1.__importStar)(Language);
+    Suggestion_1 = (0, tslib_1.__importDefault)(Suggestion_1);
+    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     const _data = new Map();
     /**
      * Creates the DOM structure for target element. If `element` is a `<textarea>`

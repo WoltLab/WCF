@@ -8,8 +8,8 @@
  */
 define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Core"], function (require, exports, tslib_1, Ajax, Core) {
     "use strict";
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
     class UiUserProfileMenuItemAbstract {
         /**
          * Creates a new user profile menu item.

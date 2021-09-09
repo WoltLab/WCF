@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", ".
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiUserSessionDelete = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
-    UiNotification = tslib_1.__importStar(UiNotification);
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
-    Language = tslib_1.__importStar(Language);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Language = (0, tslib_1.__importStar)(Language);
     class UiUserSessionDelete {
         /**
          * Initializes the session delete buttons.

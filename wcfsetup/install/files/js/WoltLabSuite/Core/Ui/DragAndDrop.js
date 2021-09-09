@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../Core", "../Event/Handler", "./Redacto
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.register = void 0;
-    Core = tslib_1.__importStar(Core);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Core = (0, tslib_1.__importStar)(Core);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     function register(options) {
         const uuid = Core.getUuid();
         options = Core.extend({
@@ -27,7 +27,7 @@ define(["require", "exports", "tslib", "../Core", "../Event/Handler", "./Redacto
         });
         EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${options.elementId}`, options.onDrop);
         EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_globalDrop_${options.elementId}`, options.onGlobalDrop);
-        DragAndDrop_1.init({
+        (0, DragAndDrop_1.init)({
             uuid: uuid,
             $editor: [options.element],
             $element: [{ id: options.elementId }],

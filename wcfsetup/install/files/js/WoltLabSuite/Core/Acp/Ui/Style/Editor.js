@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.showVisualEditor = exports.hideVisualEditor = exports.setup = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
-    Util_1 = tslib_1.__importDefault(Util_1);
-    EventHandler = tslib_1.__importStar(EventHandler);
-    UiScreen = tslib_1.__importStar(UiScreen);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     const _stylePreviewRegions = new Map();
     let _stylePreviewRegionMarker;
     const _stylePreviewWindow = document.getElementById("spWindow");

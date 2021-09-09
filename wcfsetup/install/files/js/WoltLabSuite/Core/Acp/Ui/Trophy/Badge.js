@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    UiStyleFontAwesome = tslib_1.__importStar(UiStyleFontAwesome);
+    Language = (0, tslib_1.__importStar)(Language);
+    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    UiStyleFontAwesome = (0, tslib_1.__importStar)(UiStyleFontAwesome);
     /**
      * @exports     WoltLabSuite/Core/Acp/Ui/Trophy/Badge
      */

@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.show = void 0;
-    Language = tslib_1.__importStar(Language);
+    Language = (0, tslib_1.__importStar)(Language);
     let _busy = false;
     let _callback = null;
     let _didInit = false;

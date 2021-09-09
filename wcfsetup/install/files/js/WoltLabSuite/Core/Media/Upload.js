@@ -9,16 +9,16 @@
  */
 define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "../Dom/Traverse", "../Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, DomTraverse, Language, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
     "use strict";
-    Upload_1 = tslib_1.__importDefault(Upload_1);
-    Core = tslib_1.__importStar(Core);
-    DomUtil = tslib_1.__importStar(DomUtil);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
-    Language = tslib_1.__importStar(Language);
-    User_1 = tslib_1.__importDefault(User_1);
-    DateUtil = tslib_1.__importStar(DateUtil);
-    FileUtil = tslib_1.__importStar(FileUtil);
-    DomChangeListener = tslib_1.__importStar(DomChangeListener);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
+    Core = (0, tslib_1.__importStar)(Core);
+    DomUtil = (0, tslib_1.__importStar)(DomUtil);
+    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
+    Language = (0, tslib_1.__importStar)(Language);
+    User_1 = (0, tslib_1.__importDefault)(User_1);
+    DateUtil = (0, tslib_1.__importStar)(DateUtil);
+    FileUtil = (0, tslib_1.__importStar)(FileUtil);
+    DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class MediaUpload extends Upload_1.default {
         constructor(buttonContainerId, targetId, options) {
             super(buttonContainerId, targetId, Core.extend({
@@ -64,9 +64,10 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                     else if (cell.classList.contains("columnIcon")) {
                         cell.querySelectorAll("[data-object-id]").forEach((el) => DomUtil.hide(el));
                         cell.querySelector(".mediaEditButton").classList.add("jsMediaEditButton");
-                        cell.querySelector(".jsObjectAction[data-object-action='delete']").dataset.confirmMessage = Language.get("wcf.media.delete.confirmMessage", {
-                            title: file.name,
-                        });
+                        cell.querySelector(".jsObjectAction[data-object-action='delete']").dataset.confirmMessage =
+                            Language.get("wcf.media.delete.confirmMessage", {
+                                title: file.name,
+                            });
                     }
                     else if (cell.classList.contains("columnFilename")) {
                         // replace copied image with spinner

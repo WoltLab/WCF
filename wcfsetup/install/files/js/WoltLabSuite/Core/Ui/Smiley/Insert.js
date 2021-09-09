@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Event/Handler"], function (require, exports, tslib_1, Core, EventHandler) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
-    EventHandler = tslib_1.__importStar(EventHandler);
+    Core = (0, tslib_1.__importStar)(Core);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class UiSmileyInsert {
         constructor(editorId) {
             this.editorId = editorId;
