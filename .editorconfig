@@ -17,6 +17,8 @@ ij_smart_tabs = true
 ij_wrap_on_typing = false
 
 [*.css]
+indent_size = 4
+ij_continuation_indent_size = 4
 ij_css_align_closing_brace_with_properties = false
 ij_css_blank_lines_around_nested_selector = 1
 ij_css_blank_lines_between_blocks = 1
@@ -36,6 +38,8 @@ ij_css_use_double_quotes = true
 ij_css_value_alignment = do_not_align
 
 [*.scss]
+indent_size = 4
+ij_continuation_indent_size = 4
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
 ij_scss_blank_lines_between_blocks = 1
