@@ -117,7 +117,7 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
         parent::populate();
 
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
-            'acl',
+            'tags',
             function (IFormDocument $document, array $parameters) {
                 if ($this->checkDependencies() && $this->getValue() !== null && !empty($this->getValue())) {
                     $parameters[$this->getObjectProperty()] = $this->getValue();
