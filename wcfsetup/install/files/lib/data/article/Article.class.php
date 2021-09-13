@@ -8,6 +8,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IUserContent;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
 use wcf\system\article\discussion\VoidArticleDiscussionProvider;
@@ -97,27 +99,35 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
     }
 
     /**
-     * Returns true if the active user has access to this article.
+     * Returns true if the given user has access to this article. If the given $user is null,
+     * the function uses the current user.
      *
+     * <strong>Attention:</strong> The `$user` parameter was introduced with version 5.5.
+     *
+     * @param UserProfile|null $user
      * @return  bool
      */
-    public function canRead()
+    public function canRead(?UserProfile $user = null)
     {
-        if ($this->isDeleted && !WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
+
+        if ($this->isDeleted && !$user->getPermission('admin.content.article.canManageArticle')) {
             return false;
         }
 
         if ($this->publicationStatus != self::PUBLISHED) {
-            if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle') && (!WCF::getSession()->getPermission('admin.content.article.canContributeArticle') || $this->userID != WCF::getUser()->userID)) {
+            if (!$user->getPermission('admin.content.article.canManageArticle') && (!$user->getPermission('admin.content.article.canContributeArticle') || $this->userID != $user->userID)) {
                 return false;
             }
         }
 
         if ($this->getCategory()) {
-            return $this->getCategory()->isAccessible();
+            return $this->getCategory()->isAccessible($user->getDecoratedObject());
         }
 
-        return WCF::getSession()->getPermission('user.article.canRead');
+        return $user->getPermission('user.article.canRead');
     }
 
     /**
