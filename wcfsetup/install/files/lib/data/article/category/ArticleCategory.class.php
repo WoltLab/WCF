@@ -197,6 +197,25 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     }
 
     /**
+     * Returns all userIDs which have subscribed this category.
+     *
+     * @return  int[]
+     * @since   5.5
+     */
+    public function getSubscribedUserIDs(): array
+    {
+        $objectTypeID = UserObjectWatchHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.category');
+        $sql = "SELECT  userID
+                FROM    wcf" . WCF_N . "_user_object_watch
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$objectTypeID, $this->categoryID]);
+
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+    /**
      * Returns true if the active user has subscribed to this category.
      *
      * @return  bool
