@@ -1,11 +1,7 @@
 <select id="{$option->optionName}" name="values[{$option->optionName}][]" multiple size="10">
-	{foreach from=$categoryList item=categoryItem}
-		<option value="{@$categoryItem->categoryID}"{if $categoryItem->categoryID|in_array:$value} selected{/if}>{$categoryItem->getTitle()}</option>
-		
-		{if $categoryItem->hasChildren()}
-			{foreach from=$categoryItem item=subCategoryItem}
-				<option value="{@$subCategoryItem->categoryID}"{if $subCategoryItem->categoryID|in_array:$value} selected{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$subCategoryItem->getTitle()}</option>
-			{/foreach}
+	{foreach from=$categoryList item='category'}
+		{if !$maximumNestingLevel|isset || $maximumNestingLevel == -1 || $categoryNodeList->getDepth() < $maximumNestingLevel}
+			<option value="{$category->categoryID}"{if $category->categoryID|in_array:$value} selected{/if}>{section name=i loop=$categoryList->getDepth()}&nbsp;&nbsp;&nbsp;&nbsp;{/section}{$category->getTitle()}</option>
 		{/if}
 	{/foreach}
 </select>
