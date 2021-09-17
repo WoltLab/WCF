@@ -339,7 +339,7 @@
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP-Klassenname]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu {if LANGUAGE_USE_INFORMAL_VARIANT}erhälst du{else}erhalten Sie{/if} auf dieser Website: <a href="http://www.unixgeeks.org/security/newbie/unix/cron-1.html" class="externalURL">Newbie: Intro to cron</a>]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu {if LANGUAGE_USE_INFORMAL_VARIANT}erhältst du{else}erhalten Sie{/if} auf dieser Website: <a href="http://www.unixgeeks.org/security/newbie/unix/cron-1.html" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
@@ -4683,7 +4683,7 @@ haben:</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.html.outro"><![CDATA[
 <p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Kennwort nicht ändern {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if},
 dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.</p>]]></item>
-		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhälst{else}Sie erhalten{/if} in Kürze eine E-Mail mit weiteren Informationen.]]></item>
+		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} in Kürze eine E-Mail mit weiteren Informationen.]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Sicherheitsschlüssel]]></item>
 		<item name="wcf.user.lostPasswordKey.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort]]></item>
