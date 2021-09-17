@@ -2,8 +2,10 @@
 
 namespace wcf\system\user\notification\object\type;
 
+use wcf\data\article\content\ArticleContent;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentList;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\WCF;
 
@@ -17,7 +19,8 @@ use wcf\system\WCF;
  * @since       5.2
  */
 class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements
-    ICommentUserNotificationObjectType
+    ICommentUserNotificationObjectType,
+    IMultiRecipientCommentUserNotificationObjectType
 {
     /**
      * @inheritDoc
@@ -48,5 +51,31 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
         $statement->execute([$objectID]);
 
         return $statement->fetchSingleColumn() ?: 0;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRecipientIDs(Comment $comment)
+    {
+        $articleContent = new ArticleContent($comment->objectID);
+        $article = $articleContent->getArticle();
+
+        \assert($article->articleID !== 0);
+
+        $subscribers = $article->getCategory()->getSubscribedUserIDs();
+
+        $users = UserProfileRuntimeCache::getInstance()->getObjects($subscribers);
+
+        // Add the article author to the recipients, to ensure, that he
+        // receive a notifications, even if he has not subscribed the category.
+        $recipients = [$article->getUserID()];
+        foreach ($users as $user) {
+            if ($article->canRead($user)) {
+                $recipients[] = $user->userID;
+            }
+        }
+
+        return \array_unique($recipients);
     }
 }
