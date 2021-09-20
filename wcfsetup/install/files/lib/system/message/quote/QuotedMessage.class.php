@@ -160,7 +160,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->quotes);
     }

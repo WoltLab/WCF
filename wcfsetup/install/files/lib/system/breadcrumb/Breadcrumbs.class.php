@@ -82,7 +82,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         if ($this->items === null) {
             $this->loadBreadcrumbs();

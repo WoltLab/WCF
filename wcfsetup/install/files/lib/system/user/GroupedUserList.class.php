@@ -132,7 +132,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->userIDs);
     }

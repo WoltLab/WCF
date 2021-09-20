@@ -100,7 +100,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->objects);
     }

@@ -93,10 +93,8 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 
     /**
      * Returns the number of children.
-     *
-     * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->children);
     }

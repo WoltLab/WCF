@@ -57,7 +57,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->smilies);
     }
