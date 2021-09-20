@@ -210,12 +210,12 @@
 	}
 	
 	.mainMenuShowPrevious {
-		background: linear-gradient(to left, transparent 0%, $wcfHeaderMenuBackground 75%);
+		background: linear-gradient(to left, transparentize($wcfHeaderMenuBackground, 1) 0%, $wcfHeaderMenuBackground 75%);
 		left: 0;
 	}
 	
 	.mainMenuShowNext {
-		background: linear-gradient(to right, transparent 0%, $wcfHeaderMenuBackground 75%);
+		background: linear-gradient(to right, transparentize($wcfHeaderMenuBackground, 1) 0%, $wcfHeaderMenuBackground 75%);
 		justify-content: flex-end;
 		right: 0;
 	}
