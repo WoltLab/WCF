@@ -6,6 +6,7 @@ use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
+use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\cover\photo\IWebpUserCoverPhoto;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -300,6 +301,11 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             foreach ($userProfiles as $userProfile) {
                 $editor = new UserEditor($userProfile->getDecoratedObject());
                 $coverPhoto = $userProfile->getCoverPhoto(true);
+                if ($coverPhoto instanceof DefaultUserCoverPhoto) {
+                    // The default cover photo can be returned if the user has a
+                    // cover photo, but it has been disabled by an administrator.
+                    continue;
+                }
 
                 // If neither the regular, nor the WebP variant is readable then the
                 // cover photo is missing and we must clear the database information.
