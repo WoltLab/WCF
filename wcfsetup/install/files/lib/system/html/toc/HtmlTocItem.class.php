@@ -94,10 +94,8 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
 
     /**
      * Returns the number of children.
-     *
-     * @return        int
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->children);
     }

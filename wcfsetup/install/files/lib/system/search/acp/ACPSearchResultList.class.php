@@ -120,7 +120,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->results);
     }
