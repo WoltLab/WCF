@@ -122,11 +122,7 @@
 		}
 
 		&::before {
-			background-image: linear-gradient(
-				to top,
-				transparentize($wcfContentBackground, 1),
-				$wcfContentBackground
-			);
+			background-image: linear-gradient(to top, transparentize($wcfContentBackground, 1), $wcfContentBackground);
 			top: 0;
 		}
 		&.overflowTop::before {
