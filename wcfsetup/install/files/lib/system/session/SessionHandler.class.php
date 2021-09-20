@@ -483,7 +483,7 @@ final class SessionHandler extends SingletonFactory
             // We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
             // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
             //    and it is supported by default in common JavaScript frameworks.
-            // 2) We want to set the SameSite=strict parameter.
+            // 2) We want to set the SameSite=lax parameter.
             // 3) We don't want the HttpOnly parameter.
             $sameSite = $cookieDomain = '';
 
@@ -493,9 +493,9 @@ final class SessionHandler extends SingletonFactory
                 $cookieDomain = HeaderUtil::getCookieDomain();
                 $cookieDomain = ($cookieDomain !== null ? '; domain=' . $cookieDomain : '');
             } else {
-                // SameSite=strict is not supported in a multi domain set-up, because
+                // SameSite=lax is not supported in a multi domain set-up, because
                 // it breaks cross-application requests.
-                $sameSite = '; SameSite=strict';
+                $sameSite = '; SameSite=lax';
             }
 
             if (!HTTP_SEND_X_FRAME_OPTIONS) {
