@@ -18,7 +18,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
-        node-version: "14"
+        node-version: "16"
         cache: "npm"
     - run: npm install
     - run: npx tsc --noEmit
@@ -34,7 +34,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
-        node-version: "14"
+        node-version: "16"
         cache: "npm"
     - run: npm install
     - run: npx eslint .
@@ -49,7 +49,7 @@ jobs:
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
-        node-version: "14"
+        node-version: "16"
         cache: "npm"
     - run: npm install
     - run: npx tsc

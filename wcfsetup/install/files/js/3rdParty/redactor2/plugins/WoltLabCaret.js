@@ -514,7 +514,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				// which also happens to be the last element
 				if (this.selection.current() === this.$editor[0]) {
 					var node = this.$editor[0].childNodes[this.selection.get().anchorOffset];
-					if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'TABLE') {
+					if (node && node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'TABLE') {
 						block = node;
 					}
 				}
@@ -619,6 +619,14 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var anchorNode, sibling;
 			
 			var selection = window.getSelection();
+			if (!selection.rangeCount) {
+				// Skip invocations that do not have an active range. This happens if the
+				// user loads a page but has not yet interacted with the page. Such a
+				// selection is the result of a synthetic event without any prior user
+				// interaction.
+				return;
+			}
+
 			if (!selection.isCollapsed) {
 				if (_isSafari && _iOS && _touchstartTarget === event.target && this.utils.isBlockTag(_touchstartTarget.nodeName)) {
 					// Treat this as a collapsed selection instead, because the iOS Safari
