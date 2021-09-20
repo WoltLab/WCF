@@ -66,6 +66,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
      * @inheritDoc
      * @return  Smiley
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         $objectID = $this->indexToObject[$this->index];
@@ -79,6 +80,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
      *
      * @see \Iterator::key()
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->indexToObject[$this->index];
@@ -87,7 +89,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -95,7 +97,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -103,7 +105,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
@@ -111,7 +113,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
     /**
      * @inheritDoc
      */
-    public function seek($offset)
+    public function seek($offset): void
     {
         $this->index = $offset;
 
