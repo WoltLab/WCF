@@ -424,7 +424,7 @@ class BoxAddForm extends AbstractForm
         if ($this->pageIDs === null || $this->visibleEverywhere === null) {
             throw new \LogicException(
                 \sprintf(
-                    "The '%d' condition for the definition '%d' is missing.",
+                    "The '%s' condition for the definition '%s' is missing.",
                     'com.woltlab.wcf.page',
                     Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME
                 )
