@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'GuzzleHttp\\BodySummarizer' => $vendorDir . '/guzzlehttp/guzzle/src/BodySummarizer.php',
     'GuzzleHttp\\BodySummarizerInterface' => $vendorDir . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
@@ -526,6 +527,7 @@ return array(
     'ScssPhp\\ScssPhp\\ValueConverter' => $vendorDir . '/scssphp/scssphp/src/ValueConverter.php',
     'ScssPhp\\ScssPhp\\Version' => $vendorDir . '/scssphp/scssphp/src/Version.php',
     'ScssPhp\\ScssPhp\\Warn' => $vendorDir . '/scssphp/scssphp/src/Warn.php',
+    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
     'Symfony\\Component\\CssSelector\\CssSelectorConverter' => $vendorDir . '/symfony/css-selector/CssSelectorConverter.php',
     'Symfony\\Component\\CssSelector\\Exception\\ExceptionInterface' => $vendorDir . '/symfony/css-selector/Exception/ExceptionInterface.php',
     'Symfony\\Component\\CssSelector\\Exception\\ExpressionErrorException' => $vendorDir . '/symfony/css-selector/Exception/ExpressionErrorException.php',
@@ -575,8 +577,11 @@ return array(
     'Symfony\\Component\\CssSelector\\XPath\\TranslatorInterface' => $vendorDir . '/symfony/css-selector/XPath/TranslatorInterface.php',
     'Symfony\\Component\\CssSelector\\XPath\\XPathExpr' => $vendorDir . '/symfony/css-selector/XPath/XPathExpr.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
+    'Symfony\\Polyfill\\Php80\\Php80' => $vendorDir . '/symfony/polyfill-php80/Php80.php',
     'TrueBV\\Exception\\DomainOutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/DomainOutOfBoundsException.php',
     'TrueBV\\Exception\\LabelOutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/LabelOutOfBoundsException.php',
     'TrueBV\\Exception\\OutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/OutOfBoundsException.php',
     'TrueBV\\Punycode' => $vendorDir . '/true/punycode/src/Punycode.php',
+    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );
