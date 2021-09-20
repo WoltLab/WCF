@@ -179,6 +179,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         $objectID = $this->indexToObject[$this->index];
@@ -192,6 +193,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
      *
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->indexToObject[$this->index];
@@ -200,7 +202,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -208,7 +210,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -216,7 +218,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
@@ -224,7 +226,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function seek($offset)
+    public function seek($offset): void
     {
         $this->index = $offset;
 
