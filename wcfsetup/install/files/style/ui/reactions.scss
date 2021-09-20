@@ -112,7 +112,7 @@
 		&::after {
 			background-image: linear-gradient(
 				to bottom,
-				transparentize($wcfContentBackground, 100%),
+				transparentize($wcfContentBackground, 1),
 				$wcfContentBackground
 			);
 			bottom: 0;
@@ -124,7 +124,7 @@
 		&::before {
 			background-image: linear-gradient(
 				to top,
-				transparentize($wcfContentBackground, 100%),
+				transparentize($wcfContentBackground, 1),
 				$wcfContentBackground
 			);
 			top: 0;

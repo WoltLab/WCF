@@ -76,7 +76,7 @@
 	position: relative;
 
 	&::after {
-		background-image: linear-gradient(to top, $wcfContentBackground, transparentize($wcfContentBackground, 100%));
+		background-image: linear-gradient(to top, $wcfContentBackground, transparentize($wcfContentBackground, 1));
 		content: "";
 		left: 0;
 		height: #{$wcfFontLineHeight}em;
