@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -218,12 +218,12 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.6.0',
-            'version' => '1.6.0.0',
+            'pretty_version' => 'v1.8.1',
+            'version' => '1.8.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => 'b83594e2323c5d6e80785df3f91b9d1d32aad530',
+            'reference' => '5e37759a63caf54392a4b709358a39ac7425a69f',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
