@@ -668,8 +668,8 @@ type Parameters = {
 } & {
   [category in Category]?: string;
 } & {
-    [number: number]: string;
-  };
+  [number: number]: string;
+};
 
 const Plural = {
   /**
