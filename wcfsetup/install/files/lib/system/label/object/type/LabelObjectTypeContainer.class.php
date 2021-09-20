@@ -116,7 +116,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->objectTypes);
     }

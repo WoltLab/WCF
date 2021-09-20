@@ -171,7 +171,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->labels);
     }
