@@ -804,17 +804,17 @@
         },
         {
             "name": "scssphp/scssphp",
-            "version": "v1.4.1",
-            "version_normalized": "1.4.1.0",
+            "version": "dev-woltlab-1.4",
+            "version_normalized": "dev-woltlab-1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "ba86c963b94ec7ebd6e19d90cdab90d89667dbf7"
+                "url": "https://github.com/WoltLab/scssphp",
+                "reference": "0c5596430dce019f00d1d4f082c03db848cb3b65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/ba86c963b94ec7ebd6e19d90cdab90d89667dbf7",
-                "reference": "ba86c963b94ec7ebd6e19d90cdab90d89667dbf7",
+                "url": "https://api.github.com/repos/WoltLab/scssphp/zipball/0c5596430dce019f00d1d4f082c03db848cb3b65",
+                "reference": "0c5596430dce019f00d1d4f082c03db848cb3b65",
                 "shasum": ""
             },
             "require": {
@@ -830,7 +830,7 @@
                 "twbs/bootstrap": "~4.3",
                 "zurb/foundation": "~6.5"
             },
-            "time": "2021-01-04T13:23:23+00:00",
+            "time": "2021-08-13T09:16:55+00:00",
             "bin": [
                 "bin/pscss"
             ],
@@ -841,7 +841,11 @@
                     "ScssPhp\\ScssPhp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "ScssPhp\\ScssPhp\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -866,10 +870,6 @@
                 "scss",
                 "stylesheet"
             ],
-            "support": {
-                "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.4.1"
-            },
             "install-path": "../scssphp/scssphp"
         },
         {
