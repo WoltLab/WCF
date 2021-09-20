@@ -514,7 +514,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				// which also happens to be the last element
 				if (this.selection.current() === this.$editor[0]) {
 					var node = this.$editor[0].childNodes[this.selection.get().anchorOffset];
-					if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'TABLE') {
+					if (node && node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'TABLE') {
 						block = node;
 					}
 				}
