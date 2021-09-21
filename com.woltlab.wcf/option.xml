@@ -1364,7 +1364,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="user_cleanup_notification_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>14</defaultvalue>
+				<defaultvalue>31</defaultvalue>
 				<minvalue>1</minvalue>
 				<suffix>days</suffix>
 			</option>
