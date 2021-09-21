@@ -20,6 +20,9 @@
         "paragonie/constant_time_encoding": "^2.3",
         "laminas/laminas-diactoros": "^2.4",
         "laminas/laminas-httphandlerrunner": "^1.2",
-        "laminas/laminas-progressbar": "^2.7"
+        "laminas/laminas-progressbar": "^2.7",
+        "symfony/polyfill-php73": "^1.23",
+        "symfony/polyfill-php74": "^1.23",
+        "symfony/polyfill-php80": "^1.23"
     }
 }
