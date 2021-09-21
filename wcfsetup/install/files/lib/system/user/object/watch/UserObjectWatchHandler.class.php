@@ -120,28 +120,21 @@ class UserObjectWatchHandler extends SingletonFactory
         IUserNotificationObject $notificationObject,
         array $additionalData = []
     ) {
-        // get object type id
         $objectTypeObj = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
-
-        // get subscriber
-        $userIDs = $recipientIDs = [];
-        $sql = "SELECT  userID, notification
-                FROM    wcf" . WCF_N . "_user_object_watch
-                WHERE   objectTypeID = ?
-                    AND objectID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$objectTypeObj->objectTypeID, $objectID]);
-        while ($row = $statement->fetchArray()) {
-            $userIDs[] = $row['userID'];
-            if ($row['notification'] && $notificationObject->getAuthorID() != $row['userID']) {
-                $recipientIDs[] = $row['userID'];
-            }
-        }
+        $userIDs = $this->getSubscribers($objectType, $objectID);
 
         if (!empty($userIDs)) {
             // reset user storage
-            $objectTypeObj->getProcessor()->resetUserStorage($userIDs);
+            $objectTypeObj->getProcessor()->resetUserStorage(\array_keys($userIDs));
+
+            $recipientIDs = \array_filter(
+                $userIDs,
+                static function ($notification, $userID) use ($notificationObject) {
+                    return $notification && $userID != $notificationObject->getAuthorID();
+                },
+                \ARRAY_FILTER_USE_BOTH
+            );
 
             if (!empty($recipientIDs)) {
                 // create notifications
@@ -149,10 +142,34 @@ class UserObjectWatchHandler extends SingletonFactory
                     $notificationEventName,
                     $notificationObjectType,
                     $notificationObject,
-                    $recipientIDs,
+                    \array_keys($recipientIDs),
                     $additionalData
                 );
             }
         }
+    }
+
+    /**
+     * Returns the subscribers for a specific object as an array.
+     * The array key indicates the userID and the array value indicates
+     * the notification status (`1` = should get a notification,
+     * `0` = should not get a notification).
+     *
+     * @since 5.5
+     */
+    public function getSubscribers(string $objectType, int $objectID): array
+    {
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
+
+        $userIDs = [];
+        $sql = "SELECT  userID, notification
+                FROM    wcf" . WCF_N . "_user_object_watch
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$objectTypeObj->objectTypeID, $objectID]);
+
+        return $statement->fetchMap('userID', 'notification');
     }
 }
