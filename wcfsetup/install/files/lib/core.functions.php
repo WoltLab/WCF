@@ -18,7 +18,7 @@ namespace {
 	spl_autoload_register([WCF::class, 'autoload']);
 	
 	/**
-	 * @deprecated 5.5 Use prepared statements if possible. Directly WCF::getDB()->escapeString() if prepared statements cannot be used.
+	 * @deprecated 5.5 Use prepared statements if possible. Directly call WCF::getDB()->escapeString() if prepared statements cannot be used.
 	 */
 	function escapeString($string) {
 		return WCF::getDB()->escapeString($string);
