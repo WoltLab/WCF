@@ -224,10 +224,23 @@ class NotificationHandler {
     }
 
     if (typeof pollData.notification === "object" && typeof pollData.notification.message === "string") {
-      const notification = new window.Notification(pollData.notification.title, {
-        body: StringUtil.unescapeHTML(pollData.notification.message).replace(/&#x202F;/g, "\u202F"),
-        icon: this.icon,
-      });
+      let notification: Notification;
+
+      try {
+        notification = new window.Notification(pollData.notification.title, {
+          body: StringUtil.unescapeHTML(pollData.notification.message).replace(/&#x202F;/g, "\u202F"),
+          icon: this.icon,
+        });
+      } catch (e) {
+        // The `Notification` constructor is not available on Android.
+        // See https://bugs.chromium.org/p/chromium/issues/detail?id=481856
+        if (e.name === "TypeError") {
+          return;
+        }
+
+        throw e;
+      }
+
       notification.onclick = () => {
         window.focus();
         notification.close();
