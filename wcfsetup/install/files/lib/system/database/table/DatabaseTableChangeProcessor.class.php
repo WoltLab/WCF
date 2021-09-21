@@ -821,7 +821,7 @@ class DatabaseTableChangeProcessor
     protected function diffIndices(DatabaseTableIndex $oldIndex, DatabaseTableIndex $newIndex)
     {
         if ($newIndex->hasGeneratedName()) {
-            return !empty(\array_diff($oldIndex->getData(), $newIndex->getData()));
+            return !empty(\array_diff_assoc($oldIndex->getData(), $newIndex->getData()));
         }
 
         return $oldIndex->getName() !== $newIndex->getName();
