@@ -18,11 +18,7 @@ namespace {
 	spl_autoload_register([WCF::class, 'autoload']);
 	
 	/**
-	 * Escapes a string for use in sql query.
-	 * 
-	 * @see	\wcf\system\database\Database::escapeString()
-	 * @param	string		$string
-	 * @return	string
+	 * @deprecated 5.5 Use prepared statements if possible. Directly WCF::getDB()->escapeString() if prepared statements cannot be used.
 	 */
 	function escapeString($string) {
 		return WCF::getDB()->escapeString($string);
