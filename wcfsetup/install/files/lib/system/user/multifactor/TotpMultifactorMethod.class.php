@@ -326,8 +326,14 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                             }
                         }
                         if ($selectedDevice === null) {
-                            // This should never happen.
-                            $field->addValidationError(new FormFieldValidationError('unreachable'));
+                            // The user sent an invalid value for the device selector.
+                            $field->value('');
+                            $field->addValidationError(new FormFieldValidationError(
+                                'invalidCode',
+                                'wcf.user.security.multifactor.error.invalidCode'
+                            ));
+
+                            return;
                         }
 
                         $totp = new Totp($selectedDevice['secret']);
