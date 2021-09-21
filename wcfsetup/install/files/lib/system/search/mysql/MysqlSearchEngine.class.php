@@ -146,7 +146,8 @@ class MysqlSearchEngine extends AbstractSearchEngine
             );
 
             if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
-                $relevanceCalc = "MATCH (subject" . (!$subjectOnly ? ', message, metaData' : '') . ") AGAINST ('" . escapeString($q) . "') + (5 / (1 + POW(LN(1 + (" . TIME_NOW . " - time) / 2592000), 2))) AS relevance";
+                $escapedQuery = WCF::getDB()->escapeString($q);
+                $relevanceCalc = "MATCH (subject" . (!$subjectOnly ? ', message, metaData' : '') . ") AGAINST ('" . $escapedQuery . "') + (5 / (1 + POW(LN(1 + (" . TIME_NOW . " - time) / 2592000), 2))) AS relevance";
             }
         }
 
