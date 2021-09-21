@@ -169,7 +169,7 @@ window.addEventListener('pageshow', function(event) {
 		
 		User.init(
 			{@$__wcf->user->userID},
-			'{@$__wcf->user->username|encodeJS}',
+			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if},
 			{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if}
 		);
 		
@@ -212,7 +212,10 @@ window.addEventListener('pageshow', function(event) {
 	define.amd = __require_define_amd;
 	$.holdReady(true);
 	
-	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
+	WCF.User.init(
+		{@$__wcf->user->userID},
+		{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if}
+	);
 </script>
 
 {js application='wcf' file='WCF.ACL' bundle='WCF.Combined' hasTiny=true}
