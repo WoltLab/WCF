@@ -434,16 +434,6 @@ spl_autoload_register(function($className) {
 });
 
 /**
- * Escapes strings for execution in sql queries.
- * 
- * @param	string		$string
- * @return	string
- */
-function escapeString($string) {
-	return \wcf\system\WCF::getDB()->escapeString($string);
-}
-
-/**
  * Helper method to output debug data for all passed variables,
  * uses `print_r()` for arrays and objects, `var_dump()` otherwise.
  */
