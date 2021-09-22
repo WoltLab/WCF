@@ -13,14 +13,13 @@ use wcf\data\option\OptionAction;
 use wcf\system\email\Email;
 use wcf\system\email\transport\exception\TransientFailure;
 use wcf\system\io\RemoteFile;
-use wcf\util\StringUtil;
 
 if (MAIL_SMTP_STARTTLS != 'may') {
     return;
 }
 
 $value = 'encrypt';
-if (StringUtil::startsWith(MAIL_SMTP_HOST, 'ssl://')) {
+if (\str_starts_with(MAIL_SMTP_HOST, 'ssl://')) {
     // Anything using proper SSL can't use STARTTLS.
     $value = 'none';
 } elseif (MAIL_SMTP_PORT == 465) {

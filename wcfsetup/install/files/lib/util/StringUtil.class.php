@@ -342,13 +342,7 @@ final class StringUtil
     }
 
     /**
-     * Checks whether $haystack starts with $needle, or not.
-     *
-     * @param string $haystack The string to be checked for starting with $needle
-     * @param string $needle The string to be found at the start of $haystack
-     * @param bool $ci Case insensitive or not. Default = false.
-     *
-     * @return  bool                True, if $haystack starts with $needle, false otherwise.
+     * @deprecated 5.5 Use \str_starts_with() instead. If a case-insensitive comparison is desired, manually call \mb_strtolower on both parameters.
      */
     public static function startsWith($haystack, $needle, $ci = false)
     {
@@ -361,12 +355,7 @@ final class StringUtil
     }
 
     /**
-     * Returns true if $haystack ends with $needle or if the length of $needle is 0.
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool $ci case insensitive
-     * @return  bool
+     * @deprecated 5.5 Use \str_ends_with() instead. If a case-insensitive comparison is desired, manually call \mb_strtolower on both parameters.
      */
     public static function endsWith($haystack, $needle, $ci = false)
     {

@@ -438,7 +438,7 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->githubDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'github:')) {
+        if ($this->githubDisconnect && \str_starts_with(WCF::getUser()->authData, 'github:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.github.disconnect.success';
         }
@@ -456,7 +456,7 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->twitterDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'twitter:')) {
+        if ($this->twitterDisconnect && \str_starts_with(WCF::getUser()->authData, 'twitter:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
         }
@@ -474,7 +474,7 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->facebookDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'facebook:')) {
+        if ($this->facebookDisconnect && \str_starts_with(WCF::getUser()->authData, 'facebook:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
         }
@@ -492,7 +492,7 @@ class AccountManagementForm extends AbstractForm
                 WCF::getSession()->unregister('__oauthUser');
             }
         }
-        if ($this->googleDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'google:')) {
+        if ($this->googleDisconnect && \str_starts_with(WCF::getUser()->authData, 'google:')) {
             $updateParameters['authData'] = '';
             $success[] = 'wcf.user.3rdparty.google.disconnect.success';
         }

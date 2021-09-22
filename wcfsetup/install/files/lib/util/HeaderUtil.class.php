@@ -65,10 +65,10 @@ final class HeaderUtil
         $addDomain = (\mb_strpos(
             $application->cookieDomain,
             '.'
-        ) === false || StringUtil::endsWith(
+        ) === false || \str_ends_with(
             $application->cookieDomain,
             '.lan'
-        ) || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
+        ) || \str_ends_with($application->cookieDomain, '.local')) ? false : true;
 
         if (!$addDomain) {
             return null;

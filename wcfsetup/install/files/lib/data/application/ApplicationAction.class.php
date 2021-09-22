@@ -7,7 +7,6 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Executes application-related actions.
@@ -53,7 +52,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction
         WCF::getDB()->beginTransaction();
         foreach ($this->getObjects() as $application) {
             $domainName = $application->domainName;
-            if (StringUtil::endsWith($regex->replace($domainName, ''), $application->cookieDomain)) {
+            if (\str_ends_with($regex->replace($domainName, ''), $application->cookieDomain)) {
                 $domainName = $application->cookieDomain;
             }
 

@@ -14,7 +14,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Handles ACL permissions.
@@ -446,7 +445,7 @@ class ACLHandler extends SingletonFactory
     {
         $optionList = new ACLOptionList();
         if (!empty($categoryName)) {
-            if (StringUtil::endsWith($categoryName, '.*')) {
+            if (\str_ends_with($categoryName, '.*')) {
                 $categoryName = \mb_substr($categoryName, 0, -1) . '%';
                 $optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", [$categoryName]);
             } else {

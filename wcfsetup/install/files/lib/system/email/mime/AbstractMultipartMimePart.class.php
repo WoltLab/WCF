@@ -139,7 +139,10 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
                 );
             }
 
-            if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {
+            if (
+                !\str_starts_with($header[0], 'x-')
+                && !\str_starts_with($header[0], 'content-')
+            ) {
                 throw new \DomainException("The header '" . $header[0] . "' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
             }
         }

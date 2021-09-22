@@ -545,7 +545,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
                         // copy templates
                         foreach ($templates as $template) {
-                            if (!StringUtil::endsWith($template['filename'], '.tpl')) {
+                            if (!\str_ends_with($template['filename'], '.tpl')) {
                                 continue;
                             }
 

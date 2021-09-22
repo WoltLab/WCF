@@ -483,7 +483,7 @@ class Email
     public function addHeader($header, $value)
     {
         $header = \mb_strtolower($header);
-        if (!StringUtil::startsWith($header, 'x-')) {
+        if (!\str_starts_with($header, 'x-')) {
             throw new \DomainException(
                 "The header '{$header}' may not be set. You may only set user defined headers (starting with 'X-')."
             );

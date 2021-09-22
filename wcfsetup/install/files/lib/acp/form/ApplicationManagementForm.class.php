@@ -125,7 +125,7 @@ final class ApplicationManagementForm extends AbstractForm
             $this->cookieDomain = $regex->replace($this->cookieDomain, '');
 
             // check if cookie domain shares the same domain (may exclude subdomains)
-            if (!StringUtil::endsWith($regex->replace($this->domainName, ''), $this->cookieDomain)) {
+            if (!\str_ends_with($regex->replace($this->domainName, ''), $this->cookieDomain)) {
                 throw new UserInputException('cookieDomain', 'invalid');
             }
         }

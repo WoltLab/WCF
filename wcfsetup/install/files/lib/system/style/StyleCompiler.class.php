@@ -586,7 +586,7 @@ EOT;
     protected function compileStylesheet(string $scss, array $variables): string
     {
         foreach ($variables as &$value) {
-            if (StringUtil::startsWith($value, '../')) {
+            if (\str_starts_with($value, '../')) {
                 $value = '"' . $value . '"';
             }
         }
