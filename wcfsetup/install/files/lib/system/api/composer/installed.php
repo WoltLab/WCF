@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -146,12 +146,12 @@
             'dev_requirement' => false,
         ),
         'pelago/emogrifier' => array(
-            'pretty_version' => 'v5.0.1',
-            'version' => '5.0.1.0',
+            'pretty_version' => 'v6.0.0',
+            'version' => '6.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../pelago/emogrifier',
             'aliases' => array(),
-            'reference' => '37595a9bb62c3c25969bdd9e8d7dd24c3ac62bc9',
+            'reference' => 'aa72d5407efac118f3896bcb995a2cba793df0ae',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(
@@ -215,6 +215,15 @@
             'install_path' => __DIR__ . '/../ralouphie/getallheaders',
             'aliases' => array(),
             'reference' => '120b605dfeb996808c31b6477290a714d356e822',
+            'dev_requirement' => false,
+        ),
+        'sabberworm/php-css-parser' => array(
+            'pretty_version' => '8.3.1',
+            'version' => '8.3.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
+            'aliases' => array(),
+            'reference' => 'd217848e1396ef962fb1997cf3e2421acba7f796',
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(

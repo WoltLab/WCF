@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Net' => array($vendorDir . '/pear/net_idna2'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),

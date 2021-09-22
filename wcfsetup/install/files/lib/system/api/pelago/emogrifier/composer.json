@@ -32,21 +32,28 @@
             "name": "Jaime Prado"
         }
     ],
-    "support": {
-        "issues": "https://github.com/MyIntervals/emogrifier/issues",
-        "source": "https://github.com/MyIntervals/emogrifier"
-    },
     "require": {
-        "php": "~7.1.0 || ~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0",
+        "php": "~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0 || ~8.1.0",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "symfony/css-selector": "^3.4.32 || ^4.4 || ^5.1"
+        "sabberworm/php-css-parser": "^8.3.1",
+        "symfony/css-selector": "^3.4.32 || ^4.4 || ^5.3 || ^6.0"
     },
     "require-dev": {
-        "php-parallel-lint/php-parallel-lint": "^1.2.0",
-        "rawr/cross-data-providers": "^2.3.0",
-        "slevomat/coding-standard": "^6.4.1",
-        "squizlabs/php_codesniffer": "^3.5.8"
+        "php-parallel-lint/php-parallel-lint": "^1.3.0",
+        "phpunit/phpunit": "^8.5.16",
+        "rawr/cross-data-providers": "^2.3.0"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "7.0.x-dev"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -59,44 +66,60 @@
         }
     },
     "prefer-stable": true,
-    "config": {
-        "sort-packages": true,
-        "preferred-install": {
-            "*": "dist"
-        }
-    },
     "scripts": {
-        "php:version": "php -v | grep -Po 'PHP\\s++\\K(?:\\d++\\.)*+\\d++(?:-\\w++)?+'",
-        "php:fix": "\"./tools/php-cs-fixer.phar\" --config=config/php-cs-fixer.php fix config/ src/ tests/",
-        "ci:php:lint": "\"vendor/bin/parallel-lint\" config src tests",
-        "ci:php:sniff": "\"vendor/bin/phpcs\" config src tests",
-        "ci:php:fixer": "\"./tools/php-cs-fixer.phar\" --config=config/php-cs-fixer.php fix --dry-run -v --show-progress=dots --diff-format=udiff config/ src/ tests/",
-        "ci:php:md": "\"./tools/phpmd.phar\" src text config/phpmd.xml",
-        "ci:php:psalm": "\"./tools/psalm.phar\" --show-info=false",
-        "ci:tests:unit": "\"./tools/phpunit.phar\"",
-        "ci:tests:sof": "\"./tools/phpunit.phar\" --stop-on-failure",
-        "ci:tests": [
-            "@ci:tests:unit"
+        "ci": [
+            "@ci:static",
+            "@ci:dynamic"
         ],
+        "ci:composer:normalize": "@php \"./.phive/composer-normalize\" --dry-run",
         "ci:dynamic": [
             "@ci:tests"
         ],
+        "ci:php:fixer": "@php \"./.phive/php-cs-fixer\" --config=config/php-cs-fixer.php fix --dry-run -v --show-progress=dots config/ src/ tests/",
+        "ci:php:lint": "\"./vendor/bin/parallel-lint\" config src tests",
+        "ci:php:md": "@php \"./.phive/phpmd\" src text config/phpmd.xml",
+        "ci:php:psalm": "@php \"./.phive/psalm\" --show-info=false",
+        "ci:php:sniff": "@php \"./.phive/phpcs\" config src tests",
         "ci:static": [
+            "@ci:composer:normalize",
             "@ci:php:lint",
             "@ci:php:sniff",
             "@ci:php:fixer",
             "@ci:php:md",
             "@ci:php:psalm"
         ],
-        "ci": [
-            "@ci:static",
-            "@ci:dynamic"
+        "ci:tests": [
+            "@ci:tests:unit"
         ],
-        "phive:update:phpunit": "echo y | \"./tools/phive.phar\" --no-progress update phpunit"
+        "ci:tests:sof": "@php \"./vendor/bin/phpunit\" --stop-on-failure",
+        "ci:tests:unit": "@php \"./vendor/bin/phpunit\"",
+        "composer:normalize": "@php \"./.phive/composer-normalize\"",
+        "php:fix": "@php \"./.phive/php-cs-fixer\" --config=config/php-cs-fixer.php fix config/ src/ tests/",
+        "php:version": "@php -v | grep -Po 'PHP\\s++\\K(?:\\d++\\.)*+\\d++(?:-\\w++)?+'",
+        "psalm:baseline": "@php \"./.phive/psalm\" --set-baseline=psalm.baseline.xml",
+        "psalm:cc": "@php \"./.phive/psalm\" --clear-cache"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-main": "6.0.x-dev"
-        }
+    "scripts-descriptions": {
+        "ci": "Runs all dynamic and static code checks.",
+        "ci:composer:normalize": "Checks the formatting and structure of the composer.json.",
+        "ci:dynamic": "Runs all dynamic tests (i.e., currently, the unit tests).",
+        "ci:php:fixer": "Checks the code style with PHP CS Fixer.",
+        "ci:php:lint": "Lints the PHP files for syntax errors.",
+        "ci:php:md": "Checks the code complexity with PHPMD.",
+        "ci:php:psalm": "Checks the types with Psalm.",
+        "ci:php:sniff": "Checks the code style with PHP_CodeSniffer.",
+        "ci:static": "Runs all static code analysis checks for the code and the composer.json.",
+        "ci:tests": "Runs all dynamic tests (i.e., currently, the unit tests).",
+        "ci:tests:sof": "Runs the unit tests and stops at the first failure.",
+        "ci:tests:unit": "Runs all unit tests.",
+        "composer:normalize": "Reformats and sorts the composer.json file.",
+        "php:fix": "Reformats the code with php-cs-fixer.",
+        "php:version": "Outputs the installed PHP version.",
+        "psalm:baseline": "Updates the Psalm baseline file to match the code.",
+        "psalm:cc": "Clears the Psalm cache."
+    },
+    "support": {
+        "issues": "https://github.com/MyIntervals/emogrifier/issues",
+        "source": "https://github.com/MyIntervals/emogrifier"
     }
 }
