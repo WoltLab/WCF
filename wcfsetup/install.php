@@ -30,22 +30,7 @@ $neededFilesPattern = [
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
 	'!^install/packages/.*!'];
-	
-// define needed functions and classes
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
-/**
- * WCF::handleException() calls the show method on exceptions that implement this interface.
- *
- * @package	com.woltlab.wcf
- * @author	Marcel Werk
- */
-interface IPrintableException {
-	public function show();
-}
 
-// define needed classes
-// needed are:
-// SystemException, PrintableException, BasicFileUtil, Tar, File, ZipFile
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * A SystemException is thrown when an unexpected error occurs.
@@ -53,7 +38,7 @@ interface IPrintableException {
  * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
-class SystemException extends \Exception implements IPrintableException {
+class SystemException extends \Exception {
 	protected $description;
 	protected $information = '';
 	protected $functions = '';
@@ -481,7 +466,7 @@ function handleException($e) {
 	try {
 		if (!($e instanceof \Exception)) throw $e;
 		
-		if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
+		if ($e instanceof SystemException || $e instanceof \wcf\system\exception\IPrintableException) {
 			$e->show();
 			exit;
 		}
