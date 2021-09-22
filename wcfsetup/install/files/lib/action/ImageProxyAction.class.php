@@ -117,7 +117,7 @@ class ImageProxyAction extends AbstractAction
                     // rewrite schemaless URLs to https
                     $scheme = Url::parse($url)['scheme'];
                     if (!$scheme) {
-                        if (StringUtil::startsWith($url, '//')) {
+                        if (\str_starts_with($url, '//')) {
                             $url = 'https:' . $url;
                         } else {
                             throw new \DomainException("Refusing to proxy a schemaless URL that does not start with //");

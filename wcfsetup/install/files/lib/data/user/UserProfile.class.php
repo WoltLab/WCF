@@ -1015,7 +1015,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isConnectedWithFacebook()
     {
-        return StringUtil::startsWith($this->authData, 'facebook:');
+        return \str_starts_with($this->authData, 'facebook:');
     }
 
     /**
@@ -1023,7 +1023,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isConnectedWithGithub()
     {
-        return StringUtil::startsWith($this->authData, 'github:');
+        return \str_starts_with($this->authData, 'github:');
     }
 
     /**
@@ -1031,7 +1031,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isConnectedWithGoogle()
     {
-        return StringUtil::startsWith($this->authData, 'google:');
+        return \str_starts_with($this->authData, 'google:');
     }
 
     /**
@@ -1039,7 +1039,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     public function isConnectedWithTwitter()
     {
-        return StringUtil::startsWith($this->authData, 'twitter:');
+        return \str_starts_with($this->authData, 'twitter:');
     }
 
     /**

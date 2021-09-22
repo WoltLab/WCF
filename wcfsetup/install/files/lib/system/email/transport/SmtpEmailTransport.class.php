@@ -442,7 +442,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
             // o  Before sending a line of mail text, the SMTP client checks the
             //    first character of the line.  If it is a period, one additional
             //    period is inserted at the beginning of the line.
-            if (StringUtil::startsWith($item, '.')) {
+            if (\str_starts_with($item, '.')) {
                 return '.' . $item;
             }
 
