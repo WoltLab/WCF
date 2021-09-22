@@ -1182,18 +1182,18 @@ class GZipFile extends File {
 	}
 }
 
-// let's go
-// get temp file prefix
-if (isset($_REQUEST['tmpFilePrefix'])) {
-	$prefix = preg_replace('/[^a-f0-9_]+/', '', $_REQUEST['tmpFilePrefix']);
-}
-else {
-	$prefix = \bin2hex(\random_bytes(4));
-}
-define('TMP_FILE_PREFIX', $prefix);
+// Bootstrap Setup.
 
-// try to find the temp folder
-define('TMP_DIR', BasicFileUtil::getInstallTempFolder());
+$prefix = $_GET['tmpFilePrefix'] ?? $_POST['tmpFilePrefix'] ?? \bin2hex(\random_bytes(4));
+\define(
+	'TMP_FILE_PREFIX',
+	\preg_replace('/[^a-f0-9_]+/', '', $prefix)
+);
+
+\define(
+	'TMP_DIR',
+	BasicFileUtil::getInstallTempFolder()
+);
 
 // check whether setup files are already unzipped
 if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
