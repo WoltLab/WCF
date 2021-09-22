@@ -7,18 +7,11 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-// define constants
 define('INSTALL_SCRIPT', __FILE__);
 define('INSTALL_SCRIPT_DIR', dirname(__FILE__).'/');
 define('SETUP_FILE', INSTALL_SCRIPT_DIR . 'WCFSetup.tar.gz');
 define('NO_IMPORTS', 1);
 
-// set exception handler
-set_exception_handler('handleException');
-// set php error handler
-set_error_handler('handleError', E_ALL);
-
-// define list of needed file
 $neededFilesPattern = [
 	'!^setup/.*!',
 	'!^install/files/acp/images/woltlabSuite.*!',
@@ -29,105 +22,8 @@ $neededFilesPattern = [
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
-	'!^install/packages/.*!'];
-
-/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
-/**
- * A SystemException is thrown when an unexpected error occurs.
- *
- * @package	com.woltlab.wcf
- * @author	Marcel Werk
- */
-class SystemException extends \Exception {
-	protected $description;
-	protected $information = '';
-	protected $functions = '';
-	
-	/**
-	 * Creates a new SystemException.
-	 *
-	 * @param	string		$message	error message
-	 * @param	int		$code		error code
-	 * @param	string		$description	description of the error
-	 * @param	\Exception	$previous	repacked Exception
-	 */
-	public function __construct($message = '', $code = 0, $description = '', \Exception $previous = null) {
-		parent::__construct((string) $message, (int) $code, $previous);
-		$this->description = $description;
-	}
-	
-	/**
-	 * Returns the description of this exception.
-	 *
-	 * @return	string
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
-	
-	/**
-	 * Prints this exception.
-	 * This method is called by WCF::handleException().
-	 */
-	public function show() {
-	}
-}
-
-/**
- * Loads the required classes automatically.
- */
-spl_autoload_register(function($className) {
-	$namespaces = explode('\\', $className);
-	if (count($namespaces) > 1) {
-		// remove 'wcf' component
-		array_shift($namespaces);
-		
-		$className = implode('/', $namespaces);
-		$classPath = TMP_DIR . 'install/files/lib/' . $className . '.class.php';
-		if (file_exists($classPath)) {
-			require_once($classPath);
-		}
-	}
-});
-
-/**
- * Helper method to output debug data for all passed variables,
- * uses `print_r()` for arrays and objects, `var_dump()` otherwise.
- */
-function wcfDebug() {
-	echo "<pre>";
-	
-	$args = func_get_args();
-	$length = count($args);
-	if ($length === 0) {
-		echo "ERROR: No arguments provided.<hr>";
-	}
-	else {
-		for ($i = 0; $i < $length; $i++) {
-			$arg = $args[$i];
-			
-			echo "<h2>Argument {$i} (" . gettype($arg) . ")</h2>";
-			
-			if (is_array($arg) || is_object($arg)) {
-				print_r($arg);
-			}
-			else {
-				var_dump($arg);
-			}
-			
-			echo "<hr>";
-		}
-	}
-	
-	$backtrace = debug_backtrace();
-	
-	// output call location to help finding these debug outputs again
-	echo "wcfDebug() called in {$backtrace[0]['file']} on line {$backtrace[0]['line']}";
-	
-	echo "</pre>";
-	
-	exit;
-}
+	'!^install/packages/.*!',
+];
 
 function sanitizeStacktrace(\Throwable $e, bool $ignorePaths = false) {
 	$trace = $e->getTrace();
@@ -583,7 +479,7 @@ function printException($e) {
 	<?php
 }
 
-function handleException($e) {
+set_exception_handler(static function ($e) {
 	try {
 		if ($e instanceof \wcf\system\exception\IPrintableException) {
 			$e->show();
@@ -597,15 +493,112 @@ function handleException($e) {
 	catch (\Throwable $exception) {
 		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
 	}
-}
-
-function handleError($severity, $message, $file, $line) {
+});
+set_error_handler(static function ($severity, $message, $file, $line) {
 	// this is necessary for the shut-up operator
 	if (!(\error_reporting() & $severity)) {
 		return;
 	}
 
 	throw new ErrorException($message, 0, $severity, $file, $line);
+}, E_ALL);
+
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
+/**
+ * A SystemException is thrown when an unexpected error occurs.
+ *
+ * @package	com.woltlab.wcf
+ * @author	Marcel Werk
+ */
+class SystemException extends \Exception {
+	protected $description;
+	protected $information = '';
+	protected $functions = '';
+	
+	/**
+	 * Creates a new SystemException.
+	 *
+	 * @param	string		$message	error message
+	 * @param	int		$code		error code
+	 * @param	string		$description	description of the error
+	 * @param	\Exception	$previous	repacked Exception
+	 */
+	public function __construct($message = '', $code = 0, $description = '', \Exception $previous = null) {
+		parent::__construct((string) $message, (int) $code, $previous);
+		$this->description = $description;
+	}
+	
+	/**
+	 * Returns the description of this exception.
+	 *
+	 * @return	string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+	
+	/**
+	 * Prints this exception.
+	 * This method is called by WCF::handleException().
+	 */
+	public function show() {
+	}
+}
+
+/**
+ * Loads the required classes automatically.
+ */
+spl_autoload_register(function($className) {
+	$namespaces = explode('\\', $className);
+	if (count($namespaces) > 1) {
+		// remove 'wcf' component
+		array_shift($namespaces);
+		
+		$className = implode('/', $namespaces);
+		$classPath = TMP_DIR . 'install/files/lib/' . $className . '.class.php';
+		if (file_exists($classPath)) {
+			require_once($classPath);
+		}
+	}
+});
+
+/**
+ * Helper method to output debug data for all passed variables,
+ * uses `print_r()` for arrays and objects, `var_dump()` otherwise.
+ */
+function wcfDebug() {
+	echo "<pre>";
+	
+	$args = func_get_args();
+	$length = count($args);
+	if ($length === 0) {
+		echo "ERROR: No arguments provided.<hr>";
+	}
+	else {
+		for ($i = 0; $i < $length; $i++) {
+			$arg = $args[$i];
+			
+			echo "<h2>Argument {$i} (" . gettype($arg) . ")</h2>";
+			
+			if (is_array($arg) || is_object($arg)) {
+				print_r($arg);
+			}
+			else {
+				var_dump($arg);
+			}
+			
+			echo "<hr>";
+		}
+	}
+	
+	$backtrace = debug_backtrace();
+	
+	// output call location to help finding these debug outputs again
+	echo "wcfDebug() called in {$backtrace[0]['file']} on line {$backtrace[0]['line']}";
+	
+	echo "</pre>";
+	
+	exit;
 }
 
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
