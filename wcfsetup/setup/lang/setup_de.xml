@@ -48,6 +48,8 @@
 		<item name="wcf.global.systemRequirements.hostname.description"><![CDATA[Der vom Webserver ermittelte Hostname muss dem Hostnamen in der Adressleiste des Webbrowsers entsprechen.]]></item>
 		<item name="wcf.global.systemRequirements.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.global.systemRequirements.cookie.description"><![CDATA[Gesetzte Cookies müssen vom Webbrowser zurück an den Server gesendet werden.]]></item>
+		<item name="wcf.global.systemRequirements.tls"><![CDATA[Verschlüsselte HTTPS-Verbindung (SSL/TLS)]]></item>
+		<item name="wcf.global.systemRequirements.tls.description"><![CDATA[Die Installation wird über eine unverschlüsselte HTTP-Verbindung aufgerufen. Aus Gründen des Datenschutzes sollte der Zugriff generell über eine verschlüsselte HTTPS-Verbindung erfolgen. Unverschlüsselte Anfragen sollten auf die verschlüsselte Version umgeleitet werden. Bei der Verwendung von unverschlüsselten Verbindungen kann es zu einer Einschränkung des Funktionsumfangs kommen, da Webbrowser bestimmte Funktionen lediglich zur Verwendung mit verschlüsselten Verbindungen zulassen.]]></item>
 		<item name="wcf.global.next"><![CDATA[Lade nächsten Schritt …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[Die Installation lädt im Moment den nächsten Schritt. Bitte haben Sie einen Augenblick Geduld.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
