@@ -17,7 +17,7 @@
 		<item name="wcf.global.license.accept.description"><![CDATA[Do you accept the terms and conditions of the license agreement? You may only install this software upon acceptance of the license agreement.]]></item>
 		<item name="wcf.global.license.missingAcception"><![CDATA[You must accept the license agreement to continue this installation.]]></item>
 		<item name="wcf.global.systemRequirements.required"><![CDATA[Required System Components]]></item>
-		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended System Component]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended System Components]]></item>
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Required]]></item>
 		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Found]]></item>
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended]]></item>
