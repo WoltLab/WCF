@@ -1203,7 +1203,7 @@ if (isset($_REQUEST['tmpFilePrefix'])) {
 	$prefix = preg_replace('/[^a-f0-9_]+/', '', $_REQUEST['tmpFilePrefix']);
 }
 else {
-	$prefix = substr(sha1(uniqid(microtime())), 0, 8);
+	$prefix = \bin2hex(\random_bytes(4));
 }
 define('TMP_FILE_PREFIX', $prefix);
 
