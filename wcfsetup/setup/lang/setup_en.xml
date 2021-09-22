@@ -48,6 +48,8 @@
 		<item name="wcf.global.systemRequirements.hostname.description"><![CDATA[The host name determined by the web server must match the host name within the web browser's URL bar.]]></item>
 		<item name="wcf.global.systemRequirements.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.global.systemRequirements.cookie.description"><![CDATA[The web browser must send cookies back to the web server.]]></item>
+		<item name="wcf.global.systemRequirements.tls"><![CDATA[Encrypted HTTPS Connection (SSL/TLS)]]></item>
+		<item name="wcf.global.systemRequirements.tls.description"><![CDATA[The setup is accessed via an unencrypted HTTP connection. For privacy and security only encrypted HTTPS connections should be used. Unencrypted connections should be redirected to the encrypted variant. Some features might be unsupported when using unencrypted connections, as web browsers restrict some features for use with encrypted connections only.]]></item>
 		<item name="wcf.global.next"><![CDATA[Loading next step …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[The installation is currently loading the next step, please wait.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Configure Database Access]]></item>
