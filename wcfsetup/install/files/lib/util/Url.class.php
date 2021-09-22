@@ -208,7 +208,7 @@ final class Url implements \ArrayAccess
                     if ($isWildcard && \mb_strpos($hostname, $host) !== false) {
                         // the prepended dot will ensure that `example.com` matches only
                         // on domains like `foo.example.com` but not on `bar-example.com`
-                        if (StringUtil::endsWith($hostname, '.' . $host)) {
+                        if (\str_ends_with($hostname, '.' . $host)) {
                             $validHosts[$hostname] = $hostname;
 
                             return true;

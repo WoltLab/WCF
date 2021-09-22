@@ -10,7 +10,6 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Represents an attachment.
@@ -199,7 +198,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
                 $this->getThumbnailLocation('tiny'),
             ] as $location
         ) {
-            if (!StringUtil::endsWith($location, '.bin')) {
+            if (!\str_ends_with($location, '.bin')) {
                 \rename($location, $location . '.bin');
             }
         }

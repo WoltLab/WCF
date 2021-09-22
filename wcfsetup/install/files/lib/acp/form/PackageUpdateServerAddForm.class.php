@@ -93,7 +93,7 @@ class PackageUpdateServerAddForm extends AbstractForm
             throw new UserInputException('serverURL', 'invalid');
         }
 
-        if (StringUtil::endsWith(Url::parse($this->serverURL)['host'], '.woltlab.com', true)) {
+        if (\str_ends_with(Url::parse($this->serverURL)['host'], '.woltlab.com', true)) {
             throw new UserInputException('serverURL', 'woltlab');
         }
 
