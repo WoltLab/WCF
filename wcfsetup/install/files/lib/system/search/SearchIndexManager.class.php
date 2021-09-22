@@ -130,7 +130,6 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     }
 
     /**
-     * @inheritDoc
      * @deprecated  3.0 - please use `set() instead`
      */
     public function add(
@@ -148,7 +147,6 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     }
 
     /**
-     * @inheritDoc
      * @deprecated  3.0 - please use `set() instead`
      */
     public function update(

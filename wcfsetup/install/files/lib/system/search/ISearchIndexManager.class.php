@@ -38,58 +38,6 @@ interface ISearchIndexManager
     );
 
     /**
-     * Adds a new entry.
-     *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $message
-     * @param string $subject
-     * @param int $time
-     * @param int $userID
-     * @param string $username
-     * @param int $languageID
-     * @param string $metaData
-     * @deprecated  3.0 - please use `set()` instead
-     */
-    public function add(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
-    );
-
-    /**
-     * Updates the search index.
-     *
-     * @param string $objectType
-     * @param int $objectID
-     * @param string $message
-     * @param string $subject
-     * @param int $time
-     * @param int $userID
-     * @param string $username
-     * @param int $languageID
-     * @param string $metaData
-     * @deprecated  3.0 - please use `set() instead`
-     */
-    public function update(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
-    );
-
-    /**
      * Deletes search index entries.
      *
      * @param string $objectType
