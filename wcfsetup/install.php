@@ -661,26 +661,6 @@ class BasicFileUtil {
 	}
 	
 	/**
-	 * Removes a leading slash from the given path.
-	 * 
-	 * @param	string		$path
-	 * @return	string
-	 */
-	public static function removeLeadingSlash($path) {
-		return ltrim($path, '/');
-	}
-	
-	/**
-	 * Removes a trailing slash from the given path.
-	 * 
-	 * @param	string		$path
-	 * @return	string
-	 */
-	public static function removeTrailingSlash($path) {
-		return rtrim($path, '/');
-	}
-	
-	/**
 	 * Adds a trailing slash to the given path.
 	 * 
 	 * @param	string		$path
@@ -688,16 +668,6 @@ class BasicFileUtil {
 	 */
 	public static function addTrailingSlash($path) {
 		return rtrim($path, '/').'/';
-	}
-	
-	/**
-	 * Adds a leading slash to the given path.
-	 * 
-	 * @param	string		$path
-	 * @return	string
-	 */
-	public static function addLeadingSlash($path) {
-		return '/'.ltrim($path, '/');
 	}
 	
 	/**
