@@ -247,7 +247,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             } elseif ($type === UserIgnore::TYPE_BLOCK_DIRECT_CONTACT) {
                 return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES]);
             } elseif ($type === UserIgnore::TYPE_HIDE_MESSAGES) {
-                return $userType === UserIgnore::TYPE_HIDE_MESSAGES;
+                return $userType == UserIgnore::TYPE_HIDE_MESSAGES;
             } else {
                 return false;
             }
