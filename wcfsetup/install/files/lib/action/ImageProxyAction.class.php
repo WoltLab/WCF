@@ -203,10 +203,7 @@ class ImageProxyAction extends AbstractAction
             $this->executed();
 
             return new RedirectResponse(WCF::getPath() . $path, 301);
-        } catch (SystemException $e) {
-            \wcf\functions\exception\logThrowable($e);
-            throw new IllegalLinkException();
-        } catch (CryptoException $e) {
+        } catch (SystemException | CryptoException $e) {
             \wcf\functions\exception\logThrowable($e);
             throw new IllegalLinkException();
         }
