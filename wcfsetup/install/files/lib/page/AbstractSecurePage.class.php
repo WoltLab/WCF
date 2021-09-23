@@ -6,13 +6,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
- * Extends AbstractPage by a function to validate a given security token.
- * A missing or invalid token will be result in a throw of a IllegalLinkException.
- *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Page
+ * @deprecated 5.5 Pages / GET requests must not modify server state and thus no XSRF protection is required. Use a form instead.
  */
 abstract class AbstractSecurePage extends AbstractPage
 {
