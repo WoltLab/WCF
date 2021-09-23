@@ -76,7 +76,7 @@ final class CLIUtil
     {
         $result = '';
         foreach ($list as $row) {
-            $parts = StringUtil::split($row, CLIWCF::getTerminal()->getWidth() - 2);
+            $parts = \mb_str_split($row, CLIWCF::getTerminal()->getWidth() - 2);
             $result .= '* ' . \implode(\PHP_EOL . '  ', $parts) . \PHP_EOL;
         }
 
