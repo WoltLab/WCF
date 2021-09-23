@@ -3223,7 +3223,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.ajax.error.badRequest"><![CDATA[The server was unable to process your request due to an incomplete request.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You are not authorized to execute this action.]]></item>
-		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session has expired, please reload this page.]]></item>
+		<item name="wcf.ajax.error.sessionExpired"><![CDATA[The validity of your request could not be verified, because the XSRF token was invalid. Please reload the page and try performing the action again.]]></item>
 	</category>
 	<category name="wcf.article">
 		<item name="wcf.article.nextArticle"><![CDATA[Next Article]]></item>
