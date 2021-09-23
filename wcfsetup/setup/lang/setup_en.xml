@@ -50,6 +50,8 @@
 		<item name="wcf.global.systemRequirements.cookie.description"><![CDATA[The web browser must send cookies back to the web server.]]></item>
 		<item name="wcf.global.systemRequirements.tls"><![CDATA[Encrypted HTTPS Connection (SSL/TLS)]]></item>
 		<item name="wcf.global.systemRequirements.tls.description"><![CDATA[The setup is accessed via an unencrypted HTTP connection. For privacy and security only encrypted HTTPS connections should be used. Unencrypted connections should be redirected to the encrypted variant. Some features might be unsupported when using unencrypted connections, as web browsers restrict some features for use with encrypted connections only.]]></item>
+		<item name="wcf.global.systemRequirements.x64"><![CDATA[64-bit Support]]></item>
+		<item name="wcf.global.systemRequirements.x64.description"><![CDATA[A PHP version with support for 64-bit integers is required to correctly process numbers larger than ~2.1 billion. Without 64-bit support some functionality might be unavailable or return incorrect results. Furthermore the request processing speed of 64-bit PHP is increased compared to 32-bit PHP.]]></item>
 		<item name="wcf.global.next"><![CDATA[Loading next step …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[The installation is currently loading the next step, please wait.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Configure Database Access]]></item>
