@@ -171,4 +171,67 @@ class UserObjectWatchHandler extends SingletonFactory
 
         return $statement->fetchMap('userID', 'notification');
     }
+
+    /**
+     * Updates a watched object for all subscribers including subscribers
+     * of the parent object.
+     *
+     * @since 5.5
+     */
+    public function updateObjectWithParent(
+        string $objectType,
+        int $objectID,
+        string $parentObjectType,
+        int $parentObjectID,
+        string $notificationEventName,
+        string $notificationObjectType,
+        IUserNotificationObject $notificationObject,
+        array $additionalData = []
+    ) {
+        $recipientIDs = [];
+        $filterRecipients = static function ($notification, $userID) use ($notificationObject) {
+            return $notification && $userID != $notificationObject->getAuthorID();
+        };
+
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
+        $userIDs = $this->getSubscribers($objectType, $objectID);
+        if (!empty($userIDs)) {
+            $objectTypeObj->getProcessor()->resetUserStorage(\array_keys($userIDs));
+            $recipientIDs = \array_keys(
+                \array_filter(
+                    $userIDs,
+                    $filterRecipients,
+                    \ARRAY_FILTER_USE_BOTH
+                )
+            );
+        }
+
+        $parentObjectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $parentObjectType);
+        $parentUserIDs = $this->getSubscribers($parentObjectType, $parentObjectID);
+        if (!empty($parentUserIDs)) {
+            $parentObjectTypeObj->getProcessor()->resetUserStorage(\array_keys($parentUserIDs));
+            $parentRecipientIDs = \array_keys(
+                \array_filter(
+                    $parentUserIDs,
+                    $filterRecipients,
+                    \ARRAY_FILTER_USE_BOTH
+                )
+            );
+            $recipientIDs = \array_unique(\array_merge($recipientIDs, $parentRecipientIDs));
+        }
+
+        if (!empty($recipientIDs)) {
+            if (!empty($recipientIDs)) {
+                UserNotificationHandler::getInstance()->fireEvent(
+                    $notificationEventName,
+                    $notificationObjectType,
+                    $notificationObject,
+                    $recipientIDs,
+                    $additionalData
+                );
+            }
+        }
+    }
 }
