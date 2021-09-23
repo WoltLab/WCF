@@ -153,9 +153,11 @@ class WCFACP extends WCF
             empty($pathInfo)
             || !\preg_match('~^/?(login|(full-)?logout|multifactor-authentication|reauthentication)/~i', $pathInfo)
         ) {
+            $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+
             if (WCF::getUser()->userID == 0) {
                 // work-around for AJAX-requests within ACP
-                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                if ($isAjax) {
                     throw new AJAXException(
                         WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'),
                         AJAXException::SESSION_EXPIRED,
@@ -177,8 +179,6 @@ class WCFACP extends WCF
 
                 exit;
             } else {
-                $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
-
                 try {
                     WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
                 } catch (PermissionDeniedException $e) {
