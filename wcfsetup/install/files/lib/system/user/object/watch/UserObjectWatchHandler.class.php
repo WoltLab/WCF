@@ -223,15 +223,13 @@ class UserObjectWatchHandler extends SingletonFactory
         }
 
         if (!empty($recipientIDs)) {
-            if (!empty($recipientIDs)) {
-                UserNotificationHandler::getInstance()->fireEvent(
-                    $notificationEventName,
-                    $notificationObjectType,
-                    $notificationObject,
-                    $recipientIDs,
-                    $additionalData
-                );
-            }
+            UserNotificationHandler::getInstance()->fireEvent(
+                $notificationEventName,
+                $notificationObjectType,
+                $notificationObject,
+                $recipientIDs,
+                $additionalData
+            );
         }
     }
 }
