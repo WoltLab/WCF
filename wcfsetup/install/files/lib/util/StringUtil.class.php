@@ -325,11 +325,7 @@ final class StringUtil
     }
 
     /**
-     * Alias to php str_split() function with multibyte support.
-     *
-     * @param string $string
-     * @param int $length
-     * @return  string[]
+     * @deprecated 5.5 Use \mb_str_split() instead.
      */
     public static function split($string, $length = 1)
     {
