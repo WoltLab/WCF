@@ -162,7 +162,6 @@ class UserObjectWatchHandler extends SingletonFactory
         $objectTypeObj = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 
-        $userIDs = [];
         $sql = "SELECT  userID, notification
                 FROM    wcf" . WCF_N . "_user_object_watch
                 WHERE   objectTypeID = ?
