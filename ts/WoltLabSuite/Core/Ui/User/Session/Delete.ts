@@ -13,7 +13,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } f
 import * as UiNotification from "../../Notification";
 import * as UiConfirmation from "../../Confirmation";
 import * as Language from "../../../Language";
-import { getXsrfToken } from "../../../Core";
+import * as Core from "../../../Core";
 
 export class UiUserSessionDelete implements AjaxCallbackObject {
   private readonly knownElements = new Map<string, HTMLElement>();
@@ -67,7 +67,7 @@ export class UiUserSessionDelete implements AjaxCallbackObject {
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
-      url: "index.php?delete-session/&t=" + getXsrfToken(),
+      url: "index.php?delete-session/&t=" + Core.getXsrfToken(),
     };
   }
 }

@@ -7,11 +7,12 @@
  * @module  Ajax (alias)
  * @module  WoltLabSuite/Core/Ajax
  */
-define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (require, exports, tslib_1, Request_1, Core_1) {
+define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (require, exports, tslib_1, Request_1, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getRequestObject = exports.apiOnce = exports.api = void 0;
     Request_1 = (0, tslib_1.__importDefault)(Request_1);
+    Core = (0, tslib_1.__importStar)(Core);
     const _cache = new WeakMap();
     /**
      * Shorthand function to perform a request against the WCF-API with overrides
@@ -29,7 +30,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (re
             options.pinData = true;
             options.callbackObject = callbackObject;
             if (!options.url) {
-                options.url = "index.php?ajax-proxy/&t=" + (0, Core_1.getXsrfToken)();
+                options.url = "index.php?ajax-proxy/&t=" + Core.getXsrfToken();
                 options.withCredentials = true;
             }
             request = new Request_1.default(options);
@@ -65,7 +66,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (re
         options.pinData = false;
         options.callbackObject = null;
         if (!options.url) {
-            options.url = "index.php?ajax-proxy/&t=" + (0, Core_1.getXsrfToken)();
+            options.url = "index.php?ajax-proxy/&t=" + Core.getXsrfToken();
             options.withCredentials = true;
         }
         const request = new Request_1.default(options);
