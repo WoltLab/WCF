@@ -41,6 +41,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", ".
                 message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
                 confirm: (_parameters) => {
                     Ajax.api(this, {
+                        t: Core.getXsrfToken(),
                         sessionID: element.dataset.sessionId,
                     });
                 },
@@ -58,7 +59,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", ".
         }
         _ajaxSetup() {
             return {
-                url: "index.php?delete-session/&t=" + Core.getXsrfToken(),
+                url: "index.php?delete-session/",
             };
         }
     }

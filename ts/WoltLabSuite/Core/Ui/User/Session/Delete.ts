@@ -45,6 +45,7 @@ export class UiUserSessionDelete implements AjaxCallbackObject {
       message: Language.get("wcf.user.security.deleteSession.confirmMessage"),
       confirm: (_parameters) => {
         Ajax.api(this, {
+          t: Core.getXsrfToken(),
           sessionID: element.dataset.sessionId,
         });
       },
@@ -67,7 +68,7 @@ export class UiUserSessionDelete implements AjaxCallbackObject {
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
-      url: "index.php?delete-session/&t=" + Core.getXsrfToken(),
+      url: "index.php?delete-session/",
     };
   }
 }
