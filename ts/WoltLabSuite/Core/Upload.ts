@@ -46,7 +46,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
         // is true if every file from a multi-file selection is uploaded in its own request
         singleFileRequests: false,
         // url for uploading file
-        url: `index.php?ajax-upload/&t=${window.SECURITY_TOKEN}`,
+        url: `index.php?ajax-upload/&t=${Core.getXsrfToken()}`,
       },
       options,
     ) as TOptions;

@@ -292,3 +292,7 @@ export function enableLegacyInheritance<T>(legacyClass: T): void {
     }
   };
 }
+
+export function getXsrfToken(): string {
+  return (window as any).SECURITY_TOKEN;
+}

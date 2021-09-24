@@ -170,7 +170,7 @@ class UiFileDelete implements AjaxCallbackObject {
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
-      url: "index.php?ajax-file-delete/&t=" + window.SECURITY_TOKEN,
+      url: "index.php?ajax-file-delete/&t=" + Core.getXsrfToken(),
     };
   }
 }

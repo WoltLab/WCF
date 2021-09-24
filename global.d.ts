@@ -16,7 +16,6 @@ declare global {
     REACTION_TYPES: {
       [key: string]: Reaction;
     };
-    SECURITY_TOKEN: string;
     TIME_NOW: number;
     WCF_PATH: string;
     WSC_API_URL: string;

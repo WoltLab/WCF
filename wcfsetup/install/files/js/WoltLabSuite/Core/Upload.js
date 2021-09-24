@@ -38,7 +38,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
                 // is true if every file from a multi-file selection is uploaded in its own request
                 singleFileRequests: false,
                 // url for uploading file
-                url: `index.php?ajax-upload/&t=${window.SECURITY_TOKEN}`,
+                url: `index.php?ajax-upload/&t=${Core.getXsrfToken()}`,
             }, options);
             this._options.url = Core.convertLegacyUrl(this._options.url);
             if (this._options.url.indexOf("index.php") === 0) {

@@ -87,7 +87,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
     // By default, `AJAXProxyAction` is used which relies on an `IDatabaseObjectAction` object; if
     // no such object is used but an `IAJAXInvokeAction` object, `AJAXInvokeAction` has to be used.
     if (!this._options.usesDboAction) {
-      options.url = "index.php?ajax-invoke/&t=" + window.SECURITY_TOKEN;
+      options.url = "index.php?ajax-invoke/&t=" + Core.getXsrfToken();
       options.withCredentials = true;
     }
 

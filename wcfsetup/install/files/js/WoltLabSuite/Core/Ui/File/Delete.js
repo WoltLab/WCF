@@ -123,7 +123,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         }
         _ajaxSetup() {
             return {
-                url: "index.php?ajax-file-delete/&t=" + window.SECURITY_TOKEN,
+                url: "index.php?ajax-file-delete/&t=" + Core.getXsrfToken(),
             };
         }
     }
