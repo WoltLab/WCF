@@ -16,8 +16,6 @@
 \define('TMP_DIR', '');
 \define('WCF_N', 1);
 \define('WCF_OPTION_INC_PHP_SUCCESS', true);
-\define('SECURITY_TOKEN', '');
-\define('SECURITY_TOKEN_INPUT_TAG', '');
 
 // option constants
 \define('LAST_UPDATE_TIME', 0);
