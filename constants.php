@@ -15,13 +15,6 @@
 \define('TMP_DIR', '');
 \define('WCF_N', 1);
 \define('WCF_OPTION_INC_PHP_SUCCESS', true);
-\define('SID_ARG_1ST', '');
-\define('SID_ARG_2ND', '');
-\define('SID_ARG_2ND_NOT_ENCODED', '');
-\define('SID', '');
-\define('SID_INPUT_TAG', '');
-\define('SECURITY_TOKEN', '');
-\define('SECURITY_TOKEN_INPUT_TAG', '');
 
 // option constants
 \define('LAST_UPDATE_TIME', 0);
