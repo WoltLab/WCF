@@ -3,6 +3,7 @@
 namespace wcf\action;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
@@ -16,8 +17,10 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  */
-class DeleteSessionAction extends AbstractAction
+class DeleteSessionAction extends AbstractSecureAction
 {
+    use TAJAXException;
+
     /**
      * @inheritDoc
      */
@@ -27,6 +30,22 @@ class DeleteSessionAction extends AbstractAction
      * @var string
      */
     private $sessionID;
+
+    /**
+     * @inheritDoc
+     */
+    public function __run()
+    {
+        try {
+            return parent::__run();
+        } catch (\Throwable $e) {
+            if ($e instanceof AJAXException) {
+                throw $e;
+            } else {
+                $this->throwException($e);
+            }
+        }
+    }
 
     /**
      * @inheritDoc
