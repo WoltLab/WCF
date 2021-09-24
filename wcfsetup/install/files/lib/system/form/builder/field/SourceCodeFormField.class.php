@@ -19,8 +19,7 @@ class SourceCodeFormField extends AbstractFormField implements
     ICssClassFormField,
     IImmutableFormField,
     IMaximumLengthFormField,
-    IMinimumLengthFormField,
-    INullableFormField
+    IMinimumLengthFormField
 {
     use TAttributeFormField;
     use TAutoFocusFormField;
@@ -28,7 +27,6 @@ class SourceCodeFormField extends AbstractFormField implements
     use TImmutableFormField;
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
-    use TNullableFormField;
 
     /**
      * @var string|null
