@@ -7,7 +7,7 @@
  * @module  Ajax (alias)
  * @module  WoltLabSuite/Core/Ajax
  */
-define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exports, tslib_1, Request_1) {
+define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (require, exports, tslib_1, Request_1, Core_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getRequestObject = exports.apiOnce = exports.api = void 0;
@@ -29,7 +29,7 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
             options.pinData = true;
             options.callbackObject = callbackObject;
             if (!options.url) {
-                options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
+                options.url = "index.php?ajax-proxy/&t=" + (0, Core_1.getXsrfToken)();
                 options.withCredentials = true;
             }
             request = new Request_1.default(options);
@@ -65,7 +65,7 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
         options.pinData = false;
         options.callbackObject = null;
         if (!options.url) {
-            options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
+            options.url = "index.php?ajax-proxy/&t=" + (0, Core_1.getXsrfToken)();
             options.withCredentials = true;
         }
         const request = new Request_1.default(options);

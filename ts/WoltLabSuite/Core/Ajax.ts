@@ -10,6 +10,7 @@
 
 import AjaxRequest from "./Ajax/Request";
 import { AjaxCallbackObject, CallbackSuccess, CallbackFailure, RequestData, RequestOptions } from "./Ajax/Data";
+import { getXsrfToken } from "./Core";
 
 const _cache = new WeakMap();
 
@@ -37,7 +38,7 @@ export function api(
     options.callbackObject = callbackObject;
 
     if (!options.url) {
-      options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
+      options.url = "index.php?ajax-proxy/&t=" + getXsrfToken();
       options.withCredentials = true;
     }
 
@@ -78,7 +79,7 @@ export function apiOnce(options: RequestOptions): void {
   options.pinData = false;
   options.callbackObject = null;
   if (!options.url) {
-    options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
+    options.url = "index.php?ajax-proxy/&t=" + getXsrfToken();
     options.withCredentials = true;
   }
 

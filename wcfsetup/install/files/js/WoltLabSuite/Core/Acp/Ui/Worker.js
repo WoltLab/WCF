@@ -97,7 +97,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                     parameters: this.options.parameters,
                 },
                 silent: true,
-                url: "index.php?worker-proxy/&t=" + window.SECURITY_TOKEN,
+                url: "index.php?worker-proxy/&t=" + Core.getXsrfToken(),
             };
         }
         _dialogSetup() {

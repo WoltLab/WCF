@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/User/Session/Delete
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", "../../Confirmation", "../../../Language"], function (require, exports, tslib_1, Ajax, UiNotification, UiConfirmation, Language) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", "../../Confirmation", "../../../Language", "../../../Core"], function (require, exports, tslib_1, Ajax, UiNotification, UiConfirmation, Language, Core_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiUserSessionDelete = void 0;
@@ -57,7 +57,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", ".
         }
         _ajaxSetup() {
             return {
-                url: "index.php?delete-session/&t=" + window.SECURITY_TOKEN,
+                url: "index.php?delete-session/&t=" + (0, Core_1.getXsrfToken)(),
             };
         }
     }

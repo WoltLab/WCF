@@ -63,7 +63,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
         // Dummy value, because it is checked in the base method, without using it with this upload handler.
         className: "invalid",
         // url
-        url: `index.php?ajax-file-upload/&t=${window.SECURITY_TOKEN}`,
+        url: `index.php?ajax-file-upload/&t=${Core.getXsrfToken()}`,
       },
       options,
     );

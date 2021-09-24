@@ -148,7 +148,7 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
         parameters: this.options.parameters,
       },
       silent: true,
-      url: "index.php?worker-proxy/&t=" + window.SECURITY_TOKEN,
+      url: "index.php?worker-proxy/&t=" + Core.getXsrfToken(),
     };
   }
 
