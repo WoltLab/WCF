@@ -36,11 +36,14 @@ final class JSON
      */
     public static function decode($json, $asArray = true)
     {
-        // decodes JSON
         $data = @\json_decode($json, $asArray);
 
         if ($data === null && self::getLastError() !== \JSON_ERROR_NONE) {
-            throw new SystemException('Could not decode JSON (error ' . self::getLastError() . '): ' . $json);
+            throw new SystemException(\sprintf(
+                'Could not decode JSON (error %d): %s',
+                self::getLastError(),
+                StringUtil::truncate($json, 250, StringUtil::HELLIP, true)
+            ));
         }
 
         return $data;
