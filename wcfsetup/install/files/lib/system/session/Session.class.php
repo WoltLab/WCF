@@ -68,19 +68,11 @@ final class Session
     }
 
     /**
-     * Returns a font awesome device icon.
+     * @deprecated 5.4 Use ->getUserAgent()->getDeviceIcon().
      */
     public function getDeviceIcon(): string
     {
-        if ($this->getUserAgent()->isTablet()) {
-            return 'tablet';
-        }
-
-        if ($this->getUserAgent()->isMobileBrowser()) {
-            return 'mobile';
-        }
-
-        return 'laptop';
+        return $this->getUserAgent()->getDeviceIcon();
     }
 
     /**

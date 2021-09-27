@@ -71,7 +71,7 @@
 		{foreach from=$activeSessions item=session}
 			<li class="box64 sessionItem">
 				<div>
-					<span class="icon icon64 fa-{$session->getDeviceIcon()}"></span>
+					<span class="icon icon64 fa-{$session->getUserAgent()->getDeviceIcon()}"></span>
 				</div>
 				
 				<div class="accountSecurityContainer">

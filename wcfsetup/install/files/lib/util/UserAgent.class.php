@@ -484,4 +484,20 @@ final class UserAgent
 
         return false;
     }
+
+    /**
+     * Returns a font awesome device icon.
+     */
+    public function getDeviceIcon(): string
+    {
+        if ($this->isTablet()) {
+            return 'tablet';
+        }
+
+        if ($this->isMobileBrowser()) {
+            return 'mobile';
+        }
+
+        return 'laptop';
+    }
 }
