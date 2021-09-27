@@ -155,6 +155,28 @@
 		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.recommended{/lang}</h2>
 		
 		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.x64{/lang}</h2>
+			
+			<div class="row rowColGap formGrid">
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
+				</dl>
+				
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+					<dd>
+						<span class="badge {if !$system.x64.result}red{else}green{/if}">
+						{if !$system.x64.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}
+							{lang}wcf.global.systemRequirements.active{/lang}
+						{/if}</span>
+						{if !$system.x64.result}<small>{lang}wcf.global.systemRequirements.x64.description{/lang}</small>{/if}
+					</dd>
+				</dl>
+			</div>
+		</section>
+
+		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.tls{/lang}</h2>
 			
 			<div class="row rowColGap formGrid">
