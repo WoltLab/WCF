@@ -37,8 +37,25 @@
 		<file>acp/style/testing-reset.css</file>
 		<file>acp/style/wcf.css</file>
 		<file>acp/style/wcfAcp.css</file>
+		<file>acp/templates/__dialogForm.tpl</file>
+		<file>acp/templates/__formFieldFooter.tpl</file>
+		<file>acp/templates/__formFieldHeader.tpl</file>
+		<file>acp/templates/__integerFormField.tpl</file>
+		<file>acp/templates/__multifactorBackupCodeField.tpl</file>
+		<file>acp/templates/__multifactorEmailCodeField.tpl</file>
+		<file>acp/templates/__multifactorTotpCodeField.tpl</file>
+		<file>acp/templates/__wysiwygSmileyFormField.tpl</file>
+		<file>acp/templates/devtoolsFormBuilderTest.tpl</file>
+		<file>acp/templates/masterPassword.tpl</file>
+		<file>acp/templates/masterPasswordInit.tpl</file>
+		<file>acp/templates/reactionTypeIcon.tpl</file>
+		<file>acp/templates/userGroupPromoteOwner.tpl</file>
+		<file>acp/update-com.woltlab.wcf_3.2_reactionUpdate.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_2.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_3.php</file>
+		<file>acp/update-com.woltlab.wcf_5.2.php</file>
+		<file>acp/update-com.woltlab.wcf_5.2_reactionUpdate.php</file>
+		<file>acp/update-com.woltlab.wcf_5.2_reloadOptions.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</file>
 		<file>acp/update_4.0.0_b1.php</file>
 		<file>acp/update_5.4_db.php</file>
@@ -94,6 +111,8 @@
 		<file>acp/update_com.woltlab.wcf_5.3_sitemaps.php</file>
 		<file>acp/update_com.woltlab.wcf_5.3_style.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4.2_deleteInvalidSessions.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4.3_resetAvatarCache.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_db.php</file>
@@ -553,6 +572,7 @@
 		<file>images/favicon.ico</file>
 		<file>images/imageViewer/blank.png</file>
 		<file>images/imageViewer/menu.png</file>
+		<file>images/reaction/reactionIcon.svg</file>
 		<file>images/smilies/angry.png</file>
 		<file>images/smilies/angry_emojione.png</file>
 		<file>images/smilies/attention.png</file>
@@ -1014,6 +1034,7 @@
 		<file>js/3rdParty/polyfill/promise.LICENSE</file>
 		<file>js/3rdParty/polyfill/promise.js</file>
 		<file>js/3rdParty/polyfill/promise.min.js</file>
+		<file>js/3rdParty/prism/prism-meta.js</file>
 		<file>js/3rdParty/redactor/README.md</file>
 		<file>js/3rdParty/redactor/languages/ar.js</file>
 		<file>js/3rdParty/redactor/languages/az.js</file>
@@ -1106,6 +1127,7 @@
 		<file>js/WoltLab/WCF/Attachment/Upload.js</file>
 		<file>js/WoltLab/WCF/Controller/Sitemap.js</file>
 		<file>js/WoltLab/WCF/Ui/Collapsible/Sidebar.js</file>
+		<file>js/WoltLabSuite.Core.min.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload.js</file>
@@ -1115,9 +1137,20 @@
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
 		<file>js/WoltLabSuite/Core/Controller/ClipboardData.js</file>
+		<file>js/WoltLabSuite/Core/Core.js</file>
 		<file>js/WoltLabSuite/Core/Core.ts</file>
+		<file>js/WoltLabSuite/Core/Dictionary.js</file>
 		<file>js/WoltLabSuite/Core/Dictionary.ts</file>
+		<file>js/WoltLabSuite/Core/ExifUtil.js</file>
 		<file>js/WoltLabSuite/Core/File/Util.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/ExcludedPackages.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/Instructions.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/OptionalPackages.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/RequiredPackages.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Label.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Rating.js</file>
+		<file>js/WoltLabSuite/Core/ImageResizer.js</file>
 		<file>js/WoltLabSuite/Core/Media/Search.js</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
@@ -1135,10 +1168,13 @@
 		<file>lib/acp/form/ApplicationGroupEditForm.class.php</file>
 		<file>lib/acp/form/DashboardOptionForm.class.php</file>
 		<file>lib/acp/form/DevtoolsFormBuilderTestForm.class.php</file>
+		<file>lib/acp/form/DevtoolsProjectSyncForm.class.php</file>
 		<file>lib/acp/form/LanguageServerAddForm.class.php</file>
 		<file>lib/acp/form/LanguageServerEditForm.class.php</file>
 		<file>lib/acp/form/MasterPasswordForm.class.php</file>
 		<file>lib/acp/form/MasterPasswordInitForm.class.php</file>
+		<file>lib/acp/form/MediaCategoryAddForm.class.php</file>
+		<file>lib/acp/form/MediaCategoryEditForm.class.php</file>
 		<file>lib/acp/form/MediaEditForm.class.php</file>
 		<file>lib/acp/form/MultifactorAuthenticationAbortForm.class.php</file>
 		<file>lib/acp/form/OptionImportForm.class.php</file>
@@ -1154,6 +1190,7 @@
 		<file>lib/acp/page/LanguageServerListPage.class.php</file>
 		<file>lib/acp/page/LessStylesheetsPage.class.php</file>
 		<file>lib/acp/page/MediaAddPage.class.php</file>
+		<file>lib/acp/page/MediaCategoryListPage.class.php</file>
 		<file>lib/acp/page/PackageUpdateSearchResultPage.class.php</file>
 		<file>lib/acp/page/PageMenuItemListPage.class.php</file>
 		<file>lib/action/APIAction.class.php</file>
@@ -1490,6 +1527,10 @@
 		<file>lib/system/api/pelago/emogrifier/.gitignore</file>
 		<file>lib/system/api/pelago/emogrifier/.travis.yml</file>
 		<file>lib/system/api/pelago/emogrifier/CODE_OF_CONDUCT.md</file>
+		<file>lib/system/api/pelago/emogrifier/CONTRIBUTING.md</file>
+		<file>lib/system/api/pelago/emogrifier/Classes/Emogrifier.php</file>
+		<file>lib/system/api/pelago/emogrifier/Configuration/PhpCodeSniffer/Standards/Emogrifier/ruleset.xml</file>
+		<file>lib/system/api/pelago/emogrifier/Tests/Unit/EmogrifierTest.php</file>
 		<file>lib/system/api/pelago/emogrifier/config/php-cs-fixer.php</file>
 		<file>lib/system/api/pelago/emogrifier/config/phpmd.xml</file>
 		<file>lib/system/api/pelago/emogrifier/phpcs.xml.dist</file>
@@ -1745,6 +1786,7 @@
 		<file>lib/system/cache/source/MemcacheAdapter.class.php</file>
 		<file>lib/system/cache/source/MemcachedAdapter.class.php</file>
 		<file>lib/system/cache/source/NoCacheSource.class.php</file>
+		<file>lib/system/category/MediaCategoryType.class.php</file>
 		<file>lib/system/cleanup/CleanupHandler.class.php</file>
 		<file>lib/system/cleanup/ICleanupAdapter.class.php</file>
 		<file>lib/system/cleanup/ICleanupHandler.class.php</file>
@@ -1782,10 +1824,31 @@
 		<file>lib/system/event/listener/UserLoggedInEmailNotificationListener.class.php</file>
 		<file>lib/system/event/listener/UserMultifactorSucceededEmailNotificationListener.class.php</file>
 		<file>lib/system/exception/InvalidArgumentException.class.php</file>
+		<file>lib/system/form/builder/FormDataHandler.class.php</file>
+		<file>lib/system/form/builder/IFormDataHandler.class.php</file>
+		<file>lib/system/form/builder/field/AclFormField.class.php</file>
+		<file>lib/system/form/builder/field/IObjectTypeFormField.class.php</file>
+		<file>lib/system/form/builder/field/IObjectTypeFormNode.class.php</file>
+		<file>lib/system/form/builder/field/OptionFormField.class.php</file>
+		<file>lib/system/form/builder/field/SimpleAclFormField.class.php</file>
 		<file>lib/system/form/builder/field/TForcedIdFormField.class.php</file>
+		<file>lib/system/form/builder/field/TObjectTypeFormField.class.php</file>
+		<file>lib/system/form/builder/field/TObjectTypeFormNode.class.php</file>
+		<file>lib/system/form/builder/field/TagFormField.class.php</file>
+		<file>lib/system/form/builder/field/UserFormField.class.php</file>
+		<file>lib/system/form/builder/field/UserGroupOptionFormField.class.php</file>
+		<file>lib/system/form/builder/field/UsernameFormField.class.php</file>
+		<file>lib/system/form/builder/field/WysiwygFormField.class.php</file>
+		<file>lib/system/form/builder/field/data/CustomFormFieldDataProcessor.class.php</file>
+		<file>lib/system/form/builder/field/data/DefaultFormFieldDataProcessor.class.php</file>
 		<file>lib/system/form/builder/field/data/GuiPackageInstallationPluginFormFieldDataProcessor.class.php</file>
+		<file>lib/system/form/builder/field/data/IFormFieldDataProcessor.class.php</file>
+		<file>lib/system/form/builder/field/data/VoidFormFieldDataProcessor.class.php</file>
 		<file>lib/system/form/builder/field/data/processor/CustomFormFieldDataProcessor.class.php</file>
+		<file>lib/system/form/builder/field/data/processor/DefaultFormFieldDataProcessor.class.php</file>
 		<file>lib/system/form/builder/field/data/processor/IFormFieldDataProcessor.class.php</file>
+		<file>lib/system/form/builder/field/data/processor/VoidFormFieldDataProcessor.class.php</file>
+		<file>lib/system/form/builder/field/wysiwyg/WysiwygSmileyFormField.class.php</file>
 		<file>lib/system/html/input/node/HtmlInputNodeWoltlabColor.class.php</file>
 		<file>lib/system/html/input/node/HtmlInputNodeWoltlabMention.class.php</file>
 		<file>lib/system/html/input/node/IHtmlInputNodeProcessor.class.php</file>
@@ -1841,17 +1904,29 @@
 		<file>lib/system/style/lessc.inc.php</file>
 		<file>lib/system/style/scssphp/LICENSE.md</file>
 		<file>lib/system/style/scssphp/classmap.php</file>
+		<file>lib/system/style/scssphp/src/Base/Range.php</file>
 		<file>lib/system/style/scssphp/src/Block.php</file>
+		<file>lib/system/style/scssphp/src/Colors.php</file>
+		<file>lib/system/style/scssphp/src/Compiler.php</file>
 		<file>lib/system/style/scssphp/src/Compiler/Environment.php</file>
 		<file>lib/system/style/scssphp/src/Exception/CompilerException.php</file>
 		<file>lib/system/style/scssphp/src/Exception/ParserException.php</file>
 		<file>lib/system/style/scssphp/src/Exception/ServerException.php</file>
 		<file>lib/system/style/scssphp/src/Formatter.php</file>
+		<file>lib/system/style/scssphp/src/Formatter/Compact.php</file>
+		<file>lib/system/style/scssphp/src/Formatter/Compressed.php</file>
+		<file>lib/system/style/scssphp/src/Formatter/Crunched.php</file>
 		<file>lib/system/style/scssphp/src/Formatter/Debug.php</file>
+		<file>lib/system/style/scssphp/src/Formatter/Expanded.php</file>
+		<file>lib/system/style/scssphp/src/Formatter/Nested.php</file>
 		<file>lib/system/style/scssphp/src/Formatter/OutputBlock.php</file>
 		<file>lib/system/style/scssphp/src/Node.php</file>
 		<file>lib/system/style/scssphp/src/Node/Number.php</file>
+		<file>lib/system/style/scssphp/src/Parser.php</file>
+		<file>lib/system/style/scssphp/src/Server.php</file>
 		<file>lib/system/style/scssphp/src/Type.php</file>
+		<file>lib/system/style/scssphp/src/Util.php</file>
+		<file>lib/system/style/scssphp/src/Version.php</file>
 		<file>lib/system/template/SetupTemplate.class.php</file>
 		<file>lib/system/template/plugin/ArrayfromlistModifierTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconCompilerTemplatePlugin.class.php</file>
@@ -1879,6 +1954,7 @@
 		<file>lib/system/user/authentication/password/algorithm/Invalid.php</file>
 		<file>lib/system/user/collapsible/content/ICollapsibleContentAction.class.php</file>
 		<file>lib/system/user/collapsible/content/UserCollapsibleSidebarHandler.class.php</file>
+		<file>lib/system/user/notification/event/PaidSubscriptionUserUserNotificationEvent.class.php</file>
 		<file>lib/system/user/notification/object/CommentResponseLikeUserNotificationObject.class.php</file>
 		<file>lib/system/user/notification/object/type/UserProfileCommentLikeUserNotificationObjectType.class.php</file>
 		<file>lib/system/user/online/location/UserLocation.class.php</file>
