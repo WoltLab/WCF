@@ -396,7 +396,7 @@ final class SessionHandler extends SingletonFactory
         HeaderUtil::setCookie(
             'user_session',
             $this->getCookieValue(),
-            TIME_NOW + (self::USER_SESSION_LIFETIME * 2)
+            TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
         );
     }
 
@@ -1094,7 +1094,7 @@ final class SessionHandler extends SingletonFactory
             HeaderUtil::setCookie(
                 'user_session',
                 $this->getCookieValue(),
-                TIME_NOW + (self::USER_SESSION_LIFETIME * 2)
+                TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
             );
         }
     }
