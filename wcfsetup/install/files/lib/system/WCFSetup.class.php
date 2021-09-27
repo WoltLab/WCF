@@ -387,11 +387,7 @@ class WCFSetup extends WCF
         $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
         $system['phpVersion']['result'] = (\version_compare($comparePhpVersion, '7.2.24') >= 0);
 
-        // The magic number below is 2**53, the largest integer that can be represented exactly
-        // as an 64 Bit double precision IEEE-754 floating point number.
-        // 64 Bit PHP will be able to detect the difference between 2**53 and 2**53 + 1, while
-        // 32 Bit PHP will not.
-        $system['x64']['result'] = \PHP_INT_SIZE >= 8 && (9007199254740992 !== 9007199254740992 + 1);
+        $system['x64']['result'] = \PHP_INT_SIZE == 8;
 
         // sql
         $system['sql']['result'] = MySQLDatabase::isSupported();
