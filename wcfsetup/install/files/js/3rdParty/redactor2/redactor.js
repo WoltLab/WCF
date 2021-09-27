@@ -2888,7 +2888,7 @@
 					for (var i = 0; i < len; i++) {
 						if (tags[i] === 'td' || tags[i] === 'th') {
 							html = html.replace(
-								new RegExp('###' + tags[i] + '\s?(.*?[^#])###', 'gi'),
+								new RegExp('###' + tags[i] + '(?:\\s?|\\s([^#]*?))###', 'gi'),
 								'<' + tags[i] + '$1>'
 							);
 						}
