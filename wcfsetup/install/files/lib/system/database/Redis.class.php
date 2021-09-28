@@ -72,7 +72,7 @@ class Redis {
 			}
 		}
 		
-		if (!$this->redis->connect($host, $port)) {
+		if (!$this->redis->connect($host, (int)$port)) {
 			throw new \RuntimeException('Unable to connect to Redis server');
 		}
 		
