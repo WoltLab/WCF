@@ -2152,16 +2152,7 @@ else {
 }
 
 /**
- * Executes provided callback if scroll threshold is reached. Usable to determine
- * if user reached the bottom of an element to load new elements on the fly.
- * 
- * If you do not provide a value for 'reference' and 'target' it will assume you're
- * monitoring page scrolls, otherwise a valid jQuery selector must be provided for both.
- * 
- * @param	integer		threshold
- * @param	object		callback
- * @param	string		reference
- * @param	string		target
+ * @deprecated use `WoltLabSuite/Core/Ui/ScrollSpy` instead
  */
 WCF.Action.Scroll = Class.extend({
 	/**
