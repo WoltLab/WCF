@@ -75,7 +75,14 @@ class Redis
             }
         }
 
-        if (!$this->redis->connect($host, $port)) {
+        if (!\is_numeric($port)) {
+            throw new \InvalidArgumentException(\sprintf(
+                "The given port '%s' is not numeric.",
+                $port
+            ));
+        }
+
+        if (!$this->redis->connect($host, (int)$port)) {
             throw new \RuntimeException('Unable to connect to Redis server');
         }
 
