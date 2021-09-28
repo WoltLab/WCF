@@ -766,7 +766,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
-		<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Kann Dateianhänge verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -5572,5 +5571,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.systemCheck.mysql.searchEngine"/>
 	<item name="wcf.acp.systemCheck.mysql.searchEngine.description"/>
 	<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"/>
+	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 </delete>
 </language>
