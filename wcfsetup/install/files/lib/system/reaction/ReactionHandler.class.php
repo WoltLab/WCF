@@ -687,7 +687,7 @@ class ReactionHandler extends SingletonFactory
         // reduce count of received users
         $users = [];
         foreach ($likeObjects as $likeObject) {
-            if ($likeObject->likes) {
+            if ($likeObject->likes && $likeObject->objectUserID) {
                 if (!isset($users[$likeObject->objectUserID])) {
                     $users[$likeObject->objectUserID] = 0;
                 }
@@ -699,7 +699,7 @@ class ReactionHandler extends SingletonFactory
         foreach ($users as $userID => $reactionData) {
             $userEditor = new UserEditor(new User(null, ['userID' => $userID]));
             $userEditor->updateCounters([
-                'likesReceived' => $users[$userID],
+                'likesReceived' => $reactionData,
             ]);
         }
 
@@ -714,10 +714,12 @@ class ReactionHandler extends SingletonFactory
             foreach ($likeList as $like) {
                 $likeData[$like->likeID] = $like->userID;
 
-                if (!isset($activityPoints[$like->objectUserID])) {
-                    $activityPoints[$like->objectUserID] = 0;
+                if ($like->objectUserID) {
+                    if (!isset($activityPoints[$like->objectUserID])) {
+                        $activityPoints[$like->objectUserID] = 0;
+                    }
+                    $activityPoints[$like->objectUserID]++;
                 }
-                $activityPoints[$like->objectUserID]++;
             }
 
             // delete like notifications
