@@ -134,7 +134,15 @@ final class UnfurlResponse
 
         $this->body = "";
         while (!$this->response->getBody()->eof()) {
-            $this->body .= $this->response->getBody()->read(8192);
+            try {
+                $this->body .= $this->response->getBody()->read(8192);
+            } catch (\RuntimeException $e) {
+                throw new DownloadFailed(
+                    'Failed to read response body.',
+                    0,
+                    $e
+                );
+            }
 
             if ($this->response->getBody()->tell() >= self::MAX_SIZE) {
                 break;
