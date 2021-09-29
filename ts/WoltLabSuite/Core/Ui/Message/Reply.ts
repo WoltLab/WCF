@@ -278,6 +278,8 @@ class UiMessageReply {
     // causing the keyboard to vanish, but the focus remains inside the editor.
     window.setTimeout(() => {
       const editor = document.activeElement?.closest(".redactor-layer");
+      if (editor && editor instanceof HTMLElement) {
+        editor.blur();
       }
     }, 50);
   }
