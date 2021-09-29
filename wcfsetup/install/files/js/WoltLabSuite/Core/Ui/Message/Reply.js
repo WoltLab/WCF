@@ -206,6 +206,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
         _reset() {
             this._getEditor().code.set("<p>\u200b</p>");
             EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+            // Opera on Android does not properly blur the editor after submitting the message,
+            // causing the keyboard to vanish, but the focus remains inside the editor.
+            window.setTimeout(() => {
+                var _a;
+                const editor = (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.closest(".redactor-layer");
+                if (editor && editor instanceof HTMLElement) {
+                    editor.blur();
+                }
+            }, 50);
         }
         /**
          * Handles errors occurred during server processing.
