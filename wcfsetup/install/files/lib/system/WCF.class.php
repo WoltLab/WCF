@@ -9,6 +9,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
+use wcf\data\style\StyleAction;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
@@ -23,7 +24,9 @@ use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\ParentClassException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
@@ -531,12 +534,30 @@ class WCF
      */
     protected function initStyle()
     {
+        $styleID = 0;
+
         if (isset($_REQUEST['styleID'])) {
-            self::getSession()->setStyleID(\intval($_REQUEST['styleID']));
+            $styleID = \intval($_REQUEST['styleID']);
+
+            try {
+                $action = new StyleAction([$styleID], 'changeStyle');
+                $action->validateAction();
+                $action->executeAction();
+            } catch (PermissionDeniedException | UserInputException $e) {
+                $styleID = 0;
+            }
+        }
+
+        if ($styleID === 0) {
+            if (self::getSession()->getUser()->userID) {
+                $styleID = self::getSession()->getUser()->styleID ?: 0;
+            } else {
+                $styleID = self::getSession()->getVar('styleID') ?: 0;
+            }
         }
 
         $styleHandler = StyleHandler::getInstance();
-        $styleHandler->changeStyle(self::getSession()->getStyleID());
+        $styleHandler->changeStyle($styleID);
     }
 
     /**
