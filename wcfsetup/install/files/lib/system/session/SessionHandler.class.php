@@ -5,6 +5,7 @@ namespace wcf\system\session;
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
+use wcf\data\style\StyleAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\application\ApplicationHandler;
@@ -15,9 +16,11 @@ use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -88,12 +91,6 @@ final class SessionHandler extends SingletonFactory
      * @var LegacySession
      */
     protected $legacySession;
-
-    /**
-     * style id
-     * @var int
-     */
-    protected $styleID;
 
     /**
      * user object
@@ -407,9 +404,8 @@ final class SessionHandler extends SingletonFactory
     {
         $this->defineConstants();
 
-        // assign language and style id
+        // assign language
         $this->languageID = $this->getVar('languageID') ?: $this->user->languageID;
-        $this->styleID = $this->getVar('styleID') ?: $this->user->styleID;
 
         // https://github.com/WoltLab/WCF/issues/2568
         if ($this->getVar('__wcfIsFirstVisit') === true) {
@@ -1018,7 +1014,6 @@ final class SessionHandler extends SingletonFactory
         $this->groupData = null;
         $this->languageIDs = null;
         $this->languageID = $this->user->languageID;
-        $this->styleID = $this->user->styleID;
 
         // change language
         WCF::setLanguage($this->languageID ?: 0);
@@ -1163,8 +1158,8 @@ final class SessionHandler extends SingletonFactory
         // If we reach this point we determined that a new authentication is not necessary.
         \assert(
             ($lastAuthentication >= TIME_NOW - $softLimit)
-            || ($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT
-                && $lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
+                || ($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT
+                    && $lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
         );
 
         // Update the lastCheck timestamp to make sure that the grace period works properly.
@@ -1363,24 +1358,24 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Returns currently active style id.
-     *
-     * @return  int
+     * @deprecated 5.5 - Use `StyleHandler::getInstance()->getStyle()->styleID` instead.
      */
     public function getStyleID()
     {
-        return $this->styleID;
+        return StyleHandler::getInstance()->getStyle()->styleID;
     }
 
     /**
-     * Sets the currently active style id.
-     *
-     * @param int $styleID
+     * @deprecated 5.5 - Set the style directly with the `StyleAction::changeStyle()`.
      */
     public function setStyleID($styleID)
     {
-        $this->styleID = $styleID;
-        $this->register('styleID', $this->styleID);
+        try {
+            $action = new StyleAction([$styleID], 'changeStyle');
+            $action->validateAction();
+            $action->executeAction();
+        } catch (PermissionDeniedException | UserInputException $e) {
+        }
     }
 
     /**
