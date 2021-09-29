@@ -536,6 +536,7 @@ class WCF
     {
         $styleID = 0;
 
+        /** @deprecated The 'styleID' parameter is deprecated. */
         if (isset($_REQUEST['styleID'])) {
             $styleID = \intval($_REQUEST['styleID']);
 
