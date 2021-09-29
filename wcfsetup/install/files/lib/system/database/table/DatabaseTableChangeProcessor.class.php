@@ -1217,7 +1217,7 @@ class DatabaseTableChangeProcessor
 
                         foreach ($table->getForeignKeys() as $foreignKey) {
                             foreach ($existingForeignKeys as $existingForeignKey) {
-                                if (empty(\array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
+                                if (empty(\array_diff_assoc($foreignKey->getData(), $existingForeignKey->getData()))) {
                                     if ($foreignKey->willBeDropped()) {
                                         if (
                                             $this->getForeignKeyPackageID(
