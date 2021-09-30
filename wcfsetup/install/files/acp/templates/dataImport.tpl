@@ -202,7 +202,13 @@
 				<dd>
 					<input type="text" id="dbPrefix" name="dbPrefix" value="{$dbPrefix}" class="short">
 					{if $errorField == 'database'}
-						<small class="innerError">{lang}wcf.acp.dataImport.configure.database.error{/lang}</small>
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.dataImport.configure.database.error.{@$errorType}{/lang}
+							{/if}
+						</small>
 					{/if}
 				</dd>
 			</dl>
@@ -218,7 +224,13 @@
 				<dd>
 					<input type="text" id="fileSystemPath" name="fileSystemPath" value="{$fileSystemPath}" class="long">
 					{if $errorField == 'fileSystemPath'}
-						<small class="innerError">{lang}wcf.acp.dataImport.configure.fileSystem.path.error{/lang}</small>
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.dataImport.configure.fileSystem.path.error.{@$errorType}{/lang}
+							{/if}
+						</small>
 					{/if}
 					<small>{lang}wcf.acp.dataImport.configure.fileSystem.path.description{/lang}</small>
 				</dd>
