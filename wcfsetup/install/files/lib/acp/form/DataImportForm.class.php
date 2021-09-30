@@ -2,8 +2,10 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\application\Application;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\DatabaseException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -226,6 +228,12 @@ class DataImportForm extends AbstractForm
     {
         parent::validate();
 
+        foreach (ApplicationHandler::getInstance()->getAbbreviations() as $abbreviation) {
+            if (\realpath(Application::getDirectory($abbreviation)) === \realpath($this->fileSystemPath)) {
+                throw new UserInputException('fileSystemPath', 'thisCommunity');
+            }
+        }
+
         $this->exporter->setData(
             $this->dbHost,
             $this->dbUser,
@@ -241,7 +249,7 @@ class DataImportForm extends AbstractForm
             $this->exporter->validateDatabaseAccess();
         } catch (DatabaseException $e) {
             WCF::getTPL()->assign('exception', $e);
-            throw new UserInputException('database');
+            throw new UserInputException('database', 'exception');
         }
 
         // validate selected data
@@ -253,7 +261,7 @@ class DataImportForm extends AbstractForm
 
         // validate file access
         if (!$this->exporter->validateFileAccess()) {
-            throw new UserInputException('fileSystemPath');
+            throw new UserInputException('fileSystemPath', 'invalid');
         }
 
         // validate user merge mode

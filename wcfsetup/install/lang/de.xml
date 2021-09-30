@@ -370,6 +370,8 @@
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Folgende Daten importieren:]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error.exception"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
+		<br><strong>{$exception->getPrevious()->getMessage()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[Kennwort]]></item>
@@ -378,9 +380,8 @@
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Datei-System-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur alten Installation]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Geben Sie den Dateipfad der alten Installation an, dieser wird für den Import von Datei-basierten Inhalten, z. B. Avatare oder Dateianhänge, benötigt.]]></item>
-		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br><strong>{$exception->getPrevious()->getMessage()}</strong>]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.error.invalid"><![CDATA[Es wurde keine Installation unter dem angegebenen Pfad gefunden.]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.error.thisCommunity"><![CDATA[Der angegebene Pfad entspricht dem Pfad einer installierten App.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Verhalten bei sich überschneidenden Benutzerkonten]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[Benutzerkonten mit identischer E-Mail-Adresse zusammenlegen]]></item>
