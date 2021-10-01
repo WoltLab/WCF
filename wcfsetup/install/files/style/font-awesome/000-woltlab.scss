@@ -9,45 +9,70 @@ $fa-size-scale-base: 15;
 @import 'variables';
 @import 'mixins';
 
-/* Fix for division:
- * https://github.com/scssphp/scssphp/issues/504
- */
-@mixin fa-size ($font-size) {
-  font-size: (($font-size / $fa-size-scale-base)) * 1em; // converts step in sizing scale into an em-based value that's relative to the scale's base
-  line-height: ((1 / $font-size)) * 1em; // sets the line-height of the icon back to that of it's parent
-  vertical-align: (((6 / $font-size)) - ((3 / 8))) * 1em; // vertically centers the icon taking into account the surrounding text's descender
-}
-$fa-fw-width            : ((20em / 16));
-$fa-li-margin           : ($fa-li-width * divide(5 / 4)) !default;
-
 /* Compatibility */
 
 .icon {
   @extend .fas;
 }
-.icon16 {
-  @include fa-size(16);
-}
-.icon24 {
-  @include fa-size(24);
-}
-.icon32 {
-  @include fa-size(32);
-}
-.icon48 {
-  @include fa-size(48);
-}
-.icon64 {
-  @include fa-size(64);
-}
-.icon96 {
-  @include fa-size(96);
-}
-.icon128 {
-  @include fa-size(128);
-}
-.icon144 {
-  @include fa-size(144);
+.icon {
+  text-align: center;
+
+  &.icon16 {
+    font-size: 14px;
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+  }
+
+  &.icon24 {
+    font-size: 18px;
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+  }
+
+  &.icon32 {
+    font-size: 28px;
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+    vertical-align: -5px;
+  }
+
+  &.icon48 {
+    font-size: 42px;
+    height: 48px;
+    line-height: 48px;
+    width: 48px;
+  }
+
+  &.icon64 {
+    font-size: 56px;
+    height: 64px;
+    line-height: 64px;
+    width: 64px;
+  }
+
+  &.icon96 {
+    font-size: 84px;
+    height: 96px;
+    line-height: 96px;
+    width: 96px;
+  }
+
+  &.icon128 {
+    font-size: 112px;
+    height: 128px;
+    line-height: 128px;
+    width: 128px;
+  }
+
+  &.icon144 {
+    font-size: 130px;
+    height: 144px;
+    line-height: 144px;
+    width: 144px;
+  }
 }
 
 /* Shims */
