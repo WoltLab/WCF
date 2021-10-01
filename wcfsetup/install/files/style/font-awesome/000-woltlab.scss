@@ -20,8 +20,7 @@ $fa-li-margin           : ($fa-li-width * divide(5 / 4)) !default;
 /* Compatibility */
 
 .icon {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
+  @extend .fas;
 }
 .icon16 {
   @include fa-size(16);
