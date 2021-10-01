@@ -273,6 +273,15 @@ class UiMessageReply {
     this._getEditor().code.set("<p>\u200b</p>");
 
     EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+
+    // Opera on Android does not properly blur the editor after submitting the message,
+    // causing the keyboard to vanish, but the focus remains inside the editor.
+    window.setTimeout(() => {
+      const editor = document.activeElement?.closest(".redactor-layer");
+      if (editor && editor instanceof HTMLElement) {
+        editor.blur();
+      }
+    }, 50);
   }
 
   /**
