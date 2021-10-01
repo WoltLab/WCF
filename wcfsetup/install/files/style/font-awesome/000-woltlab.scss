@@ -1,6 +1,9 @@
 /* Variables */
 $fa-font-path           : "../font";
 
+// TODO: Derive this from the actual font size.
+$fa-size-scale-base: 15;
+
 /* Imports */
 @import 'functions';
 @import 'variables';
