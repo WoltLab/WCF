@@ -1995,6 +1995,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		The foreign key {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
 	{else if $error[type] === 'unknownTableInForeignKey'}
 		The foreign key {$error[tableName]} ({$error[columnNames]}) references an unknown table {$error[referencedTableName]}.
+	{else if $error[type] === 'duplicateColumnInIndex'}
+		The index {$error[tableName]} ({$error[columnNames]}) contains duplicate columns.
 	{else}
 		Unknown error.
 	{/if}

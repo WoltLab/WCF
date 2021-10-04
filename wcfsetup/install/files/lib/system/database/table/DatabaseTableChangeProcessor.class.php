@@ -1241,6 +1241,14 @@ class DatabaseTableChangeProcessor
                 }
 
                 foreach ($table->getIndices() as $index) {
+                    if (\count($index->getColumns()) !== \count(\array_unique($index->getColumns()))) {
+                        $errors[] = [
+                            'columnNames' => \implode(',', $index->getColumns()),
+                            'tableName' => $table->getName(),
+                            'type' => 'duplicateColumnInIndex',
+                        ];
+                    }
+
                     foreach ($index->getColumns() as $indexColumn) {
                         $column = $this->getColumnByName($indexColumn, $table, $existingTable);
                         if ($column === null) {
