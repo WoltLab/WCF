@@ -140,7 +140,15 @@ class ImageProxyAction extends AbstractAction
 
                         $file = new File($tmp);
                         while (!$response->getBody()->eof()) {
-                            $file->write($response->getBody()->read(8192));
+                            try {
+                                $file->write($response->getBody()->read(8192));
+                            } catch (\RuntimeException $e) {
+                                throw new \DomainException(
+                                    'Failed to read response body.',
+                                    0,
+                                    $e
+                                );
+                            }
 
                             if ($response->getBody()->tell() >= self::MAX_SIZE) {
                                 throw new \DomainException(\sprintf(
