@@ -2,6 +2,7 @@
 
 namespace wcf\system\html\output\node;
 
+use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
 use wcf\system\html\output\AmpHtmlOutputProcessor;
@@ -20,6 +21,8 @@ use wcf\util\StringUtil;
  */
 class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
 {
+    private static $disableUnfurlingForContext = ['com.woltlab.wcf.user.signature'];
+
     /**
      * @inheritDoc
      */
@@ -30,14 +33,28 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
      */
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
+        if ($this->outputType !== 'text/html') {
+            return;
+        }
+
+        $htmlProcessor = $htmlNodeProcessor->getHtmlProcessor();
+        if ($htmlProcessor instanceof AmpHtmlOutputProcessor) {
+            return;
+        }
+
+        if (
+            $htmlProcessor instanceof AbstractHtmlProcessor
+            && \in_array($htmlProcessor->getContext()['objectType'], self::$disableUnfurlingForContext)
+        ) {
+            return;
+        }
+
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $attribute = $element->getAttribute(HtmlNodeUnfurlLink::UNFURL_URL_ID_ATTRIBUTE_NAME);
             if (
-                $this->outputType === 'text/html'
-                && !empty($attribute)
+                !empty($attribute)
                 && MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $attribute) !== null
-                && !($htmlNodeProcessor->getHtmlProcessor() instanceof AmpHtmlOutputProcessor)
             ) {
                 $enableUgc = true;
                 $processor = $htmlNodeProcessor->getHtmlProcessor();
