@@ -25,7 +25,6 @@ class UploadFormField extends AbstractFormField
     use TMaximumFormField {
         maximum as traitMaximum;
     }
-
     use TMinimumFormField;
 
     /**

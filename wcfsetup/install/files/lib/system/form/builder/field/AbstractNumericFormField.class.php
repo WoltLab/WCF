@@ -30,7 +30,6 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     use TAttributeFormField {
         getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
     }
-
     use TAutoCompleteFormField;
     use TAutoFocusFormField;
     use TCssClassFormField;

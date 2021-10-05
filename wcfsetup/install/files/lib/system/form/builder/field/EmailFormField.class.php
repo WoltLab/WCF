@@ -32,7 +32,6 @@ class EmailFormField extends AbstractFormField implements
     use TAttributeFormField {
         getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
     }
-
     use TAutoCompleteFormField;
     use TAutoFocusFormField;
     use TCssClassFormField;
@@ -41,7 +40,6 @@ class EmailFormField extends AbstractFormField implements
     use TI18nFormField {
         validate as protected i18nValidate;
     }
-
     use TPatternFormField;
     use TPlaceholderFormField;
 

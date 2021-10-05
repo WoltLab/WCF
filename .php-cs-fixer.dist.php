@@ -117,7 +117,7 @@ return (new PhpCsFixer\Config())
         'blank_line_before_statement' => ['statements' => ['return', 'exit']],
         'compact_nullable_typehint' => true,
         'method_chaining_indentation' => true,
-        'no_extra_blank_lines' => ['tokens' => ['case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'square_brace_block', 'switch', 'throw', 'use', 'use_trait']],
+        'no_extra_blank_lines' => ['tokens' => ['case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'square_brace_block', 'switch', 'throw', 'use']],
         'no_spaces_around_offset' => true,
     ])
     ->setFinder($finder);

@@ -41,7 +41,6 @@ class WysiwygFormField extends AbstractFormField implements
     use TInputAttributeFormField {
         getReservedFieldAttributes as private inputGetReservedFieldAttributes;
     }
-
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
     use TObjectTypeFormNode;
