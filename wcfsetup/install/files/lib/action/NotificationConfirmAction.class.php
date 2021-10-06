@@ -8,8 +8,10 @@ use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\page\NotificationListPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -98,8 +100,14 @@ class NotificationConfirmAction extends AbstractAction
             $this->notification->additionalData
         );
 
-        return new RedirectResponse(
-            $notificationEvent->getLink()
-        );
+        // The notification link can be `null` (e.g. for some moderation notifications).
+        // This would trigger an exception further in the code, because the PSR7 redirect response
+        // expect a real URL. For this reason, we rewrite `null` with a link to the NotificationListPage.
+        $link = $notificationEvent->getLink();
+        if ($link === null) {
+            $link = LinkHandler::getInstance()->getControllerLink(NotificationListPage::class);
+        }
+
+        return new RedirectResponse($link);
     }
 }
