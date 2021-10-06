@@ -38,7 +38,12 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
     /**
      * Returns object link.
      *
-     * @return  string
+     * The returned value can be `null` however, this should be avoided as much as possible.
+     * If the returned value is `null`, the NotificationListPage will be used a link, on any
+     * place, where the link is required (e.g. in the NotificationConfirmAction). After the
+     * confirmation of the notification, the notification is not clickable anymore.
+     *
+     * @return  ?string
      */
     public function getLink();
 
