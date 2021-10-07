@@ -1,3 +1,15 @@
+.sidebarItemList {
+	> li {
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+	}
+}
+
+.sidebarItem.new h3 {
+	font-weight: 600;
+}
+
 /* legacy styling for sidebars (deprecated) */
 .sidebar {
 	fieldset {
@@ -85,7 +97,6 @@
 		}
 	}
 
-	.sidebarItemList,
 	.sidebarBoxList {
 		// deprecated
 		> li {
