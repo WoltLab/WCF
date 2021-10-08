@@ -288,7 +288,8 @@ CREATE TABLE wcf1_blacklist_entry (
 	occurrences SMALLINT(5) NOT NULL,
 
 	UNIQUE KEY entry (type, hash),
-	KEY numberOfReports (type, occurrences)
+	KEY numberOfReports (type, occurrences),
+	KEY lastSeen (lastSeen)
 );
 
 DROP TABLE IF EXISTS wcf1_box;
