@@ -10,9 +10,15 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
+    PartialDatabaseTable::create('wcf1_blacklist_entry')
+        ->columns([
+            DatabaseTableIndex::create('lastSeen')
+                ->columns(['lastSeen']),
+        ]),
     PartialDatabaseTable::create('wcf1_comment')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('hasEmbeddedObjects'),
