@@ -5,7 +5,6 @@ namespace wcf\system\cli\command;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\CLIWCF;
-use wcf\system\database\DatabaseException;
 use wcf\system\importer\ImportHandler;
 use wcf\system\importer\UserImporter;
 use wcf\system\WCF;
@@ -252,7 +251,7 @@ class ImportCLICommand implements ICLICommand
                 do {
                     $exceptions[] = $e;
                 } while ($e = $e->getPrevious());
-                
+
                 $errorMessage = WCF::getLanguage()->getDynamicVariable(
                     'wcf.acp.dataImport.configure.database.error.exception',
                     [

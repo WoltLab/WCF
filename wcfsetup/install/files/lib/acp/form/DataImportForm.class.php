@@ -6,7 +6,6 @@ use wcf\data\application\Application;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\database\DatabaseException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\importer\UserImporter;
