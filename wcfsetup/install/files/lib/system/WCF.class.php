@@ -413,6 +413,10 @@ class WCF
      */
     protected function defineLegacyOptions(): void
     {
+        // The legacy URLs have been removed since 3.0.
+        // https://github.com/WoltLab/WCF/commit/b9f49efdf9c71c66f86aaff812b0aadd41247950
+        \define('URL_LEGACY_MODE', 0);
+
         // The attachment module is always enabled since 5.2.
         // https://github.com/WoltLab/WCF/issues/2531
         \define('MODULE_ATTACHMENT', 1);

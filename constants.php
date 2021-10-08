@@ -47,7 +47,6 @@
 \define('EXTERNAL_LINK_REL_NOFOLLOW', 1);
 \define('EXTERNAL_LINK_TARGET_BLANK', 0);
 \define('FOOTER_CODE', '');
-\define('URL_LEGACY_MODE', 0);
 \define('URL_OMIT_INDEX_PHP', 0);
 \define('URL_TITLE_COMPONENT_REPLACEMENT', '');
 \define('OFFLINE', 0);
