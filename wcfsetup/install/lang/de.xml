@@ -371,7 +371,7 @@
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Folgende Daten importieren:]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.error.exception"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br><strong>{$exception->getPrevious()->getMessage()}</strong>]]></item>
+		{foreach from=$exceptions item='exception'}<br><strong>{$exception->getMessage()}</strong>{/foreach}]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[Kennwort]]></item>

@@ -348,7 +348,8 @@
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Import the data selected below:]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Database Credentials]]></item>
-		<item name="wcf.acp.dataImport.configure.database.error.exception"><![CDATA[An error occurred while trying to access the database:<br><strong>{$exception->getPrevious()->getMessage()}</strong>]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error.exception"><![CDATA[An error occurred while trying to access the database:
+		{foreach from=$exceptions item='exception'}<br><strong>{$exception->getMessage()}</strong>{/foreach}]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Username]]></item>
 		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[Password]]></item>

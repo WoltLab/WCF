@@ -247,8 +247,12 @@ class DataImportForm extends AbstractForm
         // validate database Access
         try {
             $this->exporter->validateDatabaseAccess();
-        } catch (DatabaseException $e) {
-            WCF::getTPL()->assign('exception', $e);
+        } catch (\Exception $e) {
+            $exceptions = [];
+            do {
+                $exceptions[] = $e;
+            } while ($e = $e->getPrevious());
+            WCF::getTPL()->assign('exceptions', $exceptions);
             throw new UserInputException('database', 'exception');
         }
 

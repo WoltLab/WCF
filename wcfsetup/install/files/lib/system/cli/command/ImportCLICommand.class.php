@@ -247,10 +247,18 @@ class ImportCLICommand implements ICLICommand
 
             try {
                 $this->exporter->validateDatabaseAccess();
-            } catch (DatabaseException $e) {
-                $errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.configure.database.error', [
-                    'exception' => $e,
-                ]);
+            } catch (\Exception $e) {
+                $exceptions = [];
+                do {
+                    $exceptions[] = $e;
+                } while ($e = $e->getPrevious());
+                
+                $errorMessage = WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.dataImport.configure.database.error.exception',
+                    [
+                        'exceptions' => $exceptions,
+                    ]
+                );
                 $errorMessageLines = \explode('<br>', $errorMessage);
                 foreach ($errorMessageLines as &$line) {
                     $line = StringUtil::stripHTML($line);
