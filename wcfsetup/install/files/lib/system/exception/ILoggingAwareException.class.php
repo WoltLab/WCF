@@ -3,13 +3,7 @@
 namespace wcf\system\exception;
 
 /**
- * Indicates that the exception should be let known if it was logged.
- *
- * @author      Tim Duesterhus
- * @copyright   2001-2021 WoltLab GmbH
- * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Exception
- * @since       5.4
+ * @deprecated 5.5 Either use 'IExtraInformationException' or include the necessary information within the message.
  */
 interface ILoggingAwareException extends \Throwable
 {
