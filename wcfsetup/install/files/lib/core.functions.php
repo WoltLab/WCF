@@ -246,6 +246,7 @@ namespace wcf\functions\exception {
 		// let the Exception know it has been logged
 		$prev = $e;
 		do {
+			/** @deprecated 5.5 The ILoggingAwareException interface and feature is deprecated. See the interface for details. */
 			if (
 				$prev instanceof ILoggingAwareException
 				|| (method_exists($prev, 'finalizeLog') && is_callable([$prev, 'finalizeLog']))
