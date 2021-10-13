@@ -45,7 +45,7 @@
 					UiUserEditor.init();
 				{/if}
 				
-				{if !$user->getPermission('user.profile.cannotBeIgnored')}
+				{if !$user->getPermission('user.profile.cannotBeIgnored') || $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}
 					new UiUserProfileMenuItemIgnore({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
 				{/if}
 				
