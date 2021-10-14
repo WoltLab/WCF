@@ -50,7 +50,13 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm
         if (!$this->user->userID) {
             throw new UserInputException('username', 'notFound');
         }
+    }
 
+    /**
+     * @inheritDoc
+     */
+    public function validateActivationState()
+    {
         if ($this->user->reactivationCode == 0) {
             throw new UserInputException('username', 'alreadyEnabled');
         }
