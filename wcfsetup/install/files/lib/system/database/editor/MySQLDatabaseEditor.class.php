@@ -466,6 +466,8 @@ class MySQLDatabaseEditor extends DatabaseEditor
         // not null / null
         if (!empty($columnData['notNull'])) {
             $definition .= " NOT NULL";
+        } else {
+            $definition .= " NULL";
         }
         // default
         if (isset($columnData['default']) && $columnData['default'] !== '') {
