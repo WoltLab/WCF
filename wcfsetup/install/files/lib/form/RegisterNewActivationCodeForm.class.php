@@ -104,10 +104,6 @@ class RegisterNewActivationCodeForm extends AbstractForm
             throw new UserInputException('username', 'notFound');
         }
 
-        if ($this->user->isEmailConfirmed()) {
-            throw new UserInputException('username', 'alreadyEnabled');
-        }
-
         if (!empty($this->user->getBlacklistMatches())) {
             throw new PermissionDeniedException();
         }
