@@ -164,7 +164,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             return {
                 parameters: {
                     data: {
-                        excludedSearchValues: this.excludedSearchValues,
+                        excludedSearchValues: Array.from(this.excludedSearchValues),
                         searchString: value,
                     },
                 },
