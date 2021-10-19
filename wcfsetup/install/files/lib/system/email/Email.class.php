@@ -566,40 +566,45 @@ class Email
     }
 
     /**
-     * Returns the email's headers as a string.
-     * Note: This method attempts to convert the header name to the "canonical"
-     *       case of the header (e.g. upper case at the start and after the hyphen).
+     * Returns the "canonical" case of the given header name (e.g. upper case at the start and after the hyphen).
+     *
+     * @since 5.4
+     */
+    public static function getCanonicalHeaderName(string $name): string
+    {
+        switch ($name) {
+            case 'message-id':
+                return 'Message-ID';
+            case 'list-id':
+                return 'List-ID';
+            case 'list-unsubscribe-post':
+                // This case is identical to the default case below.
+                // It is special cased, because the grammar of this header is defined
+                // to be pretty tight.
+                return 'List-Unsubscribe-Post';
+            case 'mime-version':
+                return 'MIME-Version';
+            default:
+                return \preg_replace_callback('/(?:^|-)[a-z]/', static function ($matches) {
+                    return \mb_strtoupper($matches[0]);
+                }, $name);
+        }
+    }
+
+    /**
+     * Returns the email's headers as a string. Returns the header names in their
+     * canonical form.
      *
      * @return  string
-     * @see \wcf\system\email\Email::getHeaders()
-     *
+     * @see Email::getHeaders()
+     * @see Email::getCanonicalHeaderName()
      */
     public function getHeaderString()
     {
         return \implode("\r\n", \array_map(static function ($item) {
             [$name, $value] = $item;
 
-            switch ($name) {
-                case 'message-id':
-                    $name = 'Message-ID';
-                    break;
-                case 'list-id':
-                    $name = 'List-ID';
-                    break;
-                case 'list-unsubscribe-post':
-                    // This case is identical to the default case below.
-                    // It is special cased, because the grammar of this header is defined
-                    // to be pretty tight.
-                    $name = 'List-Unsubscribe-Post';
-                    break;
-                case 'mime-version':
-                    $name = 'MIME-Version';
-                    break;
-                default:
-                    $name = \preg_replace_callback('/(?:^|-)[a-z]/', static function ($matches) {
-                        return \mb_strtoupper($matches[0]);
-                    }, $name);
-            }
+            $name = self::getCanonicalHeaderName($name);
 
             return $name . ': ' . $value;
         }, $this->getHeaders()));
