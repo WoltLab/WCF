@@ -43,7 +43,11 @@ class PhpEmailTransport implements IEmailTransport
         });
 
         $headers = \implode("\r\n", \array_map(static function ($item) {
-            return \implode(': ', $item);
+            [$name, $value] = $item;
+
+            $name = Email::getCanonicalHeaderName($name);
+
+            return $name . ': ' . $value;
         }, $headers));
 
         $encodedSubject = EmailGrammar::encodeQuotedPrintableHeader($email->getSubject());
