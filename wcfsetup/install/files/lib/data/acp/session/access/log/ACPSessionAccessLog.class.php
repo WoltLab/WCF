@@ -29,17 +29,11 @@ class ACPSessionAccessLog extends DatabaseObject
     protected static $databaseTableIndexName = 'sessionAccessLogID';
 
     /**
-     * Returns true if the URI of this log entry is protected.
-     *
-     * @return  bool
+     * @since 5.5 This method is long broken.
      */
     public function hasProtectedURI()
     {
-        if ($this->requestMethod != 'GET' || !\preg_match('/(\?|&)(page|form)=/', $this->requestURI)) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
