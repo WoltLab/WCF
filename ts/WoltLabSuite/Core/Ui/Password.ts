@@ -57,6 +57,15 @@ function initElement(input: HTMLInputElement): void {
     }
   });
 
+  // Hide the password when the form is being submitted to prevent
+  // it from being stored within the web browser's autocomplete list.
+  // see https://github.com/WoltLab/WCF/issues/4554
+  input.form?.addEventListener("submit", () => {
+    if (input.type !== "password") {
+      toggle(input, button, icon);
+    }
+  });
+
   if (activeElement === input) {
     input.focus();
   }

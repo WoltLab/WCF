@@ -26,6 +26,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         });
     }
     function initElement(input) {
+        var _a;
         _knownElements.add(input);
         const activeElement = document.activeElement;
         const inputAddon = document.createElement("div");
@@ -48,6 +49,14 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         button.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
+                toggle(input, button, icon);
+            }
+        });
+        // Hide the password when the form is being submitted to prevent
+        // it from being stored within the web browser's autocomplete list.
+        // see https://github.com/WoltLab/WCF/issues/4554
+        (_a = input.form) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", () => {
+            if (input.type !== "password") {
                 toggle(input, button, icon);
             }
         });
