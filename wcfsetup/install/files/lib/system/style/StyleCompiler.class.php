@@ -64,14 +64,6 @@ final class StyleCompiler extends SingletonFactory
         "Fira Mono", "Droid Sans Mono", "Courier New", monospace';
 
     /**
-     * @inheritDoc
-     */
-    protected function init()
-    {
-        require_once(WCF_DIR . 'lib/system/style/scssphp/scss.inc.php');
-    }
-
-    /**
      * Returns a fresh instance of the scssphp compiler.
      */
     protected function makeCompiler(): Compiler
