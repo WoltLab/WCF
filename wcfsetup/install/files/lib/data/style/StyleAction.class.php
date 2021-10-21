@@ -354,7 +354,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     }
 
                     // Create ICO file.
-                    require(WCF_DIR . 'lib/system/api/chrisjean/php-ico/class-php-ico.php');
                     (new \PHP_ICO($file->getLocation(), [
                         [16, 16],
                         [32, 32],
