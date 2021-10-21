@@ -12,19 +12,17 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class DefaultFalseBooleanDatabaseTableColumn extends TinyintDatabaseTableColumn
+final class DefaultFalseBooleanDatabaseTableColumn
 {
-    /**
-     * @inheritDoc
-     */
     public static function create($name)
     {
-        /** @var TinyintDatabaseTableColumn $column */
-        $column = parent::create($name);
-
-        return $column
+        return TinyintDatabaseTableColumn::create($name)
             ->length(1)
             ->notNull()
             ->defaultValue(0);
+    }
+
+    private function __construct()
+    {
     }
 }

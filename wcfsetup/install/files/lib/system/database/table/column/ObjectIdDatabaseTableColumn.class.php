@@ -14,14 +14,18 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class ObjectIdDatabaseTableColumn extends NotNullInt10DatabaseTableColumn
+final class ObjectIdDatabaseTableColumn
 {
     /**
      * @inheritDoc
      */
     public static function create($name)
     {
-        return parent::create($name)
+        return NotNullInt10DatabaseTableColumn::create($name)
             ->autoIncrement();
+    }
+
+    private function __construct()
+    {
     }
 }

@@ -11,15 +11,19 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class NotNullVarchar255DatabaseTableColumn extends VarcharDatabaseTableColumn
+final class NotNullVarchar255DatabaseTableColumn
 {
     /**
      * @inheritDoc
      */
     public static function create($name)
     {
-        return parent::create($name)
+        return VarcharDatabaseTableColumn::create($name)
             ->notNull()
             ->length(255);
+    }
+
+    private function __construct()
+    {
     }
 }
