@@ -88,18 +88,18 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public function delete()
     {
-        parent::delete();
+        $sql = "DELETE FROM wcf1_style
+                WHERE       styleID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$this->styleID]);
 
-        // delete style files
-        $files = @\glob(WCF_DIR . 'style/style-' . $this->styleID . '*.css');
-        if (\is_array($files)) {
-            foreach ($files as $file) {
-                @\unlink($file);
-            }
+        // delete CSS files
+        StyleHandler::getInstance()->resetStylesheet($this->getDecoratedObject());
+
+        // remove custom images
+        if ($this->imagePath && $this->imagePath != 'images/') {
+            $this->removeDirectory($this->imagePath);
         }
-
-        // delete preload data
-        @\unlink(WCF_DIR . 'style/style-' . $this->styleID . '-preload.json');
 
         // delete preview image
         if ($this->image) {
@@ -111,6 +111,47 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                 WHERE       languageItem = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['wcf.style.styleDescription' . $this->styleID]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function deleteAll(array $objectIDs = [])
+    {
+        $styleList = new StyleList();
+        $styleList->decoratorClassName = static::class;
+        $styleList->setObjectIDs($objectIDs);
+        $styleList->readObjects();
+
+        foreach ($styleList as $style) {
+            \assert($style instanceof self);
+            $style->delete();
+        }
+    }
+
+    /**
+     * Recursively removes a directory and all it's contents.
+     *
+     * @since 5.4
+     */
+    private function removeDirectory(string $pathComponent)
+    {
+        $dir = WCF_DIR . $pathComponent;
+        if (\is_dir($dir)) {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($dir),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($iterator as $path) {
+                if ($path->isDir()) {
+                    @\rmdir($path);
+                } else {
+                    @\unlink($path);
+                }
+            }
+
+            @\rmdir($dir);
+        }
     }
 
     /**
