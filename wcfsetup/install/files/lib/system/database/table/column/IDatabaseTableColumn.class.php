@@ -38,7 +38,7 @@ interface IDatabaseTableColumn
     /**
      * Returns the default value of the column.
      *
-     * @return  $this
+     * @return  mixed
      */
     public function getDefaultValue();
 
