@@ -127,35 +127,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     }
 
     /**
-     * @inheritDoc
-     */
-    public function delete()
-    {
-        $count = parent::delete();
-
-        foreach ($this->getObjects() as $style) {
-            // remove custom images
-            if ($style->imagePath && $style->imagePath != 'images/') {
-                $this->removeDirectory($style->imagePath);
-            }
-
-            // remove preview image
-            $previewImage = WCF_DIR . 'images/' . $style->image;
-            if (\file_exists($previewImage)) {
-                @\unlink($previewImage);
-            }
-
-            // remove stylesheet
-            StyleHandler::getInstance()->resetStylesheet($style->getDecoratedObject());
-        }
-
-        return $count;
-    }
-
-    /**
-     * Recursively removes a directory and all it's contents.
-     *
-     * @param string $pathComponent
+     * @deprecated 5.4 This method is unused.
      */
     protected function removeDirectory($pathComponent)
     {
