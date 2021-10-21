@@ -11,15 +11,19 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class NotNullInt10DatabaseTableColumn extends IntDatabaseTableColumn
+final class NotNullInt10DatabaseTableColumn
 {
     /**
      * @inheritDoc
      */
     public static function create($name)
     {
-        return parent::create($name)
+        return IntDatabaseTableColumn::create($name)
             ->notNull()
             ->length(10);
+    }
+
+    private function __construct()
+    {
     }
 }
