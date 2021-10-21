@@ -43,7 +43,7 @@
 						<td class="columnURL columnIpAddress{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} hot{/if}">{$sessionAccessLog->getIpAddress()}</td>
 						<td class="columnDate columnTime">{@$sessionAccessLog->time|time}</td>
 						<td class="columnText columnClassName">{$sessionAccessLog->className}</td>
-						<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}">{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}">{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}</a>{else}{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}{/if}</td>
+						<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}">{$sessionAccessLog->requestURI|truncate:50|tableWordwrap}</td>
 						<td class="columnText columnRequestMethod">{$sessionAccessLog->requestMethod}</td>
 						
 						{event name='columns'}
