@@ -32,6 +32,7 @@ use wcf\util\Url;
  * @property-read int $lastFetch
  * @property-read int $imageID
  * @property-read int $isStored
+ * @property-read string $status
  */
 class UnfurlUrl extends DatabaseObject
 {
