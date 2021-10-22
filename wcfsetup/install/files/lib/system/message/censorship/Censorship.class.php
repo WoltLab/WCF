@@ -77,6 +77,10 @@ class Censorship extends SingletonFactory
      */
     public function test($text)
     {
+        if (empty($this->censoredWords)) {
+            return false;
+        }
+
         // reset values
         $this->matches = $this->words = [];
 
