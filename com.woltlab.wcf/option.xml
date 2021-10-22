@@ -1131,6 +1131,7 @@ XING</selectoptions>
 				<categoryname>message.censorship</categoryname>
 				<optiontype>boolean</optiontype>
 				<enableoptions>censored_words</enableoptions>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="censored_words">
 				<categoryname>message.censorship</categoryname>
