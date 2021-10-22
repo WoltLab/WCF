@@ -3,6 +3,7 @@
 namespace wcf\system\message\censorship;
 
 use wcf\system\SingletonFactory;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -45,15 +46,13 @@ class Censorship extends SingletonFactory
     protected function init()
     {
         // get words which should be censored
-        $censoredWords = \explode("\n", StringUtil::unifyNewlines(\mb_strtolower(CENSORED_WORDS)));
+        $censoredWords = ArrayUtil::trim(\explode(
+            "\n",
+            StringUtil::unifyNewlines(\mb_strtolower(CENSORED_WORDS))
+        ));
 
         // format censored words
-        for ($i = 0, $length = \count($censoredWords); $i < $length; $i++) {
-            $censoredWord = StringUtil::trim($censoredWords[$i]);
-            if (empty($censoredWord)) {
-                continue;
-            }
-
+        foreach ($censoredWords as $censoredWord) {
             $displayedCensoredWord = \str_replace(['~', '*'], '', $censoredWord);
 
             // check if censored word contains at least one delimiter
