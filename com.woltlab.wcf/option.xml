@@ -531,6 +531,7 @@
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>offline_message,offline_message_allow_html</enableoptions>
 			</option>
 			<option name="offline_message">
@@ -541,6 +542,7 @@
 			<option name="offline_message_allow_html">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /offline -->
 			<!-- general.system.ipAddress -->
