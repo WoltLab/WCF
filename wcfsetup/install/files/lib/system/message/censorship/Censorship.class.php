@@ -105,7 +105,7 @@ class Censorship extends SingletonFactory
                     continue 2;
                 } // check for asterisk matches ("*badword*" == "FooBadwordBar")
                 elseif (\mb_strpos($censoredWord, '*') !== false) {
-                    $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord));
+                    $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord, '!'));
                     if (\preg_match('!^' . $censoredWord . '$!', $word)) {
                         // store censored word
                         if (isset($this->matches[$word])) {
