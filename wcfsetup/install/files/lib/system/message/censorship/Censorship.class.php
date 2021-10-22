@@ -35,12 +35,6 @@ class Censorship extends SingletonFactory
     protected $words = [];
 
     /**
-     * list of matches
-     * @var array
-     */
-    protected $matches = [];
-
-    /**
      * @inheritDoc
      */
     protected function init()
@@ -81,7 +75,7 @@ class Censorship extends SingletonFactory
         }
 
         // reset values
-        $this->matches = $this->words = [];
+        $matches = $this->words = [];
 
         // string to lower case
         $text = \mb_strtolower($text);
@@ -99,10 +93,10 @@ class Censorship extends SingletonFactory
                 // check for direct matches ("badword" == "badword")
                 if ($censoredWord == $word) {
                     // store censored word
-                    if (isset($this->matches[$word])) {
-                        $this->matches[$word]++;
+                    if (isset($matches[$word])) {
+                        $matches[$word]++;
                     } else {
-                        $this->matches[$word] = 1;
+                        $matches[$word] = 1;
                     }
 
                     continue 2;
@@ -111,10 +105,10 @@ class Censorship extends SingletonFactory
                     $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord, '!'));
                     if (\preg_match('!^' . $censoredWord . '$!', $word)) {
                         // store censored word
-                        if (isset($this->matches[$word])) {
-                            $this->matches[$word]++;
+                        if (isset($matches[$word])) {
+                            $matches[$word]++;
                         } else {
-                            $this->matches[$word] = 1;
+                            $matches[$word] = 1;
                         }
 
                         continue 2;
@@ -145,10 +139,10 @@ class Censorship extends SingletonFactory
                         }
 
                         // store censored word
-                        if (isset($this->matches[$displayedCensoredWord])) {
-                            $this->matches[$displayedCensoredWord]++;
+                        if (isset($matches[$displayedCensoredWord])) {
+                            $matches[$displayedCensoredWord]++;
                         } else {
-                            $this->matches[$displayedCensoredWord] = 1;
+                            $matches[$displayedCensoredWord] = 1;
                         }
 
                         continue 2;
@@ -158,8 +152,8 @@ class Censorship extends SingletonFactory
         }
 
         // at least one censored word was found
-        if (\count($this->matches) > 0) {
-            return $this->matches;
+        if (\count($matches) > 0) {
+            return $matches;
         } // text is clean
         else {
             return false;
