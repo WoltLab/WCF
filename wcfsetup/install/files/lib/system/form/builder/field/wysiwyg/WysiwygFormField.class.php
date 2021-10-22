@@ -435,13 +435,13 @@ class WysiwygFormField extends AbstractFormField implements
                     $this->validateMinimumLength($message);
                     $this->validateMaximumLength($message);
 
-                    if (empty($this->getValidationErrors()) && ENABLE_CENSORSHIP) {
-                        $result = Censorship::getInstance()->test($message);
-                        if ($result) {
+                    if (empty($this->getValidationErrors())) {
+                        $censoredWords = Censorship::getInstance()->test($message);
+                        if ($censoredWords) {
                             $this->addValidationError(new FormFieldValidationError(
                                 'censoredWords',
                                 'wcf.message.error.censoredWordsFound',
-                                ['censoredWords' => $result]
+                                ['censoredWords' => $censoredWords]
                             ));
                         }
                     }

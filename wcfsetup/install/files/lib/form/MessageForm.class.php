@@ -202,13 +202,10 @@ abstract class MessageForm extends AbstractCaptchaForm
             $this->subject = \mb_substr($this->subject, 0, 255);
         }
 
-        // search for censored words
-        if (ENABLE_CENSORSHIP) {
-            $result = Censorship::getInstance()->test($this->subject);
-            if ($result) {
-                WCF::getTPL()->assign('censoredWords', $result);
-                throw new UserInputException('subject', 'censoredWordsFound');
-            }
+        $censoredWords = Censorship::getInstance()->test($this->subject);
+        if ($censoredWords) {
+            WCF::getTPL()->assign('censoredWords', $censoredWords);
+            throw new UserInputException('subject', 'censoredWordsFound');
         }
     }
 
@@ -251,12 +248,10 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
 
         // search for censored words
-        if (ENABLE_CENSORSHIP) {
-            $result = Censorship::getInstance()->test($message);
-            if ($result) {
-                WCF::getTPL()->assign('censoredWords', $result);
-                throw new UserInputException('text', 'censoredWordsFound');
-            }
+        $censoredWords = Censorship::getInstance()->test($message);
+        if ($censoredWords) {
+            WCF::getTPL()->assign('censoredWords', $censoredWords);
+            throw new UserInputException('text', 'censoredWordsFound');
         }
     }
 
