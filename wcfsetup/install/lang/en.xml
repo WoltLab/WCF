@@ -1405,8 +1405,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 <li>“*” to match parts: “wolt*” matches “woltlab”</li>
 <li>“~” to find splitted parts: “wolt~” matches “wolt-lab”</li>
 </ul>]]></item>
-		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable censorship]]></item>
-		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for every message containing the words below.]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Content Share]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Display content share button]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edit History]]></item>
@@ -5577,5 +5575,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.systemCheck.mysql.searchEngine.description"/>
 	<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"/>
 	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
+	<item name="wcf.acp.option.enable_censorship"/>
+	<item name="wcf.acp.option.enable_censorship.description"/>
 </delete>
 </language>

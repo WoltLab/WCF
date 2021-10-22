@@ -1096,12 +1096,6 @@ XING</selectoptions>
 			</option>
 			<!-- /message.general.unfurl -->
 			<!-- message.censorship -->
-			<option name="enable_censorship">
-				<categoryname>message.censorship</categoryname>
-				<optiontype>boolean</optiontype>
-				<enableoptions>censored_words</enableoptions>
-				<defaultvalue>0</defaultvalue>
-			</option>
 			<option name="censored_words">
 				<categoryname>message.censorship</categoryname>
 				<optiontype>lineBreakSeparatedText</optiontype>
@@ -1683,5 +1677,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="module_system_recaptcha"/>
 		<option name="profile_mail_use_captcha"/>
 		<option name="url_legacy_mode"/>
+		<option name="enable_censorship"/>
 	</delete>
 </data>
