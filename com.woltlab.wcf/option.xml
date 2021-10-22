@@ -512,6 +512,7 @@
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>offline_message,offline_message_allow_html</enableoptions>
 			</option>
 			<option name="offline_message">
@@ -522,6 +523,7 @@
 			<option name="offline_message_allow_html">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /offline -->
 			<!-- general.system.ipAddress -->
@@ -935,10 +937,12 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 			<option name="module_paid_subscription">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="paid_subscription_enable_tos_confirmation">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>paid_subscription_tos_url</enableoptions>
 			</option>
 			<option name="paid_subscription_tos_url">
@@ -1130,10 +1134,12 @@ XING</selectoptions>
 			<option name="force_login">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="register_disabled">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 				<enableoptions>!register_enable_disclaimer,!register_activation_method</enableoptions>
 			</option>
 			<option name="register_enable_disclaimer">
