@@ -215,6 +215,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                 return;
             }
             const container = this.containers.get(this.activeMessageId);
+            if (container === undefined) {
+                // Since 5.4 we listen for global mouse events, because those are much
+                // more reliable on mobile devices. However, this can cause conflicts
+                // if two or more types of message types with quote support coexist on
+                // the same page.
+                return;
+            }
             const objectId = ~~container.dataset.objectId;
             const content = this.messageBodySelector
                 ? container.querySelector(this.messageBodySelector)
