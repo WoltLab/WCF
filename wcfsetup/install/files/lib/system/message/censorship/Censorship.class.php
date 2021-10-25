@@ -3,6 +3,7 @@
 namespace wcf\system\message\censorship;
 
 use wcf\system\SingletonFactory;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -34,26 +35,18 @@ class Censorship extends SingletonFactory
     protected $words = [];
 
     /**
-     * list of matches
-     * @var array
-     */
-    protected $matches = [];
-
-    /**
      * @inheritDoc
      */
     protected function init()
     {
         // get words which should be censored
-        $censoredWords = \explode("\n", StringUtil::unifyNewlines(\mb_strtolower(CENSORED_WORDS)));
+        $censoredWords = ArrayUtil::trim(\explode(
+            "\n",
+            StringUtil::unifyNewlines(\mb_strtolower(CENSORED_WORDS))
+        ));
 
         // format censored words
-        for ($i = 0, $length = \count($censoredWords); $i < $length; $i++) {
-            $censoredWord = StringUtil::trim($censoredWords[$i]);
-            if (empty($censoredWord)) {
-                continue;
-            }
-
+        foreach ($censoredWords as $censoredWord) {
             $displayedCensoredWord = \str_replace(['~', '*'], '', $censoredWord);
 
             // check if censored word contains at least one delimiter
@@ -77,8 +70,12 @@ class Censorship extends SingletonFactory
      */
     public function test($text)
     {
+        if (empty($this->censoredWords)) {
+            return false;
+        }
+
         // reset values
-        $this->matches = $this->words = [];
+        $matches = $this->words = [];
 
         // string to lower case
         $text = \mb_strtolower($text);
@@ -96,22 +93,22 @@ class Censorship extends SingletonFactory
                 // check for direct matches ("badword" == "badword")
                 if ($censoredWord == $word) {
                     // store censored word
-                    if (isset($this->matches[$word])) {
-                        $this->matches[$word]++;
+                    if (isset($matches[$word])) {
+                        $matches[$word]++;
                     } else {
-                        $this->matches[$word] = 1;
+                        $matches[$word] = 1;
                     }
 
                     continue 2;
                 } // check for asterisk matches ("*badword*" == "FooBadwordBar")
                 elseif (\mb_strpos($censoredWord, '*') !== false) {
-                    $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord));
+                    $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord, '!'));
                     if (\preg_match('!^' . $censoredWord . '$!', $word)) {
                         // store censored word
-                        if (isset($this->matches[$word])) {
-                            $this->matches[$word]++;
+                        if (isset($matches[$word])) {
+                            $matches[$word]++;
                         } else {
-                            $this->matches[$word] = 1;
+                            $matches[$word] = 1;
                         }
 
                         continue 2;
@@ -142,10 +139,10 @@ class Censorship extends SingletonFactory
                         }
 
                         // store censored word
-                        if (isset($this->matches[$displayedCensoredWord])) {
-                            $this->matches[$displayedCensoredWord]++;
+                        if (isset($matches[$displayedCensoredWord])) {
+                            $matches[$displayedCensoredWord]++;
                         } else {
-                            $this->matches[$displayedCensoredWord] = 1;
+                            $matches[$displayedCensoredWord] = 1;
                         }
 
                         continue 2;
@@ -155,8 +152,8 @@ class Censorship extends SingletonFactory
         }
 
         // at least one censored word was found
-        if (\count($this->matches) > 0) {
-            return $this->matches;
+        if (\count($matches) > 0) {
+            return $matches;
         } // text is clean
         else {
             return false;

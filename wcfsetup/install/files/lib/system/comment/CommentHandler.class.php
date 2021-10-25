@@ -735,18 +735,15 @@ class CommentHandler extends SingletonFactory
      */
     public static function enforceCensorship($text)
     {
-        // search for censored words
-        if (ENABLE_CENSORSHIP) {
-            $result = Censorship::getInstance()->test($text);
-            if ($result) {
-                throw new UserInputException(
-                    'text',
-                    WCF::getLanguage()->getDynamicVariable(
-                        'wcf.message.error.censoredWordsFound',
-                        ['censoredWords' => $result]
-                    )
-                );
-            }
+        $censoredWords = Censorship::getInstance()->test($text);
+        if ($censoredWords) {
+            throw new UserInputException(
+                'text',
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.message.error.censoredWordsFound',
+                    ['censoredWords' => $censoredWords]
+                )
+            );
         }
     }
 }

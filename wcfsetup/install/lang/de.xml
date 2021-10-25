@@ -1424,8 +1424,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.censored_words.description"><![CDATA[Sollte bei der Erstellung einer Nachricht eines dieser Wörter verwendet werden, so wird die Erstellung verweigert.<br>
 <em>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} „*“, um Wortteile zu finden: „wolt*“ findet auch „woltlab“</em><br>
 <em>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} „~“, um Worttrennungen zu finden: „wolt~“ findet auch „wolt-lab“</em>]]></item>
-		<item name="wcf.acp.option.enable_censorship"><![CDATA[Zensur aktivieren]]></item>
-		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Aktiviert die Zensur der unten angegebenen Wörter in allen von Benutzern geschriebenen Texten.]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Teilen]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Bearbeitungen]]></item>
@@ -5575,5 +5573,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.systemCheck.mysql.searchEngine.description"/>
 	<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"/>
 	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
+	<item name="wcf.acp.option.enable_censorship"/>
+	<item name="wcf.acp.option.enable_censorship.description"/>
 </delete>
 </language>

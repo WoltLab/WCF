@@ -28,13 +28,10 @@ class AboutMeOptionType extends MessageOptionType
             throw new UserInputException($option->optionName, 'tooLong');
         }
 
-        // search for censored words
-        if (ENABLE_CENSORSHIP) {
-            $result = Censorship::getInstance()->test($newValue);
-            if ($result) {
-                WCF::getTPL()->assign('censoredWords', $result);
-                throw new UserInputException($option->optionName, 'censoredWordsFound');
-            }
+        $censoredWords = Censorship::getInstance()->test($newValue);
+        if ($censoredWords) {
+            WCF::getTPL()->assign('censoredWords', $censoredWords);
+            throw new UserInputException($option->optionName, 'censoredWordsFound');
         }
     }
 }

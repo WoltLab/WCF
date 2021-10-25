@@ -488,6 +488,10 @@ class WCF
 
         // The captcha option related to the removed MailForm was removed in 5.5.
         \define('PROFILE_MAIL_USE_CAPTCHA', 1);
+
+        // The censorship module is fully configured by the censored_words option since 5.5.
+        // If this option is empty, no censorship will be performed.
+        \define('ENABLE_CENSORSHIP', 1);
     }
 
     /**
