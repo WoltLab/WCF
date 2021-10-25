@@ -18,9 +18,9 @@
 			</ol>
 		</dd>
 	</dl>
-	
+
 	{if $__supportsInvertedPermissions}
-        	{if !$invertPermissionsPrefixed|isset}{assign var='invertPermissionsPrefixed' value=$__aclSimplePrefix}{/if}
+		{if !$invertPermissionsPrefixed|isset}{assign var='invertPermissionsPrefixed' value=$__aclSimplePrefix}{/if}
 		<dl id="{@$__aclSimplePrefix}invertPermissionsDl" {if $aclValues[allowAll]} style="display: none;"{/if}>
 			<dt><label for="{@$__aclSimplePrefix}invertPermissions">{lang}wcf.acl.access.invertPermissions{/lang}</label></dt>
 			<dd>
@@ -48,7 +48,7 @@
 			<input type="text" id="{@$__aclSimplePrefix}aclSearchInput" class="long" placeholder="{lang}wcf.acl.search.description{/lang}">
 		</dd>
 	</dl>
-	
+
 	<dl id="{@$__aclSimplePrefix}aclListContainer"{if $aclValues[allowAll]} style="display: none;"{/if}>
 		<dt id="{@$__aclSimplePrefix}aclListContainerDt">{lang}wcf.acl.access.granted{/lang}</dt>
 		<dd>
@@ -82,7 +82,7 @@
 			'wcf.acl.access.granted': '{jslang}wcf.acl.access.granted{/jslang}',
 			'wcf.acl.access.denied': '{jslang}wcf.acl.access.denied{/jslang}',
 		});
-		
+
 		new UiAclSimple('{@$__aclSimplePrefix}', '{@$__aclInputName}');
 	});
 </script>

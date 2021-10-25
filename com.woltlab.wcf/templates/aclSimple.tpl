@@ -1,5 +1,6 @@
 {if !$__aclSimplePrefix|isset}{assign var='__aclSimplePrefix' value=''}{/if}
 {if !$__aclInputName|isset}{assign var='__aclInputName' value='aclValues'}{/if}
+{if !$__supportsInvertedPermissions|isset}{assign var='__supportsInvertedPermissions' value=false}{/if}
 
 <div class="section">
 	<dl>
@@ -17,19 +18,39 @@
 			</ol>
 		</dd>
 	</dl>
+
+	{if $__supportsInvertedPermissions}
+		{if !$invertPermissionsPrefixed|isset}{assign var='invertPermissionsPrefixed' value=$__aclSimplePrefix}{/if}
+		<dl id="{@$__aclSimplePrefix}invertPermissionsDl" {if $aclValues[allowAll]} style="display: none;"{/if}>
+			<dt><label for="{@$__aclSimplePrefix}invertPermissions">{lang}wcf.acl.access.invertPermissions{/lang}</label></dt>
+			<dd>
+				<ol class="flexibleButtonGroup">
+					<li>
+						<input type="radio" id="{@$__aclSimplePrefix}invertPermissions" name="{@$__aclSimplePrefix}invertPermissions" value="1"{if $invertPermissions} checked{/if}>
+						<label for="{@$__aclSimplePrefix}invertPermissions" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
+					</li>
+					<li>
+						<input type="radio" id="{@$__aclSimplePrefix}invertPermissions_no" name="{@$__aclSimplePrefix}invertPermissions" value="0"{if !$invertPermissions} checked{/if}>
+						<label for="{@$__aclSimplePrefix}invertPermissions_no" class="red"><span class="icon icon16 fa-times"></span> {lang}wcf.acp.option.type.boolean.no{/lang}</label>
+					</li>
+				</ol>
+				<small>{lang}wcf.acl.access.invertPermissions.description{/lang}</small>
+			</dd>
+		</dl>
+	{/if}
 </div>
 
 <section class="section" id="{@$__aclSimplePrefix}aclInputContainer"{if $aclValues[allowAll]} style="display: none;"{/if}>
 	<h2 class="sectionTitle">{lang}wcf.acl.access{/lang}</h2>
 	<dl>
-		<dt><label for="{@$__aclSimplePrefix}aclSearchInput">{lang}wcf.acl.access.grant{/lang}</label></dt>
+		<dt><label for="{@$__aclSimplePrefix}aclSearchInput" id="{@$__aclSimplePrefix}aclSearchInputLabel">{lang}wcf.acl.access.grant{/lang}</label></dt>
 		<dd>
 			<input type="text" id="{@$__aclSimplePrefix}aclSearchInput" class="long" placeholder="{lang}wcf.acl.search.description{/lang}">
 		</dd>
 	</dl>
 
 	<dl id="{@$__aclSimplePrefix}aclListContainer"{if $aclValues[allowAll]} style="display: none;"{/if}>
-		<dt>{lang}wcf.acl.access.granted{/lang}</dt>
+		<dt id="{@$__aclSimplePrefix}aclListContainerDt">{lang}wcf.acl.access.granted{/lang}</dt>
 		<dd>
 			<ul id="{@$__aclSimplePrefix}aclAccessList" class="aclList containerList">
 				{foreach from=$aclValues[group] item=aclGroup}
@@ -54,7 +75,14 @@
 </section>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Acl/Simple'], function(UiAclSimple) {
+	require(['WoltLabSuite/Core/Ui/Acl/Simple', 'Language'], function(UiAclSimple, Language) {
+		Language.addObject({
+			'wcf.acl.access.grant': '{jslang}wcf.acl.access.grant{/jslang}',
+			'wcf.acl.access.deny': '{jslang}wcf.acl.access.deny{/jslang}',
+			'wcf.acl.access.granted': '{jslang}wcf.acl.access.granted{/jslang}',
+			'wcf.acl.access.denied': '{jslang}wcf.acl.access.denied{/jslang}',
+		});
+
 		new UiAclSimple('{@$__aclSimplePrefix}', '{@$__aclInputName}');
 	});
 </script>
