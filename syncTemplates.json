@@ -60,6 +60,7 @@
     "__wysiwygSmileyFormContainer",
     "__wysiwygSmileyFormNode",
     "__wysiwygTabMenuFormContainer",
+    "aclSimple",
     "aclPermissionJavaScript",
     "articleAdd",
     "articleAddDialog",
