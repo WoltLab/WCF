@@ -188,14 +188,25 @@
 						</td>
 
 						{foreach from=$columnHeads key=column item=columnLanguageVariable}
-							{if $column === 'registrationDate'}
-								<td class="columnDate columnRegistrationIpAddress">
-									{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $user->registrationIpAddress}
-										<span class="jsTooltip" title="{lang}wcf.user.registrationIpAddress{/lang}">{$user->getRegistrationIpAddress()}</span>
+							{if $column === 'lastActivityTime'}
+								<td class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}">
+									{if $user->isOnline()}
+										{lang}wcf.user.online{/lang}
+										<span class="userOnlineIndicator" aria-hidden="true"></span>
+									{else}
+										{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}
 									{/if}
 								</td>
-							{/if}
-							<td class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
+							{else}
+								{if $column === 'registrationDate'}
+									<td class="columnDate columnRegistrationIpAddress">
+										{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $user->registrationIpAddress}
+											<span class="jsTooltip" title="{lang}wcf.user.registrationIpAddress{/lang}">{$user->getRegistrationIpAddress()}</span>
+										{/if}
+									</td>
+								{/if}
+								<td class="column{$column|ucfirst}{if $columnStyling[$column]|isset} {$columnStyling[$column]}{/if}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
+							{/if}	
 						{/foreach}
 
 						{event name='columns'}
