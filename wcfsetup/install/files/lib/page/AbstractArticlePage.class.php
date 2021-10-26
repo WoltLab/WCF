@@ -120,10 +120,12 @@ abstract class AbstractArticlePage extends AbstractPage
         parent::readData();
 
         // update view count
-        $articleEditor = new ArticleEditor($this->article->getDecoratedObject());
-        $articleEditor->updateCounters([
-            'views' => 1,
-        ]);
+        if ($this->article->isPublished()) {
+            $articleEditor = new ArticleEditor($this->article->getDecoratedObject());
+            $articleEditor->updateCounters([
+                'views' => 1,
+            ]);
+        }
 
         // update article visit
         if (ARTICLE_ENABLE_VISIT_TRACKING && $this->article->isNew()) {
