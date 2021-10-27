@@ -49,13 +49,13 @@ class PaypalCallbackAction extends AbstractAction
                 $response = $client->send($request);
                 $content = (string)$response->getBody();
             } catch (ClientExceptionInterface $e) {
-                throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
+                throw new \Exception('PayPal IPN validation request failed: ' . $e->getMessage(), 0, $e);
             }
 
             if (\strpos($content, "VERIFIED") === false) {
-                throw new SystemException('request not validated');
+                throw new \Exception("PayPal IPN validation did not return 'VERIFIED'.");
             }
-        } catch (SystemException $e) {
+        } catch (\Exception $e) {
             \wcf\functions\exception\logThrowable($e);
             return new EmptyResponse(500);
         }
@@ -127,7 +127,7 @@ class PaypalCallbackAction extends AbstractAction
             }
 
             $this->executed();
-        } catch (SystemException $e) {
+        } catch (\Exception $e) {
             \wcf\functions\exception\logThrowable($e);
         }
 
