@@ -2,19 +2,22 @@
 
 namespace wcf\action;
 
+use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\exception\SystemException;
+use wcf\system\io\HttpFactory;
 use wcf\system\payment\type\IPaymentType;
-use wcf\util\HTTPRequest;
 use wcf\util\StringUtil;
 
 /**
  * Handles Paypal callbacks.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
+ * @see https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNImplementation/
  */
 class PaypalCallbackAction extends AbstractAction
 {
@@ -38,20 +41,31 @@ class PaypalCallbackAction extends AbstractAction
                     $url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
                 }
 
-                $request = new HTTPRequest($url, [], \array_merge(['cmd' => '_notify-validate'], $_POST));
-                $request->execute();
-                $reply = $request->getReply();
-                $content = $reply['body'];
-            } catch (SystemException $e) {
-                @\header('HTTP/1.1 500 Internal Server Error');
-                throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
+                $request = new Request('POST', $url, [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ], \http_build_query(
+                    \array_merge(['cmd' => '_notify-validate'], $_POST),
+                    '',
+                    '&',
+                    \PHP_QUERY_RFC1738
+                ));
+                $client = HttpFactory::getDefaultClient();
+                $response = $client->send($request);
+                $content = (string)$response->getBody();
+            } catch (ClientExceptionInterface $e) {
+                throw new \Exception('PayPal IPN validation request failed: ' . $e->getMessage(), 0, $e);
             }
 
             if (\strpos($content, "VERIFIED") === false) {
-                @\header('HTTP/1.1 500 Internal Server Error');
-                throw new SystemException('request not validated');
+                throw new \Exception("PayPal IPN validation did not return 'VERIFIED'.");
             }
+        } catch (\Exception $e) {
+            \wcf\functions\exception\logThrowable($e);
 
+            return new EmptyResponse(500);
+        }
+
+        try {
             // fix encoding
             if (!empty($_POST['charset']) && \strtoupper($_POST['charset']) != 'UTF-8') {
                 foreach ($_POST as &$value) {
@@ -67,21 +81,21 @@ class PaypalCallbackAction extends AbstractAction
                     $exceptionMessage .= " and business ('" . $_POST['business'] . "')";
                 }
                 $exceptionMessage .= ", expected '" . PAYPAL_EMAIL_ADDRESS . "'.";
-                throw new SystemException($exceptionMessage);
+                throw new \Exception($exceptionMessage);
             }
 
             // get token
             if (!isset($_POST['custom'])) {
-                throw new SystemException('invalid custom item');
+                throw new \Exception('invalid custom item');
             }
             $tokenParts = \explode(':', $_POST['custom'], 2);
             if (\count($tokenParts) != 2) {
-                throw new SystemException('invalid custom item');
+                throw new \Exception('invalid custom item');
             }
             // get payment type object type
             $objectType = ObjectTypeCache::getInstance()->getObjectType(\intval($tokenParts[0]));
             if ($objectType === null || !($objectType->getProcessor() instanceof IPaymentType)) {
-                throw new SystemException('invalid payment type id');
+                throw new \Exception('invalid payment type id');
             }
             $processor = $objectType->getProcessor();
 
@@ -118,11 +132,12 @@ class PaypalCallbackAction extends AbstractAction
             }
 
             $this->executed();
-        } catch (SystemException $e) {
-            echo $e->getMessage();
-            $e->getExceptionID(); // log error
-
-            exit;
+        } catch (\Exception $e) {
+            \wcf\functions\exception\logThrowable($e);
         }
+
+        // Request was either successful or failed due to an error that cannot be fixed by
+        // resending the notification. Status code 200 marks the notification as completed for PayPal.
+        return new EmptyResponse(200);
     }
 }
