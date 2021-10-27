@@ -64,7 +64,6 @@ class ZipWriter
         $record = "\x50\x4b\x01\x02";
         $record .= "\x00\x00\x0a\x00";
         $record .= "\x00\x00\x00\x00";
-        //$record .= "\x00\x00\x00\x00";
         $record .= static::getDosDatetime($date);
         $record .= \pack("V", 0);
         $record .= \pack("V", 0);
@@ -74,8 +73,6 @@ class ZipWriter
         $record .= \pack("v", 0);
         $record .= \pack("v", 0);
         $record .= \pack("v", 0);
-        //$ext = "\x00\x00\x10\x00";
-        //$ext = "\xff\xff\xff\xff";
         $record .= \pack("V", 16);
         $record .= \pack("V", $this->lastOffset);
         $record .= $name;
