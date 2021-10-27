@@ -57,6 +57,7 @@ class PaypalCallbackAction extends AbstractAction
             }
         } catch (\Exception $e) {
             \wcf\functions\exception\logThrowable($e);
+
             return new EmptyResponse(500);
         }
 
