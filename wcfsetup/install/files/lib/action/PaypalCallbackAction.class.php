@@ -43,7 +43,12 @@ class PaypalCallbackAction extends AbstractAction
 
                 $request = new Request('POST', $url, [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                ], \http_build_query(\array_merge(['cmd' => '_notify-validate'], $_POST), '', '&', \PHP_QUERY_RFC1738));
+                ], \http_build_query(
+                    \array_merge(['cmd' => '_notify-validate'], $_POST),
+                    '',
+                    '&',
+                    \PHP_QUERY_RFC1738
+                ));
                 $client = HttpFactory::getDefaultClient();
                 $response = $client->send($request);
                 $content = (string)$response->getBody();
