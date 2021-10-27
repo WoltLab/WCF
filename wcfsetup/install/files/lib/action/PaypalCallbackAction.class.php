@@ -6,7 +6,6 @@ use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\exception\SystemException;
 use wcf\system\io\HttpFactory;
 use wcf\system\payment\type\IPaymentType;
 use wcf\util\StringUtil;
@@ -77,21 +76,21 @@ class PaypalCallbackAction extends AbstractAction
                     $exceptionMessage .= " and business ('" . $_POST['business'] . "')";
                 }
                 $exceptionMessage .= ", expected '" . PAYPAL_EMAIL_ADDRESS . "'.";
-                throw new SystemException($exceptionMessage);
+                throw new \Exception($exceptionMessage);
             }
 
             // get token
             if (!isset($_POST['custom'])) {
-                throw new SystemException('invalid custom item');
+                throw new \Exception('invalid custom item');
             }
             $tokenParts = \explode(':', $_POST['custom'], 2);
             if (\count($tokenParts) != 2) {
-                throw new SystemException('invalid custom item');
+                throw new \Exception('invalid custom item');
             }
             // get payment type object type
             $objectType = ObjectTypeCache::getInstance()->getObjectType(\intval($tokenParts[0]));
             if ($objectType === null || !($objectType->getProcessor() instanceof IPaymentType)) {
-                throw new SystemException('invalid payment type id');
+                throw new \Exception('invalid payment type id');
             }
             $processor = $objectType->getProcessor();
 
