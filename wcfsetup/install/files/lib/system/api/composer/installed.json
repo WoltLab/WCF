@@ -1381,17 +1381,17 @@
         },
         {
             "name": "sabberworm/php-css-parser",
-            "version": "8.3.1",
-            "version_normalized": "8.3.1.0",
+            "version": "dev-woltlab-8.3.1",
+            "version_normalized": "dev-woltlab-8.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-                "reference": "d217848e1396ef962fb1997cf3e2421acba7f796"
+                "url": "https://github.com/WoltLab/PHP-CSS-Parser",
+                "reference": "2c397c3b29bfaf39e044e044bfcd759f99e67118"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/d217848e1396ef962fb1997cf3e2421acba7f796",
-                "reference": "d217848e1396ef962fb1997cf3e2421acba7f796",
+                "url": "https://api.github.com/repos/WoltLab/PHP-CSS-Parser/zipball/2c397c3b29bfaf39e044e044bfcd759f99e67118",
+                "reference": "2c397c3b29bfaf39e044e044bfcd759f99e67118",
                 "shasum": ""
             },
             "require": {
@@ -1401,7 +1401,7 @@
                 "codacy/coverage": "^1.4",
                 "phpunit/phpunit": "~4.8"
             },
-            "time": "2020-06-01T09:10:00+00:00",
+            "time": "2021-10-28T13:16:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1409,7 +1409,6 @@
                     "Sabberworm\\CSS": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1425,10 +1424,6 @@
                 "parser",
                 "stylesheet"
             ],
-            "support": {
-                "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
-                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.3.1"
-            },
             "install-path": "../sabberworm/php-css-parser"
         },
         {
