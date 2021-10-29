@@ -150,7 +150,7 @@
 			
 			User.init(
 				{@$__wcf->user->userID},
-				'{@$__wcf->user->username|encodeJS}',
+				{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if},
 				{if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if}
 			);
 			
@@ -180,7 +180,10 @@
 	<script>
 		define.amd = __require_define_amd;
 		$.holdReady(true);
-		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
+		WCF.User.init(
+			{@$__wcf->user->userID},
+			{if $__wcf->user->userID}'{@$__wcf->user->username|encodeJS}'{else}''{/if}
+		);
 	</script>
 	{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
 	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
