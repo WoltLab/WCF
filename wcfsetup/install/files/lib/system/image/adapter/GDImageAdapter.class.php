@@ -99,7 +99,11 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
 
         switch ($this->type) {
             case \IMAGETYPE_GIF:
-                $this->image = \imagecreatefromgif($file);
+                // suppress warnings and properly handle errors
+                $this->image = @\imagecreatefromgif($file);
+                if ($this->image === false) {
+                    throw new SystemException("Could not read gif image '" . $file . "'.");
+                }
                 break;
 
             case \IMAGETYPE_JPEG:
