@@ -265,7 +265,11 @@ class SystemCheckPage extends AbstractPage
 
         $this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() == $expectedForeignKeyCount;
 
-        if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys']) {
+        if (
+            $this->results['mysql']['result']
+            && $this->results['mysql']['innodb']
+            && $this->results['mysql']['foreignKeys']
+        ) {
             $this->results['status']['mysql'] = true;
         }
     }
@@ -283,7 +287,7 @@ class SystemCheckPage extends AbstractPage
             $this->results['php']['sha256'] = \in_array('sha256', \hash_algos());
         }
 
-        $this->results['status']['php'] = empty($this->results['php']['extension']) && $this->results['php']['sha256'];
+        $this->results['status']['php'] = $this->results['status']['php'] && empty($this->results['php']['extension']) && $this->results['php']['sha256'];
     }
 
     protected function validatePhpMemoryLimit()

@@ -118,7 +118,7 @@
 					{if !$results[php][gd][png]}
 						<li>{@$statusInsufficient} <kbd>png</kbd></li>
 					{/if}
-				        {if !$results[php][gd][webp]}
+					{if !$results[php][gd][webp]}
 						<li>{@$statusInsufficient} <kbd>webp</kbd></li>
 					{/if}
 				</ul>
