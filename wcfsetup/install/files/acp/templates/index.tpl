@@ -15,6 +15,10 @@
 	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
 {/foreach}
 
+{if $systemIdMismatch}
+	<p class="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</p>
+{/if}
+
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>
 {/if}

@@ -8,8 +8,10 @@ use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\Environment;
 use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -169,6 +171,12 @@ class IndexPage extends AbstractPage
             $taintedApplications[$application->getPackage()->packageID] = $application;
         }
 
+        $storedSystemId = RegistryHandler::getInstance()->get(
+            'com.woltlab.wcf',
+            Environment::SYSTEM_ID_REGISTRY_KEY
+        );
+        $systemIdMismatch = $storedSystemId !== Environment::getSystemId();
+
         $missingLanguageItemsMTime = 0;
         if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
             $logList = new DevtoolsMissingLanguageItemList();
@@ -191,6 +199,7 @@ class IndexPage extends AbstractPage
             'evaluationExpired' => $evaluationExpired,
             'evaluationPending' => $evaluationPending,
             'taintedApplications' => $taintedApplications,
+            'systemIdMismatch' => $systemIdMismatch,
             'missingLanguageItemsMTime' => $missingLanguageItemsMTime,
         ]);
     }
