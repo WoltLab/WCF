@@ -23,24 +23,24 @@ final class Environment
      */
     public static function getSystemId(): string
     {
-        $ctx = \hash_init('sha256');
+        $fields = [];
 
+        // 1) The path to this class as a proxy for the document root.
+        $fields[] = \sprintf("__FILE__ %s", __FILE__);
+
+        // 2) The PHP minor version.
+        $fields[] = \sprintf('PHP %s', self::getMinorVersion(\PHP_VERSION));
+
+        // 3) The MySQL fork and minor version.
         $sqlVersion = WCF::getDB()->getVersion();
+        $fields[] = \sprintf(
+            '%s %s',
+            \stripos($sqlVersion, 'MariaDB') !== false ? 'MariaDB' : 'MySQL',
+            self::getMinorVersion($sqlVersion)
+        );
 
-        foreach (
-            [
-                // 1) The path to this class as a proxy for the document root.
-                \sprintf("__FILE__ %s", __FILE__),
-                // 2) The PHP minor version.
-                \sprintf('PHP %s', self::getMinorVersion(\PHP_VERSION)),
-                // 3) The MySQL fork and minor version.
-                \sprintf(
-                    '%s %s',
-                    \stripos($sqlVersion, 'MariaDB') !== false ? 'MariaDB' : 'MySQL',
-                    self::getMinorVersion($sqlVersion)
-                ),
-            ] as $field
-        ) {
+        $ctx = \hash_init('sha256');
+        foreach ($fields as $field) {
             \hash_update($ctx, $field);
         }
 
