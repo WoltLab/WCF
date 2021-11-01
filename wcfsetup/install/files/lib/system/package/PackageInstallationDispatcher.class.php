@@ -21,6 +21,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\DevtoolsSetup;
+use wcf\system\Environment;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
@@ -31,6 +32,7 @@ use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\setup\IFileHandler;
@@ -273,6 +275,12 @@ class PackageInstallationDispatcher
 
                     // update options.inc.php
                     OptionEditor::resetCache();
+
+                    RegistryHandler::getInstance()->set(
+                        'com.woltlab.wcf',
+                        Environment::SYSTEM_ID_REGISTRY_KEY,
+                        Environment::getSystemId()
+                    );
 
                     WCF::getSession()->register('__wcfSetup_completed', true);
                 }

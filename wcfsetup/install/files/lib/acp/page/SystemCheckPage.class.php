@@ -5,7 +5,9 @@ namespace wcf\acp\page;
 use wcf\data\application\Application;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\Environment;
 use wcf\system\exception\SystemException;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -182,6 +184,18 @@ class SystemCheckPage extends AbstractPage
         $this->validatePhpVersion();
         $this->validatePhpGdSupport();
         $this->validateWritableDirectories();
+
+        if (
+            $this->results['status']['mysql']
+            && $this->results['status']['php']
+            && $this->results['status']['directories']
+        ) {
+            RegistryHandler::getInstance()->set(
+                'com.woltlab.wcf',
+                Environment::SYSTEM_ID_REGISTRY_KEY,
+                Environment::getSystemId()
+            );
+        }
     }
 
     /**
