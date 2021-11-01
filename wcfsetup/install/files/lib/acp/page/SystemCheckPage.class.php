@@ -295,7 +295,12 @@ class SystemCheckPage extends AbstractPage
 
         $this->results['mysql']['searchEngine']['result'] = empty($this->results['mysql']['searchEngine']['incorrectTables']);
 
-        if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys'] && $this->results['mysql']['searchEngine']['result']) {
+        if (
+            $this->results['mysql']['result']
+            && $this->results['mysql']['innodb']
+            && $this->results['mysql']['foreignKeys']
+            && $this->results['mysql']['searchEngine']['result']
+        ) {
             $this->results['status']['mysql'] = true;
         }
     }
