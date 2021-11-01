@@ -12,6 +12,8 @@ namespace wcf\system;
  */
 final class Environment
 {
+    public const SYSTEM_ID_REGISTRY_KEY = self::class . "::getSystemId()";
+
     /**
      * Returns a string representing key system information where
      * changes might affect the software's behavior.
