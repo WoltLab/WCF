@@ -1614,6 +1614,16 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[This package does not contain any data on API compatibility, the installation is prevented while the developer tools are enabled.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
 		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade available!</strong> Visit <a href="https://www.woltlab.com/">woltlab.com</a> to learn about the new WoltLab Suite, packed with awesome innovations and improvements for your community.]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expiring"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support is expiring!</p>
+<p><br></p>
+<p>This version is severely outdated and will only receive security updates until <strong>July 1, 2022</strong> before this version is permanently discontinued. It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/en/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expired"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support has expired!</p>
+<p><br></p>
+<p>This version is severely outdated and will no longer receive security updates since <strong>July 1, 2022</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/en/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">

@@ -1618,6 +1618,16 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
 		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade verfügbar!</strong> {if LANGUAGE_USE_INFORMAL_VARIANT}Informiere dich{else}Informieren Sie sich{/if} unverbindlich auf <a href="https://www.woltlab.com/de/">woltlab.com</a> über die neue WoltLab Suite, mit innovativen Neuerungen und Verbesserungen für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Community.]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expiring"><![CDATA[<p style="font-size: 18px; font-weight: 600">Die Sicherheitsunterstützung läuft aus!</p>
+<p><br></p>
+<p>Diese Version ist stark veraltet und erhält nur noch bis zum <strong>1. Juli 2022</strong> Sicherheitsupdates, bevor diese Version endgültig eingestellt wird. Es wird dringend empfohlen, auf eine neuere Version umzusteigen, um weiterhin von Sicherheitsupdates und der Unterstützung neuer PHP-Versionen zu profitieren.</p>
+<p><br></p>
+<p>Kennen Sie schon unser Managed Hosting-Angebot? Wir übernehmen den technischen Betrieb Ihres Forums für Sie, halten die Software aktuell und die Lizenzkosten sind bereits inklusive. Erfahren Sie mehr unter <a href="https://www.woltlab.com/de/">woltlab.com</a> und sprechen Sie uns bei Interesse gerne an!</p>]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expired"><![CDATA[<p style="font-size: 18px; font-weight: 600">Die Sicherheitsunterstützung wurde eingestellt!</p>
+<p><br></p>
+<p>Diese Version ist stark veraltet und erhält seit dem <strong>1. Juli 2022</strong> keine Sicherheitsupdates mehr! Es wird dringend empfohlen, auf eine neuere Version umzusteigen, um weiterhin von Sicherheitsupdates und der Unterstützung neuer PHP-Versionen zu profitieren.</p>
+<p><br></p>
+<p>Kennen Sie schon unser Managed Hosting-Angebot? Wir übernehmen den technischen Betrieb Ihres Forums für Sie, halten die Software aktuell und die Lizenzkosten sind bereits inklusive. Erfahren Sie mehr unter <a href="https://www.woltlab.com/de/">woltlab.com</a> und sprechen Sie uns bei Interesse gerne an!</p>]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
