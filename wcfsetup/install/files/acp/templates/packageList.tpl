@@ -61,6 +61,15 @@
 {if !(70000 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)}
 	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
 {/if}
+
+{if TIME_NOW < 1672574400}
+	<div class="warning">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{elseif TIME_NOW < 1688212800}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{else}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expired{/lang}</div>
+{/if}
+
 {if $recentlyDisabledCustomValues > 0}
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}
