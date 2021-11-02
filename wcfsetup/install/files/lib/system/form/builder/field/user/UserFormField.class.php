@@ -50,17 +50,15 @@ class UserFormField extends AbstractFormField implements
     protected $templateName = '__userFormField';
 
     /**
-     * user profiles of the entered users (and `null` for non-existing users; only relevant for
-     * invalid inputs)
-     * @var (UserProfile|null)[]
+     * user profiles of the entered users
+     * @var UserProfile[]
      */
     protected $users = [];
 
     /**
-     * Returns the user profiles of the entered users (and `null` for non-existing users; only
-     * relevant for invalid inputs).
+     * Returns the user profiles of the entered users.
      *
-     * @return  (UserProfile|null)[]
+     * @return  UserProfile[]
      */
     public function getUsers()
     {
@@ -156,14 +154,21 @@ class UserFormField extends AbstractFormField implements
             }
 
             // Validate usernames.
-            $this->users = UserProfile::getUserProfilesByUsername($usernames);
+            $users = UserProfile::getUserProfilesByUsername($usernames);
+            $this->users = \array_values(\array_filter(
+                $users,
+                function (?UserProfile $user) {
+                    return $user !== null;
+                }
+            ));
 
             $nonExistentUsernames = [];
             foreach ($usernames as $username) {
-                if (!isset($this->users[$username])) {
+                if (!isset($users[$username])) {
                     $nonExistentUsernames[] = $username;
                 }
             }
+
 
             if (!empty($nonExistentUsernames)) {
                 if ($this->allowsMultiple()) {
@@ -226,12 +231,12 @@ class UserFormField extends AbstractFormField implements
             $value = [$value];
         }
 
-        $this->users = \array_filter(
+        $this->users = \array_values(\array_filter(
             UserProfileRuntimeCache::getInstance()->getObjects($value),
             function (?UserProfile $user) {
                 return $user !== null;
             }
-        );
+        ));
         $usernames = \array_column($this->users, 'username');
 
         if ($this->allowsMultiple()) {
