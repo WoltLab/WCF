@@ -157,7 +157,7 @@ class UserFormField extends AbstractFormField implements
             $users = UserProfile::getUserProfilesByUsername($usernames);
             $this->users = \array_values(\array_filter(
                 $users,
-                function (?UserProfile $user) {
+                static function (?UserProfile $user) {
                     return $user !== null;
                 }
             ));
@@ -168,7 +168,6 @@ class UserFormField extends AbstractFormField implements
                     $nonExistentUsernames[] = $username;
                 }
             }
-
 
             if (!empty($nonExistentUsernames)) {
                 if ($this->allowsMultiple()) {
