@@ -52,7 +52,7 @@ class UserFormField extends AbstractFormField implements
     /**
      * user profiles of the entered users (and `null` for non-existing users; only relevant for
      * invalid inputs)
-     * @var UserProfile[]|null[]
+     * @var (UserProfile|null)[]
      */
     protected $users = [];
 
@@ -60,7 +60,7 @@ class UserFormField extends AbstractFormField implements
      * Returns the user profiles of the entered users (and `null` for non-existing users; only
      * relevant for invalid inputs).
      *
-     * @return  UserProfile[]|null[]
+     * @return  (UserProfile|null)[]
      */
     public function getUsers()
     {
