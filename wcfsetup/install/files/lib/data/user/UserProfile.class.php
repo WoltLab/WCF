@@ -689,6 +689,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         $userProfiles = UserProfileRuntimeCache::getInstance()->getCachedObjects();
         foreach ($usernames as $index => $username) {
             foreach ($userProfiles as $user) {
+                if ($user === null) {
+                    continue;
+                }
+
                 if (\mb_strtolower($user->username) === $username) {
                     $users[$username] = $user;
                     unset($usernames[$index]);
