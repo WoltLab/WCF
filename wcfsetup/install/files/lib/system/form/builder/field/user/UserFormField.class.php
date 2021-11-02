@@ -225,9 +225,7 @@ class UserFormField extends AbstractFormField implements
         if ($this->allowsMultiple()) {
             $this->users = UserProfileRuntimeCache::getInstance()->getObjects($value);
 
-            $value = \array_map(static function (UserProfile $user) {
-                return $user->username;
-            }, $this->users);
+            $value = \array_column($this->users, 'username');
         } else {
             $user = UserProfileRuntimeCache::getInstance()->getObject($value);
             $this->users[] = $user;
