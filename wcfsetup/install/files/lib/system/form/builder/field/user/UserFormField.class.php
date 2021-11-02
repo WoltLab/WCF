@@ -72,6 +72,10 @@ class UserFormField extends AbstractFormField implements
      */
     public function getSaveValue()
     {
+        if ($this->allowsMultiple()) {
+            throw new \BadMethodCallException("The return value of getSaveValue() is undefined if multiple values may be entered.");
+        }
+
         if (empty($this->getUsers())) {
             if ($this->isNullable()) {
                 return null;
