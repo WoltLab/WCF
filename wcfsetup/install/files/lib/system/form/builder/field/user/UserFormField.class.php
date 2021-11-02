@@ -224,7 +224,7 @@ class UserFormField extends AbstractFormField implements
 
         $this->users = \array_filter(
             UserProfileRuntimeCache::getInstance()->getObjects($value),
-            function (?UserProfile $user) {
+            static function (?UserProfile $user) {
                 return $user !== null;
             }
         );
