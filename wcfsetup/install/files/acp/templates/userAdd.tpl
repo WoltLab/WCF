@@ -9,153 +9,157 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action === 'edit'}
-				<li>
-					<div 	class="dropdown"{*
-							*}id="userListDropdown{@$user->userID}" {*
-							*}data-object-id="{@$user->getObjectID()}" {*
-							*}data-banned="{if $user->banned}true{else}false{/if}" {*
-							*}data-enabled="{if !$user->activationCode}true{else}false{/if}" {*
-							*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
-					*}>
-						<a href="#" class="dropdownToggle button">
-							<span class="icon icon16 fa-pencil"></span>
-							<span>{lang}wcf.global.button.edit{/lang}</span>
-						</a>
+				{hascontent}
+					<li>
+						<div 	class="dropdown"{*
+								*}id="userListDropdown{@$user->userID}" {*
+								*}data-object-id="{@$user->getObjectID()}" {*
+								*}data-banned="{if $user->banned}true{else}false{/if}" {*
+								*}data-enabled="{if !$user->activationCode}true{else}false{/if}" {*
+								*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
+						*}>
+							<a href="#" class="dropdownToggle button">
+								<span class="icon icon16 fa-pencil"></span>
+								<span>{lang}wcf.global.button.edit{/lang}</span>
+							</a>
 
-						<ul class="dropdownMenu">
-							{event name='dropdownItems'}
+							<ul class="dropdownMenu">
+								{content}
+									{event name='dropdownItems'}
 
-							{if $user->userID != $__wcf->user->userID}
-								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-									<li>
-										<a  href="#" {*
-											*}class="jsEnable" {*
-											*}data-enable-message="{lang}wcf.acp.user.enable{/lang}" {*
-											*}data-disable-message="{lang}wcf.acp.user.disable{/lang}"{*
-										*}>
-											{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}
-										</a>
-									</li>
-								{/if}
+									{if $user->userID != $__wcf->user->userID}
+										{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+											<li>
+												<a  href="#" {*
+													*}class="jsEnable" {*
+													*}data-enable-message="{lang}wcf.acp.user.enable{/lang}" {*
+													*}data-disable-message="{lang}wcf.acp.user.disable{/lang}"{*
+												*}>
+													{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}
+												</a>
+											</li>
+										{/if}
 
-								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-									<li>
-										<a href="#" {*
-										*}class="jsConfirmEmailToggle" {*
-										*}data-confirm-email-message="{lang}wcf.acp.user.action.confirmEmail{/lang}" {*
-										*}data-unconfirm-email-message="{lang}wcf.acp.user.action.unconfirmEmail{/lang}"{*
-										*}>
-											{lang}wcf.acp.user.action.{if $user->isEmailConfirmed()}un{/if}confirmEmail{/lang}
-										</a>
-									</li>
-								{/if}
+										{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+											<li>
+												<a href="#" {*
+												*}class="jsConfirmEmailToggle" {*
+												*}data-confirm-email-message="{lang}wcf.acp.user.action.confirmEmail{/lang}" {*
+												*}data-unconfirm-email-message="{lang}wcf.acp.user.action.unconfirmEmail{/lang}"{*
+												*}>
+													{lang}wcf.acp.user.action.{if $user->isEmailConfirmed()}un{/if}confirmEmail{/lang}
+												</a>
+											</li>
+										{/if}
 
-								{if $__wcf->session->getPermission('admin.user.canMailUser')}
-									<li>
-										<a {*
-										*}href="{link controller='UserMail' id=$user->userID}{/link}"{*
-										*}>
-											{lang}wcf.acp.user.action.sendMail{/lang}
-										</a>
-									</li>
-								{/if}
+										{if $__wcf->session->getPermission('admin.user.canMailUser')}
+											<li>
+												<a {*
+												*}href="{link controller='UserMail' id=$user->userID}{/link}"{*
+												*}>
+													{lang}wcf.acp.user.action.sendMail{/lang}
+												</a>
+											</li>
+										{/if}
 
-								{if $__wcf->session->getPermission('admin.user.canEditPassword')}
-									<li>
-										<a {*
-										*}href="#" {*
-										*}class="jsSendNewPassword"{*
-										*}>
-											{lang}wcf.acp.user.action.sendNewPassword{/lang}
-										</a>
-									</li>
-								{/if}
-							{/if}
+										{if $__wcf->session->getPermission('admin.user.canEditPassword')}
+											<li>
+												<a {*
+												*}href="#" {*
+												*}class="jsSendNewPassword"{*
+												*}>
+													{lang}wcf.acp.user.action.sendNewPassword{/lang}
+												</a>
+											</li>
+										{/if}
+									{/if}
 
-							{if $__wcf->session->getPermission('admin.user.canExportGdprData')}
-								<li>
-									<a {*
-										*}href="{link controller='UserExportGdpr' id=$user->userID}{/link}"{*
-										*}>
-										{lang}wcf.acp.user.exportGdpr{/lang}
-									</a>
-								</li>
-							{/if}
+									{if $__wcf->session->getPermission('admin.user.canExportGdprData')}
+										<li>
+											<a {*
+												*}href="{link controller='UserExportGdpr' id=$user->userID}{/link}"{*
+												*}>
+												{lang}wcf.acp.user.exportGdpr{/lang}
+											</a>
+										</li>
+									{/if}
 
-							{if $__wcf->session->getPermission('admin.user.canDeleteUser') && $user->userID != $__wcf->user->userID}
-								<li class="dropdownDivider"></li>
-								<li><a href="#" class="jsDelete">{lang}wcf.global.button.delete{/lang}</a></li>
-								<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.content.removeContent{/lang}</a></li>
-							{/if}
-						</ul>
-					</div>
-				</li>
-				<script data-relocate="true">
-					require([
-						'WoltLabSuite/Core/Language',
-						'WoltLabSuite/Core/Acp/Ui/User/Editor',
-						'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
-						'WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete',
-						'WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction',
-						'WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction',
-						'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
-						'WoltLabSuite/Core/Controller/Clipboard',
-					], (
-						Language,
-						AcpUiUserList,
-						AcpUserContentRemoveHandler,
-						{ Delete },
-						{ DisableAction },
-						{ SendNewPasswordAction },
-						{ ToggleConfirmEmailAction },
-						Clipboard
-					) => {
-							Language.addObject({
-								'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
-								'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}',
-								'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
-								'wcf.acp.content.removeContent': '{jslang}wcf.acp.content.removeContent{/jslang}',
+									{if $__wcf->session->getPermission('admin.user.canDeleteUser') && $user->userID != $__wcf->user->userID}
+										<li class="dropdownDivider"></li>
+										<li><a href="#" class="jsDelete">{lang}wcf.global.button.delete{/lang}</a></li>
+										<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.content.removeContent{/lang}</a></li>
+									{/if}
+								{/content}
+							</ul>
+						</div>
+					</li>
+					<script data-relocate="true">
+						require([
+							'WoltLabSuite/Core/Language',
+							'WoltLabSuite/Core/Acp/Ui/User/Editor',
+							'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler',
+							'WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete',
+							'WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction',
+							'WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction',
+							'WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction',
+							'WoltLabSuite/Core/Controller/Clipboard',
+						], (
+							Language,
+							AcpUiUserList,
+							AcpUserContentRemoveHandler,
+							{ Delete },
+							{ DisableAction },
+							{ SendNewPasswordAction },
+							{ ToggleConfirmEmailAction },
+							Clipboard
+						) => {
+								Language.addObject({
+									'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
+									'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}',
+									'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
+									'wcf.acp.content.removeContent': '{jslang}wcf.acp.content.removeContent{/jslang}',
+								});
+
+								const dropdownElement = document.querySelector("#userListDropdown{@$user->userID}");
+
+								const deleteContent = document.querySelector(".jsDeleteContent");
+								if (deleteContent !== null) {
+									new AcpUserContentRemoveHandler(deleteContent, {@$user->userID}, (data) => {
+										window.location.reload();
+									});
+								}
+
+								const sendNewPassword = document.querySelector(".jsSendNewPassword");
+								if (sendNewPassword !== null) {
+									new SendNewPasswordAction(sendNewPassword, {@$user->userID}, dropdownElement);
+								}
+
+								const toggleConfirmEmail = document.querySelector(".jsConfirmEmailToggle");
+								if (toggleConfirmEmail !== null) {
+									new ToggleConfirmEmailAction(toggleConfirmEmail, {@$user->userID}, dropdownElement);
+								}
+
+								const enableUser = document.querySelector(".jsEnable");
+								if (enableUser !== null) {
+									new DisableAction(enableUser, {@$user->userID}, dropdownElement);
+								}
+
+								const deleteUser = document.querySelector(".jsDelete");
+								if (deleteUser !== null) {
+									// We cannot use the DeleteAction, because the Delete Action is only usable for
+									// dropdown menues.
+									deleteUser.addEventListener("click", (event) => {
+										const deleteAction = new Delete([{@$user->userID}], () => {
+											window.location.href = "{link controller='UserList'}{/link}";
+										}, '{jslang objectTitle=$user->username}wcf.button.delete.confirmMessage{/jslang}');
+
+										deleteAction.delete();
+									});
+								}
 							});
-
-							const dropdownElement = document.querySelector("#userListDropdown{@$user->userID}");
-
-							const deleteContent = document.querySelector(".jsDeleteContent");
-							if (deleteContent !== null) {
-								new AcpUserContentRemoveHandler(deleteContent, {@$user->userID}, (data) => {
-									window.location.reload();
-								});
-							}
-
-							const sendNewPassword = document.querySelector(".jsSendNewPassword");
-							if (sendNewPassword !== null) {
-								new SendNewPasswordAction(sendNewPassword, {@$user->userID}, dropdownElement);
-							}
-
-							const toggleConfirmEmail = document.querySelector(".jsConfirmEmailToggle");
-							if (toggleConfirmEmail !== null) {
-								new ToggleConfirmEmailAction(toggleConfirmEmail, {@$user->userID}, dropdownElement);
-							}
-
-							const enableUser = document.querySelector(".jsEnable");
-							if (enableUser !== null) {
-								new DisableAction(enableUser, {@$user->userID}, dropdownElement);
-							}
-
-							const deleteUser = document.querySelector(".jsDelete");
-							if (deleteUser !== null) {
-								// We cannot use the DeleteAction, because the Delete Action is only usable for
-								// dropdown menues.
-								deleteUser.addEventListener("click", (event) => {
-									const deleteAction = new Delete([{@$user->userID}], () => {
-										window.location.href = "{link controller='UserList'}{/link}";
-									}, '{jslang objectTitle=$user->username}wcf.button.delete.confirmMessage{/jslang}');
-
-									deleteAction.delete();
-								});
-							}
-						});
-				</script>
-			{/if}
+					</script>
+				{/if}
+			{/hascontent}
 
 			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 
