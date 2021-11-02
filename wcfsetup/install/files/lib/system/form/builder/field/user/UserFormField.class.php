@@ -222,20 +222,22 @@ class UserFormField extends AbstractFormField implements
     {
         // ensure array value for form fields that actually support multiple values;
         // allows enabling support for multiple values for existing fields
-        if ($this->allowsMultiple() && !\is_array($value)) {
+        if (!\is_array($value)) {
             $value = [$value];
         }
 
+        $this->users = \array_filter(
+            UserProfileRuntimeCache::getInstance()->getObjects($value),
+            function (?UserProfile $user) {
+                return $user !== null;
+            }
+        );
+        $usernames = \array_column($this->users, 'username');
+
         if ($this->allowsMultiple()) {
-            $this->users = UserProfileRuntimeCache::getInstance()->getObjects($value);
-
-            $value = \array_column($this->users, 'username');
+            return parent::value($usernames);
         } else {
-            $user = UserProfileRuntimeCache::getInstance()->getObject($value);
-            $this->users[] = $user;
-            $value = $user->username;
+            return parent::value($usernames[0] ?? null);
         }
-
-        return parent::value($value);
     }
 }
