@@ -58,6 +58,14 @@
 	{/hascontent}
 </header>
 
+{if TIME_NOW < 1641038400}
+	<div class="warning">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{elseif TIME_NOW < 1656676800}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{else}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expired{/lang}</div>
+{/if}
+
 {if $recentlyDisabledCustomValues > 0}
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}

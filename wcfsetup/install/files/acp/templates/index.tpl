@@ -4,6 +4,14 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
+{if TIME_NOW < 1641038400}
+	<div class="warning">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{elseif TIME_NOW < 1656676800}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{else}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expired{/lang}</div>
+{/if}
+
 {if !$evaluationExpired|empty}
 	{foreach from=$evaluationExpired item=$expiredApp}
 		<p class="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</p>
