@@ -25,7 +25,7 @@
 						<ul class="dropdownMenu">
 							{event name='dropdownItems'}
 
-							{if $user->userID !== $__wcf->user->userID}
+							{if $user->userID != $__wcf->user->userID}
 								{if $__wcf->session->getPermission('admin.user.canEnableUser')}
 									<li>
 										<a  href="#" {*
@@ -82,7 +82,7 @@
 								</li>
 							{/if}
 
-							{if $__wcf->session->getPermission('admin.user.canDeleteUser') && $user->userID !== $__wcf->user->userID}
+							{if $__wcf->session->getPermission('admin.user.canDeleteUser') && $user->userID != $__wcf->user->userID}
 								<li class="dropdownDivider"></li>
 								<li><a href="#" class="jsDelete">{lang}wcf.global.button.delete{/lang}</a></li>
 								<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.content.removeContent{/lang}</a></li>
