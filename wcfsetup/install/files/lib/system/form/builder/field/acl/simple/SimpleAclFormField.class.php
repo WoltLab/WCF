@@ -32,6 +32,11 @@ class SimpleAclFormField extends AbstractFormField
     protected $templateName = '__simpleAclFormField';
 
     /**
+     * @var bool
+     */
+    protected $supportInvertedPermissions = false;
+
+    /**
      * @inheritDoc
      */
     public function getHtmlVariables()
@@ -40,6 +45,8 @@ class SimpleAclFormField extends AbstractFormField
             '__aclSimplePrefix' => $this->getPrefixedId(),
             '__aclInputName' => $this->getPrefixedId(),
             'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->getValue() ?: []),
+            '__supportsInvertedPermissions' => $this->supportInvertedPermissions,
+            'invertPermissions' => $this->isInverted(),
         ];
     }
 
@@ -82,9 +89,41 @@ class SimpleAclFormField extends AbstractFormField
 
             if (\is_array($value)) {
                 $this->value = $value;
+
+                if ($this->supportInvertedPermissions) {
+                    $requestData = $this->getDocument()->getRequestData();
+                    $field = $this->getPrefixedId() . 'invertPermissions';
+                    $this->value['invertPermissions'] = isset($requestData[$field]) && $requestData[$field];
+                }
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Enables or disables the support for inverted permissions.
+     *
+     * @return  static      this field
+     * @since   5.5
+     */
+    public function supportInvertedPermissions(bool $supportInvertedPermissions = true)
+    {
+        $this->supportInvertedPermissions = $supportInvertedPermissions;
+
+        return $this;
+    }
+
+    /**
+     * @since 5.5
+     */
+    public function isSupportingInvertedPermissions(): bool
+    {
+        return $this->supportInvertedPermissions;
+    }
+
+    private function isInverted(): bool
+    {
+        return $this->supportInvertedPermissions && isset($this->value['invertPermissions']) && $this->value['invertPermissions'];
     }
 }
