@@ -52,7 +52,7 @@ class UserFormField extends AbstractFormField implements
     /**
      * user profiles of the entered users (and `null` for non-existing users; only relevant for
      * invalid inputs)
-     * @var UserProfile[]|null[]
+     * @var (UserProfile|null)[]
      */
     protected $users = [];
 
@@ -60,7 +60,7 @@ class UserFormField extends AbstractFormField implements
      * Returns the user profiles of the entered users (and `null` for non-existing users; only
      * relevant for invalid inputs).
      *
-     * @return  UserProfile[]|null[]
+     * @return  (UserProfile|null)[]
      */
     public function getUsers()
     {
@@ -229,9 +229,7 @@ class UserFormField extends AbstractFormField implements
         if ($this->allowsMultiple()) {
             $this->users = UserProfileRuntimeCache::getInstance()->getObjects($value);
 
-            $value = \array_map(static function (UserProfile $user) {
-                return $user->username;
-            }, $this->users);
+            $value = \array_column($this->users, 'username');
         } else {
             $user = UserProfileRuntimeCache::getInstance()->getObject($value);
             $this->users[] = $user;
