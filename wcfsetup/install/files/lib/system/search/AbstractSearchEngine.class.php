@@ -3,6 +3,7 @@
 namespace wcf\system\search;
 
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\NotImplementedException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -47,7 +48,10 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
     /**
      * @deprecated 5.4 - This method was required for use in parseSearchQuery().
      */
-    abstract protected function getFulltextMinimumWordLength();
+    protected function getFulltextMinimumWordLength()
+    {
+        throw new NotImplementedException();
+    }
 
     /**
      * @inheritDoc
