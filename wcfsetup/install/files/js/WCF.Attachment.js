@@ -114,11 +114,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 				
 				// Remove any existing entries for this tmpHash.
-				data.tmpHashes = data.tmpHashes.filter((item) => item != tmpHash);
+				data.tmpHashes = data.tmpHashes.filter((item) => item !== tmpHash);
 				
 				var count = this._fileListSelector.children('li:not(.uploadFailed)').length;
 				if (count > 0) {
-					// Add a new entry for this tmpHash if successful uploads exist.
+					// Add a new entry for this tmpHash if files have been uploaded.
 					data.tmpHashes.push(tmpHash);
 				}
 			}).bind(this));
