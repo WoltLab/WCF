@@ -16,7 +16,7 @@ export class IsNotClicked extends Abstract {
   constructor(dependentElementId: string, fieldId: string) {
     super(dependentElementId, fieldId);
 
-    // To check for clicks after they occured, set `isClicked` in the field's data set and then
+    // To check for clicks after they occurred, set `isClicked` in the field's data set and then
     // explicitly check the dependencies as the dependency manager itself does to listen to click
     // events.
     this._field.addEventListener("click", () => {
