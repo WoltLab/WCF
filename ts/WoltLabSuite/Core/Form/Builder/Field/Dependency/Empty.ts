@@ -11,6 +11,7 @@
 
 import Abstract from "./Abstract";
 import * as Core from "../../../../Core";
+import * as UiItemList from "../../../../Ui/ItemList";
 
 class Empty extends Abstract {
   public checkDependency(): boolean {
@@ -18,6 +19,11 @@ class Empty extends Abstract {
       switch (this._field.tagName) {
         case "INPUT": {
           const field = this._field as HTMLInputElement;
+
+          if (UiItemList.hasItemList(field.id)) {
+            return UiItemList.getValues(field.id).length === 0;
+          }
+
           switch (field.type) {
             case "checkbox":
               return !field.checked;

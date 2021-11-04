@@ -527,6 +527,10 @@ export function setValues(elementId: string, values: ItemData[]): void {
   });
 }
 
+export function hasItemList(elementId: string): boolean {
+  return _data.has(elementId);
+}
+
 type ItemListInputElement = HTMLInputElement | HTMLTextAreaElement;
 
 export interface ItemData {
