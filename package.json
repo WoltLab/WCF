@@ -10,7 +10,7 @@
     "@types/perfect-scrollbar": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
-    "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#06171c20f9bc1f4fbfbf12ba5c88bc1db0624970",
+    "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.4.1",
