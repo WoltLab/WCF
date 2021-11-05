@@ -1978,7 +1978,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 	{else if $error[type] === 'foreignColumnDrop'}
 		Die Spalte {$error[tableName]}.{$error[columnName]} gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
 	{else if $error[type] === 'foreignColumnChange'}
-		Die Spalte {$error[tableName]}.{$error[columnName]} gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+		Die Spalte {$error[tableName]}.{$error[columnName]} gehört zu einem anderen Paket und kann deshalb nicht verändert werden.
 	{else if $error[type] === 'renameNonexistingColumn'}
 		Die Spalte {$error[tableName]}.{$error[columnName]} existiert nicht und kann deshalb nicht umbenannt werden.
 	{else if $error[type] === 'foreignIndexDrop'}

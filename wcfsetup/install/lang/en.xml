@@ -1964,7 +1964,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	{else if $error[type] === 'foreignColumnDrop'}
 		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
 	{else if $error[type] === 'foreignColumnChange'}
-		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
+		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be altered.
 	{else if $error[type] === 'renameNonexistingColumn'}
 		The column {$error[tableName]}.{$error[columnName]} does not exist and thus cannot be renamed.
 	{else if $error[type] === 'foreignIndexDrop'}
