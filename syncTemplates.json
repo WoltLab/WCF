@@ -64,6 +64,7 @@
     "aclPermissionJavaScript",
     "articleAdd",
     "articleAddDialog",
+    "articleBBCode",
     "benchmark",
     "booleanOptionType",
     "booleanSearchableOptionType",
