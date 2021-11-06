@@ -36,13 +36,13 @@
 			</div>
 			
 			<div class="contentItemMeta">
-				<a href="{$article->getUserProfile()->getLink()}" class="contentItemMetaImage" aria-hidden="true" tabindex="-1">
+				<span class="contentItemMetaImage">
 					{@$article->getUserProfile()->getAvatar()->getImageTag(32)}
-				</a>
+				</span>
 				
 				<div class="contentItemMetaContent">
 					<div class="contentItemMetaAuthor">
-						{user object=$article->getUserProfile()}
+						{@$article->getUserProfile()->getFormattedUsername()}
 					</div>
 					<div class="contentItemMetaTime">
 						{@$article->time|time}
