@@ -7670,10 +7670,48 @@
 					var lineHeight = parseInt($link.css('line-height'), 10);
 					var lineClicked = Math.ceil((e.pageY - pos.top) / lineHeight);
 					var top = pos.top + lineClicked * lineHeight;
+
+					// WoltLab Modification START
+
+					// Check if the tooltip would exceed the available screen.
+					document.body.appendChild(tooltip[0]);
+					const tooltipWidth = Math.trunc(tooltip[0].clientWidth);
+					tooltip[0].remove();
+
+					var tooltipLeft = `${pos.left}px`;
+					var tooltipRight = "auto";
+					const overflowRight = document.body.clientWidth - (pos.left + tooltipWidth);
+					if (overflowRight < 0) {
+						const rect = $link[0].getBoundingClientRect();
+						const rightBoundary = Math.trunc(rect.right);
+						const leftBoundary = rightBoundary - tooltipWidth;
+
+						// Align it with the right boundary if there is enough space this way.
+						if (leftBoundary > 0) {
+							tooltipLeft = "auto";
+							tooltipRight = (document.body.clientWidth - rightBoundary) + "px";
+						} else {
+							// The tooltip will overflow the left side too, align the tooltip
+							// to the center.
+							let offsetLeft = Math.trunc((document.body.clientWidth - tooltipWidth) / 2);
+
+							// If the tooltip does not fit on the screen, force it to go from
+							// exactly left to right.
+							if (offsetLeft < 0) {
+								tooltipLeft = "0px";
+								tooltipRight = "0px";
+							} else {
+								tooltipLeft = `${offsetLeft}px`;
+							}
+						}
+					}
+
+					// WoltLab Modification END
 					
 					tooltip.css({
 						top: top + 'px',
-						left: pos.left + 'px'
+						left: tooltipLeft,
+						right: tooltipRight
 					});
 					
 					$('.redactor-link-tooltip').remove();
