@@ -3,8 +3,16 @@ html.disableScrolling {
 
 	body {
 		overflow: hidden !important;
+	}
+}
 
-		@include screen-md-down {
+@include screen-md-down {
+	html.disableScrolling {
+		/* Fix for the gap when using fullscreen dialogs and the navbar collapses.
+		   See https://stackoverflow.com/questions/69589924/ios-15-minimized-address-bar-issue-with-fixed-position-full-screen-content */
+		height: 100vh !important;
+
+		body {
 			position: fixed !important;
 		}
 	}
