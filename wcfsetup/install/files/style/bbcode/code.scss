@@ -165,6 +165,15 @@
 	}
 }
 
+.quoteBoxContent .codeBox .codeBoxHeader {
+	/*
+		The quote box has its own stacking context, causing the `top` value
+	    to be relative to the quote box and not the document body.
+	    See https://community.woltlab.com/thread/293105-quelltext-innerhalb-eines-zitates-wird-teilweise-abgeschnitten/
+	*/
+	top: 0;
+}
+
 .anchorFixedHeader:not(.disableAnchorFixedHeader):target .codeBoxHeader {
 	top: -30px; /* see wsc31.scss */
 }
