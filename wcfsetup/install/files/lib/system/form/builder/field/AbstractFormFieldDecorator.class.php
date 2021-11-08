@@ -439,38 +439,6 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     /**
-     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
-     */
-    public static function create($id)
-    {
-        throw new \BadMethodCallException('This method is not available on a decorator.');
-    }
-
-    /**
-     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
-     */
-    public static function validateAttribute($name)
-    {
-        throw new \BadMethodCallException('This method is not available on a decorator.');
-    }
-
-    /**
-     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
-     */
-    public static function validateClass($class)
-    {
-        throw new \BadMethodCallException('This method is not available on a decorator.');
-    }
-
-    /**
-     * @throws \BadMethodCallException always, as static methods are not defined on decorators.
-     */
-    public static function validateId($id)
-    {
-        throw new \BadMethodCallException('This method is not available on a decorator.');
-    }
-
-    /**
      * @inheritDoc
      */
     public function description($languageItem = null, array $variables = [])
