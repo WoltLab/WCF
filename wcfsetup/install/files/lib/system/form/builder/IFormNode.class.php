@@ -286,41 +286,4 @@ interface IFormNode
      * nodes are valid. A `IFormField` object is valid if its value is valid.
      */
     public function validate();
-
-    /**
-     * Creates a new element with the given id.
-     *
-     * @param string $id node id
-     * @return  static          this node
-     *
-     * @throws  \InvalidArgumentException   if the given id is already used by another element or otherwise is invalid
-     */
-    public static function create($id);
-
-    /**
-     * Checks if the given attribute name class a and a valid attribute name.
-     *
-     * @param string $name checked argument name
-     *
-     * @throws  \InvalidArgumentException   if the given attribute name is invalid
-     */
-    public static function validateAttribute($name);
-
-    /**
-     * Checks if the given parameter class a and a valid node class.
-     *
-     * @param string $class checked class
-     *
-     * @throws  \InvalidArgumentException   if the given id is invalid
-     */
-    public static function validateClass($class);
-
-    /**
-     * Checks if the given parameter is a and a valid node id.
-     *
-     * @param string $id checked id
-     *
-     * @throws  \InvalidArgumentException   if the given id is invalid
-     */
-    public static function validateId($id);
 }

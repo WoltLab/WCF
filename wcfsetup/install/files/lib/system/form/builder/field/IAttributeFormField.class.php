@@ -57,11 +57,4 @@ interface IAttributeFormField extends IFormField
      * @return      static                          this form field
      */
     public function removeFieldAttribute(string $name);
-
-    /**
-     * Checks if the given name is a valid additional attribute name.
-     *
-     * @throws      \InvalidArgumentException       if the given additional attribute name is invalid
-     */
-    public static function validateFieldAttribute(string $name);
 }
