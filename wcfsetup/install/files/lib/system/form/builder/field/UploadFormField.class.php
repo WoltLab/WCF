@@ -14,8 +14,8 @@ use wcf\util\ImageUtil;
 /**
  * Implementation of a form field for to uploads.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Florian Gail, Joshua Ruesweg
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
@@ -340,52 +340,143 @@ class UploadFormField extends AbstractFormField
     /**
      * @inheritDoc
      *
-     * @throws \InvalidArgumentException    if the getter for the value provides invalid values
+     * @throws \InvalidArgumentException    If the getter for the value or the object's property provides invalid values.
      */
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
         if ($loadValues) {
-            // first check, whether an getter for the field exists
-            if (\method_exists($object, 'get' . \ucfirst($this->getObjectProperty()) . 'UploadFileLocations')) {
-                $value = \call_user_func([
-                    $object,
-                    'get' . \ucfirst($this->getObjectProperty()) . 'UploadFileLocations',
-                ]);
-                $method = "method '" . \get_class($object) . "::get" . \ucfirst($this->getObjectProperty()) . "UploadFileLocations()'";
-            } elseif (\method_exists($object, 'get' . \ucfirst($this->getObjectProperty()))) {
-                $value = \call_user_func([$object, 'get' . \ucfirst($this->getObjectProperty())]);
-                $method = "method '" . \get_class($object) . "::get" . \ucfirst($this->getObjectProperty()) . "()'";
-            } else {
-                $value = $data[$this->getObjectProperty()];
-                $method = "variable '" . \get_class($object) . "::$" . $this->getObjectProperty() . "'";
-            }
+            $propertyName = \ucfirst($this->getObjectProperty());
+            $className = \get_class($object);
 
-            if (\is_array($value)) {
-                $value = \array_map(function ($v) use ($method) {
-                    if (!\is_string($v) || !\file_exists($v)) {
-                        throw new \InvalidArgumentException(
-                            "The {$method} must return an array of strings with the file locations for field '{$this->getId()}'."
-                        );
-                    }
-
-                    return new UploadFile(
-                        $v,
-                        \basename($v),
-                        ImageUtil::isImage($v, \basename($v), $this->svgImageAllowed()),
-                        true,
-                        $this->svgImageAllowed()
+            if (\method_exists($object, "get{$propertyName}UploadFiles")) {
+                try {
+                    $value = $this->readUploadFiles(
+                        \call_user_func([
+                            $object,
+                            "get{$propertyName}UploadFiles",
+                        ])
                     );
-                }, $value);
-
-                $this->value($value);
+                } catch (\InvalidArgumentException | \TypeError $e) {
+                    throw new \InvalidArgumentException(
+                        \sprintf(
+                            "The method %s must return an array of objects of class '%s' with the valid file locations for field '%s'.",
+                            "{$className}::get{$propertyName}UploadFiles()",
+                            UploadFile::class,
+                            $this->getId()
+                        ),
+                        0,
+                        $e
+                    );
+                }
+            } elseif (\method_exists($object, "get{$propertyName}UploadFileLocations")) {
+                try {
+                    $value = $this->readUploadLocations(
+                        \call_user_func([
+                            $object,
+                            "get{$propertyName}UploadFileLocations",
+                        ])
+                    );
+                } catch (\InvalidArgumentException | \TypeError $e) {
+                    throw new \InvalidArgumentException(
+                        \sprintf(
+                            "The method %s must return an array of strings with the valid file locations for field '%s'.",
+                            "{$className}::get{$propertyName}UploadFileLocations()",
+                            $this->getId()
+                        ),
+                        0,
+                        $e
+                    );
+                }
+            } elseif (\method_exists($object, "get{$propertyName}")) {
+                try {
+                    $value = $this->readUploadLocations(
+                        \call_user_func([
+                            $object,
+                            "get{$propertyName}",
+                        ])
+                    );
+                } catch (\InvalidArgumentException | \TypeError $e) {
+                    throw new \InvalidArgumentException(
+                        \sprintf(
+                            "The method %s must return an array of strings with the valid file locations for field '%s'.",
+                            "{$className}::get{$propertyName}()",
+                            $this->getId()
+                        ),
+                        0,
+                        $e
+                    );
+                }
             } else {
-                throw new \InvalidArgumentException(
-                    "The {$method} must return an array of strings with the file locationsfor field '{$this->getId()}'."
-                );
+                $variableName = $this->getObjectProperty();
+                try {
+                    $value = $this->readUploadLocations($data[$variableName] ?? null);
+                } catch (\InvalidArgumentException | \TypeError $e) {
+                    throw new \InvalidArgumentException(
+                        \sprintf(
+                            "The property %s must contain an array of strings with the valid file locations for field '%s'.",
+                            "{$className}::\${$variableName}",
+                            $this->getId()
+                        ),
+                        0,
+                        $e
+                    );
+                }
             }
+
+            $this->value($value);
         }
 
         return $this;
+    }
+
+    /**
+     * Reads an array of `UploadFile` objects and validates it.
+     *
+     * @param UploadFile[] $data
+     * @return UploadFile[]
+     * @throws \InvalidArgumentException
+     * @since 5.5
+     */
+    private function readUploadFiles(array $data): array
+    {
+        foreach ($data as $value) {
+            if (!($value instanceof UploadFile)) {
+                throw new \InvalidArgumentException("At least one value is not an instance of '" . UploadFile::class . "'.");
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Reads an array of strings containing file locations and validates it.
+     *
+     * @param string[] $data
+     * @return UploadFile[]
+     * @throws \InvalidArgumentException
+     * @since 5.5
+     */
+    private function readUploadLocations(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (!\is_string($value)) {
+                throw new \InvalidArgumentException('At least one value is not a string.');
+            }
+
+            if (!\file_exists($value)) {
+                throw new \InvalidArgumentException("File '{$value}' could not be found.");
+            }
+
+            $data[$key] = new UploadFile(
+                $value,
+                \basename($value),
+                ImageUtil::isImage($value, \basename($value), $this->svgImageAllowed()),
+                true,
+                $this->svgImageAllowed()
+            );
+        }
+
+        return $data;
     }
 
     /**
