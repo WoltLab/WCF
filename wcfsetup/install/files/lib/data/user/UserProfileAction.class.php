@@ -4,6 +4,9 @@ namespace wcf\data\user;
 
 use wcf\data\IPopoverAction;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\avatar\UserAvatarAction;
+use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -22,6 +25,8 @@ use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -607,6 +612,79 @@ class UserProfileAction extends UserAction implements IPopoverAction
         $this->uploadFile = $uploadHandler->getFiles()[0];
 
         $uploadHandler->validateFiles(new UserCoverPhotoUploadFileValidationStrategy());
+    }
+
+    /**
+     * Sets an avatar for a given user.
+     *
+     * @throws UserInputException If none or more than one user is given.
+     * @throws \InvalidArgumentException If the given avatar is not an image or is incorrect sized.
+     * @throws \RuntimeException If the avatar could not be saved for any reasons.
+     */
+    public function setAvatar(): void
+    {
+        $user = $this->getSingleObject();
+
+        $imageData = \getimagesize($this->parameters['fileLocation']);
+
+        if (!$imageData) {
+            throw new \InvalidArgumentException("The given file is not an image.");
+        }
+
+        if ($imageData[0] != UserAvatar::AVATAR_SIZE || $imageData[1] != UserAvatar::AVATAR_SIZE) {
+            throw new \InvalidArgumentException(
+                "The given avatar has not the size of " . UserAvatar::AVATAR_SIZE . "×" . UserAvatar::AVATAR_SIZE . "."
+            );
+        }
+
+        $data = [
+            'avatarName' => $this->parameters['filename'] ?? 'avatar',
+            'avatarExtension' => $this->parameters['extension'] ?? ImageUtil::getExtensionByMimeType($imageData['mime']),
+            'width' => $imageData[0],
+            'height' => $imageData[1],
+            'userID' => $user->userID,
+            'fileHash' => \sha1_file($this->parameters['fileLocation']),
+        ];
+
+        // create avatar
+        $avatar = UserAvatarEditor::create($data);
+
+        // check avatar directory
+        // and create subdirectory if necessary
+        $dir = \dirname($avatar->getLocation(null, false));
+        if (!@\file_exists($dir)) {
+            FileUtil::makePath($dir);
+        }
+
+        // move uploaded file
+        if (@\rename($this->parameters['fileLocation'], $avatar->getLocation(null, false))) {
+            // Create the WebP variant or the JPEG fallback of the avatar.
+            $avatarEditor = new UserAvatarEditor($avatar);
+            if ($avatarEditor->createAvatarVariant()) {
+                $avatar = new UserAvatar($avatar->avatarID);
+            }
+
+            // delete old avatar
+            if ($user->avatarID) {
+                (new UserAvatarAction([$user->avatarID], 'delete'))->executeAction();
+            }
+
+            // update user
+            $userEditor = new UserEditor($user->getDecoratedObject());
+            $userEditor->update([
+                'avatarID' => $avatar->avatarID,
+                'enableGravatar' => 0,
+            ]);
+
+            // reset user storage
+            UserStorageHandler::getInstance()->reset([$user->userID], 'avatar');
+        } else {
+            // moving failed; delete avatar
+            $editor = new UserAvatarEditor($avatar);
+            $editor->delete();
+
+            throw new \RuntimeException("Could not save avatar.");
+        }
     }
 
     /**
