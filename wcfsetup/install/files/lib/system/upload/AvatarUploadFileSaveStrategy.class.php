@@ -2,15 +2,12 @@
 
 namespace wcf\system\upload;
 
+use RuntimeException;
 use wcf\data\user\avatar\UserAvatar;
-use wcf\data\user\avatar\UserAvatarAction;
-use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserProfileAction;
 use wcf\system\exception\SystemException;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\ImageUtil;
 
 /**
@@ -91,56 +88,15 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
                 return;
             }
 
-            $imageData = \getimagesize($fileLocation);
-            $data = [
-                'avatarName' => $uploadFile->getFilename(),
-                'avatarExtension' => $uploadFile->getFileExtension(),
-                'width' => $imageData[0],
-                'height' => $imageData[1],
-                'userID' => $this->userID,
-                'fileHash' => \sha1_file($fileLocation),
-            ];
+            try {
+                $returnValues = (new UserProfileAction([$this->userID], 'setAvatar', [
+                    'fileLocation' => $fileLocation,
+                    'filename' => $uploadFile->getFilename(),
+                    'extension' => $uploadFile->getFileExtension(),
+                ]))->executeAction();
 
-            // create avatar
-            $this->avatar = UserAvatarEditor::create($data);
-
-            // check avatar directory
-            // and create subdirectory if necessary
-            $dir = \dirname($this->avatar->getLocation(null, false));
-            if (!@\file_exists($dir)) {
-                FileUtil::makePath($dir);
-            }
-
-            // move uploaded file
-            if (@\copy($fileLocation, $this->avatar->getLocation(null, false))) {
-                @\unlink($fileLocation);
-
-                // Create the WebP variant or the JPEG fallback of the avatar.
-                $avatarEditor = new UserAvatarEditor($this->avatar);
-                if ($avatarEditor->createAvatarVariant()) {
-                    $this->avatar = new UserAvatar($this->avatar->avatarID);
-                }
-
-                // delete old avatar
-                if ($this->user->avatarID) {
-                    $action = new UserAvatarAction([$this->user->avatarID], 'delete');
-                    $action->executeAction();
-                }
-
-                // update user
-                $userEditor = new UserEditor($this->user);
-                $userEditor->update([
-                    'avatarID' => $this->avatar->avatarID,
-                    'enableGravatar' => 0,
-                ]);
-
-                // reset user storage
-                UserStorageHandler::getInstance()->reset([$this->userID], 'avatar');
-            } else {
-                // moving failed; delete avatar
-                $editor = new UserAvatarEditor($this->avatar);
-                $editor->delete();
-
+                $this->avatar = $returnValues['returnValues']['avatar'];
+            } catch (RuntimeException $e) {
                 $uploadFile->setValidationErrorType('uploadFailed');
             }
         }

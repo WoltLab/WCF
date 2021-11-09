@@ -621,7 +621,7 @@ class UserProfileAction extends UserAction implements IPopoverAction
      * @throws \InvalidArgumentException If the given avatar is not an image or is incorrect sized.
      * @throws \RuntimeException If the avatar could not be saved for any reasons.
      */
-    public function setAvatar(): void
+    public function setAvatar(): array
     {
         $user = $this->getSingleObject();
 
@@ -685,6 +685,10 @@ class UserProfileAction extends UserAction implements IPopoverAction
 
             throw new \RuntimeException("Could not save avatar.");
         }
+
+        return [
+            'avatar' => $avatar,
+        ];
     }
 
     /**
