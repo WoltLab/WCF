@@ -65,6 +65,7 @@ define(['Language'], function(Language) {
 			if (_activeRequests === 0) {
 				if (_timeoutShow !== null) {
 					window.clearTimeout(_timeoutShow);
+					_timeoutShow = null;
 				}
 				
 				_overlay.classList.remove('active');
