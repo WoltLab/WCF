@@ -558,6 +558,7 @@
 .messageSignature img,
 .messageSignatureConstraints img {
 	max-height: #{$wcf_option_signature_max_image_height}px;
+	width: auto;
 }
 
 @include screen-sm-down {
