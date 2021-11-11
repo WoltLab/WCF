@@ -41,6 +41,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             if (--this._activeRequests === 0) {
                 if (this._timer !== null) {
                     window.clearTimeout(this._timer);
+                    this._timer = null;
                 }
                 this._overlay.classList.remove("active");
             }

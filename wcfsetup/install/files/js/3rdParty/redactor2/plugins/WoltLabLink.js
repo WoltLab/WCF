@@ -60,7 +60,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 			});
 		},
 		
-		show: function(e) {
+		show: function(e, $link) {
 			// if call from clickable element
 			if (typeof e !== 'undefined' && e.preventDefault)
 			{
@@ -77,7 +77,8 @@ $.Redactor.prototype.WoltLabLink = function() {
 			this.observe.closeAllTooltip();
 			
 			// is link
-			var $el = this.link.is();
+			//var $el = this.link.is();
+			var $el = $link;
 			
 			// build link
 			if (hasSelectedText) this.selection.restore();

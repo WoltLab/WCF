@@ -6652,7 +6652,7 @@
 					
 					return ($link.length === 0 || nodes.length > 1) ? false : $link;
 				},
-				unlink: function (e) {
+				unlink: function (e, $link) {
 					// if call from clickable element
 					if (typeof e !== 'undefined' && e.preventDefault) {
 						e.preventDefault();
@@ -6661,7 +6661,7 @@
 					// buffer
 					this.buffer.set();
 					
-					var links = this.selection.inlines('a');
+					var links = $link ? [$link] : this.selection.inlines('a');
 					if (links.length === 0) {
 						return;
 					}
@@ -7658,22 +7658,62 @@
 					
 					var aLink = $('<a href="' + $link.attr('href') + '" target="_blank" />').html(
 						href).addClass('redactor-link-tooltip-action');
-					var aEdit = $('<a href="#" />').html(this.lang.get('edit')).on('click',
-						$.proxy(this.link.show, this)
-					).addClass('redactor-link-tooltip-action');
-					var aUnlink = $('<a href="#" />').html(this.lang.get('unlink')).on('click',
-						$.proxy(this.link.unlink, this)
-					).addClass('redactor-link-tooltip-action');
+					var aEdit = $('<a href="#" />')
+						.html(this.lang.get('edit'))
+						.addClass('redactor-link-tooltip-action')
+						.on('click', (event) => this.link.show(event, $link));
+					var aUnlink = $('<a href="#" />')
+						.html(this.lang.get('unlink'))
+						.addClass('redactor-link-tooltip-action')
+						.on('click', (event) => this.link.unlink(event, $link));
 					
 					tooltip.append(aLink).append(' | ').append(aEdit).append(' | ').append(aUnlink);
 					
 					var lineHeight = parseInt($link.css('line-height'), 10);
 					var lineClicked = Math.ceil((e.pageY - pos.top) / lineHeight);
 					var top = pos.top + lineClicked * lineHeight;
+
+					// WoltLab Modification START
+
+					// Check if the tooltip would exceed the available screen.
+					document.body.appendChild(tooltip[0]);
+					const tooltipWidth = Math.trunc(tooltip[0].clientWidth);
+					tooltip[0].remove();
+
+					var tooltipLeft = `${pos.left}px`;
+					var tooltipRight = "auto";
+					const overflowRight = document.body.clientWidth - (pos.left + tooltipWidth);
+					if (overflowRight < 0) {
+						const rect = $link[0].getBoundingClientRect();
+						const rightBoundary = Math.trunc(rect.right);
+						const leftBoundary = rightBoundary - tooltipWidth;
+
+						// Align it with the right boundary if there is enough space this way.
+						if (leftBoundary > 0) {
+							tooltipLeft = "auto";
+							tooltipRight = (document.body.clientWidth - rightBoundary) + "px";
+						} else {
+							// The tooltip will overflow the left side too, align the tooltip
+							// to the center.
+							let offsetLeft = Math.trunc((document.body.clientWidth - tooltipWidth) / 2);
+
+							// If the tooltip does not fit on the screen, force it to go from
+							// exactly left to right.
+							if (offsetLeft < 0) {
+								tooltipLeft = "0px";
+								tooltipRight = "0px";
+							} else {
+								tooltipLeft = `${offsetLeft}px`;
+							}
+						}
+					}
+
+					// WoltLab Modification END
 					
 					tooltip.css({
 						top: top + 'px',
-						left: pos.left + 'px'
+						left: tooltipLeft,
+						right: tooltipRight
 					});
 					
 					$('.redactor-link-tooltip').remove();

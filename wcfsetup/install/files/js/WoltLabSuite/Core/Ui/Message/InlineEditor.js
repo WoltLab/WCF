@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Message/InlineEditor
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Environment", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Environment, EventHandler, Language, UiDropdownReusable, UiNotification, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Environment", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Environment, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll) {
     "use strict";
     Ajax = (0, tslib_1.__importStar)(Ajax);
     Core = (0, tslib_1.__importStar)(Core);
@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     Language = (0, tslib_1.__importStar)(Language);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
     UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     UiScroll = (0, tslib_1.__importStar)(UiScroll);
     class UiMessageInlineEditor {
         /**
@@ -127,7 +128,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 event.preventDefault();
                 event.stopPropagation();
                 this._activeDropdownElement = element;
-                UiDropdownReusable.toggleDropdown(this._options.dropdownIdentifier, button);
+                let referenceElement = button;
+                if (UiScreen.is("screen-sm-down") && button.clientWidth === 0) {
+                    const message = button.closest(this._options.messageSelector);
+                    const messageData = this._elements.get(message);
+                    referenceElement = messageData.messageHeader.querySelector(".messageQuickOptions");
+                }
+                UiDropdownReusable.toggleDropdown(this._options.dropdownIdentifier, referenceElement);
             });
             // build dropdown
             if (this._dropdownMenu === null) {

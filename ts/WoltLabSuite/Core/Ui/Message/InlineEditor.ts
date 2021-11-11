@@ -18,6 +18,7 @@ import * as Language from "../../Language";
 import { NotificationAction } from "../Dropdown/Data";
 import * as UiDropdownReusable from "../Dropdown/Reusable";
 import * as UiNotification from "../Notification";
+import * as UiScreen from "../Screen";
 import * as UiScroll from "../Scroll";
 import {
   AjaxResponseEditor,
@@ -181,7 +182,15 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       event.stopPropagation();
 
       this._activeDropdownElement = element;
-      UiDropdownReusable.toggleDropdown(this._options.dropdownIdentifier, button);
+
+      let referenceElement = button;
+      if (UiScreen.is("screen-sm-down") && button.clientWidth === 0) {
+        const message = button.closest(this._options.messageSelector) as HTMLElement;
+        const messageData = this._elements.get(message)!;
+        referenceElement = messageData.messageHeader.querySelector(".messageQuickOptions") as HTMLElement;
+      }
+
+      UiDropdownReusable.toggleDropdown(this._options.dropdownIdentifier, referenceElement);
     });
 
     // build dropdown
