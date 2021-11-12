@@ -15,63 +15,45 @@ $fa-size-scale-base: 15;
   @extend .fas;
 }
 .icon {
+  --icon-size: 16px;
+
+  font-size: var(--icon-size);
+  height: var(--icon-size);
+  line-height: var(--icon-size);
   text-align: center;
+  width: 1.25em;
 
   &.icon16 {
-    font-size: 16px;
-    height: 16px;
-    line-height: 16px;
-    width: 16px;
+    --icon-size: 16px;
   }
 
   &.icon24 {
-    font-size: 24px;
-    height: 24px;
-    line-height: 24px;
-    width: 24px;
+    --icon-size: 24px;
   }
 
   &.icon32 {
-    font-size: 32px;
-    height: 32px;
-    line-height: 32px;
-    width: 32px;
+    --icon-size: 32px;
     vertical-align: -5px;
   }
 
   &.icon48 {
-    font-size: 48px;
-    height: 48px;
-    line-height: 48px;
-    width: 48px;
+    --icon-size: 48px;
   }
 
   &.icon64 {
-    font-size: 64px;
-    height: 64px;
-    line-height: 64px;
-    width: 64px;
+    --icon-size: 64px;
   }
 
   &.icon96 {
-    font-size: 96px;
-    height: 96px;
-    line-height: 96px;
-    width: 96px;
+    --icon-size: 96px;
   }
 
   &.icon128 {
-    font-size: 128px;
-    height: 128px;
-    line-height: 128px;
-    width: 128px;
+    --icon-size: 128px;
   }
 
   &.icon144 {
-    font-size: 144px;
-    height: 144px;
-    line-height: 144px;
-    width: 144px;
+    --icon-size: 144px;
   }
 }
 
