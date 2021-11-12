@@ -17,6 +17,7 @@ $fa-size-scale-base: 15;
 .icon {
   --icon-size: 16px;
 
+  color: $wcfContentText;
   font-size: var(--icon-size);
   height: var(--icon-size);
   line-height: var(--icon-size);
