@@ -573,6 +573,86 @@ class UserProfileAction extends UserAction implements IPopoverAction
     }
 
     /**
+     * Sets an avatar for a given user. The given file will be renamed and is gone after this method call.
+     *
+     * @throws UserInputException If none or more than one user is given.
+     * @throws \InvalidArgumentException If the given file is not an image or is incorrectly sized.
+     */
+    public function setAvatar(): array
+    {
+        $user = $this->getSingleObject();
+
+        $imageData = \getimagesize($this->parameters['fileLocation']);
+
+        if (!$imageData) {
+            throw new \InvalidArgumentException("The given file is not an image.");
+        }
+
+        if ($imageData[0] != UserAvatar::AVATAR_SIZE || $imageData[1] != UserAvatar::AVATAR_SIZE) {
+            throw new \InvalidArgumentException(
+                \sprintf(
+                    "The given file does not have the size of %dx%d",
+                    UserAvatar::AVATAR_SIZE,
+                    UserAvatar::AVATAR_SIZE
+                )
+            );
+        }
+
+        $data = [
+            'avatarName' => $this->parameters['filename'] ?? \basename($this->parameters['fileLocation']),
+            'avatarExtension' => ImageUtil::getExtensionByMimeType($imageData['mime']),
+            'width' => $imageData[0],
+            'height' => $imageData[1],
+            'userID' => $user->userID,
+            'fileHash' => \sha1_file($this->parameters['fileLocation']),
+        ];
+
+        // create avatar
+        $avatar = UserAvatarEditor::create($data);
+
+        try {
+            // check avatar directory
+            // and create subdirectory if necessary
+            $dir = \dirname($avatar->getLocation(null, false));
+            if (!\file_exists($dir)) {
+                FileUtil::makePath($dir);
+            }
+
+            \rename($this->parameters['fileLocation'], $avatar->getLocation(null, false));
+
+            // Create the WebP variant or the JPEG fallback of the avatar.
+            $avatarEditor = new UserAvatarEditor($avatar);
+            if ($avatarEditor->createAvatarVariant()) {
+                $avatar = new UserAvatar($avatar->avatarID);
+            }
+
+            // update user
+            $userEditor = new UserEditor($user->getDecoratedObject());
+            $userEditor->update([
+                'avatarID' => $avatar->avatarID,
+                'enableGravatar' => 0,
+            ]);
+        } catch (\Exception $e) {
+            $editor = new UserAvatarEditor($avatar);
+            $editor->delete();
+
+            throw $e;
+        }
+
+        // delete old avatar
+        if ($user->avatarID) {
+            (new UserAvatarAction([$user->avatarID], 'delete'))->executeAction();
+        }
+
+        // reset user storage
+        UserStorageHandler::getInstance()->reset([$user->userID], 'avatar');
+
+        return [
+            'avatar' => $avatar,
+        ];
+    }
+
+    /**
      * Validates the 'uploadCoverPhoto' method.
      *
      * @throws  PermissionDeniedException
@@ -612,83 +692,6 @@ class UserProfileAction extends UserAction implements IPopoverAction
         $this->uploadFile = $uploadHandler->getFiles()[0];
 
         $uploadHandler->validateFiles(new UserCoverPhotoUploadFileValidationStrategy());
-    }
-
-    /**
-     * Sets an avatar for a given user.
-     *
-     * @throws UserInputException If none or more than one user is given.
-     * @throws \InvalidArgumentException If the given avatar is not an image or is incorrect sized.
-     * @throws \RuntimeException If the avatar could not be saved for any reasons.
-     */
-    public function setAvatar(): array
-    {
-        $user = $this->getSingleObject();
-
-        $imageData = \getimagesize($this->parameters['fileLocation']);
-
-        if (!$imageData) {
-            throw new \InvalidArgumentException("The given file is not an image.");
-        }
-
-        if ($imageData[0] != UserAvatar::AVATAR_SIZE || $imageData[1] != UserAvatar::AVATAR_SIZE) {
-            throw new \InvalidArgumentException(
-                "The given avatar has not the size of " . UserAvatar::AVATAR_SIZE . "×" . UserAvatar::AVATAR_SIZE . "."
-            );
-        }
-
-        $data = [
-            'avatarName' => $this->parameters['filename'] ?? 'avatar',
-            'avatarExtension' => $this->parameters['extension'] ?? ImageUtil::getExtensionByMimeType($imageData['mime']),
-            'width' => $imageData[0],
-            'height' => $imageData[1],
-            'userID' => $user->userID,
-            'fileHash' => \sha1_file($this->parameters['fileLocation']),
-        ];
-
-        // create avatar
-        $avatar = UserAvatarEditor::create($data);
-
-        // check avatar directory
-        // and create subdirectory if necessary
-        $dir = \dirname($avatar->getLocation(null, false));
-        if (!@\file_exists($dir)) {
-            FileUtil::makePath($dir);
-        }
-
-        // move uploaded file
-        if (@\rename($this->parameters['fileLocation'], $avatar->getLocation(null, false))) {
-            // Create the WebP variant or the JPEG fallback of the avatar.
-            $avatarEditor = new UserAvatarEditor($avatar);
-            if ($avatarEditor->createAvatarVariant()) {
-                $avatar = new UserAvatar($avatar->avatarID);
-            }
-
-            // delete old avatar
-            if ($user->avatarID) {
-                (new UserAvatarAction([$user->avatarID], 'delete'))->executeAction();
-            }
-
-            // update user
-            $userEditor = new UserEditor($user->getDecoratedObject());
-            $userEditor->update([
-                'avatarID' => $avatar->avatarID,
-                'enableGravatar' => 0,
-            ]);
-
-            // reset user storage
-            UserStorageHandler::getInstance()->reset([$user->userID], 'avatar');
-        } else {
-            // moving failed; delete avatar
-            $editor = new UserAvatarEditor($avatar);
-            $editor->delete();
-
-            throw new \RuntimeException("Could not save avatar.");
-        }
-
-        return [
-            'avatar' => $avatar,
-        ];
     }
 
     /**
