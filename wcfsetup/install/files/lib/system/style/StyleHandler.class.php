@@ -303,8 +303,8 @@ class StyleHandler extends SingletonFactory
      */
     protected function parseVariables()
     {
-        $content = \file_get_contents(WCF_DIR . 'style/icon/_variables.scss');
-        \preg_match_all('~\$fa-var-([a-z0-9\-]+)~', $content, $matches);
+        $content = \file_get_contents(WCF_DIR . 'style/font-awesome/_variables.scss');
+        \preg_match_all('~\$fa-var-([a-z0-9\-]{2,})~', $content, $matches);
 
         $this->icons = $matches[1];
     }
