@@ -222,7 +222,9 @@
             'version' => 'dev-woltlab-8.3.1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '8.3.1',
+            ),
             'reference' => '2c397c3b29bfaf39e044e044bfcd759f99e67118',
             'dev_requirement' => false,
         ),
