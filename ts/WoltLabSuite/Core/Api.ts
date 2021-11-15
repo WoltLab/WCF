@@ -3,7 +3,12 @@ import * as Core from "./Core";
 import DomChangeListener from "./Dom/Change/Listener";
 
 type Payload = Record<string, unknown>;
-type ResponseData = Record<string, unknown>;
+type ResponseData = {
+  actionName: string;
+  forceBackgroundQueuePerform?: boolean;
+  objectIDs: number[];
+  returnValues: unknown;
+};
 
 export type CallbackFailure = (result: ErrorResult) => boolean;
 
@@ -50,7 +55,7 @@ type RequestBody = {
   parameters?: Payload;
 };
 
-export class Api<TResponseData extends ResponseData> {
+export class Api {
   private readonly actionName: string;
   private readonly className: string;
   private _failure: CallbackFailure | undefined = undefined;
@@ -64,8 +69,8 @@ export class Api<TResponseData extends ResponseData> {
     this.className = className;
   }
 
-  static prepare<TResponseData extends ResponseData>(actionName: string, className: string): Api<TResponseData> {
-    return new Api<TResponseData>(actionName, className);
+  static dboAction(actionName: string, className: string): Api {
+    return new Api(actionName, className);
   }
 
   failure(failure: CallbackFailure): this {
@@ -100,7 +105,7 @@ export class Api<TResponseData extends ResponseData> {
     return this;
   }
 
-  async dispatch(): Promise<TResponseData> {
+  async dispatch(): Promise<unknown> {
     const url = window.WSC_API_URL + "index.php?ajax-proxy/&t=" + Core.getXsrfToken();
 
     const body: RequestBody = {
@@ -119,6 +124,7 @@ export class Api<TResponseData extends ResponseData> {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         "X-Requested-With": "XMLHttpRequest",
+        "X-XSRF-TOKEN": Core.getXsrfToken(),
       },
       body: Core.serialize(body),
       mode: "same-origin",
@@ -154,7 +160,7 @@ export class Api<TResponseData extends ResponseData> {
         return Promise.reject(result);
       }
 
-      let json: TResponseData;
+      let json: ResponseData;
       try {
         json = await response.json();
       } catch (e) {
@@ -165,7 +171,7 @@ export class Api<TResponseData extends ResponseData> {
 
       // This is an explicit wait for the event loop to execute the
       // callee function before we execute additional tasks.
-      return Promise.resolve(json).then(async (result) => {
+      return Promise.resolve(json.returnValues).then(async (result) => {
         if (json.forceBackgroundQueuePerform) {
           const backgroundQueue = await import("./BackgroundQueue");
           backgroundQueue.invoke();
