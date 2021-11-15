@@ -100,12 +100,9 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
                     const result = this.handleError(ErrorCode.INVALID_JSON, response);
                     return Promise.reject(result);
                 }
-                // This is an explicit wait for the event loop to execute the
-                // callee function before we execute additional tasks.
-                return Promise.resolve(json.returnValues).then(async (result) => {
+                return Promise.resolve(json.returnValues).then((result) => {
                     if (json.forceBackgroundQueuePerform) {
-                        const backgroundQueue = await new Promise((resolve_1, reject_1) => { require(["./BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar);
-                        backgroundQueue.invoke();
+                        void new Promise((resolve_1, reject_1) => { require(["./BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
                     }
                     return result;
                 });
@@ -155,11 +152,14 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
         async genericError(result) {
             const html = await this.getErrorHtml(result);
             if (html !== "") {
-                const uiDialog = await new Promise((resolve_2, reject_2) => { require(["./Ui/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar);
-                const domUtil = await new Promise((resolve_3, reject_3) => { require(["./Dom/Util"], resolve_3, reject_3); }).then(tslib_1.__importStar);
-                const language = await new Promise((resolve_4, reject_4) => { require(["./Language"], resolve_4, reject_4); }).then(tslib_1.__importStar);
-                uiDialog.openStatic(domUtil.getUniqueId(), html, {
-                    title: language.get("wcf.global.error.title"),
+                // Load these modules on runtime to avoid circular dependencies.
+                const [UiDialog, DomUtil, Language] = await Promise.all([
+                    new Promise((resolve_2, reject_2) => { require(["./Ui/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar),
+                    new Promise((resolve_3, reject_3) => { require(["./Dom/Util"], resolve_3, reject_3); }).then(tslib_1.__importStar),
+                    new Promise((resolve_4, reject_4) => { require(["./Language"], resolve_4, reject_4); }).then(tslib_1.__importStar),
+                ]);
+                UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+                    title: Language.get("wcf.global.error.title"),
                 });
             }
         }

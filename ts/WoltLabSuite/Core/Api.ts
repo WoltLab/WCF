@@ -169,13 +169,11 @@ export class Api {
         return Promise.reject(result);
       }
 
-      // This is an explicit wait for the event loop to execute the
-      // callee function before we execute additional tasks.
-      return Promise.resolve(json.returnValues).then(async (result) => {
+      return Promise.resolve(json.returnValues).then((result) => {
         if (json.forceBackgroundQueuePerform) {
-          const backgroundQueue = await import("./BackgroundQueue");
-          backgroundQueue.invoke();
+          void import("./BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
         }
+
         return result;
       });
     } catch (error) {
@@ -232,12 +230,14 @@ export class Api {
     const html = await this.getErrorHtml(result);
 
     if (html !== "") {
-      const uiDialog = await import("./Ui/Dialog");
-      const domUtil = await import("./Dom/Util");
-      const language = await import("./Language");
-
-      uiDialog.openStatic(domUtil.getUniqueId(), html, {
-        title: language.get("wcf.global.error.title"),
+      // Load these modules on runtime to avoid circular dependencies.
+      const [UiDialog, DomUtil, Language] = await Promise.all([
+        import("./Ui/Dialog"),
+        import("./Dom/Util"),
+        import("./Language"),
+      ]);
+      UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+        title: Language.get("wcf.global.error.title"),
       });
     }
   }
