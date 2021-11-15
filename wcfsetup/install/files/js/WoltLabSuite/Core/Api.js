@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
             this.actionName = actionName;
             this.className = className;
         }
-        static prepare(actionName, className) {
+        static dboAction(actionName, className) {
             return new Api(actionName, className);
         }
         failure(failure) {
@@ -64,6 +64,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                     "X-Requested-With": "XMLHttpRequest",
+                    "X-XSRF-TOKEN": Core.getXsrfToken(),
                 },
                 body: Core.serialize(body),
                 mode: "same-origin",
@@ -101,7 +102,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
                 }
                 // This is an explicit wait for the event loop to execute the
                 // callee function before we execute additional tasks.
-                return Promise.resolve(json).then(async (result) => {
+                return Promise.resolve(json.returnValues).then(async (result) => {
                     if (json.forceBackgroundQueuePerform) {
                         const backgroundQueue = await new Promise((resolve_1, reject_1) => { require(["./BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar);
                         backgroundQueue.invoke();
