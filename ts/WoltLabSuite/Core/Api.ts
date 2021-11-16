@@ -10,27 +10,6 @@ type ResponseData = {
   returnValues: unknown;
 };
 
-export type CallbackFailure = (result: ErrorResult) => boolean;
-
-export enum ErrorCode {
-  CONNECTION_ERROR = "connection_error",
-  EXPECTED_JSON = "expected_json",
-  INVALID_JSON = "invalid_json",
-  STATUS_NOT_OK = "status_not_ok",
-}
-
-export type ErrorResult =
-  | {
-      code: ErrorCode;
-      error?: never;
-      response: Response;
-    }
-  | {
-      code: ErrorCode;
-      error: any;
-      response?: never;
-    };
-
 type ErrorResponsePrevious = {
   message: string;
   stacktrace: string;
@@ -58,7 +37,6 @@ type RequestBody = {
 export class Api {
   private readonly actionName: string;
   private readonly className: string;
-  private _failure: CallbackFailure | undefined = undefined;
   private _objectIDs: number[] = [];
   private _payload: Payload = {};
   private _showLoadingIndicator = true;
@@ -71,12 +49,6 @@ export class Api {
 
   static dboAction(actionName: string, className: string): Api {
     return new Api(actionName, className);
-  }
-
-  failure(failure: CallbackFailure): this {
-    this._failure = failure;
-
-    return this;
   }
 
   getAbortController(): AbortController {
@@ -148,25 +120,19 @@ export class Api {
       const response = await fetch(url, init);
 
       if (!response.ok) {
-        const result = this.handleError(ErrorCode.STATUS_NOT_OK, response);
-
-        return Promise.reject(result);
+        throw new StatusNotOk(response);
       }
 
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        const result = this.handleError(ErrorCode.EXPECTED_JSON, response);
-
-        return Promise.reject(result);
+        throw new ExpectedJson(response);
       }
 
       let json: ResponseData;
       try {
         json = await response.json();
       } catch (e) {
-        const result = this.handleError(ErrorCode.INVALID_JSON, response);
-
-        return Promise.reject(result);
+        throw new InvalidJson(response);
       }
 
       return Promise.resolve(json.returnValues).then((result) => {
@@ -177,20 +143,12 @@ export class Api {
         return result;
       });
     } catch (error) {
-      const result: ErrorResult = {
-        code: ErrorCode.CONNECTION_ERROR,
-        error,
-      };
-      let suppressError = false;
-      if (typeof this._failure === "function") {
-        suppressError = this._failure(result);
+      if (error instanceof ExpectedJson || error instanceof InvalidJson || error instanceof StatusNotOk) {
+        throw error;
+      } else {
+        // Re-package the error for use in our global "unhandledrejection" handler.
+        throw new ConnectionError(error);
       }
-
-      if (!suppressError) {
-        await this.genericError(result);
-      }
-
-      return Promise.reject(result);
     } finally {
       if (showLoadingIndicator) {
         AjaxStatus.hide();
@@ -208,87 +166,134 @@ export class Api {
       });
     }
   }
+}
 
-  private async handleError(code: ErrorCode, response: Response): Promise<ErrorResult> {
-    const result: ErrorResult = { code, response };
-    if (!this.suppressError(result)) {
-      await this.genericError(result);
+export class ConnectionError extends Error {
+  readonly originalError: unknown;
+
+  constructor(originalError: unknown) {
+    let message = "Unknown error";
+    if (originalError instanceof Error) {
+      message = originalError.message;
     }
 
-    return result;
-  }
+    super(message);
 
-  private suppressError(result: ErrorResult): boolean {
-    if (typeof this._failure === "function") {
-      return this._failure(result);
-    }
-
-    return true;
-  }
-
-  private async genericError(result: ErrorResult): Promise<void> {
-    const html = await this.getErrorHtml(result);
-
-    if (html !== "") {
-      // Load these modules on runtime to avoid circular dependencies.
-      const [UiDialog, DomUtil, Language] = await Promise.all([
-        import("./Ui/Dialog"),
-        import("./Dom/Util"),
-        import("./Language"),
-      ]);
-      UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-        title: Language.get("wcf.global.error.title"),
-      });
-    }
-  }
-
-  private async getErrorHtml(result: ErrorResult): Promise<string> {
-    let details = "";
-    let message = "";
-
-    if (result.error) {
-      message = result.error.toString();
-    } else if (result.response) {
-      if (result.code === ErrorCode.INVALID_JSON) {
-        message = await result.response.text();
-      } else {
-        const json = (await result.response.json()) as ErrorResponse;
-
-        if (Core.isPlainObject(json) && Object.keys(json).length > 0) {
-          if (json.returnValues && json.returnValues.description) {
-            details += `<br><p>Description:</p><p>${json.returnValues.description}</p>`;
-          }
-
-          if (json.file && json.line) {
-            details += `<br><p>File:</p><p>${json.file} in line ${json.line}</p>`;
-          }
-
-          if (json.stacktrace) {
-            details += `<br><p>Stacktrace:</p><p>${json.stacktrace}</p>`;
-          } else if (json.exceptionID) {
-            details += `<br><p>Exception ID: <code>${json.exceptionID}</code></p>`;
-          }
-
-          message = json.message;
-
-          json.previous.forEach((previous) => {
-            details += `<hr><p>${previous.message}</p>`;
-            details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
-          });
-        }
-      }
-    }
-
-    if (!message || message === "undefined") {
-      if (!window.ENABLE_DEBUG_MODE) {
-        return "";
-      }
-
-      message = "fetch() failed without a response body. Check your browser console.";
-    }
-
-    return `<div class="ajaxDebugMessage"><p>${message}</p>${details}</div>`;
+    this.name = "ConnectionError";
+    this.originalError = originalError;
   }
 }
+
+export class StatusNotOk extends Error {
+  readonly response: Response;
+
+  constructor(response: Response) {
+    super("The API request returned a status code outside of the 200-299 range.");
+
+    this.name = "StatusNotOk";
+    this.response = response;
+  }
+}
+
+export class ExpectedJson extends Error {
+  readonly response: Response;
+
+  constructor(response: Response) {
+    super("The API did not return a JSON response.");
+
+    this.name = "ExpectedJson";
+    this.response = response;
+  }
+}
+
+export class InvalidJson extends Error {
+  readonly response: Response;
+
+  constructor(response: Response) {
+    super("Failed to decode the JSON response from the API.");
+
+    this.name = "InvalidJson";
+    this.response = response;
+  }
+}
+
+type ApiError = ConnectionError | ExpectedJson | InvalidJson | StatusNotOk;
+
+async function genericError(error: ApiError): Promise<void> {
+  const html = await getErrorHtml(error);
+
+  if (html !== "") {
+    // Load these modules on runtime to avoid circular dependencies.
+    const [UiDialog, DomUtil, Language] = await Promise.all([
+      import("./Ui/Dialog"),
+      import("./Dom/Util"),
+      import("./Language"),
+    ]);
+    UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+      title: Language.get("wcf.global.error.title"),
+    });
+  }
+}
+
+async function getErrorHtml(error: ApiError): Promise<string> {
+  let details = "";
+  let message = "";
+
+  if (error instanceof ConnectionError) {
+    message = error.message;
+  } else {
+    if (error instanceof InvalidJson) {
+      message = await error.response.text();
+    } else {
+      const json = (await error.response.json()) as ErrorResponse;
+
+      if (Core.isPlainObject(json) && Object.keys(json).length > 0) {
+        if (json.returnValues && json.returnValues.description) {
+          details += `<br><p>Description:</p><p>${json.returnValues.description}</p>`;
+        }
+
+        if (json.file && json.line) {
+          details += `<br><p>File:</p><p>${json.file} in line ${json.line}</p>`;
+        }
+
+        if (json.stacktrace) {
+          details += `<br><p>Stacktrace:</p><p>${json.stacktrace}</p>`;
+        } else if (json.exceptionID) {
+          details += `<br><p>Exception ID: <code>${json.exceptionID}</code></p>`;
+        }
+
+        message = json.message;
+
+        json.previous.forEach((previous) => {
+          details += `<hr><p>${previous.message}</p>`;
+          details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
+        });
+      }
+    }
+  }
+
+  if (!message || message === "undefined") {
+    if (!window.ENABLE_DEBUG_MODE) {
+      return "";
+    }
+
+    message = "fetch() failed without a response body. Check your browser console.";
+  }
+
+  return `<div class="ajaxDebugMessage"><p>${message}</p>${details}</div>`;
+}
+
+window.addEventListener("unhandledrejection", (event) => {
+  if (
+    event.reason instanceof ConnectionError ||
+    event.reason instanceof InvalidJson ||
+    event.reason instanceof StatusNotOk ||
+    event.reason instanceof ExpectedJson
+  ) {
+    event.preventDefault();
+
+    void genericError(event.reason);
+  }
+});
 
 export default Api;
