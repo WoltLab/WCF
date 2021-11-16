@@ -135,13 +135,11 @@ export class Api {
         throw new InvalidJson(response);
       }
 
-      return Promise.resolve(json.returnValues).then((result) => {
-        if (json.forceBackgroundQueuePerform) {
-          void import("./BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
-        }
+      if (json.forceBackgroundQueuePerform) {
+        void import("./BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
+      }
 
-        return result;
-      });
+      return json.returnValues;
     } catch (error) {
       if (error instanceof ExpectedJson || error instanceof InvalidJson || error instanceof StatusNotOk) {
         throw error;

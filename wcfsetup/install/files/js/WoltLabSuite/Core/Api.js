@@ -85,12 +85,10 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
                 catch (e) {
                     throw new InvalidJson(response);
                 }
-                return Promise.resolve(json.returnValues).then((result) => {
-                    if (json.forceBackgroundQueuePerform) {
-                        void new Promise((resolve_1, reject_1) => { require(["./BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
-                    }
-                    return result;
-                });
+                if (json.forceBackgroundQueuePerform) {
+                    void new Promise((resolve_1, reject_1) => { require(["./BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
+                }
+                return json.returnValues;
             }
             catch (error) {
                 if (error instanceof ExpectedJson || error instanceof InvalidJson || error instanceof StatusNotOk) {
