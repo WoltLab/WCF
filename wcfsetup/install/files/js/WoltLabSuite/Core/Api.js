@@ -91,7 +91,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
                 return json.returnValues;
             }
             catch (error) {
-                if (error instanceof ExpectedJson || error instanceof InvalidJson || error instanceof StatusNotOk) {
+                if (error instanceof ApiError) {
                     throw error;
                 }
                 else {
@@ -117,8 +117,8 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
     }
     exports.Api = Api;
     class ApiError extends Error {
-        constructor(message) {
-            super(message);
+        constructor() {
+            super(...arguments);
             this.name = "ApiError";
         }
     }

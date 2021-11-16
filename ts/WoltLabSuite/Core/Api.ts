@@ -141,7 +141,7 @@ export class Api {
 
       return json.returnValues;
     } catch (error) {
-      if (error instanceof ExpectedJson || error instanceof InvalidJson || error instanceof StatusNotOk) {
+      if (error instanceof ApiError) {
         throw error;
       } else {
         // Re-package the error for use in our global "unhandledrejection" handler.
@@ -167,11 +167,7 @@ export class Api {
 }
 
 export class ApiError extends Error {
-  constructor(message: string) {
-    super(message);
-
-    this.name = "ApiError";
-  }
+  name = "ApiError";
 }
 
 export class ConnectionError extends ApiError {
