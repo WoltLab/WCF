@@ -109,7 +109,7 @@ export class Api {
       init.signal = this._signal.signal;
     }
 
-    // Use a local copy to isolte the behavior in case of changes before
+    // Use a local copy to isolate the behavior in case of changes before
     // the request handling has completed.
     const showLoadingIndicator = this._showLoadingIndicator;
     if (showLoadingIndicator) {
@@ -166,7 +166,15 @@ export class Api {
   }
 }
 
-export class ConnectionError extends Error {
+export class ApiError extends Error {
+  constructor(message: string) {
+    super(message);
+
+    this.name = "ApiError";
+  }
+}
+
+export class ConnectionError extends ApiError {
   readonly originalError: unknown;
 
   constructor(originalError: unknown) {
@@ -182,7 +190,7 @@ export class ConnectionError extends Error {
   }
 }
 
-export class StatusNotOk extends Error {
+export class StatusNotOk extends ApiError {
   readonly response: Response;
 
   constructor(response: Response) {
@@ -193,7 +201,7 @@ export class StatusNotOk extends Error {
   }
 }
 
-export class ExpectedJson extends Error {
+export class ExpectedJson extends ApiError {
   readonly response: Response;
 
   constructor(response: Response) {
@@ -204,7 +212,7 @@ export class ExpectedJson extends Error {
   }
 }
 
-export class InvalidJson extends Error {
+export class InvalidJson extends ApiError {
   readonly response: Response;
 
   constructor(response: Response) {
@@ -214,8 +222,6 @@ export class InvalidJson extends Error {
     this.response = response;
   }
 }
-
-type ApiError = ConnectionError | ExpectedJson | InvalidJson | StatusNotOk;
 
 async function genericError(error: ApiError): Promise<void> {
   const html = await getErrorHtml(error);
@@ -242,10 +248,15 @@ async function getErrorHtml(error: ApiError): Promise<string> {
   } else {
     if (error instanceof InvalidJson) {
       message = await error.response.text();
-    } else {
-      const json = (await error.response.json()) as ErrorResponse;
+    } else if (error instanceof ExpectedJson || error instanceof StatusNotOk) {
+      let json: ErrorResponse | undefined = undefined;
+      try {
+        json = await error.response.json();
+      } catch (e) {
+        message = await error.response.text();
+      }
 
-      if (Core.isPlainObject(json) && Object.keys(json).length > 0) {
+      if (json && Core.isPlainObject(json) && Object.keys(json).length > 0) {
         if (json.returnValues && json.returnValues.description) {
           details += `<br><p>Description:</p><p>${json.returnValues.description}</p>`;
         }
@@ -282,12 +293,7 @@ async function getErrorHtml(error: ApiError): Promise<string> {
 }
 
 window.addEventListener("unhandledrejection", (event) => {
-  if (
-    event.reason instanceof ConnectionError ||
-    event.reason instanceof InvalidJson ||
-    event.reason instanceof StatusNotOk ||
-    event.reason instanceof ExpectedJson
-  ) {
+  if (event.reason instanceof ApiError) {
     event.preventDefault();
 
     void genericError(event.reason);

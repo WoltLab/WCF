@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/Listener"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.Api = void 0;
+    exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = exports.Api = void 0;
     AjaxStatus = (0, tslib_1.__importStar)(AjaxStatus);
     Core = (0, tslib_1.__importStar)(Core);
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
@@ -63,7 +63,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
             if (this._signal) {
                 init.signal = this._signal.signal;
             }
-            // Use a local copy to isolte the behavior in case of changes before
+            // Use a local copy to isolate the behavior in case of changes before
             // the request handling has completed.
             const showLoadingIndicator = this._showLoadingIndicator;
             if (showLoadingIndicator) {
@@ -116,7 +116,14 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
         }
     }
     exports.Api = Api;
-    class ConnectionError extends Error {
+    class ApiError extends Error {
+        constructor(message) {
+            super(message);
+            this.name = "ApiError";
+        }
+    }
+    exports.ApiError = ApiError;
+    class ConnectionError extends ApiError {
         constructor(originalError) {
             let message = "Unknown error";
             if (originalError instanceof Error) {
@@ -128,7 +135,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
         }
     }
     exports.ConnectionError = ConnectionError;
-    class StatusNotOk extends Error {
+    class StatusNotOk extends ApiError {
         constructor(response) {
             super("The API request returned a status code outside of the 200-299 range.");
             this.name = "StatusNotOk";
@@ -136,7 +143,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
         }
     }
     exports.StatusNotOk = StatusNotOk;
-    class ExpectedJson extends Error {
+    class ExpectedJson extends ApiError {
         constructor(response) {
             super("The API did not return a JSON response.");
             this.name = "ExpectedJson";
@@ -144,7 +151,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
         }
     }
     exports.ExpectedJson = ExpectedJson;
-    class InvalidJson extends Error {
+    class InvalidJson extends ApiError {
         constructor(response) {
             super("Failed to decode the JSON response from the API.");
             this.name = "InvalidJson";
@@ -176,9 +183,15 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
             if (error instanceof InvalidJson) {
                 message = await error.response.text();
             }
-            else {
-                const json = (await error.response.json());
-                if (Core.isPlainObject(json) && Object.keys(json).length > 0) {
+            else if (error instanceof ExpectedJson || error instanceof StatusNotOk) {
+                let json = undefined;
+                try {
+                    json = await error.response.json();
+                }
+                catch (e) {
+                    message = await error.response.text();
+                }
+                if (json && Core.isPlainObject(json) && Object.keys(json).length > 0) {
                     if (json.returnValues && json.returnValues.description) {
                         details += `<br><p>Description:</p><p>${json.returnValues.description}</p>`;
                     }
@@ -208,10 +221,7 @@ define(["require", "exports", "tslib", "./Ajax/Status", "./Core", "./Dom/Change/
         return `<div class="ajaxDebugMessage"><p>${message}</p>${details}</div>`;
     }
     window.addEventListener("unhandledrejection", (event) => {
-        if (event.reason instanceof ConnectionError ||
-            event.reason instanceof InvalidJson ||
-            event.reason instanceof StatusNotOk ||
-            event.reason instanceof ExpectedJson) {
+        if (event.reason instanceof ApiError) {
             event.preventDefault();
             void genericError(event.reason);
         }
