@@ -7,12 +7,13 @@
  * @module  Ajax (alias)
  * @module  WoltLabSuite/Core/Ajax
  */
-define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (require, exports, tslib_1, Request_1, Core) {
+define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAction"], function (require, exports, tslib_1, Request_1, Core, DboAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getRequestObject = exports.apiOnce = exports.api = void 0;
+    exports.dboAction = exports.getRequestObject = exports.apiOnce = exports.api = void 0;
     Request_1 = (0, tslib_1.__importDefault)(Request_1);
     Core = (0, tslib_1.__importStar)(Core);
+    DboAction_1 = (0, tslib_1.__importDefault)(DboAction_1);
     const _cache = new WeakMap();
     /**
      * Shorthand function to perform a request against the WCF-API with overrides
@@ -83,4 +84,13 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core"], function (re
         return _cache.get(callbackObject);
     }
     exports.getRequestObject = getRequestObject;
+    /**
+     * Prepares a new requests to a `wcf\\data\\DatabaseObjectAction` action.
+     *
+     * @since 5.5
+     */
+    function dboAction(actionName, className) {
+        return DboAction_1.default.prepare(actionName, className);
+    }
+    exports.dboAction = dboAction;
 });
