@@ -14,21 +14,18 @@ namespace wcf\system\database\table\index;
  * @package WoltLabSuite\Core\System\Database\Table\Index
  * @since   5.2
  */
-class DatabaseTablePrimaryIndex extends DatabaseTableIndex
+final class DatabaseTablePrimaryIndex
 {
     /**
-     * Returns a `PrimaryDatabaseTableIndex` object with `PRIMARY` as name and primary as type.
-     *
-     * @inheritDoc
-     * @return  $this
+     * Returns a `DatabaseTableIndex` object with `PRIMARY` as name and primary as type.
      */
-    public static function create($name = '')
+    public static function create()
     {
-        if (!empty($name)) {
-            throw new \LogicException('The primary index cannot be assigned a name.');
-        }
+        return DatabaseTableIndex::create('PRIMARY')
+            ->type(DatabaseTableIndex::PRIMARY_TYPE);
+    }
 
-        return parent::create('PRIMARY')
-            ->type(static::PRIMARY_TYPE);
+    private function __construct()
+    {
     }
 }
