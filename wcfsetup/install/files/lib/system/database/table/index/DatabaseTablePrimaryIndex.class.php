@@ -19,7 +19,7 @@ final class DatabaseTablePrimaryIndex
     /**
      * Returns a `DatabaseTableIndex` object with `PRIMARY` as name and primary as type.
      */
-    public static function create()
+    public static function create(): DatabaseTableIndex
     {
         return DatabaseTableIndex::create('PRIMARY')
             ->type(DatabaseTableIndex::PRIMARY_TYPE);

@@ -13,10 +13,7 @@ namespace wcf\system\database\table\column;
  */
 final class NotNullVarchar255DatabaseTableColumn
 {
-    /**
-     * @inheritDoc
-     */
-    public static function create($name)
+    public static function create($name): IDatabaseTableColumn
     {
         return VarcharDatabaseTableColumn::create($name)
             ->notNull()

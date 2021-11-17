@@ -16,10 +16,7 @@ namespace wcf\system\database\table\column;
  */
 final class ObjectIdDatabaseTableColumn
 {
-    /**
-     * @inheritDoc
-     */
-    public static function create($name)
+    public static function create($name): IDatabaseTableColumn
     {
         return NotNullInt10DatabaseTableColumn::create($name)
             ->autoIncrement();
