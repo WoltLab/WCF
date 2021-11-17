@@ -18,7 +18,9 @@ final class ObjectIdDatabaseTableColumn
 {
     public static function create($name): IDatabaseTableColumn
     {
-        return NotNullInt10DatabaseTableColumn::create($name)
+        return IntDatabaseTableColumn::create($name)
+            ->notNull()
+            ->length(10)
             ->autoIncrement();
     }
 
