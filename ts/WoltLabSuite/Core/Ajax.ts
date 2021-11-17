@@ -11,6 +11,7 @@
 import AjaxRequest from "./Ajax/Request";
 import { AjaxCallbackObject, CallbackSuccess, CallbackFailure, RequestData, RequestOptions } from "./Ajax/Data";
 import * as Core from "./Core";
+import DboAction from "./Ajax/DboAction";
 
 const _cache = new WeakMap();
 
@@ -96,4 +97,13 @@ export function getRequestObject(callbackObject: AjaxCallbackObject): AjaxReques
   }
 
   return _cache.get(callbackObject);
+}
+
+/**
+ * Prepares a new requests to a `wcf\\data\\DatabaseObjectAction` action.
+ *
+ * @since 5.5
+ */
+export function dboAction(actionName: string, className: string): DboAction {
+  return DboAction.prepare(actionName, className);
 }
