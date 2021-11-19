@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "./CountButtons"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, CountButtons_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "./CountButtons", "../../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, CountButtons_1, EventHandler) {
     "use strict";
     Ajax = (0, tslib_1.__importStar)(Ajax);
     Core = (0, tslib_1.__importStar)(Core);
@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     CountButtons_1 = (0, tslib_1.__importDefault)(CountButtons_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     const availableReactions = Object.values(window.REACTION_TYPES);
     class UiReactionHandler {
         /**
@@ -50,6 +51,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             Listener_1.default.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
             this.callbackFocus = (event) => this.maintainFocus(event);
+            EventHandler.add("WoltLabSuite/Core/Ui/Reaction/Handler", `update_${objectType}`, (data) => {
+                this._update(data);
+            });
         }
         /**
          * Initializes all applicable react buttons with the given selector.
@@ -363,10 +367,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             });
             this._closePopover();
         }
+        /**
+         * Function to update the reaction button and stats
+         */
+        _update(data) {
+            const objectId = ~~data.objectID;
+            this.countButtons.updateCountButtons(objectId, data.reactions);
+            this._updateReactButton(objectId, data.reactionTypeID);
+        }
         _ajaxSuccess(data) {
-            const objectId = ~~data.returnValues.objectID;
-            this.countButtons.updateCountButtons(objectId, data.returnValues.reactions);
-            this._updateReactButton(objectId, data.returnValues.reactionTypeID);
+            this._update(data.returnValues);
         }
         _ajaxSetup() {
             return {
