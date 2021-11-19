@@ -114,7 +114,7 @@ class UiReactionHandler {
 
     this.callbackFocus = (event: Event) => this.maintainFocus(event);
     
-    EventHandler.add("WoltLabSuite/Core/Ui/Reaction/Handler", "update_" + this._objectType, (data) => {
+    EventHandler.add("WoltLabSuite/Core/Ui/Reaction/Handler", `update_${objectType}`, (data) => {
       this._update(data);
     });
   }
@@ -503,7 +503,7 @@ class UiReactionHandler {
   }
 
   _ajaxSuccess(data: AjaxResponse): void {
-    this._update(data.returnValues as ReactionUpdateData)
+    this._update(data.returnValues as ReactionUpdateData);
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
