@@ -17,6 +17,7 @@ import * as UiAlignment from "../Alignment";
 import UiCloseOverlay from "../CloseOverlay";
 import * as UiScreen from "../Screen";
 import CountButtons from "./CountButtons";
+import * as EventHandler from "../../Event/Handler";
 import { Reaction, ReactionStats } from "./Data";
 
 interface ReactionHandlerOptions {
@@ -33,6 +34,12 @@ interface ReactionHandlerOptions {
     };
     reactionTypeID?: number;
   };
+}
+
+interface ReactionUpdateData {
+  objectID: number;
+  reactions: ReactionStats;
+  reactionTypeID: number;
 }
 
 interface ElementData {
@@ -106,6 +113,10 @@ class UiReactionHandler {
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
 
     this.callbackFocus = (event: Event) => this.maintainFocus(event);
+    
+    EventHandler.add("WoltLabSuite/Core/Ui/Reaction/Handler", "update_" + this._objectType, (data) => {
+      this._update(data);
+    });
   }
 
   /**
@@ -481,11 +492,18 @@ class UiReactionHandler {
     this._closePopover();
   }
 
-  _ajaxSuccess(data: AjaxResponse): void {
-    const objectId = ~~data.returnValues.objectID;
-    this.countButtons.updateCountButtons(objectId, data.returnValues.reactions);
+  /**
+   * Function to update the reaction button and stats
+   */
+  protected _update(data: ReactionUpdateData): void {
+    const objectId = ~~data.objectID;
+    this.countButtons.updateCountButtons(objectId, data.reactions);
 
-    this._updateReactButton(objectId, data.returnValues.reactionTypeID);
+    this._updateReactButton(objectId, data.reactionTypeID);
+  }
+
+  _ajaxSuccess(data: AjaxResponse): void {
+    this._update(data.returnValues as ReactionUpdateData)
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
