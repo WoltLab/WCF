@@ -113,7 +113,7 @@ class UiReactionHandler {
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
 
     this.callbackFocus = (event: Event) => this.maintainFocus(event);
-    
+
     EventHandler.add("WoltLabSuite/Core/Ui/Reaction/Handler", `update_${objectType}`, (data) => {
       this._update(data);
     });
