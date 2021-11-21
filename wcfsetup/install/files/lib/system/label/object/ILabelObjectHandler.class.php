@@ -65,7 +65,7 @@ interface ILabelObjectHandler
      *
      * @param int[] $objectIDs
      * @param bool $validatePermissions
-     * @return  Label[]
+     * @return  Label[][]
      */
     public function getAssignedLabels(array $objectIDs, $validatePermissions = true);
 }
