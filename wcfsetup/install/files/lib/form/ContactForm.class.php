@@ -100,12 +100,7 @@ class ContactForm extends AbstractCaptchaForm
             $this->tmpHash = $_REQUEST['tmpHash'];
         }
         if (empty($this->tmpHash)) {
-            $this->tmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
-            if ($this->tmpHash === null) {
-                $this->tmpHash = StringUtil::getRandomID();
-            } else {
-                WCF::getSession()->unregister('__wcfAttachmentTmpHash');
-            }
+            $this->tmpHash = StringUtil::getRandomID();
         }
     }
 
