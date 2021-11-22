@@ -93,14 +93,4 @@ interface IFormFieldDependency
      * @return  string      id of the dependency
      */
     public function getId();
-
-    /**
-     * Creates a new dependency with the given id.
-     *
-     * @param string $id id of the created dependency
-     * @return  static              newly created dependency
-     *
-     * @throws  \InvalidArgumentException   if the given id is invalid
-     */
-    public static function create($id);
 }

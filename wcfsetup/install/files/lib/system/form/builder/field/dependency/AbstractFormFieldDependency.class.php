@@ -170,8 +170,12 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
     }
 
     /**
-     * @inheritDoc
-     * @return  static
+     * Creates a new dependency with the given id.
+     *
+     * @param string $id id of the created dependency
+     * @return  static              newly created dependency
+     *
+     * @throws  \InvalidArgumentException   if the given id is invalid
      */
     public static function create($id)
     {

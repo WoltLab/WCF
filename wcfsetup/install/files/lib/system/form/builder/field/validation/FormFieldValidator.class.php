@@ -81,7 +81,11 @@ class FormFieldValidator implements IFormFieldValidator
     }
 
     /**
-     * @inheritDoc
+     * Checks if the given parameter is a and a valid validator id.
+     *
+     * @param mixed $id checked id
+     *
+     * @throws  \InvalidArgumentException   if the given id is invalid
      */
     public static function validateId($id)
     {
