@@ -122,6 +122,33 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					data.tmpHashes.push(tmpHash);
 				}
 			}).bind(this));
+
+			const form = this._fileListSelector[0].closest("form");
+			if (form) {
+				// Read any cached `tmpHash` values from the autosave feature.
+				const metaData = {};
+				form.dataset.attachmentTmpHashes = "";
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
+				if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
+					// Caching the values here preserves them from the removal
+					// caused by the automated cleanup that runs on form submit
+					// and is bound before our event listener.
+					form.dataset.attachmentTmpHashes = metaData.tmpHashes.join(',');
+				}
+
+				form.addEventListener("submit", (event) => {
+					let tmpHash = this._tmpHash
+					if (form.dataset.attachmentTmpHashes) {
+						tmpHash += `,${form.dataset.attachmentTmpHashes}`;
+					}
+					
+
+					const input = form.querySelector('input[name="tmpHash"]');
+					if (input) {
+						input.value = tmpHash;
+					}
+				});
+			}
 			
 			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, (function (data) {
 				var images = this._getImageAttachments();
