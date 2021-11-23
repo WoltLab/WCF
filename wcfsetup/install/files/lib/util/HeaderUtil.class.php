@@ -161,18 +161,9 @@ final class HeaderUtil
         // move script tags to the bottom of the page
         $javascript = [];
         self::$output = \preg_replace_callback(
-            '~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?</script>\s*)(?P<conditionAfter><!\[ENDIF]-->\s*)?~s',
+            '~<script data-relocate="true"(?P<script>.*?</script>)\s*~s',
             static function ($matches) use (&$javascript) {
-                $match = '';
-                if (isset($matches['conditionBefore'])) {
-                    $match .= $matches['conditionBefore'];
-                }
-                $match .= '<script' . $matches['script'];
-                if (isset($matches['conditionAfter'])) {
-                    $match .= $matches['conditionAfter'];
-                }
-
-                $javascript[] = $match;
+                $javascript[] = '<script' . $matches['script'];
 
                 return '';
             },
