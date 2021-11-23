@@ -313,9 +313,7 @@ class QuickReplyManager extends SingletonFactory
     }
 
     /**
-     * Stores tmpHash in current session, used in combination with the extended form.
-     *
-     * @param string $tmpHash
+     * @deprecated 5.5 The concept of starting a message in a simple editor and then migrating to an extended editor no longer exists.
      */
     public function setTmpHash($tmpHash)
     {

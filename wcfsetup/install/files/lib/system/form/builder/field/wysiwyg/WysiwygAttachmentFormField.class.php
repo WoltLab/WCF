@@ -67,6 +67,7 @@ class WysiwygAttachmentFormField extends AbstractFormField
             if ($this->attachmentHandler === null) {
                 $tmpHash = StringUtil::getRandomID();
                 if ($this->getDocument()->isAjax()) {
+                    /** @deprecated 5.5 see QuickReplyManager::setTmpHash() */
                     $sessionTmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
                     if ($sessionTmpHash !== null) {
                         $tmpHash = $sessionTmpHash;

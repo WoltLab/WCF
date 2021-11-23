@@ -132,6 +132,7 @@ abstract class MessageForm extends AbstractCaptchaForm
             $this->tmpHash = $_REQUEST['tmpHash'];
         }
         if (empty($this->tmpHash)) {
+            /** @deprecated 5.5 see QuickReplyManager::setTmpHash() */
             $this->tmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
             if ($this->tmpHash === null) {
                 $this->tmpHash = StringUtil::getRandomID();
