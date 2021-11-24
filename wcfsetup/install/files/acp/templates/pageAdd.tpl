@@ -106,12 +106,12 @@
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.page.contents{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('boxes')}">{lang}wcf.acp.box.list{/lang}</a></li>
+				<li><a href="#general">{lang}wcf.global.form.data{/lang}</a></li>
+				<li><a href="#contents">{lang}wcf.acp.page.contents{/lang}</a></li>
+				<li><a href="#boxes">{lang}wcf.acp.box.list{/lang}</a></li>
 
 				{if $action != 'edit' || $page->pageType != 'system'}
-					<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
+					<li><a href="#acl">{lang}wcf.acl.access{/lang}</a></li>
 				{/if}
 
 				{event name='tabMenuTabs'}

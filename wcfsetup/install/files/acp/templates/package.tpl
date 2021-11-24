@@ -27,9 +27,9 @@
 <div class="section tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
-			<li><a href="{@$__wcf->getAnchor('information')}">{lang}wcf.acp.package.information.title{/lang}</a></li>
+			<li><a href="#information">{lang}wcf.acp.package.information.title{/lang}</a></li>
 			{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-				<li><a href="{@$__wcf->getAnchor('dependencies')}">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>
+				<li><a href="#dependencies">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>
 			{/if}
 			
 			{event name='tabMenuTabs'}
@@ -93,10 +93,10 @@
 			<nav class="menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
-						<li><a href="{@$__wcf->getAnchor('dependencies-required')}">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
+						<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
 					{/if}
 					{if $package->getDependentPackages()|count}
-						<li><a href="{@$__wcf->getAnchor('dependencies-dependent')}">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
+						<li><a href="#dependencies-dependent">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
 					{/if}
 					
 					{event name='dependenciesSubTabMenuTabs'}

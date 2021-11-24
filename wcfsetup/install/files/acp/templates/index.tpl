@@ -48,9 +48,9 @@
 <div class="section tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}system{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
-			{if ENABLE_WOLTLAB_NEWS}<li><a href="{@$__wcf->getAnchor('news')}">{lang}wcf.acp.index.news{/lang}</a></li>{/if}
-			<li><a href="{@$__wcf->getAnchor('system')}">{lang}wcf.acp.index.system{/lang}</a></li>
-			<li><a href="{@$__wcf->getAnchor('credits')}">{lang}wcf.acp.index.credits{/lang}</a></li>
+			{if ENABLE_WOLTLAB_NEWS}<li><a href="#news">{lang}wcf.acp.index.news{/lang}</a></li>{/if}
+			<li><a href="#system">{lang}wcf.acp.index.system{/lang}</a></li>
+			<li><a href="#credits">{lang}wcf.acp.index.credits{/lang}</a></li>
 			
 			{event name='tabMenuTabs'}
 		</ul>

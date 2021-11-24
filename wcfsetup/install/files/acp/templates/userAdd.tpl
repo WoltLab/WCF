@@ -178,19 +178,19 @@
 	<div class="section tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('__essentials')}">{lang}wcf.global.form.data{/lang}</a></li>
+				<li><a href="#__essentials">{lang}wcf.global.form.data{/lang}</a></li>
 
 				{foreach from=$optionTree item=categoryLevel1}
 					<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 
 				{if MODULE_USER_SIGNATURE}
-					<li><a href="{@$__wcf->getAnchor('signatureManagement')}">{lang}wcf.user.signature{/lang}</a></li>
+					<li><a href="#signatureManagement">{lang}wcf.user.signature{/lang}</a></li>
 				{/if}
 
 				{if $action === 'edit'}
-					<li><a href="{@$__wcf->getAnchor('avatarForm')}">{lang}wcf.user.avatar{/lang}</a></li>
-					<li><a href="{@$__wcf->getAnchor('coverPhotoForm')}">{lang}wcf.user.coverPhoto{/lang}</a></li>
+					<li><a href="#avatarForm">{lang}wcf.user.avatar{/lang}</a></li>
+					<li><a href="#coverPhotoForm">{lang}wcf.user.coverPhoto{/lang}</a></li>
 				{/if}
 
 				{event name='tabMenuTabs'}

@@ -39,8 +39,8 @@
 	<div class="section tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('connect')}">{lang}wcf.acp.label.group.category.connect{/lang}</a></li>
+				<li><a href="#general">{lang}wcf.global.form.data{/lang}</a></li>
+				<li><a href="#connect">{lang}wcf.acp.label.group.category.connect{/lang}</a></li>
 			</ul>
 		</nav>
 		
