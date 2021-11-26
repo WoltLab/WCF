@@ -78,7 +78,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 			
 			// is link
 			//var $el = this.link.is();
-			var $el = $link;
+			var $el = $link || false;
 			
 			// build link
 			if (hasSelectedText) this.selection.restore();
