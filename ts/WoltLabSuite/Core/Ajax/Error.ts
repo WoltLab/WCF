@@ -51,13 +51,13 @@ async function getErrorHtml(error: ApiError): Promise<string> {
     message = error.message;
   } else {
     if (error instanceof InvalidJson) {
-      message = await error.response.text();
+      message = await error.response.clone().text();
     } else if (error instanceof ExpectedJson || error instanceof StatusNotOk) {
       let json: ErrorResponse | undefined = undefined;
       try {
-        json = await error.response.json();
+        json = await error.response.clone().json();
       } catch (e) {
-        message = await error.response.text();
+        message = await error.response.clone().text();
       }
 
       if (json && Core.isPlainObject(json) && Object.keys(json).length > 0) {
