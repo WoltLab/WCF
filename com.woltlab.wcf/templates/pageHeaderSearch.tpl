@@ -26,7 +26,7 @@
 			<div class="pageHeaderSearchType dropdown">
 				<a href="#" class="button dropdownToggle"><span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span></a>
 				<ul class="dropdownMenu">
-					<li><a href="#" data-extended-link="{link controller='Search'}{/link}" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
+					<li><a href="#" data-extended-link="{link controller='Search'}extended=1{/link}" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 					<li class="dropdownDivider"></li>
 					
 					{hascontent}
@@ -44,7 +44,7 @@
 					{/foreach}
 					
 					<li class="dropdownDivider"></li>
-					<li><a class="pageHeaderSearchExtendedLink" href="{@$__searchLink}">{lang}wcf.search.extended{/lang}</a></li>
+					<li><a class="pageHeaderSearchExtendedLink" href="{link controller='Search'}extended=1{/link}">{lang}wcf.search.extended{/lang}</a></li>
 				</ul>
 			</div>
 			

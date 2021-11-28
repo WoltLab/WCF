@@ -4514,6 +4514,8 @@ Dateianhänge:
 		<item name="wcf.search.type.keywords"><![CDATA[Suche nach Begriffen]]></item>
 		<item name="wcf.search.type.tags"><![CDATA[Suche nach Tags]]></item>
 		<item name="wcf.search.type.tags.popular"><![CDATA[Beliebte Tags]]></item>
+		<item name="wcf.search.results.title"><![CDATA[{plural value=$count one='Ein Ergebnis' other='# Ergebnisse'}{if $query} für „{@$query}“{/if}]]></item>
+		<item name="wcf.search.button.showMoreFilters"><![CDATA[Erweiterte Filter]]></item>
 	</category>
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>

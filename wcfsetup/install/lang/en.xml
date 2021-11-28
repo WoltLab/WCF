@@ -4516,6 +4516,8 @@ Attachments:
 		<item name="wcf.search.type.keywords"><![CDATA[Search by Terms]]></item>
 		<item name="wcf.search.type.tags"><![CDATA[Search by Tags]]></item>
 		<item name="wcf.search.type.tags.popular"><![CDATA[Popular Tags]]></item>
+		<item name="wcf.search.results.title"><![CDATA[{plural value=$count one='One Result' other='# Results'}{if $query} for “{@$query}”{/if}]]></item>
+		<item name="wcf.search.button.showMoreFilters"><![CDATA[Advanced filters]]></item>
 	</category>
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Change Style]]></item>

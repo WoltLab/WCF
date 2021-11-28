@@ -1,62 +1,77 @@
 {include file='header' __disableAds=true}
 
-{include file='formError'}
+<style>
+	.searchBar {
+		display: grid;
+		grid-template-columns: 60% 20% auto;
+		column-gap: 20px;
+	}
 
-{if $errorMessage|isset}
-	<p class="error" role="alert">{@$errorMessage}</p>
-{/if}
+	.searchShowMoreFiltersButton {
+		cursor: pointer;
+		user-select: none;
+	}
 
-<form method="post" action="{link controller='Search'}{/link}">
-	<div class="section tabMenuContainer staticTabMenuContainer">
-		<nav class="tabMenu">
-			<ul>
-				<li class="active"><a href="{link controller='Search'}{/link}">{lang}wcf.search.type.keywords{/lang}</a></li>
-				{if MODULE_TAGGING && $__wcf->session->getPermission('user.tag.canViewTag')}<li><a href="{link controller='TagSearch'}{/link}">{lang}wcf.search.type.tags{/lang}</a></li>{/if}
-				
-				{event name='tabMenuTabs'}
-			</ul>
-		</nav>
+	.searchFiltersContainer {
+		margin-top: 20px;
+	}
+
+	.searchFilters {
+	    margin-top: 20px;
+	}
+
+	.searchFilters {
+		columns: 2;
+	}
+
+	.searchFilters > :is(div, dl) {
+    	break-inside: avoid-column;
+	}
+</style>
+
+<form id="extendedSearchForm">
+	<div class="section">
+		<div class="searchBar">
+			<input id="searchQuery" class="searchQuery long" type="text" name="q" value="" maxlength="255" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autofocus>
+			<select id="searchType" class="searchType" name="type" aria-label="wcf.search.type">
+				<option value="">{lang}wcf.search.type.everywhere{/lang}</option>
+				{foreach from=$objectTypes key=objectTypeName item=objectType}
+					{if $objectType->isAccessible()}
+						<option value="{@$objectTypeName}">{lang}wcf.search.type.{@$objectTypeName}{/lang}</option>
+					{/if}
+				{/foreach}
+			</select>
+			<button class="searchButton button buttonPrimary">{lang}wcf.global.search{/lang}</button>
+		</div>
+
+		<details class="searchFiltersContainer"{if $extended} open{/if}>
+			<summary class="searchShowMoreFiltersButton">{lang}wcf.search.button.showMoreFilters{/lang}</summary>
 		
-		<div class="tabMenuContent">
-			<div class="section">
-				<dl{if $errorField == 'q'} class="formError"{/if}>
-					<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
+			<div class="searchFilters defaultSearchFilters">
+				<dl>
+					<dt></dt>
 					<dd>
-						<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus>
-						{if $errorField == 'q'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.search.query.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked{/if}> {lang}wcf.search.subjectOnly{/lang}</label>
-						{event name='queryOptions'}
-						
-						<small>{lang}wcf.search.query.description{/lang}</small>
+						<label><input type="checkbox" name="subjectOnly" value="1"> {lang}wcf.search.subjectOnly{/lang}</label>
+						{* deprecated *}{event name='queryOptions'}
 					</dd>
 				</dl>
 				
 				<dl>
 					<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
 					<dd>
-						<input type="text" id="searchAuthor" name="username" value="{$username}" class="medium" maxlength="255" autocomplete="off">
-						<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked{/if}> {lang}wcf.search.matchExactly{/lang}</label>
-						{event name='authorOptions'}
+						<input type="text" id="searchAuthor" name="username" value="" class="medium" maxlength="255" autocomplete="off">
+						<label><input type="checkbox" name="nameExactly" value="1"> {lang}wcf.search.matchExactly{/lang}</label>
+						{* deprecated *}{event name='authorOptions'}
 					</dd>
 				</dl>
-				
 				<dl>
 					<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
 					<dd>
-						<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}">
-						<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}">
-						{event name='periodOptions'}
+						<input type="date" id="startDate" name="startDate" value="" data-placeholder="{lang}wcf.date.period.start{/lang}">
+						<input type="date" id="endDate" name="endDate" value="" data-placeholder="{lang}wcf.date.period.end{/lang}">
+						{* deprecated *}{event name='periodOptions'}
 					</dd>
 				</dl>
-				
 				<dl>
 					<dt><label for="sortField">{lang}wcf.search.sortBy{/lang}</label></dt>
 					<dd>
@@ -71,61 +86,33 @@
 							<option value="ASC"{if $sortOrder == 'ASC'} selected{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
 							<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 						</select>
-						
-						{event name='displayOptions'}
+						{* deprecated *}{event name='displayOptions'}
 					</dd>
 				</dl>
 				
-				{event name='generalFields'}
-				
-				<dl>
-					<dt>{lang}wcf.search.type{/lang}</dt>
-					<dd class="floated">
-						{foreach from=$objectTypes key=objectTypeName item=objectType}
-							{if $objectType->isAccessible()}
-								<label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked{/if}> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label>
-							{/if}
-						{/foreach}
-					</dd>
-				</dl>
+				{* deprecated *}{event name='generalFields'}
+				{event name='searchFilters'}
 			</div>
-				
-			{event name='sections'}
-				
+
 			{foreach from=$objectTypes key=objectTypeName item=objectType}
 				{if $objectType->isAccessible() && $objectType->getFormTemplateName()}
-					{assign var='__jsID' value='.'|str_replace:'_':$objectTypeName}
-					<section class="section" id="{@$__jsID}Form">
-						<h2 class="sectionTitle">{lang}wcf.search.type.{@$objectTypeName}{/lang}</h2>
-						
+					<div class="searchFilters objectTypeSearchFilters" data-object-type="{$objectTypeName}" hidden>
 						{include file=$objectType->getFormTemplateName() application=$objectType->getApplication()}
-						
-						<script data-relocate="true">
-							$(function() {
-								$('#{@$__jsID}').click(function() {
-									if (this.checked) $('#{@$__jsID}Form').wcfFadeIn();
-									else $('#{@$__jsID}Form').wcfFadeOut();
-								});
-								{if !$objectTypeName|in_array:$selectedObjectTypes}$('#{@$__jsID}Form').hide();{/if}
-							});
-						</script>
-					</section>
+					</div>
 				{/if}
 			{/foreach}
-			
-			{include file='captcha' supportsAsyncCaptcha=true}
-			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-				{csrfToken}
-			</div>
-		</div>
+		</details>
 	</div>
 </form>
+
+<div id="searchResultContainer"></div>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('searchAuthor'));
+	});
+	require(['WoltLabSuite/Core/Ui/Search/Extended'], (UiSearchExtended) => {
+		new UiSearchExtended();
 	});
 </script>
 
