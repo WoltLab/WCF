@@ -82,10 +82,11 @@
 			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
-				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
+				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}" data-title="Benachrichtigungen">
 					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
+						/*
 							$(function() {
 								new WCF.User.Panel.Notification({
 									noItems: '{jslang}wcf.user.notification.noMoreNotifications{/jslang}',
@@ -94,6 +95,8 @@
 									title: '{jslang}wcf.user.notification.notifications{/jslang}'
 								});
 							});
+						*/
+							require(["WoltLabSuite/Core/Ui/User/Menu/DropDown"], (UiUserMenuDropDown) => UiUserMenuDropDown.setup());
 						</script>
 					{/if}
 				</li>

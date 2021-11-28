@@ -2,9 +2,13 @@
 
 namespace wcf\data\user\notification;
 
+use wcf\action\NotificationConfirmAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\user\UserProfile;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -202,6 +206,58 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             'template' => WCF::getTPL()->fetch('notificationListUserPanel'),
             'totalCount' => $notifications['notificationCount'],
         ];
+    }
+
+    public function validateGetNotificationData(): void
+    {
+    }
+
+    public function getNotificationData(): array
+    {
+        $data = UserNotificationHandler::getInstance()->getMixedNotifications();
+        if ($data['count'] === 0) {
+            return [];
+        }
+
+        $notifications = [];
+        foreach ($data['notifications'] as $notificationData) {
+            $notificationID = $notificationData['notificationID'];
+
+            /** @var IUserNotificationEvent $event */
+            $event = $notificationData['event'];
+
+            if ($notificationData['authors'] === 1) {
+                $image = $event->getAuthor()->getAvatar()->getImageTag(48);
+            } else {
+                $image = '<span class="icon icon48 fa-users"></span>';
+            }
+
+
+            if ($event->isConfirmed()) {
+                $link = $event->getLink();
+            } else {
+                $link = LinkHandler::getInstance()->getControllerLink(
+                    NotificationConfirmAction::class,
+                    ['id' => $notificationID]
+                );
+            }
+
+            $usernames = array_map(static function (UserProfile $userProfile) {
+                return $userProfile->getFormattedUsername();
+            }, $event->getAuthors());
+
+            $notifications[] = [
+                'content' => $event->getMessage(),
+                'image' => $image,
+                'isUnread' => !$event->isConfirmed(),
+                'link' => $link,
+                'objectId' => $notificationID,
+                'time' => $notificationData['time'],
+                'usernames' => $usernames,
+            ];
+        }
+
+        return $notifications;
     }
 
     /**
