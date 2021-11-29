@@ -4511,7 +4511,6 @@ Dateianhänge:
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Seite]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
-		<item name="wcf.search.type.keywords"><![CDATA[Suche nach Begriffen]]></item>
 		<item name="wcf.search.type.tags"><![CDATA[Suche nach Tags]]></item>
 		<item name="wcf.search.type.tags.popular"><![CDATA[Beliebte Tags]]></item>
 		<item name="wcf.search.results.title"><![CDATA[{plural value=$count one='Ein Ergebnis' other='# Ergebnisse'}{if $query} für „{@$query}“{/if}]]></item>
@@ -5578,5 +5577,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 	<item name="wcf.acp.option.enable_censorship"/>
 	<item name="wcf.acp.option.enable_censorship.description"/>
+	<item name="wcf.search.type.keywords" />
 </delete>
 </language>

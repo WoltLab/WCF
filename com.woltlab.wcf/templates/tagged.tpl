@@ -40,6 +40,10 @@
 	{pages print=true assign=pagesLinks controller='Tagged' object=$tag link="objectType=$objectType&pageNo=%d"}
 {/capture}
 
+{capture assign='contentInteractionButtons'}
+	<a href="{link controller='TagSearch'}{/link}" class="contentInteractionButton button small">{lang}wcf.search.type.tags{/lang}</a>
+{/capture}
+
 {include file='header'}
 
 {if $items}
