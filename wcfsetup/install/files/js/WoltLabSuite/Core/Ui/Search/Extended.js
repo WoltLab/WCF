@@ -41,11 +41,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastRequest = request.getAbortController();
             const { count, searchID, title, template } = (await request.dispatch());
+            document.querySelector(".contentTitle").textContent = title;
+            while (this.form.nextSibling !== null) {
+                this.form.parentElement.removeChild(this.form.nextSibling);
+            }
             if (count > 0) {
-                document.querySelector(".contentTitle").textContent = title;
                 const fragment = DomUtil.createFragmentFromHtml(template);
-                const marker = document.getElementById("searchResultContainer");
-                marker.parentElement.insertBefore(fragment, marker);
+                this.form.parentElement.appendChild(fragment);
             }
         }
         getFormData() {

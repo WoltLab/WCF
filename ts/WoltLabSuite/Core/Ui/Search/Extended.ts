@@ -4,8 +4,8 @@ import UiSearchInput from "./Input";
 
 type ResponseSearch = {
   count: number;
+  title: string;
   searchID?: number;
-  title?: string;
   template?: string;
 };
 
@@ -59,12 +59,15 @@ class UISearchExtended {
     const request = dboAction("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
     this.lastRequest = request.getAbortController();
     const { count, searchID, title, template } = (await request.dispatch()) as ResponseSearch;
+    document.querySelector(".contentTitle")!.textContent = title;
+    
+    while (this.form.nextSibling !== null) {
+      this.form.parentElement!.removeChild(this.form.nextSibling);
+    }
+    
     if (count > 0) {
-      document.querySelector(".contentTitle")!.textContent = title!;
       const fragment = DomUtil.createFragmentFromHtml(template!);
-
-      const marker = document.getElementById("searchResultContainer")!;
-      marker.parentElement!.insertBefore(fragment, marker);
+      this.form.parentElement!.appendChild(fragment);
     }
   }
 

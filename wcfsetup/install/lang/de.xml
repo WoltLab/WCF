@@ -4512,7 +4512,7 @@ Dateianhänge:
 		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
 		<item name="wcf.search.type.tags"><![CDATA[Suche nach Tags]]></item>
 		<item name="wcf.search.type.tags.popular"><![CDATA[Beliebte Tags]]></item>
-		<item name="wcf.search.results.title"><![CDATA[{plural value=$count one='Ein Ergebnis' other='# Ergebnisse'}{if $query} für „{@$query}“{/if}]]></item>
+		<item name="wcf.search.results.title"><![CDATA[{plural value=$count 0='Keine Ergebnisse' one='Ein Ergebnis' other='# Ergebnisse'}{if $query} für „{@$query}“{/if}]]></item>
 		<item name="wcf.search.button.showMoreFilters"><![CDATA[Erweiterte Filter]]></item>
 	</category>
 	<category name="wcf.style">

@@ -57,6 +57,10 @@ class SearchAction extends AbstractDatabaseObjectAction
         if ($search === null) {
             return [
                 'count' => 0,
+                'title' => WCF::getLanguage()->getDynamicVariable('wcf.search.results.title', [
+                    'count' => 0,
+                    'query' => $this->parameters['q'] ?? '',
+                ]),
             ];
         }
 
@@ -71,11 +75,11 @@ class SearchAction extends AbstractDatabaseObjectAction
 
         return [
             'count' => $resultHandler->countSearchResults(),
-            'searchID' => $search->searchID,
             'title' => WCF::getLanguage()->getDynamicVariable('wcf.search.results.title', [
                 'count' => $resultHandler->countSearchResults(),
                 'query' => $resultHandler->getQuery(),
             ]),
+            'searchID' => $search->searchID,
             'template' => WCF::getTPL()->fetch('searchResultList'),
         ];
     }

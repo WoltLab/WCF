@@ -105,8 +105,6 @@
 	</div>
 </form>
 
-<div id="searchResultContainer"></div>
-
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('searchAuthor'));
