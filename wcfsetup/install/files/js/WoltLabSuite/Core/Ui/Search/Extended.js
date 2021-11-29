@@ -1,17 +1,29 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util"], function (require, exports, tslib_1, Ajax_1, DomUtil) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"], function (require, exports, tslib_1, Ajax_1, DomUtil, Input_1) {
     "use strict";
     DomUtil = (0, tslib_1.__importStar)(DomUtil);
+    Input_1 = (0, tslib_1.__importDefault)(Input_1);
     class UISearchExtended {
         constructor() {
             this.lastRequest = undefined;
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
+            this.initEventListener();
+            this.initKeywordSuggestions();
+        }
+        initEventListener() {
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
                 this.search();
             });
             this.typeInput.addEventListener("change", () => this.changeType());
+        }
+        initKeywordSuggestions() {
+            new Input_1.default(this.queryInput, {
+                ajax: {
+                    className: "wcf\\data\\search\\keyword\\SearchKeywordAction",
+                },
+            });
         }
         changeType() {
             document.querySelectorAll(".objectTypeSearchFilters").forEach((filter) => {

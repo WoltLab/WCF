@@ -1,6 +1,6 @@
 import { dboAction } from "../../Ajax";
-import * as Language from "../../Language";
 import * as DomUtil from "../../Dom/Util";
+import UiSearchInput from "./Input";
 
 type ResponseSearch = {
   count: number;
@@ -20,11 +20,24 @@ class UISearchExtended {
     this.queryInput = document.getElementById("searchQuery") as HTMLInputElement;
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
 
+    this.initEventListener();
+    this.initKeywordSuggestions();
+  }
+
+  private initEventListener(): void {
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
       this.search();
     });
     this.typeInput.addEventListener("change", () => this.changeType());
+  }
+
+  private initKeywordSuggestions(): void {
+    new UiSearchInput(this.queryInput, {
+      ajax: {
+        className: "wcf\\data\\search\\keyword\\SearchKeywordAction",
+      },
+    });
   }
 
   private changeType(): void {

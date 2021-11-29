@@ -32,7 +32,7 @@
 <form id="extendedSearchForm">
 	<div class="section">
 		<div class="searchBar">
-			<input id="searchQuery" class="searchQuery long" type="text" name="q" value="" maxlength="255" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autofocus>
+			<input id="searchQuery" class="searchQuery long" type="text" name="q" value="" maxlength="255" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" autofocus>
 			<select id="searchType" class="searchType" name="type" aria-label="wcf.search.type">
 				<option value="">{lang}wcf.search.type.everywhere{/lang}</option>
 				{foreach from=$objectTypes key=objectTypeName item=objectType}
