@@ -92,11 +92,6 @@ class SearchForm extends AbstractCaptchaForm
     public $username = '';
 
     /**
-     * @inheritDoc
-     */
-    public $useCaptcha = SEARCH_USE_CAPTCHA;
-
-    /**
      * parameters used for previous search
      * @var array
      */

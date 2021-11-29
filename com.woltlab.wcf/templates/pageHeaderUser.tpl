@@ -268,15 +268,8 @@
 		{/if}
 		
 		<!-- page search -->
-		{if !SEARCH_USE_CAPTCHA || $__wcf->user->userID}
-			<li class="jsOnly">
-				<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
-			</li>
-		{else}
-			<li>
-				<a href="{link controller='Search'}{/link}" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
-				<span id="userPanelSearchButton" style="display: none"></span>
-			</li>
-		{/if}
+		<li class="jsOnly">
+			<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+		</li>
 	</ul>
 </nav>

@@ -492,6 +492,9 @@ class WCF
         // The censorship module is fully configured by the censored_words option since 5.5.
         // If this option is empty, no censorship will be performed.
         \define('ENABLE_CENSORSHIP', 1);
+
+        // The captcha option related to the removed SearchForm was removed in 5.5.
+        \define('SEARCH_USE_CAPTCHA', 0);
     }
 
     /**
