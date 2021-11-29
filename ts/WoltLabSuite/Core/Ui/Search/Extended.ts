@@ -13,12 +13,14 @@ class UISearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
   private readonly typeInput: HTMLSelectElement;
+  private readonly usernameInput: HTMLInputElement;
   private lastRequest: AbortController | undefined = undefined;
 
   constructor() {
     this.form = document.getElementById("extendedSearchForm") as HTMLFormElement;
     this.queryInput = document.getElementById("searchQuery") as HTMLInputElement;
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
+    this.usernameInput = document.getElementById("searchAuthor") as HTMLInputElement;
 
     this.initEventListener();
     this.initKeywordSuggestions();
@@ -47,6 +49,10 @@ class UISearchExtended {
   }
 
   private async search(): Promise<void> {
+    if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
+      return;
+    }
+
     if (this.lastRequest) {
       this.lastRequest.abort();
     }

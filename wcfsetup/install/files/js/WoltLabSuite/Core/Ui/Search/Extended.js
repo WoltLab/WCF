@@ -8,6 +8,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
+            this.usernameInput = document.getElementById("searchAuthor");
             this.initEventListener();
             this.initKeywordSuggestions();
         }
@@ -31,6 +32,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
             });
         }
         async search() {
+            if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
+                return;
+            }
             if (this.lastRequest) {
                 this.lastRequest.abort();
             }
