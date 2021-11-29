@@ -109,14 +109,39 @@ export class UserMenuDataNotification implements UserMenuProvider {
     this.button = document.getElementById("userNotifications");
 
     if (this.button) {
-      const badge = this.button.querySelector(".badge");
+      const badge = this.button.querySelector<HTMLElement>(".badge");
       if (badge) {
         const counter = parseInt(badge.textContent!.trim());
         if (counter) {
           updateUnreadCounter(counter);
         }
       }
+
+      // TODO: Migrate this!
+      window.WCF.System.PushNotification.addCallback("userNotificationCount", (count: number) =>
+        this.updateUserNotificationCount(count, badge),
+      );
     }
+  }
+
+  private updateUserNotificationCount(count: number, badge: HTMLElement | null): void {
+    // TODO: Reset the view
+
+    // TODO: This should be part of `View.ts`?
+    if (badge === null && count > 0) {
+      badge = document.createElement("span");
+      badge.classList.add("badge badgeUpdate");
+
+      this.button?.querySelector("a")!.append(badge);
+    }
+
+    if (count > 0) {
+      badge!.textContent = count.toString();
+    } else if (badge) {
+      badge.remove();
+    }
+
+    updateUnreadCounter(count);
   }
 
   getButtons(): UserMenuButton[] {

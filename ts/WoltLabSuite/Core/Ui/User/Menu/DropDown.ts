@@ -2,6 +2,7 @@ import { UserMenuDataNotification } from "./Data/Notification";
 import { UserMenuProvider } from "./Data/Provider";
 import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
+import CloseOverlay from "../../CloseOverlay";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -16,12 +17,21 @@ function init(): void {
 
     button.addEventListener("click", (event) => {
       event.preventDefault();
+      event.stopPropagation();
 
       const view = getView(provider);
       void view.open();
 
       const element = view.getElement();
       Alignment.set(element, button, { horizontal: "right" });
+    });
+  });
+
+  CloseOverlay.add("WoltLabSuite/Ui/User/Menu", () => {
+    providers.forEach((provider) => {
+      if (views.has(provider)) {
+        getView(provider).close();
+      }
     });
   });
 }

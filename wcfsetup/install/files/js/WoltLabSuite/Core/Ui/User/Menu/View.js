@@ -19,8 +19,12 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         }
         async open() {
             this.reset();
+            this.element.hidden = false;
             const data = await this.provider.getData();
             this.setContent(data);
+        }
+        close() {
+            this.element.hidden = true;
         }
         setContent(data) {
             const content = this.getContent();
@@ -76,6 +80,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             content.innerHTML = `<span class="userMenuContentStatus">TODO: Loading…</span>`;
         }
         buildElement() {
+            this.element.hidden = true;
             this.element.classList.add("userMenu");
             this.element.dataset.origin = this.provider.getPanelButtonId();
             this.element.innerHTML = `
@@ -85,6 +90,10 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
       </div>
       <div class="userMenuContent"></div>
     `;
+            // Prevent clicks inside the dialog to close it.
+            this.element.addEventListener("click", (event) => {
+                event.stopPropagation();
+            });
             const buttons = this.element.querySelector(".userMenuButtons");
             this.provider.getButtons().forEach((button) => {
                 buttons.append(this.buildButton(button));

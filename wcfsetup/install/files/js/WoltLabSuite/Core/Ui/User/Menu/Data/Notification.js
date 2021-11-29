@@ -97,7 +97,26 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function 
                         updateUnreadCounter(counter);
                     }
                 }
+                // TODO: Migrate this!
+                window.WCF.System.PushNotification.addCallback("userNotificationCount", (count) => this.updateUserNotificationCount(count, badge));
             }
+        }
+        updateUserNotificationCount(count, badge) {
+            // TODO: Reset the view
+            var _a;
+            // TODO: This should be part of `View.ts`?
+            if (badge === null && count > 0) {
+                badge = document.createElement("span");
+                badge.classList.add("badge badgeUpdate");
+                (_a = this.button) === null || _a === void 0 ? void 0 : _a.querySelector("a").append(badge);
+            }
+            if (count > 0) {
+                badge.textContent = count.toString();
+            }
+            else if (badge) {
+                badge.remove();
+            }
+            updateUnreadCounter(count);
         }
         getButtons() {
             return [

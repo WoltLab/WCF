@@ -1,9 +1,10 @@
-define(["require", "exports", "tslib", "./Data/Notification", "./View", "../../Alignment"], function (require, exports, tslib_1, Notification_1, View_1, Alignment) {
+define(["require", "exports", "tslib", "./Data/Notification", "./View", "../../Alignment", "../../CloseOverlay"], function (require, exports, tslib_1, Notification_1, View_1, Alignment, CloseOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     View_1 = (0, tslib_1.__importDefault)(View_1);
     Alignment = (0, tslib_1.__importStar)(Alignment);
+    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     let container = undefined;
     const providers = new Set();
     const views = new Map();
@@ -15,10 +16,18 @@ define(["require", "exports", "tslib", "./Data/Notification", "./View", "../../A
             }
             button.addEventListener("click", (event) => {
                 event.preventDefault();
+                event.stopPropagation();
                 const view = getView(provider);
                 void view.open();
                 const element = view.getElement();
                 Alignment.set(element, button, { horizontal: "right" });
+            });
+        });
+        CloseOverlay_1.default.add("WoltLabSuite/Ui/User/Menu", () => {
+            providers.forEach((provider) => {
+                if (views.has(provider)) {
+                    getView(provider).close();
+                }
             });
         });
     }

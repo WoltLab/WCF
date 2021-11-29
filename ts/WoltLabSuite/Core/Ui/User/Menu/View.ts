@@ -28,9 +28,15 @@ export class UserMenuView {
   async open(): Promise<void> {
     this.reset();
 
+    this.element.hidden = false;
+
     const data = await this.provider.getData();
 
     this.setContent(data);
+  }
+
+  close(): void {
+    this.element.hidden = true;
   }
 
   private setContent(data: UserMenuData[]): void {
@@ -102,6 +108,7 @@ export class UserMenuView {
   }
 
   private buildElement(): void {
+    this.element.hidden = true;
     this.element.classList.add("userMenu");
     this.element.dataset.origin = this.provider.getPanelButtonId();
     this.element.innerHTML = `
@@ -111,6 +118,11 @@ export class UserMenuView {
       </div>
       <div class="userMenuContent"></div>
     `;
+
+    // Prevent clicks inside the dialog to close it.
+    this.element.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
 
     const buttons = this.element.querySelector(".userMenuButtons")!;
     this.provider.getButtons().forEach((button) => {
