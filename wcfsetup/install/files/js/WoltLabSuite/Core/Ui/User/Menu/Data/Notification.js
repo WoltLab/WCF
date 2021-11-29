@@ -88,6 +88,16 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function 
     class UserMenuDataNotification {
         constructor() {
             this.view = undefined;
+            this.button = document.getElementById("userNotifications");
+            if (this.button) {
+                const badge = this.button.querySelector(".badge");
+                if (badge) {
+                    const counter = parseInt(badge.textContent.trim());
+                    if (counter) {
+                        updateUnreadCounter(counter);
+                    }
+                }
+            }
         }
         getButtons() {
             return [

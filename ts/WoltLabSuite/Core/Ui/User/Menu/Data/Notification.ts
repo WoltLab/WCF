@@ -102,7 +102,22 @@ function drawCounter(ctx: CanvasRenderingContext2D, counter: string): void {
 }
 
 export class UserMenuDataNotification implements UserMenuProvider {
+  private readonly button: HTMLElement | null;
   private view: UserMenuView | undefined = undefined;
+
+  constructor() {
+    this.button = document.getElementById("userNotifications");
+
+    if (this.button) {
+      const badge = this.button.querySelector(".badge");
+      if (badge) {
+        const counter = parseInt(badge.textContent!.trim());
+        if (counter) {
+          updateUnreadCounter(counter);
+        }
+      }
+    }
+  }
 
   getButtons(): UserMenuButton[] {
     return [
