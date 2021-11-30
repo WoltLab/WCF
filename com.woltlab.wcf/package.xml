@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.15</version> <!-- codename: hurricane -->
-		<date>2021-08-31</date>
+		<version>5.2.16</version> <!-- codename: hurricane -->
+		<date>2021-11-30</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -108,11 +108,10 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.2.14">
+	<instructions type="update" fromversion="5.2.15">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
 		
-		<instruction type="language" />
+		<instruction type="language"/>
 	</instructions>
 </package>
