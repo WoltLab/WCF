@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.9 dev 2</version>
-		<date>2021-11-22</date>
+		<version>5.4.9</version>
+		<date>2021-11-30</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -49,8 +49,19 @@
 		
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
-	
-	<instructions type="update" fromversion="5.4.9 dev 1">
+
+	<instructions type="update" fromversion="5.4.8">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language"/>
+		
+		<instruction type="mediaProvider"/>
+		<instruction type="option"/>
+	</instructions>
+	
+	<instructions type="update" fromversion="5.4.9 dev 2">
+		<void/>
 	</instructions>
 </package>
