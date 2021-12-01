@@ -127,6 +127,10 @@ class SystemCheckPage extends AbstractPage
             'result' => false,
             'version' => '0.0.0',
             'foreignKeys' => false,
+            'bufferPool' => [
+                'result' => false,
+                'value' => '0',
+            ],
         ],
         'php' => [
             'gd' => [
@@ -279,10 +283,27 @@ class SystemCheckPage extends AbstractPage
 
         $this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() == $expectedForeignKeyCount;
 
+        $sql = "SELECT  @@innodb_buffer_pool_size";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute();
+        $this->results['mysql']['bufferPool']['value'] = $statement->fetchSingleColumn();
+        if ($this->results['mysql']['bufferPool']['value'] > 134217728) {
+            // More than 134217728 bytes indicates that the web hoster at
+            // the very least touched the MySQL configuration once.
+            $this->results['mysql']['bufferPool']['result'] = 'recommended';
+        } elseif ($this->results['mysql']['bufferPool']['value'] == 134217728) {
+            // The default of 134217728 bytes is okay, but the web hoster did not care.
+            $this->results['mysql']['bufferPool']['result'] = 'sufficient';
+        } else {
+            // The web hoster messed up the configuration.
+            $this->results['mysql']['bufferPool']['result'] = false;
+        }
+
         if (
             $this->results['mysql']['result']
             && $this->results['mysql']['innodb']
             && $this->results['mysql']['foreignKeys']
+            && $this->results['mysql']['bufferPool']['result']
         ) {
             $this->results['status']['mysql'] = true;
         }

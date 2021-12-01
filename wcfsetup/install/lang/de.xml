@@ -2806,6 +2806,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[Die kryptographische Funktion SHA-256 wird für den sicheren Betrieb der Software benötigt.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB verfügbar]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB unter MariaDB) ist eine transaktionale Storage-Engine von MySQL und wird zwingend für den Betrieb benötigt. Dies ist eine Standardfunktion von MySQL.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Bufferpool-Größe]]></item>
+		<item name="wcf.acp.systemCheck.mysql.bufferPool.description"><![CDATA[Der Bufferpool ist der Ort an dem die gespeicherten Daten im Arbeitsspeicher vorgehalten werden und wird von allen Kunden des Datenbankservers geteilt. Der Bufferpool muss mindestens 128 MiB groß sein, damit auch komplexe Datenbankabfragen verarbeitet werden können. Um Wartezeit durch Festplattenzugriffe zu vermeiden, sollte der Bufferpool allerdings in Abhängigkeit von der Hardware viel größer konfiguriert werden.]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Beschreibbare Verzeichnisse]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Einige Verzeichnisse werden zur Laufzeit durch die Software beschrieben, der PHP-Benutzer muss Schreibrechte haben.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Unterstützte Formate der GD-Bibliothek]]></item>
