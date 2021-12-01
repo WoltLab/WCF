@@ -1993,6 +1993,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		Der Fremdschlüssel {$error[tableName]} ({$error[columnNames]}) referenziert eine unbekannte Tabelle {$error[referencedTableName]}.
 	{else if $error[type] === 'duplicateColumnInIndex'}
 		Der Index {$error[tableName]} ({$error[columnNames]}) enthält doppelte Spalten.
+	{else if $error[type] === 'primaryNotCalledPrimary'}
+		Der Primärindex {$error[tableName]} ({$error[columnNames]}) heißt nicht 'PRIMARY'.
 	{else}
 		Unbekannter Fehler.
 	{/if}
