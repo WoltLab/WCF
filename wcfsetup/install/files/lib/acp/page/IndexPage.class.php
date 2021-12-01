@@ -38,14 +38,10 @@ class IndexPage extends AbstractPage
     {
         parent::readData();
 
-        $sql = "SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit'";
+        $sql = "SELECT @@innodb_flush_log_at_trx_commit";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
-        $row = $statement->fetchArray();
-        $innodbFlushLogAtTrxCommit = false;
-        if ($row !== false) {
-            $innodbFlushLogAtTrxCommit = $row['Value'];
-        }
+        $innodbFlushLogAtTrxCommit = $statement->fetchSingleColumn();
 
         $this->server = [
             'os' => \PHP_OS,
