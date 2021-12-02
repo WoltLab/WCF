@@ -1,7 +1,6 @@
 //noinspection JSUnresolvedVariable
 requirejs.config({
 	paths: {
-		favico: '3rdParty/favico',
 		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
 		'Pica': '3rdParty/pica',
 		'pica': '3rdParty/pica',
@@ -17,7 +16,6 @@ requirejs.config({
 		main: "lib/codemirror"
 	}],
 	shim: {
-		favico: { exports: 'Favico' },
 		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
 		'qr-creator': { exports: 'QrCreator' },
 	},

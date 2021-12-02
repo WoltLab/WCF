@@ -34,10 +34,7 @@
 			const path = module.require('path');
 			
 			if (global.allModules === undefined) {
-				global.allModules = [
-					// https://github.com/WoltLab/WCF/issues/4198
-					'favico'
-				];
+				global.allModules = [];
 				
 				var queue = ['WoltLabSuite'];
 				var folder;
