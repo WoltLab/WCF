@@ -1,8 +1,9 @@
-define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener) {
+define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
     DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
+    Language = (0, tslib_1.__importStar)(Language);
     class UserMenuView {
         constructor(provider) {
             this.provider = provider;
@@ -10,27 +11,36 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             this.buildElement();
             this.markAllAsReadButton = this.buildButton({
                 icon: '<span class="icon icon24 fa-check"></span>',
+                link: "#",
                 name: "markAllAsRead",
-                title: "TODO: Mark all as read",
+                title: Language.get("wcf.user.panel.markAllAsRead"),
             });
         }
         getElement() {
             return this.element;
         }
         async open() {
-            this.reset();
-            this.element.hidden = false;
-            const data = await this.provider.getData();
-            this.setContent(data);
+            if (this.provider.isStale()) {
+                this.reset();
+                this.element.hidden = false;
+                const data = await this.provider.getData();
+                this.setContent(data);
+            }
+            else {
+                this.element.hidden = false;
+            }
         }
         close() {
             this.element.hidden = true;
+        }
+        getItems() {
+            return Array.from(this.getContent().querySelectorAll(".userMenuItem"));
         }
         setContent(data) {
             const content = this.getContent();
             this.markAllAsReadButton.remove();
             if (data.length === 0) {
-                content.innerHTML = `<span class="userMenuContentStatus">TODO: Nothing to see here.</span>`;
+                content.innerHTML = `<span class="userMenuContentStatus">${this.provider.getEmptyViewMessage()}</span>`;
             }
             else {
                 let hasUnreadContent = false;
@@ -52,6 +62,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         createItem(itemData) {
             const element = document.createElement("div");
             element.classList.add("userMenuItem");
+            element.dataset.objectId = itemData.objectId.toString();
             element.dataset.isUnread = itemData.isUnread ? "true" : "false";
             const link = (0, StringUtil_1.escapeHTML)(itemData.link);
             element.innerHTML = `
@@ -62,16 +73,16 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
       <div class="userMenuItemTime"></div>
       <div class="userMenuItemUnread">
         <a href="#" class="userMenuItemMarkAsRead" role="button">
-          <span class="icon icon24 fa-check jsTooltip" title="TODO: Mark as read"></span>
+          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.user.panel.markAsRead")}"></span>
         </a>
       </div>
     `;
             const time = (0, Util_1.getTimeElement)(new Date(itemData.time * 1000));
             element.querySelector(".userMenuItemTime").append(time);
             const markAsRead = element.querySelector(".userMenuItemMarkAsRead");
-            markAsRead.addEventListener("click", (event) => {
+            markAsRead.addEventListener("click", async (event) => {
                 event.preventDefault();
-                // TODO
+                await this.provider.markAsRead(itemData.objectId);
                 element.dataset.isUnread = "false";
             });
             return element;
@@ -110,31 +121,26 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             link.classList.add("userMenuButton", "jsTooltip");
             link.title = button.title;
             link.innerHTML = button.icon;
-            if (button.link) {
-                link.href = button.link;
-            }
-            else {
+            if (button.name === "markAllAsRead") {
                 link.href = "#";
                 link.addEventListener("click", (event) => {
                     event.preventDefault();
-                    this.onButtonClick(button.name);
+                    this.markAllAsRead();
                 });
+            }
+            else {
+                link.href = button.link;
             }
             return link;
         }
-        onButtonClick(name) {
-            if (name === "markAllAsRead") {
-                void this.provider.markAllAsRead();
-                this.getContent()
-                    .querySelectorAll(".userMenuItem")
-                    .forEach((element) => {
-                    element.dataset.isUnread = "false";
-                });
-                this.markAllAsReadButton.remove();
-            }
-            else {
-                this.provider.onButtonClick(name);
-            }
+        markAllAsRead() {
+            void this.provider.markAllAsRead();
+            this.getContent()
+                .querySelectorAll(".userMenuItem")
+                .forEach((element) => {
+                element.dataset.isUnread = "false";
+            });
+            this.markAllAsReadButton.remove();
         }
         buildFooter(footer) {
             const link = (0, StringUtil_1.escapeHTML)(footer.link);

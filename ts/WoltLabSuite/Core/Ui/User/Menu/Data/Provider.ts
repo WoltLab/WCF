@@ -2,7 +2,7 @@ import UserMenuView from "../View";
 
 export type UserMenuButton = {
   icon: string;
-  link?: string;
+  link: string;
   name: string;
   title: string;
 };
@@ -15,6 +15,8 @@ export type UserMenuFooter = {
 export interface UserMenuProvider {
   getData(): Promise<UserMenuData[]>;
 
+  getEmptyViewMessage(): string;
+
   getFooter(): UserMenuFooter | null;
 
   getMenuButtons(): UserMenuButton[];
@@ -25,9 +27,11 @@ export interface UserMenuProvider {
 
   getView(): UserMenuView;
 
-  markAllAsRead(): Promise<void>;
+  isStale(): boolean;
 
-  onButtonClick(name: string): void;
+  markAsRead(objectId: number): Promise<void>;
+
+  markAllAsRead(): Promise<void>;
 }
 
 export type UserMenuData = {

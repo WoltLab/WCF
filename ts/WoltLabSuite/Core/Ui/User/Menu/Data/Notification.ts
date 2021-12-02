@@ -4,7 +4,7 @@ import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "
 import { registerProvider } from "../DropDown";
 
 let originalFavicon = "";
-function updateUnreadCounter(counter: number): void {
+function setFaviconCounter(counter: number): void {
   const favicon = document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
   if (!favicon) {
     return;
@@ -103,6 +103,7 @@ function drawCounter(ctx: CanvasRenderingContext2D, counter: string): void {
 }
 
 type Options = {
+  noItems: string;
   settingsLink: string;
   settingsTitle: string;
   showAllLink: string;
@@ -110,9 +111,16 @@ type Options = {
   title: string;
 };
 
+type ResponseMarkAsRead = {
+  markAsRead: number;
+  totalCount: number;
+};
+
 class UserMenuDataNotification implements UserMenuProvider {
   private readonly button: HTMLElement;
+  private counter = 0;
   private readonly options: Options;
+  private stale = true;
   private view: UserMenuView | undefined = undefined;
 
   constructor(button: HTMLElement, options: Options) {
@@ -123,34 +131,15 @@ class UserMenuDataNotification implements UserMenuProvider {
     if (badge) {
       const counter = parseInt(badge.textContent!.trim());
       if (counter) {
-        updateUnreadCounter(counter);
+        setFaviconCounter(counter);
+        this.counter = counter;
       }
     }
 
     // TODO: Migrate this!
-    window.WCF.System.PushNotification.addCallback("userNotificationCount", (count: number) =>
-      this.updateUserNotificationCount(count, badge),
+    window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter: number) =>
+      this.updateCounter(counter),
     );
-  }
-
-  private updateUserNotificationCount(count: number, badge: HTMLElement | null): void {
-    // TODO: Reset the view
-
-    // TODO: This should be part of `View.ts`?
-    if (badge === null && count > 0) {
-      badge = document.createElement("span");
-      badge.classList.add("badge badgeUpdate");
-
-      this.button?.querySelector("a")!.append(badge);
-    }
-
-    if (count > 0) {
-      badge!.textContent = count.toString();
-    } else if (badge) {
-      badge.remove();
-    }
-
-    updateUnreadCounter(count);
   }
 
   getPanelButton(): HTMLElement {
@@ -175,7 +164,9 @@ class UserMenuDataNotification implements UserMenuProvider {
     ).dispatch()) as UserMenuData[];
 
     const counter = data.filter((item) => item.isUnread).length;
-    updateUnreadCounter(counter);
+    this.updateCounter(counter);
+
+    this.stale = false;
 
     return data;
   }
@@ -199,12 +190,59 @@ class UserMenuDataNotification implements UserMenuProvider {
     return this.view;
   }
 
+  getEmptyViewMessage(): string {
+    return this.options.noItems;
+  }
+
+  isStale(): boolean {
+    if (this.stale) {
+      return true;
+    }
+
+    const unreadItems = this.getView()
+      .getItems()
+      .filter((item) => item.dataset.isUnread === "true");
+    if (this.counter !== unreadItems.length) {
+      return true;
+    }
+
+    return false;
+  }
+
+  async markAsRead(objectId: number): Promise<void> {
+    const response = (await dboAction("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
+      .objectIds([objectId])
+      .dispatch()) as ResponseMarkAsRead;
+
+    this.updateCounter(response.totalCount);
+  }
+
   async markAllAsRead(): Promise<void> {
     await dboAction("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
   }
 
-  onButtonClick(name: string): void {
-    console.log("Clicked on", name);
+  private updateCounter(counter: number): void {
+    // TODO: Reset the view?
+
+    let badge = this.button.querySelector<HTMLElement>(".badge");
+    if (badge === null && counter > 0) {
+      badge = document.createElement("span");
+      badge.classList.add("badge badgeUpdate");
+
+      this.button.querySelector("a")!.append(badge);
+    }
+
+    if (badge) {
+      if (counter === 0) {
+        badge.remove();
+      } else {
+        badge.textContent = counter.toString();
+      }
+    }
+
+    setFaviconCounter(counter);
+
+    this.counter = counter;
   }
 }
 

@@ -1,8 +1,7 @@
-define(["require", "exports", "tslib", "./View", "../../Alignment", "../../CloseOverlay"], function (require, exports, tslib_1, View_1, Alignment, CloseOverlay_1) {
+define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay"], function (require, exports, tslib_1, Alignment, CloseOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerProvider = void 0;
-    View_1 = (0, tslib_1.__importDefault)(View_1);
     Alignment = (0, tslib_1.__importStar)(Alignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     let container = undefined;
@@ -54,7 +53,7 @@ define(["require", "exports", "tslib", "./View", "../../Alignment", "../../Close
     }
     function getView(provider) {
         if (!views.has(provider)) {
-            const view = new View_1.default(provider);
+            const view = provider.getView();
             getContainer().append(view.getElement());
             views.set(provider, view);
         }

@@ -4,7 +4,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDo
     exports.setup = void 0;
     View_1 = (0, tslib_1.__importDefault)(View_1);
     let originalFavicon = "";
-    function updateUnreadCounter(counter) {
+    function setFaviconCounter(counter) {
         const favicon = document.querySelector('link[rel="shortcut icon"]');
         if (!favicon) {
             return;
@@ -87,6 +87,8 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDo
     }
     class UserMenuDataNotification {
         constructor(button, options) {
+            this.counter = 0;
+            this.stale = true;
             this.view = undefined;
             this.button = button;
             this.options = options;
@@ -94,28 +96,12 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDo
             if (badge) {
                 const counter = parseInt(badge.textContent.trim());
                 if (counter) {
-                    updateUnreadCounter(counter);
+                    setFaviconCounter(counter);
+                    this.counter = counter;
                 }
             }
             // TODO: Migrate this!
-            window.WCF.System.PushNotification.addCallback("userNotificationCount", (count) => this.updateUserNotificationCount(count, badge));
-        }
-        updateUserNotificationCount(count, badge) {
-            // TODO: Reset the view
-            var _a;
-            // TODO: This should be part of `View.ts`?
-            if (badge === null && count > 0) {
-                badge = document.createElement("span");
-                badge.classList.add("badge badgeUpdate");
-                (_a = this.button) === null || _a === void 0 ? void 0 : _a.querySelector("a").append(badge);
-            }
-            if (count > 0) {
-                badge.textContent = count.toString();
-            }
-            else if (badge) {
-                badge.remove();
-            }
-            updateUnreadCounter(count);
+            window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter) => this.updateCounter(counter));
         }
         getPanelButton() {
             return this.button;
@@ -133,7 +119,8 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDo
         async getData() {
             const data = (await (0, Ajax_1.dboAction)("getNotificationData", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch());
             const counter = data.filter((item) => item.isUnread).length;
-            updateUnreadCounter(counter);
+            this.updateCounter(counter);
+            this.stale = false;
             return data;
         }
         getFooter() {
@@ -151,11 +138,48 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDo
             }
             return this.view;
         }
+        getEmptyViewMessage() {
+            return this.options.noItems;
+        }
+        isStale() {
+            if (this.stale) {
+                return true;
+            }
+            const unreadItems = this.getView()
+                .getItems()
+                .filter((item) => item.dataset.isUnread === "true");
+            if (this.counter !== unreadItems.length) {
+                return true;
+            }
+            return false;
+        }
+        async markAsRead(objectId) {
+            const response = (await (0, Ajax_1.dboAction)("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
+                .objectIds([objectId])
+                .dispatch());
+            this.updateCounter(response.totalCount);
+        }
         async markAllAsRead() {
             await (0, Ajax_1.dboAction)("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
         }
-        onButtonClick(name) {
-            console.log("Clicked on", name);
+        updateCounter(counter) {
+            // TODO: Reset the view?
+            let badge = this.button.querySelector(".badge");
+            if (badge === null && counter > 0) {
+                badge = document.createElement("span");
+                badge.classList.add("badge badgeUpdate");
+                this.button.querySelector("a").append(badge);
+            }
+            if (badge) {
+                if (counter === 0) {
+                    badge.remove();
+                }
+                else {
+                    badge.textContent = counter.toString();
+                }
+            }
+            setFaviconCounter(counter);
+            this.counter = counter;
         }
     }
     let isInitialized = false;

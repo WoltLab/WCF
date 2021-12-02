@@ -65,7 +65,7 @@ function close(provider: UserMenuProvider): void {
 
 function getView(provider: UserMenuProvider): UserMenuView {
   if (!views.has(provider)) {
-    const view = new UserMenuView(provider);
+    const view = provider.getView();
     getContainer().append(view.getElement());
 
     views.set(provider, view);

@@ -2,6 +2,7 @@ import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "
 import { getTimeElement } from "../../../Date/Util";
 import { escapeHTML } from "../../../StringUtil";
 import * as DomChangeListener from "../../../Dom/Change/Listener";
+import * as Language from "../../../Language";
 
 export class UserMenuView {
   private readonly element: HTMLElement;
@@ -16,8 +17,9 @@ export class UserMenuView {
 
     this.markAllAsReadButton = this.buildButton({
       icon: '<span class="icon icon24 fa-check"></span>',
+      link: "#",
       name: "markAllAsRead",
-      title: "TODO: Mark all as read",
+      title: Language.get("wcf.user.panel.markAllAsRead"),
     });
   }
 
@@ -26,17 +28,25 @@ export class UserMenuView {
   }
 
   async open(): Promise<void> {
-    this.reset();
+    if (this.provider.isStale()) {
+      this.reset();
 
-    this.element.hidden = false;
+      this.element.hidden = false;
 
-    const data = await this.provider.getData();
+      const data = await this.provider.getData();
 
-    this.setContent(data);
+      this.setContent(data);
+    } else {
+      this.element.hidden = false;
+    }
   }
 
   close(): void {
     this.element.hidden = true;
+  }
+
+  getItems(): HTMLElement[] {
+    return Array.from(this.getContent().querySelectorAll(".userMenuItem"));
   }
 
   private setContent(data: UserMenuData[]): void {
@@ -45,7 +55,7 @@ export class UserMenuView {
     this.markAllAsReadButton.remove();
 
     if (data.length === 0) {
-      content.innerHTML = `<span class="userMenuContentStatus">TODO: Nothing to see here.</span>`;
+      content.innerHTML = `<span class="userMenuContentStatus">${this.provider.getEmptyViewMessage()}</span>`;
     } else {
       let hasUnreadContent = false;
 
@@ -72,6 +82,7 @@ export class UserMenuView {
   private createItem(itemData: UserMenuData): HTMLElement {
     const element = document.createElement("div");
     element.classList.add("userMenuItem");
+    element.dataset.objectId = itemData.objectId.toString();
     element.dataset.isUnread = itemData.isUnread ? "true" : "false";
 
     const link = escapeHTML(itemData.link);
@@ -84,7 +95,7 @@ export class UserMenuView {
       <div class="userMenuItemTime"></div>
       <div class="userMenuItemUnread">
         <a href="#" class="userMenuItemMarkAsRead" role="button">
-          <span class="icon icon24 fa-check jsTooltip" title="TODO: Mark as read"></span>
+          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.user.panel.markAsRead")}"></span>
         </a>
       </div>
     `;
@@ -93,10 +104,11 @@ export class UserMenuView {
     element.querySelector(".userMenuItemTime")!.append(time);
 
     const markAsRead = element.querySelector(".userMenuItemMarkAsRead")!;
-    markAsRead.addEventListener("click", (event) => {
+    markAsRead.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      // TODO
+      await this.provider.markAsRead(itemData.objectId);
+
       element.dataset.isUnread = "false";
     });
 
@@ -143,34 +155,30 @@ export class UserMenuView {
     link.title = button.title;
     link.innerHTML = button.icon;
 
-    if (button.link) {
-      link.href = button.link;
-    } else {
+    if (button.name === "markAllAsRead") {
       link.href = "#";
       link.addEventListener("click", (event) => {
         event.preventDefault();
 
-        this.onButtonClick(button.name);
+        this.markAllAsRead();
       });
+    } else {
+      link.href = button.link;
     }
 
     return link;
   }
 
-  private onButtonClick(name: string): void {
-    if (name === "markAllAsRead") {
-      void this.provider.markAllAsRead();
+  private markAllAsRead(): void {
+    void this.provider.markAllAsRead();
 
-      this.getContent()
-        .querySelectorAll(".userMenuItem")
-        .forEach((element: HTMLElement) => {
-          element.dataset.isUnread = "false";
-        });
+    this.getContent()
+      .querySelectorAll(".userMenuItem")
+      .forEach((element: HTMLElement) => {
+        element.dataset.isUnread = "false";
+      });
 
-      this.markAllAsReadButton.remove();
-    } else {
-      this.provider.onButtonClick(name);
-    }
+    this.markAllAsReadButton.remove();
   }
 
   private buildFooter(footer: UserMenuFooter): HTMLElement {
@@ -184,7 +192,7 @@ export class UserMenuView {
     return element;
   }
 
-  private getContent(): HTMLElement {
+  getContent(): HTMLElement {
     return this.element.querySelector(".userMenuContent")!;
   }
 }
