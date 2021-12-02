@@ -71,18 +71,19 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             const markAsRead = element.querySelector(".userMenuItemMarkAsRead");
             markAsRead.addEventListener("click", (event) => {
                 event.preventDefault();
+                // TODO
                 element.dataset.isUnread = "false";
             });
             return element;
         }
         reset() {
             const content = this.getContent();
-            content.innerHTML = `<span class="userMenuContentStatus">TODO: Loading…</span>`;
+            content.innerHTML = `<span class="userMenuContentStatus"><span class="icon icon24 fa-spinner"></span></span>`;
         }
         buildElement() {
             this.element.hidden = true;
             this.element.classList.add("userMenu");
-            this.element.dataset.origin = this.provider.getPanelButtonId();
+            this.element.dataset.origin = this.provider.getPanelButton().id;
             this.element.innerHTML = `
       <div class="userMenuHeader">
         <div class="userMenuTitle">${this.provider.getTitle()}</div>
@@ -95,7 +96,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 event.stopPropagation();
             });
             const buttons = this.element.querySelector(".userMenuButtons");
-            this.provider.getButtons().forEach((button) => {
+            this.provider.getMenuButtons().forEach((button) => {
                 buttons.append(this.buildButton(button));
             });
             const footer = this.provider.getFooter();

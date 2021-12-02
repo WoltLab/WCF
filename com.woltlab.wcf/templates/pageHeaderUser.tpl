@@ -86,17 +86,16 @@
 					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-						/*
-							$(function() {
-								new WCF.User.Panel.Notification({
+							require(["WoltLabSuite/Core/Ui/User/Menu/Data/Notification"], ({ setup }) => {
+								setup({
 									noItems: '{jslang}wcf.user.notification.noMoreNotifications{/jslang}',
 									settingsLink: '{link controller='NotificationSettings' encode=false}{/link}',
+									settingsTitle: '{jslang}wcf.user.notification.settings{/jslang}',
 									showAllLink: '{link controller='NotificationList' encode=false}{/link}',
-									title: '{jslang}wcf.user.notification.notifications{/jslang}'
-								});
+									showAllTitle: '{jslang}wcf.user.notification.showAll{/jslang}',
+									title: '{jslang}wcf.user.notification.notifications{/jslang}',
+								})
 							});
-						*/
-							require(["WoltLabSuite/Core/Ui/User/Menu/DropDown"], (UiUserMenuDropDown) => UiUserMenuDropDown.setup());
 						</script>
 					{/if}
 				</li>

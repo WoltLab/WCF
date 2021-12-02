@@ -13,13 +13,13 @@ export type UserMenuFooter = {
 };
 
 export interface UserMenuProvider {
-  getButtons(): UserMenuButton[];
-
   getData(): Promise<UserMenuData[]>;
 
   getFooter(): UserMenuFooter | null;
 
-  getPanelButtonId(): string;
+  getMenuButtons(): UserMenuButton[];
+
+  getPanelButton(): HTMLElement;
 
   getTitle(): string;
 

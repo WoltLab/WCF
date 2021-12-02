@@ -1,7 +1,7 @@
-define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function (require, exports, tslib_1, Ajax_1, View_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDown"], function (require, exports, tslib_1, Ajax_1, View_1, DropDown_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.UserMenuDataNotification = void 0;
+    exports.setup = void 0;
     View_1 = (0, tslib_1.__importDefault)(View_1);
     let originalFavicon = "";
     function updateUnreadCounter(counter) {
@@ -86,20 +86,19 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function 
         ctx.closePath();
     }
     class UserMenuDataNotification {
-        constructor() {
+        constructor(button, options) {
             this.view = undefined;
-            this.button = document.getElementById("userNotifications");
-            if (this.button) {
-                const badge = this.button.querySelector(".badge");
-                if (badge) {
-                    const counter = parseInt(badge.textContent.trim());
-                    if (counter) {
-                        updateUnreadCounter(counter);
-                    }
+            this.button = button;
+            this.options = options;
+            const badge = button.querySelector(".badge");
+            if (badge) {
+                const counter = parseInt(badge.textContent.trim());
+                if (counter) {
+                    updateUnreadCounter(counter);
                 }
-                // TODO: Migrate this!
-                window.WCF.System.PushNotification.addCallback("userNotificationCount", (count) => this.updateUserNotificationCount(count, badge));
             }
+            // TODO: Migrate this!
+            window.WCF.System.PushNotification.addCallback("userNotificationCount", (count) => this.updateUserNotificationCount(count, badge));
         }
         updateUserNotificationCount(count, badge) {
             // TODO: Reset the view
@@ -118,13 +117,16 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function 
             }
             updateUnreadCounter(count);
         }
-        getButtons() {
+        getPanelButton() {
+            return this.button;
+        }
+        getMenuButtons() {
             return [
                 {
                     icon: '<span class="icon icon24 fa-cog"></span>',
-                    link: "#todo-notification-settings",
+                    link: this.options.settingsLink,
                     name: "settings",
-                    title: "TODO: Settings",
+                    title: this.options.settingsTitle,
                 },
             ];
         }
@@ -136,15 +138,12 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function 
         }
         getFooter() {
             return {
-                link: "https://example.com",
-                title: "TODO: Show All Notifications",
+                link: this.options.showAllLink,
+                title: this.options.showAllTitle,
             };
         }
-        getPanelButtonId() {
-            return "userNotifications";
-        }
         getTitle() {
-            return "TODO: Notifications";
+            return this.options.title;
         }
         getView() {
             if (this.view === undefined) {
@@ -159,5 +158,16 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View"], function 
             console.log("Clicked on", name);
         }
     }
-    exports.UserMenuDataNotification = UserMenuDataNotification;
+    let isInitialized = false;
+    function setup(options) {
+        if (!isInitialized) {
+            const button = document.getElementById("userNotifications");
+            if (button !== null) {
+                const provider = new UserMenuDataNotification(button, options);
+                (0, DropDown_1.registerProvider)(provider);
+            }
+            isInitialized = true;
+        }
+    }
+    exports.setup = setup;
 });

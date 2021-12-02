@@ -1,6 +1,7 @@
 import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
+import { registerProvider } from "../DropDown";
 
 let originalFavicon = "";
 function updateUnreadCounter(counter: number): void {
@@ -101,27 +102,35 @@ function drawCounter(ctx: CanvasRenderingContext2D, counter: string): void {
   ctx.closePath();
 }
 
-export class UserMenuDataNotification implements UserMenuProvider {
-  private readonly button: HTMLElement | null;
+type Options = {
+  settingsLink: string;
+  settingsTitle: string;
+  showAllLink: string;
+  showAllTitle: string;
+  title: string;
+};
+
+class UserMenuDataNotification implements UserMenuProvider {
+  private readonly button: HTMLElement;
+  private readonly options: Options;
   private view: UserMenuView | undefined = undefined;
 
-  constructor() {
-    this.button = document.getElementById("userNotifications");
+  constructor(button: HTMLElement, options: Options) {
+    this.button = button;
+    this.options = options;
 
-    if (this.button) {
-      const badge = this.button.querySelector<HTMLElement>(".badge");
-      if (badge) {
-        const counter = parseInt(badge.textContent!.trim());
-        if (counter) {
-          updateUnreadCounter(counter);
-        }
+    const badge = button.querySelector<HTMLElement>(".badge");
+    if (badge) {
+      const counter = parseInt(badge.textContent!.trim());
+      if (counter) {
+        updateUnreadCounter(counter);
       }
-
-      // TODO: Migrate this!
-      window.WCF.System.PushNotification.addCallback("userNotificationCount", (count: number) =>
-        this.updateUserNotificationCount(count, badge),
-      );
     }
+
+    // TODO: Migrate this!
+    window.WCF.System.PushNotification.addCallback("userNotificationCount", (count: number) =>
+      this.updateUserNotificationCount(count, badge),
+    );
   }
 
   private updateUserNotificationCount(count: number, badge: HTMLElement | null): void {
@@ -144,13 +153,17 @@ export class UserMenuDataNotification implements UserMenuProvider {
     updateUnreadCounter(count);
   }
 
-  getButtons(): UserMenuButton[] {
+  getPanelButton(): HTMLElement {
+    return this.button;
+  }
+
+  getMenuButtons(): UserMenuButton[] {
     return [
       {
         icon: '<span class="icon icon24 fa-cog"></span>',
-        link: "#todo-notification-settings",
+        link: this.options.settingsLink,
         name: "settings",
-        title: "TODO: Settings",
+        title: this.options.settingsTitle,
       },
     ];
   }
@@ -169,17 +182,13 @@ export class UserMenuDataNotification implements UserMenuProvider {
 
   getFooter(): UserMenuFooter | null {
     return {
-      link: "https://example.com",
-      title: "TODO: Show All Notifications",
+      link: this.options.showAllLink,
+      title: this.options.showAllTitle,
     };
   }
 
-  getPanelButtonId(): string {
-    return "userNotifications";
-  }
-
   getTitle(): string {
-    return "TODO: Notifications";
+    return this.options.title;
   }
 
   getView(): UserMenuView {
@@ -196,5 +205,18 @@ export class UserMenuDataNotification implements UserMenuProvider {
 
   onButtonClick(name: string): void {
     console.log("Clicked on", name);
+  }
+}
+
+let isInitialized = false;
+export function setup(options: Options): void {
+  if (!isInitialized) {
+    const button = document.getElementById("userNotifications");
+    if (button !== null) {
+      const provider = new UserMenuDataNotification(button, options);
+      registerProvider(provider);
+    }
+
+    isInitialized = true;
   }
 }

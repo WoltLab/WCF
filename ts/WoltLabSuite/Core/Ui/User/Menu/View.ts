@@ -96,6 +96,7 @@ export class UserMenuView {
     markAsRead.addEventListener("click", (event) => {
       event.preventDefault();
 
+      // TODO
       element.dataset.isUnread = "false";
     });
 
@@ -104,13 +105,13 @@ export class UserMenuView {
 
   private reset(): void {
     const content = this.getContent();
-    content.innerHTML = `<span class="userMenuContentStatus">TODO: Loading…</span>`;
+    content.innerHTML = `<span class="userMenuContentStatus"><span class="icon icon24 fa-spinner"></span></span>`;
   }
 
   private buildElement(): void {
     this.element.hidden = true;
     this.element.classList.add("userMenu");
-    this.element.dataset.origin = this.provider.getPanelButtonId();
+    this.element.dataset.origin = this.provider.getPanelButton().id;
     this.element.innerHTML = `
       <div class="userMenuHeader">
         <div class="userMenuTitle">${this.provider.getTitle()}</div>
@@ -125,7 +126,7 @@ export class UserMenuView {
     });
 
     const buttons = this.element.querySelector(".userMenuButtons")!;
-    this.provider.getButtons().forEach((button) => {
+    this.provider.getMenuButtons().forEach((button) => {
       buttons.append(this.buildButton(button));
     });
 

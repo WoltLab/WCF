@@ -1,4 +1,3 @@
-import { UserMenuDataNotification } from "./Data/Notification";
 import { UserMenuProvider } from "./Data/Provider";
 import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
@@ -8,32 +7,60 @@ let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
 const views = new Map<UserMenuProvider, UserMenuView>();
 
-function init(): void {
-  providers.forEach((provider) => {
-    const button = document.getElementById(provider.getPanelButtonId());
-    if (button === null) {
-      throw new Error(`Cannot find a panel button with the id '${provider.getPanelButtonId()}'.`);
+function initProvider(provider: UserMenuProvider): void {
+  providers.add(provider);
+
+  const button = provider.getPanelButton();
+
+  prepareButton(button);
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (button.classList.contains("open")) {
+      close(provider);
+    } else {
+      open(provider);
     }
-
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const view = getView(provider);
-      void view.open();
-
-      const element = view.getElement();
-      Alignment.set(element, button, { horizontal: "right" });
-    });
   });
+}
 
-  CloseOverlay.add("WoltLabSuite/Ui/User/Menu", () => {
-    providers.forEach((provider) => {
-      if (views.has(provider)) {
-        getView(provider).close();
-      }
-    });
-  });
+function prepareButton(button: HTMLElement): void {
+  const link = button.querySelector("a")!;
+  link.setAttribute("role", "button");
+  link.tabIndex = 0;
+  link.setAttribute("aria-haspopup", "true");
+  link.setAttribute("aria-expanded", "false");
+}
+
+function open(provider: UserMenuProvider): void {
+  const view = getView(provider);
+  void view.open();
+
+  const button = provider.getPanelButton();
+  button.querySelector("a")!.setAttribute("aria-expanded", "true");
+  button.classList.add("open");
+
+  const element = view.getElement();
+  Alignment.set(element, button, { horizontal: "right" });
+}
+
+function close(provider: UserMenuProvider): void {
+  if (!views.has(provider)) {
+    return;
+  }
+
+  const button = provider.getPanelButton();
+  if (!button.classList.contains("open")) {
+    return;
+  }
+
+  const view = getView(provider);
+  view.close();
+
+  button.classList.remove("open");
+  button.querySelector("a")!.setAttribute("aria-expanded", "false");
 }
 
 function getView(provider: UserMenuProvider): UserMenuView {
@@ -57,10 +84,12 @@ function getContainer(): HTMLElement {
   return container;
 }
 
-export function setup(): void {
+export function registerProvider(provider: UserMenuProvider): void {
   if (providers.size === 0) {
-    providers.add(new UserMenuDataNotification());
-
-    init();
+    CloseOverlay.add("WoltLabSuite/Ui/User/Menu", () => {
+      providers.forEach((provider) => close(provider));
+    });
   }
+
+  initProvider(provider);
 }
