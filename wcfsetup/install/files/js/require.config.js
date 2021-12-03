@@ -1,12 +1,14 @@
 //noinspection JSUnresolvedVariable
 requirejs.config({
 	paths: {
+		'focus-trap': '3rdParty/focus-trap/focus-trap.umd.min',
 		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
 		'Pica': '3rdParty/pica',
 		'pica': '3rdParty/pica',
 		prism: '3rdParty/prism',
 		'prismjs': '3rdParty/prism/prism',
 		'qr-creator': '3rdParty/qr-creator.min',
+		tabbable: '3rdParty/focus-trap/index.umd.min',
 		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',
 	},
@@ -16,6 +18,7 @@ requirejs.config({
 		main: "lib/codemirror"
 	}],
 	shim: {
+		'focus-trap': { deps: ['tabbable'], exports: 'focus-trap' },
 		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
 		'qr-creator': { exports: 'QrCreator' },
 	},
