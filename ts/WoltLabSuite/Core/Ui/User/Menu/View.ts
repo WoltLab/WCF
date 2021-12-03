@@ -3,9 +3,11 @@ import { getTimeElement } from "../../../Date/Util";
 import { escapeHTML } from "../../../StringUtil";
 import * as DomChangeListener from "../../../Dom/Change/Listener";
 import * as Language from "../../../Language";
+import { createFocusTrap, FocusTrap } from "focus-trap";
 
 export class UserMenuView {
   private readonly element: HTMLElement;
+  private readonly focusTrap: FocusTrap;
   private readonly markAllAsReadButton: HTMLElement;
   private readonly provider: UserMenuProvider;
 
@@ -21,6 +23,17 @@ export class UserMenuView {
       name: "markAllAsRead",
       title: Language.get("wcf.user.panel.markAllAsRead"),
     });
+
+    this.focusTrap = createFocusTrap(this.element, {
+      allowOutsideClick: true,
+      escapeDeactivates: (): boolean => {
+        // Intercept the "Escape" key and close the dialog through other means.
+        this.element.dispatchEvent(new Event("shouldClose"));
+
+        return false;
+      },
+      fallbackFocus: this.element,
+    });
   }
 
   getElement(): HTMLElement {
@@ -28,20 +41,24 @@ export class UserMenuView {
   }
 
   async open(): Promise<void> {
-    if (this.provider.isStale()) {
+    const isStale = this.provider.isStale();
+    if (isStale) {
       this.reset();
+    }
 
-      this.element.hidden = false;
+    this.element.hidden = false;
+    this.focusTrap.activate();
 
+    if (isStale) {
       const data = await this.provider.getData();
 
       this.setContent(data);
-    } else {
-      this.element.hidden = false;
     }
   }
 
   close(): void {
+    this.focusTrap.deactivate();
+
     this.element.hidden = true;
   }
 
@@ -124,6 +141,7 @@ export class UserMenuView {
     this.element.hidden = true;
     this.element.classList.add("userMenu");
     this.element.dataset.origin = this.provider.getPanelButton().id;
+    this.element.tabIndex = -1;
     this.element.innerHTML = `
       <div class="userMenuHeader">
         <div class="userMenuTitle">${this.provider.getTitle()}</div>

@@ -18,7 +18,6 @@ requirejs.config({
 		main: "lib/codemirror"
 	}],
 	shim: {
-		'focus-trap': { deps: ['tabbable'], exports: 'focus-trap' },
 		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
 		'qr-creator': { exports: 'QrCreator' },
 	},

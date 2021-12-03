@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language) {
+define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
@@ -15,22 +15,33 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 name: "markAllAsRead",
                 title: Language.get("wcf.user.panel.markAllAsRead"),
             });
+            this.focusTrap = (0, focus_trap_1.createFocusTrap)(this.element, {
+                allowOutsideClick: true,
+                escapeDeactivates: () => {
+                    // Intercept the "Escape" key and close the dialog through other means.
+                    this.element.dispatchEvent(new Event("shouldClose"));
+                    return false;
+                },
+                fallbackFocus: this.element,
+            });
         }
         getElement() {
             return this.element;
         }
         async open() {
-            if (this.provider.isStale()) {
+            const isStale = this.provider.isStale();
+            if (isStale) {
                 this.reset();
-                this.element.hidden = false;
+            }
+            this.element.hidden = false;
+            this.focusTrap.activate();
+            if (isStale) {
                 const data = await this.provider.getData();
                 this.setContent(data);
             }
-            else {
-                this.element.hidden = false;
-            }
         }
         close() {
+            this.focusTrap.deactivate();
             this.element.hidden = true;
         }
         getItems() {
@@ -95,6 +106,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             this.element.hidden = true;
             this.element.classList.add("userMenu");
             this.element.dataset.origin = this.provider.getPanelButton().id;
+            this.element.tabIndex = -1;
             this.element.innerHTML = `
       <div class="userMenuHeader">
         <div class="userMenuTitle">${this.provider.getTitle()}</div>
