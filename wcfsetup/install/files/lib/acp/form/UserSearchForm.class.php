@@ -140,8 +140,12 @@ class UserSearchForm extends UserOptionListForm
         if (isset($_POST['sortOrder'])) {
             $this->sortOrder = $_POST['sortOrder'];
         }
-        if (isset($_POST['columns']) && \is_array($_POST['columns'])) {
-            $this->columns = $_POST['columns'];
+        if (!empty($_POST)) {
+            if (isset($_POST['columns']) && \is_array($_POST['columns'])) {
+                $this->columns = $_POST['columns'];
+            } else {
+                $this->columns = [];
+            }
         }
     }
 
