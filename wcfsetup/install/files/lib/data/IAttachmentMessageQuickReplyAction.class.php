@@ -10,7 +10,7 @@ namespace wcf\data;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data
  */
-interface IAttachmentMessageQuickReplyAction extends IExtendedMessageQuickReplyAction
+interface IAttachmentMessageQuickReplyAction extends IMessageQuickReplyAction
 {
     /**
      * Returns an attachment handler object.

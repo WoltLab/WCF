@@ -86,11 +86,20 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 									elRemove(container);
 									
 									if (caretStart === null) {
-										if (caretEnd.nodeName === 'OL' || caretEnd.nodeName === 'UL') {
-											caretEnd = caretEnd.lastElementChild;
-										}
-										
-										this.caret.end(caretEnd);
+										const getLastChild = (node) => {
+											const nodeName = node.nodeName;
+											if (nodeName === 'OL' || nodeName === 'UL') {
+												return getLastChild(node.lastElementChild);
+											}
+
+											if (nodeName === 'LI' && node.lastElementChild) {
+												return getLastChild(node.lastElementChild);
+											}
+
+											return node;
+										};
+
+										this.caret.end(getLastChild(caretEnd));
 									}
 									else {
 										if (caretStart.nodeName === 'OL' || caretStart.nodeName === 'UL') {

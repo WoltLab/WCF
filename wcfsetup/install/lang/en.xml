@@ -1979,6 +1979,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		The foreign key {$error[tableName]} ({$error[columnNames]}) references an unknown table {$error[referencedTableName]}.
 	{else if $error[type] === 'duplicateColumnInIndex'}
 		The index {$error[tableName]} ({$error[columnNames]}) contains duplicate columns.
+	{else if $error[type] === 'primaryNotCalledPrimary'}
+		The primary index {$error[tableName]} ({$error[columnNames]}) is not named 'PRIMARY'.
 	{else}
 		Unknown error.
 	{/if}
@@ -2737,6 +2739,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[The cryptographic function SHA-256 is required for a safe and secure operation of the software.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB available]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB when using MariaDB) is a transaction storage engine for MySQL and is required for the operation of the software. This is a built-in feature of MySQL.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Bufferpool Size]]></item>
+		<item name="wcf.acp.systemCheck.mysql.bufferPool.description"><![CDATA[The bufferpool is the place where the stored data is kept in memory. It is shared by every customer using the same database server. The bufferpool must have a size of at least 128 MiB to allow for processing of complex queries. To prevent disk accesses from slowing down the page the bufferpool should generally be configured much larger. The ideal size varies based on the hardware configuration.]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Writable Directories]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Some directories are being written to during the normal operation. The user that runs the PHP process must have write access.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Supported formats of the GD library]]></item>
