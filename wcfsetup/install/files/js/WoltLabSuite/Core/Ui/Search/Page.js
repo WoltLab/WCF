@@ -8,6 +8,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     Input_1 = (0, tslib_1.__importDefault)(Input_1);
+    const parameters = new Map();
     function click(event) {
         event.preventDefault();
         const pageHeader = document.getElementById("pageHeader");
@@ -17,14 +18,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         }, 10);
         const target = event.currentTarget;
         const objectType = target.dataset.objectType;
-        const container = document.getElementById("pageHeaderSearchParameters");
-        container.innerHTML = "";
         const extendedLink = target.dataset.extendedLink;
         if (extendedLink) {
             const link = document.querySelector(".pageHeaderSearchExtendedLink");
             link.href = extendedLink;
         }
-        const parameters = new Map();
+        parameters.clear();
         try {
             const data = JSON.parse(target.dataset.parameters || "");
             if (Core.isPlainObject(data)) {
@@ -36,16 +35,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         catch (e) {
             // Ignore JSON parsing failure.
         }
-        if (objectType) {
-            parameters.set("types[]", objectType);
+        if (objectType && objectType !== "everywhere") {
+            parameters.set("type", objectType);
         }
-        parameters.forEach((value, key) => {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = value;
-            container.appendChild(input);
-        });
         // update label
         const inputContainer = document.getElementById("pageHeaderSearchInputContainer");
         const button = inputContainer.querySelector(".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel");
@@ -87,6 +79,19 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         // trigger click on init
         const link = dropdownMenu.querySelector('a[data-object-type="' + objectType + '"]');
         link.click();
+        searchInput.form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            submit(searchInput.form, searchInput);
+        });
     }
     exports.init = init;
+    function submit(form, input) {
+        const url = new URL(form.action);
+        url.search += url.search !== "" ? "&" : "?";
+        url.search += "q=" + encodeURIComponent(input.value.trim());
+        parameters.forEach((value, key) => {
+            url.search += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        });
+        window.location.href = url.toString();
+    }
 });

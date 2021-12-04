@@ -1,4 +1,3 @@
-{capture assign='__searchLink'}{link controller='Search'}{/link}{/capture}
 {if $__searchTypeLabel|empty}
 	{capture assign='__searchTypeLabel'}{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}{/lang}{/capture}
 {/if}
@@ -21,7 +20,7 @@
 {event name='settings'}
 
 <div id="pageHeaderSearch" class="pageHeaderSearch">
-	<form method="post" action="{@$__searchLink}">
+	<form method="post" action="{link controller='Search'}{/link}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
 				<a href="#" class="button dropdownToggle"><span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span></a>
@@ -39,7 +38,7 @@
 					
 					{foreach from=$__wcf->getSearchEngine()->getAvailableObjectTypes() key=_searchObjectTypeName item=_searchObjectType}
 						{if $_searchObjectType->isAccessible()}
-							<li><a href="#" data-extended-link="{link controller='Search'}types[]={@$_searchObjectTypeName}{/link}" data-object-type="{@$_searchObjectTypeName}">{lang}wcf.search.type.{@$_searchObjectTypeName}{/lang}</a></li>
+							<li><a href="#" data-extended-link="{link controller='Search'}type={@$_searchObjectTypeName}&extended=1{/link}" data-object-type="{@$_searchObjectTypeName}">{lang}wcf.search.type.{@$_searchObjectTypeName}{/lang}</a></li>
 						{/if}
 					{/foreach}
 					
