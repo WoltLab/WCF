@@ -1,8 +1,10 @@
 define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"], function (require, exports, tslib_1, Ajax_1, DomUtil, Input_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.UiSearchExtended = void 0;
     DomUtil = (0, tslib_1.__importStar)(DomUtil);
     Input_1 = (0, tslib_1.__importDefault)(Input_1);
-    class UISearchExtended {
+    class UiSearchExtended {
         constructor() {
             this.lastRequest = undefined;
             this.form = document.getElementById("extendedSearchForm");
@@ -11,6 +13,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
             this.usernameInput = document.getElementById("searchAuthor");
             this.initEventListener();
             this.initKeywordSuggestions();
+            this.initQueryString();
         }
         initEventListener() {
             this.form.addEventListener("submit", (event) => {
@@ -35,6 +38,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
             if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
                 return;
             }
+            this.updateQueryString();
             if (this.lastRequest) {
                 this.lastRequest.abort();
             }
@@ -50,13 +54,36 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
                 this.form.parentElement.appendChild(fragment);
             }
         }
+        updateQueryString() {
+            const url = new URL(this.form.action);
+            new FormData(this.form).forEach((value, key) => {
+                if (value.toString()) {
+                    url.search += url.search !== "" ? "&" : "?";
+                    url.search += encodeURIComponent(key) + "=" + encodeURIComponent(value.toString());
+                }
+            });
+            window.history.replaceState({}, document.title, url.toString());
+        }
         getFormData() {
             const data = {};
             new FormData(this.form).forEach((value, key) => {
-                data[key] = value;
+                if (value.toString()) {
+                    data[key] = value;
+                }
             });
             return data;
         }
+        initQueryString() {
+            const url = new URL(window.location.href);
+            url.searchParams.forEach((value, key) => {
+                if (value && this.form.elements[key]) {
+                    this.form.elements[key].value = value;
+                }
+            });
+            this.typeInput.dispatchEvent(new Event("change"));
+            this.search();
+        }
     }
-    return UISearchExtended;
+    exports.UiSearchExtended = UiSearchExtended;
+    exports.default = UiSearchExtended;
 });

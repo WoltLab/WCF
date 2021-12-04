@@ -29,7 +29,7 @@
 	}
 </style>
 
-<form id="extendedSearchForm">
+<form id="extendedSearchForm" method="post" action="{link controller='Search'}{if $extended}extended=1{/if}{/link}">
 	<div class="section">
 		<div class="searchBar">
 			<input id="searchQuery" class="searchQuery long" type="text" name="q" value="" maxlength="255" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" autofocus>
@@ -109,7 +109,7 @@
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('searchAuthor'));
 	});
-	require(['WoltLabSuite/Core/Ui/Search/Extended'], (UiSearchExtended) => {
+	require(['WoltLabSuite/Core/Ui/Search/Extended'], ({ UiSearchExtended }) => {
 		new UiSearchExtended();
 	});
 </script>

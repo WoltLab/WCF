@@ -9,7 +9,7 @@ type ResponseSearch = {
   template?: string;
 };
 
-class UISearchExtended {
+export class UiSearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
   private readonly typeInput: HTMLSelectElement;
@@ -24,6 +24,7 @@ class UISearchExtended {
 
     this.initEventListener();
     this.initKeywordSuggestions();
+    this.initQueryString();
   }
 
   private initEventListener(): void {
@@ -53,6 +54,8 @@ class UISearchExtended {
       return;
     }
 
+    this.updateQueryString();
+
     if (this.lastRequest) {
       this.lastRequest.abort();
     }
@@ -60,25 +63,52 @@ class UISearchExtended {
     this.lastRequest = request.getAbortController();
     const { count, searchID, title, template } = (await request.dispatch()) as ResponseSearch;
     document.querySelector(".contentTitle")!.textContent = title;
-    
+
     while (this.form.nextSibling !== null) {
       this.form.parentElement!.removeChild(this.form.nextSibling);
     }
-    
+
     if (count > 0) {
       const fragment = DomUtil.createFragmentFromHtml(template!);
       this.form.parentElement!.appendChild(fragment);
     }
   }
 
+  private updateQueryString(): void {
+    const url = new URL(this.form.action);
+
+    new FormData(this.form).forEach((value, key) => {
+      if (value.toString()) {
+        url.search += url.search !== "" ? "&" : "?";
+        url.search += encodeURIComponent(key) + "=" + encodeURIComponent(value.toString());
+      }
+    });
+
+    window.history.replaceState({}, document.title, url.toString());
+  }
+
   private getFormData(): Record<string, unknown> {
     const data = {};
     new FormData(this.form).forEach((value, key) => {
-      data[key] = value;
+      if (value.toString()) {
+        data[key] = value;
+      }
     });
 
     return data;
   }
+
+  private initQueryString(): void {
+    const url = new URL(window.location.href);
+    url.searchParams.forEach((value, key) => {
+      if (value && this.form.elements[key]) {
+        this.form.elements[key].value = value;
+      }
+    });
+
+    this.typeInput.dispatchEvent(new Event("change"));
+    this.search();
+  }
 }
 
-export = UISearchExtended;
+export default UiSearchExtended;
