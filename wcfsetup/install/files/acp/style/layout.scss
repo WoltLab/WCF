@@ -568,3 +568,11 @@ $wcfAcpSubMenuWidth: 300px;
 		display: none;
 	}
 }
+
+.acpLoginForm {
+	max-width: 500px;
+
+	form > :first-child {
+		margin-top: 0;
+	}
+}
