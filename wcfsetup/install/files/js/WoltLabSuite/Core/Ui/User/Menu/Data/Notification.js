@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDown"], function (require, exports, tslib_1, Ajax_1, View_1, DropDown_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -188,7 +188,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../DropDo
             const button = document.getElementById("userNotifications");
             if (button !== null) {
                 const provider = new UserMenuDataNotification(button, options);
-                (0, DropDown_1.registerProvider)(provider);
+                (0, Manager_1.registerProvider)(provider);
             }
             isInitialized = true;
         }

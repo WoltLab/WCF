@@ -252,14 +252,15 @@
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-							$(function() {
-								new WCF.User.Panel.Moderation({
+							require(["WoltLabSuite/Core/Ui/User/Menu/Data/ModerationQueue"], ({ setup }) => {
+								setup({
 									deletedContent: '{jslang}wcf.moderation.showDeletedContent{/jslang}',
 									deletedContentLink: '{link controller='DeletedContentList' encode=false}{/link}',
 									noItems: '{jslang}wcf.moderation.noMoreItems{/jslang}',
 									showAllLink: '{link controller='ModerationList' encode=false}{/link}',
+									showAllTitle: '{jslang}wcf.moderation.showAll{/jslang}',
 									title: '{jslang}wcf.moderation.moderation{/jslang}'
-								});
+								})
 							});
 						</script>
 					{/if}

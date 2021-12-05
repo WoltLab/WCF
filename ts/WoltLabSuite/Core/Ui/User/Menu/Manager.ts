@@ -2,6 +2,7 @@ import { UserMenuProvider } from "./Data/Provider";
 import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
 import CloseOverlay from "../../CloseOverlay";
+import DropDown from "../../Dropdown/Simple";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -35,6 +36,9 @@ function prepareButton(button: HTMLElement): void {
 }
 
 function open(provider: UserMenuProvider): void {
+  closeAll();
+  DropDown.closeAll();
+
   const view = getView(provider);
   void view.open();
 
@@ -63,6 +67,10 @@ function close(provider: UserMenuProvider): void {
   button.querySelector("a")!.setAttribute("aria-expanded", "false");
 }
 
+function closeAll(): void {
+  providers.forEach((provider) => close(provider));
+}
+
 function getView(provider: UserMenuProvider): UserMenuView {
   if (!views.has(provider)) {
     const view = provider.getView();
@@ -89,9 +97,7 @@ function getContainer(): HTMLElement {
 
 export function registerProvider(provider: UserMenuProvider): void {
   if (providers.size === 0) {
-    CloseOverlay.add("WoltLabSuite/Ui/User/Menu", () => {
-      providers.forEach((provider) => close(provider));
-    });
+    CloseOverlay.add("WoltLabSuite/Ui/User/Menu", () => closeAll());
   }
 
   initProvider(provider);

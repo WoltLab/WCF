@@ -6,8 +6,11 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\database\exception\DatabaseQueryException;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
@@ -100,6 +103,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
     /**
      * Validates parameters to fetch a list of outstanding queues.
+     * 
+     * @deprecated 5.5
      */
     public function validateGetOutstandingQueues()
     {
@@ -110,9 +115,66 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Returns a list of outstanding queues.
      *
      * @return  string[]
+     * @deprecated 5.5
      */
     public function getOutstandingQueues()
     {
+        ['queues' => $queues, 'totalCount' => $totalCount] = $this->getModerationQueues();
+
+        WCF::getTPL()->assign([
+            'queues' => $queues,
+        ]);
+
+        return [
+            'template' => WCF::getTPL()->fetch('moderationQueueList'),
+            'totalCount' => $totalCount,
+        ];
+    }
+
+    /**
+     * @since 5.5
+     */
+    public function validateGetModerationQueueData(): void
+    {
+        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
+    }
+
+    /**
+     * @since 5.5
+     */
+    public function getModerationQueueData(): array
+    {
+        ['queues' => $queues, 'totalCount' => $totalCount] = $this->getModerationQueues();
+
+        $data = [];
+        /** @var ViewableModerationQueue $queue */
+        foreach ($queues as $queue) {
+            $username = '';
+            if ($queue->getUserProfile()->userID) {
+                $username = $queue->getUserProfile()->getFormattedUsername();
+            } else {
+                $username = $queue->getAffectedObject()->getUsername();
+            }
+
+            $data[] = [
+                'content' => $queue->getAffectedObject()->getTitle(),
+                'image' => $queue->getUserProfile()->getAvatar()->getImageTag(48),
+                'isUnread' => $queue->isNew(),
+                'link' => $queue->getLink(),
+                'objectId' => $queue->queueID,
+                'time' => $queue->lastChangeTime,
+                'usernames' => [$username],
+            ];
+        }
+
+        return $data;
+    }
+
+    /**
+     * @since 5.5
+     * @deprecated 5.5 This method will be merged with `getModerationQueueData`
+     */
+    private function getModerationQueues(): array {
         // Maximum cardinality of the returned array
         static $MAX_ITEMS = 10;
 
@@ -186,13 +248,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             }
         }
 
-        WCF::getTPL()->assign([
-            'queues' => $queues,
-        ]);
-
         return [
-            'template' => WCF::getTPL()->fetch('moderationQueueList'),
-            'totalCount' => $totalCount,
+            'queues'=>$queues,
+            'totalCount'=>$totalCount,
         ];
     }
 

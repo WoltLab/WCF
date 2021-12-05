@@ -184,6 +184,8 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
 
     /**
      * Validates the 'getOutstandingNotifications' action.
+     * 
+     * @deprecated 5.5
      */
     public function validateGetOutstandingNotifications()
     {
@@ -194,6 +196,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Loads user notifications.
      *
      * @return  mixed[]
+     * @deprecated 5.5
      */
     public function getOutstandingNotifications()
     {
@@ -208,10 +211,16 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         ];
     }
 
+    /**
+     * @since 5.5
+     */
     public function validateGetNotificationData(): void
     {
     }
 
+    /**
+     * @since 5.5
+     */
     public function getNotificationData(): array
     {
         $data = UserNotificationHandler::getInstance()->getMixedNotifications();

@@ -1,7 +1,7 @@
 import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
-import { registerProvider } from "../DropDown";
+import { registerProvider } from "../Manager";
 
 let originalFavicon = "";
 function setFaviconCounter(counter: number): void {
