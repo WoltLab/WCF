@@ -5,6 +5,7 @@ namespace wcf\system\search;
 use wcf\data\search\ICustomIconSearchResultObject;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
+use wcf\page\SearchResultPage;
 use wcf\system\exception\ImplementationException;
 use wcf\system\search\SearchEngine;
 
@@ -129,5 +130,36 @@ final class SearchResultHandler
     public function getQuery(): string
     {
         return $this->searchData['query'];
+    }
+
+    public function getTemplateName(): array
+    {
+        /*if (count($this->searchData['objectTypeNames']) === 1) {
+            $objectType = SearchEngine::getInstance()->getObjectType($this->searchData['objectTypeNames'][0]);
+            if ($objectType instanceof XXX) {
+                if (($templateName = $objectType->getResultListTemplateName()) !== null) {
+                    return [
+                        'templateName' => $templateName['templateName'],
+                        'application' => $templateName['application'],
+                    ];
+                }
+            }
+        }*/
+
+        return $this->getLegacyTemplateName();
+    }
+
+    /**
+     * @deprecated 5.5
+     */
+    private function getLegacyTemplateName(): array
+    {
+        $page = new SearchResultPage();
+        $page->assignVariables();
+
+        return [
+            'templateName' => $page->resultListTemplateName,
+            'application' => $page->resultListApplication,
+        ];
     }
 }

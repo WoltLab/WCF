@@ -22,6 +22,7 @@ use wcf\util\HeaderUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Page
+ * @deprecated 5.5
  */
 class SearchResultPage extends MultipleLinkPage
 {
@@ -191,36 +192,6 @@ class SearchResultPage extends MultipleLinkPage
                 $this->customIcons[\spl_object_hash($message)] = $customIcon;
             }
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        $searchPreselectObjectType = 'everywhere';
-        if (\count($this->searchData['selectedObjectTypes']) === 1) {
-            $searchPreselectObjectType = \reset($this->searchData['selectedObjectTypes']);
-        }
-
-        WCF::getTPL()->assign([
-            'query' => $this->searchData['query'],
-            'objects' => $this->messages,
-            'searchData' => $this->searchData,
-            'searchID' => $this->searchID,
-            'highlight' => $this->highlight,
-            'sortField' => $this->searchData['sortField'],
-            'sortOrder' => $this->searchData['sortOrder'],
-            'alterable' => !empty($this->searchData['alterable']) ? 1 : 0,
-            'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
-            'resultListTemplateName' => $this->resultListTemplateName,
-            'resultListApplication' => $this->resultListApplication,
-            'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID),
-            'searchPreselectObjectType' => $searchPreselectObjectType,
-            'customIcons' => $this->customIcons,
-        ]);
     }
 
     /**

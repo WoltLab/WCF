@@ -24,6 +24,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Form
+ * @deprecated 5.5
  */
 class SearchForm extends AbstractCaptchaForm
 {
@@ -138,6 +139,11 @@ class SearchForm extends AbstractCaptchaForm
      * @var bool
      */
     public $submit = false;
+
+    /**
+     * @var int[]
+     */
+    public $userIDs = [];
 
     /**
      * @inheritDoc
@@ -559,27 +565,6 @@ class SearchForm extends AbstractCaptchaForm
      */
     public function getUserIDs()
     {
-        $userIDs = [];
-
-        // username
-        if (!empty($this->username)) {
-            $sql = "SELECT  userID
-                    FROM    wcf" . WCF_N . "_user
-                    WHERE   username " . ($this->nameExactly ? "= ?" : "LIKE ?");
-            $statement = WCF::getDB()->prepareStatement($sql, 100);
-            $statement->execute([$this->username . (!$this->nameExactly ? '%' : '')]);
-            $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-            if (empty($userIDs)) {
-                $this->throwNoMatchesException();
-            }
-        }
-
-        // userID
-        if ($this->userID) {
-            $userIDs[] = $this->userID;
-        }
-
-        return $userIDs;
+        return $this->userIDs;
     }
 }

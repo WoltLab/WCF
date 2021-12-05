@@ -66,6 +66,7 @@ class SearchAction extends AbstractDatabaseObjectAction
 
         $resultHandler = new SearchResultHandler($search);
         $resultHandler->loadSearchResults();
+        $templateName = $resultHandler->getTemplateName();
 
         WCF::getTPL()->assign([
             'objects' => $resultHandler->getSearchResults(),
@@ -81,7 +82,7 @@ class SearchAction extends AbstractDatabaseObjectAction
             ]),
             'pages' => ceil($resultHandler->countSearchResults() / SEARCH_RESULTS_PER_PAGE),
             'searchID' => $search->searchID,
-            'template' => WCF::getTPL()->fetch('searchResultList'),
+            'template' => WCF::getTPL()->fetch($templateName['templateName'], $templateName['application']),
         ];
     }
 
@@ -104,6 +105,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $search = new Search($this->parameters['searchID']);
         $resultHandler = new SearchResultHandler($search, SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1));
         $resultHandler->loadSearchResults();
+        $templateName = $resultHandler->getTemplateName();
 
         WCF::getTPL()->assign([
             'objects' => $resultHandler->getSearchResults(),
@@ -112,7 +114,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         ]);
 
         return [
-            'template' => WCF::getTPL()->fetch('searchResultList'),
+            'template' => WCF::getTPL()->fetch($templateName['templateName'], $templateName['application']),
         ];
     }
 }

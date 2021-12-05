@@ -5,6 +5,7 @@ namespace wcf\system\search;
 use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
+use wcf\form\SearchForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -144,6 +145,8 @@ final class SearchHandler
 
     private function buildTypeBasedConditionBuilders(): void
     {
+        $form = $this->getSearchFormEmulation();
+        
         foreach ($this->objectTypeNames as $key => $objectTypeName) {
             $objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
             if ($objectType === null) {
@@ -155,7 +158,7 @@ final class SearchHandler
                     throw new PermissionDeniedException();
                 }
 
-                if (($conditionBuilder = $objectType->getConditions()) !== null) {
+                if (($conditionBuilder = $objectType->getConditions($form)) !== null) {
                     $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
                 }
             } catch (PermissionDeniedException $e) {
@@ -163,6 +166,25 @@ final class SearchHandler
                 continue;
             }
         }
+    }
+
+    /**
+     * @deprecated 5.5
+     */
+    private function getSearchFormEmulation(): SearchForm
+    {
+        foreach ($this->parameters as $key => $value) {
+            $_POST[$key] = $value;
+        }
+        
+        $form = new SearchForm();
+        $form->readFormParameters();
+        $form->userIDs = $this->getUserIDs();
+        if (count($form->selectedObjectTypes) === 1) {
+            $this->objectTypeNames = $form->selectedObjectTypes;
+        }
+
+        return $form;
     }
 
     private function getUserIDs(): array
