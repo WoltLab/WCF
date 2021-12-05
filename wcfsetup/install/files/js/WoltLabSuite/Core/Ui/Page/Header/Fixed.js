@@ -59,7 +59,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
      * Opens the search bar.
      */
     function openSearchBar() {
-        window.WCF.Dropdown.Interactive.Handler.closeAll();
+        CloseOverlay_1.default.execute();
         _pageHeader.classList.add("searchBarOpen");
         _userPanelSearchButton.parentElement.classList.add("open");
         if (!_isMobile) {

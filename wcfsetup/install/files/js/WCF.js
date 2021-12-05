@@ -1230,9 +1230,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				return false;
 			}
 			else {
-				WCF.Dropdown.Interactive.Handler.closeAll();
-				
-				this.open();
+				require(["WoltLabSuite/Core/Ui/CloseOverlay"], (CloseOverlay) => {
+					CloseOverlay.execute();
+
+					this.open();
+				});
 				
 				return true;
 			}

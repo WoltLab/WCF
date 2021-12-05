@@ -66,7 +66,7 @@ function initSearchBar(): void {
  * Opens the search bar.
  */
 function openSearchBar(): void {
-  window.WCF.Dropdown.Interactive.Handler.closeAll();
+  UiCloseOverlay.execute();
 
   _pageHeader.classList.add("searchBarOpen");
   _userPanelSearchButton.parentElement!.classList.add("open");

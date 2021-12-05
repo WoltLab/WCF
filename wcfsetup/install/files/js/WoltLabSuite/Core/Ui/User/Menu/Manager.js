@@ -1,10 +1,9 @@
-define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../Dropdown/Simple"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, Simple_1) {
+define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay"], function (require, exports, tslib_1, Alignment, CloseOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerProvider = void 0;
     Alignment = (0, tslib_1.__importStar)(Alignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     let container = undefined;
     const providers = new Set();
     const views = new Map();
@@ -31,8 +30,7 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         link.setAttribute("aria-expanded", "false");
     }
     function open(provider) {
-        closeAll();
-        Simple_1.default.closeAll();
+        CloseOverlay_1.default.execute();
         const view = getView(provider);
         void view.open();
         const button = provider.getPanelButton();

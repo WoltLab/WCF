@@ -2,7 +2,6 @@ import { UserMenuProvider } from "./Data/Provider";
 import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
 import CloseOverlay from "../../CloseOverlay";
-import DropDown from "../../Dropdown/Simple";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -36,8 +35,7 @@ function prepareButton(button: HTMLElement): void {
 }
 
 function open(provider: UserMenuProvider): void {
-  closeAll();
-  DropDown.closeAll();
+  CloseOverlay.execute();
 
   const view = getView(provider);
   void view.open();
