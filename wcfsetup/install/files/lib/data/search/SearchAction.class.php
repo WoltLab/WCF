@@ -7,7 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchHandler;
-use wcf\system\search\SearchResultHandler as SearchSearchResultHandler;
+use wcf\system\search\SearchResultHandler;
 use wcf\system\WCF;
 
 /**
@@ -64,7 +64,7 @@ class SearchAction extends AbstractDatabaseObjectAction
             ];
         }
 
-        $resultHandler = new SearchSearchResultHandler($search);
+        $resultHandler = new SearchResultHandler($search);
         $resultHandler->loadSearchResults();
 
         WCF::getTPL()->assign([
