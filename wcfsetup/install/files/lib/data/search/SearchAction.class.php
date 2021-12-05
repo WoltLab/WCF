@@ -79,7 +79,39 @@ class SearchAction extends AbstractDatabaseObjectAction
                 'count' => $resultHandler->countSearchResults(),
                 'query' => $resultHandler->getQuery(),
             ]),
+            'pages' => ceil($resultHandler->countSearchResults() / SEARCH_RESULTS_PER_PAGE),
             'searchID' => $search->searchID,
+            'template' => WCF::getTPL()->fetch('searchResultList'),
+        ];
+    }
+
+    public function validateGetSearchResults(): void
+    {
+        $this->readInteger('searchID');
+        $this->readInteger('pageNo');
+
+        $search = new Search($this->parameters['searchID']);
+        if (!$search->searchID || $search->searchType != 'messages') {
+            throw new IllegalLinkException();
+        }
+        if ($search->userID && $search->userID != WCF::getUser()->userID) {
+            throw new IllegalLinkException();
+        }
+    }
+
+    public function getSearchResults(): array
+    {
+        $search = new Search($this->parameters['searchID']);
+        $resultHandler = new SearchResultHandler($search, SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1));
+        $resultHandler->loadSearchResults();
+
+        WCF::getTPL()->assign([
+            'objects' => $resultHandler->getSearchResults(),
+            'customIcons' => $resultHandler->getCustomIcons(),
+            'query' => $resultHandler->getQuery(),
+        ]);
+
+        return [
             'template' => WCF::getTPL()->fetch('searchResultList'),
         ];
     }

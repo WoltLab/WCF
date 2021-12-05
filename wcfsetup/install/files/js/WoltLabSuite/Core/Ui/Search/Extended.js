@@ -1,12 +1,16 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"], function (require, exports, tslib_1, Ajax_1, DomUtil, Input_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input"], function (require, exports, tslib_1, Ajax_1, DomUtil, StringUtil_1, Pagination_1, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiSearchExtended = void 0;
     DomUtil = (0, tslib_1.__importStar)(DomUtil);
+    Pagination_1 = (0, tslib_1.__importDefault)(Pagination_1);
     Input_1 = (0, tslib_1.__importDefault)(Input_1);
     class UiSearchExtended {
         constructor() {
-            this.lastRequest = undefined;
+            this.pages = 0;
+            this.activePage = 1;
+            this.lastSearchRequest = undefined;
+            this.lastSearchResultRequest = undefined;
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
@@ -39,19 +43,19 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
                 return;
             }
             this.updateQueryString();
-            if (this.lastRequest) {
-                this.lastRequest.abort();
+            if (this.lastSearchRequest) {
+                this.lastSearchRequest.abort();
             }
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
-            this.lastRequest = request.getAbortController();
-            const { count, searchID, title, template } = (await request.dispatch());
+            this.lastSearchRequest = request.getAbortController();
+            const { count, searchID, title, pages, template } = (await request.dispatch());
             document.querySelector(".contentTitle").textContent = title;
-            while (this.form.nextSibling !== null) {
-                this.form.parentElement.removeChild(this.form.nextSibling);
-            }
+            this.searchID = searchID;
+            this.activePage = 1;
+            this.removeSearchResults();
             if (count > 0) {
-                const fragment = DomUtil.createFragmentFromHtml(template);
-                this.form.parentElement.appendChild(fragment);
+                this.pages = pages;
+                this.showSearchResults(template);
             }
         }
         updateQueryString() {
@@ -82,6 +86,49 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "./Input"
             });
             this.typeInput.dispatchEvent(new Event("change"));
             this.search();
+        }
+        initPagination(position) {
+            const wrapperDiv = document.createElement("div");
+            wrapperDiv.classList.add("pagination" + (0, StringUtil_1.ucfirst)(position));
+            this.form.parentElement.appendChild(wrapperDiv);
+            const div = document.createElement("div");
+            wrapperDiv.appendChild(div);
+            new Pagination_1.default(div, {
+                activePage: this.activePage,
+                maxPage: this.pages,
+                callbackSwitch: (pageNo) => {
+                    this.changePage(pageNo);
+                },
+            });
+        }
+        async changePage(pageNo) {
+            if (this.lastSearchResultRequest) {
+                this.lastSearchResultRequest.abort();
+            }
+            const request = (0, Ajax_1.dboAction)("getSearchResults", "wcf\\data\\search\\SearchAction").payload({
+                searchID: this.searchID,
+                pageNo,
+            });
+            this.lastSearchResultRequest = request.getAbortController();
+            const { template } = (await request.dispatch());
+            this.activePage = pageNo;
+            this.removeSearchResults();
+            this.showSearchResults(template);
+        }
+        removeSearchResults() {
+            while (this.form.nextSibling !== null) {
+                this.form.parentElement.removeChild(this.form.nextSibling);
+            }
+        }
+        showSearchResults(template) {
+            if (this.pages > 1) {
+                this.initPagination("top");
+            }
+            const fragment = DomUtil.createFragmentFromHtml(template);
+            this.form.parentElement.appendChild(fragment);
+            if (this.pages > 1) {
+                this.initPagination("bottom");
+            }
         }
     }
     exports.UiSearchExtended = UiSearchExtended;
