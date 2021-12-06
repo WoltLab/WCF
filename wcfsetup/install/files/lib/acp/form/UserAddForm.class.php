@@ -3,6 +3,7 @@
 namespace wcf\acp\form;
 
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
 use wcf\system\bbcode\BBCodeHandler;
@@ -341,7 +342,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // Check if username exists already.
-        if (!UserUtil::isAvailableUsername($username)) {
+        if (User::getUserByUsername($username)->userID) {
             throw new UserInputException('username', 'notUnique');
         }
     }

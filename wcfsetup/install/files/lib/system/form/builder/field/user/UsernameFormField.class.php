@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field\user;
 
+use wcf\data\user\User;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IAttributeFormField;
 use wcf\system\form\builder\field\IAutoCompleteFormField;
@@ -132,7 +133,7 @@ class UsernameFormField extends AbstractFormField implements
                         'invalid',
                         'wcf.form.field.username.error.invalid'
                     ));
-                } elseif (!UserUtil::isAvailableUsername($this->getValue())) {
+                } elseif (User::getUserByUsername($this->getValue())->userID) {
                     $this->addValidationError(new FormFieldValidationError(
                         'notUnique',
                         'wcf.form.field.username.error.notUnique'

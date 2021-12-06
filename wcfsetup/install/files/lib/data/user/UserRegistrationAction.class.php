@@ -60,7 +60,7 @@ class UserRegistrationAction extends UserAction
             ];
         }
 
-        if (!UserUtil::isAvailableUsername($this->parameters['username'])) {
+        if (User::getUserByUsername($this->parameters['username'])->userID) {
             return [
                 'isValid' => false,
                 'error' => 'notUnique',

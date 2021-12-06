@@ -248,7 +248,7 @@ class AccountManagementForm extends AbstractForm
                 }
 
                 // checks if user name exists already.
-                if (!UserUtil::isAvailableUsername($this->username)) {
+                if (User::getUserByUsername($this->username)->userID) {
                     throw new UserInputException('username', 'notUnique');
                 }
             }
