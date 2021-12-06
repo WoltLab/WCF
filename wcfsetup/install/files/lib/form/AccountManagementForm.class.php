@@ -247,7 +247,8 @@ class AccountManagementForm extends AbstractForm
                 }
 
                 // checks if user name exists already.
-                if (User::getUserByUsername($this->username)->userID) {
+                $user2 = User::getUserByUsername($this->username);
+                if ($user2->userID && $user2->userID != WCF::getUser()->userID) {
                     throw new UserInputException('username', 'notUnique');
                 }
             }
