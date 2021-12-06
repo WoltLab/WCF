@@ -3,7 +3,6 @@
 namespace wcf\data\user;
 
 use wcf\util\UserRegistrationUtil;
-use wcf\util\UserUtil;
 
 /**
  * Executes user registration-related actions.
@@ -60,7 +59,7 @@ class UserRegistrationAction extends UserAction
             ];
         }
 
-        if (!UserUtil::isAvailableUsername($this->parameters['username'])) {
+        if (User::getUserByUsername($this->parameters['username'])->userID) {
             return [
                 'isValid' => false,
                 'error' => 'notUnique',
@@ -86,7 +85,7 @@ class UserRegistrationAction extends UserAction
             ];
         }
 
-        if (!UserUtil::isAvailableEmail($this->parameters['email'])) {
+        if (User::getUserByEmail($this->parameters['email'])->userID) {
             return [
                 'isValid' => false,
                 'error' => 'notUnique',

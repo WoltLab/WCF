@@ -11,6 +11,7 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\IMessageInlineEditorAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\CommentHandler;
@@ -35,7 +36,6 @@ use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
 use wcf\util\UserRegistrationUtil;
-use wcf\util\UserUtil;
 
 /**
  * Executes comment-related actions.
@@ -1423,7 +1423,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             if (!UserRegistrationUtil::isValidUsername($this->parameters['data']['username'])) {
                 throw new UserInputException('username', 'invalid');
             }
-            if (!UserUtil::isAvailableUsername($this->parameters['data']['username'])) {
+            if (User::getUserByUsername($this->parameters['data']['username'])->userID) {
                 throw new UserInputException('username', 'notUnique');
             }
         } catch (UserInputException $e) {
