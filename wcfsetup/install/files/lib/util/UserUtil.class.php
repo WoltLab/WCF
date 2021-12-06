@@ -89,10 +89,7 @@ final class UserUtil
     }
 
     /**
-     * Returns true if the given email address is available.
-     *
-     * @param string $email
-     * @return  bool
+     * @deprecated 5.5 Check whether `User::getUserByEmail()->userID` is truthy.
      */
     public static function isAvailableEmail($email)
     {
