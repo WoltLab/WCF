@@ -366,7 +366,7 @@ class UserAddForm extends UserOptionListForm
         }
 
         // Check if email exists already.
-        if (!UserUtil::isAvailableEmail($email)) {
+        if (User::getUserByEmail($email)->userID) {
             throw new UserInputException('email', 'notUnique');
         }
 

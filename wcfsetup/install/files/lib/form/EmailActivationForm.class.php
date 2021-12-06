@@ -11,7 +11,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\UserUtil;
 
 /**
  * Shows the email activation form.
@@ -90,7 +89,7 @@ class EmailActivationForm extends AbstractForm
         }
 
         // check whether the new email isn't unique anymore
-        if (!UserUtil::isAvailableEmail($this->user->newEmail)) {
+        if (User::getUserByEmail($this->user->newEmail)->userID) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.user.email.error.notUnique'));
         }
 
