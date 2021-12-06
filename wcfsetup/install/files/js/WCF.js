@@ -962,6 +962,8 @@ WCF.Dropdown.Interactive = { };
 if (COMPILER_TARGET_DEFAULT) {
 	/**
 	 * General interface to create and manage interactive dropdowns.
+	 * 
+	 * @deprecated 5.5 Use `WoltLabSuite/Core/Ui/User/Menu/Manager` instead.
 	 */
 	WCF.Dropdown.Interactive.Handler = {
 		/**
@@ -1069,6 +1071,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * @param        jQuery                triggerElement
 	 * @param        string                identifier
 	 * @param        object                options
+	 * @deprecated 5.5 Implement `WoltLabSuite/Core/Ui/User/Menu/Data/Provider` instead.
 	 */
 	WCF.Dropdown.Interactive.Instance = Class.extend({
 		/**

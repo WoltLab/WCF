@@ -16,6 +16,8 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Menu\User
+ * 
+ * @method UserMenuItem[] getMenuItems()
  */
 class UserMenu extends TreeMenu
 {
@@ -57,5 +59,32 @@ class UserMenu extends TreeMenu
         }
 
         return $item->getProcessor()->isVisible();
+    }
+
+    /**
+     * @since 5.5
+     */
+    public function getUserMenuItems(): array
+    {
+        $data = [];
+        foreach ($this->getMenuItems('') as $category) {
+            $link = '';
+            $items = [];
+            foreach ($this->getMenuItems($category->menuItem) as $item) {
+                if (!$link) {
+                    $link = $item->getProcessor()->getLink();
+                }
+
+                $items[] = $item->getTitle();
+            }
+            
+            $data[] = [
+                'category' => $category,
+                'items' => $items,
+                'link' => $link,
+            ];
+        }
+
+        return $data;
     }
 }

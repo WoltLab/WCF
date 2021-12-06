@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay"], function (require, exports, tslib_1, Alignment, CloseOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.registerProvider = void 0;
+    exports.registerProvider = exports.getContainer = void 0;
     Alignment = (0, tslib_1.__importStar)(Alignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     let container = undefined;
@@ -73,6 +73,7 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay"],
         }
         return container;
     }
+    exports.getContainer = getContainer;
     function registerProvider(provider) {
         if (providers.size === 0) {
             CloseOverlay_1.default.add("WoltLabSuite/Ui/User/Menu", () => closeAll());

@@ -83,7 +83,7 @@ function getView(provider: UserMenuProvider): UserMenuView {
   return views.get(provider)!;
 }
 
-function getContainer(): HTMLElement {
+export function getContainer(): HTMLElement {
   if (container === undefined) {
     container = document.createElement("div");
     container.classList.add("dropdownMenuContainer");

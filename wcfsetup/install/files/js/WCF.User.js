@@ -20,6 +20,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * @param        jQuery                triggerElement
 	 * @param        string                identifier
 	 * @param        object                options
+	 * @deprecated 5.5  Implement `WoltLabSuite/Core/Ui/User/Menu/Data/Provider` instead.
 	 */
 	WCF.User.Panel.Abstract = Class.extend({
 		/**
@@ -124,14 +125,9 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._triggerElement.dblclick($.proxy(this._dblClick, this));
 			}
 			
-			if (this._options.staticDropdown === true) {
-				this._loadData = false;
-			}
-			else {
-				var $badge = this._triggerElement.find('span.badge');
-				if ($badge.length) {
-					this._badge = $badge;
-				}
+			var $badge = this._triggerElement.find('span.badge');
+			if ($badge.length) {
+				this._badge = $badge;
 			}
 		},
 		
@@ -397,23 +393,6 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 		}
 	});
-	
-	/**
-	 * User Panel implementation for user menu dropdown.
-	 *
-	 * @see        WCF.User.Panel.Abstract
-	 */
-	WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
-		/**
-		 * @see        WCF.User.Panel.Abstract.init()
-		 */
-		init: function () {
-			this._super($('#userMenu'), 'userMenu', {
-				pointerOffset: '13px',
-				staticDropdown: true
-			});
-		}
-	});
 }
 else {
 	WCF.User.Panel.Abstract = Class.extend({
@@ -426,27 +405,6 @@ else {
 		_proxy: {},
 		_triggerElement: {},
 		init: function() {},
-		toggle: function() {},
-		_dblClick: function() {},
-		_initDropdown: function() {},
-		_load: function() {},
-		_success: function() {},
-		_markAsRead: function() {},
-		_markAllAsRead: function() {},
-		updateBadge: function() {},
-		resetItems: function() {}
-	});
-	
-	WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
-		init: function() {},
-		_badge: {},
-		_dropdown: {},
-		_identifier: "",
-		_loadData: true,
-		_markAllAsReadLink: {},
-		_options: {},
-		_proxy: {},
-		_triggerElement: {},
 		toggle: function() {},
 		_dblClick: function() {},
 		_initDropdown: function() {},

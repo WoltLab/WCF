@@ -109,7 +109,7 @@ export class UserMenuView {
       <div class="userMenuItemContent">
         <a href="${link}" class="userMenuItemLink">${itemData.content}</a>
       </div>
-      <div class="userMenuItemTime"></div>
+      <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
         <a href="#" class="userMenuItemMarkAsRead" role="button">
           <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.user.panel.markAsRead")}"></span>
@@ -118,7 +118,7 @@ export class UserMenuView {
     `;
 
     const time = getTimeElement(new Date(itemData.time * 1_000));
-    element.querySelector(".userMenuItemTime")!.append(time);
+    element.querySelector(".userMenuItemMeta")!.append(time);
 
     const markAsRead = element.querySelector(".userMenuItemMarkAsRead")!;
     markAsRead.addEventListener("click", async (event) => {
@@ -151,9 +151,7 @@ export class UserMenuView {
     `;
 
     // Prevent clicks inside the dialog to close it.
-    this.element.addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
+    this.element.addEventListener("click", (event) => event.stopPropagation());
 
     const buttons = this.element.querySelector(".userMenuButtons")!;
     this.provider.getMenuButtons().forEach((button) => {
