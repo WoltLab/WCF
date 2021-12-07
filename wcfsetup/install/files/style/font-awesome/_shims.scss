@@ -104,10 +104,6 @@
 }
 .#{$fa-css-prefix}.#{$fa-css-prefix}-edit:before { content: fa-content($fa-var-pen-to-square); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-share-square-o {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
 .#{$fa-css-prefix}.#{$fa-css-prefix}-share-square-o:before { content: fa-content($fa-var-share-from-square); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-check-square-o {
@@ -154,17 +150,9 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-arrows-h:before { content: fa-content($fa-var-left-right); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-bar-chart {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-.#{$fa-css-prefix}.#{$fa-css-prefix}-bar-chart:before { content: fa-content($fa-var-chart-bar); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-bar-chart:before { content: fa-content($fa-var-chart-column); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-bar-chart-o {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-.#{$fa-css-prefix}.#{$fa-css-prefix}-bar-chart-o:before { content: fa-content($fa-var-chart-bar); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-bar-chart-o:before { content: fa-content($fa-var-chart-column); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-twitter-square {
   font-family: 'Font Awesome 6 Brands';
@@ -292,13 +280,15 @@
 }
 .#{$fa-css-prefix}.#{$fa-css-prefix}-hand-o-down:before { content: fa-content($fa-var-hand-point-down); }
 
+.#{$fa-css-prefix}.#{$fa-css-prefix}-globe:before { content: fa-content($fa-var-earth-americas); }
+
+.#{$fa-css-prefix}.#{$fa-css-prefix}-tasks:before { content: fa-content($fa-var-bars-progress); }
+
 .#{$fa-css-prefix}.#{$fa-css-prefix}-arrows-alt:before { content: fa-content($fa-var-maximize); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-group:before { content: fa-content($fa-var-users); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-chain:before { content: fa-content($fa-var-link); }
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-scissors:before { content: fa-content($fa-var-scissors); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-cut:before { content: fa-content($fa-var-scissors); }
 
@@ -324,6 +314,8 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-reorder:before { content: fa-content($fa-var-bars); }
 
+.#{$fa-css-prefix}.#{$fa-css-prefix}-magic:before { content: fa-content($fa-var-wand-magic-sparkles); }
+
 .#{$fa-css-prefix}.#{$fa-css-prefix}-pinterest {
   font-family: 'Font Awesome 6 Brands';
   font-weight: 400;
@@ -345,10 +337,6 @@
 }
 .#{$fa-css-prefix}.#{$fa-css-prefix}-google-plus:before { content: fa-content($fa-var-google-plus-g); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-money {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
 .#{$fa-css-prefix}.#{$fa-css-prefix}-money:before { content: fa-content($fa-var-money-bill-1); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-unsorted:before { content: fa-content($fa-var-sort); }
@@ -367,7 +355,9 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-legal:before { content: fa-content($fa-var-gavel); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-dashboard:before { content: fa-content($fa-var-gauge-simple); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-tachometer:before { content: fa-content($fa-var-gauge); }
+
+.#{$fa-css-prefix}.#{$fa-css-prefix}-dashboard:before { content: fa-content($fa-var-gauge); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-comment-o {
   font-family: 'Font Awesome 6 Free';
@@ -383,16 +373,7 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-flash:before { content: fa-content($fa-var-bolt); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-clipboard {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-paste {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-.#{$fa-css-prefix}.#{$fa-css-prefix}-paste:before { content: fa-content($fa-var-clipboard); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-clipboard:before { content: fa-content($fa-var-paste); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-lightbulb-o {
   font-family: 'Font Awesome 6 Free';
@@ -499,27 +480,25 @@
   font-family: 'Font Awesome 6 Free';
   font-weight: 400;
 }
-.#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-o:before { content: fa-content($fa-var-star-half); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-o:before { content: fa-content($fa-var-star-half-stroke); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-empty {
   font-family: 'Font Awesome 6 Free';
   font-weight: 400;
 }
-.#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-empty:before { content: fa-content($fa-var-star-half); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-empty:before { content: fa-content($fa-var-star-half-stroke); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-full {
   font-family: 'Font Awesome 6 Free';
   font-weight: 400;
 }
-.#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-full:before { content: fa-content($fa-var-star-half); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-star-half-full:before { content: fa-content($fa-var-star-half-stroke); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-code-fork:before { content: fa-content($fa-var-code-branch); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-chain-broken:before { content: fa-content($fa-var-link-slash); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-unlink:before { content: fa-content($fa-var-link-slash); }
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-shield:before { content: fa-content($fa-var-shield-blank); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-calendar-o {
   font-family: 'Font Awesome 6 Free';
@@ -542,7 +521,7 @@
   font-weight: 400;
 }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-ticket:before { content: fa-content($fa-var-ticket-simple); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-unlock-alt:before { content: fa-content($fa-var-unlock); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-minus-square-o {
   font-family: 'Font Awesome 6 Free';
@@ -609,9 +588,9 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-dollar:before { content: fa-content($fa-var-dollar-sign); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-inr:before { content: fa-content($fa-var-rupee-sign); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-inr:before { content: fa-content($fa-var-indian-rupee-sign); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-rupee:before { content: fa-content($fa-var-rupee-sign); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-rupee:before { content: fa-content($fa-var-indian-rupee-sign); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-jpy:before { content: fa-content($fa-var-yen-sign); }
 
@@ -648,9 +627,9 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-sort-alpha-desc:before { content: fa-content($fa-var-arrow-down-z-a); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-sort-amount-asc:before { content: fa-content($fa-var-arrow-down-wide-short); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-sort-amount-asc:before { content: fa-content($fa-var-arrow-down-short-wide); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-sort-amount-desc:before { content: fa-content($fa-var-arrow-down-short-wide); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-sort-amount-desc:before { content: fa-content($fa-var-arrow-down-wide-short); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-sort-numeric-asc:before { content: fa-content($fa-var-arrow-down-1-9); }
 
@@ -859,9 +838,9 @@
   font-weight: 400;
 }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-try:before { content: fa-content($fa-var-lira-sign); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-try:before { content: fa-content($fa-var-turkish-lira-sign); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-turkish-lira:before { content: fa-content($fa-var-lira-sign); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-turkish-lira:before { content: fa-content($fa-var-turkish-lira-sign); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-plus-square-o {
   font-family: 'Font Awesome 6 Free';
@@ -949,8 +928,6 @@
   font-family: 'Font Awesome 6 Brands';
   font-weight: 400;
 }
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-spoon:before { content: fa-content($fa-var-spoon); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-behance {
   font-family: 'Font Awesome 6 Brands';
@@ -1090,33 +1067,12 @@
   font-weight: 400;
 }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-life-ring {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-life-bouy {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
 .#{$fa-css-prefix}.#{$fa-css-prefix}-life-bouy:before { content: fa-content($fa-var-life-ring); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-life-buoy {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
 .#{$fa-css-prefix}.#{$fa-css-prefix}-life-buoy:before { content: fa-content($fa-var-life-ring); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-life-saver {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
 .#{$fa-css-prefix}.#{$fa-css-prefix}-life-saver:before { content: fa-content($fa-var-life-ring); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-support {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
 .#{$fa-css-prefix}.#{$fa-css-prefix}-support:before { content: fa-content($fa-var-life-ring); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-circle-o-notch:before { content: fa-content($fa-var-circle-notch); }
@@ -1218,8 +1174,6 @@
 .#{$fa-css-prefix}.#{$fa-css-prefix}-circle-thin:before { content: fa-content($fa-var-circle); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-header:before { content: fa-content($fa-var-heading); }
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-sliders:before { content: fa-content($fa-var-sliders); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-futbol-o {
   font-family: 'Font Awesome 6 Free';
@@ -1347,12 +1301,6 @@
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-sheqel:before { content: fa-content($fa-var-shekel-sign); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-meanpath {
-  font-family: 'Font Awesome 6 Brands';
-  font-weight: 400;
-}
-.#{$fa-css-prefix}.#{$fa-css-prefix}-meanpath:before { content: fa-content($fa-var-font-awesome); }
-
 .#{$fa-css-prefix}.#{$fa-css-prefix}-buysellads {
   font-family: 'Font Awesome 6 Brands';
   font-weight: 400;
@@ -1404,7 +1352,9 @@
 }
 .#{$fa-css-prefix}.#{$fa-css-prefix}-diamond:before { content: fa-content($fa-var-gem); }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-intersex:before { content: fa-content($fa-var-transgender); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-transgender:before { content: fa-content($fa-var-mars-and-venus); }
+
+.#{$fa-css-prefix}.#{$fa-css-prefix}-intersex:before { content: fa-content($fa-var-mars-and-venus); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-transgender-alt:before { content: fa-content($fa-var-transgender); }
 
@@ -1505,13 +1455,11 @@
   font-weight: 400;
 }
 
-.#{$fa-css-prefix}.#{$fa-css-prefix}-hourglass-o {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 400;
-}
-.#{$fa-css-prefix}.#{$fa-css-prefix}-hourglass-o:before { content: fa-content($fa-var-hourglass); }
+.#{$fa-css-prefix}.#{$fa-css-prefix}-hourglass-o:before { content: fa-content($fa-var-hourglass-empty); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-hourglass-1:before { content: fa-content($fa-var-hourglass-start); }
+
+.#{$fa-css-prefix}.#{$fa-css-prefix}-hourglass-half:before { content: fa-content($fa-var-hourglass); }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-hourglass-2:before { content: fa-content($fa-var-hourglass); }
 
@@ -1587,11 +1535,6 @@
 }
 
 .#{$fa-css-prefix}.#{$fa-css-prefix}-gg-circle {
-  font-family: 'Font Awesome 6 Brands';
-  font-weight: 400;
-}
-
-.#{$fa-css-prefix}.#{$fa-css-prefix}-tripadvisor {
   font-family: 'Font Awesome 6 Brands';
   font-weight: 400;
 }

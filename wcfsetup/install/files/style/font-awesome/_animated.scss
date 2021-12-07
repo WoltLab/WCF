@@ -19,8 +19,8 @@
   animation-timing-function: var(--#{$fa-css-prefix}-animation-timing, cubic-bezier(.4,0,.6,1));
 }
 
-.#{$fa-css-prefix}-flash {
-  animation-name: #{$fa-css-prefix}-flash;
+.#{$fa-css-prefix}-beat-fade {
+  animation-name: #{$fa-css-prefix}-beat-fade;
   animation-delay: var(--#{$fa-css-prefix}-animation-delay, 0);
   animation-direction: var(--#{$fa-css-prefix}-animation-direction, normal);
   animation-duration: var(--#{$fa-css-prefix}-animation-duration, 1s);
@@ -65,7 +65,7 @@
 @media (prefers-reduced-motion: reduce) {
   .#{$fa-css-prefix}-beat,
   .#{$fa-css-prefix}-fade,
-  .#{$fa-css-prefix}-flash,
+  .#{$fa-css-prefix}-beat-fade,
   .#{$fa-css-prefix}-flip,
   .#{$fa-css-prefix}-pulse,
   .#{$fa-css-prefix}-spin,
@@ -87,14 +87,14 @@
   50% { opacity: var(--#{$fa-css-prefix}-fade-opacity, 0.4); }
 }
 
-@keyframes #{$fa-css-prefix}-flash {
+@keyframes #{$fa-css-prefix}-beat-fade {
   0%, 100% {
-    opacity: var(--#{$fa-css-prefix}-flash-opacity, 0.4);
+    opacity: var(--#{$fa-css-prefix}-beat-fade-opacity, 0.4);
     transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(var(--#{$fa-css-prefix}-flash-scale, 1.125));
+    transform: scale(var(--#{$fa-css-prefix}-beat-fade-scale, 1.125));
   }
 }
 
