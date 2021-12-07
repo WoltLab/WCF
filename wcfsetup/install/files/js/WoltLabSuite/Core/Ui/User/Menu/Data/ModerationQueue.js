@@ -81,7 +81,6 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
         }
         updateCounter(counter) {
-            // TODO: Reset the view?
             let badge = this.button.querySelector(".badge");
             if (badge === null && counter > 0) {
                 badge = document.createElement("span");

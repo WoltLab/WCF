@@ -100,8 +100,10 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
                     this.counter = counter;
                 }
             }
-            // TODO: Migrate this!
-            window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter) => this.updateCounter(counter));
+            window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter) => {
+                this.updateCounter(counter);
+                this.stale = true;
+            });
         }
         getPanelButton() {
             return this.button;
@@ -166,7 +168,6 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             await (0, Ajax_1.dboAction)("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
         }
         updateCounter(counter) {
-            // TODO: Reset the view?
             let badge = this.button.querySelector(".badge");
             if (badge === null && counter > 0) {
                 badge = document.createElement("span");

@@ -121,8 +121,6 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   private updateCounter(counter: number): void {
-    // TODO: Reset the view?
-
     let badge = this.button.querySelector<HTMLElement>(".badge");
     if (badge === null && counter > 0) {
       badge = document.createElement("span");

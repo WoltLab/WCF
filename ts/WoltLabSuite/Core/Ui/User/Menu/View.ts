@@ -126,10 +126,19 @@ export class UserMenuView {
 
       await this.provider.markAsRead(itemData.objectId);
 
-      element.dataset.isUnread = "false";
+      this.markAsRead(element);
     });
 
     return element;
+  }
+
+  private markAsRead(element: HTMLElement) {
+    element.dataset.isUnread = "false";
+
+    const unreadItems = this.getContent().querySelectorAll('.userMenuItem[data-is-unread="true"]');
+    if (unreadItems.length === 0) {
+      this.markAllAsReadButton.remove();
+    }
   }
 
   private reset(): void {

@@ -94,9 +94,16 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             markAsRead.addEventListener("click", async (event) => {
                 event.preventDefault();
                 await this.provider.markAsRead(itemData.objectId);
-                element.dataset.isUnread = "false";
+                this.markAsRead(element);
             });
             return element;
+        }
+        markAsRead(element) {
+            element.dataset.isUnread = "false";
+            const unreadItems = this.getContent().querySelectorAll('.userMenuItem[data-is-unread="true"]');
+            if (unreadItems.length === 0) {
+                this.markAllAsReadButton.remove();
+            }
         }
         reset() {
             const content = this.getContent();

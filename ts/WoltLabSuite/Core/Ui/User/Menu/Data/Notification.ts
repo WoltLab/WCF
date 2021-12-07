@@ -136,10 +136,11 @@ class UserMenuDataNotification implements UserMenuProvider {
       }
     }
 
-    // TODO: Migrate this!
-    window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter: number) =>
-      this.updateCounter(counter),
-    );
+    window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter: number) => {
+      this.updateCounter(counter);
+
+      this.stale = true;
+    });
   }
 
   getPanelButton(): HTMLElement {
@@ -226,8 +227,6 @@ class UserMenuDataNotification implements UserMenuProvider {
   }
 
   private updateCounter(counter: number): void {
-    // TODO: Reset the view?
-
     let badge = this.button.querySelector<HTMLElement>(".badge");
     if (badge === null && counter > 0) {
       badge = document.createElement("span");
