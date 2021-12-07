@@ -5,6 +5,7 @@
     --color: #{$wcfUserMenuText};
     --color-dimmed: #{$wcfUserMenuDimmedText};
     --color-indicator: #{$wcfUserMenuIndicator};
+    --color-link: #{$wcfUserMenuLink};
 
     background-color: var(--background-color);
     border-radius: 5px;
@@ -54,12 +55,14 @@
 }
 
 .userMenuTitle {
-    font-size: 18px;
-    font-weight: 600;
     grid-area: title;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @include wcfFontHeadline;
+
+    font-weight: 600;
 }
 
 .userMenuButtons {
@@ -81,10 +84,11 @@
 .userMenuContentStatus {
     align-items: center;
     color: var(--color-dimmed);
-    font-size: 18px;
     display: flex;
     height: 60px;
     justify-content: center;
+
+    @include wcfFontHeadline;
 }
 
 .userMenuItem {
@@ -125,7 +129,7 @@
 
 .userMenuItemLink,
 .userMenuItemLink:hover {
-    color: inherit;
+    color: var(--color-link);
 }
 
 .userMenuItemLink::before {
@@ -148,11 +152,12 @@
 
 .userMenuItemMeta {
     color: var(--color-dimmed);
-    font-size: 12px;
     grid-area: meta;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @include wcfFontSmall;
 }
 
 .userMenuItemUnread {
@@ -209,7 +214,7 @@
 }
 
 .userMenuFooterLink {
-    color: inherit;
+    color: var(--color-link);
 
     &:hover {
         color: inherit;
