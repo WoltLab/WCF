@@ -183,7 +183,7 @@ class UserListPage extends SortablePage
         parent::readData();
 
         // add email column for authorized users
-        if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+        if (!$this->searchID && WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
             \array_unshift($this->columns, 'email');
         }
 

@@ -24,7 +24,11 @@
 				}
 				
 				var alternateLink = elBySel('link[rel="alternate"][hreflang="' + languageCode + '"]');
-				if (alternateLink) {
+				if (
+					alternateLink
+					&& document.body.dataset.application === "wcf"
+					&& document.body.dataset.template === "cms"
+				) {
 					// Check if the page does not have unique links per language, such as for the landing page.
 					var currentLink = elBySel('link[rel="alternate"][hreflang="{$__wcf->getLanguage()->getFixedLanguageCode()}"]');
 					if (!currentLink || currentLink.href !== alternateLink.href) {

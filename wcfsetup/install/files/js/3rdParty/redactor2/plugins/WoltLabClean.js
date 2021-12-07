@@ -546,6 +546,26 @@ $.Redactor.prototype.WoltLabClean = function() {
 					hadImages = true;
 					data.images = false;
 				}
+
+				div.querySelectorAll("colgroup").forEach((colgroup) => colgroup.remove());
+
+				// Clean up attributes in tables because Redactor's regex is bad.
+				div.querySelectorAll("table, tbody, td, th, thead, tr").forEach((cell) => {
+					for (let i = cell.attributes.length - 1; i >= 0; i--) {
+						const attr = cell.attributes.item(i);
+						const name = attr.name;
+						if (cell.nodeName === "TD" || cell.nodeName === "TH") {
+							if (name === "colspan" || name === "rowspan") {
+								const value = +attr.value;
+								if (!Number.isNaN(value) && Number.isInteger(value)) {
+									continue;
+								}
+							}
+						}
+
+						cell.attributes.removeNamedItem(name);
+					}
+				});
 				
 				html = mpConvertTags.call(this, div.innerHTML, data);
 				
