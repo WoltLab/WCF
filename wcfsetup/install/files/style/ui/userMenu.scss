@@ -5,7 +5,6 @@
     --color: #{$wcfUserMenuText};
     --color-dimmed: #{$wcfUserMenuDimmedText};
     --color-indicator: #{$wcfUserMenuIndicator};
-    --color-link: #{$wcfUserMenuLink};
 
     background-color: var(--background-color);
     border-radius: 5px;
@@ -129,7 +128,7 @@
 
 .userMenuItemLink,
 .userMenuItemLink:hover {
-    color: var(--color-link);
+    color: inherit;
 }
 
 .userMenuItemLink::before {
@@ -214,7 +213,7 @@
 }
 
 .userMenuFooterLink {
-    color: var(--color-link);
+    color: inherit;
 
     &:hover {
         color: inherit;
