@@ -3,12 +3,12 @@
 namespace wcf\data;
 
 use wcf\data\object\type\ObjectType;
+use wcf\data\user\User;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\captcha\ICaptchaHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
-use wcf\util\UserUtil;
 
 /**
  * Provides methods related to the guest dialog of message quick reply.
@@ -117,7 +117,7 @@ trait TMessageQuickReplyGuestDialogAction
             if (!UserRegistrationUtil::isValidUsername($this->parameters['data']['username'])) {
                 throw new UserInputException('username', 'invalid');
             }
-            if (!UserUtil::isAvailableUsername($this->parameters['data']['username'])) {
+            if (User::getUserByUsername($this->parameters['data']['username'])->userID) {
                 throw new UserInputException('username', 'notUnique');
             }
         } catch (UserInputException $e) {

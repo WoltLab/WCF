@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.user.login' __isLogin=true}
 
-<div id="login" style="display: none">
+<div id="login" class="acpLoginForm" style="display: none">
 	<form method="post" action="{link controller='Login'}{/link}">
 		{if !$errorField|empty && $errorField == 'cookie'}
 			<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>

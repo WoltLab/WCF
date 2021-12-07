@@ -47,8 +47,10 @@
 {capture assign='contentInteractionButtons'}
 	<a id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.assignedUser.change{/lang}</a>
 	{if !$queue->isDone()}
-		<a id="enableContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.enableContent{/lang}</a>
-		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<a id="removeContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.removeContent{/lang}</a>{/if}
+		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}
+			<a id="removeContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.removeContent{/lang}</a>
+		{/if}
+		<a id="removeReport" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.report.removeReport{/lang}</a>
 	{/if}
 	{if $queue->canChangeJustifiedStatus()}
 		<a id="changeJustifiedStatus" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</a>

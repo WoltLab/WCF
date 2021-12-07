@@ -2821,9 +2821,9 @@
 						
 						if (tags[i] === 'td' || tags[i] === 'th') {
 							html = html.replace(new RegExp(
-								'<' + tags[i] + '(.*?[^>])((colspan|rowspan)="(.*?[^>])")?(.*?[^>])>',
+								'<' + tags[i] + '([^>]*?)>',
 								'gi'
-							), '###' + tags[i] + ' $2###');
+							), '###' + tags[i] + ' $1###');
 						}
 						else if (this.utils.isInlineTag(tags[i])) {
 							html = html.replace(

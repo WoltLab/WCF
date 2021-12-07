@@ -223,6 +223,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        object                event
 		 */
 		_removeItem: function (event) {
+			this._savePermissions();
+			
 			var $listItem = $(event.currentTarget).parent();
 			var $type = $listItem.data('type');
 			var $objectID = $listItem.data('objectID');

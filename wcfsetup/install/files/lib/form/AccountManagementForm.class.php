@@ -16,7 +16,6 @@ use wcf\system\WCF;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
-use wcf\util\UserUtil;
 
 /**
  * Shows the account management form.
@@ -248,7 +247,8 @@ class AccountManagementForm extends AbstractForm
                 }
 
                 // checks if user name exists already.
-                if (!UserUtil::isAvailableUsername($this->username)) {
+                $user2 = User::getUserByUsername($this->username);
+                if ($user2->userID && $user2->userID != WCF::getUser()->userID) {
                     throw new UserInputException('username', 'notUnique');
                 }
             }
@@ -293,7 +293,7 @@ class AccountManagementForm extends AbstractForm
                 }
 
                 // checks if email already exists.
-                if (!UserUtil::isAvailableEmail($this->email)) {
+                if (User::getUserByEmail($this->email)->userID) {
                     throw new UserInputException('email', 'notUnique');
                 }
             }

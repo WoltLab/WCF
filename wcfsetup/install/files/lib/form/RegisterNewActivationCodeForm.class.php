@@ -16,7 +16,6 @@ use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
-use wcf\util\UserUtil;
 
 /**
  * Shows the new activation code form.
@@ -148,7 +147,7 @@ class RegisterNewActivationCodeForm extends AbstractForm
                 }
 
                 // Check if email exists already.
-                if (!UserUtil::isAvailableEmail($this->email)) {
+                if (User::getUserByEmail($this->email)->userID) {
                     throw new UserInputException('email', 'notUnique');
                 }
             } else {
