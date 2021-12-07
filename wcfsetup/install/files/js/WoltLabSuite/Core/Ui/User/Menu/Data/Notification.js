@@ -116,6 +116,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
                 },
             ];
         }
+        getIdentifier() {
+            return "com.woltlab.wcf.notifications";
+        }
         async getData() {
             const data = (await (0, Ajax_1.dboAction)("getNotificationData", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch());
             const counter = data.filter((item) => item.isUnread).length;

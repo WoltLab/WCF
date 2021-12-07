@@ -2,6 +2,7 @@ import { UserMenuProvider } from "./Data/Provider";
 import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
 import CloseOverlay from "../../CloseOverlay";
+import * as EventHandler from "../../../Event/Handler";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -96,6 +97,14 @@ export function getContainer(): HTMLElement {
 export function registerProvider(provider: UserMenuProvider): void {
   if (providers.size === 0) {
     CloseOverlay.add("WoltLabSuite/Ui/User/Menu", () => closeAll());
+
+    EventHandler.add("com.woltlab.wcf.UserMenuMobile", "more", (data) => {
+      providers.forEach((provider) => {
+        if (data.identifier === provider.getIdentifier()) {
+          open(provider);
+        }
+      });
+    });
   }
 
   initProvider(provider);

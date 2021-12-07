@@ -104,6 +104,10 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
     return false;
   }
 
+  getIdentifier(): string {
+    return "com.woltlab.wcf.moderation";
+  }
+
   async markAsRead(objectId: number): Promise<void> {
     const response = (await dboAction("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
       .objectIds([objectId])

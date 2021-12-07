@@ -68,6 +68,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             }
             return false;
         }
+        getIdentifier() {
+            return "com.woltlab.wcf.moderation";
+        }
         async markAsRead(objectId) {
             const response = (await (0, Ajax_1.dboAction)("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
                 .objectIds([objectId])

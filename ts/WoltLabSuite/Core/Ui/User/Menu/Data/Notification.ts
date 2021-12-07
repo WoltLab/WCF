@@ -157,6 +157,10 @@ class UserMenuDataNotification implements UserMenuProvider {
     ];
   }
 
+  getIdentifier(): string {
+    return "com.woltlab.wcf.notifications";
+  }
+
   async getData(): Promise<UserMenuData[]> {
     const data = (await dboAction(
       "getNotificationData",

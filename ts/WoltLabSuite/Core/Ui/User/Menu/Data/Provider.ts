@@ -19,6 +19,8 @@ export interface UserMenuProvider {
 
   getFooter(): UserMenuFooter | null;
 
+  getIdentifier(): string;
+
   getMenuButtons(): UserMenuButton[];
 
   getPanelButton(): HTMLElement;

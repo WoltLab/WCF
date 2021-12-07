@@ -12,7 +12,7 @@
     pointer-events: all;
     position: absolute;
     width: 400px;
-    z-index: 300;
+    z-index: 450;
 
     &.userMenuControlPanel {
         .userMenuItemImage {
@@ -25,6 +25,22 @@
 
         .icon {
             color: var(--color-dimmed);
+        }
+    }
+
+    /* TODO: This is for the old mobile menu only. */
+    @include screen-xs {
+        border-radius: 0;
+        bottom: 0 !important;
+        display: flex;
+        left: 0 !important;
+        flex-direction: column;
+        right: 0 !important;
+        top: 50px !important;
+        width: 100%;
+
+        .userMenuContent {
+            flex: 1 auto;
         }
     }
 }
