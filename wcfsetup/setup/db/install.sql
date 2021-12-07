@@ -2504,7 +2504,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltip
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBackground', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBackgroundActive', 'rgba(239, 239, 239, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuText', 'rgba(58, 58, 61, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuDimmedText', 'rgba(108, 108, 108, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuTextDimmed', 'rgba(108, 108, 108, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuIndicator', 'rgba(49, 138, 220, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBorder', 'rgb(221, 221, 221, 1)');
 

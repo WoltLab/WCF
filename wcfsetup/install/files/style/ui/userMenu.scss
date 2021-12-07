@@ -3,12 +3,13 @@
     --background-color-active: #{$wcfUserMenuBackgroundActive};
     --border-color: #{$wcfUserMenuBorder};
     --color: #{$wcfUserMenuText};
-    --color-dimmed: #{$wcfUserMenuDimmedText};
+    --color-dimmed: #{$wcfUserMenuTextDimmed};
     --color-indicator: #{$wcfUserMenuIndicator};
 
     background-color: var(--background-color);
     border-radius: 5px;
     box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+    color: var(--color);
     pointer-events: all;
     position: absolute;
     width: 400px;
@@ -26,6 +27,10 @@
         .icon {
             color: var(--color-dimmed);
         }
+    }
+
+    .icon {
+        color: inherit;
     }
 
     /* TODO: This is for the old mobile menu only. */
