@@ -1,3 +1,13 @@
+/**
+ * User menu for notifications.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/User/Menu/Data/Notification
+ * @woltlabExcludeBundle tiny
+ */
+
 import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";

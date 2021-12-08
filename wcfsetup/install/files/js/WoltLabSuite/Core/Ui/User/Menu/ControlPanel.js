@@ -1,3 +1,12 @@
+/**
+ * User menu for the control panel.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/User/Menu/ControlPanel
+ * @woltlabExcludeBundle tiny
+ */
 define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus-trap", "../../Alignment"], function (require, exports, tslib_1, CloseOverlay_1, Manager_1, focus_trap_1, Alignment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

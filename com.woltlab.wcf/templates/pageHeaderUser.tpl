@@ -89,7 +89,17 @@
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
 				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}" data-title="Benachrichtigungen">
-					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
+					<a
+						class="jsTooltip"
+						href="{link controller='NotificationList'}{/link}"
+						title="{lang}wcf.user.notification.notifications{/lang}"
+						role="button"
+						tabindex="0"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+						<span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
+					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
 							require(["WoltLabSuite/Core/Ui/User/Menu/Data/Notification"], ({ setup }) => {
@@ -251,7 +261,15 @@
 		{if !$__hideUserMenu|isset}
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
-					<a class="jsTooltip" href="{link controller='ModerationList'}{/link}" title="{lang}wcf.moderation.moderation{/lang}">
+					<a
+						class="jsTooltip"
+						href="{link controller='ModerationList'}{/link}"
+						title="{lang}wcf.moderation.moderation{/lang}"
+						role="button"
+						tabindex="0"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
 						<span class="icon icon32 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}

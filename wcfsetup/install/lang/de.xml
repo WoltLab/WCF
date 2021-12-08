@@ -5281,6 +5281,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.notification.notifications"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Deaktiviert]]></item>
 		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Aktiviert]]></item>
+		<item name="wcf.user.notification.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Alle Benachrichtigungen anzeigen]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Die gewählten E-Mail-Benachrichtigungen wurde erfolgreich abbestellt.]]></item>
 		<item name="wcf.user.notification.mail.unsubscribe.confirm"><![CDATA[Gewählte E-Mail-Benachrichtigungen abbstellen]]></item>

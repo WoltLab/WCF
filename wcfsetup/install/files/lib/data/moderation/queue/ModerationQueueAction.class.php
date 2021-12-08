@@ -103,7 +103,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
     /**
      * Validates parameters to fetch a list of outstanding queues.
-     * 
+     *
      * @deprecated 5.5
      */
     public function validateGetOutstandingQueues()
@@ -174,7 +174,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * @since 5.5
      * @deprecated 5.5 This method will be merged with `getModerationQueueData`
      */
-    private function getModerationQueues(): array {
+    private function getModerationQueues(): array
+    {
         // Maximum cardinality of the returned array
         static $MAX_ITEMS = 10;
 
@@ -249,8 +250,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         }
 
         return [
-            'queues'=>$queues,
-            'totalCount'=>$totalCount,
+            'queues' => $queues,
+            'totalCount' => $totalCount,
         ];
     }
 

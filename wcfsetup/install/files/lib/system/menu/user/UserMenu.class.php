@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Menu\User
- * 
+ *
  * @method UserMenuItem[] getMenuItems()
  */
 class UserMenu extends TreeMenu
@@ -77,7 +77,7 @@ class UserMenu extends TreeMenu
 
                 $items[] = $item->getTitle();
             }
-            
+
             $data[] = [
                 'category' => $category,
                 'items' => $items,

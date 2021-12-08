@@ -1,3 +1,12 @@
+/**
+ * Controls the behavior of the user menus.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/User/Menu/Manager
+ * @woltlabExcludeBundle tiny
+ */
 define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -11,7 +20,6 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
     function initProvider(provider) {
         providers.add(provider);
         const button = provider.getPanelButton();
-        prepareButton(button);
         button.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -22,13 +30,6 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
                 open(provider);
             }
         });
-    }
-    function prepareButton(button) {
-        const link = button.querySelector("a");
-        link.setAttribute("role", "button");
-        link.tabIndex = 0;
-        link.setAttribute("aria-haspopup", "true");
-        link.setAttribute("aria-expanded", "false");
     }
     function open(provider) {
         CloseOverlay_1.default.execute();

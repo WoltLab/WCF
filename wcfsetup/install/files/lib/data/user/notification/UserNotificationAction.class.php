@@ -184,7 +184,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
 
     /**
      * Validates the 'getOutstandingNotifications' action.
-     * 
+     *
      * @deprecated 5.5
      */
     public function validateGetOutstandingNotifications()

@@ -1,3 +1,13 @@
+/**
+ * Provides the UI elements of a user menu.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/User/Menu/View
+ * @woltlabExcludeBundle tiny
+ */
+
 import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Data/Provider";
 import { getTimeElement } from "../../../Date/Util";
 import { escapeHTML } from "../../../StringUtil";

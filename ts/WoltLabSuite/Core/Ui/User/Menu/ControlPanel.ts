@@ -1,3 +1,13 @@
+/**
+ * User menu for the control panel.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/User/Menu/ControlPanel
+ * @woltlabExcludeBundle tiny
+ */
+
 import UiCloseOverlay from "../../CloseOverlay";
 import { getContainer } from "./Manager";
 import { createFocusTrap, FocusTrap } from "focus-trap";
