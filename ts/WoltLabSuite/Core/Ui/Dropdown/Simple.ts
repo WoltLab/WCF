@@ -96,8 +96,11 @@ function toggle(
   disableAutoFocus?: boolean,
 ): boolean {
   _blockCloseAll = true;
-  UiCloseOverlay.execute();
-  _blockCloseAll = false;
+  try {
+    UiCloseOverlay.execute();
+  } finally {
+    _blockCloseAll = false;
+  }
 
   let isKeyboardClick = false;
   if (event !== null) {

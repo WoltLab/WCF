@@ -65,7 +65,7 @@ export function setup(): void {
 
     focusTrap = createFocusTrap(element, {
       allowOutsideClick: true,
-      escapeDeactivates: (): boolean => {
+      escapeDeactivates(): boolean {
         close();
 
         return false;

@@ -52,7 +52,7 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
             });
             focusTrap = (0, focus_trap_1.createFocusTrap)(element, {
                 allowOutsideClick: true,
-                escapeDeactivates: () => {
+                escapeDeactivates() {
                     close();
                     return false;
                 },

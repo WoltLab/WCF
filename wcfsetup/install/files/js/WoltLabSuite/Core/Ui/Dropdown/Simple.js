@@ -88,8 +88,12 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
      */
     function toggle(event, targetId, alternateElement, disableAutoFocus) {
         _blockCloseAll = true;
-        CloseOverlay_1.default.execute();
-        _blockCloseAll = false;
+        try {
+            CloseOverlay_1.default.execute();
+        }
+        finally {
+            _blockCloseAll = false;
+        }
         let isKeyboardClick = false;
         if (event !== null) {
             event.preventDefault();

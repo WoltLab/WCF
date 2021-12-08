@@ -196,7 +196,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
      * Loads user notifications.
      *
      * @return  mixed[]
-     * @deprecated 5.5
+     * @deprecated 5.5 This method provided the data for the legacy user panel implementation.
      */
     public function getOutstandingNotifications()
     {

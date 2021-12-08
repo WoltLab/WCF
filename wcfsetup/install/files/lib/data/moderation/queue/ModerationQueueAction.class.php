@@ -112,7 +112,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
      * Returns a list of outstanding queues.
      *
      * @return  string[]
-     * @deprecated 5.5
+     * @deprecated 5.5 This method provided the data for the legacy user panel implementation.
      */
     public function getOutstandingQueues()
     {
