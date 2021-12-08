@@ -95,6 +95,18 @@
 	@include wcfFontHeadline;
 }
 
+.userMenuContent.userMenuContentScrollable {
+	@include screen-lg {
+		max-height: 400px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	@include screen-md-down {
+		overflow: hidden auto;
+	}
+}
+
 .userMenuItem {
 	background-color: var(--background-color);
 	display: grid;

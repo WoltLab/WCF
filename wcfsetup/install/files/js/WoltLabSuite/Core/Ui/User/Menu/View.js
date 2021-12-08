@@ -7,14 +7,17 @@
  * @module WoltLabSuite/Core/Ui/User/Menu/View
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1) {
+define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUtil", "../../../Dom/Change/Listener", "../../../Language", "focus-trap", "perfect-scrollbar", "../../Screen"], function (require, exports, tslib_1, Util_1, StringUtil_1, DomChangeListener, Language, focus_trap_1, perfectScrollbar, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
     DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
     Language = (0, tslib_1.__importStar)(Language);
+    perfectScrollbar = (0, tslib_1.__importStar)(perfectScrollbar);
+    UiScreen = (0, tslib_1.__importStar)(UiScreen);
     class UserMenuView {
         constructor(provider) {
+            this.usePerfectScrollbar = false;
             this.provider = provider;
             this.element = document.createElement("div");
             this.buildElement();
@@ -32,6 +35,20 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                     return false;
                 },
                 fallbackFocus: this.element,
+            });
+            UiScreen.on("screen-lg", {
+                match: () => {
+                    this.usePerfectScrollbar = true;
+                    this.rebuildScrollbar();
+                },
+                unmatch: () => {
+                    this.usePerfectScrollbar = false;
+                    this.rebuildScrollbar();
+                },
+                setup: () => {
+                    this.usePerfectScrollbar = true;
+                    this.rebuildScrollbar();
+                },
             });
         }
         getElement() {
@@ -78,6 +95,29 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 }
                 DomChangeListener.trigger();
             }
+            this.rebuildScrollbar();
+        }
+        rebuildScrollbar() {
+            const content = this.getContent();
+            if (this.usePerfectScrollbar) {
+                this.enablePerfectScrollbar(content);
+            }
+            else {
+                this.disablePerfectScrollbar(content);
+            }
+        }
+        enablePerfectScrollbar(content) {
+            if (content.dataset.psId) {
+                perfectScrollbar.update(content);
+            }
+            else {
+                perfectScrollbar.initialize(content, {
+                    suppressScrollX: true,
+                });
+            }
+        }
+        disablePerfectScrollbar(content) {
+            perfectScrollbar.destroy(content);
         }
         createItem(itemData) {
             const element = document.createElement("div");
@@ -128,7 +168,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         <div class="userMenuTitle">${this.provider.getTitle()}</div>
         <div class="userMenuButtons"></div>
       </div>
-      <div class="userMenuContent"></div>
+      <div class="userMenuContent userMenuContentScrollable"></div>
     `;
             // Prevent clicks inside the dialog to close it.
             this.element.addEventListener("click", (event) => event.stopPropagation());

@@ -14,9 +14,12 @@ import { escapeHTML } from "../../../StringUtil";
 import * as DomChangeListener from "../../../Dom/Change/Listener";
 import * as Language from "../../../Language";
 import { createFocusTrap, FocusTrap } from "focus-trap";
+import * as perfectScrollbar from "perfect-scrollbar";
+import * as UiScreen from "../../Screen";
 
 export class UserMenuView {
   private readonly element: HTMLElement;
+  private usePerfectScrollbar = false;
   private readonly focusTrap: FocusTrap;
   private readonly markAllAsReadButton: HTMLElement;
   private readonly provider: UserMenuProvider;
@@ -43,6 +46,21 @@ export class UserMenuView {
         return false;
       },
       fallbackFocus: this.element,
+    });
+
+    UiScreen.on("screen-lg", {
+      match: () => {
+        this.usePerfectScrollbar = true;
+        this.rebuildScrollbar();
+      },
+      unmatch: () => {
+        this.usePerfectScrollbar = false;
+        this.rebuildScrollbar();
+      },
+      setup: () => {
+        this.usePerfectScrollbar = true;
+        this.rebuildScrollbar();
+      },
     });
   }
 
@@ -104,6 +122,31 @@ export class UserMenuView {
 
       DomChangeListener.trigger();
     }
+
+    this.rebuildScrollbar();
+  }
+
+  private rebuildScrollbar(): void {
+    const content = this.getContent();
+    if (this.usePerfectScrollbar) {
+      this.enablePerfectScrollbar(content);
+    } else {
+      this.disablePerfectScrollbar(content);
+    }
+  }
+
+  private enablePerfectScrollbar(content: HTMLElement): void {
+    if (content.dataset.psId) {
+      perfectScrollbar.update(content);
+    } else {
+      perfectScrollbar.initialize(content, {
+        suppressScrollX: true,
+      });
+    }
+  }
+
+  private disablePerfectScrollbar(content: HTMLElement): void {
+    perfectScrollbar.destroy(content);
   }
 
   private createItem(itemData: UserMenuData): HTMLElement {
@@ -166,7 +209,7 @@ export class UserMenuView {
         <div class="userMenuTitle">${this.provider.getTitle()}</div>
         <div class="userMenuButtons"></div>
       </div>
-      <div class="userMenuContent"></div>
+      <div class="userMenuContent userMenuContentScrollable"></div>
     `;
 
     // Prevent clicks inside the dialog to close it.
