@@ -547,8 +547,19 @@ class UserEditForm extends UserAddForm
      */
     protected function validateUsername($username)
     {
-        if (\mb_strtolower($this->user->username) != \mb_strtolower($username)) {
-            parent::validateUsername($username);
+        try {
+            if (\mb_strtolower($this->user->username) != \mb_strtolower($username)) {
+                parent::validateUsername($username);
+            }
+        } catch (UserInputException $e) {
+            if ($e->getField() === 'username' && $e->getType() === 'notUnique') {
+                $user2 = User::getUserByUsername($username);
+                if ($user2->userID != $this->user->userID) {
+                    throw $e;
+                }
+            } else {
+                throw $e;
+            }
         }
     }
 

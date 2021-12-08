@@ -61,6 +61,8 @@ trait TLengthDatabaseTableColumn
     public function length($length)
     {
         if ($length !== null) {
+            $length = (int)$length;
+
             $this->validateLength($length);
         }
 

@@ -163,6 +163,20 @@
 			<small>{lang}wcf.acp.systemCheck.mysql.foreignKeys.description{/lang}</small>
 		</dd>
 	</dl>
+
+	<dl{if !$results[mysql][bufferPool][result]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.mysql.bufferPool{/lang}</dt>
+		<dd>
+			{if $results[mysql][bufferPool][result] === 'recommended'}
+				{@$statusOk}
+			{elseif $results[mysql][bufferPool][result] === 'sufficient'}
+				{@$statusSufficient}
+			{else}
+				{@$statusInsufficient}
+			{/if} {$results[mysql][bufferPool][value]|filesizeBinary}
+			<small>{lang}wcf.acp.systemCheck.mysql.bufferPool.description{/lang}</small>
+		</dd>
+	</dl>
 </section>
 
 <section class="section">

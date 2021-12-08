@@ -11,6 +11,34 @@ $.Redactor.prototype.WoltLabList = function() {
 				var isEmptyBlock = (block && block.tagName === 'P' && (block.innerHTML === '<br>' || block.innerHTML === ''));
 				var isBlockWrapped = ($prev.closest('ol, ul', this.core.editor()[0]).length === 1 && $next.closest('ol, ul', this.core.editor()[0]).length === 1);
 				
+				// Special case: Caret is at an illegal `<p><br></p>` inside a list.
+				if (isEmptyBlock) {
+					let hasCommonListItem = false;
+
+					const parent = block.parentElement;
+					if (parent.nodeName === "LI") {
+						if (
+							$prev[0].parentElement === parent
+							&& $next[0].parentElement === parent
+						) {
+							hasCommonListItem = true;
+						}
+					}
+
+					if (hasCommonListItem) {
+						// In lists the previous content could be a text node.
+						const previousSibling = block.previousSibling;
+						if (previousSibling !== null) {
+							this.buffer.set();
+							
+							block.remove();
+							this.caret.end($(previousSibling));
+
+							return true;
+						}
+					}
+				}
+
 				var isEffectivelyEmptyBlock = false;
 				if (isBlockWrapped && !isEmptyBlock) {
 					// check if the current block _is_ actually empty, but

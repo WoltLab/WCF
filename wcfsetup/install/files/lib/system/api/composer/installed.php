@@ -47,12 +47,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.4.0',
-            'version' => '7.4.0.0',
+            'pretty_version' => '7.4.1',
+            'version' => '7.4.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '868b3571a039f0ebc11ac8f344f4080babe2cb94',
+            'reference' => 'ee0a041b1760e6a53d2a39c8c34115adc2af2c79',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
@@ -238,12 +238,12 @@
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
-            'pretty_version' => 'v5.3.4',
-            'version' => '5.3.4.0',
+            'pretty_version' => 'v5.4.0',
+            'version' => '5.4.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/css-selector',
             'aliases' => array(),
-            'reference' => '7fb120adc7f600a59027775b224c13a33530dd90',
+            'reference' => '44b933f98bb4b5220d10bed9ce5662f8c2d13dcc',
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(

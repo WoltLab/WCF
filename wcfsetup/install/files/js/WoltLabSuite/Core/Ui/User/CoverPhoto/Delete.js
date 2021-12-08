@@ -22,7 +22,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
          * Initializes the delete handler and enables the delete button on upload.
          */
         constructor(userId) {
-            this.button = document.querySelector(".jsButtonDeleteCoverPhoto");
+            const button = document.querySelector(".jsButtonDeleteCoverPhoto");
+            if (button === null) {
+                return;
+            }
+            this.button = button;
             this.button.addEventListener("click", (ev) => this._click(ev));
             this.userId = userId;
             EventHandler.add("com.woltlab.wcf.user", "coverPhoto", (data) => {

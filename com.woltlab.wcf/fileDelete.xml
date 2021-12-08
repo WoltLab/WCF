@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/fileDelete.xsd">
 	<delete>
+		<!-- Special files -->
+		<file>acp/masterPassword.inc.php</file>
+		<!-- /Special files -->
 		<file>acp/database/update_com.woltlab.wcf_5.4.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_session_2_user_session.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_session_4_drop_virtual.php</file>
@@ -13,13 +16,13 @@
 		<file>acp/dereferrer.php</file>
 		<file>acp/images/acpLogo.png</file>
 		<file>acp/images/blueTemptation/blueTemptationHeader.png</file>
+		<file>acp/images/blueTemptationHeader.png</file>
 		<file>acp/images/wcfLogo-small.png</file>
 		<file>acp/images/wcfLogo.png</file>
 		<file>acp/images/wcfLogo2.svg</file>
 		<file>acp/images/wcfLogoWhite.svg</file>
 		<file>acp/js/WCF.ACP.User.js</file>
 		<file>acp/js/wcombined.min.js</file>
-		<file>acp/masterPassword.inc.php</file>
 		<file>acp/pre_update_com.woltlab.wcf_2.1.php</file>
 		<file>acp/rebuild_attachments_com.woltlab.wcf_2.1.4.php</file>
 		<file>acp/rebuild_comments_com.woltlab.wcf_2.1.php</file>
@@ -35,7 +38,9 @@
 		<file>acp/style/pageMenu.scss</file>
 		<file>acp/style/style.css</file>
 		<file>acp/style/testing-reset.css</file>
+		<file>acp/style/testing.css</file>
 		<file>acp/style/wcf.css</file>
+		<file>acp/style/wcf.less</file>
 		<file>acp/style/wcfAcp.css</file>
 		<file>acp/templates/__dialogForm.tpl</file>
 		<file>acp/templates/__formFieldFooter.tpl</file>
@@ -45,11 +50,63 @@
 		<file>acp/templates/__multifactorEmailCodeField.tpl</file>
 		<file>acp/templates/__multifactorTotpCodeField.tpl</file>
 		<file>acp/templates/__wysiwygSmileyFormField.tpl</file>
+		<file>acp/templates/applicationGroupAdd.tpl</file>
+		<file>acp/templates/avatarCropDialog.tpl</file>
+		<file>acp/templates/categorySelectList.tpl</file>
+		<file>acp/templates/dashboardList.tpl</file>
+		<file>acp/templates/dashboardOption.tpl</file>
+		<file>acp/templates/detailedPackageList.tpl</file>
 		<file>acp/templates/devtoolsFormBuilderTest.tpl</file>
+		<file>acp/templates/languageServerAdd.tpl</file>
+		<file>acp/templates/languageServerList.tpl</file>
+		<file>acp/templates/mainMenu.tpl</file>
+		<file>acp/templates/mainMenuSubMenu.tpl</file>
 		<file>acp/templates/masterPassword.tpl</file>
 		<file>acp/templates/masterPasswordInit.tpl</file>
+		<file>acp/templates/mediaAdd.tpl</file>
+		<file>acp/templates/optionImport.tpl</file>
+		<file>acp/templates/optionTypeBoolean.tpl</file>
+		<file>acp/templates/optionTypeCustomselect.tpl</file>
+		<file>acp/templates/optionTypeDate.tpl</file>
+		<file>acp/templates/optionTypeMultiselect.tpl</file>
+		<file>acp/templates/optionTypeRadiobuttons.tpl</file>
+		<file>acp/templates/optionTypeSelect.tpl</file>
+		<file>acp/templates/optionTypeText.tpl</file>
+		<file>acp/templates/optionTypeTextI18n.tpl</file>
+		<file>acp/templates/optionTypeTextarea.tpl</file>
+		<file>acp/templates/optionTypeTextareaI18n.tpl</file>
+		<file>acp/templates/packageAutoUpdateList.tpl</file>
+		<file>acp/templates/packageInstallation.tpl</file>
+		<file>acp/templates/packageListDetailed.tpl</file>
+		<file>acp/templates/packageListPlugins.tpl</file>
+		<file>acp/templates/packageUninstallationDependencies.tpl</file>
+		<file>acp/templates/packageUpdateAuth.tpl</file>
+		<file>acp/templates/packageUpdateSearch.tpl</file>
+		<file>acp/templates/packageUpdateSearchResult.tpl</file>
+		<file>acp/templates/packageView.tpl</file>
+		<file>acp/templates/pageLanding.tpl</file>
+		<file>acp/templates/pageLogo.tpl</file>
+		<file>acp/templates/pageMenuItemAdd.tpl</file>
+		<file>acp/templates/pageMenuItemList.tpl</file>
+		<file>acp/templates/pageMenuUser.tpl</file>
+		<file>acp/templates/pageSearchArea.tpl</file>
 		<file>acp/templates/reactionTypeIcon.tpl</file>
+		<file>acp/templates/searchArea.tpl</file>
+		<file>acp/templates/setupFooter.tpl</file>
+		<file>acp/templates/setupHeader.tpl</file>
+		<file>acp/templates/setupWindowFooter.tpl</file>
+		<file>acp/templates/setupWindowHeader.tpl</file>
+		<file>acp/templates/styleVariableColor.tpl</file>
+		<file>acp/templates/styleVariableUnit.tpl</file>
+		<file>acp/templates/updateServerAdd.tpl</file>
+		<file>acp/templates/updateServerList.tpl</file>
+		<file>acp/templates/userBulkProcessing.tpl</file>
 		<file>acp/templates/userGroupPromoteOwner.tpl</file>
+		<file>acp/templates/userPanel.tpl</file>
+		<file>acp/templates/usersMassProcessing.tpl</file>
+		<file>acp/templates/workerException.tpl</file>
+		<file>acp/templates/workerFinish.tpl</file>
+		<file>acp/templates/workerNext.tpl</file>
 		<file>acp/update-com.woltlab.wcf_3.2_reactionUpdate.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_2.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2.0_beta_3.php</file>
@@ -57,19 +114,23 @@
 		<file>acp/update-com.woltlab.wcf_5.2_reactionUpdate.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2_reloadOptions.php</file>
 		<file>acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</file>
+		<file>acp/update_2.0.0.php</file>
 		<file>acp/update_4.0.0_b1.php</file>
 		<file>acp/update_5.4_db.php</file>
 		<file>acp/update_5.4_removeFiles.php</file>
 		<file>acp/update_accessibleGroups_com.woltlab.wcf_2.1.0_rc_2.php</file>
 		<file>acp/update_b4.php</file>
 		<file>acp/update_b5.php</file>
+		<file>acp/update_com.woltlab.wcf.b7.php</file>
 		<file>acp/update_com.woltlab.wcf.b8.php</file>
 		<file>acp/update_com.woltlab.wcf.b9.php</file>
+		<file>acp/update_com.woltlab.wcf_2.0.1.php</file>
 		<file>acp/update_com.woltlab.wcf_2.0.3.php</file>
 		<file>acp/update_com.woltlab.wcf_2.0.4.php</file>
 		<file>acp/update_com.woltlab.wcf_2.1.0_rc_1.php</file>
 		<file>acp/update_com.woltlab.wcf_2.1.php</file>
 		<file>acp/update_com.woltlab.wcf_2.2.0.php</file>
+		<file>acp/update_com.woltlab.wcf_3.0.0.php</file>
 		<file>acp/update_com.woltlab.wcf_3.0.0_rc_1.php</file>
 		<file>acp/update_com.woltlab.wcf_3.0.0_rc_3.php</file>
 		<file>acp/update_com.woltlab.wcf_3.0.14.php</file>
@@ -138,6 +199,7 @@
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_boxCondtions.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_clearPackageCompatibility.php</file>
 		<file>acp/update_com.woltlab.wcf_beta1_to_beta2.php</file>
 		<file>acp/update_com.woltlab.wcf_embeddedObjectOrphans.php</file>
@@ -189,6 +251,10 @@
 		<file>icon/bookmark1.svg</file>
 		<file>icon/bookmarkColored.svg</file>
 		<file>icon/bookmarkInverse.svg</file>
+		<file>icon/boxCloser.svg</file>
+		<file>icon/boxCloser2.svg</file>
+		<file>icon/boxOpener.svg</file>
+		<file>icon/boxOpener2.svg</file>
 		<file>icon/brackets.svg</file>
 		<file>icon/bracketsColored.svg</file>
 		<file>icon/bracketsInverse.svg</file>
@@ -292,6 +358,7 @@
 		<file>icon/errorColored.svg</file>
 		<file>icon/errorInverse.svg</file>
 		<file>icon/errorRed.svg</file>
+		<file>icon/externalLink.svg</file>
 		<file>icon/externalURL.svg</file>
 		<file>icon/externalURL1.svg</file>
 		<file>icon/externalURLColored.svg</file>
@@ -303,6 +370,7 @@
 		<file>icon/fireColored.svg</file>
 		<file>icon/fireInverse.svg</file>
 		<file>icon/flag.svg</file>
+		<file>icon/flag/en.svg</file>
 		<file>icon/flag/index.php</file>
 		<file>icon/flagColored.svg</file>
 		<file>icon/flagInverse.svg</file>
@@ -369,6 +437,7 @@
 		<file>icon/infoColored.svg</file>
 		<file>icon/infoInverse.svg</file>
 		<file>icon/inlineCode.png</file>
+		<file>icon/installation1.svg</file>
 		<file>icon/key.svg</file>
 		<file>icon/keyColored.svg</file>
 		<file>icon/keyInverse.svg</file>
@@ -387,6 +456,7 @@
 		<file>icon/lockOpen.svg</file>
 		<file>icon/lockOpenColored.svg</file>
 		<file>icon/lockOpenInverse.svg</file>
+		<file>icon/logIn.svg</file>
 		<file>icon/logIn1.svg</file>
 		<file>icon/logIn2.svg</file>
 		<file>icon/marker.svg</file>
@@ -417,12 +487,15 @@
 		<file>icon/packageColored.svg</file>
 		<file>icon/packageInverse.svg</file>
 		<file>icon/packagePlugin1.svg</file>
+		<file>icon/packageStandalone1.svg</file>
 		<file>icon/packageStandaloneAdd1.svg</file>
 		<file>icon/pin.svg</file>
 		<file>icon/pin1.svg</file>
 		<file>icon/pinColored.svg</file>
 		<file>icon/pinInverse.svg</file>
 		<file>icon/play.svg</file>
+		<file>icon/play1.svg</file>
+		<file>icon/play1D.svg</file>
 		<file>icon/playColored.svg</file>
 		<file>icon/playInverse.svg</file>
 		<file>icon/plugin.svg</file>
@@ -470,10 +543,12 @@
 		<file>icon/smileyColored.svg</file>
 		<file>icon/smileyInverse.svg</file>
 		<file>icon/sortASC.svg</file>
+		<file>icon/sortASC2.svg</file>
 		<file>icon/sortASCColored.svg</file>
 		<file>icon/sortASCInverse.svg</file>
 		<file>icon/sortASCS.png</file>
 		<file>icon/sortDESC.svg</file>
+		<file>icon/sortDESC2.svg</file>
 		<file>icon/sortDESCColored.svg</file>
 		<file>icon/sortDESCInverse.svg</file>
 		<file>icon/sortDESCS.png</file>
@@ -925,6 +1000,7 @@
 		<file>js/3rdParty/ckeditor/plugins/templates/templates/images/template1.gif</file>
 		<file>js/3rdParty/ckeditor/plugins/templates/templates/images/template2.gif</file>
 		<file>js/3rdParty/ckeditor/plugins/templates/templates/images/template3.gif</file>
+		<file>js/3rdParty/ckeditor/plugins/wbbcode/plugin.js</file>
 		<file>js/3rdParty/ckeditor/plugins/wbutton/plugin.js</file>
 		<file>js/3rdParty/ckeditor/plugins/wsc/LICENSE.md</file>
 		<file>js/3rdParty/ckeditor/plugins/wsc/README.md</file>
@@ -1026,15 +1102,19 @@
 		<file>js/3rdParty/codemirror/mode/vb/LICENSE.txt</file>
 		<file>js/3rdParty/codemirror/mode/xquery/LICENSE</file>
 		<file>js/3rdParty/enquire.js</file>
+		<file>js/3rdParty/jquery-2.0.1.min.map</file>
+		<file>js/3rdParty/jquery-ui.nestedSortable.js</file>
+		<file>js/3rdParty/jquery-ui.nestedSortable.min.js</file>
 		<file>js/3rdParty/jquery-ui.timepicker.js</file>
 		<file>js/3rdParty/jquery-ui.timepicker.min.js</file>
 		<file>js/3rdParty/jquery.min.map</file>
 		<file>js/3rdParty/jquery.tools.min.js</file>
+		<file>js/3rdParty/jquery.ui.touch-punch.js</file>
+		<file>js/3rdParty/jquery.ui.touch-punch.min.js</file>
 		<file>js/3rdParty/less.min.js</file>
 		<file>js/3rdParty/polyfill/promise.LICENSE</file>
 		<file>js/3rdParty/polyfill/promise.js</file>
 		<file>js/3rdParty/polyfill/promise.min.js</file>
-		<file>js/3rdParty/prism/prism-meta.js</file>
 		<file>js/3rdParty/redactor/README.md</file>
 		<file>js/3rdParty/redactor/languages/ar.js</file>
 		<file>js/3rdParty/redactor/languages/az.js</file>
@@ -1114,7 +1194,6 @@
 		<file>js/WCF.Label.min.js</file>
 		<file>js/WCF.Like.js</file>
 		<file>js/WCF.Like.min.js</file>
-		<file>js/WCF.Like</file>
 		<file>js/WCF.Location.min.js</file>
 		<file>js/WCF.Message.min.js</file>
 		<file>js/WCF.Moderation.min.js</file>
@@ -1124,22 +1203,160 @@
 		<file>js/WCF.Tagging.min.js</file>
 		<file>js/WCF.User.min.js</file>
 		<file>js/WCF.min.js</file>
+		<file>js/WoltLab/WCF/ACP/Bootstrap.js</file>
+		<file>js/WoltLab/WCF/Acp/Bootstrap.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Article/Add.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Box/Add.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Box/Controller/Handler.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Box/Handler.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/CodeMirror/Media.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/CodeMirror/Page.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Menu/Item/Handler.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Page/Add.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Page/Menu.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Style/Editor.js</file>
+		<file>js/WoltLab/WCF/Acp/Ui/Style/Image/Upload.js</file>
+		<file>js/WoltLab/WCF/Ajax.js</file>
+		<file>js/WoltLab/WCF/Ajax/Jsonp.js</file>
+		<file>js/WoltLab/WCF/Ajax/Request.js</file>
+		<file>js/WoltLab/WCF/Ajax/Status.js</file>
 		<file>js/WoltLab/WCF/Attachment/Upload.js</file>
+		<file>js/WoltLab/WCF/BBCode/FromHtml.js</file>
+		<file>js/WoltLab/WCF/BBCode/Parser.js</file>
+		<file>js/WoltLab/WCF/BBCode/ToHtml.js</file>
+		<file>js/WoltLab/WCF/Bbcode/Collapsible.js</file>
+		<file>js/WoltLab/WCF/Bbcode/FromHtml.js</file>
+		<file>js/WoltLab/WCF/Bbcode/Parser.js</file>
+		<file>js/WoltLab/WCF/Bbcode/ToHtml.js</file>
+		<file>js/WoltLab/WCF/Bootstrap.js</file>
+		<file>js/WoltLab/WCF/BootstrapFrontend.js</file>
+		<file>js/WoltLab/WCF/CallbackList.js</file>
+		<file>js/WoltLab/WCF/ColorUtil.js</file>
+		<file>js/WoltLab/WCF/Controller/Captcha.js</file>
+		<file>js/WoltLab/WCF/Controller/Clipboard.js</file>
+		<file>js/WoltLab/WCF/Controller/Condition/Page/Dependence.js</file>
+		<file>js/WoltLab/WCF/Controller/Notice/Dismiss.js</file>
+		<file>js/WoltLab/WCF/Controller/Popover.js</file>
 		<file>js/WoltLab/WCF/Controller/Sitemap.js</file>
+		<file>js/WoltLab/WCF/Controller/Style/Changer.js</file>
+		<file>js/WoltLab/WCF/Controller/User/Notification/Settings.js</file>
+		<file>js/WoltLab/WCF/Core.js</file>
+		<file>js/WoltLab/WCF/DOM/Change/Listener.js</file>
+		<file>js/WoltLab/WCF/DOM/Traverse.js</file>
+		<file>js/WoltLab/WCF/DOM/Util.js</file>
+		<file>js/WoltLab/WCF/Date/Picker.js</file>
+		<file>js/WoltLab/WCF/Date/Time/Relative.js</file>
+		<file>js/WoltLab/WCF/Date/Util.js</file>
+		<file>js/WoltLab/WCF/Dictionary.js</file>
+		<file>js/WoltLab/WCF/Dom/Change/Listener.js</file>
+		<file>js/WoltLab/WCF/Dom/Traverse.js</file>
+		<file>js/WoltLab/WCF/Dom/Util.js</file>
+		<file>js/WoltLab/WCF/Environment.js</file>
+		<file>js/WoltLab/WCF/Event/Handler.js</file>
+		<file>js/WoltLab/WCF/Event/Key.js</file>
+		<file>js/WoltLab/WCF/File/Util.js</file>
+		<file>js/WoltLab/WCF/Language.js</file>
+		<file>js/WoltLab/WCF/Language/Chooser.js</file>
+		<file>js/WoltLab/WCF/Language/Input.js</file>
+		<file>js/WoltLab/WCF/List.js</file>
+		<file>js/WoltLab/WCF/Media/Editor.js</file>
+		<file>js/WoltLab/WCF/Media/Manager.js</file>
+		<file>js/WoltLab/WCF/Media/Manager/Base.js</file>
+		<file>js/WoltLab/WCF/Media/Manager/Editor.js</file>
+		<file>js/WoltLab/WCF/Media/Manager/Search.js</file>
+		<file>js/WoltLab/WCF/Media/Manager/Select.js</file>
+		<file>js/WoltLab/WCF/Media/Search.js</file>
+		<file>js/WoltLab/WCF/Media/Upload.js</file>
+		<file>js/WoltLab/WCF/NumberUtil.js</file>
+		<file>js/WoltLab/WCF/ObjectMap.js</file>
+		<file>js/WoltLab/WCF/Permission.js</file>
+		<file>js/WoltLab/WCF/StringUtil.js</file>
+		<file>js/WoltLab/WCF/Template.grammar.jison</file>
+		<file>js/WoltLab/WCF/Template.grammar.js</file>
+		<file>js/WoltLab/WCF/Template.js</file>
+		<file>js/WoltLab/WCF/Timer/Repeating.js</file>
+		<file>js/WoltLab/WCF/UI/Alignment.js</file>
+		<file>js/WoltLab/WCF/UI/CloseOverlay.js</file>
+		<file>js/WoltLab/WCF/UI/Collapsible/Sidebar.js</file>
+		<file>js/WoltLab/WCF/UI/Confirmation.js</file>
+		<file>js/WoltLab/WCF/UI/Dialog.js</file>
+		<file>js/WoltLab/WCF/UI/Dropdown/Simple.js</file>
+		<file>js/WoltLab/WCF/UI/FlexibleMenu.js</file>
+		<file>js/WoltLab/WCF/UI/ItemList.js</file>
+		<file>js/WoltLab/WCF/UI/ItemList/User.js</file>
+		<file>js/WoltLab/WCF/UI/Mobile.js</file>
+		<file>js/WoltLab/WCF/UI/Suggestion.js</file>
+		<file>js/WoltLab/WCF/UI/TabMenu.js</file>
+		<file>js/WoltLab/WCF/UI/TabMenu/Simple.js</file>
+		<file>js/WoltLab/WCF/UI/Tooltip.js</file>
+		<file>js/WoltLab/WCF/Ui/Acl/Simple.js</file>
+		<file>js/WoltLab/WCF/Ui/Alignment.js</file>
+		<file>js/WoltLab/WCF/Ui/CloseOverlay.js</file>
 		<file>js/WoltLab/WCF/Ui/Collapsible/Sidebar.js</file>
-		<file>js/WoltLabSuite.Core.min.js</file>
+		<file>js/WoltLab/WCF/Ui/Confirmation.js</file>
+		<file>js/WoltLab/WCF/Ui/Dialog.js</file>
+		<file>js/WoltLab/WCF/Ui/Dropdown/Reusable.js</file>
+		<file>js/WoltLab/WCF/Ui/Dropdown/Simple.js</file>
+		<file>js/WoltLab/WCF/Ui/FlexibleMenu.js</file>
+		<file>js/WoltLab/WCF/Ui/ItemList.js</file>
+		<file>js/WoltLab/WCF/Ui/ItemList/Filter.js</file>
+		<file>js/WoltLab/WCF/Ui/ItemList/User.js</file>
+		<file>js/WoltLab/WCF/Ui/Like/Handler.js</file>
+		<file>js/WoltLab/WCF/Ui/Message/InlineEditor.js</file>
+		<file>js/WoltLab/WCF/Ui/Message/Manager.js</file>
+		<file>js/WoltLab/WCF/Ui/Message/Reply.js</file>
+		<file>js/WoltLab/WCF/Ui/Message/Share.js</file>
+		<file>js/WoltLab/WCF/Ui/Mobile.js</file>
+		<file>js/WoltLab/WCF/Ui/Notification.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Action.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Header/Fixed.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/JumpTo.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/JumpToTop.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Menu/Abstract.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Menu/Main.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Menu/User.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Search.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Search/Handler.js</file>
+		<file>js/WoltLab/WCF/Ui/Page/Search/Input.js</file>
+		<file>js/WoltLab/WCF/Ui/Pagination.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Autosave.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Code.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Format.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Link.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Mention.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Metacode.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Page.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Quote.js</file>
+		<file>js/WoltLab/WCF/Ui/Redactor/Spoiler.js</file>
+		<file>js/WoltLab/WCF/Ui/Screen.js</file>
+		<file>js/WoltLab/WCF/Ui/Scroll.js</file>
+		<file>js/WoltLab/WCF/Ui/Search/Input.js</file>
+		<file>js/WoltLab/WCF/Ui/Search/Page.js</file>
+		<file>js/WoltLab/WCF/Ui/Suggestion.js</file>
+		<file>js/WoltLab/WCF/Ui/TabMenu.js</file>
+		<file>js/WoltLab/WCF/Ui/TabMenu/Simple.js</file>
+		<file>js/WoltLab/WCF/Ui/Toggle/Input.js</file>
+		<file>js/WoltLab/WCF/Ui/Tooltip.js</file>
+		<file>js/WoltLab/WCF/Ui/User/Editor.js</file>
+		<file>js/WoltLab/WCF/Ui/User/Ignore.js</file>
+		<file>js/WoltLab/WCF/Ui/User/List.js</file>
+		<file>js/WoltLab/WCF/Ui/User/Profile/Menu/Item/Abstract.js</file>
+		<file>js/WoltLab/WCF/Ui/User/Profile/Menu/Item/Follow.js</file>
+		<file>js/WoltLab/WCF/Ui/User/Profile/Menu/Item/Ignore.js</file>
+		<file>js/WoltLab/WCF/Ui/User/Search/Input.js</file>
+		<file>js/WoltLab/WCF/Upload.js</file>
+		<file>js/WoltLab/WCF/User.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Image/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Dialog/Ban.js</file>
+		<file>js/WoltLabSuite/Core/Api.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
 		<file>js/WoltLabSuite/Core/Controller/ClipboardData.js</file>
-		<file>js/WoltLabSuite/Core/Core.js</file>
 		<file>js/WoltLabSuite/Core/Core.ts</file>
-		<file>js/WoltLabSuite/Core/Dictionary.js</file>
 		<file>js/WoltLabSuite/Core/Dictionary.ts</file>
 		<file>js/WoltLabSuite/Core/ExifUtil.js</file>
 		<file>js/WoltLabSuite/Core/File/Util.js</file>
@@ -1173,32 +1390,47 @@
 		<file>lib/acp/form/LanguageServerEditForm.class.php</file>
 		<file>lib/acp/form/MasterPasswordForm.class.php</file>
 		<file>lib/acp/form/MasterPasswordInitForm.class.php</file>
-		<file>lib/acp/form/MediaCategoryAddForm.class.php</file>
-		<file>lib/acp/form/MediaCategoryEditForm.class.php</file>
 		<file>lib/acp/form/MediaEditForm.class.php</file>
 		<file>lib/acp/form/MultifactorAuthenticationAbortForm.class.php</file>
 		<file>lib/acp/form/OptionImportForm.class.php</file>
+		<file>lib/acp/form/PackageInstallationForm.class.php</file>
 		<file>lib/acp/form/PackageUpdateAuthForm.class.php</file>
 		<file>lib/acp/form/PackageUpdateForm.class.php</file>
 		<file>lib/acp/form/PackageUpdateSearchForm.class.php</file>
 		<file>lib/acp/form/PageLandingForm.class.php</file>
 		<file>lib/acp/form/PageMenuItemAddForm.class.php</file>
 		<file>lib/acp/form/PageMenuItemEditForm.class.php</file>
+		<file>lib/acp/form/UpdateServerAddForm.class.php</file>
+		<file>lib/acp/form/UpdateServerEditForm.class.php</file>
 		<file>lib/acp/form/UserGroupPromoteOwnerForm.class.php</file>
+		<file>lib/acp/form/UsersMassProcessingForm.class.php</file>
 		<file>lib/acp/page/ApplicationManagementPage.class.php</file>
 		<file>lib/acp/page/DashboardListPage.class.php</file>
+		<file>lib/acp/page/DetailedPackageListPage.class.php</file>
 		<file>lib/acp/page/LanguageServerListPage.class.php</file>
 		<file>lib/acp/page/LessStylesheetsPage.class.php</file>
 		<file>lib/acp/page/MediaAddPage.class.php</file>
-		<file>lib/acp/page/MediaCategoryListPage.class.php</file>
+		<file>lib/acp/page/PackageAutoUpdateListPage.class.php</file>
+		<file>lib/acp/page/PackageListDetailedPage.class.php</file>
 		<file>lib/acp/page/PackageUpdateSearchResultPage.class.php</file>
+		<file>lib/acp/page/PackageViewPage.class.php</file>
 		<file>lib/acp/page/PageMenuItemListPage.class.php</file>
+		<file>lib/acp/page/UpdateServerListPage.class.php</file>
 		<file>lib/action/APIAction.class.php</file>
 		<file>lib/action/AbstractSecureObjectAction.class.php</file>
+		<file>lib/action/Action.class.php</file>
 		<file>lib/action/ClipboardAction.class.php</file>
 		<file>lib/action/ClipboardLoadMarkedItemsAction.class.php</file>
 		<file>lib/action/ClipboardProxyAction.class.php</file>
+		<file>lib/data/DatabaseObjectAction.class.php</file>
+		<file>lib/data/EditableCachedObject.class.php</file>
+		<file>lib/data/EditableObject.class.php</file>
+		<file>lib/data/ICollapsibleContainerAction.class.php</file>
+		<file>lib/data/ILinkableDatabaseObject.class.php</file>
+		<file>lib/data/ILoadableCollapsibleContainerAction.class.php</file>
 		<file>lib/data/IPositionAction.class.php</file>
+		<file>lib/data/ITitledDatabaseObject.class.php</file>
+		<file>lib/data/StorableObject.class.php</file>
 		<file>lib/data/VersionableDatabaseObject.class.php</file>
 		<file>lib/data/VersionableDatabaseObjectAction.class.php</file>
 		<file>lib/data/VersionableDatabaseObjectEditor.class.php</file>
@@ -1236,6 +1468,8 @@
 		<file>lib/data/language/server/LanguageServerEditor.class.php</file>
 		<file>lib/data/language/server/LanguageServerList.class.php</file>
 		<file>lib/data/menu/ViewableMenu.class.php</file>
+		<file>lib/data/page/location/ILocation.class.php</file>
+		<file>lib/data/page/location/Location.class.php</file>
 		<file>lib/data/page/location/PageLocation.class.php</file>
 		<file>lib/data/page/location/PageLocationAction.class.php</file>
 		<file>lib/data/page/location/PageLocationEditor.class.php</file>
@@ -1265,13 +1499,16 @@
 		<file>lib/data/user/activity/point/event/UserActivityPointEventEditor.class.php</file>
 		<file>lib/data/user/activity/point/event/UserActivityPointEventList.class.php</file>
 		<file>lib/data/user/option/IUserOptionOutput.class.php</file>
+		<file>lib/data/user/option/UserOptionOutput.class.php</file>
 		<file>lib/form/AbstractSecureForm.class.php</file>
+		<file>lib/form/Form.class.php</file>
 		<file>lib/form/MailForm.class.php</file>
 		<file>lib/form/MultifactorAuthenticationAbortForm.class.php</file>
 		<file>lib/form/RecaptchaForm.class.php</file>
 		<file>lib/page/CookiePolicyPage.class.php</file>
 		<file>lib/page/DashboardPage.class.php</file>
 		<file>lib/page/LessStylesheetsPage.class.php</file>
+		<file>lib/page/Page.class.php</file>
 		<file>lib/page/PrivacyPolicyPage.class.php</file>
 		<file>lib/page/util/InlineCalendar.class.php</file>
 		<file>lib/system/api/bin/pscss.bat</file>
@@ -1402,6 +1639,7 @@
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
+		<file>lib/system/api/ezyang/htmlpurifier/README</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
 		<file>lib/system/api/ezyang/htmlpurifier/WHATSNEW</file>
 		<file>lib/system/api/ezyang/htmlpurifier/WYSIWYG</file>
@@ -1456,6 +1694,7 @@
 		<file>lib/system/api/ezyang/htmlpurifier/plugins/phorum/settings/migrate-sigs-form.php</file>
 		<file>lib/system/api/ezyang/htmlpurifier/plugins/phorum/settings/migrate-sigs.php</file>
 		<file>lib/system/api/ezyang/htmlpurifier/plugins/phorum/settings/save.php</file>
+		<file>lib/system/api/ezyang/htmlpurifier/release1-update.php</file>
 		<file>lib/system/api/ezyang/htmlpurifier/release2-tag.php</file>
 		<file>lib/system/api/ezyang/htmlpurifier/test-settings.sample.php</file>
 		<file>lib/system/api/ezyang/htmlpurifier/test-settings.travis.php</file>
@@ -1465,6 +1704,9 @@
 		<file>lib/system/api/guzzlehttp/guzzle/Dockerfile</file>
 		<file>lib/system/api/guzzlehttp/guzzle/src/Exception/SeekException.php</file>
 		<file>lib/system/api/guzzlehttp/guzzle/src/UriTemplate.php</file>
+		<file>lib/system/api/guzzlehttp/guzzle/vendor-bin/php-cs-fixer/composer.json</file>
+		<file>lib/system/api/guzzlehttp/guzzle/vendor-bin/phpstan/composer.json</file>
+		<file>lib/system/api/guzzlehttp/guzzle/vendor-bin/psalm/composer.json</file>
 		<file>lib/system/api/guzzlehttp/promises/.php_cs.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan-baseline.neon</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan.neon.dist</file>
@@ -1518,6 +1760,9 @@
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm.xml</file>
+		<file>lib/system/api/parsedown/LICENSE.txt</file>
+		<file>lib/system/api/parsedown/Parsedown.php</file>
+		<file>lib/system/api/parsedown/README.md</file>
 		<file>lib/system/api/parsedown/version</file>
 		<file>lib/system/api/pear/pear_exception/.gitignore</file>
 		<file>lib/system/api/pear/pear_exception/.travis.yml</file>
@@ -1747,7 +1992,9 @@
 		<file>lib/system/api/zend/ProgressBar/Exception/RuntimeException.php</file>
 		<file>lib/system/api/zend/ProgressBar/ProgressBar.php</file>
 		<file>lib/system/api/zend/ProgressBar/composer.json</file>
+		<file>lib/system/application/Application.class.php</file>
 		<file>lib/system/auth/UserAuth.class.php</file>
+		<file>lib/system/auth/UserAuthDefault.class.php</file>
 		<file>lib/system/auth/UserAuthEmail.class.php</file>
 		<file>lib/system/background/job/DownloadRankImageJob.class.php</file>
 		<file>lib/system/background/job/DownloadStyleLogoJob.class.php</file>
@@ -1770,12 +2017,55 @@
 		<file>lib/system/box/RecentActivityBoxController.class.php</file>
 		<file>lib/system/box/StaffOnlineBoxController.class.php</file>
 		<file>lib/system/box/UsersOnlineBoxController.class.php</file>
+		<file>lib/system/cache/CacheBuilder.class.php</file>
+		<file>lib/system/cache/CacheBuilderACPMenu.class.php</file>
+		<file>lib/system/cache/CacheBuilderApplication.class.php</file>
+		<file>lib/system/cache/CacheBuilderCleanupAdapter.class.php</file>
+		<file>lib/system/cache/CacheBuilderCoreObject.class.php</file>
+		<file>lib/system/cache/CacheBuilderCronjob.class.php</file>
+		<file>lib/system/cache/CacheBuilderEventListener.class.php</file>
+		<file>lib/system/cache/CacheBuilderIcon.class.php</file>
+		<file>lib/system/cache/CacheBuilderLanguage.class.php</file>
+		<file>lib/system/cache/CacheBuilderOption.class.php</file>
+		<file>lib/system/cache/CacheBuilderPackage.class.php</file>
+		<file>lib/system/cache/CacheBuilderPackageDependency.class.php</file>
+		<file>lib/system/cache/CacheBuilderPageMenu.class.php</file>
+		<file>lib/system/cache/CacheBuilderSpider.class.php</file>
+		<file>lib/system/cache/CacheBuilderStyle.class.php</file>
+		<file>lib/system/cache/CacheBuilderTemplate.class.php</file>
+		<file>lib/system/cache/CacheBuilderTemplateGroup.class.php</file>
+		<file>lib/system/cache/CacheBuilderTemplateListener.class.php</file>
+		<file>lib/system/cache/CacheBuilderTemplateListenerCode.class.php</file>
+		<file>lib/system/cache/CacheBuilderUserGroup.class.php</file>
+		<file>lib/system/cache/CacheBuilderUserGroupPermission.class.php</file>
+		<file>lib/system/cache/ICacheBuilder.class.php</file>
 		<file>lib/system/cache/SetupCacheHandler.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderACPMenu.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderApplication.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderCleanupAdapter.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderCoreObject.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderCronjob.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderEventListener.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderIcon.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderLanguage.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderOption.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderPackage.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderPackageDependency.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderPageMenu.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderSpider.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderStyle.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderTemplate.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderTemplateGroup.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderTemplateListener.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderTemplateListenerCode.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderUserGroup.class.php</file>
+		<file>lib/system/cache/builder/CacheBuilderUserGroupPermission.class.php</file>
 		<file>lib/system/cache/builder/CleanupAdapterCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/ClipboardItemTypeCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/ControllerCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/DashboardBoxCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/IconCacheBuilder.class.php</file>
+		<file>lib/system/cache/builder/PackageDependency.CacheBuilderclass.php</file>
 		<file>lib/system/cache/builder/PackageDependencyCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/PageMenuCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/SitemapCacheBuilder.class.php</file>
@@ -1783,17 +2073,30 @@
 		<file>lib/system/cache/builder/TemplateListenerCacheBuilder.class.php</file>
 		<file>lib/system/cache/builder/VersionCacheBuilder.class.php</file>
 		<file>lib/system/cache/source/ApcCacheSource.class.php</file>
+		<file>lib/system/cache/source/CacheSource.class.php</file>
 		<file>lib/system/cache/source/MemcacheAdapter.class.php</file>
+		<file>lib/system/cache/source/MemcacheCacheSource.class.php</file>
 		<file>lib/system/cache/source/MemcachedAdapter.class.php</file>
 		<file>lib/system/cache/source/NoCacheSource.class.php</file>
-		<file>lib/system/category/MediaCategoryType.class.php</file>
+		<file>lib/system/cleanup/CleanupAdapter.class.php</file>
 		<file>lib/system/cleanup/CleanupHandler.class.php</file>
 		<file>lib/system/cleanup/ICleanupAdapter.class.php</file>
 		<file>lib/system/cleanup/ICleanupHandler.class.php</file>
+		<file>lib/system/cli/DatabaseCommandHistory.class.php</file>
+		<file>lib/system/cli/command/CommandHandler.class.php</file>
+		<file>lib/system/cli/command/CommandNameCompleter.class.php</file>
+		<file>lib/system/cli/command/CronjobCommand.class.php</file>
+		<file>lib/system/cli/command/ExitCommand.class.php</file>
+		<file>lib/system/cli/command/ICommand.class.php</file>
+		<file>lib/system/cli/command/PackageCommand.class.php</file>
+		<file>lib/system/cli/command/WorkerCommand.class.php</file>
 		<file>lib/system/clipboard/action/UserExtendedClipboardAction.class.php</file>
 		<file>lib/system/condition/INoticeCondition.class.php</file>
 		<file>lib/system/condition/UserReputationCondition.class.php</file>
+		<file>lib/system/cronjob/CleanUpCronjobLogCronjob.class.php</file>
+		<file>lib/system/cronjob/CleanUpSessionLogCronjob.class.php</file>
 		<file>lib/system/cronjob/CleanupListenerCronjob.class.php</file>
+		<file>lib/system/cronjob/Cronjob.class.php</file>
 		<file>lib/system/dashboard/DashboardHandler.class.php</file>
 		<file>lib/system/dashboard/box/AbstractContentDashboardBox.class.php</file>
 		<file>lib/system/dashboard/box/AbstractSidebarDashboardBox.class.php</file>
@@ -1810,6 +2113,7 @@
 		<file>lib/system/dashboard/box/SignedInAsDashboardBox.class.php</file>
 		<file>lib/system/dashboard/box/StaffOnlineSidebarDashboardBox.class.php</file>
 		<file>lib/system/dashboard/box/StatsSidebarDashboardBox.class.php</file>
+		<file>lib/system/dashboard/box/TodaysBirthdaysDashboardBox.class.php</file>
 		<file>lib/system/dashboard/box/TodaysFollowingBirthdaysDashboardBox.class.php</file>
 		<file>lib/system/dashboard/box/UsersOnlineSidebarDashboardBox.class.php</file>
 		<file>lib/system/database/PostgreSQLDatabase.class.php</file>
@@ -1818,12 +2122,19 @@
 		<file>lib/system/database/table/column/IUnsignedDatabaseTableColumn.class.php</file>
 		<file>lib/system/database/table/column/TUnsignedDatabaseTableColumn.class.php</file>
 		<file>lib/system/dialog/TestDialog.class.php</file>
+		<file>lib/system/email/mime/AbstractRecipientAwareTextMimePart.class.php</file>
+		<file>lib/system/email/transport/EmailTransport.class.php</file>
+		<file>lib/system/event/EventListener.class.php</file>
 		<file>lib/system/event/ICancelableEvent.class.php</file>
 		<file>lib/system/event/TCancelableEvent.class.php</file>
+		<file>lib/system/event/listener/IEventListener.class.php</file>
 		<file>lib/system/event/listener/PreParserAtUserListener.class.php</file>
 		<file>lib/system/event/listener/UserLoggedInEmailNotificationListener.class.php</file>
 		<file>lib/system/event/listener/UserMultifactorSucceededEmailNotificationListener.class.php</file>
 		<file>lib/system/exception/InvalidArgumentException.class.php</file>
+		<file>lib/system/exception/PrintableException.class.php</file>
+		<file>lib/system/form/FormElement.class.php</file>
+		<file>lib/system/form/FormElementContainer.class.php</file>
 		<file>lib/system/form/builder/FormDataHandler.class.php</file>
 		<file>lib/system/form/builder/IFormDataHandler.class.php</file>
 		<file>lib/system/form/builder/field/AclFormField.class.php</file>
@@ -1852,10 +2163,14 @@
 		<file>lib/system/html/input/node/HtmlInputNodeWoltlabColor.class.php</file>
 		<file>lib/system/html/input/node/HtmlInputNodeWoltlabMention.class.php</file>
 		<file>lib/system/html/input/node/IHtmlInputNodeProcessor.class.php</file>
+		<file>lib/system/html/node/HtmlNodeProcessor.class.php</file>
+		<file>lib/system/html/output/HtmlOutputNodeProcessor.class.php</file>
+		<file>lib/system/html/output/node/HtmlOutputNodeBlockquote.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabColor.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabFont.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabMention.class.php</file>
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabSize.class.php</file>
+		<file>lib/system/html/output/node/QuoteHtmlOutputNode.class.php</file>
 		<file>lib/system/image/Thumbnail.class.php</file>
 		<file>lib/system/language/LanguageServerProcessor.class.php</file>
 		<file>lib/system/log/modification/ModificationLogHandler.class.php</file>
@@ -1863,29 +2178,86 @@
 		<file>lib/system/mail/MailSender.class.php</file>
 		<file>lib/system/mail/PHPMailSender.class.php</file>
 		<file>lib/system/mail/SMTPMailSender.class.php</file>
+		<file>lib/system/menu/TreeMenuItem.class.php</file>
 		<file>lib/system/menu/page/DefaultPageMenuItemProvider.class.php</file>
 		<file>lib/system/menu/page/IPageMenuItemProvider.class.php</file>
 		<file>lib/system/menu/page/PageMenu.class.php</file>
+		<file>lib/system/menu/page/PageMenuItemProvider.class.php</file>
 		<file>lib/system/message/MessageFormSettingsHandler.class.php</file>
 		<file>lib/system/message/unfurl/DownloadFailed.class.php</file>
 		<file>lib/system/message/unfurl/ParsingFailed.class.php</file>
 		<file>lib/system/message/unfurl/UrlInaccessible.class.php</file>
 		<file>lib/system/option/CustomselectOptionType.class.php</file>
+		<file>lib/system/option/MultiselectOptionType.class.php</file>
+		<file>lib/system/option/OptionType.class.php</file>
+		<file>lib/system/option/OptionTypeBoolean.class.php</file>
+		<file>lib/system/option/OptionTypeCustomselect.class.php</file>
+		<file>lib/system/option/OptionTypeDate.class.php</file>
+		<file>lib/system/option/OptionTypeFloat.class.php</file>
+		<file>lib/system/option/OptionTypeInteger.class.php</file>
+		<file>lib/system/option/OptionTypeMultiselect.class.php</file>
+		<file>lib/system/option/OptionTypePassword.class.php</file>
+		<file>lib/system/option/OptionTypeRadiobuttons.class.php</file>
+		<file>lib/system/option/OptionTypeSelect.class.php</file>
+		<file>lib/system/option/OptionTypeText.class.php</file>
+		<file>lib/system/option/OptionTypeTextarea.class.php</file>
+		<file>lib/system/option/OptionTypeTimezone.class.php</file>
 		<file>lib/system/option/PageMultiSelectOptionType.class.php</file>
 		<file>lib/system/option/PageSelectOptionType.class.php</file>
+		<file>lib/system/option/RadiobuttonsOptionType.class.php</file>
+		<file>lib/system/option/SearchableUserOption.class.php</file>
 		<file>lib/system/option/UrlControllerReplacementOptionType.class.php</file>
+		<file>lib/system/option/group/BooleanGroupOptionType.class.php</file>
+		<file>lib/system/option/group/GroupOptionType.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeBoolean.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeGroups.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeInfiniteInteger.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeInfiniteInverseInteger.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeInteger.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeInverseInteger.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeText.class.php</file>
+		<file>lib/system/option/group/GroupOptionTypeTextarea.class.php</file>
+		<file>lib/system/option/group/GroupsGroupOptionType.class.php</file>
+		<file>lib/system/option/group/IGroupOptionType.class.php</file>
+		<file>lib/system/option/group/InfiniteIntegerGroupOptionType.class.php</file>
+		<file>lib/system/option/group/InfiniteInverseIntegerGroupOptionType.class.php</file>
+		<file>lib/system/option/group/IntegerGroupOptionType.class.php</file>
+		<file>lib/system/option/group/InverseIntegerGroupOptionType.class.php</file>
+		<file>lib/system/option/group/TextGroupOptionType.class.php</file>
+		<file>lib/system/option/group/TextareaGroupOptionType.class.php</file>
 		<file>lib/system/option/user/GooglePlusUserOptionOutput.class.php</file>
 		<file>lib/system/option/user/IUserOptionOutputContactInformation.class.php</file>
+		<file>lib/system/option/userGroup/BooleanUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/IUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/InfiniteIntegerUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/InfiniteInverseIntegerUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/IntegerUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/InverseIntegerUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/TextUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/TextareaUserGroupOptionType.class.php</file>
+		<file>lib/system/option/userGroup/UserGroupsUserGroupOptionType.class.php</file>
 		<file>lib/system/package/PackageDependencyHandler.class.php</file>
 		<file>lib/system/package/PackageUpdateAuthorizationRequiredException.class.php</file>
+		<file>lib/system/package/SplitNodeException.php</file>
+		<file>lib/system/package/plugin/ACPTemplatesPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/ClipboardItemTypePackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/CronjobsPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/DashboardBoxPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/FilesPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/GroupOptionsPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/LanguagesPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/OptionsPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/PackageIconPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/PackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/PageLocationPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/PageMenuPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/SitemapPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/SqlPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/StyleAttributePackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/StyleAttributesPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/TemplatesPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/UserGroupOptionsPackageInstallationPlugin.class.php</file>
+		<file>lib/system/package/plugin/UserOptionsPackageInstallationPlugin.class.php</file>
 		<file>lib/system/page/PageManager.class.php</file>
 		<file>lib/system/page/location/IPageLocation.class.php</file>
 		<file>lib/system/payment/method/SofortUeberweisungPaymentMethod.class.php</file>
@@ -1897,10 +2269,12 @@
 		<file>lib/system/request/Route.class.php</file>
 		<file>lib/system/request/StaticRoute.class.php</file>
 		<file>lib/system/search/SearchKeywordManager.class.php</file>
+		<file>lib/system/setup/FileHandler.class.php</file>
 		<file>lib/system/sitemap/ISitemapProvider.class.php</file>
 		<file>lib/system/sitemap/SitemapHandler.class.php</file>
 		<file>lib/system/sitemap/UserAccountSitemapProvider.class.php</file>
 		<file>lib/system/stat/DislikeStatDailyHandler.class.php</file>
+		<file>lib/system/storage/StorageHandler.class.php</file>
 		<file>lib/system/style/lessc.inc.php</file>
 		<file>lib/system/style/scssphp/LICENSE.md</file>
 		<file>lib/system/style/scssphp/classmap.php</file>
@@ -1927,11 +2301,48 @@
 		<file>lib/system/style/scssphp/src/Type.php</file>
 		<file>lib/system/style/scssphp/src/Util.php</file>
 		<file>lib/system/style/scssphp/src/Version.php</file>
+		<file>lib/system/template/IBlockTemplatePlugin.class.php</file>
+		<file>lib/system/template/ICompilerTemplatePlugin.class.php</file>
+		<file>lib/system/template/IFunctionTemplatePlugin.class.php</file>
+		<file>lib/system/template/IModifierTemplatePlugin.class.php</file>
+		<file>lib/system/template/IPrefilterTemplatePlugin.class.php</file>
+		<file>lib/system/template/ITemplatePluginBlock.class.php</file>
+		<file>lib/system/template/ITemplatePluginCompiler.class.php</file>
+		<file>lib/system/template/ITemplatePluginFunction.class.php</file>
+		<file>lib/system/template/ITemplatePluginModifier.class.php</file>
+		<file>lib/system/template/ITemplatePluginPrefilter.class.php</file>
 		<file>lib/system/template/SetupTemplate.class.php</file>
+		<file>lib/system/template/TemplatePluginBlock.class.php</file>
+		<file>lib/system/template/TemplatePluginCompiler.class.php</file>
+		<file>lib/system/template/TemplatePluginFunction.class.php</file>
+		<file>lib/system/template/TemplatePluginModifier.class.php</file>
+		<file>lib/system/template/TemplatePluginPrefilter.class.php</file>
 		<file>lib/system/template/plugin/ArrayfromlistModifierTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/DatediffModifierTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/EncodejsModifierTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/HtmlcheckboxesFunctionTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/HtmloptionsFunctionTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconCompilerTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconPrefilterTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/StaticlangTemplatePluginCompiler.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginBlockLink.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerAppend.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerAssign.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerFetch.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerIcon.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerImplode.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerLang.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerPrepend.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginCompilerStaticlang.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginFunctionCounter.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginFunctionCycle.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginFunctionHtmlcheckboxes.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginFunctionHtmloptions.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginFunctionPages.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginFunctionSmallpages.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginModifierArrayfromlist.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginModifierConcat.class.php</file>
+		<file>lib/system/template/plugin/TemplatePluginModifierDate.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginModifierDatediff.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginModifierEncodejs.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginModifierFilesize.class.php</file>
@@ -1944,6 +2355,7 @@
 		<file>lib/system/template/plugin/TemplatePluginPrefilterIcon.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginPrefilterLang.class.php</file>
 		<file>lib/system/template/plugin/WordwrapModifierTemplatePlugin.class.php</file>
+		<file>lib/system/user/UserCollapsibleContentHandler.class.php</file>
 		<file>lib/system/user/activity/point/AbstractUserActivityPointObjectProcessor.class.php</file>
 		<file>lib/system/user/activity/point/DefaultUserActivityPointObjectProcessor.class.php</file>
 		<file>lib/system/user/activity/point/IUserActivityPointObjectProcessor.class.php</file>
@@ -1955,8 +2367,10 @@
 		<file>lib/system/user/collapsible/content/ICollapsibleContentAction.class.php</file>
 		<file>lib/system/user/collapsible/content/UserCollapsibleSidebarHandler.class.php</file>
 		<file>lib/system/user/notification/event/PaidSubscriptionUserUserNotificationEvent.class.php</file>
+		<file>lib/system/user/notification/object/CommentLikeUserNotificationObject.class.php</file>
 		<file>lib/system/user/notification/object/CommentResponseLikeUserNotificationObject.class.php</file>
 		<file>lib/system/user/notification/object/type/UserProfileCommentLikeUserNotificationObjectType.class.php</file>
+		<file>lib/system/user/notification/object/type/UserProfileCommentResponseLikeUserNotificationObjectType.class.php</file>
 		<file>lib/system/user/online/location/UserLocation.class.php</file>
 		<file>lib/system/version/VersionHandler.class.php</file>
 		<file>lib/system/worker/DatabaseConvertEncodingWorker.class.php</file>
@@ -1965,33 +2379,43 @@
 		<file>lib/system/worker/UserActivityPointUpdateCacheWorker.class.php</file>
 		<file>lib/system/worker/UserRankUpdateWorker.class.php</file>
 		<file>lib/util/BasicFileUtil.class.php</file>
+		<file>lib/util/CLIUtil.php</file>
+		<file>lib/util/HTTPUtil.class.php</file>
 		<file>lib/util/UnfurlUrlUtil.class.php</file>
+		<file>media/.htaccess</file>
 		<file>style/acl.less</file>
 		<file>style/alert.less</file>
+		<file>style/alerts.less</file>
 		<file>style/attachment.less</file>
 		<file>style/badge.less</file>
 		<file>style/bbcode.less</file>
 		<file>style/bbcode/bbcodeCollapsible.less</file>
 		<file>style/bbcode/code.less</file>
 		<file>style/bbcode/codeInline.less</file>
+		<file>style/bbcode/quote.less</file>
 		<file>style/bootstrap.less</file>
 		<file>style/bootstrap/mixin.less</file>
+		<file>style/bootstrap/mixins.less</file>
+		<file>style/bootstrap/reset.less</file>
 		<file>style/bootstrap/variables.less</file>
 		<file>style/breadcrumbs.less</file>
 		<file>style/button.less</file>
 		<file>style/buttons.css</file>
 		<file>style/codebox.less</file>
 		<file>style/colorPicker.css</file>
+		<file>style/colorPicker.less</file>
 		<file>style/comment.less</file>
 		<file>style/comments.less</file>
 		<file>style/containers.css</file>
 		<file>style/content.less</file>
 		<file>style/conversation.less</file>
+		<file>style/datePicker.less</file>
 		<file>style/dialog.less</file>
 		<file>style/dropdown.less</file>
 		<file>style/element/dl.less</file>
 		<file>style/element/inputText.less</file>
 		<file>style/element/label.scss</file>
+		<file>style/element/list.less</file>
 		<file>style/element/select.less</file>
 		<file>style/element/textarea.less</file>
 		<file>style/extra/ie6-fix-rtl.css</file>
@@ -2015,17 +2439,28 @@
 		<file>style/icon/icon.less</file>
 		<file>style/imageViewer.css</file>
 		<file>style/imageViewer.less</file>
+		<file>style/imageviewer.less</file>
 		<file>style/import.less</file>
 		<file>style/inlineCalendar.css</file>
 		<file>style/inputs.less</file>
 		<file>style/label.less</file>
 		<file>style/layout.css</file>
 		<file>style/layout.less</file>
+		<file>style/layout/containerList.less</file>
+		<file>style/layout/content.less</file>
 		<file>style/layout/form.less</file>
+		<file>style/layout/global.less</file>
+		<file>style/layout/layout.less</file>
+		<file>style/layout/navigation.less</file>
 		<file>style/layout/navigation.scss</file>
+		<file>style/layout/pageFooter.less</file>
+		<file>style/layout/pageHeader.less</file>
+		<file>style/layout/pageHeaderSticky.less</file>
 		<file>style/layout/pageHeaderSticky.scss</file>
+		<file>style/layout/sidebar.less</file>
 		<file>style/like.less</file>
 		<file>style/logo.less</file>
+		<file>style/message.css</file>
 		<file>style/message.less</file>
 		<file>style/messages.css</file>
 		<file>style/mixins.less</file>
@@ -2052,15 +2487,27 @@
 		<file>style/tabular.less</file>
 		<file>style/tagging.less</file>
 		<file>style/tooltip.less</file>
+		<file>style/ui/alert.less</file>
+		<file>style/ui/badge.less</file>
+		<file>style/ui/breadcrumb.less</file>
+		<file>style/ui/button.less</file>
+		<file>style/ui/comment.less</file>
+		<file>style/ui/dialog.less</file>
+		<file>style/ui/dropdown.less</file>
 		<file>style/ui/dropdownInteractive.less</file>
+		<file>style/ui/message.less</file>
 		<file>style/ui/poll.less</file>
 		<file>style/ui/popover.less</file>
+		<file>style/ui/redactor.less</file>
 		<file>style/ui/sitemap.scss</file>
 		<file>style/ui/spinner.less</file>
 		<file>style/ui/tabMenu.less</file>
+		<file>style/ui/tabMenuMessage.less</file>
 		<file>style/ui/table.less</file>
 		<file>style/ui/tabularBox.less</file>
 		<file>style/ui/textarea.scss</file>
+		<file>style/ui/tooltipBalloon.less</file>
+		<file>style/ui/userProfile.less</file>
 		<file>style/user.less</file>
 		<file>style/userPanel.less</file>
 		<file>style/variables.less</file>

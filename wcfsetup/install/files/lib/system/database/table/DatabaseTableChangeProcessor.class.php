@@ -1297,6 +1297,17 @@ class DatabaseTableChangeProcessor
                         ];
                     }
 
+                    if (
+                        $index->getType() === DatabaseTableIndex::PRIMARY_TYPE
+                        && $index->getName() !== 'PRIMARY'
+                    ) {
+                        $errors[] = [
+                            'columnNames' => \implode(',', $index->getColumns()),
+                            'tableName' => $table->getName(),
+                            'type' => 'primaryNotCalledPrimary',
+                        ];
+                    }
+
                     foreach ($index->getColumns() as $indexColumn) {
                         $column = $this->getColumnByName($indexColumn, $table, $existingTable);
                         if ($column === null) {

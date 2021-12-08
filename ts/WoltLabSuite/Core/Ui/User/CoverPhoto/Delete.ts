@@ -30,7 +30,12 @@ class UiUserCoverPhotoDelete implements AjaxCallbackObject {
    * Initializes the delete handler and enables the delete button on upload.
    */
   constructor(userId: number) {
-    this.button = document.querySelector(".jsButtonDeleteCoverPhoto") as HTMLAnchorElement;
+    const button = document.querySelector<HTMLAnchorElement>(".jsButtonDeleteCoverPhoto");
+    if (button === null) {
+      return;
+    }
+
+    this.button = button;
     this.button.addEventListener("click", (ev) => this._click(ev));
     this.userId = userId;
 
