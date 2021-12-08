@@ -241,7 +241,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                 $image = '<span class="icon icon48 fa-users"></span>';
             }
 
-
             if ($event->isConfirmed()) {
                 $link = $event->getLink();
             } else {
@@ -251,7 +250,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                 );
             }
 
-            $usernames = array_map(static function (UserProfile $userProfile) {
+            $usernames = \array_map(static function (UserProfile $userProfile) {
                 return $userProfile->getFormattedUsername();
             }, $event->getAuthors());
 
