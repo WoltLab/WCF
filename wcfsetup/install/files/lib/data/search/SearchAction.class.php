@@ -29,6 +29,11 @@ class SearchAction extends AbstractDatabaseObjectAction
      */
     protected $className = SearchEditor::class;
 
+    /**
+     * @inheritDoc
+     */
+    protected $allowGuestAccess = ['search'];
+
     public function validateSearch(): void
     {
         $this->readString('q', true);
