@@ -15,7 +15,7 @@ use wcf\system\database\table\PartialDatabaseTable;
 
 return [
     PartialDatabaseTable::create('wcf1_blacklist_entry')
-        ->columns([
+        ->indices([
             DatabaseTableIndex::create('lastSeen')
                 ->columns(['lastSeen']),
         ]),
