@@ -43,6 +43,8 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readBoolean('subjectOnly', true);
         $this->readString('startDate', true);
         $this->readString('endDate', true);
+        $this->readString('sortField', true);
+        $this->readString('sortOrder', true);
 
         if (empty($this->parameters['q']) && empty($this->parameters['username'])) {
             throw new UserInputException('q');
@@ -52,6 +54,14 @@ class SearchAction extends AbstractDatabaseObjectAction
             if (SearchEngine::getInstance()->getObjectType($this->parameters['type']) === null) {
                 throw new IllegalLinkException();
             }
+        }
+
+        if (\in_array($this->parameters['sortField'], ['subject', 'time', 'username', 'relevance'])) {
+            $this->parameters['sortField'] = SEARCH_DEFAULT_SORT_FIELD;
+        }
+
+        if ($this->parameters['sortOrder'] !== 'ASC' && $this->parameters['sortOrder'] !== 'DESC') {
+            $this->parameters['sortOrder'] = SEARCH_DEFAULT_SORT_ORDER;
         }
     }
 
