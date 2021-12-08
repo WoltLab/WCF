@@ -1,231 +1,231 @@
 .userMenu {
-    --background-color: #{$wcfUserMenuBackground};
-    --background-color-active: #{$wcfUserMenuBackgroundActive};
-    --border-color: #{$wcfUserMenuBorder};
-    --color: #{$wcfUserMenuText};
-    --color-dimmed: #{$wcfUserMenuTextDimmed};
-    --color-indicator: #{$wcfUserMenuIndicator};
+	--background-color: #{$wcfUserMenuBackground};
+	--background-color-active: #{$wcfUserMenuBackgroundActive};
+	--border-color: #{$wcfUserMenuBorder};
+	--color: #{$wcfUserMenuText};
+	--color-dimmed: #{$wcfUserMenuTextDimmed};
+	--color-indicator: #{$wcfUserMenuIndicator};
 
-    background-color: var(--background-color);
-    border-radius: 5px;
-    box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
-    color: var(--color);
-    pointer-events: all;
-    position: absolute;
-    width: 400px;
-    z-index: 450;
+	background-color: var(--background-color);
+	border-radius: 5px;
+	box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+	color: var(--color);
+	pointer-events: all;
+	position: absolute;
+	width: 400px;
+	z-index: 450;
 
-    &.userMenuControlPanel {
-        .userMenuItemImage {
-            align-self: center;
-        }
+	&.userMenuControlPanel {
+		.userMenuItemImage {
+			align-self: center;
+		}
 
-        .userMenuItemContent {
-            font-weight: 600;
-        }
+		.userMenuItemContent {
+			font-weight: 600;
+		}
 
-        .icon {
-            color: var(--color-dimmed);
-        }
-    }
+		.icon {
+			color: var(--color-dimmed);
+		}
+	}
 
-    .icon {
-        color: var(--color);
-    }
+	.icon {
+		color: var(--color);
+	}
 
-    /* TODO: This is for the old mobile menu only. */
-    @include screen-xs {
-        border-radius: 0;
-        bottom: 0 !important;
-        display: flex;
-        left: 0 !important;
-        flex-direction: column;
-        right: 0 !important;
-        top: 50px !important;
-        width: 100%;
+	/* TODO: This is for the old mobile menu only. */
+	@include screen-xs {
+		border-radius: 0;
+		bottom: 0 !important;
+		display: flex;
+		left: 0 !important;
+		flex-direction: column;
+		right: 0 !important;
+		top: 50px !important;
+		width: 100%;
 
-        .userMenuContent {
-            flex: 1 auto;
-        }
-    }
+		.userMenuContent {
+			flex: 1 auto;
+		}
+	}
 }
 
 .userMenuHeader {
-    column-gap: 10px;
-    display: grid;
-    grid-template-areas: "title buttons";
-    grid-template-columns: auto max-content;
-    padding: 10px;
+	column-gap: 10px;
+	display: grid;
+	grid-template-areas: "title buttons";
+	grid-template-columns: auto max-content;
+	padding: 10px;
 }
 
 .userMenuTitle {
-    grid-area: title;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	grid-area: title;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
-    @include wcfFontHeadline;
+	@include wcfFontHeadline;
 
-    font-weight: 600;
+	font-weight: 600;
 }
 
 .userMenuButtons {
-    column-gap: 10px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-area: buttons;
+	column-gap: 10px;
+	display: grid;
+	grid-auto-flow: column;
+	grid-area: buttons;
 }
 
 .userMenuButton {
-    transform: scale(1);
-    transition: transform 0.24s ease-in-out;
+	transform: scale(1);
+	transition: transform 0.24s ease-in-out;
 
-    &:hover {
-        transform: scale(1.5);
-    }
+	&:hover {
+		transform: scale(1.5);
+	}
 }
 
 .userMenuContentStatus {
-    align-items: center;
-    color: var(--color-dimmed);
-    display: flex;
-    height: 60px;
-    justify-content: center;
+	align-items: center;
+	color: var(--color-dimmed);
+	display: flex;
+	height: 60px;
+	justify-content: center;
 
-    @include wcfFontHeadline;
+	@include wcfFontHeadline;
 }
 
 .userMenuItem {
-    background-color: var(--background-color);
-    display: grid;
-    grid-template-areas:
-        "image content"
-        "image meta";
-    grid-template-columns: 60px auto;
-    padding: 10px 30px 10px 10px;
-    position: relative;
-    transition: background-color 0.12s linear;
+	background-color: var(--background-color);
+	display: grid;
+	grid-template-areas:
+		"image content"
+		"image meta";
+	grid-template-columns: 60px auto;
+	padding: 10px 30px 10px 10px;
+	position: relative;
+	transition: background-color 0.12s linear;
 
-    &:hover {
-        background-color: var(--background-color-active);
-    }
+	&:hover {
+		background-color: var(--background-color-active);
+	}
 
-    &[data-is-unread="true"] .userMenuItemLink::before {
-        right: 30px;
-    }
+	&[data-is-unread="true"] .userMenuItemLink::before {
+		right: 30px;
+	}
 
-    &[data-is-unread="false"] .userMenuItemUnread {
-        display: none;
-    }
+	&[data-is-unread="false"] .userMenuItemUnread {
+		display: none;
+	}
 
-    &.userMenuItemNarrow {
-        grid-template-columns: 40px auto;
-    }
+	&.userMenuItemNarrow {
+		grid-template-columns: 40px auto;
+	}
 
-    &.userMenuItemSingleLine {
-        grid-template-areas: "image content";
+	&.userMenuItemSingleLine {
+		grid-template-areas: "image content";
 
-        .userMenuItemContent {
-            align-self: center;
-        }
-    }
+		.userMenuItemContent {
+			align-self: center;
+		}
+	}
 }
 
 .userMenuItemLink,
 .userMenuItemLink:hover {
-    color: inherit;
+	color: inherit;
 }
 
 .userMenuItemLink::before {
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 1;
+	bottom: 0;
+	content: "";
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1;
 }
 
 .userMenuItemImage {
-    grid-area: image;
+	grid-area: image;
 }
 
 .userMenuItemContent {
-    grid-area: content;
+	grid-area: content;
 }
 
 .userMenuItemMeta {
-    color: var(--color-dimmed);
-    grid-area: meta;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	color: var(--color-dimmed);
+	grid-area: meta;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
-    @include wcfFontSmall;
+	@include wcfFontSmall;
 }
 
 .userMenuItemUnread {
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 34px;
+	align-items: center;
+	bottom: 0;
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 34px;
 
-    &::before {
-        background-color: var(--color-indicator);
-        border-radius: 50%;
-        content: "";
-        height: 10px;
-        left: 7px;
-        opacity: 1;
-        position: absolute;
-        top: calc(50% - 5px);
-        transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
-        width: 10px;
-    }
+	&::before {
+		background-color: var(--color-indicator);
+		border-radius: 50%;
+		content: "";
+		height: 10px;
+		left: 7px;
+		opacity: 1;
+		position: absolute;
+		top: calc(50% - 5px);
+		transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
+		width: 10px;
+	}
 }
 
 .userMenuItem:hover .userMenuItemUnread::before {
-    opacity: 0;
-    left: 0;
+	opacity: 0;
+	left: 0;
 }
 
 .userMenuItemMarkAsRead {
-    display: block;
-    opacity: 1;
-    position: relative;
-    left: 0;
-    transform: scale(1);
-    transition: opacity 0.12s ease-in-out, left 0.12s ease-in-out, transform 0.24s ease-in-out;
-    width: 100%;
+	display: block;
+	opacity: 1;
+	position: relative;
+	left: 0;
+	transform: scale(1);
+	transition: opacity 0.12s ease-in-out, left 0.12s ease-in-out, transform 0.24s ease-in-out;
+	width: 100%;
 
-    &:hover {
-        transform: scale(1.5);
-    }
+	&:hover {
+		transform: scale(1.5);
+	}
 }
 
 .userMenuItem:not(:hover) .userMenuItemMarkAsRead {
-    opacity: 0;
-    left: 10px;
+	opacity: 0;
+	left: 10px;
 }
 
 .userMenuFooter {
-    border-top: 1px solid var(--border-color);
-    padding: 10px;
-    text-align: center;
+	border-top: 1px solid var(--border-color);
+	padding: 10px;
+	text-align: center;
 }
 
 .userMenuFooterLink {
-    color: inherit;
+	color: inherit;
 
-    &:hover {
-        color: inherit;
-        text-decoration: underline;
-    }
+	&:hover {
+		color: inherit;
+		text-decoration: underline;
+	}
 }
 
 .userMenuContentDivider {
-    border-top: 1px solid var(--border-color);
+	border-top: 1px solid var(--border-color);
 }
