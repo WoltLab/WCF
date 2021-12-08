@@ -12,6 +12,7 @@ import UiCloseOverlay from "../../CloseOverlay";
 import { getContainer } from "./Manager";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import * as Alignment from "../../Alignment";
+import DomUtil from "../../../Dom/Util";
 
 const button = document.getElementById("userMenu")!;
 const element = button.querySelector(".userMenu") as HTMLElement;
@@ -32,7 +33,16 @@ function open(): void {
 
   focusTrap.activate();
 
-  Alignment.set(element, button, { horizontal: "right" });
+  setAlignment(element, button);
+}
+
+function setAlignment(element: HTMLElement, referenceElement: HTMLElement): void {
+  Alignment.set(element, referenceElement, { horizontal: "right" });
+
+  if (window.getComputedStyle(element).position === "fixed" && DomUtil.getFixedParent(referenceElement) !== null) {
+    const { top, height } = referenceElement.getBoundingClientRect();
+    element.style.setProperty("top", `${top + height}px`);
+  }
 }
 
 function close(): void {

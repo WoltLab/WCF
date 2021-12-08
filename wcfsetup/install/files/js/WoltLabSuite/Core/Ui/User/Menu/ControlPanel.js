@@ -7,12 +7,13 @@
  * @module WoltLabSuite/Core/Ui/User/Menu/ControlPanel
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus-trap", "../../Alignment"], function (require, exports, tslib_1, CloseOverlay_1, Manager_1, focus_trap_1, Alignment) {
+define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus-trap", "../../Alignment", "../../../Dom/Util"], function (require, exports, tslib_1, CloseOverlay_1, Manager_1, focus_trap_1, Alignment, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     Alignment = (0, tslib_1.__importStar)(Alignment);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     const button = document.getElementById("userMenu");
     const element = button.querySelector(".userMenu");
     let focusTrap;
@@ -26,7 +27,14 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
         button.classList.add("open");
         link.setAttribute("aria-expanded", "true");
         focusTrap.activate();
-        Alignment.set(element, button, { horizontal: "right" });
+        setAlignment(element, button);
+    }
+    function setAlignment(element, referenceElement) {
+        Alignment.set(element, referenceElement, { horizontal: "right" });
+        if (window.getComputedStyle(element).position === "fixed" && Util_1.default.getFixedParent(referenceElement) !== null) {
+            const { top, height } = referenceElement.getBoundingClientRect();
+            element.style.setProperty("top", `${top + height}px`);
+        }
     }
     function close() {
         focusTrap.deactivate();

@@ -7,13 +7,14 @@
  * @module WoltLabSuite/Core/Ui/User/Menu/Manager
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler) {
+define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerProvider = exports.getContainer = void 0;
     Alignment = (0, tslib_1.__importStar)(Alignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     let container = undefined;
     const providers = new Set();
     const views = new Map();
@@ -39,7 +40,14 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         button.querySelector("a").setAttribute("aria-expanded", "true");
         button.classList.add("open");
         const element = view.getElement();
-        Alignment.set(element, button, { horizontal: "right" });
+        setAlignment(element, button);
+    }
+    function setAlignment(element, referenceElement) {
+        Alignment.set(element, referenceElement, { horizontal: "right" });
+        if (window.getComputedStyle(element).position === "fixed" && Util_1.default.getFixedParent(referenceElement) !== null) {
+            const { top, height } = referenceElement.getBoundingClientRect();
+            element.style.setProperty("top", `${top + height}px`);
+        }
     }
     function close(provider) {
         if (!views.has(provider)) {

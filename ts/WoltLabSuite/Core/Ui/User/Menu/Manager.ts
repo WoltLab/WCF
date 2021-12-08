@@ -13,6 +13,7 @@ import UserMenuView from "./View";
 import * as Alignment from "../../Alignment";
 import CloseOverlay from "../../CloseOverlay";
 import * as EventHandler from "../../../Event/Handler";
+import DomUtil from "../../../Dom/Util";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -46,7 +47,16 @@ function open(provider: UserMenuProvider): void {
   button.classList.add("open");
 
   const element = view.getElement();
-  Alignment.set(element, button, { horizontal: "right" });
+  setAlignment(element, button);
+}
+
+function setAlignment(element: HTMLElement, referenceElement: HTMLElement): void {
+  Alignment.set(element, referenceElement, { horizontal: "right" });
+
+  if (window.getComputedStyle(element).position === "fixed" && DomUtil.getFixedParent(referenceElement) !== null) {
+    const { top, height } = referenceElement.getBoundingClientRect();
+    element.style.setProperty("top", `${top + height}px`);
+  }
 }
 
 function close(provider: UserMenuProvider): void {
