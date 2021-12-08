@@ -72,6 +72,10 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!-- Make all the new options available as early as possible. -->
 		<instruction type="option" run="standalone" />
 
+		<!-- The updated object types are required for the boxCondition migrator. -->
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+
 		<!-- Migrate the database as early as possible. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.5.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_boxConditions.php</instruction>
@@ -80,8 +84,6 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="packageInstallationPlugin" />
 
 		<!-- Misc. PIPs. -->
-		<instruction type="objectTypeDefinition" />
-		<instruction type="objectType" />
 		<instruction type="eventListener" />
 		<instruction type="language" />
 		<instruction type="mediaProvider" />
