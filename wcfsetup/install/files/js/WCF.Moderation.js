@@ -693,84 +693,6 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 		}
 	});
-	
-	/**
-	 * User Panel implementation for moderation queues.
-	 *
-	 * @see        WCF.User.Panel.Abstract
-	 */
-	WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
-		/**
-		 * @see        WCF.User.Panel.Abstract.init()
-		 */
-		init: function (options) {
-			options.enableMarkAsRead = true;
-			
-			this._super($('#outstandingModeration'), 'outstandingModeration', options);
-			
-			require(['EventHandler'], (function (EventHandler) {
-				EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function (data) {
-					if (data.identifier === 'com.woltlab.wcf.moderation') {
-						this.toggle();
-					}
-				}).bind(this));
-			}).bind(this));
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._initDropdown()
-		 */
-		_initDropdown: function () {
-			var $dropdown = this._super();
-			
-			$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon24 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
-			
-			return $dropdown;
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._load()
-		 */
-		_load: function () {
-			this._proxy.setOption('data', {
-				actionName: 'getOutstandingQueues',
-				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
-			});
-			this._proxy.sendRequest();
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._markAsRead()
-		 */
-		_markAsRead: function (event, objectID) {
-			this._proxy.setOption('data', {
-				actionName: 'markAsRead',
-				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
-				objectIDs: [objectID]
-			});
-			this._proxy.sendRequest();
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._markAllAsRead()
-		 */
-		_markAllAsRead: function (event) {
-			this._proxy.setOption('data', {
-				actionName: 'markAllAsRead',
-				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
-			});
-			this._proxy.sendRequest();
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract.resetItems()
-		 */
-		resetItems: function () {
-			this._super();
-			
-			this._loadData = true;
-		}
-	});
 }
 else {
 	WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
@@ -788,26 +710,5 @@ else {
 		_success: function() {},
 		_failure: function() {},
 		_assignUser: function() {}
-	});
-	
-	WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
-		init: function() {},
-		_initDropdown: function() {},
-		_load: function() {},
-		_markAsRead: function() {},
-		_markAllAsRead: function() {},
-		resetItems: function() {},
-		_badge: {},
-		_dropdown: {},
-		_identifier: "",
-		_loadData: true,
-		_markAllAsReadLink: {},
-		_options: {},
-		_proxy: {},
-		_triggerElement: {},
-		toggle: function() {},
-		_dblClick: function() {},
-		_success: function() {},
-		updateBadge: function() {}
 	});
 }

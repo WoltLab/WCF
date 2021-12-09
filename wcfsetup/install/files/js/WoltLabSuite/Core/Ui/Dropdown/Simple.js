@@ -23,6 +23,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
     const _menus = new Map();
     let _menuContainer;
     let _activeTargetId = "";
+    let _blockCloseAll = false;
     /**
      * Handles drop-down positions in overlays when scrolling in the overlay.
      */
@@ -86,6 +87,13 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
      * Toggles the drop-down's state between open and close.
      */
     function toggle(event, targetId, alternateElement, disableAutoFocus) {
+        _blockCloseAll = true;
+        try {
+            CloseOverlay_1.default.execute();
+        }
+        finally {
+            _blockCloseAll = false;
+        }
         let isKeyboardClick = false;
         if (event !== null) {
             event.preventDefault();
@@ -216,7 +224,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 }
             }
         });
-        window.WCF.Dropdown.Interactive.Handler.closeAll();
         return event === null;
     }
     function handleKeyDown(event) {
@@ -489,6 +496,9 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
          * Closes all dropdowns.
          */
         closeAll() {
+            if (_blockCloseAll) {
+                return;
+            }
             _dropdowns.forEach((dropdown, containerId) => {
                 if (dropdown.classList.contains("dropdownOpen")) {
                     dropdown.classList.remove("dropdownOpen");

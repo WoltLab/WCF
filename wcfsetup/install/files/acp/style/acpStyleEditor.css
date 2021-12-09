@@ -66,6 +66,10 @@ html[dir="rtl"] #spTable th { text-align: right; }
 /* ### dropdown ### */
 #spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }
 
+/* ### user menu ### */
+#spUserMenu { position: relative; margin-bottom: 40px; z-index: 1; }
+#spUserMenu a, #spUserMenu a:hover { color: var(--color) !important; }
+
 /* ### footer box ### */
 #spFooterBox > .spBoundary { display: flex; justify-content: space-between; padding: 15px 0; }
 #spFooterBox .spFooterBoxItem { flex: 0 0 auto; width: calc(50% - 15px); /* work-around for IE which does not support calc() for flex-basis */ }

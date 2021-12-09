@@ -23,8 +23,8 @@ import {
 import * as Language from "../Language";
 import * as Environment from "../Environment";
 import * as EventHandler from "../Event/Handler";
-import UiDropdownSimple from "./Dropdown/Simple";
 import { AjaxCallbackSetup } from "../Ajax/Data";
+import CloseOverlay from "./CloseOverlay";
 
 let _activeDialog: string | null = null;
 let _callbackFocus: (event: FocusEvent) => void;
@@ -519,9 +519,7 @@ const UiDialog = {
     }
 
     if (Core.stringToBool(data.dialog.getAttribute("aria-hidden"))) {
-      // close existing dropdowns
-      UiDropdownSimple.closeAll();
-      window.WCF.Dropdown.Interactive.Handler.closeAll();
+      CloseOverlay.execute();
 
       if (_callbackFocus === null) {
         _callbackFocus = this._maintainFocus.bind(this);

@@ -110,3 +110,8 @@ html {
 	// prevent iOS Safari from blowing up font size when in landscape mode
 	-webkit-text-size-adjust: 100%;
 }
+
+// Force [hidden] to be not overuled by `display`.
+[hidden] {
+	display: none !important;
+}

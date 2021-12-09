@@ -20,21 +20,6 @@
 		display: none;
 	}
 
-	&.interactiveDropdownUserMenu {
-		> .interactiveDropdownItemsContainer {
-			overflow: visible;
-			max-height: none;
-
-			a {
-				color: $wcfContentLink;
-
-				&:hover {
-					color: $wcfContentLinkActive;
-				}
-			}
-		}
-	}
-
 	@include screen-sm-md {
 		display: flex;
 		flex-direction: column;

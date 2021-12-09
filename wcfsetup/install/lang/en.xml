@@ -5279,6 +5279,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
 		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Disabled]]></item>
 		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Enabled]]></item>
+		<item name="wcf.user.notification.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Display All Notifications]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Email notification has been disabled.]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[The selected email notifications have been unsubscribed.]]></item>
