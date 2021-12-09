@@ -4494,21 +4494,14 @@ Dateianhänge:
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Suche nach Autor]]></item>
 		<item name="wcf.search.extended"><![CDATA[Erweiterte Suche]]></item>
-		<item name="wcf.search.general"><![CDATA[Allgemeine Suchangaben]]></item>
 		<item name="wcf.search.matchExactly"><![CDATA[Exakter Treffer]]></item>
 		<item name="wcf.search.period"><![CDATA[Im Zeitraum]]></item>
-		<item name="wcf.search.query"><![CDATA[Suche nach Begriff]]></item>
-		<item name="wcf.search.query.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen oder mehrere Begriffe ein. Ein Begriff muss mindestens vier Zeichen lang sein.]]></item>
-		<item name="wcf.search.results.change"><![CDATA[Suche ändern]]></item>
-		<item name="wcf.search.results.description"><![CDATA[Suchergebnisse {#$startIndex}-{#$endIndex} von insgesamt {#$items}{if $query} für „<strong>{$query}</strong>“{/if}.{if $items == 1000} Es gibt noch weitere Suchergebnisse, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}verfeinere deine{else}verfeinern Sie Ihre{/if} Suche.{/if}{if $highlight}<br>Diese Suchbegriffe wurden hervorgehoben: <span class="highlight">{$highlight}</span>{/if}]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sortierung]]></item>
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevanz]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Datum]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Autor]]></item>
 		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
 		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
-		<item name="wcf.search.type.everywhere"><![CDATA[Alles]]></item>
-		<item name="wcf.search.error.noMatches"><![CDATA[Es wurde kein{if !$query|empty} mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Suchanfrage „{$query}“ übereinstimmender{/if} Eintrag gefunden.]]></item>
 		<item name="wcf.search.error.user.noMatches"><![CDATA[Es wurde kein Eintrag von diesem Autor gefunden.]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
@@ -5582,5 +5575,12 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.option.enable_censorship.description"/>
 	<item name="wcf.search.type.keywords" />
 	<item name="wcf.acp.option.search_use_captcha" />
+	<item name="wcf.search.query.description" />
+	<item name="wcf.search.results.change" />
+	<item name="wcf.search.results.description" />
+	<item name="wcf.search.general" />
+	<item name="wcf.search.query" />
+	<item name="wcf.search.error.noMatches" />
+	<item name="wcf.search.error.user.noMatches" />
 </delete>
 </language>

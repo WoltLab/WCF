@@ -4496,13 +4496,8 @@ Attachments:
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Search by Author]]></item>
 		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
-		<item name="wcf.search.general"><![CDATA[General Search Terms]]></item>
 		<item name="wcf.search.matchExactly"><![CDATA[Exact match]]></item>
 		<item name="wcf.search.period"><![CDATA[Time Period]]></item>
-		<item name="wcf.search.query"><![CDATA[Search for Term]]></item>
-		<item name="wcf.search.query.description"><![CDATA[Type in one or more search terms, each must be at least 4 characters.]]></item>
-		<item name="wcf.search.results.change"><![CDATA[Change Search]]></item>
-		<item name="wcf.search.results.description"><![CDATA[Search results {#$startIndex}-{#$endIndex} of {#$items}{if $query} for “<strong>{$query}</strong>”{/if}.{if $items == 1000} There are more results available, please enhance your search parameters.{/if}{if $highlight}<br>These terms were highlighted: <span class="highlight">{$highlight}</span>{/if}]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sort by]]></item>
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevance]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
@@ -4510,8 +4505,6 @@ Attachments:
 		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
 		<item name="wcf.search.type"><![CDATA[Search in]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
-		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
-		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Article]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Page]]></item>
@@ -5584,5 +5577,12 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.option.enable_censorship.description"/>
 	<item name="wcf.search.type.keywords" />
 	<item name="wcf.acp.option.search_use_captcha" />
+	<item name="wcf.search.query.description" />
+	<item name="wcf.search.results.change" />
+	<item name="wcf.search.results.description" />
+	<item name="wcf.search.general" />
+	<item name="wcf.search.query" />
+	<item name="wcf.search.error.noMatches" />
+	<item name="wcf.search.error.user.noMatches" />
 </delete>
 </language>
