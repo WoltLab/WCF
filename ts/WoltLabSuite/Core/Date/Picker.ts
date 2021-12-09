@@ -16,10 +16,11 @@ import * as Language from "../Language";
 import * as UiAlignment from "../Ui/Alignment";
 import UiCloseOverlay from "../Ui/CloseOverlay";
 import DomUtil from "../Dom/Util";
+import { createFocusTrap, FocusTrap } from "focus-trap";
 
 let _didInit = false;
 let _firstDayOfWeek = 0;
-let _wasInsidePicker = false;
+let _focusTrap: FocusTrap;
 
 const _data = new Map<HTMLInputElement, DatePickerData>();
 let _input: HTMLInputElement | null = null;
@@ -174,7 +175,14 @@ function createPicker() {
 
   document.body.appendChild(_datePicker);
 
-  document.body.addEventListener("focus", maintainFocus, { capture: true });
+  _focusTrap = createFocusTrap(_datePicker, {
+    allowOutsideClick: true,
+    escapeDeactivates(): boolean {
+      close();
+
+      return false;
+    },
+  });
 }
 
 /**
@@ -304,7 +312,7 @@ function open(event: MouseEvent): void {
 
   _input.nextElementSibling!.setAttribute("aria-expanded", "true");
 
-  _wasInsidePicker = false;
+  _focusTrap.activate();
 }
 
 /**
@@ -327,6 +335,7 @@ function close() {
   const sibling = _input!.nextElementSibling as HTMLElement;
   sibling.setAttribute("aria-expanded", "false");
   _input = null;
+  _focusTrap.deactivate();
 }
 
 /**
@@ -608,24 +617,6 @@ function getElement(element: InputElementOrString): HTMLInputElement {
   }
 
   return element;
-}
-
-function maintainFocus(event: FocusEvent): void {
-  if (_datePicker === null || !_datePicker.classList.contains("active")) {
-    return;
-  }
-
-  if (!_datePicker.contains(event.target as HTMLElement)) {
-    if (_wasInsidePicker) {
-      const sibling = _input!.nextElementSibling as HTMLElement;
-      sibling.focus();
-      _wasInsidePicker = false;
-    } else {
-      _datePicker.querySelector<HTMLElement>(".previous")!.focus();
-    }
-  } else {
-    _wasInsidePicker = true;
-  }
 }
 
 const DatePicker = {
