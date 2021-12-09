@@ -567,4 +567,12 @@ class SearchForm extends AbstractCaptchaForm
     {
         return $this->userIDs;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function __run()
+    {
+        throw new IllegalLinkException();
+    }
 }

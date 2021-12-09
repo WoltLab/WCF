@@ -5,7 +5,6 @@ namespace wcf\page;
 use wcf\data\search\ICustomIconSearchResultObject;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\ImplementationException;
@@ -217,5 +216,13 @@ class SearchResultPage extends MultipleLinkPage
      */
     protected function readObjects()
     {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __run()
+    {
+        throw new IllegalLinkException();
     }
 }
