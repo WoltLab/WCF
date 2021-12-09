@@ -1,7 +1,8 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input"], function (require, exports, tslib_1, Ajax_1, DomUtil, StringUtil_1, Pagination_1, Input_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Pagination_1, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiSearchExtended = void 0;
+    Picker_1 = (0, tslib_1.__importDefault)(Picker_1);
     DomUtil = (0, tslib_1.__importStar)(DomUtil);
     Pagination_1 = (0, tslib_1.__importDefault)(Pagination_1);
     Input_1 = (0, tslib_1.__importDefault)(Input_1);
@@ -80,8 +81,30 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../St
         initQueryString() {
             const url = new URL(window.location.href);
             url.searchParams.forEach((value, key) => {
-                if (value && this.form.elements[key]) {
-                    this.form.elements[key].value = value;
+                let element = this.form.elements[key];
+                if (value && element) {
+                    if (element instanceof RadioNodeList) {
+                        let id = "";
+                        element.forEach((childElement) => {
+                            if (childElement.classList.contains("inputDatePicker")) {
+                                id = childElement.id;
+                            }
+                        });
+                        if (id) {
+                            Picker_1.default.setDate(id, new Date(value));
+                        }
+                    }
+                    else if (element instanceof HTMLInputElement) {
+                        if (element.type === "checkbox") {
+                            element.checked = true;
+                        }
+                        else {
+                            element.value = value;
+                        }
+                    }
+                    else if (element instanceof HTMLSelectElement) {
+                        element.value = value;
+                    }
                 }
             });
             this.typeInput.dispatchEvent(new Event("change"));

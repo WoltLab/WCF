@@ -1,4 +1,5 @@
 import { dboAction } from "../../Ajax";
+import DatePicker from "../../Date/Picker";
 import * as DomUtil from "../../Dom/Util";
 import { ucfirst } from "../../StringUtil";
 import UiPagination from "../Pagination";
@@ -78,7 +79,7 @@ export class UiSearchExtended {
     this.activePage = 1;
 
     this.removeSearchResults();
-    
+
     if (count > 0) {
       this.pages = pages!;
       this.showSearchResults(template!);
@@ -112,8 +113,27 @@ export class UiSearchExtended {
   private initQueryString(): void {
     const url = new URL(window.location.href);
     url.searchParams.forEach((value, key) => {
-      if (value && this.form.elements[key]) {
-        this.form.elements[key].value = value;
+      let element = this.form.elements[key] as HTMLElement;
+      if (value && element) {
+        if (element instanceof RadioNodeList) {
+          let id = "";
+          element.forEach((childElement: HTMLElement) => {
+            if (childElement.classList.contains("inputDatePicker")) {
+              id = childElement.id;
+            }
+          });
+          if (id) {
+            DatePicker.setDate(id, new Date(value));
+          }
+        } else if (element instanceof HTMLInputElement) {
+          if (element.type === "checkbox") {
+            element.checked = true;
+          } else {
+            element.value = value;
+          }
+        } else if (element instanceof HTMLSelectElement) {
+          element.value = value;
+        }
       }
     });
 
