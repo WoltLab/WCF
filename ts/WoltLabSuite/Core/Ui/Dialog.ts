@@ -25,9 +25,9 @@ import * as Environment from "../Environment";
 import * as EventHandler from "../Event/Handler";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import CloseOverlay from "./CloseOverlay";
+import { createFocusTrap } from "focus-trap";
 
 let _activeDialog: string | null = null;
-let _callbackFocus: (event: FocusEvent) => void;
 let _container: HTMLElement;
 const _dialogs = new Map<ElementId, DialogData>();
 let _dialogFullHeight = false;
@@ -38,20 +38,6 @@ const _validCallbacks = ["onBeforeClose", "onClose", "onShow"];
 
 // list of supported `input[type]` values for dialog submit
 const _validInputTypes = ["number", "password", "search", "tel", "text", "url"];
-
-const _focusableElements = [
-  'a[href]:not([tabindex^="-"]):not([inert])',
-  'area[href]:not([tabindex^="-"]):not([inert])',
-  "input:not([disabled]):not([inert])",
-  "select:not([disabled]):not([inert])",
-  "textarea:not([disabled]):not([inert])",
-  "button:not([disabled]):not([inert])",
-  'iframe:not([tabindex^="-"]):not([inert])',
-  'audio:not([tabindex^="-"]):not([inert])',
-  'video:not([tabindex^="-"]):not([inert])',
-  '[contenteditable]:not([tabindex^="-"]):not([inert])',
-  '[tabindex]:not([tabindex^="-"]):not([inert])',
-];
 
 /**
  * @exports  WoltLabSuite/Core/Ui/Dialog
@@ -482,12 +468,23 @@ const UiDialog = {
       DomUtil.show(content);
     }
 
+    const focusTrap = createFocusTrap(dialog, {
+      allowOutsideClick: true,
+      escapeDeactivates(): boolean {
+        UiDialog.close(id);
+
+        return false;
+      },
+      fallbackFocus: dialog,
+    });
+
     _dialogs.set(id, {
       backdropCloseOnClick: options.backdropCloseOnClick,
       closable: options.closable,
-      content: content,
-      dialog: dialog,
-      header: header,
+      content,
+      dialog,
+      focusTrap,
+      header,
       onBeforeClose: options.onBeforeClose!,
       onClose: options.onClose!,
       onShow: options.onShow!,
@@ -521,11 +518,6 @@ const UiDialog = {
     if (Core.stringToBool(data.dialog.getAttribute("aria-hidden"))) {
       CloseOverlay.execute();
 
-      if (_callbackFocus === null) {
-        _callbackFocus = this._maintainFocus.bind(this);
-        document.body.addEventListener("focus", _callbackFocus, { capture: true });
-      }
-
       if (data.closable && Core.stringToBool(_container.getAttribute("aria-hidden"))) {
         window.addEventListener("keyup", _keyupListener);
       }
@@ -542,7 +534,6 @@ const UiDialog = {
       // Set the focus to the first focusable child of the dialog element.
       const closeButton = data.header.querySelector(".dialogCloseButton");
       if (closeButton) closeButton.setAttribute("inert", "true");
-      this._setFocusToFirstItem(data.dialog, false);
       if (closeButton) closeButton.removeAttribute("inert");
 
       if (typeof data.onShow === "function") {
@@ -560,63 +551,8 @@ const UiDialog = {
     this.rebuild(id);
 
     DomChangeListener.trigger();
-  },
 
-  _maintainFocus(event: FocusEvent): void {
-    if (_activeDialog) {
-      const data = _dialogs.get(_activeDialog) as DialogData;
-      const target = event.target as HTMLElement;
-      if (
-        !data.dialog.contains(target) &&
-        !target.closest(".dropdownMenuContainer") &&
-        !target.closest(".datePicker")
-      ) {
-        this._setFocusToFirstItem(data.dialog, true);
-      }
-    }
-  },
-
-  _setFocusToFirstItem(dialog: HTMLElement, maintain: boolean): void {
-    let focusElement = this._getFirstFocusableChild(dialog);
-    if (focusElement !== null) {
-      if (maintain) {
-        if (focusElement.id === "username" || (focusElement as HTMLInputElement).name === "username") {
-          if (Environment.browser() === "safari" && Environment.platform() === "ios") {
-            // iOS Safari's username/password autofill breaks if the input field is focused
-            focusElement = null;
-          }
-        }
-      }
-
-      if (focusElement) {
-        // Setting the focus to a select element in iOS is pretty strange, because
-        // it focuses it, but also displays the keyboard for a fraction of a second,
-        // causing it to pop out from below and immediately vanish.
-        //
-        // iOS will only show the keyboard if an input element is focused *and* the
-        // focus is an immediate result of a user interaction. This method must be
-        // assumed to be called from within a click event, but we want to set the
-        // focus without triggering the keyboard.
-        //
-        // We can break the condition by wrapping it in a setTimeout() call,
-        // effectively tricking iOS into focusing the element without showing the
-        // keyboard.
-        setTimeout(() => {
-          focusElement!.focus();
-        }, 1);
-      }
-    }
-  },
-
-  _getFirstFocusableChild(element: HTMLElement): HTMLElement | null {
-    const nodeList = element.querySelectorAll<HTMLElement>(_focusableElements.join(","));
-    for (let i = 0, length = nodeList.length; i < length; i++) {
-      if (nodeList[i].offsetWidth && nodeList[i].offsetHeight && nodeList[i].getClientRects().length) {
-        return nodeList[i];
-      }
-    }
-
-    return null;
+    data.focusTrap.activate();
   },
 
   /**
@@ -818,6 +754,8 @@ const UiDialog = {
     if (typeof data.onClose === "function") {
       data.onClose(id);
     }
+
+    data.focusTrap.deactivate();
 
     // get next active dialog
     _activeDialog = null;
