@@ -54,7 +54,8 @@
 		<!--
 tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_5.5_ensureInnoDbSearch.php \
-	acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php
+	acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php \
+	acp/update_com.woltlab.wcf_5.5_styleVariables.php
 		-->
 		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
 
@@ -63,6 +64,9 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 
 		<!-- Clean up the file log. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php</instruction>
+
+		<!-- Insert the new style variables early to prevent style rebuilds bricking the system. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_styleVariables.php</instruction>
 
 		<!-- Deploy new application code. -->
 		<instruction type="file" />

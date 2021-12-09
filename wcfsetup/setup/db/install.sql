@@ -2500,7 +2500,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextSha
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowLight', 'rgba(255, 255, 255, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipBackground', 'rgba(0, 0, 0, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipText', 'rgba(255, 255, 255, 1)');
-
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBackground', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBackgroundActive', 'rgba(239, 239, 239, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuText', 'rgba(58, 58, 61, 1)');
