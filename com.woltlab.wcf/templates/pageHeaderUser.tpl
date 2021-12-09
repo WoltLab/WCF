@@ -78,7 +78,10 @@
 						{/foreach}
 					</div>
 					<div class="userMenuFooter">
-						<a href="{link controller='Logout'}t={csrfToken type=url}{/link}" class="userMenuFooterLink">{lang}wcf.user.logout{/lang}</a>
+						<form method="post" action="{link controller='Logout'}{/link}">
+							<a href="#" class="userMenuFooterLink" role="button">{lang}wcf.user.logout{/lang}</a>
+							{csrfToken}
+						</form>
 					</div>
 				</div>
 				<script data-relocate="true">

@@ -66,6 +66,11 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
                 },
                 fallbackFocus: element,
             });
+            const logoutLink = element.querySelector(".userMenuFooterLink");
+            logoutLink.addEventListener("click", (event) => {
+                event.preventDefault();
+                logoutLink.closest("form").submit();
+            });
             isInitialized = true;
         }
     }
