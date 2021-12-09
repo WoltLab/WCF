@@ -73,12 +73,12 @@ class SearchForm extends AbstractCaptchaForm
     /**
      * @inheritDoc
      */
-    public $sortField = SEARCH_DEFAULT_SORT_FIELD;
+    public $sortField = '';
 
     /**
      * @inheritDoc
      */
-    public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
+    public $sortOrder = '';
 
     /**
      * user id

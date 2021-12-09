@@ -86,8 +86,6 @@ final class SearchResultHandler
     private function cacheMessageData(): void
     {
         $types = [];
-
-        // group object id by object type
         for ($i = $this->startIndex; $i < $this->endIndex; $i++) {
             $type = $this->searchData['results'][$i]['objectType'];
             $objectID = $this->searchData['results'][$i]['objectID'];
@@ -134,17 +132,17 @@ final class SearchResultHandler
 
     public function getTemplateName(): array
     {
-        /*if (count($this->searchData['objectTypeNames']) === 1) {
+        if (count($this->searchData['objectTypeNames']) === 1) {
             $objectType = SearchEngine::getInstance()->getObjectType($this->searchData['objectTypeNames'][0]);
-            if ($objectType instanceof XXX) {
-                if (($templateName = $objectType->getResultListTemplateName()) !== null) {
+            if ($objectType instanceof ISearchProvider) {
+                if (($templateName = $objectType->getResultListTemplateName())) {
                     return [
-                        'templateName' => $templateName['templateName'],
-                        'application' => $templateName['application'],
+                        'templateName' => $templateName,
+                        'application' => $objectType->getApplication(),
                     ];
                 }
             }
-        }*/
+        }
 
         return $this->getLegacyTemplateName();
     }

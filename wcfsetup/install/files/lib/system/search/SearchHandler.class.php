@@ -146,7 +146,7 @@ final class SearchHandler
     private function buildTypeBasedConditionBuilders(): void
     {
         $form = $this->getSearchFormEmulation();
-        
+
         foreach ($this->objectTypeNames as $key => $objectTypeName) {
             $objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
             if ($objectType === null) {
@@ -158,8 +158,21 @@ final class SearchHandler
                     throw new PermissionDeniedException();
                 }
 
-                if (($conditionBuilder = $objectType->getConditions($form)) !== null) {
-                    $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
+                if ($objectType instanceof ISearchProvider) {
+                    if (($conditionBuilder = $objectType->getConditionBuilder((\count($this->objectTypeNames) === 1 ? $this->parameters : []))) !== null) {
+                        $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
+                    }
+
+                    if (
+                        \count($this->objectTypeNames) === 1
+                        && ($newSortField = $objectType->getCustomSortField($this->parameters['sortField']))
+                    ) {
+                        $this->parameters['sortField'] = $newSortField;
+                    }
+                } else {
+                    if (($conditionBuilder = $objectType->getConditions($form)) !== null) {
+                        $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
+                    }
                 }
             } catch (PermissionDeniedException $e) {
                 unset($this->objectTypeNames[$key]);
@@ -176,12 +189,18 @@ final class SearchHandler
         foreach ($this->parameters as $key => $value) {
             $_POST[$key] = $value;
         }
-        
+
         $form = new SearchForm();
         $form->readFormParameters();
         $form->userIDs = $this->getUserIDs();
         if (count($form->selectedObjectTypes) === 1) {
             $this->objectTypeNames = $form->selectedObjectTypes;
+        }
+        if ($form->sortField) {
+            $this->parameters['sortField'] = $form->sortField;
+        }
+        if ($form->sortOrder) {
+            $this->parameters['sortOrder'] = $form->sortOrder;
         }
 
         return $form;
@@ -230,6 +249,7 @@ final class SearchHandler
             $this->typeBasedConditionBuilders,
             $this->parameters['sortField'],
             $this->parameters['sortOrder'],
+            $this->getAdditionalData(),
         ]));
     }
 
@@ -273,18 +293,10 @@ final class SearchHandler
 
     private function saveSearch(): Search
     {
-        $additionalData = [];
-        foreach ($this->objectTypeNames as $objectTypeName) {
-            $objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
-            if (($data = $objectType->getAdditionalData()) !== null) {
-                $additionalData[$objectTypeName] = $data;
-            }
-        }
-
         $this->searchData = [
             'results' => $this->results,
             'query' => $this->parameters['q'] ?? '',
-            'additionalData' => $additionalData,
+            'additionalData' => $this->getAdditionalData(),
             'sortField' => $this->parameters['sortField'] ?? '',
             'sortOrder' => $this->parameters['sortOrder'] ?? '',
             'nameExactly' => $this->parameters['nameExactly'] ?? '',
@@ -307,5 +319,18 @@ final class SearchHandler
         ]);
         $resultValues = $this->objectAction->executeAction();
         return $resultValues['returnValues'];
+    }
+
+    private function getAdditionalData(): array
+    {
+        $additionalData = [];
+        foreach ($this->objectTypeNames as $objectTypeName) {
+            $objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
+            if (($data = $objectType->getAdditionalData()) !== null) {
+                $additionalData[$objectTypeName] = $data;
+            }
+        }
+
+        return $additionalData;
     }
 }
