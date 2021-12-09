@@ -1,34 +1,5 @@
 {include file='header' __disableAds=true}
 
-<style>
-	.searchBar {
-		display: grid;
-		grid-template-columns: 60% 20% auto;
-		column-gap: 20px;
-	}
-
-	.searchShowMoreFiltersButton {
-		cursor: pointer;
-		user-select: none;
-	}
-
-	.searchFiltersContainer {
-		margin-top: 20px;
-	}
-
-	.searchFilters {
-	    margin-top: 20px;
-	}
-
-	.searchFilters {
-		columns: 2;
-	}
-
-	.searchFilters > :is(div, dl) {
-    	break-inside: avoid-column;
-	}
-</style>
-
 <form id="extendedSearchForm" method="post" action="{link controller='Search'}{if $extended}extended=1{/if}{/link}">
 	<div class="section">
 		<div class="searchBar">
@@ -101,6 +72,8 @@
 					</div>
 				{/if}
 			{/foreach}
+
+			<button class="searchButton button buttonPrimary">{lang}wcf.global.search{/lang}</button>
 		</details>
 	</div>
 </form>
