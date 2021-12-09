@@ -321,10 +321,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             return coordinates;
         }
         initCopyQuote(supportDirectInsert) {
-            const copyQuote = document.getElementById("quoteManagerCopy");
-            copyQuote === null || copyQuote === void 0 ? void 0 : copyQuote.remove();
-            this.copyQuote.id = "quoteManagerCopy";
-            this.copyQuote.classList.add("balloonTooltip", "interactive");
+            this.copyQuote.classList.add("balloonTooltip", "interactive", "quoteManagerCopy");
             const buttonSaveQuote = document.createElement("span");
             buttonSaveQuote.classList.add("jsQuoteManagerStore");
             buttonSaveQuote.textContent = Language.get("wcf.message.quote.quoteSelected");

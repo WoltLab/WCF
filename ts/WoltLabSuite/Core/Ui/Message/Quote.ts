@@ -438,11 +438,7 @@ export class UiMessageQuote implements AjaxCallbackObject {
   }
 
   private initCopyQuote(supportDirectInsert: boolean): void {
-    const copyQuote = document.getElementById("quoteManagerCopy");
-    copyQuote?.remove();
-
-    this.copyQuote.id = "quoteManagerCopy";
-    this.copyQuote.classList.add("balloonTooltip", "interactive");
+    this.copyQuote.classList.add("balloonTooltip", "interactive", "quoteManagerCopy");
 
     const buttonSaveQuote = document.createElement("span");
     buttonSaveQuote.classList.add("jsQuoteManagerStore");
