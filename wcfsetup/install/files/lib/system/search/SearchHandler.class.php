@@ -12,6 +12,15 @@ use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
+/**
+ * Performs full-text search.
+ *
+ * @author  Marcel Werk
+ * @copyright   2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\System\Search
+ * @since 5.5
+ */
 final class SearchHandler
 {
     /**
@@ -182,6 +191,7 @@ final class SearchHandler
     }
 
     /**
+     * Will be removed with 6.0 once all search providers have switched to ISearchProvider.
      * @deprecated 5.5
      */
     private function getSearchFormEmulation(): SearchForm

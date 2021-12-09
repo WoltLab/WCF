@@ -9,6 +9,15 @@ use wcf\page\SearchResultPage;
 use wcf\system\exception\ImplementationException;
 use wcf\system\search\SearchEngine;
 
+/**
+ * Provides the results of a full-text search.
+ *
+ * @author  Marcel Werk
+ * @copyright   2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\System\Search
+ * @since 5.5
+ */
 final class SearchResultHandler
 {
     /**
@@ -148,6 +157,7 @@ final class SearchResultHandler
     }
 
     /**
+     * Will be removed with 6.0 once all search providers have switched to ISearchProvider.
      * @deprecated 5.5
      */
     private function getLegacyTemplateName(): array
