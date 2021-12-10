@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Page
  * @since 5.5
  */
-class SearchPage extends AbstractPage
+final class SearchPage extends AbstractPage
 {
     /**
      * @var bool

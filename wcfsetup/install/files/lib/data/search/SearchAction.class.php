@@ -34,6 +34,9 @@ class SearchAction extends AbstractDatabaseObjectAction
      */
     protected $allowGuestAccess = ['search'];
 
+    /**
+     * @since 5.5
+     */
     public function validateSearch(): void
     {
         $this->readString('q', true);
@@ -60,11 +63,14 @@ class SearchAction extends AbstractDatabaseObjectAction
             $this->parameters['sortField'] = SEARCH_DEFAULT_SORT_FIELD;
         }
 
-        if ($this->parameters['sortOrder'] !== 'ASC' && $this->parameters['sortOrder'] !== 'DESC') {
+        if (\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
             $this->parameters['sortOrder'] = SEARCH_DEFAULT_SORT_ORDER;
         }
     }
 
+    /**
+     * @since 5.5
+     */
     public function search(): array
     {
         $handler = new SearchHandler($this->parameters);
@@ -101,6 +107,9 @@ class SearchAction extends AbstractDatabaseObjectAction
         ];
     }
 
+    /**
+     * @since 5.5
+     */
     public function validateGetSearchResults(): void
     {
         $this->readInteger('searchID');
@@ -115,6 +124,9 @@ class SearchAction extends AbstractDatabaseObjectAction
         }
     }
 
+    /**
+     * @since 5.5
+     */
     public function getSearchResults(): array
     {
         $search = new Search($this->parameters['searchID']);

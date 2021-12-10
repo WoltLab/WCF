@@ -1,3 +1,13 @@
+/**
+ * Provides the program logic for the extended search form.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Search/Extended
+ * @woltlabExcludeBundle all
+ */
+
 import { dboAction } from "../../Ajax";
 import DatePicker from "../../Date/Picker";
 import * as DomUtil from "../../Dom/Util";
@@ -68,12 +78,12 @@ export class UiSearchExtended {
 
     this.updateQueryString();
 
-    if (this.lastSearchRequest) {
-      this.lastSearchRequest.abort();
-    }
+    this.lastSearchRequest?.abort();
+
     const request = dboAction("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
     this.lastSearchRequest = request.getAbortController();
     const { count, searchID, title, pages, template } = (await request.dispatch()) as ResponseSearch;
+
     document.querySelector(".contentTitle")!.textContent = title;
     this.searchID = searchID;
     this.activePage = 1;
@@ -159,9 +169,7 @@ export class UiSearchExtended {
   }
 
   private async changePage(pageNo: number): Promise<void> {
-    if (this.lastSearchResultRequest) {
-      this.lastSearchResultRequest.abort();
-    }
+    this.lastSearchResultRequest?.abort();
 
     const request = dboAction("getSearchResults", "wcf\\data\\search\\SearchAction").payload({
       searchID: this.searchID,

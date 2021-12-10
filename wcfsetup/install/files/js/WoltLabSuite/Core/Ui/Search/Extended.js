@@ -1,3 +1,12 @@
+/**
+ * Provides the program logic for the extended search form.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Search/Extended
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Pagination_1, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -40,13 +49,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             });
         }
         async search() {
+            var _a;
             if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
                 return;
             }
             this.updateQueryString();
-            if (this.lastSearchRequest) {
-                this.lastSearchRequest.abort();
-            }
+            (_a = this.lastSearchRequest) === null || _a === void 0 ? void 0 : _a.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
             const { count, searchID, title, pages, template } = (await request.dispatch());
@@ -125,9 +133,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             });
         }
         async changePage(pageNo) {
-            if (this.lastSearchResultRequest) {
-                this.lastSearchResultRequest.abort();
-            }
+            var _a;
+            (_a = this.lastSearchResultRequest) === null || _a === void 0 ? void 0 : _a.abort();
             const request = (0, Ajax_1.dboAction)("getSearchResults", "wcf\\data\\search\\SearchAction").payload({
                 searchID: this.searchID,
                 pageNo,
