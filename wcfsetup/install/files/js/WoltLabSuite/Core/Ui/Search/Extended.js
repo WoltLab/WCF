@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         initEventListener() {
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
-                this.search();
+                void this.search();
             });
             this.typeInput.addEventListener("change", () => this.changeType());
         }
@@ -81,7 +81,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         initQueryString() {
             const url = new URL(window.location.href);
             url.searchParams.forEach((value, key) => {
-                let element = this.form.elements[key];
+                const element = this.form.elements[key];
                 if (value && element) {
                     if (element instanceof RadioNodeList) {
                         let id = "";
@@ -108,7 +108,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 }
             });
             this.typeInput.dispatchEvent(new Event("change"));
-            this.search();
+            void this.search();
         }
         initPagination(position) {
             const wrapperDiv = document.createElement("div");
@@ -120,7 +120,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 activePage: this.activePage,
                 maxPage: this.pages,
                 callbackSwitch: (pageNo) => {
-                    this.changePage(pageNo);
+                    void this.changePage(pageNo);
                 },
             });
         }

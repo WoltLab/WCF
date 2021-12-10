@@ -42,7 +42,7 @@ export class UiSearchExtended {
   private initEventListener(): void {
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.search();
+      void this.search();
     });
     this.typeInput.addEventListener("change", () => this.changeType());
   }
@@ -113,7 +113,7 @@ export class UiSearchExtended {
   private initQueryString(): void {
     const url = new URL(window.location.href);
     url.searchParams.forEach((value, key) => {
-      let element = this.form.elements[key] as HTMLElement;
+      const element = this.form.elements[key] as HTMLElement;
       if (value && element) {
         if (element instanceof RadioNodeList) {
           let id = "";
@@ -138,7 +138,7 @@ export class UiSearchExtended {
     });
 
     this.typeInput.dispatchEvent(new Event("change"));
-    this.search();
+    void this.search();
   }
 
   private initPagination(position: "top" | "bottom"): void {
@@ -153,7 +153,7 @@ export class UiSearchExtended {
       maxPage: this.pages,
 
       callbackSwitch: (pageNo) => {
-        this.changePage(pageNo);
+        void this.changePage(pageNo);
       },
     });
   }
@@ -185,7 +185,7 @@ export class UiSearchExtended {
       this.initPagination("top");
     }
 
-    const fragment = DomUtil.createFragmentFromHtml(template!);
+    const fragment = DomUtil.createFragmentFromHtml(template);
     this.form.parentElement!.appendChild(fragment);
 
     if (this.pages > 1) {

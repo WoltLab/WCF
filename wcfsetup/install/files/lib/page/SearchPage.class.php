@@ -29,7 +29,9 @@ class SearchPage extends AbstractPage
     {
         parent::readParameters();
 
-        if (!empty($_REQUEST['extended'])) $this->extended = true;
+        if (!empty($_REQUEST['extended'])) {
+            $this->extended = true;
+        }
     }
 
     /**
@@ -42,8 +44,7 @@ class SearchPage extends AbstractPage
         foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $objectType) {
             if ($objectType instanceof ISearchProvider) {
                 $objectType->assignVariables();
-            }
-            else {
+            } else {
                 $objectType->show();
             }
         }

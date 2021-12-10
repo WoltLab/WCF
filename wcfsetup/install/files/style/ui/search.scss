@@ -8,7 +8,7 @@
 /* search form */
 .searchBar {
 	display: grid;
-	
+
 	@include screen-md-up {
 		column-gap: 20px;
 		grid-template-columns: 60% 20% auto;
@@ -29,7 +29,7 @@
 }
 
 .searchFilters {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 @include screen-md-up {
