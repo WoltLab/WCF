@@ -4569,7 +4569,6 @@ Attachments:
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
 		<item name="wcf.user.language.description"><![CDATA[User interface language]]></item>
 		<item name="wcf.user.logout"><![CDATA[Logout]]></item>
-		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to log out?]]></item>
 		<item name="wcf.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.registrationIpAddress"><![CDATA[Registration IP Address]]></item>
@@ -5583,5 +5582,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 	<item name="wcf.acp.option.enable_censorship"/>
 	<item name="wcf.acp.option.enable_censorship.description"/>
+	<item name="wcf.user.logout.sure"/>
 </delete>
 </language>

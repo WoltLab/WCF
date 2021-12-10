@@ -4567,7 +4567,6 @@ Dateianhänge:
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>
 		<item name="wcf.user.logout"><![CDATA[Abmelden]]></item>
-		<item name="wcf.user.logout.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dich{else}Wollen Sie sich{/if} wirklich abmelden?]]></item>
 		<item name="wcf.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.registrationIpAddress"><![CDATA[Registrierungs-IP-Adresse]]></item>
@@ -5581,5 +5580,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 	<item name="wcf.acp.option.enable_censorship"/>
 	<item name="wcf.acp.option.enable_censorship.description"/>
+	<item name="wcf.user.logout.sure"/>
 </delete>
 </language>

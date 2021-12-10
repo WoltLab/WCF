@@ -12,7 +12,7 @@
 						{event name='userMenuItems'}
 						
 						<li class="dropdownDivider"></li>
-						<li><a href="{link controller='Logout'}t={csrfToken type=url}{/link}" onclick="WCF.System.Confirmation.show('{jslang}wcf.user.logout.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
+						<li><a href="{link controller='Logout'}t={csrfToken type=url}{/link}">{lang}wcf.user.logout{/lang}</a></li>
 					</ul>
 				</li>
 				
