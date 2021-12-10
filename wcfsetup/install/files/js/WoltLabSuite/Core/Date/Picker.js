@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Date/Picker
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1) {
+define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "focus-trap"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, focus_trap_1) {
     "use strict";
     Core = (0, tslib_1.__importStar)(Core);
     DateUtil = (0, tslib_1.__importStar)(DateUtil);
@@ -19,7 +19,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
     let _didInit = false;
     let _firstDayOfWeek = 0;
-    let _wasInsidePicker = false;
+    let _focusTrap;
     const _data = new Map();
     let _input = null;
     let _maxDate;
@@ -145,7 +145,13 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         _dateMinute.innerHTML = tmp;
         _dateTime.appendChild(_dateMinute);
         document.body.appendChild(_datePicker);
-        document.body.addEventListener("focus", maintainFocus, { capture: true });
+        _focusTrap = (0, focus_trap_1.createFocusTrap)(_datePicker, {
+            allowOutsideClick: true,
+            escapeDeactivates() {
+                close();
+                return false;
+            },
+        });
     }
     /**
      * Initializes the minimum/maximum date range.
@@ -255,7 +261,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
         UiAlignment.set(_datePicker, _input);
         _input.nextElementSibling.setAttribute("aria-expanded", "true");
-        _wasInsidePicker = false;
+        _focusTrap.activate();
     }
     /**
      * Closes the date picker.
@@ -273,6 +279,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         const sibling = _input.nextElementSibling;
         sibling.setAttribute("aria-expanded", "false");
         _input = null;
+        _focusTrap.deactivate();
     }
     /**
      * Updates the position of the date picker in a dialog if the dialog content
@@ -498,24 +505,6 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             throw new Error("Expected a valid date picker input element or id.");
         }
         return element;
-    }
-    function maintainFocus(event) {
-        if (_datePicker === null || !_datePicker.classList.contains("active")) {
-            return;
-        }
-        if (!_datePicker.contains(event.target)) {
-            if (_wasInsidePicker) {
-                const sibling = _input.nextElementSibling;
-                sibling.focus();
-                _wasInsidePicker = false;
-            }
-            else {
-                _datePicker.querySelector(".previous").focus();
-            }
-        }
-        else {
-            _wasInsidePicker = true;
-        }
     }
     const DatePicker = {
         /**

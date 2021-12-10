@@ -1,4 +1,15 @@
+/**
+ * Interfaces and data types for dialogs.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Dialog/Data
+ * @woltlabExcludeBundle all
+ */
+
 import { RequestPayload, ResponseData } from "../../Ajax/Data";
+import { FocusTrap } from "focus-trap";
 
 export type DialogHtml = DocumentFragment | string | null;
 
@@ -48,6 +59,7 @@ export interface DialogData {
   closable: boolean;
   content: HTMLElement;
   dialog: HTMLElement;
+  focusTrap: FocusTrap;
   header: HTMLElement;
 
   onBeforeClose: CallbackOnBeforeClose;

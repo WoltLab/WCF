@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "./CountButtons"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, CountButtons_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "./CountButtons", "focus-trap"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, CountButtons_1, focus_trap_1) {
     "use strict";
     Ajax = (0, tslib_1.__importStar)(Ajax);
     Core = (0, tslib_1.__importStar)(Core);
@@ -25,6 +25,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         constructor(objectType, opts) {
             this.activeButton = undefined;
             this._cache = new Map();
+            this.focusTrap = undefined;
             this._containers = new Map();
             this._objects = new Map();
             this._popoverCurrentObjectId = 0;
@@ -49,7 +50,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             this.countButtons = new CountButtons_1.default(this._objectType, this._options);
             Listener_1.default.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
-            this.callbackFocus = (event) => this.maintainFocus(event);
         }
         /**
          * Initializes all applicable react buttons with the given selector.
@@ -238,8 +238,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             this.activeButton = element;
             if (availableReactions.length > 1) {
                 this.activeButton.setAttribute("aria-expanded", "true");
-                document.body.addEventListener("focus", this.callbackFocus, { capture: true });
             }
+            this.getFocusTrap().activate();
         }
         /**
          * Returns the react popover element.
@@ -286,17 +286,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             return this._popover;
         }
         keydown(event) {
-            if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+            if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 const activeButton = this.activeButton;
-                if (event.key === "Escape") {
-                    this._closePopover();
-                }
-                else {
-                    const reactionTypeItem = event.currentTarget;
-                    const reactionTypeId = ~~reactionTypeItem.dataset.reactionTypeId;
-                    this._react(reactionTypeId);
-                }
+                const reactionTypeItem = event.currentTarget;
+                const reactionTypeId = ~~reactionTypeItem.dataset.reactionTypeId;
+                this._react(reactionTypeId);
                 activeButton.focus();
             }
         }
@@ -340,10 +335,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 }
                 if (availableReactions.length > 1) {
                     this.activeButton.setAttribute("aria-expanded", "false");
-                    document.body.removeEventListener("focus", this.callbackFocus, { capture: true });
                 }
                 this.activeButton = undefined;
                 this._popoverCurrentObjectId = 0;
+                this.getFocusTrap().deactivate();
             }
         }
         /**
@@ -376,25 +371,17 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 },
             };
         }
-        maintainFocus(event) {
-            // Ignore a focus shift that was not the result of a keyboard interaction.
-            if (document.activeElement && !document.activeElement.classList.contains("focus-visible")) {
-                return;
+        getFocusTrap() {
+            if (this.focusTrap === undefined) {
+                this.focusTrap = (0, focus_trap_1.createFocusTrap)(this._popover, {
+                    allowOutsideClick: true,
+                    escapeDeactivates: () => {
+                        this._closePopover();
+                        return false;
+                    },
+                });
             }
-            const popover = this._getPopover();
-            if (!popover.contains(event.target)) {
-                if (this.wasInsideReactions) {
-                    this.activeButton.focus();
-                    this.wasInsideReactions = false;
-                }
-                else {
-                    const firstReaction = popover.querySelector(".reactionTypeButton");
-                    firstReaction.focus();
-                }
-            }
-            else {
-                this.wasInsideReactions = true;
-            }
+            return this.focusTrap;
         }
     }
     Core.enableLegacyInheritance(UiReactionHandler);
