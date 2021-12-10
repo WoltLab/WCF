@@ -78,6 +78,7 @@ final class SearchHandler
         }
 
         $this->saveKeywordSuggestion();
+
         return $this->saveSearch();
     }
 
@@ -105,7 +106,7 @@ final class SearchHandler
     private function initObjectTypeNames(): void
     {
         if (!empty($this->parameters['type'])) {
-            $this->objectTypeNames[] =  $this->parameters['type'];
+            $this->objectTypeNames[] = $this->parameters['type'];
         } else {
             $this->objectTypeNames = \array_keys(SearchEngine::getInstance()->getAvailableObjectTypes());
         }
@@ -203,7 +204,7 @@ final class SearchHandler
         $form = new SearchForm();
         $form->readFormParameters();
         $form->userIDs = $this->getUserIDs();
-        if (count($form->selectedObjectTypes) === 1) {
+        if (\count($form->selectedObjectTypes) === 1) {
             $this->objectTypeNames = $form->selectedObjectTypes;
         }
         if ($form->sortField) {
@@ -298,7 +299,7 @@ final class SearchHandler
             $this->parameters['sortField'] . ' ' . $this->parameters['sortOrder']
         );
 
-        return (!empty($this->results));
+        return !empty($this->results);
     }
 
     private function saveSearch(): Search
@@ -313,7 +314,7 @@ final class SearchHandler
             'subjectOnly' => $this->parameters['subjectOnly'] ?? '',
             'startDate' => $this->parameters['startDate'] ?? '',
             'endDate' => $this->parameters['endDate'] ?? '',
-            'username' =>  $this->parameters['username'] ?? '',
+            'username' => $this->parameters['username'] ?? '',
             'userID' => $this->parameters['userID'] ?? '',
             'objectTypeNames' => $this->objectTypeNames,
         ];
@@ -328,6 +329,7 @@ final class SearchHandler
             ],
         ]);
         $resultValues = $this->objectAction->executeAction();
+
         return $resultValues['returnValues'];
     }
 
