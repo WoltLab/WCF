@@ -95,7 +95,7 @@ class SearchAction extends AbstractDatabaseObjectAction
                 'count' => $resultHandler->countSearchResults(),
                 'query' => $resultHandler->getQuery(),
             ]),
-            'pages' => ceil($resultHandler->countSearchResults() / SEARCH_RESULTS_PER_PAGE),
+            'pages' => \ceil($resultHandler->countSearchResults() / SEARCH_RESULTS_PER_PAGE),
             'searchID' => $search->searchID,
             'template' => WCF::getTPL()->fetch($templateName['templateName'], $templateName['application']),
         ];

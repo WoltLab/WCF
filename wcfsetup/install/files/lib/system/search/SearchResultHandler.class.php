@@ -7,7 +7,6 @@ use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
 use wcf\page\SearchResultPage;
 use wcf\system\exception\ImplementationException;
-use wcf\system\search\SearchEngine;
 
 /**
  * Provides the results of a full-text search.
@@ -141,7 +140,7 @@ final class SearchResultHandler
 
     public function getTemplateName(): array
     {
-        if (count($this->searchData['objectTypeNames']) === 1) {
+        if (\count($this->searchData['objectTypeNames']) === 1) {
             $objectType = SearchEngine::getInstance()->getObjectType($this->searchData['objectTypeNames'][0]);
             if ($objectType instanceof ISearchProvider) {
                 if (($templateName = $objectType->getResultListTemplateName())) {
