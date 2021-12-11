@@ -88,10 +88,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     function submit(form, input) {
         const url = new URL(form.action);
         url.search += url.search !== "" ? "&" : "?";
-        url.search += "q=" + encodeURIComponent(input.value.trim());
-        parameters.forEach((value, key) => {
-            url.search += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(value);
-        });
+        url.search += new URLSearchParams([["q", input.value.trim()], ...Array.from(parameters)]).toString();
         window.location.href = url.toString();
     }
 });

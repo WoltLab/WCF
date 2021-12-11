@@ -108,11 +108,6 @@ export function init(objectType: string): void {
 function submit(form: HTMLFormElement, input: HTMLInputElement): void {
   const url = new URL(form.action);
   url.search += url.search !== "" ? "&" : "?";
-  url.search += "q=" + encodeURIComponent(input.value.trim());
-
-  parameters.forEach((value, key) => {
-    url.search += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(value);
-  });
-
+  url.search += new URLSearchParams([["q", input.value.trim()], ...Array.from(parameters)]).toString();
   window.location.href = url.toString();
 }

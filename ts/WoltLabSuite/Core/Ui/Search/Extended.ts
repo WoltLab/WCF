@@ -98,13 +98,15 @@ export class UiSearchExtended {
 
   private updateQueryString(): void {
     const url = new URL(this.form.action);
+    url.search += url.search !== "" ? "&" : "?";
 
+    const parameters: string[][] = [];
     new FormData(this.form).forEach((value, key) => {
-      if (value.toString()) {
-        url.search += url.search !== "" ? "&" : "?";
-        url.search += encodeURIComponent(key) + "=" + encodeURIComponent(value.toString());
+      if (value.toString().trim()) {
+        parameters.push([key, value.toString().trim()]);
       }
     });
+    url.search += new URLSearchParams(parameters);
 
     window.history.replaceState({}, document.title, url.toString());
   }
