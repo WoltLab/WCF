@@ -7,6 +7,7 @@ use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\search\AbstractSearchEngine;
 use wcf\system\search\exception\SearchFailed;
+use wcf\system\search\ISearchProvider;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -59,7 +60,12 @@ class MysqlSearchEngine extends AbstractSearchEngine
             }
             $additionalConditionsConditionBuilder = ($additionalConditions[$objectTypeName] ?? null);
 
-            $query = $objectType->getOuterSQLQuery($q, $searchIndexCondition, $additionalConditionsConditionBuilder);
+            if ($objectType instanceof ISearchProvider) {
+                $query = $objectType->getOuterSqlQuery($additionalConditionsConditionBuilder);    
+            }
+            else {
+                $query = $objectType->getOuterSQLQuery($q, $searchIndexCondition, $additionalConditionsConditionBuilder);
+            }
             if (empty($query)) {
                 $query = "
                     SELECT      " . $objectType->getIDFieldName() . " AS objectID,
