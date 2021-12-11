@@ -7,91 +7,112 @@
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu">
-				<a class="jsTooltip" href="{$__wcf->user->getLink()}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
-				<div class="interactiveDropdown interactiveDropdownStatic interactiveDropdownUserMenu">
-					<div class="interactiveDropdownHeader">
-						<span class="interactiveDropdownTitle">{lang}wcf.user.controlPanel{/lang}</span>
-						
-						{hascontent}
-							<ul class="interactiveDropdownLinks">
-								{content}
-									{event name='userMenuLinks'}
-								{/content}
-							</ul>
-						{/hascontent}
+				<a
+					class="jsTooltip"
+					href="{$__wcf->user->getLink()}"
+					title="{lang}wcf.user.controlPanel{/lang}"
+					role="button"
+					tabindex="0"
+					aria-haspopup="true"
+					aria-expanded="false"
+				>
+					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span>
+				</a>
+				<div class="userMenu userMenuControlPanel" data-origin="userMenu" tabindex="-1" hidden>
+					<div class="userMenuHeader">
+						<div class="userMenuTitle">{lang}wcf.user.controlPanel{/lang}</div>
 					</div>
-					<div class="interactiveDropdownItemsContainer">
-						<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
-							<li>
-								<div class="box48">
-									{user object=$__wcf->getUserProfileHandler()->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
-									
-									<div class="containerHeadline">
-										<h3>
-											{user object=$__wcf->getUserProfileHandler()->getUserProfile()}
-											{if MODULE_USER_RANK}
-												{if $__wcf->getUserProfileHandler()->getUserTitle()}
-													<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
-												{/if}
-												{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
-													<span class="userRankImage">{@$__wcf->getUserProfileHandler()->getRank()->getImage()}</span>
-												{/if}
-											{/if}
-										</h3>
-										
-										<ul class="inlineList dotSeparated">
-											<li><a href="{$__wcf->user->getLink()}">{lang}wcf.user.myProfile{/lang}</a></li>
-											{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}" class="jsUserPanelEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
-											{if $__wcf->session->getPermission('admin.general.canUseAcp')}<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>{/if}
-										</ul>
-									</div>
-								</div>
-							</li>
-							
-							{event name='userMenuItemsBefore'}
-							
-							{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-								<li class="interactiveDropdownUserMenuItem">
-									<div class="box48">
-										<div><span class="icon icon48 {@$menuCategory->getIconClassName()}"></span></div>
-										
-										<div class="containerHeadline">
-											<h3>{$menuCategory->getTitle()}</h3>
-											
-											<ul class="inlineList dotSeparated">
-												{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
-													<li><a href="{$menuItem->getProcessor()->getLink()}">{@$menuItem}</a></li>
-												{/foreach}
-											</ul>
-										</div>
-									</div>
-								</li>
-							{/foreach}
-							
-							{event name='userMenuItemsAfter'}
-						</ul>
+					<div class="userMenuContent">
+						<div class="userMenuItem">
+							<div class="userMenuItemImage">
+								{@$__wcf->getUserProfileHandler()->getUserProfile()->getAvatar()->getImageTag(48)}
+							</div>
+							<div class="userMenuItemContent">
+								{* This is the unformatted username, custom styles might not work nicely here and
+								   the consistent styling is used to provide visual anchors to identify links. *}
+								<a href="{$__wcf->user->getLink()}" class="userMenuItemLink">{$__wcf->user->username}</a>
+								
+								{if MODULE_USER_RANK}
+									{if $__wcf->getUserProfileHandler()->getUserTitle()}
+										<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
+									{/if}
+									{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
+										<span class="userRankImage">{@$__wcf->getUserProfileHandler()->getRank()->getImage()}</span>
+									{/if}
+								{/if}
+							</div>
+							<div class="userMenuItemMeta">
+								{lang}wcf.user.myProfile{/lang}
+							</div>
+						</div>
 					</div>
-					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={csrfToken type=url}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{jslang}wcf.user.logout.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
+					<div class="userMenuContentDivider"></div>
+					{if $__wcf->session->getPermission('admin.general.canUseAcp')}
+					<div class="userMenuContent">
+						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
+							<div class="userMenuItemImage">
+								<span class="icon icon32 fa-wrench"></span>
+							</div>
+							<div class="userMenuItemContent">
+								<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
+							</div>
+						</div>
+					</div>
+					<div class="userMenuContentDivider"></div>
+					{/if}
+					<div class="userMenuContent">
+						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
+						<div class="userMenuItem userMenuItemNarrow" data-category="{$menuItem[category]->menuItem}">
+							<div class="userMenuItemImage">
+								<span class="icon icon32 {$menuItem[category]->getIconClassName()}"></span>
+							</div>
+							<div class="userMenuItemContent">
+								<a href="{$menuItem[link]}" class="userMenuItemLink">
+									{$menuItem[category]->getTitle()}
+								</a>
+							</div>
+							<div class="userMenuItemMeta">
+								{implode from=$menuItem[items] item=title glue=' · '}{$title}{/implode}
+							</div>
+						</div>
+						{/foreach}
+					</div>
+					<div class="userMenuFooter">
+						<form method="post" action="{link controller='Logout'}{/link}">
+							<a href="#" class="userMenuFooterLink" role="button">{lang}wcf.user.logout{/lang}</a>
+							{csrfToken}
+						</form>
+					</div>
 				</div>
 				<script data-relocate="true">
-					$(function() {
-						new WCF.User.Panel.UserMenu();
-					});
+					require(["WoltLabSuite/Core/Ui/User/Menu/ControlPanel"], ({ setup }) => setup());
 				</script>
 			</li>
 			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
-				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
-					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
+				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}" data-title="Benachrichtigungen">
+					<a
+						class="jsTooltip"
+						href="{link controller='NotificationList'}{/link}"
+						title="{lang}wcf.user.notification.notifications{/lang}"
+						role="button"
+						tabindex="0"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+						<span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
+					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-							$(function() {
-								new WCF.User.Panel.Notification({
+							require(["WoltLabSuite/Core/Ui/User/Menu/Data/Notification"], ({ setup }) => {
+								setup({
 									noItems: '{jslang}wcf.user.notification.noMoreNotifications{/jslang}',
 									settingsLink: '{link controller='NotificationSettings' encode=false}{/link}',
+									settingsTitle: '{jslang}wcf.user.notification.settings{/jslang}',
 									showAllLink: '{link controller='NotificationList' encode=false}{/link}',
-									title: '{jslang}wcf.user.notification.notifications{/jslang}'
+									showAllTitle: '{jslang}wcf.user.notification.showAll{/jslang}',
+									title: '{jslang}wcf.user.notification.notifications{/jslang}',
 								});
 							});
 						</script>
@@ -243,19 +264,28 @@
 		{if !$__hideUserMenu|isset}
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
-					<a class="jsTooltip" href="{link controller='ModerationList'}{/link}" title="{lang}wcf.moderation.moderation{/lang}">
+					<a
+						class="jsTooltip"
+						href="{link controller='ModerationList'}{/link}"
+						title="{lang}wcf.moderation.moderation{/lang}"
+						role="button"
+						tabindex="0"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
 						<span class="icon icon32 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-							$(function() {
-								new WCF.User.Panel.Moderation({
+							require(["WoltLabSuite/Core/Ui/User/Menu/Data/ModerationQueue"], ({ setup }) => {
+								setup({
 									deletedContent: '{jslang}wcf.moderation.showDeletedContent{/jslang}',
 									deletedContentLink: '{link controller='DeletedContentList' encode=false}{/link}',
 									noItems: '{jslang}wcf.moderation.noMoreItems{/jslang}',
 									showAllLink: '{link controller='ModerationList' encode=false}{/link}',
+									showAllTitle: '{jslang}wcf.moderation.showAll{/jslang}',
 									title: '{jslang}wcf.moderation.moderation{/jslang}'
 								});
 							});

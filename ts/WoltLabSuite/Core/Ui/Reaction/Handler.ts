@@ -18,6 +18,7 @@ import UiCloseOverlay from "../CloseOverlay";
 import * as UiScreen from "../Screen";
 import CountButtons from "./CountButtons";
 import { Reaction, ReactionStats } from "./Data";
+import { createFocusTrap, FocusTrap } from "focus-trap";
 
 interface ReactionHandlerOptions {
   // selectors
@@ -55,9 +56,9 @@ const availableReactions = Object.values(window.REACTION_TYPES);
 
 class UiReactionHandler {
   protected activeButton?: HTMLElement | undefined = undefined;
-  protected readonly callbackFocus: (event: Event) => void;
   readonly countButtons: CountButtons;
   protected readonly _cache = new Map<string, unknown>();
+  protected focusTrap?: FocusTrap = undefined;
   protected readonly _containers = new Map<string, ElementData>();
   protected readonly _options: ReactionHandlerOptions;
   protected readonly _objects = new Map<number, ElementData[]>();
@@ -65,7 +66,6 @@ class UiReactionHandler {
   protected _popoverCurrentObjectId = 0;
   protected _popover: HTMLElement | null;
   protected _popoverContent: HTMLElement | null;
-  protected wasInsideReactions: boolean;
 
   /**
    * Initializes the reaction handler.
@@ -104,8 +104,6 @@ class UiReactionHandler {
 
     DomChangeListener.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
-
-    this.callbackFocus = (event: Event) => this.maintainFocus(event);
   }
 
   /**
@@ -324,8 +322,9 @@ class UiReactionHandler {
     this.activeButton = element;
     if (availableReactions.length > 1) {
       this.activeButton.setAttribute("aria-expanded", "true");
-      document.body.addEventListener("focus", this.callbackFocus, { capture: true });
     }
+
+    this.getFocusTrap().activate();
   }
 
   /**
@@ -390,19 +389,14 @@ class UiReactionHandler {
   }
 
   protected keydown(event: KeyboardEvent): void {
-    if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
 
       const activeButton = this.activeButton!;
+      const reactionTypeItem = event.currentTarget as HTMLElement;
+      const reactionTypeId = ~~reactionTypeItem.dataset.reactionTypeId!;
 
-      if (event.key === "Escape") {
-        this._closePopover();
-      } else {
-        const reactionTypeItem = event.currentTarget as HTMLElement;
-        const reactionTypeId = ~~reactionTypeItem.dataset.reactionTypeId!;
-
-        this._react(reactionTypeId);
-      }
+      this._react(reactionTypeId);
 
       activeButton.focus();
     }
@@ -452,11 +446,12 @@ class UiReactionHandler {
 
       if (availableReactions.length > 1) {
         this.activeButton!.setAttribute("aria-expanded", "false");
-        document.body.removeEventListener("focus", this.callbackFocus, { capture: true });
       }
 
       this.activeButton = undefined;
       this._popoverCurrentObjectId = 0;
+
+      this.getFocusTrap().deactivate();
     }
   }
 
@@ -497,25 +492,19 @@ class UiReactionHandler {
     };
   }
 
-  protected maintainFocus(event: Event): void {
-    // Ignore a focus shift that was not the result of a keyboard interaction.
-    if (document.activeElement && !document.activeElement.classList.contains("focus-visible")) {
-      return;
+  private getFocusTrap(): FocusTrap {
+    if (this.focusTrap === undefined) {
+      this.focusTrap = createFocusTrap(this._popover!, {
+        allowOutsideClick: true,
+        escapeDeactivates: (): boolean => {
+          this._closePopover();
+
+          return false;
+        },
+      });
     }
 
-    const popover = this._getPopover();
-
-    if (!popover.contains(event.target as Element)) {
-      if (this.wasInsideReactions) {
-        this.activeButton!.focus();
-        this.wasInsideReactions = false;
-      } else {
-        const firstReaction = popover.querySelector(".reactionTypeButton") as HTMLElement;
-        firstReaction.focus();
-      }
-    } else {
-      this.wasInsideReactions = true;
-    }
+    return this.focusTrap;
   }
 }
 

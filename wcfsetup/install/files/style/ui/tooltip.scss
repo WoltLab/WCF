@@ -40,13 +40,9 @@
 	}
 }
 
-#quoteManagerCopy {
-	/* Prevent the tooltip from being selected on touch devices. */
+.quoteManagerCopy {
 	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
-
 	white-space: nowrap;
 	z-index: 350;
 

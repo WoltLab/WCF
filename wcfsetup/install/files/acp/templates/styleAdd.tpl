@@ -741,6 +741,40 @@
 											<li><a>Sed diam nonumy</a></li>
 										</ul>
 									</div>
+
+									<div class="spHeadline">User Menu</div>
+
+									<div class="userMenu" id="spUserMenu" data-region="wcfUserMenu">
+										<div class="userMenuHeader">
+											<div class="userMenuTitle">Lorem Ipsum</div>
+											<div class="userMenuButtons">
+												<a class="userMenuButton"><span class="icon icon24 fa-cog"></span></a>
+											</div>
+										</div>
+										<div class="userMenuContent">
+											<div class="userMenuItem" data-is-unread="true">
+												<div class="userMenuItemImage">
+													<span class="icon icon48 fa-user"></span>
+												</div>
+												<div class="userMenuItemContent">
+													<a class="userMenuItemLink">
+														Dolor Sit Amet
+													</a>
+												</div>
+												<div class="userMenuItemMeta">
+													Consetetur Sadipscing
+												</div>
+												<div class="userMenuItemUnread">
+													<a class="userMenuItemMarkAsRead">
+														<span class="icon icon24 fa-check"></span>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="userMenuFooter">
+											<a class="userMenuFooterLink">Sed diam nonumy</a>
+										</div>
+									</div>
 									
 									<div class="spHeadline">Status</div>
 									
@@ -874,6 +908,7 @@
 							<div class="spSidebarBox" data-category="apiVersion" style="display: none;">
 								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 								<p><sup class="spApiVersion">5.2</sup> <small>{lang version='5.2'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
+								<p><sup class="spApiVersion">5.5</sup> <small>{lang version='5.5'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 							</div>
 						</div>
 					</div>
@@ -959,6 +994,12 @@
 				'wcfDropdownLink': '#spDropdown li a { color: VALUE; }',
 				'wcfDropdownBackgroundActive': '#spDropdown li.active > a, #spDropdown li a:hover { background-color: VALUE; }',
 				'wcfDropdownLinkActive': '#spDropdown li.active > a, #spDropdown li a:hover { color: VALUE; }',
+				'wcfUserMenuBackground': '#spUserMenu { --background-color: VALUE; }',
+				'wcfUserMenuBackgroundActive': '#spUserMenu { --background-color-active: VALUE; }',
+				'wcfUserMenuBorder': '#spUserMenu { --border-color: VALUE; }',
+				'wcfUserMenuIndicator': '#spUserMenu { --color-indicator: VALUE; }',
+				'wcfUserMenuText': '#spUserMenu { --color: VALUE; }',
+				'wcfUserMenuTextDimmed': '#spUserMenu { --color-dimmed: VALUE; }',
 				'wcfFooterBoxBackground': '#spFooterBox { background-color: VALUE; }',
 				'wcfFooterBoxText': '#spFooterBox { color: VALUE; }',
 				'wcfFooterBoxLink': '#spFooterBox a { color: VALUE; }',
@@ -1006,7 +1047,7 @@
 				'wcfStatusErrorBorder': '#spStatusError { border-color: VALUE; }',
 				'wcfStatusErrorText': '#spStatusError { color: VALUE; }',
 				'wcfStatusErrorLink': '#spStatusError a { color: VALUE; }',
-				'wcfStatusErrorLinkActive': '#spStatusError a:hover { color: VALUE; }'
+				'wcfStatusErrorLinkActive': '#spStatusError a:hover { color: VALUE; }',
 			};
 		</script>
 		

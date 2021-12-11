@@ -22,7 +22,9 @@
     "@types/pica": "^5.1.3",
     "@types/prismjs": "^1.16.6",
     "@types/twitter-for-web": "0.0.2",
+    "focus-trap": "^6.7.1",
     "qr-creator": "^1.0.0",
+    "tabbable": "^5.2.1",
     "tslib": "^2.3.1"
   }
 }

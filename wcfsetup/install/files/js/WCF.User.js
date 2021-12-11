@@ -20,6 +20,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * @param        jQuery                triggerElement
 	 * @param        string                identifier
 	 * @param        object                options
+	 * @deprecated 5.5  Implement `WoltLabSuite/Core/Ui/User/Menu/Data/Provider` instead.
 	 */
 	WCF.User.Panel.Abstract = Class.extend({
 		/**
@@ -124,14 +125,9 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._triggerElement.dblclick($.proxy(this._dblClick, this));
 			}
 			
-			if (this._options.staticDropdown === true) {
-				this._loadData = false;
-			}
-			else {
-				var $badge = this._triggerElement.find('span.badge');
-				if ($badge.length) {
-					this._badge = $badge;
-				}
+			var $badge = this._triggerElement.find('span.badge');
+			if ($badge.length) {
+				this._badge = $badge;
 			}
 		},
 		
@@ -397,175 +393,6 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 		}
 	});
-	
-	/**
-	 * User Panel implementation for user notifications.
-	 *
-	 * @see        WCF.User.Panel.Abstract
-	 */
-	WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
-		/**
-		 * favico instance
-		 * @var        Favico
-		 */
-		_favico: null,
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract.init()
-		 */
-		init: function (options) {
-			options.enableMarkAsRead = true;
-			
-			this._super($('#userNotifications'), 'userNotifications', options);
-			
-			try {
-				require(["favico"], (Favico) => {
-					this._favico = new Favico({
-						animation: 'none',
-						type: 'circle'
-					});
-					
-					if (this._badge !== null) {
-						var $count = parseInt(this._badge.text()) || 0;
-						this._favico.badge($count);
-					}
-				});
-			}
-			catch (e) {
-				console.debug("[WCF.User.Panel.Notification] Failed to initialized Favico: " + e.message);
-			}
-			
-			WCF.System.PushNotification.addCallback('userNotificationCount', $.proxy(this.updateUserNotificationCount, this));
-			
-			require(['EventHandler'], (function (EventHandler) {
-				EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function (data) {
-					if (data.identifier === 'com.woltlab.wcf.notifications') {
-						this.toggle();
-					}
-				}).bind(this));
-			}).bind(this));
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._initDropdown()
-		 */
-		_initDropdown: function () {
-			var $dropdown = this._super();
-			
-			$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon24 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
-			
-			return $dropdown;
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._load()
-		 */
-		_load: function () {
-			this._proxy.setOption('data', {
-				actionName: 'getOutstandingNotifications',
-				className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-			});
-			this._proxy.sendRequest();
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._markAsRead()
-		 */
-		_markAsRead: function (event, objectID) {
-			this._proxy.setOption('data', {
-				actionName: 'markAsConfirmed',
-				className: 'wcf\\data\\user\\notification\\UserNotificationAction',
-				objectIDs: [objectID]
-			});
-			this._proxy.sendRequest();
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract._markAllAsRead()
-		 */
-		_markAllAsRead: function (event) {
-			this._proxy.setOption('data', {
-				actionName: 'markAllAsConfirmed',
-				className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-			});
-			this._proxy.sendRequest();
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract.resetItems()
-		 */
-		resetItems: function () {
-			this._super();
-			
-			if (this._markAllAsReadLink) {
-				this._markAllAsReadLink.remove();
-				this._markAllAsReadLink = null;
-			}
-		},
-		
-		/**
-		 * @see        WCF.User.Panel.Abstract.updateBadge()
-		 */
-		updateBadge: function (count) {
-			count = parseInt(count) || 0;
-			
-			// update data attribute
-			$('#userNotifications').attr('data-count', count);
-			
-			if (this._favico !== null) {
-				this._favico.badge(count);
-			}
-			
-			this._super(count);
-		},
-		
-		/**
-		 * Updates the badge counter and resets the dropdown's item list.
-		 *
-		 * @param        integer                count
-		 */
-		updateUserNotificationCount: function (count) {
-			if (this._dropdown !== null) {
-				this._dropdown.resetItems();
-			}
-			
-			this.updateBadge(count);
-		},
-		
-		_success: function(data) {
-			this._super(data);
-			
-			elBySelAll('.interactiveDropdownItemShadowLink', this._dropdown.getItemList()[0], (function (link) {
-				link.addEventListener('click', (function (event) {
-					if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
-						// Only close the drop-down if no key modifier was pressed.
-						return;
-					}
-					
-					this._dropdown.close();
-
-					WCF.System.Event.fireEvent('com.woltlab.wcf.UserMenuMobile', 'close');
-				}).bind(this));
-			}.bind(this)));
-		}
-	});
-	
-	/**
-	 * User Panel implementation for user menu dropdown.
-	 *
-	 * @see        WCF.User.Panel.Abstract
-	 */
-	WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
-		/**
-		 * @see        WCF.User.Panel.Abstract.init()
-		 */
-		init: function () {
-			this._super($('#userMenu'), 'userMenu', {
-				pointerOffset: '13px',
-				staticDropdown: true
-			});
-		}
-	});
 }
 else {
 	WCF.User.Panel.Abstract = Class.extend({
@@ -578,50 +405,6 @@ else {
 		_proxy: {},
 		_triggerElement: {},
 		init: function() {},
-		toggle: function() {},
-		_dblClick: function() {},
-		_initDropdown: function() {},
-		_load: function() {},
-		_success: function() {},
-		_markAsRead: function() {},
-		_markAllAsRead: function() {},
-		updateBadge: function() {},
-		resetItems: function() {}
-	});
-	
-	WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
-		_favico: {},
-		init: function() {},
-		_initDropdown: function() {},
-		_load: function() {},
-		_markAsRead: function() {},
-		_markAllAsRead: function() {},
-		resetItems: function() {},
-		updateBadge: function() {},
-		updateUserNotificationCount: function() {},
-		_badge: {},
-		_dropdown: {},
-		_identifier: "",
-		_loadData: true,
-		_markAllAsReadLink: {},
-		_options: {},
-		_proxy: {},
-		_triggerElement: {},
-		toggle: function() {},
-		_dblClick: function() {},
-		_success: function() {}
-	});
-	
-	WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
-		init: function() {},
-		_badge: {},
-		_dropdown: {},
-		_identifier: "",
-		_loadData: true,
-		_markAllAsReadLink: {},
-		_options: {},
-		_proxy: {},
-		_triggerElement: {},
 		toggle: function() {},
 		_dblClick: function() {},
 		_initDropdown: function() {},

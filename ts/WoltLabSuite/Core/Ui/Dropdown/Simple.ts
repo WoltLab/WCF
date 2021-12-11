@@ -25,6 +25,7 @@ const _dropdowns = new Map<string, HTMLElement>();
 const _menus = new Map<string, HTMLElement>();
 let _menuContainer: HTMLElement;
 let _activeTargetId = "";
+let _blockCloseAll = false;
 
 /**
  * Handles drop-down positions in overlays when scrolling in the overlay.
@@ -94,6 +95,13 @@ function toggle(
   alternateElement?: HTMLElement,
   disableAutoFocus?: boolean,
 ): boolean {
+  _blockCloseAll = true;
+  try {
+    UiCloseOverlay.execute();
+  } finally {
+    _blockCloseAll = false;
+  }
+
   let isKeyboardClick = false;
   if (event !== null) {
     event.preventDefault();
@@ -250,8 +258,6 @@ function toggle(
       }
     }
   });
-
-  window.WCF.Dropdown.Interactive.Handler.closeAll();
 
   return event === null;
 }
@@ -590,6 +596,10 @@ const UiDropdownSimple = {
    * Closes all dropdowns.
    */
   closeAll(): void {
+    if (_blockCloseAll) {
+      return;
+    }
+
     _dropdowns.forEach((dropdown, containerId) => {
       if (dropdown.classList.contains("dropdownOpen")) {
         dropdown.classList.remove("dropdownOpen");

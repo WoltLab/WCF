@@ -7,7 +7,7 @@
  * @module  Ui/Dialog (alias)
  * @module  WoltLabSuite/Core/Ui/Dialog
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./Dropdown/Simple"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, Simple_1) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, CloseOverlay_1, focus_trap_1) {
     "use strict";
     Core = (0, tslib_1.__importStar)(Core);
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
@@ -16,9 +16,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
     Language = (0, tslib_1.__importStar)(Language);
     Environment = (0, tslib_1.__importStar)(Environment);
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     let _activeDialog = null;
-    let _callbackFocus;
     let _container;
     const _dialogs = new Map();
     let _dialogFullHeight = false;
@@ -28,19 +27,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
     const _validCallbacks = ["onBeforeClose", "onClose", "onShow"];
     // list of supported `input[type]` values for dialog submit
     const _validInputTypes = ["number", "password", "search", "tel", "text", "url"];
-    const _focusableElements = [
-        'a[href]:not([tabindex^="-"]):not([inert])',
-        'area[href]:not([tabindex^="-"]):not([inert])',
-        "input:not([disabled]):not([inert])",
-        "select:not([disabled]):not([inert])",
-        "textarea:not([disabled]):not([inert])",
-        "button:not([disabled]):not([inert])",
-        'iframe:not([tabindex^="-"]):not([inert])',
-        'audio:not([tabindex^="-"]):not([inert])',
-        'video:not([tabindex^="-"]):not([inert])',
-        '[contenteditable]:not([tabindex^="-"]):not([inert])',
-        '[tabindex]:not([tabindex^="-"]):not([inert])',
-    ];
     /**
      * @exports  WoltLabSuite/Core/Ui/Dialog
      */
@@ -404,12 +390,21 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             if (content.style.getPropertyValue("display") === "none") {
                 Util_1.default.show(content);
             }
+            const focusTrap = (0, focus_trap_1.createFocusTrap)(dialog, {
+                allowOutsideClick: true,
+                escapeDeactivates() {
+                    UiDialog.close(id);
+                    return false;
+                },
+                fallbackFocus: dialog,
+            });
             _dialogs.set(id, {
                 backdropCloseOnClick: options.backdropCloseOnClick,
                 closable: options.closable,
-                content: content,
-                dialog: dialog,
-                header: header,
+                content,
+                dialog,
+                focusTrap,
+                header,
                 onBeforeClose: options.onBeforeClose,
                 onClose: options.onClose,
                 onShow: options.onShow,
@@ -434,13 +429,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 Util_1.default.setInnerHtml(data.content, html);
             }
             if (Core.stringToBool(data.dialog.getAttribute("aria-hidden"))) {
-                // close existing dropdowns
-                Simple_1.default.closeAll();
-                window.WCF.Dropdown.Interactive.Handler.closeAll();
-                if (_callbackFocus === null) {
-                    _callbackFocus = this._maintainFocus.bind(this);
-                    document.body.addEventListener("focus", _callbackFocus, { capture: true });
-                }
+                CloseOverlay_1.default.execute();
                 if (data.closable && Core.stringToBool(_container.getAttribute("aria-hidden"))) {
                     window.addEventListener("keyup", _keyupListener);
                 }
@@ -455,7 +444,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 const closeButton = data.header.querySelector(".dialogCloseButton");
                 if (closeButton)
                     closeButton.setAttribute("inert", "true");
-                this._setFocusToFirstItem(data.dialog, false);
                 if (closeButton)
                     closeButton.removeAttribute("inert");
                 if (typeof data.onShow === "function") {
@@ -470,56 +458,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             }
             this.rebuild(id);
             Listener_1.default.trigger();
-        },
-        _maintainFocus(event) {
-            if (_activeDialog) {
-                const data = _dialogs.get(_activeDialog);
-                const target = event.target;
-                if (!data.dialog.contains(target) &&
-                    !target.closest(".dropdownMenuContainer") &&
-                    !target.closest(".datePicker")) {
-                    this._setFocusToFirstItem(data.dialog, true);
-                }
-            }
-        },
-        _setFocusToFirstItem(dialog, maintain) {
-            let focusElement = this._getFirstFocusableChild(dialog);
-            if (focusElement !== null) {
-                if (maintain) {
-                    if (focusElement.id === "username" || focusElement.name === "username") {
-                        if (Environment.browser() === "safari" && Environment.platform() === "ios") {
-                            // iOS Safari's username/password autofill breaks if the input field is focused
-                            focusElement = null;
-                        }
-                    }
-                }
-                if (focusElement) {
-                    // Setting the focus to a select element in iOS is pretty strange, because
-                    // it focuses it, but also displays the keyboard for a fraction of a second,
-                    // causing it to pop out from below and immediately vanish.
-                    //
-                    // iOS will only show the keyboard if an input element is focused *and* the
-                    // focus is an immediate result of a user interaction. This method must be
-                    // assumed to be called from within a click event, but we want to set the
-                    // focus without triggering the keyboard.
-                    //
-                    // We can break the condition by wrapping it in a setTimeout() call,
-                    // effectively tricking iOS into focusing the element without showing the
-                    // keyboard.
-                    setTimeout(() => {
-                        focusElement.focus();
-                    }, 1);
-                }
-            }
-        },
-        _getFirstFocusableChild(element) {
-            const nodeList = element.querySelectorAll(_focusableElements.join(","));
-            for (let i = 0, length = nodeList.length; i < length; i++) {
-                if (nodeList[i].offsetWidth && nodeList[i].offsetHeight && nodeList[i].getClientRects().length) {
-                    return nodeList[i];
-                }
-            }
-            return null;
+            data.focusTrap.activate();
         },
         /**
          * Rebuilds dialog identified by given id.
@@ -682,6 +621,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             if (typeof data.onClose === "function") {
                 data.onClose(id);
             }
+            data.focusTrap.deactivate();
             // get next active dialog
             _activeDialog = null;
             for (let i = 0; i < _container.childElementCount; i++) {
