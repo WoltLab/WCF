@@ -12,7 +12,7 @@
 	{assign var='__searchObjectTypeName' value='com.woltlab.wcf.article'}
 	
 	{capture assign='__searchTypesScoped'}
-		{if $category|isset}<li><a href="#" data-extended-link="{link controller='Search'}types[]=com.woltlab.wcf.article{/link}" data-object-type="com.woltlab.wcf.article" data-parameters='{ "articleCategoryIDs[]": {@$category->categoryID} }'>{$category->getTitle()}</a></li>{/if}
+		{if $category|isset}<li><a href="#" data-extended-link="{link controller='Search'}type=com.woltlab.wcf.article&extended=1{/link}" data-object-type="com.woltlab.wcf.article" data-parameters='{ "articleCategoryID": {@$category->categoryID} }'>{$category->getTitle()}</a></li>{/if}
 	{/capture}
 	{assign var='__searchAreaInitialized' value=true}
 {/if}

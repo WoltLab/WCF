@@ -7,16 +7,12 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\data\article\content\SearchResultArticleContent;
 use wcf\data\article\content\SearchResultArticleContentList;
-use wcf\form\IForm;
-use wcf\form\SearchForm;
+use wcf\data\search\ISearchResultObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\page\PageLocationManager;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
- * An implementation of ISearchableObjectType for searching in articles.
+ * An implementation of ISearchProvider for searching in articles.
  *
  * @author      Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
@@ -24,24 +20,22 @@ use wcf\util\ArrayUtil;
  * @package WoltLabSuite\Core\System\Search
  * @since   3.0
  */
-class ArticleSearch extends AbstractSearchableObjectType
+class ArticleSearch extends AbstractSearchProvider
 {
     /**
-     * ids of the selected categories
-     * @var int[]
+     * @var int
      */
-    public $articleCategoryIDs = [];
+    private $articleCategoryID = 0;
 
     /**
-     * message data cache
      * @var SearchResultArticleContent[]
      */
-    public $messageCache = [];
+    private $messageCache = [];
 
     /**
      * @inheritDoc
      */
-    public function cacheObjects(array $objectIDs, ?array $additionalData = null)
+    public function cacheObjects(array $objectIDs, ?array $additionalData = null): void
     {
         $list = new SearchResultArticleContentList();
         $list->setObjectIDs($objectIDs);
@@ -54,7 +48,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getObject($objectID)
+    public function getObject(int $objectID): ?ISearchResultObject
     {
         return $this->messageCache[$objectID] ?? null;
     }
@@ -62,7 +56,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getTableName()
+    public function getTableName(): string
     {
         return 'wcf' . WCF_N . '_article_content';
     }
@@ -70,7 +64,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getIDFieldName()
+    public function getIDFieldName(): string
     {
         return $this->getTableName() . '.articleContentID';
     }
@@ -78,7 +72,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getSubjectFieldName()
+    public function getSubjectFieldName(): string
     {
         return $this->getTableName() . '.title';
     }
@@ -86,7 +80,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getUsernameFieldName()
+    public function getUsernameFieldName(): string
     {
         return 'wcf' . WCF_N . '_article.username';
     }
@@ -94,7 +88,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getTimeFieldName()
+    public function getTimeFieldName(): string
     {
         return 'wcf' . WCF_N . '_article.time';
     }
@@ -102,35 +96,55 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getConditions(?IForm $form = null)
+    public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
     {
-        // accessible category ids
-        if (isset($_POST['articleCategoryIDs'])) {
-            $this->articleCategoryIDs = ArrayUtil::toIntegerArray($_POST['articleCategoryIDs']);
+        if (!empty($parameters['articleCategoryID'])) {
+            $this->articleCategoryID = \intval($parameters['articleCategoryID']);
         }
+
+        $articleCategoryIDs = $this->getArticleCategoryIDs($this->articleCategoryID);
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-        if (!empty($this->articleCategoryIDs)) {
-            $this->articleCategoryIDs = \array_intersect($accessibleCategoryIDs, $this->articleCategoryIDs);
-        } else {
-            $this->articleCategoryIDs = $accessibleCategoryIDs;
+        if (!empty($articleCategoryIDs)) {
+            $articleCategoryIDs = \array_intersect($articleCategoryIDs, $accessibleCategoryIDs);
         }
-        if (empty($this->articleCategoryIDs)) {
-            throw new PermissionDeniedException();
+        else {
+            $articleCategoryIDs = $accessibleCategoryIDs;
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add(
-            'wcf' . WCF_N . '_article.categoryID IN (?) AND wcf' . WCF_N . '_article.publicationStatus = ?',
-            [$this->articleCategoryIDs, Article::PUBLISHED]
-        );
-
+        if (empty($articleCategoryIDs)) {
+            $conditionBuilder->add('1=0');
+        }
+        else {
+            $conditionBuilder->add(
+                'wcf' . WCF_N . '_article.categoryID IN (?) AND wcf' . WCF_N . '_article.publicationStatus = ?',
+                [$articleCategoryIDs, Article::PUBLISHED]
+            );
+        }
+        
         return $conditionBuilder;
+    }
+
+    private function getArticleCategoryIDs(int $categoryID): array
+    {
+        $categoryIDs = [];
+
+        if ($categoryID) {
+            if (($category = ArticleCategory::getCategory($categoryID)) !== null) {
+                $categoryIDs[] = $categoryID;
+                foreach ($category->getAllChildCategories() as $childCategory) {
+                    $categoryIDs[] = $childCategory->categoryID;
+                }
+            }
+        }
+        
+        return $categoryIDs;
     }
 
     /**
      * @inheritDoc
      */
-    public function getJoins()
+    public function getJoins(): string
     {
         return '
             INNER JOIN  wcf' . WCF_N . '_article
@@ -140,7 +154,7 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getFormTemplateName()
+    public function getFormTemplateName(): string
     {
         return 'searchArticle';
     }
@@ -148,15 +162,15 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getAdditionalData()
+    public function getAdditionalData(): ?array
     {
-        return ['articleCategoryIDs' => $this->articleCategoryIDs];
+        return ['articleCategoryID' => $this->articleCategoryID];
     }
 
     /**
      * @inheritDoc
      */
-    public function isAccessible()
+    public function isAccessible(): bool
     {
         return MODULE_ARTICLE && SEARCH_ENABLE_ARTICLES;
     }
@@ -164,27 +178,10 @@ class ArticleSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function show(?IForm $form = null)
+    public function assignVariables(): void
     {
-        /** @var SearchForm $form */
-
-        // get existing values
-        if ($form !== null && isset($form->searchData['additionalData']['com.woltlab.wcf.article'])) {
-            $this->articleCategoryIDs = $form->searchData['additionalData']['com.woltlab.wcf.article']['articleCategoryIDs'];
-        }
-
         WCF::getTPL()->assign([
-            'articleCategoryIDs' => $this->articleCategoryIDs,
             'articleCategoryList' => (new ArticleCategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     * @since   3.0
-     */
-    public function setLocation()
-    {
-        PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ArticleList');
     }
 }
