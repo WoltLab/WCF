@@ -61,9 +61,8 @@ class MysqlSearchEngine extends AbstractSearchEngine
             $additionalConditionsConditionBuilder = ($additionalConditions[$objectTypeName] ?? null);
 
             if ($objectType instanceof ISearchProvider) {
-                $query = $objectType->getOuterSqlQuery($additionalConditionsConditionBuilder);    
-            }
-            else {
+                $query = $objectType->getOuterSqlQuery($additionalConditionsConditionBuilder);
+            } else {
                 $query = $objectType->getOuterSQLQuery($q, $searchIndexCondition, $additionalConditionsConditionBuilder);
             }
             if (empty($query)) {

@@ -106,22 +106,20 @@ class ArticleSearch extends AbstractSearchProvider
         $accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
         if (!empty($articleCategoryIDs)) {
             $articleCategoryIDs = \array_intersect($articleCategoryIDs, $accessibleCategoryIDs);
-        }
-        else {
+        } else {
             $articleCategoryIDs = $accessibleCategoryIDs;
         }
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         if (empty($articleCategoryIDs)) {
             $conditionBuilder->add('1=0');
-        }
-        else {
+        } else {
             $conditionBuilder->add(
                 'wcf' . WCF_N . '_article.categoryID IN (?) AND wcf' . WCF_N . '_article.publicationStatus = ?',
                 [$articleCategoryIDs, Article::PUBLISHED]
             );
         }
-        
+
         return $conditionBuilder;
     }
 
@@ -137,7 +135,7 @@ class ArticleSearch extends AbstractSearchProvider
                 }
             }
         }
-        
+
         return $categoryIDs;
     }
 
