@@ -83,7 +83,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          * Handles the 'keydown' event.
          */
         keydown(event) {
-            if ((this.activeItem !== null && Simple_1.default.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
+            if ((this.activeItem && Simple_1.default.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
                 if (event.key === "Enter") {
                     event.preventDefault();
                 }
@@ -97,7 +97,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          */
         keyup(event) {
             // handle dropdown keyboard navigation
-            if (this.activeItem !== null || !this.autoFocus) {
+            if (this.activeItem || !this.autoFocus) {
                 if (Simple_1.default.isOpen(this.dropdownContainerId)) {
                     if (event.key === "ArrowUp") {
                         event.preventDefault();

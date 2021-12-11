@@ -103,7 +103,7 @@ class UiSearchInput {
    * Handles the 'keydown' event.
    */
   private keydown(event: KeyboardEvent): void {
-    if ((this.activeItem !== null && UiDropdownSimple.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
+    if ((this.activeItem && UiDropdownSimple.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
       if (event.key === "Enter") {
         event.preventDefault();
       }
@@ -119,7 +119,7 @@ class UiSearchInput {
    */
   private keyup(event: KeyboardEvent): void {
     // handle dropdown keyboard navigation
-    if (this.activeItem !== null || !this.autoFocus) {
+    if (this.activeItem || !this.autoFocus) {
       if (UiDropdownSimple.isOpen(this.dropdownContainerId)) {
         if (event.key === "ArrowUp") {
           event.preventDefault();
