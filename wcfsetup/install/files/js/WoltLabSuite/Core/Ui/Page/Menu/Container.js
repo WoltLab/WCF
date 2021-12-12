@@ -14,12 +14,14 @@ define(["require", "exports", "focus-trap", "../../Screen"], function (require, 
             this.content.innerHTML = "";
             this.content.append(this.provider.getContent());
             this.provider.getMenuButton().setAttribute("aria-expanded", "true");
+            (0, Screen_1.pageOverlayOpen)();
             (0, Screen_1.scrollDisable)();
             this.container.hidden = false;
             this.getFocusTrap().activate();
         }
         close() {
             this.provider.getMenuButton().setAttribute("aria-expanded", "false");
+            (0, Screen_1.pageOverlayClose)();
             (0, Screen_1.scrollEnable)();
             this.container.hidden = true;
             this.getFocusTrap().deactivate();

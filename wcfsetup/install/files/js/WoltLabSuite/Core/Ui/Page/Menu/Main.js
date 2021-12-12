@@ -53,24 +53,47 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             });
         }
         getContent() {
+            const container = document.createElement("div");
+            container.classList.add("pageMenuMainContainer");
+            container.append(...this.buildMainMenu());
+            const footerMenu = this.buildFooterMenu();
+            if (footerMenu) {
+                container.append(footerMenu);
+            }
             const fragment = document.createDocumentFragment();
-            fragment.append(...this.buildMainMenu());
+            fragment.append(container);
             return fragment;
         }
         getMenuButton() {
             return this.mainMenu;
         }
         buildMainMenu() {
-            const menu = this.mainMenu.querySelector(".boxMenu");
-            const menuItems = Array.from(menu.children).map((element) => {
+            const boxMenu = this.mainMenu.querySelector(".boxMenu");
+            const nav = this.buildMenu(boxMenu);
+            nav.setAttribute("aria-label", window.PAGE_TITLE);
+            nav.setAttribute("role", "navigation");
+            return [nav];
+        }
+        buildFooterMenu() {
+            const box = document.querySelector('.box[data-box-identifier="com.woltlab.wcf.FooterMenu"]');
+            if (box === null) {
+                return null;
+            }
+            const boxMenu = box.querySelector(".boxMenu");
+            const nav = this.buildMenu(boxMenu);
+            nav.classList.add("pageMenuMainNavigationFooter");
+            const label = box.querySelector("nav").getAttribute("aria-label");
+            nav.setAttribute("aria-label", label);
+            return nav;
+        }
+        buildMenu(boxMenu) {
+            const menuItems = Array.from(boxMenu.children).map((element) => {
                 return normalizeMenuItem(element);
             });
             const nav = document.createElement("nav");
             nav.classList.add("pageMenuMainNavigation");
-            nav.setAttribute("aria-label", window.PAGE_TITLE);
-            nav.setAttribute("role", "navigation");
             nav.append(this.buildMenuItemList(menuItems));
-            return [nav];
+            return nav;
         }
         buildMenuItemList(menuItems) {
             const list = document.createElement("ul");

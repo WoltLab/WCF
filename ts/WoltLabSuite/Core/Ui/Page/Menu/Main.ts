@@ -73,9 +73,18 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   getContent(): DocumentFragment {
-    const fragment = document.createDocumentFragment();
+    const container = document.createElement("div");
+    container.classList.add("pageMenuMainContainer");
 
-    fragment.append(...this.buildMainMenu());
+    container.append(...this.buildMainMenu());
+
+    const footerMenu = this.buildFooterMenu();
+    if (footerMenu) {
+      container.append(footerMenu);
+    }
+
+    const fragment = document.createDocumentFragment();
+    fragment.append(container);
 
     return fragment;
   }
@@ -85,18 +94,41 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   private buildMainMenu(): HTMLElement[] {
-    const menu = this.mainMenu.querySelector(".boxMenu")!;
-    const menuItems: MenuItem[] = Array.from(menu.children).map((element: HTMLElement) => {
+    const boxMenu = this.mainMenu.querySelector(".boxMenu") as HTMLElement;
+
+    const nav = this.buildMenu(boxMenu);
+    nav.setAttribute("aria-label", window.PAGE_TITLE);
+    nav.setAttribute("role", "navigation");
+
+    return [nav];
+  }
+
+  private buildFooterMenu(): HTMLElement | null {
+    const box = document.querySelector('.box[data-box-identifier="com.woltlab.wcf.FooterMenu"]');
+    if (box === null) {
+      return null;
+    }
+
+    const boxMenu = box.querySelector(".boxMenu") as HTMLElement;
+    const nav = this.buildMenu(boxMenu);
+    nav.classList.add("pageMenuMainNavigationFooter");
+
+    const label = box.querySelector("nav")!.getAttribute("aria-label")!;
+    nav.setAttribute("aria-label", label);
+
+    return nav;
+  }
+
+  private buildMenu(boxMenu: HTMLElement): HTMLElement {
+    const menuItems: MenuItem[] = Array.from(boxMenu.children).map((element: HTMLElement) => {
       return normalizeMenuItem(element);
     });
 
     const nav = document.createElement("nav");
     nav.classList.add("pageMenuMainNavigation");
-    nav.setAttribute("aria-label", window.PAGE_TITLE);
-    nav.setAttribute("role", "navigation");
     nav.append(this.buildMenuItemList(menuItems));
 
-    return [nav];
+    return nav;
   }
 
   private buildMenuItemList(menuItems: MenuItem[]): HTMLUListElement {

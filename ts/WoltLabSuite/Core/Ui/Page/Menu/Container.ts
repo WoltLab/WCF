@@ -1,6 +1,6 @@
 import { PageMenuProvider } from "./Provider";
 import { createFocusTrap, FocusTrap } from "focus-trap";
-import { scrollDisable, scrollEnable } from "../../Screen";
+import { pageOverlayClose, pageOverlayOpen, scrollDisable, scrollEnable } from "../../Screen";
 
 export class PageMenuContainer {
   private readonly container = document.createElement("div");
@@ -19,6 +19,7 @@ export class PageMenuContainer {
     this.content.append(this.provider.getContent());
     this.provider.getMenuButton().setAttribute("aria-expanded", "true");
 
+    pageOverlayOpen();
     scrollDisable();
 
     this.container.hidden = false;
@@ -28,6 +29,7 @@ export class PageMenuContainer {
   close(): void {
     this.provider.getMenuButton().setAttribute("aria-expanded", "false");
 
+    pageOverlayClose();
     scrollEnable();
 
     this.container.hidden = true;
