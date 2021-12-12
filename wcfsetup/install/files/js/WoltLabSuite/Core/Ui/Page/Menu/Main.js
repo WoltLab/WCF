@@ -47,10 +47,24 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         constructor() {
             this.mainMenu = document.querySelector(".mainMenu");
             this.container = new Container_1.default(this);
-            this.mainMenu.addEventListener("click", (event) => {
+            this.callbackOpen = (event) => {
                 event.preventDefault();
+                event.stopPropagation();
                 this.container.toggle();
-            });
+            };
+        }
+        enable() {
+            this.mainMenu.setAttribute("aria-expanded", "false");
+            this.mainMenu.setAttribute("role", "button");
+            this.mainMenu.tabIndex = 0;
+            this.mainMenu.addEventListener("click", this.callbackOpen);
+        }
+        disable() {
+            this.container.close();
+            this.mainMenu.removeAttribute("aria-expanded");
+            this.mainMenu.removeAttribute("role");
+            this.mainMenu.removeAttribute("tabindex");
+            this.mainMenu.removeEventListener("click", this.callbackOpen);
         }
         getContent() {
             const container = document.createElement("div");

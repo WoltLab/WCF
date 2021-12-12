@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Mobile
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, EventHandler, UiAlignment, CloseOverlay_1, UiDropdownReusable, User_1, UiScreen) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, EventHandler, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeShadow = exports.rebuildShadow = exports.disableShadow = exports.disable = exports.enableShadow = exports.enable = exports.setup = void 0;
@@ -26,7 +26,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     let _enableMobileMenu = false;
     const _knownMessages = new WeakSet();
     let _mobileSidebarEnabled = false;
-    //let _pageMenuMain: UiPageMenuMain;
+    let _pageMenuMain;
     let _pageMenuUser = undefined;
     let _messageGroups = null;
     const _sidebars = [];
@@ -136,7 +136,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     }
     function initMobileMenu() {
         if (_enableMobileMenu) {
-            //_pageMenuMain = new UiPageMenuMain();
+            _pageMenuMain = new Main_1.PageMenuMain();
+            _pageMenuMain.enable();
             if (User_1.default.hasValidMenu()) {
                 _pageMenuUser = new User_1.default();
             }
@@ -316,7 +317,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     function enable() {
         _enabled = true;
         if (_enableMobileMenu) {
-            //_pageMenuMain.enable();
+            _pageMenuMain.enable();
             _pageMenuUser === null || _pageMenuUser === void 0 ? void 0 : _pageMenuUser.enable();
         }
     }
@@ -336,7 +337,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     function disable() {
         _enabled = false;
         if (_enableMobileMenu) {
-            //_pageMenuMain.disable();
+            _pageMenuMain.disable();
             _pageMenuUser === null || _pageMenuUser === void 0 ? void 0 : _pageMenuUser.disable();
         }
     }

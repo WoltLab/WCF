@@ -1,15 +1,24 @@
-define(["require", "exports", "focus-trap", "../../Screen"], function (require, exports, focus_trap_1, Screen_1) {
+define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../CloseOverlay", "../../../Dom/Util"], function (require, exports, tslib_1, focus_trap_1, Screen_1, CloseOverlay_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.PageMenuContainer = void 0;
+    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class PageMenuContainer {
         constructor(provider) {
             this.container = document.createElement("div");
             this.content = document.createElement("div");
             this.focusTrap = undefined;
             this.provider = provider;
+            const menuId = Util_1.default.identify(this.provider.getMenuButton());
+            CloseOverlay_1.default.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
+                if (!this.container.hidden) {
+                    this.close();
+                }
+            });
         }
         open() {
+            CloseOverlay_1.default.execute();
             this.buildElements();
             this.content.innerHTML = "";
             this.content.append(this.provider.getContent());

@@ -56,7 +56,10 @@ function normalizeMenuItem(menuItem: HTMLElement): MenuItem {
   };
 }
 
+type CallbackOpen = (event: MouseEvent) => void;
+
 export class PageMenuMain implements PageMenuProvider {
+  private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly mainMenu: HTMLElement;
 
@@ -65,11 +68,28 @@ export class PageMenuMain implements PageMenuProvider {
 
     this.container = new PageMenuContainer(this);
 
-    this.mainMenu.addEventListener("click", (event) => {
+    this.callbackOpen = (event) => {
       event.preventDefault();
+      event.stopPropagation();
 
       this.container.toggle();
-    });
+    };
+  }
+
+  enable(): void {
+    this.mainMenu.setAttribute("aria-expanded", "false");
+    this.mainMenu.setAttribute("role", "button");
+    this.mainMenu.tabIndex = 0;
+    this.mainMenu.addEventListener("click", this.callbackOpen);
+  }
+
+  disable(): void {
+    this.container.close();
+
+    this.mainMenu.removeAttribute("aria-expanded");
+    this.mainMenu.removeAttribute("role");
+    this.mainMenu.removeAttribute("tabindex");
+    this.mainMenu.removeEventListener("click", this.callbackOpen);
   }
 
   getContent(): DocumentFragment {

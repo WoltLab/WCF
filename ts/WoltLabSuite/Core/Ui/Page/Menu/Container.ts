@@ -1,6 +1,8 @@
 import { PageMenuProvider } from "./Provider";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import { pageOverlayClose, pageOverlayOpen, scrollDisable, scrollEnable } from "../../Screen";
+import UiCloseOverlay from "../../CloseOverlay";
+import DomUtil from "../../../Dom/Util";
 
 export class PageMenuContainer {
   private readonly container = document.createElement("div");
@@ -10,9 +12,18 @@ export class PageMenuContainer {
 
   constructor(provider: PageMenuProvider) {
     this.provider = provider;
+
+    const menuId = DomUtil.identify(this.provider.getMenuButton());
+    UiCloseOverlay.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
+      if (!this.container.hidden) {
+        this.close();
+      }
+    });
   }
 
   open(): void {
+    UiCloseOverlay.execute();
+
     this.buildElements();
 
     this.content.innerHTML = "";
