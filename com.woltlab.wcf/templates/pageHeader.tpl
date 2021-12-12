@@ -20,6 +20,9 @@
 			require(['WoltLabSuite/Core/Ui/Page/Header/Fixed'], function(UiPageHeaderFixed) {
 				UiPageHeaderFixed.init();
 			});
+			require(["WoltLabSuite/Core/Ui/Page/Menu/Main"], ({ PageMenuMain }) => {
+				new PageMenuMain();
+			})
 		</script>
 	</header>
 	

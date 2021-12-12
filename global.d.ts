@@ -13,6 +13,7 @@ declare global {
     ENABLE_DEBUG_MODE: boolean;
     ENABLE_DEVELOPER_TOOLS: boolean;
     LANGUAGE_ID: number;
+    PAGE_TITLE: string;
     REACTION_TYPES: {
       [key: string]: Reaction;
     };

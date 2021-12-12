@@ -14,13 +14,13 @@ import * as EventHandler from "../Event/Handler";
 import * as UiAlignment from "./Alignment";
 import UiCloseOverlay from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
-import UiPageMenuMain from "./Page/Menu/Main";
+//import UiPageMenuMain from "./Page/Menu/Main";
 import UiPageMenuUser from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
 
 interface MainMenuMorePayload {
   identifier: string;
-  handler: UiPageMenuMain;
+  handler: any;//UiPageMenuMain;
 }
 
 let _dropdownMenu: HTMLUListElement | null = null;
@@ -30,7 +30,7 @@ let _enabledLGTouchNavigation = false;
 let _enableMobileMenu = false;
 const _knownMessages = new WeakSet<HTMLElement>();
 let _mobileSidebarEnabled = false;
-let _pageMenuMain: UiPageMenuMain;
+//let _pageMenuMain: UiPageMenuMain;
 let _pageMenuUser: UiPageMenuUser | undefined = undefined;
 let _messageGroups: HTMLCollection | null = null;
 const _sidebars: HTMLElement[] = [];
@@ -163,7 +163,7 @@ function initMessages(): void {
 
 function initMobileMenu(): void {
   if (_enableMobileMenu) {
-    _pageMenuMain = new UiPageMenuMain();
+    //_pageMenuMain = new UiPageMenuMain();
 
     if (UiPageMenuUser.hasValidMenu()) {
       _pageMenuUser = new UiPageMenuUser();
@@ -378,7 +378,7 @@ export function setup(enableMobileMenu: boolean): void {
 export function enable(): void {
   _enabled = true;
   if (_enableMobileMenu) {
-    _pageMenuMain.enable();
+    //_pageMenuMain.enable();
     _pageMenuUser?.enable();
   }
 }
@@ -398,7 +398,7 @@ export function enableShadow(): void {
 export function disable(): void {
   _enabled = false;
   if (_enableMobileMenu) {
-    _pageMenuMain.disable();
+    //_pageMenuMain.disable();
     _pageMenuUser?.disable();
   }
 }

@@ -12,6 +12,10 @@
 	
 	{include file='headInclude'}
 	
+<style>
+
+</style>
+
 	{if !$canonicalURL|empty}
 		<link rel="canonical" href="{$canonicalURL}">
 	{/if}

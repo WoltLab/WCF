@@ -1,111 +1,204 @@
 /**
  * Provides the touch-friendly fullscreen main menu.
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Page/Menu/Main
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/Main
  */
 
-import * as Core from "../../../Core";
-import DomUtil from "../../../Dom/Util";
+import PageMenuContainer from "./Container";
+import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
-import UiPageMenuAbstract from "./Abstract";
+import DomUtil from "../../../Dom/Util";
 
-class UiPageMenuMain extends UiPageMenuAbstract {
-  private hasItems = false;
-  private readonly navigationList: HTMLOListElement;
-  private readonly title: HTMLElement;
+type MenuItem = {
+  active: boolean;
+  children: MenuItem[];
+  counter: number;
+  link?: string;
+  title: string;
+};
 
-  /**
-   * Initializes the touch-friendly fullscreen main menu.
-   */
+function normalizeMenuItem(menuItem: HTMLElement): MenuItem {
+  const anchor = menuItem.querySelector(".boxMenuLink") as HTMLAnchorElement;
+  const title = anchor.querySelector(".boxMenuLinkTitle")!.textContent as string;
+
+  let counter = 0;
+  const outstandingItems = anchor.querySelector(".boxMenuLinkOutstandingItems");
+  if (outstandingItems) {
+    counter = +outstandingItems.textContent!.replace(/[^0-9]/, "");
+  }
+
+  const subMenu = menuItem.querySelector("ol");
+  let children: MenuItem[] = [];
+  if (subMenu instanceof HTMLOListElement) {
+    children = Array.from(subMenu.children).map((subMenuItem: HTMLElement) => {
+      return normalizeMenuItem(subMenuItem);
+    });
+  }
+
+  // `link.href` represents the computed link, not the raw value.
+  const href = anchor.getAttribute("href");
+  let link: string | undefined = undefined;
+  if (href && href !== "#") {
+    link = anchor.href;
+  }
+
+  const active = menuItem.classList.contains("active");
+
+  return {
+    active,
+    children,
+    counter,
+    link,
+    title,
+  };
+}
+
+export class PageMenuMain implements PageMenuProvider {
+  private readonly container: PageMenuContainer;
+  private readonly mainMenu: HTMLElement;
+
   constructor() {
-    super("com.woltlab.wcf.MainMenuMobile", "pageMainMenuMobile", "#pageHeader .mainMenu");
+    this.mainMenu = document.querySelector(".mainMenu")!;
 
-    this.title = document.getElementById("pageMainMenuMobilePageOptionsTitle") as HTMLElement;
-    if (this.title !== null) {
-      this.navigationList = document.querySelector(".jsPageNavigationIcons") as HTMLOListElement;
-    }
+    this.container = new PageMenuContainer(this);
 
-    this.button.setAttribute("aria-label", Language.get("wcf.menu.page"));
-    this.button.setAttribute("role", "button");
+    this.mainMenu.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      this.container.toggle();
+    });
   }
 
-  open(event?: MouseEvent): boolean {
-    if (!super.open(event)) {
-      return false;
-    }
+  getContent(): DocumentFragment {
+    const fragment = document.createDocumentFragment();
 
-    if (this.title === null) {
-      return true;
-    }
+    fragment.append(...this.buildMainMenu());
 
-    this.hasItems = this.navigationList && this.navigationList.childElementCount > 0;
+    return fragment;
+  }
 
-    if (this.hasItems) {
-      while (this.navigationList.childElementCount) {
-        const item = this.navigationList.children[0];
+  getMenuButton(): HTMLElement {
+    return this.mainMenu;
+  }
 
-        item.classList.add("menuOverlayItem", "menuOverlayItemOption");
-        item.addEventListener("click", (ev) => {
-          ev.stopPropagation();
+  private buildMainMenu(): HTMLElement[] {
+    const menu = this.mainMenu.querySelector(".boxMenu")!;
+    const menuItems: MenuItem[] = Array.from(menu.children).map((element: HTMLElement) => {
+      return normalizeMenuItem(element);
+    });
 
-          this.close();
-        });
+    const nav = document.createElement("nav");
+    nav.classList.add("pageMenuMainNavigation");
+    nav.setAttribute("aria-label", window.PAGE_TITLE);
+    nav.setAttribute("role", "navigation");
+    nav.append(this.buildMenuItemList(menuItems));
 
-        const link = item.children[0];
-        link.classList.add("menuOverlayItemLink");
-        link.classList.add("box24");
+    return [nav];
+  }
 
-        link.children[1].classList.remove("invisible");
-        link.children[1].classList.add("menuOverlayItemTitle");
+  private buildMenuItemList(menuItems: MenuItem[]): HTMLUListElement {
+    const list = document.createElement("ul");
+    list.classList.add("pageMenuMainItemList");
 
-        this.title.insertAdjacentElement("afterend", item);
+    menuItems
+      .filter((menuItem) => {
+        // Remove links that have no target (`#`) and do not contain any children.
+        if (!menuItem.link && menuItem.children.length === 0) {
+          return false;
+        }
+
+        return true;
+      })
+      .forEach((menuItem) => {
+        list.append(this.buildMenuItem(menuItem));
+      });
+
+    return list;
+  }
+
+  private buildMenuItem(menuItem: MenuItem): HTMLLIElement {
+    const listItem = document.createElement("li");
+    listItem.classList.add("pageMenuMainItem");
+
+    if (menuItem.link) {
+      const link = document.createElement("a");
+      link.classList.add("pageMenuMainItemLink");
+      link.href = menuItem.link;
+      link.textContent = menuItem.title;
+      if (menuItem.active) {
+        link.setAttribute("aria-current", "page");
       }
 
-      DomUtil.show(this.title);
+      listItem.append(link);
     } else {
-      DomUtil.hide(this.title);
+      const label = document.createElement("span");
+      label.textContent = menuItem.title;
+
+      listItem.append(label);
     }
 
-    return true;
+    if (menuItem.children.length) {
+      listItem.classList.add("pageMenuMainItemExpandable");
+
+      const menuId = DomUtil.getUniqueId();
+
+      const button = document.createElement("a");
+      button.classList.add("pageMenuMainItemToggle");
+      button.tabIndex = 0;
+      button.setAttribute("role", "button");
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-controls", menuId);
+      button.setAttribute("aria-label", Language.get("TODO"));
+      button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
+
+      const list = this.buildMenuItemList(menuItem.children);
+      list.id = menuId;
+      list.hidden = true;
+
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        this.toggleList(button, list);
+      });
+      button.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+
+          button.click();
+        }
+      });
+
+      list.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          event.stopPropagation();
+
+          this.toggleList(button, list);
+        }
+      });
+
+      listItem.append(button, list);
+    }
+
+    return listItem;
   }
 
-  close(event?: Event): boolean {
-    if (!super.close(event)) {
-      return false;
-    }
+  private toggleList(button: HTMLAnchorElement, list: HTMLUListElement): void {
+    if (list.hidden) {
+      button.setAttribute("aria-expanded", "true");
+      list.hidden = false;
+    } else {
+      button.setAttribute("aria-expanded", "false");
+      list.hidden = true;
 
-    if (this.hasItems) {
-      DomUtil.hide(this.title);
-
-      let item = this.title.nextElementSibling;
-      while (item && item.classList.contains("menuOverlayItemOption")) {
-        item.classList.remove("menuOverlayItem", "menuOverlayItemOption");
-        item.removeEventListener("click", (ev) => {
-          ev.stopPropagation();
-
-          this.close();
-        });
-
-        const link = item.children[0];
-        link.classList.remove("menuOverlayItemLink");
-        link.classList.remove("box24");
-
-        link.children[1].classList.add("invisible");
-        link.children[1].classList.remove("menuOverlayItemTitle");
-
-        this.navigationList.appendChild(item);
-
-        item = item.nextElementSibling;
+      if (document.activeElement !== button) {
+        button.focus();
       }
     }
-
-    return true;
   }
 }
 
-Core.enableLegacyInheritance(UiPageMenuMain);
-
-export = UiPageMenuMain;
+export default PageMenuMain;
