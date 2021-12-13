@@ -46,7 +46,7 @@ class UiToggleInput {
     this.element = element;
 
     this.hide = this.getElements("hide", Array.isArray(options.hide) ? options.hide : []);
-    this.hide = this.getElements("show", Array.isArray(options.show) ? options.show : []);
+    this.show = this.getElements("show", Array.isArray(options.show) ? options.show : []);
 
     this.element.addEventListener("change", (ev) => this.change(ev));
 
