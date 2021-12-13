@@ -8,10 +8,10 @@
   "devDependencies": {
     "@types/google.maps": "^3.47.1",
     "@types/perfect-scrollbar": "^0.7.0",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.31.1",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.1",
     "typescript": "^4.5.3"
