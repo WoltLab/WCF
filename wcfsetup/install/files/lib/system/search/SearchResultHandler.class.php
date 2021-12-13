@@ -35,9 +35,9 @@ final class SearchResultHandler
     private $messages = [];
 
     /**
-     * @var string[]
+     * @var \SplObjectStorage
      */
-    private $customIcons = [];
+    private $customIcons;
 
     /**
      * @var int
@@ -60,6 +60,7 @@ final class SearchResultHandler
         $this->startIndex = $startIndex;
         $this->limit = $limit;
         $this->searchData = \unserialize($this->search->searchData);
+        $this->customIcons = new \SplObjectStorage();
     }
 
     public function countSearchResults(): int
@@ -86,7 +87,7 @@ final class SearchResultHandler
         return $this->messages;
     }
 
-    public function getCustomIcons(): array
+    public function getCustomIcons(): \SplObjectStorage
     {
         return $this->customIcons;
     }
@@ -117,7 +118,8 @@ final class SearchResultHandler
             $objectID = $this->searchData['results'][$i]['objectID'];
 
             $objectType = SearchEngine::getInstance()->getObjectType($type);
-            if (($message = $objectType->getObject($objectID)) !== null) {
+            $message = $objectType->getObject($objectID);
+            if ($message !== null) {
                 if (!($message instanceof ISearchResultObject)) {
                     throw new ImplementationException(\get_class($message), ISearchResultObject::class);
                 }
@@ -128,7 +130,7 @@ final class SearchResultHandler
                 }
 
                 $this->messages[] = $message;
-                $this->customIcons[\spl_object_hash($message)] = $customIcon;
+                $this->customIcons[$message] = $customIcon;
             }
         }
     }

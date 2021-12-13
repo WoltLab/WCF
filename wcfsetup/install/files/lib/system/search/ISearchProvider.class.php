@@ -102,5 +102,5 @@ interface ISearchProvider
      * Replaces the outer SQL query with a custom version. Querying the search index requires the
      * placeholder {WCF_SEARCH_INNER_JOIN} within an empty INNER JOIN() statement.
      */
-    public function getOuterSqlQuery(?PreparedStatementConditionBuilder $additionalConditions = null): string;
+    public function getFetchObjectsQuery(?PreparedStatementConditionBuilder $additionalConditions = null): string;
 }

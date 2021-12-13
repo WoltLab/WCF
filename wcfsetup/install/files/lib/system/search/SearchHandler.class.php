@@ -8,7 +8,6 @@ use wcf\data\search\SearchAction;
 use wcf\form\SearchForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -105,7 +104,10 @@ final class SearchHandler
 
     private function initObjectTypeNames(): void
     {
-        if (!empty($this->parameters['type'])) {
+        if (
+            !empty($this->parameters['type'])
+            && SearchEngine::getInstance()->getObjectType($this->parameters['type']) !== null
+        ) {
             $this->objectTypeNames[] = $this->parameters['type'];
         } else {
             $this->objectTypeNames = \array_keys(SearchEngine::getInstance()->getAvailableObjectTypes());
@@ -159,9 +161,6 @@ final class SearchHandler
 
         foreach ($this->objectTypeNames as $key => $objectTypeName) {
             $objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
-            if ($objectType === null) {
-                throw new SystemException('unknown search object type ' . $objectTypeName);
-            }
 
             try {
                 if (!$objectType->isAccessible()) {

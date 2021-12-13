@@ -116,8 +116,19 @@ abstract class AbstractSearchProvider extends AbstractObjectTypeProcessor implem
     /**
      * @inheritDoc
      */
-    public function getOuterSqlQuery(?PreparedStatementConditionBuilder $additionalConditions = null): string
+    public function getFetchObjectsQuery(?PreparedStatementConditionBuilder $additionalConditions = null): string
     {
         return '';
+    }
+
+    /**
+     * @deprecated 5.5
+     */
+    public function getOuterSQLQuery(
+        string $q,
+        ?PreparedStatementConditionBuilder &$searchIndexConditions = null,
+        ?PreparedStatementConditionBuilder &$additionalConditions = null
+    ): string {
+        return $this->getFetchObjectsQuery($additionalConditions);
     }
 }
