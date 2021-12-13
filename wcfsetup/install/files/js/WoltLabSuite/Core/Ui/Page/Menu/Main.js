@@ -81,6 +81,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         getMenuButton() {
             return this.mainMenu;
         }
+        refresh() {
+            /* Does nothing */
+        }
         buildMainMenu() {
             const boxMenu = this.mainMenu.querySelector(".boxMenu");
             const nav = this.buildMenu(boxMenu);

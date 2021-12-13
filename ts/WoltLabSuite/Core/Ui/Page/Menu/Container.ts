@@ -34,6 +34,8 @@ export class PageMenuContainer {
     scrollDisable();
 
     this.container.hidden = false;
+    this.provider.refresh();
+
     this.getFocusTrap().activate();
   }
 
@@ -55,6 +57,10 @@ export class PageMenuContainer {
     }
   }
 
+  getContent(): HTMLElement {
+    return this.content;
+  }
+
   private buildElements(): void {
     if (this.container.classList.contains("pageMenuContainer")) {
       return;
@@ -69,6 +75,9 @@ export class PageMenuContainer {
     });
 
     this.content.classList.add("pageMenuContent");
+    this.content.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
 
     this.container.append(this.content);
 

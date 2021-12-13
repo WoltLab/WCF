@@ -26,6 +26,7 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
             (0, Screen_1.pageOverlayOpen)();
             (0, Screen_1.scrollDisable)();
             this.container.hidden = false;
+            this.provider.refresh();
             this.getFocusTrap().activate();
         }
         close() {
@@ -43,6 +44,9 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
                 this.close();
             }
         }
+        getContent() {
+            return this.content;
+        }
         buildElements() {
             if (this.container.classList.contains("pageMenuContainer")) {
                 return;
@@ -55,6 +59,9 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
                 }
             });
             this.content.classList.add("pageMenuContent");
+            this.content.addEventListener("click", (event) => {
+                event.stopPropagation();
+            });
             this.container.append(this.content);
             document.body.append(this.container);
         }

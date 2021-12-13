@@ -113,6 +113,10 @@ export class PageMenuMain implements PageMenuProvider {
     return this.mainMenu;
   }
 
+  refresh(): void {
+    /* Does nothing */
+  }
+
   private buildMainMenu(): HTMLElement[] {
     const boxMenu = this.mainMenu.querySelector(".boxMenu") as HTMLElement;
 
