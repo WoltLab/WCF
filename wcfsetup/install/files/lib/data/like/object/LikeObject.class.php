@@ -94,7 +94,6 @@ class LikeObject extends DatabaseObject
                             'renderedReactionIcon' => $reactionType->renderIcon(),
                             'renderedReactionIconEncoded' => JSON::encode($reactionType->renderIcon()),
                             'reactionTitle' => $reactionType->getTitle(),
-                            'reactionType' => $reactionType->type,
                         ];
                     }
                 }
@@ -158,7 +157,6 @@ class LikeObject extends DatabaseObject
      *      'renderedReactionIcon' => string,
      *      'renderedReactionIconEncoded' => string,
      *      'reactionTitle' => string,
-     *      'reactionType' => string,
      * ]
      *
      * If the object does not received any reaction yet, an empty array is returned.
