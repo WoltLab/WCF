@@ -47,8 +47,10 @@ class LikeObject extends DatabaseObject
     protected $users = [];
 
     /**
-     * A list with all reaction counts.
-     * @var int[]
+     * An array with all reaction types, which were received for the object. As key, the reactionTypeID
+     * is used. As value there is another array. If the object does not received any reaction yet,
+     * an empty array is returned.
+     * @var array
      */
     protected $reactions = [];
 
@@ -148,10 +150,20 @@ class LikeObject extends DatabaseObject
     }
 
     /**
-     * Returns all reaction counts for this object. Reactions without any count won't be saved in the array.
-     * So this method returns an empty array, if this object has no reactions.
+     * Returns an array with all reaction types, which were received for the object. As key, the reactionTypeID
+     * is used. As value there is another array, which has the following structure:
      *
-     * @return      int[]
+     * [
+     *      'reactionCount' => int,
+     *      'renderedReactionIcon' => string,
+     *      'renderedReactionIconEncoded' => string,
+     *      'reactionTitle' => string,
+     *      'reactionType' => string,
+     * ]
+     *
+     * If the object does not received any reaction yet, an empty array is returned.
+     *
+     * @return  array
      * @since   5.2
      */
     public function getReactions()
