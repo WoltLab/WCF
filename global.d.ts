@@ -20,7 +20,6 @@ declare global {
     WCF_PATH: string;
     WSC_API_URL: string;
 
-    Favico: any;
     jQuery: JQueryStatic;
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
