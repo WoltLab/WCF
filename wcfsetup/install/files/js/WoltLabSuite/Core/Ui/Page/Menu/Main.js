@@ -1,5 +1,5 @@
 /**
- * Provides the touch-friendly fullscreen main menu.
+ * Provides the touch-friendly main menu.
  *
  * @author Alexander Ebert
  * @copyright 2001-2021 WoltLab GmbH

@@ -1,89 +1,126 @@
 /**
- * Provides the touch-friendly fullscreen user menu.
+ * Provides the touch-friendly user menu.
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Page/Menu/User
+ * @author Alexander Ebert
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/User
  */
 
-import * as Core from "../../../Core";
-import * as EventHandler from "../../../Event/Handler";
+import PageMenuContainer from "./Container";
+import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
-import UiPageMenuAbstract from "./Abstract";
+import { getUserMenuProviders } from "../../User/Menu/Manager";
+import { UserMenuProvider } from "../../User/Menu/Data/Provider";
+import DomUtil from "../../../Dom/Util";
 
-interface EventPayload {
-  count: number;
-  identifier: string;
-}
+type CallbackOpen = (event: MouseEvent) => void;
 
-class UiPageMenuUser extends UiPageMenuAbstract {
-  /**
-   * Initializes the touch-friendly fullscreen user menu.
-   */
+type Tab = HTMLAnchorElement;
+type TabPanel = HTMLDivElement;
+type TabComponents = [Tab, TabPanel];
+
+type TabList = HTMLDivElement;
+type TabPanelContainer = HTMLDivElement;
+type TabMenu = [TabList, TabPanelContainer];
+
+export class PageMenuUser implements PageMenuProvider {
+  private readonly callbackOpen: CallbackOpen;
+  private readonly container: PageMenuContainer;
+  private readonly userMenu: HTMLElement;
+
   constructor() {
-    super("com.woltlab.wcf.UserMenuMobile", "pageUserMenuMobile", "#pageHeader .userPanel");
+    this.userMenu = document.querySelector(".userPanel")!;
 
-    EventHandler.add("com.woltlab.wcf.userMenu", "updateBadge", (data) => this.updateBadge(data));
+    this.container = new PageMenuContainer(this);
 
-    this.button.setAttribute("aria-label", Language.get("wcf.menu.user"));
-    this.button.setAttribute("role", "button");
+    this.callbackOpen = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      this.container.toggle();
+    };
   }
 
-  close(event?: Event): boolean {
-    // The user menu is not initialized if there are no items to display.
-    if (this.menu === undefined) {
-      return false;
-    }
-
-    const dropdown = window.WCF.Dropdown.Interactive.Handler.getOpenDropdown();
-    if (dropdown) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-
-      dropdown.close();
-
-      return true;
-    }
-
-    return super.close(event);
+  enable(): void {
+    this.userMenu.setAttribute("aria-expanded", "false");
+    this.userMenu.setAttribute("role", "button");
+    this.userMenu.tabIndex = 0;
+    this.userMenu.addEventListener("click", this.callbackOpen);
   }
 
-  private updateBadge(data: EventPayload): void {
-    this.menu.querySelectorAll(".menuOverlayItemBadge").forEach((item: HTMLElement) => {
-      if (item.dataset.badgeIdentifier === data.identifier) {
-        let badge = item.querySelector(".badge");
-        if (data.count) {
-          if (badge === null) {
-            badge = document.createElement("span");
-            badge.className = "badge badgeUpdate";
-            item.appendChild(badge);
-          }
+  disable(): void {
+    this.container.close();
 
-          badge.textContent = data.count.toString();
-        } else if (badge !== null) {
-          badge.remove();
-        }
+    this.userMenu.removeAttribute("aria-expanded");
+    this.userMenu.removeAttribute("role");
+    this.userMenu.removeAttribute("tabindex");
+    this.userMenu.removeEventListener("click", this.callbackOpen);
+  }
 
-        this.updateButtonState();
-      }
+  getContent(): DocumentFragment {
+    const fragment = document.createDocumentFragment();
+    fragment.append(...this.buildTabMenu());
+
+    return fragment;
+  }
+
+  getMenuButton(): HTMLElement {
+    return this.userMenu;
+  }
+
+  private buildTabMenu(): TabMenu {
+    const tabList = document.createElement("div");
+    tabList.classList.add("pageMenuUserTabList");
+    tabList.setAttribute("role", "tablist");
+    tabList.setAttribute("aria-label", Language.get("TODO"));
+
+    const tabPanelContainer = document.createElement("div");
+
+    // TODO: Inject the control panel first.
+
+    getUserMenuProviders().forEach((provider) => {
+      const [tab, tabPanel] = this.buildTab(provider);
+
+      tabList.append(tab);
+      tabPanelContainer.append(tabPanel);
     });
+
+    // TODO: Inject legacy user panel items.
+
+    return [tabList, tabPanelContainer];
   }
 
-  static hasValidMenu(): boolean {
-    const menu = document.querySelector("#pageUserMenuMobile > .menuOverlayItemList")!;
-    if (menu.childElementCount === 1 && menu.children[0].classList.contains("menuOverlayTitle")) {
-      const userPanel = document.querySelector("#pageHeader .userPanel")!;
-      userPanel.classList.add("hideUserPanel");
-      return false;
-    }
+  private buildTab(provider: UserMenuProvider): TabComponents {
+    const tabId = DomUtil.getUniqueId();
+    const panelId = DomUtil.getUniqueId();
 
-    return true;
+    const tab = document.createElement("a");
+    tab.classList.add("pageMenuUserTab");
+    tab.id = tabId;
+    tab.setAttribute("aria-controls", panelId);
+    tab.setAttribute("aria-selected", "false");
+    tab.setAttribute("role", "tab");
+    tab.tabIndex = -1;
+
+    const button = provider.getPanelButton().querySelector("a")!;
+    tab.setAttribute("aria-label", button.dataset.title || button.title);
+    tab.innerHTML = button.querySelector(".icon")!.outerHTML;
+
+    const panel = document.createElement("div");
+    panel.classList.add("pageMenuUserTabPanel");
+    panel.id = panelId;
+    panel.hidden = true;
+    panel.setAttribute("aria-labelledby", tabId);
+    panel.setAttribute("role", "tabpanel");
+    panel.tabIndex = 0;
+
+    return [tab, panel];
   }
 }
 
-Core.enableLegacyInheritance(UiPageMenuUser);
+export function hasValidUserMenu(): boolean {
+  return true;
+}
 
-export = UiPageMenuUser;
+export default PageMenuUser;

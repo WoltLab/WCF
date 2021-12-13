@@ -15,7 +15,7 @@ import * as UiAlignment from "./Alignment";
 import UiCloseOverlay from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
 import { PageMenuMain } from "./Page/Menu/Main";
-import UiPageMenuUser from "./Page/Menu/User";
+import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
 
 interface MainMenuMorePayload {
@@ -31,7 +31,7 @@ let _enableMobileMenu = false;
 const _knownMessages = new WeakSet<HTMLElement>();
 let _mobileSidebarEnabled = false;
 let _pageMenuMain: PageMenuMain;
-let _pageMenuUser: UiPageMenuUser | undefined = undefined;
+let _pageMenuUser: PageMenuUser | undefined = undefined;
 let _messageGroups: HTMLCollection | null = null;
 const _sidebars: HTMLElement[] = [];
 
@@ -166,8 +166,9 @@ function initMobileMenu(): void {
     _pageMenuMain = new PageMenuMain();
     _pageMenuMain.enable();
 
-    if (UiPageMenuUser.hasValidMenu()) {
-      _pageMenuUser = new UiPageMenuUser();
+    if (hasValidUserMenu()) {
+      _pageMenuUser = new PageMenuUser();
+      _pageMenuUser.enable();
     }
   }
 }

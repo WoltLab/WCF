@@ -17,7 +17,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
-    User_1 = (0, tslib_1.__importDefault)(User_1);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _dropdownMenu = null;
     let _dropdownMenuMessage = null;
@@ -138,8 +137,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         if (_enableMobileMenu) {
             _pageMenuMain = new Main_1.PageMenuMain();
             _pageMenuMain.enable();
-            if (User_1.default.hasValidMenu()) {
-                _pageMenuUser = new User_1.default();
+            if ((0, User_1.hasValidUserMenu)()) {
+                _pageMenuUser = new User_1.PageMenuUser();
+                _pageMenuUser.enable();
             }
         }
     }
