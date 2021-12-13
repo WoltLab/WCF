@@ -101,7 +101,7 @@ class RewriteTest {
       });
     });
 
-    const results: TestResult[] = await Promise.all(tests.map((test) => test.catch((result) => result)));
+    const results: TestResult[] = await Promise.all(tests.map((test) => test.catch((result: TestResult) => result)));
 
     const passed = results.every((result) => result.pass);
 
