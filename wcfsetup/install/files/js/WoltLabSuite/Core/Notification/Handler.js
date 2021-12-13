@@ -178,8 +178,10 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
                 catch (e) {
                     // The `Notification` constructor is not available on Android.
                     // See https://bugs.chromium.org/p/chromium/issues/detail?id=481856
-                    if (e.name === "TypeError") {
-                        return;
+                    if (e instanceof Error) {
+                        if (e.name === "TypeError") {
+                            return;
+                        }
                     }
                     throw e;
                 }
