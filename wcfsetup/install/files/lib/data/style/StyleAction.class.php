@@ -188,6 +188,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 } else {
                     $this->parameters['variables'][$type] = '';
                 }
+            } else {
+                $existingFile = $style->getVariable($type);
+                $filePath = $style->getAssetPath() . $existingFile;
+                if ($existingFile && \file_exists($filePath)) {
+                    \unlink($filePath);
+                }
             }
         }
 
@@ -274,6 +280,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
                     $file->setProcessed($newLocation);
                 } else {
+                    $existingFile = $style->{$type};
+                    $filePath = WCF_DIR . 'images/' . $existingFile;
+                    if ($existingFile && \file_exists($filePath)) {
+                        \unlink($filePath);
+                    }
+
                     (new StyleEditor($style))->update([
                         $type => '',
                     ]);
@@ -340,11 +352,15 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 }
             } else {
                 foreach ($images as $filename => $length) {
-                    \unlink($style->getAssetPath() . $filename);
+                    if (\file_exists($style->getAssetPath() . $filename)) {
+                        \unlink($style->getAssetPath() . $filename);
+                    }
                 }
-                \unlink($style->getAssetPath() . "favicon.ico");
-                \unlink($style->getAssetPath() . "manifest.json");
-                \unlink($style->getAssetPath() . "browserconfig.xml");
+                foreach (["favicon.ico", "manifest.json", "browserconfig.xml"] as $filename) {
+                    if (\file_exists($style->getAssetPath() . $filename)) {
+                        \unlink($style->getAssetPath() . $filename);
+                    }
+                }
                 foreach (['png', 'jpg', 'gif'] as $extension) {
                     if (\file_exists($style->getAssetPath() . "favicon-template." . $extension)) {
                         \unlink($style->getAssetPath() . "favicon-template." . $extension);
@@ -443,6 +459,11 @@ BROWSERCONFIG;
 
                 $file->setProcessed($newLocation);
             } else {
+                $filePath = $style->getAssetPath() . 'coverPhoto' . $style->coverPhotoExtension;
+                if (\file_exists($filePath)) {
+                    \unlink($filePath);
+                }
+
                 (new StyleEditor($style))->update([
                     'coverPhotoExtension' => '',
                 ]);

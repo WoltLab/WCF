@@ -434,10 +434,9 @@ class StyleAddForm extends AbstractForm
 
         $this->uploads = [];
         foreach (\array_keys($this->getUploadFields()) as $field) {
-            $removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
-            if (!empty($removedFiles)) {
-                $this->uploads[$field] = null;
-            }
+            // Call this method, to ensure, that the removed files are marked as proccessed.
+            UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
+            $this->uploads[$field] = null;
 
             $files = UploadHandler::getInstance()->getFilesByFieldId($field);
             if (!empty($files)) {
