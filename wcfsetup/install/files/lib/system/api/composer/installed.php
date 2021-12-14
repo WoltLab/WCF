@@ -154,7 +154,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => '6ea5a5429d9cf91c8d57a1756505356e54a27646',
+            'reference' => 'a4cb0d7758a48c71ae04f448d2ad3c5d97d73fc4',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
