@@ -4,9 +4,9 @@ namespace wcf\system\style;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\HttpFactory;
 use wcf\system\SingletonFactory;
@@ -158,7 +158,7 @@ EOT
             } else {
                 throw new FontDownloadFailed("Unable to download font family '" . $family . "'.", '', $e);
             }
-        } catch (RequestException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new FontDownloadFailed("Unable to download font family '" . $family . "'.", '', $e);
         }
     }
