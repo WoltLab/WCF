@@ -49,7 +49,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     const INFO_FILE = 'style.xml';
 
-    const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp'];
+    const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp', 'ico'];
 
     /**
      * list of compatible API versions
@@ -706,6 +706,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
                         $imagesTar->extract($key, $targetFile);
                         FileUtil::makeWritable($targetFile);
+
+                        if (\preg_match('/^favicon\-template\.(png|jpg|gif)$/', \basename($targetFile))) {
+                            $style->update([
+                                'hasFavicon' => 1,
+                            ]);
+                        }
                     }
                 }
 
