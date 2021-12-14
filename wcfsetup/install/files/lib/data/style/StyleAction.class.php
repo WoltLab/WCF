@@ -188,6 +188,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 } else {
                     $this->parameters['variables'][$type] = '';
                 }
+            } else {
+                // If the key was not provided then no change is desired. We must re-use
+                // the current value, because all variables will be cleared.
+                $this->parameters['variables'][$type] = $style->getVariable($type);
             }
         }
 
