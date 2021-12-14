@@ -33,6 +33,6 @@ return [
             EnumDatabaseTableColumn::create('apiVersion')
                 ->enumValues(['3.0', '3.1', '5.2', '5.5'])
                 ->notNull()
-                ->defaultValue('3.0')
+                ->defaultValue('3.0'),
         ]),
 ];
