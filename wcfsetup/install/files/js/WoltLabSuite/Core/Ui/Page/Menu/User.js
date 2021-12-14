@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module WoltLabSuite/Core/Ui/Page/Menu/User
  */
-define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1) {
+define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hasValidUserMenu = exports.PageMenuUser = void 0;
@@ -87,16 +87,26 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.attachViewToPanel(tab);
         }
         attachViewToPanel(tab) {
+            const origin = tab.dataset.origin;
             const tabPanel = this.tabPanels.get(tab);
-            if (tabPanel.childElementCount === 0) {
-                const provider = this.userMenuProviders.get(tab);
-                if (provider) {
-                    const view = provider.getView();
-                    tabPanel.append(view.getElement());
-                    void view.open();
+            if (origin === "userMenu") {
+                const element = (0, ControlPanel_1.getElement)();
+                element.hidden = false;
+                if (tabPanel.childElementCount === 0) {
+                    tabPanel.append(element);
                 }
-                else {
-                    throw new Error("TODO: Legacy user panel menus");
+            }
+            else {
+                if (tabPanel.childElementCount === 0) {
+                    const provider = this.userMenuProviders.get(tab);
+                    if (provider) {
+                        const view = provider.getView();
+                        tabPanel.append(view.getElement());
+                        void view.open();
+                    }
+                    else {
+                        throw new Error("TODO: Legacy user panel menus");
+                    }
                 }
             }
         }
@@ -147,7 +157,11 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             tabList.setAttribute("role", "tablist");
             tabList.setAttribute("aria-label", Language.get("TODO"));
             tabContainer.append(tabList);
-            // TODO: Inject the control panel first.
+            const [tab, tabPanel] = this.buildControlPanelTab();
+            tabList.append(tab);
+            tabContainer.append(tabPanel);
+            this.tabs.push(tab);
+            this.tabPanels.set(tab, tabPanel);
             (0, Manager_1.getUserMenuProviders)().forEach((provider) => {
                 const [tab, tabPanel] = this.buildTab(provider);
                 tabList.append(tab);
@@ -160,19 +174,39 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return tabContainer;
         }
         buildTab(provider) {
+            const panelButton = provider.getPanelButton();
+            const button = panelButton.querySelector("a");
+            const data = {
+                icon: button.querySelector(".icon").outerHTML,
+                label: button.dataset.title || button.title,
+                origin: panelButton.id,
+            };
+            return this.buildTabComponents(data);
+        }
+        buildControlPanelTab() {
+            const panel = document.getElementById("topMenu");
+            const userMenu = document.getElementById("userMenu");
+            const userMenuButton = userMenu.querySelector("a");
+            const data = {
+                icon: panel.querySelector(".userPanelAvatar .userAvatarImage").outerHTML,
+                label: userMenuButton.dataset.title || userMenuButton.title,
+                origin: userMenu.id,
+            };
+            return this.buildTabComponents(data);
+        }
+        buildTabComponents(data) {
             const tabId = Util_1.default.getUniqueId();
             const panelId = Util_1.default.getUniqueId();
             const tab = document.createElement("a");
             tab.classList.add("pageMenuUserTab");
-            tab.dataset.origin = provider.getPanelButton().id;
+            tab.dataset.origin = data.origin;
             tab.id = tabId;
             tab.setAttribute("aria-controls", panelId);
             tab.setAttribute("aria-selected", "false");
             tab.setAttribute("role", "tab");
             tab.tabIndex = -1;
-            const button = provider.getPanelButton().querySelector("a");
-            tab.setAttribute("aria-label", button.dataset.title || button.title);
-            tab.innerHTML = button.querySelector(".icon").outerHTML;
+            tab.setAttribute("aria-label", data.label);
+            tab.innerHTML = data.icon;
             tab.addEventListener("click", (event) => {
                 event.preventDefault();
                 this.openTab(tab);

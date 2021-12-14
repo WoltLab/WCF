@@ -13,12 +13,19 @@ import * as Language from "../../../Language";
 import { getUserMenuProviders } from "../../User/Menu/Manager";
 import { UserMenuProvider } from "../../User/Menu/Data/Provider";
 import DomUtil from "../../../Dom/Util";
+import { getElement as getControlPanelElement } from "../../User/Menu/ControlPanel";
 
 type CallbackOpen = (event: MouseEvent) => void;
 
 type Tab = HTMLAnchorElement;
 type TabPanel = HTMLDivElement;
 type TabComponents = [Tab, TabPanel];
+
+type TabData = {
+  icon: string;
+  label: string;
+  origin: string;
+};
 
 export class PageMenuUser implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
@@ -117,15 +124,26 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   private attachViewToPanel(tab: HTMLAnchorElement): void {
+    const origin = tab.dataset.origin!;
     const tabPanel = this.tabPanels.get(tab)!;
-    if (tabPanel.childElementCount === 0) {
-      const provider = this.userMenuProviders.get(tab);
-      if (provider) {
-        const view = provider.getView();
-        tabPanel.append(view.getElement());
-        void view.open();
-      } else {
-        throw new Error("TODO: Legacy user panel menus");
+
+    if (origin === "userMenu") {
+      const element = getControlPanelElement();
+      element.hidden = false;
+
+      if (tabPanel.childElementCount === 0) {
+        tabPanel.append(element);
+      }
+    } else {
+      if (tabPanel.childElementCount === 0) {
+        const provider = this.userMenuProviders.get(tab);
+        if (provider) {
+          const view = provider.getView();
+          tabPanel.append(view.getElement());
+          void view.open();
+        } else {
+          throw new Error("TODO: Legacy user panel menus");
+        }
       }
     }
   }
@@ -183,7 +201,12 @@ export class PageMenuUser implements PageMenuProvider {
     tabList.setAttribute("aria-label", Language.get("TODO"));
     tabContainer.append(tabList);
 
-    // TODO: Inject the control panel first.
+    const [tab, tabPanel] = this.buildControlPanelTab();
+    tabList.append(tab);
+    tabContainer.append(tabPanel);
+
+    this.tabs.push(tab);
+    this.tabPanels.set(tab, tabPanel);
 
     getUserMenuProviders().forEach((provider) => {
       const [tab, tabPanel] = this.buildTab(provider);
@@ -202,21 +225,47 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   private buildTab(provider: UserMenuProvider): TabComponents {
+    const panelButton = provider.getPanelButton();
+    const button = panelButton.querySelector("a")!;
+
+    const data: TabData = {
+      icon: button.querySelector(".icon")!.outerHTML,
+      label: button.dataset.title || button.title,
+      origin: panelButton.id,
+    };
+
+    return this.buildTabComponents(data);
+  }
+
+  private buildControlPanelTab(): TabComponents {
+    const panel = document.getElementById("topMenu")!;
+    const userMenu = document.getElementById("userMenu")!;
+    const userMenuButton = userMenu.querySelector("a")!;
+
+    const data: TabData = {
+      icon: panel.querySelector(".userPanelAvatar .userAvatarImage")!.outerHTML,
+      label: userMenuButton.dataset.title || userMenuButton.title,
+      origin: userMenu.id,
+    };
+
+    return this.buildTabComponents(data);
+  }
+
+  private buildTabComponents(data: TabData): TabComponents {
     const tabId = DomUtil.getUniqueId();
     const panelId = DomUtil.getUniqueId();
 
     const tab = document.createElement("a");
     tab.classList.add("pageMenuUserTab");
-    tab.dataset.origin = provider.getPanelButton().id;
+    tab.dataset.origin = data.origin;
     tab.id = tabId;
     tab.setAttribute("aria-controls", panelId);
     tab.setAttribute("aria-selected", "false");
     tab.setAttribute("role", "tab");
     tab.tabIndex = -1;
 
-    const button = provider.getPanelButton().querySelector("a")!;
-    tab.setAttribute("aria-label", button.dataset.title || button.title);
-    tab.innerHTML = button.querySelector(".icon")!.outerHTML;
+    tab.setAttribute("aria-label", data.label);
+    tab.innerHTML = data.icon;
 
     tab.addEventListener("click", (event) => {
       event.preventDefault();

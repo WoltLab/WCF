@@ -54,6 +54,10 @@ function close(): void {
   link.setAttribute("aria-expanded", "false");
 }
 
+export function getElement(): HTMLElement {
+  return element;
+}
+
 let isInitialized = false;
 export function setup(): void {
   if (!isInitialized) {

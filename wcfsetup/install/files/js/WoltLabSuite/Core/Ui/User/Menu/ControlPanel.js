@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus-trap", "../../Alignment", "../../../Dom/Util"], function (require, exports, tslib_1, CloseOverlay_1, Manager_1, focus_trap_1, Alignment, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = exports.getElement = void 0;
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     Alignment = (0, tslib_1.__importStar)(Alignment);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
@@ -42,6 +42,10 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
         button.classList.remove("open");
         link.setAttribute("aria-expanded", "false");
     }
+    function getElement() {
+        return element;
+    }
+    exports.getElement = getElement;
     let isInitialized = false;
     function setup() {
         if (!isInitialized) {

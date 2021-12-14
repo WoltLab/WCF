@@ -60,7 +60,7 @@
 					</div>
 					<div class="userMenuContentDivider"></div>
 					{/if}
-					<div class="userMenuContent">
+					<div class="userMenuContent userMenuContentScrollable">
 						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
 						<div class="userMenuItem userMenuItemNarrow" data-category="{$menuItem[category]->menuItem}">
 							<div class="userMenuItemImage">
