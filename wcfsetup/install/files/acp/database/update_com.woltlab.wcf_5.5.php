@@ -10,6 +10,7 @@
  */
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
@@ -26,5 +27,12 @@ return [
     PartialDatabaseTable::create('wcf1_comment_response')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('hasEmbeddedObjects'),
+        ]),
+    PartialDatabaseTable::create('wcf1_style')
+        ->columns([
+            EnumDatabaseTableColumn::create('apiVersion')
+                ->enumValues(['3.0', '3.1', '5.2', '5.5'])
+                ->notNull()
+                ->defaultValue('3.0')
         ]),
 ];
