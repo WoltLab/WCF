@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class PageMenuUser {
         constructor() {
+            this.userMenuProviders = new Map();
             this.tabPanels = new Map();
             this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
@@ -40,21 +41,30 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         }
         getContent() {
             const fragment = document.createDocumentFragment();
-            fragment.append(...this.buildTabMenu());
+            fragment.append(this.buildTabMenu());
             return fragment;
         }
         getMenuButton() {
             return this.userMenu;
         }
         refresh() {
-            this.openNotifications();
+            const activeTab = this.tabs.find((element) => element.getAttribute("aria-selected") === "true");
+            if (activeTab === undefined) {
+                this.openNotifications();
+            }
+            else {
+                // The UI elements in the tab panel are shared and can appear in a different
+                // context. The element might have been moved elsewhere while the menu was
+                // closed.
+                this.attachViewToPanel(activeTab);
+            }
         }
         openNotifications() {
             const notifications = this.tabs.find((element) => element.dataset.origin === "userNotifications");
             if (!notifications) {
                 throw new Error("Unable to find the notifications tab.");
             }
-            notifications.click();
+            this.openTab(notifications);
         }
         openTab(tab) {
             if (tab.getAttribute("aria-selected") === "true") {
@@ -73,6 +83,21 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             tabPanel.hidden = false;
             if (document.activeElement !== tab) {
                 tab.focus();
+            }
+            this.attachViewToPanel(tab);
+        }
+        attachViewToPanel(tab) {
+            const tabPanel = this.tabPanels.get(tab);
+            if (tabPanel.childElementCount === 0) {
+                const provider = this.userMenuProviders.get(tab);
+                if (provider) {
+                    const view = provider.getView();
+                    tabPanel.append(view.getElement());
+                    void view.open();
+                }
+                else {
+                    throw new Error("TODO: Legacy user panel menus");
+                }
             }
         }
         keydown(event) {
@@ -115,21 +140,24 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.tabs[index].focus();
         }
         buildTabMenu() {
+            const tabContainer = document.createElement("div");
+            tabContainer.classList.add("pageMenuUserTabContainer");
             const tabList = document.createElement("div");
             tabList.classList.add("pageMenuUserTabList");
             tabList.setAttribute("role", "tablist");
             tabList.setAttribute("aria-label", Language.get("TODO"));
-            const tabPanelContainer = document.createElement("div");
+            tabContainer.append(tabList);
             // TODO: Inject the control panel first.
             (0, Manager_1.getUserMenuProviders)().forEach((provider) => {
                 const [tab, tabPanel] = this.buildTab(provider);
                 tabList.append(tab);
-                tabPanelContainer.append(tabPanel);
+                tabContainer.append(tabPanel);
                 this.tabs.push(tab);
                 this.tabPanels.set(tab, tabPanel);
+                this.userMenuProviders.set(tab, provider);
             });
             // TODO: Inject legacy user panel items.
-            return [tabList, tabPanelContainer];
+            return tabContainer;
         }
         buildTab(provider) {
             const tabId = Util_1.default.getUniqueId();
@@ -157,7 +185,6 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             panel.setAttribute("aria-labelledby", tabId);
             panel.setAttribute("role", "tabpanel");
             panel.tabIndex = 0;
-            panel.textContent = "panel for #" + provider.getPanelButton().id;
             return [tab, panel];
         }
     }

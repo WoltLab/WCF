@@ -315,6 +315,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
      * Enables the mobile UI.
      */
     function enable() {
+        CloseOverlay_1.default.execute();
         _enabled = true;
         if (_enableMobileMenu) {
             _pageMenuMain.enable();
@@ -335,6 +336,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
      * Disables the mobile UI.
      */
     function disable() {
+        CloseOverlay_1.default.execute();
         _enabled = false;
         if (_enableMobileMenu) {
             _pageMenuMain.disable();

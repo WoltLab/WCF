@@ -1,0 +1,159 @@
+.pageMenuContainer {
+    background-color: rgba(0, 0, 0, 0.34);
+    bottom: 0;
+    display: grid;
+    grid-template-areas: "content";
+    grid-template-columns: auto;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 50px;
+    z-index: 300;
+}
+
+.pageMenuContent {
+    --background-color: #{$wcfUserMenuBackground};
+    --background-color-active: #{$wcfUserMenuBackgroundActive};
+    --border-color: #{$wcfUserMenuBorder};
+    --color: #{$wcfUserMenuText};
+    --color-dimmed: #{$wcfUserMenuTextDimmed};
+    --color-indicator: #{$wcfUserMenuIndicator};
+
+    background-color: var(--background-color);
+    grid-area: content;
+}
+
+.pageMenuMainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pageMenuMainNavigationFooter {
+    margin-top: auto;
+}
+
+.pageMenuMainItem {
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.pageMenuMainItemExpandable {
+    display: grid;
+    grid-template-areas:
+        "item button"
+        "list list";
+    grid-template-columns: auto 44px;
+}
+
+.pageMenuMainItemLink {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    font-weight: 600;
+    grid-area: item;
+    min-height: 44px;
+    padding: 0 10px;
+}
+
+.pageMenuMainItemToggle {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    &::before {
+        border-left: 1px solid var(--border-color);
+        bottom: 10px;
+        content: "";
+        left: 0;
+        position: absolute;
+        top: 10px;
+    }
+
+    .icon {
+        transform: rotate(0);
+    }
+
+    &[aria-expanded="true"] .icon {
+        transform: rotate(180deg);
+    }
+}
+
+.pageMenuMainItemList {
+    grid-area: list;
+}
+
+.pageMenuMainItem .pageMenuMainItemList {
+    padding: 10px 0 20px 0;
+
+    .pageMenuMainItem {
+        border-bottom-width: 0;
+    }
+
+    .pageMenuMainItemLink {
+        font-weight: 400;
+        min-height: 34px;
+        padding-left: 20px;
+    }
+}
+
+.pageMenuMainNavigationFooter .pageMenuMainItem:last-child {
+    border-bottom-width: 0;
+}
+
+.pageMenuUserTabContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pageMenuUserTabList {
+    border-bottom: 1px solid var(--border-color);
+    display: grid;
+    grid-auto-columns: minmax(70px, 1fr);
+    grid-auto-flow: column;
+    overflow: auto;
+}
+
+.pageMenuUserTab {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+
+    &:not(:last-child) {
+        border-right: 1px solid var(--border-color);
+    }
+
+    &[aria-selected="true"] {
+        background-color: var(--background-color-active);
+    }
+}
+
+.pageMenuUserTabPanel {
+    flex: 1 auto;
+}
+
+@include screen-md-down {
+    .mainMenu[aria-expanded="true"]::before {
+        content: $fa-var-times;
+    }
+
+    .userPanel.userPanelLoggedIn[aria-expanded="true"] {
+        &::before {
+            content: $fa-var-times;
+            color: $wcfHeaderLink;
+            font-family: FontAwesome;
+            font-size: 28px;
+            line-height: 32px;
+            padding: 5px 5px;
+        }
+
+        .userPanelAvatar {
+            display: none;
+        }
+    }
+}

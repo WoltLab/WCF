@@ -7,13 +7,8 @@
 	--color-indicator: #{$wcfUserMenuIndicator};
 
 	background-color: var(--background-color);
-	border-radius: 5px;
-	box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
 	color: var(--color);
 	pointer-events: all;
-	position: fixed;
-	width: 400px;
-	z-index: 450;
 
 	&.userMenuControlPanel {
 		.userMenuItemImage {
@@ -32,21 +27,23 @@
 	.icon {
 		color: var(--color);
 	}
+}
 
-	/* TODO: This is for the old mobile menu only. */
-	@include screen-xs {
-		border-radius: 0;
-		bottom: 0 !important;
-		display: flex;
-		left: 0 !important;
-		flex-direction: column;
-		right: 0 !important;
-		top: 50px !important;
-		width: 100%;
+.dropdownMenuContainer .userMenu {
+	border-radius: 5px;
+	box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+	position: fixed;
+	width: 400px;
+	z-index: 450;
+}
 
-		.userMenuContent {
-			flex: 1 auto;
-		}
+.pageMenuUserTabPanel .userMenu {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	.userMenuContent {
+		flex: 1 auto;
 	}
 }
 

@@ -378,6 +378,8 @@ export function setup(enableMobileMenu: boolean): void {
  * Enables the mobile UI.
  */
 export function enable(): void {
+  UiCloseOverlay.execute();
+
   _enabled = true;
   if (_enableMobileMenu) {
     _pageMenuMain.enable();
@@ -398,6 +400,8 @@ export function enableShadow(): void {
  * Disables the mobile UI.
  */
 export function disable(): void {
+  UiCloseOverlay.execute();
+
   _enabled = false;
   if (_enableMobileMenu) {
     _pageMenuMain.disable();

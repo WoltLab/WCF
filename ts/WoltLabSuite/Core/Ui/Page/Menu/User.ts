@@ -20,13 +20,10 @@ type Tab = HTMLAnchorElement;
 type TabPanel = HTMLDivElement;
 type TabComponents = [Tab, TabPanel];
 
-type TabList = HTMLDivElement;
-type TabPanelContainer = HTMLDivElement;
-type TabMenu = [TabList, TabPanelContainer];
-
 export class PageMenuUser implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
+  private readonly userMenuProviders = new Map<HTMLAnchorElement, UserMenuProvider>();
   private readonly tabPanels = new Map<HTMLAnchorElement, HTMLDivElement>();
   private readonly tabs: HTMLAnchorElement[] = [];
   private readonly userMenu: HTMLElement;
@@ -62,7 +59,7 @@ export class PageMenuUser implements PageMenuProvider {
 
   getContent(): DocumentFragment {
     const fragment = document.createDocumentFragment();
-    fragment.append(...this.buildTabMenu());
+    fragment.append(this.buildTabMenu());
 
     return fragment;
   }
@@ -72,7 +69,15 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   refresh(): void {
-    this.openNotifications();
+    const activeTab = this.tabs.find((element) => element.getAttribute("aria-selected") === "true");
+    if (activeTab === undefined) {
+      this.openNotifications();
+    } else {
+      // The UI elements in the tab panel are shared and can appear in a different
+      // context. The element might have been moved elsewhere while the menu was
+      // closed.
+      this.attachViewToPanel(activeTab);
+    }
   }
 
   private openNotifications(): void {
@@ -81,7 +86,7 @@ export class PageMenuUser implements PageMenuProvider {
       throw new Error("Unable to find the notifications tab.");
     }
 
-    notifications.click();
+    this.openTab(notifications);
   }
 
   private openTab(tab: HTMLAnchorElement): void {
@@ -106,6 +111,22 @@ export class PageMenuUser implements PageMenuProvider {
 
     if (document.activeElement !== tab) {
       tab.focus();
+    }
+
+    this.attachViewToPanel(tab);
+  }
+
+  private attachViewToPanel(tab: HTMLAnchorElement): void {
+    const tabPanel = this.tabPanels.get(tab)!;
+    if (tabPanel.childElementCount === 0) {
+      const provider = this.userMenuProviders.get(tab);
+      if (provider) {
+        const view = provider.getView();
+        tabPanel.append(view.getElement());
+        void view.open();
+      } else {
+        throw new Error("TODO: Legacy user panel menus");
+      }
     }
   }
 
@@ -152,13 +173,15 @@ export class PageMenuUser implements PageMenuProvider {
     this.tabs[index].focus();
   }
 
-  private buildTabMenu(): TabMenu {
+  private buildTabMenu(): HTMLDivElement {
+    const tabContainer = document.createElement("div");
+    tabContainer.classList.add("pageMenuUserTabContainer");
+
     const tabList = document.createElement("div");
     tabList.classList.add("pageMenuUserTabList");
     tabList.setAttribute("role", "tablist");
     tabList.setAttribute("aria-label", Language.get("TODO"));
-
-    const tabPanelContainer = document.createElement("div");
+    tabContainer.append(tabList);
 
     // TODO: Inject the control panel first.
 
@@ -166,15 +189,16 @@ export class PageMenuUser implements PageMenuProvider {
       const [tab, tabPanel] = this.buildTab(provider);
 
       tabList.append(tab);
-      tabPanelContainer.append(tabPanel);
+      tabContainer.append(tabPanel);
 
       this.tabs.push(tab);
       this.tabPanels.set(tab, tabPanel);
+      this.userMenuProviders.set(tab, provider);
     });
 
     // TODO: Inject legacy user panel items.
 
-    return [tabList, tabPanelContainer];
+    return tabContainer;
   }
 
   private buildTab(provider: UserMenuProvider): TabComponents {
@@ -208,7 +232,6 @@ export class PageMenuUser implements PageMenuProvider {
     panel.setAttribute("aria-labelledby", tabId);
     panel.setAttribute("role", "tabpanel");
     panel.tabIndex = 0;
-    panel.textContent = "panel for #" + provider.getPanelButton().id;
 
     return [tab, panel];
   }

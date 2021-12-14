@@ -20,8 +20,9 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
         open() {
             CloseOverlay_1.default.execute();
             this.buildElements();
-            this.content.innerHTML = "";
-            this.content.append(this.provider.getContent());
+            if (this.content.childElementCount === 0) {
+                this.content.append(this.provider.getContent());
+            }
             this.provider.getMenuButton().setAttribute("aria-expanded", "true");
             (0, Screen_1.pageOverlayOpen)();
             (0, Screen_1.scrollDisable)();
