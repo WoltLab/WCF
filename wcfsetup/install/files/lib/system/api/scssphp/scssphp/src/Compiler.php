@@ -203,7 +203,7 @@ class Compiler
      */
     protected $charsetSeen;
     /**
-     * @var array<int, string>
+     * @var array<int, string|null>
      */
     protected $sourceNames;
 
@@ -458,7 +458,7 @@ class Compiler
     /**
      * Instantiate parser
      *
-     * @param string $path
+     * @param string|null $path
      *
      * @return \ScssPhp\ScssPhp\Parser
      */
@@ -471,7 +471,7 @@ class Compiler
         // Otherwise, the CSS will be rendered as-is. It can even be extended!
         $cssOnly = false;
 
-        if (substr($path, '-4') === '.css') {
+        if ($path !== null && substr($path, -4) === '.css') {
             $cssOnly = true;
         }
 
@@ -5479,12 +5479,16 @@ class Compiler
     }
 
     /**
-     * @param string $path
+     * @param string|null $path
      *
      * @return string
      */
     private function getPrettyPath($path)
     {
+        if ($path === null) {
+            return '(unknown file)';
+        }
+
         $normalizedPath = $path;
         $normalizedRootDirectory = $this->rootDirectory.'/';
 
@@ -5684,6 +5688,10 @@ class Compiler
             }
 
             $file = $this->sourceNames[$env->block->sourceIndex];
+
+            if ($file === null) {
+                continue;
+            }
 
             if (realpath($file) === $name) {
                 throw $this->error('An @import loop has been found: %s imports %s', $file, basename($file));

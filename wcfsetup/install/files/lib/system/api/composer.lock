@@ -801,12 +801,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/scssphp",
-                "reference": "0c5596430dce019f00d1d4f082c03db848cb3b65"
+                "reference": "6ea5a5429d9cf91c8d57a1756505356e54a27646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/scssphp/zipball/0c5596430dce019f00d1d4f082c03db848cb3b65",
-                "reference": "0c5596430dce019f00d1d4f082c03db848cb3b65",
+                "url": "https://api.github.com/repos/WoltLab/scssphp/zipball/6ea5a5429d9cf91c8d57a1756505356e54a27646",
+                "reference": "6ea5a5429d9cf91c8d57a1756505356e54a27646",
                 "shasum": ""
             },
             "require": {
@@ -860,7 +860,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2021-08-13T09:16:55+00:00"
+            "time": "2021-05-17T09:53:41+00:00"
         },
         {
             "name": "symfony/css-selector",
