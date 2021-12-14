@@ -18,7 +18,7 @@ import { getElement as getControlPanelElement } from "../../User/Menu/ControlPan
 type CallbackOpen = (event: MouseEvent) => void;
 
 type Tab = HTMLAnchorElement;
-type TabPanel = HTMLDivElement;
+type TabPanel = HTMLElement;
 type TabComponents = [Tab, TabPanel];
 
 type TabData = {
@@ -30,9 +30,9 @@ type TabData = {
 export class PageMenuUser implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
-  private readonly userMenuProviders = new Map<HTMLAnchorElement, UserMenuProvider>();
-  private readonly tabPanels = new Map<HTMLAnchorElement, HTMLDivElement>();
-  private readonly tabs: HTMLAnchorElement[] = [];
+  private readonly userMenuProviders = new Map<Tab, UserMenuProvider>();
+  private readonly tabPanels = new Map<Tab, HTMLElement>();
+  private readonly tabs: Tab[] = [];
   private readonly userMenu: HTMLElement;
 
   constructor() {
@@ -96,7 +96,7 @@ export class PageMenuUser implements PageMenuProvider {
     this.openTab(notifications);
   }
 
-  private openTab(tab: HTMLAnchorElement): void {
+  private openTab(tab: Tab): void {
     if (tab.getAttribute("aria-selected") === "true") {
       return;
     }
@@ -123,7 +123,7 @@ export class PageMenuUser implements PageMenuProvider {
     this.attachViewToPanel(tab);
   }
 
-  private attachViewToPanel(tab: HTMLAnchorElement): void {
+  private attachViewToPanel(tab: Tab): void {
     const origin = tab.dataset.origin!;
     const tabPanel = this.tabPanels.get(tab)!;
 
@@ -149,7 +149,7 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   private keydown(event: KeyboardEvent): void {
-    const tab = event.currentTarget as HTMLAnchorElement;
+    const tab = event.currentTarget as Tab;
 
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -191,7 +191,7 @@ export class PageMenuUser implements PageMenuProvider {
     this.tabs[index].focus();
   }
 
-  private buildTabMenu(): HTMLDivElement {
+  private buildTabMenu(): HTMLElement {
     const tabContainer = document.createElement("div");
     tabContainer.classList.add("pageMenuUserTabContainer");
 
@@ -201,12 +201,7 @@ export class PageMenuUser implements PageMenuProvider {
     tabList.setAttribute("aria-label", Language.get("TODO"));
     tabContainer.append(tabList);
 
-    const [tab, tabPanel] = this.buildControlPanelTab();
-    tabList.append(tab);
-    tabContainer.append(tabPanel);
-
-    this.tabs.push(tab);
-    this.tabPanels.set(tab, tabPanel);
+    this.buildControlPanelTab(tabList, tabContainer);
 
     getUserMenuProviders().forEach((provider) => {
       const [tab, tabPanel] = this.buildTab(provider);
@@ -237,7 +232,7 @@ export class PageMenuUser implements PageMenuProvider {
     return this.buildTabComponents(data);
   }
 
-  private buildControlPanelTab(): TabComponents {
+  private buildControlPanelTab(tabList: HTMLElement, tabContainer: HTMLElement): void {
     const panel = document.getElementById("topMenu")!;
     const userMenu = document.getElementById("userMenu")!;
     const userMenuButton = userMenu.querySelector("a")!;
@@ -248,7 +243,13 @@ export class PageMenuUser implements PageMenuProvider {
       origin: userMenu.id,
     };
 
-    return this.buildTabComponents(data);
+    const [tab, tabPanel] = this.buildTabComponents(data);
+
+    tabList.append(tab);
+    tabContainer.append(tabPanel);
+
+    this.tabs.push(tab);
+    this.tabPanels.set(tab, tabPanel);
   }
 
   private buildTabComponents(data: TabData): TabComponents {

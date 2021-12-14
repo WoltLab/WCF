@@ -157,11 +157,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             tabList.setAttribute("role", "tablist");
             tabList.setAttribute("aria-label", Language.get("TODO"));
             tabContainer.append(tabList);
-            const [tab, tabPanel] = this.buildControlPanelTab();
-            tabList.append(tab);
-            tabContainer.append(tabPanel);
-            this.tabs.push(tab);
-            this.tabPanels.set(tab, tabPanel);
+            this.buildControlPanelTab(tabList, tabContainer);
             (0, Manager_1.getUserMenuProviders)().forEach((provider) => {
                 const [tab, tabPanel] = this.buildTab(provider);
                 tabList.append(tab);
@@ -183,7 +179,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             };
             return this.buildTabComponents(data);
         }
-        buildControlPanelTab() {
+        buildControlPanelTab(tabList, tabContainer) {
             const panel = document.getElementById("topMenu");
             const userMenu = document.getElementById("userMenu");
             const userMenuButton = userMenu.querySelector("a");
@@ -192,7 +188,11 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 label: userMenuButton.dataset.title || userMenuButton.title,
                 origin: userMenu.id,
             };
-            return this.buildTabComponents(data);
+            const [tab, tabPanel] = this.buildTabComponents(data);
+            tabList.append(tab);
+            tabContainer.append(tabPanel);
+            this.tabs.push(tab);
+            this.tabPanels.set(tab, tabPanel);
         }
         buildTabComponents(data) {
             const tabId = Util_1.default.getUniqueId();
