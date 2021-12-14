@@ -706,6 +706,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
                         $imagesTar->extract($key, $targetFile);
                         FileUtil::makeWritable($targetFile);
+
+                        if (\preg_match('/^favicon\-template\.(png|jpg|gif)$/', \basename($targetFile))) {
+                            $style->update([
+                                'hasFavicon' => 1,
+                            ]);
+                        }
                     }
                 }
 
