@@ -49,7 +49,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     const INFO_FILE = 'style.xml';
 
-    const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp'];
+    const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp', 'ico'];
 
     /**
      * list of compatible API versions
