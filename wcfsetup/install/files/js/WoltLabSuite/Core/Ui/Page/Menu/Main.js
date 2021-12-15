@@ -81,7 +81,10 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         getMenuButton() {
             return this.mainMenu;
         }
-        refresh() {
+        sleep() {
+            /* Does nothing */
+        }
+        wakeup() {
             /* Does nothing */
         }
         buildMainMenu() {

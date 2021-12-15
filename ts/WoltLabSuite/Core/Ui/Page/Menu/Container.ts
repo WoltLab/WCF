@@ -37,7 +37,7 @@ export class PageMenuContainer {
     scrollDisable();
 
     this.container.hidden = false;
-    this.provider.refresh();
+    this.provider.wakeup();
 
     this.getFocusTrap().activate();
   }
@@ -50,6 +50,8 @@ export class PageMenuContainer {
 
     this.container.hidden = true;
     this.getFocusTrap().deactivate();
+
+    this.provider.sleep();
   }
 
   toggle(): void {

@@ -7,5 +7,7 @@ export interface PageMenuProvider {
 
   getMenuButton(): HTMLElement;
 
-  refresh(): void;
+  sleep(): void;
+
+  wakeup(): void;
 }

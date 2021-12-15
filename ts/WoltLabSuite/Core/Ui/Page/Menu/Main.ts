@@ -113,7 +113,11 @@ export class PageMenuMain implements PageMenuProvider {
     return this.mainMenu;
   }
 
-  refresh(): void {
+  sleep(): void {
+    /* Does nothing */
+  }
+
+  wakeup(): void {
     /* Does nothing */
   }
 

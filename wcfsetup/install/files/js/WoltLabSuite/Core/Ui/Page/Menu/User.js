@@ -16,6 +16,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class PageMenuUser {
         constructor() {
+            this.activeTab = undefined;
             this.legacyUserPanels = new Map();
             this.userMenuProviders = new Map();
             this.tabPanels = new Map();
@@ -49,16 +50,20 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         getMenuButton() {
             return this.userMenu;
         }
-        refresh() {
-            const activeTab = this.tabs.find((element) => element.getAttribute("aria-selected") === "true");
-            if (activeTab === undefined) {
-                this.openNotifications();
+        sleep() {
+            if (this.activeTab) {
+                this.closeTab(this.activeTab);
             }
-            else {
+        }
+        wakeup() {
+            if (this.activeTab) {
                 // The UI elements in the tab panel are shared and can appear in a different
                 // context. The element might have been moved elsewhere while the menu was
                 // closed.
-                this.attachViewToPanel(activeTab);
+                this.openTab(this.activeTab);
+            }
+            else {
+                this.openNotifications();
             }
         }
         openNotifications() {
@@ -69,16 +74,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.openTab(notifications);
         }
         openTab(tab) {
-            if (tab.getAttribute("aria-selected") === "true") {
-                return;
-            }
-            const activeTab = this.tabs.find((element) => element.getAttribute("aria-selected") === "true");
-            if (activeTab) {
-                activeTab.setAttribute("aria-selected", "false");
-                activeTab.tabIndex = -1;
-                const activePanel = this.tabPanels.get(activeTab);
-                activePanel.hidden = true;
-            }
+            this.closeActiveTab();
             tab.setAttribute("aria-selected", "true");
             tab.tabIndex = 0;
             const tabPanel = this.tabPanels.get(tab);
@@ -87,6 +83,24 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 tab.focus();
             }
             this.attachViewToPanel(tab);
+            this.activeTab = tab;
+        }
+        closeActiveTab() {
+            if (!this.activeTab) {
+                return;
+            }
+            this.closeTab(this.activeTab);
+            this.activeTab = undefined;
+        }
+        closeTab(tab) {
+            tab.setAttribute("aria-selected", "false");
+            tab.tabIndex = -1;
+            const tabPanel = this.tabPanels.get(tab);
+            tabPanel.hidden = true;
+            const legacyPanel = this.legacyUserPanels.get(tab);
+            if (legacyPanel) {
+                legacyPanel.close();
+            }
         }
         attachViewToPanel(tab) {
             const origin = tab.dataset.origin;

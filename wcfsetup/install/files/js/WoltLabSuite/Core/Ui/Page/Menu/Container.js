@@ -28,7 +28,7 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
             (0, Screen_1.pageOverlayOpen)();
             (0, Screen_1.scrollDisable)();
             this.container.hidden = false;
-            this.provider.refresh();
+            this.provider.wakeup();
             this.getFocusTrap().activate();
         }
         close() {
@@ -37,6 +37,7 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
             (0, Screen_1.scrollEnable)();
             this.container.hidden = true;
             this.getFocusTrap().deactivate();
+            this.provider.sleep();
         }
         toggle() {
             if (this.container.hidden) {

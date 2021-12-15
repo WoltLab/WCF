@@ -39,6 +39,7 @@ type LegacyUserPanelApi = {
 };
 
 export class PageMenuUser implements PageMenuProvider {
+  private activeTab?: Tab = undefined;
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly legacyUserPanels = new Map<Tab, LegacyUserPanelApi>();
@@ -87,15 +88,20 @@ export class PageMenuUser implements PageMenuProvider {
     return this.userMenu;
   }
 
-  refresh(): void {
-    const activeTab = this.tabs.find((element) => element.getAttribute("aria-selected") === "true");
-    if (activeTab === undefined) {
-      this.openNotifications();
-    } else {
+  sleep(): void {
+    if (this.activeTab) {
+      this.closeTab(this.activeTab);
+    }
+  }
+
+  wakeup(): void {
+    if (this.activeTab) {
       // The UI elements in the tab panel are shared and can appear in a different
       // context. The element might have been moved elsewhere while the menu was
       // closed.
-      this.attachViewToPanel(activeTab);
+      this.openTab(this.activeTab);
+    } else {
+      this.openNotifications();
     }
   }
 
@@ -109,18 +115,7 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   private openTab(tab: Tab): void {
-    if (tab.getAttribute("aria-selected") === "true") {
-      return;
-    }
-
-    const activeTab = this.tabs.find((element) => element.getAttribute("aria-selected") === "true");
-    if (activeTab) {
-      activeTab.setAttribute("aria-selected", "false");
-      activeTab.tabIndex = -1;
-
-      const activePanel = this.tabPanels.get(activeTab)!;
-      activePanel.hidden = true;
-    }
+    this.closeActiveTab();
 
     tab.setAttribute("aria-selected", "true");
     tab.tabIndex = 0;
@@ -133,6 +128,31 @@ export class PageMenuUser implements PageMenuProvider {
     }
 
     this.attachViewToPanel(tab);
+
+    this.activeTab = tab;
+  }
+
+  private closeActiveTab(): void {
+    if (!this.activeTab) {
+      return;
+    }
+
+    this.closeTab(this.activeTab);
+
+    this.activeTab = undefined;
+  }
+
+  private closeTab(tab: Tab): void {
+    tab.setAttribute("aria-selected", "false");
+    tab.tabIndex = -1;
+
+    const tabPanel = this.tabPanels.get(tab)!;
+    tabPanel.hidden = true;
+
+    const legacyPanel = this.legacyUserPanels.get(tab);
+    if (legacyPanel) {
+      legacyPanel.close();
+    }
   }
 
   private attachViewToPanel(tab: Tab): void {
