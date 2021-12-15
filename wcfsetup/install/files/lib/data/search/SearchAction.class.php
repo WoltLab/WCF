@@ -4,7 +4,9 @@ namespace wcf\data\search;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchHandler;
 use wcf\system\search\SearchResultHandler;
@@ -33,6 +35,16 @@ class SearchAction extends AbstractDatabaseObjectAction
      * @inheritDoc
      */
     protected $allowGuestAccess = ['search'];
+
+    /**
+     * @var int
+     */
+    private const ALLOWED_REQUESTS_PER_24H = 600;
+
+    /**
+     * @var int
+     */
+    private const ALLOWED_REQUESTS_PER_60S = 20;
 
     /**
      * @since 5.5
@@ -66,6 +78,21 @@ class SearchAction extends AbstractDatabaseObjectAction
         if (\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
             $this->parameters['sortOrder'] = SEARCH_DEFAULT_SORT_ORDER;
         }
+
+        $requestsPer24h = FloodControl::getInstance()->countContent(
+            'com.woltlab.wcf.search',
+            new \DateInterval('PT24H')
+        );
+        $requestsPer60s = FloodControl::getInstance()->countContent(
+            'com.woltlab.wcf.search',
+            new \DateInterval('PT60S')
+        );
+        if (
+            $requestsPer24h['count'] >= self::ALLOWED_REQUESTS_PER_24H
+            || $requestsPer60s['count'] >= self::ALLOWED_REQUESTS_PER_60S
+        ) {
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.page.error.flood'));
+        }
     }
 
     /**
@@ -75,6 +102,7 @@ class SearchAction extends AbstractDatabaseObjectAction
     {
         $handler = new SearchHandler($this->parameters);
         $search = $handler->search();
+        FloodControl::getInstance()->registerContent('com.woltlab.wcf.search');
         if ($search === null) {
             return [
                 'count' => 0,

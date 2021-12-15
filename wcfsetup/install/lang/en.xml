@@ -4340,6 +4340,7 @@ Attachments:
 		<item name="wcf.page.error.backward"><![CDATA[Back to previous page.]]></item>
 		<item name="wcf.page.error.insufficientPermissions"><![CDATA[Insufficient Permissions]]></item>
 		<item name="wcf.page.error.loginAvailable"><![CDATA[This page or section may be accessible for authorized users only.]]></item>
+		<item name="wcf.page.error.flood"><![CDATA[You have performed too many actions of this type. The function has therefore been temporarily deactivated for security reasons. Please try again later.]]></item>
 		<item name="wcf.page.jumpTo"><![CDATA[Go to Page]]></item>
 		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>

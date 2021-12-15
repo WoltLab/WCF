@@ -4392,6 +4392,7 @@ Dateianhänge:
 		<item name="wcf.page.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.page.error.insufficientPermissions"><![CDATA[Unzureichende Berechtigungen]]></item>
 		<item name="wcf.page.error.loginAvailable"><![CDATA[Diese Seite bzw. dieser Bereich steht möglicherweise nur angemeldeten Benutzern zur Verfügung.]]></item>
+		<item name="wcf.page.error.flood"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Aktionen dieser Art ausgeführt. Die Funktion wurde daher aus Sicherheitsgründen temporär deaktiviert. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es später erneut.]]></item>
 		<item name="wcf.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
 		<item name="wcf.page.jumpTo.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Wert zwischen „1“ und „#pages#“ ein.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Weiterleitung]]></item>
