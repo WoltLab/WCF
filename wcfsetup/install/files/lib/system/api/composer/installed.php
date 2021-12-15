@@ -218,14 +218,12 @@
             'dev_requirement' => false,
         ),
         'sabberworm/php-css-parser' => array(
-            'pretty_version' => 'dev-woltlab-8.3.1',
-            'version' => 'dev-woltlab-8.3.1',
+            'pretty_version' => '8.4.0',
+            'version' => '8.4.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
-            'aliases' => array(
-                0 => '8.3.1',
-            ),
-            'reference' => '2c397c3b29bfaf39e044e044bfcd759f99e67118',
+            'aliases' => array(),
+            'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
