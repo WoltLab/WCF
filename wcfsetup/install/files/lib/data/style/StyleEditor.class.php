@@ -1053,7 +1053,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $imagesTar = new TarWriter($imagesTarName);
             FileUtil::makeWritable($imagesTarName);
 
-            $regEx = new Regex('^[^\.].+\.(jpg|jpeg|gif|png|svg|ico|json|xml|txt|webp)$', Regex::CASE_INSENSITIVE);
+            $regEx = new Regex('^([a-zA-Z0-9_-]+\.)+(jpg|jpeg|gif|png|svg|ico|json|xml|txt|webp)$', Regex::CASE_INSENSITIVE);
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator(
                     $this->getAssetPath(),
