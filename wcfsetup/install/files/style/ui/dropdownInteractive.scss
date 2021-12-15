@@ -1,5 +1,9 @@
 .dropdownMenuContainer > .interactiveDropdown.open {
 	visibility: visible;
+
+	@include screen-md-down {
+		top: var(--offset-top, 101px) !important;
+	}
 }
 
 /* styling for interactive dropdowns (currently only used in the user panel) */

@@ -14,6 +14,7 @@ import { getUserMenuProviders } from "../../User/Menu/Manager";
 import { UserMenuProvider } from "../../User/Menu/Data/Provider";
 import DomUtil from "../../../Dom/Util";
 import { getElement as getControlPanelElement } from "../../User/Menu/ControlPanel";
+import * as EventHandler from "../../../Event/Handler";
 
 type CallbackOpen = (event: MouseEvent) => void;
 
@@ -27,9 +28,20 @@ type TabData = {
   origin: string;
 };
 
+type LegacyDropdownInteractive = {
+  getContainer(): JQuery;
+};
+type LegacyUserPanelApi = {
+  close(): void;
+  getDropdown(): LegacyDropdownInteractive;
+  open(): void;
+  toggle(): void;
+};
+
 export class PageMenuUser implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
+  private readonly legacyUserPanels = new Map<Tab, LegacyUserPanelApi>();
   private readonly userMenuProviders = new Map<Tab, UserMenuProvider>();
   private readonly tabPanels = new Map<Tab, HTMLElement>();
   private readonly tabs: Tab[] = [];
@@ -142,7 +154,13 @@ export class PageMenuUser implements PageMenuProvider {
           tabPanel.append(view.getElement());
           void view.open();
         } else {
-          throw new Error("TODO: Legacy user panel menus");
+          const legacyPanel = this.legacyUserPanels.get(tab)!;
+          legacyPanel.open();
+
+          const { top } = tabPanel.getBoundingClientRect();
+
+          const container = legacyPanel.getDropdown().getContainer()[0];
+          container.style.setProperty("--offset-top", `${top}px`);
         }
       }
     }
@@ -214,7 +232,7 @@ export class PageMenuUser implements PageMenuProvider {
       this.userMenuProviders.set(tab, provider);
     });
 
-    // TODO: Inject legacy user panel items.
+    this.buildLegacyTabs(tabList, tabContainer);
 
     return tabContainer;
   }
@@ -250,6 +268,47 @@ export class PageMenuUser implements PageMenuProvider {
 
     this.tabs.push(tab);
     this.tabPanels.set(tab, tabPanel);
+  }
+
+  private buildLegacyTabs(tabList: HTMLElement, tabContainer: HTMLElement): void {
+    const userPanelItems = document.querySelector(".userPanelItems") as HTMLUListElement;
+
+    type LegacyPanel = {
+      api: LegacyUserPanelApi;
+      element: HTMLElement;
+    };
+    const legacyPanelData: { panels: LegacyPanel[] } = {
+      panels: [],
+    };
+    EventHandler.fire("com.woltlab.wcf.pageMenu", "legacyMenu", legacyPanelData);
+
+    Array.from(userPanelItems.children)
+      .filter((listItem: HTMLLIElement) => {
+        const element = legacyPanelData.panels.find((panel) => panel.element === listItem);
+
+        return element !== undefined;
+      })
+      .map((listItem: HTMLLIElement) => {
+        const button = listItem.querySelector("a")!;
+
+        return {
+          icon: button.querySelector(".icon")!.outerHTML,
+          label: button.dataset.title || button.title,
+          origin: listItem.id,
+        } as TabData;
+      })
+      .forEach((data: TabData) => {
+        const [tab, tabPanel] = this.buildTabComponents(data);
+
+        tabList.append(tab);
+        tabContainer.append(tabPanel);
+
+        this.tabs.push(tab);
+        this.tabPanels.set(tab, tabPanel);
+
+        const legacyPanel = legacyPanelData.panels.find((panel) => panel.element.id === data.origin)!;
+        this.legacyUserPanels.set(tab, legacyPanel.api);
+      });
   }
 
   private buildTabComponents(data: TabData): TabComponents {

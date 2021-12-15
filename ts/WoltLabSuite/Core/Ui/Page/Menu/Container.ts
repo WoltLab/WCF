@@ -9,6 +9,7 @@ export class PageMenuContainer {
   private readonly content = document.createElement("div");
   private focusTrap?: FocusTrap = undefined;
   private readonly provider: PageMenuProvider;
+  private skipCloseOverlay = false;
 
   constructor(provider: PageMenuProvider) {
     this.provider = provider;

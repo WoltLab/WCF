@@ -14,10 +14,10 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     Alignment = (0, tslib_1.__importStar)(Alignment);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    const button = document.getElementById("userMenu");
-    const element = button.querySelector(".userMenu");
+    let button;
+    let element;
     let focusTrap;
-    const link = button.querySelector("a");
+    let link;
     function open() {
         if (!element.hidden) {
             return;
@@ -49,6 +49,9 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
     let isInitialized = false;
     function setup() {
         if (!isInitialized) {
+            button = document.getElementById("userMenu");
+            element = button.querySelector(".userMenu");
+            link = button.querySelector("a");
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/User/Menu/ControlPanel", () => close());
             (0, Manager_1.getContainer)().append(element);
             element.addEventListener("click", (event) => event.stopPropagation());

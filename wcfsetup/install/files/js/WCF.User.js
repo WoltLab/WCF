@@ -129,6 +129,46 @@ if (COMPILER_TARGET_DEFAULT) {
 			if ($badge.length) {
 				this._badge = $badge;
 			}
+
+			require(["WoltLabSuite/Core/Event/Handler"], (EventHandler) => {
+				EventHandler.add("com.woltlab.wcf.pageMenu", "legacyMenu", (data) => {
+					data.panels.push({
+						api: {
+							getDropdown: () => this._dropdown,
+							open: () => {
+								if (this._dropdown === null) {
+									this._dropdown = this._initDropdown();
+								}
+
+								this._dropdown.open();
+
+								if (!this._loadData) {
+									// check if there are outstanding items but there are no outstanding ones in the current list
+									if (this._badge !== null) {
+										var $count = parseInt(this._badge.text()) || 0;
+										if ($count && !this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding').length) {
+											this._loadData = true;
+										}
+									}
+								}
+								
+								if (this._loadData) {
+									this._loadData = false;
+									this._load();
+								}
+							},
+							close: () => {
+								if (this._dropdown === null) {
+									this._dropdown = this._initDropdown();
+								}
+
+								this._dropdown.close();
+							},
+						},
+						element: triggerElement[0],
+					});
+				});
+			});
 		},
 		
 		/**

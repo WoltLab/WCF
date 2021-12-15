@@ -6,15 +6,17 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module WoltLabSuite/Core/Ui/Page/Menu/User
  */
-define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1) {
+define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hasValidUserMenu = exports.PageMenuUser = void 0;
     Container_1 = (0, tslib_1.__importDefault)(Container_1);
     Language = (0, tslib_1.__importStar)(Language);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     class PageMenuUser {
         constructor() {
+            this.legacyUserPanels = new Map();
             this.userMenuProviders = new Map();
             this.tabPanels = new Map();
             this.tabs = [];
@@ -105,7 +107,11 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                         void view.open();
                     }
                     else {
-                        throw new Error("TODO: Legacy user panel menus");
+                        const legacyPanel = this.legacyUserPanels.get(tab);
+                        legacyPanel.open();
+                        const { top } = tabPanel.getBoundingClientRect();
+                        const container = legacyPanel.getDropdown().getContainer()[0];
+                        container.style.setProperty("--offset-top", `${top}px`);
                     }
                 }
             }
@@ -166,7 +172,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 this.tabPanels.set(tab, tabPanel);
                 this.userMenuProviders.set(tab, provider);
             });
-            // TODO: Inject legacy user panel items.
+            this.buildLegacyTabs(tabList, tabContainer);
             return tabContainer;
         }
         buildTab(provider) {
@@ -193,6 +199,35 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             tabContainer.append(tabPanel);
             this.tabs.push(tab);
             this.tabPanels.set(tab, tabPanel);
+        }
+        buildLegacyTabs(tabList, tabContainer) {
+            const userPanelItems = document.querySelector(".userPanelItems");
+            const legacyPanelData = {
+                panels: [],
+            };
+            EventHandler.fire("com.woltlab.wcf.pageMenu", "legacyMenu", legacyPanelData);
+            Array.from(userPanelItems.children)
+                .filter((listItem) => {
+                const element = legacyPanelData.panels.find((panel) => panel.element === listItem);
+                return element !== undefined;
+            })
+                .map((listItem) => {
+                const button = listItem.querySelector("a");
+                return {
+                    icon: button.querySelector(".icon").outerHTML,
+                    label: button.dataset.title || button.title,
+                    origin: listItem.id,
+                };
+            })
+                .forEach((data) => {
+                const [tab, tabPanel] = this.buildTabComponents(data);
+                tabList.append(tab);
+                tabContainer.append(tabPanel);
+                this.tabs.push(tab);
+                this.tabPanels.set(tab, tabPanel);
+                const legacyPanel = legacyPanelData.panels.find((panel) => panel.element.id === data.origin);
+                this.legacyUserPanels.set(tab, legacyPanel.api);
+            });
         }
         buildTabComponents(data) {
             const tabId = Util_1.default.getUniqueId();

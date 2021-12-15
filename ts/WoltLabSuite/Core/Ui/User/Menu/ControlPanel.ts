@@ -14,10 +14,10 @@ import { createFocusTrap, FocusTrap } from "focus-trap";
 import * as Alignment from "../../Alignment";
 import DomUtil from "../../../Dom/Util";
 
-const button = document.getElementById("userMenu")!;
-const element = button.querySelector(".userMenu") as HTMLElement;
+let button: HTMLElement;
+let element: HTMLElement;
 let focusTrap: FocusTrap;
-const link = button.querySelector("a")!;
+let link: HTMLAnchorElement;
 
 function open(): void {
   if (!element.hidden) {
@@ -61,6 +61,10 @@ export function getElement(): HTMLElement {
 let isInitialized = false;
 export function setup(): void {
   if (!isInitialized) {
+    button = document.getElementById("userMenu")!;
+    element = button.querySelector(".userMenu") as HTMLElement;
+    link = button.querySelector("a")!;
+
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/User/Menu/ControlPanel", () => close());
     getContainer().append(element);
 

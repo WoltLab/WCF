@@ -9,6 +9,7 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
             this.container = document.createElement("div");
             this.content = document.createElement("div");
             this.focusTrap = undefined;
+            this.skipCloseOverlay = false;
             this.provider = provider;
             const menuId = Util_1.default.identify(this.provider.getMenuButton());
             CloseOverlay_1.default.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
