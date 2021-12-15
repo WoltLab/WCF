@@ -4,15 +4,21 @@ import { pageOverlayClose, pageOverlayOpen, scrollDisable, scrollEnable } from "
 import UiCloseOverlay from "../../CloseOverlay";
 import DomUtil from "../../../Dom/Util";
 
+export const enum Orientation {
+  Left = "left",
+  Right = "right",
+}
+
 export class PageMenuContainer {
   private readonly container = document.createElement("div");
   private readonly content = document.createElement("div");
   private focusTrap?: FocusTrap = undefined;
+  private readonly orientation: Orientation;
   private readonly provider: PageMenuProvider;
-  private skipCloseOverlay = false;
 
-  constructor(provider: PageMenuProvider) {
+  constructor(provider: PageMenuProvider, orientation: Orientation) {
     this.provider = provider;
+    this.orientation = orientation;
 
     const menuId = DomUtil.identify(this.provider.getMenuButton());
     UiCloseOverlay.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
@@ -72,6 +78,7 @@ export class PageMenuContainer {
     }
 
     this.container.classList.add("pageMenuContainer");
+    this.container.dataset.orientation = this.orientation;
     this.container.hidden = true;
     this.container.addEventListener("click", (event) => {
       if (event.target === this.container) {

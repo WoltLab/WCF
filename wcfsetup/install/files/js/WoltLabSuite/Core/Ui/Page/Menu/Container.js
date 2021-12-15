@@ -5,12 +5,12 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
     class PageMenuContainer {
-        constructor(provider) {
+        constructor(provider, orientation) {
             this.container = document.createElement("div");
             this.content = document.createElement("div");
             this.focusTrap = undefined;
-            this.skipCloseOverlay = false;
             this.provider = provider;
+            this.orientation = orientation;
             const menuId = Util_1.default.identify(this.provider.getMenuButton());
             CloseOverlay_1.default.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
                 if (!this.container.hidden) {
@@ -55,6 +55,7 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
                 return;
             }
             this.container.classList.add("pageMenuContainer");
+            this.container.dataset.orientation = this.orientation;
             this.container.hidden = true;
             this.container.addEventListener("click", (event) => {
                 if (event.target === this.container) {

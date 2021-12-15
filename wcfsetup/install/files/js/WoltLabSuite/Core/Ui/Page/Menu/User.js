@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.tabPanels = new Map();
             this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
-            this.container = new Container_1.default(this);
+            this.container = new Container_1.default(this, "right" /* Right */);
             this.callbackOpen = (event) => {
                 event.preventDefault();
                 event.stopPropagation();

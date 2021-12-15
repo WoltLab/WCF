@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Ui/Page/Menu/User
  */
 
-import PageMenuContainer from "./Container";
+import PageMenuContainer, { Orientation } from "./Container";
 import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
 import { getUserMenuProviders } from "../../User/Menu/Manager";
@@ -51,7 +51,7 @@ export class PageMenuUser implements PageMenuProvider {
   constructor() {
     this.userMenu = document.querySelector(".userPanel")!;
 
-    this.container = new PageMenuContainer(this);
+    this.container = new PageMenuContainer(this, Orientation.Right);
 
     this.callbackOpen = (event) => {
       event.preventDefault();
