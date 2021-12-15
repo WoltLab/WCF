@@ -266,19 +266,21 @@ final class SearchHandler
     private function getExistingSearch(): ?Search
     {
         if (!empty($this->parameters['q'])) {
-            $parameters = [$this->searchHash, 'messages', TIME_NOW - 1800];
+            $conditionBuilder = new PreparedStatementConditionBuilder();
+            $conditionBuilder->add('searchHash = ?', [$this->searchHash]);
+            $conditionBuilder->add('searchType = ?', ['messages']);
+            $conditionBuilder->add('searchTime > ?', [TIME_NOW - 1800]);
             if (WCF::getUser()->userID) {
-                $parameters[] = WCF::getUser()->userID;
+                $conditionBuilder->add('userID = ?', [WCF::getUser()->userID]);
+            } else {
+                $conditionBuilder->add('userID IS NULL');
             }
 
             $sql = "SELECT  searchID
                     FROM    wcf" . WCF_N . "_search
-                    WHERE   searchHash = ?
-                        AND searchType = ?
-                        AND searchTime > ?
-                        " . (WCF::getUser()->userID ? 'AND userID = ?' : 'AND userID IS NULL');
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute($parameters);
+            $statement->execute($conditionBuilder->getParameters());
             if ($searchID = $statement->fetchSingleColumn()) {
                 return new Search($searchID);
             }
