@@ -3,8 +3,7 @@
 		{foreach from=$objects item=message}
 			<li>
 				<div class="box48">
-					{assign var=_messageObjectHash value=$message|spl_object_hash}
-					{assign var=_messageCustomIcon value=$customIcons[$_messageObjectHash]}
+					{assign var=_messageCustomIcon value=$customIcons[$message]}
 					{if $_messageCustomIcon === ''}
 						{if $message->getUserProfile()}
 							{user object=$message->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}

@@ -45,11 +45,6 @@ class TagSearchForm extends AbstractCaptchaForm
     public $neededPermissions = ['user.tag.canViewTag'];
 
     /**
-     * @inheritDoc
-     */
-    public $useCaptcha = SEARCH_USE_CAPTCHA;
-
-    /**
      * @var TagCloud
      */
     public $tagCloud;

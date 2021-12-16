@@ -26,7 +26,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
 
     /**
      * list of available object types
-     * @var ISearchableObjectType[]
+     * @var ISearchableObjectType[]|ISearchProvider[]
      */
     protected $availableObjectTypes = [];
 
@@ -54,7 +54,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     /**
      * Returns a list of available object types.
      *
-     * @return  ISearchableObjectType[]
+     * @return  ISearchableObjectType[]|ISearchProvider[]
      */
     public function getAvailableObjectTypes()
     {
@@ -65,7 +65,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
      * Returns the object type with the given name.
      *
      * @param string $objectTypeName
-     * @return  ISearchableObjectType|null
+     * @return  ISearchableObjectType|ISearchProvider|null
      */
     public function getObjectType($objectTypeName)
     {

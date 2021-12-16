@@ -93,7 +93,6 @@
 		</definition>
 		<definition>
 			<name>com.woltlab.wcf.searchableObjectType</name>
-			<interfacename>wcf\system\search\ISearchableObjectType</interfacename>
 		</definition>
 		<definition>
 			<name>com.woltlab.wcf.poll</name>

@@ -5,7 +5,6 @@ namespace wcf\page;
 use wcf\data\search\ICustomIconSearchResultObject;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\ImplementationException;
@@ -22,6 +21,7 @@ use wcf\util\HeaderUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Page
+ * @deprecated 5.5
  */
 class SearchResultPage extends MultipleLinkPage
 {
@@ -196,36 +196,6 @@ class SearchResultPage extends MultipleLinkPage
     /**
      * @inheritDoc
      */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        $searchPreselectObjectType = 'everywhere';
-        if (\count($this->searchData['selectedObjectTypes']) === 1) {
-            $searchPreselectObjectType = \reset($this->searchData['selectedObjectTypes']);
-        }
-
-        WCF::getTPL()->assign([
-            'query' => $this->searchData['query'],
-            'objects' => $this->messages,
-            'searchData' => $this->searchData,
-            'searchID' => $this->searchID,
-            'highlight' => $this->highlight,
-            'sortField' => $this->searchData['sortField'],
-            'sortOrder' => $this->searchData['sortOrder'],
-            'alterable' => !empty($this->searchData['alterable']) ? 1 : 0,
-            'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
-            'resultListTemplateName' => $this->resultListTemplateName,
-            'resultListApplication' => $this->resultListApplication,
-            'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID),
-            'searchPreselectObjectType' => $searchPreselectObjectType,
-            'customIcons' => $this->customIcons,
-        ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function countItems()
     {
         // call countItems event
@@ -246,5 +216,13 @@ class SearchResultPage extends MultipleLinkPage
      */
     protected function readObjects()
     {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __run()
+    {
+        throw new IllegalLinkException();
     }
 }
