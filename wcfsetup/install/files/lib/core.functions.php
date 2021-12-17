@@ -717,7 +717,14 @@ EXPLANATION;
 			if (!isset($item['args'])) $item['args'] = [];
 
 			try {
-				if (!empty($item['args'])) {
+				$cannotBeReflected = !$item['class'] && \in_array($item['function'], [
+					'include',
+					'include_once',
+					'require',
+					'require_once',
+				]);
+
+				if (!empty($item['args']) && !$cannotBeReflected) {
 					if ($item['class']) {
 						$function = new \ReflectionMethod($item['class'], $item['function']);
 					}
