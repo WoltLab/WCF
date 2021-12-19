@@ -456,7 +456,7 @@
 		grid-template-columns: auto repeat(3, max-content);
 		height: 50px;
 		left: 0;
-		padding: 0 10px;
+		padding: 0 6px;
 		position: fixed;
 		right: 0;
 		top: 0;
@@ -470,8 +470,25 @@
 		position: static;
 	}
 
+	.pageHeaderSearchMobile,
+	.userPanel,
+	.mainMenu {
+		align-items: center;
+		display: flex;
+		height: 40px;
+		justify-content: center;
+		width: 40px;
+	}
+
 	.pageHeaderLogo {
 		grid-area: logo;
+
+		a {
+			align-items: center;
+			display: inline-flex;
+			height: 40px;
+			padding: 0 4px;
+		}
 	}
 
 	.pageHeaderSearchMobile {
