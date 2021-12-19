@@ -21,6 +21,12 @@
 	}
 }
 
+@include screen-xs {
+	.pageMenuContent {
+		width: 100%;
+	}
+}
+
 .pageMenuContent {
 	--background-color: #{$wcfUserMenuBackground};
 	--background-color-active: #{$wcfUserMenuBackgroundActive};
