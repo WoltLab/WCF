@@ -20,6 +20,10 @@
 
 {event name='settings'}
 
+<a href="#" id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" role="button" tabindex="0" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
+	<span class="icon icon32 fa-search" aria-hidden="true"></span>
+</a>
+
 <div id="pageHeaderSearch" class="pageHeaderSearch">
 	<form method="post" action="{@$__searchLink}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">

@@ -30,14 +30,6 @@
 		display: flex;
 	}
 
-	@include screen-md-down {
-		background-color: $wcfHeaderBackground;
-
-		> .layoutBoundary {
-			padding: 9px 10px;
-		}
-	}
-
 	@include screen-lg {
 		background-color: $wcfHeaderMenuBackground;
 	}
@@ -58,26 +50,11 @@
 			padding-bottom: 30px;
 			padding-top: 30px;
 		}
-
-		@include screen-md-down {
-			height: 50px;
-			-webkit-justify-content: center;
-			justify-content: center;
-			left: 60px;
-			padding: 9px 0;
-			position: fixed;
-			right: 60px;
-			top: 0;
-			width: auto;
-			z-index: 301;
-		}
 	}
 }
 
 /* MAIN MENU */
 .mainMenu {
-	flex: 1;
-	margin-right: 20px;
 	position: relative;
 
 	.boxMenu {
@@ -223,6 +200,11 @@
 		justify-content: flex-end;
 		right: 0;
 	}
+
+	@include screen-lg {
+		flex: 1;
+		margin-right: 20px;
+	}
 }
 
 /* Hack for a font rendering issue in Safari on menu hover */
@@ -331,6 +313,7 @@
 			max-height: 30px;
 			max-width: 100%;
 			object-fit: contain;
+			width: auto;
 		}
 	}
 }
@@ -339,6 +322,12 @@
 .pageHeaderSearch {
 	display: none;
 	position: fixed;
+}
+
+@include screen-lg {
+	.pageHeaderSearchMobile {
+		display: none;
+	}
 }
 
 .searchBarOpen .pageHeaderSearch {
@@ -458,16 +447,41 @@
 }
 
 @include screen-md-down {
-	.pageHeaderPanel > .layoutBoundary {
-		/* pushes buttons to the left / right corner */
-		-webkit-justify-content: space-between;
-		justify-content: space-between;
+	.pageHeader {
+		align-items: center;
+		background-color: $wcfHeaderBackground;
+		column-gap: 10px;
+		display: grid;
+		grid-template-areas: "logo search menu user";
+		grid-template-columns: auto repeat(3, max-content);
+		height: 50px;
+		left: 0;
+		padding: 0 10px;
+		position: fixed;
+		right: 0;
+		top: 0;
+	}
+
+	.pageHeaderPanel,
+	.pageHeaderFacade,
+	.pageHeaderPanel .layoutBoundary,
+	.pageHeaderFacade .layoutBoundary {
+		display: contents;
+		position: static;
+	}
+
+	.pageHeaderLogo {
+		grid-area: logo;
+	}
+
+	.pageHeaderSearchMobile {
+		grid-area: search;
 	}
 
 	.userPanel {
-		flex: 0 0 auto;
+		grid-area: user;
 
-		> .userPanelItems {
+		.userPanelItems {
 			display: none;
 		}
 
@@ -477,13 +491,13 @@
 	}
 
 	.mainMenu {
-		flex: 0 0 auto;
+		grid-area: menu;
 
 		&::before {
 			content: $fa-var-bars;
 		}
 
-		> .boxContent {
+		.boxContent {
 			display: none;
 		}
 	}
