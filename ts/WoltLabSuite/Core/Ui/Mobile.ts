@@ -11,7 +11,7 @@ import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Environment from "../Environment";
 import * as UiAlignment from "./Alignment";
-import UiCloseOverlay from "./CloseOverlay";
+import UiCloseOverlay, { Origin } from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
 import { closeSearchBar, openSearchBar } from "./Page/Header/Fixed";
 import { PageMenuMain } from "./Page/Menu/Main";
@@ -82,6 +82,8 @@ function initSearchButton(): void {
   });
 
   searchBar.addEventListener("click", (event) => {
+    event.stopPropagation();
+
     if (event.target === searchBar) {
       event.preventDefault();
 
@@ -92,7 +94,14 @@ function initSearchButton(): void {
     }
   });
 
-  UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", () => {
+  UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
+    if (origin === Origin.DropDown) {
+      const button = document.getElementById("pageHeaderSearchTypeSelect")!;
+      if (button.dataset.target === identifier) {
+        return;
+      }
+    }
+
     closeSearch(searchBar, scrollTop);
     closeSearchBar();
 

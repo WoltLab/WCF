@@ -14,7 +14,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     Environment = (0, tslib_1.__importStar)(Environment);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    CloseOverlay_1 = (0, tslib_1.__importStar)(CloseOverlay_1);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _dropdownMenu = null;
@@ -70,6 +70,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             }
         });
         searchBar.addEventListener("click", (event) => {
+            event.stopPropagation();
             if (event.target === searchBar) {
                 event.preventDefault();
                 closeSearch(searchBar, scrollTop);
@@ -77,7 +78,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
                 searchButton.setAttribute("aria-expanded", "false");
             }
         });
-        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/MobileSearch", () => {
+        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
+            if (origin === CloseOverlay_1.Origin.DropDown) {
+                const button = document.getElementById("pageHeaderSearchTypeSelect");
+                if (button.dataset.target === identifier) {
+                    return;
+                }
+            }
             closeSearch(searchBar, scrollTop);
             (0, Fixed_1.closeSearchBar)();
             searchButton.setAttribute("aria-expanded", "false");

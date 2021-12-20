@@ -12,7 +12,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     exports.init = exports.closeSearchBar = exports.openSearchBar = void 0;
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    CloseOverlay_1 = (0, tslib_1.__importStar)(CloseOverlay_1);
     Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _isMobile = false;
@@ -42,7 +42,13 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
                 openSearchBar();
             }
         });
-        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Page/Header/Fixed", () => {
+        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Page/Header/Fixed", (origin, identifier) => {
+            if (origin === CloseOverlay_1.Origin.DropDown) {
+                const button = document.getElementById("pageHeaderSearchTypeSelect");
+                if (button.dataset.target === identifier) {
+                    return;
+                }
+            }
             if (_pageHeader.classList.contains("searchBarForceOpen")) {
                 return;
             }

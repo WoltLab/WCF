@@ -9,7 +9,7 @@
 
 import * as EventHandler from "../../../Event/Handler";
 import * as UiAlignment from "../../Alignment";
-import UiCloseOverlay from "../../CloseOverlay";
+import UiCloseOverlay, { Origin } from "../../CloseOverlay";
 import UiDropdownSimple from "../../Dropdown/Simple";
 import * as UiScreen from "../../Screen";
 
@@ -45,7 +45,14 @@ function initSearchBar(): void {
     }
   });
 
-  UiCloseOverlay.add("WoltLabSuite/Core/Ui/Page/Header/Fixed", () => {
+  UiCloseOverlay.add("WoltLabSuite/Core/Ui/Page/Header/Fixed", (origin, identifier) => {
+    if (origin === Origin.DropDown) {
+      const button = document.getElementById("pageHeaderSearchTypeSelect")!;
+      if (button.dataset.target === identifier) {
+        return;
+      }
+    }
+
     if (_pageHeader.classList.contains("searchBarForceOpen")) {
       return;
     }

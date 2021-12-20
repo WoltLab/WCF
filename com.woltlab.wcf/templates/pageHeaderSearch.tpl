@@ -28,7 +28,7 @@
 	<form method="post" action="{@$__searchLink}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
-				<a href="#" class="button dropdownToggle"><span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span></a>
+				<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect"><span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span></a>
 				<ul class="dropdownMenu">
 					<li><a href="#" data-extended-link="{link controller='Search'}{/link}" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 					<li class="dropdownDivider"></li>
