@@ -10,18 +10,13 @@
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Environment from "../Environment";
-import * as EventHandler from "../Event/Handler";
 import * as UiAlignment from "./Alignment";
 import UiCloseOverlay from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
+import { closeSearchBar, openSearchBar } from "./Page/Header/Fixed";
 import { PageMenuMain } from "./Page/Menu/Main";
 import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
-
-interface MainMenuMorePayload {
-  identifier: string;
-  handler: any; //UiPageMenuMain;
-}
 
 let _dropdownMenu: HTMLUListElement | null = null;
 let _dropdownMenuMessage: HTMLElement | null = null;
@@ -38,7 +33,7 @@ const _sidebars: HTMLElement[] = [];
 function init(): void {
   _enabled = true;
 
-  initSearchBar();
+  initSearchButton();
   initButtonGroupNavigation();
   initMessages();
   initMobileMenu();
@@ -50,19 +45,28 @@ function init(): void {
   });
 }
 
-function initSearchBar(): void {
+function initSearchButton(): void {
   const searchBar = document.getElementById("pageHeaderSearch")!;
   const searchInput = document.getElementById("pageHeaderSearchInput")!;
 
   let scrollTop: number | null = null;
-  EventHandler.add("com.woltlab.wcf.MainMenuMobile", "more", (data: MainMenuMorePayload) => {
-    if (data.identifier === "com.woltlab.wcf.search") {
-      data.handler.close();
+  const searchButton = document.getElementById("pageHeaderSearchMobile")!;
+  searchButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
+    if (searchButton.getAttribute("aria-expanded") === "true") {
+      closeSearch(searchBar, scrollTop);
+      closeSearchBar();
+
+      searchButton.setAttribute("aria-expanded", "false");
+    } else {
       if (Environment.platform() === "ios") {
         scrollTop = document.body.scrollTop;
         UiScreen.scrollDisable();
       }
+
+      openSearchBar();
 
       const pageHeader = document.getElementById("pageHeader")!;
       searchBar.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
@@ -72,20 +76,40 @@ function initSearchBar(): void {
       if (Environment.platform() === "ios") {
         document.body.scrollTop = 0;
       }
+
+      searchButton.setAttribute("aria-expanded", "true");
     }
   });
 
-  document.getElementById("main")!.addEventListener("click", () => {
-    if (searchBar) {
-      searchBar.classList.remove("open");
-    }
+  searchBar.addEventListener("click", (event) => {
+    if (event.target === searchBar) {
+      event.preventDefault();
 
-    if (Environment.platform() === "ios" && scrollTop) {
-      UiScreen.scrollEnable();
-      document.body.scrollTop = scrollTop;
-      scrollTop = null;
+      closeSearch(searchBar, scrollTop);
+      closeSearchBar();
+
+      searchButton.setAttribute("aria-expanded", "false");
     }
   });
+
+  UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", () => {
+    closeSearch(searchBar, scrollTop);
+    closeSearchBar();
+
+    searchButton.setAttribute("aria-expanded", "false");
+  });
+}
+
+function closeSearch(searchBar: HTMLElement, scrollTop: number | null): void {
+  if (searchBar) {
+    searchBar.classList.remove("open");
+  }
+
+  if (Environment.platform() === "ios" && scrollTop) {
+    UiScreen.scrollEnable();
+    document.body.scrollTop = scrollTop;
+    scrollTop = null;
+  }
 }
 
 function initButtonGroupNavigation(): void {

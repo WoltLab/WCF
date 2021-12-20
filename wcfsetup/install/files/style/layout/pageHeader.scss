@@ -493,6 +493,10 @@
 
 	.pageHeaderSearchMobile {
 		grid-area: search;
+
+		&[aria-expanded="true"] .icon::before {
+			content: $fa-var-times;
+		}
 	}
 
 	.userPanel {
@@ -562,6 +566,8 @@
 	}
 
 	.pageHeaderSearch {
+		background-color: rgba(0, 0, 0, 0.34);
+		bottom: 0;
 		left: 0 !important;
 		right: 0 !important;
 

@@ -9,7 +9,7 @@
 define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignment", "../../CloseOverlay", "../../Dropdown/Simple", "../../Screen"], function (require, exports, tslib_1, EventHandler, UiAlignment, CloseOverlay_1, Simple_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = void 0;
+    exports.init = exports.closeSearchBar = exports.openSearchBar = void 0;
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
@@ -74,6 +74,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
             _searchInput.selectionStart = _searchInput.selectionEnd = _searchInput.value.length;
         }, 1);
     }
+    exports.openSearchBar = openSearchBar;
     /**
      * Closes the search bar.
      */
@@ -88,6 +89,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
         const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType");
         Simple_1.default.close(scope.id);
     }
+    exports.closeSearchBar = closeSearchBar;
     /**
      * Initializes the sticky page header handler.
      */

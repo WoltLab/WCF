@@ -65,7 +65,7 @@ function initSearchBar(): void {
 /**
  * Opens the search bar.
  */
-function openSearchBar(): void {
+export function openSearchBar(): void {
   UiCloseOverlay.execute();
 
   _pageHeader.classList.add("searchBarOpen");
@@ -89,7 +89,7 @@ function openSearchBar(): void {
 /**
  * Closes the search bar.
  */
-function closeSearchBar(): void {
+export function closeSearchBar(): void {
   _pageHeader.classList.remove("searchBarOpen");
   _userPanelSearchButton.parentElement!.classList.remove("open");
 
