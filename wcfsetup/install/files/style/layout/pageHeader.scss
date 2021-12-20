@@ -569,10 +569,12 @@
 		background-color: rgba(0, 0, 0, 0.34);
 		bottom: 0;
 		left: 0 !important;
+		overflow: hidden;
 		right: 0 !important;
 
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
 			display: flex;
 			flex-wrap: wrap;
 

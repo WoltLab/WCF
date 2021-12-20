@@ -114,10 +114,13 @@ function closeSearch(searchBar: HTMLElement, scrollTop: number | null): void {
     searchBar.classList.remove("open");
   }
 
-  if (Environment.platform() === "ios" && scrollTop) {
+  if (Environment.platform() === "ios") {
     UiScreen.scrollEnable();
-    document.body.scrollTop = scrollTop;
-    scrollTop = null;
+
+    if (scrollTop !== null) {
+      document.body.scrollTop = scrollTop;
+      scrollTop = null;
+    }
   }
 }
 
