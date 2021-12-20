@@ -81,6 +81,8 @@ export class PageMenuMain implements PageMenuProvider {
     this.mainMenu.setAttribute("role", "button");
     this.mainMenu.tabIndex = 0;
     this.mainMenu.addEventListener("click", this.callbackOpen);
+
+    this.refreshUnreadIndicator();
   }
 
   disable(): void {
@@ -118,7 +120,7 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   wakeup(): void {
-    /* Does nothing */
+    this.refreshUnreadIndicator();
   }
 
   private buildMainMenu(): HTMLElement[] {
@@ -257,6 +259,15 @@ export class PageMenuMain implements PageMenuProvider {
       if (document.activeElement !== button) {
         button.focus();
       }
+    }
+  }
+
+  private refreshUnreadIndicator(): void {
+    const hasUnreadItems = this.mainMenu.querySelector(".boxMenuLinkOutstandingItems") !== null;
+    if (hasUnreadItems) {
+      this.mainMenu.classList.add("pageMenuMobileButtonHasContent");
+    } else {
+      this.mainMenu.classList.remove("pageMenuMobileButtonHasContent");
     }
   }
 }

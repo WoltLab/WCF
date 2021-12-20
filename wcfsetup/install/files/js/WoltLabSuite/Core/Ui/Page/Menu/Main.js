@@ -58,6 +58,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.mainMenu.setAttribute("role", "button");
             this.mainMenu.tabIndex = 0;
             this.mainMenu.addEventListener("click", this.callbackOpen);
+            this.refreshUnreadIndicator();
         }
         disable() {
             this.container.close();
@@ -85,7 +86,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             /* Does nothing */
         }
         wakeup() {
-            /* Does nothing */
+            this.refreshUnreadIndicator();
         }
         buildMainMenu() {
             const boxMenu = this.mainMenu.querySelector(".boxMenu");
@@ -195,6 +196,15 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 if (document.activeElement !== button) {
                     button.focus();
                 }
+            }
+        }
+        refreshUnreadIndicator() {
+            const hasUnreadItems = this.mainMenu.querySelector(".boxMenuLinkOutstandingItems") !== null;
+            if (hasUnreadItems) {
+                this.mainMenu.classList.add("pageMenuMobileButtonHasContent");
+            }
+            else {
+                this.mainMenu.classList.remove("pageMenuMobileButtonHasContent");
             }
         }
     }

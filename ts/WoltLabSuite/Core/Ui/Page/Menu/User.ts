@@ -66,6 +66,8 @@ export class PageMenuUser implements PageMenuProvider {
     this.userMenu.setAttribute("role", "button");
     this.userMenu.tabIndex = 0;
     this.userMenu.addEventListener("click", this.callbackOpen);
+
+    this.refreshUnreadIndicator();
   }
 
   disable(): void {
@@ -103,6 +105,8 @@ export class PageMenuUser implements PageMenuProvider {
     } else {
       this.openNotifications();
     }
+
+    this.refreshUnreadIndicator();
   }
 
   private openNotifications(): void {
@@ -363,6 +367,15 @@ export class PageMenuUser implements PageMenuProvider {
     panel.tabIndex = 0;
 
     return [tab, panel];
+  }
+
+  private refreshUnreadIndicator(): void {
+    const hasUnreadItems = this.userMenu.querySelector(".badge.badgeUpdate") !== null;
+    if (hasUnreadItems) {
+      this.userMenu.classList.add("pageMenuMobileButtonHasContent");
+    } else {
+      this.userMenu.classList.remove("pageMenuMobileButtonHasContent");
+    }
   }
 }
 

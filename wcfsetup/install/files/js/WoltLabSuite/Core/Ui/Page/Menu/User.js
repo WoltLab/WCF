@@ -34,6 +34,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.userMenu.setAttribute("role", "button");
             this.userMenu.tabIndex = 0;
             this.userMenu.addEventListener("click", this.callbackOpen);
+            this.refreshUnreadIndicator();
         }
         disable() {
             this.container.close();
@@ -65,6 +66,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             else {
                 this.openNotifications();
             }
+            this.refreshUnreadIndicator();
         }
         openNotifications() {
             const notifications = this.tabs.find((element) => element.dataset.origin === "userNotifications");
@@ -269,6 +271,15 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             panel.setAttribute("role", "tabpanel");
             panel.tabIndex = 0;
             return [tab, panel];
+        }
+        refreshUnreadIndicator() {
+            const hasUnreadItems = this.userMenu.querySelector(".badge.badgeUpdate") !== null;
+            if (hasUnreadItems) {
+                this.userMenu.classList.add("pageMenuMobileButtonHasContent");
+            }
+            else {
+                this.userMenu.classList.remove("pageMenuMobileButtonHasContent");
+            }
         }
     }
     exports.PageMenuUser = PageMenuUser;

@@ -523,8 +523,8 @@
 		}
 	}
 
-	.mainMenu,
-	.userPanel {
+	.mainMenu[aria-expanded="false"],
+	.userPanel[aria-expanded="false"] {
 		position: relative;
 
 		&.pageMenuMobileButtonHasContent::after {
@@ -534,8 +534,8 @@
 			content: "";
 			height: 14px;
 			position: absolute;
-			right: -3px;
-			top: -3px;
+			right: 0;
+			top: 0;
 			width: 14px;
 		}
 	}
