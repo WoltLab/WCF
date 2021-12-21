@@ -33,11 +33,24 @@ class UploadHandler extends SingletonFactory
     const VALID_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
 
     /**
+     * @since 5.5
+     */
+    private const UPLOAD_FIELD_SESSION_TIMEOUT = 3600 * 24;
+
+    /**
      * Contains the registered upload fields.
      *
      * @var UploadField[]
      */
     protected $fields = [];
+
+    /**
+     * @inheritDoc
+     */
+    protected function init()
+    {
+        $this->cleanupStorage();
+    }
 
     /**
      * Registers a UploadField.
@@ -431,6 +444,26 @@ class UploadHandler extends SingletonFactory
     }
 
     /**
+     * @since 5.5
+     */
+    private function cleanupStorage(): void
+    {
+        $hasChanges = false;
+        $storage = $this->getStorage();
+
+        foreach ($storage as $internalID => $storageData) {
+            if (!isset($storageData['registered']) || $storageData['registered'] < (\TIME_NOW - self::UPLOAD_FIELD_SESSION_TIMEOUT)) {
+                unset($storage[$internalID]);
+                $hasChanges = true;
+            }
+        }
+
+        if ($hasChanges) {
+            WCF::getSession()->register(self::UPLOAD_HANDLER_SESSION_VAR, $storage);
+        }
+    }
+
+    /**
      * Registers an field in the storage.
      *
      * @param UploadField $field
@@ -442,6 +475,7 @@ class UploadHandler extends SingletonFactory
             'field' => $field,
             'files' => [],
             'removedFiles' => [],
+            'registered' => \TIME_NOW,
         ];
 
         $this->fields[$field->getFieldId()] = $field;
