@@ -82,6 +82,8 @@ class UiPageMenuMain extends UiPageMenuAbstract {
 
       let item = this.title.nextElementSibling;
       while (item && item.classList.contains("menuOverlayItemOption")) {
+        const nextSibling = item.nextElementSibling;
+
         item.classList.remove("menuOverlayItem", "menuOverlayItemOption");
         item.removeEventListener("click", (ev) => {
           ev.stopPropagation();
@@ -96,9 +98,9 @@ class UiPageMenuMain extends UiPageMenuAbstract {
         link.children[1].classList.add("invisible");
         link.children[1].classList.remove("menuOverlayItemTitle");
 
-        this.navigationList.appendChild(item);
+        this.navigationList.prepend(item);
 
-        item = item.nextElementSibling;
+        item = nextSibling;
       }
     }
 

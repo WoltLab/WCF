@@ -64,6 +64,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
                 Util_1.default.hide(this.title);
                 let item = this.title.nextElementSibling;
                 while (item && item.classList.contains("menuOverlayItemOption")) {
+                    const nextSibling = item.nextElementSibling;
                     item.classList.remove("menuOverlayItem", "menuOverlayItemOption");
                     item.removeEventListener("click", (ev) => {
                         ev.stopPropagation();
@@ -74,8 +75,8 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
                     link.classList.remove("box24");
                     link.children[1].classList.add("invisible");
                     link.children[1].classList.remove("menuOverlayItemTitle");
-                    this.navigationList.appendChild(item);
-                    item = item.nextElementSibling;
+                    this.navigationList.prepend(item);
+                    item = nextSibling;
                 }
             }
             return true;
