@@ -48,15 +48,16 @@
 }
 
 .userMenuHeader {
-	column-gap: 10px;
+	align-items: center;
 	display: grid;
+    min-height: 44px;
 	grid-template-areas: "title buttons";
 	grid-template-columns: auto max-content;
-	padding: 10px;
 }
 
 .userMenuTitle {
 	grid-area: title;
+	margin: 0 10px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -67,15 +68,20 @@
 }
 
 .userMenuButtons {
-	column-gap: 10px;
+	column-gap: 1px;
 	display: grid;
 	grid-auto-flow: column;
 	grid-area: buttons;
 }
 
 .userMenuButton {
+	align-items: center;
+    display: flex;
+    height: 44px;
+    justify-content: center;
 	transform: scale(1);
 	transition: transform 0.24s ease-in-out;
+    width: 44px;
 
 	&:hover {
 		transform: scale(1.5);
