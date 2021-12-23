@@ -50,7 +50,7 @@
 .userMenuHeader {
 	align-items: center;
 	display: grid;
-    min-height: 44px;
+	min-height: 44px;
 	grid-template-areas: "title buttons";
 	grid-template-columns: auto max-content;
 }
@@ -76,12 +76,15 @@
 
 .userMenuButton {
 	align-items: center;
-    display: flex;
-    height: 44px;
-    justify-content: center;
+	display: flex;
+	height: 44px;
+	justify-content: center;
+	width: 44px;
+}
+
+body:not(.touch) .userMenuButton {
 	transform: scale(1);
 	transition: transform 0.24s ease-in-out;
-    width: 44px;
 
 	&:hover {
 		transform: scale(1.5);
@@ -121,10 +124,6 @@
 	position: relative;
 	transition: background-color 0.12s linear;
 
-	&:hover {
-		background-color: var(--background-color-active);
-	}
-
 	&[data-is-unread="true"] .userMenuItemLink::before {
 		right: 30px;
 	}
@@ -144,6 +143,10 @@
 			align-self: center;
 		}
 	}
+}
+
+body:not(.touch) .userMenuItem:hover {
+	background-color: var(--background-color-active);
 }
 
 .userMenuItemLink,
@@ -197,12 +200,15 @@
 		opacity: 1;
 		position: absolute;
 		top: calc(50% - 5px);
-		transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
 		width: 10px;
 	}
 }
 
-.userMenuItem:hover .userMenuItemUnread::before {
+body:not(.touch) .userMenuItemUnread::before {
+	transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
+}
+
+body:not(.touch) .userMenuItem:hover .userMenuItemUnread::before {
 	opacity: 0;
 	left: 0;
 }
@@ -212,9 +218,12 @@
 	opacity: 1;
 	position: relative;
 	left: 0;
+	width: 100%;
+}
+
+body:not(.touch) .userMenuItemMarkAsRead {
 	transform: scale(1);
 	transition: opacity 0.12s ease-in-out, left 0.12s ease-in-out, transform 0.24s ease-in-out;
-	width: 100%;
 
 	&:hover {
 		transform: scale(1.5);
