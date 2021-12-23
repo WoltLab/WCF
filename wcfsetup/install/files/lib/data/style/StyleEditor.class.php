@@ -1066,7 +1066,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                 if (!$file->isFile()) {
                     continue;
                 }
-                if (!$regEx->match($file->getPathName())) {
+                if (!$regEx->match($file->getBasename())) {
                     continue;
                 }
 
