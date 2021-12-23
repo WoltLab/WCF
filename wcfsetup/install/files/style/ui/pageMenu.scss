@@ -51,15 +51,34 @@
 
 .pageMenuMainItem {
 	border-bottom: 1px solid var(--border-color);
+	column-gap: 10px;
+	display: grid;
+	grid-template-areas: "item";
+	grid-template-columns: auto;
 	position: relative;
 }
 
+.pageMenuMainItemOutstandingItems {
+	grid-template-areas: "item counter";
+	grid-template-columns: auto min-content;
+
+	&:not(.pageMenuMainItemExpandable) {
+		padding-right: 10px;
+	}
+}
+
 .pageMenuMainItemExpandable {
-	display: grid;
 	grid-template-areas:
 		"item button"
 		"list list";
 	grid-template-columns: auto 44px;
+
+	&.pageMenuMainItemOutstandingItems {
+		grid-template-areas:
+			"item counter button"
+			"list list    list";
+		grid-template-columns: auto min-content 44px;
+	}
 }
 
 .pageMenuMainItemLink {
@@ -69,7 +88,16 @@
 	font-weight: 600;
 	grid-area: item;
 	min-height: 44px;
+	overflow: hidden;
 	padding: 0 10px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pageMenuMainItemCounter {
+	align-self: center;
+	grid-area: counter;
+	white-space: nowrap;
 }
 
 .pageMenuMainItemToggle {

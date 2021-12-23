@@ -150,6 +150,14 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 label.textContent = menuItem.title;
                 listItem.append(label);
             }
+            if (menuItem.counter > 0) {
+                const counter = document.createElement("span");
+                counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
+                counter.setAttribute("aria-label", "TODO");
+                counter.textContent = menuItem.counter.toString();
+                listItem.classList.add("pageMenuMainItemOutstandingItems");
+                listItem.append(counter);
+            }
             if (menuItem.children.length) {
                 listItem.classList.add("pageMenuMainItemExpandable");
                 const menuId = Util_1.default.getUniqueId();
