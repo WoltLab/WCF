@@ -106,6 +106,7 @@ export class PageMenuUser implements PageMenuProvider {
       this.openNotifications();
     }
 
+    this.refreshTabUnreadIndicators();
     this.refreshUnreadIndicator();
   }
 
@@ -157,6 +158,8 @@ export class PageMenuUser implements PageMenuProvider {
     if (legacyPanel) {
       legacyPanel.close();
     }
+
+    this.refreshTabUnreadIndicators();
   }
 
   private attachViewToPanel(tab: Tab): void {
@@ -341,6 +344,7 @@ export class PageMenuUser implements PageMenuProvider {
 
     const tab = document.createElement("a");
     tab.classList.add("pageMenuUserTab");
+    tab.dataset.hasUnreadContent = "false";
     tab.dataset.origin = data.origin;
     tab.id = tabId;
     tab.setAttribute("aria-controls", panelId);
@@ -376,6 +380,16 @@ export class PageMenuUser implements PageMenuProvider {
     } else {
       this.userMenu.classList.remove("pageMenuMobileButtonHasContent");
     }
+  }
+
+  private refreshTabUnreadIndicators(): void {
+    this.userMenuProviders.forEach((provider, tab) => {
+      if (provider.hasUnreadContent()) {
+        tab.dataset.hasUnreadContent = "true";
+      } else {
+        tab.dataset.hasUnreadContent = "false";
+      }
+    });
   }
 }
 

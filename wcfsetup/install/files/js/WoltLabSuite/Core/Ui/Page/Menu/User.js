@@ -66,6 +66,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             else {
                 this.openNotifications();
             }
+            this.refreshTabUnreadIndicators();
             this.refreshUnreadIndicator();
         }
         openNotifications() {
@@ -103,6 +104,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             if (legacyPanel) {
                 legacyPanel.close();
             }
+            this.refreshTabUnreadIndicators();
         }
         attachViewToPanel(tab) {
             const origin = tab.dataset.origin;
@@ -250,6 +252,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const panelId = Util_1.default.getUniqueId();
             const tab = document.createElement("a");
             tab.classList.add("pageMenuUserTab");
+            tab.dataset.hasUnreadContent = "false";
             tab.dataset.origin = data.origin;
             tab.id = tabId;
             tab.setAttribute("aria-controls", panelId);
@@ -280,6 +283,16 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             else {
                 this.userMenu.classList.remove("pageMenuMobileButtonHasContent");
             }
+        }
+        refreshTabUnreadIndicators() {
+            this.userMenuProviders.forEach((provider, tab) => {
+                if (provider.hasUnreadContent()) {
+                    tab.dataset.hasUnreadContent = "true";
+                }
+                else {
+                    tab.dataset.hasUnreadContent = "false";
+                }
+            });
         }
     }
     exports.PageMenuUser = PageMenuUser;

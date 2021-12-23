@@ -39,6 +39,8 @@ export interface UserMenuProvider {
 
   getView(): UserMenuView;
 
+  hasUnreadContent(): boolean;
+
   isStale(): boolean;
 
   markAsRead(objectId: number): Promise<void>;

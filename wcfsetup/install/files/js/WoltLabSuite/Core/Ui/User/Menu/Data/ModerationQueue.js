@@ -80,6 +80,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         getIdentifier() {
             return "com.woltlab.wcf.moderation";
         }
+        hasUnreadContent() {
+            return this.counter > 0;
+        }
         async markAsRead(objectId) {
             const response = (await (0, Ajax_1.dboAction)("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
                 .objectIds([objectId])
