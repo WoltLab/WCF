@@ -10,23 +10,6 @@
 	z-index: 300;
 }
 
-@include screen-sm-md {
-	.pageMenuContainer[data-orientation="right"] .pageMenuContent {
-		margin-left: auto;
-	}
-
-	.pageMenuContent {
-		box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
-		width: 400px;
-	}
-}
-
-@include screen-xs {
-	.pageMenuContent {
-		width: 100%;
-	}
-}
-
 .pageMenuContent {
 	--background-color: #{$wcfUserMenuBackground};
 	--background-color-active: #{$wcfUserMenuBackgroundActive};
@@ -46,6 +29,8 @@
 }
 
 .pageMenuMainNavigationFooter {
+	/* This is a workaround for the lack of `max(40px, auto)`. */
+	padding-top: 30px;
 	margin-top: auto;
 }
 
@@ -142,10 +127,6 @@
 	}
 }
 
-.pageMenuMainNavigationFooter .pageMenuMainItem:last-child {
-	border-bottom-width: 0;
-}
-
 .pageMenuUserTabContainer {
 	display: flex;
 	flex-direction: column;
@@ -210,5 +191,29 @@
 		.userPanelAvatar {
 			display: none;
 		}
+	}
+}
+
+@include screen-sm-md {
+	.pageMenuContainer[data-orientation="right"] .pageMenuContent {
+		margin-left: auto;
+	}
+
+	.pageMenuContent {
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
+		width: 400px;
+	}
+}
+
+@include screen-sm-down {
+	.pageMenuContent {
+		/* Gap to prevent conflicts with the UI elements of touch browsers. */
+		padding-bottom: 30px;
+	}
+}
+
+@include screen-xs {
+	.pageMenuContent {
+		width: 100%;
 	}
 }
