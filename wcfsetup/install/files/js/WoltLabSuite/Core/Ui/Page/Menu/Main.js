@@ -70,11 +70,17 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         getContent() {
             const container = document.createElement("div");
             container.classList.add("pageMenuMainContainer");
+            container.addEventListener("scroll", () => this.updateOverflowIndicator(container), { passive: true });
             container.append(...this.buildMainMenu());
             const footerMenu = this.buildFooterMenu();
             if (footerMenu) {
                 container.append(footerMenu);
             }
+            // Detect changes to the height of the children, for example, when a submenu is being expanded.
+            const observer = new ResizeObserver(() => this.updateOverflowIndicator(container));
+            Array.from(container.children).forEach((menu) => {
+                observer.observe(menu);
+            });
             const fragment = document.createDocumentFragment();
             fragment.append(container);
             return fragment;
@@ -213,6 +219,26 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             }
             else {
                 this.mainMenu.classList.remove("pageMenuMobileButtonHasContent");
+            }
+        }
+        updateOverflowIndicator(container) {
+            const hasOverflow = container.clientHeight < container.scrollHeight;
+            if (hasOverflow) {
+                if (container.scrollTop > 0) {
+                    container.classList.add("pageMenuMainContainerOverflowTop");
+                }
+                else {
+                    container.classList.remove("pageMenuMainContainerOverflowTop");
+                }
+                if (container.clientHeight + container.scrollTop < container.scrollHeight) {
+                    container.classList.add("pageMenuMainContainerOverflowBottom");
+                }
+                else {
+                    container.classList.remove("pageMenuMainContainerOverflowBottom");
+                }
+            }
+            else {
+                container.classList.remove("pageMenuMainContainerOverflowTop", "pageMenuMainContainerOverflowBottom");
             }
         }
     }

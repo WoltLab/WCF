@@ -26,6 +26,31 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	overflow: auto;
+
+	&::after,
+	&::before {
+		--box-shadow-size: 20px;
+		--box-shadow-size-inverted: calc(-1 * var(--box-shadow-size));
+
+		bottom: 0;
+		content: "";
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		transition: box-shadow 0.24s ease-out;
+		right: 0;
+		top: 0;
+		z-index: 1;
+	}
+
+	&.pageMenuMainContainerOverflowTop::before {
+		box-shadow: 0 var(--box-shadow-size) var(--box-shadow-size) var(--box-shadow-size-inverted) #000 inset;
+	}
+
+	&.pageMenuMainContainerOverflowBottom::after {
+		box-shadow: 0 var(--box-shadow-size-inverted) var(--box-shadow-size) var(--box-shadow-size-inverted) #000 inset;
+	}
 }
 
 .pageMenuMainNavigationFooter {
@@ -195,6 +220,12 @@
 }
 
 @include screen-sm-md {
+	.pageMenuMainContainer::after,
+	.pageMenuMainContainer::before {
+		right: auto;
+		width: 400px;
+	}
+
 	.pageMenuContainer[data-orientation="right"] .pageMenuContent {
 		margin-left: auto;
 	}
