@@ -102,6 +102,10 @@
 	padding: 0 10px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+
+	&:hover {
+		color: inherit;
+	}
 }
 
 .pageMenuMainItemCounter {
@@ -237,7 +241,12 @@
 }
 
 @include screen-sm-down {
-	.pageMenuContent {
+	.pageMenuMainNavigation:last-child {
+		/* Gap to prevent conflicts with the UI elements of touch browsers. */
+		margin-bottom: 30px;
+	}
+
+	.pageMenuUserTabContainer {
 		/* Gap to prevent conflicts with the UI elements of touch browsers. */
 		padding-bottom: 30px;
 	}

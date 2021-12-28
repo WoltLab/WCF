@@ -99,7 +99,7 @@ export class PageMenuMain implements PageMenuProvider {
     container.classList.add("pageMenuMainContainer");
     container.addEventListener("scroll", () => this.updateOverflowIndicator(container), { passive: true });
 
-    container.append(...this.buildMainMenu());
+    container.append(this.buildMainMenu());
 
     const footerMenu = this.buildFooterMenu();
     if (footerMenu) {
@@ -130,14 +130,14 @@ export class PageMenuMain implements PageMenuProvider {
     this.refreshUnreadIndicator();
   }
 
-  private buildMainMenu(): HTMLElement[] {
+  private buildMainMenu(): HTMLElement {
     const boxMenu = this.mainMenu.querySelector(".boxMenu") as HTMLElement;
 
     const nav = this.buildMenu(boxMenu);
     nav.setAttribute("aria-label", window.PAGE_TITLE);
     nav.setAttribute("role", "navigation");
 
-    return [nav];
+    return nav;
   }
 
   private buildFooterMenu(): HTMLElement | null {

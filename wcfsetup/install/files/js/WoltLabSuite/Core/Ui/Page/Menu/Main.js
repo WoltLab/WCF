@@ -71,7 +71,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const container = document.createElement("div");
             container.classList.add("pageMenuMainContainer");
             container.addEventListener("scroll", () => this.updateOverflowIndicator(container), { passive: true });
-            container.append(...this.buildMainMenu());
+            container.append(this.buildMainMenu());
             const footerMenu = this.buildFooterMenu();
             if (footerMenu) {
                 container.append(footerMenu);
@@ -99,7 +99,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const nav = this.buildMenu(boxMenu);
             nav.setAttribute("aria-label", window.PAGE_TITLE);
             nav.setAttribute("role", "navigation");
-            return [nav];
+            return nav;
         }
         buildFooterMenu() {
             const box = document.querySelector('.box[data-box-identifier="com.woltlab.wcf.FooterMenu"]');
