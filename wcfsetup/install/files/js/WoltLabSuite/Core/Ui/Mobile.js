@@ -79,14 +79,17 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             }
         });
         CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-            if (origin === CloseOverlay_1.Origin.DropDown) {
+            const isAcp = document.body.classList.contains("wcfAcp");
+            if (!isAcp && origin === CloseOverlay_1.Origin.DropDown) {
                 const button = document.getElementById("pageHeaderSearchTypeSelect");
                 if (button.dataset.target === identifier) {
                     return;
                 }
             }
             closeSearch(searchBar, scrollTop);
-            (0, Fixed_1.closeSearchBar)();
+            if (!isAcp) {
+                (0, Fixed_1.closeSearchBar)();
+            }
             searchButton.setAttribute("aria-expanded", "false");
         });
     }

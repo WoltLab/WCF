@@ -95,7 +95,9 @@ function initSearchButton(): void {
   });
 
   UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-    if (origin === Origin.DropDown) {
+    const isAcp = document.body.classList.contains("wcfAcp");
+
+    if (!isAcp && origin === Origin.DropDown) {
       const button = document.getElementById("pageHeaderSearchTypeSelect")!;
       if (button.dataset.target === identifier) {
         return;
@@ -103,7 +105,9 @@ function initSearchButton(): void {
     }
 
     closeSearch(searchBar, scrollTop);
-    closeSearchBar();
+    if (!isAcp) {
+      closeSearchBar();
+    }
 
     searchButton.setAttribute("aria-expanded", "false");
   });

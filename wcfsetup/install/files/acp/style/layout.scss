@@ -326,8 +326,11 @@ $wcfAcpSubMenuWidth: 300px;
 	#jumpToPage,
 	#woltlab {
 		a {
-			background-color: transparent !important;
-			padding: 0 !important;
+			background-color: transparent;
+			height: 40px;
+			justify-content: center;
+			padding: 0;
+			width: 40px;
 		}
 	}
 
@@ -346,6 +349,11 @@ $wcfAcpSubMenuWidth: 300px;
 	.acpPageMenu,
 	.acpPageSubMenu {
 		display: none;
+	}
+
+	.dropdownMenuUserPanel {
+		position: fixed;
+		top: 50px !important;
 	}
 }
 
