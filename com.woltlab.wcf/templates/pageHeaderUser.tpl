@@ -1,9 +1,9 @@
 <nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
 	{if $__wcf->user->userID}
-		<span class="userPanelAvatar">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</span>
+		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</span>
 	{else}
 		<a href="{link controller='Login'}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
-			<span class="icon icon32 fa-sign-in"></span>
+			<span class="icon icon32 fa-sign-in" aria-hidden="true"></span>
 		</a>
 	{/if}
 	

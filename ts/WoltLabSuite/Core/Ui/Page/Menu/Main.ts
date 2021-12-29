@@ -87,6 +87,7 @@ export class PageMenuMain implements PageMenuProvider {
 
   enable(): void {
     this.mainMenu.setAttribute("aria-expanded", "false");
+    this.mainMenu.setAttribute("aria-label", Language.get("wcf.menu.page"));
     this.mainMenu.setAttribute("role", "button");
     this.mainMenu.tabIndex = 0;
     this.mainMenu.addEventListener("click", this.callbackOpen);
@@ -98,6 +99,7 @@ export class PageMenuMain implements PageMenuProvider {
     this.container.close();
 
     this.mainMenu.removeAttribute("aria-expanded");
+    this.mainMenu.removeAttribute("aria-label");
     this.mainMenu.removeAttribute("role");
     this.mainMenu.removeAttribute("tabindex");
     this.mainMenu.removeEventListener("click", this.callbackOpen);
@@ -233,7 +235,7 @@ export class PageMenuMain implements PageMenuProvider {
     if (menuItem.counter > 0) {
       const counter = document.createElement("span");
       counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
-      counter.setAttribute("aria-label", "TODO");
+      counter.setAttribute("aria-hidden", "true");
       counter.textContent = menuItem.counter.toString();
 
       listItem.classList.add("pageMenuMainItemOutstandingItems");
@@ -255,7 +257,7 @@ export class PageMenuMain implements PageMenuProvider {
 
       let ariaLabel = menuItem.title;
       if (menuItem.link) {
-        ariaLabel = Language.get("TODO");
+        ariaLabel = Language.get("wcf.menu.page.button.toggle", { title: menuItem.title });
       }
       button.setAttribute("aria-label", ariaLabel);
 

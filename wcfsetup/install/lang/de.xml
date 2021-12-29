@@ -4251,6 +4251,7 @@ Dateianhänge:
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
 		<item name="wcf.menu.page"><![CDATA[Menü]]></item>
+		<item name="wcf.menu.page.button.toggle"><![CDATA[Weitere {$title} Seiten]]></item>
 		<item name="wcf.menu.page.location"><![CDATA[Aktueller Ort]]></item>
 		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
 		<item name="wcf.menu.page.options"><![CDATA[Optionen]]></item>

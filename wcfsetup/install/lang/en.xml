@@ -4199,6 +4199,7 @@ Attachments:
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
 		<item name="wcf.menu.page"><![CDATA[Menu]]></item>
+		<item name="wcf.menu.page.button.toggle"><![CDATA[More {$title} pages]]></item>
 		<item name="wcf.menu.page.location"><![CDATA[Current Location]]></item>
 		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
 		<item name="wcf.menu.page.options"><![CDATA[Options]]></item>

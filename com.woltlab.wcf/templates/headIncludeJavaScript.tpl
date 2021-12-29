@@ -123,6 +123,7 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.user.panel.settings': '{jslang}wcf.user.panel.settings{/jslang}',
 			'wcf.user.panel.showAll': '{jslang}wcf.user.panel.showAll{/jslang}',
 			'wcf.menu.page': '{jslang}wcf.menu.page{/jslang}',
+			'wcf.menu.page.button.toggle': '{jslang __literal=true}wcf.menu.page.button.toggle{/jslang}',
 			'wcf.menu.user': '{jslang}wcf.menu.user{/jslang}',
 			'wcf.global.button.showMenu': '{jslang}wcf.global.button.showMenu{/jslang}',
 			'wcf.global.button.hideMenu': '{jslang}wcf.global.button.hideMenu{/jslang}',

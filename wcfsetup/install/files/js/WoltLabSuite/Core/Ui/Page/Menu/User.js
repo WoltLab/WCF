@@ -31,6 +31,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         }
         enable() {
             this.userMenu.setAttribute("aria-expanded", "false");
+            this.userMenu.setAttribute("aria-label", Language.get("wcf.menu.user"));
             this.userMenu.setAttribute("role", "button");
             this.userMenu.tabIndex = 0;
             this.userMenu.addEventListener("click", this.callbackOpen);
@@ -39,6 +40,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         disable() {
             this.container.close();
             this.userMenu.removeAttribute("aria-expanded");
+            this.userMenu.removeAttribute("aria-label");
             this.userMenu.removeAttribute("role");
             this.userMenu.removeAttribute("tabindex");
             this.userMenu.removeEventListener("click", this.callbackOpen);
@@ -179,7 +181,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const tabList = document.createElement("div");
             tabList.classList.add("pageMenuUserTabList");
             tabList.setAttribute("role", "tablist");
-            tabList.setAttribute("aria-label", Language.get("TODO"));
+            tabList.setAttribute("aria-label", Language.get("wcf.menu.user"));
             tabContainer.append(tabList);
             this.buildControlPanelTab(tabList, tabContainer);
             (0, Manager_1.getUserMenuProviders)().forEach((provider) => {
