@@ -1,6 +1,7 @@
-<div id="pageHeaderMobileSearch" class="pageHeaderMobileSearch">
-	<!-- Placeholder for the mobile UI. -->
-</div>
+<a href="#" id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" role="button" tabindex="0" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
+	<span class="icon icon32 fa-search" aria-hidden="true"></span>
+</a>
+
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<div class="pageHeaderSearchInputContainer">
 		<div id="pageHeaderSearchType" class="pageHeaderSearchType dropdown">
@@ -24,6 +25,7 @@
 </div>
 <script data-relocate="true">
 	(function() {
+		/*
 		elById('pageHeaderMobileSearch').addEventListener('click', function() {
 			this.classList.toggle('active');
 			
@@ -33,5 +35,6 @@
 				}, 100);
 			}
 		});
+		*/
 	})();
 </script>
