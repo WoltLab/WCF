@@ -13,7 +13,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     Container_1 = (0, tslib_1.__importDefault)(Container_1);
     Language = (0, tslib_1.__importStar)(Language);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    function normalizeMenuItem(menuItem) {
+    function normalizeMenuItem(menuItem, depth) {
         const anchor = menuItem.querySelector(".boxMenuLink");
         const title = anchor.querySelector(".boxMenuLinkTitle").textContent;
         let counter = 0;
@@ -24,8 +24,12 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         const subMenu = menuItem.querySelector("ol");
         let children = [];
         if (subMenu instanceof HTMLOListElement) {
+            let childDepth = depth;
+            if (childDepth < 2) {
+                childDepth = (depth + 1);
+            }
             children = Array.from(subMenu.children).map((subMenuItem) => {
-                return normalizeMenuItem(subMenuItem);
+                return normalizeMenuItem(subMenuItem, childDepth);
             });
         }
         // `link.href` represents the computed link, not the raw value.
@@ -39,6 +43,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             active,
             children,
             counter,
+            depth,
             link,
             title,
         };
@@ -115,7 +120,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         }
         buildMenu(boxMenu) {
             const menuItems = Array.from(boxMenu.children).map((element) => {
-                return normalizeMenuItem(element);
+                return normalizeMenuItem(element, 0);
             });
             const nav = document.createElement("nav");
             nav.classList.add("pageMenuMainNavigation");
@@ -140,6 +145,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         }
         buildMenuItem(menuItem) {
             const listItem = document.createElement("li");
+            listItem.dataset.depth = menuItem.depth.toString();
             listItem.classList.add("pageMenuMainItem");
             if (menuItem.link) {
                 const link = document.createElement("a");
@@ -152,8 +158,17 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 listItem.append(link);
             }
             else {
-                const label = document.createElement("span");
+                const label = document.createElement("a");
+                label.classList.add("pageMenuMainItemLabel");
+                label.href = "#";
                 label.textContent = menuItem.title;
+                label.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const button = label.nextElementSibling;
+                    button.click();
+                });
+                // The button to expand the link group is used instead.
+                label.setAttribute("aria-hidden", "true");
                 listItem.append(label);
             }
             if (menuItem.counter > 0) {
@@ -173,8 +188,12 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 button.setAttribute("role", "button");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", menuId);
-                button.setAttribute("aria-label", Language.get("TODO"));
                 button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
+                let ariaLabel = menuItem.title;
+                if (menuItem.link) {
+                    ariaLabel = Language.get("TODO");
+                }
+                button.setAttribute("aria-label", ariaLabel);
                 const list = this.buildMenuItemList(menuItem.children);
                 list.id = menuId;
                 list.hidden = true;

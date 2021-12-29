@@ -12,15 +12,18 @@ import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
 import DomUtil from "../../../Dom/Util";
 
+type MenuItemDepth = 0 | 1 | 2;
+
 type MenuItem = {
   active: boolean;
   children: MenuItem[];
   counter: number;
+  depth: MenuItemDepth;
   link?: string;
   title: string;
 };
 
-function normalizeMenuItem(menuItem: HTMLElement): MenuItem {
+function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuItem {
   const anchor = menuItem.querySelector(".boxMenuLink") as HTMLAnchorElement;
   const title = anchor.querySelector(".boxMenuLinkTitle")!.textContent as string;
 
@@ -33,8 +36,13 @@ function normalizeMenuItem(menuItem: HTMLElement): MenuItem {
   const subMenu = menuItem.querySelector("ol");
   let children: MenuItem[] = [];
   if (subMenu instanceof HTMLOListElement) {
+    let childDepth = depth;
+    if (childDepth < 2) {
+      childDepth = (depth + 1) as MenuItemDepth;
+    }
+
     children = Array.from(subMenu.children).map((subMenuItem: HTMLElement) => {
-      return normalizeMenuItem(subMenuItem);
+      return normalizeMenuItem(subMenuItem, childDepth);
     });
   }
 
@@ -51,6 +59,7 @@ function normalizeMenuItem(menuItem: HTMLElement): MenuItem {
     active,
     children,
     counter,
+    depth,
     link,
     title,
   };
@@ -158,7 +167,7 @@ export class PageMenuMain implements PageMenuProvider {
 
   private buildMenu(boxMenu: HTMLElement): HTMLElement {
     const menuItems: MenuItem[] = Array.from(boxMenu.children).map((element: HTMLElement) => {
-      return normalizeMenuItem(element);
+      return normalizeMenuItem(element, 0);
     });
 
     const nav = document.createElement("nav");
@@ -190,6 +199,7 @@ export class PageMenuMain implements PageMenuProvider {
 
   private buildMenuItem(menuItem: MenuItem): HTMLLIElement {
     const listItem = document.createElement("li");
+    listItem.dataset.depth = menuItem.depth.toString();
     listItem.classList.add("pageMenuMainItem");
 
     if (menuItem.link) {
@@ -203,8 +213,19 @@ export class PageMenuMain implements PageMenuProvider {
 
       listItem.append(link);
     } else {
-      const label = document.createElement("span");
+      const label = document.createElement("a");
+      label.classList.add("pageMenuMainItemLabel");
+      label.href = "#";
       label.textContent = menuItem.title;
+      label.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const button = label.nextElementSibling as HTMLAnchorElement;
+        button.click();
+      });
+
+      // The button to expand the link group is used instead.
+      label.setAttribute("aria-hidden", "true");
 
       listItem.append(label);
     }
@@ -230,8 +251,13 @@ export class PageMenuMain implements PageMenuProvider {
       button.setAttribute("role", "button");
       button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-controls", menuId);
-      button.setAttribute("aria-label", Language.get("TODO"));
       button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
+
+      let ariaLabel = menuItem.title;
+      if (menuItem.link) {
+        ariaLabel = Language.get("TODO");
+      }
+      button.setAttribute("aria-label", ariaLabel);
 
       const list = this.buildMenuItemList(menuItem.children);
       list.id = menuId;
