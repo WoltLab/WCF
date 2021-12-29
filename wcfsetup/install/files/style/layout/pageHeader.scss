@@ -325,7 +325,8 @@
 }
 
 @include screen-lg {
-	.pageHeaderSearchMobile {
+	.pageHeaderSearchMobile,
+	.userPanelLoginLink {
 		display: none;
 	}
 }
@@ -540,8 +541,7 @@
 		}
 	}
 
-	.mainMenu,
-	.userPanel:not(.userPanelLoggedIn) {
+	.mainMenu {
 		&::before {
 			color: $wcfHeaderLink;
 			font-family: FontAwesome;
@@ -555,10 +555,12 @@
 		}
 	}
 
-	.userPanel:not(.userPanelLoggedIn) {
-		&::before {
-			content: $fa-var-user;
-		}
+	.userPanelLoginLink {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
 	}
 
 	.userPanel.hideUserPanel::before {

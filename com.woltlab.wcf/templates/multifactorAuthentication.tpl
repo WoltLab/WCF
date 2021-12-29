@@ -2,7 +2,7 @@
 {capture assign='contentTitle'}{lang}wcf.user.security.multifactor.authentication{/lang}{/capture}
 {capture assign='contentDescription'}{lang}wcf.user.security.multifactor.authentication.description{/lang}{/capture}
 
-{include file='header' __disableAds=true __disableLoginLink=true __sidebarLeftHasMenu=true}
+{include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 <div class="section tabMenuContainer staticTabMenuContainer">
 	<nav class="tabMenu">

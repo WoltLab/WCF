@@ -1,6 +1,10 @@
 <nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
 	{if $__wcf->user->userID}
 		<span class="userPanelAvatar">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</span>
+	{else}
+		<a href="{link controller='Login'}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
+			<span class="icon icon32 fa-sign-in"></span>
+		</a>
 	{/if}
 	
 	<ul class="userPanelItems">
@@ -123,7 +127,7 @@
 			{if $__wcf->getLanguage()->getLanguages()|count > 1}
 				<li id="pageLanguageContainer">
 					<script data-relocate="true">
-						require(['EventHandler', 'WoltLabSuite/Core/Language/Chooser'], function(EventHandler, LanguageChooser) {
+						require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 							var languages = {
 								{implode from=$__wcf->getLanguage()->getLanguages() item=_language}
 									'{@$_language->languageID}': {
@@ -150,115 +154,13 @@
 							};
 							
 							LanguageChooser.init('pageLanguageContainer', 'pageLanguageID', {@$__wcf->getLanguage()->languageID}, languages, callback);
-							EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
-								if (data.identifier === 'com.woltlab.wcf.language') {
-									callback(data.parent);
-								}
-							});
 						});
 					</script>
 				</li>
 			{/if}
-			{if !$__disableLoginLink|isset}
-				<!-- login box -->
-				<li id="userLogin">
-					<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
-					<div id="loginForm" class="loginForm" style="display: none">
-						<form method="post" action="{link controller='Login'}{/link}">
-							<section class="section loginFormLogin">
-								<h2 class="sectionTitle">{lang}wcf.user.login.login{/lang}</h2>
-								
-								<dl>
-									<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
-									<dd>
-										<input type="text" id="username" name="username" value="" required class="long" autocomplete="username">
-									</dd>
-								</dl>
-								
-								<dl>
-									<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
-									<dd>
-										<input type="password" id="password" name="password" value="" class="long" autocomplete="current-password">
-										<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
-									</dd>
-								</dl>
-								
-								{event name='fields'}
-								
-								<div class="userLoginButtons">
-									<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-									<input type="hidden" name="url" value="{$__wcf->session->requestURI}">
-									{csrfToken}
-								</div>
-							</section>
-							
-							{if !REGISTER_DISABLED}
-								<section class="section loginFormRegister">
-									<h2 class="sectionTitle">{lang}wcf.user.login.register{/lang}</h2>
-									
-									<p>{lang}wcf.user.login.register.teaser{/lang}</p>
-									
-									<div class="userLoginButtons">
-										<a href="{link controller='Register'}{/link}" class="button loginFormRegisterButton">{lang}wcf.user.login.register.registerNow{/lang}</a>
-									</div>
-								</section>
-							{/if}
-							
-							{hascontent}
-								<section class="section loginFormThirdPartyLogin">
-									<h2 class="sectionTitle">{lang}wcf.user.login.3rdParty{/lang}</h2>
-									
-									<dl>
-										<dt></dt>
-										<dd>
-											<ul class="buttonList">
-												{content}
-													{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
-														<li id="facebookAuth" class="thirdPartyLogin">
-															<a href="{link controller='FacebookAuth'}{/link}" class="button thirdPartyLoginButton facebookLoginButton"><span class="icon icon24 fa-facebook-official"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
-														</li>
-													{/if}
-													
-													{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
-														<li id="googleAuth" class="thirdPartyLogin">
-															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon24 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
-														</li>
-													{/if}
-												
-													{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
-														<li id="twitterAuth" class="thirdPartyLogin">
-															<a href="{link controller='TwitterAuth'}{/link}" class="button thirdPartyLoginButton twitterLoginButton"><span class="icon icon24 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
-														</li>
-													{/if}
-													
-													{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
-														<li id="githubAuth" class="thirdPartyLogin">
-															<a href="{link controller='GithubAuth'}{/link}" class="button thirdPartyLoginButton githubLoginButton"><span class="icon icon24 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
-														</li>
-													{/if}
-													
-													{event name='3rdpartyButtons'}
-												{/content}
-											</ul>
-										</dd>
-									</dl>
-								</section>
-							{/hascontent}
-						</form>
-					</div>
-					
-					<script data-relocate="true">
-						$(function() {
-							WCF.Language.addObject({
-								'wcf.user.button.login': '{jslang}wcf.user.button.login{/jslang}',
-								'wcf.user.button.register': '{jslang}wcf.user.button.register{/jslang}',
-								'wcf.user.login': '{jslang}wcf.user.login{/jslang}'
-							});
-							WCF.User.QuickLogin.init();
-						});
-					</script>
-				</li>
-			{/if}
+			<li id="userLogin">
+				<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
+			</a>
 		{/if}
 		
 		{if !$__hideUserMenu|isset}

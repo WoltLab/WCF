@@ -394,7 +394,9 @@ export class PageMenuUser implements PageMenuProvider {
 }
 
 export function hasValidUserMenu(): boolean {
-  return true;
+  const panel = document.getElementById("topMenu")!;
+
+  return panel.classList.contains("userPanelLoggedIn");
 }
 
 export default PageMenuUser;

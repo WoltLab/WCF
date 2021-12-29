@@ -297,7 +297,8 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     }
     exports.PageMenuUser = PageMenuUser;
     function hasValidUserMenu() {
-        return true;
+        const panel = document.getElementById("topMenu");
+        return panel.classList.contains("userPanelLoggedIn");
     }
     exports.hasValidUserMenu = hasValidUserMenu;
     exports.default = PageMenuUser;

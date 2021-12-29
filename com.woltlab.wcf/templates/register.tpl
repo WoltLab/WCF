@@ -6,7 +6,7 @@
 	</style>
 {/capture}
 
-{include file='header' __disableLoginLink=true __disableAds=true}
+{include file='header' __disableAds=true}
 
 {if $isExternalAuthentication}
 	<p class="info" role="status">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</p>
