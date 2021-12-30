@@ -10,6 +10,7 @@
 import * as Core from "../Core";
 import { BoostrapOptions, setup as bootstrapSetup } from "../Bootstrap";
 import * as UiPageMenu from "./Ui/Page/Menu";
+import AcpUiPageMenuMainBackend from "./Ui/Page/Menu/Main/Backend";
 
 interface AcpBootstrapOptions {
   bootstrap: BoostrapOptions;
@@ -25,6 +26,7 @@ export function setup(options: AcpBootstrapOptions): void {
     {
       bootstrap: {
         enableMobileMenu: true,
+        pageMenuMainProvider: new AcpUiPageMenuMainBackend(),
       },
     },
     options,

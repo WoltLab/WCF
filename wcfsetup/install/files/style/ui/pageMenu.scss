@@ -157,6 +157,10 @@
 		min-height: 34px;
 	}
 
+	.pageMenuMainItemLink[aria-current="page"] {
+		font-weight: 600;
+	}
+
 	.pageMenuMainItemToggle::before {
 		bottom: 5px;
 		top: 5px;
