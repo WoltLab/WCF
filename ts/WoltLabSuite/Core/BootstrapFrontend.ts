@@ -19,6 +19,7 @@ import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
 import * as UiMessageShareProviders from "./Ui/Message/Share/Providers";
 import * as UiFeedDialog from "./Ui/Feed/Dialog";
 import User from "./User";
+import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 
 interface BoostrapOptions {
   backgroundQueue: {
@@ -59,7 +60,10 @@ export function setup(options: BoostrapOptions): void {
   // Modify the URL of the background queue URL to always target the current domain to avoid CORS.
   options.backgroundQueue.url = window.WSC_API_URL + options.backgroundQueue.url.substr(window.WCF_PATH.length);
 
-  Bootstrap.setup({ enableMobileMenu: true });
+  Bootstrap.setup({
+    enableMobileMenu: true,
+    pageMenuMainProvider: new UiPageMenuMainFrontend(),
+  });
   UiPageHeaderMenu.init();
 
   if (options.styleChanger) {

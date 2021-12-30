@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/BootstrapFrontend
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Style/Changer", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerStyleChanger, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, UiMessageShareProviders, UiFeedDialog, User_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Style/Changer", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerStyleChanger, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, UiMessageShareProviders, UiFeedDialog, User_1, Frontend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -22,6 +22,7 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     UiMessageShareProviders = (0, tslib_1.__importStar)(UiMessageShareProviders);
     UiFeedDialog = (0, tslib_1.__importStar)(UiFeedDialog);
     User_1 = (0, tslib_1.__importDefault)(User_1);
+    Frontend_1 = (0, tslib_1.__importDefault)(Frontend_1);
     /**
      * Initializes user profile popover.
      */
@@ -45,7 +46,10 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     function setup(options) {
         // Modify the URL of the background queue URL to always target the current domain to avoid CORS.
         options.backgroundQueue.url = window.WSC_API_URL + options.backgroundQueue.url.substr(window.WCF_PATH.length);
-        Bootstrap.setup({ enableMobileMenu: true });
+        Bootstrap.setup({
+            enableMobileMenu: true,
+            pageMenuMainProvider: new Frontend_1.default(),
+        });
         UiPageHeaderMenu.init();
         if (options.styleChanger) {
             ControllerStyleChanger.setup();

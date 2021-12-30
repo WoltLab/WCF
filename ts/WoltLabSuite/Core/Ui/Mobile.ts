@@ -15,6 +15,7 @@ import UiCloseOverlay, { Origin } from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
 import { closeSearchBar, openSearchBar } from "./Page/Header/Fixed";
 import { PageMenuMain } from "./Page/Menu/Main";
+import { PageMenuMainProvider } from "./Page/Menu/Main/Provider";
 import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
 
@@ -28,6 +29,7 @@ let _mobileSidebarEnabled = false;
 let _pageMenuMain: PageMenuMain;
 let _pageMenuUser: PageMenuUser | undefined = undefined;
 let _messageGroups: HTMLCollection | null = null;
+let _pageMenuMainProvider: PageMenuMainProvider;
 const _sidebars: HTMLElement[] = [];
 
 function init(): void {
@@ -203,7 +205,7 @@ function initMessages(): void {
 
 function initMobileMenu(): void {
   if (_enableMobileMenu) {
-    _pageMenuMain = new PageMenuMain();
+    _pageMenuMain = new PageMenuMain(_pageMenuMainProvider);
     _pageMenuMain.enable();
 
     if (hasValidUserMenu()) {
@@ -367,8 +369,10 @@ function rebuildMobileNavigation(navigation: HTMLElement): void {
 /**
  * Initializes the mobile UI.
  */
-export function setup(enableMobileMenu: boolean): void {
+export function setup(enableMobileMenu: boolean, pageMenuMainProvider: PageMenuMainProvider): void {
   _enableMobileMenu = enableMobileMenu;
+  _pageMenuMainProvider = pageMenuMainProvider;
+
   document.querySelectorAll(".sidebar").forEach((sidebar: HTMLElement) => {
     _sidebars.push(sidebar);
   });

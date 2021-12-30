@@ -27,6 +27,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     let _pageMenuMain;
     let _pageMenuUser = undefined;
     let _messageGroups = null;
+    let _pageMenuMainProvider;
     const _sidebars = [];
     function init() {
         _enabled = true;
@@ -168,7 +169,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     }
     function initMobileMenu() {
         if (_enableMobileMenu) {
-            _pageMenuMain = new Main_1.PageMenuMain();
+            _pageMenuMain = new Main_1.PageMenuMain(_pageMenuMainProvider);
             _pageMenuMain.enable();
             if ((0, User_1.hasValidUserMenu)()) {
                 _pageMenuUser = new User_1.PageMenuUser();
@@ -301,8 +302,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     /**
      * Initializes the mobile UI.
      */
-    function setup(enableMobileMenu) {
+    function setup(enableMobileMenu, pageMenuMainProvider) {
         _enableMobileMenu = enableMobileMenu;
+        _pageMenuMainProvider = pageMenuMainProvider;
         document.querySelectorAll(".sidebar").forEach((sidebar) => {
             _sidebars.push(sidebar);
         });

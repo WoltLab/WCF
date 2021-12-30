@@ -63,6 +63,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
     function setup(options) {
         options = Core.extend({
             enableMobileMenu: true,
+            pageMenuMainProvider: undefined,
         }, options);
         StringUtil.setupI18n({
             decimalPoint: Language.get("wcf.global.decimalPoint"),
@@ -75,7 +76,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
         DateTimeRelative.setup();
         Picker_1.default.init();
         Simple_1.default.setup();
-        UiMobile.setup(options.enableMobileMenu);
+        UiMobile.setup(options.enableMobileMenu, options.pageMenuMainProvider);
         UiTabMenu.setup();
         Dialog_1.default.setup();
         UiTooltip.setup();

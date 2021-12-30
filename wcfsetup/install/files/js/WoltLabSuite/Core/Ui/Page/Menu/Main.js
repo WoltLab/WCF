@@ -13,44 +13,10 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     Container_1 = (0, tslib_1.__importDefault)(Container_1);
     Language = (0, tslib_1.__importStar)(Language);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    function normalizeMenuItem(menuItem, depth) {
-        const anchor = menuItem.querySelector(".boxMenuLink");
-        const title = anchor.querySelector(".boxMenuLinkTitle").textContent;
-        let counter = 0;
-        const outstandingItems = anchor.querySelector(".boxMenuLinkOutstandingItems");
-        if (outstandingItems) {
-            counter = +outstandingItems.textContent.replace(/[^0-9]/, "");
-        }
-        const subMenu = menuItem.querySelector("ol");
-        let children = [];
-        if (subMenu instanceof HTMLOListElement) {
-            let childDepth = depth;
-            if (childDepth < 2) {
-                childDepth = (depth + 1);
-            }
-            children = Array.from(subMenu.children).map((subMenuItem) => {
-                return normalizeMenuItem(subMenuItem, childDepth);
-            });
-        }
-        // `link.href` represents the computed link, not the raw value.
-        const href = anchor.getAttribute("href");
-        let link = undefined;
-        if (href && href !== "#") {
-            link = anchor.href;
-        }
-        const active = menuItem.classList.contains("active");
-        return {
-            active,
-            children,
-            counter,
-            depth,
-            link,
-            title,
-        };
-    }
     class PageMenuMain {
-        constructor() {
+        constructor(menuItemProvider) {
             this.mainMenu = document.querySelector(".mainMenu");
+            this.menuItemProvider = menuItemProvider;
             this.container = new Container_1.default(this, "left" /* Left */);
             this.callbackOpen = (event) => {
                 event.preventDefault();
@@ -121,9 +87,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return nav;
         }
         buildMenu(boxMenu) {
-            const menuItems = Array.from(boxMenu.children).map((element) => {
-                return normalizeMenuItem(element, 0);
-            });
+            const menuItems = this.menuItemProvider.getMenuItems(boxMenu);
             const nav = document.createElement("nav");
             nav.classList.add("pageMenuMainNavigation");
             nav.append(this.buildMenuItemList(menuItems));

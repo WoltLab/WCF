@@ -11,59 +11,7 @@ import PageMenuContainer, { Orientation } from "./Container";
 import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
 import DomUtil from "../../../Dom/Util";
-
-type MenuItemDepth = 0 | 1 | 2;
-
-type MenuItem = {
-  active: boolean;
-  children: MenuItem[];
-  counter: number;
-  depth: MenuItemDepth;
-  link?: string;
-  title: string;
-};
-
-function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuItem {
-  const anchor = menuItem.querySelector(".boxMenuLink") as HTMLAnchorElement;
-  const title = anchor.querySelector(".boxMenuLinkTitle")!.textContent as string;
-
-  let counter = 0;
-  const outstandingItems = anchor.querySelector(".boxMenuLinkOutstandingItems");
-  if (outstandingItems) {
-    counter = +outstandingItems.textContent!.replace(/[^0-9]/, "");
-  }
-
-  const subMenu = menuItem.querySelector("ol");
-  let children: MenuItem[] = [];
-  if (subMenu instanceof HTMLOListElement) {
-    let childDepth = depth;
-    if (childDepth < 2) {
-      childDepth = (depth + 1) as MenuItemDepth;
-    }
-
-    children = Array.from(subMenu.children).map((subMenuItem: HTMLElement) => {
-      return normalizeMenuItem(subMenuItem, childDepth);
-    });
-  }
-
-  // `link.href` represents the computed link, not the raw value.
-  const href = anchor.getAttribute("href");
-  let link: string | undefined = undefined;
-  if (href && href !== "#") {
-    link = anchor.href;
-  }
-
-  const active = menuItem.classList.contains("active");
-
-  return {
-    active,
-    children,
-    counter,
-    depth,
-    link,
-    title,
-  };
-}
+import { MenuItem, PageMenuMainProvider } from "./Main/Provider";
 
 type CallbackOpen = (event: MouseEvent) => void;
 
@@ -71,9 +19,11 @@ export class PageMenuMain implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly mainMenu: HTMLElement;
+  private readonly menuItemProvider: PageMenuMainProvider;
 
-  constructor() {
+  constructor(menuItemProvider: PageMenuMainProvider) {
     this.mainMenu = document.querySelector(".mainMenu")!;
+    this.menuItemProvider = menuItemProvider;
 
     this.container = new PageMenuContainer(this, Orientation.Left);
 
@@ -168,9 +118,7 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   private buildMenu(boxMenu: HTMLElement): HTMLElement {
-    const menuItems: MenuItem[] = Array.from(boxMenu.children).map((element: HTMLElement) => {
-      return normalizeMenuItem(element, 0);
-    });
+    const menuItems = this.menuItemProvider.getMenuItems(boxMenu);
 
     const nav = document.createElement("nav");
     nav.classList.add("pageMenuMainNavigation");

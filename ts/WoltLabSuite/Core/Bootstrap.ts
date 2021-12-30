@@ -33,6 +33,7 @@ import * as UiObjectActionToggle from "./Ui/Object/Action/Toggle";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
+import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 
 // non strict equals by intent
 if (window.WCF == null) {
@@ -49,6 +50,7 @@ window.__wcf_bc_eventHandler = EventHandler;
 
 export interface BoostrapOptions {
   enableMobileMenu: boolean;
+  pageMenuMainProvider: PageMenuMainProvider;
 }
 
 function initA11y() {
@@ -72,6 +74,7 @@ export function setup(options: BoostrapOptions): void {
   options = Core.extend(
     {
       enableMobileMenu: true,
+      pageMenuMainProvider: undefined,
     },
     options,
   ) as BoostrapOptions;
@@ -89,7 +92,7 @@ export function setup(options: BoostrapOptions): void {
   DateTimeRelative.setup();
   DatePicker.init();
   UiDropdownSimple.setup();
-  UiMobile.setup(options.enableMobileMenu);
+  UiMobile.setup(options.enableMobileMenu, options.pageMenuMainProvider);
   UiTabMenu.setup();
   UiDialog.setup();
   UiTooltip.setup();
