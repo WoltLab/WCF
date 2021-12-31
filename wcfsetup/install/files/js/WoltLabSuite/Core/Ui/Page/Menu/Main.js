@@ -72,7 +72,22 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const nav = this.buildMenu(boxMenu);
             nav.setAttribute("aria-label", window.PAGE_TITLE);
             nav.setAttribute("role", "navigation");
+            this.showActiveMenuItem(nav);
             return nav;
+        }
+        showActiveMenuItem(menu) {
+            const activeMenuItem = menu.querySelector('.pageMenuMainItemLink[aria-current="page"]');
+            if (activeMenuItem) {
+                let element = activeMenuItem;
+                while (element && element.parentElement) {
+                    element = element.parentElement.closest(".pageMenuMainItemList");
+                    if (element) {
+                        element.hidden = false;
+                        const button = element.previousElementSibling;
+                        button === null || button === void 0 ? void 0 : button.setAttribute("aria-expanded", "true");
+                    }
+                }
+            }
         }
         buildFooterMenu() {
             const box = document.querySelector('.box[data-box-identifier="com.woltlab.wcf.FooterMenu"]');

@@ -98,7 +98,25 @@ export class PageMenuMain implements PageMenuProvider {
     nav.setAttribute("aria-label", window.PAGE_TITLE);
     nav.setAttribute("role", "navigation");
 
+    this.showActiveMenuItem(nav);
+
     return nav;
+  }
+
+  private showActiveMenuItem(menu: HTMLElement): void {
+    const activeMenuItem = menu.querySelector<HTMLElement>('.pageMenuMainItemLink[aria-current="page"]');
+    if (activeMenuItem) {
+      let element: HTMLElement | null = activeMenuItem;
+      while (element && element.parentElement) {
+        element = element.parentElement.closest<HTMLElement>(".pageMenuMainItemList");
+        if (element) {
+          element.hidden = false;
+
+          const button = element.previousElementSibling;
+          button?.setAttribute("aria-expanded", "true");
+        }
+      }
+    }
   }
 
   private buildFooterMenu(): HTMLElement | null {
