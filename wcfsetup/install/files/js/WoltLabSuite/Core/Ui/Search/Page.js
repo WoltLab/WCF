@@ -10,14 +10,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     Input_1 = (0, tslib_1.__importDefault)(Input_1);
     function click(event) {
         event.preventDefault();
-        event.stopPropagation();
-        const searchType = document.querySelector(".pageHeaderSearchType");
-        Simple_1.default.close(Util_1.default.identify(searchType));
-        const pageHeader = document.getElementById("pageHeader");
-        pageHeader.classList.add("searchBarForceOpen");
-        window.setTimeout(() => {
-            pageHeader.classList.remove("searchBarForceOpen");
-        }, 10);
         const target = event.currentTarget;
         const objectType = target.dataset.objectType;
         const container = document.getElementById("pageHeaderSearchParameters");

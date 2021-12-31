@@ -7,16 +7,6 @@ import UiSearchInput from "./Input";
 
 function click(event: MouseEvent): void {
   event.preventDefault();
-  event.stopPropagation();
-
-  const searchType = document.querySelector(".pageHeaderSearchType") as HTMLElement;
-  UiDropdownSimple.close(DomUtil.identify(searchType))!;
-
-  const pageHeader = document.getElementById("pageHeader") as HTMLElement;
-  pageHeader.classList.add("searchBarForceOpen");
-  window.setTimeout(() => {
-    pageHeader.classList.remove("searchBarForceOpen");
-  }, 10);
 
   const target = event.currentTarget as HTMLElement;
   const objectType = target.dataset.objectType;

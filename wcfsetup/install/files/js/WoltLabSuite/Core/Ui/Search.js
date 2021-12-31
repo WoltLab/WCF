@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Page/Header/Fixed
  */
-define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Simple", "./Screen", "../Environment"], function (require, exports, tslib_1, EventHandler, UiAlignment, CloseOverlay_1, Simple_1, UiScreen, Environment) {
+define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Simple", "./Screen", "../Environment", "../Dom/Util"], function (require, exports, tslib_1, EventHandler, UiAlignment, CloseOverlay_1, Simple_1, UiScreen, Environment, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
@@ -22,6 +22,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
     const _pageHeader = document.getElementById("pageHeader");
     const _pageHeaderPanel = document.getElementById("pageHeaderPanel");
     const _pageHeaderSearch = document.getElementById("pageHeaderSearch");
+    let _pageHeaderSearchMobile = undefined;
     const _pageHeaderSearchInput = document.getElementById("pageHeaderSearchInput");
     const _topMenu = document.getElementById("topMenu");
     const _userPanelSearchButton = document.getElementById("userPanelSearchButton");
@@ -30,6 +31,14 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
      */
     function initSearchBar() {
         _pageHeaderSearch.addEventListener("click", (event) => event.stopPropagation());
+        const searchType = document.querySelector(".pageHeaderSearchType");
+        const dropdownMenuId = (0, Util_1.identify)(searchType);
+        const dropdownMenu = Simple_1.default.getDropdownMenu(dropdownMenuId);
+        dropdownMenu.addEventListener("click", (event) => {
+            // This prevents triggering the `UiCloseOverlay`.
+            event.stopPropagation();
+            Simple_1.default.close(dropdownMenuId);
+        });
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -47,14 +56,13 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                     return;
                 }
             }
-            if (_pageHeader.classList.contains("searchBarForceOpen")) {
-                return;
-            }
             closeSearch();
+            _pageHeaderSearchMobile === null || _pageHeaderSearchMobile === void 0 ? void 0 : _pageHeaderSearchMobile.setAttribute("aria-expanded", "false");
         });
     }
-    function initSearchButton() {
+    function initMobileSearch() {
         const searchButton = document.getElementById("pageHeaderSearchMobile");
+        _pageHeaderSearchMobile = searchButton;
         searchButton.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -84,16 +92,6 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                 closeSearch();
                 searchButton.setAttribute("aria-expanded", "false");
             }
-        });
-        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-            if (!_isAcp && origin === CloseOverlay_1.Origin.DropDown) {
-                const button = document.getElementById("pageHeaderSearchTypeSelect");
-                if (button.dataset.target === identifier) {
-                    return;
-                }
-            }
-            closeSearch();
-            searchButton.setAttribute("aria-expanded", "false");
         });
     }
     function openSearch() {
@@ -143,7 +141,6 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             return;
         }
         initSearchBar();
-        initSearchButton();
         UiScreen.on("screen-md-down", {
             match() {
                 _isMobile = true;
@@ -154,6 +151,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             },
             setup() {
                 _isMobile = true;
+                initMobileSearch();
             },
         });
         EventHandler.add("com.woltlab.wcf.Search", "close", closeSearch);

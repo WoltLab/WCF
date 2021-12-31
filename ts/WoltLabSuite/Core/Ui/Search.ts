@@ -13,6 +13,7 @@ import UiCloseOverlay, { Origin } from "./CloseOverlay";
 import UiDropdownSimple from "./Dropdown/Simple";
 import * as UiScreen from "./Screen";
 import * as Environment from "../Environment";
+import { identify } from "../Dom/Util";
 
 let _isMobile = false;
 let _scrollTop: number | undefined = undefined;
@@ -21,6 +22,7 @@ const _isAcp = document.body.classList.contains("wcfAcp");
 const _pageHeader = document.getElementById("pageHeader")!;
 const _pageHeaderPanel = document.getElementById("pageHeaderPanel")!;
 const _pageHeaderSearch = document.getElementById("pageHeaderSearch")!;
+let _pageHeaderSearchMobile: HTMLElement | undefined = undefined;
 const _pageHeaderSearchInput = document.getElementById("pageHeaderSearchInput") as HTMLInputElement;
 const _topMenu = document.getElementById("topMenu")!;
 const _userPanelSearchButton = document.getElementById("userPanelSearchButton");
@@ -30,6 +32,16 @@ const _userPanelSearchButton = document.getElementById("userPanelSearchButton");
  */
 function initSearchBar(): void {
   _pageHeaderSearch.addEventListener("click", (event) => event.stopPropagation());
+
+  const searchType = document.querySelector(".pageHeaderSearchType") as HTMLElement;
+  const dropdownMenuId = identify(searchType);
+  const dropdownMenu = UiDropdownSimple.getDropdownMenu(dropdownMenuId)!;
+  dropdownMenu.addEventListener("click", (event) => {
+    // This prevents triggering the `UiCloseOverlay`.
+    event.stopPropagation();
+
+    UiDropdownSimple.close(dropdownMenuId);
+  });
 
   _userPanelSearchButton?.addEventListener("click", (event) => {
     event.preventDefault();
@@ -50,16 +62,16 @@ function initSearchBar(): void {
       }
     }
 
-    if (_pageHeader.classList.contains("searchBarForceOpen")) {
-      return;
-    }
-
     closeSearch();
+
+    _pageHeaderSearchMobile?.setAttribute("aria-expanded", "false");
   });
 }
 
-function initSearchButton(): void {
+function initMobileSearch(): void {
   const searchButton = document.getElementById("pageHeaderSearchMobile")!;
+  _pageHeaderSearchMobile = searchButton;
+
   searchButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -98,19 +110,6 @@ function initSearchButton(): void {
 
       searchButton.setAttribute("aria-expanded", "false");
     }
-  });
-
-  UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-    if (!_isAcp && origin === Origin.DropDown) {
-      const button = document.getElementById("pageHeaderSearchTypeSelect")!;
-      if (button.dataset.target === identifier) {
-        return;
-      }
-    }
-
-    closeSearch();
-
-    searchButton.setAttribute("aria-expanded", "false");
   });
 }
 
@@ -173,7 +172,6 @@ export function init(): void {
   }
 
   initSearchBar();
-  initSearchButton();
 
   UiScreen.on("screen-md-down", {
     match() {
@@ -185,6 +183,8 @@ export function init(): void {
     },
     setup() {
       _isMobile = true;
+
+      initMobileSearch();
     },
   });
 
