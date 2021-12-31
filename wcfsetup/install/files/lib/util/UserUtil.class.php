@@ -47,7 +47,7 @@ final class UserUtil
     }
 
     /**
-     * @deprecated 5.5 Check whether `User::getUserByUsername()->userID` is truthy.
+     * @deprecated 5.5 Check whether `User::getUserByUsername()->userID` is falsy.
      */
     public static function isAvailableUsername($name)
     {
@@ -89,7 +89,7 @@ final class UserUtil
     }
 
     /**
-     * @deprecated 5.5 Check whether `User::getUserByEmail()->userID` is truthy.
+     * @deprecated 5.5 Check whether `User::getUserByEmail()->userID` is falsy.
      */
     public static function isAvailableEmail($email)
     {

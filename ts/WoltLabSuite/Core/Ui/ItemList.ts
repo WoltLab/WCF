@@ -210,7 +210,7 @@ function paste(event: ClipboardEvent): void {
   const maxLength = +element.maxLength;
   text.split(/,/).forEach((item) => {
     item = item.trim();
-    if (maxLength && item.length > maxLength) {
+    if (maxLength !== -1 && item.length > maxLength) {
       // truncating items provides a better UX than throwing an error or silently discarding it
       item = item.substr(0, maxLength);
     }

@@ -44,6 +44,7 @@
 		<template>reactionTabbedUserList</template>
 		<template>reactionTypeIcon</template>
 		<template>searchArea</template>
+		<template>searchResult</template>
 		<template>shareButtonsPrivacySettings</template>
 		<template>sitemap</template>
 		<template>sitemapUserAccount</template>

@@ -24,6 +24,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Form
+ * @deprecated 5.5
  */
 class SearchForm extends AbstractCaptchaForm
 {
@@ -72,12 +73,12 @@ class SearchForm extends AbstractCaptchaForm
     /**
      * @inheritDoc
      */
-    public $sortField = SEARCH_DEFAULT_SORT_FIELD;
+    public $sortField = '';
 
     /**
      * @inheritDoc
      */
-    public $sortOrder = SEARCH_DEFAULT_SORT_ORDER;
+    public $sortOrder = '';
 
     /**
      * user id
@@ -90,11 +91,6 @@ class SearchForm extends AbstractCaptchaForm
      * @var string
      */
     public $username = '';
-
-    /**
-     * @inheritDoc
-     */
-    public $useCaptcha = SEARCH_USE_CAPTCHA;
 
     /**
      * parameters used for previous search
@@ -143,6 +139,11 @@ class SearchForm extends AbstractCaptchaForm
      * @var bool
      */
     public $submit = false;
+
+    /**
+     * @var int[]
+     */
+    public $userIDs = [];
 
     /**
      * @inheritDoc
@@ -564,27 +565,14 @@ class SearchForm extends AbstractCaptchaForm
      */
     public function getUserIDs()
     {
-        $userIDs = [];
+        return $this->userIDs;
+    }
 
-        // username
-        if (!empty($this->username)) {
-            $sql = "SELECT  userID
-                    FROM    wcf" . WCF_N . "_user
-                    WHERE   username " . ($this->nameExactly ? "= ?" : "LIKE ?");
-            $statement = WCF::getDB()->prepareStatement($sql, 100);
-            $statement->execute([$this->username . (!$this->nameExactly ? '%' : '')]);
-            $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-            if (empty($userIDs)) {
-                $this->throwNoMatchesException();
-            }
-        }
-
-        // userID
-        if ($this->userID) {
-            $userIDs[] = $this->userID;
-        }
-
-        return $userIDs;
+    /**
+     * @inheritDoc
+     */
+    public function __run()
+    {
+        throw new IllegalLinkException();
     }
 }

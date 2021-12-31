@@ -54,8 +54,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					}, { passive: true });
 					
 					editor.addEventListener('touchend', (function (event) {
-						handleEditorClick(event);
-						handleEditorMouseUp(event);
+						const selection = window.getSelection();
+						if (selection.rangeCount === 0 || selection.isCollapsed) {
+							handleEditorClick(event);
+							handleEditorMouseUp(event);
+						}
 					}).bind(this));
 				}
 				else {

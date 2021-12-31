@@ -1,13 +1,12 @@
 <dl>
 	<dt><label>{lang}wcf.article.search.categories{/lang}</label></dt>
 	<dd>
-		<ul class="scrollableCheckboxList">
+		<select name="articleCategoryID">
+			<option value="">{lang}wcf.global.language.noSelection{/lang}</option>
 			{foreach from=$articleCategoryList item=category}
-				<li{if $category->getDepth() > 1} style="padding-left: {$category->getDepth()*20-20}px"{/if}>
-					<label><input type="checkbox" name="articleCategoryIDs[]" value="{@$category->categoryID}"{if $category->categoryID|in_array:$articleCategoryIDs} checked{/if}> {$category->getTitle()}</label>
-				</li>
+				<option value="{@$category->categoryID}">{if $category->getDepth() > 1}{@'&nbsp;&nbsp;&nbsp;&nbsp;'|str_repeat:-1+$category->getDepth()}{/if}{$category->getTitle()}</option>
 			{/foreach}
-		</ul>
+		</select>
 	</dd>
 </dl>
 

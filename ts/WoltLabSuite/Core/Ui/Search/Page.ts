@@ -5,14 +5,13 @@ import UiDropdownSimple from "../Dropdown/Simple";
 import * as UiScreen from "../Screen";
 import UiSearchInput from "./Input";
 
+const parameters = new Map<string, string>();
+
 function click(event: MouseEvent): void {
   event.preventDefault();
 
   const target = event.currentTarget as HTMLElement;
   const objectType = target.dataset.objectType;
-
-  const container = document.getElementById("pageHeaderSearchParameters") as HTMLElement;
-  container.innerHTML = "";
 
   const extendedLink = target.dataset.extendedLink;
   if (extendedLink) {
@@ -20,7 +19,8 @@ function click(event: MouseEvent): void {
     link.href = extendedLink;
   }
 
-  const parameters = new Map<string, string>();
+  parameters.clear();
+
   try {
     const data = JSON.parse(target.dataset.parameters || "");
     if (Core.isPlainObject(data)) {
@@ -32,17 +32,9 @@ function click(event: MouseEvent): void {
     // Ignore JSON parsing failure.
   }
 
-  if (objectType) {
-    parameters.set("types[]", objectType);
+  if (objectType && objectType !== "everywhere") {
+    parameters.set("type", objectType);
   }
-
-  parameters.forEach((value, key) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = key;
-    input.value = value;
-    container.appendChild(input);
-  });
 
   // update label
   const inputContainer = document.getElementById("pageHeaderSearchInputContainer") as HTMLElement;
@@ -100,4 +92,16 @@ export function init(objectType: string): void {
   // trigger click on init
   const link = dropdownMenu.querySelector('a[data-object-type="' + objectType + '"]') as HTMLAnchorElement;
   link.click();
+
+  searchInput.form!.addEventListener("submit", (event) => {
+    event.preventDefault();
+    submit(searchInput.form!, searchInput);
+  });
+}
+
+function submit(form: HTMLFormElement, input: HTMLInputElement): void {
+  const url = new URL(form.action);
+  url.search += url.search !== "" ? "&" : "?";
+  url.search += new URLSearchParams([["q", input.value.trim()], ...Array.from(parameters)]).toString();
+  window.location.href = url.toString();
 }

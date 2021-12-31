@@ -265,21 +265,21 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      */
     public function parseAttributes($attributes)
     {
-        if (empty($attributes)) {
-            return [];
-        }
+        if (!empty($attributes)) {
+            $parsedAttributes = \base64_decode($attributes, true);
+            if ($parsedAttributes !== false) {
+                try {
+                    $parsedAttributes = JSON::decode($parsedAttributes);
+                } catch (SystemException $e) {
+                    /* parse errors can occur if user provided malicious content - ignore them */
+                    $parsedAttributes = [];
+                }
 
-        $parsedAttributes = \base64_decode($attributes, true);
-        if ($parsedAttributes !== false) {
-            try {
-                $parsedAttributes = JSON::decode($parsedAttributes);
-            } catch (SystemException $e) {
-                /* parse errors can occur if user provided malicious content - ignore them */
-                $parsedAttributes = [];
+                return $parsedAttributes;
             }
         }
 
-        return $parsedAttributes;
+        return [];
     }
 
     /**

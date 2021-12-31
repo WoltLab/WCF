@@ -49,7 +49,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     const INFO_FILE = 'style.xml';
 
-    const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp'];
+    const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp', 'ico'];
 
     /**
      * list of compatible API versions
@@ -706,6 +706,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
                         $imagesTar->extract($key, $targetFile);
                         FileUtil::makeWritable($targetFile);
+
+                        if (\preg_match('/^favicon\-template\.(png|jpg|gif)$/', \basename($targetFile))) {
+                            $style->update([
+                                'hasFavicon' => 1,
+                            ]);
+                        }
                     }
                 }
 
@@ -1047,7 +1053,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $imagesTar = new TarWriter($imagesTarName);
             FileUtil::makeWritable($imagesTarName);
 
-            $regEx = new Regex('\.(jpg|jpeg|gif|png|svg|ico|json|xml|txt|webp)$', Regex::CASE_INSENSITIVE);
+            $regEx = new Regex('^([a-zA-Z0-9_-]+\.)+(jpg|jpeg|gif|png|svg|ico|json|xml|txt|webp)$', Regex::CASE_INSENSITIVE);
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator(
                     $this->getAssetPath(),
@@ -1060,7 +1066,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                 if (!$file->isFile()) {
                     continue;
                 }
-                if (!$regEx->match($file->getPathName())) {
+                if (!$regEx->match($file->getBasename())) {
                     continue;
                 }
 

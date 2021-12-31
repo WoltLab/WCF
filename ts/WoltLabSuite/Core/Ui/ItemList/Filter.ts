@@ -36,6 +36,7 @@ class UiItemListFilter {
   protected readonly _items = new Set<ItemMetaData>();
   protected readonly _options: FilterOptions;
   protected _value = "";
+  protected _clearButton: HTMLAnchorElement;
 
   /**
    * Creates a new filter input.
@@ -48,7 +49,7 @@ class UiItemListFilter {
       {
         callbackPrepareItem: undefined,
         enableVisibilityFilter: true,
-        filterPosition: "bottom",
+        filterPosition: "top",
       },
       options,
     ) as FilterOptions;
@@ -93,19 +94,19 @@ class UiItemListFilter {
     });
     input.addEventListener("keyup", () => this._keyup());
 
-    const clearButton = document.createElement("a");
-    clearButton.href = "#";
-    clearButton.className = "button inputSuffix jsTooltip";
-    clearButton.title = Language.get("wcf.global.filter.button.clear");
-    clearButton.innerHTML = '<span class="icon icon16 fa-times"></span>';
-    clearButton.addEventListener("click", (event) => {
+    this._clearButton = document.createElement("a");
+    this._clearButton.href = "#";
+    this._clearButton.className = "button inputSuffix disabled jsTooltip";
+    this._clearButton.title = Language.get("wcf.global.filter.button.clear");
+    this._clearButton.innerHTML = '<span class="icon icon16 fa-times"></span>';
+    this._clearButton.addEventListener("click", (event) => {
       event.preventDefault();
 
       this.reset();
     });
 
     inputAddon.appendChild(input);
-    inputAddon.appendChild(clearButton);
+    inputAddon.appendChild(this._clearButton);
 
     if (this._options.enableVisibilityFilter) {
       const visibilityButton = document.createElement("a");
@@ -126,6 +127,9 @@ class UiItemListFilter {
     this._container = container;
     this._element = element;
     this._input = input;
+
+    // set fixed height to avoid layout jumps
+    this._element.style.setProperty("height", `${this._element.offsetHeight}px`, "");
   }
 
   /**
@@ -183,11 +187,14 @@ class UiItemListFilter {
       return;
     }
 
+    if (value) {
+      this._clearButton.classList.remove("disabled");
+    } else {
+      this._clearButton.classList.add("disabled");
+    }
+
     if (!this._fragment) {
       this._fragment = document.createDocumentFragment();
-
-      // set fixed height to avoid layout jumps
-      this._element.style.setProperty("height", `${this._element.offsetHeight}px`, "");
     }
 
     // move list into fragment before editing items, increases performance

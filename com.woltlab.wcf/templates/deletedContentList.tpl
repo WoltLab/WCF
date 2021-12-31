@@ -1,6 +1,6 @@
 {capture assign='pageTitle'}{lang}wcf.moderation.deletedContent.{@$objectType}{/lang}{/capture}
 
-{capture assign='sidebarLeft'}
+{capture assign='sidebarRight'}
 	<section class="box" data-static-box-identifier="com.woltlab.wcf.DeletedContentListMenu">
 		<h2 class="boxTitle">{lang}wcf.moderation.deletedContent.objectTypes{/lang}</h2>
 		

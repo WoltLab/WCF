@@ -103,8 +103,7 @@
 
 		> span {
 			color: $wcfContentDimmedText;
-			text-transform: uppercase;
-
+			
 			@include wcfFontSmall;
 		}
 	}

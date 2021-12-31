@@ -17,7 +17,7 @@ $values = [
     'wcfUserMenuText' => 'rgba(58, 58, 61, 1)',
     'wcfUserMenuTextDimmed', 'rgba(108, 108, 108, 1)',
     'wcfUserMenuIndicator' => 'rgba(49, 138, 220, 1)',
-    'wcfUserMenuBorder' => 'rgb(221, 221, 221, 1)',
+    'wcfUserMenuBorder' => 'rgba(221, 221, 221, 1)',
 ];
 
 $sql = "INSERT IGNORE INTO wcf1_style_variable (variableName, defaultValue) VALUES (?, ?)";

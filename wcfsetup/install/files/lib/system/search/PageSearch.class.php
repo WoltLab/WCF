@@ -5,7 +5,7 @@ namespace wcf\system\search;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\content\SearchResultPageContent;
 use wcf\data\page\content\SearchResultPageContentList;
-use wcf\form\IForm;
+use wcf\data\search\ISearchResultObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -18,18 +18,17 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Search
  * @since   3.1
  */
-class PageSearch extends AbstractSearchableObjectType
+class PageSearch extends AbstractSearchProvider
 {
     /**
-     * message data cache
      * @var SearchResultPageContent[]
      */
-    public $messageCache = [];
+    private $messageCache = [];
 
     /**
      * @inheritDoc
      */
-    public function cacheObjects(array $objectIDs, ?array $additionalData = null)
+    public function cacheObjects(array $objectIDs, ?array $additionalData = null): void
     {
         $list = new SearchResultPageContentList();
         $list->setObjectIDs($objectIDs);
@@ -42,7 +41,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getObject($objectID)
+    public function getObject(int $objectID): ?ISearchResultObject
     {
         return $this->messageCache[$objectID] ?? null;
     }
@@ -50,7 +49,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getTableName()
+    public function getTableName(): string
     {
         return 'wcf' . WCF_N . '_page_content';
     }
@@ -58,7 +57,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getIDFieldName()
+    public function getIDFieldName(): string
     {
         return $this->getTableName() . '.pageContentID';
     }
@@ -66,7 +65,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getSubjectFieldName()
+    public function getSubjectFieldName(): string
     {
         return $this->getTableName() . '.title';
     }
@@ -74,7 +73,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getUsernameFieldName()
+    public function getUsernameFieldName(): string
     {
         return "''";
     }
@@ -82,7 +81,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getTimeFieldName()
+    public function getTimeFieldName(): string
     {
         return 'wcf' . WCF_N . '_page_content.pageContentID';
     }
@@ -90,15 +89,20 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function getConditions(?IForm $form = null)
+    public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add(
             'wcf' . WCF_N . '_page.pageType IN (?) AND wcf' . WCF_N . '_page.isDisabled = ?',
             [['text', 'html'], 0]
         );
+        $this->initAclCondition($conditionBuilder);
 
-        // acl
+        return $conditionBuilder;
+    }
+
+    private function initAclCondition(PreparedStatementConditionBuilder $conditionBuilder): void
+    {
         $objectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.acl.simple', 'com.woltlab.wcf.page');
         $conditionBuilder->add('(
@@ -131,14 +135,12 @@ class PageSearch extends AbstractSearchableObjectType
             $objectTypeID,
             WCF::getUser()->userID,
         ]);
-
-        return $conditionBuilder;
     }
 
     /**
      * @inheritDoc
      */
-    public function getJoins()
+    public function getJoins(): string
     {
         return '
             INNER JOIN  wcf' . WCF_N . '_page
@@ -148,7 +150,7 @@ class PageSearch extends AbstractSearchableObjectType
     /**
      * @inheritDoc
      */
-    public function isAccessible()
+    public function isAccessible(): bool
     {
         return SEARCH_ENABLE_PAGES;
     }

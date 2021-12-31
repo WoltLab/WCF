@@ -1790,6 +1790,10 @@
 			<name>com.woltlab.wcf.lostPasswordForm</name>
 			<definitionname>com.woltlab.wcf.floodControl</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.search</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

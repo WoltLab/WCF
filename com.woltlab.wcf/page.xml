@@ -271,7 +271,7 @@
 		</page>
 		<page identifier="com.woltlab.wcf.Search">
 			<pageType>system</pageType>
-			<controller>wcf\form\SearchForm</controller>
+			<controller>wcf\page\SearchPage</controller>
 			<name language="de">Suche</name>
 			<name language="en">Search</name>
 			<content language="en">

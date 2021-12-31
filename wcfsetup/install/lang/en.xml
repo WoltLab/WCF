@@ -1579,7 +1579,6 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for lost password]]></item>
-		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable Captcha protection for search]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[User Authentication]]></item>
 		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[Log failed login attempts]]></item>
@@ -4342,6 +4341,7 @@ Attachments:
 		<item name="wcf.page.error.backward"><![CDATA[Back to previous page.]]></item>
 		<item name="wcf.page.error.insufficientPermissions"><![CDATA[Insufficient Permissions]]></item>
 		<item name="wcf.page.error.loginAvailable"><![CDATA[This page or section may be accessible for authorized users only.]]></item>
+		<item name="wcf.page.error.flood"><![CDATA[You have performed too many actions of this type. The function has therefore been temporarily deactivated for security reasons. Please try again later.]]></item>
 		<item name="wcf.page.jumpTo"><![CDATA[Go to Page]]></item>
 		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>
@@ -4498,13 +4498,8 @@ Attachments:
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Search by Author]]></item>
 		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
-		<item name="wcf.search.general"><![CDATA[General Search Terms]]></item>
 		<item name="wcf.search.matchExactly"><![CDATA[Exact match]]></item>
 		<item name="wcf.search.period"><![CDATA[Time Period]]></item>
-		<item name="wcf.search.query"><![CDATA[Search for Term]]></item>
-		<item name="wcf.search.query.description"><![CDATA[Type in one or more search terms, each must be at least 4 characters.]]></item>
-		<item name="wcf.search.results.change"><![CDATA[Change Search]]></item>
-		<item name="wcf.search.results.description"><![CDATA[Search results {#$startIndex}-{#$endIndex} of {#$items}{if $query} for “<strong>{$query}</strong>”{/if}.{if $items == 1000} There are more results available, please enhance your search parameters.{/if}{if $highlight}<br>These terms were highlighted: <span class="highlight">{$highlight}</span>{/if}]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sort by]]></item>
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevance]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
@@ -4512,15 +4507,14 @@ Attachments:
 		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
 		<item name="wcf.search.type"><![CDATA[Search in]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
-		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
-		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Article]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Page]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
-		<item name="wcf.search.type.keywords"><![CDATA[Search by Terms]]></item>
 		<item name="wcf.search.type.tags"><![CDATA[Search by Tags]]></item>
 		<item name="wcf.search.type.tags.popular"><![CDATA[Popular Tags]]></item>
+		<item name="wcf.search.results.title"><![CDATA[{plural value=$count 0='No Results' one='One Result' other='# Results'}{if $query} for “{@$query}”{/if}]]></item>
+		<item name="wcf.search.button.showMoreFilters"><![CDATA[Advanced filters]]></item>
 	</category>
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Change Style]]></item>
@@ -5139,6 +5133,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.3rdparty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.3rdparty.login.error.access_denied"><![CDATA[Access to your external account has been rejected.]]></item>
 		<item name="wcf.user.3rdparty.login.error.denied"><![CDATA[Access to your external account has been rejected.]]></item>
+		<item name="wcf.user.3rdparty.login.error.user_aborted"><![CDATA[The login process has been aborted.]]></item>
 		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Unable to communicate with the external service. Internal error code: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[An error occurred while processing your authentication request. Please contact the administrator for help. Internal error code: <code>{$exceptionID}</code>.]]></item>
 		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Unable to find the authentication request. Maybe your session expired.]]></item>
@@ -5583,6 +5578,15 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<item name="wcf.acp.group.option.user.attachment.maxCount.description"/>
 	<item name="wcf.acp.option.enable_censorship"/>
 	<item name="wcf.acp.option.enable_censorship.description"/>
+	<item name="wcf.search.type.keywords" />
+	<item name="wcf.acp.option.search_use_captcha" />
+	<item name="wcf.search.query.description" />
+	<item name="wcf.search.results.change" />
+	<item name="wcf.search.results.description" />
+	<item name="wcf.search.general" />
+	<item name="wcf.search.query" />
+	<item name="wcf.search.error.noMatches" />
+	<item name="wcf.search.error.user.noMatches" />
 	<item name="wcf.user.logout.sure"/>
 </delete>
 </language>

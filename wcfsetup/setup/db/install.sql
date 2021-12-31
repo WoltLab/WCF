@@ -1337,7 +1337,7 @@ CREATE TABLE wcf1_style (
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
 	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
-	apiVersion ENUM('3.0', '3.1', '5.2') NOT NULL DEFAULT '3.0'
+	apiVersion ENUM('3.0', '3.1', '5.2', '5.5') NOT NULL DEFAULT '3.0'
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -2505,7 +2505,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuText', 'rgba(58, 58, 61, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuTextDimmed', 'rgba(108, 108, 108, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuIndicator', 'rgba(49, 138, 220, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBorder', 'rgb(221, 221, 221, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserMenuBorder', 'rgba(221, 221, 221, 1)');
 
 -- Email template group
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');

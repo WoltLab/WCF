@@ -355,8 +355,7 @@
 			padding: 4px 8px;
 			position: relative;
 			text-align: left;
-			text-transform: none;
-
+			
 			&::after {
 				color: inherit;
 				content: $fa-var-caret-down;
