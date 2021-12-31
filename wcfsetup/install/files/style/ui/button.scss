@@ -36,13 +36,8 @@ a.button {
 		text-decoration: none;
 	}
 
-	&:not(.inputPrefix) {
-		text-transform: uppercase;
-	}
-
 	&.small {
 		padding: 6px 8px;
-		text-transform: none;
 
 		@include wcfFontSmall;
 	}
@@ -138,8 +133,7 @@ a.button {
 
 	&.smallButtons .button {
 		padding: 6px 8px;
-		text-transform: none;
-
+		
 		@include wcfFontSmall;
 	}
 
