@@ -120,7 +120,7 @@ function openSearch(): void {
   _userPanelSearchButton?.parentElement!.classList.add("open");
 
   if (!_isMobile) {
-    // calculate value for `right` on desktop
+    // Calculate the value for `right` on desktop.
     UiAlignment.set(_pageHeaderSearch, _topMenu, {
       horizontal: "right",
     });
@@ -142,7 +142,8 @@ function closeSearch(): void {
   _pageHeaderSearch.classList.remove("open");
   _userPanelSearchButton?.parentElement!.classList.remove("open");
 
-  ["bottom", "left", "right", "top"].forEach((propertyName) => {
+  const positions = ["bottom", "left", "right", "top"];
+  positions.forEach((propertyName) => {
     _pageHeaderSearch.style.removeProperty(propertyName);
   });
 
@@ -157,7 +158,6 @@ function closeSearch(): void {
 
   _pageHeaderSearchInput.blur();
 
-  // close the scope selection
   const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType")!;
   UiDropdownSimple.close(scope.id);
 }
@@ -188,5 +188,5 @@ export function init(): void {
     },
   });
 
-  EventHandler.add("com.woltlab.wcf.Search", "close", closeSearch);
+  EventHandler.add("com.woltlab.wcf.Search", "close", () => closeSearch());
 }

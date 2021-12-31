@@ -99,7 +99,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         _pageHeader.classList.add("searchBarOpen");
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.add("open");
         if (!_isMobile) {
-            // calculate value for `right` on desktop
+            // Calculate the value for `right` on desktop.
             UiAlignment.set(_pageHeaderSearch, _topMenu, {
                 horizontal: "right",
             });
@@ -117,7 +117,8 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         _pageHeader.classList.remove("searchBarOpen");
         _pageHeaderSearch.classList.remove("open");
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.remove("open");
-        ["bottom", "left", "right", "top"].forEach((propertyName) => {
+        const positions = ["bottom", "left", "right", "top"];
+        positions.forEach((propertyName) => {
             _pageHeaderSearch.style.removeProperty(propertyName);
         });
         if (Environment.platform() === "ios") {
@@ -128,7 +129,6 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             }
         }
         _pageHeaderSearchInput.blur();
-        // close the scope selection
         const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType");
         Simple_1.default.close(scope.id);
     }
@@ -154,7 +154,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                 initMobileSearch();
             },
         });
-        EventHandler.add("com.woltlab.wcf.Search", "close", closeSearch);
+        EventHandler.add("com.woltlab.wcf.Search", "close", () => closeSearch());
     }
     exports.init = init;
 });
