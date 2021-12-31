@@ -27,9 +27,6 @@
 }
 
 .contentHeader {
-	display: flex;
-	align-items: flex-start;
-
 	.contentHeaderDescription {
 		color: $wcfContentDimmedText;
 		margin-top: 5px;
@@ -54,10 +51,6 @@
 		}
 	}
 
-	.contentHeaderTitle {
-		flex: 1 1 0%;
-	}
-
 	.contentTitle + .inlineDataList {
 		margin-top: 5px;
 	}
@@ -66,62 +59,52 @@
 		color: $wcfContentDimmedText;
 	}
 
+	.contentHeaderNavigation {
+		> ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			margin-bottom: -5px;
+			margin-left: -5px;
+			white-space: nowrap;
+		}
+
+		.button {
+			display: block;
+			margin-left: 5px;
+			margin-bottom: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
 	@include screen-sm-down {
 		.contentHeaderIcon {
 			display: none;
 		}
-	}
 
-	@include screen-sm-down {
-		.contentHeaderNavigation {
-			flex: 0 auto;
-
-			ul {
-				margin-left: 5px;
-			}
-
-			li:not(:first-child) {
-				margin-top: 5px;
-			}
-
-			.button {
-				padding: 6px 10px;
-				text-transform: none;
-			}
+		.contentHeaderNavigation > ul {
+			margin-top: 10px;
 		}
 	}
 
 	@include screen-md-up {
+		display: flex;
+		align-items: flex-start;
+
 		.contentHeaderIcon {
 			flex: 0 0 64px;
 			margin-right: 15px;
+		}
+
+		.contentHeaderTitle {
+			flex: 1 1 0%;
 		}
 
 		.contentHeaderNavigation {
 			flex: 0 0 auto;
 			margin-left: 15px;
 			max-width: 50%;
-
-			> ul {
-				@include inlineList;
-
-				align-items: flex-start;
-				flex-wrap: wrap;
-				justify-content: flex-end;
-				margin-top: -5px;
-
-				> li {
-					margin-top: 5px;
-
-					&:not(:last-child) {
-						margin-right: 0;
-					}
-
-					&:not(:first-child) {
-						margin-left: 5px;
-					}
-				}
-			}
 		}
 	}
 }
