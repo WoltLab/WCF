@@ -15,23 +15,18 @@ import * as UiScreen from "../../Screen";
 
 let _isMobile = false;
 
-let _pageHeader: HTMLElement;
-let _pageHeaderPanel: HTMLElement;
-let _pageHeaderSearch: HTMLElement;
-let _searchInput: HTMLInputElement;
-let _topMenu: HTMLElement;
-let _userPanelSearchButton: HTMLElement;
+const _pageHeader = document.getElementById("pageHeader")!;
+const _pageHeaderPanel = document.getElementById("pageHeaderPanel")!;
+const _pageHeaderSearch = document.getElementById("pageHeaderSearch")!;
+const _searchInput = document.getElementById("pageHeaderSearchInput") as HTMLInputElement;
+const _topMenu = document.getElementById("topMenu")!;
+let _userPanelSearchButton: HTMLElement | null = null;
 
 /**
  * Provides the collapsible search bar.
  */
 function initSearchBar(): void {
-  _pageHeaderSearch = document.getElementById("pageHeaderSearch")!;
   _pageHeaderSearch.addEventListener("click", (ev) => ev.stopPropagation());
-
-  _pageHeaderPanel = document.getElementById("pageHeaderPanel")!;
-  _searchInput = document.getElementById("pageHeaderSearchInput") as HTMLInputElement;
-  _topMenu = document.getElementById("topMenu")!;
 
   _userPanelSearchButton = document.getElementById("userPanelSearchButton")!;
   _userPanelSearchButton.addEventListener("click", (event) => {
@@ -59,14 +54,6 @@ function initSearchBar(): void {
 
     closeSearchBar();
   });
-
-  EventHandler.add("com.woltlab.wcf.MainMenuMobile", "more", (data) => {
-    if (data.identifier === "com.woltlab.wcf.search") {
-      data.handler.close(true);
-
-      _userPanelSearchButton.click();
-    }
-  });
 }
 
 /**
@@ -76,7 +63,7 @@ export function openSearchBar(): void {
   UiCloseOverlay.execute();
 
   _pageHeader.classList.add("searchBarOpen");
-  _userPanelSearchButton.parentElement!.classList.add("open");
+  _userPanelSearchButton?.parentElement!.classList.add("open");
 
   if (!_isMobile) {
     // calculate value for `right` on desktop
@@ -98,7 +85,7 @@ export function openSearchBar(): void {
  */
 export function closeSearchBar(): void {
   _pageHeader.classList.remove("searchBarOpen");
-  _userPanelSearchButton.parentElement!.classList.remove("open");
+  _userPanelSearchButton?.parentElement!.classList.remove("open");
 
   ["bottom", "left", "right", "top"].forEach((propertyName) => {
     _pageHeaderSearch.style.removeProperty(propertyName);
@@ -115,8 +102,6 @@ export function closeSearchBar(): void {
  * Initializes the sticky page header handler.
  */
 export function init(): void {
-  _pageHeader = document.getElementById("pageHeader")!;
-
   initSearchBar();
 
   UiScreen.on("screen-md-down", {

@@ -16,21 +16,17 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _isMobile = false;
-    let _pageHeader;
-    let _pageHeaderPanel;
-    let _pageHeaderSearch;
-    let _searchInput;
-    let _topMenu;
-    let _userPanelSearchButton;
+    const _pageHeader = document.getElementById("pageHeader");
+    const _pageHeaderPanel = document.getElementById("pageHeaderPanel");
+    const _pageHeaderSearch = document.getElementById("pageHeaderSearch");
+    const _searchInput = document.getElementById("pageHeaderSearchInput");
+    const _topMenu = document.getElementById("topMenu");
+    let _userPanelSearchButton = null;
     /**
      * Provides the collapsible search bar.
      */
     function initSearchBar() {
-        _pageHeaderSearch = document.getElementById("pageHeaderSearch");
         _pageHeaderSearch.addEventListener("click", (ev) => ev.stopPropagation());
-        _pageHeaderPanel = document.getElementById("pageHeaderPanel");
-        _searchInput = document.getElementById("pageHeaderSearchInput");
-        _topMenu = document.getElementById("topMenu");
         _userPanelSearchButton = document.getElementById("userPanelSearchButton");
         _userPanelSearchButton.addEventListener("click", (event) => {
             event.preventDefault();
@@ -54,12 +50,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
             }
             closeSearchBar();
         });
-        EventHandler.add("com.woltlab.wcf.MainMenuMobile", "more", (data) => {
-            if (data.identifier === "com.woltlab.wcf.search") {
-                data.handler.close(true);
-                _userPanelSearchButton.click();
-            }
-        });
     }
     /**
      * Opens the search bar.
@@ -67,7 +57,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     function openSearchBar() {
         CloseOverlay_1.default.execute();
         _pageHeader.classList.add("searchBarOpen");
-        _userPanelSearchButton.parentElement.classList.add("open");
+        _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.add("open");
         if (!_isMobile) {
             // calculate value for `right` on desktop
             UiAlignment.set(_pageHeaderSearch, _topMenu, {
@@ -86,7 +76,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
      */
     function closeSearchBar() {
         _pageHeader.classList.remove("searchBarOpen");
-        _userPanelSearchButton.parentElement.classList.remove("open");
+        _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.remove("open");
         ["bottom", "left", "right", "top"].forEach((propertyName) => {
             _pageHeaderSearch.style.removeProperty(propertyName);
         });
@@ -100,7 +90,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
      * Initializes the sticky page header handler.
      */
     function init() {
-        _pageHeader = document.getElementById("pageHeader");
         initSearchBar();
         UiScreen.on("screen-md-down", {
             match() {
