@@ -15,6 +15,7 @@ import * as UiScreen from "./Screen";
 import * as Environment from "../Environment";
 
 let _isMobile = false;
+let _scrollTop: number | undefined = undefined;
 
 const _isAcp = document.body.classList.contains("wcfAcp");
 const _pageHeader = document.getElementById("pageHeader")!;
@@ -35,16 +36,16 @@ function initSearchBar(): void {
     event.stopPropagation();
 
     if (_pageHeader.classList.contains("searchBarOpen")) {
-      closeSearchBar();
+      closeSearch();
     } else {
-      openSearchBar();
+      openSearch();
     }
   });
 
   UiCloseOverlay.add("WoltLabSuite/Core/Ui/Search", (origin, identifier) => {
     if (origin === Origin.DropDown) {
-      const button = document.getElementById("pageHeaderSearchTypeSelect");
-      if (button && button.dataset.target === identifier) {
+      const button = document.getElementById("pageHeaderSearchTypeSelect")!;
+      if (button.dataset.target === identifier) {
         return;
       }
     }
@@ -53,32 +54,29 @@ function initSearchBar(): void {
       return;
     }
 
-    closeSearchBar();
+    closeSearch();
   });
 }
 
 function initSearchButton(): void {
-  let scrollTop: number | null = null;
   const searchButton = document.getElementById("pageHeaderSearchMobile")!;
   searchButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
     if (searchButton.getAttribute("aria-expanded") === "true") {
-      closeSearch(_pageHeaderSearch, scrollTop);
-      closeSearchBar();
+      closeSearch();
 
       searchButton.setAttribute("aria-expanded", "false");
     } else {
       if (Environment.platform() === "ios") {
-        scrollTop = document.body.scrollTop;
+        _scrollTop = document.body.scrollTop;
         UiScreen.scrollDisable();
       }
 
-      openSearchBar();
+      openSearch();
 
-      const pageHeader = document.getElementById("pageHeader")!;
-      _pageHeaderSearch.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
+      _pageHeaderSearch.style.setProperty("top", `${_pageHeader.offsetHeight}px`, "");
       _pageHeaderSearch.classList.add("open");
       _pageHeaderSearchInput.focus();
 
@@ -96,8 +94,7 @@ function initSearchButton(): void {
     if (event.target === _pageHeaderSearch) {
       event.preventDefault();
 
-      closeSearch(_pageHeaderSearch, scrollTop);
-      closeSearchBar();
+      closeSearch();
 
       searchButton.setAttribute("aria-expanded", "false");
     }
@@ -111,31 +108,13 @@ function initSearchButton(): void {
       }
     }
 
-    closeSearch(_pageHeaderSearch, scrollTop);
-    if (!_isAcp) {
-      closeSearchBar();
-    }
+    closeSearch();
 
     searchButton.setAttribute("aria-expanded", "false");
   });
 }
 
-function closeSearch(searchBar: HTMLElement, scrollTop: number | null): void {
-  if (searchBar) {
-    searchBar.classList.remove("open");
-  }
-
-  if (Environment.platform() === "ios") {
-    UiScreen.scrollEnable();
-
-    if (scrollTop !== null) {
-      document.body.scrollTop = scrollTop;
-      scrollTop = null;
-    }
-  }
-}
-
-function openSearchBar(): void {
+function openSearch(): void {
   UiCloseOverlay.execute();
 
   _pageHeader.classList.add("searchBarOpen");
@@ -152,17 +131,30 @@ function openSearchBar(): void {
   _pageHeaderSearchInput.focus();
 
   window.setTimeout(() => {
-    _pageHeaderSearchInput.selectionStart = _pageHeaderSearchInput.selectionEnd = _pageHeaderSearchInput.value.length;
+    // Places the caret at the end of the search input.
+    const length = _pageHeaderSearchInput.value.length;
+    _pageHeaderSearchInput.selectionStart = length;
+    _pageHeaderSearchInput.selectionEnd = length;
   }, 1);
 }
 
-function closeSearchBar(): void {
+function closeSearch(): void {
   _pageHeader.classList.remove("searchBarOpen");
+  _pageHeaderSearch.classList.remove("open");
   _userPanelSearchButton?.parentElement!.classList.remove("open");
 
   ["bottom", "left", "right", "top"].forEach((propertyName) => {
     _pageHeaderSearch.style.removeProperty(propertyName);
   });
+
+  if (Environment.platform() === "ios") {
+    UiScreen.scrollEnable();
+
+    if (_scrollTop !== undefined) {
+      document.body.scrollTop = _scrollTop;
+      _scrollTop = undefined;
+    }
+  }
 
   _pageHeaderSearchInput.blur();
 
@@ -189,11 +181,12 @@ export function init(): void {
     },
     unmatch() {
       _isMobile = false;
+      _scrollTop = undefined;
     },
     setup() {
       _isMobile = true;
     },
   });
 
-  EventHandler.add("com.woltlab.wcf.Search", "close", closeSearchBar);
+  EventHandler.add("com.woltlab.wcf.Search", "close", closeSearch);
 }

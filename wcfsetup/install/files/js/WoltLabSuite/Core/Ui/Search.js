@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     Environment = (0, tslib_1.__importStar)(Environment);
     let _isMobile = false;
+    let _scrollTop = undefined;
     const _isAcp = document.body.classList.contains("wcfAcp");
     const _pageHeader = document.getElementById("pageHeader");
     const _pageHeaderPanel = document.getElementById("pageHeaderPanel");
@@ -33,44 +34,41 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             event.preventDefault();
             event.stopPropagation();
             if (_pageHeader.classList.contains("searchBarOpen")) {
-                closeSearchBar();
+                closeSearch();
             }
             else {
-                openSearchBar();
+                openSearch();
             }
         });
         CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Search", (origin, identifier) => {
             if (origin === CloseOverlay_1.Origin.DropDown) {
                 const button = document.getElementById("pageHeaderSearchTypeSelect");
-                if (button && button.dataset.target === identifier) {
+                if (button.dataset.target === identifier) {
                     return;
                 }
             }
             if (_pageHeader.classList.contains("searchBarForceOpen")) {
                 return;
             }
-            closeSearchBar();
+            closeSearch();
         });
     }
     function initSearchButton() {
-        let scrollTop = null;
         const searchButton = document.getElementById("pageHeaderSearchMobile");
         searchButton.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
             if (searchButton.getAttribute("aria-expanded") === "true") {
-                closeSearch(_pageHeaderSearch, scrollTop);
-                closeSearchBar();
+                closeSearch();
                 searchButton.setAttribute("aria-expanded", "false");
             }
             else {
                 if (Environment.platform() === "ios") {
-                    scrollTop = document.body.scrollTop;
+                    _scrollTop = document.body.scrollTop;
                     UiScreen.scrollDisable();
                 }
-                openSearchBar();
-                const pageHeader = document.getElementById("pageHeader");
-                _pageHeaderSearch.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
+                openSearch();
+                _pageHeaderSearch.style.setProperty("top", `${_pageHeader.offsetHeight}px`, "");
                 _pageHeaderSearch.classList.add("open");
                 _pageHeaderSearchInput.focus();
                 if (Environment.platform() === "ios") {
@@ -83,8 +81,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             event.stopPropagation();
             if (event.target === _pageHeaderSearch) {
                 event.preventDefault();
-                closeSearch(_pageHeaderSearch, scrollTop);
-                closeSearchBar();
+                closeSearch();
                 searchButton.setAttribute("aria-expanded", "false");
             }
         });
@@ -95,26 +92,11 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                     return;
                 }
             }
-            closeSearch(_pageHeaderSearch, scrollTop);
-            if (!_isAcp) {
-                closeSearchBar();
-            }
+            closeSearch();
             searchButton.setAttribute("aria-expanded", "false");
         });
     }
-    function closeSearch(searchBar, scrollTop) {
-        if (searchBar) {
-            searchBar.classList.remove("open");
-        }
-        if (Environment.platform() === "ios") {
-            UiScreen.scrollEnable();
-            if (scrollTop !== null) {
-                document.body.scrollTop = scrollTop;
-                scrollTop = null;
-            }
-        }
-    }
-    function openSearchBar() {
+    function openSearch() {
         CloseOverlay_1.default.execute();
         _pageHeader.classList.add("searchBarOpen");
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.add("open");
@@ -127,15 +109,26 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         _pageHeaderSearch.style.setProperty("top", `${_pageHeaderPanel.clientHeight}px`, "");
         _pageHeaderSearchInput.focus();
         window.setTimeout(() => {
-            _pageHeaderSearchInput.selectionStart = _pageHeaderSearchInput.selectionEnd = _pageHeaderSearchInput.value.length;
+            // Places the caret at the end of the search input.
+            const length = _pageHeaderSearchInput.value.length;
+            _pageHeaderSearchInput.selectionStart = length;
+            _pageHeaderSearchInput.selectionEnd = length;
         }, 1);
     }
-    function closeSearchBar() {
+    function closeSearch() {
         _pageHeader.classList.remove("searchBarOpen");
+        _pageHeaderSearch.classList.remove("open");
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.remove("open");
         ["bottom", "left", "right", "top"].forEach((propertyName) => {
             _pageHeaderSearch.style.removeProperty(propertyName);
         });
+        if (Environment.platform() === "ios") {
+            UiScreen.scrollEnable();
+            if (_scrollTop !== undefined) {
+                document.body.scrollTop = _scrollTop;
+                _scrollTop = undefined;
+            }
+        }
         _pageHeaderSearchInput.blur();
         // close the scope selection
         const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType");
@@ -157,12 +150,13 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             },
             unmatch() {
                 _isMobile = false;
+                _scrollTop = undefined;
             },
             setup() {
                 _isMobile = true;
             },
         });
-        EventHandler.add("com.woltlab.wcf.Search", "close", closeSearchBar);
+        EventHandler.add("com.woltlab.wcf.Search", "close", closeSearch);
     }
     exports.init = init;
 });

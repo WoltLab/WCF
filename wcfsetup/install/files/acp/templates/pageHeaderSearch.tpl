@@ -5,7 +5,7 @@
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<div class="pageHeaderSearchInputContainer">
 		<div id="pageHeaderSearchType" class="pageHeaderSearchType dropdown">
-			<a href="#" class="button dropdownToggle"><span class="pageHeaderSearchTypeLabel">{lang}wcf.search.type.everywhere{/lang}</span></a>
+			<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect"><span class="pageHeaderSearchTypeLabel">{lang}wcf.search.type.everywhere{/lang}</span></a>
 			<ul class="dropdownMenu">
 				<li><a href="#" data-provider-name="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 				<li class="dropdownDivider"></li>
@@ -23,18 +23,3 @@
 		</button>
 	</div>
 </div>
-<script data-relocate="true">
-	(function() {
-		/*
-		elById('pageHeaderMobileSearch').addEventListener('click', function() {
-			this.classList.toggle('active');
-			
-			if (elById('pageHeaderSearch').classList.toggle('open')) {
-				window.setTimeout(function() {
-					elById('pageHeaderSearchInput').focus();
-				}, 100);
-			}
-		});
-		*/
-	})();
-</script>
