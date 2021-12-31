@@ -1371,6 +1371,7 @@
 		<file>js/WoltLabSuite/Core/ImageResizer.js</file>
 		<file>js/WoltLabSuite/Core/Media/Search.js</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/Menu/Abstract.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Reaction/ReputationButtons.js</file>
