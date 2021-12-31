@@ -4504,7 +4504,6 @@ Dateianhänge:
 		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
 		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Alles]]></item>
-		<item name="wcf.search.error.user.noMatches"><![CDATA[Es wurde kein Eintrag von diesem Autor gefunden.]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Seite]]></item>
