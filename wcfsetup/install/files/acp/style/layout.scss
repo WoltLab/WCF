@@ -295,6 +295,11 @@ $wcfAcpSubMenuWidth: 300px;
 	.pageHeader {
 		grid-template-areas: "logo woltlab jumpToPage search menu user";
 		grid-template-columns: auto repeat(5, max-content);
+
+		&[data-is-login="true"] {
+			grid-template-areas: "logo";
+			grid-template-columns: auto;
+		}
 	}
 
 	.pageHeaderPanel > .layoutBoundary {

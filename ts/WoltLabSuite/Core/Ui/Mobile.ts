@@ -19,6 +19,7 @@ import { PageMenuMainProvider } from "./Page/Menu/Main/Provider";
 import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
 
+const _isAcp = document.body.classList.contains("wcfAcp");
 let _dropdownMenu: HTMLUListElement | null = null;
 let _dropdownMenuMessage: HTMLElement | null = null;
 let _enabled = false;
@@ -50,6 +51,11 @@ function init(): void {
 function initSearchButton(): void {
   const searchBar = document.getElementById("pageHeaderSearch")!;
   const searchInput = document.getElementById("pageHeaderSearchInput")!;
+
+  // The search bar is unavailable during WCFSetup or the login.
+  if (_isAcp && searchBar === null) {
+    return;
+  }
 
   let scrollTop: number | null = null;
   const searchButton = document.getElementById("pageHeaderSearchMobile")!;
@@ -97,9 +103,7 @@ function initSearchButton(): void {
   });
 
   UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-    const isAcp = document.body.classList.contains("wcfAcp");
-
-    if (!isAcp && origin === Origin.DropDown) {
+    if (!_isAcp && origin === Origin.DropDown) {
       const button = document.getElementById("pageHeaderSearchTypeSelect")!;
       if (button.dataset.target === identifier) {
         return;
@@ -107,7 +111,7 @@ function initSearchButton(): void {
     }
 
     closeSearch(searchBar, scrollTop);
-    if (!isAcp) {
+    if (!_isAcp) {
       closeSearchBar();
     }
 

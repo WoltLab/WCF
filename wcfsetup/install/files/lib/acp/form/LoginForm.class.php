@@ -276,6 +276,7 @@ class LoginForm extends AbstractCaptchaForm
             'username' => $this->username,
             'password' => $this->password,
             'url' => $this->url,
+            '__wcfAcpIsLogin' => true,
         ]);
     }
 }

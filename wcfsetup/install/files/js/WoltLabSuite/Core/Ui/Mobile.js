@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     CloseOverlay_1 = (0, tslib_1.__importStar)(CloseOverlay_1);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
+    const _isAcp = document.body.classList.contains("wcfAcp");
     let _dropdownMenu = null;
     let _dropdownMenuMessage = null;
     let _enabled = false;
@@ -44,6 +45,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     function initSearchButton() {
         const searchBar = document.getElementById("pageHeaderSearch");
         const searchInput = document.getElementById("pageHeaderSearchInput");
+        // The search bar is unavailable during WCFSetup or the login.
+        if (_isAcp && searchBar === null) {
+            return;
+        }
         let scrollTop = null;
         const searchButton = document.getElementById("pageHeaderSearchMobile");
         searchButton.addEventListener("click", (event) => {
@@ -80,15 +85,14 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             }
         });
         CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-            const isAcp = document.body.classList.contains("wcfAcp");
-            if (!isAcp && origin === CloseOverlay_1.Origin.DropDown) {
+            if (!_isAcp && origin === CloseOverlay_1.Origin.DropDown) {
                 const button = document.getElementById("pageHeaderSearchTypeSelect");
                 if (button.dataset.target === identifier) {
                     return;
                 }
             }
             closeSearch(searchBar, scrollTop);
-            if (!isAcp) {
+            if (!_isAcp) {
                 (0, Fixed_1.closeSearchBar)();
             }
             searchButton.setAttribute("aria-expanded", "false");

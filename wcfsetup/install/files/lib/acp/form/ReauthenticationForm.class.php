@@ -2,6 +2,8 @@
 
 namespace wcf\acp\form;
 
+use wcf\system\WCF;
+
 /**
  * Represents the reauthentication form.
  *
@@ -13,4 +15,10 @@ namespace wcf\acp\form;
  */
 class ReauthenticationForm extends \wcf\form\ReauthenticationForm
 {
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign(['__wcfAcpIsLogin' => true]);
+    }
 }
