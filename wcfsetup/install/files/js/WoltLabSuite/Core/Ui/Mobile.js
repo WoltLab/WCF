@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Mobile
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Header/Fixed", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Fixed_1, Main_1, User_1, UiScreen) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeShadow = exports.rebuildShadow = exports.disableShadow = exports.disable = exports.enableShadow = exports.enable = exports.setup = void 0;
@@ -14,10 +14,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     Environment = (0, tslib_1.__importStar)(Environment);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importStar)(CloseOverlay_1);
+    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
-    const _isAcp = document.body.classList.contains("wcfAcp");
     let _dropdownMenu = null;
     let _dropdownMenuMessage = null;
     let _enabled = false;
@@ -32,7 +31,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     const _sidebars = [];
     function init() {
         _enabled = true;
-        initSearchButton();
         initButtonGroupNavigation();
         initMessages();
         initMobileMenu();
@@ -41,74 +39,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             initButtonGroupNavigation();
             initMessages();
         });
-    }
-    function initSearchButton() {
-        const searchBar = document.getElementById("pageHeaderSearch");
-        const searchInput = document.getElementById("pageHeaderSearchInput");
-        // The search bar is unavailable during WCFSetup or the login.
-        if (_isAcp && searchBar === null) {
-            return;
-        }
-        let scrollTop = null;
-        const searchButton = document.getElementById("pageHeaderSearchMobile");
-        searchButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            if (searchButton.getAttribute("aria-expanded") === "true") {
-                closeSearch(searchBar, scrollTop);
-                (0, Fixed_1.closeSearchBar)();
-                searchButton.setAttribute("aria-expanded", "false");
-            }
-            else {
-                if (Environment.platform() === "ios") {
-                    scrollTop = document.body.scrollTop;
-                    UiScreen.scrollDisable();
-                }
-                (0, Fixed_1.openSearchBar)();
-                const pageHeader = document.getElementById("pageHeader");
-                searchBar.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
-                searchBar.classList.add("open");
-                searchInput.focus();
-                if (Environment.platform() === "ios") {
-                    document.body.scrollTop = 0;
-                }
-                searchButton.setAttribute("aria-expanded", "true");
-            }
-        });
-        searchBar.addEventListener("click", (event) => {
-            event.stopPropagation();
-            if (event.target === searchBar) {
-                event.preventDefault();
-                closeSearch(searchBar, scrollTop);
-                (0, Fixed_1.closeSearchBar)();
-                searchButton.setAttribute("aria-expanded", "false");
-            }
-        });
-        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-            if (!_isAcp && origin === CloseOverlay_1.Origin.DropDown) {
-                const button = document.getElementById("pageHeaderSearchTypeSelect");
-                if (button.dataset.target === identifier) {
-                    return;
-                }
-            }
-            closeSearch(searchBar, scrollTop);
-            if (!_isAcp) {
-                (0, Fixed_1.closeSearchBar)();
-            }
-            searchButton.setAttribute("aria-expanded", "false");
-        });
-    }
-    function closeSearch(searchBar, scrollTop) {
-        if (searchBar) {
-            searchBar.classList.remove("open");
-        }
-        if (Environment.platform() === "ios") {
-            UiScreen.scrollEnable();
-            if (scrollTop !== null) {
-                document.body.scrollTop = scrollTop;
-                scrollTop = null;
-            }
-        }
     }
     function initButtonGroupNavigation() {
         document.querySelectorAll(".buttonGroupNavigation").forEach((navigation) => {

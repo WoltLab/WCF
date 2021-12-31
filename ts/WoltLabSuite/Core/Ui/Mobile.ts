@@ -11,15 +11,13 @@ import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Environment from "../Environment";
 import * as UiAlignment from "./Alignment";
-import UiCloseOverlay, { Origin } from "./CloseOverlay";
+import UiCloseOverlay from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
-import { closeSearchBar, openSearchBar } from "./Page/Header/Fixed";
 import { PageMenuMain } from "./Page/Menu/Main";
 import { PageMenuMainProvider } from "./Page/Menu/Main/Provider";
 import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
 
-const _isAcp = document.body.classList.contains("wcfAcp");
 let _dropdownMenu: HTMLUListElement | null = null;
 let _dropdownMenuMessage: HTMLElement | null = null;
 let _enabled = false;
@@ -36,7 +34,6 @@ const _sidebars: HTMLElement[] = [];
 function init(): void {
   _enabled = true;
 
-  initSearchButton();
   initButtonGroupNavigation();
   initMessages();
   initMobileMenu();
@@ -46,92 +43,6 @@ function init(): void {
     initButtonGroupNavigation();
     initMessages();
   });
-}
-
-function initSearchButton(): void {
-  const searchBar = document.getElementById("pageHeaderSearch")!;
-  const searchInput = document.getElementById("pageHeaderSearchInput")!;
-
-  // The search bar is unavailable during WCFSetup or the login.
-  if (_isAcp && searchBar === null) {
-    return;
-  }
-
-  let scrollTop: number | null = null;
-  const searchButton = document.getElementById("pageHeaderSearchMobile")!;
-  searchButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (searchButton.getAttribute("aria-expanded") === "true") {
-      closeSearch(searchBar, scrollTop);
-      closeSearchBar();
-
-      searchButton.setAttribute("aria-expanded", "false");
-    } else {
-      if (Environment.platform() === "ios") {
-        scrollTop = document.body.scrollTop;
-        UiScreen.scrollDisable();
-      }
-
-      openSearchBar();
-
-      const pageHeader = document.getElementById("pageHeader")!;
-      searchBar.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
-      searchBar.classList.add("open");
-      searchInput.focus();
-
-      if (Environment.platform() === "ios") {
-        document.body.scrollTop = 0;
-      }
-
-      searchButton.setAttribute("aria-expanded", "true");
-    }
-  });
-
-  searchBar.addEventListener("click", (event) => {
-    event.stopPropagation();
-
-    if (event.target === searchBar) {
-      event.preventDefault();
-
-      closeSearch(searchBar, scrollTop);
-      closeSearchBar();
-
-      searchButton.setAttribute("aria-expanded", "false");
-    }
-  });
-
-  UiCloseOverlay.add("WoltLabSuite/Core/Ui/MobileSearch", (origin, identifier) => {
-    if (!_isAcp && origin === Origin.DropDown) {
-      const button = document.getElementById("pageHeaderSearchTypeSelect")!;
-      if (button.dataset.target === identifier) {
-        return;
-      }
-    }
-
-    closeSearch(searchBar, scrollTop);
-    if (!_isAcp) {
-      closeSearchBar();
-    }
-
-    searchButton.setAttribute("aria-expanded", "false");
-  });
-}
-
-function closeSearch(searchBar: HTMLElement, scrollTop: number | null): void {
-  if (searchBar) {
-    searchBar.classList.remove("open");
-  }
-
-  if (Environment.platform() === "ios") {
-    UiScreen.scrollEnable();
-
-    if (scrollTop !== null) {
-      document.body.scrollTop = scrollTop;
-      scrollTop = null;
-    }
-  }
 }
 
 function initButtonGroupNavigation(): void {

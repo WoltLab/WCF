@@ -30,6 +30,7 @@ import * as UiEmpty from "./Ui/Empty";
 import * as UiObjectAction from "./Ui/Object/Action";
 import * as UiObjectActionDelete from "./Ui/Object/Action/Delete";
 import * as UiObjectActionToggle from "./Ui/Object/Action/Toggle";
+import { init as initSearch } from "./Ui/Search";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
@@ -101,6 +102,7 @@ export function setup(options: BoostrapOptions): void {
   UiObjectAction.setup();
   UiObjectActionDelete.setup();
   UiObjectActionToggle.setup();
+  initSearch();
 
   // Convert forms with `method="get"` into `method="post"`
   document.querySelectorAll("form[method=get]").forEach((form: HTMLFormElement) => {
