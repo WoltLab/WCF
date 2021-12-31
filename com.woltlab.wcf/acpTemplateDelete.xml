@@ -32,6 +32,7 @@
 		<template>pageLanding</template>
 		<template>pageMenuItemAdd</template>
 		<template>pageMenuItemList</template>
+		<template>pageMenuMobile</template>
 		<template>reactionTypeIcon</template>
 		<template>setupFooter</template>
 		<template>setupHeader</template>

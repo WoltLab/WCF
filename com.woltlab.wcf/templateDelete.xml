@@ -37,6 +37,7 @@
 		<template>multifactorManageEmail</template>
 		<template>notificationListOustanding</template>
 		<template>pageLogo</template>
+		<template>pageMenuMobile</template>
 		<template>pageNavbarBottom</template>
 		<template>privacyPolicy</template>
 		<template>quoteBBCodeTag</template>
