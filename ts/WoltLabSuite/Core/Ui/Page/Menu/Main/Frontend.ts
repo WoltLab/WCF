@@ -43,7 +43,7 @@ function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuIte
 }
 
 export class UiPageMenuMainFrontend implements PageMenuMainProvider {
-  getMenuItems(container:HTMLElement): MenuItem[] {
+  getMenuItems(container: HTMLElement): MenuItem[] {
     return Array.from(container.children).map((element: HTMLElement) => {
       return normalizeMenuItem(element, 0);
     });
