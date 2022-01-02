@@ -40,6 +40,13 @@ class PackageUpdatePage extends AbstractPage
         parent::readData();
 
         $this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates(true, true);
+
+        // Reduce the versions into a single value.
+        foreach ($this->availableUpdates as &$update) {
+            $latestVersion = reset($update['versions']);
+            $update['newVersion'] = $latestVersion['packageVersion'];
+        }
+        unset($update);
     }
 
     /**

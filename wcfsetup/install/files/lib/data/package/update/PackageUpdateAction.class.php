@@ -748,6 +748,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         } catch (PackageUpdateUnauthorizedException $e) {
             return [
                 'template' => $e->getRenderedTemplate(),
+                'type' => 'authenticationRequired',
             ];
         }
 
@@ -757,12 +758,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
             if (!empty($excludedPackages)) {
                 return [
-                    'excludedPackages' => true,
                     'template' => WCF::getTPL()->fetch(
                         'packageUpdateExcludedPackages',
                         'wcf',
                         ['excludedPackages' => $excludedPackages]
                     ),
+                    'type' => 'conflict',
                 ];
             }
         }
@@ -816,6 +817,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
         return [
             'queueID' => $queueID,
+            'type' => 'queue',
         ];
     }
 }
