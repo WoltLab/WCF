@@ -1364,7 +1364,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Debug (mbox)]]></item>
 		<item name="wcf.acp.option.mail_send_method.debugFolder"><![CDATA[Debug (Ordner mit .eml-Dateien)]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[PHP]]></item>
-		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP]]></item>
+		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP (empfohlen)]]></item>
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur (Text)]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Die Signatur wird an jede automatisch generierte E-Mail angehängt.]]></item>
 		<item name="wcf.acp.option.mail_signature_html"><![CDATA[Signatur (HTML)]]></item>
