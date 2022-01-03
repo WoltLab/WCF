@@ -1,36 +1,37 @@
 {include file='header' pageTitle='wcf.acp.dataImport'}
 
-<script data-relocate="true">
-	$(function() {
-		{if $queue|isset}
-			WCF.Language.addObject({
+{if $queue|isset}
+	<script data-relocate="true">
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/DataImport/Manager'], (Language, { AcpUiDataImportManager }) => {
+			Language.addObject({
 				'wcf.acp.dataImport': '{jslang}wcf.acp.dataImport{/jslang}',
 				'wcf.acp.dataImport.completed': '{jslang}wcf.acp.dataImport.completed{/jslang}',
 				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{@$importer}': '{jslang}wcf.acp.dataImport.data.{@$importer}{/jslang}'{/implode}
 			});
 			
-			var $queues = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
-			new WCF.ACP.Import.Manager($queues, '{link controller='RebuildData' encode=false}{/link}');
-		{/if}
-		
-		$('.jsImportSection').change(function(event) {
-			var $section = $(event.currentTarget);
-			
-			if ($section.is(':checked')) {
-				$section.parent().next().find('input[type=checkbox]').prop('checked', 'checked');
-			}
-			else {
-				$section.parent().next().find('input[type=checkbox]').prop('checked', false);
-			}
+			const queue = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
+			new AcpUiDataImportManager(queue, '{link controller='RebuildData' encode=false}{/link}');
 		});
-		
-		$('.jsImportItem').change(function(event) {
-			var $item = $(event.currentTarget);
-			if ($item.is(':checked')) {
-				$item.parents('.jsImportCollection').find('.jsImportSection').prop('checked', 'checked');
-			}
+	</script>
+{/if}
+
+<script data-relocate="true">
+	(() => {
+		document.querySelectorAll('.jsImportSection').forEach((section) => {
+			section.addEventListener('change', () => {
+				section.closest('.jsImportCollection').querySelectorAll('.jsImportItem').forEach((item) => {
+					item.checked = section.checked;
+				});
+			});
 		});
-	});
+		document.querySelectorAll('.jsImportItem').forEach((item) => {
+			item.addEventListener('change', () => {
+				if (item.checked) {
+					item.closest('.jsImportCollection').querySelector('.jsImportSection').checked = true;
+				}
+			});
+		});
+	})();
 </script>
 
 <header class="contentHeader">
