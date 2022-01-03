@@ -51,22 +51,21 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
             );
         }
 
-        $hash = StringUtil::getRandomID();
         $glue = $tagArgs['glue'] ?? "', '";
-        $this->tagStack[] = ['hash' => $hash, 'glue' => $glue];
+        $itemVar = \mb_substr($tagArgs['item'], 0, 1) != '$' ? "\$this->v[" . $tagArgs['item'] . "]" : $tagArgs['item'];
+        $keyVar = null;
+        if (isset($tagArgs['key'])) {
+            $keyVar = \mb_substr($tagArgs['key'], 0, 1) != '$' ? "\$this->v[" . $tagArgs['key'] . "]" : $tagArgs['key'];
+        }
+        $hash = StringUtil::getRandomID();
+        $this->tagStack[] = ['hash' => $hash, 'glue' => $glue, 'itemVar' => $itemVar, 'keyVar' => $keyVar];
 
         $phpCode = "<?php\n";
         $phpCode .= "\$_length" . $hash . " = count(" . $tagArgs['from'] . ");\n";
         $phpCode .= "\$_i" . $hash . " = 0;\n";
-        $phpCode .= "foreach (" . $tagArgs['from'] . " as " . (isset($tagArgs['key']) ? (\mb_substr(
-            $tagArgs['key'],
-            0,
-            1
-        ) != '$' ? "\$this->v[" . $tagArgs['key'] . "]" : $tagArgs['key']) . " => " : '') . (\mb_substr(
-            $tagArgs['item'],
-            0,
-            1
-        ) != '$' ? "\$this->v[" . $tagArgs['item'] . "]" : $tagArgs['item']) . ") { ?>";
+        $phpCode .= "\$_item" . $hash . " = {$itemVar} ?? null;\n";
+        $phpCode .= "\$_key" . $hash . " = " . ($keyVar ? "{$keyVar} ?? " : "") . " null;\n";
+        $phpCode .= "foreach (" . $tagArgs['from'] . " as " . ($keyVar ? $keyVar . " => " : '') . $itemVar . ") { ?>";
 
         return $phpCode;
     }
@@ -79,9 +78,23 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
         $compiler->popTag('implode');
         $tagArgs = \array_pop($this->tagStack);
 
+        // Close the foreach loop
         $phpCode = "<?php\n";
         $phpCode .= "if (++\$_i" . $tagArgs['hash'] . " < \$_length" . $tagArgs['hash'] . ") { echo " . $tagArgs['glue'] . "; }\n";
-        $phpCode .= "} ?>";
+        $phpCode .= "}\n";
+
+        // Unset item and key and restore previous values
+        $phpCode .= "unset({$tagArgs['itemVar']});";
+        $phpCode .= "{$tagArgs['itemVar']} = \$_item" . $tagArgs['hash'] . ";\n";
+        if ($tagArgs['keyVar']) {
+            $phpCode .= "unset({$tagArgs['keyVar']});";
+            $phpCode .= "{$tagArgs['keyVar']} = \$_key" . $tagArgs['hash'] . ";\n";
+        }
+
+        // Unset temporary variables
+        $phpCode .= "unset(\$_length" . $tagArgs['hash'] . ", \$_i" . $tagArgs['hash'] . ");\n";
+        $phpCode .= "unset(\$_item" . $tagArgs['hash'] . ", \$_key" . $tagArgs['hash'] . ");\n";
+        $phpCode .= "?>";
 
         return $phpCode;
     }
