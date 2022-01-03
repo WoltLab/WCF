@@ -1,5 +1,5 @@
 .dialogOverlay {
-	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0.4);
 	bottom: 0;
 	left: 0;
 	opacity: 0;
@@ -11,26 +11,15 @@
 	will-change: opacity;
 	z-index: 399;
 
-	@include screen-sm-up {
-		padding: 100px 0;
-	}
-
 	&[aria-hidden="false"] {
 		opacity: 1;
 		transition-delay: 0s;
 		visibility: visible;
 	}
 
-	&::before {
-		background-color: rgba(0, 0, 0, 0.4);
-		bottom: 0;
-		content: "";
-		display: block;
-		left: 0;
-		position: fixed;
-		right: 0;
-		top: 0;
-		z-index: 100;
+	@include screen-sm-up {
+		display: grid;
+		grid-template-areas: "dialog";
 	}
 }
 
@@ -67,9 +56,12 @@
 	}
 
 	@include screen-sm-up {
+		align-self: flex-start;
 		animation: wcfDialogOut 0.3s;
 		animation-fill-mode: forwards;
 		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.3);
+		grid-area: dialog;
+		justify-self: center;
 		left: 50%;
 		max-height: 80%;
 		max-width: 80%;

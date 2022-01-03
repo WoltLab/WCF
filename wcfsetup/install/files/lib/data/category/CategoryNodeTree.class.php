@@ -150,7 +150,7 @@ class CategoryNodeTree implements \IteratorAggregate
     }
 
     /**
-     * @inheritDoc
+     * @return \RecursiveIteratorIterator
      */
     public function getIterator()
     {
