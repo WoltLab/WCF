@@ -1,3 +1,13 @@
+/**
+ * Allows the selection of packages for an update and handles any possible
+ * conflicts. Prompts for credentials if necessary.
+ *
+ * @author      Alexander Ebert
+ * @copyright   2001-2022 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/Acp/Ui/Package/Update/Manager
+ */
+
 import { dboAction } from "../../../../Ajax";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
 import * as Language from "../../../../Language";

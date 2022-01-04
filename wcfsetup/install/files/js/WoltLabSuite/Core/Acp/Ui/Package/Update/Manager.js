@@ -1,3 +1,12 @@
+/**
+ * Allows the selection of packages for an update and handles any possible
+ * conflicts. Prompts for credentials if necessary.
+ *
+ * @author      Alexander Ebert
+ * @copyright   2001-2022 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/Acp/Ui/Package/Update/Manager
+ */
 define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax_1, Language, UiDialog, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
