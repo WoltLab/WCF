@@ -1329,7 +1329,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Use Debug (mbox)]]></item>
 		<item name="wcf.acp.option.mail_send_method.debugFolder"><![CDATA[Use Debug (Folder with .eml files)]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[Use PHP]]></item>
-		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[Use SMTP]]></item>
+		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[Use SMTP (recommended)]]></item>
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Sender’s Signature (Text)]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[The signature that will be appended to every message.]]></item>
 		<item name="wcf.acp.option.mail_signature_html"><![CDATA[Sender’s Signature (HTML)]]></item>
