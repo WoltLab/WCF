@@ -1920,6 +1920,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.purchaseRequired.description"><![CDATA[Das Paket „{$packageName}“ ist kostenpflichtig und muss zuvor im Plugin-Store erworben werden.]]></item>
 		<item name="wcf.acp.package.update.installUpdate"><![CDATA[Dieses Update installieren]]></item>
 		<item name="wcf.acp.package.update.upgrade"><![CDATA[Dieses Paket wird aktualisiert.]]></item>
+		<item name="wcf.acp.package.update.newVersion"><![CDATA[{$currentVersion} → <span class="packageUpdateNewVersion">{$newVersion}</span>]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Paket hochladen]]></item>

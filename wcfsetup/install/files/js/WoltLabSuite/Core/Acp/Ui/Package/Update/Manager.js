@@ -34,7 +34,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         updateSubmitButtonState() {
             let disableButton = true;
             this.packages.forEach((checkbox) => {
-                if (!checkbox || checkbox.checked) {
+                if (checkbox === null || checkbox.checked) {
                     disableButton = false;
                 }
             });
@@ -70,14 +70,18 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             finally {
                 this.submitButton.disabled = false;
             }
-            if (response.type === "authorizationRequired" /* AuthorizationRequired */) {
-                this.promptCredentials(response.template);
-            }
-            else if (response.type === "conflict" /* Conflict */) {
-                this.showConflict(response.template);
-            }
-            else {
-                this.startInstallation(response.queueID);
+            switch (response.type) {
+                case "authorizationRequired" /* AuthorizationRequired */:
+                    this.promptCredentials(response.template);
+                    break;
+                case "conflict" /* Conflict */:
+                    this.showConflict(response.template);
+                    break;
+                case "queue" /* Queue */:
+                    this.startInstallation(response.queueID);
+                    break;
+                default:
+                    throw new Error("Unexpected response type");
             }
         }
         promptCredentials(template) {

@@ -44,7 +44,7 @@ class PackageUpdatePage extends AbstractPage
 
         // Reduce the versions into a single value.
         foreach ($this->availableUpdates as &$update) {
-            $latestVersion = reset($update['versions']);
+            $latestVersion = \reset($update['versions']);
             $update['newVersion'] = $latestVersion;
         }
         unset($update);

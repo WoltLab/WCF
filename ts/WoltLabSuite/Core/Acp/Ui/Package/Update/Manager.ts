@@ -74,7 +74,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
   private updateSubmitButtonState(): void {
     let disableButton = true;
     this.packages.forEach((checkbox) => {
-      if (!checkbox || checkbox.checked) {
+      if (checkbox === null || checkbox.checked) {
         disableButton = false;
       }
     });
@@ -118,12 +118,21 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
       this.submitButton.disabled = false;
     }
 
-    if (response.type === ResponseType.AuthorizationRequired) {
-      this.promptCredentials(response.template);
-    } else if (response.type === ResponseType.Conflict) {
-      this.showConflict(response.template);
-    } else {
-      this.startInstallation(response.queueID);
+    switch (response.type) {
+      case ResponseType.AuthorizationRequired:
+        this.promptCredentials(response.template);
+        break;
+
+      case ResponseType.Conflict:
+        this.showConflict(response.template);
+        break;
+
+      case ResponseType.Queue:
+        this.startInstallation(response.queueID);
+        break;
+
+      default:
+        throw new Error("Unexpected response type");
     }
   }
 

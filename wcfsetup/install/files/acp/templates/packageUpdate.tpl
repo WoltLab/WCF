@@ -11,12 +11,14 @@
 			<div class="contentItemContent">
 				<div class="contentItemTitle">{$update[packageName]|language}</div>
 				<div class="contentItemDescription">
-					<small{if $update[newVersion][servers][0][packageUpdateServerID] === $woltlabUpdateServer->packageUpdateServerID} class="packageSearchAuthorWoltlab"{/if}>{$update[author]}</small>
+					<small
+						class="jsTooltip{if $update[newVersion][servers][0][packageUpdateServerID] === $woltlabUpdateServer->packageUpdateServerID} packageSearchAuthorWoltlab{/if}"
+						title="{lang}wcf.acp.package.author{/lang}"
+					>{*
+						*}{$update[author]}
+					</small>
 					<p class="packageUpdateAvailable">
-						{$update[packageVersion]}
-						→
-						</span>
-						<span class="packageUpdateNewVersion">{$update[newVersion][packageVersion]}</span>
+						{lang currentVersion=$update[packageVersion] newVersion=$update[newVersion][packageVersion]}wcf.acp.package.update.newVersion{/lang}
 					</p>
 				</div>
 			</div>
@@ -41,7 +43,7 @@
 		Language.addObject({
 			'wcf.acp.package.update.excludedPackages': '{jslang}wcf.acp.package.update.excludedPackages{/jslang}',
 			'wcf.acp.package.update.title': '{jslang}wcf.acp.package.update.title{/jslang}',
-			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}'
+			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}',
 		});
 
 		setup();
