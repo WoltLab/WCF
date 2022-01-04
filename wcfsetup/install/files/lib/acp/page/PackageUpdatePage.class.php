@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\page\AbstractPage;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\WCF;
@@ -40,6 +41,13 @@ class PackageUpdatePage extends AbstractPage
         parent::readData();
 
         $this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates(true, true);
+
+        // Reduce the versions into a single value.
+        foreach ($this->availableUpdates as &$update) {
+            $latestVersion = \reset($update['versions']);
+            $update['newVersion'] = $latestVersion;
+        }
+        unset($update);
     }
 
     /**
@@ -49,8 +57,15 @@ class PackageUpdatePage extends AbstractPage
     {
         parent::assignVariables();
 
+        $woltlabUpdateServer = \array_filter(PackageUpdateServer::getActiveUpdateServers(), static function (PackageUpdateServer $updateServer) {
+            return $updateServer->isWoltLabUpdateServer();
+        });
+
         WCF::getTPL()->assign([
             'availableUpdates' => $this->availableUpdates,
+            'items' => \count($this->availableUpdates),
+            'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
+            'woltlabUpdateServer' => \reset($woltlabUpdateServer),
         ]);
     }
 }

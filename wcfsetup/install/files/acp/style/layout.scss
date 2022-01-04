@@ -585,3 +585,38 @@ $wcfAcpSubMenuWidth: 300px;
 		margin-top: 0;
 	}
 }
+
+.contentItemList.packageUpdateList {
+	--minimum-column-width: 400px;
+
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(var(--minimum-column-width), 1fr));
+	margin: 0;
+
+	.contentItem {
+		margin: 0;
+	}
+
+	.contentItemDescription {
+		margin-top: 0;
+	}
+
+	@include screen-sm {
+		--minimum-column-width: 45%;
+	}
+
+	@include screen-xs {
+		--minimum-column-width: 100%;
+	}
+}
+
+.packageUpdateAvailable {
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.packageUpdateNewVersion {
+	color: $wcfContentText;
+	font-weight: 600;
+}
