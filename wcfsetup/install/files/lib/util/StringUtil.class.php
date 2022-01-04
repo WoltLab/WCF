@@ -119,7 +119,11 @@ final class StringUtil
      */
     public static function encodeHTML($string)
     {
-        return @\htmlspecialchars((string)$string, \ENT_COMPAT, 'UTF-8');
+        return @\htmlspecialchars(
+            (string)$string,
+            \ENT_QUOTES | \ENT_SUBSTITUTE | \ENT_HTML401,
+            'UTF-8'
+        );
     }
 
     /**
