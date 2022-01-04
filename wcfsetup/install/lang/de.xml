@@ -1902,6 +1902,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.server.message"><![CDATA[Servermeldung]]></item>
 		<item name="wcf.acp.package.update.server.url"><![CDATA[URL]]></item>
 		<item name="wcf.acp.package.update.title"><![CDATA[Paket-Aktualisierung]]></item>
+		<item name="wcf.acp.package.update.availableUpdates"><![CDATA[Verfügbare Updates]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authentifizierung erforderlich]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Aktualisierung wird vorbereitet …]]></item>
@@ -1918,6 +1919,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.purchaseRequired.button.purchase"><![CDATA[Im Plugin-Store anzeigen]]></item>
 		<item name="wcf.acp.package.update.purchaseRequired.description"><![CDATA[Das Paket „{$packageName}“ ist kostenpflichtig und muss zuvor im Plugin-Store erworben werden.]]></item>
 		<item name="wcf.acp.package.update.installUpdate"><![CDATA[Dieses Update installieren]]></item>
+		<item name="wcf.acp.package.update.upgrade"><![CDATA[Dieses Paket wird aktualisiert.]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Paket hochladen]]></item>

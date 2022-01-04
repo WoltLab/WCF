@@ -55,17 +55,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
   private initPackages(): void {
     document.querySelectorAll(".packageUpdate").forEach((element: HTMLElement) => {
       const checkbox = element.querySelector<HTMLInputElement>('input[type="checkbox"]');
-      checkbox?.addEventListener("change", () => {
-        const dl = checkbox.closest("dl")!;
-
-        if (checkbox.checked) {
-          dl.classList.remove("disabled");
-        } else {
-          dl.classList.add("disabled");
-        }
-
-        this.updateSubmitButtonState();
-      });
+      checkbox?.addEventListener("change", () => this.updateSubmitButtonState());
 
       this.packages.set(element, checkbox);
     });
@@ -84,9 +74,8 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
 
   private getSelectedPackages(): Record<string, string> {
     const packages = {};
-    document.querySelectorAll(".jsPackageUpdate").forEach((element: HTMLElement) => {
-      const checkbox = element.querySelector('input[type="checkbox"]') as HTMLInputElement;
-      if (checkbox.checked) {
+    this.packages.forEach((checkbox, element) => {
+      if (checkbox === null || checkbox.checked) {
         packages[element.dataset.package!] = element.dataset.version!;
       }
     });

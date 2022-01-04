@@ -63,7 +63,9 @@ class PackageUpdatePage extends AbstractPage
 
         WCF::getTPL()->assign([
             'availableUpdates' => $this->availableUpdates,
-            'woltlabUpdateServer' => reset($woltlabUpdateServer),
+            'items' => \count($this->availableUpdates),
+            'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
+            'woltlabUpdateServer' => \reset($woltlabUpdateServer),
         ]);
     }
 }

@@ -1,7 +1,7 @@
-{include file='header' pageTitle='wcf.acp.package.update.title'}
+{include file='header' pageTitle='wcf.acp.package.update.availableUpdates'}
 
 <header class="contentHeader">
-	<h1 class="contentTitle">{lang}wcf.acp.package.update.title{/lang}</h1>
+	<h1 class="contentTitle">{lang}wcf.acp.package.update.availableUpdates{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
 </header>
 
 <div class="section">
@@ -21,7 +21,11 @@
 				</div>
 			</div>
 			<div class="contentItemMeta">
-				<label><input type="checkbox" value="1" checked> {lang}wcf.acp.package.update.installUpdate{/lang}</label>
+				{if $upgradeOverrideEnabled}
+					{lang}wcf.acp.package.update.upgrade{/lang}
+				{else}
+					<label><input type="checkbox" value="1" checked> {lang}wcf.acp.package.update.installUpdate{/lang}</label>
+				{/if}
 			</div>
 		</div>
 		{/foreach}
