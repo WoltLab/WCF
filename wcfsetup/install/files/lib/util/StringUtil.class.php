@@ -114,6 +114,9 @@ final class StringUtil {
 		// escape singe quote
 		$string = str_replace("'", "\'", $string);
 		
+		// escape double quote
+		$string = str_replace('"', '\"', $string);
+		
 		// escape new lines
 		$string = str_replace("\n", '\n', $string);
 		
