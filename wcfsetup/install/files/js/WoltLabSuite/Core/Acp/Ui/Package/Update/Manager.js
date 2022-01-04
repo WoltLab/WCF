@@ -16,7 +16,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             this.initPackages();
         }
         initPackages() {
-            document.querySelectorAll(".jsPackageUpdate").forEach((element) => {
+            document.querySelectorAll(".packageUpdate").forEach((element) => {
                 const checkbox = element.querySelector('input[type="checkbox"]');
                 checkbox === null || checkbox === void 0 ? void 0 : checkbox.addEventListener("change", () => {
                     const dl = checkbox.closest("dl");

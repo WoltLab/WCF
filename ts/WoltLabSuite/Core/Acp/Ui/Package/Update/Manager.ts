@@ -37,7 +37,7 @@ type Payload = {
 };
 
 class AcpUiPackageUpdateManager implements DialogCallbackObject {
-  private readonly packages = new Map<HTMLInputElement, HTMLInputElement | null>();
+  private readonly packages = new Map<HTMLElement, HTMLInputElement | null>();
   private readonly submitButton: HTMLButtonElement;
 
   constructor() {
@@ -53,7 +53,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
   }
 
   private initPackages(): void {
-    document.querySelectorAll(".jsPackageUpdate").forEach((element: HTMLInputElement) => {
+    document.querySelectorAll(".packageUpdate").forEach((element: HTMLElement) => {
       const checkbox = element.querySelector<HTMLInputElement>('input[type="checkbox"]');
       checkbox?.addEventListener("change", () => {
         const dl = checkbox.closest("dl")!;

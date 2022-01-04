@@ -4,34 +4,29 @@
 	<h1 class="contentTitle">{lang}wcf.acp.package.update.title{/lang}</h1>
 </header>
 
-{foreach from=$availableUpdates item=update}
-	<section class="section jsPackageUpdate" data-package="{$update[package]}" data-version="{$update[newVersion]}">
-		<header class="sectionHeader">
-			<h2 class="sectionTitle"><label>
-				<input type="checkbox" value="1" checked>
-				{$update[packageName]|language}
-			</label></h2>
-			{if $update[packageDescription]}<p class="sectionDescription">{$update[packageDescription]|language}</p>{/if}
-		</header>
-		
-		<dl>
-			<dt>
-				{lang}wcf.acp.package.installedVersion{/lang}
-			</dt>
-			<dd>
-				{$update[packageVersion]} ({$update[packageDate]|date})
-			</dd>
-		</dl>
-		<dl>
-			<dt>
-				{lang}wcf.acp.package.availableVersions{/lang}
-			</dt>
-			<dd>
-				{$update[newVersion]}
-			</dd>
-		</dl>
-	</section>
-{/foreach}
+<div class="section">
+	<div class="contentItemList packageUpdateList">
+		{foreach from=$availableUpdates item=update}
+		<div class="contentItem packageUpdate" data-package="{$update[package]}" data-version="{$update[newVersion][packageVersion]}">
+			<div class="contentItemContent">
+				<div class="contentItemTitle">{$update[packageName]|language}</div>
+				<div class="contentItemDescription">
+					<small{if $update[newVersion][servers][0][packageUpdateServerID] === $woltlabUpdateServer->packageUpdateServerID} class="packageSearchAuthorWoltlab"{/if}>{$update[author]}</small>
+					<p class="packageUpdateAvailable">
+						{$update[packageVersion]}
+						→
+						</span>
+						<span class="packageUpdateNewVersion">{$update[newVersion][packageVersion]}</span>
+					</p>
+				</div>
+			</div>
+			<div class="contentItemMeta">
+				<label><input type="checkbox" value="1" checked> {lang}wcf.acp.package.update.installUpdate{/lang}</label>
+			</div>
+		</div>
+		{/foreach}
+	</div>
+</div>
 
 <div class="formSubmit">
 	<button class="buttonPrimary" id="packageUpdateSubmitButton">{lang}wcf.global.button.submit{/lang}</button>
