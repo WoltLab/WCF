@@ -15,7 +15,7 @@ $wcfAcpSubMenuWidth: 300px;
 			height: 50px;
 			padding: 0;
 		}
-		
+
 		.pageHeaderLogo {
 			background-color: rgb(58, 109, 156);
 			flex: 0 0 $wcfAcpMenuWidth;
@@ -23,20 +23,20 @@ $wcfAcpSubMenuWidth: 300px;
 			margin: 0;
 			order: 1;
 			position: relative;
-			
+
 			&:last-child {
 				flex: 1 1 auto;
 			}
-			
+
 			.pageHeaderLogoLarge {
 				display: none;
 			}
-			
+
 			.pageHeaderLogoSmall {
 				display: inline;
 				max-height: 30px;
 			}
-			
+
 			> a {
 				align-items: center;
 				bottom: 0;
@@ -48,71 +48,71 @@ $wcfAcpSubMenuWidth: 300px;
 				top: 0;
 			}
 		}
-		
+
 		.mainMenu {
 			flex: 0 0 auto;
 			margin-right: 0;
 			order: 2;
 		}
-		
+
 		.pageHeaderSearch {
 			display: block;
 			flex: 0 0 auto;
 			margin-bottom: 0;
 			order: 3;
 			position: static;
-			
+
 			// force to take up the full available height
 			/*position: relative;
 			top: -10px;*/
-			
+
 			.pageHeaderSearchType > .button {
-				background-color: rgba(0, 0, 0, .2);
+				background-color: rgba(0, 0, 0, 0.2);
 				color: $wcfHeaderSearchBoxPlaceholderActive;
 				align-items: center;
 				border-radius: 0;
 				display: flex;
 				height: 50px;
 				padding: 6px 10px;
-				
+
 				&:hover {
-					background-color: rgba(0, 0, 0, .4);
+					background-color: rgba(0, 0, 0, 0.4);
 				}
 			}
-			
+
 			.pageHeaderSearchInputContainer {
 				background-color: $wcfHeaderMenuLinkBackground;
 				border-radius: 0;
 				box-shadow: none;
 				padding: 0;
 			}
-			
+
 			.pageHeaderSearchInput {
 				height: 50px;
 				width: 300px !important;
-				
+
 				background-color: transparent;
 				color: $wcfHeaderMenuLinkActive;
 				padding: 6px 8px;
-				
+
 				&:hover,
 				&:focus {
-					background-color: rgba(0, 0, 0, .1);
+					background-color: rgba(0, 0, 0, 0.1);
 				}
 			}
-			
+
 			.pageHeaderSearchInputButton {
 				display: none;
 			}
 		}
-		
+
 		.userPanel {
 			flex: 1 1 auto;
 			margin-right: 20px;
 			order: 4;
 		}
 	}
-	
+
 	@include screen-md-down {
 		max-width: 100vw;
 	}
@@ -125,7 +125,7 @@ $wcfAcpSubMenuWidth: 300px;
 	position: fixed;
 	top: 50px !important;
 	width: 500px;
-	
+
 	@include screen-xs {
 		width: 100%;
 	}
@@ -134,7 +134,7 @@ $wcfAcpSubMenuWidth: 300px;
 	&::after {
 		display: none;
 	}
-	
+
 	> .dropdownText {
 		color: $wcfContentDimmedText;
 	}
@@ -145,10 +145,9 @@ $wcfAcpSubMenuWidth: 300px;
 	}
 }
 
-
 .acpPageContentContainer {
 	flex: 1 0 auto;
-	
+
 	#content {
 		// required by IE 11 for proper width calculation
 		flex: 1;
@@ -156,10 +155,11 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 @include screen-lg {
-	.acpPageMenu .icon, .acpPageSubMenu .icon {
+	.acpPageMenu .icon,
+	.acpPageSubMenu .icon {
 		color: inherit;
 	}
-	
+
 	.acpPageMenu {
 		background-color: rgb(50, 92, 132);
 		bottom: 0;
@@ -169,40 +169,40 @@ $wcfAcpSubMenuWidth: 300px;
 		position: fixed;
 		top: 50px;
 		width: $wcfAcpMenuWidth;
-		
+
 		.acpPageMenuLink {
 			//background-color: rgb(43, 79, 113);
-			color: rgba(255, 255, 255, .7);
+			color: rgba(255, 255, 255, 0.7);
 			display: block;
 			padding: 20px 10px;
-			
+
 			&:hover {
 				//background-color: rgb(36, 66, 95);
 				background-color: rgb(43, 79, 113);
 				color: rgba(255, 255, 255, 1);
 			}
-			
+
 			&.active {
 				background-color: rgb(36, 66, 95);
 				color: rgba(255, 255, 255, 1);
-				
+
 				> .icon {
 					transform: scale(1);
 				}
 			}
-			
+
 			> .icon {
-				transform: scale(.8);
-				transition: transform .12s linear;
+				transform: scale(0.8);
+				transition: transform 0.12s linear;
 			}
 		}
-		
+
 		.acpPageMenuItemLabel {
 			display: block;
 			margin-top: 5px;
 		}
 	}
-	
+
 	.acpPageSubMenu {
 		background-color: rgb(36, 66, 95);
 		bottom: 0;
@@ -211,31 +211,31 @@ $wcfAcpSubMenuWidth: 300px;
 		position: fixed;
 		top: 50px;
 	}
-	
+
 	.acpPageSubMenuCategoryList {
 		overflow: hidden;
 		width: $wcfAcpSubMenuWidth;
-		
+
 		&:not(.active) {
 			display: none;
 		}
-		
+
 		> .acpPageSubMenuCategory {
 			margin-top: 20px;
 			padding-left: 20px;
-			
+
 			> span {
-				color: rgba(255, 255, 255, .5);
+				color: rgba(255, 255, 255, 0.5);
 				display: block;
 				padding: 5px 20px;
 				text-transform: uppercase;
 			}
-			
+
 			&:last-child {
 				margin-bottom: 20px;
 			}
 		}
-		
+
 		.acpPageSubMenuLink,
 		.acpPageSubMenuIcon {
 			color: rgb(255, 255, 255);
@@ -245,25 +245,25 @@ $wcfAcpSubMenuWidth: 300px;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
-		
+
 		.acpPageSubMenuLink:hover,
 		.acpPageSubMenuLink:hover ~ .acpPageSubMenuIcon:not(.active),
 		.acpPageSubMenuIcon:hover {
 			background-color: rgb(43, 79, 113);
 		}
-		
+
 		.acpPageSubMenuLinkWrapper {
 			display: flex;
-			
+
 			> .acpPageSubMenuLink {
 				flex: 1 1 auto;
 			}
-			
+
 			> .acpPageSubMenuIcon {
 				flex: 0 0 auto;
 			}
 		}
-		
+
 		.acpPageSubMenuItemList > .active > a,
 		.acpPageSubMenuLink.active,
 		.acpPageSubMenuLink.active ~ .acpPageSubMenuIcon,
@@ -272,17 +272,17 @@ $wcfAcpSubMenuWidth: 300px;
 			color: rgb(44, 62, 80) !important;
 		}
 	}
-	
+
 	.pageContainer:not(.acpPageHiddenMenu) {
 		.acpPageContentContainer {
 			padding-left: $wcfAcpMenuWidth;
 		}
-		
+
 		.pageFooter {
 			padding-left: $wcfAcpMenuWidth;
 		}
 	}
-	
+
 	.pageContainer.acpPageSubMenuActive {
 		.acpPageContentContainer,
 		.pageFooter {
@@ -295,43 +295,43 @@ $wcfAcpSubMenuWidth: 300px;
 	.pageHeaderPanel > .layoutBoundary {
 		justify-content: normal;
 	}
-	
+
 	.mainMenu {
 		margin-right: 10px;
 		order: 1;
 	}
-	
+
 	.pageHeaderContainer:not(.pageHeaderContainerIsLogin) .pageHeaderLogo {
 		left: 50%;
 		position: absolute;
 		/* Half the image width is actually 27.5px, but this would also cause the browser's anti-aliasing to kick in. */
 		transform: translateX(-28px);
 	}
-	
+
 	.pageHeaderContainer.pageHeaderContainerIsLogin .pageHeaderLogo {
 		flex: 1 auto;
 		text-align: center;
 	}
-	
+
 	.userPanel {
 		flex: 1 auto;
 		order: 3;
 		pointer-events: none;
 		text-align: right;
-		
+
 		&::before {
 			pointer-events: all;
 		}
 	}
-	
+
 	.acpPageMenu,
 	.acpPageSubMenu {
 		display: none;
 	}
-	
+
 	.pageHeaderMobileSearch {
 		order: 2;
-		
+
 		&::before {
 			content: $fa-var-search;
 			font-family: FontAwesome;
@@ -344,11 +344,11 @@ $wcfAcpSubMenuWidth: 300px;
 
 .main {
 	flex: 1 1 auto;
-	
+
 	@include screen-lg {
 		padding: 40px 0;
 	}
-	
+
 	@include screen-md-down {
 		padding: 20px 0;
 	}
@@ -362,11 +362,11 @@ $wcfAcpSubMenuWidth: 300px;
 	background-color: rgb(52, 73, 94);
 	display: flex;
 	flex-wrap: wrap;
-	
+
 	> li {
 		flex: 0 0 auto;
 		margin-bottom: 1px;
-		
+
 		> a {
 			color: rgb(255, 255, 255);
 			display: block;
@@ -375,11 +375,11 @@ $wcfAcpSubMenuWidth: 300px;
 			padding: 10px;
 			text-align: center;
 			font-weight: 400;
-			
+
 			&:hover {
 				background-color: rgb(19, 34, 48);
 			}
-			
+
 			.icon {
 				color: inherit;
 			}
@@ -418,7 +418,7 @@ $wcfAcpSubMenuWidth: 300px;
 	background-size: cover;
 	height: 200px;
 	margin-bottom: 5px;
-	
+
 	@include screen-xs {
 		height: 150px;
 	}
@@ -445,7 +445,7 @@ $wcfAcpSubMenuWidth: 300px;
 	.pageHeaderSearchInputContainer > .dropdown {
 		flex: 1 auto;
 	}
-	
+
 	.pageHeaderSearchInput {
 		width: 100% !important;
 	}
@@ -463,11 +463,11 @@ $wcfAcpSubMenuWidth: 300px;
 	text-align: center;
 	right: 0;
 	z-index: 9999;
-	
+
 	@include screen-md-up {
 		padding: 20px;
 	}
-	
+
 	> a {
 		color: inherit;
 		text-decoration: underline;
@@ -479,11 +479,11 @@ $wcfAcpSubMenuWidth: 300px;
 	.columnText {
 		padding: 15px 10px;
 	}
-	
+
 	td.columnIcon {
 		position: relative;
 		width: 44px;
-		
+
 		a {
 			align-items: center;
 			bottom: 5px;
@@ -537,28 +537,28 @@ $wcfAcpSubMenuWidth: 300px;
 	&:not([data-status="idle"]) .packageSearchStatusIdle {
 		display: none;
 	}
-	
+
 	&:not([data-status="loading"]) .packageSearchStatusLoading {
 		display: none;
 	}
-	
+
 	&:not([data-status="noResults"]) .packageSearchStatusNoResults {
 		display: none;
 	}
-	
+
 	&:not([data-status="refreshDatabase"]) .packageSearchStatusRefreshDatabase {
 		display: none;
 	}
-	
+
 	&:not([data-status="showResults"]) {
-		#packageSearchResultCounter, 
+		#packageSearchResultCounter,
 		#packageSearchResultList {
 			display: none;
 		}
 	}
 }
 
-.packageSearchStatus  {
+.packageSearchStatus {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -568,7 +568,7 @@ $wcfAcpSubMenuWidth: 300px;
 
 .packageSearchStatusLabel {
 	margin-top: 10px;
-	
+
 	@include wcfFontHeadline;
 }
 
