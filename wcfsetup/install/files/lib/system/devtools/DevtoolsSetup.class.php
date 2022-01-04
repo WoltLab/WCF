@@ -61,15 +61,17 @@ class DevtoolsSetup extends SingletonFactory
             return null;
         }
 
-        // dirname return a single backslash on Windows if there are no parent directories
-        $dir = \dirname($_SERVER['SCRIPT_NAME']);
-        $dir = ($dir === '\\') ? '/' : FileUtil::addTrailingSlash($dir);
-        if ($dir === '/') {
-            throw new \RuntimeException("Refusing to install in the document root.");
-        }
+        if (empty($dbConfig['dbName'])) {
+            // dirname return a single backslash on Windows if there are no parent directories
+            $dir = \dirname($_SERVER['SCRIPT_NAME']);
+            $dir = ($dir === '\\') ? '/' : FileUtil::addTrailingSlash($dir);
+            if ($dir === '/') {
+                throw new \RuntimeException("Refusing to install in the document root.");
+            }
 
-        $dir = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($dir));
-        $dbName = \implode('_', \explode('/', $dir));
+            $dir = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($dir));
+            $dbConfig['dbName'] = \implode('_', \explode('/', $dir));
+        }
 
         $dbConfig = $this->configuration['setup']['database'];
 
@@ -78,7 +80,7 @@ class DevtoolsSetup extends SingletonFactory
             'host' => $dbConfig['host'],
             'password' => $dbConfig['password'],
             'username' => $dbConfig['username'],
-            'dbName' => $dbName,
+            'dbName' => $dbConfig['dbName'],
             'dbNumber' => $dbConfig['dbNumber'],
         ];
     }
