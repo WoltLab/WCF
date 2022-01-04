@@ -62,14 +62,14 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
   }
 
   private updateSubmitButtonState(): void {
-    let isValid = true;
+    let disableButton = true;
     this.packages.forEach((checkbox) => {
-      if (checkbox && !checkbox.checked) {
-        isValid = false;
+      if (!checkbox || checkbox.checked) {
+        disableButton = false;
       }
     });
 
-    this.submitButton.disabled = !isValid;
+    this.submitButton.disabled = disableButton;
   }
 
   private getSelectedPackages(): Record<string, string> {
