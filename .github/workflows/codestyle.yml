@@ -60,6 +60,7 @@ jobs:
       run: |
         shopt -s globstar
         npx prettier -w wcfsetup/install/files/style/**/*.scss
+        npx prettier -w wcfsetup/install/files/acp/style/**/*.scss
     - run: echo "::add-matcher::.github/diff.json"
     - name: Show diff
       run: |
