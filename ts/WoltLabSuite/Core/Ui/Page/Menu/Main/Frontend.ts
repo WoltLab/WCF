@@ -1,3 +1,12 @@
+/**
+ * Provides the menu items for the mobile main menu in the frontend.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/Main/Frontend
+ */
+
 import { MenuItem, MenuItemDepth, PageMenuMainProvider } from "./Provider";
 
 function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuItem {
@@ -7,7 +16,7 @@ function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuIte
   let counter = 0;
   const outstandingItems = anchor.querySelector(".boxMenuLinkOutstandingItems");
   if (outstandingItems) {
-    counter = +outstandingItems.textContent!.replace(/[^0-9]/, "");
+    counter = parseInt(outstandingItems.textContent!.replace(/[^0-9]/, ""), 10);
   }
 
   const subMenu = menuItem.querySelector("ol");

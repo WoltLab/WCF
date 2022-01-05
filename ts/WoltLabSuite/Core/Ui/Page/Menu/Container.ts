@@ -1,3 +1,13 @@
+/**
+ * Wrapper logic for elements that are placed over the main content
+ * such as the mobile main menu and the user menu with its tabs.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/Container
+ */
+
 import { PageMenuProvider } from "./Provider";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import { pageOverlayClose, pageOverlayOpen, scrollDisable, scrollEnable } from "../../Screen";

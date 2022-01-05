@@ -94,7 +94,7 @@ function getView(provider: UserMenuProvider): UserMenuView {
   return views.get(provider)!;
 }
 
-export function getUserMenuProviders(): Set<UserMenuProvider> {
+export function getUserMenuProviders(): ReadonlySet<UserMenuProvider> {
   return providers;
 }
 

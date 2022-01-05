@@ -1,3 +1,12 @@
+/**
+ * Provides the menu items for the mobile main menu in the admin panel.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Acp/Ui/Page/Menu/Main/Backend
+ */
+
 import { MenuItem, PageMenuMainProvider } from "../../../../../Ui/Page/Menu/Main/Provider";
 
 function getSubMenuItems(subMenu: HTMLElement, menuItem: string): MenuItem[] {

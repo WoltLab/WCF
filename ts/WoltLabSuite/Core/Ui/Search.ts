@@ -1,10 +1,12 @@
 /**
- * Manages the sticky page header.
+ * Controls the behavior and placement of the search input depending on
+ * the context (frontend or admin panel) and the active view (mobile or
+ * desktop).
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Page/Header/Fixed
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Search
  */
 
 import * as EventHandler from "../Event/Handler";
@@ -81,6 +83,9 @@ function initMobileSearch(): void {
 
       searchButton.setAttribute("aria-expanded", "false");
     } else {
+      // iOS Safari behaves unpredictable when the keyboard focus
+      // is moved into a HTML element that is inside a parent with
+      // fixed positioning *and* the page had been scrolled down.
       if (Environment.platform() === "ios") {
         _scrollTop = document.body.scrollTop;
         UiScreen.scrollDisable();

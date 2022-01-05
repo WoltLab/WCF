@@ -1,3 +1,12 @@
+/**
+ * Wrapper logic for elements that are placed over the main content
+ * such as the mobile main menu and the user menu with its tabs.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/Container
+ */
 define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../CloseOverlay", "../../../Dom/Util"], function (require, exports, tslib_1, focus_trap_1, Screen_1, CloseOverlay_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

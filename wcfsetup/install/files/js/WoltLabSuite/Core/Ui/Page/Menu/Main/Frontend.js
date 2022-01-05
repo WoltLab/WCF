@@ -1,3 +1,11 @@
+/**
+ * Provides the menu items for the mobile main menu in the frontend.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/Main/Frontend
+ */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -8,7 +16,7 @@ define(["require", "exports"], function (require, exports) {
         let counter = 0;
         const outstandingItems = anchor.querySelector(".boxMenuLinkOutstandingItems");
         if (outstandingItems) {
-            counter = +outstandingItems.textContent.replace(/[^0-9]/, "");
+            counter = parseInt(outstandingItems.textContent.replace(/[^0-9]/, ""), 10);
         }
         const subMenu = menuItem.querySelector("ol");
         let children = [];

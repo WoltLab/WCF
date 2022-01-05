@@ -2,9 +2,10 @@
  * Provides the touch-friendly user menu.
  *
  * @author Alexander Ebert
- * @copyright 2001-2021 WoltLab GmbH
+ * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module WoltLabSuite/Core/Ui/Page/Menu/User
+ * @woltlabExcludeBundle tiny
  */
 
 import PageMenuContainer, { Orientation } from "./Container";

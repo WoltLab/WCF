@@ -31,10 +31,10 @@ import * as UiObjectAction from "./Ui/Object/Action";
 import * as UiObjectActionDelete from "./Ui/Object/Action/Delete";
 import * as UiObjectActionToggle from "./Ui/Object/Action/Toggle";
 import { init as initSearch } from "./Ui/Search";
+import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
-import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 
 // non strict equals by intent
 if (window.WCF == null) {
