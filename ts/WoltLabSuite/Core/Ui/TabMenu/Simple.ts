@@ -169,9 +169,9 @@ class TabMenuSimple {
 
         // check for parent tab menu
         if (selectTab) {
-          const item = this.container.parentNode as HTMLElement;
-          if (item.classList.contains("tabMenuContainer")) {
-            returnValue = item;
+          const parent = this.container.parentElement;
+          if (parent?.classList.contains("tabMenuContainer")) {
+            returnValue = this.container;
           }
         }
       }
