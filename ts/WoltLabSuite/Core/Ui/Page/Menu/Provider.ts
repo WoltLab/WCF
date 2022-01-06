@@ -33,7 +33,7 @@ export interface PageMenuProvider {
   /**
    * Suspends the activity of the container and returns any borrowed HTML elements
    * to their previous position. It is primarily used to restore the UI in case the
-   * mobile view bcomes inactive.
+   * mobile view becomes inactive.
    */
   sleep(): void;
 

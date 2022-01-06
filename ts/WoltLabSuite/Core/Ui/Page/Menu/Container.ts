@@ -30,6 +30,10 @@ export class PageMenuContainer {
     this.provider = provider;
     this.orientation = orientation;
 
+    // Set the container to be initially hidden, otherwise the detection in
+    // `toggle()` incorrectly assumes the container to be visible on first click.
+    this.container.hidden = true;
+
     const menuId = DomUtil.identify(this.provider.getMenuButton());
     UiCloseOverlay.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
       if (!this.container.hidden) {

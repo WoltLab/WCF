@@ -20,6 +20,9 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
             this.focusTrap = undefined;
             this.provider = provider;
             this.orientation = orientation;
+            // Set the container to be initially hidden, otherwise the detection in
+            // `toggle()` incorrectly assumes the container to be visible on first click.
+            this.container.hidden = true;
             const menuId = Util_1.default.identify(this.provider.getMenuButton());
             CloseOverlay_1.default.add(`WoltLabSuite/Core/Ui/PageMenu/Container-${menuId}`, () => {
                 if (!this.container.hidden) {
