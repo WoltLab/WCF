@@ -103,12 +103,21 @@ class UserSearchForm extends UserOptionListForm
         if (isset($_GET['groupID'])) {
             $this->groupID = \intval($_GET['groupID']);
 
-            // disable check for security token for GET requests
-            $_POST['t'] = WCF::getSession()->getSecurityToken();
-
-            // do search
             try {
+                // Enforce the visibility of the default columns when filtering the list of
+                // users by a user group. This is required to tell searches apart that opted
+                // out of any default columns.
+                //
+                // See 9bc86ecf0bd32ed2615023bcf9ae398aafbb23fa for more context.
+                $defaultColumns = $this->columns;
+
                 $this->readData();
+
+                $this->columns = $defaultColumns;
+
+                // disable check for security token for GET requests
+                $_POST['t'] = WCF::getSession()->getSecurityToken();
+
                 $this->validate();
                 $this->save();
             } catch (UserInputException $e) {
