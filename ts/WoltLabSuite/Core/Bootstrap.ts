@@ -30,6 +30,8 @@ import * as UiEmpty from "./Ui/Empty";
 import * as UiObjectAction from "./Ui/Object/Action";
 import * as UiObjectActionDelete from "./Ui/Object/Action/Delete";
 import * as UiObjectActionToggle from "./Ui/Object/Action/Toggle";
+import { init as initSearch } from "./Ui/Search";
+import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
@@ -49,6 +51,7 @@ window.__wcf_bc_eventHandler = EventHandler;
 
 export interface BoostrapOptions {
   enableMobileMenu: boolean;
+  pageMenuMainProvider: PageMenuMainProvider;
 }
 
 function initA11y() {
@@ -72,6 +75,7 @@ export function setup(options: BoostrapOptions): void {
   options = Core.extend(
     {
       enableMobileMenu: true,
+      pageMenuMainProvider: undefined,
     },
     options,
   ) as BoostrapOptions;
@@ -89,7 +93,7 @@ export function setup(options: BoostrapOptions): void {
   DateTimeRelative.setup();
   DatePicker.init();
   UiDropdownSimple.setup();
-  UiMobile.setup(options.enableMobileMenu);
+  UiMobile.setup(options.enableMobileMenu, options.pageMenuMainProvider);
   UiTabMenu.setup();
   UiDialog.setup();
   UiTooltip.setup();
@@ -98,6 +102,7 @@ export function setup(options: BoostrapOptions): void {
   UiObjectAction.setup();
   UiObjectActionDelete.setup();
   UiObjectActionToggle.setup();
+  initSearch();
 
   // Convert forms with `method="get"` into `method="post"`
   document.querySelectorAll("form[method=get]").forEach((form: HTMLFormElement) => {

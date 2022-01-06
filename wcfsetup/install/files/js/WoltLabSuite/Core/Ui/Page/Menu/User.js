@@ -1,72 +1,308 @@
 /**
- * Provides the touch-friendly fullscreen user menu.
+ * Provides the touch-friendly user menu.
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Page/Menu/User
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Page/Menu/User
+ * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../Core", "../../../Event/Handler", "../../../Language", "./Abstract"], function (require, exports, tslib_1, Core, EventHandler, Language, Abstract_1) {
+define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.hasValidUserMenu = exports.PageMenuUser = void 0;
+    Container_1 = (0, tslib_1.__importDefault)(Container_1);
     Language = (0, tslib_1.__importStar)(Language);
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
-    class UiPageMenuUser extends Abstract_1.default {
-        /**
-         * Initializes the touch-friendly fullscreen user menu.
-         */
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    class PageMenuUser {
         constructor() {
-            super("com.woltlab.wcf.UserMenuMobile", "pageUserMenuMobile", "#pageHeader .userPanel");
-            EventHandler.add("com.woltlab.wcf.userMenu", "updateBadge", (data) => this.updateBadge(data));
-            this.button.setAttribute("aria-label", Language.get("wcf.menu.user"));
-            this.button.setAttribute("role", "button");
+            this.activeTab = undefined;
+            this.legacyUserPanels = new Map();
+            this.userMenuProviders = new Map();
+            this.tabPanels = new Map();
+            this.tabs = [];
+            this.userMenu = document.querySelector(".userPanel");
+            this.container = new Container_1.default(this, "right" /* Right */);
+            this.callbackOpen = (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.container.toggle();
+            };
         }
-        close(event) {
-            // The user menu is not initialized if there are no items to display.
-            if (this.menu === undefined) {
-                return false;
+        enable() {
+            this.userMenu.setAttribute("aria-expanded", "false");
+            this.userMenu.setAttribute("aria-label", Language.get("wcf.menu.user"));
+            this.userMenu.setAttribute("role", "button");
+            this.userMenu.tabIndex = 0;
+            this.userMenu.addEventListener("click", this.callbackOpen);
+            this.refreshUnreadIndicator();
+        }
+        disable() {
+            this.container.close();
+            this.userMenu.removeAttribute("aria-expanded");
+            this.userMenu.removeAttribute("aria-label");
+            this.userMenu.removeAttribute("role");
+            this.userMenu.removeAttribute("tabindex");
+            this.userMenu.removeEventListener("click", this.callbackOpen);
+        }
+        getContent() {
+            const fragment = document.createDocumentFragment();
+            fragment.append(this.buildTabMenu());
+            return fragment;
+        }
+        getMenuButton() {
+            return this.userMenu;
+        }
+        sleep() {
+            if (this.activeTab) {
+                this.closeTab(this.activeTab);
             }
-            const dropdown = window.WCF.Dropdown.Interactive.Handler.getOpenDropdown();
-            if (dropdown) {
-                if (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
+        }
+        wakeup() {
+            if (this.activeTab) {
+                // The UI elements in the tab panel are shared and can appear in a different
+                // context. The element might have been moved elsewhere while the menu was
+                // closed.
+                this.openTab(this.activeTab);
+            }
+            else {
+                this.openNotifications();
+            }
+            this.refreshTabUnreadIndicators();
+            this.refreshUnreadIndicator();
+        }
+        openNotifications() {
+            const notifications = this.tabs.find((element) => element.dataset.origin === "userNotifications");
+            if (!notifications) {
+                throw new Error("Unable to find the notifications tab.");
+            }
+            this.openTab(notifications);
+        }
+        openTab(tab) {
+            this.closeActiveTab();
+            tab.setAttribute("aria-selected", "true");
+            tab.tabIndex = 0;
+            const tabPanel = this.tabPanels.get(tab);
+            tabPanel.hidden = false;
+            if (document.activeElement !== tab) {
+                tab.focus();
+            }
+            this.attachViewToPanel(tab);
+            this.activeTab = tab;
+        }
+        closeActiveTab() {
+            if (!this.activeTab) {
+                return;
+            }
+            this.closeTab(this.activeTab);
+            this.activeTab = undefined;
+        }
+        closeTab(tab) {
+            tab.setAttribute("aria-selected", "false");
+            tab.tabIndex = -1;
+            const tabPanel = this.tabPanels.get(tab);
+            tabPanel.hidden = true;
+            const legacyPanel = this.legacyUserPanels.get(tab);
+            if (legacyPanel) {
+                legacyPanel.close();
+            }
+            this.refreshTabUnreadIndicators();
+        }
+        attachViewToPanel(tab) {
+            const origin = tab.dataset.origin;
+            const tabPanel = this.tabPanels.get(tab);
+            if (origin === "userMenu") {
+                const element = (0, ControlPanel_1.getElement)();
+                element.hidden = false;
+                if (tabPanel.childElementCount === 0) {
+                    tabPanel.append(element);
                 }
-                dropdown.close();
-                return true;
             }
-            return super.close(event);
+            else {
+                if (tabPanel.childElementCount === 0) {
+                    const provider = this.userMenuProviders.get(tab);
+                    if (provider) {
+                        const view = provider.getView();
+                        tabPanel.append(view.getElement());
+                        void view.open();
+                    }
+                    else {
+                        const legacyPanel = this.legacyUserPanels.get(tab);
+                        legacyPanel.open();
+                        const { top } = tabPanel.getBoundingClientRect();
+                        const container = legacyPanel.getDropdown().getContainer()[0];
+                        container.style.setProperty("--offset-top", `${top}px`);
+                    }
+                }
+            }
         }
-        updateBadge(data) {
-            this.menu.querySelectorAll(".menuOverlayItemBadge").forEach((item) => {
-                if (item.dataset.badgeIdentifier === data.identifier) {
-                    let badge = item.querySelector(".badge");
-                    if (data.count) {
-                        if (badge === null) {
-                            badge = document.createElement("span");
-                            badge.className = "badge badgeUpdate";
-                            item.appendChild(badge);
-                        }
-                        badge.textContent = data.count.toString();
-                    }
-                    else if (badge !== null) {
-                        badge.remove();
-                    }
-                    this.updateButtonState();
+        keydown(event) {
+            const tab = event.currentTarget;
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                this.openTab(tab);
+                return;
+            }
+            const navigationKeyEvents = ["ArrowLeft", "ArrowRight", "End", "Home"];
+            if (!navigationKeyEvents.includes(event.key)) {
+                return;
+            }
+            event.preventDefault();
+            const currentIndex = this.tabs.indexOf(tab);
+            const lastIndex = this.tabs.length - 1;
+            let index;
+            if (event.key === "ArrowLeft") {
+                if (currentIndex === 0) {
+                    index = lastIndex;
+                }
+                else {
+                    index = currentIndex - 1;
+                }
+            }
+            else if (event.key === "ArrowRight") {
+                if (currentIndex === lastIndex) {
+                    index = 0;
+                }
+                else {
+                    index = currentIndex + 1;
+                }
+            }
+            else if (event.key === "End") {
+                index = lastIndex;
+            }
+            else {
+                index = 0;
+            }
+            this.tabs[index].focus();
+        }
+        buildTabMenu() {
+            const tabContainer = document.createElement("div");
+            tabContainer.classList.add("pageMenuUserTabContainer");
+            const tabList = document.createElement("div");
+            tabList.classList.add("pageMenuUserTabList");
+            tabList.setAttribute("role", "tablist");
+            tabList.setAttribute("aria-label", Language.get("wcf.menu.user"));
+            tabContainer.append(tabList);
+            this.buildControlPanelTab(tabList, tabContainer);
+            (0, Manager_1.getUserMenuProviders)().forEach((provider) => {
+                const [tab, tabPanel] = this.buildTab(provider);
+                tabList.append(tab);
+                tabContainer.append(tabPanel);
+                this.tabs.push(tab);
+                this.tabPanels.set(tab, tabPanel);
+                this.userMenuProviders.set(tab, provider);
+            });
+            this.buildLegacyTabs(tabList, tabContainer);
+            return tabContainer;
+        }
+        buildTab(provider) {
+            const panelButton = provider.getPanelButton();
+            const button = panelButton.querySelector("a");
+            const data = {
+                icon: button.querySelector(".icon").outerHTML,
+                label: button.dataset.title || button.title,
+                origin: panelButton.id,
+            };
+            return this.buildTabComponents(data);
+        }
+        buildControlPanelTab(tabList, tabContainer) {
+            const panel = document.getElementById("topMenu");
+            const userMenu = document.getElementById("userMenu");
+            const userMenuButton = userMenu.querySelector("a");
+            const data = {
+                icon: panel.querySelector(".userPanelAvatar .userAvatarImage").outerHTML,
+                label: userMenuButton.dataset.title || userMenuButton.title,
+                origin: userMenu.id,
+            };
+            const [tab, tabPanel] = this.buildTabComponents(data);
+            tabList.append(tab);
+            tabContainer.append(tabPanel);
+            this.tabs.push(tab);
+            this.tabPanels.set(tab, tabPanel);
+        }
+        buildLegacyTabs(tabList, tabContainer) {
+            const userPanelItems = document.querySelector(".userPanelItems");
+            const legacyPanelData = {
+                panels: [],
+            };
+            EventHandler.fire("com.woltlab.wcf.pageMenu", "legacyMenu", legacyPanelData);
+            Array.from(userPanelItems.children)
+                .filter((listItem) => {
+                const element = legacyPanelData.panels.find((panel) => panel.element === listItem);
+                return element !== undefined;
+            })
+                .map((listItem) => {
+                const button = listItem.querySelector("a");
+                return {
+                    icon: button.querySelector(".icon").outerHTML,
+                    label: button.dataset.title || button.title,
+                    origin: listItem.id,
+                };
+            })
+                .forEach((data) => {
+                const [tab, tabPanel] = this.buildTabComponents(data);
+                tabList.append(tab);
+                tabContainer.append(tabPanel);
+                this.tabs.push(tab);
+                this.tabPanels.set(tab, tabPanel);
+                const legacyPanel = legacyPanelData.panels.find((panel) => panel.element.id === data.origin);
+                this.legacyUserPanels.set(tab, legacyPanel.api);
+            });
+        }
+        buildTabComponents(data) {
+            const tabId = Util_1.default.getUniqueId();
+            const panelId = Util_1.default.getUniqueId();
+            const tab = document.createElement("a");
+            tab.classList.add("pageMenuUserTab");
+            tab.dataset.hasUnreadContent = "false";
+            tab.dataset.origin = data.origin;
+            tab.id = tabId;
+            tab.setAttribute("aria-controls", panelId);
+            tab.setAttribute("aria-selected", "false");
+            tab.setAttribute("role", "tab");
+            tab.tabIndex = -1;
+            tab.setAttribute("aria-label", data.label);
+            tab.innerHTML = data.icon;
+            tab.addEventListener("click", (event) => {
+                event.preventDefault();
+                this.openTab(tab);
+            });
+            tab.addEventListener("keydown", (event) => this.keydown(event));
+            const panel = document.createElement("div");
+            panel.classList.add("pageMenuUserTabPanel");
+            panel.id = panelId;
+            panel.hidden = true;
+            panel.setAttribute("aria-labelledby", tabId);
+            panel.setAttribute("role", "tabpanel");
+            panel.tabIndex = 0;
+            return [tab, panel];
+        }
+        refreshUnreadIndicator() {
+            const hasUnreadItems = this.userMenu.querySelector(".badge.badgeUpdate") !== null;
+            if (hasUnreadItems) {
+                this.userMenu.classList.add("pageMenuMobileButtonHasContent");
+            }
+            else {
+                this.userMenu.classList.remove("pageMenuMobileButtonHasContent");
+            }
+        }
+        refreshTabUnreadIndicators() {
+            this.userMenuProviders.forEach((provider, tab) => {
+                if (provider.hasUnreadContent()) {
+                    tab.dataset.hasUnreadContent = "true";
+                }
+                else {
+                    tab.dataset.hasUnreadContent = "false";
                 }
             });
         }
-        static hasValidMenu() {
-            const menu = document.querySelector("#pageUserMenuMobile > .menuOverlayItemList");
-            if (menu.childElementCount === 1 && menu.children[0].classList.contains("menuOverlayTitle")) {
-                const userPanel = document.querySelector("#pageHeader .userPanel");
-                userPanel.classList.add("hideUserPanel");
-                return false;
-            }
-            return true;
-        }
     }
-    Core.enableLegacyInheritance(UiPageMenuUser);
-    return UiPageMenuUser;
+    exports.PageMenuUser = PageMenuUser;
+    function hasValidUserMenu() {
+        const panel = document.getElementById("topMenu");
+        return panel.classList.contains("userPanelLoggedIn");
+    }
+    exports.hasValidUserMenu = hasValidUserMenu;
+    exports.default = PageMenuUser;
 });

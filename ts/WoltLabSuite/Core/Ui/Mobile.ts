@@ -10,18 +10,13 @@
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Environment from "../Environment";
-import * as EventHandler from "../Event/Handler";
 import * as UiAlignment from "./Alignment";
 import UiCloseOverlay from "./CloseOverlay";
 import * as UiDropdownReusable from "./Dropdown/Reusable";
-import UiPageMenuMain from "./Page/Menu/Main";
-import UiPageMenuUser from "./Page/Menu/User";
+import { PageMenuMain } from "./Page/Menu/Main";
+import { PageMenuMainProvider } from "./Page/Menu/Main/Provider";
+import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
-
-interface MainMenuMorePayload {
-  identifier: string;
-  handler: UiPageMenuMain;
-}
 
 let _dropdownMenu: HTMLUListElement | null = null;
 let _dropdownMenuMessage: HTMLElement | null = null;
@@ -30,15 +25,15 @@ let _enabledLGTouchNavigation = false;
 let _enableMobileMenu = false;
 const _knownMessages = new WeakSet<HTMLElement>();
 let _mobileSidebarEnabled = false;
-let _pageMenuMain: UiPageMenuMain;
-let _pageMenuUser: UiPageMenuUser | undefined = undefined;
+let _pageMenuMain: PageMenuMain;
+let _pageMenuUser: PageMenuUser | undefined = undefined;
 let _messageGroups: HTMLCollection | null = null;
+let _pageMenuMainProvider: PageMenuMainProvider;
 const _sidebars: HTMLElement[] = [];
 
 function init(): void {
   _enabled = true;
 
-  initSearchBar();
   initButtonGroupNavigation();
   initMessages();
   initMobileMenu();
@@ -47,44 +42,6 @@ function init(): void {
   DomChangeListener.add("WoltLabSuite/Core/Ui/Mobile", () => {
     initButtonGroupNavigation();
     initMessages();
-  });
-}
-
-function initSearchBar(): void {
-  const searchBar = document.getElementById("pageHeaderSearch")!;
-  const searchInput = document.getElementById("pageHeaderSearchInput")!;
-
-  let scrollTop: number | null = null;
-  EventHandler.add("com.woltlab.wcf.MainMenuMobile", "more", (data: MainMenuMorePayload) => {
-    if (data.identifier === "com.woltlab.wcf.search") {
-      data.handler.close();
-
-      if (Environment.platform() === "ios") {
-        scrollTop = document.body.scrollTop;
-        UiScreen.scrollDisable();
-      }
-
-      const pageHeader = document.getElementById("pageHeader")!;
-      searchBar.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
-      searchBar.classList.add("open");
-      searchInput.focus();
-
-      if (Environment.platform() === "ios") {
-        document.body.scrollTop = 0;
-      }
-    }
-  });
-
-  document.getElementById("main")!.addEventListener("click", () => {
-    if (searchBar) {
-      searchBar.classList.remove("open");
-    }
-
-    if (Environment.platform() === "ios" && scrollTop) {
-      UiScreen.scrollEnable();
-      document.body.scrollTop = scrollTop;
-      scrollTop = null;
-    }
   });
 }
 
@@ -163,10 +120,12 @@ function initMessages(): void {
 
 function initMobileMenu(): void {
   if (_enableMobileMenu) {
-    _pageMenuMain = new UiPageMenuMain();
+    _pageMenuMain = new PageMenuMain(_pageMenuMainProvider);
+    _pageMenuMain.enable();
 
-    if (UiPageMenuUser.hasValidMenu()) {
-      _pageMenuUser = new UiPageMenuUser();
+    if (hasValidUserMenu()) {
+      _pageMenuUser = new PageMenuUser();
+      _pageMenuUser.enable();
     }
   }
 }
@@ -325,8 +284,10 @@ function rebuildMobileNavigation(navigation: HTMLElement): void {
 /**
  * Initializes the mobile UI.
  */
-export function setup(enableMobileMenu: boolean): void {
+export function setup(enableMobileMenu: boolean, pageMenuMainProvider: PageMenuMainProvider): void {
   _enableMobileMenu = enableMobileMenu;
+  _pageMenuMainProvider = pageMenuMainProvider;
+
   document.querySelectorAll(".sidebar").forEach((sidebar: HTMLElement) => {
     _sidebars.push(sidebar);
   });
@@ -376,6 +337,8 @@ export function setup(enableMobileMenu: boolean): void {
  * Enables the mobile UI.
  */
 export function enable(): void {
+  UiCloseOverlay.execute();
+
   _enabled = true;
   if (_enableMobileMenu) {
     _pageMenuMain.enable();
@@ -396,6 +359,8 @@ export function enableShadow(): void {
  * Disables the mobile UI.
  */
 export function disable(): void {
+  UiCloseOverlay.execute();
+
   _enabled = false;
   if (_enableMobileMenu) {
     _pageMenuMain.disable();

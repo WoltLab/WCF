@@ -10,12 +10,6 @@ const parameters = new Map<string, string>();
 function click(event: MouseEvent): void {
   event.preventDefault();
 
-  const pageHeader = document.getElementById("pageHeader") as HTMLElement;
-  pageHeader.classList.add("searchBarForceOpen");
-  window.setTimeout(() => {
-    pageHeader.classList.remove("searchBarForceOpen");
-  }, 10);
-
   const target = event.currentTarget as HTMLElement;
   const objectType = target.dataset.objectType;
 

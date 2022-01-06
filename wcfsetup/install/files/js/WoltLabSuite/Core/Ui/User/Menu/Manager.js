@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.registerProvider = exports.getContainer = void 0;
+    exports.registerProvider = exports.getContainer = exports.getUserMenuProviders = void 0;
     Alignment = (0, tslib_1.__importStar)(Alignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
@@ -75,6 +75,10 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         }
         return views.get(provider);
     }
+    function getUserMenuProviders() {
+        return providers;
+    }
+    exports.getUserMenuProviders = getUserMenuProviders;
     function getContainer() {
         if (container === undefined) {
             container = document.createElement("div");

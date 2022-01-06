@@ -10,14 +10,14 @@
 define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus-trap", "../../Alignment", "../../../Dom/Util"], function (require, exports, tslib_1, CloseOverlay_1, Manager_1, focus_trap_1, Alignment, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = exports.getElement = void 0;
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     Alignment = (0, tslib_1.__importStar)(Alignment);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    const button = document.getElementById("userMenu");
-    const element = button.querySelector(".userMenu");
+    let button;
+    let element;
     let focusTrap;
-    const link = button.querySelector("a");
+    let link;
     function open() {
         if (!element.hidden) {
             return;
@@ -42,9 +42,16 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
         button.classList.remove("open");
         link.setAttribute("aria-expanded", "false");
     }
+    function getElement() {
+        return element;
+    }
+    exports.getElement = getElement;
     let isInitialized = false;
     function setup() {
         if (!isInitialized) {
+            button = document.getElementById("userMenu");
+            element = button.querySelector(".userMenu");
+            link = button.querySelector("a");
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/User/Menu/ControlPanel", () => close());
             (0, Manager_1.getContainer)().append(element);
             element.addEventListener("click", (event) => event.stopPropagation());

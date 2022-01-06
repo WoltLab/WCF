@@ -6,19 +6,16 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Mobile
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "../Event/Handler", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, EventHandler, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeShadow = exports.rebuildShadow = exports.disableShadow = exports.disable = exports.enableShadow = exports.enable = exports.setup = void 0;
     Core = (0, tslib_1.__importStar)(Core);
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     Environment = (0, tslib_1.__importStar)(Environment);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
-    Main_1 = (0, tslib_1.__importDefault)(Main_1);
-    User_1 = (0, tslib_1.__importDefault)(User_1);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
     let _dropdownMenu = null;
     let _dropdownMenuMessage = null;
@@ -30,10 +27,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     let _pageMenuMain;
     let _pageMenuUser = undefined;
     let _messageGroups = null;
+    let _pageMenuMainProvider;
     const _sidebars = [];
     function init() {
         _enabled = true;
-        initSearchBar();
         initButtonGroupNavigation();
         initMessages();
         initMobileMenu();
@@ -41,37 +38,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         Listener_1.default.add("WoltLabSuite/Core/Ui/Mobile", () => {
             initButtonGroupNavigation();
             initMessages();
-        });
-    }
-    function initSearchBar() {
-        const searchBar = document.getElementById("pageHeaderSearch");
-        const searchInput = document.getElementById("pageHeaderSearchInput");
-        let scrollTop = null;
-        EventHandler.add("com.woltlab.wcf.MainMenuMobile", "more", (data) => {
-            if (data.identifier === "com.woltlab.wcf.search") {
-                data.handler.close();
-                if (Environment.platform() === "ios") {
-                    scrollTop = document.body.scrollTop;
-                    UiScreen.scrollDisable();
-                }
-                const pageHeader = document.getElementById("pageHeader");
-                searchBar.style.setProperty("top", `${pageHeader.offsetHeight}px`, "");
-                searchBar.classList.add("open");
-                searchInput.focus();
-                if (Environment.platform() === "ios") {
-                    document.body.scrollTop = 0;
-                }
-            }
-        });
-        document.getElementById("main").addEventListener("click", () => {
-            if (searchBar) {
-                searchBar.classList.remove("open");
-            }
-            if (Environment.platform() === "ios" && scrollTop) {
-                UiScreen.scrollEnable();
-                document.body.scrollTop = scrollTop;
-                scrollTop = null;
-            }
         });
     }
     function initButtonGroupNavigation() {
@@ -137,9 +103,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     }
     function initMobileMenu() {
         if (_enableMobileMenu) {
-            _pageMenuMain = new Main_1.default();
-            if (User_1.default.hasValidMenu()) {
-                _pageMenuUser = new User_1.default();
+            _pageMenuMain = new Main_1.PageMenuMain(_pageMenuMainProvider);
+            _pageMenuMain.enable();
+            if ((0, User_1.hasValidUserMenu)()) {
+                _pageMenuUser = new User_1.PageMenuUser();
+                _pageMenuUser.enable();
             }
         }
     }
@@ -268,8 +236,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     /**
      * Initializes the mobile UI.
      */
-    function setup(enableMobileMenu) {
+    function setup(enableMobileMenu, pageMenuMainProvider) {
         _enableMobileMenu = enableMobileMenu;
+        _pageMenuMainProvider = pageMenuMainProvider;
         document.querySelectorAll(".sidebar").forEach((sidebar) => {
             _sidebars.push(sidebar);
         });
@@ -315,6 +284,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
      * Enables the mobile UI.
      */
     function enable() {
+        CloseOverlay_1.default.execute();
         _enabled = true;
         if (_enableMobileMenu) {
             _pageMenuMain.enable();
@@ -335,6 +305,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
      * Disables the mobile UI.
      */
     function disable() {
+        CloseOverlay_1.default.execute();
         _enabled = false;
         if (_enableMobileMenu) {
             _pageMenuMain.disable();

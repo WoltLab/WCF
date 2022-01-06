@@ -14,7 +14,7 @@ import DomChangeListener from "../../Dom/Change/Listener";
 import * as DomTraverse from "../../Dom/Traverse";
 import DomUtil from "../../Dom/Util";
 import * as UiAlignment from "../Alignment";
-import UiCloseOverlay from "../CloseOverlay";
+import UiCloseOverlay, { Origin } from "../CloseOverlay";
 import { AllowFlip } from "../Alignment";
 import { NotificationAction, NotificationCallback } from "./Data";
 
@@ -95,13 +95,6 @@ function toggle(
   alternateElement?: HTMLElement,
   disableAutoFocus?: boolean,
 ): boolean {
-  _blockCloseAll = true;
-  try {
-    UiCloseOverlay.execute();
-  } finally {
-    _blockCloseAll = false;
-  }
-
   let isKeyboardClick = false;
   if (event !== null) {
     event.preventDefault();
@@ -118,6 +111,13 @@ function toggle(
         disableAutoFocus = true;
       }
     }
+  }
+
+  _blockCloseAll = true;
+  try {
+    UiCloseOverlay.execute(Origin.DropDown, targetId!);
+  } finally {
+    _blockCloseAll = false;
   }
 
   let dropdown = _dropdowns.get(targetId!) as HTMLElement;

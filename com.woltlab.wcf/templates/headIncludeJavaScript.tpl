@@ -16,6 +16,7 @@
 	var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 	var WSC_API_VERSION = {@WSC_API_VERSION};
+	var PAGE_TITLE = '{PAGE_TITLE|language|encodeJS}';
 	
 	var REACTION_TYPES = {@$__wcf->getReactionHandler()->getReactionsJSVariable()};
 	
@@ -122,6 +123,7 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.user.panel.settings': '{jslang}wcf.user.panel.settings{/jslang}',
 			'wcf.user.panel.showAll': '{jslang}wcf.user.panel.showAll{/jslang}',
 			'wcf.menu.page': '{jslang}wcf.menu.page{/jslang}',
+			'wcf.menu.page.button.toggle': '{jslang __literal=true}wcf.menu.page.button.toggle{/jslang}',
 			'wcf.menu.user': '{jslang}wcf.menu.user{/jslang}',
 			'wcf.global.button.showMenu': '{jslang}wcf.global.button.showMenu{/jslang}',
 			'wcf.global.button.hideMenu': '{jslang}wcf.global.button.hideMenu{/jslang}',

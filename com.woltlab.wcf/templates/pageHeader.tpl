@@ -15,12 +15,6 @@
 				{include file='pageHeaderSearch'}
 			</div>
 		</div>
-		
-		<script data-relocate="true">
-			require(['WoltLabSuite/Core/Ui/Page/Header/Fixed'], function(UiPageHeaderFixed) {
-				UiPageHeaderFixed.init();
-			});
-		</script>
 	</header>
 	
 	{hascontent}

@@ -292,20 +292,18 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 @include screen-md-down {
+	.pageHeader {
+		grid-template-areas: "logo woltlab jumpToPage search menu user";
+		grid-template-columns: auto repeat(5, max-content);
+
+		&[data-is-login="true"] {
+			grid-template-areas: "logo";
+			grid-template-columns: auto;
+		}
+	}
+
 	.pageHeaderPanel > .layoutBoundary {
 		justify-content: normal;
-	}
-
-	.mainMenu {
-		margin-right: 10px;
-		order: 1;
-	}
-
-	.pageHeaderContainer:not(.pageHeaderContainerIsLogin) .pageHeaderLogo {
-		left: 50%;
-		position: absolute;
-		/* Half the image width is actually 27.5px, but this would also cause the browser's anti-aliasing to kick in. */
-		transform: translateX(-28px);
 	}
 
 	.pageHeaderContainer.pageHeaderContainerIsLogin .pageHeaderLogo {
@@ -314,14 +312,43 @@ $wcfAcpSubMenuWidth: 300px;
 	}
 
 	.userPanel {
-		flex: 1 auto;
-		order: 3;
-		pointer-events: none;
-		text-align: right;
+		display: contents;
 
-		&::before {
-			pointer-events: all;
+		.userPanelItems {
+			display: contents;
+
+			li {
+				display: contents;
+
+				&:not(#userMenu):not(#jumpToPage):not(#woltlab) {
+					display: none;
+				}
+			}
 		}
+	}
+
+	#userMenu,
+	#jumpToPage,
+	#woltlab {
+		a {
+			background-color: transparent;
+			height: 40px;
+			justify-content: center;
+			padding: 0;
+			width: 40px;
+		}
+	}
+
+	#userMenu a {
+		grid-area: user;
+	}
+
+	#jumpToPage a {
+		grid-area: jumpToPage;
+	}
+
+	#woltlab a {
+		grid-area: woltlab;
 	}
 
 	.acpPageMenu,
@@ -329,16 +356,9 @@ $wcfAcpSubMenuWidth: 300px;
 		display: none;
 	}
 
-	.pageHeaderMobileSearch {
-		order: 2;
-
-		&::before {
-			content: $fa-var-search;
-			font-family: FontAwesome;
-			font-size: 28px;
-			line-height: 32px;
-			padding: 5px 5px;
-		}
+	.dropdownMenuUserPanel {
+		position: fixed;
+		top: 50px !important;
 	}
 }
 

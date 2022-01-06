@@ -30,14 +30,6 @@
 		display: flex;
 	}
 
-	@include screen-md-down {
-		background-color: $wcfHeaderBackground;
-
-		> .layoutBoundary {
-			padding: 9px 10px;
-		}
-	}
-
 	@include screen-lg {
 		background-color: $wcfHeaderMenuBackground;
 	}
@@ -58,26 +50,11 @@
 			padding-bottom: 30px;
 			padding-top: 30px;
 		}
-
-		@include screen-md-down {
-			height: 50px;
-			-webkit-justify-content: center;
-			justify-content: center;
-			left: 60px;
-			padding: 9px 0;
-			position: fixed;
-			right: 60px;
-			top: 0;
-			width: auto;
-			z-index: 301;
-		}
 	}
 }
 
 /* MAIN MENU */
 .mainMenu {
-	flex: 1;
-	margin-right: 20px;
 	position: relative;
 
 	.boxMenu {
@@ -223,6 +200,11 @@
 		justify-content: flex-end;
 		right: 0;
 	}
+
+	@include screen-lg {
+		flex: 1;
+		margin-right: 20px;
+	}
 }
 
 /* Hack for a font rendering issue in Safari on menu hover */
@@ -331,6 +313,7 @@
 			max-height: 30px;
 			max-width: 100%;
 			object-fit: contain;
+			width: auto;
 		}
 	}
 }
@@ -339,6 +322,13 @@
 .pageHeaderSearch {
 	display: none;
 	position: fixed;
+}
+
+@include screen-lg {
+	.pageHeaderSearchMobile,
+	.userPanelLoginLink {
+		display: none;
+	}
 }
 
 .searchBarOpen .pageHeaderSearch {
@@ -457,39 +447,84 @@
 }
 
 @include screen-md-down {
-	.pageHeaderPanel > .layoutBoundary {
-		/* pushes buttons to the left / right corner */
-		-webkit-justify-content: space-between;
-		justify-content: space-between;
+	.pageHeader {
+		align-items: center;
+		background-color: $wcfHeaderBackground;
+		column-gap: 10px;
+		display: grid;
+		grid-template-areas: "logo search menu user";
+		grid-template-columns: auto repeat(3, max-content);
+		height: 50px;
+		left: 0;
+		padding: 0 6px;
+		position: fixed;
+		right: 0;
+		top: 0;
+	}
+
+	.pageHeaderPanel,
+	.pageHeaderFacade,
+	.pageHeaderPanel .layoutBoundary,
+	.pageHeaderFacade .layoutBoundary {
+		display: contents;
+		position: static;
+	}
+
+	.pageHeaderSearchMobile,
+	.userPanel,
+	.mainMenu {
+		align-items: center;
+		display: flex;
+		height: 40px;
+		justify-content: center;
+		width: 40px;
+	}
+
+	.pageHeaderLogo {
+		grid-area: logo;
+
+		a {
+			align-items: center;
+			display: inline-flex;
+			height: 40px;
+			padding: 0 4px;
+		}
+	}
+
+	.pageHeaderSearchMobile {
+		grid-area: search;
+
+		&[aria-expanded="true"] .icon::before {
+			content: $fa-var-times;
+		}
 	}
 
 	.userPanel {
-		flex: 0 0 auto;
+		grid-area: user;
 
-		> .userPanelItems {
+		.userPanelItems {
 			display: none;
 		}
 
 		.userPanelAvatar {
 			display: block;
-			padding: 0 5px;
 		}
 	}
 
 	.mainMenu {
-		flex: 0 0 auto;
+		grid-area: menu;
 
 		&::before {
 			content: $fa-var-bars;
 		}
 
-		> .boxContent {
+		.boxContent {
 			display: none;
 		}
 	}
 
-	.mainMenu,
-	.userPanel {
+	.mainMenu[aria-expanded="false"],
+	.userPanel[aria-expanded="false"] {
 		position: relative;
 
 		&.pageMenuMobileButtonHasContent::after {
@@ -499,14 +534,13 @@
 			content: "";
 			height: 14px;
 			position: absolute;
-			right: -3px;
-			top: -3px;
+			right: 0;
+			top: 0;
 			width: 14px;
 		}
 	}
 
-	.mainMenu,
-	.userPanel:not(.userPanelLoggedIn) {
+	.mainMenu {
 		&::before {
 			color: $wcfHeaderLink;
 			font-family: FontAwesome;
@@ -520,10 +554,12 @@
 		}
 	}
 
-	.userPanel:not(.userPanelLoggedIn) {
-		&::before {
-			content: $fa-var-user;
-		}
+	.userPanelLoginLink {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
 	}
 
 	.userPanel.hideUserPanel::before {
@@ -531,11 +567,15 @@
 	}
 
 	.pageHeaderSearch {
+		background-color: rgba(0, 0, 0, 0.34);
+		bottom: 0;
 		left: 0 !important;
+		overflow: hidden;
 		right: 0 !important;
 
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
 			display: flex;
 			flex-wrap: wrap;
 

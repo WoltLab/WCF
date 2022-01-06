@@ -94,6 +94,10 @@ function getView(provider: UserMenuProvider): UserMenuView {
   return views.get(provider)!;
 }
 
+export function getUserMenuProviders(): ReadonlySet<UserMenuProvider> {
+  return providers;
+}
+
 export function getContainer(): HTMLElement {
   if (container === undefined) {
     container = document.createElement("div");

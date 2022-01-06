@@ -11,11 +11,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     const parameters = new Map();
     function click(event) {
         event.preventDefault();
-        const pageHeader = document.getElementById("pageHeader");
-        pageHeader.classList.add("searchBarForceOpen");
-        window.setTimeout(() => {
-            pageHeader.classList.remove("searchBarForceOpen");
-        }, 10);
         const target = event.currentTarget;
         const objectType = target.dataset.objectType;
         const extendedLink = target.dataset.extendedLink;

@@ -7,13 +7,8 @@
 	--color-indicator: #{$wcfUserMenuIndicator};
 
 	background-color: var(--background-color);
-	border-radius: 5px;
-	box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
 	color: var(--color);
 	pointer-events: all;
-	position: fixed;
-	width: 400px;
-	z-index: 450;
 
 	&.userMenuControlPanel {
 		.userMenuItemImage {
@@ -32,34 +27,37 @@
 	.icon {
 		color: var(--color);
 	}
+}
 
-	/* TODO: This is for the old mobile menu only. */
-	@include screen-xs {
-		border-radius: 0;
-		bottom: 0 !important;
-		display: flex;
-		left: 0 !important;
-		flex-direction: column;
-		right: 0 !important;
-		top: 50px !important;
-		width: 100%;
+.dropdownMenuContainer .userMenu {
+	border-radius: 5px;
+	box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+	position: fixed;
+	width: 400px;
+	z-index: 450;
+}
 
-		.userMenuContent {
-			flex: 1 auto;
-		}
+.pageMenuUserTabPanel .userMenu {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	.userMenuContentScrollable {
+		flex: 1 auto;
 	}
 }
 
 .userMenuHeader {
-	column-gap: 10px;
+	align-items: center;
 	display: grid;
+	min-height: 44px;
 	grid-template-areas: "title buttons";
 	grid-template-columns: auto max-content;
-	padding: 10px;
 }
 
 .userMenuTitle {
 	grid-area: title;
+	margin: 0 10px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -70,13 +68,21 @@
 }
 
 .userMenuButtons {
-	column-gap: 10px;
+	column-gap: 1px;
 	display: grid;
 	grid-auto-flow: column;
 	grid-area: buttons;
 }
 
 .userMenuButton {
+	align-items: center;
+	display: flex;
+	height: 44px;
+	justify-content: center;
+	width: 44px;
+}
+
+body:not(.touch) .userMenuButton {
 	transform: scale(1);
 	transition: transform 0.24s ease-in-out;
 
@@ -118,10 +124,6 @@
 	position: relative;
 	transition: background-color 0.12s linear;
 
-	&:hover {
-		background-color: var(--background-color-active);
-	}
-
 	&[data-is-unread="true"] .userMenuItemLink::before {
 		right: 30px;
 	}
@@ -141,6 +143,10 @@
 			align-self: center;
 		}
 	}
+}
+
+body:not(.touch) .userMenuItem:hover {
+	background-color: var(--background-color-active);
 }
 
 .userMenuItemLink,
@@ -194,12 +200,15 @@
 		opacity: 1;
 		position: absolute;
 		top: calc(50% - 5px);
-		transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
 		width: 10px;
 	}
 }
 
-.userMenuItem:hover .userMenuItemUnread::before {
+body:not(.touch) .userMenuItemUnread::before {
+	transition: left 0.12s ease-in-out, opacity 0.12s ease-in-out;
+}
+
+body:not(.touch) .userMenuItem:hover .userMenuItemUnread::before {
 	opacity: 0;
 	left: 0;
 }
@@ -209,9 +218,12 @@
 	opacity: 1;
 	position: relative;
 	left: 0;
+	width: 100%;
+}
+
+body:not(.touch) .userMenuItemMarkAsRead {
 	transform: scale(1);
 	transition: opacity 0.12s ease-in-out, left 0.12s ease-in-out, transform 0.24s ease-in-out;
-	width: 100%;
 
 	&:hover {
 		transform: scale(1.5);

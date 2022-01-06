@@ -129,6 +129,46 @@ if (COMPILER_TARGET_DEFAULT) {
 			if ($badge.length) {
 				this._badge = $badge;
 			}
+
+			require(["WoltLabSuite/Core/Event/Handler"], (EventHandler) => {
+				EventHandler.add("com.woltlab.wcf.pageMenu", "legacyMenu", (data) => {
+					data.panels.push({
+						api: {
+							getDropdown: () => this._dropdown,
+							open: () => {
+								if (this._dropdown === null) {
+									this._dropdown = this._initDropdown();
+								}
+
+								this._dropdown.open();
+
+								if (!this._loadData) {
+									// check if there are outstanding items but there are no outstanding ones in the current list
+									if (this._badge !== null) {
+										var $count = parseInt(this._badge.text()) || 0;
+										if ($count && !this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding').length) {
+											this._loadData = true;
+										}
+									}
+								}
+								
+								if (this._loadData) {
+									this._loadData = false;
+									this._load();
+								}
+							},
+							close: () => {
+								if (this._dropdown === null) {
+									this._dropdown = this._initDropdown();
+								}
+
+								this._dropdown.close();
+							},
+						},
+						element: triggerElement[0],
+					});
+				});
+			});
 		},
 		
 		/**
@@ -416,73 +456,6 @@ else {
 		resetItems: function() {}
 	});
 }
-
-/**
- * Quick login box
- */
-WCF.User.QuickLogin = {
-	/**
-	 * Initializes the quick login box
-	 */
-	init: function() {
-		require(['EventHandler', 'Ui/Dialog'], function(EventHandler, UiDialog) {
-			var loginForm = elById('loginForm');
-			var loginSection = elBySel('.loginFormLogin', loginForm);
-			if (loginSection && !loginSection.nextElementSibling) {
-				loginForm.classList.add('loginFormLoginOnly');
-			}
-			
-			var registrationBlock = elBySel('.loginFormRegister', loginForm);
-			
-			var callbackOpen = function(event) {
-				if (event instanceof Event) {
-					event.preventDefault();
-					event.stopPropagation();
-				}
-				
-				loginForm.style.removeProperty('display');
-				
-				UiDialog.openStatic('loginForm', null, {
-					title: WCF.Language.get('wcf.user.login')
-				});
-				
-				// The registration part should always be on the right
-				// but some browser (Firefox and IE) have a really bad
-				// support for forcing column breaks, requiring us to
-				// work around it by force pushing it to the right.
-				if (loginSection !== null && registrationBlock !== null) {
-					var loginOffset = loginSection.offsetTop;
-					var margin = 0;
-					if (loginForm.clientWidth > loginSection.clientWidth * 2) {
-						while (loginOffset < (registrationBlock.offsetTop - 50)) {
-							// push the registration down by 100 pixel each time
-							margin += 100;
-							loginSection.style.setProperty('margin-bottom', margin + 'px', '');
-						}
-					}
-				}
-			};
-			
-			var links = document.getElementsByClassName('loginLink');
-			for (var i = 0, length = links.length; i < length; i++) {
-				links[i].addEventListener('click', callbackOpen);
-			}
-			
-			var input = loginForm.querySelector('#loginForm input[name=url]');
-			if (input !== null && !input.value.match(/^https?:\/\//)) {
-				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
-			}
-			
-			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
-				if (data.identifier === 'com.woltlab.wcf.login') {
-					data.handler.close(true);
-					
-					callbackOpen();
-				}
-			});
-		});
-	}
-};
 
 /**
  * UserProfile namespace

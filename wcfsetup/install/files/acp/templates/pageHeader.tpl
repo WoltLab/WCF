@@ -1,5 +1,5 @@
 <div class="pageHeaderContainer{if !$__isLogin|empty} pageHeaderContainerIsLogin{/if}">
-	<header id="pageHeader" class="pageHeader">
+	<header id="pageHeader" class="pageHeader" data-is-login="{if !$__wcfAcpIsLogin|empty}true{else}false{/if}">
 		<div id="pageHeaderPanel" class="pageHeaderPanel">
 			<div class="layoutBoundary">
 				{include file='pageHeaderLogo'}

@@ -15,7 +15,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
     DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    CloseOverlay_1 = (0, tslib_1.__importStar)(CloseOverlay_1);
     let _availableDropdowns;
     const _callbacks = new CallbackList_1.default();
     let _didInit = false;
@@ -87,13 +87,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
      * Toggles the drop-down's state between open and close.
      */
     function toggle(event, targetId, alternateElement, disableAutoFocus) {
-        _blockCloseAll = true;
-        try {
-            CloseOverlay_1.default.execute();
-        }
-        finally {
-            _blockCloseAll = false;
-        }
         let isKeyboardClick = false;
         if (event !== null) {
             event.preventDefault();
@@ -109,6 +102,13 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                     disableAutoFocus = true;
                 }
             }
+        }
+        _blockCloseAll = true;
+        try {
+            CloseOverlay_1.default.execute(CloseOverlay_1.Origin.DropDown, targetId);
+        }
+        finally {
+            _blockCloseAll = false;
         }
         let dropdown = _dropdowns.get(targetId);
         let preventToggle = false;

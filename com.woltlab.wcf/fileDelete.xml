@@ -88,6 +88,7 @@
 		<file>acp/templates/pageLogo.tpl</file>
 		<file>acp/templates/pageMenuItemAdd.tpl</file>
 		<file>acp/templates/pageMenuItemList.tpl</file>
+		<file>acp/templates/pageMenuMobile.tpl</file>
 		<file>acp/templates/pageMenuUser.tpl</file>
 		<file>acp/templates/pageSearchArea.tpl</file>
 		<file>acp/templates/reactionTypeIcon.tpl</file>
@@ -1370,7 +1371,9 @@
 		<file>js/WoltLabSuite/Core/ImageResizer.js</file>
 		<file>js/WoltLabSuite/Core/Media/Search.js</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Page/Menu/Abstract.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Reaction/ReputationButtons.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Redactor/RuntimeStyle.js</file>
 		<file>js/closest.js</file>
@@ -2495,6 +2498,7 @@
 		<file>style/ui/dialog.less</file>
 		<file>style/ui/dropdown.less</file>
 		<file>style/ui/dropdownInteractive.less</file>
+		<file>style/ui/menuMobile.scss</file>
 		<file>style/ui/message.less</file>
 		<file>style/ui/poll.less</file>
 		<file>style/ui/popover.less</file>

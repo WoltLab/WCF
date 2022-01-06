@@ -1,4 +1,4 @@
-{include file='header' __disableLoginLink=true __disableAds=true}
+{include file='header' __disableAds=true}
 
 {if $forceLoginRedirect}<p class="info" role="status">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
 

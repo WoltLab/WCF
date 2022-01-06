@@ -209,6 +209,10 @@ class UserMenuDataNotification implements UserMenuProvider {
     return this.options.noItems;
   }
 
+  hasUnreadContent(): boolean {
+    return this.counter > 0;
+  }
+
   isStale(): boolean {
     if (this.stale) {
       return true;
