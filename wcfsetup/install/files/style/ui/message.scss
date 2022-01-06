@@ -555,8 +555,8 @@
 	@extend .htmlContent;
 }
 
-.messageSignature img,
-.messageSignatureConstraints img {
+.messageSignature img:not(.userAvatarImage),
+.messageSignatureConstraints img:not(.userAvatarImage) {
 	max-height: #{$wcf_option_signature_max_image_height}px;
 	width: auto;
 }
