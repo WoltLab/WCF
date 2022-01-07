@@ -391,7 +391,7 @@ class OptionHandler implements IOptionHandler
         $typeObj = $this->getTypeObject($option->optionType);
 
         // get new value
-        $newValue = $this->rawValues[$option->optionName] ?? null;
+        $newValue = $this->rawValues[$option->optionName] ?? '';
 
         // get save value
         $this->optionValues[$option->optionName] = $typeObj->getData($option, $newValue);
