@@ -393,22 +393,18 @@ class OptionHandler implements IOptionHandler
         // get new value
         $newValue = $this->rawValues[$option->optionName] ?? null;
 
-        // Skip validation for I18n options. They are special cased and are not provided
-        // within the `rawValues`, thus causing validation to be effectively useless.
-        if (!$this->supportI18n || !$option->supportI18n) {
-            // get save value
-            $this->optionValues[$option->optionName] = $typeObj->getData($option, $newValue);
+        // get save value
+        $this->optionValues[$option->optionName] = $typeObj->getData($option, $newValue);
 
-            // validate with pattern
-            if ($option->validationPattern) {
-                if (
-                    !\preg_match(
-                        '~' . \str_replace('~', '\~', $option->validationPattern) . '~',
-                        $this->optionValues[$option->optionName]
-                    )
-                ) {
-                    throw new UserInputException($option->optionName, 'validationFailed');
-                }
+        // validate with pattern
+        if ($option->validationPattern) {
+            if (
+                !\preg_match(
+                    '~' . \str_replace('~', '\~', $option->validationPattern) . '~',
+                    $this->optionValues[$option->optionName]
+                )
+            ) {
+                throw new UserInputException($option->optionName, 'validationFailed');
             }
         }
 
