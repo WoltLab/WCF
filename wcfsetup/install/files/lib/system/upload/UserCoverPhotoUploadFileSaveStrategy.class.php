@@ -111,6 +111,7 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
                 // always generate a new hash to invalidate the browser cache and to avoid filename guessing
                 'coverPhotoHash' => StringUtil::getRandomID(),
                 'coverPhotoExtension' => $uploadFile->getFileExtension(),
+                'coverPhotoHasWebP' => 0,
             ]);
 
             // force-reload the user profile to use a predictable code-path to fetch the cover photo
