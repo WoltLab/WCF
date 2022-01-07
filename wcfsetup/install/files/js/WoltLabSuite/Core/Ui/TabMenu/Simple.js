@@ -140,9 +140,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
                     selectTab = this.tabs.get(hash);
                     // check for parent tab menu
                     if (selectTab) {
-                        const item = this.container.parentNode;
-                        if (item.classList.contains("tabMenuContainer")) {
-                            returnValue = item;
+                        const parent = this.container.parentElement;
+                        if (parent === null || parent === void 0 ? void 0 : parent.classList.contains("tabMenuContainer")) {
+                            returnValue = this.container;
                         }
                     }
                 }
