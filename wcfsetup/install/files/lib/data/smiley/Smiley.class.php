@@ -88,7 +88,7 @@ class Smiley extends DatabaseObject implements ITitledObject
             $this->height = $this->width = 0;
 
             $file = WCF_DIR . $this->smileyPath;
-            if (\file_exists($file) && \preg_match('~\.(gif|jpe?g|png)$~', $file)) {
+            if (\file_exists($file) && \preg_match('~\.(gif|jpe?g|png|webp)$~', $file)) {
                 $data = \getimagesize($file);
                 if ($data !== false) {
                     // The first two indices of `getimagesize()` represent the image dimensions.
