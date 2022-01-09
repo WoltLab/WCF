@@ -2,8 +2,8 @@
 
 namespace wcf\system\comment\manager;
 
-use wcf\data\article\ArticleEditor;
 use wcf\data\article\content\ArticleContent;
+use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -97,8 +97,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
      */
     public function updateCounter($objectID, $value)
     {
-        $articleContent = new ArticleContent($objectID);
-        $editor = new ArticleEditor($articleContent->getArticle());
+        $editor = new ArticleContentEditor(new ArticleContent($objectID));
         $editor->updateCounters([
             'comments' => $value,
         ]);
