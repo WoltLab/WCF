@@ -33,7 +33,7 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.article.articleComments', [
             'articleContent' => $this->articleContent ?: $this->article->getArticleContent(),
-            'article' => $this->article, // kept line for backward compatibility in 3rd party translations 
+            'article' => $this->article, // kept line for backward compatibility in 3rd party translations
         ]);
     }
 
