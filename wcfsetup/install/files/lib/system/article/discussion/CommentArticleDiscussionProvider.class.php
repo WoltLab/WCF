@@ -3,7 +3,6 @@
 namespace wcf\system\article\discussion;
 
 use wcf\data\article\Article;
-use wcf\data\article\content\ArticleContent;
 use wcf\system\comment\CommentHandler;
 use wcf\system\WCF;
 
