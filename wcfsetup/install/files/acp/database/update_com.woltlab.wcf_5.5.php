@@ -11,10 +11,23 @@
 
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
+use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
+    PartialDatabaseTable::create('wcf1_article')
+        ->columns([
+            SmallintDatabaseTableColumn::create('comments')
+                ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_article_content')
+        ->columns([
+            SmallintDatabaseTableColumn::create('comments')
+                ->length(5)
+                ->notNull()
+                ->defaultValue(0),
+        ]),
     PartialDatabaseTable::create('wcf1_blacklist_entry')
         ->indices([
             DatabaseTableIndex::create('lastSeen')

@@ -85,13 +85,12 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         );
         $articleContentList->readObjects();
         foreach ($articleContentList as $articleContent) {
+            $data = [];
+
             // count comments
             $commentStatement->execute([$commentObjectType->objectTypeID, $articleContent->articleContentID]);
             $row = $commentStatement->fetchSingleRow();
-            if (!isset($comments[$articleContent->articleID])) {
-                $comments[$articleContent->articleID] = 0;
-            }
-            $comments[$articleContent->articleID] += $row['comments'] + $row['responses'];
+            $data['comments'] = $row['comments'] + $row['responses'];
 
             // update search index
             SearchIndexManager::getInstance()->set(
@@ -119,9 +118,11 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
             }
 
             if ($hasEmbeddedObjects != $articleContent->hasEmbeddedObjects) {
-                $articleContentEditor = new ArticleContentEditor($articleContent);
-                $articleContentEditor->update(['hasEmbeddedObjects' => $hasEmbeddedObjects]);
+                $data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
             }
+
+            $articleContentEditor = new ArticleContentEditor($articleContent);
+            $articleContentEditor->update($data);
         }
 
         // fetch cumulative likes
@@ -145,9 +146,6 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
 
             // update cumulative likes
             $data['cumulativeLikes'] = $cumulativeLikes[$article->articleID] ?? 0;
-
-            // update comment counter
-            $data['comments'] = $comments[$article->articleID] ?? 0;
 
             // update data
             $editor->update($data);

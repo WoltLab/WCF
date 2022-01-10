@@ -22,7 +22,7 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
      */
     public function getDiscussionCount()
     {
-        return $this->article->comments;
+        return $this->articleContent ? $this->articleContent->comments : $this->article->getArticleContent()->comments;
     }
 
     /**
@@ -30,7 +30,10 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
      */
     public function getDiscussionCountPhrase()
     {
-        return WCF::getLanguage()->getDynamicVariable('wcf.article.articleComments', ['article' => $this->article]);
+        return WCF::getLanguage()->getDynamicVariable('wcf.article.articleComments', [
+            'articleContent' => $this->articleContent ?: $this->article->getArticleContent(),
+            'article' => $this->article, // kept line for backward compatibility in 3rd party translations
+        ]);
     }
 
     /**

@@ -3229,7 +3229,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.article.relatedArticles"><![CDATA[Related Articles]]></item>
 		<item name="wcf.article.moreArticles"><![CDATA[More Articles]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[About the Author]]></item>
-		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Comment{if $article->comments != 1}s{/if}]]></item>
+		<item name="wcf.article.articleComments"><![CDATA[{plural value=$articleContent->comments one='# Comment' other='# Comments'}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Reacted with <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a>.]]></item>

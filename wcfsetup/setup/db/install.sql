@@ -157,7 +157,6 @@ CREATE TABLE wcf1_article (
 	publicationStatus TINYINT(1) NOT NULL DEFAULT 1,
 	publicationDate INT(10) NOT NULL DEFAULT 0,
 	enableComments TINYINT(1) NOT NULL DEFAULT 1,
-	comments SMALLINT(5) NOT NULL DEFAULT 0,
 	views MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
@@ -179,6 +178,7 @@ CREATE TABLE wcf1_article_content (
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	metaTitle VARCHAR(255) NOT NULL DEFAULT '',
 	metaDescription VARCHAR(255) NOT NULL DEFAULT '',
+	comments SMALLINT(5) NOT NULL DEFAULT 0,
 
 	UNIQUE KEY (articleID, languageID)
 );
