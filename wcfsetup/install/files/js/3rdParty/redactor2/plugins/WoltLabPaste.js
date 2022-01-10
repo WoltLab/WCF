@@ -374,6 +374,20 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						parent.removeChild(br);
 					});
 				});
+
+				// Convert legacy HTML tags into their consistent equivalent.
+				Object.keys(this.opts.replaceTags).forEach((tagName) => {
+					const newTagName = this.opts.replaceTags[tagName].toLowerCase();
+
+					div.querySelectorAll(tagName.toLowerCase()).forEach((legacyElement) => {
+						const newElement = document.createElement(newTagName);
+						while (legacyElement.childNodes.length > 0) {
+							newElement.appendChild(legacyElement.childNodes[0]);
+						}
+						legacyElement.insertAdjacentElement("beforebegin", newElement);
+						legacyElement.remove();
+					});
+				});
 				
 				mpInsert.call(this, div.innerHTML, data);
 				
