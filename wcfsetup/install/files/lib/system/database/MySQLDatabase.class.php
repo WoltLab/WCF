@@ -94,7 +94,15 @@ class MySQLDatabase extends Database
             $statement = $this->prepareStatement('SELECT VERSION()');
             $statement->execute();
 
-            return $statement->fetchSingleColumn();
+            $version = $statement->fetchSingleColumn();
+
+            // Strip MariaDB replication version hack.
+            // see https://stackoverflow.com/a/56607492/782822
+            if (\stripos($version, 'MariaDB') !== false) {
+                $version = \preg_replace('/^5\\.5\\.5-/', '', $version);
+            }
+
+            return $version;
         } catch (\PDOException $e) {
         }
 
