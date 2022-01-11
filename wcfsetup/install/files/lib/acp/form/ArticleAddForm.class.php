@@ -372,11 +372,8 @@ class ArticleAddForm extends AbstractForm
         }
 
         // article date
-        if (empty($this->time)) {
+        if (empty($this->time) || !$this->timeObj) {
             throw new UserInputException('time');
-        }
-        if (!$this->timeObj) {
-            throw new UserInputException('time', 'invalid');
         }
 
         // publication status

@@ -5838,6 +5838,11 @@
 						
 						return this.keydown.onShiftSpace();
 					}
+
+					// Shift+Enter should always behave like a "regular" Enter keypress inside `<pre>`.
+					if (this.keydown.pre && key === this.keyCode.ENTER) {
+						return this.keydown.onEnter(e);
+					}
 					
 					// on Shift+Enter or Ctrl+Enter
 					if (key === this.keyCode.ENTER && (e.ctrlKey || e.shiftKey)) {

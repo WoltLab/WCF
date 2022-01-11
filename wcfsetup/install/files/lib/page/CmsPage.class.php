@@ -5,6 +5,7 @@ namespace wcf\page;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\MetaTagHandler;
 use wcf\system\request\LinkHandler;
@@ -77,7 +78,7 @@ class CmsPage extends AbstractPage
         }
 
         if (!$this->page->isAccessible()) {
-            throw new IllegalLinkException();
+            throw new PermissionDeniedException();
         }
 
         $this->content = $this->page->getPageContentByLanguage($this->languageID);
