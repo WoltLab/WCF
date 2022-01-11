@@ -18,7 +18,15 @@
 	{hascontent}
 		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
+				{content}
+					{if $package->canUninstall()}
+						<li><a class="button jsUninstallButton jsTooltip" role="button" tabindex="0" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
+					{else}
+						<li><a class="button jsUninstallButton disabled jsTooltip" role="button" tabindex="0" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
+					{/if}
+					
+					{event name='contentHeaderNavigation'}
+				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
