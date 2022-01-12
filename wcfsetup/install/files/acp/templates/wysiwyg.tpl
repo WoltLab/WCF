@@ -62,6 +62,8 @@
 				'wcf.editor.autosave.discard': '{jslang}wcf.editor.autosave.discard{/jslang}',
 				'wcf.editor.autosave.keep': '{jslang}wcf.editor.autosave.keep{/jslang}',
 				'wcf.editor.autosave.restored': '{jslang}wcf.editor.autosave.restored{/jslang}',
+
+				'wcf.editor.button.more': '{jslang}wcf.editor.button.more{/jslang}',
 				
 				'wcf.editor.code.edit': '{jslang}wcf.editor.code.edit{/jslang}',
 				'wcf.editor.code.file': '{jslang}wcf.editor.code.file{/jslang}',
