@@ -227,6 +227,10 @@ final class DateUtil
         $weeks = \floor($days / 7);
         $hours = $interval->format('%h');
         $minutes = $interval->format('%i');
+        if (!$years && !$months && !$days && !$hours && !$minutes) {
+            // Prevents empty output if the interval is less than 60 seconds.
+            $minutes = 1;
+        }
 
         $direction = '';
         switch ($interval->format('%R')) {
