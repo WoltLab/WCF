@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Mobile
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
+define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen", "../Language"], function (require, exports, tslib_1, focus_trap_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeShadow = exports.rebuildShadow = exports.disableShadow = exports.disable = exports.enableShadow = exports.enable = exports.setup = void 0;
@@ -18,11 +18,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
     UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
     UiScreen = (0, tslib_1.__importStar)(UiScreen);
+    Language = (0, tslib_1.__importStar)(Language);
     let _dropdownMenu = null;
     let _dropdownMenuMessage = null;
     let _enabled = false;
     let _enabledLGTouchNavigation = false;
     let _enableMobileMenu = false;
+    let _focusTrap = undefined;
     const _knownMessages = new WeakSet();
     let _mobileSidebarEnabled = false;
     let _pageMenuMain;
@@ -34,6 +36,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         _enabled = true;
         initButtonGroupNavigation();
         initMessages();
+        initMessagesA11y();
         initMobileMenu();
         CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Mobile", closeAllMenus);
         Listener_1.default.add("WoltLabSuite/Core/Ui/Mobile", () => {
@@ -73,6 +76,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         });
     }
     function initMessages() {
+        const isScreenSmDown = UiScreen.is("screen-sm-down");
         document.querySelectorAll(".message").forEach((message) => {
             if (_knownMessages.has(message)) {
                 return;
@@ -97,9 +101,57 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
                             toggleMobileNavigation(message, quickOptions, navigation);
                         }
                     });
+                    quickOptions.addEventListener("keydown", (event) => {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            quickOptions.click();
+                        }
+                    });
+                    if (isScreenSmDown) {
+                        enableMessageA11y(quickOptions);
+                    }
                 }
             }
             _knownMessages.add(message);
+        });
+    }
+    function enableMessageA11y(quickOptions) {
+        quickOptions.tabIndex = 0;
+        quickOptions.setAttribute("role", "button");
+        quickOptions.setAttribute("aria-label", Language.get("wcf.global.button.more"));
+    }
+    function disableMessageA11y(quickOptions) {
+        quickOptions.removeAttribute("tabindex");
+        quickOptions.removeAttribute("role");
+        quickOptions.removeAttribute("aria-label");
+    }
+    function initMessagesA11y() {
+        UiScreen.on("screen-sm-down", {
+            match() {
+                document.querySelectorAll(".message").forEach((message) => {
+                    const navigation = message.querySelector(".jsMobileNavigation");
+                    if (navigation) {
+                        const quickOptions = message.querySelector(".messageQuickOptions");
+                        if (quickOptions && navigation.childElementCount) {
+                            enableMessageA11y(quickOptions);
+                        }
+                    }
+                });
+            },
+            unmatch() {
+                document.querySelectorAll(".message").forEach((message) => {
+                    if (!_knownMessages.has(message)) {
+                        return;
+                    }
+                    const navigation = message.querySelector(".jsMobileNavigation");
+                    if (navigation) {
+                        const quickOptions = message.querySelector(".messageQuickOptions");
+                        if (quickOptions && navigation.childElementCount) {
+                            disableMessageA11y(quickOptions);
+                        }
+                    }
+                });
+            },
         });
     }
     function initMobileMenu() {
@@ -151,6 +203,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         }
         else if (_dropdownMenu.classList.contains("dropdownOpen")) {
             closeDropdown();
+            _focusTrap.deactivate();
+            _focusTrap = undefined;
             if (_dropdownMenuMessage === message) {
                 // toggle behavior
                 return;
@@ -172,6 +226,14 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         });
         _dropdownMenu.classList.add("dropdownOpen");
         _dropdownMenuMessage = message;
+        _focusTrap = (0, focus_trap_1.createFocusTrap)(_dropdownMenu, {
+            allowOutsideClick: true,
+            escapeDeactivates() {
+                toggleMobileNavigation(message, quickOptions, navigation);
+                return false;
+            },
+        });
+        _focusTrap.activate();
     }
     function setupLGTouchNavigation() {
         _enabledLGTouchNavigation = true;
