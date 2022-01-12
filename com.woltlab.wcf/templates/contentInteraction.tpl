@@ -22,7 +22,7 @@
 
         {hascontent}
             <div class="contentInteractionDropdown dropdown jsOnly">
-                <a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-ellipsis-v"></span></a>
+                <a href="#" class="button small dropdownToggle" aria-label="{lang}wcf.page.contentInteractionButtons{/lang}"><span class="icon icon16 fa-ellipsis-v"></span></a>
 
                 <ul class="contentInteractionDropdownItems dropdownMenu">
                     {content}
