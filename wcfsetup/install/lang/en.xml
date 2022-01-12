@@ -3760,7 +3760,6 @@ Attachments:
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
-		<item name="wcf.editor.button.more"><![CDATA[More]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Redo]]></item>
@@ -3848,6 +3847,7 @@ Attachments:
 		<item name="wcf.global.button.hide"><![CDATA[Hide]]></item>
 		<item name="wcf.global.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.global.button.list"><![CDATA[List]]></item>
+		<item name="wcf.global.button.more"><![CDATA[More]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.reply"><![CDATA[Reply]]></item>
@@ -4378,7 +4378,6 @@ Attachments:
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[If selected, the requested page <strong>may not</strong> be one of the pages selected under “Requested Page”.]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Edit Box]]></item>
 		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}New Item{else}News Items{/if})]]></item>
-		<item name="wcf.page.contentInteractionButtons"><![CDATA[More]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>

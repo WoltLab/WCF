@@ -193,7 +193,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 			_toggleButton = elCreate('li');
 			_toggleButton.className = 'redactorToolbarToggle';
 			_toggleButton.innerHTML = `<a href="#" role="button" aria-label="${
-					WCF.Language.get("wcf.editor.button.more")
+					WCF.Language.get("wcf.global.button.more")
 				}"><span class="icon icon16 fa-caret-down"></span></a>`;
 			elData(_toggleButton, 'show-on-mobile', true);
 			
