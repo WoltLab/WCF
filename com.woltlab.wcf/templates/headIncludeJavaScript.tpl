@@ -82,6 +82,7 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.global.button.enable': '{jslang}wcf.global.button.enable{/jslang}',
 			'wcf.global.button.hide': '{jslang}wcf.global.button.hide{/jslang}',
 			'wcf.global.button.insert': '{jslang}wcf.global.button.insert{/jslang}',
+			'wcf.global.button.more': '{jslang}wcf.global.button.more{/jslang}',
 			'wcf.global.button.next': '{jslang}wcf.global.button.next{/jslang}',
 			'wcf.global.button.preview': '{jslang}wcf.global.button.preview{/jslang}',
 			'wcf.global.button.reset': '{jslang}wcf.global.button.reset{/jslang}',

@@ -3812,7 +3812,6 @@ Dateianhänge:
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
-		<item name="wcf.editor.button.more"><![CDATA[Mehr]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Wiederholen]]></item>
@@ -3900,6 +3899,7 @@ Dateianhänge:
 		<item name="wcf.global.button.hide"><![CDATA[Ausblenden]]></item>
 		<item name="wcf.global.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.global.button.list"><![CDATA[Auflistung]]></item>
+		<item name="wcf.global.button.more"><![CDATA[Mehr]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>
@@ -4430,7 +4430,6 @@ Dateianhänge:
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[Wenn ausgewählt, darf die aufgerufene Seite <strong>keine</strong> der unter „Aufgerufene Seite“ ausgewählten Seiten sein.]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Box bearbeiten]]></item>
 		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}neuer Eintrag{else}neue Einträge{/if})]]></item>
-		<item name="wcf.page.contentInteractionButtons"><![CDATA[Mehr]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Verfügbare Mitgliedschaften]]></item>
