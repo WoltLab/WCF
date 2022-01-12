@@ -192,7 +192,9 @@ $.Redactor.prototype.WoltLabButton = function() {
 		_setupToggleButton: function () {
 			_toggleButton = elCreate('li');
 			_toggleButton.className = 'redactorToolbarToggle';
-			_toggleButton.innerHTML = '<a href="#"><span class="icon icon16 fa-caret-down"></span></a>';
+			_toggleButton.innerHTML = `<a href="#" role="button" aria-label="${
+					WCF.Language.get("wcf.editor.button.more")
+				}"><span class="icon icon16 fa-caret-down"></span></a>`;
 			elData(_toggleButton, 'show-on-mobile', true);
 			
 			var icon = _toggleButton.children[0].children[0];

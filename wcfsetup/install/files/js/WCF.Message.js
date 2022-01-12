@@ -1909,6 +1909,12 @@ $.widget('wcf.messageTabMenu', {
 			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
 			// handle a11y
 			$anchor.attr('role', 'button').attr('tabindex', '0').attr('aria-haspopup', true).attr('aria-expanded', false).attr('aria-controls', $tabContainer[0].id);
+
+			const span = $tabs[$i].querySelector("span:not(.icon)");
+			if (span) {
+				$anchor[0].setAttribute("aria-labelledby", $(span).wcfIdentify());
+			}
+
 			$anchor.on('keydown', (function(event) {
 				if (event.which === 13 || event.which === 32) {
 					event.preventDefault();

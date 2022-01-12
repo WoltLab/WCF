@@ -3760,6 +3760,7 @@ Attachments:
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.more"><![CDATA[More]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Redo]]></item>

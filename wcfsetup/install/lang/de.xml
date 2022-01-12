@@ -3812,6 +3812,7 @@ Dateianhänge:
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.more"><![CDATA[Mehr]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Wiederholen]]></item>
