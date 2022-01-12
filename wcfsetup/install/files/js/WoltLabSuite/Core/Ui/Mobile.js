@@ -6,12 +6,13 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Mobile
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "./Alignment", "./CloseOverlay", "./Dropdown/Reusable", "./Page/Menu/Main", "./Page/Menu/User", "./Screen"], function (require, exports, tslib_1, Core, Listener_1, Util_1, Environment, UiAlignment, CloseOverlay_1, UiDropdownReusable, Main_1, User_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeShadow = exports.rebuildShadow = exports.disableShadow = exports.disable = exports.enableShadow = exports.enable = exports.setup = void 0;
     Core = (0, tslib_1.__importStar)(Core);
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Util_1 = (0, tslib_1.__importDefault)(Util_1);
     Environment = (0, tslib_1.__importStar)(Environment);
     UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
     CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
@@ -335,6 +336,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
                     shadow = document.createElement("a");
                     shadow.className = "mobileLinkShadow";
                     shadow.href = link.href;
+                    shadow.setAttribute("aria-labelledby", Util_1.default.identify(link));
                     parent.appendChild(shadow);
                     parent.classList.add("mobileLinkShadowContainer");
                 }

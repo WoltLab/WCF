@@ -9,6 +9,7 @@
 
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
+import DomUtil from "../Dom/Util";
 import * as Environment from "../Environment";
 import * as UiAlignment from "./Alignment";
 import UiCloseOverlay from "./CloseOverlay";
@@ -391,6 +392,7 @@ export function rebuildShadow(elements: HTMLElement[] | HTMLCollection, linkSele
         shadow = document.createElement("a");
         shadow.className = "mobileLinkShadow";
         shadow.href = link.href;
+        shadow.setAttribute("aria-labelledby", DomUtil.identify(link));
         parent.appendChild(shadow);
         parent.classList.add("mobileLinkShadowContainer");
       }
