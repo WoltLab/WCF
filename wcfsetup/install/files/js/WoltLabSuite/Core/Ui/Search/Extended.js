@@ -25,9 +25,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
             this.usernameInput = document.getElementById("searchAuthor");
+            this.initDelimiter();
             this.initEventListener();
             this.initKeywordSuggestions();
             this.initQueryString();
+        }
+        initDelimiter() {
+            this.delimiter = document.createElement("div");
+            this.form.insertAdjacentElement("afterend", this.delimiter);
         }
         initEventListener() {
             this.form.addEventListener("submit", (event) => {
@@ -123,7 +128,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         initPagination(position) {
             const wrapperDiv = document.createElement("div");
             wrapperDiv.classList.add("pagination" + (0, StringUtil_1.ucfirst)(position));
-            this.form.parentElement.appendChild(wrapperDiv);
+            this.form.parentElement.insertBefore(wrapperDiv, this.delimiter);
             const div = document.createElement("div");
             wrapperDiv.appendChild(div);
             new Pagination_1.default(div, {
@@ -148,7 +153,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.showSearchResults(template);
         }
         removeSearchResults() {
-            while (this.form.nextSibling !== null) {
+            while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {
                 this.form.parentElement.removeChild(this.form.nextSibling);
             }
         }
@@ -157,7 +162,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 this.initPagination("top");
             }
             const fragment = DomUtil.createFragmentFromHtml(template);
-            this.form.parentElement.appendChild(fragment);
+            this.form.parentElement.insertBefore(fragment, this.delimiter);
             if (this.pages > 1) {
                 this.initPagination("bottom");
             }

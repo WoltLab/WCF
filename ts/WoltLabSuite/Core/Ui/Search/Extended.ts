@@ -37,6 +37,7 @@ export class UiSearchExtended {
   private activePage = 1;
   private lastSearchRequest: AbortController | undefined = undefined;
   private lastSearchResultRequest: AbortController | undefined = undefined;
+  private delimiter: HTMLDivElement;
 
   constructor() {
     this.form = document.getElementById("extendedSearchForm") as HTMLFormElement;
@@ -44,9 +45,15 @@ export class UiSearchExtended {
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
     this.usernameInput = document.getElementById("searchAuthor") as HTMLInputElement;
 
+    this.initDelimiter();
     this.initEventListener();
     this.initKeywordSuggestions();
     this.initQueryString();
+  }
+
+  private initDelimiter(): void {
+    this.delimiter = document.createElement("div");
+    this.form.insertAdjacentElement("afterend", this.delimiter);
   }
 
   private initEventListener(): void {
@@ -156,7 +163,7 @@ export class UiSearchExtended {
   private initPagination(position: "top" | "bottom"): void {
     const wrapperDiv = document.createElement("div");
     wrapperDiv.classList.add("pagination" + ucfirst(position));
-    this.form.parentElement!.appendChild(wrapperDiv);
+    this.form.parentElement!.insertBefore(wrapperDiv, this.delimiter);
     const div = document.createElement("div");
     wrapperDiv.appendChild(div);
 
@@ -185,7 +192,7 @@ export class UiSearchExtended {
   }
 
   private removeSearchResults(): void {
-    while (this.form.nextSibling !== null) {
+    while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {
       this.form.parentElement!.removeChild(this.form.nextSibling);
     }
   }
@@ -196,7 +203,7 @@ export class UiSearchExtended {
     }
 
     const fragment = DomUtil.createFragmentFromHtml(template);
-    this.form.parentElement!.appendChild(fragment);
+    this.form.parentElement!.insertBefore(fragment, this.delimiter);
 
     if (this.pages > 1) {
       this.initPagination("bottom");
