@@ -1470,6 +1470,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.password_min_score.0"><![CDATA[0: Deaktiviert]]></item>
 		<item name="wcf.acp.option.password_min_score.1"><![CDATA[1: Gering (Eine Million Versuche)]]></item>
 		<item name="wcf.acp.option.password_min_score.2"><![CDATA[2: Gut (100 Millionen Versuche)]]></item>
+		<item name="wcf.acp.option.password_min_score.3"><![CDATA[3: Stark (10 Milliarden Versuche)]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reservierte Namen]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[Namen, die nicht als Benutzername verwendet werden dürfen.]]></item>
 		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reservierte E-Mail-Adressen]]></item>
