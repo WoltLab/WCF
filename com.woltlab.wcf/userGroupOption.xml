@@ -606,6 +606,14 @@ pdf</defaultvalue>
 				<suffix>seconds</suffix>
 				<admindefaultvalue>0</admindefaultvalue>
 			</option>
+			<!-- maxvalue: 16,777,215 rounded to a nice number -->
+			<option name="user.comment.maxLength">
+				<categoryname>user.message.comment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>100000</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>15000000</maxvalue>
+			</option>
 			<option name="user.comment.disallowedBBCodes">
 				<categoryname>user.message.comment</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
