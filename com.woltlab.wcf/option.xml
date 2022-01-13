@@ -1101,7 +1101,8 @@ XING</selectoptions>
 				<optiontype>select</optiontype>
 				<selectoptions>0:wcf.acp.option.password_min_score.0
 1:wcf.acp.option.password_min_score.1
-2:wcf.acp.option.password_min_score.2</selectoptions>
+2:wcf.acp.option.password_min_score.2
+3:wcf.acp.option.password_min_score.3</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.password -->

@@ -1449,8 +1449,9 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.password_min_score"><![CDATA[Security Level]]></item>
 		<item name="wcf.acp.option.password_min_score.description"><![CDATA[“Score” value of the <a href="https://github.com/dropbox/zxcvbn" class="externalURL">zxcvbn library</a> that passwords need to achive.]]></item>
 		<item name="wcf.acp.option.password_min_score.0"><![CDATA[0: Disabled]]></item>
-		<item name="wcf.acp.option.password_min_score.1"><![CDATA[1: Very guessable (1 million attempts)]]></item>
-		<item name="wcf.acp.option.password_min_score.2"><![CDATA[2: Somewhat guessable (100 million attempts)]]></item>
+		<item name="wcf.acp.option.password_min_score.1"><![CDATA[1: Low (1 million attempts)]]></item>
+		<item name="wcf.acp.option.password_min_score.2"><![CDATA[2: Good (100 million attempts)]]></item>
+		<item name="wcf.acp.option.password_min_score.3"><![CDATA[3: Strong (10 billion attempts)]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reserved Usernames]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[You can specify which usernames are unavailable for registration.]]></item>
 		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reserved Email Addresses]]></item>
