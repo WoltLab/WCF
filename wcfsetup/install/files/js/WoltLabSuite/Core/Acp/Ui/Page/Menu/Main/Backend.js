@@ -26,13 +26,30 @@ define(["require", "exports"], function (require, exports) {
     }
     function getMenuItems(category) {
         return Array.from(category.querySelectorAll(".acpPageSubMenuLink")).map((link) => {
+            const children = getMenuItemActions(link);
             return {
                 active: link.classList.contains("active"),
-                children: [],
+                children,
                 counter: 0,
                 depth: 2,
                 link: link.href,
                 title: link.textContent,
+            };
+        });
+    }
+    function getMenuItemActions(link) {
+        const listItem = link.parentElement;
+        if (!listItem.classList.contains("acpPageSubMenuLinkWrapper")) {
+            return [];
+        }
+        return Array.from(listItem.querySelectorAll(".acpPageSubMenuIcon")).map((action) => {
+            return {
+                active: action.classList.contains("active"),
+                children: [],
+                counter: 0,
+                depth: 2,
+                link: action.href,
+                title: action.dataset.tooltip || action.title,
             };
         });
     }

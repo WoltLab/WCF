@@ -22,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
         let children = [];
         if (subMenu instanceof HTMLOListElement) {
             let childDepth = depth;
-            if (childDepth < 2) {
+            if (childDepth < 3) {
                 childDepth = (depth + 1);
             }
             children = Array.from(subMenu.children).map((subMenuItem) => {
