@@ -613,6 +613,7 @@ pdf</defaultvalue>
 				<defaultvalue>100000</defaultvalue>
 				<minvalue>0</minvalue>
 				<maxvalue>15000000</maxvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="user.comment.disallowedBBCodes">
 				<categoryname>user.message.comment</categoryname>
