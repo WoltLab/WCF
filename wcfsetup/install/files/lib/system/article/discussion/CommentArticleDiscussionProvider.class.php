@@ -41,7 +41,7 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
      */
     public function getDiscussionLink()
     {
-        return '';
+        return $this->articleContent->getLink() . '#comments';
     }
 
     /**
