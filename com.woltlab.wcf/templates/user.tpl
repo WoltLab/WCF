@@ -332,7 +332,7 @@
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 					{if $menuItem->getContentManager()->isVisible($userID)}
-						<li><a href="{@$__wcf->getAnchor($menuItem->getIdentifier())}">{$menuItem}</a></li>
+						<li><a href="#{$menuItem->getIdentifier()|rawurlencode}">{$menuItem}</a></li>
 					{/if}
 				{/foreach}
 			</ul>
