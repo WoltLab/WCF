@@ -42,12 +42,13 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
     /**
      * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
      */
-    function formatNumeric(number, decimalPlaces) {
+    function formatNumeric(number, decimalPlaces, forceDecimalPlaces = false) {
         let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
         const numberParts = tmp.split(".");
         tmp = addThousandsSeparator(+numberParts[0]);
         if (numberParts.length > 1) {
-            tmp += _decimalPoint + numberParts[1];
+            tmp +=
+                _decimalPoint + (forceDecimalPlaces ? numberParts[1].padEnd(Math.abs(decimalPlaces || -2), "0") : numberParts[1]);
         }
         tmp = tmp.replace("-", "\u2212");
         return tmp;
