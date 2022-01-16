@@ -181,7 +181,7 @@
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+					<li><a href="#{$categoryLevel1[object]->categoryName|rawurlencode}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
@@ -192,7 +192,7 @@
 					<ul>
 						{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
 							{assign var=__categoryLevel2Name value=$categoryLevel1[object]->categoryName|concat:'-':$categoryLevel2[object]->categoryName}
-							<li><a href="{@$__wcf->getAnchor($__categoryLevel2Name)}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
+							<li><a href="#{$__categoryLevel2Name|rawurlencode}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
 						{/foreach}
 					</ul>
 				</nav>

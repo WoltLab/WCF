@@ -9,7 +9,7 @@
  * @woltlabExcludeBundle all
  */
 
-export type MenuItemDepth = 0 | 1 | 2;
+export type MenuItemDepth = 0 | 1 | 2 | 3;
 
 export type MenuItem = {
   active: boolean;

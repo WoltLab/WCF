@@ -181,7 +181,7 @@
 				<li><a href="#__essentials">{lang}wcf.global.form.data{/lang}</a></li>
 
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+					<li><a href="#{$categoryLevel1[object]->categoryName|rawurlencode}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 
 				{if MODULE_USER_SIGNATURE}

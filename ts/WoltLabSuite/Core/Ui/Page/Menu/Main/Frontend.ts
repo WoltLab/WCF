@@ -23,7 +23,7 @@ function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuIte
   let children: MenuItem[] = [];
   if (subMenu instanceof HTMLOListElement) {
     let childDepth = depth;
-    if (childDepth < 2) {
+    if (childDepth < 3) {
       childDepth = (depth + 1) as MenuItemDepth;
     }
 

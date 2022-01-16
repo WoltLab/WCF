@@ -27,13 +27,33 @@ function getSubMenuItems(subMenu: HTMLElement, menuItem: string): MenuItem[] {
 
 function getMenuItems(category: HTMLOListElement): MenuItem[] {
   return Array.from(category.querySelectorAll(".acpPageSubMenuLink")).map((link: HTMLAnchorElement) => {
+    const children = getMenuItemActions(link);
+
     return {
       active: link.classList.contains("active"),
-      children: [],
+      children,
       counter: 0,
       depth: 2,
       link: link.href,
       title: link.textContent!,
+    };
+  });
+}
+
+function getMenuItemActions(link: HTMLAnchorElement): MenuItem[] {
+  const listItem = link.parentElement!;
+  if (!listItem.classList.contains("acpPageSubMenuLinkWrapper")) {
+    return [];
+  }
+
+  return Array.from(listItem.querySelectorAll(".acpPageSubMenuIcon")).map((action: HTMLAnchorElement) => {
+    return {
+      active: action.classList.contains("active"),
+      children: [],
+      counter: 0,
+      depth: 2,
+      link: action.href,
+      title: action.dataset.tooltip || action.title,
     };
   });
 }

@@ -7,6 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Mobile
  */
 
+import { createFocusTrap, FocusTrap } from "focus-trap";
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
@@ -18,12 +19,14 @@ import { PageMenuMain } from "./Page/Menu/Main";
 import { PageMenuMainProvider } from "./Page/Menu/Main/Provider";
 import { hasValidUserMenu, PageMenuUser } from "./Page/Menu/User";
 import * as UiScreen from "./Screen";
+import * as Language from "../Language";
 
 let _dropdownMenu: HTMLUListElement | null = null;
 let _dropdownMenuMessage: HTMLElement | null = null;
 let _enabled = false;
 let _enabledLGTouchNavigation = false;
 let _enableMobileMenu = false;
+let _focusTrap: FocusTrap | undefined = undefined;
 const _knownMessages = new WeakSet<HTMLElement>();
 let _mobileSidebarEnabled = false;
 let _pageMenuMain: PageMenuMain;
@@ -37,6 +40,7 @@ function init(): void {
 
   initButtonGroupNavigation();
   initMessages();
+  initMessagesA11y();
   initMobileMenu();
 
   UiCloseOverlay.add("WoltLabSuite/Core/Ui/Mobile", closeAllMenus);
@@ -84,6 +88,8 @@ function initButtonGroupNavigation(): void {
 }
 
 function initMessages(): void {
+  const isScreenSmDown = UiScreen.is("screen-sm-down");
+
   document.querySelectorAll(".message").forEach((message: HTMLElement) => {
     if (_knownMessages.has(message)) {
       return;
@@ -113,12 +119,65 @@ function initMessages(): void {
             toggleMobileNavigation(message, quickOptions, navigation);
           }
         });
+        quickOptions.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+
+            quickOptions.click();
+          }
+        });
+
+        if (isScreenSmDown) {
+          enableMessageA11y(quickOptions);
+        }
       }
     }
     _knownMessages.add(message);
   });
 }
 
+function enableMessageA11y(quickOptions: HTMLElement): void {
+  quickOptions.tabIndex = 0;
+  quickOptions.setAttribute("role", "button");
+  quickOptions.setAttribute("aria-label", Language.get("wcf.global.button.more"));
+}
+
+function disableMessageA11y(quickOptions: HTMLElement): void {
+  quickOptions.removeAttribute("tabindex");
+  quickOptions.removeAttribute("role");
+  quickOptions.removeAttribute("aria-label");
+}
+
+function initMessagesA11y(): void {
+  UiScreen.on("screen-sm-down", {
+    match() {
+      document.querySelectorAll(".message").forEach((message: HTMLElement) => {
+        const navigation = message.querySelector(".jsMobileNavigation") as HTMLAnchorElement;
+        if (navigation) {
+          const quickOptions = message.querySelector(".messageQuickOptions") as HTMLElement;
+          if (quickOptions && navigation.childElementCount) {
+            enableMessageA11y(quickOptions);
+          }
+        }
+      });
+    },
+    unmatch() {
+      document.querySelectorAll(".message").forEach((message: HTMLElement) => {
+        if (!_knownMessages.has(message)) {
+          return;
+        }
+
+        const navigation = message.querySelector(".jsMobileNavigation") as HTMLAnchorElement;
+        if (navigation) {
+          const quickOptions = message.querySelector(".messageQuickOptions") as HTMLElement;
+          if (quickOptions && navigation.childElementCount) {
+            disableMessageA11y(quickOptions);
+          }
+        }
+      });
+    },
+  });
+}
 function initMobileMenu(): void {
   if (_enableMobileMenu) {
     _pageMenuMain = new PageMenuMain(_pageMenuMainProvider);
@@ -175,6 +234,9 @@ function toggleMobileNavigation(message: HTMLElement, quickOptions: HTMLElement,
     UiDropdownReusable.init("com.woltlab.wcf.jsMobileNavigation", _dropdownMenu);
   } else if (_dropdownMenu.classList.contains("dropdownOpen")) {
     closeDropdown();
+    _focusTrap!.deactivate();
+    _focusTrap = undefined;
+
     if (_dropdownMenuMessage === message) {
       // toggle behavior
       return;
@@ -196,6 +258,16 @@ function toggleMobileNavigation(message: HTMLElement, quickOptions: HTMLElement,
   });
   _dropdownMenu.classList.add("dropdownOpen");
   _dropdownMenuMessage = message;
+
+  _focusTrap = createFocusTrap(_dropdownMenu, {
+    allowOutsideClick: true,
+    escapeDeactivates(): boolean {
+      toggleMobileNavigation(message, quickOptions, navigation);
+
+      return false;
+    },
+  });
+  _focusTrap.activate();
 }
 
 function setupLGTouchNavigation(): void {

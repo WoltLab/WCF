@@ -4,8 +4,7 @@
 	<nav class="tabMenu">
 		<ul>
 			{foreach from=$groupedObjectTypes key='conditionGroup' item='conditionObjectTypes'}
-				{assign var='__anchor' value='user_'|concat:$conditionGroup}
-				<li><a href="{@$__wcf->getAnchor($__anchor)}">{lang}wcf.user.condition.conditionGroup.{$conditionGroup}{/lang}</a></li>
+				<li><a href="#user_{$conditionGroup|rawurlencode}">{lang}wcf.user.condition.conditionGroup.{$conditionGroup}{/lang}</a></li>
 			{/foreach}
 		</ul>
 	</nav>

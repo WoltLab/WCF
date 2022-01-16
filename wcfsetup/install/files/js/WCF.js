@@ -5535,6 +5535,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @var         string
 		 */
 		_quickOption: null,
+
+		_dropDownIdToElementId: new Map(),
 		
 		/**
 		 * Initializes a new inline editor.
@@ -5621,10 +5623,17 @@ if (COMPILER_TARGET_DEFAULT) {
 		/**
 		 * Closes all inline editors.
 		 */
-		_closeAll: function () {
-			for (var $elementID in this._elements) {
-				this._hide($elementID);
+		_closeAll: function (origin, identifier) {
+			let skipElementId = "";
+			if (origin === "dropdown") {
+				skipElementId = this._dropDownIdToElementId.get(identifier || "") || "";
 			}
+
+			Object.keys(this._elements).forEach((elementId) => {
+				if (elementId !== skipElementId) {
+					this._hide(elementId);
+				}
+			});
 		},
 		
 		/**
@@ -5673,12 +5682,21 @@ if (COMPILER_TARGET_DEFAULT) {
 				if (parent && parent.nodeName === 'LI' && parent.childElementCount === 1) {
 					// do not add a wrapper element if the trigger is the only child
 					parent.classList.add('dropdown');
-				}
-				else {
+				} else if (parent && parent.classList.contains("contentInteractionButton")) {
+					// "Content interaction" buttons use plain `<div>` elements, using
+					// them as the drop-down target allows the drop-down to be aligned
+					// with the entire element and not just a `<span>` within.
+					parent.classList.add("dropdown");
+				} else {
 					$trigger.wrap('<span class="dropdown" />');
 				}
 				
 				this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
+
+				this._dropDownIdToElementId.set(
+					$trigger.parent().wcfIdentify(),
+					$elementID,
+				);
 			}
 			this._dropdowns[$elementID].empty();
 			

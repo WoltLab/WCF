@@ -1353,6 +1353,17 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             throw new UserInputException('message');
         }
 
+        $commentTextContent = $htmlInputProcessor->getTextContent();
+        if (\mb_strlen($commentTextContent) > WCF::getSession()->getPermission('user.comment.maxLength')) {
+            throw new UserInputException(
+                'text',
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.message.error.tooLong',
+                    ['maxTextLength' => WCF::getSession()->getPermission('user.comment.maxLength')]
+                )
+            );
+        }
+
         $this->parameters['htmlInputProcessor'] = $htmlInputProcessor;
     }
 

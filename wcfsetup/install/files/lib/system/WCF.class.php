@@ -1028,10 +1028,7 @@ class WCF
     }
 
     /**
-     * Returns a fully qualified anchor for current page.
-     *
-     * @param string $fragment
-     * @return  string
+     * @deprecated 5.5 - Put a '#' followed by the fragment as the anchor's href. Make sure to |rawurlencode any variables that may contain special characters.
      */
     public function getAnchor($fragment)
     {
