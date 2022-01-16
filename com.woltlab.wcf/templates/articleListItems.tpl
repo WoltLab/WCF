@@ -4,7 +4,15 @@
 	{foreach from=$objects item='article' name='articles'}
 		<article class="contentItem contentItemMultiColumn" role="article">
 			<div class="contentItemLink">
-				<div class="contentItemImage contentItemImageLarge" style="background-image: url({if $article->getTeaserImage()}{$article->getTeaserImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if})">
+				<div class="contentItemImage contentItemImageLarge">
+					<img
+						class="contentItemImageElement"
+						src="{if $article->getTeaserImage()}{$article->getTeaserImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if}"
+						height="{if $article->getTeaserImage()}{@$article->getTeaserImage()->getThumbnailHeight('medium')}{else}{@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoHeight()}{/if}"
+						width="{if $article->getTeaserImage()}{@$article->getTeaserImage()->getThumbnailWidth('medium')}{else}{@$__wcf->getStyleHandler()->getStyle()->getCoverPhotoWidth()}{/if}"
+						loading="lazy"
+						alt="">
+					
 					{hascontent}
 						<div class="contentItemBadges">
 							{content}
