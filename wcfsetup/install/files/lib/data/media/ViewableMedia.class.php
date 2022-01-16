@@ -186,7 +186,7 @@ class ViewableMedia extends DatabaseObjectDecorator
                 return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
                             <img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
                     . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
-                    . 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
+                    . 'style="margin-top: ' . $marginTop . 'px;" height="' . $height . '" width="' . $width . '" loading="lazy">
                         </span>';
             }
         }
