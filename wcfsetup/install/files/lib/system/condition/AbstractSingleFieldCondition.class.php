@@ -87,7 +87,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition
     public function getHTML()
     {
         return <<<HTML
-<dl>
+<dl{$this->getErrorClass()}>
 	<dt>{$this->getLabel()}</dt>
 	<dd>
 		{$this->getFieldElement()}
