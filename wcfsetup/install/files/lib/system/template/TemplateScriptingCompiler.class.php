@@ -141,6 +141,7 @@ class TemplateScriptingCompiler
         'ucfirst',
         'uniqid',
         'urlencode',
+        'var_dump',
         'version_compare',
         'wcfDebug',
         'wordwrap',
