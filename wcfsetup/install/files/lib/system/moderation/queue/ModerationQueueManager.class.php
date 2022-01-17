@@ -346,8 +346,12 @@ class ModerationQueueManager extends SingletonFactory
      *
      * @param bool[] $assignments
      */
-    public function setAssignment(array $assignments)
+    public function setAssignment(array $assignments, ?int $userID = null)
     {
+        if ($userID === null) {
+            $userID = WCF::getUser()->userID;
+        }
+
         $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_moderation_queue_to_user
                                     (queueID, userID, isAffected)
                 VALUES              (?, ?, ?)";
@@ -357,7 +361,7 @@ class ModerationQueueManager extends SingletonFactory
         foreach ($assignments as $queueID => $isAffected) {
             $statement->execute([
                 $queueID,
-                WCF::getUser()->userID,
+                $userID,
                 $isAffected ? 1 : 0,
             ]);
         }
