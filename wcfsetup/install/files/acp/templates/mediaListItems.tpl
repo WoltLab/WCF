@@ -9,7 +9,7 @@
 			{assign var='__mediaTitle' value=$media->title}
 		{/if}
 		<div class="mediaInformation">
-			<p class="mediaTitle">{$__mediaTitle}</p>
+			<p class="mediaTitle" title="{$__mediaTitle}">{$__mediaTitle}</p>
 		</div>
 		
 		<nav class="jsMobileNavigation buttonGroupNavigation">
