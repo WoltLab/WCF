@@ -5,8 +5,7 @@ namespace wcf\system\moderation\queue;
 use wcf\data\DatabaseObject;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
-use wcf\data\user\User;
-use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\SystemException;
@@ -120,9 +119,9 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
      */
     public function isAffectedUser(ModerationQueue $queue, $userID)
     {
-        $user = new UserProfile(new User($userID));
+        $userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
 
-        return $user->getPermission($this->requiredPermission);
+        return $userProfile->getPermission($this->requiredPermission);
     }
 
     /**
