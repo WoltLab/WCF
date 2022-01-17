@@ -94,10 +94,27 @@
 
 .contentItemImageSmall {
 	min-height: 75px;
+
+	.contentItemImageElement {
+		height: 75px;
+	}
 }
 
 .contentItemImageLarge {
 	min-height: 150px;
+
+	.contentItemImageElement {
+		height: 150px;
+	}
+}
+
+.contentItemImageElement {
+	margin: -10px -10px 10px -10px;
+	object-fit: cover;
+	object-position: center;
+
+	// The `100% + 20px` are the result of the negative margins.
+	max-width: calc(100% + 20px);
 }
 
 .contentItemBadges,
@@ -105,6 +122,13 @@
 	align-items: flex-start;
 	display: flex;
 	flex-direction: column;
+}
+
+.contentItemImageElement + .contentItemBadges {
+	left: 10px;
+	position: absolute;
+	top: 10px;
+	z-index: 1;
 }
 
 .contentItemOptions {

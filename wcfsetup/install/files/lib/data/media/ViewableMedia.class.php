@@ -186,7 +186,7 @@ class ViewableMedia extends DatabaseObjectDecorator
                 return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
                             <img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
                     . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
-                    . 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
+                    . 'style="margin-top: ' . $marginTop . 'px;" height="' . $height . '" width="' . $width . '" loading="lazy">
                         </span>';
             }
         }
@@ -209,7 +209,14 @@ class ViewableMedia extends DatabaseObjectDecorator
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
         }
 
-        return '<img src="' . StringUtil::encodeHTML($this->getThumbnailLink($size)) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '') . 'style="width: ' . $this->getThumbnailWidth($size) . 'px; height: ' . $this->getThumbnailHeight($size) . 'px;">';
+        return \sprintf(
+            '<img src="%s" alt="%s" width="%d" height="%d" loading="lazy" %s>',
+            StringUtil::encodeHTML($this->getThumbnailLink($size)),
+            StringUtil::encodeHTML($this->altText),
+            $this->getThumbnailWidth($size),
+            $this->getThumbnailHeight($size),
+            ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
+        );
     }
 
     /**
