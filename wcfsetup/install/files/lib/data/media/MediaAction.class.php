@@ -770,6 +770,23 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'fileUpdateTime' => TIME_NOW,
             'userID' => $this->getSingleObject()->userID,
             'username' => $this->getSingleObject()->username,
+            // Reset thumbnail data in case the new file has no thumbnails.
+            'tinyThumbnailType' => '',
+            'tinyThumbnailSize' => 0,
+            'tinyThumbnailWidth' => 0,
+            'tinyThumbnailHeight' => 0,
+            'smallThumbnailType' => '',
+            'smallThumbnailSize' => 0,
+            'smallThumbnailWidth' => 0,
+            'smallThumbnailHeight' => 0,
+            'mediumThumbnailType' => '',
+            'mediumThumbnailSize' => 0,
+            'mediumThumbnailWidth' => 0,
+            'mediumThumbnailHeight' => 0,
+            'largeThumbnailType' => '',
+            'largeThumbnailSize' => 0,
+            'largeThumbnailWidth' => 0,
+            'largeThumbnailHeight' => 0,
         ]);
 
         /** @noinspection PhpUndefinedMethodInspection */
