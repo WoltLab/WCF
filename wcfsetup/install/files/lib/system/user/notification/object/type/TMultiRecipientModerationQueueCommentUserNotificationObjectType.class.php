@@ -65,6 +65,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
     {
         $queue = new ModerationQueue($comment->objectID);
         $objectType = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID);
+        $canUseModerationOption = UserGroupOptionCacheBuilder::getInstance()->getData()['options']['mod.general.canUseModeration'];
         $processor = $objectType->getProcessor();
 
         \assert($processor instanceof IModerationQueueReportHandler);
@@ -76,32 +77,42 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
         // For performance reasons, the query is also limited to 100 userIDs, because each
         // permission calculation could perform own SQL queries within the calculation and we
         // have to calculate the permissions for each user separately.
-        $sql = "SELECT DISTINCT userID
-                FROM    (SELECT  userID
-                         FROM   wcf1_user_to_group
-                         WHERE  groupID IN  (SELECT groupID
-                                             FROM   wcf1_user_group_option_value
-                                             WHERE  optionID = ?
-                                                AND optionValue = ?)) x
-                WHERE userID NOT IN (SELECT userID
-                                     FROM   wcf1_user_to_group
-                                     WHERE  groupID IN (SELECT groupID
-                                                        FROM   wcf1_user_group_option_value
-                                                        WHERE  optionID = ?
-                                                           AND optionValue = ?))
-                  AND userID NOT IN (SELECT  userID
-                                     FROM    wcf1_moderation_queue_to_user
-                                     WHERE   queueID = ?)";
+        $sql = "SELECT  DISTINCT userID
+                FROM    (
+                            SELECT  userID
+                            FROM    wcf1_user_to_group
+                            WHERE   groupID IN (
+                                SELECT  groupID
+                                FROM    wcf1_user_group_option_value
+                                WHERE   optionID = ?
+                                    AND optionValue = ?
+                            )
+                        ) users_in_groups_with_access
+                WHERE   userID NOT IN (
+                            SELECT  userID
+                            FROM    wcf1_user_to_group
+                            WHERE   groupID IN (
+                                        SELECT  groupID
+                                        FROM    wcf1_user_group_option_value
+                                        WHERE   optionID = ?
+                                            AND optionValue = ?
+                                    )
+                        )
+                    AND userID NOT IN (
+                            SELECT  userID
+                            FROM    wcf1_moderation_queue_to_user
+                            WHERE   queueID = ?
+                        )";
         $statement = WCF::getDB()->prepare($sql, 100);
         $statement->execute([
-            UserGroupOptionCacheBuilder::getInstance()->getData()['options']['mod.general.canUseModeration']->optionID,
+            $canUseModerationOption->optionID,
             1,
-            UserGroupOptionCacheBuilder::getInstance()->getData()['options']['mod.general.canUseModeration']->optionID,
+            $canUseModerationOption->optionID,
             -1,
             $queue->queueID,
         ]);
 
-        $userIDs = $statement->fetchArray();
+        $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         if ($userIDs) {
             UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
@@ -109,7 +120,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
             foreach ($userIDs as $userID) {
                 ModerationQueueManager::getInstance()->setAssignment([
                     $queue->queueID => $processor->isAffectedUser($queue, $userID),
-                ], $userID);
+                ], UserProfileRuntimeCache::getInstance()->getObject($userID)->getDecoratedObject());
             }
         }
     }

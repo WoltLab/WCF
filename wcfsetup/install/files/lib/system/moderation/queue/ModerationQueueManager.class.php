@@ -7,6 +7,7 @@ use wcf\data\moderation\queue\ModerationQueueList;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -346,10 +347,16 @@ class ModerationQueueManager extends SingletonFactory
      *
      * @param bool[] $assignments
      */
-    public function setAssignment(array $assignments, ?int $userID = null)
+    public function setAssignment(array $assignments, ?User $user = null)
     {
-        if ($userID === null) {
-            $userID = WCF::getUser()->userID;
+        if ($user === null) {
+            $user = WCF::getUser();
+        }
+
+        if (!$user->userID) {
+            throw new \InvalidArgumentException(
+                "Assigning moderation queue items to guests is not supported."
+            );
         }
 
         $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_moderation_queue_to_user
@@ -361,7 +368,7 @@ class ModerationQueueManager extends SingletonFactory
         foreach ($assignments as $queueID => $isAffected) {
             $statement->execute([
                 $queueID,
-                $userID,
+                $user->userID,
                 $isAffected ? 1 : 0,
             ]);
         }
