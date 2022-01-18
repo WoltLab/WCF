@@ -49,7 +49,7 @@ class DatabaseTable {
 	 * @param	string		$name	name of the database table
 	 */
 	protected function __construct($name) {
-		$this->name = ApplicationHandler::insertRealDatabaseTableNames($name);
+		$this->name = ApplicationHandler::insertRealDatabaseTableNames($name, true);
 	}
 	
 	/**
