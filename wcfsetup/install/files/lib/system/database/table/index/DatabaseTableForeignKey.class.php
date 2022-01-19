@@ -275,7 +275,7 @@ class DatabaseTableForeignKey
      */
     public function referencedTable($referencedTable)
     {
-        $this->referencedTable = ApplicationHandler::insertRealDatabaseTableNames($referencedTable);
+        $this->referencedTable = ApplicationHandler::insertRealDatabaseTableNames($referencedTable, true);
 
         return $this;
     }
