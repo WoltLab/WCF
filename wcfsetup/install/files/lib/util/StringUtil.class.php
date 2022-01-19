@@ -120,7 +120,7 @@ final class StringUtil {
 	 */
 	public static function encodeJS($string) {
 		$string = self::unifyNewlines($string);
-		$string = str_replace(["\\", "'", "\n", "/"], ["\\\\", "\'", '\n', '\/'], $string);
+		$string = str_replace(["\\", "'", '"', "\n", "/"], ["\\\\", "\'", '\"', '\n', '\/'], $string);
 		
 		return $string;
 	}
