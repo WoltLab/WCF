@@ -3,10 +3,15 @@
 namespace wcf\system\user\notification\object\type;
 
 use wcf\data\comment\Comment;
+use wcf\data\moderation\queue\ModerationQueue;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -32,60 +37,91 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
             return [];
         }
 
-        // 1. fetch assigned user
-        // 2. fetch users who commented on the moderation queue entry
-        // 3. fetch users who responded to a comment on the moderation queue entry
-        $sql = "(
-            SELECT  assignedUserID
-            FROM    wcf" . WCF_N . "_moderation_queue
-            WHERE   queueID = ?
-                AND assignedUserID IS NOT NULL
-        ) UNION (
-            SELECT  DISTINCT userID
-            FROM    wcf" . WCF_N . "_comment
-            WHERE   objectID = ?
-                AND objectTypeID = ?
-        ) UNION (
-            SELECT      DISTINCT comment_response.userID
-            FROM        wcf" . WCF_N . "_comment_response comment_response
-            INNER JOIN  wcf" . WCF_N . "_comment comment
-            ON          comment.commentID = comment_response.commentID
-            WHERE       comment.objectID = ?
-                    AND comment.objectTypeID = ?
-        )";
+        $this->loadModerators($comment);
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('queueID = ?', [$comment->objectID]);
+        $conditionBuilder->add('isAffected = ?', [1]);
+        $sql = "SELECT  userID
+                FROM    wcf" . WCF_N . "_moderation_queue_to_user
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            $comment->objectID,
-            $comment->objectID,
-            $objectTypeID,
-            $comment->objectID,
-            $objectTypeID,
-        ]);
+        $statement->execute($conditionBuilder->getParameters());
         $recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        // make sure that all users can (still) access the moderation queue entry
-        if (!empty($recipientIDs)) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('userID IN (?)', [$recipientIDs]);
-            $conditionBuilder->add('queueID = ?', [$comment->objectID]);
-            $conditionBuilder->add('isAffected = ?', [1]);
-            $sql = "SELECT  userID
-                    FROM    wcf" . WCF_N . "_moderation_queue_to_user
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute($conditionBuilder->getParameters());
-            $recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-            // make sure that all users (still) have permission to access moderation
-            if (!$recipientIDs) {
-                UserStorageHandler::getInstance()->loadStorage($recipientIDs);
-                $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($recipientIDs);
-                $recipientIDs = \array_keys(\array_filter($userProfiles, static function (UserProfile $userProfile) {
-                    return $userProfile->getPermission('mod.general.canUseModeration');
-                }));
-            }
+        // make sure that all users (still) have permission to access moderation
+        if (!$recipientIDs) {
+            UserStorageHandler::getInstance()->loadStorage($recipientIDs);
+            $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($recipientIDs);
+            $recipientIDs = \array_keys(\array_filter($userProfiles, static function (UserProfile $userProfile) {
+                return $userProfile->getPermission('mod.general.canUseModeration');
+            }));
         }
 
         return $recipientIDs;
+    }
+
+    private function loadModerators(Comment $comment): void
+    {
+        $queue = new ModerationQueue($comment->objectID);
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID);
+        $canUseModerationOption = UserGroupOptionCacheBuilder::getInstance()->getData()['options']['mod.general.canUseModeration'];
+        $processor = $objectType->getProcessor();
+
+        \assert($processor instanceof IModerationQueueReportHandler);
+
+        // Load all userIDs, which have the permission to access the moderation AND which
+        // have no entry in the table wcf1_moderation_queue_to_user for the given queue.
+        // The wcf1_moderation_queue_to_user table caches the access to the queue item with
+        // the isAffected column, so we don't need to calculate the access for these users.
+        // For performance reasons, the query is also limited to 100 userIDs, because each
+        // permission calculation could perform own SQL queries within the calculation and we
+        // have to calculate the permissions for each user separately.
+        $sql = "SELECT  DISTINCT userID
+                FROM    (
+                            SELECT  userID
+                            FROM    wcf1_user_to_group
+                            WHERE   groupID IN (
+                                SELECT  groupID
+                                FROM    wcf1_user_group_option_value
+                                WHERE   optionID = ?
+                                    AND optionValue = ?
+                            )
+                        ) users_in_groups_with_access
+                WHERE   userID NOT IN (
+                            SELECT  userID
+                            FROM    wcf1_user_to_group
+                            WHERE   groupID IN (
+                                        SELECT  groupID
+                                        FROM    wcf1_user_group_option_value
+                                        WHERE   optionID = ?
+                                            AND optionValue = ?
+                                    )
+                        )
+                    AND userID NOT IN (
+                            SELECT  userID
+                            FROM    wcf1_moderation_queue_to_user
+                            WHERE   queueID = ?
+                        )";
+        $statement = WCF::getDB()->prepare($sql, 100);
+        $statement->execute([
+            $canUseModerationOption->optionID,
+            1,
+            $canUseModerationOption->optionID,
+            -1,
+            $queue->queueID,
+        ]);
+
+        $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        if ($userIDs) {
+            UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
+
+            foreach ($userIDs as $userID) {
+                ModerationQueueManager::getInstance()->setAssignment([
+                    $queue->queueID => $processor->isAffectedUser($queue, $userID),
+                ], UserProfileRuntimeCache::getInstance()->getObject($userID)->getDecoratedObject());
+            }
+        }
     }
 }
