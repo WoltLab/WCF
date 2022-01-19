@@ -53,7 +53,7 @@ class DatabaseTable
      */
     protected function __construct($name)
     {
-        $this->name = ApplicationHandler::insertRealDatabaseTableNames($name);
+        $this->name = ApplicationHandler::insertRealDatabaseTableNames($name, true);
     }
 
     /**
