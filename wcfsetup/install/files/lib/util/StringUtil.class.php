@@ -135,7 +135,7 @@ final class StringUtil
     {
         $string = self::unifyNewlines($string);
 
-        return \str_replace(["\\", "'", "\n", "/"], ["\\\\", "\\'", '\n', '\/'], $string);
+        return \str_replace(["\\", "'", '"', "\n", "/"], ["\\\\", "\\'", '\\"', '\n', '\/'], $string);
     }
 
     /**
