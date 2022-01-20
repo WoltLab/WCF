@@ -165,7 +165,11 @@ final class StringUtil
     {
         $string = \str_ireplace('&nbsp;', ' ', $string); // convert non-breaking spaces to ascii 32; not ascii 160
 
-        return @\html_entity_decode($string, \ENT_COMPAT, 'UTF-8');
+        return @\html_entity_decode(
+            $string,
+            \ENT_QUOTES | \ENT_SUBSTITUTE | \ENT_HTML401,
+            'UTF-8'
+        );
     }
 
     /**
