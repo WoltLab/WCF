@@ -5,21 +5,21 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "NewsArticle",
-			"mainEntityOfPage": "{@$regularCanonicalURL|encodeJSON}",
-			"headline": "{@$articleContent->title|encodeJSON}",
+			"mainEntityOfPage": {@$regularCanonicalURL|json},
+			"headline": {@$articleContent->title|json},
 			"datePublished": "{@$article->time|date:'c'}",
 			"dateModified": "{@$article->time|date:'c'}",
-			"description": "{@$articleContent->getFormattedTeaser()|encodeJSON}",
+			"description": {@$articleContent->getFormattedTeaser()|json},
 			"author": {
 				"@type": "Person",
-				"name": "{@$article->username|encodeJSON}"
+				"name": {@$article->username|json}
 			},
 			"publisher": {
 				"@type": "Organization",
 				"name": "{PAGE_TITLE|language}",
 				"logo": {
 					"@type": "ImageObject",
-					"url": "{@$__wcf->getStyleHandler()->getStyle()->getPageLogo()|encodeJSON}",
+					"url": {@$__wcf->getStyleHandler()->getStyle()->getPageLogo()|json},
 					"width": {@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoWidth')},
 					"height": {@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')}
 				}
@@ -27,7 +27,7 @@
 			{if $articleContent->getImage()}
 			,"image": {
 				"@type": "ImageObject",
-				"url": "{@$articleContent->getImage()->getThumbnailLink('large')|encodeJSON}",
+				"url": {@$articleContent->getImage()->getThumbnailLink('large')|json},
 				"width": {@$articleContent->getImage()->getThumbnailWidth('large')},
 				"height": {@$articleContent->getImage()->getThumbnailHeight('large')}
 			}
