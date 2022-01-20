@@ -143,12 +143,12 @@ final class StringUtil
      */
     public static function encodeJSON($string)
     {
-        $string = self::encodeJS($string);
+        $string = self::unifyNewlines($string);
 
-        $string = self::encodeHTML($string);
+        // This differs from encodeJS() by not encoding the single quote.
+        $string = \str_replace(["\\", '"', "\n", "/"], ["\\\\", '\\"', '\\n', '\\/'], $string);
 
-        // single quotes must be encoded as HTML entity
-        return \str_replace("\\'", "&#39;", $string);
+        return self::encodeHTML($string);
     }
 
     /**
