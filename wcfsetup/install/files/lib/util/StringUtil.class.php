@@ -140,10 +140,7 @@ final class StringUtil
     }
 
     /**
-     * Encodes JSON strings. This is not the same as PHP's json_encode()!
-     *
-     * @param string $string
-     * @return  string
+     * @deprecated 5.5 This function is broken due to the implicit HTML encoding and cannot be fixed without introducing security issues. Use JSON::encode() or the |json template modifier instead.
      */
     public static function encodeJSON($string)
     {
