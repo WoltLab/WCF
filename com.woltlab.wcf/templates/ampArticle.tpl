@@ -20,7 +20,7 @@
 			},
 			"publisher": {
 				"@type": "Organization",
-				"name": "{PAGE_TITLE|language}",
+				"name": {@PAGE_TITLE|language|json},
 				"logo": {
 					"@type": "ImageObject",
 					"url": {@$__wcf->getStyleHandler()->getStyle()->getPageLogo()|json},
