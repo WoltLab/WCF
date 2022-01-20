@@ -124,14 +124,8 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<!-- update type element -->
-	<xs:element name="updatetype" type="xs:NCName" />
-	
 	<!-- timestamp element -->
 	<xs:element name="timestamp" type="xs:integer" />
-	
-	<!-- version type element -->
-	<xs:element name="versiontype" type="xs:NCName" />
 	
 	<!-- license element -->
 	<xs:element name="license" type="xs:NCName" />
