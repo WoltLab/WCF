@@ -4,10 +4,10 @@
 {
 "@context": "http://schema.org",
 "@type": "WebSite",
-"url": "{@$__websiteUrl|encodeJSON}",
+"url": {@$__websiteUrl|json},
 "potentialAction": {
 "@type": "SearchAction",
-"target": "{@$__searchTargetUrl|encodeJSON}",
+"target": {@$__searchTargetUrl|json},
 "query-input": "required name=search_term_string"
 }
 }
