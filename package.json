@@ -6,8 +6,6 @@
     "global.d.ts"
   ],
   "devDependencies": {
-    "@types/google.maps": "^3.47.2",
-    "@types/perfect-scrollbar": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
@@ -17,6 +15,8 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "@types/google.maps": "^3.47.2",
+    "@types/perfect-scrollbar": "^0.7.0",
     "@types/facebook-js-sdk": "^3.3.5",
     "@types/jquery": "^3.5.11",
     "@types/pica": "^5.1.3",
