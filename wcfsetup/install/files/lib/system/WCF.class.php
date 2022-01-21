@@ -51,7 +51,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '5.3.17');
+define('WCF_VERSION', '5.3.18');
 
 // define current API version
 // @deprecated 5.2
