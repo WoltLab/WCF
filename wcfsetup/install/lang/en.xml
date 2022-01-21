@@ -4967,6 +4967,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<small>Generate one time codes with an app on your smartphone.</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link"><![CDATA[Begin setup]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Completely Disable Multi-factor Authentication{else}Disable <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>{/if}]]></item>
