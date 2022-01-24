@@ -4969,6 +4969,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<small>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link"><![CDATA[Einrichtung beginnen]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Schütze dein Benutzerkonto{else}Schützen Sie Ihr Benutzerkonto{/if}, indem bei jeder Anmeldung eine zusätzliche Authentifizierung mit Hilfe eines zweiten Faktors erforderlich ist.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Deaktivieren]]></item>
 		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Mehrfaktor-Authentifizierung vollständig deaktivieren{else}<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> deaktivieren{/if}]]></item>
