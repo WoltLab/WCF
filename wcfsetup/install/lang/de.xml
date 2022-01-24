@@ -523,7 +523,7 @@
 		<dd><kbd>{$version}</kbd></dd>
 	</dl>
 {/if}]]></item>
-		<item name="wcf.acp.devtools.project.excludedPackage.error.requirementExclusion"><![CDATA[Wenn benötigte Pakete als inkompatible Pakete hinzugefügt werden, muss sollwohl die benötigte, als auch die inkompatible Version explizit angegeben werden und die inkompatible Version neuer sein als die benötigte Version. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackage.error.requirementExclusion"><![CDATA[Wenn benötigte Pakete als inkompatible Pakete hinzugefügt werden, muss sowohl die benötigte, als auch die inkompatible Version explizit angegeben werden und die inkompatible Version neuer sein als die benötigte Version. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.version"><![CDATA[Inkompatible Version]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.error.selfExclusion"><![CDATA[Ein Paket kann nicht inkompatibel zu sich selbst sein.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.optionalPackage"><![CDATA[{$packageIdentifier}]]></item>
