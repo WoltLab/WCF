@@ -510,6 +510,7 @@
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wurde bereits hinzugefügt.]]></item>
 		<item name="wcf.acp.devtools.project.packageVersion.error.maximumLength"><![CDATA[Die Version darf nicht länger als 255 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.selfRequirement"><![CDATA[Ein Paket kann sich nicht selbst benötigen.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.error.missingWcfRequirement"><![CDATA[Das Paket <kbd>com.woltlab.wcf</kbd> muss mindestens in Version {$minVersion} vorausgesetzt werden.]]></item>
 		<item name="wcf.acp.devtools.project.add.mode"><![CDATA[Modus]]></item>
 		<item name="wcf.acp.devtools.project.add.mode.import"><![CDATA[Vorhandenes Paket importieren]]></item>
 		<item name="wcf.acp.devtools.project.add.mode.setup"><![CDATA[Neues Projekt erstellen]]></item>
@@ -528,7 +529,7 @@
 		<dd><kbd>{$version}</kbd></dd>
 	</dl>
 {/if}]]></item>
-		<item name="wcf.acp.devtools.project.excludedPackage.error.requirementExclusion"><![CDATA[Wenn benötigte Pakete als inkompatible Pakete hinzugefügt werden, muss sollwohl die benötigte, als auch die inkompatible Version explizit angegeben werden und die inkompatible Version neuer sein als die benötigte Version. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackage.error.requirementExclusion"><![CDATA[Wenn benötigte Pakete als inkompatible Pakete hinzugefügt werden, muss sowohl die benötigte, als auch die inkompatible Version explizit angegeben werden und die inkompatible Version neuer sein als die benötigte Version. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.version"><![CDATA[Inkompatible Version]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackage.error.selfExclusion"><![CDATA[Ein Paket kann nicht inkompatibel zu sich selbst sein.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.optionalPackage"><![CDATA[{$packageIdentifier}]]></item>
