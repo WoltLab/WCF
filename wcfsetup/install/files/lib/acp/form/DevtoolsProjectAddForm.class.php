@@ -50,6 +50,11 @@ use wcf\util\FileUtil;
 class DevtoolsProjectAddForm extends AbstractFormBuilderForm
 {
     /**
+     * Defines the minimum WCF version supported by the dev tool.
+     */
+    private const MIN_WCF_VERSION = "3.1.0";
+
+    /**
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.add';
@@ -406,6 +411,32 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             }
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'missingWcfRequirement',
+                        static function (DevtoolsProjectRequiredPackagesFormField $formField) {
+                            foreach ($formField->getSaveValue() as $requirement) {
+                                if (
+                                    $requirement['packageIdentifier'] === "com.woltlab.wcf"
+                                    && Package::compareVersion(
+                                        $requirement['minVersion'],
+                                        self::MIN_WCF_VERSION
+                                    ) >= 0
+                                ) {
+                                    return;
+                                }
+                            }
+
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'missingWcfRequirement',
+                                    'wcf.acp.devtools.project.requiredPackage.error.missingWcfRequirement',
+                                    [
+                                        'minVersion' => self::MIN_WCF_VERSION,
+                                    ]
+                                )
+                            );
                         }
                     ))
             );

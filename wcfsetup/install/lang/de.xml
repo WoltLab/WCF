@@ -504,6 +504,7 @@
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wurde bereits hinzugefügt.]]></item>
 		<item name="wcf.acp.devtools.project.packageVersion.error.maximumLength"><![CDATA[Die Version darf nicht länger als 255 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.selfRequirement"><![CDATA[Ein Paket kann sich nicht selbst benötigen.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.error.missingWcfRequirement"><![CDATA[Das Paket <kbd>com.woltlab.wcf</kbd> muss mindestens in Version {$minVersion} vorausgesetzt werden.]]></item>
 		<item name="wcf.acp.devtools.project.add.mode"><![CDATA[Modus]]></item>
 		<item name="wcf.acp.devtools.project.add.mode.import"><![CDATA[Vorhandenes Paket importieren]]></item>
 		<item name="wcf.acp.devtools.project.add.mode.setup"><![CDATA[Neues Projekt erstellen]]></item>
