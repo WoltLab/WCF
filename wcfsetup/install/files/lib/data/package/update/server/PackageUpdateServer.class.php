@@ -132,6 +132,15 @@ class PackageUpdateServer extends DatabaseObject
         return $results;
     }
 
+    final public static function getPluginStoreServer(): self
+    {
+        $pluginStoreServer = \array_filter(self::getActiveUpdateServers(), static function (self $updateServer) {
+            return $updateServer->isWoltLabStoreServer();
+        });
+
+        return \current($pluginStoreServer);
+    }
+
     /**
      * Returns true if the given server url is valid.
      *
