@@ -690,7 +690,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 throw new UserInputException('authData');
             }
 
-            $this->readInteger('packageUpdateServerID', false, 'authData');
+            $this->readInteger('packageUpdateServerID', true, 'authData');
+            if (!$this->parameters['authData']['packageUpdateServerID']) {
+                $this->parameters['authData']['packageUpdateServerID'] = PackageUpdateServer::getPluginStoreServer()->packageUpdateServerID;
+            }
+
             $this->readString('password', false, 'authData');
             $this->readString('username', false, 'authData');
             $this->readBoolean('saveCredentials', true, 'authData');

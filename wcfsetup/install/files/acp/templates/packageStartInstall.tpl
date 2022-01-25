@@ -6,16 +6,20 @@
 {include file='header'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Package/Search'], function(Language, AcpUiPackageSearch) {
+	require([
+		"Language", "WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation", "WoltLabSuite/Core/Acp/Ui/Package/Search"],
+		(Language, { setup }, AcpUiPackageSearch) => {
 		Language.addObject({
 			'wcf.acp.package.install.title': '{jslang}wcf.acp.package.install.title{/jslang}',
-			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}'
+			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}',
+			'wcf.acp.package.quickInstallation.code.error.invalid': '{jslang}wcf.acp.package.quickInstallation.code.error.invalid{/jslang}',
 		});
 		
+		setup();
 		new AcpUiPackageSearch();
 		
 		{if $errorField === 'uploadPackage'}
-			elBySel('.jsButtonUploadPackage').click();
+			document.querySelector('.jsButtonUploadPackage').click();
 		{/if}
 	});
 </script>
@@ -44,6 +48,18 @@
 {include file='formError'}
 
 <div class="section">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.package.quickInstallation{/lang}</h2>
+
+		<dl>
+			<dt><label for="quickInstallationCode">{lang}wcf.acp.package.quickInstallation.code{/lang}</label></dt>
+			<dd>
+				<input type="text" id="quickInstallationCode" value="" class="long" autocomplete="off">
+				<small>{lang}wcf.acp.package.quickInstallation.code.description{/lang}</small>
+			</dd>
+		</dl>
+	</section>
+
 	<section class="section" id="packageSearch">
 		<h2 class="sectionTitle">{lang}wcf.acp.package.search{/lang}</h2>
 		

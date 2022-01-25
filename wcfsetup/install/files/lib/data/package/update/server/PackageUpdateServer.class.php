@@ -2,6 +2,7 @@
 
 namespace wcf\data\package\update\server;
 
+use Package;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
@@ -130,6 +131,15 @@ class PackageUpdateServer extends DatabaseObject
         }
 
         return $results;
+    }
+
+    final public static function getPluginStoreServer(): PackageUpdateServer
+    {
+        $pluginStoreServer = \array_filter(self::getActiveUpdateServers(), function (PackageUpdateServer $updateServer) {
+            return $updateServer->isWoltLabStoreServer();
+        });
+
+        return current($pluginStoreServer);
     }
 
     /**

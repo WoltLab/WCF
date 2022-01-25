@@ -2001,6 +2001,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[The upgrade to WoltLab Suite {$version} is now ready. Please click on the button “Search for Updates” to start the upgrade.<br>
 <br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Cancel the upgrade</a>]]></item>
+		<item name="wcf.acp.package.quickInstallation"><![CDATA[Installation by StoreCode]]></item>
+		<item name="wcf.acp.package.quickInstallation.code"><![CDATA[StoreCode]]></item>
+		<item name="wcf.acp.package.quickInstallation.code.error.invalid"><![CDATA[The provided StoreCode is invalid.]]></item>
+		<item name="wcf.acp.package.quickInstallation.code.description"><![CDATA[Paste the StoreCode from the official Plugin-Store from your clipboard to start the installation.]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
