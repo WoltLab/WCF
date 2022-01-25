@@ -2,7 +2,6 @@
 
 namespace wcf\data\package\update\server;
 
-use Package;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
