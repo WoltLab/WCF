@@ -222,7 +222,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 this.getOptions().forEach((option, i) => {
                     const input = document.createElement("input");
                     input.type = "hidden";
-                    input.name = `${this.wysiwygId} + 'Poll_options[${i}}]`;
+                    input.name = `${this.wysiwygId}Poll_options[${i}]`;
                     input.value = option;
                     form.appendChild(input);
                 });
