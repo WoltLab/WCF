@@ -2018,7 +2018,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.quickInstallation"><![CDATA[Installation per StoreCode]]></item>
 		<item name="wcf.acp.package.quickInstallation.code"><![CDATA[StoreCode]]></item>
 		<item name="wcf.acp.package.quickInstallation.code.error.invalid"><![CDATA[Der eingegebene StoreCode ist ungültig.]]></item>
-		<item name="wcf.acp.package.quickInstallation.code.description"><![CDATA[Fügen Sie den StoreCode aus dem offiziellen Plugin-Store aus Ihrer Zwischenablage ein, um die Installation zu starten.]]></item>
+		<item name="wcf.acp.package.quickInstallation.code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Füge{else}Fügen Sie{/if} den StoreCode aus dem offiziellen Plugin-Store aus der Zwischenablage ein, um die Installation zu starten.]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>

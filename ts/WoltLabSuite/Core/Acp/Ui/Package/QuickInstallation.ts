@@ -1,3 +1,13 @@
+/**
+ * Initiates a package installation based on the StoreCode provided in the
+ * package installation screen.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation
+ */
+
 import { dboAction } from "../../../Ajax";
 import { isPlainObject } from "../../../Core";
 import * as Language from "../../../Language";
@@ -77,7 +87,7 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
       {
         _dialogSetup() {
           return {
-            id: "foo",
+            id: "quickInstallationError",
             source: null,
           };
         },

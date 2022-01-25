@@ -133,13 +133,13 @@ class PackageUpdateServer extends DatabaseObject
         return $results;
     }
 
-    final public static function getPluginStoreServer(): PackageUpdateServer
+    final public static function getPluginStoreServer(): self
     {
-        $pluginStoreServer = \array_filter(self::getActiveUpdateServers(), function (PackageUpdateServer $updateServer) {
+        $pluginStoreServer = \array_filter(self::getActiveUpdateServers(), static function (PackageUpdateServer $updateServer) {
             return $updateServer->isWoltLabStoreServer();
         });
 
-        return current($pluginStoreServer);
+        return \current($pluginStoreServer);
     }
 
     /**
