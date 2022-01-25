@@ -63,6 +63,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 _dialogSetup() {
                     return {
                         id: "quickInstallationError",
+                        options: {
+                            title: Language.get("wcf.global.error.title"),
+                        },
                         source: null,
                     };
                 },

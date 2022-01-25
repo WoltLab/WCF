@@ -88,6 +88,9 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
         _dialogSetup() {
           return {
             id: "quickInstallationError",
+            options: {
+              title: Language.get("wcf.global.error.title"),
+            },
             source: null,
           };
         },
