@@ -52,13 +52,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp', 'ico'];
 
     /**
-     * list of compatible API versions
-     * @var int[]
-     * @deprecated 5.2
-     */
-    public static $compatibilityApiVersions = [2018];
-
-    /**
      * @inheritDoc
      */
     protected static $baseClass = Style::class;
@@ -1165,13 +1158,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
             $xml->startElement('excludedpackages');
             $xml->writeElement('excludedpackage', 'com.woltlab.wcf', ['version' => self::EXCLUDE_WCF_VERSION]);
-            $xml->endElement();
-
-            // @deprecated 5.2
-            $xml->startElement('compatibility');
-            foreach (self::$compatibilityApiVersions as $apiVersion) {
-                $xml->writeElement('api', '', ['version' => $apiVersion]);
-            }
             $xml->endElement();
 
             $xml->startElement('instructions', ['type' => 'install']);
