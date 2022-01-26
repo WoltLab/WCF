@@ -23,31 +23,11 @@ input[type="search"],
 input[type="tel"],
 input[type="text"],
 input[type="url"] {
-	&::-webkit-input-placeholder {
-		/* WebKit browsers */
+	&::placeholder {
 		color: $wcfInputPlaceholder;
-	}
-	&::-moz-placeholder {
-		/* Mozilla Firefox 19+ */
-		color: $wcfInputPlaceholder;
-	}
-	&:-ms-input-placeholder {
-		/* Internet Explorer 10+ */
-		color: $wcfInputPlaceholder;
-	}
 
-	&:focus,
-	&:hover {
-		&::-webkit-input-placeholder {
-			/* WebKit browsers */
-			color: $wcfInputPlaceholderActive;
-		}
-		&::-moz-placeholder {
-			/* Mozilla Firefox 19+ */
-			color: $wcfInputPlaceholderActive;
-		}
-		&:-ms-input-placeholder {
-			/* Internet Explorer 10+ */
+		&:focus,
+		&:hover {
 			color: $wcfInputPlaceholderActive;
 		}
 	}
@@ -57,6 +37,15 @@ input[type="url"] {
 		background-color: $wcfInputDisabledBackground !important;
 		border-color: $wcfInputDisabledBorder !important;
 		color: $wcfInputDisabledText !important;
+	}
+}
+
+textarea::placeholder {
+	color: $wcfInputPlaceholder;
+
+	&:focus,
+	&:hover {
+		color: $wcfInputPlaceholderActive;
 	}
 }
 
