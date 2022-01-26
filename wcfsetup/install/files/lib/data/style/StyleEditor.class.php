@@ -703,6 +703,15 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                             continue;
                         }
 
+                        // Check whether a file within the custom/ directory would be overwritten.
+                        // Skip the extraction in this case, to preserve administrator changes. A style author
+                        // can opt to use a different (versioned) file name if they *need* to update the image.
+                        if (\str_starts_with($targetFile, $style->getAssetPath() . 'custom/')) {
+                            if (\file_exists($targetFile)) {
+                                continue;
+                            }
+                        }
+
                         // duplicate pageLogo for mobile version
                         if ($duplicateLogo && $val['filename'] == $styleData['variables']['pageLogo']) {
                             $imagesTar->extract($key, $style->getAssetPath() . 'm-' . \basename($targetFile));
