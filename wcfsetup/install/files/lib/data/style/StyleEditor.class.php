@@ -613,7 +613,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         $duplicateLogo = false;
         // duplicate logo if logo matches mobile logo
-        if (!empty($styleData['variables']['pageLogo']) && !empty($styleData['variables']['pageLogoMobile']) && $styleData['variables']['pageLogo'] == $styleData['variables']['pageLogoMobile']) {
+        if (
+            !empty($styleData['variables']['pageLogo'])
+            && !empty($styleData['variables']['pageLogoMobile'])
+            && $styleData['variables']['pageLogo'] == $styleData['variables']['pageLogoMobile']
+        ) {
             $styleData['variables']['pageLogoMobile'] = 'm-' . \basename($styleData['variables']['pageLogo']);
             $duplicateLogo = true;
         }
