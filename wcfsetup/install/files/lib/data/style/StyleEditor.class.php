@@ -694,12 +694,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                             continue;
                         }
 
-                        if (\strpos($path, '../') !== false) {
+                        if (\str_contains($path, '../')) {
                             continue;
                         }
 
                         $targetFile = FileUtil::getRealPath($style->getAssetPath() . $path);
-                        if (\strpos(FileUtil::getRelativePath($style->getAssetPath(), $targetFile), '../') !== false) {
+                        if (\str_contains(FileUtil::getRelativePath($style->getAssetPath(), $targetFile), '../')) {
                             continue;
                         }
 
