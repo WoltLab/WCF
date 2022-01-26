@@ -71,6 +71,19 @@ class UserOptionHandler extends OptionHandler
      */
     public $conditionMode = false;
 
+    public function init()
+    {
+        parent::init();
+
+        if ($this->inRegistration && REGISTER_MIN_USER_AGE) {
+            foreach ($this->options as $option) {
+                if ($option->optionName === 'birthday') {
+                    $option->setRequired(true);
+                }
+            }
+        }
+    }
+
     /**
      * Shows empty options.
      *

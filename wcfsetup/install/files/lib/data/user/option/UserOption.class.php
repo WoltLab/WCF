@@ -229,4 +229,9 @@ class UserOption extends Option implements ITitledObject
     {
         $this->data['visible'] = $visibleOption;
     }
+
+    public function setRequired(bool $isRequired): void
+    {
+        $this->data['required'] = $isRequired ? 1 : 0;
+    }
 }
