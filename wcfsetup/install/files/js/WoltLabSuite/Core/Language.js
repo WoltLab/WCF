@@ -46,6 +46,11 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
      * Compiles the given value into a phrase.
      */
     function compile(value) {
+        if (!value.includes("{")) {
+            return function () {
+                return value;
+            };
+        }
         try {
             const template = new Template_1.default(value);
             return template.fetch.bind(template);

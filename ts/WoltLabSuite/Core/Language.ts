@@ -46,6 +46,12 @@ export function add(key: string, value: string): void {
  * Compiles the given value into a phrase.
  */
 function compile(value: string): Phrase {
+  if (!value.includes("{")) {
+    return function () {
+      return value;
+    };
+  }
+
   try {
     const template = new Template(value);
     return template.fetch.bind(template);
