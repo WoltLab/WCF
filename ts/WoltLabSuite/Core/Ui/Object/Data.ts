@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import { DatabaseObjectActionResponse } from "../../Ajax/Data";
 import { ClipboardActionData } from "../../Controller/Clipboard/Data";
 

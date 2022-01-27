@@ -1,5 +1,6 @@
-// This helper interface exists to prevent a circular dependency
-// between `./Delete` and `./Upload`
+/**
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
