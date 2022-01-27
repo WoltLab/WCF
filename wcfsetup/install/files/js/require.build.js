@@ -21,6 +21,7 @@
 		excludeShallow: [
 			'WoltLabSuite.Core.min',
 			'WoltLabSuite.Core.tiny.min',
+			"pica",
 		],
 		rawText: {
 			'WoltLabSuite.Core.min': 'define([], function() {});',
