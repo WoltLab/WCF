@@ -1,5 +1,5 @@
 /**
- * @woltlabExcludeBundle tiny
+ * @woltlabExcludeBundle all
  */
 
 import * as Core from "../../../../../Core";

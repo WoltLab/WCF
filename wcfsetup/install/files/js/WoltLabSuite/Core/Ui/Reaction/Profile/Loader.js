@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Reaction/Profile/Loader
  * @since       5.2
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Core, Util_1, Language) {
     "use strict";

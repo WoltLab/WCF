@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Reaction/Profile/Loader
  * @since       5.2
+ * @woltlabExcludeBundle all
  */
 
 import * as Ajax from "../../../Ajax";
