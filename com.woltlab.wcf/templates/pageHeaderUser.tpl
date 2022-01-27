@@ -2,7 +2,7 @@
 	{if $__wcf->user->userID}
 		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</span>
 	{else}
-		<a href="{link controller='Login'}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
+		<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
 			<span class="icon icon32 fa-sign-in" aria-hidden="true"></span>
 		</a>
 	{/if}
@@ -159,7 +159,7 @@
 				</li>
 			{/if}
 			<li id="userLogin">
-				<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
+				<a class="loginLink" href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
 			</a>
 		{/if}
 		
