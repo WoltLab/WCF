@@ -13,8 +13,8 @@ import * as UiScreen from "../../Screen";
 
 let _enabled = false;
 
-let _buttonShowNext: HTMLAnchorElement;
-let _buttonShowPrevious: HTMLAnchorElement;
+let _buttonShowNext: HTMLAnchorElement | undefined;
+let _buttonShowPrevious: HTMLAnchorElement | undefined;
 let _firstElement: HTMLElement;
 let _menu: HTMLElement;
 
@@ -55,36 +55,32 @@ function disable(): void {
 /**
  * Displays the next three menu items.
  */
-function showNext(event: MouseEvent): void {
-  event.preventDefault();
-
+function showNext(): void {
   if (_invisibleRight.length) {
     const showItem = _invisibleRight.slice(0, 3).pop()!;
     setMarginLeft(_menu.clientWidth - (showItem.offsetLeft + showItem.clientWidth));
 
     if (_menu.lastElementChild === showItem) {
-      _buttonShowNext.classList.remove("active");
+      _buttonShowNext!.classList.remove("active");
     }
 
-    _buttonShowPrevious.classList.add("active");
+    _buttonShowPrevious!.classList.add("active");
   }
 }
 
 /**
  * Displays the previous three menu items.
  */
-function showPrevious(event: MouseEvent): void {
-  event.preventDefault();
-
+function showPrevious(): void {
   if (_invisibleLeft.length) {
     const showItem = _invisibleLeft.slice(-3)[0];
     setMarginLeft(showItem.offsetLeft * -1);
 
     if (_menu.firstElementChild === showItem) {
-      _buttonShowPrevious.classList.remove("active");
+      _buttonShowPrevious!.classList.remove("active");
     }
 
-    _buttonShowNext.classList.add("active");
+    _buttonShowNext!.classList.add("active");
   }
 }
 
@@ -109,7 +105,12 @@ function rebuildVisibility(): void {
   _invisibleRight = [];
 
   const menuWidth = _menu.clientWidth;
-  if (_menu.scrollWidth > menuWidth || _marginLeft < 0) {
+  const scrollWidth = _menu.scrollWidth;
+  if (!_buttonShowPrevious && scrollWidth > menuWidth) {
+    initOverflowNavigation();
+  }
+
+  if (scrollWidth > menuWidth || _marginLeft < 0) {
     Array.from(_menu.children).forEach((child: HTMLElement) => {
       const offsetLeft = child.offsetLeft;
       if (offsetLeft < 0) {
@@ -120,8 +121,8 @@ function rebuildVisibility(): void {
     });
   }
 
-  _buttonShowPrevious.classList[_invisibleLeft.length ? "add" : "remove"]("active");
-  _buttonShowNext.classList[_invisibleRight.length ? "add" : "remove"]("active");
+  _buttonShowPrevious?.classList[_invisibleLeft.length ? "add" : "remove"]("active");
+  _buttonShowNext?.classList[_invisibleRight.length ? "add" : "remove"]("active");
 }
 
 /**
@@ -136,26 +137,6 @@ function setup(): void {
  * Setups overflow handling.
  */
 function setupOverflow(): void {
-  const menuParent = _menu.parentElement!;
-
-  _buttonShowNext = document.createElement("a");
-  _buttonShowNext.className = "mainMenuShowNext";
-  _buttonShowNext.href = "#";
-  _buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
-  _buttonShowNext.setAttribute("aria-hidden", "true");
-  _buttonShowNext.addEventListener("click", showNext);
-
-  menuParent.appendChild(_buttonShowNext);
-
-  _buttonShowPrevious = document.createElement("a");
-  _buttonShowPrevious.className = "mainMenuShowPrevious";
-  _buttonShowPrevious.href = "#";
-  _buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
-  _buttonShowPrevious.setAttribute("aria-hidden", "true");
-  _buttonShowPrevious.addEventListener("click", showPrevious);
-
-  menuParent.insertBefore(_buttonShowPrevious, menuParent.firstChild);
-
   _firstElement.addEventListener("transitionend", rebuildVisibility);
 
   window.addEventListener("resize", () => {
@@ -166,6 +147,34 @@ function setupOverflow(): void {
   });
 
   enable();
+}
+
+function initOverflowNavigation(): void {
+  _buttonShowNext = document.createElement("a");
+  _buttonShowNext.className = "mainMenuShowNext";
+  _buttonShowNext.href = "#";
+  _buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
+  _buttonShowNext.setAttribute("aria-hidden", "true");
+  _buttonShowNext.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    showNext();
+  });
+
+  _menu.insertAdjacentElement("beforebegin", _buttonShowNext);
+
+  _buttonShowPrevious = document.createElement("a");
+  _buttonShowPrevious.className = "mainMenuShowPrevious";
+  _buttonShowPrevious.href = "#";
+  _buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
+  _buttonShowPrevious.setAttribute("aria-hidden", "true");
+  _buttonShowPrevious.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    showPrevious();
+  });
+
+  _menu.insertAdjacentElement("afterend", _buttonShowPrevious);
 }
 
 /**

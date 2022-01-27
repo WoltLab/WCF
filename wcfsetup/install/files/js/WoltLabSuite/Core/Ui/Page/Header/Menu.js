@@ -51,8 +51,7 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
     /**
      * Displays the next three menu items.
      */
-    function showNext(event) {
-        event.preventDefault();
+    function showNext() {
         if (_invisibleRight.length) {
             const showItem = _invisibleRight.slice(0, 3).pop();
             setMarginLeft(_menu.clientWidth - (showItem.offsetLeft + showItem.clientWidth));
@@ -65,8 +64,7 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
     /**
      * Displays the previous three menu items.
      */
-    function showPrevious(event) {
-        event.preventDefault();
+    function showPrevious() {
         if (_invisibleLeft.length) {
             const showItem = _invisibleLeft.slice(-3)[0];
             setMarginLeft(showItem.offsetLeft * -1);
@@ -94,7 +92,11 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
         _invisibleLeft = [];
         _invisibleRight = [];
         const menuWidth = _menu.clientWidth;
-        if (_menu.scrollWidth > menuWidth || _marginLeft < 0) {
+        const scrollWidth = _menu.scrollWidth;
+        if (!_buttonShowPrevious && scrollWidth > menuWidth) {
+            initOverflowNavigation();
+        }
+        if (scrollWidth > menuWidth || _marginLeft < 0) {
             Array.from(_menu.children).forEach((child) => {
                 const offsetLeft = child.offsetLeft;
                 if (offsetLeft < 0) {
@@ -105,8 +107,8 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
                 }
             });
         }
-        _buttonShowPrevious.classList[_invisibleLeft.length ? "add" : "remove"]("active");
-        _buttonShowNext.classList[_invisibleRight.length ? "add" : "remove"]("active");
+        _buttonShowPrevious === null || _buttonShowPrevious === void 0 ? void 0 : _buttonShowPrevious.classList[_invisibleLeft.length ? "add" : "remove"]("active");
+        _buttonShowNext === null || _buttonShowNext === void 0 ? void 0 : _buttonShowNext.classList[_invisibleRight.length ? "add" : "remove"]("active");
     }
     /**
      * Builds the UI and binds the event listeners.
@@ -119,21 +121,6 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      * Setups overflow handling.
      */
     function setupOverflow() {
-        const menuParent = _menu.parentElement;
-        _buttonShowNext = document.createElement("a");
-        _buttonShowNext.className = "mainMenuShowNext";
-        _buttonShowNext.href = "#";
-        _buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
-        _buttonShowNext.setAttribute("aria-hidden", "true");
-        _buttonShowNext.addEventListener("click", showNext);
-        menuParent.appendChild(_buttonShowNext);
-        _buttonShowPrevious = document.createElement("a");
-        _buttonShowPrevious.className = "mainMenuShowPrevious";
-        _buttonShowPrevious.href = "#";
-        _buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
-        _buttonShowPrevious.setAttribute("aria-hidden", "true");
-        _buttonShowPrevious.addEventListener("click", showPrevious);
-        menuParent.insertBefore(_buttonShowPrevious, menuParent.firstChild);
         _firstElement.addEventListener("transitionend", rebuildVisibility);
         window.addEventListener("resize", () => {
             _firstElement.style.setProperty("margin-left", "0px", "");
@@ -141,6 +128,28 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
             rebuildVisibility();
         });
         enable();
+    }
+    function initOverflowNavigation() {
+        _buttonShowNext = document.createElement("a");
+        _buttonShowNext.className = "mainMenuShowNext";
+        _buttonShowNext.href = "#";
+        _buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
+        _buttonShowNext.setAttribute("aria-hidden", "true");
+        _buttonShowNext.addEventListener("click", (event) => {
+            event.preventDefault();
+            showNext();
+        });
+        _menu.insertAdjacentElement("beforebegin", _buttonShowNext);
+        _buttonShowPrevious = document.createElement("a");
+        _buttonShowPrevious.className = "mainMenuShowPrevious";
+        _buttonShowPrevious.href = "#";
+        _buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
+        _buttonShowPrevious.setAttribute("aria-hidden", "true");
+        _buttonShowPrevious.addEventListener("click", (event) => {
+            event.preventDefault();
+            showPrevious();
+        });
+        _menu.insertAdjacentElement("afterend", _buttonShowPrevious);
     }
     /**
      * Setups a11y improvements.
