@@ -1,4 +1,6 @@
 (function () {
+	const excludedModules = [];
+
 	var config = {
 		mainConfigFile: 'require.config.js',
 		generateSourceMaps: true,
@@ -69,6 +71,7 @@
 					if ((matches = contents.match(/@woltlabExcludeBundle\s+(tiny|all)/))) {
 						switch (matches[1]) {
 							case 'all':
+								excludedModules.push(module.replace(/\.js$/, ''));
 								return false;
 							case 'tiny':
 								return moduleName !== 'WoltLabSuite.Core.tiny.min';
@@ -84,7 +87,14 @@
 			}
 			
 			return moduleContents;
-		}
+		},
+		onBuildWrite(moduleName, path, contents) {
+			if (excludedModules.includes(moduleName)) {
+				return "";
+			}
+			
+			return contents;
+		},
 	};
 	
 	var _isSupportedBuildUrl = require._isSupportedBuildUrl;
