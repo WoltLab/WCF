@@ -6,6 +6,8 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/FlexibleMenu
+ * @deprecated 5.5 This module is unused and will be removed.
+ * @woltlabExcludeBundle all
  */
 
 import DomChangeListener from "../Dom/Change/Listener";

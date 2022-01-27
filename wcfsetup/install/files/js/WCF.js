@@ -4786,6 +4786,7 @@ WCF.System.Dependency.Manager = {
 
 /**
  * Provides flexible dropdowns for tab-based menus.
+ * @deprecated 5.5 This module is unused and will be removed.
  */
 WCF.System.FlexibleMenu = {
 	/**
