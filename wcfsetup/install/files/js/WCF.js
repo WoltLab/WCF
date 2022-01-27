@@ -136,7 +136,8 @@ window.shuffle = function(array) {
 	jQuery.browser.touch = (!!('ontouchstart' in window) || (!!('msMaxTouchPoints' in window.navigator) && window.navigator.msMaxTouchPoints > 0));
 	
 	// detect smartphones
-	jQuery.browser.smartphone = ($('html').css('caption-side') == 'bottom');
+	// @deprecated 5.5 The previous check always yielded false, the property is kept for compatibility only.
+	jQuery.browser.smartphone = false;
 	
 	// properly detect IE11
 	if (jQuery.browser.mozilla && ua.match(/trident/)) {
