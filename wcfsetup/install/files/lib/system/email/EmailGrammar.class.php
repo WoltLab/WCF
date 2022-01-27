@@ -35,7 +35,7 @@ final class EmailGrammar
             case 'quoted-pair':
                 return "(?:\\\\(?:" . self::getGrammar('WSP') . "|" . self::getGrammar('VCHAR') . "))";
             case 'atext':
-                return "[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]";
+                return "[a-zA-Z0-9!#$%&'*+\\-/=?^_`{|}~]";
             case 'atom':
                 return "(?:" . self::getGrammar('CFWS') . "?" . self::getGrammar('atext') . "+" . self::getGrammar('CFWS') . "?)";
             case 'id-left':
