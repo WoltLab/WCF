@@ -39,7 +39,7 @@ fs.readdirSync(basePath)
             });
         }
 
-        childProcess.execSync(`ts-node syncTemplates.ts ${path}`, {
+        childProcess.execSync(`npx ts-node syncTemplates.ts ${path}`, {
             stdio: [0, 1, 2]
         });
 
