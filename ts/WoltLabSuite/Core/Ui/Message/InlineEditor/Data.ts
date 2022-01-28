@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import { ResponseData } from "../../../Ajax/Data";
 
 export interface MessageInlineEditorOptions {

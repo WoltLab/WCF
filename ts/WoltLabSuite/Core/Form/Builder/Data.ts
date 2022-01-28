@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import { DialogOptions } from "../../Ui/Dialog/Data";
 import { DatabaseObjectActionResponse } from "../../Ajax/Data";
 

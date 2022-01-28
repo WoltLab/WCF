@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import { DatabaseObjectActionResponse } from "../../Ajax/Data";
 
 export interface ClipboardOptions {

@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 export interface Reaction {
   title: string;
   renderedIcon: string;

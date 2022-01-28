@@ -12,7 +12,6 @@ import * as Clipboard from "../Clipboard";
 import * as UiNotification from "../Ui/Notification";
 import Prism from "../Prism";
 import * as PrismHelper from "../Prism/Helper";
-import PrismMeta from "../prism-meta";
 
 async function waitForIdle(): Promise<void> {
   return new Promise((resolve, _reject) => {
@@ -88,6 +87,8 @@ class Code {
     if (!this.language) {
       throw new Error("No language detected");
     }
+
+    const PrismMeta = (await import("../prism-meta")).default;
     if (!PrismMeta[this.language]) {
       throw new Error(`Unknown language '${this.language}'`);
     }

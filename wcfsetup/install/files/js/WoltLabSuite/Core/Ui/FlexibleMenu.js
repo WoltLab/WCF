@@ -6,6 +6,8 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/FlexibleMenu
+ * @deprecated 5.5 This module is unused and will be removed.
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", "../Dom/Traverse", "./Dropdown/Simple"], function (require, exports, tslib_1, Listener_1, Util_1, DomTraverse, Simple_1) {
     "use strict";

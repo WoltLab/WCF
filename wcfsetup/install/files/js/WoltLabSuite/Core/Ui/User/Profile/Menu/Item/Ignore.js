@@ -1,5 +1,5 @@
 /**
- * @woltlabExcludeBundle tiny
+ * @woltlabExcludeBundle all
  */
 define(["require", "exports", "tslib", "../../../../../Core", "../../../../../Language", "../../../../Notification", "./Abstract", "../../../../../Form/Builder/Dialog"], function (require, exports, tslib_1, Core, Language, UiNotification, Abstract_1, Dialog_1) {
     "use strict";

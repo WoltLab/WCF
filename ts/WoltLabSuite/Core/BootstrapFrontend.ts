@@ -9,7 +9,6 @@
 
 import * as BackgroundQueue from "./BackgroundQueue";
 import * as Bootstrap from "./Bootstrap";
-import * as ControllerStyleChanger from "./Controller/Style/Changer";
 import * as ControllerPopover from "./Controller/Popover";
 import * as UiUserIgnore from "./Ui/User/Ignore";
 import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
@@ -67,7 +66,9 @@ export function setup(options: BoostrapOptions): void {
   UiPageHeaderMenu.init();
 
   if (options.styleChanger) {
-    ControllerStyleChanger.setup();
+    void import("./Controller/Style/Changer").then((ControllerStyleChanger) => {
+      ControllerStyleChanger.setup();
+    });
   }
 
   if (options.enableUserPopover) {

@@ -1,3 +1,6 @@
+/**
+ * @woltlabExcludeBundle all
+ */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Util_1) {
     "use strict";
     Ajax = (0, tslib_1.__importStar)(Ajax);

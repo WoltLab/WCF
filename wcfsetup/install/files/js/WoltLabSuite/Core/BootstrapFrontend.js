@@ -6,13 +6,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/BootstrapFrontend
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Style/Changer", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerStyleChanger, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, UiMessageShareProviders, UiFeedDialog, User_1, Frontend_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, UiMessageShareProviders, UiFeedDialog, User_1, Frontend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     BackgroundQueue = (0, tslib_1.__importStar)(BackgroundQueue);
     Bootstrap = (0, tslib_1.__importStar)(Bootstrap);
-    ControllerStyleChanger = (0, tslib_1.__importStar)(ControllerStyleChanger);
     ControllerPopover = (0, tslib_1.__importStar)(ControllerPopover);
     UiUserIgnore = (0, tslib_1.__importStar)(UiUserIgnore);
     UiPageHeaderMenu = (0, tslib_1.__importStar)(UiPageHeaderMenu);
@@ -52,7 +51,9 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
         });
         UiPageHeaderMenu.init();
         if (options.styleChanger) {
-            ControllerStyleChanger.setup();
+            void new Promise((resolve_1, reject_1) => { require(["./Controller/Style/Changer"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((ControllerStyleChanger) => {
+                ControllerStyleChanger.setup();
+            });
         }
         if (options.enableUserPopover) {
             _initUserPopover();

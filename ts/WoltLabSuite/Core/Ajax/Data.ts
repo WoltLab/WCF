@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 export interface RequestPayload {
   [key: string]: any;
 }

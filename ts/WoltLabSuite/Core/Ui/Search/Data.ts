@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import { DatabaseObjectActionPayload } from "../../Ajax/Data";
 
 export type CallbackDropdownInit = (list: HTMLUListElement) => void;

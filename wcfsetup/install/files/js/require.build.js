@@ -84,7 +84,7 @@
 			}
 			
 			return moduleContents;
-		}
+		},
 	};
 	
 	var _isSupportedBuildUrl = require._isSupportedBuildUrl;

@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 export interface UploadOptions {
   // name of the PHP action
   action: string;

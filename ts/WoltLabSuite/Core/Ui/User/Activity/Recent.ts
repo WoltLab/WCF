@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle all
+ */
+
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
 import * as Core from "../../../Core";

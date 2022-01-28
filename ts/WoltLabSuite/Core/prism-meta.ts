@@ -1,3 +1,7 @@
+/**
+ * @woltlabExcludeBundle tiny
+ */
+
 export interface LanguageData {
   title: string;
   file: string;
