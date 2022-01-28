@@ -8,60 +8,54 @@
 					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 							<li class="attachmentThumbnail" data-attachment-id="{@$attachment->attachmentID}">
-								{if $attachment->hasThumbnail()}
-									<a href="{$attachment->getLink()}"{if $attachment->canDownload()} class="jsImageViewer jsTooltip" title="{lang}wcf.attachment.image.title{/lang}"{/if}>
-								{/if}
-								
-								<div class="attachmentThumbnailContainer">
-									<span class="attachmentThumbnailImage">
-										{if $attachment->hasThumbnail()}
-											<img
-												src="{$attachment->getThumbnailLink('thumbnail')}"
-												alt=""
-												{if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT}
-													class="attachmentThumbnailImageScalable"
-												{/if}
-												width="{$attachment->thumbnailWidth}"
-												height="{$attachment->thumbnailHeight}"
-												loading="lazy"
-											>
-										{else}
-											<img
-												src="{$attachment->getLink()}"
-												alt=""
-												{if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT}
-													class="attachmentThumbnailImageScalable"
-												{/if}
-												width="{$attachment->width}"
-												height="{$attachment->height}"
-												loading="lazy"
-											>
-										{/if}
-									</span>
-								
-									<span class="attachmentThumbnailData">
-										<span class="attachmentFilename">{$attachment->filename}</span>
-									</span>
-								</div>
-								
-								<ul class="attachmentMetaData inlineList">
-									<li>
-										<span class="icon icon16 fa-file-text-o"></span>
-										{@$attachment->filesize|filesize}
-									</li>
-									<li>
-										<span class="icon icon16 fa-expand"></span>
-										{#$attachment->width}×{#$attachment->height}
-									</li>
-									<li>
-										<span class="icon icon16 fa-eye"></span>
-										{#$attachment->downloads}
-									</li>
-								</ul>
-								
-								{if $attachment->hasThumbnail()}
-									</a>
-								{/if}
+								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} class="jsImageViewer jsTooltip" title="{lang}wcf.attachment.image.title{/lang}"{/if}>
+									<div class="attachmentThumbnailContainer">
+										<span class="attachmentThumbnailImage">
+											{if $attachment->hasThumbnail()}
+												<img
+													src="{$attachment->getThumbnailLink('thumbnail')}"
+													alt=""
+													{if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT}
+														class="attachmentThumbnailImageScalable"
+													{/if}
+													width="{$attachment->thumbnailWidth}"
+													height="{$attachment->thumbnailHeight}"
+													loading="lazy"
+												>
+											{else}
+												<img
+													src="{$attachment->getLink()}"
+													alt=""
+													{if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT}
+														class="attachmentThumbnailImageScalable"
+													{/if}
+													width="{$attachment->width}"
+													height="{$attachment->height}"
+													loading="lazy"
+												>
+											{/if}
+										</span>
+									
+										<span class="attachmentThumbnailData">
+											<span class="attachmentFilename">{$attachment->filename}</span>
+										</span>
+									</div>
+									
+									<ul class="attachmentMetaData inlineList">
+										<li>
+											<span class="icon icon16 fa-file-text-o"></span>
+											{@$attachment->filesize|filesize}
+										</li>
+										<li>
+											<span class="icon icon16 fa-expand"></span>
+											{#$attachment->width}×{#$attachment->height}
+										</li>
+										<li>
+											<span class="icon icon16 fa-eye"></span>
+											{#$attachment->downloads}
+										</li>
+									</ul>
+								</a>
 							</li>
 						{/if}
 					{/foreach}
