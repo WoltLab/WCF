@@ -6,14 +6,13 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bbcode/Code
  */
-define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Notification", "../Prism", "../Prism/Helper", "../prism-meta"], function (require, exports, tslib_1, Language, Clipboard, UiNotification, Prism_1, PrismHelper, prism_meta_1) {
+define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Notification", "../Prism", "../Prism/Helper"], function (require, exports, tslib_1, Language, Clipboard, UiNotification, Prism_1, PrismHelper) {
     "use strict";
     Language = (0, tslib_1.__importStar)(Language);
     Clipboard = (0, tslib_1.__importStar)(Clipboard);
     UiNotification = (0, tslib_1.__importStar)(UiNotification);
     Prism_1 = (0, tslib_1.__importDefault)(Prism_1);
     PrismHelper = (0, tslib_1.__importStar)(PrismHelper);
-    prism_meta_1 = (0, tslib_1.__importDefault)(prism_meta_1);
     async function waitForIdle() {
         return new Promise((resolve, _reject) => {
             if (window.requestIdleCallback) {
@@ -69,12 +68,13 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             if (!this.language) {
                 throw new Error("No language detected");
             }
-            if (!prism_meta_1.default[this.language]) {
+            const PrismMeta = (await new Promise((resolve_1, reject_1) => { require(["../prism-meta"], resolve_1, reject_1); }).then(tslib_1.__importStar)).default;
+            if (!PrismMeta[this.language]) {
                 throw new Error(`Unknown language '${this.language}'`);
             }
             this.container.classList.add("highlighting");
             // Step 1) Load the requested grammar.
-            await new Promise((resolve_1, reject_1) => { require(["prism/components/prism-" + prism_meta_1.default[this.language].file], resolve_1, reject_1); }).then(tslib_1.__importStar);
+            await new Promise((resolve_2, reject_2) => { require(["prism/components/prism-" + PrismMeta[this.language].file], resolve_2, reject_2); }).then(tslib_1.__importStar);
             // Step 2) Perform the highlighting into a temporary element.
             await waitForIdle();
             const grammar = Prism_1.default.languages[this.language];
