@@ -62,6 +62,20 @@
 		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
+					{if $__wcf->session->getPermission('admin.user.canSearchUser')}
+						<li class="dropdown">
+							<a class="button dropdownToggle"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
+							<ul class="dropdownMenu">
+								<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
+								<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
+								<li><a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{lang}wcf.acp.user.quickSearch.disabled{/lang}</a></li>
+								<li><a href="{link controller='UserQuickSearch'}mode=pendingActivation{/link}">{lang}wcf.acp.user.quickSearch.pendingActivation{/lang}</a></li>
+								<li><a href="{link controller='UserQuickSearch'}mode=disabledAvatars{/link}">{lang}wcf.acp.user.quickSearch.disabledAvatars{/lang}</a></li>
+								<li><a href="{link controller='UserQuickSearch'}mode=disabledSignatures{/link}">{lang}wcf.acp.user.quickSearch.disabledSignatures{/lang}</a></li>
+							</ul>
+						</li>
+					{/if}
+
 					{if $__wcf->session->getPermission('admin.user.canAddUser')}
 						<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 					{/if}
