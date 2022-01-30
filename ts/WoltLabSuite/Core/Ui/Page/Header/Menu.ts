@@ -38,10 +38,7 @@ function enable(): void {
   if (Environment.browser() === "safari") {
     window.setTimeout(rebuildVisibility, 1000);
   } else {
-    rebuildVisibility();
-
-    // IE11 sometimes suffers from a timing issue
-    window.setTimeout(rebuildVisibility, 1000);
+    window.requestAnimationFrame(() => rebuildVisibility());
   }
 }
 
