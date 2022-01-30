@@ -200,8 +200,8 @@
 		{/if}
 		
 		<!-- page search -->
-		<li class="jsOnly">
-			<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+		<li>
+			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 	</ul>
 </nav>
