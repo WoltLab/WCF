@@ -1,4 +1,4 @@
-order allow,deny
-<Files ~ "\.(png|jpg|gif)$">
-	allow from all
-</Files>
+Require all denied
+<FilesMatch ".+\.(gif|jpe?g|png)$">
+	Require all granted
+</FilesMatch>
