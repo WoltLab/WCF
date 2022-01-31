@@ -26,7 +26,7 @@ class DatabaseException extends \wcf\system\database\DatabaseException
         // > Returns the exception code as integer in Exception but possibly as other type in Exception
         // descendants (for example as string in PDOException).
         if ($previous) {
-            $this->code = $previous->code;
+            $this->code = $previous->getCode();
         }
     }
 }
