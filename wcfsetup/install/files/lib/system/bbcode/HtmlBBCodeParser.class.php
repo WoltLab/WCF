@@ -381,11 +381,14 @@ class HtmlBBCodeParser extends BBCodeParser {
 			$attributes = '';
 		}
 		
+		$openingTag = StringUtil::encodeHTML('[' . $name . $attributes . ']');
+		$closingTag = StringUtil::encodeHTML('[/' . $name . ']');
+		
 		if ($openingTagOnly) {
-			return '[' . $name . $attributes . ']';
+			return $openingTag;
 		}
 		
-		return '[' . $name . $attributes . ']<!-- META_CODE_INNER_CONTENT -->[/' . $name . ']';
+		return $openingTag . '<!-- META_CODE_INNER_CONTENT -->' . $closingTag;
 	}
 	
 	/**
