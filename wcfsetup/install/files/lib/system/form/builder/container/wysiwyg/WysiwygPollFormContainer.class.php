@@ -286,7 +286,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
     {
         parent::populate();
 
-        $id = $this->wysiwygId . 'Poll';
+        $id = $this->wysiwygId . 'poll';
 
         // add data handler to group poll data into a sub-array of parameters
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
@@ -299,8 +299,8 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
                 $wysiwygId = $this->getWysiwygId();
 
                 foreach (self::FIELD_NAMES as $fieldName) {
-                    $parameters[$wysiwygId . '_pollData'][$fieldName] = $parameters['data'][$id . '_' . $fieldName];
-                    unset($parameters['data'][$id . '_' . $fieldName]);
+                    $parameters[$wysiwygId . '_pollData'][$fieldName] = $parameters['data'][$id . \ucfirst($fieldName)];
+                    unset($parameters['data'][$id . \ucfirst($fieldName)]);
                 }
 
                 // this will always add a poll array to the parameters but
@@ -311,16 +311,16 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
             }
         ));
 
-        $this->questionField = TextFormField::create($id . '_question')
+        $this->questionField = TextFormField::create($id . 'Question')
             ->label('wcf.poll.question')
             ->maximumLength(255);
 
         // if either options or question is given, the other must also be given
-        $this->optionsField = PollOptionsFormField::create($id . '_options')
+        $this->optionsField = PollOptionsFormField::create($id . 'Options')
             ->wysiwygId($this->getWysiwygId())
             ->addValidator(new FormFieldValidator('empty', static function (PollOptionsFormField $formField) use ($id) {
                 /** @var TextFormField $questionFormField */
-                $questionFormField = $formField->getDocument()->getNodeById($id . '_question');
+                $questionFormField = $formField->getDocument()->getNodeById($id . 'Question');
 
                 if (empty($formField->getValue()) && $questionFormField->getValue() !== '') {
                     $formField->addValidationError(new FormFieldValidationError('empty'));
@@ -329,7 +329,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
                 }
             }));
 
-        $this->endTimeField = DateFormField::create($id . '_endTime')
+        $this->endTimeField = DateFormField::create($id . 'EndTime')
             ->label('wcf.poll.endTime')
             ->supportTime()
             ->addValidator(new FormFieldValidator('futureTime', function (DateFormField $formField) {
@@ -345,13 +345,13 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
                 }
             }));
 
-        $this->maxVotesField = IntegerFormField::create($id . '_maxVotes')
+        $this->maxVotesField = IntegerFormField::create($id . 'MaxVotes')
             ->label('wcf.poll.maxVotes')
             ->minimum(1)
             ->maximum(POLL_MAX_OPTIONS)
             ->value(1);
 
-        $this->isChangeableField = BooleanFormField::create($id . '_isChangeable')
+        $this->isChangeableField = BooleanFormField::create($id . 'IsChangeable')
             ->label('wcf.poll.isChangeable');
 
         /** @var IPollHandler $pollHandler */
@@ -360,15 +360,15 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
             $pollHandler = $this->getObjectType()->getProcessor();
         }
 
-        $this->isPublicField = BooleanFormField::create($id . '_isPublic')
+        $this->isPublicField = BooleanFormField::create($id . 'IsPublic')
             ->label('wcf.poll.isPublic')
             ->available($pollHandler !== null && $pollHandler->canStartPublicPoll());
 
-        $this->resultsRequireVoteField = BooleanFormField::create($id . '_resultsRequireVote')
+        $this->resultsRequireVoteField = BooleanFormField::create($id . 'ResultsRequireVote')
             ->label('wcf.poll.resultsRequireVote')
             ->description('wcf.poll.resultsRequireVote.description');
 
-        $this->sortByVotesField = BooleanFormField::create($id . '_sortByVotes')
+        $this->sortByVotesField = BooleanFormField::create($id . 'SortByVotes')
             ->label('wcf.poll.sortByVotes');
 
         $this->appendChildren([
