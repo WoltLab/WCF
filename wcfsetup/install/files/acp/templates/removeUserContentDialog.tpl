@@ -1,5 +1,5 @@
 <div>
-	<p class="warning" style="margin-top: 0px;">{lang}wcf.acp.content.provider.removeContentWarning{/lang}</p>
+	<p class="warning">{lang}wcf.acp.content.provider.removeContentWarning{/lang}</p>
 	
 	<div class="section">
 		<header class="sectionHeader">
