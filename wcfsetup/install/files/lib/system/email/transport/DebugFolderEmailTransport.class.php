@@ -58,8 +58,26 @@ class DebugFolderEmailTransport implements IEmailTransport
         $eml .= "Delivered-To: <" . $envelopeTo->getAddress() . ">\r\n";
         $eml .= $email->getEmail();
         $eml .= "\r\n";
+
         $timestamp = \explode(' ', \microtime());
-        $filename = $timestamp[1] . '.M' . \substr($timestamp[0], 2) . '.eml';
+        // Mangle the envelopeTo address to be a valid hostname, as the
+        // Maildir format expects the last dot-separated part to be a valid hostname.
+        $mangledTo = \str_replace(
+            '@',
+            '.',
+            \preg_replace(
+                '/[^a-z0-9@]/',
+                '',
+                \strtolower($envelopeTo->getAddress())
+            )
+        );
+        $filename = \sprintf(
+            '%d.M%d.%s.eml',
+            $timestamp[1],
+            \substr($timestamp[0], 2),
+            \substr($mangledTo, 0, 25)
+        );
+
         \file_put_contents($this->folder . $filename, $eml);
 
         if (\PHP_EOL != "\r\n") {
