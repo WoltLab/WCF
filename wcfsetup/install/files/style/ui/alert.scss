@@ -204,6 +204,18 @@
 	}
 }
 
+/* dialogs */
+.dialogContent {
+	.error,
+	.info,
+	.success,
+	.warning {
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}
+
 /* inline infos */
 .innerInfo {
 	background-color: $wcfStatusInfoBackground;
