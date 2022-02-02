@@ -1,15 +1,22 @@
 {if $__showPoll|isset && $__showPoll}
 	<script data-relocate="true">
-		$(function() {
-			WCF.Language.addObject({
+		require(['Language', 'WoltLabSuite/Core/Ui/Poll/Editor', 'EventHandler'], function (Language, UiPollEditor, EventHandler) {
+			Language.addObject({
 				'wcf.poll.button.addOption': '{jslang}wcf.poll.button.addOption{/jslang}',
-				'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}'
+				'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}',
 			});
-			
-			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ], {@POLL_MAX_OPTIONS});
+
+			new UiPollEditor(
+				'pollOptionContainer',
+				[ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
+				"",
+				{
+					maxOptions: {@POLL_MAX_OPTIONS}
+				}
+			);
 		});
 	</script>
-	
+
 	<div id="poll" class="jsOnly messageTabMenuContent">
 		<dl{if $errorField == 'pollOptions'} class="formError"{/if}>
 			<dt>
@@ -80,7 +87,7 @@
 				<label><input type="checkbox" name="pollSortByVotes" value="1"{if $pollSortByVotes} checked{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
 			</dd>
 		</dl>
-		
+
 		{event name='fields'}
 	</div>
 {/if}

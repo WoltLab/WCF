@@ -313,7 +313,7 @@ class UiPollEditor {
       this.getOptions().forEach((option, i) => {
         const input = document.createElement("input");
         input.type = "hidden";
-        input.name = `${this.wysiwygId}Poll_options[${i}]`;
+        input.name = `${this.wysiwygId}pollOptions[${i}]`;
         input.value = option;
         form.appendChild(input);
       });
@@ -361,6 +361,7 @@ class UiPollEditor {
     return {
       [this.questionField.id]: this.questionField.value,
       [this.wysiwygId + "Poll_options"]: this.getOptions(),
+      [this.wysiwygId + "pollOptions"]: this.getOptions(),
       [this.endTimeField.id]: this.endTimeField.value,
       [this.maxVotesField.id]: this.maxVotesField.value,
       [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,

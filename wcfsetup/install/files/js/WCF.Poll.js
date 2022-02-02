@@ -15,6 +15,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 *
 	 * @param        string                containerID
 	 * @param        array<object>        optionList
+	 * @deprecated	5.5 use `WoltLabSuite/Core/Ui/Poll/Editor` instead
 	 */
 	WCF.Poll.Management = Class.extend({
 		/**
