@@ -2,8 +2,10 @@
 
 namespace wcf\data\moderation\queue;
 
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\moderation\queue\ModerationQueueReportManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -18,6 +20,8 @@ use wcf\util\StringUtil;
  */
 class ModerationQueueReportAction extends ModerationQueueAction
 {
+    private const ALLOWED_REPORTS_PER_10M = 10;
+
     /**
      * @inheritDoc
      */
@@ -178,6 +182,14 @@ class ModerationQueueReportAction extends ModerationQueueAction
             $this->parameters['message'] = \mb_substr($this->parameters['messages'], 0, 64000);
         }
 
+        $requests = FloodControl::getInstance()->countContent(
+            'com.woltlab.wcf.moderation.report',
+            new \DateInterval('PT10M')
+        );
+        if ($requests['count'] >= self::ALLOWED_REPORTS_PER_10M) {
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.page.error.flood'));
+        }
+
         $this->validatePrepareReport();
     }
 
@@ -200,6 +212,8 @@ class ModerationQueueReportAction extends ModerationQueueAction
                 $this->parameters['message']
             );
         }
+
+        FloodControl::getInstance()->registerContent('com.woltlab.wcf.moderation.report');
 
         return [
             'reported' => 1,
