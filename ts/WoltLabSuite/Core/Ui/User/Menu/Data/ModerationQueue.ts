@@ -138,7 +138,7 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
     let badge = this.button.querySelector<HTMLElement>(".badge");
     if (badge === null && counter > 0) {
       badge = document.createElement("span");
-      badge.classList.add("badge badgeUpdate");
+      badge.classList.add("badge", "badgeUpdate");
 
       this.button.querySelector("a")!.append(badge);
     }
