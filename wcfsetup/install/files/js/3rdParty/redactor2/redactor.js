@@ -4829,7 +4829,7 @@
 					
 					document.execCommand('strikethrough');
 					
-					this.selection.saveInstant();
+					this.selection.save();
 
 					// WoltLab: Chrome misbehaves in some cases, causing the `<strike>` element for
 					// contained elements to be stripped. Instead, those children are assigned the
@@ -4879,7 +4879,7 @@
 						}
 					});
 					
-					this.selection.restoreInstant();
+					this.selection.restore();
 				},
 				cleanInsideOrParent: function ($el, params) {
 					if (params) {
