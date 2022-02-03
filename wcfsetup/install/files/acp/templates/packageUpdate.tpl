@@ -9,7 +9,7 @@
 		{foreach from=$availableUpdates item=update}
 		<div class="contentItem packageUpdate" data-package="{$update[package]}" data-version="{$update[newVersion][packageVersion]}">
 			<div class="contentItemContent">
-				<div class="contentItemTitle">{$update[packageName]|language}</div>
+				<div class="contentItemTitle">{$update[packageName]|phrase}</div>
 				<div class="contentItemDescription">
 					<small
 						class="jsTooltip{if $update[newVersion][servers][0][packageUpdateServerID] === $woltlabUpdateServer->packageUpdateServerID} packageSearchAuthorWoltlab{/if}"

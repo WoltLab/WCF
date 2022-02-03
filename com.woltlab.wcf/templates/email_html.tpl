@@ -144,7 +144,7 @@
 	</head>
 	<body>
 	{capture assign='header'}
-	<h1>{@PAGE_TITLE|language}</h1>
+	<h1>{PAGE_TITLE|phrase}</h1>
 	{/capture}
 	{include file='email_paddingHelper' block=true class='header' content=$header sandbox=true}
 
@@ -158,10 +158,10 @@
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>
 	{content}
-	{if MAIL_SIGNATURE_HTML|language}
-	{@MAIL_SIGNATURE_HTML|language}
+	{if MAIL_SIGNATURE_HTML|phrase}
+	{@MAIL_SIGNATURE_HTML|phrase}
 	{else}
-	{@MAIL_SIGNATURE|language|newlineToBreak}
+	{@MAIL_SIGNATURE|phrase|newlineToBreak}
 	{/if}
 	{/content}{/hascontent}{/capture}
 	{include file='email_paddingHelper' block=true class='footer' content=$footer sandbox=true}

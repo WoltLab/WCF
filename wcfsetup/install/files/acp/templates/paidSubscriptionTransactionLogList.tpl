@@ -99,7 +99,7 @@
 						<td class="columnID columnLogID">{@$log->logID}</td>
 						<td class="columnTitle columnLogMessage"><a href="{link controller='PaidSubscriptionTransactionLog' id=$log->logID}{/link}">{$log->logMessage}</a></td>
 						<td class="columnText columnUsername"><a href="{link controller='UserEdit' id=$log->userID}{/link}" title="{lang}wcf.acp.user.edit{/lang}">{$log->username}</a></td>
-						<td class="columnText columnSubscriptionTitle">{$log->title|language}</td>
+						<td class="columnText columnSubscriptionTitle">{$log->title|phrase}</td>
 						<td class="columnText columnPaymentMethod">{lang}wcf.payment.{@$log->getPaymentMethodName()}{/lang}</td>
 						<td class="columnText columnTransactionID">{$log->transactionID}</td>
 						<td class="columnDate columnLogTime">{@$log->logTime|time}</td>

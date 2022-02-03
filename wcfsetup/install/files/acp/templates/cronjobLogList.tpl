@@ -42,7 +42,7 @@
 					<select name="cronjobID" aria-label="{lang}wcf.acp.cronjob.description{/lang}">
 						<option value="0">{lang}wcf.acp.cronjob.description{/lang}</option>
 						{foreach from=$availableCronjobs item=availableCronjob}
-							<option value="{@$availableCronjob->cronjobID}"{if $availableCronjob->cronjobID == $cronjobID} selected{/if}>{$availableCronjob->description|language}</option>
+							<option value="{@$availableCronjob->cronjobID}"{if $availableCronjob->cronjobID == $cronjobID} selected{/if}>{$availableCronjob->getDescription()}</option>
 						{/foreach}
 					</select>
 				</dd>
@@ -99,7 +99,7 @@
 					<tr>
 						<td class="columnID columnCronjobID">{@$cronjobLog->cronjobID}</td>
 						<td class="columnTitle columnClassName">{$cronjobLog->className}</td>
-						<td class="columnText columnDescription">{$cronjobLog->description|language}</td>
+						<td class="columnText columnDescription">{$cronjobLog->description|phrase}</td>
 						<td class="columnDate columnExecTime">{if $cronjobLog->execTime}{@$cronjobLog->execTime|time}{/if}</td>
 						
 						<td class="columnText columnSuccess">
