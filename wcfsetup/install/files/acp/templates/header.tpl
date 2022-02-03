@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex">
-	<title>{if $pageTitle|isset}{@$pageTitle|phrase} - {/if}{jslang}wcf.global.acp{/jslang}{if PACKAGE_ID} - {PAGE_TITLE|phrase}{/if}</title>
+	<title>{if $pageTitle|isset}{$pageTitle|phrase} - {/if}{jslang}wcf.global.acp{/jslang}{if PACKAGE_ID} - {PAGE_TITLE|phrase}{/if}</title>
 	
 	{* work-around for Microsoft Edge that sometimes does not apply this style, if it was set via an external stylesheet *}
 	<style>ol, ul { list-style: none; }</style>

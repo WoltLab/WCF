@@ -3235,7 +3235,7 @@ aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
 <p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurückgesetzt. Es ist nun
 erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
-Benutzerkonto {$mailbox->getUser()->username} auf der Seite <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|phrase}</a>
+Benutzerkonto {$mailbox->getUser()->username} auf der Seite <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a>
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Neues Kennwort setzen]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[

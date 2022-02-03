@@ -3163,7 +3163,7 @@ the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
 <p>An administrator has reset your password. You are now required to set a new password to be able to use your
-user account {$mailbox->getUser()->username} on the website <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|phrase}</a> again:</p>]]></item>
+user account {$mailbox->getUser()->username} on the website <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phrase}</a> again:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Choose new password]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
 <p>If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} you’ll have to use

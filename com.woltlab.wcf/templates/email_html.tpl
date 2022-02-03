@@ -144,7 +144,7 @@
 	</head>
 	<body>
 	{capture assign='header'}
-	<h1>{@PAGE_TITLE|phrase}</h1>
+	<h1>{PAGE_TITLE|phrase}</h1>
 	{/capture}
 	{include file='email_paddingHelper' block=true class='header' content=$header sandbox=true}
 
