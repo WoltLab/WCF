@@ -44,7 +44,7 @@
 	
 	<div id="information" class="hidden tabMenuContent">
 		<div class="section">
-			{if $package->packageDescription|language}
+			{if $package->getDescription()}
 				<dl>
 					<dt>{lang}wcf.acp.package.description{/lang}</dt>
 					<dd>{$package->getDescription()}</dd>

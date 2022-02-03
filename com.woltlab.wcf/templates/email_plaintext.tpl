@@ -7,6 +7,6 @@
 
 -- {* this line ends with a space *}
 {content}
-{@MAIL_SIGNATURE|language}
+{@MAIL_SIGNATURE|phrase}
 {/content}
 {/hascontent}

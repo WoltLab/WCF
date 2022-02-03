@@ -8,7 +8,7 @@
 		{/if}
 	{/if}
 	
-	<title>{if $pageTitle}{@$pageTitle} - {/if}{PAGE_TITLE|language}</title>
+	<title>{if $pageTitle}{@$pageTitle} - {/if}{PAGE_TITLE|phrase}</title>
 	
 	{include file='headInclude'}
 	
@@ -75,8 +75,8 @@
 	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {@$__mainItemScope}{/if}>
 		<div class="layoutBoundary">
 			{hascontent}
-				{if !$__sidebarLeftShow|isset}{assign var='__sidebarLeftShow' value='wcf.global.button.showSidebarLeft'|language}{/if}
-				{if !$__sidebarLeftHide|isset}{assign var='__sidebarLeftHide' value='wcf.global.button.hideSidebar'|language}{/if}
+				{if !$__sidebarLeftShow|isset}{assign var='__sidebarLeftShow' value='wcf.global.button.showSidebarLeft'|phrase}{/if}
+				{if !$__sidebarLeftHide|isset}{assign var='__sidebarLeftHide' value='wcf.global.button.hideSidebar'|phrase}{/if}
 				
 				<aside class="sidebar boxesSidebarLeft{if !$__sidebarLeftHasMenu|empty || $__wcf->getBoxHandler()->sidebarLeftHasMenu()} boxesSidebarLeftHasMenu{/if}" aria-label="{lang}wcf.page.sidebar.left{/lang}" data-show-sidebar="{$__sidebarLeftShow}" data-hide-sidebar="{$__sidebarLeftHide}" data-show-navigation="{lang}wcf.global.button.showNavigation{/lang}" data-hide-navigation="{lang}wcf.global.button.hideNavigation{/lang}">
 					<div class="boxContainer">
@@ -113,8 +113,8 @@
 					{else}
 						{if $contentTitle|empty}
 							{if $__wcf->isLandingPage() && USE_PAGE_TITLE_ON_LANDING_PAGE}
-								{capture assign='contentTitle'}{PAGE_TITLE|language}{/capture}
-								{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
+								{capture assign='contentTitle'}{PAGE_TITLE|phrase}{/capture}
+								{capture assign='contentDescription'}{PAGE_DESCRIPTION|phrase}{/capture}
 							{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
 								{capture assign='contentTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
 							{/if}

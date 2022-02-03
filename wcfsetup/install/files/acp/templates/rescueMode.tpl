@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex">
-	<title>{lang}wcf.acp.rescueMode{/lang} - {lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
+	<title>{lang}wcf.acp.rescueMode{/lang} - {lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|phrase}{/if}</title>
 	
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600">
 	<link rel="stylesheet" href="{$pageURL}&amp;proxy=css">

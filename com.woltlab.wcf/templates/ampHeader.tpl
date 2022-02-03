@@ -2,7 +2,7 @@
 <html amp lang="{@$__wcf->language->getFixedLanguageCode()}">
 	<head>
 		<meta charset="utf-8">
-		<title>{@$pageTitle} - {PAGE_TITLE|language}</title>
+		<title>{@$pageTitle} - {PAGE_TITLE|phrase}</title>
 		<link rel="canonical" href="{$regularCanonicalURL}">
 		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 		{if !$headContent|empty}

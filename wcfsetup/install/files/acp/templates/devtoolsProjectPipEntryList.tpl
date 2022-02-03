@@ -68,7 +68,7 @@
 			<thead>
 				<tr>
 					{foreach from=$entryList->getKeys() item=languageItem name=entryListKeys}
-						<th{if $tpl[foreach][entryListKeys][first]} colspan="2"{/if}>{@$languageItem|language}</th>
+						<th{if $tpl[foreach][entryListKeys][first]} colspan="2"{/if}>{@$languageItem|phrase}</th>
 					{/foreach}
 				</tr>
 			</thead>

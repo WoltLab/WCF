@@ -53,7 +53,7 @@
 		require(['Ui/Dialog'], function (UiDialog) {
 			UiDialog.openStatic('login', null, {
 				closable: false,
-				title: '{@$pageTitle|language}',
+				title: '{jslang}wcf.user.login{/jslang}',
 				onShow: function() {
 					// The focus is set in Dialog.js via setTimeout(), so this has to be done the same way here.
 					setTimeout(function() {

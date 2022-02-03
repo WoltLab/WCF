@@ -66,7 +66,7 @@
 						<td class="columnID columnRankID">{@$userRank->rankID}</td>
 						<td class="columnTitle columnRankTitle"><a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.acp.user.rank.edit{/lang}" class="badge label{if $userRank->cssClassName} {$userRank->cssClassName}{/if}">{$userRank->getTitle()}</a></td>
 						<td class="columnText columnRankImage">{if $userRank->rankImage}{@$userRank->getImage()}{/if}</td>
-						<td class="columnText columnGroupID">{$userRank->groupName|language}</td>
+						<td class="columnText columnGroupID">{$userRank->groupName|phrase}</td>
 						<td class="columnText columnRequiredGender">
 							{if $userRank->requiredGender}
 								{if $userRank->requiredGender == 1}

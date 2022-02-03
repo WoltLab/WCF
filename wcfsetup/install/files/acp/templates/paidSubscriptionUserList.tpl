@@ -95,7 +95,7 @@
 						</td>
 						<td class="columnID columnSubscriptionUserID">{@$subscriptionUser->subscriptionUserID}</td>
 						<td class="columnText columnUsername"><a href="{link controller='UserEdit' id=$subscriptionUser->userID}{/link}" title="{lang}wcf.acp.user.edit{/lang}">{$subscriptionUser->username}</a></td>
-						<td class="columnText columnSubscriptionTitle">{$subscriptionUser->title|language}</td>
+						<td class="columnText columnSubscriptionTitle">{$subscriptionUser->title|phrase}</td>
 						<td class="columnDate columnEndDate">{if $subscriptionUser->endDate}{@$subscriptionUser->endDate|time}{/if}</td>
 						
 						{event name='columns'}

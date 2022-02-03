@@ -14,7 +14,7 @@
 					{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}
 					{if $groupIsOwner && $option->optionName|in_array:$ownerGroupPermissions}<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}"></span> {/if}
 					
-					{$langPrefix|concat:$option->optionName|language}
+					{$langPrefix|concat:$option->optionName|phrase}
 				</label>
 			{/if}
 		</dt>

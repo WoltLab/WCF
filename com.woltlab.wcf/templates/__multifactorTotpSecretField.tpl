@@ -3,7 +3,7 @@
 	<canvas></canvas><br>
 	<kbd {*
 	*}class="totpSecret" {*
-	*}data-issuer="{PAGE_TITLE|language}" {*
+	*}data-issuer="{PAGE_TITLE|phrase}" {*
 	*}data-accountname="{$__wcf->user->username}"{*
 	*}>{$field->getEncodedValue()}</kbd>
 	
