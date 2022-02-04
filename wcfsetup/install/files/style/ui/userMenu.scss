@@ -31,7 +31,8 @@
 
 .dropdownMenuContainer .userMenu {
 	border-radius: 5px;
-	box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0,
+		rgb(255 255 255 / 50%) 0 0 0 1px inset;
 	position: fixed;
 	width: 400px;
 	z-index: 450;
@@ -147,6 +148,10 @@ body:not(.touch) .userMenuButton {
 
 body:not(.touch) .userMenuItem:hover {
 	background-color: var(--background-color-active);
+}
+
+.userMenuItemLinkPlain {
+	font-weight: 600;
 }
 
 .userMenuItemLink,

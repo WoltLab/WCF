@@ -155,6 +155,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         getEmptyViewMessage() {
             return this.options.noItems;
         }
+        hasPlainTitle() {
+            return false;
+        }
         hasUnreadContent() {
             return this.counter > 0;
         }

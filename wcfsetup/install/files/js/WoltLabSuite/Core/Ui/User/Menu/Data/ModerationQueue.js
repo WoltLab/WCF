@@ -80,6 +80,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         getIdentifier() {
             return "com.woltlab.wcf.moderation";
         }
+        hasPlainTitle() {
+            return true;
+        }
         hasUnreadContent() {
             return this.counter > 0;
         }

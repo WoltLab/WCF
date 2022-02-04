@@ -118,6 +118,10 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
     return "com.woltlab.wcf.moderation";
   }
 
+  hasPlainTitle(): boolean {
+    return true;
+  }
+
   hasUnreadContent(): boolean {
     return this.counter > 0;
   }

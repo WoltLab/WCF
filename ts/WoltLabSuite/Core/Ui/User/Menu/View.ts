@@ -182,6 +182,11 @@ export class UserMenuView {
       this.markAsRead(element);
     });
 
+    if (this.provider.hasPlainTitle()) {
+      const link = element.querySelector(".userMenuItemLink") as HTMLAnchorElement;
+      link.classList.add("userMenuItemLinkPlain");
+    }
+
     return element;
   }
 

@@ -145,6 +145,10 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 await this.provider.markAsRead(itemData.objectId);
                 this.markAsRead(element);
             });
+            if (this.provider.hasPlainTitle()) {
+                const link = element.querySelector(".userMenuItemLink");
+                link.classList.add("userMenuItemLinkPlain");
+            }
             return element;
         }
         markAsRead(element) {

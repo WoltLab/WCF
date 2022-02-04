@@ -39,6 +39,8 @@ export interface UserMenuProvider {
 
   getView(): UserMenuView;
 
+  hasPlainTitle(): boolean;
+
   hasUnreadContent(): boolean;
 
   isStale(): boolean;
