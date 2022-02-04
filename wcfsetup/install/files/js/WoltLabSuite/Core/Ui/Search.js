@@ -133,7 +133,9 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                 _scrollTop = undefined;
             }
         }
-        _pageHeaderSearchInput.blur();
+        if (_isMobile) {
+            _pageHeaderSearchInput.blur();
+        }
         const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType");
         Simple_1.default.close(scope.id);
     }

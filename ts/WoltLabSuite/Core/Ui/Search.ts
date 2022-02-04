@@ -161,7 +161,9 @@ function closeSearch(): void {
     }
   }
 
-  _pageHeaderSearchInput.blur();
+  if (_isMobile) {
+    _pageHeaderSearchInput.blur();
+  }
 
   const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType")!;
   UiDropdownSimple.close(scope.id);
