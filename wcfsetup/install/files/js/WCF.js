@@ -4471,7 +4471,13 @@ WCF.Search.Base = Class.extend({
 			return;
 		}
 		
-		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
+		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', (origin, identifier) => {
+			if (origin === "dropdown" && identifier === this._searchInput[0].parentElement.id) {
+				return;
+			}
+
+			this._clearList();
+		});
 		
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
