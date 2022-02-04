@@ -91,6 +91,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="eventListener" />
 		<instruction type="language" />
 		<instruction type="mediaProvider" />
+		<instruction type="userGroupOption" />
 
 		<!-- Updates to <allowSpidersToIndex> only -->
 		<instruction type="page" />
