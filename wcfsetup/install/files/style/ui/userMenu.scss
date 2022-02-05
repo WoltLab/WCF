@@ -269,6 +269,10 @@ body:not(.touch) .userMenuItemMarkAsRead {
 	}
 }
 
+.userMenuContent .ps-scrollbar-y-rail {
+	z-index: 2;
+}
+
 .userMenuContentDivider {
 	border-top: 1px solid var(--border-color);
 }
