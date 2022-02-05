@@ -643,12 +643,6 @@ class PackageInstallationScheduler
     {
         if (!isset($fromversions[$newVersion])) {
             throw new UnknownUpdatePath($package, $currentVersion, $newVersion);
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.unknown', [
-                'currentVersion' => $currentVersion,
-                'newVersion' => $newVersion,
-                'package' => $package,
-                'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
-            ]));
         }
 
         // find direct update
@@ -672,12 +666,19 @@ class PackageInstallationScheduler
                         '>'
                     ) && Package::compareVersion($packageVersion, $newVersion, '<')
                 ) {
-                    $innerUpdateThreadList[] = $this->findShortestUpdateThread(
-                        $package,
-                        $fromversions,
-                        $currentVersion,
-                        $packageVersion
-                    ) + [$packageVersion => $newVersion];
+                    try {
+                        $innerUpdateThreadList[] = $this->findShortestUpdateThread(
+                            $package,
+                            $fromversions,
+                            $currentVersion,
+                            $packageVersion
+                        ) + [$packageVersion => $newVersion];
+                    } catch (IncoherentUpdatePath $e) {
+                        // Ignore issues caused by multiple split update paths
+                        // where the first path has incoherent, but other valid
+                        // paths exist.
+                        continue;
+                    }
                 }
             }
 
@@ -692,15 +693,6 @@ class PackageInstallationScheduler
 
         if (empty($updateThreadList)) {
             throw new IncoherentUpdatePath($package, $currentVersion, $newVersion);
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                'wcf.acp.package.update.path.incoherent',
-                [
-                    'currentVersion' => $currentVersion,
-                    'newVersion' => $newVersion,
-                    'package' => $package,
-                    'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
-                ]
-            ));
         }
 
         // sort by length
