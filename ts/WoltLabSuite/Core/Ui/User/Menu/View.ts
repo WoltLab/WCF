@@ -182,6 +182,16 @@ export class UserMenuView {
       this.markAsRead(element);
     });
 
+    if (itemData.usernames.length > 0) {
+      const content = element.querySelector(".userMenuItemContent") as HTMLElement;
+      const usernames = document.createElement("div");
+      usernames.classList.add("userMenuItemUsernames");
+      usernames.textContent = itemData.usernames.join(", ");
+      content.insertAdjacentElement("afterend", usernames);
+
+      element.classList.add("userMenuItemWithUsernames");
+    }
+
     if (this.provider.hasPlainTitle()) {
       const link = element.querySelector(".userMenuItemLink") as HTMLAnchorElement;
       link.classList.add("userMenuItemLinkPlain");

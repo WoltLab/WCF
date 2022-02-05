@@ -145,6 +145,14 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 await this.provider.markAsRead(itemData.objectId);
                 this.markAsRead(element);
             });
+            if (itemData.usernames.length > 0) {
+                const content = element.querySelector(".userMenuItemContent");
+                const usernames = document.createElement("div");
+                usernames.classList.add("userMenuItemUsernames");
+                usernames.textContent = itemData.usernames.join(", ");
+                content.insertAdjacentElement("afterend", usernames);
+                element.classList.add("userMenuItemWithUsernames");
+            }
             if (this.provider.hasPlainTitle()) {
                 const link = element.querySelector(".userMenuItemLink");
                 link.classList.add("userMenuItemLinkPlain");
