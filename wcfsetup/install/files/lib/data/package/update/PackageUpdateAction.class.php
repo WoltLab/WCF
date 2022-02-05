@@ -752,7 +752,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         } catch (PackageUpdateUnauthorizedException $e) {
             return [
                 'template' => $e->getRenderedTemplate(),
-                'type' => 'authenticationRequired',
+                'type' => 'authorizationRequired',
             ];
         }
 
