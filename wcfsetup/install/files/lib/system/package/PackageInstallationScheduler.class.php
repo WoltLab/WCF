@@ -11,6 +11,8 @@ use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
+use wcf\system\package\exception\IncoherentUpdatePath;
+use wcf\system\package\exception\UnknownUpdatePath;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
@@ -592,7 +594,11 @@ class PackageInstallationScheduler
         \uksort($fromversions, [Package::class, 'compareVersion']);
 
         // find shortest update thread
-        $updateThread = $this->findShortestUpdateThread($package->package, $fromversions, $packageVersion, $version);
+        try {
+            $updateThread = $this->findShortestUpdateThread($package->package, $fromversions, $packageVersion, $version);
+        } catch (IncoherentUpdatePath | UnknownUpdatePath $e) {
+            throw new NamedUserException($e->getMessage(), 0, $e);
+        }
 
         // process update thread
         foreach ($updateThread as $fromversion => $toVersion) {
@@ -636,12 +642,7 @@ class PackageInstallationScheduler
     protected function findShortestUpdateThread($package, $fromversions, $currentVersion, $newVersion)
     {
         if (!isset($fromversions[$newVersion])) {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.unknown', [
-                'currentVersion' => $currentVersion,
-                'newVersion' => $newVersion,
-                'package' => $package,
-                'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
-            ]));
+            throw new UnknownUpdatePath($package, $currentVersion, $newVersion);
         }
 
         // find direct update
@@ -665,12 +666,19 @@ class PackageInstallationScheduler
                         '>'
                     ) && Package::compareVersion($packageVersion, $newVersion, '<')
                 ) {
-                    $innerUpdateThreadList[] = $this->findShortestUpdateThread(
-                        $package,
-                        $fromversions,
-                        $currentVersion,
-                        $packageVersion
-                    ) + [$packageVersion => $newVersion];
+                    try {
+                        $innerUpdateThreadList[] = $this->findShortestUpdateThread(
+                            $package,
+                            $fromversions,
+                            $currentVersion,
+                            $packageVersion
+                        ) + [$packageVersion => $newVersion];
+                    } catch (IncoherentUpdatePath $e) {
+                        // Ignore issues caused by multiple split update paths
+                        // where the first path has incoherent, but other valid
+                        // paths exist.
+                        continue;
+                    }
                 }
             }
 
@@ -684,15 +692,7 @@ class PackageInstallationScheduler
         }
 
         if (empty($updateThreadList)) {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                'wcf.acp.package.update.path.incoherent',
-                [
-                    'currentVersion' => $currentVersion,
-                    'newVersion' => $newVersion,
-                    'package' => $package,
-                    'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
-                ]
-            ));
+            throw new IncoherentUpdatePath($package, $currentVersion, $newVersion);
         }
 
         // sort by length
