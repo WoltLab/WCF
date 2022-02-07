@@ -119,8 +119,10 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
         } else if (cell.classList.contains("columnUploadTime")) {
           cell.innerHTML = "";
           cell.appendChild(DateUtil.getTimeElement(new Date()));
-        } else if (cell.classList.contains("columnDigits")) {
+        } else if (cell.classList.contains("columnFilesize")) {
           cell.textContent = FileUtil.formatFilesize(file.size);
+        } else if (cell.classList.contains("columnDownloads")) {
+          cell.textContent = "0";
         } else {
           // empty the other cells
           cell.innerHTML = "";

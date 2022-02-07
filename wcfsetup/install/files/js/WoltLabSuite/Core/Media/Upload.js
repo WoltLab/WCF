@@ -93,8 +93,11 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         cell.innerHTML = "";
                         cell.appendChild(DateUtil.getTimeElement(new Date()));
                     }
-                    else if (cell.classList.contains("columnDigits")) {
+                    else if (cell.classList.contains("columnFilesize")) {
                         cell.textContent = FileUtil.formatFilesize(file.size);
+                    }
+                    else if (cell.classList.contains("columnDownloads")) {
+                        cell.textContent = "0";
                     }
                     else {
                         // empty the other cells

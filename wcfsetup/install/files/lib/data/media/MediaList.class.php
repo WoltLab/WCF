@@ -49,6 +49,6 @@ class MediaList extends DatabaseObjectList
         $conditionBuilder->add('media_content.caption LIKE ?', [$searchString]);
         $conditionBuilder->add('media_content.altText LIKE ?', [$searchString]);
         $conditionBuilder->add('media.filename LIKE ?', [$searchString]);
-        $this->getConditionBuilder()->add($conditionBuilder->__toString(), $conditionBuilder->getParameters());
+        $this->getConditionBuilder()->add('(' . $conditionBuilder->__toString() . ')', $conditionBuilder->getParameters());
     }
 }
