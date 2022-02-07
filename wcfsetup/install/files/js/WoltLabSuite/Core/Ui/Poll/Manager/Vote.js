@@ -20,7 +20,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "./Manager", "..
             this.initSelects();
         }
         initButton() {
-            const button = this.pollManager.getPollContainer().querySelector(".votePollButton") || null;
+            const button = this.pollManager.getPollContainer().querySelector(".votePollButton");
             if (!button) {
                 throw new Error(`Could not find vote button for poll "${this.pollManager.pollID}".`);
             }

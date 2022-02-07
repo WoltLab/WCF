@@ -97,7 +97,7 @@ export class Manager {
   }
 
   private getInnerContainer(): HTMLElement {
-    const innerContainer = (this.poll.querySelector<HTMLElement>(".pollInnerContainer") as HTMLElement) || null;
+    const innerContainer = this.poll.querySelector<HTMLElement>(".pollInnerContainer");
 
     if (!innerContainer) {
       throw new Error(`Could not find inner container for poll "${this.pollID}"`);

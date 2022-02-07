@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Ajax/Req
             request.sendRequest();
         }
         initButton() {
-            const button = this.pollManager.getPollContainer().querySelector(this.getButtonSelector()) || null;
+            const button = this.pollManager.getPollContainer().querySelector(this.getButtonSelector());
             if (!button) {
                 throw new Error(`Could not find button with selector "${this.getButtonSelector()}" for poll "${this.pollManager.pollID}"`);
             }

@@ -28,7 +28,7 @@ export class Vote {
   }
 
   private initButton(): void {
-    const button = (this.pollManager.getPollContainer().querySelector(".votePollButton") as HTMLButtonElement) || null;
+    const button = this.pollManager.getPollContainer().querySelector<HTMLButtonElement>(".votePollButton");
 
     if (!button) {
       throw new Error(`Could not find vote button for poll "${this.pollManager.pollID}".`);

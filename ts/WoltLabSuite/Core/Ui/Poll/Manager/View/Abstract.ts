@@ -43,8 +43,7 @@ export abstract class Abstract {
   }
 
   protected initButton(): void {
-    const button =
-      (this.pollManager.getPollContainer().querySelector(this.getButtonSelector()) as HTMLButtonElement) || null;
+    const button = this.pollManager.getPollContainer().querySelector<HTMLButtonElement>(this.getButtonSelector());
 
     if (!button) {
       throw new Error(

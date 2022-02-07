@@ -23,8 +23,7 @@ export class Participants {
   }
 
   protected initButton(): void {
-    const button =
-      (this.pollManager.getPollContainer().querySelector(".showPollParticipantsButton") as HTMLButtonElement) || null;
+    const button = this.pollManager.getPollContainer().querySelector<HTMLButtonElement>(".showPollParticipantsButton");
 
     if (!button) {
       throw new Error(
@@ -58,7 +57,7 @@ export class Participants {
   }
 
   public showButton(): void {
-      this.button.hidden = false;
+    this.button.hidden = false;
   }
 }
 

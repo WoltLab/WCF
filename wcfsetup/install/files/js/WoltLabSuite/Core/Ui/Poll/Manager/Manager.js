@@ -66,7 +66,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../StringUtil
             return this.canViewResults && this.isPublic;
         }
         getInnerContainer() {
-            const innerContainer = this.poll.querySelector(".pollInnerContainer") || null;
+            const innerContainer = this.poll.querySelector(".pollInnerContainer");
             if (!innerContainer) {
                 throw new Error(`Could not find inner container for poll "${this.pollID}"`);
             }

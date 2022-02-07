@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "../../../User/List"], function (require,
             this.initButton();
         }
         initButton() {
-            const button = this.pollManager.getPollContainer().querySelector(".showPollParticipantsButton") || null;
+            const button = this.pollManager.getPollContainer().querySelector(".showPollParticipantsButton");
             if (!button) {
                 throw new Error(`Could not find button with selector "showPollParticipantsButton" for poll "${this.pollManager.pollID}"`);
             }
