@@ -49,7 +49,7 @@
 					<button class="small showResultsButton"{if $__pollView === 'result' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showResult{/lang}</button>
 				{/if}
 				{if $poll->canViewParticipants() || ($poll->canVote() && $poll->isPublic)}
-					<button class="small jsButtonPollShowParticipants"{if $__pollView === 'vote' || !$poll->canSeeResult()} style="display: none"{/if}>{lang}wcf.poll.button.showParticipants{/lang}</button>
+					<button class="small showPollParticipantsButton"{if $__pollView === 'vote' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showParticipants{/lang}</button>
 				{/if}
 
 				{event name='pollButtons'}

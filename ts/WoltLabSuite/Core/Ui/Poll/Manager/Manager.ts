@@ -9,6 +9,7 @@
  */
 
 import DomUtil from "../../../Dom/Util";
+import Participants from "./View/Participants";
 import Results from "./View/Results";
 import VoteView from "./View/Vote";
 import VoteHandler from "./Vote";
@@ -31,8 +32,6 @@ export class Manager {
   private resultsView?: Results;
 
   private voteHandler?: VoteHandler;
-
-  private activeView?: PollViews;
 
   public constructor(
     pollID: number,
@@ -65,6 +64,10 @@ export class Manager {
       this.voteView = new VoteView(this);
       this.voteHandler = new VoteHandler(this);
     }
+
+    if (this.canViewParticipants()) {
+      new Participants(this);
+    }
   }
 
   public getPollContainer(): HTMLElement {
@@ -72,8 +75,6 @@ export class Manager {
   }
 
   public changeView(view: PollViews, html: string): void {
-    this.activeView = view;
-
     this.voteView?.checkVisibility(view);
     this.resultsView?.checkVisibility(view);
     this.voteHandler?.checkVisibility(view);

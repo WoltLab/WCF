@@ -7,11 +7,12 @@
  * @module  WoltLabSuite/Core/Ui/Poll/Manager/Manager
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Util_1, Results_1, Vote_1, Vote_2) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Util_1, Participants_1, Results_1, Vote_1, Vote_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Manager = exports.PollViews = void 0;
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Participants_1 = (0, tslib_1.__importDefault)(Participants_1);
     Results_1 = (0, tslib_1.__importDefault)(Results_1);
     Vote_1 = (0, tslib_1.__importDefault)(Vote_1);
     Vote_2 = (0, tslib_1.__importDefault)(Vote_2);
@@ -40,13 +41,15 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Results", ".
                 this.voteView = new Vote_1.default(this);
                 this.voteHandler = new Vote_2.default(this);
             }
+            if (this.canViewParticipants()) {
+                new Participants_1.default(this);
+            }
         }
         getPollContainer() {
             return this.poll;
         }
         changeView(view, html) {
             var _a, _b, _c, _d;
-            this.activeView = view;
             (_a = this.voteView) === null || _a === void 0 ? void 0 : _a.checkVisibility(view);
             (_b = this.resultsView) === null || _b === void 0 ? void 0 : _b.checkVisibility(view);
             (_c = this.voteHandler) === null || _c === void 0 ? void 0 : _c.checkVisibility(view);
