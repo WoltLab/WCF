@@ -203,11 +203,6 @@ class PollAction extends AJAXProxyAction
         // render result template
         $this->getResult($returnValues);
 
-        // render vote template if votes are changeable
-        if ($this->poll->isChangeable) {
-            $this->getResult($returnValues);
-        }
-
         $returnValues['changeableVote'] = $this->poll->isChangeable ? 1 : 0;
         $returnValues['totalVotes'] = $this->poll->votes;
         $returnValues['totalVotesTooltip'] = WCF::getLanguage()->getDynamicVariable(
