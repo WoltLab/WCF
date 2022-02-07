@@ -88,6 +88,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "./Manager", "..
                     this.pollManager.canVote = data.changeableVote ? true : false;
                     this.pollManager.canViewResults = true;
                     this.pollManager.changeView(Manager_1.PollViews.results, data.template);
+                    this.pollManager.changeTotalVotes(data.totalVotes, data.totalVotesTooltip);
                 },
             });
             request.sendRequest();

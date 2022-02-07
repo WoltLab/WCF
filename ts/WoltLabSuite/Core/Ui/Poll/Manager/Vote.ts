@@ -113,6 +113,7 @@ export class Vote {
         this.pollManager.canViewResults = true;
 
         this.pollManager.changeView(PollViews.results, data.template);
+        this.pollManager.changeTotalVotes(data.totalVotes, data.totalVotesTooltip);
       },
     });
     request.sendRequest();

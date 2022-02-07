@@ -9,6 +9,7 @@
  */
 
 import DomUtil from "../../../Dom/Util";
+import { formatNumeric } from "../../../StringUtil";
 import Participants from "./View/Participants";
 import Results from "./View/Results";
 import VoteView from "./View/Vote";
@@ -96,7 +97,7 @@ export class Manager {
   }
 
   private getInnerContainer(): HTMLElement {
-    const innerContainer = (this.poll.querySelector(".pollInnerContainer") as HTMLElement) || null;
+    const innerContainer = (this.poll.querySelector<HTMLElement>(".pollInnerContainer") as HTMLElement) || null;
 
     if (!innerContainer) {
       throw new Error(`Could not find inner container for poll "${this.pollID}"`);
@@ -107,6 +108,17 @@ export class Manager {
 
   protected setInnerContainer(html: string): void {
     DomUtil.setInnerHtml(this.getInnerContainer(), html);
+  }
+
+  public changeTotalVotes(votes: number, tooltip: string): void {
+    const badge = this.getPollContainer().querySelector<HTMLSpanElement>(".pollTotalVotesBadge");
+
+    if (!badge) {
+      throw new Error(`Could not find total votes badge.`);
+    }
+
+    badge.textContent = formatNumeric(votes);
+    badge.dataset.tooltip = tooltip;
   }
 }
 

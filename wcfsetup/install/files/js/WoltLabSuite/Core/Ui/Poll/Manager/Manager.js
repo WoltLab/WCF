@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Poll/Manager/Manager
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Util_1, Participants_1, Results_1, Vote_1, Vote_2) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../StringUtil", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Util_1, StringUtil_1, Participants_1, Results_1, Vote_1, Vote_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Manager = exports.PollViews = void 0;
@@ -74,6 +74,14 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Participants
         }
         setInnerContainer(html) {
             Util_1.default.setInnerHtml(this.getInnerContainer(), html);
+        }
+        changeTotalVotes(votes, tooltip) {
+            const badge = this.getPollContainer().querySelector(".pollTotalVotesBadge");
+            if (!badge) {
+                throw new Error(`Could not find total votes badge.`);
+            }
+            badge.textContent = (0, StringUtil_1.formatNumeric)(votes);
+            badge.dataset.tooltip = tooltip;
         }
     }
     exports.Manager = Manager;
