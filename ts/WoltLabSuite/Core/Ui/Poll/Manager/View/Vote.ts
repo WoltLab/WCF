@@ -25,10 +25,10 @@ export class Vote extends Abstract {
   }
 
   public checkVisibility(view: PollViews): void {
-    if (view !== PollViews.vote && this.pollManager.canVote) {
-      this.showButton();
-    } else {
+    if (view === PollViews.vote || !this.pollManager.canVote) {
       this.hideButton();
+    } else {
+      this.showButton();
     }
   }
 }

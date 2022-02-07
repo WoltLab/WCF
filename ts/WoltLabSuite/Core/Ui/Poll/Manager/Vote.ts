@@ -81,14 +81,9 @@ export class Vote {
   }
 
   private getSelectedOptions(): number[] {
-    const numbers = new Array<number>();
-    this.inputs.forEach((input) => {
-      if (input.checked) {
-        numbers.push(parseInt(input.value, 10));
-      }
-    });
-
-    return numbers;
+    return Array.from(this.inputs)
+      .filter((input) => input.checked)
+      .map((input) => parseInt(input.value, 10));
   }
 
   private submit(): void {
@@ -120,11 +115,7 @@ export class Vote {
   }
 
   public checkVisibility(view: PollViews): void {
-    if (view !== PollViews.vote) {
-      this.button.hidden = true;
-    } else {
-      this.button.hidden = false;
-    }
+    this.button.hidden = view !== PollViews.vote;
   }
 }
 

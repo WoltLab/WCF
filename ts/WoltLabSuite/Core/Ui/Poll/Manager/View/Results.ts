@@ -13,22 +13,24 @@ import { PollViews } from "../Manager";
 import Abstract from "./Abstract";
 
 export class Results extends Abstract {
-  public checkVisibility(view: PollViews): void {
-    if (view !== PollViews.results) {
-      this.showButton();
-    } else {
-      this.hideButton();
-    }
-  }
   protected getButtonSelector(): string {
     return ".showResultsButton";
   }
+
   protected getActionName(): string {
     return "getResult";
   }
 
   protected success(data: ResponseData): void {
     this.pollManager.changeView(PollViews.results, data.template);
+  }
+
+  public checkVisibility(view: PollViews): void {
+    if (view === PollViews.results) {
+      this.hideButton();
+    } else {
+      this.showButton();
+    }
   }
 }
 

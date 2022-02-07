@@ -13,14 +13,6 @@ define(["require", "exports", "tslib", "../Manager", "./Abstract"], function (re
     exports.Results = void 0;
     Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
     class Results extends Abstract_1.default {
-        checkVisibility(view) {
-            if (view !== Manager_1.PollViews.results) {
-                this.showButton();
-            }
-            else {
-                this.hideButton();
-            }
-        }
         getButtonSelector() {
             return ".showResultsButton";
         }
@@ -29,6 +21,14 @@ define(["require", "exports", "tslib", "../Manager", "./Abstract"], function (re
         }
         success(data) {
             this.pollManager.changeView(Manager_1.PollViews.results, data.template);
+        }
+        checkVisibility(view) {
+            if (view === Manager_1.PollViews.results) {
+                this.hideButton();
+            }
+            else {
+                this.showButton();
+            }
         }
     }
     exports.Results = Results;

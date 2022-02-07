@@ -23,11 +23,11 @@ define(["require", "exports", "tslib", "../Manager", "./Abstract"], function (re
             this.pollManager.changeView(Manager_1.PollViews.vote, data.template);
         }
         checkVisibility(view) {
-            if (view !== Manager_1.PollViews.vote && this.pollManager.canVote) {
-                this.showButton();
+            if (view === Manager_1.PollViews.vote || !this.pollManager.canVote) {
+                this.hideButton();
             }
             else {
-                this.hideButton();
+                this.showButton();
             }
         }
     }

@@ -62,13 +62,9 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "./Manager", "..
             }
         }
         getSelectedOptions() {
-            const numbers = new Array();
-            this.inputs.forEach((input) => {
-                if (input.checked) {
-                    numbers.push(parseInt(input.value, 10));
-                }
-            });
-            return numbers;
+            return Array.from(this.inputs)
+                .filter((input) => input.checked)
+                .map((input) => parseInt(input.value, 10));
         }
         submit() {
             this.button.disabled = true;
@@ -94,12 +90,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "./Manager", "..
             request.sendRequest();
         }
         checkVisibility(view) {
-            if (view !== Manager_1.PollViews.vote) {
-                this.button.hidden = true;
-            }
-            else {
-                this.button.hidden = false;
-            }
+            this.button.hidden = view !== Manager_1.PollViews.vote;
         }
     }
     exports.Vote = Vote;
