@@ -141,7 +141,7 @@
 							{@$media->getElementTag(48)}
 							
 							<div>
-								<p>{$media->filename|tableWordwrap}</p>
+								<p><a href="{$media->getLink()}">{$media->filename|tableWordwrap}</a></p>
 								<p><small>{if $media->userID}{if $__wcf->session->getPermission('admin.user.canEditUser')}<a href="{link controller='UserEdit' id=$media->userID}{/link}">{$media->username}</a>{else}{$media->username}{/if}{else}{lang}wcf.user.guest{/lang}{/if}</small></p>
 							</div>
 						</div>
