@@ -42,6 +42,9 @@ define(["require", "exports", "tslib", "../../../User/List"], function (require,
             }
             this.userList.open();
         }
+        showButton() {
+            this.button.hidden = false;
+        }
     }
     exports.Participants = Participants;
     exports.default = Participants;

@@ -109,6 +109,9 @@ export class Vote {
       success: (data: ResponseData) => {
         this.button.disabled = false;
 
+        this.pollManager.canVote = data.changeableVote ? true : false;
+        this.pollManager.canViewResults = true;
+
         this.pollManager.changeView(PollViews.results, data.template);
       },
     });

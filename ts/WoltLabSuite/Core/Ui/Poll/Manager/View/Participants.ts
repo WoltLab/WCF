@@ -56,6 +56,10 @@ export class Participants {
 
     this.userList.open();
   }
+
+  public showButton(): void {
+      this.button.hidden = false;
+  }
 }
 
 export default Participants;

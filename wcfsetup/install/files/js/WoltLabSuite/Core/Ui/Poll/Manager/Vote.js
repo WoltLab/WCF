@@ -85,6 +85,8 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "./Manager", "..
                 }),
                 success: (data) => {
                     this.button.disabled = false;
+                    this.pollManager.canVote = data.changeableVote ? true : false;
+                    this.pollManager.canViewResults = true;
                     this.pollManager.changeView(Manager_1.PollViews.results, data.template);
                 },
             });

@@ -42,7 +42,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Participants
                 this.voteHandler = new Vote_2.default(this);
             }
             if (this.canViewParticipants()) {
-                new Participants_1.default(this);
+                this.participants = new Participants_1.default(this);
             }
         }
         getPollContainer() {
@@ -56,6 +56,10 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "./View/Participants
             this.setInnerContainer(html);
             if (view === PollViews.vote) {
                 (_d = this.voteHandler) === null || _d === void 0 ? void 0 : _d.initSelects();
+            }
+            if (!this.participants && this.canViewParticipants()) {
+                this.participants = new Participants_1.default(this);
+                this.participants.showButton();
             }
         }
         canViewParticipants() {

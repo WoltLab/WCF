@@ -21,8 +21,8 @@ export enum PollViews {
 
 export class Manager {
   public readonly pollID: number;
-  public readonly canViewResults: boolean;
-  public readonly canVote: boolean;
+  public canViewResults: boolean;
+  public canVote: boolean;
   public readonly isPublic: boolean;
   public readonly maxVotes: number;
   public readonly question: string;
@@ -30,6 +30,7 @@ export class Manager {
 
   private voteView?: VoteView;
   private resultsView?: Results;
+  private participants?: Participants;
 
   private voteHandler?: VoteHandler;
 
@@ -66,7 +67,7 @@ export class Manager {
     }
 
     if (this.canViewParticipants()) {
-      new Participants(this);
+      this.participants = new Participants(this);
     }
   }
 
@@ -82,6 +83,11 @@ export class Manager {
 
     if (view === PollViews.vote) {
       this.voteHandler?.initSelects();
+    }
+
+    if (!this.participants && this.canViewParticipants()) {
+      this.participants = new Participants(this);
+      this.participants.showButton();
     }
   }
 
