@@ -60,6 +60,7 @@ class TemplateScriptingCompiler
         'addslashes',
         'array_diff',
         'array_fill',
+        'array_key_exists',
         'array_keys',
         'array_pop',
         'array_slice',
