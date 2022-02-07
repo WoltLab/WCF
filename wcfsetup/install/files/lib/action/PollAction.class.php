@@ -166,7 +166,7 @@ class PollAction extends AJAXProxyAction
             'poll' => $this->poll,
         ]);
 
-        $returnValues['resultTemplate'] = WCF::getTPL()->fetch('pollResult');
+        $returnValues['template'] = WCF::getTPL()->fetch('pollResult');
     }
 
     /**
@@ -180,7 +180,7 @@ class PollAction extends AJAXProxyAction
             'poll' => $this->poll,
         ]);
 
-        $returnValues['voteTemplate'] = WCF::getTPL()->fetch('pollVote');
+        $returnValues['template'] = WCF::getTPL()->fetch('pollVote');
     }
 
     /**
@@ -205,7 +205,7 @@ class PollAction extends AJAXProxyAction
 
         // render vote template if votes are changeable
         if ($this->poll->isChangeable) {
-            $this->getVote($returnValues);
+            $this->getResult($returnValues);
         }
 
         $returnValues['canVote'] = $this->poll->isChangeable ? 1 : 0;
