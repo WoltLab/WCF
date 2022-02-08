@@ -25,8 +25,8 @@ class YearDatabaseTableColumn extends AbstractDatabaseTableColumn implements ILe
      */
     protected function validateLength($length)
     {
-        if ($length !== 2 && $length !== 4) {
-            throw new \InvalidArgumentException("Only '2' and '4' are valid lengths for year columns");
+        if ($length !== 4) {
+            throw new \InvalidArgumentException("Only '4' is a valid length for year columns.");
         }
     }
 }
