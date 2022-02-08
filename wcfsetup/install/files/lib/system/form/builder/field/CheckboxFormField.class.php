@@ -18,6 +18,11 @@ class CheckboxFormField extends BooleanFormField
     /**
      * @inheritDoc
      */
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/CheckedVoid';
+
+    /**
+     * @inheritDoc
+     */
     public function readValue()
     {
         $this->value = $this->getDocument()->hasRequestData($this->getPrefixedId());
