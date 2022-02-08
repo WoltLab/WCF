@@ -5,6 +5,7 @@ use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\table\column\AbstractIntDatabaseTableColumn;
 use wcf\system\database\table\column\IDatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
+use wcf\system\database\table\column\YearDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -748,15 +749,19 @@ class DatabaseTableChangeProcessor {
 		$diff = array_diff_assoc($oldColumn->getData(), $newColumn->getData());
 		if (!empty($diff)) {
 			// see https://github.com/WoltLab/WCF/pull/3167
-			if (
-				array_key_exists('length', $diff)
-				&& $oldColumn instanceof AbstractIntDatabaseTableColumn
-				&& (
-					!($oldColumn instanceof TinyintDatabaseTableColumn)
-					|| $oldColumn->getLength() != 1
-				)
-			) {
-				unset($diff['length']);
+			if (array_key_exists('length', $diff)) {
+				if (
+					(
+						$oldColumn instanceof AbstractIntDatabaseTableColumn
+						&& (
+							!($oldColumn instanceof TinyintDatabaseTableColumn)
+							|| $oldColumn->getLength() != 1
+						)
+					)
+					|| $oldColumn instanceof YearDatabaseTableColumn
+				) {
+					unset($diff['length']);
+				}
 			}
 			
 			if (!empty($diff)) {
