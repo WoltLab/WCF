@@ -7,6 +7,7 @@ use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 
 /**
  * Imports user avatars.
@@ -40,6 +41,7 @@ class UserAvatarImporter extends AbstractImporter
         }
         $data['width'] = $imageData[0];
         $data['height'] = $imageData[1];
+        $data['avatarExtension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
 
         // check image type
         if ($imageData[2] != \IMAGETYPE_GIF && $imageData[2] != \IMAGETYPE_JPEG && $imageData[2] != \IMAGETYPE_PNG) {
