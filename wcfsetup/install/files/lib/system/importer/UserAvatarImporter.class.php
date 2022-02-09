@@ -29,7 +29,7 @@ class UserAvatarImporter extends AbstractImporter
     public function import($oldID, array $data, array $additionalData = [])
     {
         // check file location
-        if (!@\file_exists($additionalData['fileLocation'])) {
+        if (!\is_readable($additionalData['fileLocation'])) {
             return 0;
         }
 
