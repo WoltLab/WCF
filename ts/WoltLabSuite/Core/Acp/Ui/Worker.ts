@@ -35,6 +35,7 @@ interface WorkerOptions {
   className: string;
   loopCount: number;
   parameters: ArbitraryObject;
+  implicitContinue: boolean;
 
   // callbacks
   callbackAbort: CallbackAbort | null;
@@ -60,6 +61,7 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
         className: "",
         loopCount: -1,
         parameters: {},
+        implicitContinue: false,
 
         // callbacks
         callbackAbort: null,
@@ -114,18 +116,30 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
       UiDialog.rebuild(this);
 
       const button = formSubmit.children[0] as HTMLButtonElement;
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
+      if (this.options.implicitContinue) {
+        button.disabled = true;
 
-        if (typeof this.options.callbackSuccess === "function") {
-          this.options.callbackSuccess(data);
+        window.setTimeout(() => {
+          this.finalizeWorker(data);
+        }, 500);
+      } else {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
 
-          UiDialog.close(this);
-        } else {
-          window.location.href = data.proceedURL;
-        }
-      });
-      button.focus();
+          this.finalizeWorker(data);
+        });
+        button.focus();
+      }
+    }
+  }
+
+  private finalizeWorker(data: AjaxResponse): void {
+    if (typeof this.options.callbackSuccess === "function") {
+      this.options.callbackSuccess(data);
+
+      UiDialog.close(this);
+    } else {
+      window.location.href = data.proceedURL;
     }
   }
 

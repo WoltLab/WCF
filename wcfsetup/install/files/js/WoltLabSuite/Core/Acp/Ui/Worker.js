@@ -26,6 +26,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 className: "",
                 loopCount: -1,
                 parameters: {},
+                implicitContinue: false,
                 // callbacks
                 callbackAbort: null,
                 callbackSuccess: null,
@@ -67,17 +68,28 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 content.appendChild(formSubmit);
                 Dialog_1.default.rebuild(this);
                 const button = formSubmit.children[0];
-                button.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    if (typeof this.options.callbackSuccess === "function") {
-                        this.options.callbackSuccess(data);
-                        Dialog_1.default.close(this);
-                    }
-                    else {
-                        window.location.href = data.proceedURL;
-                    }
-                });
-                button.focus();
+                if (this.options.implicitContinue) {
+                    button.disabled = true;
+                    window.setTimeout(() => {
+                        this.finalizeWorker(data);
+                    }, 500);
+                }
+                else {
+                    button.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        this.finalizeWorker(data);
+                    });
+                    button.focus();
+                }
+            }
+        }
+        finalizeWorker(data) {
+            if (typeof this.options.callbackSuccess === "function") {
+                this.options.callbackSuccess(data);
+                Dialog_1.default.close(this);
+            }
+            else {
+                window.location.href = data.proceedURL;
             }
         }
         _ajaxFailure() {

@@ -32,16 +32,17 @@ define(["require", "exports", "tslib", "../Worker", "../../../Language"], functi
             .map(([el]) => el);
         let i = 1;
         for (const worker of sorted) {
-            await runWorker(worker, `${worker.textContent} (${i++} / ${sorted.length})`);
+            await runWorker(worker, `${worker.textContent} (${i++} / ${sorted.length})`, true);
         }
     }
     exports.runAllWorkers = runAllWorkers;
-    async function runWorker(button, dialogTitle = button.textContent) {
+    async function runWorker(button, dialogTitle = button.textContent, implicitContinue = false) {
         return new Promise((resolve, reject) => {
             new Worker_1.default({
                 dialogId: "cache",
                 dialogTitle,
                 className: button.dataset.className,
+                implicitContinue,
                 callbackAbort() {
                     reject();
                 },

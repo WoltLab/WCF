@@ -35,16 +35,21 @@ export async function runAllWorkers(): Promise<void> {
 
   let i = 1;
   for (const worker of sorted) {
-    await runWorker(worker, `${worker.textContent!} (${i++} / ${sorted.length})`);
+    await runWorker(worker, `${worker.textContent!} (${i++} / ${sorted.length})`, true);
   }
 }
 
-async function runWorker(button: HTMLElement, dialogTitle: string = button.textContent!): Promise<void> {
+async function runWorker(
+  button: HTMLElement,
+  dialogTitle: string = button.textContent!,
+  implicitContinue = false,
+): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     new Worker({
       dialogId: "cache",
       dialogTitle,
       className: button.dataset.className,
+      implicitContinue,
       callbackAbort() {
         reject();
       },
