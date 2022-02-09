@@ -42,15 +42,11 @@ class UserAvatarImporter extends AbstractImporter
         $data['width'] = $imageData[0];
         $data['height'] = $imageData[1];
         $data['avatarExtension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
+        $data['fileHash'] = \sha1_file($additionalData['fileLocation']);
 
         // check image type
         if ($imageData[2] != \IMAGETYPE_GIF && $imageData[2] != \IMAGETYPE_JPEG && $imageData[2] != \IMAGETYPE_PNG) {
             return 0;
-        }
-
-        // get file hash
-        if (empty($data['fileHash'])) {
-            $data['fileHash'] = \sha1_file($additionalData['fileLocation']);
         }
 
         // get user id
