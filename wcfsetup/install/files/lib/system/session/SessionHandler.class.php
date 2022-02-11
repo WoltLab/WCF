@@ -626,18 +626,25 @@ final class SessionHandler extends SingletonFactory
         $this->user = new User($row['userID']);
         $this->variables = $variables;
 
-        $sql = "UPDATE  wcf" . WCF_N . "_user_session
-                SET     ipAddress = ?,
-                        userAgent = ?,
-                        lastActivityTime = ?
-                WHERE   sessionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            UserUtil::getIpAddress(),
-            UserUtil::getUserAgent(),
-            TIME_NOW,
-            $this->sessionID,
-        ]);
+        // Update ipAddress, userAgent and lastActivityTime only once per minute to
+        // reduce write traffic to the hot 'user_session' table.
+        //
+        // The former two fields are not going to rapidly change and the latter is just
+        // used for session expiry, where accuracy to the second is not required.
+        if ($row['lastActivityTime'] < (TIME_NOW - 60)) {
+            $sql = "UPDATE  wcf" . WCF_N . "_user_session
+                    SET     ipAddress = ?,
+                            userAgent = ?,
+                            lastActivityTime = ?
+                    WHERE   sessionID = ?";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([
+                UserUtil::getIpAddress(),
+                UserUtil::getUserAgent(),
+                TIME_NOW,
+                $this->sessionID,
+            ]);
+        }
 
         if (!$this->isACP) {
             // Fetch legacy session.
