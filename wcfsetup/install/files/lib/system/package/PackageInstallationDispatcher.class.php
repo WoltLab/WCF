@@ -393,7 +393,7 @@ class PackageInstallationDispatcher
                         3,
                     ],
                 ]))->executeAction();
-            } catch (SystemException $e) {
+            } catch (\LogicException $e) {
                 // ignore errors due to event listeners missing at this
                 // point during installation
             }
