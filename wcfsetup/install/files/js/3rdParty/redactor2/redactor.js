@@ -3564,6 +3564,10 @@
 					
 					require(['Ui/SimpleDropdown'], (function(UiSimpleDropdown) {
 						var dropdownId = this.dropdown.button[0].id;
+
+						if (this.detect.isMobile() && !UiSimpleDropdown.isOpen(dropdownId)) {
+							this.selection.save();
+						}
 						
 						UiSimpleDropdown.toggleDropdown(dropdownId);
 						if (UiSimpleDropdown.isOpen(dropdownId)) {
@@ -6677,8 +6681,8 @@
 					this.core.callback('deletedLink', $links);
 					
 				},
-				insert: function (link, cleaned) {
-					var $el = this.link.is();
+				insert: function (link, cleaned, savedLink) {
+					var $el = savedLink || this.link.is();
 					
 					if (cleaned !== true) {
 						link = this.link.buildLinkFromObject($el, link);

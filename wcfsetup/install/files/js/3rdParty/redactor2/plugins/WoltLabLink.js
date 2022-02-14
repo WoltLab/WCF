@@ -66,12 +66,21 @@ $.Redactor.prototype.WoltLabLink = function() {
 			{
 				e.preventDefault();
 			}
+
+			let hasRestoredSelection = false;
+			if (this.detect.isMobile() && !this.core.editor()[0].contains(document.activeElement)) {
+				this.selection.restore();
+
+				hasRestoredSelection = true;
+			}
 			
 			// used to determine if selection needs to be restored later as
 			// Safari sometimes discards the selection when setting markers
 			var hasSelectedText = this.selection.is();
 			
-			this.selection.save();
+			if (!hasRestoredSelection) {
+				this.selection.save();
+			}
 			
 			// close tooltip
 			this.observe.closeAllTooltip();
@@ -79,6 +88,14 @@ $.Redactor.prototype.WoltLabLink = function() {
 			// is link
 			//var $el = this.link.is();
 			var $el = $link || false;
+
+			if (hasRestoredSelection) {
+				if ($el === false) {
+					$el = this.link.is();
+				}
+
+				document.activeElement.blur();
+			}
 			
 			// build link
 			if (hasSelectedText) this.selection.restore();
@@ -101,7 +118,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 					this.selection.restore();
 					
 					// insert or update
-					this.link.insert(link, true);
+					this.link.insert(link, true, $el);
 					
 					return true;
 				}).bind(this)
