@@ -9,6 +9,7 @@ use wcf\data\poll\option\PollOptionEditor;
 use wcf\data\poll\option\PollOptionList;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\poll\PollManager;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
@@ -260,6 +261,87 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         } elseif (!$this->poll->canViewParticipants()) {
             throw new PermissionDeniedException();
         }
+    }
+
+    /**
+     * Validates the 'getResultTemplate' method.
+     *
+     * @throws UserInputException If not exactly one valid poll is given.
+     * @throws PermissionDeniedException If the current user cannot see the result of the poll.
+     * @since  5.5
+     */
+    public function validateGetResultTemplate(): void
+    {
+        $this->poll = $this->getSingleObject();
+        $this->loadRelatedObject();
+
+        if (!$this->poll->pollID) {
+            throw new UserInputException('pollID');
+        }
+
+        if (!$this->poll->canSeeResult()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Returns the result template for a specific poll.
+     *
+     * @since  5.5
+     */
+    public function getResultTemplate(): array
+    {
+        assert($this->poll instanceof PollEditor);
+
+        return [
+            'template' => WCF::getTPL()->fetch('pollResult', 'wcf', [
+                'poll' => $this->poll->getDecoratedObject(),
+            ]),
+        ];
+    }
+
+    /**
+     * Validates the 'getVoteTemplate' method.
+     *
+     * @throws UserInputException If not exactly one valid poll is given.
+     * @throws PermissionDeniedException If the current user cannot vote the poll.
+     * @since  5.5
+     */
+    public function validateGetVoteTemplate(): void
+    {
+        $this->poll = $this->getSingleObject();
+        $this->loadRelatedObject();
+
+        if (!$this->poll->pollID) {
+            throw new UserInputException('pollID');
+        }
+
+        if (!$this->poll->canVote()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Returns the result template for a specific poll.
+     *
+     * @since  5.5
+     */
+    public function getVoteTemplate(): array
+    {
+        return [
+            'template' => WCF::getTPL()->fetch('pollVote', 'wcf', [
+                'poll' => $this->poll,
+            ]),
+        ];
+    }
+
+    private function loadRelatedObject(): void
+    {
+        assert($this->poll instanceof PollEditor);
+
+        $relatedObject = PollManager::getInstance()->getRelatedObject($this->poll->getDecoratedObject());
+
+        $this->poll->setRelatedObject($relatedObject);
     }
 
     /**
