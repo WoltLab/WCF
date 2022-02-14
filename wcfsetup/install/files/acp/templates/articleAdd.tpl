@@ -389,7 +389,7 @@
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$availableLanguages item=availableLanguage}
-						<li><a href="#{$availableLanguage->languageID}">{$availableLanguage->languageName}</a></li>
+						<li><a href="#language{$availableLanguage->languageID}">{$availableLanguage->languageName}</a></li>
 					{/foreach}
 				</ul>
 			</nav>
