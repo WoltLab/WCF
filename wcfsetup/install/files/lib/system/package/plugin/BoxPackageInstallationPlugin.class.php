@@ -349,6 +349,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 unset($data['visibleEverywhere']);
                 unset($this->visibilityExceptions[$data['identifier']]);
                 unset($data['showOrder']);
+                unset($data['position']);
+                unset($data['additionalData']);
             }
 
             $box = parent::import($row, $data);
