@@ -343,7 +343,7 @@ class HtmlInputNodeTextParser
             foreach ($availableUserGroups as $group) {
                 // Usernames are already rewritten to lower case. Do not use `strcasecmp()`
                 // because only ASCII letters are compared in a case-insensitive way.
-                if (\mb_strtolower($group->getName()) ===  $username) {
+                if (\mb_strtolower($group->getName()) === $username) {
                     $groups[$group->groupID] = $group->getName();
 
                     continue 2;
