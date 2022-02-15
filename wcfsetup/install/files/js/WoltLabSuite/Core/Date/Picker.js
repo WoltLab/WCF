@@ -248,6 +248,9 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             date = _minDate;
         }
         _maxDate = getDateValue("maxDate");
+        if (_input.dataset.maxDate && _maxDate.getTime() < date.getTime()) {
+            date = _maxDate;
+        }
         if (data.isDateTime) {
             _dateHour.value = date.getHours().toString();
             _dateMinute.value = date.getMinutes().toString();
