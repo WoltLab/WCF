@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.3.19</version>
-		<date>2022-01-31</date>
+		<version>5.3.20</version>
+		<date>2022-02-15</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -106,7 +106,7 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_5.3_packageServer.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.3.18">
+	<instructions type="update" fromversion="5.3.19">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
 </package>
