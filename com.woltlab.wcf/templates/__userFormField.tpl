@@ -1,7 +1,7 @@
 <input type="text" {*
 	*}id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
-	*}value="{if $field->allowsMultiple()}{if $field->getValue()|is_array}{implode from=$field->getValue() item=username}{$username}{/implode}{/if}{else}{$field->getValue()}{/if}" {*
+	*}value="{implode from=$field->getUsers() item=fieldUser}{$fieldUser->username}{/implode}" {*
 	*}class="long"{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
 	*}{if $field->isImmutable()} disabled{/if}{*
@@ -11,8 +11,18 @@
 	require(['WoltLabSuite/Core/Ui/ItemList/User'], function(UiItemListUser) {
 		UiItemListUser.init('{@$field->getPrefixedId()}', {
 			{if $field->getMaximumMultiples() !== -1}
-				maxItems: {@$field->getMaximumMultiples()}
+				maxItems: {@$field->getMaximumMultiples()},
 			{/if}
+			callbackSetupValues() {
+				return [
+					{implode from=$field->getUsers() item=fieldUser}
+						{
+							value: {@$fieldUser->username|json},
+							objectId: {$fieldUser->userID},
+						}
+					{/implode}
+				];
+			},
 		});
 	});
 </script>
