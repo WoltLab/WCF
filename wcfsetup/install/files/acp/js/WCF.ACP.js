@@ -1236,9 +1236,11 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	_success: function(data) {
 		this._super(data);
 		
-		var search = elById('pageHeaderSearch');
-		this._list[0].style.setProperty('top', search.offsetTop + search.clientHeight + 'px', 'important');
-		this._list.addClass('acpSearchDropdown');
+		const container = document.getElementById("pageHeaderSearch").querySelector(".pageHeaderSearchInputContainer");
+		const { bottom } = container.getBoundingClientRect();
+		this._list[0].style.setProperty("top", `${Math.trunc(bottom)}px`, "important");
+		this._list[0].classList.add("acpSearchDropdown");
+		this._list[0].dataset.dropdownIgnorePageScroll = "true";
 	},
 	
 	/**

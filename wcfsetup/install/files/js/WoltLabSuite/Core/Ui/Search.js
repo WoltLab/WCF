@@ -57,6 +57,10 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                 if (button.dataset.target === identifier) {
                     return;
                 }
+                // Exception for the search bar in the admin panel.
+                if (_pageHeaderSearchInput.parentElement.id === identifier) {
+                    return;
+                }
             }
             closeSearch();
             _pageHeaderSearchMobile === null || _pageHeaderSearchMobile === void 0 ? void 0 : _pageHeaderSearchMobile.setAttribute("aria-expanded", "false");

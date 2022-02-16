@@ -62,6 +62,11 @@ function initSearchBar(): void {
       if (button.dataset.target === identifier) {
         return;
       }
+
+      // Exception for the search bar in the admin panel.
+      if (_pageHeaderSearchInput.parentElement!.id === identifier) {
+        return;
+      }
     }
 
     closeSearch();
