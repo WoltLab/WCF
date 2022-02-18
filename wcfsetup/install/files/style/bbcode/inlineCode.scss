@@ -24,7 +24,7 @@ kbd {
 	padding: 0 4px;
 	text-decoration: none;
 	vertical-align: middle;
-	word-break: break-all;
+	word-break: break-word;
 	word-wrap: break-word;
 
 	@include screen-sm-down {
