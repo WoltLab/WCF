@@ -52,13 +52,4 @@ export function init(): void {
   rebuild();
 
   DomChangeListener.add("WoltLabSuite/Core/Ui/User/Ignore", rebuild);
-
-  if (window.location.hash !== "" && _knownMessages.size > 0) {
-    const id = window.location.hash.replace(/^#/, "");
-    _knownMessages.forEach((message) => {
-      if (message.parentElement && message.parentElement.id === id) {
-        message.click();
-      }
-    });
-  }
 }

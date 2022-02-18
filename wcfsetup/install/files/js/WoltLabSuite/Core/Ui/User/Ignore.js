@@ -46,14 +46,6 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener"], function (r
     function init() {
         rebuild();
         Listener_1.default.add("WoltLabSuite/Core/Ui/User/Ignore", rebuild);
-        if (window.location.hash !== "" && _knownMessages.size > 0) {
-            const id = window.location.hash.replace(/^#/, "");
-            _knownMessages.forEach((message) => {
-                if (message.parentElement && message.parentElement.id === id) {
-                    message.click();
-                }
-            });
-        }
     }
     exports.init = init;
 });
