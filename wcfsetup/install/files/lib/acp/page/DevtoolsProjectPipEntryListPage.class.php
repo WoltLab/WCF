@@ -179,9 +179,11 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
             $this->pageNo = \intval($_REQUEST['pageNo']);
         }
 
-        $this->linkParameters = 'pip=' . $this->pip;
+        $linkParameters = [
+            'pip' => $this->pip,
+        ];
         if ($this->entryType !== null) {
-            $this->linkParameters .= '&entryType=' . $this->entryType;
+            $linkParameters['entryType'] = $this->entryType;
         }
 
         if (isset($_REQUEST['entryFilter'])) {
@@ -189,8 +191,10 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
         }
 
         if ($this->entryFilter !== null && $this->entryFilter !== '') {
-            $this->linkParameters .= '&entryFilter=' . $this->entryFilter;
+            $linkParameters['entryFilter'] = $this->entryFilter;
         }
+
+        $this->linkParameters = \http_build_query($linkParameters, '', '&');
 
         $this->canonicalURL = LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryList', [
             'id' => $this->project->projectID,
