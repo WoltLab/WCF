@@ -11,7 +11,7 @@
 	require(['WoltLabSuite/Core/Ui/ItemList/User'], function(UiItemListUser) {
 		UiItemListUser.init('{@$field->getPrefixedId()}', {
 			{if $field->getMaximumMultiples() !== -1}
-				maxItems: {@$field->getMaximumMultiples()}
+				maxItems: {@$field->getMaximumMultiples()},
 			{/if}
 		});
 	});

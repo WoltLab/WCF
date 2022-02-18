@@ -125,11 +125,15 @@ class AJAXInvokeAction extends AbstractSecureAction
      */
     protected function invoke()
     {
-        // check for interface and inheritance of SingletonFactory
-        if (!\is_subclass_of($this->className, IAJAXInvokeAction::class)) {
-            throw new ImplementationException($this->className, IAJAXInvokeAction::class);
-        } elseif (!\is_subclass_of($this->className, SingletonFactory::class)) {
-            throw new ParentClassException($this->className, SingletonFactory::class);
+        try {
+            // check for interface and inheritance of SingletonFactory
+            if (!\is_subclass_of($this->className, IAJAXInvokeAction::class)) {
+                throw new ImplementationException($this->className, IAJAXInvokeAction::class);
+            } elseif (!\is_subclass_of($this->className, SingletonFactory::class)) {
+                throw new ParentClassException($this->className, SingletonFactory::class);
+            }
+        } catch (ImplementationException | ParentClassException $e) {
+            throw new UserInputException('className', $e->getMessage());
         }
 
         // validate action name
