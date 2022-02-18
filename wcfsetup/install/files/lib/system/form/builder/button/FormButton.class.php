@@ -113,4 +113,13 @@ class FormButton implements IFormButton
     {
         // does nothing
     }
+
+    /**
+     * @inheritDoc
+     * @throws  \BadMethodCallException
+     */
+    public function description($languageItem = null, array $variables = [])
+    {
+        throw new \BadMethodCallException('Method description() is not supported by ' . \get_class($this));
+    }
 }
