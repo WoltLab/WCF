@@ -116,6 +116,14 @@ class FormButton implements IFormButton
 
     /**
      * @inheritDoc
+     */
+    public function requiresLabel()
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
      * @throws  \BadMethodCallException
      */
     public function description($languageItem = null, array $variables = [])
