@@ -243,6 +243,8 @@ class FormDocument implements IFormDocument
             } else {
                 $nodeIds[] = $button->getId();
             }
+
+            $button->populate();
         }
 
         if (!empty($doubleNodeIds)) {
@@ -781,6 +783,14 @@ class FormDocument implements IFormDocument
             $this->errorMessage('wcf.global.form.error.securityToken');
         } else {
             $this->traitValidate();
+        }
+
+        foreach ($this->getButtons() as $button) {
+            if (!$button->isAvailable() || !$button->checkDependencies()) {
+                continue;
+            }
+
+            $button->validate();
         }
     }
 }

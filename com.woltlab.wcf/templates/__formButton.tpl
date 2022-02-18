@@ -13,3 +13,5 @@
 		*}{if $button->getAccessKey()} accesskey="{$button->getAccessKey()}"{/if}{*
 	*}>{$button->getLabel()}</button>
 {/if}
+
+{include file='__formButtonDependencies'}

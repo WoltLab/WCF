@@ -102,6 +102,22 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
     }
 
     /**
+     * Returns the id of the node whose availability depends on the value of a field.
+     *
+     * @return string
+     */
+    public function getDependentPrefixedId()
+    {
+        $dependent = $this->getDependentNode();
+
+        if ($dependent instanceof IFormField) {
+            return $dependent->getPrefixedId() . 'Container';
+        }
+
+        return $dependent->getPrefixedId();
+    }
+
+    /**
      * @inheritDoc
      */
     public function getField()
