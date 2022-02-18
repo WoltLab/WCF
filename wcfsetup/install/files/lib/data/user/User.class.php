@@ -303,11 +303,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
             return;
         }
 
-        if (!isset($this->data['userOption' . $optionID])) {
-            return;
-        }
-
-        return $this->data['userOption' . $optionID];
+        return $this->data['userOption' . $optionID] ?? null;
     }
 
     /**
@@ -344,11 +340,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function __get($name)
     {
         $value = parent::__get($name);
-        if ($value === null) {
-            $value = $this->getUserOption($name);
-        }
 
-        return $value;
+        return $value ?? $this->getUserOption($name);
     }
 
     /**
