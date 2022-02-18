@@ -9,7 +9,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the option edit form.
@@ -32,12 +31,6 @@ class OptionForm extends AbstractOptionListForm
      * @var int
      */
     public $categoryID = 0;
-
-    /**
-     * option name for highlighting
-     * @var string
-     */
-    public $optionName = '';
 
     /**
      * the option tree
@@ -63,10 +56,6 @@ class OptionForm extends AbstractOptionListForm
             throw new IllegalLinkException();
         }
         $this->categoryName = $this->category->categoryName;
-
-        if (isset($_GET['optionName'])) {
-            $this->optionName = StringUtil::trim($_GET['optionName']);
-        }
 
         parent::readParameters();
     }
@@ -118,7 +107,6 @@ class OptionForm extends AbstractOptionListForm
 
         WCF::getTPL()->assign([
             'category' => $this->category,
-            'optionName' => $this->optionName,
             'optionTree' => $this->optionTree,
             'rewriteTestApplications' => ApplicationHandler::getInstance()->getApplications(),
         ]);

@@ -5,20 +5,34 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Option.Handler();
-		
-		{if $optionName}
-			setTimeout(function() {
-				var option = elById('{$optionName}');
-				var div = elCreate('div');
-				div.id = 'wcfOptionAnchor';
-				div.style.setProperty('position', 'absolute', '');
-				div.style.setProperty('top', (option.closest('dl').offsetTop - 60) + 'px', '');
-				document.body.appendChild(div);
-				div.scrollIntoView({ behavior: 'smooth' });
+	});
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const searchParams = new URLSearchParams(document.location.search);
+		const optionName = searchParams.get("optionName");
+		if (optionName) {
+			window.setTimeout(() => {
+				const element = document.getElementById(optionName);
+				if (!element) {
+					return;
+				}
+
+				const dl = element.closest("dl");
+				if (!dl) {
+					return;
+				}
+
+				const elementTop = Math.trunc(element.getBoundingClientRect().top);
+				window.scrollTo(0, elementTop - 50);
+				element.focus();
 				
-				option.focus();
+				window.setTimeout(() => {
+					const label = dl.querySelector("dt label");
+					label.classList.add("hightlightOptionLabel");
+					label.addEventListener("transitionEnd",() => label.classList.remove("hightlightOptionLabel"), { once: true });
+				}, 500);
 			}, 200);
-		{/if}
+		}
 	});
 	
 	{event name='javascriptInit'}

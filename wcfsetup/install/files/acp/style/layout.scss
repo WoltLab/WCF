@@ -640,3 +640,20 @@ $wcfAcpSubMenuWidth: 300px;
 	color: $wcfContentText;
 	font-weight: 600;
 }
+
+@keyframes hightlightOptionLabel {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.hightlightOptionLabel {
+	animation: hightlightOptionLabel .48s ease-in-out;
+	display: inline-block;
+}
