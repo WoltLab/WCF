@@ -250,6 +250,15 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * Query: `"Apfel`
      * Word: |"Apfel"|
      *
+     * Query: `Apfel"`
+     * Word: |Apfel|
+     *
+     * Query: `Ap"fel`
+     * Word: |Ap|
+     * Word: |"fel"|
+     *
+     * Query: `"`
+     *
      * Query: `"Apfel Banane" @8`
      * Word: |"Apfel Banane"|
      *
@@ -462,7 +471,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
         }
 
         // Yield only if the word is non-empty.
-        if ($word) {
+        if ($word && $word !== '"') {
             // Add missing quote.
             if ($isQuoted && \substr($word, -1) !== '"') {
                 $word .= '"';
