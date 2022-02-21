@@ -305,7 +305,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 }
 
                 // After a word is before a word. Handle the closing parenthesis
-                // early on to avoid needing through all the states.
+                // early on to avoid needing to go through all the states.
                 if ($char === ')') {
                     if ($parentheses > 0) {
                         $word = ')';
