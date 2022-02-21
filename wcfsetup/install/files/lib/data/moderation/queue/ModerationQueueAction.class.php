@@ -236,7 +236,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
             // check if stored count is out of sync
             if ($count < $totalCount) {
-                UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'outstandingModerationCount');
+                UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadModerationCount');
 
                 // check for orphaned queues
                 $queueCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
