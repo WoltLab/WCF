@@ -242,6 +242,8 @@ class UserMenuDataNotification implements UserMenuProvider {
 
   async markAllAsRead(): Promise<void> {
     await dboAction("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
+
+    this.updateCounter(0);
   }
 
   private updateCounter(counter: number): void {

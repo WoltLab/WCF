@@ -136,6 +136,8 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
 
   async markAllAsRead(): Promise<void> {
     await dboAction("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
+
+    this.updateCounter(0);
   }
 
   private updateCounter(counter: number): void {

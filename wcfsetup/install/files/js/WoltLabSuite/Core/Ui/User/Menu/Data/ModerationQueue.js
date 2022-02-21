@@ -94,6 +94,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         }
         async markAllAsRead() {
             await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
+            this.updateCounter(0);
         }
         updateCounter(counter) {
             let badge = this.button.querySelector(".badge");
