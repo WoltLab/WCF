@@ -16,7 +16,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required class="long" autocomplete="username">
+					<input type="text" id="username" name="username" value="{$username}" required autofocus class="long" autocomplete="username">
 					{if $errorField == 'username'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
