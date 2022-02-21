@@ -270,6 +270,26 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * Word: |)|
      * Word: >|Clementine|
      *
+     * Query: `"foo("`
+     * Word: |"foo("|
+     *
+     * Query: `+"foo("`
+     * Word: +|"foo("|
+     *
+     * Query: `foo(`
+     * Word: |foo|
+     * Word: |(|
+     * Word: |)|
+     *
+     * Query: `"foo(bar)"`
+     * Word: |"foo(bar)"|
+     *
+     * Query: `foo(bar)`
+     * Word: |foo|
+     * Word: |(|
+     * Word: |bar|
+     * Word: |)|
+     *
      * @see https://dev.mysql.com/doc/refman/8.0/en/fulltext-boolean.html
      * @see https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0pars.y
      * @see https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0blex.l
@@ -335,13 +355,11 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     $i++;
                     continue;
                 } else {
-                    $state = 'word';
-                    // No increment, we must interpret the current character as a word.
+                    $state = 'parenthesis';
+                    // No increment, we must interpret the current character as a possible parenthesis.
                     continue;
                 }
-            } elseif ($state === 'word') {
-                // Parentheses might have a prefix, so we handle them
-                // inside of the 'word' state.
+            } elseif ($state === 'parenthesis') {
                 if ($char === '(') {
                     $word = '(';
                     $parentheses++;
@@ -351,8 +369,12 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     // of the first word within the parenthesis.
                     $state = 'finish';
                     continue;
+                } else {
+                    $state = 'word';
+                    // No increment, we must interpret the current character as a word.
+                    continue;
                 }
-
+            } elseif ($state === 'word') {
                 // Check whether this word is quoted.
                 if ($isQuoted === null) {
                     if ($char === '"') {
