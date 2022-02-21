@@ -181,6 +181,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         }
         async markAllAsRead() {
             await (0, Ajax_1.dboAction)("markAllAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction").dispatch();
+            this.updateCounter(0);
         }
         updateCounter(counter) {
             let badge = this.button.querySelector(".badge");
