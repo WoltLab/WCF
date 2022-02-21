@@ -264,8 +264,6 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     }
 
     /**
-     * Validates the 'getResultTemplate' method.
-     *
      * @throws UserInputException If not exactly one valid poll is given.
      * @throws PermissionDeniedException If the current user cannot see the result of the poll.
      * @since  5.5
@@ -285,8 +283,6 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     }
 
     /**
-     * Returns the result template for a specific poll.
-     *
      * @since  5.5
      */
     public function getResultTemplate(): array
@@ -301,8 +297,6 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     }
 
     /**
-     * Validates the 'getVoteTemplate' method.
-     *
      * @throws UserInputException If not exactly one valid poll is given.
      * @throws PermissionDeniedException If the current user cannot vote the poll.
      * @since  5.5
@@ -322,8 +316,6 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     }
 
     /**
-     * Returns the result template for a specific poll.
-     *
      * @since  5.5
      */
     public function getVoteTemplate(): array
