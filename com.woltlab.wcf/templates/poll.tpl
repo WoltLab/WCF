@@ -1,19 +1,21 @@
 {if ($__wcf->getUser()->userID || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
-<script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Poll/Manager/Manager'], function({ Manager }) {
-		new Manager(
-			{@$poll->pollID},
-			{if $poll->canSeeResult()}true{else}false{/if},
-			{if $poll->canVote()}true{else}false{/if},
-			{if $poll->isPublic}true{else}false{/if},
-			{@$poll->maxVotes},
-			"{$poll->question}"
-		);
-	});
+	{assign var=__pollLoadedJavaScript value=true}
+	<script data-relocate="true">
+		require(['WoltLabSuite/Core/Ui/Poll/Manager/Poll'], function({ PollSetup }) {
+			new PollSetup();
+		});
 	</script>
 {/if}
 
-<div id="poll{@$poll->pollID}" class="pollContainer{if POLL_FULL_WIDTH} pollContainerFullWidth{/if}" data-poll-id="{@$poll->pollID}" data-can-vote="{if $poll->canVote()}1{else}0{/if}" data-can-view-result="{if $poll->canSeeResult()}1{else}0{/if}" data-can-view-participants="{if $poll->canViewParticipants()}true{else}false{/if}" data-in-vote="{if $poll->canVote() && !$poll->isParticipant()}1{else}0{/if}" data-question="{$poll->question}" data-max-votes="{@$poll->maxVotes}" data-is-public="{if $poll->isPublic}true{else}false{/if}">
+<div id="poll{@$poll->pollID}" class="pollContainer{if POLL_FULL_WIDTH} pollContainerFullWidth{/if}"{*
+	*} data-poll-id="{@$poll->pollID}"{*
+	*} data-can-vote="{if $poll->canVote()}true{else}false{/if}"{*
+	*} data-can-view-result="{if $poll->canSeeResult()}true{else}false{/if}"{*
+	*} data-can-view-participants="{if $poll->canViewParticipants()}true{else}false{/if}"{*
+	*} data-in-vote="{if $poll->canVote() && !$poll->isParticipant()}true{else}false{/if}"{*
+	*} data-question="{$poll->question}"{*
+	*} data-max-votes="{@$poll->maxVotes}"{*
+	*} data-is-public="{if $poll->isPublic}true{else}false{/if}">
 	<section>
 		<h2>{$poll->question} <span class="badge jsTooltip pollTotalVotesBadge" title="{lang}wcf.poll.totalVotes{/lang}">{#$poll->votes}</span></h2>
 
@@ -21,18 +23,26 @@
 			{if !$__wcf->getUser()->userID}
 				{if $poll->canSeeResult()}
 					{assign var='__pollView' value='result'}
-					{include file='pollResult'}
+					<div data-key="results">
+						{include file='pollResult'}
+					</div>
 				{else}
 					{assign var='__pollView' value='vote'}
-					{include file='pollVote'}
+					<div data-key="vote">
+						{include file='pollVote'}
+					</div>
 				{/if}
 			{else}
 				{if $poll->canVote() && !$poll->isParticipant()}
 					{assign var='__pollView' value='vote'}
-					{include file='pollVote'}
+					<div data-key="vote">
+						{include file='pollVote'}
+					</div>
 				{else}
 					{assign var='__pollView' value='result'}
-					{include file='pollResult'}
+					<div data-key="results">
+						{include file='pollResult'}
+					</div>
 				{/if}
 			{/if}
 

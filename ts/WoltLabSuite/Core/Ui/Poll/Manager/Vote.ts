@@ -9,18 +9,16 @@
  */
 
 import AjaxRequest from "../../../Ajax/Request";
-import Manager, { PollViews } from "./Manager";
+import { PollViews, Poll } from "./Poll";
 import { ResponseData } from "../../../Ajax/Data";
 import * as Core from "../../../Core";
 
 export class Vote {
-  private pollManager: Manager;
-
+  private readonly pollManager: Poll;
   private button: HTMLButtonElement;
+  private inputs: HTMLInputElement[];
 
-  private inputs: NodeListOf<HTMLInputElement>;
-
-  public constructor(manager: Manager) {
+  public constructor(manager: Poll) {
     this.pollManager = manager;
 
     this.initButton();
@@ -28,7 +26,7 @@ export class Vote {
   }
 
   private initButton(): void {
-    const button = this.pollManager.getPollContainer().querySelector<HTMLButtonElement>(".votePollButton");
+    const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".votePollButton");
 
     if (!button) {
       throw new Error(`Could not find vote button for poll "${this.pollManager.pollID}".`);
@@ -40,10 +38,10 @@ export class Vote {
   }
 
   public initSelects(): void {
-    const container = this.pollManager.getPollContainer().querySelector(".pollVoteContainer");
+    if (this.pollManager.hasView(PollViews.vote)) {
+      const container = this.pollManager.getView(PollViews.vote);
 
-    if (container) {
-      this.inputs = container.querySelectorAll<HTMLInputElement>("input");
+      this.inputs = Array.from(container.querySelectorAll<HTMLInputElement>("input"));
 
       this.inputs.forEach((input) => {
         input.addEventListener("change", () => this.checkInputs());
@@ -81,18 +79,12 @@ export class Vote {
   }
 
   private getSelectedOptions(): number[] {
-    return Array.from(this.inputs)
-      .filter((input) => input.checked)
-      .map((input) => parseInt(input.value, 10));
+    return this.inputs.filter((input) => input.checked).map((input) => parseInt(input.value, 10));
   }
 
   private submit(): void {
     this.button.disabled = true;
 
-    this.apiCall();
-  }
-
-  private apiCall(): void {
     const optionIDs = this.getSelectedOptions();
     const request = new AjaxRequest({
       url: `index.php?poll/&t=${Core.getXsrfToken()}`,
@@ -107,7 +99,8 @@ export class Vote {
         this.pollManager.canVote = data.changeableVote ? true : false;
         this.pollManager.canViewResults = true;
 
-        this.pollManager.changeView(PollViews.results, data.template);
+        this.pollManager.addView(PollViews.results, data.template);
+        this.pollManager.displayView(PollViews.results);
         this.pollManager.changeTotalVotes(data.totalVotes, data.totalVotesTooltip);
       },
     });

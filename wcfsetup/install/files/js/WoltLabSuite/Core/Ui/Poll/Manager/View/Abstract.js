@@ -7,47 +7,46 @@
  * @module  WoltLabSuite/Core/Ui/Poll/Manager/View/Abstract
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../../Core", "../../../../Ajax/Request"], function (require, exports, tslib_1, Core, Request_1) {
+define(["require", "exports", "tslib", "../../../../Ajax"], function (require, exports, tslib_1, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Abstract = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    Request_1 = (0, tslib_1.__importDefault)(Request_1);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
     class Abstract {
         constructor(manager) {
+            this.templateCache = undefined;
             this.pollManager = manager;
             this.initButton();
         }
-        apiCall(actionName, data) {
-            const request = new Request_1.default({
-                url: `index.php?poll/&t=${Core.getXsrfToken()}`,
-                data: Core.extend({
-                    actionName,
-                    pollID: this.pollManager.pollID,
-                }, data ? data : {}),
-                success: (data) => {
-                    this.button.disabled = false;
-                    this.success(data);
-                },
-            });
-            request.sendRequest();
+        async apiCall(actionName) {
+            const request = Ajax.dboAction(actionName, "wcf\\data\\poll\\PollAction");
+            request.objectIds([this.pollManager.pollID]);
+            const results = (await request.dispatch());
+            this.templateCache = results.template;
+            await this.loadView();
         }
         initButton() {
-            const button = this.pollManager.getPollContainer().querySelector(this.getButtonSelector());
+            const button = this.pollManager.getElement().querySelector(this.getButtonSelector());
             if (!button) {
                 throw new Error(`Could not find button with selector "${this.getButtonSelector()}" for poll "${this.pollManager.pollID}"`);
             }
             this.button = button;
-            this.button.addEventListener("click", (event) => {
+            this.button.addEventListener("click", async (event) => {
                 if (event) {
                     event.preventDefault();
                 }
-                this.apiCall(this.getActionName(), this.getData());
                 this.button.disabled = true;
+                await this.loadView();
             });
         }
-        getData() {
-            return undefined;
+        async loadView() {
+            if (this.templateCache === undefined) {
+                await this.apiCall(this.getActionName());
+            }
+            else {
+                this.pollManager.changeView(this.getViewName(), this.templateCache);
+            }
+            this.button.disabled = false;
         }
         changeView(view, html) {
             this.pollManager.changeView(view, html);

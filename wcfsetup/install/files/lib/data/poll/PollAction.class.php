@@ -291,7 +291,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
      */
     public function getResultTemplate(): array
     {
-        assert($this->poll instanceof PollEditor);
+        \assert($this->poll instanceof PollEditor);
 
         return [
             'template' => WCF::getTPL()->fetch('pollResult', 'wcf', [
@@ -337,7 +337,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
     private function loadRelatedObject(): void
     {
-        assert($this->poll instanceof PollEditor);
+        \assert($this->poll instanceof PollEditor);
 
         $relatedObject = PollManager::getInstance()->getRelatedObject($this->poll->getDecoratedObject());
 

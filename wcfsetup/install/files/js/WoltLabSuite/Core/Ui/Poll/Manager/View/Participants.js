@@ -14,11 +14,12 @@ define(["require", "exports", "tslib", "../../../User/List"], function (require,
     List_1 = (0, tslib_1.__importDefault)(List_1);
     class Participants {
         constructor(manager) {
+            this.userList = undefined;
             this.pollManager = manager;
             this.initButton();
         }
         initButton() {
-            const button = this.pollManager.getPollContainer().querySelector(".showPollParticipantsButton");
+            const button = this.pollManager.getElement().querySelector(".showPollParticipantsButton");
             if (!button) {
                 throw new Error(`Could not find button with selector "showPollParticipantsButton" for poll "${this.pollManager.pollID}"`);
             }

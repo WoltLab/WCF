@@ -8,28 +8,56 @@
  * @since   5.5
  */
 
+import * as Ajax from "../../../../Ajax";
 import { ResponseData } from "../../../../Ajax/Data";
-import { PollViews } from "../Manager";
-import Abstract from "./Abstract";
+import { Poll, PollViews } from "../Poll";
 
-export class Results extends Abstract {
-  protected getButtonSelector(): string {
-    return ".showResultsButton";
+export class Results {
+  protected readonly pollManager: Poll;
+  protected button: HTMLButtonElement;
+
+  public constructor(manager: Poll) {
+    this.pollManager = manager;
+
+    const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showResultsButton");
+
+    if (!button) {
+      throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollID}"`);
+    }
+
+    this.button = button;
+
+    this.button.addEventListener("click", async (event) => {
+      if (event) {
+        event.preventDefault();
+      }
+
+      this.button.disabled = true;
+
+      if (this.pollManager.hasView(PollViews.results)) {
+        this.pollManager.displayView(PollViews.results);
+      } else {
+        await this.loadView();
+      }
+
+      this.button.disabled = false;
+    });
   }
 
-  protected getActionName(): string {
-    return "getResult";
-  }
+  protected async loadView(): Promise<void> {
+    const request = Ajax.dboAction("getResultTemplate", "wcf\\data\\poll\\PollAction");
+    request.objectIds([this.pollManager.pollID]);
+    const results = (await request.dispatch()) as ResponseData;
 
-  protected success(data: ResponseData): void {
-    this.pollManager.changeView(PollViews.results, data.template);
+    this.pollManager.addView(PollViews.results, results.template);
+    this.pollManager.displayView(PollViews.results);
   }
 
   public checkVisibility(view: PollViews): void {
     if (view === PollViews.results) {
-      this.hideButton();
+      this.button.hidden = true;
     } else {
-      this.showButton();
+      this.button.hidden = false;
     }
   }
 }

@@ -7,27 +7,46 @@
  * @module  WoltLabSuite/Core/Ui/Poll/Manager/View/Results
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../Manager", "./Abstract"], function (require, exports, tslib_1, Manager_1, Abstract_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../Poll"], function (require, exports, tslib_1, Ajax, Poll_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Results = void 0;
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
-    class Results extends Abstract_1.default {
-        getButtonSelector() {
-            return ".showResultsButton";
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    class Results {
+        constructor(manager) {
+            this.pollManager = manager;
+            const button = this.pollManager.getElement().querySelector(".showResultsButton");
+            if (!button) {
+                throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollID}"`);
+            }
+            this.button = button;
+            this.button.addEventListener("click", async (event) => {
+                if (event) {
+                    event.preventDefault();
+                }
+                this.button.disabled = true;
+                if (this.pollManager.hasView(Poll_1.PollViews.results)) {
+                    this.pollManager.displayView(Poll_1.PollViews.results);
+                }
+                else {
+                    await this.loadView();
+                }
+                this.button.disabled = false;
+            });
         }
-        getActionName() {
-            return "getResult";
-        }
-        success(data) {
-            this.pollManager.changeView(Manager_1.PollViews.results, data.template);
+        async loadView() {
+            const request = Ajax.dboAction("getResultTemplate", "wcf\\data\\poll\\PollAction");
+            request.objectIds([this.pollManager.pollID]);
+            const results = (await request.dispatch());
+            this.pollManager.addView(Poll_1.PollViews.results, results.template);
+            this.pollManager.displayView(Poll_1.PollViews.results);
         }
         checkVisibility(view) {
-            if (view === Manager_1.PollViews.results) {
-                this.hideButton();
+            if (view === Poll_1.PollViews.results) {
+                this.button.hidden = true;
             }
             else {
-                this.showButton();
+                this.button.hidden = false;
             }
         }
     }

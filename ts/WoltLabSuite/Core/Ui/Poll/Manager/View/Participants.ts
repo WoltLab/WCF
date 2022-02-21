@@ -8,22 +8,22 @@
  * @since   5.5
  */
 
-import Manager from "../Manager";
+import { Poll } from "../Poll";
 import UiUserList from "../../../User/List";
 
 export class Participants {
-  protected readonly pollManager: Manager;
+  protected readonly pollManager: Poll;
   private button: HTMLButtonElement;
-  private userList?: UiUserList;
+  private userList?: UiUserList = undefined;
 
-  public constructor(manager: Manager) {
+  public constructor(manager: Poll) {
     this.pollManager = manager;
 
     this.initButton();
   }
 
   protected initButton(): void {
-    const button = this.pollManager.getPollContainer().querySelector<HTMLButtonElement>(".showPollParticipantsButton");
+    const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showPollParticipantsButton");
 
     if (!button) {
       throw new Error(
