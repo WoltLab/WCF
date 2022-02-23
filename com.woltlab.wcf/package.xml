@@ -102,6 +102,9 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="templateDelete" />
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_clearPackageDeprecations.php</instruction>
 
+		<!-- Misc. Update Scripts. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_randomize_cronjobs.php</instruction>
+
 		<!-- Migrate the STARTTLS option last. This requires external connections and thus is the
 			step that most likely might fail. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_starttls.php</instruction>
