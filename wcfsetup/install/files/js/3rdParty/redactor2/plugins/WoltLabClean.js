@@ -708,11 +708,29 @@ $.Redactor.prototype.WoltLabClean = function() {
 			
 			// Search for span[style] that contain styles that actually do nothing, because their set style
 			// equals the inherited style from its ancestors.
-			elBySelAll('span[style]', this.$editor[0], function(element) {
-				['color', 'font-family', 'font-size'].forEach(function(propertyName) {
+			const normalizeFontFamily = (value) => value.toLowerCase().replace(/['" ]/g, '');
+
+			const propertyNames = ["color", "font-family", "font-size"];
+			this.$editor[0].querySelectorAll("span[style]").forEach((element) => {
+				if (element.getAttribute("style").trim() === "") {
+					removeElements.push(element);
+					return;
+				}
+
+				propertyNames.forEach((propertyName) => {
 					var value = element.style.getPropertyValue(propertyName);
 					if (value) {
-						if (window.getComputedStyle(element.parentNode).getPropertyValue(propertyName) === value) {
+						let parentStyle = window.getComputedStyle(element.parentNode).getPropertyValue(propertyName);
+
+						// The browser handling of font families with quotes is highly inconsistent
+						// and causes frequent mismatches. Normalizing these values should improve
+						// the recognition of redundant styling.
+						if (propertyName === "font-family") {
+							parentStyle = normalizeFontFamily(parentStyle);
+							value = normalizeFontFamily(value);
+						}
+
+						if (parentStyle === value) {
 							removeElements.push(element);
 						}
 					}
