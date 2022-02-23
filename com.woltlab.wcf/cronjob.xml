@@ -7,7 +7,7 @@
 			<description language="de">Aktualisiert Paket-Informationen</description>
 			<startminute>0</startminute>
 			<starthour>2</starthour>
-			<startdom>*/2</startdom>
+			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
 			<canbedisabled>0</canbedisabled>
