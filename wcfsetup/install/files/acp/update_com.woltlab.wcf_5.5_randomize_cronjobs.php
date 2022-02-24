@@ -11,6 +11,9 @@
 
 use wcf\system\WCF;
 
+$startMinute = \random_int(0, 59);
+$startHour = \random_int(0, 23);
+
 $sql = "UPDATE  wcf1_cronjob
         SET     startMinute = ?,
                 startHour = ?,
@@ -24,8 +27,8 @@ $sql = "UPDATE  wcf1_cronjob
             AND cronjobName = ?";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute([
-    \random_int(0, 59),
-    \random_int(0, 23),
+    $startMinute,
+    $startHour,
     '*',
     '*',
     '*',
@@ -38,8 +41,8 @@ $statement->execute([
     'com.woltlab.wcf.refreshPackageUpdates',
 ]);
 $statement->execute([
-    \random_int(0, 59),
-    \random_int(0, 23),
+    $startMinute,
+    (($startHour + 12) % 24),
     \random_int(1, 15),
     '*',
     '*',
