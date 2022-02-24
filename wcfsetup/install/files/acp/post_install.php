@@ -2,6 +2,7 @@
 
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\package\PackageCache;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\system\WCF;
@@ -29,4 +30,49 @@ CategoryEditor::create([
         ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category'),
     'title' => 'Default Category',
     'time' => TIME_NOW,
+]);
+
+// Randomize the times of the package list update and robot list update cronjobs.
+$startMinute = \random_int(0, 59);
+$startHour = \random_int(0, 23);
+
+$sql = "UPDATE  wcf1_cronjob
+        SET     startMinute = ?,
+                startHour = ?,
+                startDom = ?,
+                startMonth = ?,
+                startDow = ?,
+                lastExec = ?,
+                nextExec = ?,
+                afterNextExec = ?
+        WHERE   packageiD = ?
+            AND cronjobName = ?";
+$statement = WCF::getDB()->prepare($sql);
+$statement->execute([
+    $startMinute,
+    $startHour,
+    '*',
+    '*',
+    '*',
+
+    0,
+    \TIME_NOW,
+    0,
+
+    $this->installation->getPackageID(),
+    'com.woltlab.wcf.refreshPackageUpdates',
+]);
+$statement->execute([
+    $startMinute,
+    (($startHour + 12) % 24),
+    \random_int(1, 15),
+    '*',
+    '*',
+
+    0,
+    \TIME_NOW,
+    0,
+
+    $this->installation->getPackageID(),
+    'com.woltlab.wcf.refreshSearchRobots',
 ]);
