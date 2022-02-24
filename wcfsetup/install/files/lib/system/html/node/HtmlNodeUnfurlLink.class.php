@@ -24,18 +24,36 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
      */
     public static function setUnfurl(HtmlNodePlainLink $link): void
     {
-        if ($link->isStandalone() && Url::is($link->href) && !Url::parse($link->href)['port']) {
-            self::removeStyling($link);
-
-            $object = new UnfurlUrlAction([], 'findOrCreate', [
-                'data' => [
-                    'url' => $link->href,
-                ],
-            ]);
-            $returnValues = $object->executeAction();
-
-            $link->link->setAttribute(self::UNFURL_URL_ID_ATTRIBUTE_NAME, $returnValues['returnValues']->urlID);
+        if (!$link->isStandalone()) {
+            return;
         }
+
+        if (!Url::is($link->href)) {
+            return;
+        }
+
+        $parsedUrl = Url::parse($link->href);
+
+        // Ignore non-standard ports.
+        if ($parsedUrl['port']) {
+            return;
+        }
+
+        // Ignore non-HTTP schemes.
+        if (!\in_array($parsedUrl['scheme'], ['http', 'https'])) {
+            return;
+        }
+
+        self::removeStyling($link);
+
+        $object = new UnfurlUrlAction([], 'findOrCreate', [
+            'data' => [
+                'url' => $link->href,
+            ],
+        ]);
+        $returnValues = $object->executeAction();
+
+        $link->link->setAttribute(self::UNFURL_URL_ID_ATTRIBUTE_NAME, $returnValues['returnValues']->urlID);
     }
 
     private static function removeStyling(HtmlNodePlainLink $element): void
