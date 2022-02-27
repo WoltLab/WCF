@@ -161,7 +161,11 @@ final class SessionHandler extends SingletonFactory
             case 'userID':
                 return $this->user->userID;
             case 'spiderID':
-                return $this->getSpiderID(UserUtil::getUserAgent());
+                if ($this->userID) {
+                    return null;
+                }
+
+                return $this->legacySession->spiderID;
             case 'pageID':
             case 'pageObjectID':
             case 'parentPageID':
