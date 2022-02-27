@@ -200,8 +200,11 @@ final class StringUtil
     {
         $integer = self::addThousandsSeparator($integer);
 
-        // format minus
-        return self::formatNegative($integer);
+        if ($integer < 0) {
+            return self::formatNegative($integer);
+        }
+
+        return $integer;
     }
 
     /**
@@ -651,7 +654,8 @@ final class StringUtil
                 // look for opening tags
                 if (\preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
                     \array_unshift($openTags, $tag[2]);
-                } /**
+                }
+                /**
                  * look for closing tags and check if this tag has a corresponding opening tag
                  * and omit the opening tag if it has been closed already
                  */
