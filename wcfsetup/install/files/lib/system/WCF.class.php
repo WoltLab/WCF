@@ -884,7 +884,7 @@ class WCF
     final public static function autoload($className)
     {
         $namespaces = \explode('\\', $className);
-        if (\count($namespaces) > 1) {
+        if (isset($namespaces[1])) {
             $applicationPrefix = \array_shift($namespaces);
             if ($applicationPrefix === '') {
                 $applicationPrefix = \array_shift($namespaces);
