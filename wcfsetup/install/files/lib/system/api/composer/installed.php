@@ -227,12 +227,12 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.10.0',
-            'version' => '1.10.0.0',
+            'pretty_version' => 'v1.10.1',
+            'version' => '1.10.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => '9699a52a862da4efb43985943afa17150155dd3d',
+            'reference' => '8256fbaf02b06bf8ea6dbf2331ca5382296d4027',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
