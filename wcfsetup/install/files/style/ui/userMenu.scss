@@ -146,9 +146,10 @@ body:not(.touch) .userMenuButton {
 
 	&.userMenuItemWithUsernames {
 		grid-template-areas:
-			"image content   content"
-			"image usernames meta";
-		grid-template-columns: 60px auto min-content;
+			"image content"
+			"image usernames"
+			"image meta";
+		grid-template-columns: 60px auto;
 	}
 }
 
