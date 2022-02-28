@@ -9,6 +9,7 @@ use wcf\data\poll\option\PollOptionEditor;
 use wcf\data\poll\option\PollOptionList;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\poll\PollManager;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
@@ -163,21 +164,58 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         }
     }
 
+    public function validateVote(): void
+    {
+        $this->poll = $this->getSingleObject();
+        $this->loadRelatedObject();
+
+        if (!$this->poll->pollID) {
+            throw new UserInputException('pollID');
+        }
+
+        if (!$this->poll->canVote()) {
+            throw new PermissionDeniedException();
+        }
+
+        if (!isset($this->parameters['optionIDs'])) {
+            throw new UserInputException('optionIDs');
+        }
+
+        if (\count($this->parameters['optionIDs']) > $this->poll->maxVotes) {
+            throw new UserInputException('optionIDs', 'maxVotes');
+        }
+
+        $optionIDs = [];
+        foreach ($this->poll->getOptions() as $option) {
+            $optionIDs[] = $option->optionID;
+        }
+
+        foreach ($this->parameters['optionIDs'] as $optionID) {
+            if (!\in_array($optionID, $optionIDs)) {
+                throw new UserInputException('optionIDs', 'unknownOption');
+            }
+        }
+    }
+
     /**
      * Executes a user's vote.
      */
     public function vote()
     {
-        $poll = \current($this->objects);
+        if (empty($this->poll)) {
+            $this->poll = $this->getSingleObject();
+        }
+
+        \assert($this->poll instanceof PollEditor);
 
         // get previous vote
         $sql = "SELECT  optionID
-                FROM    wcf" . WCF_N . "_poll_option_vote
+                FROM    wcf1_poll_option_vote
                 WHERE   pollID = ?
                     AND userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            $poll->pollID,
+            $this->poll->pollID,
             WCF::getUser()->userID,
         ]);
         $optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -195,23 +233,23 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         // insert new vote options
         if (!empty($this->parameters['optionIDs'])) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_poll_option_vote
+            $sql = "INSERT INTO wcf1_poll_option_vote
                                 (pollID, optionID, userID)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($this->parameters['optionIDs'] as $optionID) {
                 $statement->execute([
-                    $poll->pollID,
+                    $this->poll->pollID,
                     $optionID,
                     WCF::getUser()->userID,
                 ]);
             }
 
             // increase votes per option
-            $sql = "UPDATE  wcf" . WCF_N . "_poll_option
+            $sql = "UPDATE  wcf1_poll_option
                     SET     votes = votes + 1
                     WHERE   optionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($this->parameters['optionIDs'] as $optionID) {
                 $statement->execute([$optionID]);
             }
@@ -219,10 +257,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         // remove previous options
         if (!empty($optionIDs)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_poll_option_vote
+            $sql = "DELETE FROM wcf1_poll_option_vote
                     WHERE       optionID = ?
                             AND userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($optionIDs as $optionID) {
                 $statement->execute([
                     $optionID,
@@ -231,10 +269,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             }
 
             // decrease votes per option
-            $sql = "UPDATE  wcf" . WCF_N . "_poll_option
+            $sql = "UPDATE  wcf1_poll_option
                     SET     votes = votes - 1
                     WHERE   optionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($optionIDs as $optionID) {
                 $statement->execute([$optionID]);
             }
@@ -242,8 +280,25 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         // increase poll votes
         if (!$alreadyVoted) {
-            $poll->increaseVotes();
+            $this->poll->increaseVotes();
         }
+
+        // update poll object
+        $polls = PollManager::getInstance()->getPolls([$this->poll->pollID]);
+        $this->poll = new PollEditor($polls[$this->poll->pollID]);
+        $this->loadRelatedObject();
+
+        return [
+            'changeableVote' => $this->poll->isChangeable,
+            'totalVotes' => $this->poll->votes,
+            'totalVotesTooltip' => WCF::getLanguage()->getDynamicVariable(
+                'wcf.poll.totalVotes',
+                ['poll' => $this->poll->getDecoratedObject()]
+            ),
+            'template' => WCF::getTPL()->fetch('pollResult', 'wcf', [
+                'poll' => $this->poll->getDecoratedObject(),
+            ]),
+        ];
     }
 
     /**
@@ -260,6 +315,79 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         } elseif (!$this->poll->canViewParticipants()) {
             throw new PermissionDeniedException();
         }
+    }
+
+    /**
+     * @throws UserInputException If not exactly one valid poll is given.
+     * @throws PermissionDeniedException If the current user cannot see the result of the poll.
+     * @since  5.5
+     */
+    public function validateGetResultTemplate(): void
+    {
+        $this->poll = $this->getSingleObject();
+        $this->loadRelatedObject();
+
+        if (!$this->poll->pollID) {
+            throw new UserInputException('pollID');
+        }
+
+        if (!$this->poll->canSeeResult()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * @since  5.5
+     */
+    public function getResultTemplate(): array
+    {
+        \assert($this->poll instanceof PollEditor);
+
+        return [
+            'template' => WCF::getTPL()->fetch('pollResult', 'wcf', [
+                'poll' => $this->poll->getDecoratedObject(),
+            ]),
+        ];
+    }
+
+    /**
+     * @throws UserInputException If not exactly one valid poll is given.
+     * @throws PermissionDeniedException If the current user cannot vote the poll.
+     * @since  5.5
+     */
+    public function validateGetVoteTemplate(): void
+    {
+        $this->poll = $this->getSingleObject();
+        $this->loadRelatedObject();
+
+        if (!$this->poll->pollID) {
+            throw new UserInputException('pollID');
+        }
+
+        if (!$this->poll->canVote()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * @since  5.5
+     */
+    public function getVoteTemplate(): array
+    {
+        return [
+            'template' => WCF::getTPL()->fetch('pollVote', 'wcf', [
+                'poll' => $this->poll,
+            ]),
+        ];
+    }
+
+    private function loadRelatedObject(): void
+    {
+        \assert($this->poll instanceof PollEditor);
+
+        $relatedObject = PollManager::getInstance()->getRelatedObject($this->poll->getDecoratedObject());
+
+        $this->poll->setRelatedObject($relatedObject);
     }
 
     /**

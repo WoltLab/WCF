@@ -1,9 +1,9 @@
-<dl class="wide jsPollVote" data-max-votes="{@$poll->maxVotes}">
+<dl class="wide pollVoteContainer" data-max-votes="{@$poll->maxVotes}">
 	{foreach from=$poll->getOptions() item=option}
 		<dt></dt>
 		<dd>
 			<label>
-				{if $poll->canVote()}<input type="{if $poll->maxVotes > 1}checkbox{else}radio{/if}" name="pollOptions{@$poll->pollID}[]" value="{$option->optionValue}" data-option-id="{@$option->optionID}"{if $option->voted} checked{/if}>{/if}
+				{if $poll->canVote()}<input type="{if $poll->maxVotes > 1}checkbox{else}radio{/if}" name="pollOptions{@$poll->pollID}[]" value="{@$option->optionID}"{if $option->voted} checked{/if}>{/if}
 				{$option->optionValue}
 			</label>
 		</dd>
