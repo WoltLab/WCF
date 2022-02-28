@@ -4,13 +4,13 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Manager/Poll
+ * @module  WoltLabSuite/Core/Ui/Poll/Poll
  * @since   5.5
  */
 
-import DomChangeListener from "../../../Dom/Change/Listener";
-import DomUtil from "../../../Dom/Util";
-import { formatNumeric } from "../../../StringUtil";
+import DomChangeListener from "../../Dom/Change/Listener";
+import DomUtil from "../../Dom/Util";
+import { formatNumeric } from "../../StringUtil";
 import Participants from "./View/Participants";
 import Results from "./View/Results";
 import VoteView from "./View/Vote";

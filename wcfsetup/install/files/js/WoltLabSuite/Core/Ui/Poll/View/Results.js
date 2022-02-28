@@ -4,10 +4,10 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Manager/View/Results
+ * @module  WoltLabSuite/Core/Ui/Poll/View/Results
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../Poll"], function (require, exports, tslib_1, Ajax, Poll_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../Poll"], function (require, exports, tslib_1, Ajax, Poll_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Results = void 0;

@@ -4,12 +4,12 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Manager/Vote
+ * @module  WoltLabSuite/Core/Ui/Poll/Vote
  * @since   5.5
  */
 
 import { PollViews, Poll } from "./Poll";
-import * as Ajax from "../../../Ajax";
+import * as Ajax from "../../Ajax";
 
 type VoteResponseData = {
   changeableVote: number;

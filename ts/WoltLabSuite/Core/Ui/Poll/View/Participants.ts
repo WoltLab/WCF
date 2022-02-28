@@ -4,12 +4,12 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Manager/View/Participants
+ * @module  WoltLabSuite/Core/Ui/Poll/View/Participants
  * @since   5.5
  */
 
 import { Poll } from "../Poll";
-import UiUserList from "../../../User/List";
+import UiUserList from "../../User/List";
 
 export class Participants {
   protected readonly pollManager: Poll;

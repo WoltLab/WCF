@@ -1,33 +1,31 @@
 /**
- * Implementation for poll vote views.
+ * Implementation for poll result views.
  *
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Manager/View/Results
+ * @module  WoltLabSuite/Core/Ui/Poll/View/Results
  * @since   5.5
  */
 
-import * as Ajax from "../../../../Ajax";
+import * as Ajax from "../../../Ajax";
 import { Poll, PollViews } from "../Poll";
 
-type VoteResponseData = {
+type ResultResponseData = {
   template: string;
 };
 
-export class Vote {
+export class Results {
   private readonly pollManager: Poll;
   private readonly button: HTMLButtonElement;
 
   public constructor(manager: Poll) {
     this.pollManager = manager;
 
-    const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showVoteFormButton");
+    const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showResultsButton");
 
     if (!button) {
-      throw new Error(
-        `Could not find button with selector ".showVoteFormButton" for poll "${this.pollManager.pollId}"`,
-      );
+      throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollId}"`);
     }
 
     this.button = button;
@@ -39,8 +37,8 @@ export class Vote {
 
       this.button.disabled = true;
 
-      if (this.pollManager.hasView(PollViews.vote)) {
-        this.pollManager.displayView(PollViews.vote);
+      if (this.pollManager.hasView(PollViews.results)) {
+        this.pollManager.displayView(PollViews.results);
       } else {
         await this.loadView();
       }
@@ -50,16 +48,16 @@ export class Vote {
   }
 
   private async loadView(): Promise<void> {
-    const request = Ajax.dboAction("getVoteTemplate", "wcf\\data\\poll\\PollAction");
+    const request = Ajax.dboAction("getResultTemplate", "wcf\\data\\poll\\PollAction");
     request.objectIds([this.pollManager.pollId]);
-    const results = (await request.dispatch()) as VoteResponseData;
+    const results = (await request.dispatch()) as ResultResponseData;
 
-    this.pollManager.addView(PollViews.vote, results.template);
-    this.pollManager.displayView(PollViews.vote);
+    this.pollManager.addView(PollViews.results, results.template);
+    this.pollManager.displayView(PollViews.results);
   }
 
   public checkVisibility(view: PollViews): void {
-    if (view === PollViews.vote || !this.pollManager.canVote) {
+    if (view === PollViews.results) {
       this.button.hidden = true;
     } else {
       this.button.hidden = false;
@@ -67,4 +65,4 @@ export class Vote {
   }
 }
 
-export default Vote;
+export default Results;

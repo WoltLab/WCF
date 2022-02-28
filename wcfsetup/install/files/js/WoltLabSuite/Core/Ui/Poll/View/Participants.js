@@ -4,10 +4,10 @@
  * @author  Joshua Ruesweg
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Poll/Manager/View/Participants
+ * @module  WoltLabSuite/Core/Ui/Poll/View/Participants
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../User/List"], function (require, exports, tslib_1, List_1) {
+define(["require", "exports", "tslib", "../../User/List"], function (require, exports, tslib_1, List_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Participants = void 0;
