@@ -146,13 +146,6 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $data = [];
         /** @var ViewableModerationQueue $queue */
         foreach ($queues as $queue) {
-            $username = '';
-            if ($queue->getUserProfile()->userID) {
-                $username = $queue->getUserProfile()->getFormattedUsername();
-            } else {
-                $username = $queue->getAffectedObject()->getUsername();
-            }
-
             $data[] = [
                 'content' => $queue->getAffectedObject()->getTitle(),
                 'image' => $queue->getUserProfile()->getAvatar()->getImageTag(48),
@@ -160,7 +153,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
                 'link' => $queue->getLink(),
                 'objectId' => $queue->queueID,
                 'time' => $queue->lastChangeTime,
-                'usernames' => [$username],
+                'usernames' => [],
             ];
         }
 
