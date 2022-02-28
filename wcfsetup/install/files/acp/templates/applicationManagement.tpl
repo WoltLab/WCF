@@ -18,6 +18,8 @@
 	<div class="warning">{lang}wcf.acp.application.multiDomain{/lang}</div>
 {/if}
 
+{include file='formNotice' action='edit'}
+
 <form method="post" action="{link controller='ApplicationManagement'}{/link}">
 	{if !$isMultiDomainSetup}
 		<section class="section">
