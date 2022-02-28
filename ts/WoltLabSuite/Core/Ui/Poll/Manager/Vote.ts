@@ -8,33 +8,32 @@
  * @since   5.5
  */
 
-import AjaxRequest from "../../../Ajax/Request";
 import { PollViews, Poll } from "./Poll";
-import { ResponseData } from "../../../Ajax/Data";
-import * as Core from "../../../Core";
+import * as Ajax from "../../../Ajax";
+
+type VoteResponseData = {
+  changeableVote: number;
+  totalVotes: number;
+  totalVotesTooltip: string;
+  template: string;
+};
 
 export class Vote {
   private readonly pollManager: Poll;
-  private button: HTMLButtonElement;
+  private readonly button: HTMLButtonElement;
   private inputs: HTMLInputElement[];
 
   public constructor(manager: Poll) {
     this.pollManager = manager;
 
-    this.initButton();
-    this.initSelects();
-  }
-
-  private initButton(): void {
     const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".votePollButton");
-
     if (!button) {
-      throw new Error(`Could not find vote button for poll "${this.pollManager.pollID}".`);
+      throw new Error(`Could not find vote button for poll "${this.pollManager.pollId}".`);
     }
-
     this.button = button;
-
     this.button.addEventListener("click", () => this.submit());
+
+    this.initSelects();
   }
 
   public initSelects(): void {
@@ -82,29 +81,25 @@ export class Vote {
     return this.inputs.filter((input) => input.checked).map((input) => parseInt(input.value, 10));
   }
 
-  private submit(): void {
+  private async submit(): Promise<void> {
     this.button.disabled = true;
 
     const optionIDs = this.getSelectedOptions();
-    const request = new AjaxRequest({
-      url: `index.php?poll/&t=${Core.getXsrfToken()}`,
-      data: Core.extend({
-        actionName: "vote",
-        pollID: this.pollManager.pollID,
-        optionIDs,
-      }),
-      success: (data: ResponseData) => {
-        this.button.disabled = false;
 
-        this.pollManager.canVote = data.changeableVote ? true : false;
-        this.pollManager.canViewResults = true;
-
-        this.pollManager.addView(PollViews.results, data.template);
-        this.pollManager.displayView(PollViews.results);
-        this.pollManager.changeTotalVotes(data.totalVotes, data.totalVotesTooltip);
-      },
+    const request = Ajax.dboAction("vote", "wcf\\data\\poll\\PollAction");
+    request.objectIds([this.pollManager.pollId]);
+    request.payload({
+      optionIDs,
     });
-    request.sendRequest();
+    const results = (await request.dispatch()) as VoteResponseData;
+
+    this.pollManager.canVote = !!results.changeableVote;
+    this.pollManager.canViewResults = true;
+    this.pollManager.addView(PollViews.results, results.template);
+    this.pollManager.displayView(PollViews.results);
+    this.pollManager.changeTotalVotes(results.totalVotes, results.totalVotesTooltip);
+
+    this.button.disabled = false;
   }
 
   public checkVisibility(view: PollViews): void {

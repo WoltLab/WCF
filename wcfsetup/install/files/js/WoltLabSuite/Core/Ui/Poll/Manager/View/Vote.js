@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../Poll"], function 
             this.pollManager = manager;
             const button = this.pollManager.getElement().querySelector(".showVoteFormButton");
             if (!button) {
-                throw new Error(`Could not find button with selector ".showVoteFormButton" for poll "${this.pollManager.pollID}"`);
+                throw new Error(`Could not find button with selector ".showVoteFormButton" for poll "${this.pollManager.pollId}"`);
             }
             this.button = button;
             this.button.addEventListener("click", async (event) => {
@@ -36,7 +36,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../Poll"], function 
         }
         async loadView() {
             const request = Ajax.dboAction("getVoteTemplate", "wcf\\data\\poll\\PollAction");
-            request.objectIds([this.pollManager.pollID]);
+            request.objectIds([this.pollManager.pollId]);
             const results = (await request.dispatch());
             this.pollManager.addView(Poll_1.PollViews.vote, results.template);
             this.pollManager.displayView(Poll_1.PollViews.vote);

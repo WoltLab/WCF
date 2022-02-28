@@ -1,8 +1,8 @@
 {if ($__wcf->getUser()->userID || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
 	{assign var=__pollLoadedJavaScript value=true}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Poll/Manager/Poll'], function({ PollSetup }) {
-			new PollSetup();
+		require(['WoltLabSuite/Core/Ui/Poll/Manager/Poll'], function({ setupAll }) {
+			setupAll();
 		});
 	</script>
 {/if}

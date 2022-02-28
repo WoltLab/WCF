@@ -22,16 +22,16 @@ export enum PollViews {
 }
 
 export class Poll {
-  public readonly pollID: number;
-  protected poll: HTMLElement;
+  public readonly pollId: number;
+  private readonly element: HTMLElement;
 
-  private voteView?: VoteView;
-  private resultsView?: Results;
-  private participants?: Participants;
+  private readonly voteView?: VoteView = undefined;
+  private readonly resultsView?: Results = undefined;
+  private participants?: Participants = undefined;
 
-  private voteHandler?: VoteHandler;
+  private readonly voteHandler?: VoteHandler = undefined;
 
-  private views: Map<PollViews, HTMLElement> = new Map();
+  private readonly views: Map<PollViews, HTMLElement> = new Map();
 
   public constructor(pollID: number) {
     const poll = document.getElementById(`poll${pollID}`);
@@ -40,8 +40,8 @@ export class Poll {
       throw new Error(`Could not find poll with id "${pollID}".`);
     }
 
-    this.poll = poll;
-    this.pollID = pollID;
+    this.element = poll;
+    this.pollId = pollID;
 
     this.getInnerContainer()
       .querySelectorAll("div")
@@ -66,7 +66,7 @@ export class Poll {
   }
 
   public getElement(): HTMLElement {
-    return this.poll;
+    return this.element;
   }
 
   public hasView(key: PollViews): boolean {
@@ -75,7 +75,7 @@ export class Poll {
 
   public getView(key: PollViews): HTMLElement {
     if (!this.hasView(key)) {
-      throw new Error(`The view "${key}" is unknown for poll "${this.pollID}".`);
+      throw new Error(`The view "${key}" is unknown for poll "${this.pollId}".`);
     }
 
     return this.views.get(key)!;
@@ -83,7 +83,7 @@ export class Poll {
 
   public displayView(key: PollViews): void {
     if (!this.hasView(key)) {
-      throw new Error(`The view "${key}" is unknown for poll "${this.pollID}".`);
+      throw new Error(`The view "${key}" is unknown for poll "${this.pollId}".`);
     }
 
     this.views.forEach((view) => {
@@ -127,10 +127,10 @@ export class Poll {
   }
 
   private getInnerContainer(): HTMLElement {
-    const innerContainer = this.poll.querySelector<HTMLElement>(".pollInnerContainer");
+    const innerContainer = this.element.querySelector<HTMLElement>(".pollInnerContainer");
 
     if (!innerContainer) {
-      throw new Error(`Could not find inner container for poll "${this.pollID}"`);
+      throw new Error(`Could not find inner container for poll "${this.pollId}"`);
     }
 
     return innerContainer;
@@ -148,58 +148,55 @@ export class Poll {
   }
 
   get isPublic(): boolean {
-    return this.poll.dataset.isPublic === "true";
+    return this.element.dataset.isPublic === "true";
   }
 
   get maxVotes(): number {
-    return parseInt(this.poll.dataset.maxVotes!, 10);
+    return parseInt(this.element.dataset.maxVotes!, 10);
   }
 
   get question(): string {
-    return this.poll.dataset.question!;
+    return this.element.dataset.question!;
   }
 
   get canVote(): boolean {
-    return this.poll.dataset.canVote === "true";
+    return this.element.dataset.canVote === "true";
   }
 
   set canVote(canVote: boolean) {
-    this.poll.dataset.canVote = canVote ? "true" : "false";
+    this.element.dataset.canVote = canVote ? "true" : "false";
   }
 
   get canViewResults(): boolean {
-    return this.poll.dataset.canViewResult === "true";
+    return this.element.dataset.canViewResult === "true";
   }
 
   set canViewResults(canViewResults: boolean) {
-    this.poll.dataset.canViewResult = canViewResults ? "true" : "false";
+    this.element.dataset.canViewResult = canViewResults ? "true" : "false";
   }
 }
 
-export class PollSetup {
-  private polls: Map<number, Poll> = new Map();
+const polls: Map<number, Poll> = new Map();
+function setup(): void {
+  document.querySelectorAll(".pollContainer").forEach((pollElement: HTMLElement) => {
+    if (!pollElement.dataset.pollId) {
+      throw new Error("Invalid poll element given. Missing pollID.");
+    }
 
-  public constructor() {
-    DomChangeListener.add("WoltLabSuite/Core/Ui/Poll/Manager/Poll", () => {
-      this.init();
-    });
+    const pollID = parseInt(pollElement.dataset.pollId, 10);
 
-    this.init();
-  }
-
-  private init(): void {
-    document.querySelectorAll(".pollContainer").forEach((pollElement: HTMLElement) => {
-      if (!pollElement.dataset.pollId) {
-        throw new Error("Invalid poll element given. Missing pollID.");
-      }
-
-      const pollID = parseInt(pollElement.dataset.pollId, 10);
-
-      if (!this.polls.has(pollID)) {
-        this.polls.set(pollID, new Poll(pollID));
-      }
-    });
-  }
+    if (!polls.has(pollID)) {
+      polls.set(pollID, new Poll(pollID));
+    }
+  });
 }
 
-export default PollSetup;
+export function setupAll(): void {
+  DomChangeListener.add("WoltLabSuite/Core/Ui/Poll/Manager/Poll", () => {
+    setup();
+  });
+
+  setup();
+}
+
+export default setupAll;

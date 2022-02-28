@@ -19,20 +19,13 @@ export class Participants {
   public constructor(manager: Poll) {
     this.pollManager = manager;
 
-    this.initButton();
-  }
-
-  protected initButton(): void {
     const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showPollParticipantsButton");
-
     if (!button) {
       throw new Error(
-        `Could not find button with selector "showPollParticipantsButton" for poll "${this.pollManager.pollID}"`,
+        `Could not find button with selector "showPollParticipantsButton" for poll "${this.pollManager.pollId}"`,
       );
     }
-
     this.button = button;
-
     this.button.addEventListener("click", (event) => {
       if (event) {
         event.preventDefault();
@@ -48,7 +41,7 @@ export class Participants {
         className: "wcf\\data\\poll\\PollAction",
         dialogTitle: this.pollManager.question,
         parameters: {
-          pollID: this.pollManager.pollID,
+          pollID: this.pollManager.pollId,
         },
       });
     }

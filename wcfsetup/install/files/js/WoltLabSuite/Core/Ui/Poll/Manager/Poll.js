@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../../../Dom/Change/Listener", "../../../Dom/Util", "../../../StringUtil", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Listener_1, Util_1, StringUtil_1, Participants_1, Results_1, Vote_1, Vote_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.PollSetup = exports.Poll = exports.PollViews = void 0;
+    exports.setupAll = exports.Poll = exports.PollViews = void 0;
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     Util_1 = (0, tslib_1.__importDefault)(Util_1);
     Participants_1 = (0, tslib_1.__importDefault)(Participants_1);
@@ -24,13 +24,17 @@ define(["require", "exports", "tslib", "../../../Dom/Change/Listener", "../../..
     })(PollViews = exports.PollViews || (exports.PollViews = {}));
     class Poll {
         constructor(pollID) {
+            this.voteView = undefined;
+            this.resultsView = undefined;
+            this.participants = undefined;
+            this.voteHandler = undefined;
             this.views = new Map();
             const poll = document.getElementById(`poll${pollID}`);
             if (poll === null) {
                 throw new Error(`Could not find poll with id "${pollID}".`);
             }
-            this.poll = poll;
-            this.pollID = pollID;
+            this.element = poll;
+            this.pollId = pollID;
             this.getInnerContainer()
                 .querySelectorAll("div")
                 .forEach((element) => {
@@ -50,21 +54,21 @@ define(["require", "exports", "tslib", "../../../Dom/Change/Listener", "../../..
             }
         }
         getElement() {
-            return this.poll;
+            return this.element;
         }
         hasView(key) {
             return this.views.has(key);
         }
         getView(key) {
             if (!this.hasView(key)) {
-                throw new Error(`The view "${key}" is unknown for poll "${this.pollID}".`);
+                throw new Error(`The view "${key}" is unknown for poll "${this.pollId}".`);
             }
             return this.views.get(key);
         }
         displayView(key) {
             var _a, _b, _c;
             if (!this.hasView(key)) {
-                throw new Error(`The view "${key}" is unknown for poll "${this.pollID}".`);
+                throw new Error(`The view "${key}" is unknown for poll "${this.pollId}".`);
             }
             this.views.forEach((view) => {
                 view.hidden = true;
@@ -96,9 +100,9 @@ define(["require", "exports", "tslib", "../../../Dom/Change/Listener", "../../..
             return this.canViewResults && this.isPublic;
         }
         getInnerContainer() {
-            const innerContainer = this.poll.querySelector(".pollInnerContainer");
+            const innerContainer = this.element.querySelector(".pollInnerContainer");
             if (!innerContainer) {
-                throw new Error(`Could not find inner container for poll "${this.pollID}"`);
+                throw new Error(`Could not find inner container for poll "${this.pollId}"`);
             }
             return innerContainer;
         }
@@ -111,48 +115,46 @@ define(["require", "exports", "tslib", "../../../Dom/Change/Listener", "../../..
             badge.dataset.tooltip = tooltip;
         }
         get isPublic() {
-            return this.poll.dataset.isPublic === "true";
+            return this.element.dataset.isPublic === "true";
         }
         get maxVotes() {
-            return parseInt(this.poll.dataset.maxVotes, 10);
+            return parseInt(this.element.dataset.maxVotes, 10);
         }
         get question() {
-            return this.poll.dataset.question;
+            return this.element.dataset.question;
         }
         get canVote() {
-            return this.poll.dataset.canVote === "true";
+            return this.element.dataset.canVote === "true";
         }
         set canVote(canVote) {
-            this.poll.dataset.canVote = canVote ? "true" : "false";
+            this.element.dataset.canVote = canVote ? "true" : "false";
         }
         get canViewResults() {
-            return this.poll.dataset.canViewResult === "true";
+            return this.element.dataset.canViewResult === "true";
         }
         set canViewResults(canViewResults) {
-            this.poll.dataset.canViewResult = canViewResults ? "true" : "false";
+            this.element.dataset.canViewResult = canViewResults ? "true" : "false";
         }
     }
     exports.Poll = Poll;
-    class PollSetup {
-        constructor() {
-            this.polls = new Map();
-            Listener_1.default.add("WoltLabSuite/Core/Ui/Poll/Manager/Poll", () => {
-                this.init();
-            });
-            this.init();
-        }
-        init() {
-            document.querySelectorAll(".pollContainer").forEach((pollElement) => {
-                if (!pollElement.dataset.pollId) {
-                    throw new Error("Invalid poll element given. Missing pollID.");
-                }
-                const pollID = parseInt(pollElement.dataset.pollId, 10);
-                if (!this.polls.has(pollID)) {
-                    this.polls.set(pollID, new Poll(pollID));
-                }
-            });
-        }
+    const polls = new Map();
+    function setup() {
+        document.querySelectorAll(".pollContainer").forEach((pollElement) => {
+            if (!pollElement.dataset.pollId) {
+                throw new Error("Invalid poll element given. Missing pollID.");
+            }
+            const pollID = parseInt(pollElement.dataset.pollId, 10);
+            if (!polls.has(pollID)) {
+                polls.set(pollID, new Poll(pollID));
+            }
+        });
     }
-    exports.PollSetup = PollSetup;
-    exports.default = PollSetup;
+    function setupAll() {
+        Listener_1.default.add("WoltLabSuite/Core/Ui/Poll/Manager/Poll", () => {
+            setup();
+        });
+        setup();
+    }
+    exports.setupAll = setupAll;
+    exports.default = setupAll;
 });

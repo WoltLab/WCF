@@ -7,25 +7,21 @@
  * @module  WoltLabSuite/Core/Ui/Poll/Manager/Vote
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../Ajax/Request", "./Poll", "../../../Core"], function (require, exports, tslib_1, Request_1, Poll_1, Core) {
+define(["require", "exports", "tslib", "./Poll", "../../../Ajax"], function (require, exports, tslib_1, Poll_1, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Vote = void 0;
-    Request_1 = (0, tslib_1.__importDefault)(Request_1);
-    Core = (0, tslib_1.__importStar)(Core);
+    Ajax = (0, tslib_1.__importStar)(Ajax);
     class Vote {
         constructor(manager) {
             this.pollManager = manager;
-            this.initButton();
-            this.initSelects();
-        }
-        initButton() {
             const button = this.pollManager.getElement().querySelector(".votePollButton");
             if (!button) {
-                throw new Error(`Could not find vote button for poll "${this.pollManager.pollID}".`);
+                throw new Error(`Could not find vote button for poll "${this.pollManager.pollId}".`);
             }
             this.button = button;
             this.button.addEventListener("click", () => this.submit());
+            this.initSelects();
         }
         initSelects() {
             if (this.pollManager.hasView(Poll_1.PollViews.vote)) {
@@ -64,26 +60,21 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "./Poll", "../..
         getSelectedOptions() {
             return this.inputs.filter((input) => input.checked).map((input) => parseInt(input.value, 10));
         }
-        submit() {
+        async submit() {
             this.button.disabled = true;
             const optionIDs = this.getSelectedOptions();
-            const request = new Request_1.default({
-                url: `index.php?poll/&t=${Core.getXsrfToken()}`,
-                data: Core.extend({
-                    actionName: "vote",
-                    pollID: this.pollManager.pollID,
-                    optionIDs,
-                }),
-                success: (data) => {
-                    this.button.disabled = false;
-                    this.pollManager.canVote = data.changeableVote ? true : false;
-                    this.pollManager.canViewResults = true;
-                    this.pollManager.addView(Poll_1.PollViews.results, data.template);
-                    this.pollManager.displayView(Poll_1.PollViews.results);
-                    this.pollManager.changeTotalVotes(data.totalVotes, data.totalVotesTooltip);
-                },
+            const request = Ajax.dboAction("vote", "wcf\\data\\poll\\PollAction");
+            request.objectIds([this.pollManager.pollId]);
+            request.payload({
+                optionIDs,
             });
-            request.sendRequest();
+            const results = (await request.dispatch());
+            this.pollManager.canVote = !!results.changeableVote;
+            this.pollManager.canViewResults = true;
+            this.pollManager.addView(Poll_1.PollViews.results, results.template);
+            this.pollManager.displayView(Poll_1.PollViews.results);
+            this.pollManager.changeTotalVotes(results.totalVotes, results.totalVotesTooltip);
+            this.button.disabled = false;
         }
         checkVisibility(view) {
             this.button.hidden = view !== Poll_1.PollViews.vote;

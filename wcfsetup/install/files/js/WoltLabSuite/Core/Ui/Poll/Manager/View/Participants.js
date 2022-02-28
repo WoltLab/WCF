@@ -16,12 +16,9 @@ define(["require", "exports", "tslib", "../../../User/List"], function (require,
         constructor(manager) {
             this.userList = undefined;
             this.pollManager = manager;
-            this.initButton();
-        }
-        initButton() {
             const button = this.pollManager.getElement().querySelector(".showPollParticipantsButton");
             if (!button) {
-                throw new Error(`Could not find button with selector "showPollParticipantsButton" for poll "${this.pollManager.pollID}"`);
+                throw new Error(`Could not find button with selector "showPollParticipantsButton" for poll "${this.pollManager.pollId}"`);
             }
             this.button = button;
             this.button.addEventListener("click", (event) => {
@@ -37,7 +34,7 @@ define(["require", "exports", "tslib", "../../../User/List"], function (require,
                     className: "wcf\\data\\poll\\PollAction",
                     dialogTitle: this.pollManager.question,
                     parameters: {
-                        pollID: this.pollManager.pollID,
+                        pollID: this.pollManager.pollId,
                     },
                 });
             }

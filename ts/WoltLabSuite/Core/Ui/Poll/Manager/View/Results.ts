@@ -9,12 +9,15 @@
  */
 
 import * as Ajax from "../../../../Ajax";
-import { ResponseData } from "../../../../Ajax/Data";
 import { Poll, PollViews } from "../Poll";
 
+type ResultResponseData = {
+  template: string;
+};
+
 export class Results {
-  protected readonly pollManager: Poll;
-  protected button: HTMLButtonElement;
+  private readonly pollManager: Poll;
+  private readonly button: HTMLButtonElement;
 
   public constructor(manager: Poll) {
     this.pollManager = manager;
@@ -22,7 +25,7 @@ export class Results {
     const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showResultsButton");
 
     if (!button) {
-      throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollID}"`);
+      throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollId}"`);
     }
 
     this.button = button;
@@ -44,10 +47,10 @@ export class Results {
     });
   }
 
-  protected async loadView(): Promise<void> {
+  private async loadView(): Promise<void> {
     const request = Ajax.dboAction("getResultTemplate", "wcf\\data\\poll\\PollAction");
-    request.objectIds([this.pollManager.pollID]);
-    const results = (await request.dispatch()) as ResponseData;
+    request.objectIds([this.pollManager.pollId]);
+    const results = (await request.dispatch()) as ResultResponseData;
 
     this.pollManager.addView(PollViews.results, results.template);
     this.pollManager.displayView(PollViews.results);
