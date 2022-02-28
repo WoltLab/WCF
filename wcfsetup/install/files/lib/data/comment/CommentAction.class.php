@@ -1179,6 +1179,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		if ($objectType === null) {
 			throw new UserInputException('objectTypeID');
 		}
+		if ($objectType->getDefinition()->definitionName !== 'com.woltlab.wcf.comment.commentableContent') {
+			throw new UserInputException('objectTypeID');
+		}
 		
 		return $objectType;
 	}
