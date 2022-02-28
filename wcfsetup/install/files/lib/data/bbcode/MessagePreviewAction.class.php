@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\bbcode;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -29,6 +30,14 @@ class MessagePreviewAction extends BBCodeAction {
 		$this->readString('message', false, 'data');
 		$this->readString('messageObjectType');
 		$this->readInteger('messageObjectID', true);
+
+		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+			'com.woltlab.wcf.message',
+			$this->parameters['messageObjectType']
+		);
+		if ($objectTypeID === null) {
+			throw new UserInputException('messageObjectType');
+		}
 	}
 	
 	/**
