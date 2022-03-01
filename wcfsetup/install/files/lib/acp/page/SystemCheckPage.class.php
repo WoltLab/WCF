@@ -82,8 +82,9 @@ class SystemCheckPage extends AbstractPage
 
     public $phpVersions = [
         'minimum' => '7.2.24',
-        'sufficient' => ['7.2', '7.3'],
-        'recommended' => ['7.4', '8.0'],
+        'deprecated' => ['7.2', '7.3'],
+        'sufficient' => ['7.4'],
+        'recommended' => ['8.0', '8.1'],
     ];
 
     public $foreignKeys = [
@@ -384,7 +385,7 @@ class SystemCheckPage extends AbstractPage
         $this->results['php']['version']['value'] = $comparePhpVersion;
         if (\version_compare($comparePhpVersion, $this->phpVersions['minimum']) >= 0) {
             $majorMinor = \preg_replace('~^(\d+\.\d+).*$~', '\\1', $phpVersion);
-            foreach (['recommended', 'sufficient'] as $type) {
+            foreach (['recommended', 'sufficient', 'deprecated'] as $type) {
                 foreach ($this->phpVersions[$type] as $version) {
                     if ($majorMinor === $version) {
                         $this->results['php']['version']['result'] = $type;
