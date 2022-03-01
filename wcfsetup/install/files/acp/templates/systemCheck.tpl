@@ -58,13 +58,17 @@
 		<dt>{lang}wcf.acp.systemCheck.php.version{/lang}</dt>
 		<dd>
 			{if $results[php][version][result] === 'recommended'}
-				{@$statusOk}
+				{@$statusOk} {$results[php][version][value]}
 			{elseif $results[php][version][result] === 'sufficient'}
-				{@$statusSufficient}
+				{@$statusSufficient} {$results[php][version][value]}
+			{elseif $results[php][version][result] === 'deprecated'}
+				{@$statusSufficient} {$results[php][version][value]}
+
+				<p class="warning">{lang}wcf.acp.systemCheck.php.version.deprecated{/lang}</p>
 			{else}
-				{@$statusInsufficient}
+				{@$statusInsufficient} {$results[php][version][value]}
 			{/if}
-			{$results[php][version][value]}
+			
 			<small>{lang}wcf.acp.systemCheck.php.version.description{/lang}</small>
 		</dd>
 	</dl>
