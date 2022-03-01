@@ -165,6 +165,10 @@ final class SessionHandler extends SingletonFactory
                     return null;
                 }
 
+                if ($this->isACP) {
+                    return null;
+                }
+
                 return $this->legacySession->spiderID;
             case 'pageID':
             case 'pageObjectID':
