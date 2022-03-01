@@ -65,24 +65,14 @@ class NotificationHandler {
     this.onVisibilityChange();
 
     if (options.enableNotifications) {
-      void this.enableNotifications();
+      if ("Notification" in window && Notification.permission === "granted") {
+        this.allowNotification = true;
+      }
     }
   }
 
-  private async enableNotifications(): Promise<void> {
-    switch (window.Notification.permission) {
-      case "granted":
-        this.allowNotification = true;
-        break;
-
-      case "default": {
-        const result = await window.Notification.requestPermission();
-        if (result === "granted") {
-          this.allowNotification = true;
-        }
-        break;
-      }
-    }
+  enableNotifications(): void {
+    this.allowNotification = true;
   }
 
   /**
@@ -273,4 +263,8 @@ export function setup(options: NotificationHandlerOptions): void {
   if (!notificationHandler) {
     notificationHandler = new NotificationHandler(options);
   }
+}
+
+export function enableNotifications(): void {
+  notificationHandler!.enableNotifications();
 }

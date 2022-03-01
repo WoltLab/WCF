@@ -11,7 +11,7 @@
 define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "../StringUtil"], function (require, exports, tslib_1, Ajax, Core, EventHandler, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.enableNotifications = exports.setup = void 0;
     Ajax = (0, tslib_1.__importStar)(Ajax);
     Core = (0, tslib_1.__importStar)(Core);
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
@@ -34,22 +34,13 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             window.addEventListener("storage", () => this.onStorage());
             this.onVisibilityChange();
             if (options.enableNotifications) {
-                void this.enableNotifications();
-            }
-        }
-        async enableNotifications() {
-            switch (window.Notification.permission) {
-                case "granted":
+                if ("Notification" in window && Notification.permission === "granted") {
                     this.allowNotification = true;
-                    break;
-                case "default": {
-                    const result = await window.Notification.requestPermission();
-                    if (result === "granted") {
-                        this.allowNotification = true;
-                    }
-                    break;
                 }
             }
+        }
+        enableNotifications() {
+            this.allowNotification = true;
         }
         /**
          * Detects when this window is hidden or restored.
@@ -213,4 +204,8 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
         }
     }
     exports.setup = setup;
+    function enableNotifications() {
+        notificationHandler.enableNotifications();
+    }
+    exports.enableNotifications = enableNotifications;
 });

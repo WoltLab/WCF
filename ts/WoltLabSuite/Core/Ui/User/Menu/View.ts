@@ -16,6 +16,7 @@ import * as Language from "../../../Language";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 import * as perfectScrollbar from "perfect-scrollbar";
 import * as UiScreen from "../../Screen";
+import type { DesktopNotifications } from "./Data/Notification";
 
 export class UserMenuView {
   private readonly element: HTMLElement;
@@ -238,6 +239,16 @@ export class UserMenuView {
     const footer = this.provider.getFooter();
     if (footer !== null) {
       this.element.append(this.buildFooter(footer));
+    }
+
+    if (this.provider.getIdentifier() === "com.woltlab.wcf.notifications") {
+      const provider = this.provider as unknown as DesktopNotifications;
+      const notificationElement = provider.getDesktopNotifications();
+
+      if (notificationElement) {
+        const header = this.element.querySelector(".userMenuHeader")!;
+        header.insertAdjacentElement("afterend", notificationElement);
+      }
     }
   }
 

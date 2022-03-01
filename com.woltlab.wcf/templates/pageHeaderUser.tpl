@@ -109,7 +109,12 @@
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-							require(["WoltLabSuite/Core/Ui/User/Menu/Data/Notification"], ({ setup }) => {
+							require(["WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/User/Menu/Data/Notification"], (Language, { setup }) => {
+								Language.addObject({
+									"wcf.user.notification.enableDesktopNotifications": "{jslang}wcf.user.notification.enableDesktopNotifications{/jslang}",
+									"wcf.user.notification.enableDesktopNotifications.button": "{jslang}wcf.user.notification.enableDesktopNotifications.button{/jslang}",
+								});
+
 								setup({
 									noItems: '{jslang}wcf.user.notification.noMoreNotifications{/jslang}',
 									settingsLink: '{link controller='NotificationSettings' encode=false}{/link}',

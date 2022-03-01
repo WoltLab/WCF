@@ -192,6 +192,14 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             if (footer !== null) {
                 this.element.append(this.buildFooter(footer));
             }
+            if (this.provider.getIdentifier() === "com.woltlab.wcf.notifications") {
+                const provider = this.provider;
+                const notificationElement = provider.getDesktopNotifications();
+                if (notificationElement) {
+                    const header = this.element.querySelector(".userMenuHeader");
+                    header.insertAdjacentElement("afterend", notificationElement);
+                }
+            }
         }
         buildButton(button) {
             const link = document.createElement("a");

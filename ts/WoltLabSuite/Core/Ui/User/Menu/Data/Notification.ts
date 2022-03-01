@@ -12,6 +12,8 @@ import { dboAction } from "../../../../Ajax";
 import UserMenuView from "../View";
 import { UserMenuButton, UserMenuData, UserMenuFooter, UserMenuProvider } from "./Provider";
 import { registerProvider } from "../Manager";
+import * as Language from "../../../../Language";
+import { enableNotifications } from "../../../../Notification/Handler";
 
 let originalFavicon = "";
 function setFaviconCounter(counter: number): void {
@@ -126,7 +128,7 @@ type ResponseMarkAsRead = {
   totalCount: number;
 };
 
-class UserMenuDataNotification implements UserMenuProvider {
+class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider {
   private readonly button: HTMLElement;
   private counter = 0;
   private readonly options: Options;
@@ -232,6 +234,41 @@ class UserMenuDataNotification implements UserMenuProvider {
     return false;
   }
 
+  getDesktopNotifications(): HTMLElement | null {
+    if (!("Notification" in window)) {
+      return null;
+    }
+
+    if (Notification.permission === "granted" || Notification.permission === "denied") {
+      return null;
+    }
+
+    const element = document.createElement("div");
+    element.classList.add("userMenuNotifications");
+    element.textContent = Language.get("wcf.user.notification.enableDesktopNotifications");
+
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("userMenuNotificationsButtons");
+    element.append(buttonContainer);
+
+    const button = document.createElement("button");
+    button.classList.add("button", "small", "userMenuNotificationsButton");
+    button.textContent = Language.get("wcf.user.notification.enableDesktopNotifications.button");
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        enableNotifications();
+      }
+
+      element.remove();
+    });
+    buttonContainer.append(button);
+
+    return element;
+  }
+
   async markAsRead(objectId: number): Promise<void> {
     const response = (await dboAction("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
       .objectIds([objectId])
@@ -267,6 +304,10 @@ class UserMenuDataNotification implements UserMenuProvider {
 
     this.counter = counter;
   }
+}
+
+export interface DesktopNotifications {
+  getDesktopNotifications(): HTMLElement | null;
 }
 
 let isInitialized = false;

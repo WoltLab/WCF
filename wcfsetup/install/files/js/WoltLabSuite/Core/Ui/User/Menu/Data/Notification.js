@@ -7,11 +7,12 @@
  * @module WoltLabSuite/Core/Ui/User/Menu/Data/Notification
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manager", "../../../../Language", "../../../../Notification/Handler"], function (require, exports, tslib_1, Ajax_1, View_1, Manager_1, Language, Handler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     View_1 = (0, tslib_1.__importDefault)(View_1);
+    Language = (0, tslib_1.__importStar)(Language);
     let originalFavicon = "";
     function setFaviconCounter(counter) {
         const favicon = document.querySelector('link[rel="shortcut icon"]');
@@ -172,6 +173,33 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
                 return true;
             }
             return false;
+        }
+        getDesktopNotifications() {
+            if (!("Notification" in window)) {
+                return null;
+            }
+            if (Notification.permission === "granted" || Notification.permission === "denied") {
+                return null;
+            }
+            const element = document.createElement("div");
+            element.classList.add("userMenuNotifications");
+            element.textContent = Language.get("wcf.user.notification.enableDesktopNotifications");
+            const buttonContainer = document.createElement("div");
+            buttonContainer.classList.add("userMenuNotificationsButtons");
+            element.append(buttonContainer);
+            const button = document.createElement("button");
+            button.classList.add("button", "small", "userMenuNotificationsButton");
+            button.textContent = Language.get("wcf.user.notification.enableDesktopNotifications.button");
+            button.addEventListener("click", async (event) => {
+                event.preventDefault();
+                const permission = await Notification.requestPermission();
+                if (permission === "granted") {
+                    (0, Handler_1.enableNotifications)();
+                }
+                element.remove();
+            });
+            buttonContainer.append(button);
+            return element;
         }
         async markAsRead(objectId) {
             const response = (await (0, Ajax_1.dboAction)("markAsConfirmed", "wcf\\data\\user\\notification\\UserNotificationAction")
