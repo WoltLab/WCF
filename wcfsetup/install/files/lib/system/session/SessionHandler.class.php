@@ -1410,16 +1410,14 @@ final class SessionHandler extends SingletonFactory
      */
     protected function getSpiderID(string $userAgent): ?int
     {
-        $spiderList = SpiderCacheBuilder::getInstance()->getData();
+        $data = SpiderCacheBuilder::getInstance()->getData(['fastLookup' => true]);
         $userAgent = \strtolower($userAgent);
 
-        foreach ($spiderList as $spider) {
-            if (\strpos($userAgent, $spider->spiderIdentifier) !== false) {
-                return \intval($spider->spiderID);
-            }
+        if (!\preg_match($data['regex'], $userAgent, $matches)) {
+            return null;
         }
 
-        return null;
+        return $data['mapping'][$matches[0]];
     }
 
     /**
