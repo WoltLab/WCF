@@ -2806,7 +2806,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.directories"><![CDATA[Dateisystem]]></item>
 		<item name="wcf.acp.systemCheck.php.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[Es wird mindestens PHP {$phpVersions[minimum]} benötigt, empfohlen werden die folgenden Versionsreihen von PHP: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
-		<item name="wcf.acp.systemCheck.php.version.deprecated"><![CDATA[Die eingesetzte PHP-Version ist stark veraltet und wird in der kommenden Version von WoltLab Suite™ nicht mehr unterstützt. Die Aktualisierung auf eine moderne PHP-Version ({implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}) ist <em>dringend</em> empfohlen.]]></item>
+		<item name="wcf.acp.systemCheck.php.version.deprecated"><![CDATA[Die eingesetzte PHP-Version ist stark veraltet und wird nur eingeschränkt unterstützt, ein einwandfreier Betrieb wird mit dieser Version nicht gewährleistet. Es wird dringend empfohlen, auf eine moderne PHP-Version ({implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}) umzustellen.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[Es wird mindestens MySQL {$mysqlVersions[mysql][5]} oder MySQL {$mysqlVersions[mysql][8]} bzw. MariaDB {$mysqlVersions[mariadb][10]} benötigt, grundsätzlich wird der Einsatz neuerer Version ausdrücklich empfohlen.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys"><![CDATA[Fremdschlüssel]]></item>
