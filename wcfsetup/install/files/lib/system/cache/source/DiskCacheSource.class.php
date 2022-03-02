@@ -31,9 +31,9 @@ class DiskCacheSource implements ICacheSource
     public function flush($cacheName, $useWildcard)
     {
         if ($useWildcard) {
-            $this->removeFiles('cache.' . $cacheName . '(-[a-f0-9]+)?.php');
+            $this->removeFiles('cache.' . $cacheName . '(-[a-f0-9]+)?.v1.php');
         } else {
-            $this->removeFiles('cache.' . $cacheName . '.php');
+            $this->removeFiles('cache.' . $cacheName . '.v1.php');
         }
     }
 
@@ -91,7 +91,7 @@ class DiskCacheSource implements ICacheSource
      */
     protected function getFilename($cacheName)
     {
-        return WCF_DIR . 'cache/cache.' . $cacheName . '.php';
+        return WCF_DIR . 'cache/cache.' . $cacheName . '.v1.php';
     }
 
     /**
