@@ -67,7 +67,7 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }
 
 /* ### user menu ### */
-#spUserMenu { position: relative; margin-bottom: 40px; z-index: 1; }
+#spUserMenu { border-radius: 5px; box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0; position: relative; margin-bottom: 40px; max-width: 400px; z-index: 1; }
 #spUserMenu a, #spUserMenu a:hover { color: var(--color) !important; }
 
 /* ### footer box ### */
