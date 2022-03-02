@@ -13,15 +13,7 @@
 		});
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
-			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), {if PACKAGE_ID > 1}'{link controller='PackageList' forceWCF=true encode=false}packageID={literal}{packageID}{/literal}{/link}'{else}null{/if});
-			{if $packageID}
-				new WCF.PeriodicalExecuter(function(pe) {
-					pe.stop();
-					$('.jsUninstallButton[data-object-id={@$packageID}]').trigger('click');
-				}, 250);
-			{/if}
-			
-			new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
+			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
 		{/if}
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}

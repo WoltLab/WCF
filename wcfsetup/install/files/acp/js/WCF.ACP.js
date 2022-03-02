@@ -589,21 +589,13 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	_packageID: 0,
 	
 	/**
-	 * URL of WCF package list
-	 * @var	string
-	 */
-	_wcfPackageListURL: '',
-	
-	/**
 	 * Initializes the WCF.ACP.Package.Uninstallation class.
 	 * 
 	 * @param	jQuery		elements
-	 * @param	string		wcfPackageListURL
 	 */
-	init: function(elements, wcfPackageListURL) {
+	init: function(elements) {
 		this._elements = elements;
 		this._packageID = 0;
-		this._wcfPackageListURL = wcfPackageListURL;
 		
 		if (this._elements !== undefined && this._elements.length) {
 			this._super(0, 'UninstallPackage');
@@ -639,11 +631,6 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 */
 	_showConfirmationDialog: function(event) {
 		var $element = $(event.currentTarget);
-		
-		if ($element.data('isApplication') && this._wcfPackageListURL) {
-			window.location = WCF.String.unescapeHTML(this._wcfPackageListURL.replace(/{packageID}/, $element.data('objectID')));
-			return;
-		}
 		
 		var self = this;
 		WCF.System.Confirmation.show($element.data('confirmMessage'), function(action) {

@@ -6,7 +6,7 @@
 			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}'
 		});
 		
-		new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'), {if PACKAGE_ID > 1}'{link controller='PackageList' forceWCF=true encode=false}packageID={literal}{packageID}{/literal}{/link}'{else}null{/if});
+		new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'));
 	});
 </script>
 
