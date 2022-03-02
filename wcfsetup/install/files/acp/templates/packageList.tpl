@@ -13,7 +13,7 @@
 		});
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
-			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), null);			
+			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
 		{/if}
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
