@@ -484,16 +484,12 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                 Util_1.default.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.maximumLength"));
                 return false;
             }
-            // wildcard versions are checked on the server side
-            if (version.indexOf("*") === -1) {
-                if (!Instructions.versionRegExp.test(version)) {
+            // Allow either a single asterisk, an asterisk in the last digit or a regular version.
+            if (version !== '*') {
+                if (!Instructions.versionRegExp.test(version.replace(/\.\*$/, ".0"))) {
                     Util_1.default.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
                     return false;
                 }
-            }
-            else if (!Instructions.versionRegExp.test(version.replace("*", "0"))) {
-                Util_1.default.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
-                return false;
             }
             // remove outdated errors
             Util_1.default.innerError(inputField, "");

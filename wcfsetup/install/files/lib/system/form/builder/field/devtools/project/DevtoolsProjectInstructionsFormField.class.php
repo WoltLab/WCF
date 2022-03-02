@@ -5,7 +5,6 @@ namespace wcf\system\form\builder\field\devtools\project;
 use wcf\data\application\Application;
 use wcf\data\package\installation\plugin\PackageInstallationPlugin;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
-use wcf\data\package\Package;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
@@ -173,13 +172,11 @@ class DevtoolsProjectInstructionsFormField extends AbstractFormField
                     return false;
                 }
 
-                if (\strpos($instructions['fromVersion'], '*') !== false) {
-                    if (!Package::isValidVersion(\str_replace('*', '0', $instructions['fromVersion']))) {
-                        return false;
-                    }
-                } elseif (!Package::isValidVersion($instructions['fromVersion'])) {
-                    return false;
-                }
+                // Do not validate the actual version. The actual installation process
+                // does not validate it either and we should not *silently* drop uncommon
+                // (but valid) formats.
+                // The JavaScript validation should be sufficient to nudge the user
+                // into the correct direction.
             }
 
             foreach ($instructions['instructions'] as $instruction) {
