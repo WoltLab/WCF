@@ -15,7 +15,7 @@ namespace {
 	// set shutdown function
 	register_shutdown_function([WCF::class, 'destruct']);
 	// set autoload function
-	spl_autoload_register([WCF::class, 'autoload']);
+	spl_autoload_register([WCF::class, 'autoload'], true, true);
 	
 	/**
 	 * @deprecated 5.5 Use prepared statements if possible. Directly call WCF::getDB()->escapeString() if prepared statements cannot be used.

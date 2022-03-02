@@ -64,8 +64,8 @@ if (!@\ini_get('date.timezone')) {
 
 // wcf imports
 if (!\defined('NO_IMPORTS')) {
-    require_once(WCF_DIR . 'lib/core.functions.php');
     require_once(WCF_DIR . 'lib/system/api/autoload.php');
+    require_once(WCF_DIR . 'lib/core.functions.php');
 }
 
 /**
