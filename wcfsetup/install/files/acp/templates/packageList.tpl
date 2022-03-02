@@ -13,14 +13,7 @@
 		});
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
-			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), null);
-			{if $packageID}
-				new WCF.PeriodicalExecuter(function(pe) {
-					pe.stop();
-					$('.jsUninstallButton[data-object-id={@$packageID}]').trigger('click');
-				}, 250);
-			{/if}
-			
+			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), null);			
 			new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
 		{/if}
 		

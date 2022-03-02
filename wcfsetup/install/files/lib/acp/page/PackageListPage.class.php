@@ -50,12 +50,6 @@ class PackageListPage extends SortablePage
     public $defaultSortOrder = 'DESC';
 
     /**
-     * package id for uninstallation
-     * @var int
-     */
-    public $packageID = 0;
-
-    /**
      * @inheritDoc
      */
     public $validSortFields = [
@@ -81,18 +75,6 @@ class PackageListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        if (isset($_GET['packageID'])) {
-            $this->packageID = \intval($_GET['packageID']);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function assignVariables()
     {
         parent::assignVariables();
@@ -108,7 +90,6 @@ class PackageListPage extends SortablePage
 
         WCF::getTPL()->assign([
             'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
-            'packageID' => $this->packageID,
             'taintedApplications' => $taintedApplications,
             'availableUpgradeVersion' => WCF::AVAILABLE_UPGRADE_VERSION,
             'upgradeOverrideEnabled' => PackageUpdateServer::isUpgradeOverrideEnabled(),
