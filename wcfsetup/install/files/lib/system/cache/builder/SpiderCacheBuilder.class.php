@@ -49,6 +49,11 @@ class SpiderCacheBuilder extends AbstractCacheBuilder
                 );
             }
 
+            if ($regex === '') {
+                // This regex will never match anything.
+                $regex = '(?!)';
+            }
+
             return [
                 'regex' => "/{$regex}/",
                 'mapping' => $mapping,
