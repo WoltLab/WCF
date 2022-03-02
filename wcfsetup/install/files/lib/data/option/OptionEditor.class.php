@@ -173,12 +173,12 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
                 $writeValue = "'" . \addcslashes($option->optionValue, "'\\") . "'";
             }
 
-            $writer->write("if (!defined('{$optionName}')) define('{$optionName}', {$writeValue});\n");
+            $writer->write("if (!\\defined('{$optionName}')) \\define('{$optionName}', {$writeValue});\n");
         }
         unset($options);
 
         // add a pseudo option that indicates that option file has been written properly
-        $writer->write("if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) define('WCF_OPTION_INC_PHP_SUCCESS', true);");
+        $writer->write("if (!\\defined('WCF_OPTION_INC_PHP_SUCCESS')) \\define('WCF_OPTION_INC_PHP_SUCCESS', true);");
 
         // file footer
         $writer->write("\n");
