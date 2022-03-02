@@ -485,7 +485,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
                 return false;
             }
             // Allow either a single asterisk, an asterisk in the last digit or a regular version.
-            if (version !== '*') {
+            if (version !== "*") {
                 if (!Instructions.versionRegExp.test(version.replace(/\.\*$/, ".0"))) {
                     Util_1.default.innerError(inputField, Language.get("wcf.acp.devtools.project.packageVersion.error.format"));
                     return false;
