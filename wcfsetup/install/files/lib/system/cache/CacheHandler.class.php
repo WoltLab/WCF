@@ -6,7 +6,6 @@ use wcf\system\cache\builder\ICacheBuilder;
 use wcf\system\cache\source\DiskCacheSource;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Manages transparent cache access.
@@ -118,14 +117,16 @@ class CacheHandler extends SingletonFactory
      */
     protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = [])
     {
-        $className = \explode('\\', \get_class($cacheBuilder));
-        $application = \array_shift($className);
-        $cacheName = \str_replace('CacheBuilder', '', \array_pop($className));
+        $cacheName = \str_replace(
+            ['\\', 'system_cache_builder_'],
+            ['_', ''],
+            \get_class($cacheBuilder)
+        );
         if (!empty($parameters)) {
             $cacheName .= '-' . $this->getCacheIndex($parameters);
         }
 
-        return $application . '_' . StringUtil::firstCharToUpperCase($cacheName);
+        return $cacheName;
     }
 
     /**
