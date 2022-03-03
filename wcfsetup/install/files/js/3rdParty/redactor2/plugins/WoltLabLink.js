@@ -78,9 +78,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 			// Safari sometimes discards the selection when setting markers
 			var hasSelectedText = this.selection.is();
 			
-			if (!hasRestoredSelection) {
-				this.selection.save();
-			}
+			this.selection.save();
 			
 			// close tooltip
 			this.observe.closeAllTooltip();
