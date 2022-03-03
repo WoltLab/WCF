@@ -762,20 +762,20 @@ class Email
             @\header('Content-Encoding: identity');
         }
 
-        $dumpBody = static function ($body, $depth) use (&$dumpBody) {
+        $dumpBody = static function ($body) use (&$dumpBody) {
             $result = '';
             // @codingStandardsIgnoreStart
             if ($body instanceof mime\MimePartFacade) {
-                return $dumpBody($body->getMimePart(), $depth);
+                return $dumpBody($body->getMimePart());
             }
             if ($body instanceof mime\AbstractMultipartMimePart) {
-                $result .= "<fieldset><legend><h" . $depth . ">" . \get_class($body) . "</h" . $depth . "></legend>";
+                $result .= "<fieldset><legend>" . \get_class($body) . "</legend>";
                 foreach ($body->getMimeparts() as $part) {
-                    $result .= $dumpBody($part, $depth + 1);
+                    $result .= $dumpBody($part);
                 }
                 $result .= '</fieldset>';
             } elseif ($body instanceof mime\TextMimePart) {
-                $result .= "<fieldset><legend><h" . $depth . ">" . \get_class($body) . "</h" . $depth . "></legend>";
+                $result .= "<fieldset><legend>" . \get_class($body) . "</legend>";
                 if (\str_starts_with($body->getContentType(), 'text/html')) {
                     $result .= '<iframe src="data:text/html;base64,' . \base64_encode($body->getContent()) . '" style="width: 100%; height: 500px; border: 0"></iframe>';
                 } else {
@@ -783,7 +783,7 @@ class Email
                 }
                 $result .= '</fieldset>';
             } elseif ($body instanceof mime\AttachmentMimePart) {
-                $result .= "<fieldset><legend><h" . $depth . ">" . \get_class($body) . "</h" . $depth . "></legend>";
+                $result .= "<fieldset><legend>" . \get_class($body) . "</legend>";
                 $result .= "<dl>" . \implode('', \array_map(static function ($item) {
                     return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
                 }, $body->getAdditionalHeaders())) . "</dl>";
@@ -796,9 +796,28 @@ class Email
 
             return $result;
         };
-        echo "<h1>Message Headers</h1>
-<pre>" . StringUtil::encodeHTML($this->getHeaderString()) . "</pre>
-<h1>Message Body</h1>" . $dumpBody($this->body, 2);
+
+        foreach ($this->recipients as $recipient) {
+            if ($this->body instanceof IRecipientAwareMimePart) {
+                $this->body->setRecipient(\current($this->recipients)['mailbox']);
+            }
+            \printf(
+                <<<'EOT'
+<fieldset><legend>%s</legend>
+    <fieldset><legend>Message Headers</legend>
+        <pre>%s</pre>
+    </fieldset>
+    <fieldset><legend>Message Body</legend>
+    %s
+    </fieldset>
+</fieldset>
+EOT
+,
+                StringUtil::encodeHTML($recipient['mailbox']),
+                StringUtil::encodeHTML($this->getHeaderString()),
+                $dumpBody($this->body)
+            );
+        }
 
         exit;
     }
