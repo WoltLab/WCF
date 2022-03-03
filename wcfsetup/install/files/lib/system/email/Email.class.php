@@ -774,9 +774,9 @@ class Email
                     $result .= $dumpBody($part, $depth + 1);
                 }
                 $result .= '</fieldset>';
-            } elseif ($body instanceof mime\RecipientAwareTextMimePart) {
+            } elseif ($body instanceof mime\TextMimePart) {
                 $result .= "<fieldset><legend><h" . $depth . ">" . \get_class($body) . "</h" . $depth . "></legend>";
-                if ($body instanceof mime\HtmlTextMimePart) {
+                if (\str_starts_with($body->getContentType(), 'text/html')) {
                     $result .= '<iframe src="data:text/html;base64,' . \base64_encode($body->getContent()) . '" style="width: 100%; height: 500px; border: 0"></iframe>';
                 } else {
                     $result .= "<pre>" . StringUtil::encodeHTML($body->getContent()) . "</pre>";
