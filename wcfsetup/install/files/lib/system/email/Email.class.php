@@ -762,36 +762,67 @@ class Email
             @\header('Content-Encoding: identity');
         }
 
-        $dumpBody = static function ($body) use (&$dumpBody) {
+        $dumpPartHeaders = static function (AbstractMimePart $part) {
+            $result = "<pre>";
+            $result .= \sprintf(
+                "content-type: %s\r\n",
+                $part->getContentType()
+            );
+            if ($part->getContentTransferEncoding()) {
+                $result .= \sprintf(
+                    "content-transfer-encoding: %s\r\n",
+                    $part->getContentTransferEncoding()
+                );
+            }
+            foreach ($part->getAdditionalHeaders() as $header) {
+                $result .= \sprintf(
+                    "%s: %s\r\n",
+                    $header[0],
+                    $header[1]
+                );
+            }
+            $result .= '</pre>';
+
+            return $result;
+        };
+
+        $dumpBody = static function ($body) use (&$dumpBody, $dumpPartHeaders) {
             $result = '';
             // @codingStandardsIgnoreStart
             if ($body instanceof mime\MimePartFacade) {
                 return $dumpBody($body->getMimePart());
             }
+            $result .= \sprintf(
+                "<fieldset><legend>%s</legend>",
+                \get_class($body)
+            );
+            $result .= $dumpPartHeaders($body);
             if ($body instanceof mime\AbstractMultipartMimePart) {
-                $result .= "<fieldset><legend>" . \get_class($body) . "</legend>";
                 foreach ($body->getMimeparts() as $part) {
                     $result .= $dumpBody($part);
                 }
-                $result .= '</fieldset>';
             } elseif ($body instanceof mime\TextMimePart) {
-                $result .= "<fieldset><legend>" . \get_class($body) . "</legend>";
+                $result .= '<hr>';
                 if (\str_starts_with($body->getContentType(), 'text/html')) {
-                    $result .= '<iframe src="data:text/html;base64,' . \base64_encode($body->getContent()) . '" style="width: 100%; height: 500px; border: 0"></iframe>';
+                    $result .= \sprintf(
+                        '<iframe src="data:text/html;base64,%s" style="width: 100%%; height: 500px; border: 0"></iframe>',
+                        \base64_encode($body->getContent())
+                    );
                 } else {
-                    $result .= "<pre>" . StringUtil::encodeHTML($body->getContent()) . "</pre>";
+                    $result .= \sprintf(
+                        "<pre>%s</pre>",
+                        StringUtil::encodeHTML($body->getContent())
+                    );
                 }
-                $result .= '</fieldset>';
             } elseif ($body instanceof mime\AttachmentMimePart) {
-                $result .= "<fieldset><legend>" . \get_class($body) . "</legend>";
-                $result .= "<dl>" . \implode('', \array_map(static function ($item) {
-                    return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
-                }, $body->getAdditionalHeaders())) . "</dl>";
-                $result .= "[" . \strlen($body->getContent()) . " Bytes]";
-                $result .= '</fieldset>';
+                $result .= \sprintf(
+                    "<hr>[%d Bytes]",
+                    \strlen($body->getContent())
+                );
             } else {
                 throw new \LogicException('Bug');
             }
+            $result .= '</fieldset>';
             // @codingStandardsIgnoreEnd
 
             return $result;
