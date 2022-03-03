@@ -39,7 +39,7 @@ class BlacklistEntry extends DatabaseObject {
 			$conditions->add('(type = ? AND hash = ?)', ['email', self::getHash($email)]);
 		}
 		if (BLACKLIST_SFS_IP_ADDRESS) {
-			UserUtil::convertIPv6To4($ipAddress);
+			$ipAddress = UserUtil::convertIPv6To4($ipAddress);
 			if ($ipAddress) {
 				if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
 					$conditions->add('(type = ? AND hash = ?)', ['ipv4', self::getHash($ipAddress)]);
