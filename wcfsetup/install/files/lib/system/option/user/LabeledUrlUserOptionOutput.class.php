@@ -22,7 +22,11 @@ class LabeledUrlUserOptionOutput implements IUserOptionOutput
      */
     public function getOutput(User $user, UserOption $option, $value)
     {
-        return StringUtil::getAnchorTag(self::getURL($option, $value), $value, true, true);
+        if ($value) {
+            return StringUtil::getAnchorTag(self::getURL($option, $value), $value, true, true);
+        }
+
+        return '';
     }
 
     /**
