@@ -787,7 +787,7 @@ class Email
                 $result .= "<dl>" . \implode('', \array_map(static function ($item) {
                     return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
                 }, $body->getAdditionalHeaders())) . "</dl>";
-                $result .= "<" . \strlen($body->getContent()) . " Bytes>";
+                $result .= "[" . \strlen($body->getContent()) . " Bytes]";
                 $result .= '</fieldset>';
             } else {
                 throw new \LogicException('Bug');
