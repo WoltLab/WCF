@@ -843,7 +843,7 @@ class Email
     </fieldset>
 </fieldset>
 EOT
-,
+                ,
                 StringUtil::encodeHTML($recipient['mailbox']),
                 StringUtil::encodeHTML($this->getHeaderString()),
                 $dumpBody($this->body)
