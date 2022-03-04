@@ -4,7 +4,7 @@
 * Copyright jQuery Foundation and other contributors; Licensed MIT
 *
 * This is a modified version of jQuery UI based upon the 1.12.1 release, but with backports
-* of the fixes for the security issues addressed in later jQueryy UI releases. No other
+* of the fixes for the security issues addressed in later jQuery UI releases. No other
 * changes are made to avoid introducing backwards incompatible changes. The version number
 * has been set to 1.99.99 to indicate the change and to make external tools stop whining
 * about the library being "< 1.13".
