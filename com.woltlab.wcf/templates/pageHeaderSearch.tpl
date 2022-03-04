@@ -60,8 +60,6 @@
 			<div id="pageHeaderSearchParameters"></div>
 			
 			{if !$__searchStaticOptions|empty}{@$__searchStaticOptions}{/if}
-			
-			{csrfToken}
 		</div>
 	</form>
 </div>
