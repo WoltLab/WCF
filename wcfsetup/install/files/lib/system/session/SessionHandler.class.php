@@ -517,10 +517,8 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Returns security token.
-     *
-     * @return  string
      */
-    public function getSecurityToken()
+    public function getSecurityToken(): string
     {
         if ($this->xsrfToken === null) {
             $this->initSecurityToken();
@@ -534,9 +532,8 @@ final class SessionHandler extends SingletonFactory
      * given token is invalid.
      *
      * @param string $token
-     * @return  bool
      */
-    public function checkSecurityToken($token)
+    public function checkSecurityToken($token): bool
     {
         // The output of CryptoUtil::createSignedString() is not url-safe. For compatibility
         // reasons the SECURITY_TOKEN in URLs might not be encoded, turning the '+' into a space.
