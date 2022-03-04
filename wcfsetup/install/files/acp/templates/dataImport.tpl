@@ -60,26 +60,8 @@
 		{if $showMappingNotice}
 			<p class="warning">{lang}wcf.acp.dataImport.existingMapping.notice{/lang}</p>
 			<script data-relocate="true">
-				require(['Ajax', 'Ui/Confirmation'], (Ajax, UiConfirmation) => {
-					document.getElementById('deleteMapping').addEventListener('click', () => {
-						UiConfirmation.show({
-							confirm() {
-								Ajax.apiOnce({
-									data: {
-										actionName: 'resetMapping',
-										className: 'wcf\\system\\importer\\ImportHandler',
-									},
-									success() {
-										window.location.reload();
-									},
-									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN,
-								});
-							},
-							message: '{jslang}wcf.acp.dataImport.existingMapping.confirmMessage{/jslang}'
-						});
-						
-						return false;
-					});
+				require(['WoltLabSuite/Core/Acp/Ui/DataImport/MappingReset'], (MappingReset) => {
+					MappingReset.setup();
 				});
 			</script>
 		{/if}

@@ -1,0 +1,39 @@
+/**
+ * Provides the program logic for the import mapping reset.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/DataImport/MappingReset
+ * @woltlabExcludeBundle all
+ */
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Ui/Confirmation"], function (require, exports, tslib_1, Ajax, Core, UiConfirmation) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.setup = void 0;
+    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Core = (0, tslib_1.__importStar)(Core);
+    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    function setup() {
+        const link = document.getElementById("deleteMapping");
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            UiConfirmation.show({
+                confirm() {
+                    Ajax.apiOnce({
+                        data: {
+                            actionName: "resetMapping",
+                            className: "wcf\\system\\importer\\ImportHandler",
+                        },
+                        success() {
+                            window.location.reload();
+                        },
+                        url: "index.php?ajax-invoke&t=" + Core.getXsrfToken(),
+                    });
+                },
+                message: link.dataset.confirmMessage,
+            });
+        });
+    }
+    exports.setup = setup;
+});
