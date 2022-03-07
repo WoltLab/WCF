@@ -12,7 +12,13 @@
 		<ul class="formUploadHandlerList" id="{$uploadFieldId}uploadFileList" data-internal-id="{$uploadField->getInternalId()}">
 			{foreach from=$uploadFieldFiles item=file}
 				<li class="box64 uploadedFile" data-unique-file-id="{$file->getUniqueFileId()}">
-					<span class="icon icon64 fa-{$file->getIconName()}"></span>
+					{if $file->isImage()}
+						<a href="{$file->getImage()}" class="jsImageViewer">
+							<img src="{$file->getImage()}" width="{$file->getWidth()}" height="{$file->getHeight()}" loading="lazy" alt="" class="formUploadHandlerContentListImage">
+						</a>
+					{else}
+						<span class="icon icon64 fa-{$file->getIconName()}"></span>
+					{/if}
 					
 					<div>
 						<div>

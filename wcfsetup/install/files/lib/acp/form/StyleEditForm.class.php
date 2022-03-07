@@ -281,7 +281,7 @@ class StyleEditForm extends StyleAddForm
             }
 
             UploadHandler::getInstance()->registerFilesByField('customAssets', \array_map(static function ($filename) {
-                return new UploadFile($filename, \basename($filename), false, true, true);
+                return new UploadFile($filename, \basename($filename), true, true, true);
             }, \glob($this->style->getAssetPath() . 'custom/*')));
         }
     }

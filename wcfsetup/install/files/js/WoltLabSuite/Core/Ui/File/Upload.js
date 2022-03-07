@@ -111,8 +111,22 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                         fileElement.dataset.uniqueFileId = fileData.uniqueFileId;
                         fileElement.querySelector("small").textContent = fileData.filesize.toString();
                         const icon = fileElement.querySelector(".icon");
-                        icon.classList.remove("fa-spinner");
-                        icon.classList.add(`fa-${fileData.icon}`);
+                        if (fileData.image !== null) {
+                            const a = document.createElement("a");
+                            a.classList.add("jsImageViewer");
+                            a.href = fileData.image;
+                            const image = document.createElement("img");
+                            image.classList.add("formUploadHandlerContentListImage");
+                            image.src = fileData.image;
+                            image.width = fileData.imageWidth;
+                            image.height = fileData.imageHeight;
+                            a.appendChild(image);
+                            icon.replaceWith(a);
+                        }
+                        else {
+                            icon.classList.remove("fa-spinner");
+                            icon.classList.add(`fa-${fileData.icon}`);
+                        }
                     }
                 }
                 else if (data.error[index] !== undefined) {

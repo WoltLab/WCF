@@ -31,6 +31,8 @@ interface FileData {
   filesize: number;
   icon: string;
   image: string | null;
+  imageHeight: number | null;
+  imageWidth: number | null;
   uniqueFileId: string;
 }
 
@@ -172,10 +174,23 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
         } else {
           fileElement.dataset.uniqueFileId = fileData.uniqueFileId;
           fileElement.querySelector("small")!.textContent = fileData.filesize.toString();
-
           const icon = fileElement.querySelector(".icon") as HTMLElement;
-          icon.classList.remove("fa-spinner");
-          icon.classList.add(`fa-${fileData.icon}`);
+
+          if (fileData.image !== null) {
+            const a = document.createElement("a");
+            a.classList.add("jsImageViewer");
+            a.href = fileData.image;
+            const image = document.createElement("img");
+            image.classList.add("formUploadHandlerContentListImage");
+            image.src = fileData.image;
+            image.width = fileData.imageWidth!;
+            image.height = fileData.imageHeight!;
+            a.appendChild(image);
+            icon.replaceWith(a);
+          } else {
+            icon.classList.remove("fa-spinner");
+            icon.classList.add(`fa-${fileData.icon}`);
+          }
         }
       } else if (data.error[index] !== undefined) {
         const errorData = data["error"][index];
