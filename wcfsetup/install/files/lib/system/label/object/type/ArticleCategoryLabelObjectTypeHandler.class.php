@@ -45,7 +45,7 @@ class ArticleCategoryLabelObjectTypeHandler extends AbstractLabelObjectTypeHandl
             $this->container->add(new LabelObjectType(
                 $category->getTitle(),
                 $category->categoryID,
-                $category->getDepth()
+                $category->getDepth() - 1
             ));
         }
     }
