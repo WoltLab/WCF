@@ -30,6 +30,12 @@
 	}
 }
 
+.formUploadHandlerContentListImage {
+	max-height: 64px;
+	max-width: 64px;
+	object-fit: cover;
+}
+
 .selectedImagePreview {
 	> img {
 		margin-bottom: 5px;
