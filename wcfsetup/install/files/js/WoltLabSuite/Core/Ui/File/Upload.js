@@ -118,6 +118,8 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                             const image = document.createElement("img");
                             image.classList.add("formUploadHandlerContentListImage");
                             image.src = fileData.image;
+                            image.width = fileData.imageWidth;
+                            image.height = fileData.imageHeight;
                             a.appendChild(image);
                             icon.replaceWith(a);
                         }

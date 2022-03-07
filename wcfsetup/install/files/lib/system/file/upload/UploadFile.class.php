@@ -72,6 +72,12 @@ class UploadFile
     private $uniqueId;
 
     /**
+     * The return value of `getimagesize`.
+     * @var array
+     */
+    private $imageData;
+
+    /**
      * UploadFile constructor.
      *
      * @param string $location
@@ -98,9 +104,10 @@ class UploadFile
         $this->viewableImage = $viewableImage;
         $this->uniqueId = StringUtil::getRandomID();
         $this->detectSvgAsImage = $detectSvgAsImage;
+        $this->imageData = @\getimagesize($location);
 
         if (
-            @\getimagesize($location) !== false || ($detectSvgAsImage && \in_array(FileUtil::getMimeType($location), [
+            $this->imageData !== false || ($detectSvgAsImage && \in_array(FileUtil::getMimeType($location), [
                 'image/svg',
                 'image/svg+xml',
             ]))
@@ -139,10 +146,8 @@ class UploadFile
                 return $this->imageLink;
             }
         } else {
-            $imageData = @\getimagesize($this->location);
-
-            if ($imageData !== false) {
-                return 'data:' . $imageData['mime'] . ';base64,' . \base64_encode(\file_get_contents($this->location));
+            if ($this->imageData !== false) {
+                return 'data:' . $this->imageData['mime'] . ';base64,' . \base64_encode(\file_get_contents($this->location));
             }
 
             if (
@@ -232,6 +237,30 @@ class UploadFile
     public function isProcessed()
     {
         return $this->processed;
+    }
+
+    /**
+     * @since 5.5
+     */
+    public function getWidth(): ?int
+    {
+        if ($this->imageData === false) {
+            return null;
+        }
+
+        return $this->imageData[0];
+    }
+
+    /**
+     * @since 5.5
+     */
+    public function getHeight(): ?int
+    {
+        if ($this->imageData === false) {
+            return null;
+        }
+
+        return $this->imageData[1];
     }
 
     /**

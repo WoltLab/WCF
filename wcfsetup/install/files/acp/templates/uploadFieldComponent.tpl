@@ -14,7 +14,7 @@
 				<li class="box64 uploadedFile" data-unique-file-id="{$file->getUniqueFileId()}">
 					{if $file->isImage()}
 						<a href="{$file->getImage()}" class="jsImageViewer">
-							<img src="{$file->getImage()}" loading="lazy" alt="" class="formUploadHandlerContentListImage">
+							<img src="{$file->getImage()}" width="{$file->getWidth()}" height="{$file->getHeight()}" loading="lazy" alt="" class="formUploadHandlerContentListImage">
 						</a>
 					{else}
 						<span class="icon icon64 fa-{$file->getIconName()}"></span>

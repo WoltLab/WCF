@@ -31,6 +31,8 @@ interface FileData {
   filesize: number;
   icon: string;
   image: string | null;
+  imageHeight: number | null;
+  imageWidth: number | null;
   uniqueFileId: string;
 }
 
@@ -181,6 +183,8 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
             const image = document.createElement("img");
             image.classList.add("formUploadHandlerContentListImage");
             image.src = fileData.image;
+            image.width = fileData.imageWidth!;
+            image.height = fileData.imageHeight!;
             a.appendChild(image);
             icon.replaceWith(a);
           } else {
