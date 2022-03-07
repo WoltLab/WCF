@@ -30,7 +30,6 @@ class ArticleCategoryLabelObjectTypeHandler extends AbstractLabelObjectTypeHandl
     {
         $categoryTree = new ArticleCategoryNodeTree('com.woltlab.wcf.article.category');
         $this->categoryList = $categoryTree->getIterator();
-        $this->categoryList->setMaxDepth(0);
     }
 
     /**
@@ -46,22 +45,8 @@ class ArticleCategoryLabelObjectTypeHandler extends AbstractLabelObjectTypeHandl
             $this->container->add(new LabelObjectType(
                 $category->getTitle(),
                 $category->categoryID,
-                0
+                $category->getDepth()
             ));
-            foreach ($category as $subCategory) {
-                $this->container->add(new LabelObjectType(
-                    $subCategory->getTitle(),
-                    $subCategory->categoryID,
-                    1
-                ));
-                foreach ($subCategory as $subSubCategory) {
-                    $this->container->add(new LabelObjectType(
-                        $subSubCategory->getTitle(),
-                        $subSubCategory->categoryID,
-                        2
-                    ));
-                }
-            }
         }
     }
 
