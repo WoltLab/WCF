@@ -4,11 +4,11 @@
  * and runs modules that are needed on page load.
  *
  * @author  Tim Duesterhus
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Bootstrap
  */
-define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Language", "./StringUtil", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password", "./Ui/Empty", "./Ui/Object/Action", "./Ui/Object/Action/Delete", "./Ui/Object/Action/Toggle", "./Ui/Search", "perfect-scrollbar"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, Language, StringUtil, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword, UiEmpty, UiObjectAction, UiObjectActionDelete, UiObjectActionToggle, Search_1) {
+define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Form/XsrfToken", "./Language", "./StringUtil", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password", "./Ui/Empty", "./Ui/Object/Action", "./Ui/Object/Action/Delete", "./Ui/Object/Action/Toggle", "./Ui/Search", "perfect-scrollbar"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, XsrfToken, Language, StringUtil, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword, UiEmpty, UiObjectAction, UiObjectActionDelete, UiObjectActionToggle, Search_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
     Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
     Environment = (0, tslib_1.__importStar)(Environment);
     EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    XsrfToken = (0, tslib_1.__importStar)(XsrfToken);
     Language = (0, tslib_1.__importStar)(Language);
     StringUtil = (0, tslib_1.__importStar)(StringUtil);
     Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
@@ -65,6 +66,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
             enableMobileMenu: true,
             pageMenuMainProvider: undefined,
         }, options);
+        XsrfToken.setup();
         StringUtil.setupI18n({
             decimalPoint: Language.get("wcf.global.decimalPoint"),
             thousandsSeparator: Language.get("wcf.global.thousandsSeparator"),

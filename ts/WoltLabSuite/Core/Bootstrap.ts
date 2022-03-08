@@ -4,7 +4,7 @@
  * and runs modules that are needed on page load.
  *
  * @author  Tim Duesterhus
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Bootstrap
  */
@@ -16,6 +16,7 @@ import Devtools from "./Devtools";
 import DomChangeListener from "./Dom/Change/Listener";
 import * as Environment from "./Environment";
 import * as EventHandler from "./Event/Handler";
+import * as XsrfToken from "./Form/XsrfToken";
 import * as Language from "./Language";
 import * as StringUtil from "./StringUtil";
 import UiDialog from "./Ui/Dialog";
@@ -79,6 +80,8 @@ export function setup(options: BoostrapOptions): void {
     },
     options,
   ) as BoostrapOptions;
+
+  XsrfToken.setup();
 
   StringUtil.setupI18n({
     decimalPoint: Language.get("wcf.global.decimalPoint"),
