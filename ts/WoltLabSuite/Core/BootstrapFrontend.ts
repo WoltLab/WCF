@@ -20,7 +20,7 @@ import * as UiFeedDialog from "./Ui/Feed/Dialog";
 import User from "./User";
 import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 
-interface BoostrapOptions {
+interface BootstrapOptions {
   backgroundQueue: {
     url: string;
     force: boolean;
@@ -55,7 +55,7 @@ declare const COMPILER_TARGET_DEFAULT: boolean;
 /**
  * Bootstraps general modules and frontend exclusive ones.
  */
-export function setup(options: BoostrapOptions): void {
+export function setup(options: BootstrapOptions): void {
   // Modify the URL of the background queue URL to always target the current domain to avoid CORS.
   options.backgroundQueue.url = window.WSC_API_URL + options.backgroundQueue.url.substr(window.WCF_PATH.length);
 
