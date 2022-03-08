@@ -81,6 +81,13 @@ const UiDialog = {
       if (event.key === "Escape") {
         const target = event.target as HTMLElement;
         if (target.nodeName !== "INPUT" && target.nodeName !== "TEXTAREA") {
+          const data = _dialogs.get(_activeDialog!) as DialogData;
+          if (typeof data.onBeforeClose === "function") {
+            data.onBeforeClose(_activeDialog!);
+
+            return false;
+          }
+
           this.close(_activeDialog!);
 
           return false;

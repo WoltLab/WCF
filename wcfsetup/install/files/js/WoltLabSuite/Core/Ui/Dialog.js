@@ -63,6 +63,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 if (event.key === "Escape") {
                     const target = event.target;
                     if (target.nodeName !== "INPUT" && target.nodeName !== "TEXTAREA") {
+                        const data = _dialogs.get(_activeDialog);
+                        if (typeof data.onBeforeClose === "function") {
+                            data.onBeforeClose(_activeDialog);
+                            return false;
+                        }
                         this.close(_activeDialog);
                         return false;
                     }
