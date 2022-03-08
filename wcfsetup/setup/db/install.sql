@@ -2322,11 +2322,11 @@ ALTER TABLE wcf1_notice_dismissed ADD FOREIGN KEY (userID) REFERENCES wcf1_user 
 
 /* default inserts */
 -- default user groups
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (1, 'wcf.acp.group.group1', 1); -- Everyone
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (2, 'wcf.acp.group.group2', 2); -- Guests
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (3, 'wcf.acp.group.group3', 3); -- Registered Users
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 9); -- Administrators
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (1, 'wcf.acp.group.group1', '', 1); -- Everyone
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (2, 'wcf.acp.group.group2', '', 2); -- Guests
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (3, 'wcf.acp.group.group3', '', 3); -- Registered Users
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (4, 'wcf.acp.group.group4', '', 9); -- Administrators
+INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (5, 'wcf.acp.group.group5', '', 4); -- Moderators
 
 -- default user group options
 INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
