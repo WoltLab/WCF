@@ -486,7 +486,7 @@
 		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly.description"><![CDATA[Es werden nur PIPs angeboten, die die Verwaltung von Einträgen mittels einer grafischen Benutzeroberfläche unterstützen.]]></item>
 		<item name="wcf.acp.devtools.project.installPackage.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Paket <span class="confirmationObject">{@$packageIdentifier}</span> wirklich installieren?]]></item>
 		<item name="wcf.acp.devtools.project.installPackage.error.openRequirements"><![CDATA[Das Projekt kann nicht installiert werden, weil die folgenden Paketen fehlen:]]></item>
-		<item name="wcf.acp.devtools.project.installPackage.openRequirement"><![CDATA[{$openPackage} (Version {$openRequirement[minversion]})]]></item>
+		<item name="wcf.acp.devtools.project.installPackage.openRequirement"><![CDATA[{$openPackage}{if $openRequirement[minversion]|isset} (Version {$openRequirement[minversion]}){/if}]]></item>
 		<item name="wcf.acp.devtools.project.installPackage.error.openRequirements.title"><![CDATA[Fehlende Pakete]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier"><![CDATA[Paketbezeichner]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.requiredPackage"><![CDATA[<kbd>{$packageIdentifier}</kbd>
