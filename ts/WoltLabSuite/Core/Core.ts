@@ -294,5 +294,14 @@ export function enableLegacyInheritance<T>(legacyClass: T): void {
 }
 
 export function getXsrfToken(): string {
-  return (window as any).SECURITY_TOKEN;
+  const cookies = document.cookie.split(";").map((c) => c.trim());
+  const xsrfToken = cookies.find((c) => c.startsWith("XSRF-TOKEN="));
+
+  if (xsrfToken === undefined) {
+    return "COOKIE_NOT_FOUND";
+  }
+
+  const [_key, value] = xsrfToken.split(/=/, 2);
+
+  return decodeURIComponent(value.trim());
 }
