@@ -259,7 +259,13 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.enableLegacyInheritance = enableLegacyInheritance;
     function getXsrfToken() {
-        return window.SECURITY_TOKEN;
+        const cookies = document.cookie.split(";").map((c) => c.trim());
+        const xsrfToken = cookies.find((c) => c.startsWith("XSRF-TOKEN="));
+        if (xsrfToken === undefined) {
+            return "COOKIE_NOT_FOUND";
+        }
+        const [_key, value] = xsrfToken.split(/=/, 2);
+        return decodeURIComponent(value.trim());
     }
     exports.getXsrfToken = getXsrfToken;
 });

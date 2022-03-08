@@ -450,7 +450,7 @@ final class SessionHandler extends SingletonFactory
         if (!\defined('SECURITY_TOKEN_INPUT_TAG')) {
             \define(
                 'SECURITY_TOKEN_INPUT_TAG',
-                '<input type="hidden" name="t" value="' . $this->getSecurityToken() . '">'
+                '<input type="hidden" name="t" class="xsrfTokenInput" value="NOT_MODIFIED">'
             );
         }
     }

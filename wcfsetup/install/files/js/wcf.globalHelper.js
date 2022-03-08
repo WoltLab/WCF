@@ -391,4 +391,28 @@
 		
 		return $hash;
 	};
+
+	Object.defineProperty(
+		window,
+		'SECURITY_TOKEN',
+		{
+			configurable: false,
+			get() {
+				// This implementation effectively is a copy of WoltLabSuite/Core/Core#getXsrfToken, but
+				// we can't use this here for compatibility reasons. Use of the global SECURITY_TOKEN
+				// property is deprecated anyway.
+
+				const cookies = document.cookie.split(';').map(c => c.trim());
+				const xsrfToken = cookies.find(c => c.startsWith('XSRF-TOKEN='));
+
+				if (xsrfToken === undefined) {
+					return 'COOKIE_NOT_FOUND';
+				}
+
+				const [_key, value] = xsrfToken.split(/=/, 2);
+
+				return decodeURIComponent(value.trim());
+			}
+		}
+	);
 })(window, document);

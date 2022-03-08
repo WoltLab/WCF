@@ -35,7 +35,7 @@ class CsrfTokenFunctionTemplatePlugin implements IFunctionTemplatePlugin
             case 'url':
                 return \rawurlencode($token);
             case 'form':
-                return \sprintf('<input type="hidden" name="t" value="%s">', $token);
+                return \sprintf('<input type="hidden" name="t" class="xsrfTokenInput" value="%s">', 'NOT_MODIFIED');
             default:
                 throw new SystemException("Invalid type '" . $type . "' given.");
         }

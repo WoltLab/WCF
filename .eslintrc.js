@@ -30,7 +30,8 @@ module.exports = {
     "@typescript-eslint/no-unsafe-return": 0,
     "@typescript-eslint/no-unused-vars": [
       "error", {
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/no-misused-promises": [

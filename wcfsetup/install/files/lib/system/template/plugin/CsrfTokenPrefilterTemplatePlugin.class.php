@@ -24,7 +24,7 @@ class CsrfTokenPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
         return \strtr($sourceContent, [
             '{csrfToken type=raw}' => \sprintf('{@%s}', $getToken),
             '{csrfToken type=url}' => \sprintf('{@%s|rawurlencode}', $getToken),
-            '{csrfToken}' => \sprintf('<input type="hidden" name="t" value="{@%s}">', $getToken),
+            '{csrfToken}' => \sprintf('<input type="hidden" name="t" class="xsrfTokenInput" value="{@%s}">', "'NOT_MODIFIED'"),
         ]);
     }
 }
