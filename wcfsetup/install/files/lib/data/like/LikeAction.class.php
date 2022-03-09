@@ -242,7 +242,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->readInteger('pageNo');
 
         if ($this->parameters['pageNo'] < 1) {
-           throw new UserInputException('pageNo');
+            throw new UserInputException('pageNo');
         }
     }
 
