@@ -8,10 +8,10 @@
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Event/Handler", "../../../Language", "./Abstract"], function (require, exports, tslib_1, Core, EventHandler, Language, Abstract_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
     class UiPageMenuUser extends Abstract_1.default {
         /**
          * Initializes the touch-friendly fullscreen user menu.

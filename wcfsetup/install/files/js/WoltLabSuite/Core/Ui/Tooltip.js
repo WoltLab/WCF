@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Environment
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = exports.setup = void 0;
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Environment = (0, tslib_1.__importStar)(Environment);
-    UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Environment = tslib_1.__importStar(Environment);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
     let _pointer;
     let _text;
     let _tooltip;

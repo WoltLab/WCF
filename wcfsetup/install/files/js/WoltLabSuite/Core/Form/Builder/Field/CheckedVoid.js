@@ -14,7 +14,7 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CheckedVoid = void 0;
-    Field_1 = (0, tslib_1.__importDefault)(Field_1);
+    Field_1 = tslib_1.__importDefault(Field_1);
     class CheckedVoid extends Field_1.default {
         _getData() {
             if (this._field.checked) {

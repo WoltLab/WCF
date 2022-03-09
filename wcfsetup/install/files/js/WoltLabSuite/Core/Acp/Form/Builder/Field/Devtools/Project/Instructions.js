@@ -9,14 +9,14 @@
  */
 define(["require", "exports", "tslib", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util", "../../../../../../Ui/Sortable/List", "../../../../../../Ui/Dialog", "../../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Core, Language, DomTraverse, Listener_1, Util_1, List_1, Dialog_1, UiConfirmation) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    List_1 = (0, tslib_1.__importDefault)(List_1);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    List_1 = tslib_1.__importDefault(List_1);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
     class Instructions {
         constructor(formFieldId, instructionsTemplate, instructionsEditDialogTemplate, instructionEditDialogTemplate, pipDefaultFilenames, existingInstructions) {
             this.instructionCounter = 0;

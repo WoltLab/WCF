@@ -10,7 +10,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener"], function (requ
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             const target = mutation.target;

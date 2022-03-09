@@ -8,12 +8,12 @@
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Environment", "../../../Event/Handler", "../../../Language", "../../../Dom/Traverse", "../../Screen"], function (require, exports, tslib_1, Core, Environment, EventHandler, Language, DomTraverse, UiScreen) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Environment = (0, tslib_1.__importStar)(Environment);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
+    Core = tslib_1.__importStar(Core);
+    Environment = tslib_1.__importStar(Environment);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    UiScreen = tslib_1.__importStar(UiScreen);
     const _pageContainer = document.getElementById("pageContainer");
     /**
      * Which edge of the menu is touched? Empty string

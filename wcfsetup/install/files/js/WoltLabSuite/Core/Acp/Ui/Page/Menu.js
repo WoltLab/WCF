@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "perfect-scrollbar", "../../../Event/Hand
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    perfect_scrollbar_1 = (0, tslib_1.__importDefault)(perfect_scrollbar_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
+    perfect_scrollbar_1 = tslib_1.__importDefault(perfect_scrollbar_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    UiScreen = tslib_1.__importStar(UiScreen);
     const _acpPageMenu = document.getElementById("acpPageMenu");
     const _acpPageSubMenu = document.getElementById("acpPageSubMenu");
     let _activeMenuItem = "";

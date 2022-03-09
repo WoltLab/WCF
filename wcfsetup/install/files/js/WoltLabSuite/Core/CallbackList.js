@@ -9,7 +9,7 @@
  */
 define(["require", "exports", "tslib", "./Core"], function (require, exports, tslib_1, Core) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
+    Core = tslib_1.__importStar(Core);
     class CallbackList {
         constructor() {
             this._callbacks = new Map();

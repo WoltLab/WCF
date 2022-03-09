@@ -9,11 +9,11 @@
  */
 define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Core, Util_1) {
     "use strict";
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Language = (0, tslib_1.__importStar)(Language);
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSearch {
         constructor(mediaManager) {
             this._searchMode = false;

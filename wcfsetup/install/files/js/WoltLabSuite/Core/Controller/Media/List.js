@@ -11,11 +11,11 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
-    MediaClipboard = (0, tslib_1.__importStar)(MediaClipboard);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Editor_1 = (0, tslib_1.__importDefault)(Editor_1);
-    DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
+    Upload_1 = tslib_1.__importDefault(Upload_1);
+    MediaClipboard = tslib_1.__importStar(MediaClipboard);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Editor_1 = tslib_1.__importDefault(Editor_1);
+    DomChangeListener = tslib_1.__importStar(DomChangeListener);
     const _mediaEditor = new Editor_1.default({
         _editorSuccess: (media, oldCategoryId, closedEditorDialog = true) => {
             if (media.categoryID != oldCategoryId || closedEditorDialog) {

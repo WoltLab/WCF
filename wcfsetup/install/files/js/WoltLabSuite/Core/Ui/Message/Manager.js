@@ -8,11 +8,11 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language", "../../StringUtil"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language, StringUtil) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
     class UiMessageManager {
         /**
          * Initializes a new manager instance.

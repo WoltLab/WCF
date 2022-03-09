@@ -11,12 +11,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Ajax = tslib_1.__importStar(Ajax);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class UiUserCoverPhotoDelete {
         /**
          * Initializes the delete handler and enables the delete button on upload.

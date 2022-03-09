@@ -9,13 +9,13 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../StringUtil", "../Dialog"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, StringUtil, Dialog_1) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
     class CountButtons {
         /**

@@ -8,12 +8,12 @@
  */
 define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Notification", "../Prism", "../Prism/Helper", "../prism-meta"], function (require, exports, tslib_1, Language, Clipboard, UiNotification, Prism_1, PrismHelper, prism_meta_1) {
     "use strict";
-    Language = (0, tslib_1.__importStar)(Language);
-    Clipboard = (0, tslib_1.__importStar)(Clipboard);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    Prism_1 = (0, tslib_1.__importDefault)(Prism_1);
-    PrismHelper = (0, tslib_1.__importStar)(PrismHelper);
-    prism_meta_1 = (0, tslib_1.__importDefault)(prism_meta_1);
+    Language = tslib_1.__importStar(Language);
+    Clipboard = tslib_1.__importStar(Clipboard);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Prism_1 = tslib_1.__importDefault(Prism_1);
+    PrismHelper = tslib_1.__importStar(PrismHelper);
+    prism_meta_1 = tslib_1.__importDefault(prism_meta_1);
     async function waitForIdle() {
         return new Promise((resolve, _reject) => {
             if (window.requestIdleCallback) {

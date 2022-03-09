@@ -10,16 +10,16 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Language = (0, tslib_1.__importStar)(Language);
-    Clipboard = (0, tslib_1.__importStar)(Clipboard);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    UiMessageShare = (0, tslib_1.__importStar)(UiMessageShare);
-    UiMessageShareProviders = (0, tslib_1.__importStar)(UiMessageShareProviders);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Language = tslib_1.__importStar(Language);
+    Clipboard = tslib_1.__importStar(Clipboard);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    UiMessageShare = tslib_1.__importStar(UiMessageShare);
+    UiMessageShareProviders = tslib_1.__importStar(UiMessageShareProviders);
     const shareButtons = new WeakSet();
     const offerNativeSharing = window.navigator.share !== undefined;
     /**

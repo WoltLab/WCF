@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../Value", "../../../../Core"], function (require, exports, tslib_1, Value_1, Core) {
     "use strict";
-    Value_1 = (0, tslib_1.__importDefault)(Value_1);
-    Core = (0, tslib_1.__importStar)(Core);
+    Value_1 = tslib_1.__importDefault(Value_1);
+    Core = tslib_1.__importStar(Core);
     class Attachment extends Value_1.default {
         constructor(fieldId) {
             super(fieldId + "_tmpHash");

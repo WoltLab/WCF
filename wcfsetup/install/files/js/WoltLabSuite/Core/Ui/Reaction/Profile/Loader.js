@@ -9,10 +9,10 @@
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Core, Util_1, Language) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
     class UiReactionProfileLoader {
         /**
          * Initializes a new ReactionListLoader object.

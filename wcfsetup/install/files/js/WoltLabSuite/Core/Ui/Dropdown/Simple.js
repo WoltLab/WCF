@@ -9,13 +9,13 @@
  */
 define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay"], function (require, exports, tslib_1, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1) {
     "use strict";
-    CallbackList_1 = (0, tslib_1.__importDefault)(CallbackList_1);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     let _availableDropdowns;
     const _callbacks = new CallbackList_1.default();
     let _didInit = false;

@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.rebuild = exports.rebuildAll = exports.registerTabMenus = exports.register = exports.setup = void 0;
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     const _containers = new Map();
     const _dropdowns = new Map();
     const _dropdownMenus = new Map();

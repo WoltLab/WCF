@@ -10,8 +10,8 @@
  */
 define(["require", "exports", "tslib", "./Abstract", "../../../../Core"], function (require, exports, tslib_1, Abstract_1, Core) {
     "use strict";
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
-    Core = (0, tslib_1.__importStar)(Core);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
+    Core = tslib_1.__importStar(Core);
     class Empty extends Abstract_1.default {
         checkDependency() {
             if (this._field !== null) {

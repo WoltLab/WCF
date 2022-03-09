@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unregister = exports.register = exports.isHiddenByDependencies = exports.checkDependencies = exports.checkContainers = exports.addDependency = exports.addContainerCheckCallback = void 0;
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
     const _dependencyHiddenNodes = new Set();
     const _fields = new Map();
     const _forms = new WeakSet();

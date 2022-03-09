@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util"],
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.observe = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
     function onClick(event, content, toggleButton) {
         event.preventDefault();
         toggleButton.classList.toggle("active");

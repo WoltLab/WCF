@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Ajax = tslib_1.__importStar(Ajax);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class AcpUiPageBoxOrder {
         /**
          * Initializes the sorting capabilities.

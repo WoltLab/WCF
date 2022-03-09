@@ -10,7 +10,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hide = exports.show = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
+    Language = tslib_1.__importStar(Language);
     class AjaxStatus {
         constructor() {
             this._activeRequests = 0;

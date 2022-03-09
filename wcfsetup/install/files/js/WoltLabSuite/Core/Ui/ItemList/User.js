@@ -10,7 +10,7 @@ define(["require", "exports", "tslib", "../ItemList"], function (require, export
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getValues = exports.init = void 0;
-    UiItemList = (0, tslib_1.__importStar)(UiItemList);
+    UiItemList = tslib_1.__importStar(UiItemList);
     function syncShadow(data) {
         const values = getValues(data.element.id);
         const users = [];

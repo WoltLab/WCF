@@ -2,12 +2,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
-    Input_1 = (0, tslib_1.__importDefault)(Input_1);
+    Core = tslib_1.__importStar(Core);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    Input_1 = tslib_1.__importDefault(Input_1);
     function click(event) {
         event.preventDefault();
         const pageHeader = document.getElementById("pageHeader");

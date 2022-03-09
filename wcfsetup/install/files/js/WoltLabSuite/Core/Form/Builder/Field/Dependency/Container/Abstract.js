@@ -10,8 +10,8 @@
  */
 define(["require", "exports", "tslib", "../Manager", "../../../../../Core"], function (require, exports, tslib_1, DependencyManager, Core) {
     "use strict";
-    DependencyManager = (0, tslib_1.__importStar)(DependencyManager);
-    Core = (0, tslib_1.__importStar)(Core);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
+    Core = tslib_1.__importStar(Core);
     class Abstract {
         constructor(containerId) {
             this.init(containerId);

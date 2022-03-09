@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../../Core", "../Util", "../../Dom/Chang
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    DateUtil = (0, tslib_1.__importStar)(DateUtil);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Repeating_1 = (0, tslib_1.__importDefault)(Repeating_1);
+    Core = tslib_1.__importStar(Core);
+    DateUtil = tslib_1.__importStar(DateUtil);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    Repeating_1 = tslib_1.__importDefault(Repeating_1);
     let _isActive = true;
     let _isPending = false;
     let _offset;

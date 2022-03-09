@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ajaxApi = exports.setContent = exports.init = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Environment = (0, tslib_1.__importStar)(Environment);
-    UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
+    Ajax = tslib_1.__importStar(Ajax);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Environment = tslib_1.__importStar(Environment);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
     class ControllerPopover {
         /**
          * Builds popover DOM elements and binds event listeners.

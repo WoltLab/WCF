@@ -9,9 +9,9 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "../../Language"], function (require, exports, tslib_1, Core, EventHandler, Language) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
     class UiRedactorHtml {
         /**
          * Initializes the source code management.

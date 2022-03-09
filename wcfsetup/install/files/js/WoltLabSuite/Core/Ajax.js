@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getRequestObject = exports.apiOnce = exports.api = void 0;
-    Request_1 = (0, tslib_1.__importDefault)(Request_1);
+    Request_1 = tslib_1.__importDefault(Request_1);
     const _cache = new WeakMap();
     /**
      * Shorthand function to perform a request against the WCF-API with overrides

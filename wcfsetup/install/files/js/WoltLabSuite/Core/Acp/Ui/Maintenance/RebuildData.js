@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../Worker", "../../../Language"], functi
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.runAllWorkers = exports.register = void 0;
-    Worker_1 = (0, tslib_1.__importDefault)(Worker_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    Worker_1 = tslib_1.__importDefault(Worker_1);
+    Language = tslib_1.__importStar(Language);
     const workers = new Map();
     function register(button) {
         if (!button.dataset.className) {

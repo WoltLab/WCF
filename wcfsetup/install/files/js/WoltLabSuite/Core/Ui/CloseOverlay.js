@@ -9,7 +9,7 @@
  */
 define(["require", "exports", "tslib", "../CallbackList"], function (require, exports, tslib_1, CallbackList_1) {
     "use strict";
-    CallbackList_1 = (0, tslib_1.__importDefault)(CallbackList_1);
+    CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
     const _callbackList = new CallbackList_1.default();
     const UiCloseOverlay = {
         /**

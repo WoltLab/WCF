@@ -12,10 +12,10 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    StringUtil = tslib_1.__importStar(StringUtil);
     class NotificationHandler {
         /**
          * Initializes the desktop notification system.

@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
-    UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
+    Language = tslib_1.__importStar(Language);
+    UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
     let _dropDownMenu;
     let _objectId = 0;
     function stateChange(event) {

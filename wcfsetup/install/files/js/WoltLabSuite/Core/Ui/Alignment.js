@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.set = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    Core = tslib_1.__importStar(Core);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
     /**
      * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
      */

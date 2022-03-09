@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.open = exports.setup = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    Filter_1 = (0, tslib_1.__importDefault)(Filter_1);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Filter_1 = tslib_1.__importDefault(Filter_1);
     class UiStyleFontAwesome {
         constructor(icons) {
             this.callback = undefined;

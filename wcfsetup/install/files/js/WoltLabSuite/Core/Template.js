@@ -8,10 +8,10 @@
  */
 define(["require", "exports", "tslib", "./Core", "./I18n/Plural", "./Language/Store", "./StringUtil", "./Template/Compiler"], function (require, exports, tslib_1, Core, I18nPlural, LanguageStore, StringUtil, Compiler_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    I18nPlural = (0, tslib_1.__importStar)(I18nPlural);
-    LanguageStore = (0, tslib_1.__importStar)(LanguageStore);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    Core = tslib_1.__importStar(Core);
+    I18nPlural = tslib_1.__importStar(I18nPlural);
+    LanguageStore = tslib_1.__importStar(LanguageStore);
+    StringUtil = tslib_1.__importStar(StringUtil);
     // @todo: still required?
     // work around bug in AMD module generation of Jison
     /*function Parser() {

@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "./Manager", "../../../../Core"], function (require, exports, tslib_1, DependencyManager, Core) {
     "use strict";
-    DependencyManager = (0, tslib_1.__importStar)(DependencyManager);
-    Core = (0, tslib_1.__importStar)(Core);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
+    Core = tslib_1.__importStar(Core);
     class FormBuilderFormFieldDependency {
         constructor(dependentElementId, fieldId) {
             this.init(dependentElementId, fieldId);

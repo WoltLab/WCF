@@ -11,8 +11,8 @@
 define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, Language, Util_1) {
     "use strict";
     var _a;
-    Language = (0, tslib_1.__importStar)(Language);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
     const STATIC_DICTIONARY = [];
     const siteName = (_a = document.querySelector('meta[property="og:site_name"]')) === null || _a === void 0 ? void 0 : _a.getAttribute("content");
     if (siteName) {

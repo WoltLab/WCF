@@ -8,17 +8,17 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Environment", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Environment, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Environment = (0, tslib_1.__importStar)(Environment);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiDropdownReusable = (0, tslib_1.__importStar)(UiDropdownReusable);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
-    UiScroll = (0, tslib_1.__importStar)(UiScroll);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Environment = tslib_1.__importStar(Environment);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    UiScroll = tslib_1.__importStar(UiScroll);
     class UiMessageInlineEditor {
         /**
          * Initializes the message inline editor.
