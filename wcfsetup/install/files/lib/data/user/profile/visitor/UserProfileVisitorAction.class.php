@@ -47,6 +47,10 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 		if ($this->userProfile->isProtected()) {
 			throw new PermissionDeniedException();
 		}
+
+		if ($this->parameters['pageNo'] < 1) {
+			throw new UserInputException('pageNo');
+		}
 	}
 	
 	/**
