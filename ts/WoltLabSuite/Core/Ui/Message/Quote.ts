@@ -90,22 +90,20 @@ export class UiMessageQuote implements AjaxCallbackObject {
     document.addEventListener(
       "touchstart",
       (event) => {
-        if (this.copyQuote.classList.contains("active")) {
-          const target = event.target as HTMLElement;
-          if (target !== this.copyQuote && !this.copyQuote.contains(target)) {
-            this.copyQuote.classList.add("touchForceInaccessible");
+        const target = event.target as HTMLElement;
+        if (target !== this.copyQuote && !this.copyQuote.contains(target)) {
+          this.copyQuote.classList.add("touchForceInaccessible");
 
-            document.addEventListener(
-              "touchend",
-              () => {
-                this.copyQuote.classList.remove("touchForceInaccessible");
-              },
-              { once: true },
-            );
-          }
+          document.addEventListener(
+            "touchend",
+            () => {
+              this.copyQuote.classList.remove("touchForceInaccessible");
+            },
+            { once: true, passive: false },
+          );
         }
       },
-      { passive: true },
+      { passive: false },
     );
   }
 

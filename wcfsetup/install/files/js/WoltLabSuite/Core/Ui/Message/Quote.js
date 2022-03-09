@@ -38,16 +38,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             Listener_1.default.add("UiMessageQuote", () => this.initContainers());
             // Prevent the tooltip from being selectable while the touch pointer is being moved.
             document.addEventListener("touchstart", (event) => {
-                if (this.copyQuote.classList.contains("active")) {
-                    const target = event.target;
-                    if (target !== this.copyQuote && !this.copyQuote.contains(target)) {
-                        this.copyQuote.classList.add("touchForceInaccessible");
-                        document.addEventListener("touchend", () => {
-                            this.copyQuote.classList.remove("touchForceInaccessible");
-                        }, { once: true });
-                    }
+                const target = event.target;
+                if (target !== this.copyQuote && !this.copyQuote.contains(target)) {
+                    this.copyQuote.classList.add("touchForceInaccessible");
+                    document.addEventListener("touchend", () => {
+                        this.copyQuote.classList.remove("touchForceInaccessible");
+                    }, { once: true, passive: false });
                 }
-            }, { passive: true });
+            }, { passive: false });
         }
         /**
          * Initializes message containers.
