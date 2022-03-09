@@ -2,6 +2,7 @@
 namespace wcf\data\user\follow;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
@@ -29,6 +30,10 @@ class UserFollowingAction extends UserFollowAction {
 		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
 		if ($this->userProfile->isProtected()) {
 			throw new PermissionDeniedException();
+		}
+
+		if ($this->parameters['pageNo'] < 1) {
+			throw new UserInputException('pageNo');
 		}
 	}
 	
