@@ -35,11 +35,7 @@ class FloatOptionType extends TextOptionType
      */
     public function getData(Option $option, $newValue)
     {
-        $newValue = \str_replace(' ', '', $newValue);
-        $newValue = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
-        $newValue = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $newValue);
-
-        return \floatval($newValue);
+        return $this->toFloat($newValue);
     }
 
     /**
@@ -52,5 +48,17 @@ class FloatOptionType extends TextOptionType
         }
 
         return ($value1 > $value2) ? 1 : -1;
+    }
+
+    /**
+     * Converts a localized string value into a float value.
+     */
+    private function toFloat($value): float
+    {
+        $value = \str_replace(' ', '', $value);
+        $value = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $value);
+        $value = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $value);
+
+        return \floatval($value);
     }
 }
