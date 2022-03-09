@@ -759,46 +759,52 @@ const DatePicker = {
 
         element.addEventListener("click", open);
 
-        let clearButton: HTMLAnchorElement | null = null;
-        if (!element.disabled) {
-          // create input addon
-          const container = document.createElement("div");
-          container.className = "inputAddon";
+        // create input addon
+        const container = document.createElement("div");
+        container.className = "inputAddon";
 
-          const openButton = document.createElement("a");
-
-          openButton.className = "inputSuffix button jsTooltip";
-          openButton.href = "#";
-          openButton.setAttribute("role", "button");
-          openButton.tabIndex = 0;
-          openButton.title = Language.get("wcf.date.datePicker");
-          openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
-          openButton.setAttribute("aria-haspopup", "true");
-          openButton.setAttribute("aria-expanded", "false");
-          openButton.addEventListener("click", open);
-          container.appendChild(openButton);
-
-          let icon = document.createElement("span");
-          icon.className = "icon icon16 fa-calendar";
-          openButton.appendChild(icon);
-
-          element.parentNode!.insertBefore(container, element);
-          container.insertBefore(element, openButton);
-
-          if (!disableClear) {
-            clearButton = document.createElement("a");
-            clearButton.className = "inputSuffix button";
-            clearButton.addEventListener("click", () => this.clear(element));
-            if (isEmpty) {
-              clearButton.style.setProperty("visibility", "hidden", "");
-            }
-
-            container.appendChild(clearButton);
-
-            icon = document.createElement("span");
-            icon.className = "icon icon16 fa-times";
-            clearButton.appendChild(icon);
+        const openButton = document.createElement("a");
+        openButton.className = "inputSuffix button jsTooltip";
+        openButton.href = "#";
+        openButton.setAttribute("role", "button");
+        openButton.tabIndex = 0;
+        openButton.title = Language.get("wcf.date.datePicker");
+        openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
+        openButton.setAttribute("aria-haspopup", "true");
+        openButton.setAttribute("aria-expanded", "false");
+        openButton.addEventListener("click", (event) => {
+          if (!element.disabled) {
+            open(event);
           }
+        });
+        container.appendChild(openButton);
+
+        let icon = document.createElement("span");
+        icon.className = "icon icon16 fa-calendar";
+        openButton.appendChild(icon);
+
+        element.parentNode!.insertBefore(container, element);
+        container.insertBefore(element, openButton);
+
+        let clearButton: HTMLAnchorElement | null = null;
+        if (!disableClear) {
+          clearButton = document.createElement("a");
+          clearButton.className = "inputSuffix button";
+          clearButton.addEventListener("click", () => {
+            if (!element.disabled) {
+              this.clear(element);
+            }
+          });
+
+          if (isEmpty) {
+            clearButton.style.setProperty("visibility", "hidden", "");
+          }
+
+          container.appendChild(clearButton);
+
+          icon = document.createElement("span");
+          icon.className = "icon icon16 fa-times";
+          clearButton.appendChild(icon);
         }
 
         // check if the date input has one of the following classes set otherwise default to 'short'
@@ -812,6 +818,25 @@ const DatePicker = {
 
         if (!hasClass) {
           element.classList.add("short");
+        }
+
+        // Reflect the `disabled` state of the `<input>` element on the buttons.
+        const observer = new MutationObserver(() => {
+          if (element.disabled) {
+            openButton.classList.add("disabled");
+            clearButton?.classList.add("disabled");
+          } else {
+            openButton.classList.remove("disabled");
+            clearButton?.classList.remove("disabled");
+          }
+        });
+        observer.observe(element, {
+          attributeFilter: ["disabled"],
+        });
+
+        if (element.disabled) {
+          openButton.classList.add("disabled");
+          clearButton?.classList.add("disabled");
         }
 
         _data.set(element, {

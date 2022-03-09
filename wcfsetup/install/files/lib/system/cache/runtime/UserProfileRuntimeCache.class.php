@@ -14,9 +14,9 @@ use wcf\data\user\UserProfileList;
  * @package WoltLabSuite\Core\System\Cache\Runtime
  * @since   3.0
  *
- * @method  UserProfile[]   getCachedObjects()
- * @method  UserProfile getObject($objectID)
- * @method  UserProfile[]   getObjects(array $objectIDs)
+ * @method  UserProfile[]    getCachedObjects()
+ * @method  UserProfile|null getObject($objectID)
+ * @method  UserProfile[]    getObjects(array $objectIDs)
  */
 class UserProfileRuntimeCache extends AbstractRuntimeCache
 {

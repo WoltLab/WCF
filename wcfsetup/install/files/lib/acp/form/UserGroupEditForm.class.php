@@ -108,7 +108,7 @@ class UserGroupEditForm extends UserGroupAddForm
             I18nHandler::getInstance()->setOptions(
                 'groupDescription',
                 1,
-                $this->group->groupDescription,
+                $this->group->groupDescription ?: '',
                 'wcf.acp.group.groupDescription\d+'
             );
             $this->groupName = $this->group->groupName;

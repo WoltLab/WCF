@@ -15,7 +15,7 @@ use wcf\data\article\ViewableArticleList;
  * @since   3.0
  *
  * @method  ViewableArticle[]       getCachedObjects()
- * @method  ViewableArticle             getObject($objectID)
+ * @method  ViewableArticle|null    getObject($objectID)
  * @method  ViewableArticle[]       getObjects(array $objectIDs)
  */
 class ViewableArticleRuntimeCache extends AbstractRuntimeCache
