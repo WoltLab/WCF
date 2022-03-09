@@ -5,6 +5,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
@@ -40,6 +41,9 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 		$this->readInteger('userID');
 		
 		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+		if (!$this->userProfile) {
+			throw new UserInputException('userID');
+		}
 		if ($this->userProfile->isProtected()) {
 			throw new PermissionDeniedException();
 		}
