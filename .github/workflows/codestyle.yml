@@ -14,7 +14,7 @@ jobs:
     name: PHP
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: phpcs
       uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
     - name: Setup PHP with tools
@@ -29,7 +29,7 @@ jobs:
     name: TS Prettier
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
@@ -49,7 +49,7 @@ jobs:
     name: SCSS Prettier
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up node.js
       uses: actions/setup-node@v2
       with:
