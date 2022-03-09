@@ -296,6 +296,15 @@ abstract class Database {
 	 * @return	string
 	 */
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
+		$limit = \intval($limit);
+		$offset = \intval($offset);
+		if ($limit < 0) {
+			throw new \InvalidArgumentException('The limit must not be negative.');
+		}
+		if ($offset < 0) {
+			throw new \InvalidArgumentException('The offset must not be negative.');
+		}
+
 		if ($limit != 0) {
 			$query = preg_replace('~(\s+FOR\s+UPDATE\s*)?$~', " LIMIT " . $limit . ($offset ? " OFFSET " . $offset : '') . "\\0", $query, 1);
 		}
