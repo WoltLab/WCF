@@ -133,8 +133,8 @@ $.Redactor.prototype.WoltLabSource = function() {
 							submitButton.disabled = false;
 						}
 
-						require(['WoltLabSuite/Core/Ui/TabMenu'], function(UiTabMenu) {
-							UiTabMenu._selectErroneousTabs();
+						require(['WoltLabSuite/Core/Ui/TabMenu'], ({ selectErroneousTabs }) => {
+							selectErroneousTabs();
 						});
 					}
 

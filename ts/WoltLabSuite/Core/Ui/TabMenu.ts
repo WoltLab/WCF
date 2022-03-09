@@ -119,7 +119,7 @@ function init() {
 /**
  * Selects the first tab containing an element with class `formError`.
  */
-function selectErroneousTabs(): void {
+export function selectErroneousTabs(): void {
   _tabMenus.forEach((tabMenu) => {
     let foundError = false;
     tabMenu.getContainers().forEach((container) => {

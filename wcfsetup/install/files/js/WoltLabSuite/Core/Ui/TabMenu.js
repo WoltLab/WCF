@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", "./TabMenu/Simple", "./CloseOverlay", "./Screen", "./Scroll"], function (require, exports, tslib_1, Listener_1, Util_1, Simple_1, CloseOverlay_1, UiScreen, UiScroll) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.scrollToTab = exports.getTabMenu = exports.setup = void 0;
+    exports.scrollToTab = exports.getTabMenu = exports.setup = exports.selectErroneousTabs = void 0;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
@@ -116,6 +116,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             });
         });
     }
+    exports.selectErroneousTabs = selectErroneousTabs;
     function scrollEnable(isSetup) {
         _enableTabScroll = true;
         _tabMenus.forEach((tabMenu) => {
