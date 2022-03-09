@@ -14,9 +14,9 @@ use wcf\data\comment\response\CommentResponseList;
  * @package WoltLabSuite\Core\System\Cache\Runtime
  * @since   3.0
  *
- * @method  CommentResponse[]   getCachedObjects()
- * @method  CommentResponse     getObject($objectID)
- * @method  CommentResponse[]   getObjects(array $objectIDs)
+ * @method  CommentResponse[]    getCachedObjects()
+ * @method  CommentResponse|null getObject($objectID)
+ * @method  CommentResponse[]    getObjects(array $objectIDs)
  */
 class CommentResponseRuntimeCache extends AbstractRuntimeCache
 {

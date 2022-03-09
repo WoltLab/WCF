@@ -15,7 +15,7 @@ use wcf\data\user\UserList;
  * @since   3.0
  *
  * @method  User[]      getCachedObjects()
- * @method  User        getObject($objectID)
+ * @method  User|null   getObject($objectID)
  * @method  User[]      getObjects(array $objectIDs)
  */
 class UserRuntimeCache extends AbstractRuntimeCache

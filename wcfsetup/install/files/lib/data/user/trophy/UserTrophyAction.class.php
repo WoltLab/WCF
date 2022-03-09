@@ -10,6 +10,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -199,7 +200,10 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         $this->readInteger('userID');
 
         $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
-        if (!$this->userProfile->isAccessible('canViewTrophies') && !($this->userProfile->userID == WCF::getSession()->userID)) {
+        if (!$this->userProfile) {
+            throw new UserInputException('userID');
+        }
+        if (!$this->userProfile->isAccessible('canViewTrophies') && $this->userProfile->userID != WCF::getSession()->userID) {
             throw new PermissionDeniedException();
         }
     }

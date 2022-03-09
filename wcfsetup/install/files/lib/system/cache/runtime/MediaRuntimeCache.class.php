@@ -15,7 +15,7 @@ use wcf\data\media\MediaList;
  * @since   3.0
  *
  * @method  Media[]         getCachedObjects()
- * @method  Media           getObject($objectID)
+ * @method  Media|null      getObject($objectID)
  * @method  Media[]         getObjects(array $objectIDs)
  */
 class MediaRuntimeCache extends AbstractRuntimeCache
