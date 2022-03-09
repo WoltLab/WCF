@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     let codeInput;
     function detectCode() {
         const value = codeInput.value.trim();

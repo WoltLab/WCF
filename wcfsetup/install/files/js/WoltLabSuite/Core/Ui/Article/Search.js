@@ -5,11 +5,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.open = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiArticleSearch {
         constructor() {
             this.callbackSelect = undefined;

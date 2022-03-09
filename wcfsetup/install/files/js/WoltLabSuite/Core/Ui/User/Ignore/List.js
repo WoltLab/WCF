@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../../Form/Builder/Dialog", "../../..
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiUserIgnoreList = void 0;
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Language = tslib_1.__importStar(Language);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class UiUserIgnoreList {
         constructor() {
             this.dialogs = new Map();

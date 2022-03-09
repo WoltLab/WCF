@@ -8,15 +8,15 @@
  */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Util_1, EventHandler, Language, UiConfirmation, Dialog_1, UiNotification) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    ControllerClipboard = (0, tslib_1.__importStar)(ControllerClipboard);
-    Core = (0, tslib_1.__importStar)(Core);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Ajax = tslib_1.__importStar(Ajax);
+    ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
     const articles = new Map();
     class AcpUiArticleInlineEditor {
         /**

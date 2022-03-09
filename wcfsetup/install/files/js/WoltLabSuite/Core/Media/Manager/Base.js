@@ -9,22 +9,22 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Permission", "../../Dom/Change/Listener", "../../Event/Handler", "../../Dom/Traverse", "../../Dom/Util", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Ui/Pagination", "../../Ui/Notification", "../../StringUtil", "./Search", "../Upload", "../Editor", "../Clipboard"], function (require, exports, tslib_1, Core, Language, Permission, DomChangeListener, EventHandler, DomTraverse, DomUtil, UiDialog, Clipboard, Pagination_1, UiNotification, StringUtil, Search_1, Upload_1, Editor_1, MediaClipboard) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    Permission = (0, tslib_1.__importStar)(Permission);
-    DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    DomUtil = (0, tslib_1.__importStar)(DomUtil);
-    UiDialog = (0, tslib_1.__importStar)(UiDialog);
-    Clipboard = (0, tslib_1.__importStar)(Clipboard);
-    Pagination_1 = (0, tslib_1.__importDefault)(Pagination_1);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
-    Search_1 = (0, tslib_1.__importDefault)(Search_1);
-    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
-    Editor_1 = (0, tslib_1.__importDefault)(Editor_1);
-    MediaClipboard = (0, tslib_1.__importStar)(MediaClipboard);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Permission = tslib_1.__importStar(Permission);
+    DomChangeListener = tslib_1.__importStar(DomChangeListener);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    DomUtil = tslib_1.__importStar(DomUtil);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    Clipboard = tslib_1.__importStar(Clipboard);
+    Pagination_1 = tslib_1.__importDefault(Pagination_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Search_1 = tslib_1.__importDefault(Search_1);
+    Upload_1 = tslib_1.__importDefault(Upload_1);
+    Editor_1 = tslib_1.__importDefault(Editor_1);
+    MediaClipboard = tslib_1.__importStar(MediaClipboard);
     let mediaManagerCounter = 0;
     class MediaManager {
         constructor(options) {

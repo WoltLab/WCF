@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiSearchExtended = void 0;
-    Picker_1 = (0, tslib_1.__importDefault)(Picker_1);
-    DomUtil = (0, tslib_1.__importStar)(DomUtil);
-    Pagination_1 = (0, tslib_1.__importDefault)(Pagination_1);
-    Input_1 = (0, tslib_1.__importDefault)(Input_1);
+    Picker_1 = tslib_1.__importDefault(Picker_1);
+    DomUtil = tslib_1.__importStar(DomUtil);
+    Pagination_1 = tslib_1.__importDefault(Pagination_1);
+    Input_1 = tslib_1.__importDefault(Input_1);
     class UiSearchExtended {
         constructor() {
             this.pages = 0;

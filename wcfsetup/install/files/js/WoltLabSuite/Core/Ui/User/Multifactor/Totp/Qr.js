@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "qr-creator", "../../../../Language"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.renderAll = exports.render = void 0;
-    qr_creator_1 = (0, tslib_1.__importDefault)(qr_creator_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    qr_creator_1 = tslib_1.__importDefault(qr_creator_1);
+    Language = tslib_1.__importStar(Language);
     function render(container) {
         const secret = container.querySelector(".totpSecret");
         if (!secret) {

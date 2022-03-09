@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../Poll"], function (re
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Vote = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Ajax = tslib_1.__importStar(Ajax);
     class Vote {
         constructor(manager) {
             this.pollManager = manager;

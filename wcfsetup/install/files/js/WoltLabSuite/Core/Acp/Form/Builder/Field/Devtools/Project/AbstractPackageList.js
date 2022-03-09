@@ -9,11 +9,11 @@
  */
 define(["require", "exports", "tslib", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util"], function (require, exports, tslib_1, Core, Language, DomTraverse, Listener_1, Util_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class AbstractPackageList {
         constructor(formFieldId, existingPackages) {
             this.formFieldId = formFieldId;

@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../../Ajax"], function (require, exports
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Ajax = tslib_1.__importStar(Ajax);
     /**
      * Initializes dismiss buttons.
      */

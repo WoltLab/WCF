@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Language"],
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
     let _didInit = false;
     const _dragArea = new Map();
     let _isDragging = false;

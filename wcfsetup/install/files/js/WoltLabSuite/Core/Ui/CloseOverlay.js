@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../CallbackList"], function (require, ex
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.execute = exports.remove = exports.add = exports.Origin = void 0;
-    CallbackList_1 = (0, tslib_1.__importDefault)(CallbackList_1);
+    CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
     const _callbackList = new CallbackList_1.default();
     var Origin;
     (function (Origin) {

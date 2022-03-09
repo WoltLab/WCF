@@ -8,9 +8,9 @@
  */
 define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"], function (require, exports, tslib_1, Ajax, Core, Simple_1) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     class UiSuggestion {
         /**
          * Initializes a new suggestion input.

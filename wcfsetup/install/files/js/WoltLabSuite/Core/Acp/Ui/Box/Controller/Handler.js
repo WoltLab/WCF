@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Ajax = tslib_1.__importStar(Ajax);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
     class AcpUiBoxControllerHandler {
         constructor(initialObjectTypeId) {
             this.boxControllerContainer = document.getElementById("boxControllerContainer");

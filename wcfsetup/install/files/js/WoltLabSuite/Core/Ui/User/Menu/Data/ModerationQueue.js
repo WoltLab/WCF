@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    View_1 = (0, tslib_1.__importDefault)(View_1);
+    View_1 = tslib_1.__importDefault(View_1);
     class UserMenuDataModerationQueue {
         constructor(button, options) {
             this.counter = 0;

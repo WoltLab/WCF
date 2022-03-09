@@ -10,8 +10,8 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.openDialog = exports.init = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ArticleAdd {
         constructor(link) {
             this.link = link;

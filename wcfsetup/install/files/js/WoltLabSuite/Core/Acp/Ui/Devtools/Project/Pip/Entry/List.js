@@ -8,10 +8,10 @@
  */
 define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../../../Core", "../../../../../../Language", "../../../../../../Ui/Confirmation", "../../../../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Core, Language, Confirmation_1, UiNotification) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class DevtoolsProjectPipEntryList {
         /**
          * Initializes the devtools project pip entry list handler.

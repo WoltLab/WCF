@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../Core", "../Event/Handler", "./Redacto
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.register = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
     function register(options) {
         const uuid = Core.getUuid();
         options = Core.extend({

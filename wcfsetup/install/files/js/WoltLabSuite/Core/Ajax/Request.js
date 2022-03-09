@@ -11,11 +11,11 @@
  */
 define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Language"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Util_1, Language) {
     "use strict";
-    AjaxStatus = (0, tslib_1.__importStar)(AjaxStatus);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    AjaxStatus = tslib_1.__importStar(AjaxStatus);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
     let _didInit = false;
     let _ignoreAllErrors = false;
     /**

@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = exports.getElement = void 0;
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
-    Alignment = (0, tslib_1.__importStar)(Alignment);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    Alignment = tslib_1.__importStar(Alignment);
+    Util_1 = tslib_1.__importDefault(Util_1);
     let button;
     let element;
     let focusTrap;

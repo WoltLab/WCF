@@ -11,11 +11,11 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Core", "
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DisableAction = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
     class DisableAction extends Abstract_1.default {
         constructor(button, userId, userDataElement) {
             super(button, userId, userDataElement);

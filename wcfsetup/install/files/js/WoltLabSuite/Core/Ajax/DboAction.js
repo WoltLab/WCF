@@ -12,9 +12,9 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core", "../Dom
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DboAction = void 0;
-    AjaxStatus = (0, tslib_1.__importStar)(AjaxStatus);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
+    AjaxStatus = tslib_1.__importStar(AjaxStatus);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
     class DboAction {
         constructor(actionName, className) {
             this._objectIDs = [];

@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
-    UiDialog = (0, tslib_1.__importStar)(UiDialog);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Language = tslib_1.__importStar(Language);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiPackageUpdateManager {
         constructor() {
             this.packages = new Map();

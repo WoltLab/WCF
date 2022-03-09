@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getTimezoneDate = exports.getTimeElement = exports.gmdate = exports.format = exports.formatDateTime = exports.formatTime = exports.formatDate = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
+    Language = tslib_1.__importStar(Language);
     /**
      * Returns the formatted date.
      */

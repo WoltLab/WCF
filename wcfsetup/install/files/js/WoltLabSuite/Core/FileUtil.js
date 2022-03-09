@@ -10,7 +10,7 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.blobToFile = exports.getExtensionByMimeType = exports.getIconNameByFilename = exports.formatFilesize = void 0;
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
+    StringUtil = tslib_1.__importStar(StringUtil);
     const _fileExtensionIconMapping = new Map(Object.entries({
         // archive
         zip: "archive",

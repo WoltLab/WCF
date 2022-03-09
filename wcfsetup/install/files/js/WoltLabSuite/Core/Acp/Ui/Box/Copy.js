@@ -2,8 +2,8 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Language = (0, tslib_1.__importStar)(Language);
-    UiDialog = (0, tslib_1.__importStar)(UiDialog);
+    Language = tslib_1.__importStar(Language);
+    UiDialog = tslib_1.__importStar(UiDialog);
     class AcpUiBoxCopy {
         constructor() {
             document.querySelectorAll(".jsButtonCopyBox").forEach((button) => {

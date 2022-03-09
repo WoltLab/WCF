@@ -9,14 +9,14 @@
  */
 define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, CloseOverlay_1, focus_trap_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Environment = (0, tslib_1.__importStar)(Environment);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Environment = tslib_1.__importStar(Environment);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     let _activeDialog = null;
     let _container;
     const _dialogs = new Map();

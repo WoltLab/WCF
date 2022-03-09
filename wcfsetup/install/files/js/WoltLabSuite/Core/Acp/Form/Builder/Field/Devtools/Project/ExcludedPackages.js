@@ -10,10 +10,10 @@
  */
 define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Util"], function (require, exports, tslib_1, AbstractPackageList_1, Core, Language, Util_1) {
     "use strict";
-    AbstractPackageList_1 = (0, tslib_1.__importDefault)(AbstractPackageList_1);
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    AbstractPackageList_1 = tslib_1.__importDefault(AbstractPackageList_1);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class ExcludedPackages extends AbstractPackageList_1.default {
         constructor(formFieldId, existingPackages) {
             super(formFieldId, existingPackages);

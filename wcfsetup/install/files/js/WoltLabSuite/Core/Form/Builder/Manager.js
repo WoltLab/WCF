@@ -12,10 +12,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unregisterForm = exports.registerForm = exports.registerField = exports.hasForm = exports.hasField = exports.getForm = exports.getField = exports.getData = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Field_1 = (0, tslib_1.__importDefault)(Field_1);
-    DependencyManager = (0, tslib_1.__importStar)(DependencyManager);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Field_1 = tslib_1.__importDefault(Field_1);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
     const _fields = new Map();
     const _forms = new Map();
     /**

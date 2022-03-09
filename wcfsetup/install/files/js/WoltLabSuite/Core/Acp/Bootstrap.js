@@ -10,9 +10,9 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    UiPageMenu = (0, tslib_1.__importStar)(UiPageMenu);
-    Backend_1 = (0, tslib_1.__importDefault)(Backend_1);
+    Core = tslib_1.__importStar(Core);
+    UiPageMenu = tslib_1.__importStar(UiPageMenu);
+    Backend_1 = tslib_1.__importDefault(Backend_1);
     /**
      * Bootstraps general modules and frontend exclusive ones.
      *

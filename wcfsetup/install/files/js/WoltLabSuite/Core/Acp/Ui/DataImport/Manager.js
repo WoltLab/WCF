@@ -2,11 +2,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AcpUiDataImportManager = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiDataImportManager {
         constructor(queue, redirectUrl) {
             this.currentAction = "";

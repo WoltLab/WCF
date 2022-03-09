@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../../User/List"], function (require, ex
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Participants = void 0;
-    List_1 = (0, tslib_1.__importDefault)(List_1);
+    List_1 = tslib_1.__importDefault(List_1);
     class Participants {
         constructor(manager) {
             this.userList = undefined;

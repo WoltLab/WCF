@@ -9,10 +9,10 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../Ajax", "./Manager"], function (require, exports, tslib_1, Core, Dialog_1, Ajax, FormBuilderManager) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    FormBuilderManager = (0, tslib_1.__importStar)(FormBuilderManager);
+    Core = tslib_1.__importStar(Core);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    FormBuilderManager = tslib_1.__importStar(FormBuilderManager);
     function isDialogResponse(val) {
         return val.dialog !== undefined && val.formId !== undefined;
     }

@@ -9,10 +9,10 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.List = void 0;
-    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Language = (0, tslib_1.__importStar)(Language);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class List {
         constructor() {
             this.clearLogButton = document.getElementById("clearMissingLanguageItemLog");

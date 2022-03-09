@@ -22,8 +22,8 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, Core, Util_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class UiToggleInput {
         /**
          * Initializes a new input toggle.

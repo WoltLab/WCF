@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BanDialog = void 0;
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Picker_1 = (0, tslib_1.__importDefault)(Picker_1);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Picker_1 = tslib_1.__importDefault(Picker_1);
     class BanDialog {
         static open(userIDs, callback) {
             if (!BanDialog.instance) {

@@ -10,11 +10,11 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Event/Handler", "../../Language", "./Metacode"], function (require, exports, tslib_1, Core, Devtools_1, EventHandler, Language, UiRedactorMetacode) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Devtools_1 = (0, tslib_1.__importDefault)(Devtools_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiRedactorMetacode = (0, tslib_1.__importStar)(UiRedactorMetacode);
+    Core = tslib_1.__importStar(Core);
+    Devtools_1 = tslib_1.__importDefault(Devtools_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiRedactorMetacode = tslib_1.__importStar(UiRedactorMetacode);
     // time between save requests in seconds
     const _frequency = 15;
     class UiRedactorAutosave {

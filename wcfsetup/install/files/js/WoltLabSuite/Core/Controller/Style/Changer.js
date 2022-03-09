@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Language", "../../Ui
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.showDialog = exports.setup = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Language = (0, tslib_1.__importStar)(Language);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ControllerStyleChanger {
         /**
          * Adds the style changer to the bottom navigation.

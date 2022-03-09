@@ -9,8 +9,8 @@
 define(["require", "exports", "tslib", "../../../Event/Handler", "../../../Controller/Clipboard"], function (require, exports, tslib_1, EventHandler, ControllerClipboard) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    ControllerClipboard = (0, tslib_1.__importStar)(ControllerClipboard);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
     class UiObjectActionHandler {
         constructor(actionName, clipboardActionNames, objectAction) {
             this.objectAction = objectAction;

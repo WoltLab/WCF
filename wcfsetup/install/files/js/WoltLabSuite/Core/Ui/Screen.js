@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setDialogContainer = exports.pageOverlayIsActive = exports.pageOverlayClose = exports.pageOverlayOpen = exports.scrollEnable = exports.scrollDisable = exports.is = exports.remove = exports.on = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    Environment = (0, tslib_1.__importStar)(Environment);
+    Core = tslib_1.__importStar(Core);
+    Environment = tslib_1.__importStar(Environment);
     const _mql = new Map();
     let _scrollDisableCounter = 0;
     let _scrollOffsetFrom;

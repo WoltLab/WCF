@@ -10,11 +10,11 @@
  */
 define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util", "../../Language", "../../Upload"], function (require, exports, tslib_1, Core, Delete_1, Util_1, Language, Upload_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Delete_1 = (0, tslib_1.__importDefault)(Delete_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
+    Core = tslib_1.__importStar(Core);
+    Delete_1 = tslib_1.__importDefault(Delete_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Upload_1 = tslib_1.__importDefault(Upload_1);
     class FileUpload extends Upload_1.default {
         constructor(buttonContainerId, targetId, options) {
             options = options || {};

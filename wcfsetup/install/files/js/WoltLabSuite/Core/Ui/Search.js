@@ -12,12 +12,12 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importStar)(CloseOverlay_1);
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
-    Environment = (0, tslib_1.__importStar)(Environment);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    CloseOverlay_1 = tslib_1.__importStar(CloseOverlay_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    Environment = tslib_1.__importStar(Environment);
     let _isMobile = false;
     let _scrollTop = undefined;
     const _isAcp = document.body.classList.contains("wcfAcp");

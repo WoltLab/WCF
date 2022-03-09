@@ -9,17 +9,17 @@
  */
 define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "../Language", "../Ajax", "./Replace"], function (require, exports, tslib_1, Core, UiNotification, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language, Ajax, Replace_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    UiDialog = (0, tslib_1.__importStar)(UiDialog);
-    LanguageChooser = (0, tslib_1.__importStar)(LanguageChooser);
-    LanguageInput = (0, tslib_1.__importStar)(LanguageInput);
-    DomUtil = (0, tslib_1.__importStar)(DomUtil);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Replace_1 = (0, tslib_1.__importDefault)(Replace_1);
+    Core = tslib_1.__importStar(Core);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    LanguageChooser = tslib_1.__importStar(LanguageChooser);
+    LanguageInput = tslib_1.__importStar(LanguageInput);
+    DomUtil = tslib_1.__importStar(DomUtil);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Replace_1 = tslib_1.__importDefault(Replace_1);
     class MediaEditor {
         constructor(callbackObject) {
             this._availableLanguageCount = 1;

@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    View_1 = (0, tslib_1.__importDefault)(View_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    View_1 = tslib_1.__importDefault(View_1);
+    Language = tslib_1.__importStar(Language);
     let originalFavicon = "";
     function setFaviconCounter(counter) {
         const favicon = document.querySelector('link[rel="shortcut icon"]');

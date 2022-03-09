@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "./Simple"], function (require, exports, 
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.toggleDropdown = exports.registerCallback = exports.getDropdownMenu = exports.init = void 0;
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     const _dropdowns = new Map();
     let _ghostElementId = 0;
     /**

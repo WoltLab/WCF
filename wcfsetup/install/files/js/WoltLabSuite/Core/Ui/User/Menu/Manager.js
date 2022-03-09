@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerProvider = exports.getContainer = exports.getUserMenuProviders = void 0;
-    Alignment = (0, tslib_1.__importStar)(Alignment);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Alignment = tslib_1.__importStar(Alignment);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Util_1 = tslib_1.__importDefault(Util_1);
     let container = undefined;
     const providers = new Set();
     const views = new Map();

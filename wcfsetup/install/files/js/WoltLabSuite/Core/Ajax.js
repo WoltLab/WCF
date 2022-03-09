@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAc
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.dboAction = exports.getRequestObject = exports.apiOnce = exports.api = void 0;
-    Request_1 = (0, tslib_1.__importDefault)(Request_1);
-    Core = (0, tslib_1.__importStar)(Core);
-    DboAction_1 = (0, tslib_1.__importDefault)(DboAction_1);
+    Request_1 = tslib_1.__importDefault(Request_1);
+    Core = tslib_1.__importStar(Core);
+    DboAction_1 = tslib_1.__importDefault(DboAction_1);
     const _cache = new WeakMap();
     /**
      * Shorthand function to perform a request against the WCF-API with overrides

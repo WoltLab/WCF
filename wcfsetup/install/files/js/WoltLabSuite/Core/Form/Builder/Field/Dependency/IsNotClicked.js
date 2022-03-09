@@ -12,8 +12,8 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager"], function (req
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.IsNotClicked = void 0;
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
-    DependencyManager = (0, tslib_1.__importStar)(DependencyManager);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
     class IsNotClicked extends Abstract_1.default {
         constructor(dependentElementId, fieldId) {
             super(dependentElementId, fieldId);

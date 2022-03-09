@@ -10,11 +10,11 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Language = (0, tslib_1.__importStar)(Language);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiTemplateGroupCopy {
         constructor(templateGroupId) {
             this.folderName = undefined;

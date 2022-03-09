@@ -11,12 +11,12 @@ define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notific
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setMediaManager = exports.init = void 0;
-    Clipboard = (0, tslib_1.__importStar)(Clipboard);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
-    UiDialog = (0, tslib_1.__importStar)(UiDialog);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    Ajax = (0, tslib_1.__importStar)(Ajax);
+    Clipboard = tslib_1.__importStar(Clipboard);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
     let _mediaManager;
     const _didInit = false;
     class MediaClipboard {

@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMenuView = void 0;
-    DomChangeListener = (0, tslib_1.__importStar)(DomChangeListener);
-    Language = (0, tslib_1.__importStar)(Language);
-    perfectScrollbar = (0, tslib_1.__importStar)(perfectScrollbar);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
+    DomChangeListener = tslib_1.__importStar(DomChangeListener);
+    Language = tslib_1.__importStar(Language);
+    perfectScrollbar = tslib_1.__importStar(perfectScrollbar);
+    UiScreen = tslib_1.__importStar(UiScreen);
     class UserMenuView {
         constructor(provider) {
             this.usePerfectScrollbar = false;

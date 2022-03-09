@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.removeAllBySuffix = exports.removeAll = exports.remove = exports.fire = exports.add = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
-    Devtools_1 = (0, tslib_1.__importDefault)(Devtools_1);
+    Core = tslib_1.__importStar(Core);
+    Devtools_1 = tslib_1.__importDefault(Devtools_1);
     const _listeners = new Map();
     /**
      * Registers an event listener.

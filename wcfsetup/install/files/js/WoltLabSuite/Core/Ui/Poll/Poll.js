@@ -11,12 +11,12 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupAll = exports.Poll = exports.PollViews = void 0;
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Participants_1 = (0, tslib_1.__importDefault)(Participants_1);
-    Results_1 = (0, tslib_1.__importDefault)(Results_1);
-    Vote_1 = (0, tslib_1.__importDefault)(Vote_1);
-    Vote_2 = (0, tslib_1.__importDefault)(Vote_2);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Participants_1 = tslib_1.__importDefault(Participants_1);
+    Results_1 = tslib_1.__importDefault(Results_1);
+    Vote_1 = tslib_1.__importDefault(Vote_1);
+    Vote_2 = tslib_1.__importDefault(Vote_2);
     var PollViews;
     (function (PollViews) {
         PollViews["vote"] = "vote";

@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.PageMenuContainer = void 0;
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class PageMenuContainer {
         constructor(provider, orientation) {
             this.container = document.createElement("div");

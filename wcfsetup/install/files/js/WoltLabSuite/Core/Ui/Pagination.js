@@ -8,10 +8,10 @@
  */
 define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil", "./Page/JumpTo"], function (require, exports, tslib_1, Core, Language, StringUtil, UiPageJumpTo) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    StringUtil = (0, tslib_1.__importStar)(StringUtil);
-    UiPageJumpTo = (0, tslib_1.__importStar)(UiPageJumpTo);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    UiPageJumpTo = tslib_1.__importStar(UiPageJumpTo);
     class UiPagination {
         /**
          * Initializes the pagination.

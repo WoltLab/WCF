@@ -10,10 +10,10 @@
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language) {
     "use strict";
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Language = (0, tslib_1.__importStar)(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
     class UiFileDelete {
         constructor(buttonContainerId, targetId, isSingleImagePreview, uploadHandler) {
             this.containers = new Map();

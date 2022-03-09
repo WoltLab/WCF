@@ -9,14 +9,14 @@
  */
 define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
     "use strict";
-    Base_1 = (0, tslib_1.__importDefault)(Base_1);
-    Core = (0, tslib_1.__importStar)(Core);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    DomTraverse = (0, tslib_1.__importStar)(DomTraverse);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiDialog = (0, tslib_1.__importStar)(UiDialog);
-    Clipboard = (0, tslib_1.__importStar)(Clipboard);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Base_1 = tslib_1.__importDefault(Base_1);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Language = tslib_1.__importStar(Language);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    Clipboard = tslib_1.__importStar(Clipboard);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerEditor extends Base_1.default {
         constructor(options) {
             options = Core.extend({

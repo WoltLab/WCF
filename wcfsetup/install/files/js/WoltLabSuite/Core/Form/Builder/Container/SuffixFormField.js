@@ -9,9 +9,9 @@
  */
 define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../Event/Handler", "../../../Core"], function (require, exports, tslib_1, Simple_1, EventHandler, Core) {
     "use strict";
-    Simple_1 = (0, tslib_1.__importDefault)(Simple_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Core = (0, tslib_1.__importStar)(Core);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Core = tslib_1.__importStar(Core);
     class SuffixFormField {
         constructor(formId, suffixFieldId) {
             this._formId = formId;

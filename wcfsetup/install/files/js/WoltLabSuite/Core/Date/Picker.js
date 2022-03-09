@@ -8,14 +8,14 @@
  */
 define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Listener", "../Event/Handler", "../Language", "../Ui/Alignment", "../Ui/CloseOverlay", "../Dom/Util", "focus-trap"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, EventHandler, Language, UiAlignment, CloseOverlay_1, Util_1, focus_trap_1) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    DateUtil = (0, tslib_1.__importStar)(DateUtil);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    Language = (0, tslib_1.__importStar)(Language);
-    UiAlignment = (0, tslib_1.__importStar)(UiAlignment);
-    CloseOverlay_1 = (0, tslib_1.__importDefault)(CloseOverlay_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
+    Core = tslib_1.__importStar(Core);
+    DateUtil = tslib_1.__importStar(DateUtil);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     let _didInit = false;
     let _firstDayOfWeek = 0;
     let _focusTrap;

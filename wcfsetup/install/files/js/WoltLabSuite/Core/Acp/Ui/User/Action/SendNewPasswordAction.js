@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "./Abstract", "./Handler/SendNewPassword"
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SendNewPasswordAction = void 0;
-    Abstract_1 = (0, tslib_1.__importDefault)(Abstract_1);
-    SendNewPassword_1 = (0, tslib_1.__importDefault)(SendNewPassword_1);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
+    SendNewPassword_1 = tslib_1.__importDefault(SendNewPassword_1);
     class SendNewPasswordAction extends Abstract_1.default {
         constructor(button, userId, userDataElement) {
             super(button, userId, userDataElement);

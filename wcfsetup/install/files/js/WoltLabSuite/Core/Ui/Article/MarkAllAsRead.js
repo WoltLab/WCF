@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler"], fun
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Ajax = tslib_1.__importStar(Ajax);
+    EventHandler = tslib_1.__importStar(EventHandler);
     class UiArticleMarkAllAsRead {
         constructor() {
             document.querySelectorAll(".markAllAsReadButton").forEach((button) => {

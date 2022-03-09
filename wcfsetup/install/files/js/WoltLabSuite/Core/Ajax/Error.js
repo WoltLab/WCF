@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerGlobalRejectionHandler = exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
-    Core = (0, tslib_1.__importStar)(Core);
+    Core = tslib_1.__importStar(Core);
     async function genericError(error) {
         const html = await getErrorHtml(error);
         if (html !== "") {

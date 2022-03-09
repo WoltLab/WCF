@@ -11,7 +11,7 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.add = exports.addObject = exports.get = void 0;
-    Template_1 = (0, tslib_1.__importDefault)(Template_1);
+    Template_1 = tslib_1.__importDefault(Template_1);
     Object.defineProperty(exports, "get", { enumerable: true, get: function () { return Store_2.get; } });
     /**
      * Adds all the language items in the given object to the store.

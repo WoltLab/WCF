@@ -9,12 +9,12 @@
  */
 define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Change/Listener", "../../../Dom/Util", "../../../Language", "../Add", "../../Notification"], function (require, exports, tslib_1, Core, Listener_1, Util_1, Language, Add_1, UiNotification) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Listener_1 = (0, tslib_1.__importDefault)(Listener_1);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Add_1 = (0, tslib_1.__importDefault)(Add_1);
-    UiNotification = (0, tslib_1.__importStar)(UiNotification);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Add_1 = tslib_1.__importDefault(Add_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class UiCommentResponseAdd extends Add_1.default {
         constructor(container, options) {
             super(container);

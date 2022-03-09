@@ -11,10 +11,10 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hasValidUserMenu = exports.PageMenuUser = void 0;
-    Container_1 = (0, tslib_1.__importDefault)(Container_1);
-    Language = (0, tslib_1.__importStar)(Language);
-    Util_1 = (0, tslib_1.__importDefault)(Util_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
+    Container_1 = tslib_1.__importDefault(Container_1);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
     class PageMenuUser {
         constructor() {
             this.activeTab = undefined;

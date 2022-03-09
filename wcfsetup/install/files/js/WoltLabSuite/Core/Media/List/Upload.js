@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../Upload", "../../Core"], function (require, exports, tslib_1, Upload_1, Core) {
     "use strict";
-    Upload_1 = (0, tslib_1.__importDefault)(Upload_1);
-    Core = (0, tslib_1.__importStar)(Core);
+    Upload_1 = tslib_1.__importDefault(Upload_1);
+    Core = tslib_1.__importStar(Core);
     class MediaListUpload extends Upload_1.default {
         _createButton() {
             super._createButton();

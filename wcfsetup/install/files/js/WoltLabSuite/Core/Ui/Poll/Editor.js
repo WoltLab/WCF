@@ -9,11 +9,11 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker"], function (require, exports, tslib_1, Core, Language, List_1, EventHandler, DatePicker) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    Language = (0, tslib_1.__importStar)(Language);
-    List_1 = (0, tslib_1.__importDefault)(List_1);
-    EventHandler = (0, tslib_1.__importStar)(EventHandler);
-    DatePicker = (0, tslib_1.__importStar)(DatePicker);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    List_1 = tslib_1.__importDefault(List_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    DatePicker = tslib_1.__importStar(DatePicker);
     class UiPollEditor {
         constructor(containerId, pollOptions, wysiwygId, options) {
             const container = document.getElementById(containerId);

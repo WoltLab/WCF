@@ -11,9 +11,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Core = (0, tslib_1.__importStar)(Core);
-    UiConfirmation = (0, tslib_1.__importStar)(UiConfirmation);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
     function setup() {
         const link = document.getElementById("deleteMapping");
         link.addEventListener("click", (event) => {

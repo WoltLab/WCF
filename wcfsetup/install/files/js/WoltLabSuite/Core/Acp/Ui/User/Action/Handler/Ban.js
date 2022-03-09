@@ -11,8 +11,8 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "./Ban/Dialog"], f
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BanHandler = void 0;
-    Ajax = (0, tslib_1.__importStar)(Ajax);
-    Dialog_1 = (0, tslib_1.__importDefault)(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class BanHandler {
         constructor(userIDs) {
             this.userIDs = userIDs;

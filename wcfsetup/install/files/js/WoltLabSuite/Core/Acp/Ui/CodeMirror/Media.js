@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../../Core"], function (require, exports, tslib_1, Editor_1, Core) {
     "use strict";
-    Editor_1 = (0, tslib_1.__importDefault)(Editor_1);
-    Core = (0, tslib_1.__importStar)(Core);
+    Editor_1 = tslib_1.__importDefault(Editor_1);
+    Core = tslib_1.__importStar(Core);
     class AcpUiCodeMirrorMedia {
         constructor(elementId) {
             this.element = document.getElementById(elementId);

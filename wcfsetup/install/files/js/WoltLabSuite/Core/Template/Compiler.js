@@ -12,7 +12,7 @@ define(["require", "exports", "tslib", "../Template.grammar"], function (require
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.compile = void 0;
-    parser = (0, tslib_1.__importStar)(parser);
+    parser = tslib_1.__importStar(parser);
     /**
      * Compiles the given template.
      */

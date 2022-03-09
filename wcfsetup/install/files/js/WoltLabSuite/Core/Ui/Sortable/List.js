@@ -9,8 +9,8 @@
  */
 define(["require", "exports", "tslib", "../../Core", "../Screen"], function (require, exports, tslib_1, Core, UiScreen) {
     "use strict";
-    Core = (0, tslib_1.__importStar)(Core);
-    UiScreen = (0, tslib_1.__importStar)(UiScreen);
+    Core = tslib_1.__importStar(Core);
+    UiScreen = tslib_1.__importStar(UiScreen);
     class UiSortableList {
         /**
          * Initializes the sortable list controller.
