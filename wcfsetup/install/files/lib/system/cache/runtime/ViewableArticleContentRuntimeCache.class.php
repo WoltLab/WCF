@@ -13,7 +13,7 @@ use wcf\data\article\content\ViewableArticleContentList;
  * @since	5.2
  *
  * @method	ViewableArticleContent[]		getCachedObjects()
- * @method	ViewableArticleContent		        getObject($objectID)
+ * @method	ViewableArticleContent|null		getObject($objectID)
  * @method	ViewableArticleContent[]		getObjects(array $objectIDs)
  */
 class ViewableArticleContentRuntimeCache extends AbstractRuntimeCache {

@@ -13,7 +13,7 @@ use wcf\data\comment\CommentList;
  * @since	3.0
  * 
  * @method	Comment[]	getCachedObjects()
- * @method	Comment		getObject($objectID)
+ * @method	Comment|null	getObject($objectID)
  * @method	Comment[]	getObjects(array $objectIDs)
  */
 class CommentRuntimeCache extends AbstractRuntimeCache {

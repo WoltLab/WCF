@@ -13,7 +13,7 @@ use wcf\data\media\ViewableMediaList;
  * @since	3.0
  * 
  * @method	ViewableMedia[]         getCachedObjects()
- * @method	ViewableMedia           getObject($objectID)
+ * @method	ViewableMedia|null      getObject($objectID)
  * @method	ViewableMedia[]         getObjects(array $objectIDs)
  */
 class ViewableMediaRuntimeCache extends AbstractRuntimeCache {
