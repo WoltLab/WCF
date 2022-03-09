@@ -177,7 +177,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 		if (!$this->userProfile) {
 			throw new UserInputException('userID');
 		}
-		if (!$this->userProfile->isAccessible('canViewTrophies') && !($this->userProfile->userID == WCF::getSession()->userID)) {
+		if (!$this->userProfile->isAccessible('canViewTrophies') && $this->userProfile->userID != WCF::getSession()->userID) {
 			throw new PermissionDeniedException();
 		}
 	}
