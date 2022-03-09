@@ -199,8 +199,15 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         $this->readInteger('userID');
 
         $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+        if (!$this->userProfile) {
+            throw new UserInputException('userID');
+        }
         if ($this->userProfile->isProtected()) {
             throw new PermissionDeniedException();
+        }
+
+        if ($this->parameters['pageNo'] < 1) {
+            throw new UserInputException('pageNo');
         }
     }
 

@@ -531,6 +531,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         if (!$this->parameters['pageNo']) {
             $this->parameters['pageNo'] = 1;
         }
+        if ($this->parameters['pageNo'] < 1) {
+            throw new UserInputException('pageNo');
+        }
     }
 
     /**
