@@ -65,13 +65,14 @@ class FloatOptionType extends TextOptionType
         $value = $this->toFloat($value);
 
         $conditions->add("option_value.userOption" . $option->optionID . " LIKE ?", [$value]);
+
         return true;
     }
 
     /**
      * Converts a localized string value into a float value.
      */
-    private function toFloat($value): float
+    protected function toFloat($value): float
     {
         $value = \str_replace(' ', '', $value);
         $value = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $value);
