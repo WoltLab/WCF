@@ -13,6 +13,8 @@ namespace wcf\system\database\table\column;
  */
 class BlobDatabaseTableColumn extends AbstractDatabaseTableColumn
 {
+    use TUnsupportedDefaultValue;
+
     /**
      * @inheritDoc
      */

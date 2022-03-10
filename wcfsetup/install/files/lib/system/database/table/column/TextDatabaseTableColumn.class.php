@@ -13,6 +13,8 @@ namespace wcf\system\database\table\column;
  */
 class TextDatabaseTableColumn extends AbstractDatabaseTableColumn
 {
+    use TUnsupportedDefaultValue;
+
     /**
      * @inheritDoc
      */
