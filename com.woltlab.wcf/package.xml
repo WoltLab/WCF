@@ -56,5 +56,7 @@
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language"/>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_5.4.15_deleteDsStore.php</instruction>
 	</instructions>
 </package>
