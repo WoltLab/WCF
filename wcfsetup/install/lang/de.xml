@@ -4594,6 +4594,8 @@ Dateianhänge:
 		<item name="wcf.user.group"><![CDATA[Benutzergruppe]]></item>
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
+		<item name="wcf.user.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.user.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} zu jung. Für eine Anmeldung auf dieser Seite {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} mindestens {#REGISTER_MIN_USER_AGE} Jahre alt sein.]]></item>
 		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Text enthält folgende zensierte Wörter: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
