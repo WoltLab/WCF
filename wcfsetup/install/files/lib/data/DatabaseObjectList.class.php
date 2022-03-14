@@ -395,7 +395,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
 
             return $this->current();
         } catch (SystemException $e) {
-            return;
+            return null;
         }
     }
 

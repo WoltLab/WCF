@@ -81,14 +81,21 @@ class UiPageSearchHandler implements DialogCallbackObject {
         <div>
           <div class="containerHeadline">
             <h3>
-                <a href="${StringUtil.escapeHTML(item.link)}">${StringUtil.escapeHTML(item.title)}</a>
+                <a href="#">${StringUtil.escapeHTML(item.title)}</a>
             </h3>
-          ${description}
+            ${description}
           </div>
         </div>
       </div>`;
 
-      listItem.addEventListener("click", this.click.bind(this));
+      const link = listItem.querySelector("a")!;
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+      });
+
+      listItem.addEventListener("click", () => {
+        this.click(item.objectID);
+      });
 
       this.resultList!.appendChild(listItem);
     });
@@ -122,18 +129,10 @@ class UiPageSearchHandler implements DialogCallbackObject {
   }
 
   /**
-   * Handles clicks on the item unless the click occurred directly on a link.
+   * Selects an item from the results.
    */
-  private click(event: MouseEvent): void {
-    const clickTarget = event.target as HTMLElement;
-    if (clickTarget.nodeName === "A") {
-      return;
-    }
-
-    event.stopPropagation();
-
-    const eventTarget = event.currentTarget as HTMLElement;
-    this.callbackSuccess!(+eventTarget.dataset.objectId!);
+  private click(objectId: number): void {
+    this.callbackSuccess!(objectId);
 
     UiDialog.close(this);
   }

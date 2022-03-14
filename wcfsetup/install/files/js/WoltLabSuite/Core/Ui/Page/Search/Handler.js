@@ -58,13 +58,19 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
         <div>
           <div class="containerHeadline">
             <h3>
-                <a href="${StringUtil.escapeHTML(item.link)}">${StringUtil.escapeHTML(item.title)}</a>
+                <a href="#">${StringUtil.escapeHTML(item.title)}</a>
             </h3>
-          ${description}
+            ${description}
           </div>
         </div>
       </div>`;
-                listItem.addEventListener("click", this.click.bind(this));
+                const link = listItem.querySelector("a");
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                });
+                listItem.addEventListener("click", () => {
+                    this.click(item.objectID);
+                });
                 this.resultList.appendChild(listItem);
             });
             Util_1.default.show(this.resultListContainer);
@@ -90,16 +96,10 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
             return this.searchInputHandler;
         }
         /**
-         * Handles clicks on the item unless the click occurred directly on a link.
+         * Selects an item from the results.
          */
-        click(event) {
-            const clickTarget = event.target;
-            if (clickTarget.nodeName === "A") {
-                return;
-            }
-            event.stopPropagation();
-            const eventTarget = event.currentTarget;
-            this.callbackSuccess(+eventTarget.dataset.objectId);
+        click(objectId) {
+            this.callbackSuccess(objectId);
             Dialog_1.default.close(this);
         }
         _dialogSetup() {

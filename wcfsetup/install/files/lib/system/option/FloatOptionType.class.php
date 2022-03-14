@@ -3,7 +3,9 @@
 namespace wcf\system\option;
 
 use wcf\data\option\Option;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Option type implementation for float values.
@@ -35,11 +37,7 @@ class FloatOptionType extends TextOptionType
      */
     public function getData(Option $option, $newValue)
     {
-        $newValue = \str_replace(' ', '', $newValue);
-        $newValue = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
-        $newValue = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $newValue);
-
-        return \floatval($newValue);
+        return $this->toFloat($newValue);
     }
 
     /**
@@ -52,5 +50,34 @@ class FloatOptionType extends TextOptionType
         }
 
         return ($value1 > $value2) ? 1 : -1;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value)
+    {
+        if (!isset($_POST['searchOptions'][$option->optionName])) {
+            return false;
+        }
+
+        $value = StringUtil::trim($value);
+        $value = $this->toFloat($value);
+
+        $conditions->add("option_value.userOption" . $option->optionID . " LIKE ?", [$value]);
+
+        return true;
+    }
+
+    /**
+     * Converts a localized string value into a float value.
+     */
+    protected function toFloat($value): float
+    {
+        $value = \str_replace(' ', '', $value);
+        $value = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $value);
+        $value = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $value);
+
+        return \floatval($value);
     }
 }
