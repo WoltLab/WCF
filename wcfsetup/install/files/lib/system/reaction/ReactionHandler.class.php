@@ -340,10 +340,12 @@ class ReactionHandler extends SingletonFactory {
 					'likeValue' => 1,
 					'reactionTypeID' => $reactionTypeID
 				]]))->executeAction();
-				
-				if ($likeable->getUserID()) {
-					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
-				}
+
+                if ($like->reactionTypeID == $reactionTypeID) {
+    				if ($likeable->getUserID()) {
+    					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
+    				}
+                }
 			}
 			
 			// This interface should help to determine whether the plugin has been adapted to the API 5.2.
