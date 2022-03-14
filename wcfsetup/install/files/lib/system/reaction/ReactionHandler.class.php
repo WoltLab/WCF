@@ -365,11 +365,13 @@ class ReactionHandler extends SingletonFactory
                     ],
                 ]))->executeAction();
 
-                if ($likeable->getUserID()) {
-                    UserActivityPointHandler::getInstance()->removeEvents(
-                        'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
-                        [$likeable->getUserID() => 1]
-                    );
+                if ($like->reactionTypeID == $reactionTypeID) {
+                    if ($likeable->getUserID()) {
+                        UserActivityPointHandler::getInstance()->removeEvents(
+                            'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
+                            [$likeable->getUserID() => 1]
+                        );
+                    }
                 }
             }
 
