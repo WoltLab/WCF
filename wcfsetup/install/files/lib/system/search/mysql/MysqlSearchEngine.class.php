@@ -2,7 +2,7 @@
 
 namespace wcf\system\search\mysql;
 
-use wcf\system\database\DatabaseException;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\search\AbstractSearchEngine;
@@ -25,6 +25,11 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * @deprecated 5.4 - This property is used for the deprecated getFulltextMinimumWordLength().
      */
     protected $ftMinWordLen;
+
+    /**
+     * @var int
+     */
+    private $minTokenSize;
 
     /**
      * @inheritDoc
@@ -492,20 +497,25 @@ class MysqlSearchEngine extends AbstractSearchEngine
     protected function getFulltextMinimumWordLength()
     {
         if ($this->ftMinWordLen === null) {
-            $sql = "SHOW VARIABLES LIKE 'innodb_ft_min_token_size'";
-
-            try {
-                $statement = WCF::getDB()->prepareStatement($sql);
-                $statement->execute();
-                $row = $statement->fetchArray();
-            } catch (DatabaseException $e) {
-                // fallback if user is disallowed to issue 'SHOW VARIABLES'
-                $row = ['Value' => 3];
-            }
-
-            $this->ftMinWordLen = $row['Value'];
+            $this->ftMinWordLen = $this->getMinTokenSize();
         }
 
         return $this->ftMinWordLen;
+    }
+
+    private function getMinTokenSize(): int
+    {
+        if (!isset($this->minTokenSize)) {
+            try {
+                $sql = "SELECT @@innodb_ft_min_token_size";
+                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement->execute();
+                $this->minTokenSize = $statement->fetchSingleColumn();
+            } catch (DatabaseQueryExecutionException $e) {
+                $this->minTokenSize = 3;
+            }
+        }
+
+        return $this->minTokenSize;
     }
 }
