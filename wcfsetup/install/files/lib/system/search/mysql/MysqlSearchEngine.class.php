@@ -185,9 +185,13 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 continue;
             }
 
-            // Add a '+' prefix if no prefix is given.
             if (!$prefix) {
-                $prefix = '+';
+                // Add a '+' prefix if no prefix is given, and
+                // - the word is longer than the min token size, or
+                // - the word is quoted.
+                if ($word[0] === '"' || \strlen($word) >= $this->getMinTokenSize()) {
+                    $prefix = '+';
+                }
             }
             if (!$suffix) {
                 // Add a '*' suffix if no suffix is given,
