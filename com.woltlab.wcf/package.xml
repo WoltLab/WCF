@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.4.15 dev 1</version>
-		<date>2022-03-10</date>
+		<version>5.4.15 dev 2</version>
+		<date>2022-03-15</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -57,6 +57,14 @@
 		
 		<instruction type="language"/>
 		
+		<instruction type="script">acp/update_com.woltlab.wcf_5.4.15_deleteDsStore.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="5.4.15 dev 1">
+		<instruction type="file">files_update.tar</instruction>
+		
+		<instruction type="language"/>
+
 		<instruction type="script">acp/update_com.woltlab.wcf_5.4.15_deleteDsStore.php</instruction>
 	</instructions>
 </package>
