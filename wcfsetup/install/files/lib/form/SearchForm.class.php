@@ -151,7 +151,7 @@ class SearchForm extends AbstractCaptchaForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['q'])) {
+        if (isset($_REQUEST['q']) && \is_string($_REQUEST['q'])) {
             $this->query = StringUtil::trim($_REQUEST['q']);
         }
         if (isset($_REQUEST['username'])) {
