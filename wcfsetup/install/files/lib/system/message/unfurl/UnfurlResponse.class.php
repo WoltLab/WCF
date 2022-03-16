@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
+use ValueError;
 use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
 use wcf\system\message\unfurl\exception\DownloadFailed;
@@ -153,7 +154,7 @@ final class UnfurlResponse
         if ($this->responseCharset !== 'UTF-8') {
             try {
                 $this->body = StringUtil::convertEncoding($this->responseCharset, 'UTF-8', $this->body);
-            } catch (Exception $e) {
+            } catch (Exception | ValueError $e) {
                 throw new ParsingFailed(
                     "Could not parse body, due an invalid charset.",
                     0,

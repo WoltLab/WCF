@@ -52,6 +52,7 @@ jobs:
         node-version: "16"
         cache: "npm"
     - run: npm install
+    - run: rm -r wcfsetup/install/files/js/WoltLabSuite/
     - run: npx tsc
     - run: echo "::add-matcher::.github/diff.json"
     - name: Show diff
