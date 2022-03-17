@@ -65,7 +65,7 @@
 								<span class="badge green">{lang}wcf.acp.cronjob.log.success{/lang}</span>
 							{elseif $cronjobLog->error}
 								<a class="badge red jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
-								<span style="display: none">{@$cronjobLog->error}</span>
+								<span style="display: none">{$cronjobLog->error}</span>
 							{/if}
 						</td>
 						
