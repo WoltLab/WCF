@@ -586,6 +586,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
                     }
                 } else {
                     if ($structure === self::STRUCT_FLAT) {
+                        if (!\is_string($target[$variableName])) {
+                            throw new UserInputException($variableName);
+                        }
                         $target[$variableName] = StringUtil::trim($target[$variableName]);
                         if (!$allowEmpty && $target[$variableName] === '') {
                             throw new UserInputException($variableName);
