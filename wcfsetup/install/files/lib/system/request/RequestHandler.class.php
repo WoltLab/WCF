@@ -92,6 +92,15 @@ class RequestHandler extends SingletonFactory
 
             $this->checkOfflineMode();
 
+            if (
+                $this->isACPRequest()
+                && !ApplicationHandler::getInstance()->isMultiDomainSetup()
+            ) {
+                \header('referrer-policy: same-origin');
+                \header('cross-origin-opener-policy: same-origin');
+                \header('cross-origin-resource-policy: same-site');
+            }
+
             // start request
             $result = $this->getActiveRequest()->execute();
 
