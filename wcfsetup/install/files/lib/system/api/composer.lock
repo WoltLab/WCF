@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4709905ac8ea201053fb79a4a25e0da",
+    "content-hash": "1c5d2894e134ffd3d6d48cde54301194",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -266,16 +266,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.6.1",
+            "version": "dev-woltlab-1.6.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "239400de7a173fe9901b9ac7c06497751f00727a"
+                "url": "https://github.com/WoltLab/guzzle-psr7",
+                "reference": "986596de01529f6e837a5cadfef9ec714ace7914"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/239400de7a173fe9901b9ac7c06497751f00727a",
-                "reference": "239400de7a173fe9901b9ac7c06497751f00727a",
+                "url": "https://api.github.com/repos/WoltLab/guzzle-psr7/zipball/986596de01529f6e837a5cadfef9ec714ace7914",
+                "reference": "986596de01529f6e837a5cadfef9ec714ace7914",
                 "shasum": ""
             },
             "require": {
@@ -307,7 +307,11 @@
                     "src/functions_include.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "GuzzleHttp\\Tests\\Psr7\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -333,7 +337,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2019-07-01T23:21:34+00:00"
+            "time": "2022-03-20T21:51:18+00:00"
         },
         {
             "name": "pear/net_idna2",
@@ -1005,10 +1009,18 @@
         }
     ],
     "packages-dev": [],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "guzzlehttp/psr7",
+            "version": "dev-woltlab-1.6.1",
+            "alias": "1.6.1",
+            "alias_normalized": "1.6.1.0"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "guzzlehttp/guzzle": 20
+        "guzzlehttp/guzzle": 20,
+        "guzzlehttp/psr7": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -1,5 +1,15 @@
 <?php
 
+
+
+
+
+
+
+
+
+
+
 namespace Composer;
 
 use Composer\Semver\VersionParser;
@@ -80,12 +90,13 @@ private static $installed = array (
     ),
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.6.1',
-      'version' => '1.6.1.0',
+      'pretty_version' => 'dev-woltlab-1.6.1',
+      'version' => 'dev-woltlab-1.6.1',
       'aliases' => 
       array (
+        0 => '1.6.1',
       ),
-      'reference' => '239400de7a173fe9901b9ac7c06497751f00727a',
+      'reference' => '986596de01529f6e837a5cadfef9ec714ace7914',
     ),
     'pear/net_idna2' => 
     array (
