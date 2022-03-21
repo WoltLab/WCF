@@ -144,7 +144,7 @@ class PackageValidationException extends SystemException
      * @var int
      * @since 5.5
      */
-    const INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER = 19;
+    const INVALID_EXCLUDED_PACKAGE_VERSION_NUMBER = 19;
 
     /**
      * the package excludes itself
