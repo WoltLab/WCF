@@ -142,8 +142,16 @@ class PackageValidationException extends SystemException
     /**
      * the version of an excluded package is invalid
      * @var int
+     * @since 5.5
      */
     const INVALID_EXCLUDED_PACKAGE_VERSION_NUBMER = 19;
+
+    /**
+     * the package excludes itself
+     * @var int
+     * @since   5.5
+     */
+    const SELF_EXCLUDE = 20;
 
     /**
      * Creates a new PackageArchiveValidationException.
