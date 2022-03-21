@@ -322,6 +322,13 @@ class PackageArchive
                 );
             }
 
+            if ($element->nodeValue === $this->packageInfo['name']) {
+                throw new PackageValidationException(
+                    PackageValidationException::SELF_EXCLUDE,
+                    ['packageName' => $element->nodeValue]
+                );
+            }
+
             // read attributes
             $data = ['name' => $element->nodeValue];
             $attributes = $xpath->query('attribute::*', $element);
