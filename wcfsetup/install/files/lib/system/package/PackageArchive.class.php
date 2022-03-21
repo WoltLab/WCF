@@ -935,13 +935,12 @@ class PackageArchive
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->packageInfo['name']]);
         while ($row = $statement->fetchArray()) {
-            if (!empty($row['excludedPackageVersion'])) {
-                if (Package::compareVersion($this->packageInfo['version'], $row['excludedPackageVersion'], '<')) {
-                    continue;
-                }
+            if (
+                $row['excludedPackageVersion'] === '*'
+                || Package::compareVersion($this->packageInfo['version'], $row['excludedPackageVersion'], '>=')
+            ) {
+                $conflictedPackages[$row['packageID']] = new Package(null, $row);
             }
-
-            $conflictedPackages[$row['packageID']] = new Package(null, $row);
         }
 
         return $conflictedPackages;
@@ -970,21 +969,17 @@ class PackageArchive
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
-                if (!empty($excludedPackages[$row['package']])) {
-                    if (
-                        $excludedPackages[$row['package']] !== '*'
-                        && Package::compareVersion(
-                            $row['packageVersion'],
-                            $excludedPackages[$row['package']],
-                            '<'
-                        )
-                    ) {
-                        continue;
-                    }
+                if (
+                    $excludedPackages[$row['package']] === '*'
+                    || Package::compareVersion(
+                        $row['packageVersion'],
+                        $excludedPackages[$row['package']],
+                        '>'
+                    )
+                ) {
                     $row['excludedPackageVersion'] = $excludedPackages[$row['package']];
+                    $conflictedPackages[$row['packageID']] = new Package(null, $row);
                 }
-
-                $conflictedPackages[$row['packageID']] = new Package(null, $row);
             }
         }
 
