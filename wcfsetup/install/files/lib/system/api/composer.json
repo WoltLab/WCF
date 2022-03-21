@@ -15,12 +15,18 @@
         "true/punycode": "~2.0",
         "pear/net_idna2": "^0.2.0",
         "scssphp/scssphp": "^1.3",
-        "guzzlehttp/guzzle": "dev-6.5-woltlab"
+        "guzzlehttp/guzzle": "dev-6.5-woltlab",
+        "guzzlehttp/psr7": "dev-woltlab-1.6.1 as 1.6.1"
     },
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/WoltLab/guzzle",
+            "no-api": true
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/WoltLab/guzzle-psr7",
             "no-api": true
         }
     ]
