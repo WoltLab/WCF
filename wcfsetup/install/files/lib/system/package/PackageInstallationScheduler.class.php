@@ -420,10 +420,11 @@ class PackageInstallationScheduler
                         ];
 
                         // check version
-                        if (!empty($row['excludedPackageVersion'])) {
-                            if (Package::compareVersion($row['packageVersion'], $row['excludedPackageVersion'], '<')) {
-                                continue;
-                            }
+                        if (
+                            $row['excludedPackageVersion'] !== '*'
+                            && Package::compareVersion($row['packageVersion'], $row['excludedPackageVersion'], '<')
+                        ) {
+                            continue;
                         }
 
                         $excludedPackages[] = [
@@ -457,7 +458,8 @@ class PackageInstallationScheduler
                         if (!empty($row['excludedPackageVersion'])) {
                             // check version
                             if (
-                                Package::compareVersion(
+                                $row['excludedPackageVersion'] !== "*"
+                                && Package::compareVersion(
                                     $packageInstallation['newVersion'],
                                     $row['excludedPackageVersion'],
                                     '<'

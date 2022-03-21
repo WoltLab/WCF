@@ -8,20 +8,20 @@
 		<version>5.5.0 Alpha 1</version>
 		<date>2022-03-17</date>
 	</packageinformation>
-	
+
 	<authorinformation>
 		<author>WoltLab GmbH</author>
 		<authorurl>https://www.woltlab.com</authorurl>
 	</authorinformation>
-	
+
 	<instructions type="install">
 		<instruction type="packageInstallationPlugin" />
 		<instruction type="acpMenu" />
 		<instruction type="userGroupOption" />
 		<instruction type="option" />
-		
+
 		<instruction type="template" run="standalone" />
-		
+
 		<instruction type="eventListener" />
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob" />
@@ -31,9 +31,9 @@
 		<instruction type="objectType" />
 		<instruction type="acpSearchProvider" />
 		<instruction type="style">defaultStyle.tar</instruction>
-		
+
 		<instruction type="userOption" run="standalone" />
-		
+
 		<instruction type="bbcode" />
 		<instruction type="smiley" />
 		<instruction type="userProfileMenu" />
@@ -46,7 +46,7 @@
 		<instruction type="box" />
 		<instruction type="mediaProvider" />
 		<instruction type="templateListener" />
-		
+
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 
@@ -101,6 +101,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="fileDelete" />
 		<instruction type="templateDelete" />
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_clearPackageDeprecations.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_cleanupPackageExclusion.php</instruction>
 
 		<!-- Misc. Update Scripts. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_randomize_cronjobs.php</instruction>

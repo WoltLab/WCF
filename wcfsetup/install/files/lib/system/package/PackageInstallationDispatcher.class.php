@@ -608,7 +608,7 @@ class PackageInstallationDispatcher
                 $statement->execute([
                     $this->queue->packageID,
                     $excludedPackage['name'],
-                    !empty($excludedPackage['version']) ? $excludedPackage['version'] : '',
+                    $excludedPackage['version'],
                 ]);
             }
         }

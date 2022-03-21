@@ -607,7 +607,7 @@ class PackageUpdateDispatcher extends SingletonFactory
                         $excludedPackagesParameters[] = [
                             'packageUpdateVersionID' => $packageUpdateVersionID,
                             'excludedPackage' => $excludedIdentifier,
-                            'excludedPackageVersion' => $exclusion['version'] ?? '',
+                            'excludedPackageVersion' => $exclusion['version'],
                         ];
                     }
                 }

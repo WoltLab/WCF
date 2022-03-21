@@ -354,26 +354,26 @@ class PackageValidationArchive implements \RecursiveIterator
                 if (isset(self::$excludedPackages[$excludingPackage][$package])) {
                     for ($i = 0, $count = \count(self::$excludedPackages[$excludingPackage][$package]); $i < $count; $i++) {
                         if (
-                            Package::compareVersion(
+                            self::$excludedPackages[$excludingPackage][$package][$i] === '*'
+                            || Package::compareVersion(
                                 $packageVersion,
                                 self::$excludedPackages[$excludingPackage][$package][$i],
-                                '<'
+                                '>='
                             )
                         ) {
-                            continue;
+                            $excludingPackages[] = new Package(null, $row);
                         }
-
-                        $excludingPackages[] = new Package(null, $row);
                     }
 
                     continue;
                 }
             } else {
-                if (Package::compareVersion($packageVersion, $row['excludedPackageVersion'], '<')) {
-                    continue;
+                if (
+                    $row['excludedPackageVersion'] === '*'
+                    || Package::compareVersion($packageVersion, $row['excludedPackageVersion'], '>=')
+                ) {
+                    $excludingPackages[] = new Package(null, $row);
                 }
-
-                $excludingPackages[] = new Package(null, $row);
             }
         }
 
@@ -408,7 +408,8 @@ class PackageValidationArchive implements \RecursiveIterator
 
                 for ($i = 0, $count = \count(self::$excludedPackages[$package][$excludedPackage]); $i < $count; $i++) {
                     if (
-                        Package::compareVersion(
+                        self::$excludedPackages[$package][$excludedPackage][$i] !== "*"
+                        && Package::compareVersion(
                             $version,
                             self::$excludedPackages[$package][$excludedPackage][$i],
                             '<'
