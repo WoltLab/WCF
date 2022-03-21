@@ -65,12 +65,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '1.8.2',
-            'version' => '1.8.2.0',
+            'pretty_version' => '1.8.5',
+            'version' => '1.8.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
+            'reference' => '337e3ad8e5716c15f9657bd214d16cc5e69df268',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
