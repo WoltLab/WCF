@@ -11,10 +11,6 @@
 	{/if}
 {/capture}
 
-{capture assign='contentHeaderNavigation'}
-	{if $__wcf->getSession()->getPermission('admin.content.cms.canManagePage')}<li><a href="{link controller='PageEdit' id=$page->pageID isACP=true}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.page.edit{/lang}</span></a></li>{/if}
-{/capture}
-
 {capture assign='contentInteractionButtons'}
 	{if $page->showShareButtons()}
 		<a href="{$content->getLink()}" class="contentInteractionButton button small wsShareButton jsOnly" data-link-title="{$content->getTitle()}">{lang}wcf.message.share{/lang}</a>
@@ -22,7 +18,7 @@
 
 	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a class="button small  dropdownToggle boxFlag box24">
+			<a class="button small dropdownToggle boxFlag box24">
 				<span><img src="{$activePageLanguage->getIconPath()}" alt="" class="iconFlag"></span>
 				<span>{$activePageLanguage->languageName}</span>
 			</a>
@@ -38,6 +34,8 @@
 			</ul>
 		</div>
 	{/if}
+
+	{if $__wcf->getSession()->getPermission('admin.content.cms.canManagePage')}<a href="{link controller='PageEdit' id=$page->pageID isACP=true}{/link}" class="contentInteractionButton button small">{lang}wcf.acp.page.edit{/lang}</a>{/if}
 {/capture}
 
 {include file='header'}
