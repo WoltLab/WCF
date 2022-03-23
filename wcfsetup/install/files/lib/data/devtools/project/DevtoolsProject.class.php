@@ -3,6 +3,7 @@
 namespace wcf\data\devtools\project;
 
 use wcf\data\DatabaseObject;
+use wcf\data\package\installation\plugin\PackageInstallationPlugin;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
@@ -64,16 +65,22 @@ class DevtoolsProject extends DatabaseObject
     public function getPips()
     {
         $pipList = new PackageInstallationPluginList();
-        $pipList->sqlOrderBy = 'pluginName';
         $pipList->readObjects();
 
-        $pips = [];
-        foreach ($pipList as $pip) {
-            $pip = new DevtoolsPip($pip);
-            $pip->setProject($this);
+        $pips = \array_map(function (PackageInstallationPlugin $pip) {
+            $devtoolsPip = new DevtoolsPip($pip);
+            $devtoolsPip->setProject($this);
 
-            $pips[] = $pip;
-        }
+            return $devtoolsPip;
+        }, $pipList->getObjects());
+
+        \uasort($pips, function (DevtoolsPip $a, DevtoolsPip $b) {
+            if ($a->isImportant() === $b->isImportant()) {
+                return \strcasecmp($a->pluginName, $b->pluginName);
+            }
+
+            return $a->isImportant() ? -1 : 1;
+        });
 
         return $pips;
     }

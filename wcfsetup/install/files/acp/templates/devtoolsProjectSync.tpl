@@ -38,7 +38,6 @@
 			<thead>
 				<tr>
 					<th class="columnText">{lang}wcf.acp.devtools.pip.pluginName{/lang}</th>
-					<th class="columnText">{lang}wcf.acp.devtools.pip.defaultFilename{/lang}</th>
 					<th class="columnIcon" colspan="2">{lang}wcf.acp.devtools.pip.target{/lang}</th>
 				</tr>
 			</thead>
@@ -49,10 +48,22 @@
 					{assign var=_targets value=$pip->getTargets($object)}
 					{assign var=_targetCount value=$_targets|count}
 					
-					<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $_isSupported}true{else}false{/if}" {if $_targetCount} class="jsHasPipTargets" data-sync-dependencies="{$pip->getSyncDependencies(true)}"{/if}>
-						<td class="columnText"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}>{$pip->pluginName}</td>
+					<tr
+						data-plugin-name="{$pip->pluginName}"
+						data-is-supported="{if $_isSupported}true{else}false{/if}"
+						data-is-important="{if $pip->isImportant()}true{else}false{/if}"
+						{if $_targetCount}
+							class="jsHasPipTargets"
+							data-sync-dependencies="{$pip->getSyncDependencies(true)}"
+						{/if}
+					>
+						<td class="columnText"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}>
+							<p><strong>{$pip->pluginName}</strong></p>
+							{if $_isSupported}
+								<small class="pipDefaultFilename" title="{lang}wcf.acp.devtools.pip.defaultFilename{/lang}">{$pip->getEffectiveDefaultFilename()}</small>
+							{/if}
+						</td>
 						{if $_isSupported}
-							<td class="columnText pipDefaultFilename"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}><small>{$pip->getEffectiveDefaultFilename()}</small></td>
 							{if $_targetCount}
 								<td class="columnIcon"><button class="small jsInvokePip" data-target="{$_targets[0]}">{$_targets[0]}</button></td>
 								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[0]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
@@ -67,7 +78,13 @@
 					</tr>
 					{if $_targetCount}
 						{section name=i loop=$_targets start=1}
-							<tr data-plugin-name="{$pip->pluginName}" {if $_targetCount} class="jsHasPipTargets jsSkipTargetDetection"{/if}>
+							<tr
+								data-plugin-name="{$pip->pluginName}"
+								data-is-important="{if $pip->isImportant()}true{else}false{/if}"
+								{if $_targetCount}
+									class="jsHasPipTargets jsSkipTargetDetection"
+								{/if}
+							>
 								<td class="columnIcon"><button class="small jsInvokePip" data-target="{$_targets[$i]}">{$_targets[$i]}</button></td>
 								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[$i]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
 							</tr>
@@ -102,12 +119,16 @@
 			width: 300px;
 		}
 		
-		#syncPipMatches td.pipDefaultFilename {
-			width: 300px;
-		}
-		
 		#syncPipMatches td:last-child {
 			width: auto;
+		}
+
+		#syncPipMatches .pipDefaultFilename {
+			color: #7D8287;
+		}
+
+		#syncPipMatches tr[data-is-important="true"] + tr[data-is-important="false"] td {
+			border-top: 4px solid #e0e0e0;
 		}
 		
 		.syncStatusContainer {

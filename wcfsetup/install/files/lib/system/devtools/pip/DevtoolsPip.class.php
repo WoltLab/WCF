@@ -462,4 +462,15 @@ class DevtoolsPip extends DatabaseObjectDecorator
 
         return $instructions;
     }
+
+    /**
+     * Indicates that this is an important PIP that should be listed
+     * at the top on the project sync page.
+     *
+     * @since 5.5
+     */
+    public function isImportant(): bool
+    {
+        return \in_array($this->getDecoratedObject()->pluginName, ['acpTemplate', 'file', 'language', 'template']);
+    }
 }
