@@ -1103,6 +1103,7 @@
 		<file>js/3rdParty/codemirror/mode/vb/LICENSE.txt</file>
 		<file>js/3rdParty/codemirror/mode/xquery/LICENSE</file>
 		<file>js/3rdParty/enquire.js</file>
+		<file>js/3rdParty/favico.js</file>
 		<file>js/3rdParty/jquery-2.0.1.min.map</file>
 		<file>js/3rdParty/jquery-ui.nestedSortable.js</file>
 		<file>js/3rdParty/jquery-ui.nestedSortable.min.js</file>
@@ -1351,6 +1352,7 @@
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/Style/Image/Upload.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/AbstractUserAction.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Dialog/Ban.js</file>
 		<file>js/WoltLabSuite/Core/Api.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
@@ -1370,12 +1372,23 @@
 		<file>js/WoltLabSuite/Core/Form/Builder/Field/Rating.js</file>
 		<file>js/WoltLabSuite/Core/ImageResizer.js</file>
 		<file>js/WoltLabSuite/Core/Media/Search.js</file>
+		<file>js/WoltLabSuite/Core/Template.grammar.jison</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/Menu/Abstract.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/Abstract.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/Manager.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/Poll.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/Results.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/View/Abstract.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/View/Participants.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/View/Results.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/View/Vote.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Poll/Manager/Vote.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Reaction/ReputationButtons.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Redactor/RuntimeStyle.js</file>
+		<file>js/WoltLabSuite/Core/Ui/User/Menu/DropDown.js</file>
 		<file>js/closest.js</file>
 		<file>js/require.build-acp.js</file>
 		<file>js/wcombined.min.js</file>
@@ -1425,6 +1438,7 @@
 		<file>lib/action/ClipboardAction.class.php</file>
 		<file>lib/action/ClipboardLoadMarkedItemsAction.class.php</file>
 		<file>lib/action/ClipboardProxyAction.class.php</file>
+		<file>lib/action/PollAction.class.php</file>
 		<file>lib/data/DatabaseObjectAction.class.php</file>
 		<file>lib/data/EditableCachedObject.class.php</file>
 		<file>lib/data/EditableObject.class.php</file>
@@ -1754,6 +1768,19 @@
 		<file>lib/system/api/leafo/scssphp/src/Type.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Util.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Version.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/.gitignore</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/.travis.yml</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/phpunit.xml.dist</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/psalm.xml</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/Base32HexTest.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/Base32Test.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/Base64DotSlashOrderedTest.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/Base64DotSlashTest.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/Base64Test.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/Base64UrlSafeTest.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/EncodingTest.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/HexTest.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/tests/RFC4648Test.php</file>
 		<file>lib/system/api/paragonie/random_compat/LICENSE</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
@@ -1908,6 +1935,100 @@
 		<file>lib/system/api/php-di/phpdoc-reader/src/PhpDocReader/PhpParser/TokenParser.php</file>
 		<file>lib/system/api/php-di/phpdoc-reader/src/PhpDocReader/PhpParser/UseStatementParser.php</file>
 		<file>lib/system/api/rest/response/IRESTfulResponse.class.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/.gitignore</file>
+		<file>lib/system/api/sabberworm/php-css-parser/.travis.yml</file>
+		<file>lib/system/api/sabberworm/php-css-parser/Doxyfile</file>
+		<file>lib/system/api/sabberworm/php-css-parser/composer.lock</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/AtRuleBlockList.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSBlockList.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSList.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/Document.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/KeyFrame.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Comment/Comment.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Comment/Commentable.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/OutputFormat.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Parser.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Parsing/OutputException.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Parsing/ParserState.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Parsing/SourceException.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Parsing/UnexpectedTokenException.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Property/AtRule.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Property/CSSNamespace.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Property/Charset.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Property/Import.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Property/Selector.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Renderable.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Rule/Rule.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/RuleSet/AtRuleSet.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/RuleSet/DeclarationBlock.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/RuleSet/RuleSet.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Settings.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/CSSFunction.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/CSSString.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/CalcFunction.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/CalcRuleValueList.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/Color.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/LineName.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/PrimitiveValue.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/RuleValueList.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/Size.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/URL.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/Value.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/lib/Sabberworm/CSS/Value/ValueList.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/phpunit.xml</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/Sabberworm/CSS/CSSList/AtRuleBlockListTest.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/Sabberworm/CSS/CSSList/DocumentTest.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/Sabberworm/CSS/OutputFormatTest.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/Sabberworm/CSS/ParserTest.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/Sabberworm/CSS/RuleSet/DeclarationBlockTest.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/Sabberworm/CSS/RuleSet/LenientParsingTest.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/bootstrap.php</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-calc-no-space-around-minus.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-charset-after-rule.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-charset-in-block.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-empty-grid-linename.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-empty.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-end-token-2.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-end-token.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-fault-tolerance.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/-tobedone.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/1readme.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/2readme.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/atrules.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/calc-nested.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/calc.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/case-insensitivity.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/colortest.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/comments.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/create-shorthands.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/docuwiki.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/empty-grid-linename.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/expand-shorthands.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/functions.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/grid-linename.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/hex-alpha.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/ie-hacks.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/ie.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/important.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/inner-color.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/line-numbers.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/missing-property-value.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/ms-filter.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/namespaces.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/nested.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/slashed.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/specificity.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/trailing-whitespace.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/unicode-range.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/unicode.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/unmatched_braces.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/unopened-close-brackets.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/url.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/values.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/webkit.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/files/whitespace.css</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/phpunit.xml</file>
+		<file>lib/system/api/sabberworm/php-css-parser/tests/quickdump.php</file>
 		<file>lib/system/api/symfony/css-selector/.gitignore</file>
 		<file>lib/system/api/symfony/css-selector/Tests/CssSelectorConverterTest.php</file>
 		<file>lib/system/api/symfony/css-selector/Tests/Node/AbstractNodeTest.php</file>
