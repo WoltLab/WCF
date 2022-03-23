@@ -1675,7 +1675,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Enable “mark as read” for articles]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Enable ad rotation]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[If there is more than one ad per placeholder, a random ad will be displayed every time. Disabling this option will display all ads simultaneously.]]></item>
-		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Enable accelerated guest view (experimental)]]></item>
+		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Enable accelerated guest view]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Enables a specialized view mode for guests and search engines alike, providing greatly reduced JavaScript files to achieve faster loading and page rendering.<br><strong>Warning:</strong> This mode is highly restricted and reduces the abilities of guests to interact with your site, such as creating new content. Please review your installed plugins before enabling to see if they are compatible with this setting.]]></item>
 		<item name="wcf.acp.option.fb_share_app_id"><![CDATA[Facebook App ID]]></item>
 		<item name="wcf.acp.option.fb_share_app_id.description"><![CDATA[You can obtain the app ID from your <a href="https://developers.facebook.com/docs/apps/register?locale=en_US" class="externalURL">app’s dashboard</a>, and is used with the Open Graph tags for sharing.]]></item>
