@@ -74,7 +74,7 @@ class DevtoolsProject extends DatabaseObject
             return $devtoolsPip;
         }, $pipList->getObjects());
 
-        \uasort($pips, function (DevtoolsPip $a, DevtoolsPip $b) {
+        \uasort($pips, static function (DevtoolsPip $a, DevtoolsPip $b) {
             if ($a->isImportant() === $b->isImportant()) {
                 return \strcasecmp($a->pluginName, $b->pluginName);
             }
