@@ -36,6 +36,7 @@
 		> label {
 			background-color: rgb(207, 216, 220);
 			border: 1px solid transparent;
+			border-radius: 2px;
 			color: rgb(33, 33, 33);
 			cursor: pointer;
 			padding: 5px 10px;
@@ -73,12 +74,11 @@
 
 .disabled .flexibleButtonGroup > li > input[type="radio"]:checked + label,
 .flexibleButtonGroup > li > input[type="radio"]:disabled + label {
-	background-color: rgb(242, 242, 242) !important;
-	color: rgb(125, 130, 100) !important;
 	cursor: default;
+	opacity: 0.54;
+	pointer-events: none;
 
 	> .icon {
-		color: rgb(125, 130, 100) !important;
 		cursor: default !important;
 	}
 }
