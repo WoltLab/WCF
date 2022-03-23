@@ -109,6 +109,12 @@ class WCFACP extends WCF
                     }
                 }
 
+                if (!self::$inRescueMode) {
+                    if (ApplicationHandler::getInstance()->getApplicationByID(PACKAGE_ID)->domainPath !== RouteHandler::getPath(['acp'])) {
+                        self::$inRescueMode = true;
+                    }
+                }
+
                 if (self::$inRescueMode) {
                     self::$rescueModePageURL = RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . RouteHandler::getPath(['acp']);
                 }
