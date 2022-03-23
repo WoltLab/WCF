@@ -5,6 +5,7 @@ namespace wcf\system\html\input\node;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\event\EventHandler;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 
@@ -99,9 +100,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      */
     protected function filterGroups(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        $htmlInputProcessor = $htmlNodeProcessor->getHtmlProcessor();
+        \assert($htmlInputProcessor instanceof HtmlInputProcessor);
+
         $data = [
-            'context' => $htmlNodeProcessor->getHtmlProcessor()->getContext(),
+            'context' => $htmlInputProcessor->getContext(),
             'bbcodes' => \array_keys($groups),
         ];
 
