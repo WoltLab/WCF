@@ -424,9 +424,45 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
             DOMUtil::removeNode($end);
         } else {
             $commonAncestor = DOMUtil::getCommonAncestor($start, $end);
+
+            // This method doesn't behave nicely if the start and/or end node are
+            // contained in other inline elements. HTMLPurifier guarantees well-
+            // formed HTML therefore we can naively split all parent inline elements.
+            $element = $start;
+            $parent = $element->parentNode;
+            while ($parent && $parent !== $commonAncestor) {
+                if ($this->isBlockElement($parent)) {
+                    break;
+                }
+
+                // Split the parent unless the element is the first child.
+                if ($parent->childNodes[0] !== $element) {
+                    DOMUtil::splitParentsUntil($element, $parent->parentNode, true);
+                }
+
+                $element = $element->parentNode;
+                $parent = $element->parentNode;
+            }
+
+            $element = $end;
+            $parent = $element->parentNode;
+            while ($parent && $parent !== $commonAncestor) {
+                if ($this->isBlockElement($parent)) {
+                    break;
+                }
+
+                // Split the parent unless the element is the last child.
+                if ($parent->childNodes[\count($parent->childNodes) - 1] !== $element) {
+                    DOMUtil::splitParentsUntil($element, $parent->parentNode, false);
+                }
+
+                $element = $element->parentNode;
+                $parent = $element->parentNode;
+            }
+
             $endAncestor = DOMUtil::getParentBefore($end, $commonAncestor);
 
-            $element = $this->wrapContent($name, $attributes, $start, null);
+            $element = $this->wrapContent($name, $attributes, $start, $endAncestor);
             DOMUtil::removeNode($start);
 
             $element = DOMUtil::getParentBefore($element, $commonAncestor);
