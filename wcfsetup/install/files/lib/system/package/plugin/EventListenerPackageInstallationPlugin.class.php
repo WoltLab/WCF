@@ -36,7 +36,8 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
 class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -191,6 +192,14 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 
         // clear cache immediately
         EventListenerCacheBuilder::getInstance()->reset();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['listenerName'];
     }
 
     /**
