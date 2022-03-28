@@ -29,7 +29,8 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
 class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -82,6 +83,14 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
             'showOrder' => $showOrder,
             'className' => $data['elements']['classname'],
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['menuItem'];
     }
 
     /**
