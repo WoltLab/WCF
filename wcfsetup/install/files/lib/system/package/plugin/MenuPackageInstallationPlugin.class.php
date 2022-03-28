@@ -40,7 +40,8 @@ use wcf\system\WCF;
  * @since   3.0
  */
 class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -187,6 +188,14 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             'title' => $this->getI18nValues($data['elements']['title']),
             'originIsSystem' => 1,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['identifier'];
     }
 
     /**
