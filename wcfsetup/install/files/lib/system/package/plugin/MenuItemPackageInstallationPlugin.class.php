@@ -37,7 +37,8 @@ use wcf\system\WCF;
  * @since   3.0
  */
 class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -171,6 +172,14 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             'showOrder' => $this->getItemOrder($menuID, $parentItemID),
             'title' => $this->getI18nValues($data['elements']['title']),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['identifier'];
     }
 
     /**
