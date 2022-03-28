@@ -50,7 +50,8 @@ use wcf\util\StringUtil;
  * @since   3.0
  */
 class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -271,6 +272,14 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             'allowSpidersToIndex' => (!empty($data['elements']['allowSpidersToIndex'])) ? 1 : 0,
             'excludeFromLandingPage' => (!empty($data['elements']['excludeFromLandingPage'])) ? 1 : 0,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['identifier'];
     }
 
     /**
