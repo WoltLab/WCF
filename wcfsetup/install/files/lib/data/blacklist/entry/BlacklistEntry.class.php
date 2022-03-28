@@ -53,7 +53,16 @@ class BlacklistEntry extends DatabaseObject
                     // StopForumSpam uses the first two to four segments of an IPv6 address.
                     $ipv6TwoParts = self::getHash("{$parts[0]}:{$parts[1]}::");
                     $ipv6ThreeParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
-                    $ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}:{$parts[3]}::");
+
+                    // If the enviorment is locally avaiable via IPv6, the ip address can be `::1`. Therefore
+                    // we must check, if the third part is isset. If not, we use the IPv6 with three parts
+                    // again, to simplify the code.
+                    // See: https://github.com/WoltLab/WCF/issues/4689
+                    if (isset($parts[3])) {
+                        $ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}:{$parts[3]}::");
+                    } else {
+                        $ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
+                    }
 
                     $conditions->add(
                         '(type = ? AND hash IN (?))',
