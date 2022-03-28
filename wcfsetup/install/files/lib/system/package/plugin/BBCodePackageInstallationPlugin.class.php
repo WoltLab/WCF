@@ -39,7 +39,8 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
 class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -131,6 +132,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         }
 
         return $data;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['bbcodeTag'];
     }
 
     /**
