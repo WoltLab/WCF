@@ -28,7 +28,8 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
 class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -79,6 +80,14 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             'aliases' => $data['elements']['aliases'] ?? '',
             'showOrder' => $showOrder,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['smileyCode'];
     }
 
     /**
