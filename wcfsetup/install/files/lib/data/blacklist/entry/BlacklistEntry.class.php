@@ -55,7 +55,7 @@ class BlacklistEntry extends DatabaseObject
                     $ipv6ThreeParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
 
                     // If the enviorment is locally avaiable via IPv6, the ip address can be `::1`. Therefore
-                    // we must check, if the third part is isset. If not, we use the IPv6 with three parts
+                    // we must check, if the third part is set. If not, we use the IPv6 with three parts
                     // again, to simplify the code.
                     // See: https://github.com/WoltLab/WCF/issues/4689
                     if (isset($parts[3])) {
