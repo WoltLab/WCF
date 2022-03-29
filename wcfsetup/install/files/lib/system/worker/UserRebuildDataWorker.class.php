@@ -322,10 +322,17 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 }
 
                 if ($coverPhoto instanceof IWebpUserCoverPhoto) {
-                    $coverPhoto->createWebpVariant();
-                    $editor->update([
-                        'coverPhotoHasWebP' => 1,
-                    ]);
+                    $result = $coverPhoto->createWebpVariant();
+                    if ($result !== null) {
+                        $data['coverPhotoHasWebP'] = 1;
+
+                        // A fallback jpeg image was just created.
+                        if ($result === false) {
+                            $data['coverPhotoExtension'] = 'jpg';
+                        }
+
+                        $editor->update($data);
+                    }
                 }
             }
         }
