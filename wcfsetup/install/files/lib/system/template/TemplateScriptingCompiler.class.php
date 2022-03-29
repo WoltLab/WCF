@@ -67,6 +67,7 @@ class TemplateScriptingCompiler
         'array_values',
         'base64_decode',
         'base64_encode',
+        'basename',
         'ceil',
         'concat',
         'constant',
