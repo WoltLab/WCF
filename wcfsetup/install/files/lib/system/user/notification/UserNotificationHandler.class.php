@@ -90,6 +90,7 @@ class UserNotificationHandler extends SingletonFactory
      * @param int[] $recipientIDs
      * @param mixed[] $additionalData
      * @param int $baseObjectID
+     * @param int $contentLanguageID
      * @throws  SystemException
      */
     public function fireEvent(
@@ -98,7 +99,8 @@ class UserNotificationHandler extends SingletonFactory
         IUserNotificationObject $notificationObject,
         array $recipientIDs,
         array $additionalData = [],
-        $baseObjectID = 0
+        $baseObjectID = 0,
+        $contentLanguageID = 0
     ) {
         // check given object type and event name
         if (!isset($this->availableEvents[$objectType][$eventName])) {
@@ -233,6 +235,14 @@ class UserNotificationHandler extends SingletonFactory
                 $recipientIDs = \array_diff($recipientIDs, $userIDs);
             }
 
+            if (empty($recipientIDs)) {
+                return;
+            }
+        }
+
+        // Remove recipients who do not have the content language enabled.
+        if ($contentLanguageID) {
+            $recipientIDs = $this->filterUsersByContentLanguage($recipientIDs, $contentLanguageID);
             if (empty($recipientIDs)) {
                 return;
             }
@@ -1065,5 +1075,24 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         return [];
+    }
+
+    public function filterUsersByContentLanguage(array $userIDs, int $contentLanguageID): array
+    {
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("userID IN (?)", [$userIDs]);
+        $conditions->add("languageID = ?", [$contentLanguageID]);
+
+        $sql = "SELECT  userID
+                FROM    wcf" . WCF_N . "_user_to_language
+                " . $conditions;
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute($conditions->getParameters());
+        $filterUserIDs = [];
+        while ($userID = $statement->fetchColumn()) {
+            $filterUserIDs[] = $userID;
+        }
+
+        return \array_intersect($userIDs, $filterUserIDs);
     }
 }
