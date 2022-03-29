@@ -163,6 +163,8 @@ class AttachmentBBCode extends AbstractBBCode
                             'Attachment',
                             ['object' => $attachment]
                         )) . '" title="' . StringUtil::encodeHTML($attachment->filename) . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . '</a>';
+                    } else {
+                        $result = '<span' . ($class ? (' class="' . $class . '"') : '') . '>' . $result . '</span>';
                     }
                 }
 
