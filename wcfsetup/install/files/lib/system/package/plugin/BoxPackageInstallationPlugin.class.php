@@ -43,7 +43,9 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  * @since   3.0
  */
-class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -205,7 +207,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         }
 
         switch ($boxType) {
-            /** @noinspection PhpMissingBreakStatementInspection */
+                /** @noinspection PhpMissingBreakStatementInspection */
             case 'system':
                 if (empty($data['elements']['objectType'])) {
                     throw new SystemException("Missing required element 'objectType' for 'system'-type box '{$identifier}'");
@@ -226,9 +228,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
                 $isMultilingual = true;
 
-            // fallthrough
+                // fallthrough
 
-            // no break
+                // no break
             case 'html':
             case 'text':
             case 'tpl':
@@ -287,6 +289,14 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
             'objectTypeID' => $objectTypeID,
             'additionalData' => \serialize($additionalData),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['identifier'];
     }
 
     /**

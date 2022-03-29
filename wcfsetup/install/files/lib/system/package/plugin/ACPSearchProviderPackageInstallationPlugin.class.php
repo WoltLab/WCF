@@ -28,7 +28,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
 class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -99,6 +100,14 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
     protected function cleanup()
     {
         ACPSearchProviderCacheBuilder::getInstance()->reset();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['providerName'];
     }
 
     /**

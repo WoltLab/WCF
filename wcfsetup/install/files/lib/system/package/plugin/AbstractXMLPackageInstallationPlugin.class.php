@@ -2,6 +2,7 @@
 
 namespace wcf\system\package\plugin;
 
+use LogicException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -138,6 +139,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      */
     protected function importItems(\DOMXPath $xpath)
     {
+        $pipData = [];
         foreach ($this->getImportElements($xpath) as $element) {
             $data = [
                 'attributes' => [],
@@ -168,6 +170,29 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
             // validate item data
             $this->validateImport($data);
 
+            $pipData[] = $data;
+        }
+
+        if ($this instanceof IUniqueNameXMLPackageInstallationPlugin) {
+            $names = \array_map(function ($data) {
+                return $this->getNameByData($data);
+            }, $pipData);
+
+            $validNames = \array_filter($names, static function ($name) {
+                return !empty($name);
+            });
+
+            if ($validNames !== \array_unique($validNames)) {
+                throw new LogicException(
+                    \sprintf(
+                        "The PIP elements for '%s' do not have unique names.",
+                        $this->tagName
+                    )
+                );
+            }
+        }
+
+        foreach ($pipData as $data) {
             // try to find an existing item for updating
             $sqlData = $this->findExistingItem($data);
 

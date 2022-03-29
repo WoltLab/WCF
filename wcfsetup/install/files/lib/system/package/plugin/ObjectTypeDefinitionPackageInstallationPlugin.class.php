@@ -24,7 +24,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
 class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -65,6 +66,14 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
             'definitionName' => $data['elements']['name'],
             'categoryName' => $data['elements']['categoryname'] ?? '',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['definitionName'];
     }
 
     /**

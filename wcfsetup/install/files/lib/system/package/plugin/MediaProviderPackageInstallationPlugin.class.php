@@ -31,7 +31,8 @@ use wcf\util\StringUtil;
  * @since   3.1
  */
 class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
-    IGuiPackageInstallationPlugin
+    IGuiPackageInstallationPlugin,
+    IUniqueNameXMLPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -74,6 +75,14 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
             'title' => $data['elements']['title'],
             'regex' => StringUtil::unifyNewlines($data['elements']['regex']),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNameByData(array $data): string
+    {
+        return $data['name'];
     }
 
     /**
