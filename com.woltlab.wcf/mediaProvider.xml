@@ -16,7 +16,7 @@ https?://(?:.+?\.)?youtube.com/shorts/(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
 			<title>Vimeo</title>
 			<regex><![CDATA[https?://vimeo\.com/(?:channels/[^/]+/)?(?P<ID>\d+)/?(?P<hash>(?(?<=/)[a-zA-Z0-9]+|))
 https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)/?(?P<hash>(?(?<=/)[a-zA-Z0-9]+|))]]></regex>
-			<html><![CDATA[<div class="messageVideoContainer"><iframe src="https://player.vimeo.com/video/{$ID}?h={$hash}" width="640" height="360" allowfullscreen></iframe></div>]]></html>
+			<html><![CDATA[<div class="messageVideoContainer"><iframe src="https://player.vimeo.com/video/{$ID}?h={$hash}&amp;dnt=1" width="640" height="360" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		<provider name="dailymotion">
 			<title>Dailymotion</title>
