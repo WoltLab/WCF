@@ -94,21 +94,13 @@ abstract class AbstractArticlePage extends AbstractPage
         $this->article->getDiscussionProvider()->setArticleContent($this->articleContent->getDecoratedObject());
         $this->category = $this->article->getCategory();
 
+        if (!$this->article->canRead()) {
+            throw new PermissionDeniedException();
+        }
+
         // update interface language
         if (!WCF::getUser()->userID && $this->article->isMultilingual && $this->articleContent->languageID != WCF::getLanguage()->languageID) {
             WCF::setLanguage($this->articleContent->languageID);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function checkPermissions()
-    {
-        parent::checkPermissions();
-
-        if (!$this->article->canRead()) {
-            throw new PermissionDeniedException();
         }
     }
 
