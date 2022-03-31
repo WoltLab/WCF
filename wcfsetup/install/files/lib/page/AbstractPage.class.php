@@ -263,6 +263,10 @@ abstract class AbstractPage implements IPage
             throw new PermissionDeniedException();
         }
 
+        $this->checkModules();
+
+        $this->checkPermissions();
+
         // check if current request URL matches the canonical URL
         if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
             $canonicalURL = Url::parse(\preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
@@ -344,10 +348,6 @@ abstract class AbstractPage implements IPage
         }
 
         $this->setActiveMenuItem();
-
-        $this->checkModules();
-
-        $this->checkPermissions();
 
         $this->maybeSetPsr7Response(
             $this->readData()
