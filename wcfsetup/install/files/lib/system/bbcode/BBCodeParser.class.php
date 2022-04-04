@@ -140,7 +140,7 @@ class BBCodeParser extends SingletonFactory
         foreach ($this->tagArray as $i => $tag) {
             if ($tag['closing']) {
                 // closing tag
-                if (\in_array($tag['name'], $openTagStack) && $this->isAllowed($openTagStack, $tag['name'], true)) {
+                if (\in_array($tag['name'], $openTagStack)) {
                     // close unclosed tags
                     $tmpOpenTags = [];
                     while (($previousTag = \end($openTagStack)) != $tag['name']) {
@@ -188,7 +188,7 @@ class BBCodeParser extends SingletonFactory
                 }
             } else {
                 // opening tag
-                if ($this->isAllowed($openTagStack, $tag['name']) && $this->isValidTag($tag)) {
+                if ($this->isValidTag($tag)) {
                     $openTagStack[] = $tag['name'];
                     $openTagDataStack[] = $tag;
                     $nextIndex = \count($newTagArray);
@@ -198,7 +198,6 @@ class BBCodeParser extends SingletonFactory
                     }
                     $newTextArray[$nextIndex] .= $this->textArray[$i];
                 } else {
-                    // tag not allowed
                     $this->textArray[$i] .= $tag['source'];
                     $last = \count($newTagArray);
                     if (!isset($newTextArray[$last])) {
