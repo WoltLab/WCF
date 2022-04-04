@@ -1084,14 +1084,11 @@ class UserNotificationHandler extends SingletonFactory
         $conditions->add("languageID = ?", [$contentLanguageID]);
 
         $sql = "SELECT  userID
-                FROM    wcf" . WCF_N . "_user_to_language
-                " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_user_to_language
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
-        $filterUserIDs = [];
-        while ($userID = $statement->fetchColumn()) {
-            $filterUserIDs[] = $userID;
-        }
+        $filterUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         return \array_intersect($userIDs, $filterUserIDs);
     }
