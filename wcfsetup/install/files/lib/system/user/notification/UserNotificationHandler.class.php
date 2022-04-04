@@ -1077,6 +1077,11 @@ class UserNotificationHandler extends SingletonFactory
         return [];
     }
 
+    /**
+     * @param int[] $userIDs
+     * @return int[]
+     * @since 5.5
+     */
     public function filterUsersByContentLanguage(array $userIDs, int $contentLanguageID): array
     {
         $conditions = new PreparedStatementConditionBuilder();
