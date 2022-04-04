@@ -109,9 +109,8 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
                 }
 
                 $filePath = $this->getFilePath($file, $application);
-                if (\file_exists($filePath)) {
-                    \unlink($filePath);
-                }
+
+                $this->safeDeleteFile($filePath);
             }
         }
 
@@ -128,6 +127,49 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
             $statement->execute($conditions->getParameters());
         }
         WCF::getDB()->commitTransaction();
+    }
+
+    private static function isFilesystemCaseSensitive(): bool
+    {
+        static $isFilesystemCaseSensitive = null;
+
+        if ($isFilesystemCaseSensitive === null) {
+            $testFilePath = __FILE__;
+
+            $invertedCase = \strstr(
+                $testFilePath,
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            );
+
+            $isFilesystemCaseSensitive = !\file_exists($invertedCase);
+        }
+
+        return $isFilesystemCaseSensitive;
+    }
+
+    private function safeDeleteFile(string $filePath): void
+    {
+        if (!\file_exists($filePath)) {
+            return;
+        }
+
+        if (self::isFilesystemCaseSensitive()) {
+            \unlink($filePath);
+
+            return;
+        }
+
+        // If the filesystem is case insensitive, we must check, whether the casing of the file
+        // matches the casing of the file, which we want to delete. Therefore, we must iterate
+        // through the whole dir to find the potential file.
+        $pathInfo = \pathinfo($filePath);
+        foreach (\glob($pathInfo['dirname'] . '/*') as $file) {
+            if (\basename($file) === $pathInfo['basename']) {
+                \unlink($filePath);
+                break;
+            }
+        }
     }
 
     /**
