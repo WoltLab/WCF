@@ -64,6 +64,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     const target = event.target;
                     if (target.nodeName !== "INPUT" && target.nodeName !== "TEXTAREA") {
                         const data = _dialogs.get(_activeDialog);
+                        // The current dialog might be unclosable, but another open, but closable,
+                        // dialog could have spawned this event listener.
+                        if (!data.closable) {
+                            return true;
+                        }
                         if (typeof data.onBeforeClose === "function") {
                             data.onBeforeClose(_activeDialog);
                             return false;
@@ -648,6 +653,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
         _close(event) {
             event.preventDefault();
             const data = _dialogs.get(_activeDialog);
+            // The current dialog might be unclosable, but another open, but closable,
+            // dialog could have spawned this event listener.
+            if (!data.closable) {
+                return true;
+            }
             if (typeof data.onBeforeClose === "function") {
                 data.onBeforeClose(_activeDialog);
                 return false;

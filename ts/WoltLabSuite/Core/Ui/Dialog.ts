@@ -82,6 +82,13 @@ const UiDialog = {
         const target = event.target as HTMLElement;
         if (target.nodeName !== "INPUT" && target.nodeName !== "TEXTAREA") {
           const data = _dialogs.get(_activeDialog!) as DialogData;
+
+          // The current dialog might be unclosable, but another open, but closable,
+          // dialog could have spawned this event listener.
+          if (!data.closable) {
+            return true;
+          }
+
           if (typeof data.onBeforeClose === "function") {
             data.onBeforeClose(_activeDialog!);
 
@@ -779,6 +786,13 @@ const UiDialog = {
     event.preventDefault();
 
     const data = _dialogs.get(_activeDialog!) as DialogData;
+
+    // The current dialog might be unclosable, but another open, but closable,
+    // dialog could have spawned this event listener.
+    if (!data.closable) {
+      return true;
+    }
+
     if (typeof data.onBeforeClose === "function") {
       data.onBeforeClose(_activeDialog!);
 
