@@ -380,35 +380,11 @@ class BBCodeParser extends SingletonFactory
      * @param string $tag
      * @param bool $closing
      * @return  bool
+     * @deprecated 5.5 This method is useless since 3.0, do not use it.
      */
     protected function isAllowed(array $openTags, $tag, $closing = false)
     {
-        foreach ($openTags as $openTag) {
-            if ($closing && $openTag == $tag) {
-                continue;
-            }
-            if ($this->bbcodes[$openTag]->allowedChildren == 'all') {
-                continue;
-            }
-            if ($this->bbcodes[$openTag]->allowedChildren == 'none') {
-                return false;
-            }
-
-            $arguments = \explode('^', $this->bbcodes[$openTag]->allowedChildren);
-            if (!empty($arguments[1])) {
-                $tags = \explode(',', $arguments[1]);
-            } else {
-                $tags = [];
-            }
-
-            if ($arguments[0] == 'none' && !\in_array($tag, $tags)) {
-                return false;
-            }
-            if ($arguments[0] == 'all' && \in_array($tag, $tags)) {
-                return false;
-            }
-        }
-
+        // This is a left-over from the pre WoltLab Suite 3.0 era.
         return true;
     }
 

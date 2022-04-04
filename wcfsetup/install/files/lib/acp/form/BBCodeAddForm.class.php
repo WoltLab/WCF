@@ -30,12 +30,6 @@ class BBCodeAddForm extends AbstractForm
     public $activeMenuItem = 'wcf.acp.menu.link.bbcode.add';
 
     /**
-     * allowed child bbcodes
-     * @var string
-     */
-    public $allowedChildren = 'all';
-
-    /**
      * list of attributes
      * @var object[]
      */
@@ -122,9 +116,6 @@ class BBCodeAddForm extends AbstractForm
     {
         parent::readFormParameters();
 
-        if (isset($_POST['allowedChildren'])) {
-            $this->allowedChildren = StringUtil::trim($_POST['allowedChildren']);
-        }
         if (isset($_POST['attributes'])) {
             $this->attributes = $_POST['attributes'];
         }
