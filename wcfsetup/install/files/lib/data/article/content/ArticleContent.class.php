@@ -12,6 +12,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -88,7 +89,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
             return \nl2br(StringUtil::encodeHTML($this->teaser), false);
         } else {
             $htmlOutputProcessor = new HtmlOutputProcessor();
-            $htmlOutputProcessor->setOutputType('text/plain');
+            $htmlOutputProcessor->setOutputType('text/simplified-html');
             $htmlOutputProcessor->enableUgc = false;
             $htmlOutputProcessor->process(
                 $this->content,
@@ -98,7 +99,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
                 $this->languageID
             );
 
-            return \nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
+            return MessageUtil::truncateFormattedMessage($htmlOutputProcessor->getHtml(), 500);
         }
     }
 
