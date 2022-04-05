@@ -211,7 +211,7 @@ class UserEditForm extends UserAddForm
         }
         if ($this->banned && !isset($_POST['banNeverExpires'])) {
             if (isset($_POST['banExpires'])) {
-                $this->banExpires = @\strtotime(StringUtil::trim($_POST['banExpires']));
+                $this->banExpires = @\intval(\strtotime(StringUtil::trim($_POST['banExpires'])));
             }
         }
 
