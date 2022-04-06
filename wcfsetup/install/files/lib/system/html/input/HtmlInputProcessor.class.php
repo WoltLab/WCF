@@ -281,7 +281,21 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      */
     protected function convertToHtml($html)
     {
-        $html = StringUtil::encodeHTML($html);
+        // Do not use StringUtil::encodeHTML() / htmlspecialchars() or similar:
+        //
+        // This conversion is just used to convert an existing BBCode representation into a
+        // valid HTML representation that preserves the semantics as closely as possible.
+        //
+        // For proper BBCode parsing we need to guarantee a specific representation of the
+        // characters that mark up a BBCode (e.g. `[`, `]`, `,`, `'`), however the general
+        // purpose HTML encoder's contract is just that the resulting string interpreted
+        // as HTML will result in a TextNode with the original string as its textContent.
+        //
+        // For this reason we just encode the 4 characters that form the core of the HTML
+        // syntax. This will be safe from a security perspective, as the resulting HTML
+        // will still be processed by HTML Purifier which will filter out anything that
+        // is questionable or malicious.
+        $html = \str_replace(['<', '>', '&', '"'], ['&lt;', '&gt;', '&amp;', '&quot;'], $html);
         $html = \preg_replace('/\[attach=(\d+)\]/', "[attach=\\1,'none','2']", $html);
         $parts = \preg_split('~(\n+)~', $html, -1, \PREG_SPLIT_DELIM_CAPTURE);
 
