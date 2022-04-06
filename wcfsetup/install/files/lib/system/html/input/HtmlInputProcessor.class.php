@@ -289,7 +289,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
         // For proper BBCode parsing we need to guarantee a specific representation of the
         // characters that mark up a BBCode (e.g. `[`, `]`, `,`, `'`), however the general
         // purpose HTML encoder's contract is just that the resulting string interpreted
-        //  asHTML will result in a TextNode with the original string as its textContent.
+        // as HTML will result in a TextNode with the original string as its textContent.
         //
         // For this reason we just encode the 4 characters that form the core of the HTML
         // syntax. This will be safe from a security perspective, as the resulting HTML
