@@ -230,6 +230,18 @@ class MysqlSearchEngine extends AbstractSearchEngine
      * Word: |Apfel|
      * Word: -|Banane|
      *
+     * Query: `Apfel-Banane`
+     * Word: |Apfel|
+     * Word: |Banane|
+     *
+     * Query: `Apfel-+-Banane`
+     * Word: |Apfel|
+     * Word: |Banane|
+     *
+     * Query: `B*-tree`
+     * Word: |B|*
+     * Word: |tree|
+     *
      * Query: ` Apfel `
      * Word: |Apfel|
      *
@@ -437,15 +449,38 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     $i++;
                     continue;
                 } else {
-                    $state = 'finish';
-                    // No increment, we must yield the word and then continue parsing at
-                    // the current position to prevent skipping characters.
+                    $state = 'prefixWithoutSpace';
+                    // No increment, we must check whether the current character is a prefix
+                    // that needs to be dropped.
                     continue;
                 }
             } elseif ($state === 'atSign') {
                 if (\preg_match('/[0-9]/', $char)) {
                     $i++;
                     continue;
+                } else {
+                    $state = 'prefixWithoutSpace';
+                    // No increment, we must check whether the current character is a prefix
+                    // that needs to be dropped.
+                    continue;
+                }
+            } elseif ($state === 'prefixWithoutSpace') {
+                if (
+                    \in_array($char, [
+                        '-',
+                        '+',
+                        '~',
+                        '<',
+                        '>',
+                    ])
+                ) {
+                    // Ignore valid prefixes after a word is fully parsed: The word
+                    // parsing was aborted, because the prefix character was encountered.
+                    // Thus an input such as `compound-word` would see the hyphen as a
+                    // exclusion prefix of `word` instead of a hyphen. By ignoring such
+                    // prefixes (unless they are clearly delimited with a space) the parsed
+                    // result will better match user expectations.
+                    $i++;
                 } else {
                     $state = 'finish';
                     // No increment, we must yield the word and then continue parsing at
