@@ -5,6 +5,7 @@ namespace wcf\data\blacklist\entry;
 use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\util\IpAddress;
 use wcf\util\UserUtil;
 
 /**
@@ -43,26 +44,15 @@ class BlacklistEntry extends DatabaseObject
             $conditions->add('(type = ? AND hash = ?)', ['email', self::getHash($email)]);
         }
         if (BLACKLIST_SFS_IP_ADDRESS) {
-            $ipAddress = UserUtil::convertIPv6To4($ipAddress);
             if ($ipAddress) {
-                if (\filter_var($ipAddress, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4) !== false) {
-                    $conditions->add('(type = ? AND hash = ?)', ['ipv4', self::getHash($ipAddress)]);
+                $ipAddress = new IpAddress($ipAddress);
+                if (($ipv4 = $ipAddress->asV4()) !== null) {
+                    $conditions->add('(type = ? AND hash = ?)', ['ipv4', self::getHash($ipv4->getIpAddress())]);
                 } else {
-                    $parts = \explode(':', $ipAddress);
-
                     // StopForumSpam uses the first two to four segments of an IPv6 address.
-                    $ipv6TwoParts = self::getHash("{$parts[0]}:{$parts[1]}::");
-                    $ipv6ThreeParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
-
-                    // If the enviorment is locally avaiable via IPv6, the ip address can be `::1`. Therefore
-                    // we must check, if the third part is set. If not, we use the IPv6 with three parts
-                    // again, to simplify the code.
-                    // See: https://github.com/WoltLab/WCF/issues/4689
-                    if (isset($parts[3])) {
-                        $ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}:{$parts[3]}::");
-                    } else {
-                        $ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
-                    }
+                    $ipv6TwoParts = $ipAddress->toMasked(32, 32)->getIpAddress();
+                    $ipv6ThreeParts = $ipAddress->toMasked(32, 48)->getIpAddress();
+                    $ipv6FourParts = $ipAddress->toMasked(32, 64)->getIpAddress();
 
                     $conditions->add(
                         '(type = ? AND hash IN (?))',
