@@ -196,6 +196,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         if ($this instanceof IUniqueNameXMLPackageInstallationPlugin) {
             $names = \array_map(function ($data) {
                 \assert($this instanceof IUniqueNameXMLPackageInstallationPlugin);
+
                 return $this->getNameByData($data);
             }, $pipData);
 
