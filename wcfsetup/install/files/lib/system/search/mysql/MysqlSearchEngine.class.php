@@ -196,7 +196,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                         $word[0] === '"'
                         || \strlen($word) >= $this->getMinTokenSize()
                     )
-                 ) {
+                ) {
                     $prefix = '+';
                 }
             }
