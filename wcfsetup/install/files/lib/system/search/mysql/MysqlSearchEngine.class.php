@@ -199,9 +199,16 @@ class MysqlSearchEngine extends AbstractSearchEngine
 
             if (!$prefix) {
                 // Add a '+' prefix if no prefix is given, and
+                // the word is not a stopword, and
                 // - the word is longer than the min token size, or
                 // - the word is quoted.
-                if ($word[0] === '"' || \strlen($word) >= $this->getMinTokenSize()) {
+                if (
+                    !\in_array($word, $this->getStopWords())
+                    && (
+                        $word[0] === '"'
+                        || \strlen($word) >= $this->getMinTokenSize()
+                    )
+                ) {
                     $prefix = '+';
                 }
             }
@@ -568,5 +575,50 @@ class MysqlSearchEngine extends AbstractSearchEngine
         }
 
         return $this->minTokenSize;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getStopWords(): array
+    {
+        return [
+            'a',
+            'about',
+            'an',
+            'are',
+            'as',
+            'at',
+            'be',
+            'by',
+            'com',
+            'de',
+            'en',
+            'for',
+            'from',
+            'how',
+            'i',
+            'in',
+            'is',
+            'it',
+            'la',
+            'of',
+            'on',
+            'or',
+            'that',
+            'the',
+            'this',
+            'to',
+            'was',
+            'what',
+            'when',
+            'where',
+            'who',
+            'will',
+            'with',
+            'und',
+            'the',
+            'www',
+        ];
     }
 }
