@@ -152,11 +152,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     $boxData['visible'],
                 ]);
             }
-        }
 
-        // update box conditions
-        foreach ($this->parameters['boxToPage'] as $boxData) {
-            $this->createPageConditionForBox($boxData['boxID'], [$page]);
+            // update box conditions
+            foreach ($this->parameters['boxToPage'] as $boxData) {
+                $this->createPageConditionForBox($boxData['boxID'], [$page]);
+            }
         }
 
         // save template
@@ -297,11 +297,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                     }
                 }
             }
-        }
 
-        // update box conditions
-        foreach ($this->parameters['boxToPage'] as $boxData) {
-            $this->createPageConditionForBox($boxData['boxID'], $this->getObjects());
+            // update box conditions
+            foreach ($this->parameters['boxToPage'] as $boxData) {
+                $this->createPageConditionForBox($boxData['boxID'], $this->getObjects());
+            }
         }
     }
 
