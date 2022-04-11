@@ -11,8 +11,11 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class CharDatabaseTableColumn extends AbstractDatabaseTableColumn implements ILengthDatabaseTableColumn
+class CharDatabaseTableColumn extends AbstractDatabaseTableColumn implements
+    IDefaultValueDatabaseTableColumn,
+    ILengthDatabaseTableColumn
 {
+    use TDefaultValueDatabaseTableColumn;
     use TLengthDatabaseTableColumn;
 
     /**

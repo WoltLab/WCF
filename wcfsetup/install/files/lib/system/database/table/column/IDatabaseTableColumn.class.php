@@ -14,14 +14,6 @@ namespace wcf\system\database\table\column;
 interface IDatabaseTableColumn
 {
     /**
-     * Sets the default value of the column and returns the column.
-     *
-     * @param mixed $defaultValue
-     * @return  $this
-     */
-    public function defaultValue($defaultValue);
-
-    /**
      * Marks the column to be dropped and returns the column.
      *
      * @return  $this
@@ -34,13 +26,6 @@ interface IDatabaseTableColumn
      * @return  array
      */
     public function getData();
-
-    /**
-     * Returns the default value of the column.
-     *
-     * @return  mixed
-     */
-    public function getDefaultValue();
 
     /**
      * Returns the name of the column.

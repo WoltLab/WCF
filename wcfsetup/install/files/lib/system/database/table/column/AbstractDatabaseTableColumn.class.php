@@ -8,20 +8,15 @@ use wcf\system\database\table\TDroppableDatabaseComponent;
  * Abstract implementation of a database table column.
  *
  * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
+abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn, IDefaultValueDatabaseTableColumn
 {
     use TDroppableDatabaseComponent;
-
-    /**
-     * default value of the database table column
-     * @var mixed
-     */
-    protected $defaultValue;
+    use TDefaultValueDatabaseTableColumn;
 
     /**
      * name of the database table column
@@ -50,29 +45,24 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    public function defaultValue($defaultValue)
-    {
-        $this->validateDefaultValue($defaultValue);
-
-        $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getData()
     {
         $data = [
-            'default' => $this->getDefaultValue() !== null ? "'" . \str_replace(
-                ["'", '\\'],
-                ["''", '\\\\'],
-                $this->getDefaultValue()
-            ) . "'" : null,
             'notNull' => $this->isNotNull() ? 1 : 0,
             'type' => $this->getType(),
         ];
+
+        if ($this instanceof IDefaultValueDatabaseTableColumn) {
+            if ($this->getDefaultValue() !== null) {
+                $data['default'] = "'" . \str_replace(
+                    ["'", '\\'],
+                    ["''", '\\\\'],
+                    $this->getDefaultValue()
+                ) . "'";
+            } else {
+                $data['default'] = null;
+            }
+        }
 
         if ($this instanceof IAutoIncrementDatabaseTableColumn) {
             $data['autoIncrement'] = $this->isAutoIncremented() ? 1 : 0;
@@ -101,14 +91,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         }
 
         return $data;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getDefaultValue()
-    {
-        return $this->defaultValue;
     }
 
     /**
@@ -194,17 +176,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     }
 
     /**
-     * Checks if the given default value is valid.
-     *
-     * @param mixed $defaultValue validated default value
-     * @throws  \InvalidArgumentException   if given default value is invalid
-     */
-    protected function validateDefaultValue($defaultValue)
-    {
-        // does nothing
-    }
-
-    /**
      * @inheritDoc
      * @return  static
      */
@@ -219,8 +190,11 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     public static function createFromData($name, array $data)
     {
         $column = static::create($name)
-            ->defaultValue($data['default'])
             ->notNull($data['notNull']);
+
+        if ($column instanceof IDefaultValueDatabaseTableColumn) {
+            $column->defaultValue($data['default']);
+        }
 
         if ($column instanceof IAutoIncrementDatabaseTableColumn) {
             $column->autoIncrement($data['autoIncrement'] ?: null);
