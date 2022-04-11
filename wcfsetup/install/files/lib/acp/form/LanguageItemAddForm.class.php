@@ -231,7 +231,8 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
     /**
      * @inheritDoc
      */
-    public function saved() {
+    public function saved()
+    {
         parent::saved();
 
         LanguageFactory::getInstance()->deleteLanguageCache();
