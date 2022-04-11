@@ -11,8 +11,11 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class EnumDatabaseTableColumn extends AbstractDatabaseTableColumn implements IEnumDatabaseTableColumn
+class EnumDatabaseTableColumn extends AbstractDatabaseTableColumn implements
+    IDefaultValueDatabaseTableColumn,
+    IEnumDatabaseTableColumn
 {
+    use TDefaultValueDatabaseTableColumn;
     use TEnumDatabaseTableColumn;
 
     /**

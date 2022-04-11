@@ -13,9 +13,11 @@ namespace wcf\system\database\table\column;
  */
 abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColumn implements
     IAutoIncrementDatabaseTableColumn,
+    IDefaultValueDatabaseTableColumn,
     ILengthDatabaseTableColumn
 {
     use TAutoIncrementDatabaseTableColumn;
+    use TDefaultValueDatabaseTableColumn;
     use TLengthDatabaseTableColumn;
 
     /**

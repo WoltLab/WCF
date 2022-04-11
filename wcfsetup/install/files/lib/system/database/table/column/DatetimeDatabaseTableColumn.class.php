@@ -11,8 +11,10 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class DatetimeDatabaseTableColumn extends AbstractDatabaseTableColumn
+class DatetimeDatabaseTableColumn extends AbstractDatabaseTableColumn implements IDefaultValueDatabaseTableColumn
 {
+    use TDefaultValueDatabaseTableColumn;
+
     /**
      * @inheritDoc
      */

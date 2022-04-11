@@ -11,8 +11,11 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implements ILengthDatabaseTableColumn
+class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implements
+    IDefaultValueDatabaseTableColumn,
+    ILengthDatabaseTableColumn
 {
+    use TDefaultValueDatabaseTableColumn;
     use TLengthDatabaseTableColumn {
         TLengthDatabaseTableColumn::getLength as traitGetLength;
     }
