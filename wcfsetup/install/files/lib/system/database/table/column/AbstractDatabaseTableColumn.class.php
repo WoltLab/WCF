@@ -48,14 +48,21 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn, IDef
     public function getData()
     {
         $data = [
-            'default' => $this->getDefaultValue() !== null ? "'" . \str_replace(
-                ["'", '\\'],
-                ["''", '\\\\'],
-                $this->getDefaultValue()
-            ) . "'" : null,
             'notNull' => $this->isNotNull() ? 1 : 0,
             'type' => $this->getType(),
         ];
+
+        if ($this instanceof IDefaultValueDatabaseTableColumn) {
+            if ($this->getDefaultValue() !== null) {
+                $data['default'] = "'" . \str_replace(
+                    ["'", '\\'],
+                    ["''", '\\\\'],
+                    $this->getDefaultValue()
+                ) . "'";
+            } else {
+                $data['default'] = null;
+            }
+        }
 
         if ($this instanceof IAutoIncrementDatabaseTableColumn) {
             $data['autoIncrement'] = $this->isAutoIncremented() ? 1 : 0;
@@ -183,8 +190,11 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn, IDef
     public static function createFromData($name, array $data)
     {
         $column = static::create($name)
-            ->defaultValue($data['default'])
             ->notNull($data['notNull']);
+
+        if ($column instanceof IDefaultValueDatabaseTableColumn) {
+            $column->defaultValue($data['default']);
+        }
 
         if ($column instanceof IAutoIncrementDatabaseTableColumn) {
             $column->autoIncrement($data['autoIncrement'] ?: null);
