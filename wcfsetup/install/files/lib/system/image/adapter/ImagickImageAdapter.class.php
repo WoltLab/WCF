@@ -418,6 +418,12 @@ class ImagickImageAdapter implements IImageAdapter, IWebpImageAdapter
             throw new SystemException("Image '" . $file . "' is not readable or does not exist.", 0, '', $e);
         }
 
+        // Explicitly enable transparency if the target image has transparent pixels,
+        // otherwise the background color is replaced by #ffffff.
+        if ($this->imagick->getImageAlphaChannel()) {
+            $this->imagick->setImageBackgroundColor('transparent');
+        }
+
         $overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
 
         if ($this->imagick->getImageFormat() == 'GIF') {
