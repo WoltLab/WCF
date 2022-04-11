@@ -10,6 +10,7 @@ namespace wcf\system\database\table\column;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since 5.4
+ * @deprecated 5.5 This is obsolete once AbstractDatabaseTableColumn no longer implements IDefaultValueDatabaseTableColumn.
  */
 trait TUnsupportedDefaultValue
 {
