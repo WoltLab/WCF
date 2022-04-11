@@ -227,4 +227,13 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                 ->values(['selection'])
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function saved() {
+        parent::saved();
+
+        LanguageFactory::getInstance()->deleteLanguageCache();
+    }
 }
