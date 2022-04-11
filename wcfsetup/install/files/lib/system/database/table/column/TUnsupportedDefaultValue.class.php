@@ -15,6 +15,10 @@ trait TUnsupportedDefaultValue
 {
     public function defaultValue($defaultValue)
     {
-        throw new \BadMethodCallException("Default values for BLOB or TEXT columns are unsupported.");
+        if ($defaultValue !== null) {
+            throw new \BadMethodCallException("Default values for BLOB or TEXT columns are unsupported.");
+        }
+
+        return $this;
     }
 }
