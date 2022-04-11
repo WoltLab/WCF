@@ -8,20 +8,15 @@ use wcf\system\database\table\TDroppableDatabaseComponent;
  * Abstract implementation of a database table column.
  *
  * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
+abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn, IDefaultValueDatabaseTableColumn
 {
     use TDroppableDatabaseComponent;
-
-    /**
-     * default value of the database table column
-     * @var mixed
-     */
-    protected $defaultValue;
+    use TDefaultValueDatabaseTableColumn;
 
     /**
      * name of the database table column
@@ -46,18 +41,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      * @var string
      */
     protected $type;
-
-    /**
-     * @inheritDoc
-     */
-    public function defaultValue($defaultValue)
-    {
-        $this->validateDefaultValue($defaultValue);
-
-        $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
 
     /**
      * @inheritDoc
@@ -101,14 +84,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         }
 
         return $data;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getDefaultValue()
-    {
-        return $this->defaultValue;
     }
 
     /**
@@ -191,17 +166,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         $this->newName = $newName;
 
         return $this;
-    }
-
-    /**
-     * Checks if the given default value is valid.
-     *
-     * @param mixed $defaultValue validated default value
-     * @throws  \InvalidArgumentException   if given default value is invalid
-     */
-    protected function validateDefaultValue($defaultValue)
-    {
-        // does nothing
     }
 
     /**
