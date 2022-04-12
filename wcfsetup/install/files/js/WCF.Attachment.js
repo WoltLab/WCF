@@ -87,7 +87,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonAttachmentInsertThumbnail').click($.proxy(this._insert, this));
 		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
 		
-		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment', this._onDelete.bind(this));
+		WCF.System.Event.addListener("WoltLabSuite/Core/Ui/Object/Action", "delete", (data) => this._onDelete(data));
 		
 		this._makeSortable();
 		
@@ -771,17 +771,23 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	
 	/**
 	 * @param {Object} data
-	 * @param {jQuery} data.button
-	 * @param {jQuery} data.container
+	 * @param {HTMLElement} data.containerElement
+	 * @param {unknown} data.data
+	 * @param {HTMLElement} data.objectElement
 	 */
 	_onDelete: function (data) {
-		var objectId = elData(data.button[0], 'object-id');
-		var attachment = elBySel('.formAttachmentListItem[data-object-id="' + objectId + '"]', this._fileListSelector[0]);
+		if (!data.objectElement.classList.contains("formAttachmentListItem")) {
+			return;
+		}
+
+		// Remove any copies of attachments on delete.
+		const objectId = data.objectElement.dataset.objectId;
+		const attachment = this._fileListSelector[0].querySelector(`.formAttachmentListItem[data-object-id="${objectId}"]`);
 		if (attachment !== null) {
-			elRemove(attachment);
+			attachment.remove();
 		}
 		
-		this._removeLimitError(data);
+		this._removeLimitError({});
 	},
 	
 	/**
