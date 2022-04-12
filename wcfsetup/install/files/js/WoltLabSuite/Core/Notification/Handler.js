@@ -11,7 +11,7 @@
 define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "../StringUtil"], function (require, exports, tslib_1, Ajax, Core, EventHandler, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.enableNotifications = exports.setup = void 0;
+    exports.poll = exports.enableNotifications = exports.setup = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -87,7 +87,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
          */
         prepareNextRequest() {
             this.resetTimer();
-            this.requestTimer = window.setTimeout(this.dispatchRequest.bind(this), this.getNextDelay() * 60000);
+            this.requestTimer = window.setTimeout(() => this.dispatchRequest(), this.getNextDelay() * 60000);
         }
         /**
          * Requests new data from the server.
@@ -123,8 +123,8 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             }
             if (!abort) {
                 EventHandler.fire("com.woltlab.wcf.notification", "onStorage", {
-                    pollData: pollData,
-                    keepAliveData: keepAliveData,
+                    pollData,
+                    keepAliveData,
                 });
             }
         }
@@ -208,4 +208,8 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
         notificationHandler.enableNotifications();
     }
     exports.enableNotifications = enableNotifications;
+    function poll() {
+        notificationHandler === null || notificationHandler === void 0 ? void 0 : notificationHandler.dispatchRequest();
+    }
+    exports.poll = poll;
 });
