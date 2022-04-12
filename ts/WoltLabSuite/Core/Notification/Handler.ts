@@ -126,13 +126,13 @@ class NotificationHandler {
   private prepareNextRequest(): void {
     this.resetTimer();
 
-    this.requestTimer = window.setTimeout(this.dispatchRequest.bind(this), this.getNextDelay() * 60_000);
+    this.requestTimer = window.setTimeout(() => this.dispatchRequest(), this.getNextDelay() * 60_000);
   }
 
   /**
    * Requests new data from the server.
    */
-  private dispatchRequest(): void {
+  dispatchRequest(): void {
     const parameters: ArbitraryObject = {};
 
     EventHandler.fire("com.woltlab.wcf.notification", "beforePoll", parameters);
@@ -154,23 +154,23 @@ class NotificationHandler {
     // abort and re-schedule periodic request
     this.prepareNextRequest();
 
-    let pollData;
-    let keepAliveData;
+    let pollData: unknown;
+    let keepAliveData: unknown;
     let abort = false;
     try {
       pollData = window.localStorage.getItem(Core.getStoragePrefix() + "notification");
       keepAliveData = window.localStorage.getItem(Core.getStoragePrefix() + "keepAliveData");
 
-      pollData = JSON.parse(pollData);
-      keepAliveData = JSON.parse(keepAliveData);
+      pollData = JSON.parse(pollData as string);
+      keepAliveData = JSON.parse(keepAliveData as string);
     } catch (e) {
       abort = true;
     }
 
     if (!abort) {
       EventHandler.fire("com.woltlab.wcf.notification", "onStorage", {
-        pollData: pollData,
-        keepAliveData: keepAliveData,
+        pollData,
+        keepAliveData,
       });
     }
   }
@@ -267,4 +267,8 @@ export function setup(options: NotificationHandlerOptions): void {
 
 export function enableNotifications(): void {
   notificationHandler!.enableNotifications();
+}
+
+export function poll(): void {
+  notificationHandler?.dispatchRequest();
 }
