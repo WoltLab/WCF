@@ -12,10 +12,8 @@ use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
 use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
-use wcf\system\style\StyleHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
@@ -88,37 +86,6 @@ class RescueModeForm extends AbstractCaptchaForm
     public function readParameters()
     {
         parent::readParameters();
-
-        // request style generation to prevent issues when using the proxy parameter
-        StyleHandler::getInstance()->getStylesheet(true);
-
-        if (isset($_GET['proxy'])) {
-            switch ($_GET['proxy']) {
-                case 'css':
-                    $file = WCF_DIR . 'acp/style/style.css';
-
-                    \header('Content-Type: text/css; charset=UTF-8');
-                    break;
-
-                case 'logo':
-                    $file = WCF_DIR . 'images/default-logo.png';
-
-                    \header('Content-Type: image/png');
-                    break;
-
-                default:
-                    throw new IllegalLinkException();
-                    break;
-            }
-
-            \header('Expires: ' . \gmdate('D, d M Y H:i:s', \time() + 3600) . ' GMT');
-            \header('Last-Modified: Mon, 26 Jul 1997 05:00:00 GMT');
-            \header('Cache-Control: public, max-age=3600');
-
-            \readfile($file);
-
-            exit;
-        }
 
         // check authentication failures
         if (ENABLE_USER_AUTHENTICATION_FAILURE) {
@@ -358,6 +325,16 @@ class RescueModeForm extends AbstractCaptchaForm
             'pageURL' => WCFACP::getRescueModePageURL() . 'acp/index.php?rescue-mode/',
             'password' => $this->password,
             'username' => $this->username,
+            'assets' => [
+                'woltlabSuite.png' => \sprintf(
+                    'data:image/png;base64,%s',
+                    \base64_encode(\file_get_contents(WCF_DIR . 'acp/images/woltlabSuite.png'))
+                ),
+                'WCFSetup.css' => \sprintf(
+                    'data:text/css;base64,%s',
+                    \base64_encode(\file_get_contents(WCF_DIR . 'acp/style/setup/WCFSetup.css'))
+                ),
+            ],
         ]);
     }
 }

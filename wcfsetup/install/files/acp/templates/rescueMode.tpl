@@ -5,7 +5,7 @@
 	<meta name="robots" content="noindex">
 	<title>{lang}wcf.acp.rescueMode{/lang} - {lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|phrase}{/if}</title>
 	
-	<link rel="stylesheet" href="{$pageURL}&amp;proxy=css">
+	<link rel="stylesheet" href="{$assets['WCFSetup.css']}">
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
@@ -17,7 +17,7 @@
 			<div class="layoutBoundary">
 				<div id="pageHeaderLogo" class="pageHeaderLogo">
 					<a href="{$pageURL}">
-						<img src="{$pageURL}&amp;proxy=logo" alt="" class="pageHeaderLogoLarge" style="width: 281px;height: 40px;display: inline !important;">
+						<img src="{$assets['woltlabSuite.png']}" alt="" class="pageHeaderLogoLarge" style="width: 281px;height: 40px;display: inline !important;">
 					</a>
 				</div>
 			</div>
