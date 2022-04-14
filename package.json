@@ -1,6 +1,9 @@
 {
   "name": "@woltlab/wcf",
   "version": "5.4.0",
+  "scripts": {
+    "prepare": "echo 'this is a yarn workaround for the files property (#4711)'"
+  },
   "files": [
     "ts/**/*",
     "global.d.ts"
