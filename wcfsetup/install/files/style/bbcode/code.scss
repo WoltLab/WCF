@@ -145,6 +145,11 @@
 				> span {
 					white-space: pre-wrap;
 					word-break: break-all;
+
+					/* Prevent empty lines from collapsing. */
+					&:empty {
+						display: inline-block;
+					}
 				}
 
 				&:target {
