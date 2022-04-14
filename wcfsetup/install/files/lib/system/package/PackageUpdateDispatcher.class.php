@@ -470,7 +470,7 @@ class PackageUpdateDispatcher extends SingletonFactory
                             $version = $excludedPackage->getAttribute('version');
 
                             $packageInfo['versions'][$versionNo]['excludedPackages'][$exclusion] = [
-                                'version' => $version
+                                'version' => $version,
                             ];
                         }
                         break;
