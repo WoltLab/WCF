@@ -54,11 +54,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             },
         })
             .dispatch());
-        if ('queueID' in response) {
+        if ("queueID" in response) {
             const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
             installation.prepareInstallation();
         }
-        else if ('template' in response) {
+        else if ("template" in response) {
             Dialog_1.default.open({
                 _dialogSetup() {
                     return {
@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             }, response.template);
         }
         else {
-            throw new Error('Unreachable');
+            throw new Error("Unreachable");
         }
     }
     function setup() {
