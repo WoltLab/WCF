@@ -25,13 +25,9 @@ type InstallationCode = {
 type Response =
   | {
       queueID: number;
-      returnValues?: never;
     }
   | {
-      queueID?: never;
-      returnValues: {
-        template: string;
-      };
+      template: string;
     };
 
 function detectCode(): void {
@@ -79,10 +75,10 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
     })
     .dispatch()) as Response;
 
-  if (response.queueID) {
+  if ('queueID' in response) {
     const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
     installation.prepareInstallation();
-  } else if (response.returnValues) {
+  } else if ('template' in response) {
     UiDialog.open(
       {
         _dialogSetup() {
@@ -95,8 +91,10 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
           };
         },
       },
-      response.returnValues.template,
+      response.template,
     );
+  } else {
+    throw new Error('Unreachable');
   }
 }
 
