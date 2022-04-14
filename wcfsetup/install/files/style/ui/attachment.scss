@@ -186,6 +186,7 @@
 .attachmentTinyThumbnail {
 	max-height: 64px;
 	max-width: 64px;
+	object-fit: contain;
 }
 
 /* embedded images */
