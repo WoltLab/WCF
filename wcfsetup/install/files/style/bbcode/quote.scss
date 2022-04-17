@@ -5,7 +5,7 @@ woltlab-quote,
 	border-radius: 2px;
 	clear: both;
 	display: block;
-	font-style: italic;
+	font-style: normal;
 	margin: 1em 0;
 	overflow: hidden;
 
@@ -20,11 +20,6 @@ woltlab-quote,
 		.quoteBoxIcon {
 			display: none;
 		}
-	}
-
-	kbd,
-	.codeBoxCode {
-		font-style: normal;
 	}
 
 	@include screen-md-up {
