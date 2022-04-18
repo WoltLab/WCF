@@ -94,16 +94,16 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             $userTrophy->userID
         );
 
-		if ($userTrophy->userID != WCF::getUser()->userID) {
-			UserNotificationHandler::getInstance()->fireEvent(
-				'received',
-				'com.woltlab.wcf.userTrophy.notification',
-				new UserTrophyNotificationObject($userTrophy),
-				[
-					$userTrophy->userID,
-				]
-			);
-		}
+        if ($userTrophy->userID != WCF::getUser()->userID) {
+            UserNotificationHandler::getInstance()->fireEvent(
+                'received',
+                'com.woltlab.wcf.userTrophy.notification',
+                new UserTrophyNotificationObject($userTrophy),
+                [
+                    $userTrophy->userID,
+                ]
+            );
+        }
 
         return $userTrophy;
     }
