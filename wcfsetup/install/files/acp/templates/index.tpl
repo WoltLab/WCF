@@ -16,7 +16,9 @@
 {/foreach}
 
 {if $systemIdMismatch}
-	<p class="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</p>
+	{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
+		<p class="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</p>
+	{/if}
 {/if}
 
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
