@@ -71,11 +71,11 @@ class SearchAction extends AbstractDatabaseObjectAction
             }
         }
 
-        if (\in_array($this->parameters['sortField'], ['subject', 'time', 'username', 'relevance'])) {
+        if (!\in_array($this->parameters['sortField'], ['subject', 'time', 'username', 'relevance'])) {
             $this->parameters['sortField'] = SEARCH_DEFAULT_SORT_FIELD;
         }
 
-        if (\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
+        if (!\in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
             $this->parameters['sortOrder'] = SEARCH_DEFAULT_SORT_ORDER;
         }
 
