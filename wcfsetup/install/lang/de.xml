@@ -4849,12 +4849,12 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.menu.community.notification"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.user.menu.community.following"><![CDATA[Benutzer, denen ich folge]]></item>
 		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blockierte Benutzer]]></item>
-		<item name="wcf.user.menu.profile"><![CDATA[Benutzerkonto]]></item>
+		<item name="wcf.user.menu.profile"><![CDATA[Benutzerkonto verwalten]]></item>
 		<item name="wcf.user.menu.profile.accountManagement"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.user.menu.profile.security"><![CDATA[Sicherheit]]></item>
 		<item name="wcf.user.menu.profile.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.menu.profile.signature"><![CDATA[Signatur]]></item>
-		<item name="wcf.user.menu.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.user.menu.settings"><![CDATA[Einstellungen und Privatsphäre]]></item>
 		<item name="wcf.user.menu.settings.notification"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.user.menu.settings.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
 	</category>

@@ -27,7 +27,7 @@
 						<div class="userMenuTitle">{lang}wcf.user.controlPanel{/lang}</div>
 					</div>
 					<div class="userMenuContent">
-						<div class="userMenuItem">
+						<div class="userMenuItem{if !MODULE_USER_RANK} userMenuItemSingleLine{/if}">
 							<div class="userMenuItemImage">
 								{@$__wcf->getUserProfileHandler()->getUserProfile()->getAvatar()->getImageTag(48)}
 							</div>
@@ -35,24 +35,30 @@
 								{* This is the unformatted username, custom styles might not work nicely here and
 								   the consistent styling is used to provide visual anchors to identify links. *}
 								<a href="{$__wcf->user->getLink()}" class="userMenuItemLink">{$__wcf->user->username}</a>
-								
-								{if MODULE_USER_RANK}
-									{if $__wcf->getUserProfileHandler()->getUserTitle()}
-										<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
-									{/if}
-									{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
-										<span class="userRankImage">{@$__wcf->getUserProfileHandler()->getRank()->getImage()}</span>
-									{/if}
+							</div>
+							{if MODULE_USER_RANK}
+							<div class="userMenuItemMeta">
+								{if $__wcf->getUserProfileHandler()->getUserTitle()}
+									<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
+								{/if}
+								{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
+									<span class="userRankImage">{@$__wcf->getUserProfileHandler()->getRank()->getImage()}</span>
 								{/if}
 							</div>
-							<div class="userMenuItemMeta">
-								{lang}wcf.user.myProfile{/lang}
-							</div>
+							{/if}
 						</div>
 					</div>
 					<div class="userMenuContentDivider"></div>
-					{if $__wcf->session->getPermission('admin.general.canUseAcp')}
 					<div class="userMenuContent">
+						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
+							<div class="userMenuItemImage">
+								<span class="icon icon32 fa-user-circle-o"></span>
+							</div>
+							<div class="userMenuItemContent">
+								<a href="{$__wcf->user->getLink()}" class="userMenuItemLink">{lang}wcf.user.myProfile{/lang}</a>
+							</div>
+						</div>
+						{if $__wcf->session->getPermission('admin.general.canUseAcp')}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
 								<span class="icon icon32 fa-wrench"></span>
@@ -61,12 +67,12 @@
 								<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
 							</div>
 						</div>
+						{/if}
 					</div>
 					<div class="userMenuContentDivider"></div>
-					{/if}
 					<div class="userMenuContent userMenuContentScrollable">
 						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
-						<div class="userMenuItem userMenuItemNarrow" data-category="{$menuItem[category]->menuItem}">
+						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine" data-category="{$menuItem[category]->menuItem}">
 							<div class="userMenuItemImage">
 								<span class="icon icon32 {$menuItem[category]->getIconClassName()}"></span>
 							</div>
@@ -74,9 +80,6 @@
 								<a href="{$menuItem[link]}" class="userMenuItemLink">
 									{$menuItem[category]->getTitle()}
 								</a>
-							</div>
-							<div class="userMenuItemMeta">
-								{implode from=$menuItem[items] item=title glue=' · '}{$title}{/implode}
 							</div>
 						</div>
 						{/foreach}
