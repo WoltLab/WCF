@@ -120,6 +120,9 @@ body:not(.touch) .userMenuButton {
 		"image content"
 		"image meta";
 	grid-template-columns: 60px auto;
+	grid-template-rows: minmax(0, min-content);
+	/* min-height = 48px icon + 2*10px padding */
+	min-height: 68px;
 	padding: 10px 30px 10px 10px;
 	position: relative;
 	transition: background-color 0.12s linear;
@@ -138,6 +141,8 @@ body:not(.touch) .userMenuButton {
 
 	&.userMenuItemSingleLine {
 		grid-template-areas: "image content";
+		grid-template-rows: auto;
+		min-height: 0;
 
 		.userMenuItemContent {
 			align-self: center;
@@ -178,6 +183,8 @@ body:not(.touch) .userMenuItem:hover {
 
 .userMenuItemImage {
 	grid-area: image;
+	/* Prevent the image from being part of the `grid-template-rows` calculation. */
+	position: absolute;
 }
 
 .userMenuItemContent {
@@ -195,6 +202,7 @@ body:not(.touch) .userMenuItem:hover {
 .userMenuItemUsernames,
 .userMenuItemMeta {
 	color: var(--color-dimmed);
+	margin-top: 2px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
