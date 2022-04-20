@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.5.0 Alpha 1</version>
-		<date>2022-04-14</date>
+		<version>5.5.0 Alpha 2</version>
+		<date>2022-04-20</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -108,5 +108,13 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!-- Migrate the STARTTLS option last. This requires external connections and thus is the
 			step that most likely might fail. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_starttls.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="5.5.0 Alpha 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language"/>
 	</instructions>
 </package>
