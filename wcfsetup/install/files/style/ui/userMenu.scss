@@ -258,6 +258,7 @@ body:not(.touch) .userMenuItemMarkAsRead {
 .userMenuFooter {
 	border-top: 1px solid var(--border-color);
 	padding: 10px;
+	position: relative;
 	text-align: center;
 }
 
@@ -267,6 +268,15 @@ body:not(.touch) .userMenuItemMarkAsRead {
 	&:hover {
 		color: inherit;
 		text-decoration: underline;
+	}
+
+	&::before {
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 }
 
