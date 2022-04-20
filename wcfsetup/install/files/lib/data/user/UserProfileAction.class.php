@@ -577,6 +577,7 @@ class UserProfileAction extends UserAction implements IPopoverAction
      *
      * @throws UserInputException If none or more than one user is given.
      * @throws \InvalidArgumentException If the given file is not an image or is incorrectly sized.
+     * @since 5.5
      */
     public function setAvatar(): array
     {
