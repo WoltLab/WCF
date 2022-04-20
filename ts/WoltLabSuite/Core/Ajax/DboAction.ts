@@ -19,7 +19,6 @@ import {
 } from "./Error";
 import * as AjaxStatus from "./Status";
 import * as Core from "../Core";
-import DomChangeListener from "../Dom/Change/Listener";
 
 type Payload = Record<string, unknown>;
 type ResponseData = {
@@ -155,17 +154,6 @@ export class DboAction {
       if (showLoadingIndicator) {
         AjaxStatus.hide();
       }
-
-      DomChangeListener.trigger();
-
-      // fix anchor tags generated through WCF::getAnchor()
-      document.querySelectorAll('a[href*="#"]').forEach((link: HTMLAnchorElement) => {
-        let href = link.href;
-        if (href.indexOf("AJAXProxy") !== -1 || href.indexOf("ajax-proxy") !== -1) {
-          href = href.substr(href.indexOf("#"));
-          link.href = document.location.toString().replace(/#.*/, "") + href;
-        }
-      });
     }
   }
 }
