@@ -23,10 +23,13 @@ $.Redactor.prototype.WoltLabReply = function() {
 			_messageContent.addEventListener('click', _callbackClick);
 		},
 		
-		showEditor: function () {
+		showEditor: function (skipFocus = false) {
 			if (!_messageQuickReply) {
 				// direct api call, but conditions are not met, be graceful
-				this.WoltLabCaret.endOfEditor();
+				if (!skipFocus) {
+					this.WoltLabCaret.endOfEditor();
+				}
+				
 				return;
 			}
 			else if (!_messageQuickReply.classList.contains('messageQuickReplyCollapsed')) {
@@ -36,7 +39,9 @@ $.Redactor.prototype.WoltLabReply = function() {
 			_messageQuickReply.classList.remove('messageQuickReplyCollapsed');
 			_messageContent.removeEventListener('click', _callbackClick);
 			
-			this.WoltLabCaret.endOfEditor();
+			if (!skipFocus) {
+				this.WoltLabCaret.endOfEditor();
+			}
 		},
 		
 		_click: function (event) {

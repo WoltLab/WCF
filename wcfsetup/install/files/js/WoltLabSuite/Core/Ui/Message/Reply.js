@@ -47,7 +47,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             document.querySelectorAll(".jsQuickReply").forEach((replyButton) => {
                 replyButton.addEventListener("click", (event) => {
                     event.preventDefault();
-                    this._getEditor().WoltLabReply.showEditor();
+                    this._getEditor().WoltLabReply.showEditor(true);
                     UiScroll.element(this._container, () => {
                         this._getEditor().WoltLabCaret.endOfEditor();
                     });

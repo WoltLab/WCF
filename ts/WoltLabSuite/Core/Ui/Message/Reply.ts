@@ -80,7 +80,7 @@ class UiMessageReply {
       replyButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        this._getEditor().WoltLabReply.showEditor();
+        this._getEditor().WoltLabReply.showEditor(true);
 
         UiScroll.element(this._container, () => {
           this._getEditor().WoltLabCaret.endOfEditor();

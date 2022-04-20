@@ -60,7 +60,7 @@ export interface RedactorEditor {
     register(event: string, callback: (data: WoltLabEventData) => void): void;
   };
   WoltLabReply: {
-    showEditor(): void;
+    showEditor(skipFocus?: boolean): void;
   };
   WoltLabSource: {
     isActive(): boolean;
