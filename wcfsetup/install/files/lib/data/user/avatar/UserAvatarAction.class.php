@@ -97,7 +97,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Fetches an avatar from a remote server and sets it for given user.
+     * @deprecated 5.5 Use UserProfileAction::setAvatar() instead.
      */
     public function fetchRemoteAvatar()
     {
@@ -229,11 +229,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Enforces dimensions for given avatar.
-     *
-     * @param string $filename
-     * @return  string
-     * @throws  UserInputException
+     * @deprecated 5.5 This is a helper method only used by UserAvatarAction::fetchRemoteAvatar().
      */
     protected function enforceDimensions($filename)
     {
