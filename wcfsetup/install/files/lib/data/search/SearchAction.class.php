@@ -34,7 +34,7 @@ class SearchAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $allowGuestAccess = ['search'];
+    protected $allowGuestAccess = ['getSearchResults', 'search'];
 
     /**
      * @var int
