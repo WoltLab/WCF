@@ -3485,7 +3485,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Inhalte der Benutzer löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.assignUserByClipboard"><![CDATA[Zugewiesenen Benutzer ändern ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.assignUserByClipboard"><![CDATA[Benutzer zuweisen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.enableContent"><![CDATA[Inhalt freischalten ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeActivationContent"><![CDATA[Freizuschaltenden Inhalt löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeReport"><![CDATA[Meldung schließen ({#$count})]]></item>
@@ -4271,7 +4271,7 @@ Dateianhänge:
 	</category>
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Zugewiesener Benutzer]]></item>
-		<item name="wcf.moderation.assignedUser.change"><![CDATA[Zugewiesenen Benutzer ändern]]></item>
+		<item name="wcf.moderation.assignedUser.change"><![CDATA[Benutzer zuweisen]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[Dieser Benutzer hat unzureichende Zugriffsrechte]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
 		<item name="wcf.moderation.assignedUsername"><![CDATA[Zugewiesener Benutzer]]></item>

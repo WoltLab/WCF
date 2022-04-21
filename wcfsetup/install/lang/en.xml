@@ -3412,7 +3412,7 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[Confirm Email Address ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Unconfirm Email Address ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Delete User Contents ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.assignUserByClipboard"><![CDATA[Change Assigned User ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.assignUserByClipboard"><![CDATA[Assign User ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.enableContent"><![CDATA[Approve Content ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeActivationContent"><![CDATA[Delete Pending Content ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.moderation.queue.removeReport"><![CDATA[Close Report ({#$count})]]></item>
@@ -4219,7 +4219,7 @@ Attachments:
 	</category>
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
-		<item name="wcf.moderation.assignedUser.change"><![CDATA[Change Assigned User]]></item>
+		<item name="wcf.moderation.assignedUser.change"><![CDATA[Assign User]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[This user does not have sufficient privileges.]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.assignedUsername"><![CDATA[Assigned User]]></item>
