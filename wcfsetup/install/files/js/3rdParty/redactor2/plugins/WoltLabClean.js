@@ -224,8 +224,9 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						//noinspection JSUnresolvedVariable
 						if (this.opts.woltlab.allowedInlineStyles.indexOf(property) === -1) {
+							styleValue = element.style.getPropertyValue(property);
+
 							if (property === 'font-weight' && element.nodeName !== 'STRONG') {
-								styleValue = element.style.getPropertyValue(property);
 								if (styleValue === 'bold' || styleValue === 'bolder') {
 									styleValue = 600;
 								}
@@ -238,13 +239,29 @@ $.Redactor.prototype.WoltLabClean = function() {
 									strong.appendChild(element);
 								}
 							}
-							else if (isOffice && property === 'margin-bottom' && element.nodeName === 'P') {
+
+							if (isOffice && property === 'margin-bottom' && element.nodeName === 'P') {
 								// office sometimes uses a margin-bottom value of exactly 12pt to create spacing between paragraphs
-								styleValue = element.style.getPropertyValue(property);
 								if (styleValue.match(/^12(?:\.0)?pt$/)) {
 									var p = elCreate('p');
 									p.innerHTML = '<br>';
 									element.parentNode.insertBefore(p, element.nextSibling);
+								}
+							}
+
+							if (property === "font-style" && styleValue === "italic") {
+								if (element.closest("em, i") === null) {
+									const em = document.createElement("em");
+									element.insertAdjacentElement("beforebegin", em);
+									em.append(element);
+								}
+							}
+
+							if ((property === "text-decoration" || property === "text-decoration-line") && styleValue === "underline") {
+								if (element.closest("u") === null) {
+									const u = document.createElement("u");
+									element.insertAdjacentElement("beforebegin", u);
+									u.append(element);
 								}
 							}
 							

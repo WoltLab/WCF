@@ -240,11 +240,6 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
             throw new UserInputException('avatar', 'tooLarge');
         }
 
-        // check filesize (after shrink)
-        if (@\filesize($filename) > WCF::getSession()->getPermission('user.profile.avatar.maxSize')) {
-            throw new UserInputException('avatar', 'tooLarge');
-        }
-
         return $filename;
     }
 }
