@@ -15,6 +15,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			var mpInit = this.keydown.init;
 			this.keydown.init = (function (e) {
 				var node;
+
+				// `Ctrl + Cmd + Space` triggers macOS‘s emoji keyboard
+				if (e.metaKey && e.ctrlKey && e.key === " ") {
+					e.stopImmediatePropagation();
+					return;
+				}
 				
 				// remove empty whitespaces in front of an <img> when backspacing in Firefox
 				if (this.detect.isFirefox() && selection.isCollapsed && e.which === this.keyCode.BACKSPACE) {
