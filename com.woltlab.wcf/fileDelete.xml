@@ -1653,8 +1653,8 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
-		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
+		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
 		<file>lib/system/api/ezyang/htmlpurifier/README</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
@@ -1784,8 +1784,8 @@
 		<file>lib/system/api/paragonie/random_compat/LICENSE</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
-		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
+		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
 		<file>lib/system/api/paragonie/random_compat/lib/random.php</file>
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
@@ -2312,7 +2312,6 @@
 		<file>lib/system/message/unfurl/ParsingFailed.class.php</file>
 		<file>lib/system/message/unfurl/UrlInaccessible.class.php</file>
 		<file>lib/system/option/CustomselectOptionType.class.php</file>
-		<file>lib/system/option/MultiselectOptionType.class.php</file>
 		<file>lib/system/option/OptionType.class.php</file>
 		<file>lib/system/option/OptionTypeBoolean.class.php</file>
 		<file>lib/system/option/OptionTypeCustomselect.class.php</file>
@@ -2376,7 +2375,6 @@
 		<file>lib/system/package/plugin/PageLocationPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/PageMenuPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/SitemapPackageInstallationPlugin.class.php</file>
-		<file>lib/system/package/plugin/SqlPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/StyleAttributePackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/StyleAttributesPackageInstallationPlugin.class.php</file>
 		<file>lib/system/package/plugin/TemplatesPackageInstallationPlugin.class.php</file>
@@ -2442,10 +2440,6 @@
 		<file>lib/system/template/TemplatePluginModifier.class.php</file>
 		<file>lib/system/template/TemplatePluginPrefilter.class.php</file>
 		<file>lib/system/template/plugin/ArrayfromlistModifierTemplatePlugin.class.php</file>
-		<file>lib/system/template/plugin/DatediffModifierTemplatePlugin.class.php</file>
-		<file>lib/system/template/plugin/EncodejsModifierTemplatePlugin.class.php</file>
-		<file>lib/system/template/plugin/HtmlcheckboxesFunctionTemplatePlugin.class.php</file>
-		<file>lib/system/template/plugin/HtmloptionsFunctionTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconCompilerTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconPrefilterTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/StaticlangTemplatePluginCompiler.class.php</file>
