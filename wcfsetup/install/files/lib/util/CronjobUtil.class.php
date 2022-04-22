@@ -199,10 +199,10 @@ final class CronjobUtil
      */
     protected static function calculateDay(array &$values)
     {
-        $addAnDay = self::calculateHour($values, self::$timeBase);
+        $addADay = self::calculateHour($values, self::$timeBase);
         $timeBase = self::$timeBase;
 
-        if ($addAnDay) {
+        if ($addADay) {
             $date = \explode('.', \date("d.m.Y", $timeBase));
             $timeBase = \mktime(0, 0, 1, (int)$date[1], (int)$date[0] + 1, (int)$date[2]);
         }
@@ -220,7 +220,7 @@ final class CronjobUtil
 
             $timeBase = \mktime(0, 0, 1, $month, $day, $year);
 
-            if (!$addAnDay) {
+            if (!$addADay) {
                 self::calculateHour($values, $timeBase);
             }
         }
@@ -341,19 +341,19 @@ final class CronjobUtil
      */
     protected static function calculateHour(array &$values, &$timeBase)
     {
-        $addAnDay = false;
+        $addADay = false;
 
         // compare hour
         $hour = \intval(\date('G', $timeBase));
         $index = self::findKey($hour, $values['hour'], false);
         if ($index === false) {
             $index = self::findKey($hour, $values['hour']);
-            $addAnDay = true;
+            $addADay = true;
         }
         $hour = $values['hour'][$index];
 
         // calculate minutes
-        $addAnHour = self::calculateMinute($values, $timeBase, $addAnDay);
+        $addAnHour = self::calculateMinute($values, $timeBase, $addADay);
 
         if ($addAnHour) {
             $hour++;
@@ -361,7 +361,7 @@ final class CronjobUtil
 
             if ($index === false) {
                 $index = self::findKey($hour, $values['hour']);
-                $addAnDay = true;
+                $addADay = true;
 
                 $hour = $values['hour'][$index];
             }
@@ -369,7 +369,7 @@ final class CronjobUtil
 
         self::$result['hour'] = $hour;
 
-        return $addAnDay;
+        return $addADay;
     }
 
     /**
@@ -378,14 +378,14 @@ final class CronjobUtil
      *
      * @param array $values
      * @param int $timeBase
-     * @param bool $addAnDay
+     * @param bool $addADay
      * @return  bool
      */
-    protected static function calculateMinute(array &$values, &$timeBase, $addAnDay)
+    protected static function calculateMinute(array &$values, &$timeBase, $addADay)
     {
         $returnValue = false;
 
-        if ($addAnDay) {
+        if ($addADay) {
             $minute = 0;
         } else {
             $minute = \date('i', $timeBase);
