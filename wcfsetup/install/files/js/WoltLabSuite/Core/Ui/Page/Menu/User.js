@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Ui/Page/Menu/User
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler) {
+define(["require", "exports", "tslib", "./Container", "../../../Language", "../../User/Menu/Manager", "../../../Dom/Util", "../../User/Menu/ControlPanel", "../../../Event/Handler", "../../Screen"], function (require, exports, tslib_1, Container_1, Language, Manager_1, Util_1, ControlPanel_1, EventHandler, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hasValidUserMenu = exports.PageMenuUser = void 0;
@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.activeTab = undefined;
             this.legacyUserPanels = new Map();
             this.userMenuProviders = new Map();
+            this.tabOrigins = new Map();
             this.tabPanels = new Map();
             this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
@@ -29,6 +30,10 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 event.stopPropagation();
                 this.container.toggle();
             };
+            (0, Screen_1.on)("screen-lg", {
+                match: () => this.detachViewsFromPanel(),
+                unmatch: () => this.detachViewsFromPanel(),
+            });
         }
         enable() {
             this.userMenu.setAttribute("aria-expanded", "false");
@@ -58,6 +63,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             if (this.activeTab) {
                 this.closeTab(this.activeTab);
             }
+            this.detachViewsFromPanel();
         }
         wakeup() {
             if (this.activeTab) {
@@ -116,6 +122,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 const element = (0, ControlPanel_1.getElement)();
                 element.hidden = false;
                 if (tabPanel.childElementCount === 0) {
+                    this.tabOrigins.set(tabPanel, element.parentElement);
                     tabPanel.append(element);
                 }
             }
@@ -124,7 +131,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     const provider = this.userMenuProviders.get(tab);
                     if (provider) {
                         const view = provider.getView();
-                        tabPanel.append(view.getElement());
+                        const element = view.getElement();
+                        this.tabOrigins.set(tabPanel, element.parentElement);
+                        tabPanel.append(element);
                         void view.open();
                     }
                     else {
@@ -136,6 +145,30 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     }
                 }
             }
+        }
+        detachViewsFromPanel() {
+            this.tabPanels.forEach((tabPanel, tab) => {
+                if (tabPanel.childElementCount) {
+                    const parent = this.tabOrigins.get(tabPanel);
+                    if (parent) {
+                        const origin = tab.dataset.origin;
+                        if (origin === "userMenu") {
+                            const element = tabPanel.children[0];
+                            element.hidden = true;
+                            parent.append(element);
+                        }
+                        else {
+                            const provider = this.userMenuProviders.get(tab);
+                            if (provider) {
+                                const view = provider.getView();
+                                const element = view.getElement();
+                                element.hidden = true;
+                                parent.append(element);
+                            }
+                        }
+                    }
+                }
+            });
         }
         keydown(event) {
             const tab = event.currentTarget;

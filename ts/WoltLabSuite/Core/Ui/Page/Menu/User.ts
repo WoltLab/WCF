@@ -16,6 +16,7 @@ import { UserMenuProvider } from "../../User/Menu/Data/Provider";
 import DomUtil from "../../../Dom/Util";
 import { getElement as getControlPanelElement } from "../../User/Menu/ControlPanel";
 import * as EventHandler from "../../../Event/Handler";
+import { on as onMediaQueryChange } from "../../Screen";
 
 type CallbackOpen = (event: MouseEvent) => void;
 
@@ -45,6 +46,7 @@ export class PageMenuUser implements PageMenuProvider {
   private readonly container: PageMenuContainer;
   private readonly legacyUserPanels = new Map<Tab, LegacyUserPanelApi>();
   private readonly userMenuProviders = new Map<Tab, UserMenuProvider>();
+  private readonly tabOrigins = new Map<HTMLElement, HTMLElement>();
   private readonly tabPanels = new Map<Tab, HTMLElement>();
   private readonly tabs: Tab[] = [];
   private readonly userMenu: HTMLElement;
@@ -60,6 +62,11 @@ export class PageMenuUser implements PageMenuProvider {
 
       this.container.toggle();
     };
+
+    onMediaQueryChange("screen-lg", {
+      match: () => this.detachViewsFromPanel(),
+      unmatch: () => this.detachViewsFromPanel(),
+    });
   }
 
   enable(): void {
@@ -97,6 +104,8 @@ export class PageMenuUser implements PageMenuProvider {
     if (this.activeTab) {
       this.closeTab(this.activeTab);
     }
+
+    this.detachViewsFromPanel();
   }
 
   wakeup(): void {
@@ -174,6 +183,8 @@ export class PageMenuUser implements PageMenuProvider {
       element.hidden = false;
 
       if (tabPanel.childElementCount === 0) {
+        this.tabOrigins.set(tabPanel, element.parentElement!);
+
         tabPanel.append(element);
       }
     } else {
@@ -181,7 +192,10 @@ export class PageMenuUser implements PageMenuProvider {
         const provider = this.userMenuProviders.get(tab);
         if (provider) {
           const view = provider.getView();
-          tabPanel.append(view.getElement());
+          const element = view.getElement();
+          this.tabOrigins.set(tabPanel, element.parentElement!);
+
+          tabPanel.append(element);
           void view.open();
         } else {
           const legacyPanel = this.legacyUserPanels.get(tab)!;
@@ -194,6 +208,32 @@ export class PageMenuUser implements PageMenuProvider {
         }
       }
     }
+  }
+
+  private detachViewsFromPanel(): void {
+    this.tabPanels.forEach((tabPanel, tab) => {
+      if (tabPanel.childElementCount) {
+        const parent = this.tabOrigins.get(tabPanel);
+        if (parent) {
+          const origin = tab.dataset.origin!;
+          if (origin === "userMenu") {
+            const element = tabPanel.children[0] as HTMLElement;
+            element.hidden = true;
+
+            parent.append(element);
+          } else {
+            const provider = this.userMenuProviders.get(tab);
+            if (provider) {
+              const view = provider.getView();
+              const element = view.getElement();
+              element.hidden = true;
+
+              parent.append(element);
+            }
+          }
+        }
+      }
+    });
   }
 
   private keydown(event: KeyboardEvent): void {
