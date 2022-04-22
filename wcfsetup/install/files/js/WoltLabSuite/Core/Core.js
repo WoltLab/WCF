@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getXsrfToken = exports.enableLegacyInheritance = exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
+    exports.interactWithRedactor = exports.getXsrfToken = exports.enableLegacyInheritance = exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
     const _clone = function (variable) {
         if (typeof variable === "object" && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
@@ -29,6 +29,12 @@ define(["require", "exports"], function (require, exports) {
         return newObj;
     };
     const _prefix = "wsc" + window.WCF_PATH.hashCode() + "-";
+    let _blockFocusIn = false;
+    document.addEventListener("focusin", (event) => {
+        if (_blockFocusIn) {
+            event.stopImmediatePropagation();
+        }
+    }, true);
     /**
      * Deep clones an object.
      */
@@ -268,4 +274,24 @@ define(["require", "exports"], function (require, exports) {
         return decodeURIComponent(value.trim());
     }
     exports.getXsrfToken = getXsrfToken;
+    /**
+     * Permits the interaction with Redactor, that usually requires
+     * changes to the selection, without interfering with an active
+     * focus trap.
+     *
+     * It is strongly recommended to close a dialog before interacting
+     * with Redactor. This helper is designed for cases where this
+     * is not possible.
+     */
+    function interactWithRedactor(callback) {
+        _blockFocusIn = true;
+        const activeElement = document.activeElement;
+        void callback();
+        // Shift the focus back to preserve the behavior of the focus trap.
+        if (activeElement instanceof HTMLElement) {
+            activeElement.focus();
+        }
+        _blockFocusIn = false;
+    }
+    exports.interactWithRedactor = interactWithRedactor;
 });

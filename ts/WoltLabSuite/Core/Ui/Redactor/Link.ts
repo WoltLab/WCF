@@ -2,6 +2,7 @@
  * @woltlabExcludeBundle tiny
  */
 
+import { interactWithRedactor } from "../../Core";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import UiDialog from "../Dialog";
@@ -37,7 +38,12 @@ class UiRedactorLink implements DialogCallbackObject {
   }
 
   private submit(): void {
-    if (this.submitCallback()) {
+    let returnValue: boolean;
+    interactWithRedactor(() => {
+      returnValue = this.submitCallback();
+    });
+
+    if (returnValue!) {
       UiDialog.close(this);
     } else {
       const url = document.getElementById("redactor-link-url") as HTMLInputElement;

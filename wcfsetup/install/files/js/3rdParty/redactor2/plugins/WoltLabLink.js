@@ -117,6 +117,15 @@ $.Redactor.prototype.WoltLabLink = function() {
 					
 					// insert or update
 					this.link.insert(link, true, $el);
+
+					this.selection.save();
+
+					// Closing the dialog might move the focus somewhere else.
+					window.setTimeout(() => {
+						if (document.activeElement !== this.core.editor()[0]) {
+							this.selection.restore();
+						}
+					}, 0);
 					
 					return true;
 				}).bind(this)

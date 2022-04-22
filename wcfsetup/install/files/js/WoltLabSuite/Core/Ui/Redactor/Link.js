@@ -1,7 +1,7 @@
 /**
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Dom/Util", "../../Language", "../Dialog"], function (require, exports, tslib_1, Util_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Language", "../Dialog"], function (require, exports, tslib_1, Core_1, Util_1, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.showDialog = void 0;
@@ -25,7 +25,11 @@ define(["require", "exports", "tslib", "../../Dom/Util", "../../Language", "../D
             }
         }
         submit() {
-            if (this.submitCallback()) {
+            let returnValue;
+            (0, Core_1.interactWithRedactor)(() => {
+                returnValue = this.submitCallback();
+            });
+            if (returnValue) {
                 Dialog_1.default.close(this);
             }
             else {
