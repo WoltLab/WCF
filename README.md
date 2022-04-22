@@ -15,10 +15,6 @@ Please see http://imperavi.com/redactor/license/ for more information.
 
 Redactor II is **NOT** free software!
 
-## Contribution
-
-For information on contributing to WoltLab Suite Core refer to [CONTRIBUTING.md](CONTRIBUTING.md) in this folder.
-
 ## License
 
 This library is free software; you can redistribute it and/or
