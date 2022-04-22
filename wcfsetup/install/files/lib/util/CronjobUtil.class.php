@@ -332,8 +332,8 @@ final class CronjobUtil
     }
 
     /**
-     * Calculates hour of next execution. Returns number of days which
-     * had been added in order to match expression for hour and minutes.
+     * Calculates hour of next execution. Returns true if hour-declaration
+     * has already elapsed, thus requiring at least one day to be added.
      *
      * @param array $values
      * @param int $timeBase
