@@ -344,10 +344,10 @@ final class CronjobUtil
         $addAnDay = false;
 
         // compare hour
-        $hour = \intval(\date('G', $timeBase));
-        $index = self::findKey($hour, $values['hour'], false);
+        $currentHour = \intval(\date('G', $timeBase));
+        $index = self::findKey($currentHour, $values['hour'], false);
         if ($index === false) {
-            $index = self::findKey($hour, $values['hour']);
+            $index = self::findKey($currentHour, $values['hour']);
             $addAnDay = true;
         }
         $hour = $values['hour'][$index];
@@ -355,7 +355,9 @@ final class CronjobUtil
         // calculate minutes
         $addAnHour = self::calculateMinute($values, $timeBase, $addAnDay);
 
-        if ($addAnHour) {
+        // only add an hour (potentially a day) if the current hour is the same
+        // for which the minute-declaration has already elapsed
+        if ($addAnHour && $hour == $currentHour) {
             $hour++;
             $index = self::findKey($hour, $values['hour'], false);
 
