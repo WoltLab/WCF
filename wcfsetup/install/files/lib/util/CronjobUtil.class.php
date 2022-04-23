@@ -355,7 +355,8 @@ final class CronjobUtil
         // calculate minutes
         $addAnHour = self::calculateMinute($values, $timeBase, $addADay);
 
-        // only add an hour if the current hour is the same for which the minute-declaration has already elapsed
+        // only add an hour (potentially a day) if the current hour is the same
+        // for which the minute-declaration has already elapsed
         if ($addAnHour && $hour == $currentHour) {
             $hour++;
             $index = self::findKey($hour, $values['hour'], false);
