@@ -416,8 +416,18 @@ fieldset {
 
 	@include screen-xs {
 		flex: 0 0 100%;
+	}
+}
 
-		& + .contentInteractionButtonContainer {
+@include screen-xs {
+	body:not(.mobileShowPaginationTop) {
+		.contentInteractionPagination {
+			display: none;
+		}
+	}
+
+	body.mobileShowPaginationTop {
+		.contentInteractionPagination + .contentInteractionButtonContainer {
 			margin-top: 20px;
 		}
 	}
@@ -499,16 +509,6 @@ fieldset {
 }
 
 @include screen-sm-down {
-	body:not(.mobileShowPaginationTop) {
-		.paginationTop {
-			display: none;
-
-			& + .section {
-				margin-top: 30px;
-			}
-		}
-	}
-
 	/* DEPRECATED */
 	.contentNavigation > .pagination {
 		display: none;
