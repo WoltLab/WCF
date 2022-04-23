@@ -362,25 +362,24 @@ fieldset {
 }
 
 .contentFooter {
-	@include screen-xs {
-		> .contentFooterNavigation {
-			margin-top: 20px;
+	> .contentFooterNavigation {
+		margin-top: 20px;
 
-			> ul > li {
-				&:not(:first-child) {
-					margin-top: 10px;
-				}
-			}
+		> ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			margin-bottom: -5px;
+			margin-left: -5px;
+			white-space: nowrap;
+		}
 
-			.button {
-				display: block;
-				padding: 7px 10px;
-				text-align: center;
-
-				&:not(:first-child) {
-					margin-top: 10px;
-				}
-			}
+		.button {
+			display: block;
+			margin-left: 5px;
+			margin-bottom: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
@@ -390,18 +389,10 @@ fieldset {
 		> .paginationBottom {
 			flex: 0 0 auto;
 		}
-
+		
 		> .contentFooterNavigation {
 			flex: 1 1 auto;
-			margin: 20px 0 0 20px;
-			text-align: right;
-
-			> ul {
-				@include inlineList;
-
-				display: inline-flex;
-				flex-wrap: nowrap;
-			}
+			margin-left: 20px;
 		}
 	}
 }
