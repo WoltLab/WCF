@@ -46,6 +46,7 @@ function click(event: MouseEvent): void {
 
 export function init(objectType: string): void {
   const searchInput = document.getElementById("pageHeaderSearchInput") as HTMLInputElement;
+  const form = searchInput.form!;
 
   new UiSearchInput(searchInput, {
     ajax: {
@@ -75,8 +76,9 @@ export function init(objectType: string): void {
     },
     callbackSelect() {
       setTimeout(() => {
-        const form = DomTraverse.parentByTag(searchInput, "FORM") as HTMLFormElement;
-        form.submit();
+        // Do not use `form.submit()`, it does not trigger the `submit` event.
+        // See https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
+        submit(form, searchInput);
       }, 1);
 
       return true;
@@ -93,9 +95,9 @@ export function init(objectType: string): void {
   const link = dropdownMenu.querySelector('a[data-object-type="' + objectType + '"]') as HTMLAnchorElement;
   link.click();
 
-  searchInput.form!.addEventListener("submit", (event) => {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
-    submit(searchInput.form!, searchInput);
+    submit(form, searchInput);
   });
 }
 
