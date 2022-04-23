@@ -1,11 +1,13 @@
 .pagination {
+	overflow: auto;
+
 	@include screen-xs {
 		text-align: center;
 	}
 
 	> ul {
 		display: inline-flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 
 		> li {
 			display: flex;
