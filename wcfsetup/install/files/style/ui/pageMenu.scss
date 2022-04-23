@@ -68,27 +68,11 @@
 	position: relative;
 }
 
-.pageMenuMainItemOutstandingItems {
-	grid-template-areas: "item counter";
-	grid-template-columns: auto min-content;
-
-	&:not(.pageMenuMainItemExpandable) {
-		padding-right: 10px;
-	}
-}
-
 .pageMenuMainItemExpandable {
 	grid-template-areas:
 		"item button"
 		"list list";
 	grid-template-columns: auto 44px;
-
-	&.pageMenuMainItemOutstandingItems {
-		grid-template-areas:
-			"item counter button"
-			"list list    list";
-		grid-template-columns: auto min-content 44px;
-	}
 }
 
 .pageMenuMainItemLabel,
@@ -111,7 +95,9 @@
 
 .pageMenuMainItemCounter {
 	align-self: center;
+	border-radius: 4px;
 	grid-area: counter;
+	margin-left: 8px;
 	white-space: nowrap;
 }
 

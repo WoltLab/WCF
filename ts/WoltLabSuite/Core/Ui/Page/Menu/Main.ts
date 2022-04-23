@@ -179,6 +179,15 @@ export class PageMenuMain implements PageMenuProvider {
         link.setAttribute("aria-current", "page");
       }
 
+      if (menuItem.counter > 0) {
+        const counter = document.createElement("span");
+        counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
+        counter.setAttribute("aria-hidden", "true");
+        counter.textContent = menuItem.counter.toString();
+
+        link.append(counter);
+      }
+
       listItem.append(link);
     } else {
       const label = document.createElement("a");
@@ -196,16 +205,6 @@ export class PageMenuMain implements PageMenuProvider {
       label.setAttribute("aria-hidden", "true");
 
       listItem.append(label);
-    }
-
-    if (menuItem.counter > 0) {
-      const counter = document.createElement("span");
-      counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
-      counter.setAttribute("aria-hidden", "true");
-      counter.textContent = menuItem.counter.toString();
-
-      listItem.classList.add("pageMenuMainItemOutstandingItems");
-      listItem.append(counter);
     }
 
     if (menuItem.children.length) {

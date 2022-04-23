@@ -136,6 +136,13 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 if (menuItem.active) {
                     link.setAttribute("aria-current", "page");
                 }
+                if (menuItem.counter > 0) {
+                    const counter = document.createElement("span");
+                    counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
+                    counter.setAttribute("aria-hidden", "true");
+                    counter.textContent = menuItem.counter.toString();
+                    link.append(counter);
+                }
                 listItem.append(link);
             }
             else {
@@ -151,14 +158,6 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 // The button to expand the link group is used instead.
                 label.setAttribute("aria-hidden", "true");
                 listItem.append(label);
-            }
-            if (menuItem.counter > 0) {
-                const counter = document.createElement("span");
-                counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
-                counter.setAttribute("aria-hidden", "true");
-                counter.textContent = menuItem.counter.toString();
-                listItem.classList.add("pageMenuMainItemOutstandingItems");
-                listItem.append(counter);
             }
             if (menuItem.children.length) {
                 listItem.classList.add("pageMenuMainItemExpandable");
