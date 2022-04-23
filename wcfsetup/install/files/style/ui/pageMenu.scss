@@ -260,6 +260,20 @@
 			display: none;
 		}
 	}
+
+	.mainMenu[aria-expanded="true"]::after,
+	.userPanel.userPanelLoggedIn[aria-expanded="true"]::after {
+		border: 8px solid transparent;
+		border-top-width: 0;
+		border-bottom-color: $wcfUserMenuBackground;
+		bottom: -5px;
+		content: "";
+		position: absolute;
+	}
+
+	.userPanel.userPanelLoggedIn[aria-expanded="true"]::after {
+		bottom: 0;
+	}
 }
 
 @include screen-sm-md {
