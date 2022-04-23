@@ -125,7 +125,7 @@ class ArticleEditForm extends ArticleAddForm
             'enableComments' => $this->enableComments,
             'userID' => $this->author->userID,
             'username' => $this->author->username,
-            'time' => $this->timeObj->getTimestamp(),
+            'time' => $this->getArticleTimestamp(),
             'hasLabels' => (isset($labelIDs[$this->article->articleID]) && !empty($labelIDs[$this->article->articleID])) ? 1 : 0,
         ];
 

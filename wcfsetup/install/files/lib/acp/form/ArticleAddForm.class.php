@@ -488,7 +488,7 @@ class ArticleAddForm extends AbstractForm
         }
 
         $data = [
-            'time' => $this->timeObj->getTimestamp(),
+            'time' => $this->getArticleTimestamp(),
             'categoryID' => $this->categoryID,
             'publicationStatus' => $this->publicationStatus,
             'publicationDate' => $this->publicationStatus == Article::DELAYED_PUBLICATION ? $this->publicationDateObj->getTimestamp() : 0,
@@ -616,5 +616,20 @@ class ArticleAddForm extends AbstractForm
             'labelGroups' => $this->labelGroups,
             'labelGroupsToCategories' => $this->labelGroupsToCategories,
         ]);
+    }
+
+    /**
+     * Ensures that the date of a published article is not in the future.
+     * 
+     * @since 5.5
+     */
+    protected function getArticleTimestamp(): int
+    {
+        $time = $this->timeObj->getTimestamp();
+        if ($time > \TIME_NOW && $this->publicationStatus == Article::DELAYED_PUBLICATION) {
+            $time = \TIME_NOW;
+        }
+
+        return $time;
     }
 }
