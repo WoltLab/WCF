@@ -620,7 +620,7 @@ class ArticleAddForm extends AbstractForm
 
     /**
      * Ensures that the date of a published article is not in the future.
-     * 
+     *
      * @since 5.5
      */
     protected function getArticleTimestamp(): int
