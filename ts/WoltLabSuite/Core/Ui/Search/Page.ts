@@ -1,5 +1,4 @@
 import * as Core from "../../Core";
-import * as DomTraverse from "../../Dom/Traverse";
 import DomUtil from "../../Dom/Util";
 import UiDropdownSimple from "../Dropdown/Simple";
 import * as UiScreen from "../Screen";
