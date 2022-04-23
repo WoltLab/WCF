@@ -1,9 +1,8 @@
-define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../Dropdown/Simple", "../Screen", "./Input"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Simple_1, UiScreen, Input_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../Dropdown/Simple", "../Screen", "./Input"], function (require, exports, tslib_1, Core, Util_1, Simple_1, UiScreen, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
     Core = tslib_1.__importStar(Core);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -40,6 +39,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     }
     function init(objectType) {
         const searchInput = document.getElementById("pageHeaderSearchInput");
+        const form = searchInput.form;
         new Input_1.default(searchInput, {
             ajax: {
                 className: "wcf\\data\\search\\keyword\\SearchKeywordAction",
@@ -60,8 +60,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
             },
             callbackSelect() {
                 setTimeout(() => {
-                    const form = DomTraverse.parentByTag(searchInput, "FORM");
-                    form.submit();
+                    // Do not use `form.submit()`, it does not trigger the `submit` event.
+                    // See https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
+                    submit(form, searchInput);
                 }, 1);
                 return true;
             },
@@ -74,9 +75,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         // trigger click on init
         const link = dropdownMenu.querySelector('a[data-object-type="' + objectType + '"]');
         link.click();
-        searchInput.form.addEventListener("submit", (event) => {
+        form.addEventListener("submit", (event) => {
             event.preventDefault();
-            submit(searchInput.form, searchInput);
+            submit(form, searchInput);
         });
     }
     exports.init = init;

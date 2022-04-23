@@ -69,6 +69,7 @@ export class UiSearchExtended {
       ajax: {
         className: "wcf\\data\\search\\keyword\\SearchKeywordAction",
       },
+      autoFocus: false,
     });
   }
 
