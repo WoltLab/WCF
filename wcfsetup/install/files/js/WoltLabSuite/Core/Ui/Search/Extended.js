@@ -46,6 +46,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 ajax: {
                     className: "wcf\\data\\search\\keyword\\SearchKeywordAction",
                 },
+                autoFocus: false,
             });
         }
         changeType() {
