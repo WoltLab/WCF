@@ -7,12 +7,13 @@
  * @module  WoltLabSuite/Core/Ui/Article/MarkAllAsRead
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler"], function (require, exports, tslib_1, Ajax, EventHandler) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../Notification"], function (require, exports, tslib_1, Ajax, EventHandler, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     EventHandler = tslib_1.__importStar(EventHandler);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class UiArticleMarkAllAsRead {
         constructor() {
             document.querySelectorAll(".markAllAsReadButton").forEach((button) => {
@@ -35,6 +36,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler"], fun
             // article list
             document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
             EventHandler.fire("com.woltlab.wcf.MainMenuMobile", "updateButtonState");
+            UiNotification.show();
         }
         _ajaxSetup() {
             return {

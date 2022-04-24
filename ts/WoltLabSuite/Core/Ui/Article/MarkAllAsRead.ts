@@ -11,6 +11,7 @@
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
 import * as EventHandler from "../../Event/Handler";
+import * as UiNotification from "../Notification";
 
 class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   constructor() {
@@ -38,6 +39,7 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
     document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());
 
     EventHandler.fire("com.woltlab.wcf.MainMenuMobile", "updateButtonState");
+    UiNotification.show();
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
