@@ -115,11 +115,19 @@ export class PageMenuUser implements PageMenuProvider {
       // closed.
       this.openTab(this.activeTab);
     } else {
-      this.openNotifications();
+      if (this.isInMaintenanceMode()) {
+        this.openTab(this.tabs[0]);
+      } else {
+        this.openNotifications();
+      }
     }
 
     this.refreshTabUnreadIndicators();
     this.refreshUnreadIndicator();
+  }
+
+  private isInMaintenanceMode(): boolean {
+    return document.body.dataset.application === "wcf" && document.body.dataset.template === "offline";
   }
 
   private openNotifications(): void {

@@ -73,10 +73,18 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 this.openTab(this.activeTab);
             }
             else {
-                this.openNotifications();
+                if (this.isInMaintenanceMode()) {
+                    this.openTab(this.tabs[0]);
+                }
+                else {
+                    this.openNotifications();
+                }
             }
             this.refreshTabUnreadIndicators();
             this.refreshUnreadIndicator();
+        }
+        isInMaintenanceMode() {
+            return document.body.dataset.application === "wcf" && document.body.dataset.template === "offline";
         }
         openNotifications() {
             const notifications = this.tabs.find((element) => element.dataset.origin === "userNotifications");
