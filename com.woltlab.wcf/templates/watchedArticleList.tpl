@@ -41,9 +41,9 @@
 	{pages print=true assign='pagesLinks' controller='WatchedArticleList' link="pageNo=%d"}
 {/capture}
 
-{capture assign='contentInteractionDropdownItems'}
+{capture assign='contentInteractionButtons'}
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.article.markAllAsRead{/lang}</a></li>
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAsRead{/lang}</a>
 	{/if}
 {/capture}
 

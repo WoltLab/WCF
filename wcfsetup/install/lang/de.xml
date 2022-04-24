@@ -3324,7 +3324,6 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.sortField.random"><![CDATA[Zufällig]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
-		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
 		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{@$label->render()}</li>{/foreach}</ul> {/if}<a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sortieren]]></item>
@@ -5606,5 +5605,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.search.error.user.noMatches" />
 	<item name="wcf.user.logout.sure"/>
 	<item name="wcf.acp.dataImport.existingMapping.confirmMessage"/>
+	<item name="wcf.article.markAllAsRead" />
 </delete>
 </language>

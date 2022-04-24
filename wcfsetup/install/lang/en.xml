@@ -3251,7 +3251,6 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.article.sortField.random"><![CDATA[Random]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
-		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
 		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article {if $article->hasLabels()}<ul class="labelList">{foreach from=$article->getLabels() item=label}<li>{@$label->render()}</li>{/foreach}</ul> {/if}<a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sort]]></item>
@@ -5608,5 +5607,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.search.error.user.noMatches" />
 	<item name="wcf.user.logout.sure"/>
 	<item name="wcf.acp.dataImport.existingMapping.confirmMessage"/>
+	<item name="wcf.article.markAllAsRead" />
 </delete>
 </language>

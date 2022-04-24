@@ -66,13 +66,13 @@
 	{if $__wcf->user->userID}
 		<a href="#" class="contentInteractionButton jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}">{lang}wcf.user.objectWatch.button.subscribe{/lang}</a>
 	{/if}
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAsRead{/lang}</a>
+	{/if}
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
 	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed' id=$categoryID}{/link}{/if}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.article.markAllAsRead{/lang}</a></li>
-	{/if}
 {/capture}
 
 {include file='header'}

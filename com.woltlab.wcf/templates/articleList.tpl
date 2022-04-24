@@ -71,13 +71,13 @@
 			{event name='sortOptions'}
 		</ul>
 	</div>
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAsRead{/lang}</a>
+	{/if}
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
 	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed'}{/link}{/if}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.article.markAllAsRead{/lang}</a></li>
-	{/if}
 {/capture}
 
 {include file='header'}
