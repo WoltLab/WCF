@@ -258,6 +258,15 @@ html:not(.touch) .userMenuItemMarkAsRead {
 	}
 }
 
+/* Tapping the indicator on touch devices triggers the action
+   to mark the item as read. Positioning the button over the
+   indicator masks this behavior. */
+html.touch .userMenuItem .userMenuItemMarkAsRead {
+	opacity: 0;
+	left: 0;
+	width: 24px;
+}
+
 .userMenuItem:not(:hover) .userMenuItemMarkAsRead {
 	opacity: 0;
 	left: 10px;
