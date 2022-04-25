@@ -10,8 +10,8 @@ use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
-use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -68,7 +68,7 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
         $canUseModerationOption = UserGroupOptionCacheBuilder::getInstance()->getData()['options']['mod.general.canUseModeration'];
         $processor = $objectType->getProcessor();
 
-        \assert($processor instanceof IModerationQueueReportHandler);
+        \assert($processor instanceof IModerationQueueHandler);
 
         // Load all userIDs, which have the permission to access the moderation AND which
         // have no entry in the table wcf1_moderation_queue_to_user for the given queue.
