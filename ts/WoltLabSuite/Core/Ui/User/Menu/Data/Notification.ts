@@ -130,7 +130,6 @@ type ResponseMarkAsRead = {
 
 class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider {
   private readonly button: HTMLElement;
-  private counter = 0;
   private readonly options: Options;
   private stale = true;
   private view: UserMenuView | undefined = undefined;
@@ -139,20 +138,23 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
     this.button = button;
     this.options = options;
 
-    const badge = button.querySelector<HTMLElement>(".badge");
-    if (badge) {
-      const counter = parseInt(badge.textContent!.trim());
-      if (counter) {
-        setFaviconCounter(counter);
-        this.counter = counter;
-      }
+    if (this.counter > 0) {
+      setFaviconCounter(this.counter);
     }
 
-    window.WCF.System.PushNotification.addCallback("userNotificationCount", (counter: number) => {
-      this.updateCounter(counter);
+    window.WCF.System.PushNotification.addCallback("userNotificationCount", (count: number) => {
+      this.updateCounter(count);
 
       this.stale = true;
     });
+  }
+
+  private get counter(): number {
+    return parseInt(this.button.dataset.count!, 10);
+  }
+
+  private set counter(count: number) {
+    this.button.dataset.count = count.toString();
   }
 
   getPanelButton(): HTMLElement {
@@ -283,9 +285,11 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
     this.updateCounter(0);
   }
 
-  private updateCounter(counter: number): void {
+  private updateCounter(count: number): void {
+    this.counter = count;
+
     let badge = this.button.querySelector<HTMLElement>(".badge");
-    if (badge === null && counter > 0) {
+    if (badge === null && count > 0) {
       badge = document.createElement("span");
       badge.classList.add("badge", "badgeUpdate");
 
@@ -293,16 +297,14 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
     }
 
     if (badge) {
-      if (counter === 0) {
+      if (count === 0) {
         badge.remove();
       } else {
-        badge.textContent = counter.toString();
+        badge.textContent = count.toString();
       }
     }
 
-    setFaviconCounter(counter);
-
-    this.counter = counter;
+    setFaviconCounter(count);
   }
 }
 
