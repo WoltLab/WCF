@@ -10,7 +10,7 @@ https?://(?:.+?\.)?youtube.com/shorts/(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
 		<provider name="youtube-playlist">
 			<title>YouTube Playlist</title>
 			<regex><![CDATA[https?://(?:.+?\.)?youtu(?:\.be/|be\.com/)playlist\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
-			<html><![CDATA[<div class="messageVideoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" width="560" height="315" allowfullscreen></iframe></div>]]></html>
+			<html><![CDATA[<div class="messageVideoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" width="560" height="315" referrerpolicy="strict-origin" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		<provider name="vimeo">
 			<title>Vimeo</title>
