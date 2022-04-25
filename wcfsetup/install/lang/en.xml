@@ -3877,6 +3877,7 @@ Attachments:
 		<item name="wcf.global.date"><![CDATA[Date]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
+		<item name="wcf.global.error.ajax.network"><![CDATA[<p>Unable to connect to the server, please check your internet connection.</p><p><br></p><p>Error message from your browser: “{$message}”</p>]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>

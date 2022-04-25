@@ -3929,6 +3929,7 @@ Dateianhänge:
 		<item name="wcf.global.date"><![CDATA[Datum]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.global.error.ajax.network"><![CDATA[<p>Ein Verbindungsaufbau zum Server war nicht möglich, bitte überprüfen Sie Ihre Internetverbindung.</p><p><br></p><p>Fehlermeldung von Ihrem Browser: „{$message}“</p>]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Keine Antwort vom Server erhalten, Anfrage wurde abgebrochen.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">Was ist passiert?</p>

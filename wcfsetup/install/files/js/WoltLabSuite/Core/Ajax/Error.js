@@ -7,11 +7,12 @@
  * @module WoltLabSuite/Core/Ajax/Error
  * @since 5.5
  */
-define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {
+define(["require", "exports", "tslib", "../Core", "../Language"], function (require, exports, tslib_1, Core, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerGlobalRejectionHandler = exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
     Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
     async function genericError(error) {
         const html = await getErrorHtml(error);
         if (html !== "") {
@@ -30,7 +31,13 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         let details = "";
         let message = "";
         if (error instanceof ConnectionError) {
-            message = error.message;
+            // `fetch()` will yield a `TypeError` for network errors and CORS violations.
+            if (error.originalError instanceof TypeError) {
+                message = Language.get("wcf.global.error.ajax.network", { message: error.message });
+            }
+            else {
+                message = error.message;
+            }
         }
         else {
             if (error instanceof InvalidJson) {

@@ -9,6 +9,7 @@
  */
 
 import * as Core from "../Core";
+import * as Language from "../Language";
 
 type ErrorResponsePrevious = {
   message: string;
@@ -48,7 +49,12 @@ async function getErrorHtml(error: ApiError): Promise<string> {
   let message = "";
 
   if (error instanceof ConnectionError) {
-    message = error.message;
+    // `fetch()` will yield a `TypeError` for network errors and CORS violations.
+    if (error.originalError instanceof TypeError) {
+      message = Language.get("wcf.global.error.ajax.network", { message: error.message });
+    } else {
+      message = error.message;
+    }
   } else {
     if (error instanceof InvalidJson) {
       message = await error.response.clone().text();
