@@ -1,6 +1,7 @@
 /* PerfectScrollbar plugin */
 .ps-container {
-	&:hover > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+	&:hover > .ps-scrollbar-y-rail > .ps-scrollbar-y,
+	&.ps-in-scrolling > .ps-scrollbar-y-rail > .ps-scrollbar-y {
 		background-color: rgba(102, 102, 102, 0.6);
 	}
 
