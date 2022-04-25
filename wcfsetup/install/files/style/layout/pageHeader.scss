@@ -606,17 +606,3 @@
 		}
 	}
 }
-
-@include screen-xs {
-	.pageHeaderPanel,
-	.pageHeaderFacade > .layoutBoundary {
-		transition: transform 0.12s linear;
-	}
-
-	.redactorActive {
-		.pageHeaderPanel,
-		.pageHeaderFacade > .layoutBoundary {
-			transform: translateY(-120%);
-		}
-	}
-}

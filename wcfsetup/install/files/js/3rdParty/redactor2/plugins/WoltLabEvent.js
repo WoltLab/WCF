@@ -15,21 +15,6 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				}).bind(this))
 			}).bind(this));
 			
-			var ua = window.navigator.userAgent.toLowerCase();
-			if (ua.indexOf('windows phone') === -1 && ua.indexOf('edge/') === -1) {
-				this.$editor[0].addEventListener('focus', function () {
-					document.documentElement.classList.add('redactorActive');
-				});
-				this.$editor[0].addEventListener('focusout', function () {
-					// short delay to prevent flickering when switching focus between editors
-					window.setTimeout(function () {
-						if (!document.activeElement || !document.activeElement.classList.contains('redactor-layer')) {
-							document.documentElement.classList.remove('redactorActive');
-						}
-					}, 100);
-				});
-			}
-			
 			this.events.iterateObserver = (function(mutation) {
 				var stop = false;
 				

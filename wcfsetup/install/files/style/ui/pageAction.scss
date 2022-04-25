@@ -73,13 +73,3 @@
 .pageOverlayActive .pageAction {
 	display: none;
 }
-
-@include screen-xs {
-	.redactorActive .pageAction {
-		bottom: 10px;
-
-		&:not(.pageActionHasContextButtons) {
-			display: none !important;
-		}
-	}
-}
