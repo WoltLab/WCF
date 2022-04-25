@@ -64,6 +64,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 this.closeTab(this.activeTab);
             }
             this.detachViewsFromPanel();
+            this.refreshUnreadIndicator();
         }
         wakeup() {
             if (this.activeTab) {

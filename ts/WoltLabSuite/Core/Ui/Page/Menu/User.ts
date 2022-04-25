@@ -106,6 +106,8 @@ export class PageMenuUser implements PageMenuProvider {
     }
 
     this.detachViewsFromPanel();
+
+    this.refreshUnreadIndicator();
   }
 
   wakeup(): void {
