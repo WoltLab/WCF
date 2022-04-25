@@ -62,12 +62,10 @@
 		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.3);
 		grid-area: dialog;
 		justify-self: center;
-		left: 50%;
 		max-height: 80%;
 		max-width: 80%;
 		min-width: 500px;
 		position: absolute;
-		transform: translateX(-50%);
 
 		&[aria-hidden="false"] {
 			animation: wcfDialog 0.3s;
