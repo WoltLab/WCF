@@ -58,6 +58,8 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
 				isKbd = (!isCode && this.utils.isCurrentOrParent('kbd'));
 				if (isCode || isKbd) {
+					e.preventDefault();
+
 					if (isIe) {
 						clipboardData = window.clipboardData.getData('Text');
 					}
