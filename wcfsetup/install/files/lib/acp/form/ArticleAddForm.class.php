@@ -626,7 +626,7 @@ class ArticleAddForm extends AbstractForm
     protected function getArticleTimestamp(): int
     {
         $time = $this->timeObj->getTimestamp();
-        if ($time > \TIME_NOW && $this->publicationStatus == Article::DELAYED_PUBLICATION) {
+        if ($time > \TIME_NOW && $this->publicationStatus == Article::PUBLISHED) {
             $time = \TIME_NOW;
         }
 
