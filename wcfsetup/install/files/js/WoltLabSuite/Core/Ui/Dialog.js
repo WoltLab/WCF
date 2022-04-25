@@ -627,6 +627,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             if (data === undefined) {
                 throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
             }
+            data.focusTrap.deactivate();
             data.dialog.setAttribute("aria-hidden", "true");
             // Move the keyboard focus away from a now hidden element.
             const activeElement = document.activeElement;
@@ -636,7 +637,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             if (typeof data.onClose === "function") {
                 data.onClose(id);
             }
-            data.focusTrap.deactivate();
             // get next active dialog
             _activeDialog = null;
             for (let i = 0; i < _container.childElementCount; i++) {

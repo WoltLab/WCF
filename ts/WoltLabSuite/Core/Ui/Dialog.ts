@@ -764,6 +764,8 @@ const UiDialog = {
       throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
     }
 
+    data.focusTrap.deactivate();
+
     data.dialog.setAttribute("aria-hidden", "true");
 
     // Move the keyboard focus away from a now hidden element.
@@ -775,8 +777,6 @@ const UiDialog = {
     if (typeof data.onClose === "function") {
       data.onClose(id);
     }
-
-    data.focusTrap.deactivate();
 
     // get next active dialog
     _activeDialog = null;
