@@ -112,10 +112,6 @@ class VisitTracker extends SingletonFactory
         }
 
         if (isset($this->userVisits[$objectTypeID])) {
-            // double times the lifetime period for existing visit data;
-            // equals 2 weeks for the default lifetime of 7 days
-            $minimum -= $lifetime;
-
             // using `max()` here will yield the most recent point in time
             return \max($this->userVisits[$objectTypeID], $minimum);
         }
