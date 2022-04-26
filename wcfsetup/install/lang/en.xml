@@ -5459,7 +5459,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.status.active"><![CDATA[Active]]></item>
 		<item name="wcf.user.notification.status.email"><![CDATA[Email]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[Enable desktop notifications to receive alerts for new notifications.]]></item>
-		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Change Preferences]]></item>
+		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Change Preference]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>

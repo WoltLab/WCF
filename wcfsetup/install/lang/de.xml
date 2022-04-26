@@ -5457,7 +5457,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.status.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.notification.status.email"><![CDATA[E-Mail]]></item>
 		<item name="wcf.user.notification.enableDesktopNotifications"><![CDATA[Aktivieren Sie die Desktop-Benachrichtigungen, um einen Hinweis für neue Benachrichtigungen zu erhalten.]]></item>
-		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Präferenzen festlegen]]></item>
+		<item name="wcf.user.notification.enableDesktopNotifications.button"><![CDATA[Präferenz festlegen]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine sichtbaren Informationen hinterlegt.{else}Der Benutzer hat noch keine für {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}Sie{/if} sichtbaren Informationen hinterlegt.{/if}]]></item>
