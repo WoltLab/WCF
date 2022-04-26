@@ -19,10 +19,15 @@ use wcf\system\WCF;
 class VisitTracker extends SingletonFactory
 {
     /**
-     * default tracking lifetime
-     * @var int
+     * @deprecated 5.5 Use VisitTracker::LIFETIME instead.
      */
-    const DEFAULT_LIFETIME = 604800; // = one week
+    const DEFAULT_LIFETIME = self::LIFETIME;
+
+    /**
+     * Objects older than this are considered visited.
+     * @since 5.5
+     */
+    public const LIFETIME = 31 * 86400;
 
     /**
      * list of available object types
@@ -103,24 +108,14 @@ class VisitTracker extends SingletonFactory
             }
         }
 
-        $lifetime = ($this->availableObjectTypes[$objectType]->lifetime) ?: self::DEFAULT_LIFETIME;
-        $minimum = TIME_NOW - $lifetime;
+        $minimum = TIME_NOW - self::LIFETIME;
 
         if (WCF::getUser()->userID) {
             // Mark everything before the registration date as read.
             $minimum = \max($minimum, WCF::getUser()->registrationDate);
         }
 
-        if (isset($this->userVisits[$objectTypeID])) {
-            // double times the lifetime period for existing visit data;
-            // equals 2 weeks for the default lifetime of 7 days
-            $minimum -= $lifetime;
-
-            // using `max()` here will yield the most recent point in time
-            return \max($this->userVisits[$objectTypeID], $minimum);
-        }
-
-        return $minimum;
+        return \max($this->userVisits[$objectTypeID] ?? 0, $minimum);
     }
 
     /**
