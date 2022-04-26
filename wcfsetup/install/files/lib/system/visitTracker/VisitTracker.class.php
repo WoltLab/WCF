@@ -111,12 +111,7 @@ class VisitTracker extends SingletonFactory
             $minimum = \max($minimum, WCF::getUser()->registrationDate);
         }
 
-        if (isset($this->userVisits[$objectTypeID])) {
-            // using `max()` here will yield the most recent point in time
-            return \max($this->userVisits[$objectTypeID], $minimum);
-        }
-
-        return $minimum;
+        return \max($this->userVisits[$objectTypeID] ?? 0, $minimum);
     }
 
     /**
