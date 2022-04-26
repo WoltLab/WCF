@@ -81,17 +81,18 @@ class DailyCleanUpCronjob extends AbstractCronjob
         WCF::getDB()->beginTransaction();
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.visitTracker.objectType');
         foreach ($objectTypes as $objectType) {
-            // get lifetime
-            $lifetime = ($objectType->lifetime ?: VisitTracker::DEFAULT_LIFETIME);
+            $visitLifetime = 120 * 86400;
+            \assert($visitLifetime > VisitTracker::DEFAULT_LIFETIME);
+            $lifetime = \max($objectType->lifetime ?: 0, $visitLifetime);
 
             // delete data
             $statement1->execute([
                 $objectType->objectTypeID,
-                $lifetime,
+                TIME_NOW - $lifetime,
             ]);
             $statement2->execute([
                 $objectType->objectTypeID,
-                $lifetime,
+                TIME_NOW - $lifetime,
             ]);
         }
         WCF::getDB()->commitTransaction();
