@@ -22,7 +22,7 @@ class VisitTracker extends SingletonFactory
      * default tracking lifetime
      * @var int
      */
-    const DEFAULT_LIFETIME = 7 * 86400;
+    const DEFAULT_LIFETIME = 31 * 86400;
 
     /**
      * list of available object types
