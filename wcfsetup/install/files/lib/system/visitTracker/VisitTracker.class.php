@@ -19,10 +19,15 @@ use wcf\system\WCF;
 class VisitTracker extends SingletonFactory
 {
     /**
-     * default tracking lifetime
-     * @var int
+     * @deprecated 5.5 Use VisitTracker::LIFETIME instead.
      */
-    const DEFAULT_LIFETIME = 31 * 86400;
+    const DEFAULT_LIFETIME = self::LIFETIME;
+
+    /**
+     * Objects older than this are considered visited.
+     * @since 5.5
+     */
+    public const LIFETIME = 31 * 86400;
 
     /**
      * list of available object types
@@ -103,8 +108,7 @@ class VisitTracker extends SingletonFactory
             }
         }
 
-        $lifetime = ($this->availableObjectTypes[$objectType]->lifetime) ?: self::DEFAULT_LIFETIME;
-        $minimum = TIME_NOW - $lifetime;
+        $minimum = TIME_NOW - self::LIFETIME;
 
         if (WCF::getUser()->userID) {
             // Mark everything before the registration date as read.
