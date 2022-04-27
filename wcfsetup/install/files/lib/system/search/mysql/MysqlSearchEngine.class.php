@@ -191,7 +191,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 // - the word is longer than the min token size, or
                 // - the word is quoted.
                 if (
-                    !\in_array($word, $this->getStopWords())
+                    !$this->isStopWord($word)
                     && (
                         $word[0] === '"'
                         || \strlen($word) >= $this->getMinTokenSize()
@@ -565,48 +565,48 @@ class MysqlSearchEngine extends AbstractSearchEngine
         return $this->minTokenSize;
     }
 
-    /**
-     * @return string[]
-     */
-    private function getStopWords(): array
+    private function isStopWord(string $word): bool
     {
-        return [
-            'a',
-            'about',
-            'an',
-            'are',
-            'as',
-            'at',
-            'be',
-            'by',
-            'com',
-            'de',
-            'en',
-            'for',
-            'from',
-            'how',
-            'i',
-            'in',
-            'is',
-            'it',
-            'la',
-            'of',
-            'on',
-            'or',
-            'that',
-            'the',
-            'this',
-            'to',
-            'was',
-            'what',
-            'when',
-            'where',
-            'who',
-            'will',
-            'with',
-            'und',
-            'the',
-            'www',
-        ];
+        return \in_array(
+            $word,
+            [
+                'a',
+                'about',
+                'an',
+                'are',
+                'as',
+                'at',
+                'be',
+                'by',
+                'com',
+                'de',
+                'en',
+                'for',
+                'from',
+                'how',
+                'i',
+                'in',
+                'is',
+                'it',
+                'la',
+                'of',
+                'on',
+                'or',
+                'that',
+                'the',
+                'this',
+                'to',
+                'was',
+                'what',
+                'when',
+                'where',
+                'who',
+                'will',
+                'with',
+                'und',
+                'the',
+                'www',
+            ]
+        );
     }
 }
