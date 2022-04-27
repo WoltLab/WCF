@@ -45,7 +45,7 @@
 
 {capture assign='contentInteractionButtons'}
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAsRead{/lang}</a>
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAllAsRead{/lang}</a>
 	{/if}
 {/capture}
 

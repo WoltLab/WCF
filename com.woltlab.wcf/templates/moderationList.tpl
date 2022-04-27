@@ -11,7 +11,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.moderation.markAllAsRead{/lang}</a>
+	<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAllAsRead{/lang}</a>
 {/capture}
 
 {include file='header'}

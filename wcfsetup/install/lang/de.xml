@@ -4003,6 +4003,7 @@ Dateianhänge:
 		<item name="wcf.global.button.showMenu"><![CDATA[Menü anzeigen]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Menü verbergen]]></item>
 		<item name="wcf.global.button.markAsRead"><![CDATA[Als gelesen markieren]]></item>
+		<item name="wcf.global.button.markAllAsRead"><![CDATA[Alle als gelesen markieren]]></item>
 		<item name="wcf.global.rss.copy"><![CDATA[Link kopieren]]></item>
 		<item name="wcf.global.rss.copy.success"><![CDATA[Der Link wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.global.rss.accessToken.info"><![CDATA[Der Link zum anonymen RSS-Feed enthält nur Inhalte, auf die Gäste Zugriff haben. Der Link zum personalisierten RSS-Feed enthält alle Inhalte, auf die {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Zugriff {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}.]]></item>
@@ -4324,7 +4325,6 @@ Dateianhänge:
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Gelöschte Inhalte]]></item>
 		<item name="wcf.moderation.comments.description"><![CDATA[Diese Kommentare sind intern und nur für Moderatoren einsehbar]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
-		<item name="wcf.moderation.markAllAsRead"><![CDATA[Alle Einträge als gelesen markieren]]></item>
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
 		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
@@ -4818,8 +4818,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} IP-Adresse steht {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es später erneut!]]></item>
 		<item name="wcf.user.banned"><![CDATA[Der Benutzer {$user->username} wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
-		<item name="wcf.user.panel.markAllAsRead"><![CDATA[Alle als gelesen markieren]]></item>
-		<item name="wcf.user.panel.markAsRead"><![CDATA[Als gelesen markieren]]></item>
 		<item name="wcf.user.panel.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.user.panel.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.user.boxList.description.activityPoints"><![CDATA[{#$boxUser->activityPoints} Punkt{if $boxUser->activityPoints != 1}e{/if}]]></item>
@@ -5285,9 +5283,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
 		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "Keine Benachrichtigungen" } else if (data.returnValues.count == 1) { "Eine Benachrichtigung" } else { data.returnValues.count + " Benachrichtigungen" }]]></item>
-		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Alle als gelesen markieren]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Benachrichtigungen als gelesen markieren?]]></item>
-		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Als gelesen markieren]]></item>
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine aktuellen Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Benachrichtigungen.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Benachrichtigungen]]></item>
@@ -5607,5 +5603,10 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.logout.sure"/>
 	<item name="wcf.acp.dataImport.existingMapping.confirmMessage"/>
 	<item name="wcf.article.markAllAsRead" />
+	<item name="wcf.moderation.markAllAsRead" />
+	<item name="wcf.user.notification.markAllAsConfirmed" />
+	<item name="wcf.user.notification.markAsConfirmed" />
+	<item name="wcf.user.panel.markAllAsRead" />
+	<item name="wcf.user.panel.markAsRead" />
 </delete>
 </language>

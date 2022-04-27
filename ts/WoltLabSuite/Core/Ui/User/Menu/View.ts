@@ -35,7 +35,7 @@ export class UserMenuView {
       icon: '<span class="icon icon24 fa-check"></span>',
       link: "#",
       name: "markAllAsRead",
-      title: Language.get("wcf.user.panel.markAllAsRead"),
+      title: Language.get("wcf.global.button.markAllAsRead"),
     });
 
     this.focusTrap = createFocusTrap(this.element, {
@@ -166,7 +166,7 @@ export class UserMenuView {
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
         <a href="#" class="userMenuItemMarkAsRead" role="button">
-          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.user.panel.markAsRead")}"></span>
+          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}"></span>
         </a>
       </div>
     `;
