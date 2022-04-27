@@ -28,7 +28,7 @@
 
 {capture assign='contentInteractionButtons'}
 	{if $__wcf->getUserNotificationHandler()->getNotificationCount()}
-		<a href="#" class="jsMarkAllAsConfirmed contentInteractionButton button small jsOnly">{lang}wcf.user.notification.markAllAsConfirmed{/lang}</a>
+		<a href="#" class="jsMarkAllAsConfirmed contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAllAsRead{/lang}</a>
 	{/if}
 {/capture}
 
@@ -118,7 +118,6 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.user.notification.markAsConfirmed': '{jslang}wcf.user.notification.markAsConfirmed{/jslang}',
 			'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{jslang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/jslang}'
 		});
 		

@@ -275,7 +275,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				if (this._options.enableMarkAsRead) {
 					var $outstandingItems = this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding');
 					if (this._markAllAsReadLink === null && $outstandingItems.length) {
-						var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon24 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
+						var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.global.button.markAllAsRead') + '" class="jsTooltip"><span class="icon icon24 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
 						$button.click((function (event) {
 							this._dropdown.close();
 							
@@ -289,7 +289,7 @@ if (COMPILER_TARGET_DEFAULT) {
 						var $item = $(item).addClass('interactiveDropdownItemOutstandingIcon');
 						var $objectID = $item.data('objectID');
 						
-						var $button = $('<div class="interactiveDropdownItemMarkAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAsRead') + '" class="jsTooltip"><span class="icon icon16 fa-check" /></a></div>').appendTo($item);
+						var $button = $('<div class="interactiveDropdownItemMarkAsRead"><a href="#" title="' + WCF.Language.get('wcf.global.button.markAsRead') + '" class="jsTooltip"><span class="icon icon16 fa-check" /></a></div>').appendTo($item);
 						$button.click((function (event) {
 							this._markAsRead(event, $objectID);
 							
@@ -1461,7 +1461,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				if (!$item.data('isRead')) {
 					$item.find('a:not(.userLink)').prop('href', $item.data('link'));
 					
-					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').appendTo($item);
+					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.global.button.markAsRead') + '" />').appendTo($item);
 					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
 				}
 			}).bind(this));

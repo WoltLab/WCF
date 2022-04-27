@@ -67,7 +67,7 @@
 		<a href="#" class="contentInteractionButton jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}">{lang}wcf.user.objectWatch.button.subscribe{/lang}</a>
 	{/if}
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAsRead{/lang}</a>
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.global.button.markAllAsRead{/lang}</a>
 	{/if}
 {/capture}
 

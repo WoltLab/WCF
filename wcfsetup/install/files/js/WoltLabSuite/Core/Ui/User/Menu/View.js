@@ -25,7 +25,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 icon: '<span class="icon icon24 fa-check"></span>',
                 link: "#",
                 name: "markAllAsRead",
-                title: Language.get("wcf.user.panel.markAllAsRead"),
+                title: Language.get("wcf.global.button.markAllAsRead"),
             });
             this.focusTrap = (0, focus_trap_1.createFocusTrap)(this.element, {
                 allowOutsideClick: true,
@@ -133,7 +133,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
         <a href="#" class="userMenuItemMarkAsRead" role="button">
-          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.user.panel.markAsRead")}"></span>
+          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}"></span>
         </a>
       </div>
     `;
