@@ -140,7 +140,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             if (!isset($excludedPackagesOfInstalledPackages[$row['excludedPackage']])) {
                 $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
             } elseif (
-                Package::compareVersion(
+                $row['excludedPackageVersion'] === '*'
+                || Package::compareVersion(
                     $excludedPackagesOfInstalledPackages[$row['excludedPackage']],
                     $row['excludedPackageVersion'],
                     '>'
