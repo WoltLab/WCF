@@ -46,6 +46,26 @@ class Mailbox
      */
     public function __construct($address, $name = null, ?Language $language = null)
     {
+        $this->address = self::filterAddress($address);
+        $this->name = $name;
+        if ($language === null) {
+            $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+        } else {
+            $this->languageID = $language->languageID;
+        }
+    }
+
+    /**
+     * Preprocesses the given email address to improve compatibility for
+     * IDN domains. The rewritten email address will be returned and an
+     * exception will be thrown if the email address is invalid and cannot
+     * be fixed.
+     *
+     * @since 5.5
+     * @throws \DomainException If the given address is not valid.
+     */
+    public static function filterAddress(string $address): string
+    {
         // There could be multiple at-signs, but only in the localpart:
         //   Search for the last one.
         $atSign = \strrpos($address, '@');
@@ -78,13 +98,7 @@ class Mailbox
             throw new \DomainException("The given email address '" . $address . "' is invalid.");
         }
 
-        $this->address = $address;
-        $this->name = $name;
-        if ($language === null) {
-            $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
-        } else {
-            $this->languageID = $language->languageID;
-        }
+        return $address;
     }
 
     /**
