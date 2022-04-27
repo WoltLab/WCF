@@ -10,8 +10,8 @@
 	{pages print=true assign=pagesLinks controller='ModerationList' link="definitionID=$definitionID&assignedUserID=$assignedUserID&status=$status&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 {/capture}
 
-{capture assign='contentInteractionDropdownItems'}
-	<li class="jsOnly"><a href="#" class="markAllAsReadButton">{lang}wcf.moderation.markAllAsRead{/lang}</a></li>
+{capture assign='contentInteractionButtons'}
+	<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{lang}wcf.moderation.markAllAsRead{/lang}</a>
 {/capture}
 
 {include file='header'}

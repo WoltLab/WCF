@@ -26,8 +26,13 @@
 	{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}
 {/capture}
 
+{capture assign='contentInteractionButtons'}
+	{if $__wcf->getUserNotificationHandler()->getNotificationCount()}
+		<a href="#" class="jsMarkAllAsConfirmed contentInteractionButton button small jsOnly">{lang}wcf.user.notification.markAllAsConfirmed{/lang}</a>
+	{/if}
+{/capture}
+
 {capture assign='contentInteractionDropdownItems'}
-	{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a href="#" class="jsMarkAllAsConfirmed">{lang}wcf.user.notification.markAllAsConfirmed{/lang}</a></li>{/if}
 	<li><a rel="alternate" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">{lang}wcf.global.button.rss{/lang}</a></li>
 {/capture}
 

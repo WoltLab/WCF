@@ -1430,7 +1430,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			});
 			
 			// handle 'mark all as confirmed' buttons
-			$('.contentHeaderNavigation .jsMarkAllAsConfirmed').click(function () {
+			$('.jsMarkAllAsConfirmed').click(function () {
 				WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function (action) {
 					if (action === 'confirm') {
 						new WCF.Action.Proxy({
