@@ -28,7 +28,7 @@
 
 {capture assign='contentInteractionDropdownItems'}
 	{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a href="#" class="jsMarkAllAsConfirmed">{lang}wcf.user.notification.markAllAsConfirmed{/lang}</a></li>{/if}
-	<li><a rel="alternate" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}" class="rssFeed">{lang}wcf.global.button.rss{/lang}</a></li>
+	<li><a rel="alternate" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">{lang}wcf.global.button.rss{/lang}</a></li>
 {/capture}
 
 {include file='header' __sidebarLeftHasMenu=true}
