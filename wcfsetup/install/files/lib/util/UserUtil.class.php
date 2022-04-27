@@ -2,7 +2,6 @@
 
 namespace wcf\util;
 
-use wcf\system\email\Mailbox;
 use wcf\system\WCF;
 
 /**
@@ -62,23 +61,31 @@ final class UserUtil
     }
 
     /**
-     * Returns whether the given email is accepted by the Mailbox class.
+     * Returns true if the given e-mail is a valid address.
+     * @see http://www.faqs.org/rfcs/rfc821.html
      *
-     * @see wcf\system\email\Mailbox::__construct()
+     * @param string $email
+     * @return  bool
      */
-    public static function isValidEmail(string $email): bool
+    public static function isValidEmail($email)
     {
         if (\mb_strlen($email) > 191) {
             return false;
         }
 
-        try {
-            new Mailbox($email);
+        // local-part
+        $c = '!#\$%&\'\*\+\-\/0-9=\?a-z\^_`\{\}\|~';
+        $string = '[' . $c . ']*(?:\\\\[\x00-\x7F][' . $c . ']*)*';
+        $localPart = $string . '(?:\.' . $string . ')*';
 
-            return true;
-        } catch (\DomainException $e) {
-            return false;
-        }
+        // domain
+        $name = '[a-z0-9](?:[a-z0-9-]*[a-z0-9])?';
+        $domain = $name . '(?:\.' . $name . ')*\.[a-z]{2,}';
+
+        // mailbox
+        $mailbox = $localPart . '@' . $domain;
+
+        return \preg_match('/^' . $mailbox . '$/i', $email);
     }
 
     /**
