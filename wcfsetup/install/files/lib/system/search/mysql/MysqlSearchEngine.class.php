@@ -568,7 +568,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
     private function isStopWord(string $word): bool
     {
         return \in_array(
-            $word,
+            \strtolower($word),
             [
                 'a',
                 'about',
