@@ -25,10 +25,24 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
             this.container = new Container_1.default(this, "right" /* Right */);
+            const isReady = new Promise((resolve) => {
+                if (document.readyState === "complete") {
+                    resolve();
+                }
+                else {
+                    document.addEventListener("readystatechange", () => {
+                        if (document.readyState === "complete") {
+                            resolve();
+                        }
+                    });
+                }
+            });
             this.callbackOpen = (event) => {
                 event.preventDefault();
                 event.stopPropagation();
-                this.container.toggle();
+                // Clicking too early while the page is still loading
+                // causes an incomplete tab menu.
+                void isReady.then(() => this.container.toggle());
             };
             (0, Screen_1.on)("screen-lg", {
                 match: () => this.detachViewsFromPanel(),

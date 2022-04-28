@@ -56,11 +56,25 @@ export class PageMenuUser implements PageMenuProvider {
 
     this.container = new PageMenuContainer(this, Orientation.Right);
 
+    const isReady = new Promise<void>((resolve) => {
+      if (document.readyState === "complete") {
+        resolve();
+      } else {
+        document.addEventListener("readystatechange", () => {
+          if (document.readyState === "complete") {
+            resolve();
+          }
+        });
+      }
+    });
+
     this.callbackOpen = (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      this.container.toggle();
+      // Clicking too early while the page is still loading
+      // causes an incomplete tab menu.
+      void isReady.then(() => this.container.toggle());
     };
 
     onMediaQueryChange("screen-lg", {
