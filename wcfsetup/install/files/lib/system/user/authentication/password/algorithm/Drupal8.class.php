@@ -47,11 +47,9 @@ final class Drupal8 implements IPasswordAlgorithm
      */
     public function hash(string $password): string
     {
-        $settings = '$S$';
-        $settings .= $this->itoa64[self::COSTS];
-        $settings .= Hex::encode(\random_bytes(4));
+        $salt = Hex::encode(\random_bytes(4));
 
-        return $this->hashDrupal($password, $settings) . ':';
+        return $this->hashDrupal($password, $this->getSettings() . $salt) . ':';
     }
 
     /**
@@ -59,6 +57,14 @@ final class Drupal8 implements IPasswordAlgorithm
      */
     public function needsRehash(string $hash): bool
     {
-        return false;
+        return !\str_starts_with($hash, $this->getSettings());
+    }
+
+    /**
+     * Returns the settings prefix with the algorithm identifier and costs.
+     */
+    private function getSettings(): string
+    {
+        return '$S$' . $this->itoa64[self::COSTS];
     }
 }
