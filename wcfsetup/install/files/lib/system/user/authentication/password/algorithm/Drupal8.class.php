@@ -3,29 +3,30 @@
 namespace wcf\system\user\authentication\password\algorithm;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\system\user\authentication\password\IPasswordAlgorithm;
 
 /**
- * Implementation of the PHPASS password algorithm.
+ * Implementation of the password algorithm for Drupal 8.x.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2020 WoltLab GmbH
+ * @author  Tim Duesterhus
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\User\Authentication\Password\Algorithm
  * @since   5.4
  */
-trait TPhpass
+final class Drupal8 implements IPasswordAlgorithm
 {
     private $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
     /**
      * Returns the hashed password, with the given settings.
      */
-    private function hashPhpass(string $password, string $settings): string
+    private function hashDrupal(string $password, string $settings): string
     {
         $output = '*';
 
         // Check for correct hash
-        if (\mb_substr($settings, 0, 3, '8bit') !== '$H$' && \mb_substr($settings, 0, 3, '8bit') !== '$P$') {
+        if (\mb_substr($settings, 0, 3, '8bit') !== '$S$') {
             return $output;
         }
 
@@ -42,9 +43,9 @@ trait TPhpass
             return $output;
         }
 
-        $hash = \md5($salt . $password, true);
+        $hash = \hash('sha512', $salt . $password, true);
         do {
-            $hash = \md5($hash . $password, true);
+            $hash = \hash('sha512', $hash . $password, true);
         } while (--$count);
 
         $output = \mb_substr($settings, 0, 12, '8bit');
@@ -82,9 +83,9 @@ trait TPhpass
             return $output;
         };
 
-        $output .= $hash_encode64($hash, 16, $this->itoa64);
+        $output .= $hash_encode64($hash, 64, $this->itoa64);
 
-        return $output;
+        return \mb_substr($output, 0, 55, '8bit');
     }
 
     /**
@@ -96,11 +97,7 @@ trait TPhpass
         // but sometimes also without the salt. We don't need the salt, because the salt is saved with the hash.
         [$hash] = \explode(':', $hash, 2);
 
-        if (\mb_strlen($hash, '8bit') !== 34) {
-            return \hash_equals($hash, \md5($password));
-        }
-
-        return \hash_equals($hash, $this->hashPhpass($password, $hash));
+        return \hash_equals($hash, $this->hashDrupal($password, $hash));
     }
 
     /**
@@ -108,10 +105,10 @@ trait TPhpass
      */
     public function hash(string $password): string
     {
-        $settings = '$H$8';
+        $settings = '$S$D';
         $settings .= Hex::encode(\random_bytes(4));
 
-        return $this->hashPhpass($password, $settings) . ':';
+        return $this->hashDrupal($password, $settings) . ':';
     }
 
     /**
