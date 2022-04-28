@@ -16,7 +16,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Drupal8 implements IPasswordAlgorithm
 {
-    private $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    use TPhpass;
 
     /**
      * Returns the hashed password, with the given settings.
@@ -49,41 +49,7 @@ final class Drupal8 implements IPasswordAlgorithm
         } while (--$count);
 
         $output = \mb_substr($settings, 0, 12, '8bit');
-        $hash_encode64 = static function ($input, $count, &$itoa64) {
-            $output = '';
-            $i = 0;
-
-            do {
-                $value = \ord($input[$i++]);
-                $output .= $itoa64[$value & 0x3f];
-
-                if ($i < $count) {
-                    $value |= \ord($input[$i]) << 8;
-                }
-
-                $output .= $itoa64[($value >> 6) & 0x3f];
-
-                if ($i++ >= $count) {
-                    break;
-                }
-
-                if ($i < $count) {
-                    $value |= \ord($input[$i]) << 16;
-                }
-
-                $output .= $itoa64[($value >> 12) & 0x3f];
-
-                if ($i++ >= $count) {
-                    break;
-                }
-
-                $output .= $itoa64[($value >> 18) & 0x3f];
-            } while ($i < $count);
-
-            return $output;
-        };
-
-        $output .= $hash_encode64($hash, 64, $this->itoa64);
+        $output .= $this->encode64($hash, 64);
 
         return \mb_substr($output, 0, 55, '8bit');
     }
