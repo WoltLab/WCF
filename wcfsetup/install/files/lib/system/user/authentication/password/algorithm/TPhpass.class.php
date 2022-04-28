@@ -42,9 +42,9 @@ trait TPhpass
             return $output;
         }
 
-        $hash = \md5($salt . $password, true);
+        $hash = \hash('md5', $salt . $password, true);
         do {
-            $hash = \md5($hash . $password, true);
+            $hash = \hash('md5', $hash . $password, true);
         } while (--$count);
 
         $output = \mb_substr($settings, 0, 12, '8bit');
