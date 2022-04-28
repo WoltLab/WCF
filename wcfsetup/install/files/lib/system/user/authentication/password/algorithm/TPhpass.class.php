@@ -48,41 +48,45 @@ trait TPhpass
         } while (--$count);
 
         $output = \mb_substr($settings, 0, 12, '8bit');
-        $hash_encode64 = static function ($input, $count, &$itoa64) {
-            $output = '';
-            $i = 0;
+        $output .= $this->encode64($hash, 16);
 
-            do {
-                $value = \ord($input[$i++]);
-                $output .= $itoa64[$value & 0x3f];
+        return $output;
+    }
 
-                if ($i < $count) {
-                    $value |= \ord($input[$i]) << 8;
-                }
+    /**
+     * Encodes $count characters from $input with PHPASS' custom base64 encoder.
+     */
+    private function encode64(string $input, int $count): string
+    {
+        $output = '';
+        $i = 0;
 
-                $output .= $itoa64[($value >> 6) & 0x3f];
+        do {
+            $value = \ord($input[$i++]);
+            $output .= $this->itoa64[$value & 0x3f];
 
-                if ($i++ >= $count) {
-                    break;
-                }
+            if ($i < $count) {
+                $value |= \ord($input[$i]) << 8;
+            }
 
-                if ($i < $count) {
-                    $value |= \ord($input[$i]) << 16;
-                }
+            $output .= $this->itoa64[($value >> 6) & 0x3f];
 
-                $output .= $itoa64[($value >> 12) & 0x3f];
+            if ($i++ >= $count) {
+                break;
+            }
 
-                if ($i++ >= $count) {
-                    break;
-                }
+            if ($i < $count) {
+                $value |= \ord($input[$i]) << 16;
+            }
 
-                $output .= $itoa64[($value >> 18) & 0x3f];
-            } while ($i < $count);
+            $output .= $this->itoa64[($value >> 12) & 0x3f];
 
-            return $output;
-        };
+            if ($i++ >= $count) {
+                break;
+            }
 
-        $output .= $hash_encode64($hash, 16, $this->itoa64);
+            $output .= $this->itoa64[($value >> 18) & 0x3f];
+        } while ($i < $count);
 
         return $output;
     }
