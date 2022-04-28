@@ -252,10 +252,6 @@
 							{content}
 								{event name='menuCustomization'}
 								
-								{if $user->userID == $__wcf->user->userID}
-									<li><a href="{link controller='AvatarEdit'}{/link}">{lang}wcf.user.avatar.edit{/lang}</a></li>
-								{/if}
-								
 								{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
 									<li><a href="#" class="jsButtonEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>
 								{/if}
