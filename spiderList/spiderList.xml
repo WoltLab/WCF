@@ -1315,6 +1315,10 @@
 		<name>Unpartisan</name>
 		<url>http://www.unpartisan.com</url>
 	</spider>
+	<spider ident="Uptime-Kuma">
+		<name>Uptime-Kuma</name>
+		<url>https://uptime.kuma.pet/</url>
+	</spider>
 	<spider ident="UptimeRobot/2.0">
 		<name>Uptime Robot</name>
 		<url>http://uptimerobot.com/</url>
