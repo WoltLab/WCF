@@ -23,33 +23,7 @@ final class Drupal8 implements IPasswordAlgorithm
      */
     private function hashDrupal(string $password, string $settings): string
     {
-        $output = '*';
-
-        // Check for correct hash
-        if (\mb_substr($settings, 0, 3, '8bit') !== '$S$') {
-            return $output;
-        }
-
-        $count_log2 = \mb_strpos($this->itoa64, $settings[3], 0, '8bit');
-
-        if ($count_log2 < 7 || $count_log2 > 30) {
-            return $output;
-        }
-
-        $count = 1 << $count_log2;
-        $salt = \mb_substr($settings, 4, 8, '8bit');
-
-        if (\mb_strlen($salt, '8bit') != 8) {
-            return $output;
-        }
-
-        $hash = \hash('sha512', $salt . $password, true);
-        do {
-            $hash = \hash('sha512', $hash . $password, true);
-        } while (--$count);
-
-        $output = \mb_substr($settings, 0, 12, '8bit');
-        $output .= $this->encode64($hash, 64);
+        $output = $this->hashPhpass($password, $settings);
 
         return \mb_substr($output, 0, 55, '8bit');
     }

@@ -25,8 +25,21 @@ trait TPhpass
         $output = '*';
 
         // Check for correct hash
-        if (\mb_substr($settings, 0, 3, '8bit') !== '$H$' && \mb_substr($settings, 0, 3, '8bit') !== '$P$') {
+        if ($settings[0] !== '$' || $settings[2] !== '$') {
             return $output;
+        }
+
+        $variant = $settings[1];
+        switch ($variant) {
+            case 'H':
+            case 'P':
+                $algo = 'md5';
+                break;
+            case 'S':
+                $algo = 'sha512';
+                break;
+            default:
+                return $output;
         }
 
         $count_log2 = \mb_strpos($this->itoa64, $settings[3], 0, '8bit');
@@ -42,13 +55,13 @@ trait TPhpass
             return $output;
         }
 
-        $hash = \hash('md5', $salt . $password, true);
+        $hash = \hash($algo, $salt . $password, true);
         do {
-            $hash = \hash('md5', $hash . $password, true);
+            $hash = \hash($algo, $hash . $password, true);
         } while (--$count);
 
         $output = \mb_substr($settings, 0, 12, '8bit');
-        $output .= $this->encode64($hash, 16);
+        $output .= $this->encode64($hash, \mb_strlen($hash, '8bit'));
 
         return $output;
     }
