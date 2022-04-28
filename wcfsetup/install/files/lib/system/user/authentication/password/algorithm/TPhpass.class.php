@@ -25,8 +25,21 @@ trait TPhpass
         $output = '*';
 
         // Check for correct hash
-        if (\mb_substr($settings, 0, 3, '8bit') !== '$H$' && \mb_substr($settings, 0, 3, '8bit') !== '$P$') {
+        if ($settings[0] !== '$' || $settings[2] !== '$') {
             return $output;
+        }
+
+        $variant = $settings[1];
+        switch ($variant) {
+            case 'H':
+            case 'P':
+                $algo = 'md5';
+                break;
+            case 'S':
+                $algo = 'sha512';
+                break;
+            default:
+                return $output;
         }
 
         $count_log2 = \mb_strpos($this->itoa64, $settings[3], 0, '8bit');
@@ -42,47 +55,51 @@ trait TPhpass
             return $output;
         }
 
-        $hash = \md5($salt . $password, true);
+        $hash = \hash($algo, $salt . $password, true);
         do {
-            $hash = \md5($hash . $password, true);
+            $hash = \hash($algo, $hash . $password, true);
         } while (--$count);
 
         $output = \mb_substr($settings, 0, 12, '8bit');
-        $hash_encode64 = static function ($input, $count, &$itoa64) {
-            $output = '';
-            $i = 0;
+        $output .= $this->encode64($hash, \mb_strlen($hash, '8bit'));
 
-            do {
-                $value = \ord($input[$i++]);
-                $output .= $itoa64[$value & 0x3f];
+        return $output;
+    }
 
-                if ($i < $count) {
-                    $value |= \ord($input[$i]) << 8;
-                }
+    /**
+     * Encodes $count characters from $input with PHPASS' custom base64 encoder.
+     */
+    private function encode64(string $input, int $count): string
+    {
+        $output = '';
+        $i = 0;
 
-                $output .= $itoa64[($value >> 6) & 0x3f];
+        do {
+            $value = \ord($input[$i++]);
+            $output .= $this->itoa64[$value & 0x3f];
 
-                if ($i++ >= $count) {
-                    break;
-                }
+            if ($i < $count) {
+                $value |= \ord($input[$i]) << 8;
+            }
 
-                if ($i < $count) {
-                    $value |= \ord($input[$i]) << 16;
-                }
+            $output .= $this->itoa64[($value >> 6) & 0x3f];
 
-                $output .= $itoa64[($value >> 12) & 0x3f];
+            if ($i++ >= $count) {
+                break;
+            }
 
-                if ($i++ >= $count) {
-                    break;
-                }
+            if ($i < $count) {
+                $value |= \ord($input[$i]) << 16;
+            }
 
-                $output .= $itoa64[($value >> 18) & 0x3f];
-            } while ($i < $count);
+            $output .= $this->itoa64[($value >> 12) & 0x3f];
 
-            return $output;
-        };
+            if ($i++ >= $count) {
+                break;
+            }
 
-        $output .= $hash_encode64($hash, 16, $this->itoa64);
+            $output .= $this->itoa64[($value >> 18) & 0x3f];
+        } while ($i < $count);
 
         return $output;
     }
@@ -104,7 +121,7 @@ trait TPhpass
     }
 
     /**
-     * @inheritDoc
+     * @deprecated 5.5 Use Phpass::hash() instead.
      */
     public function hash(string $password): string
     {
@@ -115,7 +132,7 @@ trait TPhpass
     }
 
     /**
-     * @inheritDoc
+     * @deprecated 5.5 Use Phpass::needsRehash() instead.
      */
     public function needsRehash(string $hash): bool
     {
