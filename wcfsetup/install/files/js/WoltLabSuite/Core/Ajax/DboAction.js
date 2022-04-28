@@ -14,6 +14,7 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
     exports.DboAction = void 0;
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
+    let ignoreConnectionErrors = undefined;
     class DboAction {
         constructor(actionName, className) {
             this._objectIDs = [];
@@ -24,6 +25,12 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
             this.className = className;
         }
         static prepare(actionName, className) {
+            if (ignoreConnectionErrors === undefined) {
+                ignoreConnectionErrors = false;
+                window.addEventListener("beforeunload", () => {
+                    ignoreConnectionErrors = true;
+                });
+            }
             return new DboAction(actionName, className);
         }
         getAbortController() {
@@ -105,8 +112,10 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
                     throw error;
                 }
                 else {
-                    // Re-package the error for use in our global "unhandledrejection" handler.
-                    throw new Error_1.ConnectionError(error);
+                    if (!ignoreConnectionErrors) {
+                        // Re-package the error for use in our global "unhandledrejection" handler.
+                        throw new Error_1.ConnectionError(error);
+                    }
                 }
             }
             finally {

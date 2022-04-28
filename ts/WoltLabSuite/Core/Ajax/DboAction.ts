@@ -35,6 +35,8 @@ type RequestBody = {
   parameters?: Payload;
 };
 
+let ignoreConnectionErrors: boolean | undefined = undefined;
+
 export class DboAction {
   private readonly actionName: string;
   private readonly className: string;
@@ -49,6 +51,14 @@ export class DboAction {
   }
 
   static prepare(actionName: string, className: string): DboAction {
+    if (ignoreConnectionErrors === undefined) {
+      ignoreConnectionErrors = false;
+
+      window.addEventListener("beforeunload", () => {
+        ignoreConnectionErrors = true;
+      });
+    }
+
     return new DboAction(actionName, className);
   }
 
@@ -147,8 +157,10 @@ export class DboAction {
       if (error instanceof ApiError) {
         throw error;
       } else {
-        // Re-package the error for use in our global "unhandledrejection" handler.
-        throw new ConnectionError(error);
+        if (!ignoreConnectionErrors) {
+          // Re-package the error for use in our global "unhandledrejection" handler.
+          throw new ConnectionError(error);
+        }
       }
     } finally {
       if (showLoadingIndicator) {
