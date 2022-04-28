@@ -266,27 +266,6 @@
 				
 				{hascontent}
 					<li class="dropdown">
-						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.user{/lang}"><span class="icon icon32 fa-user"></span> <span class="invisible">{lang}wcf.user.profile.user{/lang}</span></a>
-						<ul class="dropdownMenu userProfileButtonMenu" data-menu="interaction">
-							{content}
-								{event name='menuInteraction'}
-								
-								{if $user->userID != $__wcf->user->userID}
-									{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-										<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
-									{/if}
-								{/if}
-								
-								{if $user->userID != $__wcf->user->userID && $__wcf->session->getPermission('user.profile.canReportContent')}
-									<li class="jsReportUser" data-object-id="{@$user->userID}"><a href="#">{lang}wcf.user.profile.report{/lang}</a></li>
-								{/if}
-							{/content}
-						</ul>
-					</li>
-				{/hascontent}
-				
-				{hascontent}
-					<li class="dropdown">
 						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon32 fa-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
 						<ul class="dropdownMenu userProfileButtonMenu" data-menu="search">
 							{content}{event name='menuSearch'}{event name='quickSearchItems'}{/content}
@@ -318,11 +297,24 @@
 				{event name='contentHeaderNavigation'}
 			</ul>
 		</nav>
-		
 	</header>
 {/capture}
 
 {include file='userSidebar' assign='sidebarRight'}
+
+{capture assign='contentInteractionDropdownItems'}
+	{event name='menuInteraction'}
+								
+	{if $user->userID != $__wcf->user->userID}
+		{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+			<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
+		{/if}
+	{/if}
+	
+	{if $user->userID != $__wcf->user->userID && $__wcf->session->getPermission('user.profile.canReportContent')}
+		<li class="jsReportUser" data-object-id="{@$user->userID}"><a href="#">{lang}wcf.user.profile.report{/lang}</a></li>
+	{/if}
+{/capture}
 
 {include file='header'}
 

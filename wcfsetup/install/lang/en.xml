@@ -5476,7 +5476,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}/response{@$responseID}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[This member limits who may view their full profile.]]></item>
-		<item name="wcf.user.profile.user"><![CDATA[User]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Management]]></item>
 		<item name="wcf.user.profile.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
@@ -5610,5 +5609,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.user.notification.markAsConfirmed" />
 	<item name="wcf.user.panel.markAllAsRead" />
 	<item name="wcf.user.panel.markAsRead" />
+	<item name="wcf.user.profile.user" />
 </delete>
 </language>
