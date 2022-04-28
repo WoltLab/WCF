@@ -148,7 +148,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         foreach ($queues as $queue) {
             $data[] = [
                 'content' => $queue->getAffectedObject()->getTitle(),
-                'image' => $queue->getUserProfile()->getAvatar()->getImageTag(48),
+                'image' => '<span class="icon icon48 ' . $queue->getIconName() . '"></span>',
                 'isUnread' => $queue->isNew(),
                 'link' => $queue->getLink(),
                 'objectId' => $queue->queueID,
