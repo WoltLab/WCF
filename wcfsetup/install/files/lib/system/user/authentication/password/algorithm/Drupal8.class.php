@@ -18,6 +18,8 @@ final class Drupal8 implements IPasswordAlgorithm
 {
     use TPhpass;
 
+    private const COSTS = 15;
+
     /**
      * Returns the hashed password, with the given settings.
      */
@@ -45,7 +47,8 @@ final class Drupal8 implements IPasswordAlgorithm
      */
     public function hash(string $password): string
     {
-        $settings = '$S$D';
+        $settings = '$S$';
+        $settings .= $this->itoa64[self::COSTS];
         $settings .= Hex::encode(\random_bytes(4));
 
         return $this->hashDrupal($password, $settings) . ':';
