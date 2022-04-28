@@ -230,21 +230,21 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         return WCF::getLanguage()->get('wcf.moderation.type.' . $definition->definitionName);
     }
 
+    /**
+     * @since 5.5
+     */
     public function getIconName(): string
     {
         $definition = ObjectTypeCache::getInstance()->getDefinition(ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->definitionID);
 
-        switch ($definition->definitionName) {
-            case 'com.woltlab.wcf.moderation.activation':
-                if ($this->getAffectedObject()->enableTime) {
-                    return 'fa-clock-o';
-                } else {
-                    return 'fa-check-square-o';
-                }
-
-            case 'com.woltlab.wcf.moderation.report':
-            default:
-                return 'fa-exclamation-triangle';
+        if ($definition->definitionName === 'com.woltlab.wcf.moderation.activation') {
+            if ($this->getAffectedObject()->enableTime) {
+                return 'fa-clock-o';
+            } else {
+                return 'fa-check-square-o';
+            }
         }
+
+        return 'fa-exclamation-triangle';
     }
 }
