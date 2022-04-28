@@ -5475,7 +5475,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[Der Benutzer hat den Zugriff auf sein vollständiges Profil eingeschränkt.]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
-		<item name="wcf.user.profile.customization"><![CDATA[Anpassung]]></item>
 		<item name="wcf.user.profile.title"><![CDATA[Benutzerprofil von {$user->username}]]></item>
 	</category>
 	<category name="wcf.user.objectWatch">
@@ -5608,5 +5607,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.panel.markAllAsRead" />
 	<item name="wcf.user.panel.markAsRead" />
 	<item name="wcf.user.profile.user" />
+	<item name="wcf.user.profile.customization" />
 </delete>
 </language>

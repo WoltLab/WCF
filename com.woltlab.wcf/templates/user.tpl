@@ -242,27 +242,20 @@
 				</dl>
 			</div>
 		</div>
-		
-		<nav class="contentHeaderNavigation">
-			<ul class="userProfileButtonContainer">
-				{hascontent}
-					<li class="dropdown">
-						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.customization{/lang}"><span class="icon icon32 fa-pencil"></span> <span class="invisible">{lang}wcf.user.profile.customization{/lang}</span></a>
-						<ul class="dropdownMenu userProfileButtonMenu" data-menu="customization">
-							{content}
-								{event name='menuCustomization'}
-								
-								{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
-									<li><a href="#" class="jsButtonEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>
-								{/if}
-							{/content}
-						</ul>
-					</li>
-				{/hascontent}
-				
-				{event name='contentHeaderNavigation'}
-			</ul>
-		</nav>
+
+		{hascontent}
+			<nav class="contentHeaderNavigation">
+				<ul class="userProfileButtonContainer">
+					{content}
+						{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
+							<li><a href="#" class="jsButtonEditProfile button buttonPrimary"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.user.editProfile{/lang}</span></a></li>
+						{/if}
+						
+						{event name='contentHeaderNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
 	</header>
 {/capture}
 
@@ -308,6 +301,7 @@
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
+	{* DEPRECATED *}{event name='menuCustomization'}
 	{event name='menuInteraction'}
 								
 	{if $user->userID != $__wcf->user->userID}
