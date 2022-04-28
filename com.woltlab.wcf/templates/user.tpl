@@ -266,15 +266,6 @@
 				
 				{hascontent}
 					<li class="dropdown">
-						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon32 fa-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
-						<ul class="dropdownMenu userProfileButtonMenu" data-menu="search">
-							{content}{event name='menuSearch'}{event name='quickSearchItems'}{/content}
-						</ul>
-					</li>
-				{/hascontent}
-				
-				{hascontent}
-					<li class="dropdown">
 						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.management{/lang}"><span class="icon icon32 fa-cog"></span> <span class="invisible">{lang}wcf.user.profile.management{/lang}</span></a>
 						<ul class="dropdownMenu userProfileButtonMenu" data-menu="management">
 							{content}
@@ -301,6 +292,23 @@
 {/capture}
 
 {include file='userSidebar' assign='sidebarRight'}
+
+{capture assign='__menuSearch'}
+	{event name='menuSearch'}
+	{* DEPRECATED *}{event name='quickSearchItems'}
+{/capture}
+{assign var='__menuSearch' value=$__menuSearch|trim}
+
+{capture assign='contentInteractionButtons'}
+	{if $__menuSearch}
+		<div class="contentInteractionButton dropdown jsOnly">
+			<a href="#" class="button small dropdownToggle">{lang}wcf.user.searchUserContent{/lang}</a>
+			<ul class="dropdownMenu userProfileButtonMenu" data-menu="search">
+				{@$__menuSearch}
+			</ul>
+		</div>
+	{/if}
+{/capture}
 
 {capture assign='contentInteractionDropdownItems'}
 	{event name='menuInteraction'}

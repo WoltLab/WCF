@@ -4786,7 +4786,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} dies sehen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
-		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von {$user->username} suchen]]></item>
+		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte suchen]]></item>
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Benutzer moderieren]]></item>
 		<item name="wcf.user.ban"><![CDATA[Benutzer sperren]]></item>
