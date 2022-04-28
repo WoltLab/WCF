@@ -18,8 +18,6 @@ final class Phpbb3 implements IPasswordAlgorithm
 {
     use TPhpass {
         verify as phpassVerify;
-
-        hash as phpassHash;
     }
 
     public function verify(string $password, string $hash): bool

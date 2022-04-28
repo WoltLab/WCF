@@ -121,7 +121,7 @@ trait TPhpass
     }
 
     /**
-     * @inheritDoc
+     * @deprecated 5.5 Use Phpass::hash() instead.
      */
     public function hash(string $password): string
     {
@@ -132,7 +132,7 @@ trait TPhpass
     }
 
     /**
-     * @inheritDoc
+     * @deprecated 5.5 Use Phpass::needsRehash() instead.
      */
     public function needsRehash(string $hash): bool
     {
