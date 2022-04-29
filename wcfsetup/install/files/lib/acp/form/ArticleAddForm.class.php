@@ -375,6 +375,9 @@ class ArticleAddForm extends AbstractForm
         if (empty($this->time) || !$this->timeObj) {
             throw new UserInputException('time');
         }
+        if ($this->timeObj->getTimestamp() > TIME_NOW && $this->publicationStatus == Article::PUBLISHED) {
+            throw new UserInputException('time', 'invalid');
+        }
 
         // publication status
         if ($this->publicationStatus != Article::UNPUBLISHED && $this->publicationStatus != Article::PUBLISHED && $this->publicationStatus != Article::DELAYED_PUBLICATION) {
