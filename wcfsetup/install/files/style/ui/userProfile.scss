@@ -15,16 +15,6 @@
 		margin-top: 20px;
 	}
 
-	@include screen-sm-md {
-		.contentHeaderNavigation {
-			.button {
-				.invisible {
-					display: inline;
-				}
-			}
-		}
-	}
-
 	@include screen-sm-down {
 		display: flex;
 		flex-wrap: wrap;
@@ -72,25 +62,6 @@
 			flex-grow: 0;
 			flex-shrink: 0;
 			flex-basis: calc(100% - 58px);
-		}
-
-		.contentHeaderNavigation {
-			.userProfileButtonContainer {
-				display: flex;
-
-				> li {
-					flex: 1 1 auto;
-					margin-top: 0 !important;
-
-					&:not(:last-child) {
-						margin-right: 1px;
-					}
-
-					.invisible {
-						display: none !important;
-					}
-				}
-			}
 		}
 	}
 

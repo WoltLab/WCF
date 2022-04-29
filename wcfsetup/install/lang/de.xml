@@ -4786,7 +4786,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} dies sehen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
-		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von {$user->username} suchen]]></item>
+		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte suchen]]></item>
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Benutzer moderieren]]></item>
 		<item name="wcf.user.ban"><![CDATA[Benutzer sperren]]></item>
@@ -5474,9 +5474,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}/response{@$responseID}">Pinnwand von {$user->username}</a> geantwortet.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[Der Benutzer hat den Zugriff auf sein vollständiges Profil eingeschränkt.]]></item>
-		<item name="wcf.user.profile.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
-		<item name="wcf.user.profile.customization"><![CDATA[Anpassung]]></item>
 		<item name="wcf.user.profile.title"><![CDATA[Benutzerprofil von {$user->username}]]></item>
 	</category>
 	<category name="wcf.user.objectWatch">
@@ -5608,5 +5606,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.notification.markAsConfirmed" />
 	<item name="wcf.user.panel.markAllAsRead" />
 	<item name="wcf.user.panel.markAsRead" />
+	<item name="wcf.user.profile.user" />
+	<item name="wcf.user.profile.customization" />
 </delete>
 </language>

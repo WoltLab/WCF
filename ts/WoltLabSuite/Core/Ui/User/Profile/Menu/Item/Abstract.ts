@@ -37,7 +37,7 @@ abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
     this._button.addEventListener("click", (ev) => this._toggle(ev));
     this._listItem.appendChild(this._button);
 
-    const menu = document.querySelector(`.userProfileButtonMenu[data-menu="interaction"]`) as HTMLElement;
+    const menu = document.querySelector(".contentInteractionDropdownItems") as HTMLElement;
     menu.insertAdjacentElement("afterbegin", this._listItem);
   }
 

@@ -30,7 +30,7 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Co
             this._button.href = "#";
             this._button.addEventListener("click", (ev) => this._toggle(ev));
             this._listItem.appendChild(this._button);
-            const menu = document.querySelector(`.userProfileButtonMenu[data-menu="interaction"]`);
+            const menu = document.querySelector(".contentInteractionDropdownItems");
             menu.insertAdjacentElement("afterbegin", this._listItem);
         }
         /**
