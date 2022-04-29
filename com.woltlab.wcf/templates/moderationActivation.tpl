@@ -45,10 +45,10 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.assignedUser.change{/lang}</a>
+	<a id="moderationAssignUser" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-user-plus"></span> <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></a>
 	{if !$queue->isDone()}
-		<a id="enableContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.enableContent{/lang}</a>
-		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<a id="removeContent" class="contentInteractionButton button small jsOnly">{lang}wcf.moderation.activation.removeContent{/lang}</a>{/if}
+		<a id="enableContent" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></a>
+		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<a id="removeContent" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></a>{/if}
 	{/if}
 {/capture}
 
