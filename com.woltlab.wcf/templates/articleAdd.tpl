@@ -200,6 +200,8 @@
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
+						{elseif $errorType == 'invalid'}
+							{lang latestDate=TIME_NOW|plainTime}wcf.form.field.date.error.latestDate{/lang}
 						{else}
 							{lang}wcf.acp.article.time.error.{@$errorType}{/lang}
 						{/if}
