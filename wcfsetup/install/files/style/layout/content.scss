@@ -449,10 +449,6 @@ fieldset {
 	flex: 0 0 auto;
 	overflow: hidden;
 
-	.icon {
-		display: none;
-	}
-
 	&:not(:first-child) {
 		&.button,
 		.button {
