@@ -14,6 +14,7 @@ import * as DomUtil from "../../Dom/Util";
 import { ucfirst } from "../../StringUtil";
 import UiPagination from "../Pagination";
 import UiSearchInput from "./Input";
+import * as UiScroll from "./../Scroll";
 
 type ResponseSearch = {
   count: number;
@@ -173,7 +174,11 @@ export class UiSearchExtended {
       maxPage: this.pages,
 
       callbackSwitch: (pageNo) => {
-        void this.changePage(pageNo);
+        void this.changePage(pageNo).then(() => {
+          if (position === "bottom") {
+            UiScroll.element(this.form.nextElementSibling as HTMLElement, undefined, "auto");
+          }
+        });
       },
     });
   }

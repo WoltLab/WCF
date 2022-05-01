@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Search/Extended
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Pagination_1, Input_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input", "./../Scroll"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Pagination_1, Input_1, UiScroll) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiSearchExtended = void 0;
@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
     DomUtil = tslib_1.__importStar(DomUtil);
     Pagination_1 = tslib_1.__importDefault(Pagination_1);
     Input_1 = tslib_1.__importDefault(Input_1);
+    UiScroll = tslib_1.__importStar(UiScroll);
     class UiSearchExtended {
         constructor() {
             this.pages = 0;
@@ -136,7 +137,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 activePage: this.activePage,
                 maxPage: this.pages,
                 callbackSwitch: (pageNo) => {
-                    void this.changePage(pageNo);
+                    void this.changePage(pageNo).then(() => {
+                        if (position === "bottom") {
+                            UiScroll.element(this.form.nextElementSibling, undefined, "auto");
+                        }
+                    });
                 },
             });
         }
