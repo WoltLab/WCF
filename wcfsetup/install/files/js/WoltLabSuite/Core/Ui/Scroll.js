@@ -28,7 +28,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
      * @param       {Element}       element         target element
      * @param       {function=}     callback        callback invoked once scrolling has ended
      */
-    function element(element, callback) {
+    function element(element, callback, behavior = "smooth") {
         if (!(element instanceof HTMLElement)) {
             throw new TypeError("Expected a valid DOM element.");
         }
@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         window.scrollTo({
             left: 0,
             top: y,
-            behavior: "smooth",
+            behavior,
         });
         window.setTimeout(() => {
             // no scrolling took place

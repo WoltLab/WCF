@@ -40,7 +40,7 @@ function onScroll(): void {
  * @param       {Element}       element         target element
  * @param       {function=}     callback        callback invoked once scrolling has ended
  */
-export function element(element: HTMLElement, callback?: Callback): void {
+export function element(element: HTMLElement, callback?: Callback, behavior: ScrollBehavior = "smooth"): void {
   if (!(element instanceof HTMLElement)) {
     throw new TypeError("Expected a valid DOM element.");
   } else if (callback !== undefined && typeof callback !== "function") {
@@ -83,7 +83,7 @@ export function element(element: HTMLElement, callback?: Callback): void {
   window.scrollTo({
     left: 0,
     top: y,
-    behavior: "smooth",
+    behavior,
   });
 
   window.setTimeout(() => {
