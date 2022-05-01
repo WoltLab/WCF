@@ -113,38 +113,27 @@ select {
 		margin-top: 30px;
 	}
 
-	@include screen-xs {
-		> .button,
-		> button,
-		> input {
-			display: block;
-			padding: 7px 10px;
-			width: 100%;
+	/* the `margin-bottom` styles are required to deal with buttons wrapping
+	   into the next row, also requires some changes to `.dialogFormSubmit`! */
+	margin-bottom: -10px;
 
-			&:not(:first-child) {
-				margin-top: 10px;
-			}
-		}
+	> button,
+	> input[type="button"],
+	> input[type="reset"],
+	> input[type="submit"],
+	> .button,
+	> a.button {
+		margin-bottom: 10px;
 	}
 
-	@include screen-sm-up {
-		/* the `margin-bottom` styles are required to deal with buttons wrapping
-		   into the next row, also requires some changes to `.dialogFormSubmit`! */
-		margin-bottom: -10px;
-
-		> button,
-		> input[type="button"],
-		> input[type="reset"],
-		> input[type="submit"],
-		> .button,
-		> a.button {
-			margin-bottom: 10px;
-		}
-
-		> :not(:first-child) {
-			margin-left: 10px;
-		}
+	> :not(:first-child) {
+		margin-left: 10px;
 	}
+}
+
+.formSubmit.formSubmit.formSubmit + .section {
+	/* Intentional selector to overwrite existing selector. */
+	margin-top: 20px;
 }
 
 .inputAddon {
