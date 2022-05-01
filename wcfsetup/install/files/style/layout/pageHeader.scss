@@ -452,7 +452,7 @@
 		background-color: $wcfHeaderBackground;
 		column-gap: 10px;
 		display: grid;
-		grid-template-areas: "logo search menu user";
+		grid-template-areas: "logo search user menu";
 		grid-template-columns: auto repeat(3, max-content);
 		height: 50px;
 		left: 0;
