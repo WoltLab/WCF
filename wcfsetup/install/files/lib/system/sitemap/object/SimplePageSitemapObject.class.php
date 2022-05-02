@@ -6,7 +6,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
 use wcf\page\AbstractPage;
-use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 
@@ -64,7 +63,7 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
             return false;
         }
 
-        if (!SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $object->pageID)) {
+        if (!$object->isAccessible()) {
             return false;
         }
 
