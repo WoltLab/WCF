@@ -98,7 +98,7 @@
 			
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
-				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}" data-title="Benachrichtigungen">
+				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
 					<a
 						class="jsTooltip"
 						href="{link controller='NotificationList'}{/link}"
