@@ -63,7 +63,7 @@
 
 {capture assign='contentInteractionButtons'}
 	<div class="contentInteractionButton dropdown jsOnly">
-		<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-sort-amount-desc"></span> <span>{lang}wcf.article.button.sort{/lang}</span></a>
+		<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower}"></span> <span>{lang}wcf.article.button.sort{/lang}</span></a>
 		<ul class="dropdownMenu">
 			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
 			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
