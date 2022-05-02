@@ -41,7 +41,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a href="{link controller='TagSearch'}{/link}" class="contentInteractionButton button small">{lang}wcf.search.type.tags{/lang}</a>
+	<a href="{link controller='TagSearch'}{/link}" class="contentInteractionButton button small"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.search.type.tags{/lang}</span></a>
 {/capture}
 
 {include file='header'}

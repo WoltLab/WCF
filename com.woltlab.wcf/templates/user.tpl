@@ -284,7 +284,7 @@
 {capture assign='contentInteractionButtons'}
 	{if $__menuSearch}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a href="#" class="button small dropdownToggle">{lang}wcf.user.searchUserContent{/lang}</a>
+			<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.user.searchUserContent{/lang}</span></a>
 			<ul class="dropdownMenu userProfileButtonMenu" data-menu="search">
 				{@$__menuSearch}
 			</ul>
@@ -292,7 +292,7 @@
 	{/if}
 	{if $__menuManagement}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a href="#" class="button small dropdownToggle">{lang}wcf.user.profile.management{/lang}</a>
+			<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-cog"></span> <span>{lang}wcf.user.profile.management{/lang}</span></a>
 			<ul class="dropdownMenu userProfileButtonMenu" data-menu="management">
 				{@$__menuManagement}
 			</ul>
