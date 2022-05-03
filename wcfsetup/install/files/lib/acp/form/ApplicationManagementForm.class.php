@@ -103,11 +103,11 @@ final class ApplicationManagementForm extends AbstractForm
             if (!empty($this->cookieDomain) || !empty($this->domainName)) {
                 throw new PermissionDeniedException();
             }
-        }
-
-        if (empty($this->domainName)) {
-            throw new UserInputException('domainName');
         } else {
+            if (empty($this->domainName)) {
+                throw new UserInputException('domainName');
+            }
+
             $regex = new Regex('^https?\://');
             $this->domainName = FileUtil::removeTrailingSlash($regex->replace($this->domainName, ''));
             $this->cookieDomain = FileUtil::removeTrailingSlash($regex->replace($this->cookieDomain, ''));
