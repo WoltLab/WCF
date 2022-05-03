@@ -136,7 +136,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
         if ($isFilesystemCaseSensitive === null) {
             $testFilePath = __FILE__;
 
-            $invertedCase = \strstr(
+            $invertedCase = \strtr(
                 $testFilePath,
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
