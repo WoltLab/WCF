@@ -7,7 +7,6 @@ use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentList;
 use wcf\data\page\Page;
 use wcf\page\AbstractPage;
-use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 
@@ -58,23 +57,15 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
         /** @var $object PageContent */
         $page = new Page($object->pageID);
 
-        if ($page->isDisabled) {
-            return false;
-        }
-
         if ($page->requireObjectID) {
             return false;
         }
 
-        if (!$page->validateOptions()) {
+        if (!$page->isVisible()) {
             return false;
         }
 
-        if (!$page->validatePermissions()) {
-            return false;
-        }
-
-        if (!SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $object->pageID)) {
+        if (!$page->isAccessible()) {
             return false;
         }
 
