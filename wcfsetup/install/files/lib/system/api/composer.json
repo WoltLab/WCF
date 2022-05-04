@@ -23,6 +23,7 @@
         "laminas/laminas-progressbar": "^2.7",
         "symfony/polyfill-php73": "^1.23",
         "symfony/polyfill-php74": "^1.23",
-        "symfony/polyfill-php80": "^1.23"
+        "symfony/polyfill-php80": "^1.23",
+        "guzzlehttp/psr7": "^2.2"
     }
 }
