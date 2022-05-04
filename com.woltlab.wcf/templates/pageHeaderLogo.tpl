@@ -5,11 +5,11 @@
 		<img src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}" alt="" class="pageHeaderLogoLarge"{*
 			*}{if $__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')} height="{@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')}"{/if}{*
 			*}{if $__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoWidth')} width="{@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoWidth')}"{/if}{*
-			*} loading="lazy">
+			*} loading="eager">
 		<img src="{$__wcf->getStyleHandler()->getStyle()->getPageLogoMobile()}" alt="" class="pageHeaderLogoSmall"{*
 			*}{if $__wcf->getStyleHandler()->getStyle()->getPageLogoSmallHeight()} height="{@$__wcf->getStyleHandler()->getStyle()->getPageLogoSmallHeight()}"{/if}{*
 			*}{if $__wcf->getStyleHandler()->getStyle()->getPageLogoSmallWidth()} width="{@$__wcf->getStyleHandler()->getStyle()->getPageLogoSmallWidth()}"{/if}{*
-			*} loading="lazy">
+			*} loading="eager">
 		
 		{event name='headerLogo'}
 	</a>
