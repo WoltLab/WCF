@@ -9,21 +9,21 @@
         }
     },
     "require": {
-        "ezyang/htmlpurifier": "4.13.*",
-        "erusev/parsedown": "1.7.*",
-        "pelago/emogrifier": "6.0.*",
         "chrisjean/php-ico": "1.0.*",
-        "true/punycode": "~2.0",
-        "pear/net_idna2": "^0.2.0",
-        "scssphp/scssphp": "^1.4",
+        "erusev/parsedown": "1.7.*",
+        "ezyang/htmlpurifier": "4.13.*",
         "guzzlehttp/guzzle": "^7.3.0",
-        "paragonie/constant_time_encoding": "^2.3",
+        "guzzlehttp/psr7": "^2.2",
         "laminas/laminas-diactoros": "^2.4",
         "laminas/laminas-httphandlerrunner": "^1.2",
         "laminas/laminas-progressbar": "^2.7",
+        "paragonie/constant_time_encoding": "^2.3",
+        "pear/net_idna2": "^0.2.0",
+        "pelago/emogrifier": "6.0.*",
+        "scssphp/scssphp": "^1.4",
         "symfony/polyfill-php73": "^1.23",
         "symfony/polyfill-php74": "^1.23",
         "symfony/polyfill-php80": "^1.23",
-        "guzzlehttp/psr7": "^2.2"
+        "true/punycode": "~2.0"
     }
 }
