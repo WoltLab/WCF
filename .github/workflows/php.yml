@@ -30,7 +30,6 @@ jobs:
     - run: echo "::add-matcher::.github/php-syntax.json"
     - name: Remove files to be ignored
       run: |
-        rm wcfsetup/install/files/lib/system/api/ezyang/htmlpurifier/library/HTMLPurifier.autoload-legacy.php
         rm wcfsetup/install/files/lib/system/api/symfony/polyfill-mbstring/bootstrap80.php
         rm wcfsetup/install/files/lib/system/api/symfony/polyfill-php73/Resources/stubs/JsonException.php
     - run: |
