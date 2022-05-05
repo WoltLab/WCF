@@ -8,7 +8,7 @@ define(["prism/prism"], function () {
 			// Match "@@ ... @@" coord lines in unified diff.
 			/^@@.*@@$/m,
 			// Match coord lines in normal diff (starts with a number).
-			/^\d+.*$/m
+			/^\d.*$/m
 		]
 
 		// deleted, inserted, unchanged, diff
@@ -36,8 +36,8 @@ define(["prism/prism"], function () {
 		if (!/^\w+$/.test(name)) { // "deleted-sign" -> "deleted"
 			alias.push(/\w+/.exec(name)[0]);
 		}
-		if (name === "diff") {
-			alias.push("bold");
+		if (name === 'diff') {
+			alias.push('bold');
 		}
 
 		Prism.languages.diff[name] = {
@@ -54,7 +54,7 @@ define(["prism/prism"], function () {
 				}
 			}
 		};
-		
+
 	});
 
 	// make prefixes available to Diff plugin

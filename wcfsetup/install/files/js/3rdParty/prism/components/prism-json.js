@@ -2,11 +2,13 @@ define(["prism/prism"], function () {
 // https://www.json.org/json-en.html
 Prism.languages.json = {
 	'property': {
-		pattern: /"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,
+		pattern: /(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,
+		lookbehind: true,
 		greedy: true
 	},
 	'string': {
-		pattern: /"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
+		pattern: /(^|[^\\])"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
+		lookbehind: true,
 		greedy: true
 	},
 	'comment': {
@@ -16,7 +18,7 @@ Prism.languages.json = {
 	'number': /-?\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/i,
 	'punctuation': /[{}[\],]/,
 	'operator': /:/,
-	'boolean': /\b(?:true|false)\b/,
+	'boolean': /\b(?:false|true)\b/,
 	'null': {
 		pattern: /\bnull\b/,
 		alias: 'keyword'

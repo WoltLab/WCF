@@ -4,7 +4,7 @@ define(["prism/prism"], function () {
 		'heredoc': [
 			// Matches the content of a quoted heredoc string (subject to interpolation)
 			{
-				pattern: /(@\("([^"\r\n\/):]+)"(?:\/[nrts$uL]*)?\).*(?:\r?\n|\r))(?:.*(?:\r?\n|\r))*?[ \t]*\|?[ \t]*-?[ \t]*\2/,
+				pattern: /(@\("([^"\r\n\/):]+)"(?:\/[nrts$uL]*)?\).*(?:\r?\n|\r))(?:.*(?:\r?\n|\r(?!\n)))*?[ \t]*(?:\|[ \t]*)?(?:-[ \t]*)?\2/,
 				lookbehind: true,
 				alias: 'string',
 				inside: {
@@ -15,7 +15,7 @@ define(["prism/prism"], function () {
 			},
 			// Matches the content of an unquoted heredoc string (no interpolation)
 			{
-				pattern: /(@\(([^"\r\n\/):]+)(?:\/[nrts$uL]*)?\).*(?:\r?\n|\r))(?:.*(?:\r?\n|\r))*?[ \t]*\|?[ \t]*-?[ \t]*\2/,
+				pattern: /(@\(([^"\r\n\/):]+)(?:\/[nrts$uL]*)?\).*(?:\r?\n|\r))(?:.*(?:\r?\n|\r(?!\n)))*?[ \t]*(?:\|[ \t]*)?(?:-[ \t]*)?\2/,
 				lookbehind: true,
 				greedy: true,
 				alias: 'string',
@@ -64,7 +64,7 @@ define(["prism/prism"], function () {
 		},
 		'string': {
 			// Allow for one nested level of double quotes inside interpolation
-			pattern: /(["'])(?:\$\{(?:[^'"}]|(["'])(?:(?!\2)[^\\]|\\[\s\S])*\2)+\}|(?!\1)[^\\]|\\[\s\S])*\1/,
+			pattern: /(["'])(?:\$\{(?:[^'"}]|(["'])(?:(?!\2)[^\\]|\\[\s\S])*\2)+\}|\$(?!\{)|(?!\1)[^\\$]|\\[\s\S])*\1/,
 			greedy: true,
 			inside: {
 				'double-quoted': {
@@ -81,7 +81,7 @@ define(["prism/prism"], function () {
 				'punctuation': /::/
 			}
 		},
-		'attr-name': /(?:\w+|\*)(?=\s*=>)/,
+		'attr-name': /(?:\b\w+|\*)(?=\s*=>)/,
 		'function': [
 			{
 				pattern: /(\.)(?!\d)\w+/,
@@ -90,7 +90,7 @@ define(["prism/prism"], function () {
 			/\b(?:contain|debug|err|fail|include|info|notice|realize|require|tag|warning)\b|\b(?!\d)\w+(?=\()/
 		],
 		'number': /\b(?:0x[a-f\d]+|\d+(?:\.\d+)?(?:e-?\d+)?)\b/i,
-		'boolean': /\b(?:true|false)\b/,
+		'boolean': /\b(?:false|true)\b/,
 		// Includes words reserved for future use
 		'keyword': /\b(?:application|attr|case|class|consumes|default|define|else|elsif|function|if|import|inherits|node|private|produces|type|undef|unless)\b/,
 		'datatype': {
@@ -135,4 +135,5 @@ define(["prism/prism"], function () {
 	Prism.languages.puppet['heredoc'][0].inside.interpolation = interpolation;
 	Prism.languages.puppet['string'].inside['double-quoted'].inside.interpolation = interpolation;
 }(Prism));
+
 return Prism; })

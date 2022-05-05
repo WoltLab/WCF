@@ -16,7 +16,7 @@ define(["prism/prism","prism/components/prism-php","prism/components/prism-javad
 				pattern: RegExp('(@(?:global|package|param|property(?:-read|-write)?|return|subpackage|throws|var)\\s+)' + typeExpression),
 				lookbehind: true,
 				inside: {
-					'keyword': /\b(?:callback|resource|boolean|integer|double|object|string|array|false|float|mixed|bool|null|self|true|void|int)\b/,
+					'keyword': /\b(?:array|bool|boolean|callback|double|false|float|int|integer|mixed|null|object|resource|self|string|true|void)\b/,
 					'punctuation': /[|\\[\]()]/
 				}
 			}

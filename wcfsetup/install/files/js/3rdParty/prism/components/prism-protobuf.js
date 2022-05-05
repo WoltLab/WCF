@@ -1,7 +1,7 @@
 define(["prism/prism","prism/components/prism-clike"], function () {
 (function (Prism) {
 
-	var builtinTypes = /\b(?:double|float|[su]?int(?:32|64)|s?fixed(?:32|64)|bool|string|bytes)\b/;
+	var builtinTypes = /\b(?:bool|bytes|double|s?fixed(?:32|64)|float|[su]?int(?:32|64)|string)\b/;
 
 	Prism.languages.protobuf = Prism.languages.extend('clike', {
 		'class-name': [
@@ -15,7 +15,7 @@ define(["prism/prism","prism/components/prism-clike"], function () {
 			}
 		],
 		'keyword': /\b(?:enum|extend|extensions|import|message|oneof|option|optional|package|public|repeated|required|reserved|returns|rpc(?=\s+\w)|service|stream|syntax|to)\b(?!\s*=\s*\d)/,
-		'function': /[a-z_]\w*(?=\s*\()/i
+		'function': /\b[a-z_]\w*(?=\s*\()/i
 	});
 
 	Prism.languages.insertBefore('protobuf', 'operator', {

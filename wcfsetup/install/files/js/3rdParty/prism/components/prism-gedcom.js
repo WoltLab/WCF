@@ -2,7 +2,7 @@ define(["prism/prism"], function () {
 Prism.languages.gedcom = {
 	'line-value': {
 		// Preceded by level, optional pointer, and tag
-		pattern: /(^\s*\d+ +(?:@\w[\w!"$%&'()*+,\-./:;<=>?[\\\]^`{|}~\x80-\xfe #]*@ +)?\w+ +).+/m,
+		pattern: /(^[\t ]*\d+ +(?:@\w[\w!"$%&'()*+,\-./:;<=>?[\\\]^`{|}~\x80-\xfe #]*@ +)?\w+ ).+/m,
 		lookbehind: true,
 		inside: {
 			'pointer': {
@@ -11,14 +11,14 @@ Prism.languages.gedcom = {
 			}
 		}
 	},
-	'tag': {
+	'record': {
 		// Preceded by level and optional pointer
-		pattern: /(^\s*\d+ +(?:@\w[\w!"$%&'()*+,\-./:;<=>?[\\\]^`{|}~\x80-\xfe #]*@ +)?)\w+/m,
+		pattern: /(^[\t ]*\d+ +(?:@\w[\w!"$%&'()*+,\-./:;<=>?[\\\]^`{|}~\x80-\xfe #]*@ +)?)\w+/m,
 		lookbehind: true,
-		alias: 'string'
+		alias: 'tag'
 	},
 	'level': {
-		pattern: /(^\s*)\d+/m,
+		pattern: /(^[\t ]*)\d+/m,
 		lookbehind: true,
 		alias: 'number'
 	},
@@ -27,4 +27,5 @@ Prism.languages.gedcom = {
 		alias: 'variable'
 	}
 };
+
 return Prism; })

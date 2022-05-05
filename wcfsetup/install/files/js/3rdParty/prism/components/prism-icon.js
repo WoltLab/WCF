@@ -15,8 +15,9 @@ Prism.languages.icon = {
 		alias: 'builtin'
 	},
 	'keyword': /\b(?:break|by|case|create|default|do|else|end|every|fail|global|if|initial|invocable|link|local|next|not|of|procedure|record|repeat|return|static|suspend|then|to|until|while)\b/,
-	'function': /(?!\d)\w+(?=\s*[({]|\s*!\s*\[)/,
+	'function': /\b(?!\d)\w+(?=\s*[({]|\s*!\s*\[)/,
 	'operator': /[+-]:(?!=)|(?:[\/?@^%&]|\+\+?|--?|==?=?|~==?=?|\*\*?|\|\|\|?|<(?:->?|<?=?)|>>?=?)(?::=)?|:(?:=:?)?|[!.\\|~]/,
 	'punctuation': /[\[\](){},;]/
 };
+
 return Prism; })

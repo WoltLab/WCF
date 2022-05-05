@@ -12,14 +12,14 @@ Prism.languages.neon = {
 	'key': {
 		pattern: /(^|[[{(,\s])[^,:=[\]{}()'"\s]+(?=\s*:(?:$|[\]}),\s])|\s*=)/,
 		lookbehind: true,
-		alias: 'atrule'
+		alias: 'property'
 	},
 	'number': {
-		pattern: /(^|[[{(=:,\s])[+-]?(?:0x[\da-fA-F]+|0o[0-7]+|0b[01]+|(?:\d+\.?\d*|\.?\d+)(?:[eE][+-]?\d+)?)(?=$|[\]}),:=\s])/,
+		pattern: /(^|[[{(=:,\s])[+-]?(?:0x[\da-fA-F]+|0o[0-7]+|0b[01]+|(?:\d+(?:\.\d*)?|\.?\d+)(?:[eE][+-]?\d+)?)(?=$|[\]}),:=\s])/,
 		lookbehind: true
 	},
 	'boolean': {
-		pattern: /(^|[[{(=:,\s])(?:true|false|yes|no)(?=$|[\]}),:=\s])/i,
+		pattern: /(^|[[{(=:,\s])(?:false|no|true|yes)(?=$|[\]}),:=\s])/i,
 		lookbehind: true
 	},
 	'null': {
@@ -33,12 +33,11 @@ Prism.languages.neon = {
 		greedy: true
 	},
 	'literal': {
-		pattern: /(^|[[{(=:,\s])(?:[^#"\',:=[\]{}()\s`-]|[:-][^"\',=[\]{}()\s])(?:[^,:=\]})(\s]+|:(?![\s,\]})]|$)|[ \t]+[^#,:=\]})(\s])*/,
+		pattern: /(^|[[{(=:,\s])(?:[^#"',:=[\]{}()\s`-]|[:-][^"',=[\]{}()\s])(?:[^,:=\]})(\s]|:(?![\s,\]})]|$)|[ \t]+[^#,:=\]})(\s])*/,
 		lookbehind: true,
 		alias: 'string',
 	},
 	'punctuation': /[,:=[\]{}()-]/,
 };
-
 
 return Prism; })
