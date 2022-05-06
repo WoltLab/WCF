@@ -5396,7 +5396,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[Neuer Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf einer Seite]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.likeableArticle.notification.like"><![CDATA[Jemand hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel reagiert]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.likeableArticle.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel]]></item>
 		<item name="wcf.user.notification.pageComment.title"><![CDATA[Neuer Kommentar (Seite)]]></item>
 		<item name="wcf.user.notification.pageComment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Seite)]]></item>
 		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
