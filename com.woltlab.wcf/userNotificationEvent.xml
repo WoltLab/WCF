@@ -125,6 +125,20 @@
 			<preset>1</preset>
 			<options>module_like,module_article</options>
 		</event>
+		<event>
+			<name>like</name>
+			<objecttype>com.woltlab.wcf.articleComment.like.notification</objecttype>
+			<classname>wcf\system\user\notification\event\ArticleCommentLikeUserNotificationEvent</classname>
+			<preset>1</preset>
+			<options>module_like,module_article</options>
+		</event>
+		<event>
+			<name>like</name>
+			<objecttype>com.woltlab.wcf.articleComment.response.like.notification</objecttype>
+			<classname>wcf\system\user\notification\event\ArticleCommentResponseLikeUserNotificationEvent</classname>
+			<preset>1</preset>
+			<options>module_like,module_article</options>
+		</event>
 		
 		<event>
 			<name>registration</name>
