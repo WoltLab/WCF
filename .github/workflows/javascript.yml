@@ -30,3 +30,22 @@ jobs:
           |awk 'BEGIN {m=0} /(.js):[0-9]+$/ {m=1; printf "%s - ",$0} m==1 && /^SyntaxError/ { m=0; print }' \
           |sed "s@$(pwd)@.@" \
           |grep '^'
+  dependency:
+    name: "Check that npm dependencies are in sync"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Set up node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "16"
+    - uses: actions/checkout@v3
+    - name: "Check 'focus-trap'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/focus-trap/focus-trap.umd.min.js node_modules/focus-trap/dist/focus-trap.umd.min.js
+        diff -wu wcfsetup/install/files/js/3rdParty/focus-trap/focus-trap.umd.min.js.map node_modules/focus-trap/dist/focus-trap.umd.min.js.map
+    - name: "Check 'tabbable'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/focus-trap/index.umd.min.js node_modules/tabbable/dist/index.umd.min.js
+        diff -wu wcfsetup/install/files/js/3rdParty/focus-trap/index.umd.min.js.map node_modules/tabbable/dist/index.umd.min.js.map
