@@ -123,6 +123,7 @@
 			<objecttype>com.woltlab.wcf.likeableArticle.notification</objecttype>
 			<classname>wcf\system\user\notification\event\ArticleLikeUserNotificationEvent</classname>
 			<preset>1</preset>
+			<options>module_like,module_article</options>
 		</event>
 		
 		<event>
