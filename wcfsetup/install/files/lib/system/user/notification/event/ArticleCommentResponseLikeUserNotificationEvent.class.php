@@ -4,10 +4,6 @@ namespace wcf\system\user\notification\event;
 
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
-use wcf\system\user\notification\event\AbstractSharedUserNotificationEvent;
-use wcf\system\user\notification\event\ITestableUserNotificationEvent;
-use wcf\system\user\notification\event\TReactionUserNotificationEvent;
-use wcf\system\user\notification\event\TTestableCommentResponseLikeUserNotificationEvent;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
 
