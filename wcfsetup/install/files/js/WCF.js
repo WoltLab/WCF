@@ -5700,13 +5700,22 @@ if (COMPILER_TARGET_DEFAULT) {
 				}
 				
 				this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
+			}
 
+			this._dropdowns[$elementID].empty();
+
+			// Some implementations override the `_show()` method to create the
+			// drop-down menus themselves, but do not register the element id.
+			if (!this._dropDownIdToElementId.has($elementID)) {
+				if ($trigger === null) {
+					$trigger = this._getTriggerElement(this._elements[$elementID]);
+				}
+				
 				this._dropDownIdToElementId.set(
 					$trigger.parent().wcfIdentify(),
 					$elementID,
 				);
 			}
-			this._dropdowns[$elementID].empty();
 			
 			// validate options
 			var $hasOptions = false;
