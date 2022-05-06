@@ -2,12 +2,10 @@
 
 namespace wcf\system\user\notification\event;
 
-use wcf\data\article\category\ArticleCategory;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
-use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
@@ -26,7 +24,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
     ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
-    use TTestableArticleUserNotificationEvent;
+    use TTestableArticleCommentUserNotificationEvent;
     use TTestableCategorizedUserNotificationEvent;
 
     /**
@@ -153,18 +151,5 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
     public function getEventHash()
     {
         return \sha1($this->eventID . '-' . $this->notification->objectID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)
-    {
-        return [
-            'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)
-                ->getArticleContent()
-                ->articleContentID,
-            'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment'),
-        ];
     }
 }
