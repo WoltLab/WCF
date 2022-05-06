@@ -755,11 +755,9 @@ WCF.Comment.Handler = Class.extend({
 				}
 			});
 		}
-		
-		//noinspection BadExpressionStatementJS
-		comment.offsetTop;
-		
-		comment.classList.add('commentHighlightTarget');
+		else {
+			this._scrollTo(comment, true);
+		}
 	},
 	
 	_insertResponse: function(data) {
@@ -777,10 +775,7 @@ WCF.Comment.Handler = Class.extend({
 		elRemove(this._permalinkResponse);
 		this._permalinkResponse = response;
 		
-		//noinspection BadExpressionStatementJS
-		response.offsetTop;
-		
-		response.classList.add('commentHighlightTarget');
+		this._scrollTo(response, true);
 	},
 	
 	/**
