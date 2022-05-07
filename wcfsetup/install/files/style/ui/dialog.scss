@@ -168,15 +168,10 @@
 			border-top: 1px solid $wcfContentBorderInner;
 			bottom: 0;
 			left: 0;
-			padding: 10px;
+			margin-bottom: 0;
+			padding: 10px 10px 0 10px;
 			position: absolute;
 			right: 0;
-
-			@include screen-sm-up {
-				/* this reverts the negative margin introduced by `.formSubmit` */
-				margin-bottom: 0;
-				padding-bottom: 0;
-			}
 		}
 
 		.section {
