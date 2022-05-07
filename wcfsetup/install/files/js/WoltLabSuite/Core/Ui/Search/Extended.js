@@ -18,6 +18,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
     UiScroll = tslib_1.__importStar(UiScroll);
     class UiSearchExtended {
         constructor() {
+            this.searchID = undefined;
             this.pages = 0;
             this.activePage = 1;
             this.lastSearchRequest = undefined;
@@ -27,14 +28,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
             this.usernameInput = document.getElementById("searchAuthor");
-            this.initDelimiter();
+            this.delimiter = document.createElement("div");
+            this.form.insertAdjacentElement("afterend", this.delimiter);
             this.initEventListener();
             this.initKeywordSuggestions();
             this.initQueryString();
-        }
-        initDelimiter() {
-            this.delimiter = document.createElement("div");
-            this.form.insertAdjacentElement("afterend", this.delimiter);
         }
         initEventListener() {
             this.form.addEventListener("submit", (event) => {

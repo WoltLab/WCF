@@ -42,12 +42,12 @@ export class UiSearchExtended {
   private readonly queryInput: HTMLInputElement;
   private readonly typeInput: HTMLSelectElement;
   private readonly usernameInput: HTMLInputElement;
-  private searchID: number | undefined;
+  private readonly delimiter: HTMLDivElement;
+  private searchID: number | undefined = undefined;
   private pages = 0;
   private activePage = 1;
   private lastSearchRequest: AbortController | undefined = undefined;
   private lastSearchResultRequest: AbortController | undefined = undefined;
-  private delimiter: HTMLDivElement;
   private searchParameters: SearchParameters = [];
 
   constructor() {
@@ -55,16 +55,12 @@ export class UiSearchExtended {
     this.queryInput = document.getElementById("searchQuery") as HTMLInputElement;
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
     this.usernameInput = document.getElementById("searchAuthor") as HTMLInputElement;
+    this.delimiter = document.createElement("div");
 
-    this.initDelimiter();
+    this.form.insertAdjacentElement("afterend", this.delimiter);
     this.initEventListener();
     this.initKeywordSuggestions();
     this.initQueryString();
-  }
-
-  private initDelimiter(): void {
-    this.delimiter = document.createElement("div");
-    this.form.insertAdjacentElement("afterend", this.delimiter);
   }
 
   private initEventListener(): void {
