@@ -51,9 +51,25 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             });
         }
         changeType() {
+            let hasVisibleFilters = false;
             document.querySelectorAll(".objectTypeSearchFilters").forEach((filter) => {
-                filter.hidden = filter.dataset.objectType !== this.typeInput.value;
+                if (filter.dataset.objectType === this.typeInput.value) {
+                    hasVisibleFilters = true;
+                    filter.hidden = false;
+                }
+                else {
+                    filter.hidden = true;
+                }
             });
+            const title = document.querySelector(".searchFiltersTitle");
+            if (hasVisibleFilters) {
+                const selectedOption = this.typeInput.selectedOptions.item(0);
+                title.textContent = selectedOption.textContent.trim();
+                title.hidden = false;
+            }
+            else {
+                title.hidden = true;
+            }
         }
         async search() {
             var _a;

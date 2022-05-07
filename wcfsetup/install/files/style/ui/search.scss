@@ -32,6 +32,31 @@
 	margin-top: 20px;
 }
 
+.searchFiltersTitle {
+	align-items: center;
+	color: $wcfContentDimmedText;
+	display: flex;
+	margin-top: 10px;
+
+	&::before {
+		border-top: 1px solid $wcfContentBorderInner;
+		content: "";
+		flex: 0 0 20px;
+		margin-right: 10px;
+	}
+
+	&::after {
+		border-top: 1px solid $wcfContentBorderInner;
+		content: "";
+		flex: 1 0 auto;
+		margin-left: 10px;
+	}
+
+	& ~ .searchFilters {
+		margin-top: 10px;
+	}
+}
+
 @include screen-md-up {
 	.searchFilters {
 		columns: 2;
@@ -39,6 +64,9 @@
 
 	.searchFilters > :is(div, dl) {
 		break-inside: avoid-column;
+
+		/* work-around for Firefox */
+		overflow: hidden;
 	}
 
 	.searchFiltersContainer .searchButton {

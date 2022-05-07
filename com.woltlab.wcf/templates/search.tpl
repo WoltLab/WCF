@@ -65,6 +65,8 @@
 				{event name='searchFilters'}
 			</div>
 
+			<div class="searchFiltersTitle" aria-hidden="true" hidden></div>
+
 			{foreach from=$objectTypes key=objectTypeName item=objectType}
 				{if $objectType->isAccessible() && $objectType->getFormTemplateName()}
 					<div class="searchFilters objectTypeSearchFilters" data-object-type="{$objectTypeName}" hidden>
