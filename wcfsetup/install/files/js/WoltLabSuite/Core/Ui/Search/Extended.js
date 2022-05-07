@@ -39,9 +39,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
                 this.activePage = 1;
-                void this.search();
+                void this.search(0 /* Modify */);
             });
             this.typeInput.addEventListener("change", () => this.changeType());
+            window.addEventListener("popstate", () => {
+                this.initQueryString();
+            });
         }
         initKeywordSuggestions() {
             new Input_1.default(this.queryInput, {
@@ -56,12 +59,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 filter.hidden = filter.dataset.objectType !== this.typeInput.value;
             });
         }
-        async search() {
+        async search(searchAction) {
             var _a;
             if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
                 return;
             }
-            this.updateQueryString();
+            this.updateQueryString(searchAction);
             (_a = this.lastSearchRequest) === null || _a === void 0 ? void 0 : _a.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
@@ -75,7 +78,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 this.showSearchResults(template);
             }
         }
-        updateQueryString() {
+        updateQueryString(searchAction) {
             const url = new URL(this.form.action);
             url.search += url.search !== "" ? "&" : "?";
             const parameters = [];
@@ -88,7 +91,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 parameters.push(["pageNo", this.activePage.toString()]);
             }
             url.search += new URLSearchParams(parameters);
-            window.history.replaceState({}, document.title, url.toString());
+            if (searchAction === 1 /* Init */) {
+                window.history.replaceState({}, document.title, url.toString());
+            }
+            else {
+                window.history.pushState({}, document.title, url.toString());
+            }
         }
         getFormData() {
             const data = {};
@@ -138,7 +146,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 }
             });
             this.typeInput.dispatchEvent(new Event("change"));
-            void this.search();
+            void this.search(1 /* Init */);
         }
         initPagination(position) {
             const wrapperDiv = document.createElement("div");

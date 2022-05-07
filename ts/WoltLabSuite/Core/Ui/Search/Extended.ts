@@ -29,6 +29,11 @@ type ResponseSearchResults = {
   template: string;
 };
 
+const enum SearchAction {
+  Modify,
+  Init,
+}
+
 export class UiSearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
@@ -62,9 +67,13 @@ export class UiSearchExtended {
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
       this.activePage = 1;
-      void this.search();
+      void this.search(SearchAction.Modify);
     });
     this.typeInput.addEventListener("change", () => this.changeType());
+
+    window.addEventListener("popstate", () => {
+      this.initQueryString();
+    });
   }
 
   private initKeywordSuggestions(): void {
@@ -82,12 +91,12 @@ export class UiSearchExtended {
     });
   }
 
-  private async search(): Promise<void> {
+  private async search(searchAction: SearchAction): Promise<void> {
     if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
       return;
     }
 
-    this.updateQueryString();
+    this.updateQueryString(searchAction);
 
     this.lastSearchRequest?.abort();
 
@@ -107,7 +116,7 @@ export class UiSearchExtended {
     }
   }
 
-  private updateQueryString(): void {
+  private updateQueryString(searchAction: SearchAction): void {
     const url = new URL(this.form.action);
     url.search += url.search !== "" ? "&" : "?";
 
@@ -122,7 +131,11 @@ export class UiSearchExtended {
     }
     url.search += new URLSearchParams(parameters);
 
-    window.history.replaceState({}, document.title, url.toString());
+    if (searchAction === SearchAction.Init) {
+      window.history.replaceState({}, document.title, url.toString());
+    } else {
+      window.history.pushState({}, document.title, url.toString());
+    }
   }
 
   private getFormData(): Record<string, unknown> {
@@ -173,7 +186,7 @@ export class UiSearchExtended {
     });
 
     this.typeInput.dispatchEvent(new Event("change"));
-    void this.search();
+    void this.search(SearchAction.Init);
   }
 
   private initPagination(position: "top" | "bottom"): void {
