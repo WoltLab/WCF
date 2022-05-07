@@ -60,6 +60,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readString('endDate', true);
         $this->readString('sortField', true);
         $this->readString('sortOrder', true);
+        $this->readInteger('pageNo', true);
 
         if (empty($this->parameters['q']) && empty($this->parameters['username'])) {
             throw new UserInputException('q');
@@ -113,7 +114,11 @@ class SearchAction extends AbstractDatabaseObjectAction
             ];
         }
 
-        $resultHandler = new SearchResultHandler($search);
+        $startIndex = 0;
+        if ($this->parameters['pageNo'] > 1) {
+            $startIndex = SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1);
+        }
+        $resultHandler = new SearchResultHandler($search, $startIndex);
         $resultHandler->loadSearchResults();
         $templateName = $resultHandler->getTemplateName();
 
@@ -130,6 +135,7 @@ class SearchAction extends AbstractDatabaseObjectAction
                 'query' => $resultHandler->getQuery(),
             ]),
             'pages' => \ceil($resultHandler->countSearchResults() / SEARCH_RESULTS_PER_PAGE),
+            'pageNo' => $this->parameters['pageNo'] ?: 1,
             'searchID' => $search->searchID,
             'template' => WCF::getTPL()->fetch($templateName['templateName'], $templateName['application']),
         ];

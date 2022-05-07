@@ -20,6 +20,7 @@ type ResponseSearch = {
   count: number;
   title: string;
   pages?: number;
+  pageNo?: number;
   searchID?: number;
   template?: string;
 };
@@ -60,6 +61,7 @@ export class UiSearchExtended {
   private initEventListener(): void {
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
+      this.activePage = 1;
       void this.search();
     });
     this.typeInput.addEventListener("change", () => this.changeType());
@@ -91,16 +93,16 @@ export class UiSearchExtended {
 
     const request = dboAction("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
     this.lastSearchRequest = request.getAbortController();
-    const { count, searchID, title, pages, template } = (await request.dispatch()) as ResponseSearch;
+    const { count, searchID, title, pages, pageNo, template } = (await request.dispatch()) as ResponseSearch;
 
     document.querySelector(".contentTitle")!.textContent = title;
     this.searchID = searchID;
-    this.activePage = 1;
 
     this.removeSearchResults();
 
     if (count > 0) {
       this.pages = pages!;
+      this.activePage = pageNo!;
       this.showSearchResults(template!);
     }
   }
@@ -115,6 +117,9 @@ export class UiSearchExtended {
         parameters.push([key, value.toString().trim()]);
       }
     });
+    if (this.activePage > 1) {
+      parameters.push(["pageNo", this.activePage.toString()]);
+    }
     url.search += new URLSearchParams(parameters);
 
     window.history.replaceState({}, document.title, url.toString());
@@ -127,6 +132,9 @@ export class UiSearchExtended {
         data[key] = value;
       }
     });
+    if (this.activePage > 1) {
+      data["pageNo"] = this.activePage;
+    }
 
     return data;
   }
@@ -134,6 +142,12 @@ export class UiSearchExtended {
   private initQueryString(): void {
     const url = new URL(window.location.href);
     url.searchParams.forEach((value, key) => {
+      if (key === "pageNo") {
+        this.activePage = parseInt(value, 10);
+        if (this.activePage < 1) this.activePage = 1;
+        return;
+      }
+
       const element = this.form.elements[key] as HTMLElement;
       if (value && element) {
         if (element instanceof RadioNodeList) {

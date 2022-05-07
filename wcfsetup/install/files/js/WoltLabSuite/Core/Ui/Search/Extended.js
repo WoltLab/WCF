@@ -38,6 +38,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         initEventListener() {
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
+                this.activePage = 1;
                 void this.search();
             });
             this.typeInput.addEventListener("change", () => this.changeType());
@@ -64,13 +65,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             (_a = this.lastSearchRequest) === null || _a === void 0 ? void 0 : _a.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
-            const { count, searchID, title, pages, template } = (await request.dispatch());
+            const { count, searchID, title, pages, pageNo, template } = (await request.dispatch());
             document.querySelector(".contentTitle").textContent = title;
             this.searchID = searchID;
-            this.activePage = 1;
             this.removeSearchResults();
             if (count > 0) {
                 this.pages = pages;
+                this.activePage = pageNo;
                 this.showSearchResults(template);
             }
         }
@@ -83,6 +84,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                     parameters.push([key, value.toString().trim()]);
                 }
             });
+            if (this.activePage > 1) {
+                parameters.push(["pageNo", this.activePage.toString()]);
+            }
             url.search += new URLSearchParams(parameters);
             window.history.replaceState({}, document.title, url.toString());
         }
@@ -93,11 +97,20 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                     data[key] = value;
                 }
             });
+            if (this.activePage > 1) {
+                data["pageNo"] = this.activePage;
+            }
             return data;
         }
         initQueryString() {
             const url = new URL(window.location.href);
             url.searchParams.forEach((value, key) => {
+                if (key === "pageNo") {
+                    this.activePage = parseInt(value, 10);
+                    if (this.activePage < 1)
+                        this.activePage = 1;
+                    return;
+                }
                 const element = this.form.elements[key];
                 if (value && element) {
                     if (element instanceof RadioNodeList) {
