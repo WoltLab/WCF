@@ -22,6 +22,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.activePage = 1;
             this.lastSearchRequest = undefined;
             this.lastSearchResultRequest = undefined;
+            this.searchParameters = [];
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
@@ -81,17 +82,20 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         updateQueryString(searchAction) {
             const url = new URL(this.form.action);
             url.search += url.search !== "" ? "&" : "?";
-            const parameters = [];
-            new FormData(this.form).forEach((value, key) => {
-                if (value.toString().trim()) {
-                    parameters.push([key, value.toString().trim()]);
-                }
-            });
+            if (searchAction !== 1 /* Navigation */) {
+                this.searchParameters = [];
+                new FormData(this.form).forEach((value, key) => {
+                    if (value.toString().trim()) {
+                        this.searchParameters.push([key, value.toString().trim()]);
+                    }
+                });
+            }
+            const parameters = this.searchParameters.slice();
             if (this.activePage > 1) {
                 parameters.push(["pageNo", this.activePage.toString()]);
             }
             url.search += new URLSearchParams(parameters);
-            if (searchAction === 1 /* Init */) {
+            if (searchAction === 2 /* Init */) {
                 window.history.replaceState({}, document.title, url.toString());
             }
             else {
@@ -111,6 +115,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             return data;
         }
         initQueryString() {
+            this.activePage = 1;
             const url = new URL(window.location.href);
             url.searchParams.forEach((value, key) => {
                 if (key === "pageNo") {
@@ -146,7 +151,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 }
             });
             this.typeInput.dispatchEvent(new Event("change"));
-            void this.search(1 /* Init */);
+            void this.search(2 /* Init */);
         }
         initPagination(position) {
             const wrapperDiv = document.createElement("div");
@@ -178,6 +183,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.activePage = pageNo;
             this.removeSearchResults();
             this.showSearchResults(template);
+            this.updateQueryString(1 /* Navigation */);
         }
         removeSearchResults() {
             while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {

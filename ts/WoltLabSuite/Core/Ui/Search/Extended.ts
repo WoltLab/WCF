@@ -29,8 +29,11 @@ type ResponseSearchResults = {
   template: string;
 };
 
+type SearchParameters = string[][];
+
 const enum SearchAction {
   Modify,
+  Navigation,
   Init,
 }
 
@@ -45,6 +48,7 @@ export class UiSearchExtended {
   private lastSearchRequest: AbortController | undefined = undefined;
   private lastSearchResultRequest: AbortController | undefined = undefined;
   private delimiter: HTMLDivElement;
+  private searchParameters: SearchParameters = [];
 
   constructor() {
     this.form = document.getElementById("extendedSearchForm") as HTMLFormElement;
@@ -120,12 +124,16 @@ export class UiSearchExtended {
     const url = new URL(this.form.action);
     url.search += url.search !== "" ? "&" : "?";
 
-    const parameters: string[][] = [];
-    new FormData(this.form).forEach((value, key) => {
-      if (value.toString().trim()) {
-        parameters.push([key, value.toString().trim()]);
-      }
-    });
+    if (searchAction !== SearchAction.Navigation) {
+      this.searchParameters = [];
+      new FormData(this.form).forEach((value, key) => {
+        if (value.toString().trim()) {
+          this.searchParameters.push([key, value.toString().trim()]);
+        }
+      });
+    }
+    const parameters = this.searchParameters.slice();
+
     if (this.activePage > 1) {
       parameters.push(["pageNo", this.activePage.toString()]);
     }
@@ -153,6 +161,8 @@ export class UiSearchExtended {
   }
 
   private initQueryString(): void {
+    this.activePage = 1;
+
     const url = new URL(window.location.href);
     url.searchParams.forEach((value, key) => {
       if (key === "pageNo") {
@@ -222,6 +232,7 @@ export class UiSearchExtended {
     this.activePage = pageNo;
     this.removeSearchResults();
     this.showSearchResults(template);
+    this.updateQueryString(SearchAction.Navigation);
   }
 
   private removeSearchResults(): void {
