@@ -113,9 +113,15 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     /**
      * @inheritDoc
      */
-    public function getImageTag($size = null)
+    public function getImageTag($size = null, bool $lazyLoading = true)
     {
-        return '<img src="' . StringUtil::encodeHTML($this->getURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage" loading="lazy">';
+        return \sprintf(
+            '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage" loading="%s">',
+            StringUtil::encodeHTML($this->getURL($size)),
+            $size,
+            $size,
+            $lazyLoading ? 'lazy' : 'eager'
+        );
     }
 
     /**

@@ -1,6 +1,6 @@
 <nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
 	{if $__wcf->user->userID}
-		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</span>
+		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}</span>
 	{else}
 		<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
 			<span class="icon icon32 fa-sign-in" aria-hidden="true"></span>
@@ -20,7 +20,7 @@
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
-					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span>
+					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)} <span>{lang}wcf.user.userNote{/lang}</span>
 				</a>
 				<div class="userMenu userMenuControlPanel" data-origin="userMenu" tabindex="-1" hidden>
 					<div class="userMenuHeader">

@@ -57,9 +57,9 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
     /**
      * @inheritDoc
      */
-    public function getImageTag($size = null)
+    public function getImageTag($size = null, bool $lazyLoading = true)
     {
-        return $this->avatar->getImageTag($size);
+        return $this->avatar->getImageTag($size, $lazyLoading);
     }
 
     /**
