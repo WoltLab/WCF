@@ -18,29 +18,32 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
     UiScroll = tslib_1.__importStar(UiScroll);
     class UiSearchExtended {
         constructor() {
+            this.searchID = undefined;
             this.pages = 0;
             this.activePage = 1;
             this.lastSearchRequest = undefined;
             this.lastSearchResultRequest = undefined;
+            this.searchParameters = [];
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
             this.usernameInput = document.getElementById("searchAuthor");
-            this.initDelimiter();
+            this.delimiter = document.createElement("div");
+            this.form.insertAdjacentElement("afterend", this.delimiter);
             this.initEventListener();
             this.initKeywordSuggestions();
             this.initQueryString();
         }
-        initDelimiter() {
-            this.delimiter = document.createElement("div");
-            this.form.insertAdjacentElement("afterend", this.delimiter);
-        }
         initEventListener() {
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
-                void this.search();
+                this.activePage = 1;
+                void this.search(0 /* Modify */);
             });
             this.typeInput.addEventListener("change", () => this.changeType());
+            window.addEventListener("popstate", () => {
+                this.initQueryString();
+            });
         }
         initKeywordSuggestions() {
             new Input_1.default(this.queryInput, {
@@ -71,36 +74,47 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 title.hidden = true;
             }
         }
-        async search() {
+        async search(searchAction) {
             var _a;
             if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
                 return;
             }
-            this.updateQueryString();
+            this.updateQueryString(searchAction);
             (_a = this.lastSearchRequest) === null || _a === void 0 ? void 0 : _a.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
-            const { count, searchID, title, pages, template } = (await request.dispatch());
+            const { count, searchID, title, pages, pageNo, template } = (await request.dispatch());
             document.querySelector(".contentTitle").textContent = title;
             this.searchID = searchID;
-            this.activePage = 1;
             this.removeSearchResults();
             if (count > 0) {
                 this.pages = pages;
+                this.activePage = pageNo;
                 this.showSearchResults(template);
             }
         }
-        updateQueryString() {
+        updateQueryString(searchAction) {
             const url = new URL(this.form.action);
             url.search += url.search !== "" ? "&" : "?";
-            const parameters = [];
-            new FormData(this.form).forEach((value, key) => {
-                if (value.toString().trim()) {
-                    parameters.push([key, value.toString().trim()]);
-                }
-            });
+            if (searchAction !== 1 /* Navigation */) {
+                this.searchParameters = [];
+                new FormData(this.form).forEach((value, key) => {
+                    if (value.toString().trim()) {
+                        this.searchParameters.push([key, value.toString().trim()]);
+                    }
+                });
+            }
+            const parameters = this.searchParameters.slice();
+            if (this.activePage > 1) {
+                parameters.push(["pageNo", this.activePage.toString()]);
+            }
             url.search += new URLSearchParams(parameters);
-            window.history.replaceState({}, document.title, url.toString());
+            if (searchAction === 2 /* Init */) {
+                window.history.replaceState({}, document.title, url.toString());
+            }
+            else {
+                window.history.pushState({}, document.title, url.toString());
+            }
         }
         getFormData() {
             const data = {};
@@ -109,11 +123,21 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                     data[key] = value;
                 }
             });
+            if (this.activePage > 1) {
+                data["pageNo"] = this.activePage;
+            }
             return data;
         }
         initQueryString() {
+            this.activePage = 1;
             const url = new URL(window.location.href);
             url.searchParams.forEach((value, key) => {
+                if (key === "pageNo") {
+                    this.activePage = parseInt(value, 10);
+                    if (this.activePage < 1)
+                        this.activePage = 1;
+                    return;
+                }
                 const element = this.form.elements[key];
                 if (value && element) {
                     if (element instanceof RadioNodeList) {
@@ -141,7 +165,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 }
             });
             this.typeInput.dispatchEvent(new Event("change"));
-            void this.search();
+            void this.search(2 /* Init */);
         }
         initPagination(position) {
             const wrapperDiv = document.createElement("div");
@@ -173,6 +197,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.activePage = pageNo;
             this.removeSearchResults();
             this.showSearchResults(template);
+            this.updateQueryString(1 /* Navigation */);
         }
         removeSearchResults() {
             while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {

@@ -20,6 +20,7 @@ type ResponseSearch = {
   count: number;
   title: string;
   pages?: number;
+  pageNo?: number;
   searchID?: number;
   template?: string;
 };
@@ -28,41 +29,51 @@ type ResponseSearchResults = {
   template: string;
 };
 
+type SearchParameters = string[][];
+
+const enum SearchAction {
+  Modify,
+  Navigation,
+  Init,
+}
+
 export class UiSearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
   private readonly typeInput: HTMLSelectElement;
   private readonly usernameInput: HTMLInputElement;
-  private searchID: number | undefined;
+  private readonly delimiter: HTMLDivElement;
+  private searchID: number | undefined = undefined;
   private pages = 0;
   private activePage = 1;
   private lastSearchRequest: AbortController | undefined = undefined;
   private lastSearchResultRequest: AbortController | undefined = undefined;
-  private delimiter: HTMLDivElement;
+  private searchParameters: SearchParameters = [];
 
   constructor() {
     this.form = document.getElementById("extendedSearchForm") as HTMLFormElement;
     this.queryInput = document.getElementById("searchQuery") as HTMLInputElement;
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
     this.usernameInput = document.getElementById("searchAuthor") as HTMLInputElement;
+    this.delimiter = document.createElement("div");
 
-    this.initDelimiter();
+    this.form.insertAdjacentElement("afterend", this.delimiter);
     this.initEventListener();
     this.initKeywordSuggestions();
     this.initQueryString();
   }
 
-  private initDelimiter(): void {
-    this.delimiter = document.createElement("div");
-    this.form.insertAdjacentElement("afterend", this.delimiter);
-  }
-
   private initEventListener(): void {
     this.form.addEventListener("submit", (event) => {
       event.preventDefault();
-      void this.search();
+      this.activePage = 1;
+      void this.search(SearchAction.Modify);
     });
     this.typeInput.addEventListener("change", () => this.changeType());
+
+    window.addEventListener("popstate", () => {
+      this.initQueryString();
+    });
   }
 
   private initKeywordSuggestions(): void {
@@ -96,44 +107,55 @@ export class UiSearchExtended {
     }
   }
 
-  private async search(): Promise<void> {
+  private async search(searchAction: SearchAction): Promise<void> {
     if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
       return;
     }
 
-    this.updateQueryString();
+    this.updateQueryString(searchAction);
 
     this.lastSearchRequest?.abort();
 
     const request = dboAction("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
     this.lastSearchRequest = request.getAbortController();
-    const { count, searchID, title, pages, template } = (await request.dispatch()) as ResponseSearch;
+    const { count, searchID, title, pages, pageNo, template } = (await request.dispatch()) as ResponseSearch;
 
     document.querySelector(".contentTitle")!.textContent = title;
     this.searchID = searchID;
-    this.activePage = 1;
 
     this.removeSearchResults();
 
     if (count > 0) {
       this.pages = pages!;
+      this.activePage = pageNo!;
       this.showSearchResults(template!);
     }
   }
 
-  private updateQueryString(): void {
+  private updateQueryString(searchAction: SearchAction): void {
     const url = new URL(this.form.action);
     url.search += url.search !== "" ? "&" : "?";
 
-    const parameters: string[][] = [];
-    new FormData(this.form).forEach((value, key) => {
-      if (value.toString().trim()) {
-        parameters.push([key, value.toString().trim()]);
-      }
-    });
+    if (searchAction !== SearchAction.Navigation) {
+      this.searchParameters = [];
+      new FormData(this.form).forEach((value, key) => {
+        if (value.toString().trim()) {
+          this.searchParameters.push([key, value.toString().trim()]);
+        }
+      });
+    }
+    const parameters = this.searchParameters.slice();
+
+    if (this.activePage > 1) {
+      parameters.push(["pageNo", this.activePage.toString()]);
+    }
     url.search += new URLSearchParams(parameters);
 
-    window.history.replaceState({}, document.title, url.toString());
+    if (searchAction === SearchAction.Init) {
+      window.history.replaceState({}, document.title, url.toString());
+    } else {
+      window.history.pushState({}, document.title, url.toString());
+    }
   }
 
   private getFormData(): Record<string, unknown> {
@@ -143,13 +165,24 @@ export class UiSearchExtended {
         data[key] = value;
       }
     });
+    if (this.activePage > 1) {
+      data["pageNo"] = this.activePage;
+    }
 
     return data;
   }
 
   private initQueryString(): void {
+    this.activePage = 1;
+
     const url = new URL(window.location.href);
     url.searchParams.forEach((value, key) => {
+      if (key === "pageNo") {
+        this.activePage = parseInt(value, 10);
+        if (this.activePage < 1) this.activePage = 1;
+        return;
+      }
+
       const element = this.form.elements[key] as HTMLElement;
       if (value && element) {
         if (element instanceof RadioNodeList) {
@@ -175,7 +208,7 @@ export class UiSearchExtended {
     });
 
     this.typeInput.dispatchEvent(new Event("change"));
-    void this.search();
+    void this.search(SearchAction.Init);
   }
 
   private initPagination(position: "top" | "bottom"): void {
@@ -211,6 +244,7 @@ export class UiSearchExtended {
     this.activePage = pageNo;
     this.removeSearchResults();
     this.showSearchResults(template);
+    this.updateQueryString(SearchAction.Navigation);
   }
 
   private removeSearchResults(): void {
