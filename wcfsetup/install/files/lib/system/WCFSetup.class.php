@@ -385,7 +385,7 @@ class WCFSetup extends WCF
         // php version
         $system['phpVersion']['value'] = \PHP_VERSION;
         $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-        $system['phpVersion']['result'] = (\version_compare($comparePhpVersion, '7.2.24') >= 0);
+        $system['phpVersion']['result'] = (\version_compare($comparePhpVersion, '8.1.2') >= 0);
 
         $system['x64']['result'] = \PHP_INT_SIZE == 8;
 

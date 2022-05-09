@@ -70,7 +70,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         $issues = [];
 
         $phpVersion = \PHP_VERSION;
-        $neededPhpVersion = '7.2.24';
+        $neededPhpVersion = '8.1.2';
         if (!\version_compare($phpVersion, $neededPhpVersion, '>=')) {
             if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
                 $title = 'Veraltete PHP-Version';
