@@ -29,7 +29,4 @@ return array(
     'cc8e14526dc240491e17a838cb78508c' => $vendorDir . '/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php',
     '786bf90caabc9e09b6ad4cc5ca8f0e30' => $vendorDir . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php',
     '751a5a3f463e4be759be31748b61737c' => $vendorDir . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php',
-    '0d59ee240a4cd96ddbb4ff164fccea4d' => $vendorDir . '/symfony/polyfill-php73/bootstrap.php',
-    'b686b8e46447868025a15ce5d0cb2634' => $vendorDir . '/symfony/polyfill-php74/bootstrap.php',
-    'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
 );

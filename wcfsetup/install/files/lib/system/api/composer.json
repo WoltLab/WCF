@@ -21,9 +21,6 @@
         "pear/net_idna2": "^0.2.0",
         "pelago/emogrifier": "^6.0.0",
         "scssphp/scssphp": "^1.10.2",
-        "symfony/polyfill-php73": "^1.25.0",
-        "symfony/polyfill-php74": "^1.25.0",
-        "symfony/polyfill-php80": "^1.25.0",
         "true/punycode": "^2.1.1"
     }
 }

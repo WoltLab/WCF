@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
-    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'GuzzleHttp\\BodySummarizer' => $vendorDir . '/guzzlehttp/guzzle/src/BodySummarizer.php',
     'GuzzleHttp\\BodySummarizerInterface' => $vendorDir . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
@@ -323,7 +322,6 @@ return array(
     'HTMLPurifier_VarParser_Flexible' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/VarParser/Flexible.php',
     'HTMLPurifier_VarParser_Native' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/VarParser/Native.php',
     'HTMLPurifier_Zipper' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/Zipper.php',
-    'JsonException' => $vendorDir . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
     'Laminas\\Diactoros\\AbstractSerializer' => $vendorDir . '/laminas/laminas-diactoros/src/AbstractSerializer.php',
     'Laminas\\Diactoros\\CallbackStream' => $vendorDir . '/laminas/laminas-diactoros/src/CallbackStream.php',
     'Laminas\\Diactoros\\ConfigProvider' => $vendorDir . '/laminas/laminas-diactoros/src/ConfigProvider.php',
@@ -477,7 +475,6 @@ return array(
     'Pelago\\Emogrifier\\HtmlProcessor\\HtmlPruner' => $vendorDir . '/pelago/emogrifier/src/HtmlProcessor/HtmlPruner.php',
     'Pelago\\Emogrifier\\Utilities\\ArrayIntersector' => $vendorDir . '/pelago/emogrifier/src/Utilities/ArrayIntersector.php',
     'Pelago\\Emogrifier\\Utilities\\CssConcatenator' => $vendorDir . '/pelago/emogrifier/src/Utilities/CssConcatenator.php',
-    'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'Psr\\Http\\Client\\ClientExceptionInterface' => $vendorDir . '/psr/http-client/src/ClientExceptionInterface.php',
     'Psr\\Http\\Client\\ClientInterface' => $vendorDir . '/psr/http-client/src/ClientInterface.php',
     'Psr\\Http\\Client\\NetworkExceptionInterface' => $vendorDir . '/psr/http-client/src/NetworkExceptionInterface.php',
@@ -585,7 +582,6 @@ return array(
     'ScssPhp\\ScssPhp\\ValueConverter' => $vendorDir . '/scssphp/scssphp/src/ValueConverter.php',
     'ScssPhp\\ScssPhp\\Version' => $vendorDir . '/scssphp/scssphp/src/Version.php',
     'ScssPhp\\ScssPhp\\Warn' => $vendorDir . '/scssphp/scssphp/src/Warn.php',
-    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
     'Symfony\\Component\\CssSelector\\CssSelectorConverter' => $vendorDir . '/symfony/css-selector/CssSelectorConverter.php',
     'Symfony\\Component\\CssSelector\\Exception\\ExceptionInterface' => $vendorDir . '/symfony/css-selector/Exception/ExceptionInterface.php',
     'Symfony\\Component\\CssSelector\\Exception\\ExpressionErrorException' => $vendorDir . '/symfony/css-selector/Exception/ExpressionErrorException.php',
@@ -635,14 +631,8 @@ return array(
     'Symfony\\Component\\CssSelector\\XPath\\TranslatorInterface' => $vendorDir . '/symfony/css-selector/XPath/TranslatorInterface.php',
     'Symfony\\Component\\CssSelector\\XPath\\XPathExpr' => $vendorDir . '/symfony/css-selector/XPath/XPathExpr.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
-    'Symfony\\Polyfill\\Php73\\Php73' => $vendorDir . '/symfony/polyfill-php73/Php73.php',
-    'Symfony\\Polyfill\\Php74\\Php74' => $vendorDir . '/symfony/polyfill-php74/Php74.php',
-    'Symfony\\Polyfill\\Php80\\Php80' => $vendorDir . '/symfony/polyfill-php80/Php80.php',
-    'Symfony\\Polyfill\\Php80\\PhpToken' => $vendorDir . '/symfony/polyfill-php80/PhpToken.php',
     'TrueBV\\Exception\\DomainOutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/DomainOutOfBoundsException.php',
     'TrueBV\\Exception\\LabelOutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/LabelOutOfBoundsException.php',
     'TrueBV\\Exception\\OutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/OutOfBoundsException.php',
     'TrueBV\\Punycode' => $vendorDir . '/true/punycode/src/Punycode.php',
-    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
-    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );
