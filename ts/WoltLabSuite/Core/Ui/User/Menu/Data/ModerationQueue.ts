@@ -63,10 +63,9 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   }
 
   async getData(): Promise<UserMenuData[]> {
-    const data = (await dboAction(
-      "getModerationQueueData",
-      "wcf\\data\\moderation\\queue\\ModerationQueueAction",
-    ).dispatch()) as UserMenuData[];
+    const data = (await dboAction("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
+      .disableLoadingIndicator()
+      .dispatch()) as UserMenuData[];
 
     const counter = data.filter((item) => item.isUnread).length;
     this.updateCounter(counter);

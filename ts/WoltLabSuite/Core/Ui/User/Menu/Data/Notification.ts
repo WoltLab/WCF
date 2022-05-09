@@ -177,10 +177,9 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
   }
 
   async getData(): Promise<UserMenuData[]> {
-    const data = (await dboAction(
-      "getNotificationData",
-      "wcf\\data\\user\\notification\\UserNotificationAction",
-    ).dispatch()) as UserMenuData[];
+    const data = (await dboAction("getNotificationData", "wcf\\data\\user\\notification\\UserNotificationAction")
+      .disableLoadingIndicator()
+      .dispatch()) as UserMenuData[];
 
     const counter = data.filter((item) => item.isUnread).length;
     this.updateCounter(counter);

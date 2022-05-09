@@ -41,7 +41,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             ];
         }
         async getData() {
-            const data = (await (0, Ajax_1.dboAction)("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch());
+            const data = (await (0, Ajax_1.dboAction)("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
+                .disableLoadingIndicator()
+                .dispatch());
             const counter = data.filter((item) => item.isUnread).length;
             this.updateCounter(counter);
             this.stale = false;
