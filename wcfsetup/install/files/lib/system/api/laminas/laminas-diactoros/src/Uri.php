@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -49,14 +43,14 @@ class Uri implements UriInterface
      *
      * @const string
      */
-    const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+    public const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
 
     /**
      * Unreserved characters used in user info, paths, query strings, and fragments.
      *
      * @const string
      */
-    const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~\pL';
+    public const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~\pL';
 
     /**
      * @var int[] Array indexed by valid scheme names to their corresponding ports.
@@ -82,7 +76,7 @@ class Uri implements UriInterface
     private $host = '';
 
     /**
-     * @var int
+     * @var int|null
      */
     private $port;
 
@@ -463,7 +457,7 @@ class Uri implements UriInterface
         $this->scheme    = isset($parts['scheme']) ? $this->filterScheme($parts['scheme']) : '';
         $this->userInfo  = isset($parts['user']) ? $this->filterUserInfoPart($parts['user']) : '';
         $this->host      = isset($parts['host']) ? strtolower($parts['host']) : '';
-        $this->port      = isset($parts['port']) ? $parts['port'] : null;
+        $this->port      = $parts['port'] ?? null;
         $this->path      = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
         $this->query     = isset($parts['query']) ? $this->filterQuery($parts['query']) : '';
         $this->fragment  = isset($parts['fragment']) ? $this->filterFragment($parts['fragment']) : '';

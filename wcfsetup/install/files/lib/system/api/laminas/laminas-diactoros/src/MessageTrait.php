@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -24,7 +18,9 @@ use function is_resource;
 use function is_string;
 use function preg_match;
 use function sprintf;
+use function str_replace;
 use function strtolower;
+use function trim;
 
 /**
  * Trait implementing the various methods defined in MessageInterface.
@@ -37,6 +33,8 @@ trait MessageTrait
      * List of all registered headers, as key => array of values.
      *
      * @var array
+     *
+     * @psalm-var array<non-empty-string, list<string>>
      */
     protected $headers = [];
 
@@ -44,6 +42,8 @@ trait MessageTrait
      * Map of normalized header name to original name used to register header.
      *
      * @var array
+     *
+     * @psalm-var array<non-empty-string, non-empty-string>
      */
     protected $headerNames = [];
 
@@ -110,6 +110,8 @@ trait MessageTrait
      *
      * @return array Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
+     *
+     * @psalm-return array<non-empty-string, list<string>>
      */
     public function getHeaders() : array
     {
@@ -194,26 +196,26 @@ trait MessageTrait
      * immutability of the message, and MUST return an instance that has the
      * new and/or updated header and value.
      *
-     * @param string $header Case-insensitive header field name.
+     * @param string $name Case-insensitive header field name.
      * @param string|string[] $value Header value(s).
      * @return static
      * @throws Exception\InvalidArgumentException for invalid header names or values.
      */
-    public function withHeader($header, $value) : MessageInterface
+    public function withHeader($name, $value) : MessageInterface
     {
-        $this->assertHeader($header);
+        $this->assertHeader($name);
 
-        $normalized = strtolower($header);
+        $normalized = strtolower($name);
 
         $new = clone $this;
-        if ($new->hasHeader($header)) {
+        if ($new->hasHeader($name)) {
             unset($new->headers[$new->headerNames[$normalized]]);
         }
 
         $value = $this->filterHeaderValue($value);
 
-        $new->headerNames[$normalized] = $header;
-        $new->headers[$header]         = $value;
+        $new->headerNames[$normalized] = $name;
+        $new->headers[$name]           = $value;
 
         return $new;
     }
@@ -230,20 +232,20 @@ trait MessageTrait
      * immutability of the message, and MUST return an instance that has the
      * new header and/or value.
      *
-     * @param string $header Case-insensitive header field name to add.
+     * @param string $name Case-insensitive header field name to add.
      * @param string|string[] $value Header value(s).
      * @return static
      * @throws Exception\InvalidArgumentException for invalid header names or values.
      */
-    public function withAddedHeader($header, $value) : MessageInterface
+    public function withAddedHeader($name, $value) : MessageInterface
     {
-        $this->assertHeader($header);
+        $this->assertHeader($name);
 
-        if (! $this->hasHeader($header)) {
-            return $this->withHeader($header, $value);
+        if (! $this->hasHeader($name)) {
+            return $this->withHeader($name, $value);
         }
 
-        $header = $this->headerNames[strtolower($header)];
+        $header = $this->headerNames[strtolower($name)];
 
         $new = clone $this;
         $value = $this->filterHeaderValue($value);
@@ -260,16 +262,16 @@ trait MessageTrait
      * immutability of the message, and MUST return an instance that removes
      * the named header.
      *
-     * @param string $header Case-insensitive header field name to remove.
+     * @param string $name Case-insensitive header field name to remove.
      * @return static
      */
-    public function withoutHeader($header) : MessageInterface
+    public function withoutHeader($name) : MessageInterface
     {
-        if (! $this->hasHeader($header)) {
+        if (! is_string($name) || $name === '' || ! $this->hasHeader($name)) {
             return clone $this;
         }
 
-        $normalized = strtolower($header);
+        $normalized = strtolower($name);
         $original   = $this->headerNames[$normalized];
 
         $new = clone $this;
@@ -370,7 +372,7 @@ trait MessageTrait
 
         // HTTP/1 uses a "<major>.<minor>" numbering scheme to indicate
         // versions of the protocol, while HTTP/2 does not.
-        if (! preg_match('#^(1\.[01]|2)$#', $version)) {
+        if (! preg_match('#^(1\.[01]|2(\.0)?)$#', $version)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP protocol version "%s" provided',
                 $version
@@ -398,7 +400,13 @@ trait MessageTrait
         return array_map(function ($value) {
             HeaderSecurity::assertValid($value);
 
-            return (string) $value;
+            $value = (string)$value;
+
+            // Normalize line folding to a single space (RFC 7230#3.2.4).
+            $value = str_replace(["\r\n\t", "\r\n "], ' ', $value);
+
+            // Remove optional whitespace (OWS, RFC 7230#3.2.3) around the header value.
+            return trim($value, "\t ");
         }, array_values($values));
     }
 

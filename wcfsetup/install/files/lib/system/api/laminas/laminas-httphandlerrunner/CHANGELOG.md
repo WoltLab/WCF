@@ -2,6 +2,77 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.5.0 - 2021-09-22
+
+
+-----
+
+### Release Notes for [1.5.0](https://github.com/laminas/laminas-httphandlerrunner/milestone/6)
+
+Feature release (minor)
+
+### 1.5.0
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Enhancement
+
+ - [24: Support PHP 8.1](https://github.com/laminas/laminas-httphandlerrunner/pull/24) thanks to @Ocramius
+
+## 1.4.0 - 2021-04-08
+
+
+-----
+
+### Release Notes for [1.4.0](https://github.com/laminas/laminas-httphandlerrunner/milestone/3)
+
+Feature release (minor)
+
+### 1.4.0
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Enhancement
+
+ - [8: Initial migration to github ci workflows and psalm integration](https://github.com/laminas/laminas-httphandlerrunner/pull/8) thanks to @gsteel
+
+## 1.3.0 - 2020-11-19
+
+### Added
+
+- [#7](https://github.com/laminas/laminas-httphandlerrunner/pull/7) adds support for PHP 8.0.
+
+### Removed
+
+- [#7](https://github.com/laminas/laminas-httphandlerrunner/pull/7) drops support for the 1.x series of laminas/laminas-diactoros.
+
+- [#7](https://github.com/laminas/laminas-httphandlerrunner/pull/7) drops support for PHP versions prior to 7.3.
+
+
+-----
+
+### Release Notes for [1.3.0](https://github.com/laminas/laminas-httphandlerrunner/milestone/1)
+
+
+
+### 1.3.0
+
+- Total issues resolved: **1**
+- Total pull requests resolved: **1**
+- Total contributors: **2**
+
+#### Enhancement
+
+ - [7: Bump up PHP version constraint.](https://github.com/laminas/laminas-httphandlerrunner/pull/7) thanks to @ADmad
+
+#### Enhancement,Help Wanted,hacktoberfest-accepted
+
+ - [6: PHP 8.0 support](https://github.com/laminas/laminas-httphandlerrunner/issues/6) thanks to @boesing
+
 ## 1.2.0 - 2020-06-03
 
 ### Added

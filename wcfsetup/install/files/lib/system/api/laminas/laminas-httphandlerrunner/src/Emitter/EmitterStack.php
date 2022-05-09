@@ -12,6 +12,7 @@ namespace Laminas\HttpHandlerRunner\Emitter;
 
 use Laminas\HttpHandlerRunner\Exception;
 use Psr\Http\Message\ResponseInterface;
+use ReturnTypeWillChange;
 use SplStack;
 
 /**
@@ -53,6 +54,7 @@ class EmitterStack extends SplStack implements EmitterInterface
      * @return void
      * @throws InvalidArgumentException if not an EmitterInterface instance
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($index, $emitter)
     {
         $this->validateEmitter($emitter);
@@ -66,6 +68,7 @@ class EmitterStack extends SplStack implements EmitterInterface
      * @return void
      * @throws InvalidArgumentException if not an EmitterInterface instance
      */
+    #[ReturnTypeWillChange]
     public function push($emitter)
     {
         $this->validateEmitter($emitter);
@@ -79,6 +82,7 @@ class EmitterStack extends SplStack implements EmitterInterface
      * @return void
      * @throws InvalidArgumentException if not an EmitterInterface instance
      */
+    #[ReturnTypeWillChange]
     public function unshift($emitter)
     {
         $this->validateEmitter($emitter);

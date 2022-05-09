@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -14,10 +8,10 @@ use Psr\Http\Message\StreamInterface;
 
 use function array_pop;
 use function implode;
-use function ltrim;
 use function preg_match;
 use function sprintf;
 use function str_replace;
+use function trim;
 use function ucwords;
 
 /**
@@ -27,9 +21,9 @@ use function ucwords;
  */
 abstract class AbstractSerializer
 {
-    const CR  = "\r";
-    const EOL = "\r\n";
-    const LF  = "\n";
+    public const CR  = "\r";
+    public const EOL = "\r\n";
+    public const LF  = "\n";
 
     /**
      * Retrieve a single line from the stream.
@@ -101,7 +95,7 @@ abstract class AbstractSerializer
                 if (! isset($headers[$currentHeader])) {
                     $headers[$currentHeader] = [];
                 }
-                $headers[$currentHeader][] = ltrim($matches['value']);
+                $headers[$currentHeader][] = trim($matches['value'], "\t ");
                 continue;
             }
 
@@ -115,7 +109,7 @@ abstract class AbstractSerializer
 
             // Append continuation to last header value found
             $value = array_pop($headers[$currentHeader]);
-            $headers[$currentHeader][] = $value . ltrim($line);
+            $headers[$currentHeader][] = $value . ' ' . trim($line, "\t ");
         }
 
         // use RelativeStream to avoid copying initial stream into memory
@@ -124,6 +118,8 @@ abstract class AbstractSerializer
 
     /**
      * Serialize headers to string values.
+     *
+     * @psalm-param array<string, string[]> $headers
      */
     protected static function serializeHeaders(array $headers) : string
     {
@@ -140,6 +136,8 @@ abstract class AbstractSerializer
 
     /**
      * Filter a header name to wordcase
+     *
+     * @param string $header
      */
     protected static function filterHeader($header) : string
     {

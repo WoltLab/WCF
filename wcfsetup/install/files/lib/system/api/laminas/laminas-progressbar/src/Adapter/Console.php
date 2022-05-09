@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-progressbar for the canonical source repository
- * @copyright https://github.com/laminas/laminas-progressbar/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-progressbar/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\ProgressBar\Adapter;
 
+use Laminas\ProgressBar\Adapter\Exception\RuntimeException;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Stdlib\StringUtils;
+use ValueError;
 
 /**
  * Laminas\ProgressBar\Adapter\Console offers a text-based progressbar for console
@@ -164,16 +160,22 @@ class Console extends AbstractAdapter
      *
      * @param  string $resource
      * @throws Exception\RuntimeException
-     * @return \Laminas\ProgressBar\Adapter\Console
      */
     public function setOutputStream($resource)
     {
-        ErrorHandler::start();
-        $stream = fopen($resource, 'w');
-        $error  = ErrorHandler::stop();
+        $fileOpenError = null;
+        ErrorHandler::start(E_DEPRECATED);
+        try {
+            $stream = fopen($resource, 'w');
+        } catch (ValueError $fileOpenError) {
+            $stream = false;
+        } finally {
+            $error = ErrorHandler::stop();
+        }
 
         if ($stream === false) {
-            throw new Exception\RuntimeException('Unable to open stream', 0, $error);
+            $previous = $fileOpenError ?: $error;
+            throw new Exception\RuntimeException('Unable to open stream', 0, $previous);
         }
 
         if ($this->outputStream !== null) {

@@ -4,7 +4,7 @@
         "prepend-autoloader": false,
         "optimize-autoloader": true,
         "platform": {
-            "php": "7.2.24",
+            "php": "8.1.2",
             "ext-gd": "0"
         }
     },

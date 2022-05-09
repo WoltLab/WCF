@@ -30,7 +30,7 @@ trait SapiEmitterTrait
      * @throws EmitterException if headers have already been sent.
      * @throws EmitterException if output is present in the output buffer.
      */
-    private function assertNoPreviousOutput()
+    private function assertNoPreviousOutput(): void
     {
         if (headers_sent()) {
             throw EmitterException::forHeadersSent();
@@ -53,7 +53,7 @@ trait SapiEmitterTrait
      *
      * @see \Laminas\HttpHandlerRunner\Emitter\SapiEmitterTrait::emitHeaders()
      */
-    private function emitStatusLine(ResponseInterface $response) : void
+    private function emitStatusLine(ResponseInterface $response): void
     {
         $reasonPhrase = $response->getReasonPhrase();
         $statusCode   = $response->getStatusCode();
@@ -74,7 +74,7 @@ trait SapiEmitterTrait
      * in such a way as to create aggregate headers (instead of replace
      * the previous).
      */
-    private function emitHeaders(ResponseInterface $response) : void
+    private function emitHeaders(ResponseInterface $response): void
     {
         $statusCode = $response->getStatusCode();
 
@@ -95,7 +95,7 @@ trait SapiEmitterTrait
     /**
      * Filter a header name to wordcase
      */
-    private function filterHeader(string $header) : string
+    private function filterHeader(string $header): string
     {
         return ucwords($header, '-');
     }

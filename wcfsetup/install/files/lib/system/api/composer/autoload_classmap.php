@@ -331,6 +331,7 @@ return array(
     'Laminas\\Diactoros\\Exception\\ExceptionInterface' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/ExceptionInterface.php',
     'Laminas\\Diactoros\\Exception\\InvalidArgumentException' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/InvalidArgumentException.php',
     'Laminas\\Diactoros\\Exception\\InvalidStreamPointerPositionException' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/InvalidStreamPointerPositionException.php',
+    'Laminas\\Diactoros\\Exception\\RuntimeException' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/RuntimeException.php',
     'Laminas\\Diactoros\\Exception\\SerializationException' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/SerializationException.php',
     'Laminas\\Diactoros\\Exception\\UnreadableStreamException' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/UnreadableStreamException.php',
     'Laminas\\Diactoros\\Exception\\UnrecognizedProtocolVersionException' => $vendorDir . '/laminas/laminas-diactoros/src/Exception/UnrecognizedProtocolVersionException.php',

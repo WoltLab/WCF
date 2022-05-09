@@ -21,7 +21,7 @@ use function sprintf;
 class InvalidEmitterException extends InvalidArgumentException implements ExceptionInterface
 {
     /**
-     * @var mixed $emitter Invalid emitter type
+     * @param mixed $emitter Invalid emitter type
      */
     public static function forEmitter($emitter) : self
     {
