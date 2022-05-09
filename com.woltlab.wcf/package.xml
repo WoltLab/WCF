@@ -110,11 +110,17 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_starttls.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.5.0 Alpha 5">
+	<instructions type="update" fromversion="5.5.0 Alpha 6">
+		<!-- Tentative update instructions from Alpha 6 -->
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		
+
+		<instruction type="objectType" />
+		<instruction type="userNotificationEvent" />
+
 		<instruction type="language"/>
+
+		<instruction type="fileDelete">fileDelete_5.5.xml</instruction>
 	</instructions>
 </package>
