@@ -401,6 +401,25 @@ const UiDialog = {
       closeButton.appendChild(span);
     }
 
+    // Dialogs are positioned using `left: 50%` as a hack to
+    // force long softwrapping of text without causing other
+    // elements to be squished together. The actual value for
+    // `transform` must not use percent values, because this
+    // causes blurry text rendering in Chromium.
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (dialog.getAttribute("aria-hidden") === "false") {
+        for (const entry of entries) {
+          const contentBoxSize: ResizeObserverSize = Array.isArray(entry.contentBoxSize)
+            ? entry.contentBoxSize[0]
+            : entry.contentBoxSize;
+
+          const offset = Math.floor(contentBoxSize.inlineSize / 2);
+          dialog.style.setProperty("transform", `translateX(-${offset}px)`);
+        }
+      }
+    });
+    resizeObserver.observe(dialog);
+
     const contentContainer = document.createElement("div");
     contentContainer.classList.add("dialogContent");
     if (options.disableContentPadding) contentContainer.classList.add("dialogContentNoPadding");

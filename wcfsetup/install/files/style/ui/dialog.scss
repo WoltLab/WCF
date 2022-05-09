@@ -67,6 +67,13 @@
 		min-width: 500px;
 		position: absolute;
 
+		// This is required to prevent dialogs from becoming
+		// unncessarily wide by forcing text to wrap. We cannot
+		// use `transform` to offset this indentation, because
+		// this causes a blurry text rendering in Chromium.
+		// The offset is calculated using a `ResizeObserver`.
+		left: 50%;
+
 		&[aria-hidden="false"] {
 			animation: wcfDialog 0.3s;
 			animation-fill-mode: forwards;
