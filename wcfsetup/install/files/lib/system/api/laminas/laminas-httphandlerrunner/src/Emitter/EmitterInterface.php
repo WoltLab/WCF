@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-httphandlerrunner for the canonical source repository
- * @copyright https://github.com/laminas/laminas-httphandlerrunner/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-httphandlerrunner/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\HttpHandlerRunner\Emitter;
@@ -31,5 +25,5 @@ interface EmitterInterface
      * the emitter was able to emit the response, while `false` indicates
      * it was not.
      */
-    public function emit(ResponseInterface $response) : bool;
+    public function emit(ResponseInterface $response): bool;
 }

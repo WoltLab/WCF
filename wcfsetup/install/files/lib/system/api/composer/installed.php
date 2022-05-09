@@ -83,12 +83,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-httphandlerrunner' => array(
-            'pretty_version' => '1.5.0',
-            'version' => '1.5.0.0',
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-httphandlerrunner',
             'aliases' => array(),
-            'reference' => '5f94e55d93f756e8ad07b9049aeb3d6d84582d0e',
+            'reference' => '4d337cde83e6b901a4443b0ab5c3b97cbaa46413',
             'dev_requirement' => false,
         ),
         'laminas/laminas-progressbar' => array(
@@ -107,15 +107,6 @@
             'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
             'reference' => 'bcd869e2fe88d567800057c1434f2380354fe325',
-            'dev_requirement' => false,
-        ),
-        'laminas/laminas-zendframework-bridge' => array(
-            'pretty_version' => '1.5.0',
-            'version' => '1.5.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../laminas/laminas-zendframework-bridge',
-            'aliases' => array(),
-            'reference' => '7f049390b756d34ba5940a8fb47634fbb51f79ab',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
@@ -270,12 +261,6 @@
             'aliases' => array(),
             'reference' => 'a4d0c11a36dd7f4e7cd7096076cab6d3378a071e',
             'dev_requirement' => false,
-        ),
-        'zendframework/zend-httphandlerrunner' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '^1.1.0',
-            ),
         ),
     ),
 );

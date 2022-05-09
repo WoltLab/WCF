@@ -1,28 +1,24 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-httphandlerrunner for the canonical source repository
- * @copyright https://github.com/laminas/laminas-httphandlerrunner/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-httphandlerrunner/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\HttpHandlerRunner\Emitter;
 
 use Psr\Http\Message\ResponseInterface;
 
+use function flush;
 use function preg_match;
 use function strlen;
 use function substr;
 
+/**
+ * @psalm-type ParsedRangeType = array{0:string,1:int,2:int,3:'*'|int}
+ */
 class SapiStreamEmitter implements EmitterInterface
 {
     use SapiEmitterTrait;
 
-    /**
-     * @var int Maximum output buffering size for each iteration.
-     */
+    /** @var int Maximum output buffering size for each iteration. */
     private $maxBufferLength;
 
     public function __construct(int $maxBufferLength = 8192)
@@ -36,7 +32,7 @@ class SapiStreamEmitter implements EmitterInterface
      * Emits the status line and headers via the header() function, and the
      * body content via the output buffer.
      */
-    public function emit(ResponseInterface $response) : bool
+    public function emit(ResponseInterface $response): bool
     {
         $this->assertNoPreviousOutput();
         $this->emitHeaders($response);
@@ -58,7 +54,7 @@ class SapiStreamEmitter implements EmitterInterface
     /**
      * Emit the message body.
      */
-    private function emitBody(ResponseInterface $response) : void
+    private function emitBody(ResponseInterface $response): void
     {
         $body = $response->getBody();
 
@@ -78,10 +74,12 @@ class SapiStreamEmitter implements EmitterInterface
 
     /**
      * Emit a range of the message body.
+     *
+     * @psalm-param ParsedRangeType $range
      */
-    private function emitBodyRange(array $range, ResponseInterface $response) : void
+    private function emitBodyRange(array $range, ResponseInterface $response): void
     {
-        list($unit, $first, $last, $length) = $range;
+        [, $first, $last] = $range;
 
         $body = $response->getBody();
 
@@ -118,8 +116,9 @@ class SapiStreamEmitter implements EmitterInterface
      *
      * @return null|array [unit, first, last, length]; returns null if no
      *     content range or an invalid content range is provided
+     * @psalm-return null|ParsedRangeType
      */
-    private function parseContentRange(string $header) : ?array
+    private function parseContentRange(string $header): ?array
     {
         if (! preg_match('/(?P<unit>[\w]+)\s+(?P<first>\d+)-(?P<last>\d+)\/(?P<length>\d+|\*)/', $header, $matches)) {
             return null;

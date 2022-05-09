@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-httphandlerrunner for the canonical source repository
- * @copyright https://github.com/laminas/laminas-httphandlerrunner/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-httphandlerrunner/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\HttpHandlerRunner;
@@ -26,11 +20,9 @@ use Throwable;
  * then the runner will use the composed error response generator to generate a
  * response, based on the exception or throwable raised.
  */
-class RequestHandlerRunner
+final class RequestHandlerRunner implements RequestHandlerRunnerInterface
 {
-    /**
-     * @var Emitter\EmitterInterface
-     */
+    /** @var Emitter\EmitterInterface */
     private $emitter;
 
     /**
@@ -48,7 +40,7 @@ class RequestHandlerRunner
      * The factory will receive the Throwable or Exception that caused the error,
      * and must return a Psr\Http\Message\ResponseInterface instance.
      *
-     * @var callable
+     * @var callable(Throwable):ResponseInterface
      */
     private $serverRequestErrorResponseGenerator;
 
@@ -56,10 +48,14 @@ class RequestHandlerRunner
      * A factory capable of generating a Psr\Http\Message\ServerRequestInterface instance.
      * The factory will not receive any arguments.
      *
-     * @var callable
+     * @var callable():ServerRequestInterface
      */
     private $serverRequestFactory;
 
+    /**
+     * @param callable():ServerRequestInterface     $serverRequestFactory
+     * @param callable(Throwable):ResponseInterface $serverRequestErrorResponseGenerator
+     */
     public function __construct(
         RequestHandlerInterface $handler,
         Emitter\EmitterInterface $emitter,
@@ -69,21 +65,11 @@ class RequestHandlerRunner
         $this->handler = $handler;
         $this->emitter = $emitter;
 
-        // Factories are cast as Closures to ensure return type safety.
-        $this->serverRequestFactory = function () use ($serverRequestFactory) : ServerRequestInterface {
-            return $serverRequestFactory();
-        };
-
-        $this->serverRequestErrorResponseGenerator =
-            function (Throwable $exception) use ($serverRequestErrorResponseGenerator) : ResponseInterface {
-                return $serverRequestErrorResponseGenerator($exception);
-            };
+        $this->serverRequestFactory                = $serverRequestFactory;
+        $this->serverRequestErrorResponseGenerator = $serverRequestErrorResponseGenerator;
     }
 
-    /**
-     * Run the application
-     */
-    public function run() : void
+    public function run(): void
     {
         try {
             $request = ($this->serverRequestFactory)();
@@ -98,7 +84,7 @@ class RequestHandlerRunner
         $this->emitter->emit($response);
     }
 
-    private function emitMarshalServerRequestException(Throwable $exception) : void
+    private function emitMarshalServerRequestException(Throwable $exception): void
     {
         $response = ($this->serverRequestErrorResponseGenerator)($exception);
         $this->emitter->emit($response);
