@@ -29,6 +29,5 @@ jobs:
     - name: Remove files to be ignored
       run: |
         rm wcfsetup/install/files/lib/system/api/symfony/polyfill-mbstring/bootstrap80.php
-        rm wcfsetup/install/files/lib/system/api/symfony/polyfill-php73/Resources/stubs/JsonException.php
     - run: |
         ! find . -type f -name '*.php' -exec php -l '{}' \; 2>&1 |grep -v '^No syntax errors detected'
