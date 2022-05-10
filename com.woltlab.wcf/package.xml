@@ -50,66 +50,6 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.4.*">
-		<!--
-tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
-	acp/update_com.woltlab.wcf_5.5_ensureInnoDbSearch.php \
-	acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php \
-	acp/update_com.woltlab.wcf_5.5_styleVariables.php
-		-->
-		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
-
-		<!-- Checks that need to happen before the upgrade starts. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_ensureInnoDbSearch.php</instruction>
-
-		<!-- Clean up the file log. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php</instruction>
-
-		<!-- Insert the new style variables early to prevent style rebuilds bricking the system. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_styleVariables.php</instruction>
-
-		<!-- Deploy new application code. -->
-		<instruction type="file" />
-		<instruction type="acpTemplate" />
-		<instruction type="template" />
-
-		<!-- Make all the new options available as early as possible. -->
-		<instruction type="option" run="standalone" />
-
-		<!-- The updated object types are required for the boxCondition migrator. -->
-		<instruction type="objectTypeDefinition" />
-		<instruction type="objectType" />
-
-		<!-- Migrate the database as early as possible. -->
-		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.5.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_boxConditions.php</instruction>
-
-		<!-- Install new PIPs (fileDelete, templateDelete, acpTemplateDelete). -->
-		<instruction type="packageInstallationPlugin" />
-
-		<!-- Misc. PIPs. -->
-		<instruction type="cronjob" />
-		<instruction type="eventListener" />
-		<instruction type="language" />
-		<instruction type="mediaProvider" />
-		<instruction type="page" />
-		<instruction type="userGroupOption" />
-
-		<!-- Clean Up. -->
-		<instruction type="acpTemplateDelete" />
-		<instruction type="fileDelete" />
-		<instruction type="templateDelete" />
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_clearPackageDeprecations.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_cleanupPackageExclusion.php</instruction>
-
-		<!-- Misc. Update Scripts. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_randomize_cronjobs.php</instruction>
-
-		<!-- Migrate the STARTTLS option last. This requires external connections and thus is the
-			step that most likely might fail. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_starttls.php</instruction>
-	</instructions>
-
 	<instructions type="update" fromversion="5.5.0 Alpha 6">
 		<!-- Tentative update instructions from Alpha 6 -->
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
