@@ -4944,12 +4944,12 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[The account <strong>{$user->username}</strong> is protected by multi-factor authentication, but no methods are set up. Please contact the administrator for support.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Dear {$setup->getUser()->username},</h2>
 
-<p>You used the emergency code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don't have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
+<p>You used the emergency code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don’t have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
 
 <p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Dear {$setup->getUser()->username},
 
-You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
+You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don\'t have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
 
 You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentication using emergency code on {@PAGE_TITLE|phrase}]]></item>
