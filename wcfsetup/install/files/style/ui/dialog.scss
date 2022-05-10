@@ -53,6 +53,9 @@
 		position: fixed;
 		right: 0 !important;
 		top: 0 !important;
+
+		// Remove the offsets for the dialog position.
+		transform: none !important;
 	}
 
 	@include screen-sm-up {
