@@ -559,7 +559,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
             return undefined;
         },
     };
-    const Plural = Object.assign({ 
+    const Plural = {
         /**
          * Returns the plural category for the given value.
          */
@@ -626,6 +626,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         getV(n) {
             return n.toString().replace(/^[^.]*\.?/, "").length;
-        } }, Languages);
+        },
+        ...Languages,
+    };
     return Plural;
 });
