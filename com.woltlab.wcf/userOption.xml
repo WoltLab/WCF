@@ -246,8 +246,4 @@
 			</option>
 		</options>
 	</import>
-	<delete>
-		<!-- This option was improperly deleted in 5.2 / 6715774b360ae6a768ebcce407eeb4418339eab1 -->
-		<option name="googlePlus" />
-	</delete>
 </data>

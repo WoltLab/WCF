@@ -1666,14 +1666,4 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 		</options>
 	</import>
-	<delete>
-		<option name="module_master_password"/>
-		<option name="blacklist_ip_addresses"/>
-		<option name="blacklist_user_agents"/>
-		<option name="module_system_recaptcha"/>
-		<option name="profile_mail_use_captcha"/>
-		<option name="url_legacy_mode"/>
-		<option name="enable_censorship"/>
-		<option name="search_use_captcha" />
-	</delete>
 </data>
