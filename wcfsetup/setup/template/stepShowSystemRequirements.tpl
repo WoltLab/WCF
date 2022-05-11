@@ -159,7 +159,7 @@
 			
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+					<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
 					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
 				</dl>
 				
@@ -181,7 +181,7 @@
 			
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+					<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
 					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
 				</dl>
 				
