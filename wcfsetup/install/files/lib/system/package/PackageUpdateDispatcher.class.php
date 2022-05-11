@@ -152,11 +152,6 @@ class PackageUpdateDispatcher extends SingletonFactory
             $settings['auth'] = $authData;
         }
 
-        $secureConnection = $updateServer->attemptSecureConnection();
-        if ($secureConnection) {
-            $settings['timeout'] = 5;
-        }
-
         $request = new HTTPRequest($updateServer->getListURL(), $settings);
 
         $requestedVersion = \wcf\getMinorVersion();

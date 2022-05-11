@@ -2,9 +2,9 @@
 
 namespace wcf\data\package\update\server;
 
+use Laminas\Diactoros\Uri;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
-use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
@@ -244,23 +244,21 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns the list endpoint for package servers.
      *
-     * @param bool $forceHTTP
      * @return  string
      */
-    public function getListURL($forceHTTP = false)
+    public function getListURL()
     {
+        $url = new Uri($this->serverURL);
+
+        if ($url->getHost() !== 'localhost') {
+            $url = $url->withScheme('https');
+        }
+
         if ($this->apiVersion == '2.0') {
-            return $this->serverURL;
+            return (string)$url;
         }
 
-        $serverURL = FileUtil::addTrailingSlash($this->serverURL) . 'list/' . WCF::getLanguage()->getFixedLanguageCode() . '.xml';
-
-        $metaData = $this->getMetaData();
-        if ($forceHTTP || !RemoteFile::supportsSSL() || !$metaData['ssl']) {
-            return \preg_replace('~^https://~', 'http://', $serverURL);
-        }
-
-        return \preg_replace('~^http://~', 'https://', $serverURL);
+        return FileUtil::addTrailingSlash((string)$url) . 'list/' . WCF::getLanguage()->getFixedLanguageCode() . '.xml';
     }
 
     /**
@@ -270,16 +268,13 @@ class PackageUpdateServer extends DatabaseObject
      */
     public function getDownloadURL()
     {
-        if ($this->apiVersion == '2.0') {
-            return $this->serverURL;
+        $url = new Uri($this->serverURL);
+
+        if ($url->getHost() !== 'localhost') {
+            $url = $url->withScheme('https');
         }
 
-        $metaData = $this->getMetaData();
-        if (!RemoteFile::supportsSSL() || !$metaData['ssl']) {
-            return \preg_replace('~^https://~', 'http://', $this->serverURL);
-        }
-
-        return \preg_replace('~^http://~', 'https://', $this->serverURL);
+        return (string)$url;
     }
 
     /**
@@ -293,22 +288,11 @@ class PackageUpdateServer extends DatabaseObject
     }
 
     /**
-     * Returns true if a request to this server would make use of a secure connection.
-     *
-     * @return  bool
+     * @deprecated 5.6 This method always returns true. Package servers must use TLS.
      */
     public function attemptSecureConnection()
     {
-        if ($this->apiVersion == '2.0') {
-            return false;
-        }
-
-        $metaData = $this->getMetaData();
-        if (RemoteFile::supportsSSL() && $metaData['ssl']) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
