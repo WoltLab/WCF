@@ -47,20 +47,11 @@ class PackageUpdateDispatcher extends SingletonFactory
 
         // loop servers
         $updateServers = [];
-        $foundWoltLabServer = false;
         $requirePurchasedVersions = false;
         foreach ($tmp as $updateServer) {
             if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
                 if (\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
                     $requirePurchasedVersions = true;
-
-                    // move a woltlab.com update server to the front of the queue to probe for SSL support
-                    if (!$foundWoltLabServer) {
-                        \array_unshift($updateServers, $updateServer);
-                        $foundWoltLabServer = true;
-
-                        continue;
-                    }
                 }
 
                 $updateServers[] = $updateServer;
