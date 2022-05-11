@@ -18,10 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         php:
-        - '7.2'
-        - '7.3'
-        - '7.4'
-        - '8.0'
         - '8.1'
     steps:
     - name: Set up PHP
@@ -33,6 +29,5 @@ jobs:
     - name: Remove files to be ignored
       run: |
         rm wcfsetup/install/files/lib/system/api/symfony/polyfill-mbstring/bootstrap80.php
-        rm wcfsetup/install/files/lib/system/api/symfony/polyfill-php73/Resources/stubs/JsonException.php
     - run: |
         ! find . -type f -name '*.php' -exec php -l '{}' \; 2>&1 |grep -v '^No syntax errors detected'

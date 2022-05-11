@@ -1,7 +1,6 @@
 # laminas-httphandlerrunner
 
-[![Build Status](https://travis-ci.com/laminas/laminas-httphandlerrunner.svg?branch=master)](https://travis-ci.com/laminas/laminas-httphandlerrunner)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-httphandlerrunner/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-httphandlerrunner?branch=master)
+[![Build Status](https://github.com/laminas/laminas-httphandlerrunner/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-httphandlerrunner/actions?query=workflow%3A"Continuous+Integration")
 
 This library provides utilities for:
 

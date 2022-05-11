@@ -24,7 +24,7 @@ namespace Symfony\Component\CssSelector\Node;
 class PseudoNode extends AbstractNode
 {
     private $selector;
-    private $identifier;
+    private string $identifier;
 
     public function __construct(NodeInterface $selector, string $identifier)
     {

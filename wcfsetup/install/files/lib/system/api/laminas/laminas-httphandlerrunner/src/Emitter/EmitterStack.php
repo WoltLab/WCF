@@ -1,17 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-httphandlerrunner for the canonical source repository
- * @copyright https://github.com/laminas/laminas-httphandlerrunner/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-httphandlerrunner/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\HttpHandlerRunner\Emitter;
 
 use Laminas\HttpHandlerRunner\Exception;
 use Psr\Http\Message\ResponseInterface;
+use ReturnTypeWillChange;
 use SplStack;
 
 /**
@@ -21,6 +16,8 @@ use SplStack;
  *
  * When iterating the stack, the first emitter to return a boolean
  * true value will short-circuit iteration.
+ *
+ * @template-extends SplStack<EmitterInterface>
  */
 class EmitterStack extends SplStack implements EmitterInterface
 {
@@ -34,7 +31,7 @@ class EmitterStack extends SplStack implements EmitterInterface
      * As such, return a boolean false value from an emitter to indicate it
      * cannot emit the response, allowing the next emitter to try.
      */
-    public function emit(ResponseInterface $response) : bool
+    public function emit(ResponseInterface $response): bool
     {
         foreach ($this as $emitter) {
             if (false !== $emitter->emit($response)) {
@@ -48,13 +45,15 @@ class EmitterStack extends SplStack implements EmitterInterface
     /**
      * Set an emitter on the stack by index.
      *
-     * @param mixed $index
+     * @param int $index
      * @param EmitterInterface $emitter
      * @return void
-     * @throws InvalidArgumentException if not an EmitterInterface instance
+     * @throws Exception\InvalidEmitterException If not an EmitterInterface instance.
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($index, $emitter)
     {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         $this->validateEmitter($emitter);
         parent::offsetSet($index, $emitter);
     }
@@ -64,10 +63,12 @@ class EmitterStack extends SplStack implements EmitterInterface
      *
      * @param EmitterInterface $emitter
      * @return void
-     * @throws InvalidArgumentException if not an EmitterInterface instance
+     * @throws Exception\InvalidEmitterException If not an EmitterInterface instance.
      */
+    #[ReturnTypeWillChange]
     public function push($emitter)
     {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         $this->validateEmitter($emitter);
         parent::push($emitter);
     }
@@ -77,10 +78,12 @@ class EmitterStack extends SplStack implements EmitterInterface
      *
      * @param EmitterInterface $emitter
      * @return void
-     * @throws InvalidArgumentException if not an EmitterInterface instance
+     * @throws Exception\InvalidEmitterException If not an EmitterInterface instance.
      */
+    #[ReturnTypeWillChange]
     public function unshift($emitter)
     {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         $this->validateEmitter($emitter);
         parent::unshift($emitter);
     }
@@ -89,9 +92,10 @@ class EmitterStack extends SplStack implements EmitterInterface
      * Validate that an emitter implements EmitterInterface.
      *
      * @param mixed $emitter
-     * @throws Exception\InvalidEmitterException for non-emitter instances
+     * @throws Exception\InvalidEmitterException For non-emitter instances.
+     * @psalm-assert EmitterInterface $emitter
      */
-    private function validateEmitter($emitter) : void
+    private function validateEmitter($emitter): void
     {
         if (! $emitter instanceof EmitterInterface) {
             throw Exception\InvalidEmitterException::forEmitter($emitter);

@@ -81,10 +81,10 @@ class SystemCheckPage extends AbstractPage
     public $phpMemoryLimit = 128;
 
     public $phpVersions = [
-        'minimum' => '7.2.24',
-        'deprecated' => ['7.2', '7.3'],
-        'sufficient' => ['7.4'],
-        'recommended' => ['8.0', '8.1'],
+        'minimum' => '8.1.2',
+        'deprecated' => [],
+        'sufficient' => [],
+        'recommended' => ['8.1'],
     ];
 
     public $foreignKeys = [

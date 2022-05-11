@@ -4,7 +4,7 @@
         "prepend-autoloader": false,
         "optimize-autoloader": true,
         "platform": {
-            "php": "7.2.24",
+            "php": "8.1.2",
             "ext-gd": "0"
         }
     },
@@ -14,16 +14,13 @@
         "ezyang/htmlpurifier": "4.14.*",
         "guzzlehttp/guzzle": "^7.4.2",
         "guzzlehttp/psr7": "^2.2.1",
-        "laminas/laminas-diactoros": "^2.4.1",
-        "laminas/laminas-httphandlerrunner": "^1.2.0",
-        "laminas/laminas-progressbar": "^2.7.0",
+        "laminas/laminas-diactoros": "^2.10.0",
+        "laminas/laminas-httphandlerrunner": "^2.1.0",
+        "laminas/laminas-progressbar": "^2.10.0",
         "paragonie/constant_time_encoding": "^2.5.0",
         "pear/net_idna2": "^0.2.0",
         "pelago/emogrifier": "^6.0.0",
         "scssphp/scssphp": "^1.10.2",
-        "symfony/polyfill-php73": "^1.25.0",
-        "symfony/polyfill-php74": "^1.25.0",
-        "symfony/polyfill-php80": "^1.25.0",
         "true/punycode": "^2.1.1"
     }
 }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-diactoros for the canonical source repository
- * @copyright https://github.com/laminas/laminas-diactoros/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-diactoros/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Diactoros;
@@ -347,7 +341,7 @@ class Stream implements StreamInterface
         }
 
         if ($error) {
-            throw new Exception\InvalidArgumentException('Invalid stream reference provided');
+            throw new Exception\RuntimeException('Invalid stream reference provided');
         }
 
         if (! $this->isValidStreamResourceType($resource)) {
@@ -370,9 +364,14 @@ class Stream implements StreamInterface
      */
     private function isValidStreamResourceType($resource): bool
     {
-        return (
-            is_resource($resource) &&
-            in_array(get_resource_type($resource), self::ALLOWED_STREAM_RESOURCE_TYPES, true)
-        );
+        if (is_resource($resource)) {
+            return in_array(get_resource_type($resource), self::ALLOWED_STREAM_RESOURCE_TYPES, true);
+        }
+
+        if (PHP_VERSION_ID >= 80000 && $resource instanceof \GdImage) {
+            return true;
+        }
+
+        return false;
     }
 }

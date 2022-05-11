@@ -1,6 +1,6 @@
 # laminas-stdlib
 
-[![Build Status](https://travis-ci.org/laminas/laminas-stdlib.svg?branch=master)](https://travis-ci.org/laminas/laminas-stdlib)
+[![Build Status](https://github.com/laminas/laminas-stdlib/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-stdlib/actions/workflows/continuous-integration.yml)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-stdlib/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-stdlib?branch=master)
 
 `Laminas\Stdlib` is a set of components that implements general purpose utility

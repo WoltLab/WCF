@@ -18,22 +18,15 @@
     "config": {
         "sort-packages": true
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.7.x-dev",
-            "dev-develop": "2.8.x-dev"
-        }
-    },
     "require": {
-        "php": "^5.6 || ^7.0",
-        "laminas/laminas-stdlib": "^3.2.1",
-        "laminas/laminas-zendframework-bridge": "^1.0"
+        "php": "^7.3 || ~8.0.0 || ~8.1.0",
+        "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
-        "laminas/laminas-json": "^2.6.1",
+        "laminas/laminas-json": "^3.0.0",
         "laminas/laminas-session": "^2.8.5",
-        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4"
+        "phpunit/phpunit": "^9.3"
     },
     "suggest": {
         "laminas/laminas-json": "Laminas\\Json component",
@@ -59,7 +52,7 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-progressbar": "self.version"
+    "conflict": {
+        "zendframework/zend-progressbar": "*"
     }
 }
