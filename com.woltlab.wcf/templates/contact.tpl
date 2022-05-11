@@ -46,9 +46,9 @@
 		
 		{if $recipientList|count > 1}
 			<dl{if $errorField == 'recipientID'} class="formError"{/if}>
-				<dt><label for="recipientID">{lang}wcf.contact.recipientID{/lang}</label></dt>
+				<dt><label for="recipientID">{lang}wcf.contact.recipientID{/lang}</label> <span class="customOptionRequired">*</span></dt>
 				<dd>
-					<select name="recipientID" id="recipientID">
+					<select name="recipientID" id="recipientID" required>
 						<option value="">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$recipientList item=recipient}
 							<option value="{@$recipient->recipientID}"{if $recipient->recipientID == $recipientID} selected{/if}>{$recipient}</option>
