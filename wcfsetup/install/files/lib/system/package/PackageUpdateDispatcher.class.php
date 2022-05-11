@@ -9,7 +9,6 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
-use wcf\system\io\RemoteFile;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -112,10 +111,6 @@ class PackageUpdateDispatcher extends SingletonFactory
 
     protected function getPurchasedVersions()
     {
-        if (!RemoteFile::supportsSSL()) {
-            return;
-        }
-
         $request = new HTTPRequest(
             'https://api.woltlab.com/1.0/customer/license/list.json',
             ['timeout' => 5],
