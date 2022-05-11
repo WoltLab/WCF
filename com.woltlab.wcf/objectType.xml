@@ -1827,9 +1827,4 @@
 		</type>
 		<!-- /deprecated -->
 	</import>
-	<delete>
-		<type name="com.woltlab.wcf.searchEngineConvertInnoDb">
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-		</type>
-	</delete>
 </data>
