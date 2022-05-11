@@ -1692,8 +1692,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Enables a set of specialized tools that are used for plugin development. Should always be disabled in production environments.]]></item>
 		<item name="wcf.acp.option.force_login"><![CDATA[Force login]]></item>
 		<item name="wcf.acp.option.force_login.description"><![CDATA[Visitors are required to log-in themselves to access the page.]]></item>
-		<item name="wcf.acp.option.desktop_notification_package_id"><![CDATA[Primary Domain for Desktop Notifications]]></item>
-		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop Notifications will be enabled for the selected app only, including all other apps that use the exact same domain.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Page logo links to the start page of the active app]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Disabling this option will cause the link to always point to the global landing page instead. This option enforces the behavior known from previous versions when disabled.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
@@ -5566,4 +5564,8 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
 </import>
+<delete>
+	<item name="wcf.acp.option.desktop_notification_package_id"/>
+	<item name="wcf.acp.option.desktop_notification_package_id.description"/>
+</delete>
 </language>

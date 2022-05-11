@@ -495,6 +495,9 @@ class WCF
 
         // The captcha option related to the removed SearchForm was removed in 5.5.
         \define('SEARCH_USE_CAPTCHA', 0);
+
+        // Multi-domain setups were removed in 5.6.
+        \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
     }
 
     /**
@@ -1181,11 +1184,7 @@ class WCF
         if (!ENABLE_DESKTOP_NOTIFICATIONS) {
             return false;
         } elseif (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            $application = ApplicationHandler::getInstance()->getApplicationByID(DESKTOP_NOTIFICATION_PACKAGE_ID);
-            // mismatch, default to Core
-            if ($application === null) {
-                $application = ApplicationHandler::getInstance()->getApplicationByID(1);
-            }
+            $application = ApplicationHandler::getInstance()->getApplicationByID(1);
 
             $currentApplication = ApplicationHandler::getInstance()->getActiveApplication();
             if ($currentApplication->domainName != $application->domainName) {
