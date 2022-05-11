@@ -51,7 +51,7 @@
 		<item name="wcf.global.systemRequirements.tls"><![CDATA[Verschlüsselte HTTPS-Verbindung (SSL/TLS)]]></item>
 		<item name="wcf.global.systemRequirements.tls.description"><![CDATA[Die Installation wird über eine unverschlüsselte HTTP-Verbindung aufgerufen. Aus Gründen des Datenschutzes sollte der Zugriff generell über eine verschlüsselte HTTPS-Verbindung erfolgen. Unverschlüsselte Anfragen sollten auf die verschlüsselte Version umgeleitet werden. Bei der Verwendung von unverschlüsselten Verbindungen kann es zu einer Einschränkung des Funktionsumfangs kommen, da Webbrowser bestimmte Funktionen lediglich zur Verwendung mit verschlüsselten Verbindungen zulassen.]]></item>
 		<item name="wcf.global.systemRequirements.x64"><![CDATA[64-Bit-Unterstützung]]></item>
-		<item name="wcf.global.systemRequirements.x64.description"><![CDATA[Eine PHP-Version mit Unterstützung für 64-Bit-Ganzzahlen wird benötigt, um Zahlwerte größer als etwa 2,1 Milliarden korrekt zu verarbeiten. Ohne 64-Bit-Unterstützung können bestimmte Funktionen eingeschränkt sein oder fehlerhafte Werte liefern. Darüber hinaus ist die Verarbeitungsgeschwindigkeit von Anfragen in 64-Bit-PHP gegenüber 32-Bit-PHP erhöht.]]></item>
+		<item name="wcf.global.systemRequirements.x64.description"><![CDATA[Die eingesetzte PHP-Version muss die Verarbeitung von 64-Bit-Ganzzahlen unterstützen, um Zahlwerte größer als etwa 2,1 Milliarden korrekt zu verarbeiten.]]></item>
 		<item name="wcf.global.next"><![CDATA[Lade nächsten Schritt …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[Die Installation lädt im Moment den nächsten Schritt. Bitte haben Sie einen Augenblick Geduld.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
