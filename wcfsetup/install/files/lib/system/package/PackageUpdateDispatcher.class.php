@@ -141,11 +141,10 @@ class PackageUpdateDispatcher extends SingletonFactory
      * Fetches the package_update.xml from an update server.
      *
      * @param PackageUpdateServer $updateServer
-     * @param bool $forceHTTP
      * @throws  PackageUpdateUnauthorizedException
      * @throws  SystemException
      */
-    protected function getPackageUpdateXML(PackageUpdateServer $updateServer, $forceHTTP = false)
+    protected function getPackageUpdateXML(PackageUpdateServer $updateServer)
     {
         $settings = [];
         $authData = $updateServer->getAuthData();
@@ -154,11 +153,11 @@ class PackageUpdateDispatcher extends SingletonFactory
         }
 
         $secureConnection = $updateServer->attemptSecureConnection();
-        if ($secureConnection && !$forceHTTP) {
+        if ($secureConnection) {
             $settings['timeout'] = 5;
         }
 
-        $request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
+        $request = new HTTPRequest($updateServer->getListURL(), $settings);
 
         $requestedVersion = \wcf\getMinorVersion();
         if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
@@ -196,19 +195,6 @@ class PackageUpdateDispatcher extends SingletonFactory
             $reply = $request->getReply();
 
             $statusCode = \is_array($reply['statusCode']) ? \reset($reply['statusCode']) : $reply['statusCode'];
-            // status code 0 is a connection timeout
-            if (!$statusCode && $secureConnection) {
-                if (\preg_match('~https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
-                    // woltlab.com servers are most likely to be available,
-                    // thus we assume that SSL connections are dropped
-                    RemoteFile::disableSSL();
-                }
-
-                // retry via http
-                $this->getPackageUpdateXML($updateServer, true);
-
-                return;
-            }
 
             throw new SystemException(
                 WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $statusCode . ')'
