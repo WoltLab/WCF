@@ -142,16 +142,13 @@ class PackageUpdateServer extends DatabaseObject
     }
 
     /**
-     * Returns true if the given server url is valid.
-     *
-     * @param string $serverURL
-     * @return  bool
+     * @deprecated 5.6 This method was only used in PackageUpdateServerAddForm.
      */
     public static function isValidServerURL($serverURL)
     {
         $parsedURL = Url::parse($serverURL);
 
-        return \in_array($parsedURL['scheme'], ['http', 'https']) && $parsedURL['host'] !== '';
+        return \in_array($parsedURL['scheme'], ['https']) && $parsedURL['host'] !== '';
     }
 
     /**

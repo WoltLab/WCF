@@ -2771,6 +2771,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[The address is invalid.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.invalidScheme"><![CDATA[The address must use the <kbd>https://</kbd> scheme.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.nonStandardPort"><![CDATA[The address must not use a non-standard port.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.userinfo"><![CDATA[The address may not contain credentials.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already set up and correctly configured.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The entered server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
