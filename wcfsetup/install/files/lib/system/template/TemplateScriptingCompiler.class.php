@@ -32,30 +32,10 @@ class TemplateScriptingCompiler
     protected $unknownPHPFunctions = ['isset', 'unset', 'empty'];
 
     /**
-     * PHP functions that can not be used in the modifier syntax
+     * PHP functions that may be used as a template modifier
      * @var string[]
      */
-    protected $disabledPHPFunctions = [
-        'system',
-        'exec',
-        'passthru',
-        'shell_exec', // command line execution
-        'include',
-        'require',
-        'include_once',
-        'require_once', // includes
-        'eval',
-        'virtual',
-        'call_user_func_array',
-        'call_user_func',
-        'assert', // code execution
-    ];
-
-    /**
-     * PHP functions and modifiers that can be used in enterprise mode
-     * @var string[]
-     */
-    protected $enterpriseFunctions = [
+    protected $allowedModifierFunctions = [
         'abs',
         'addslashes',
         'array_diff',
@@ -1622,12 +1602,9 @@ class TemplateScriptingCompiler
                                 $this->currentIdentifier,
                                 $this->currentLineNo
                             ));
-                        } elseif (
-                            \in_array($modifierData['name'], $this->disabledPHPFunctions)
-                            || (ENABLE_ENTERPRISE_MODE && !\in_array($modifierData['name'], $this->enterpriseFunctions))
-                        ) {
+                        } elseif (!\in_array($modifierData['name'], $this->allowedModifierFunctions)) {
                             throw new SystemException(static::formatSyntaxError(
-                                "disabled function '" . $values[$i] . "'",
+                                "function '" . $values[$i] . "' may not be called within a template",
                                 $this->currentIdentifier,
                                 $this->currentLineNo
                             ));
