@@ -65,10 +65,10 @@ class PackageUpdateServer extends DatabaseObject
         }
 
         if ($this->isWoltLabUpdateServer()) {
-            $this->data['serverURL'] = "http://update.woltlab.com/{$prefix}{$officialPath}/";
+            $this->data['serverURL'] = "https://update.woltlab.com/{$prefix}{$officialPath}/";
         }
         if ($this->isWoltLabStoreServer()) {
-            $this->data['serverURL'] = "http://store.woltlab.com/{$prefix}{$officialPath}/";
+            $this->data['serverURL'] = "https://store.woltlab.com/{$prefix}{$officialPath}/";
         }
         if ($this->isWoltLabUpdateServer() || $this->isWoltLabStoreServer()) {
             $this->data['isDisabled'] = 0;
@@ -112,13 +112,13 @@ class PackageUpdateServer extends DatabaseObject
 
         if (!$woltlabUpdateServer) {
             $packageServer = PackageUpdateServerEditor::create([
-                'serverURL' => "http://update.woltlab.com/{$officialPath}/",
+                'serverURL' => "https://update.woltlab.com/{$officialPath}/",
             ]);
             $results[$packageServer->packageUpdateServerID] = $packageServer;
         }
         if (!$woltlabStoreServer) {
             $packageServer = PackageUpdateServerEditor::create([
-                'serverURL' => "http://store.woltlab.com/{$officialPath}/",
+                'serverURL' => "https://store.woltlab.com/{$officialPath}/",
             ]);
             $results[$packageServer->packageUpdateServerID] = $packageServer;
         }
