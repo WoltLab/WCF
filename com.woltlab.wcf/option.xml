@@ -581,13 +581,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
-			<!-- general.system.http -->
-			<option name="http_send_x_frame_options">
-				<categoryname>general.system.http</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<!-- /general.system.http -->
 			<!-- general.system.packageServer -->
 			<option name="package_server_auth_code">
 				<categoryname>general.system.packageServer</categoryname>
@@ -1666,4 +1659,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 		</options>
 	</import>
+	<delete>
+		<option name="http_send_x_frame_options"/>
+	</delete>
 </data>

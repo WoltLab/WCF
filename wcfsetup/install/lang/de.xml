@@ -1333,8 +1333,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern (obsolet)]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Die Option zur Kontrolle der Einbindung in einem Frame ist veraltet, wird in einer zukünftigen Version entfernt und die Einbindung generell unterbunden. Die Einbindung in einem Frame reduziert die Sicherheit, da <a href="https://de.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking-Angriffe</a> ermöglicht werden. Darüber hinaus können bestimmte Sicherheitsmerkmale von Cookies in Frames nicht verwendet werden.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
@@ -5564,4 +5562,8 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 	</category>
 </import>
+<delete>
+	<item name="wcf.acp.option.http_send_x_frame_options"/>
+	<item name="wcf.acp.option.http_send_x_frame_options.description"/>
+</delete>
 </language>

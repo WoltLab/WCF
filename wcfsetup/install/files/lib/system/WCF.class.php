@@ -495,6 +495,9 @@ class WCF
 
         // The captcha option related to the removed SearchForm was removed in 5.5.
         \define('SEARCH_USE_CAPTCHA', 0);
+
+        // Disabling X-Frame-Options is no longer possible since 5.6.
+        \define('HTTP_SEND_X_FRAME_OPTIONS', 1);
     }
 
     /**

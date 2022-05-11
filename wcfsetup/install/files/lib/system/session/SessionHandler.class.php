@@ -502,10 +502,6 @@ final class SessionHandler extends SingletonFactory
                 $sameSite = '; SameSite=lax';
             }
 
-            if (!HTTP_SEND_X_FRAME_OPTIONS) {
-                $sameSite = '; SameSite=none';
-            }
-
             \header(
                 'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
                 false

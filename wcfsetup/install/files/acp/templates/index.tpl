@@ -25,10 +25,6 @@
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>
 {/if}
 
-{if !HTTP_SEND_X_FRAME_OPTIONS}
-	<p class="error">{lang}wcf.acp.index.allowsFrameEmbedding{/lang}</p>
-{/if}
-
 {if $recaptchaWithoutKey}
 	<p class="error">{lang}wcf.acp.index.recaptchaWithoutKey{/lang}</p>
 {/if}

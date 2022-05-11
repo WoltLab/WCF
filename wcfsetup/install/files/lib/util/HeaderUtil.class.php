@@ -42,16 +42,11 @@ final class HeaderUtil
     {
         $cookieDomain = self::getCookieDomain();
 
-        $sameSite = '';
-        if (!HTTP_SEND_X_FRAME_OPTIONS) {
-            $sameSite = '; SameSite=none';
-        }
-
         @\header(
             'Set-Cookie: ' . \rawurlencode(COOKIE_PREFIX . $name) . '=' . \rawurlencode((string)$value) . ($expire ? '; expires=' . \gmdate(
                 'D, d-M-Y H:i:s',
                 $expire
-            ) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite . '; HttpOnly',
+            ) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly',
             false
         );
     }
@@ -95,10 +90,7 @@ final class HeaderUtil
             self::sendNoCacheHeaders();
         }
 
-        // send X-Frame-Options
-        if (HTTP_SEND_X_FRAME_OPTIONS) {
-            @\header('X-Frame-Options: SAMEORIGIN');
-        }
+        @\header('X-Frame-Options: SAMEORIGIN');
 
         \ob_start([self::class, 'parseOutput']);
     }
