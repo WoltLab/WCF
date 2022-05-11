@@ -680,19 +680,17 @@ class WCF
 
         // class was not found, possibly the app was moved, but `packageDir` has not been adjusted
         if (!\class_exists($className)) {
-            // check if both the Core and the app are on the same domain
             $coreApp = ApplicationHandler::getInstance()->getApplicationByID(1);
-            if ($coreApp->domainName === $application->domainName) {
-                // resolve the relative path and use it to construct the autoload directory
-                $relativePath = FileUtil::getRelativePath($coreApp->domainPath, $application->domainPath);
-                if ($relativePath !== './') {
-                    $packageDir = FileUtil::getRealPath(WCF_DIR . $relativePath);
-                    self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 
-                    if (\class_exists($className)) {
-                        // the class can now be found, update the `packageDir` value
-                        (new PackageEditor($package))->update(['packageDir' => $relativePath]);
-                    }
+            // resolve the relative path and use it to construct the autoload directory
+            $relativePath = FileUtil::getRelativePath($coreApp->domainPath, $application->domainPath);
+            if ($relativePath !== './') {
+                $packageDir = FileUtil::getRealPath(WCF_DIR . $relativePath);
+                self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+
+                if (\class_exists($className)) {
+                    // the class can now be found, update the `packageDir` value
+                    (new PackageEditor($package))->update(['packageDir' => $relativePath]);
                 }
             }
         }
