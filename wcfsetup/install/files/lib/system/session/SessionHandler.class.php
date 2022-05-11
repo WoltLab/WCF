@@ -8,7 +8,6 @@ use wcf\data\session\SessionEditor;
 use wcf\data\style\StyleAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
@@ -489,25 +488,15 @@ final class SessionHandler extends SingletonFactory
             //    and it is supported by default in common JavaScript frameworks.
             // 2) We want to set the SameSite=lax parameter.
             // 3) We don't want the HttpOnly parameter.
-            $sameSite = $cookieDomain = '';
 
-            if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-                // We need to specify the cookieDomain in a multi domain set-up, because
-                // otherwise no cookies are sent to subdomains.
-                $cookieDomain = HeaderUtil::getCookieDomain();
-                $cookieDomain = ($cookieDomain !== null ? '; domain=' . $cookieDomain : '');
-            } else {
-                // SameSite=lax is not supported in a multi domain set-up, because
-                // it breaks cross-application requests.
-                $sameSite = '; SameSite=lax';
-            }
+            $sameSite = '; SameSite=lax';
 
             if (!HTTP_SEND_X_FRAME_OPTIONS) {
                 $sameSite = '; SameSite=none';
             }
 
             \header(
-                'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
+                'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
                 false
             );
         }

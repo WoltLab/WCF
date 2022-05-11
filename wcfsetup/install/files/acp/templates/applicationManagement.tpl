@@ -14,68 +14,62 @@
 	{/hascontent}
 </header>
 
-{if $isMultiDomainSetup}
-	<div class="warning">{lang}wcf.acp.application.multiDomain{/lang}</div>
-{/if}
-
 {include file='formNotice' action='edit'}
 
 <form method="post" action="{link controller='ApplicationManagement'}{/link}">
-	{if !$isMultiDomainSetup}
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.acp.application.management.domain{/lang}</h2>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.application.management.domain{/lang}</h2>
 
-			<dl{if $errorField == 'domainName'} class="formError"{/if}>
-				<dt><label for="domainName">{lang}wcf.acp.application.management.domainName{/lang}</label></dt>
-				<dd>
-					<div class="inputAddon">
-						<span class="inputPrefix">https://</span>
-						<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long">
-					</div>
-					{if $errorField == 'domainName'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.application.management.domainName.error.{$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-					<small>{lang}wcf.acp.application.management.domainName.description{/lang}</small>
-				</dd>
-			</dl>
+		<dl{if $errorField == 'domainName'} class="formError"{/if}>
+			<dt><label for="domainName">{lang}wcf.acp.application.management.domainName{/lang}</label></dt>
+			<dd>
+				<div class="inputAddon">
+					<span class="inputPrefix">https://</span>
+					<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long">
+				</div>
+				{if $errorField == 'domainName'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.application.management.domainName.error.{$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.application.management.domainName.description{/lang}</small>
+			</dd>
+		</dl>
 
-			<dl{if $errorField == 'cookieDomain'} class="formError"{/if}>
-				<dt><label for="cookieDomain">{lang}wcf.acp.application.management.cookieDomain{/lang}</label></dt>
-				<dd>
-					<input type="text" name="cookieDomain" id="cookieDomain" value="{$cookieDomain}" class="long">
-					{if $errorField == 'cookieDomain'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.application.management.cookieDomain.error.{$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-					<small>{lang}wcf.acp.application.management.cookieDomain.description{/lang}</small>
-				</dd>
-			</dl>
-		</section>
+		<dl{if $errorField == 'cookieDomain'} class="formError"{/if}>
+			<dt><label for="cookieDomain">{lang}wcf.acp.application.management.cookieDomain{/lang}</label></dt>
+			<dd>
+				<input type="text" name="cookieDomain" id="cookieDomain" value="{$cookieDomain}" class="long">
+				{if $errorField == 'cookieDomain'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.application.management.cookieDomain.error.{$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.application.management.cookieDomain.description{/lang}</small>
+			</dd>
+		</dl>
+	</section>
 
-		{* Keep the cookie domain in sync if it was previously identical. *}
-		{if $domainName === $cookieDomain}
-			<script>
-				(() => {
-					const domainName = document.getElementById("domainName");
-					const cookieDomain = document.getElementById("cookieDomain");
+	{* Keep the cookie domain in sync if it was previously identical. *}
+	{if $domainName === $cookieDomain}
+		<script>
+			(() => {
+				const domainName = document.getElementById("domainName");
+				const cookieDomain = document.getElementById("cookieDomain");
 
-					domainName.addEventListener("input", () => {
-						cookieDomain.value = domainName.value;
-					});
-				})();
-			</script>
-		{/if}
+				domainName.addEventListener("input", () => {
+					cookieDomain.value = domainName.value;
+				});
+			})();
+		</script>
 	{/if}
 
 	<section class="section">

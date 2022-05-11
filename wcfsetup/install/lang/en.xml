@@ -77,14 +77,6 @@
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Default)]]></item>
 		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: This page will be shown when a user is navigating to this app.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
-		<item name="wcf.acp.application.multiDomain"><![CDATA[<p style="font-size: 18px">The support for setups with multiple domains is discontinued.</p>
-<p><br></p>
-<p>It is strongly recommended to consolidate all apps on a shared domain, please adjust the domain and path settings for these apps:</p>
-<ul class="nativeList">
-	{foreach from=$applicationList item=application}
-		<li><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a></li>
-	{/foreach}
-</ul>]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain Configuration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.management.domainName.description"><![CDATA[Provide the domain name excluding any protocol or path, for example “www.example.com”.]]></item>
@@ -5567,5 +5559,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 <delete>
 	<item name="wcf.acp.option.desktop_notification_package_id"/>
 	<item name="wcf.acp.option.desktop_notification_package_id.description"/>
+	<item name="wcf.acp.application.multiDomain"/>
 </delete>
 </language>

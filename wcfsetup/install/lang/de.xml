@@ -77,14 +77,6 @@
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Standard)]]></item>
 		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Seite an, die angezeigt wird, wenn diese App direkt aufgerufen wird.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Apps]]></item>
-		<item name="wcf.acp.application.multiDomain"><![CDATA[<p style="font-size: 18px">Die Unterstützung für Installationen mit mehreren Domains wird eingestellt.</p>
-<p><br></p>
-<p>Es wird dringend empfohlen die Apps auf eine gemeinsame Domain zu verschieben, bitte passen Sie dazu die Domain- und Pfadkonfiguration der installierten Apps an:</p>
-<ul class="nativeList">
-	{foreach from=$applicationList item=application}
-		<li><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a></li>
-	{/foreach}
-</ul>]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain-Konfiguration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.management.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Domain-Namen ohne Protokoll und Pfad ein, beispielsweise „www.example.com“.]]></item>
@@ -5565,5 +5557,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 <delete>
 	<item name="wcf.acp.option.desktop_notification_package_id"/>
 	<item name="wcf.acp.option.desktop_notification_package_id.description"/>
+	<item name="wcf.acp.application.multiDomain"/>
 </delete>
 </language>

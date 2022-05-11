@@ -1183,14 +1183,6 @@ class WCF
     {
         if (!ENABLE_DESKTOP_NOTIFICATIONS) {
             return false;
-        } elseif (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            $application = ApplicationHandler::getInstance()->getApplicationByID(1);
-
-            $currentApplication = ApplicationHandler::getInstance()->getActiveApplication();
-            if ($currentApplication->domainName != $application->domainName) {
-                // different domain
-                return false;
-            }
         }
 
         return true;
