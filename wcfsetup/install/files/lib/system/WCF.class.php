@@ -1153,23 +1153,11 @@ class WCF
     }
 
     /**
-     * Returns the favicon URL or a base64 encoded image.
-     *
-     * @return  string
+     * @deprecated 5.6 Use ActiveStyle::getRelativeFavicon() directly.
      */
     public function getFavicon()
     {
-        $activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-        $wcf = ApplicationHandler::getInstance()->getWCF();
         $favicon = StyleHandler::getInstance()->getStyle()->getRelativeFavicon();
-
-        if ($activeApplication->domainName !== $wcf->domainName) {
-            if (\file_exists(WCF_DIR . $favicon)) {
-                $favicon = \file_get_contents(WCF_DIR . $favicon);
-
-                return 'data:image/x-icon;base64,' . \base64_encode($favicon);
-            }
-        }
 
         return self::getPath() . $favicon;
     }
