@@ -2817,6 +2817,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.php.memoryLimit.description"><![CDATA[Einige Prozesse benötigen in Spitzenzeiten eine große Menge Arbeitsspeicher, für den einwandfreien Betrieb werden mindestens {$phpMemoryLimit} MB benötigt.]]></item>
 		<item name="wcf.acp.systemCheck.php.sha256"><![CDATA[Unterstützung für SHA-256]]></item>
 		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[Die kryptographische Funktion SHA-256 wird für den sicheren Betrieb der Software benötigt.]]></item>
+		<item name="wcf.acp.systemCheck.php.x64"><![CDATA[64-Bit-Unterstützung]]></item>
+		<item name="wcf.acp.systemCheck.php.x64.description"><![CDATA[Die eingesetzte PHP-Version muss die Verarbeitung von 64-Bit-Ganzzahlen unterstützen, um Zahlwerte größer als etwa 2,1 Milliarden korrekt zu verarbeiten.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB verfügbar]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB unter MariaDB) ist eine transaktionale Storage-Engine von MySQL und wird zwingend für den Betrieb benötigt. Dies ist eine Standardfunktion von MySQL.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Bufferpool-Größe]]></item>

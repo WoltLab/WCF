@@ -22,7 +22,29 @@
 				</dl>
 			</div>
 		</section>
+		
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.x64{/lang}</h2>
 			
+			<div class="row rowColGap formGrid">
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
+				</dl>
+				
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+					<dd>
+						<span class="badge {if !$system.x64.result}red{else}green{/if}">
+						{if !$system.x64.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}
+							{lang}wcf.global.systemRequirements.active{/lang}
+						{/if}</span>
+						{if !$system.x64.result}<small>{lang}wcf.global.systemRequirements.x64.description{/lang}</small>{/if}
+					</dd>
+				</dl>
+			</div>
+		</section>
+		
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.memoryLimit{/lang}</h2>
 			
@@ -155,28 +177,6 @@
 		<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.recommended{/lang}</h2>
 		
 		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.x64{/lang}</h2>
-			
-			<div class="row rowColGap formGrid">
-				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
-					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
-					<dd>
-						<span class="badge {if !$system.x64.result}red{else}green{/if}">
-						{if !$system.x64.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}
-							{lang}wcf.global.systemRequirements.active{/lang}
-						{/if}</span>
-						{if !$system.x64.result}<small>{lang}wcf.global.systemRequirements.x64.description{/lang}</small>{/if}
-					</dd>
-				</dl>
-			</div>
-		</section>
-
-		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.tls{/lang}</h2>
 			
 			<div class="row rowColGap formGrid">
@@ -285,7 +285,7 @@
 	</section>
 
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result || !$system.graphicsLibrary.result || !$system.hostname.result || !$system.cookie.result} disabled{/if} accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.x64.result || !$system.sql.result || !$system.memoryLimit.result || !$system.graphicsLibrary.result || !$system.hostname.result || !$system.cookie.result} disabled{/if} accesskey="s">
 		<input type="hidden" name="step" value="{@$nextStep}">
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}">
 		<input type="hidden" name="languageCode" value="{@$languageCode}">
