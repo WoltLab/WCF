@@ -156,7 +156,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         getColor() {
             const color = this.colorInput.value;
             const alpha = this.alphaInput.value;
-            return Object.assign(Object.assign({}, ColorUtil.hexToRgb(color)), { a: +alpha });
+            return { ...ColorUtil.hexToRgb(color), a: +alpha };
         }
         /**
          * Opens the color picker after clicking on the picker button.
