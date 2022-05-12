@@ -85,7 +85,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                     " . ($additionalConditions[$objectTypeName] ?? '');
             }
 
-            if (\mb_strpos($query, '{WCF_SEARCH_INNER_JOIN}')) {
+            if (\str_contains($query, '{WCF_SEARCH_INNER_JOIN}')) {
                 $innerJoin = $this->getInnerJoin(
                     $objectTypeName,
                     $q,
