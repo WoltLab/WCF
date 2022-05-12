@@ -345,9 +345,7 @@ class PackageUpdateServer extends DatabaseObject
      */
     final public function isTrustedServer()
     {
-        $host = Url::parse($this->serverURL)['host'];
-
-        return $host === 'update.woltlab.com';
+        return $this->isWoltLabUpdateServer();
     }
 
     /**
