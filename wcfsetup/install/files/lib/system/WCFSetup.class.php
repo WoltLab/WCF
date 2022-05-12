@@ -727,7 +727,7 @@ class WCFSetup extends WCF
 
                         // work-around for older MySQL versions that don't know utf8mb4
                         case 1115:
-                            throw new SystemException("Insufficient MySQL version. Version '5.7.31' or greater is needed.");
+                            throw new SystemException("Insufficient MySQL version. Version '8.0.29' or greater is needed.");
                             break;
 
                         default:
@@ -739,18 +739,12 @@ class WCFSetup extends WCF
                 $sqlVersion = $db->getVersion();
                 $compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
                 if (\stripos($sqlVersion, 'MariaDB')) {
-                    if (!(\version_compare($compareSQLVersion, '10.1.44') >= 0)) {
-                        throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.1.44' or greater is needed.");
+                    if (!(\version_compare($compareSQLVersion, '10.5.12') >= 0)) {
+                        throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.5.12' or greater is needed.");
                     }
                 } else {
-                    if ($compareSQLVersion[0] === '8') {
-                        // MySQL 8.0.19+
-                        if (!(\version_compare($compareSQLVersion, '8.0.19') >= 0)) {
-                            throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
-                        }
-                    } elseif (!(\version_compare($compareSQLVersion, '5.7.31') >= 0)) {
-                        // MySQL 5.7.31+
-                        throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
+                    if (!(\version_compare($compareSQLVersion, '8.0.29') >= 0)) {
+                        throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '8.0.29' or greater is needed.");
                     }
                 }
 
