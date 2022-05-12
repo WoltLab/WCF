@@ -651,7 +651,6 @@ class WCFSetup extends WCF
             $dbUser = $_ENV['WCFSETUP_DBUSER'];
             $dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];
             $dbName = $_ENV['WCFSETUP_DBNAME'];
-            $dbNumber = 1;
 
             $attemptConnection = true;
         } elseif (self::$developerMode && ($config = DevtoolsSetup::getInstance()->getDatabaseConfig()) !== null) {
@@ -659,7 +658,6 @@ class WCFSetup extends WCF
             $dbUser = $config['username'];
             $dbPassword = $config['password'];
             $dbName = $config['dbName'];
-            $dbNumber = $config['dbNumber'];
 
             if ($config['auto']) {
                 $attemptConnection = true;
@@ -669,7 +667,6 @@ class WCFSetup extends WCF
             $dbUser = 'root';
             $dbPassword = '';
             $dbName = 'wcf';
-            $dbNumber = 1;
         }
 
         if ($attemptConnection) {
@@ -684,11 +681,6 @@ class WCFSetup extends WCF
             }
             if (isset($_POST['dbName'])) {
                 $dbName = $_POST['dbName'];
-            }
-
-            // ensure that $dbNumber is zero or a positive integer
-            if (isset($_POST['dbNumber'])) {
-                $dbNumber = \max(0, \intval($_POST['dbNumber']));
             }
 
             // get port
@@ -790,7 +782,7 @@ class WCFSetup extends WCF
                 */
 
                 // check for table conflicts
-                $conflictedTables = $this->getConflictedTables($db, $dbNumber);
+                $conflictedTables = $this->getConflictedTables($db);
 
                 // write config.inc
                 if (empty($conflictedTables)) {
@@ -803,7 +795,7 @@ class WCFSetup extends WCF
                     $file->write("\$dbUser = '" . \str_replace("'", "\\'", $dbUser) . "';\n");
                     $file->write("\$dbPassword = '" . \str_replace("'", "\\'", $dbPassword) . "';\n");
                     $file->write("\$dbName = '" . \str_replace("'", "\\'", $dbName) . "';\n");
-                    $file->write("if (!defined('WCF_N')) define('WCF_N', {$dbNumber});\n");
+                    $file->write("if (!defined('WCF_N')) define('WCF_N', 1);\n");
                     $file->close();
 
                     // go to next step
@@ -823,7 +815,6 @@ class WCFSetup extends WCF
             'dbUser' => $dbUser,
             'dbPassword' => $dbPassword,
             'dbName' => $dbName,
-            'dbNumber' => $dbNumber,
             'nextStep' => 'configureDB',
         ]);
         WCF::getTPL()->display('stepConfigureDB');
@@ -834,16 +825,12 @@ class WCFSetup extends WCF
      * which will be created in the next step.
      *
      * @param \wcf\system\database\Database $db
-     * @param int $dbNumber
      * @return  string[]    list of already existing tables
      */
-    protected function getConflictedTables($db, $dbNumber)
+    protected function getConflictedTables($db)
     {
         // get content of the sql structure file
         $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');
-
-        // installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-        $sql = \str_replace('wcf1_', 'wcf' . $dbNumber . '_', $sql);
 
         // get all tablenames which should be created
         \preg_match_all("%CREATE\\s+TABLE\\s+(\\w+)%", $sql, $matches);
