@@ -2,6 +2,7 @@
 
 namespace wcf\util;
 
+use GuzzleHttp\Psr7\Header;
 use wcf\system\exception\SystemException;
 use wcf\system\image\ImageHandler;
 
@@ -215,7 +216,7 @@ final class ImageUtil
                     [$mimeType] = ArrayUtil::trim(\explode(";", $acceptableMimeType), false);
 
                     return $mimeType;
-                }, \explode(",", $_SERVER["HTTP_ACCEPT"]));
+                }, Header::normalize($_SERVER["HTTP_ACCEPT"]));
 
                 if (\in_array("image/webp", $acceptableMimeTypes)) {
                     $supportsWebP = true;
