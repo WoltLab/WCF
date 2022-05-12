@@ -163,7 +163,7 @@ class SimpleMessageParser extends SingletonFactory
         $text = \preg_replace_callback($urlPattern, [$this, 'cacheURLsCallback'], $text);
 
         // parse emails
-        if (\mb_strpos($text, '@') !== false) {
+        if (\str_contains($text, '@')) {
             $text = \preg_replace_callback($emailPattern, [$this, 'cacheEmailsCallback'], $text);
         }
 

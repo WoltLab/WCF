@@ -386,7 +386,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     public static function checkFromversion($currentVersion, $fromVersion)
     {
-        if (\mb_strpos($fromVersion, '*') !== false) {
+        if (\str_contains($fromVersion, '*')) {
             // from version with wildcard
             // use regular expression
             $fromVersion = \str_replace('\*', '.*', \preg_quote($fromVersion, '!'));

@@ -1190,12 +1190,12 @@ class TemplateScriptingCompiler
 
             // reinserts strings
             foreach (StringStack::getStack('singleQuote') as $hash => $value) {
-                if (\mb_strpos($string, $hash) !== false) {
+                if (\str_contains($string, $hash)) {
                     $string = \str_replace($hash, $value, $string);
                 }
             }
             foreach (StringStack::getStack('doubleQuote') as $hash => $value) {
-                if (\mb_strpos($string, $hash) !== false) {
+                if (\str_contains($string, $hash)) {
                     $string = \str_replace($hash, $value, $string);
                 }
             }
@@ -2194,7 +2194,7 @@ class TemplateScriptingCompiler
      */
     public function replacePHPTags($string)
     {
-        if (\mb_strpos($string, '<?') !== false) {
+        if (\str_contains($string, '<?')) {
             $string = \str_replace('<?php', '@@PHP_START_TAG@@', $string);
             $string = \str_replace('<?', '@@PHP_SHORT_START_TAG@@', $string);
             $string = \str_replace('?>', '@@PHP_END_TAG@@', $string);

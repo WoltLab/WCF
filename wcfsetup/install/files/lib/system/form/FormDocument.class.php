@@ -116,7 +116,7 @@ class FormDocument
         $variables = [];
 
         foreach ($_REQUEST as $key => $value) {
-            if (\mb_strpos($key, $this->getName() . '_') !== false) {
+            if (\str_contains($key, $this->getName() . '_')) {
                 $key = \str_replace($this->getName() . '_', '', $key);
                 $variables[$key] = $value;
             }

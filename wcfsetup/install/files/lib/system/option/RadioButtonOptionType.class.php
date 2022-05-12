@@ -166,7 +166,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
 
         $i = 0;
         foreach ($valueToOptions as $valueToOption) {
-            if (\mb_strpos($valueToOption, ':') !== false) {
+            if (\str_contains($valueToOption, ':')) {
                 $optionData = \explode(':', $valueToOption);
                 $key = \array_shift($optionData);
                 $enableOptionValues = \implode(':', $optionData);

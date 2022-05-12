@@ -44,7 +44,7 @@ class PhpHighlighter extends Highlighter
     {
         // add starting php tag
         $phpTagsAdded = false;
-        if (\mb_strpos($string, '<?') === false) {
+        if (!\str_contains($string, '<?')) {
             $phpTagsAdded = true;
             $string = '<?php ' . $string . ' ?>';
         }

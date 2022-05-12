@@ -33,7 +33,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
             case 1:
                 if (\is_numeric($attributes[0])) {
                     $line = \intval($attributes[0]);
-                } elseif (\mb_strpos($attributes[0], '.') === false) {
+                } elseif (!\str_contains($attributes[0], '.')) {
                     $highlighter = $attributes[0];
                 } else {
                     $file = $attributes[0];
@@ -43,7 +43,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
             case 2:
                 if (\is_numeric($attributes[0])) {
                     $line = \intval($attributes[0]);
-                    if (\mb_strpos($attributes[1], '.') === false) {
+                    if (!\str_contains($attributes[1], '.')) {
                         $highlighter = $attributes[1];
                     } else {
                         $file = $attributes[1];
@@ -76,7 +76,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
         $replaceNodes = [];
         /** @var \DOMText $textNode */
         foreach ($xpath->query('.//text()', $element) as $textNode) {
-            if (\mb_strpos($textNode->textContent, "\n") !== false) {
+            if (\str_contains($textNode->textContent, "\n")) {
                 $replaceNodes[] = $textNode;
             }
         }

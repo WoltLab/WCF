@@ -150,7 +150,7 @@ class Option extends DatabaseObject
         $options = \explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->selectOptions)));
         foreach ($options as $option) {
             $key = $value = $option;
-            if (\mb_strpos($option, ':') !== false) {
+            if (\str_contains($option, ':')) {
                 $optionData = \explode(':', $option);
                 $key = \array_shift($optionData);
                 $value = \implode(':', $optionData);
@@ -174,7 +174,7 @@ class Option extends DatabaseObject
             $options = \explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->enableOptions)));
             $key = -1;
             foreach ($options as $option) {
-                if (\mb_strpos($option, ':') !== false) {
+                if (\str_contains($option, ':')) {
                     $optionData = \explode(':', $option);
                     $key = \array_shift($optionData);
                     $value = \implode(':', $optionData);

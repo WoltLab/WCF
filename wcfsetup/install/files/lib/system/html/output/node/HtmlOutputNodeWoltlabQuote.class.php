@@ -46,7 +46,7 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
                     }
 
                     $link = $element->getAttribute('data-link');
-                    if (\mb_strpos($link, 'index.php') === 0) {
+                    if (\str_starts_with($link, 'index.php')) {
                         $link = WCF::getPath() . $link;
                     }
 

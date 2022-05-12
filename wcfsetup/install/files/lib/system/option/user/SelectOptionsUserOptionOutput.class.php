@@ -52,7 +52,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput
         $options = OptionUtil::parseSelectOptions($option->selectOptions);
 
         // multiselect
-        if (\mb_strpos($value, "\n") !== false) {
+        if (\str_contains($value, "\n")) {
             $values = \explode("\n", $value);
             $result = [];
             foreach ($values as $value) {
