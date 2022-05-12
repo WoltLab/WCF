@@ -1319,7 +1319,7 @@ class WCFSetup extends WCF
         if ($useRandomCookiePrefix) {
             $cookieNames = \array_keys($_COOKIE);
             while (true) {
-                $prefix = 'wsc_' . \substr(\sha1((string)\mt_rand()), 0, 6) . '_';
+                $prefix = 'wsc_' . \bin2hex(\random_bytes(3)) . '_';
                 $isValid = true;
                 foreach ($cookieNames as $cookieName) {
                     if (\strpos($cookieName, $prefix) === 0) {
