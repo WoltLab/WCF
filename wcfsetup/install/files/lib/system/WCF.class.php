@@ -308,7 +308,7 @@ class WCF
             }
         }
 
-        @\header('HTTP/1.1 503 Service Unavailable');
+        @\header('HTTP/1.1 500 Internal Server Error');
         try {
             \wcf\functions\exception\printThrowable($e);
         } catch (\Throwable $e2) {

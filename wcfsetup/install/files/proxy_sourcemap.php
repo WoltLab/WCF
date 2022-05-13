@@ -149,7 +149,7 @@ function handle(ServerRequestInterface $request): ResponseInterface
     $body = new Stream(\fopen($cacheFilename, 'r'));
 
     if ($body->getSize() === 0) {
-        return new TextResponse('Failed to download the source map.', 503);
+        return new TextResponse('Failed to download the source map.', 500);
     }
 
     return new Response(
