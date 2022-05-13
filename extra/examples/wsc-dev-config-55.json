@@ -4,8 +4,7 @@
             "auto": true,
             "host": "localhost",
             "password": "root",
-            "username": "root",
-            "dbNumber": "2"
+            "username": "root"
         },
         "useDefaultInstallPath": true,
         "forceStaticCookiePrefix": true

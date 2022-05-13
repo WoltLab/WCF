@@ -154,7 +154,7 @@ class UserGroupAddForm extends AbstractOptionListForm
                     throw new UserInputException('groupName', 'multilingual');
                 }
             }
-            if (\mb_strpos($this->userOnlineMarking, '%s') === false) {
+            if (!\str_contains($this->userOnlineMarking, '%s')) {
                 throw new UserInputException('userOnlineMarking', 'invalid');
             }
         } catch (UserInputException $e) {

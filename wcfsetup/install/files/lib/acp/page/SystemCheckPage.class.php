@@ -55,11 +55,10 @@ class SystemCheckPage extends AbstractPage
 
     public $mysqlVersions = [
         'mysql' => [
-            '5' => '5.7.31',
-            '8' => '8.0.19',
+            '8' => '8.0.29',
         ],
         'mariadb' => [
-            '10' => '10.1.44',
+            '10' => '10.5.12',
         ],
     ];
 
@@ -151,6 +150,7 @@ class SystemCheckPage extends AbstractPage
                 'result' => 'unsupported',
                 'value' => '0.0.0',
             ],
+            'x64' => false,
         ],
         'status' => [
             'directories' => false,
@@ -186,6 +186,7 @@ class SystemCheckPage extends AbstractPage
         $this->validateMysql();
         $this->validatePhpExtensions();
         $this->validatePhpMemoryLimit();
+        $this->validatePhpX64();
         $this->validatePhpVersion();
         $this->validatePhpGdSupport();
         $this->validateWritableDirectories();
@@ -375,6 +376,13 @@ class SystemCheckPage extends AbstractPage
         }
 
         $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['memoryLimit']['result'];
+    }
+
+    protected function validatePhpX64()
+    {
+        $this->results['php']['x64'] = \PHP_INT_SIZE == 8;
+
+        $this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['x64'];
     }
 
     protected function validatePhpVersion()

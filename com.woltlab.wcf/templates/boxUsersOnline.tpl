@@ -9,18 +9,17 @@
 			<li>{user object=$userOnline}</li>
 		{/foreach}
 	</ul>
-{/if}
 
-{if USERS_ONLINE_ENABLE_LEGEND && $usersOnlineList->getUsersOnlineMarkings()|count}
-	<dl class="plain inlineDataList usersOnlineLegend">
-		<dt>{lang}wcf.user.usersOnline.marking.legend{/lang}</dt>
-		<dd>
-			<ul class="inlineList commaSeparated">
-				{foreach from=$usersOnlineList->getUsersOnlineMarkings() item=usersOnlineMarking}
-					<li>{@$usersOnlineMarking}</li>
-				{/foreach}
-			</ul>
-		</dd>
-	
-	</dl>
+	{if USERS_ONLINE_ENABLE_LEGEND && $usersOnlineList->getUsersOnlineMarkings()|count}
+		<dl class="plain inlineDataList usersOnlineLegend">
+			<dt>{lang}wcf.user.usersOnline.marking.legend{/lang}</dt>
+			<dd>
+				<ul class="inlineList commaSeparated">
+					{foreach from=$usersOnlineList->getUsersOnlineMarkings() item=usersOnlineMarking}
+						<li>{@$usersOnlineMarking}</li>
+					{/foreach}
+				</ul>
+			</dd>
+		</dl>
+	{/if}
 {/if}

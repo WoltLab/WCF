@@ -32,7 +32,7 @@ class ValidateActionException extends \Exception
     public function __construct($fieldName, $errorMessage = 'empty', array $variables = [])
     {
         $this->errorMessage = $errorMessage;
-        if (\mb_strpos($this->errorMessage, '.') === false) {
+        if (!\str_contains($this->errorMessage, '.')) {
             if (\preg_match('~^[a-zA-Z0-9-_]+$~', $this->errorMessage)) {
                 $this->errorMessage = WCF::getLanguage()
                     ->getDynamicVariable('wcf.global.form.error.' . $this->errorMessage);

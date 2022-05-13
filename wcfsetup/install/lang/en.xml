@@ -1309,8 +1309,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Under the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLong"><![CDATA[The entered text is too long.]]></item>
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame (deprecated)]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[The option to control embedding within a frame is deprecated, will be removed in a future version and embedding will be prevented in all cases. Allowing embedding reduces security by allowing <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking attacks</a> to happen. In addition certain security features for cookies are not available within frames.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
@@ -2744,6 +2742,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.memoryLimit.description"><![CDATA[Processes may require large amounts of memory at peak, requiring a limit of at least {$phpMemoryLimit} MB.]]></item>
 		<item name="wcf.acp.systemCheck.php.sha256"><![CDATA[Support for SHA-256]]></item>
 		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[The cryptographic function SHA-256 is required for a safe and secure operation of the software.]]></item>
+		<item name="wcf.acp.systemCheck.php.x64"><![CDATA[64-bit Support]]></item>
+		<item name="wcf.acp.systemCheck.php.x64.description"><![CDATA[The PHP version must support 64-bit integers to correctly process numbers larger than ~2.1 billion.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB available]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB when using MariaDB) is a transaction storage engine for MySQL and is required for the operation of the software. This is a built-in feature of MySQL.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Bufferpool Size]]></item>
@@ -5570,5 +5570,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.index.system.php.sslSupport"/>
 	<item name="wcf.acp.index.system.php.sslSupport.available"/>
 	<item name="wcf.acp.index.system.php.sslSupport.notAvailable"/>
+	<item name="wcf.acp.option.http_send_x_frame_options"/>
+	<item name="wcf.acp.option.http_send_x_frame_options.description"/>
 </delete>
 </language>

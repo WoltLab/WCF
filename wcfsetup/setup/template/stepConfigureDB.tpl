@@ -37,14 +37,6 @@
 				<small>{lang}wcf.global.configureDB.database.description{/lang}</small>
 			</dd>
 		</dl>
-		
-		<dl>
-			<dt><label for="dbNumber">{lang}wcf.global.configureDB.number{/lang}</label></dt>
-			<dd>
-				<input type="number" id="dbNumber" name="dbNumber" value="{$dbNumber}" required min="1" class="short">
-				<small>{lang}wcf.global.configureDB.number.description{/lang}</small>
-			</dd>
-		</dl>
 	</section>
 		
 	<div class="formSubmit">

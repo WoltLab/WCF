@@ -22,3 +22,33 @@ if (!\version_compare($phpVersion, $neededPhpVersion, '>=')) {
 
     throw new \RuntimeException($message);
 }
+
+if (\PHP_INT_SIZE != 8) {
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "Die eingesetzte PHP-Version muss 64-Bit-Ganzzahlen unterst&uuml;tzen.";
+    } else {
+        $message = "The PHP version must support 64-bit integers";
+    }
+
+    throw new \RuntimeException($message);
+}
+
+$sqlVersion = WCF::getDB()->getVersion();
+$compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
+if (\stripos($sqlVersion, 'MariaDB') !== false) {
+    $neededSqlVersion = '10.5.12';
+    $sqlFork = 'MariaDB';
+} else {
+    $sqlFork = 'MySQL';
+    $neededSqlVersion = '8.0.29';
+}
+
+if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "Ihre {$sqlFork}-Version '{$sqlVersion}' ist unzureichend f&uuml;r die Installation dieser Software. {$sqlFork}-Version {$neededSqlVersion} oder h&ouml;her wird ben&ouml;tigt.";
+    } else {
+        $message = "Your {$sqlFork} version '{$sqlVersion}' is insufficient for installation of this software. {$sqlFork} version {$neededSqlVersion} or greater is required.";
+    }
+
+    throw new \RuntimeException($message);
+}

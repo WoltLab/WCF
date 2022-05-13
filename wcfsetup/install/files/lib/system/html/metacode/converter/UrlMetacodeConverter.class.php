@@ -34,7 +34,7 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
         }
 
         $href = StringUtil::decodeHTML($href);
-        if (\mb_strpos($href, '//') === 0) {
+        if (\str_starts_with($href, '//')) {
             // dynamic protocol, treat as https
             $href = "https:{$href}";
         } elseif (\preg_match('~^(?P<schema>[a-z0-9]+)://~', $href, $match)) {
@@ -42,7 +42,7 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter
                 // invalid schema, replace it with `http`
                 $href = 'http' . \mb_substr($href, \strlen($match['schema']));
             }
-        } elseif (\mb_strpos($href, 'index.php') === false) {
+        } elseif (!\str_contains($href, 'index.php')) {
             // unless it's a relative `index.php` link, assume it is missing the protocol
             $href = "http://{$href}";
         }

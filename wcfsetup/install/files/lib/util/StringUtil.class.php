@@ -577,7 +577,7 @@ final class StringUtil
                     continue;
                 }
 
-                if (\mb_strpos($forbiddenName, '*') !== false) {
+                if (\str_contains($forbiddenName, '*')) {
                     $forbiddenName = \str_replace('\*', '.*', \preg_quote($forbiddenName, '/'));
                     if (\preg_match('/^' . $forbiddenName . '$/s', $word)) {
                         return false;

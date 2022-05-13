@@ -107,15 +107,6 @@ class IndexPage extends AbstractPage
             );
         }
 
-        $xFrameOptionsLink = LinkHandler::getInstance()->getLink(
-            'Option',
-            [
-                'id' => $optionCategories['general']->categoryID,
-                'optionName' => 'http_send_x_frame_options',
-            ],
-            '#category_general.system'
-        );
-
         $evaluationExpired = $evaluationPending = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
             if ($application->isTainted) {
@@ -187,7 +178,6 @@ class IndexPage extends AbstractPage
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
-            'xFrameOptionsLink' => $xFrameOptionsLink,
             'server' => $this->server,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,

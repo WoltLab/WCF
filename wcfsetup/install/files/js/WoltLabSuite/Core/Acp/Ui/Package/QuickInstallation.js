@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             try {
                 maybeJson = JSON.parse(decodedValue);
             }
-            catch (_a) {
+            catch {
                 // Skip invalid values.
             }
             if ((0, Core_1.isPlainObject)(maybeJson)) {

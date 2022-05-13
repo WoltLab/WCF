@@ -180,9 +180,9 @@ final class Url implements \ArrayAccess
         $hosts = [];
         foreach ($hostnames as $host) {
             $isWildcard = false;
-            if (\mb_strpos($host, '*') !== false) {
+            if (\str_contains($host, '*')) {
                 $host = \preg_replace('~^(\*\.)+~', '', $host);
-                if (\mb_strpos($host, '*') !== false || $host === '') {
+                if (\str_contains($host, '*') || $host === '') {
                     // bad host
                     continue;
                 }
@@ -205,7 +205,7 @@ final class Url implements \ArrayAccess
             } else {
                 // check wildcard hosts
                 foreach ($hosts as $host => $isWildcard) {
-                    if ($isWildcard && \mb_strpos($hostname, $host) !== false) {
+                    if ($isWildcard && \str_contains($hostname, $host)) {
                         // the prepended dot will ensure that `example.com` matches only
                         // on domains like `foo.example.com` but not on `bar-example.com`
                         if (\str_ends_with($hostname, '.' . $host)) {

@@ -22,8 +22,6 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 \define('COOKIE_PATH', '');
 \define('COOKIE_DOMAIN', '');
 
-\define('HTTP_SEND_X_FRAME_OPTIONS', 1);
-
 \define('CACHE_SOURCE_TYPE', 'disk');
 \define('IMAGE_ADAPTER_TYPE', 'gd');
 \define('TIMEZONE', 'Europe/Berlin');
@@ -35,7 +33,6 @@ if (!\defined('ENABLE_ENTERPRISE_MODE')) {
     \define('ENABLE_ENTERPRISE_MODE', 0);
 }
 \define('EXTERNAL_LINK_TARGET_BLANK', 0);
-\define('URL_TO_LOWERCASE', 1);
 \define('SEARCH_ENGINE', 'mysql');
 \define('SHOW_VERSION_NUMBER', 1);
 \define('LANGUAGE_USE_INFORMAL_VARIANT', 0);
