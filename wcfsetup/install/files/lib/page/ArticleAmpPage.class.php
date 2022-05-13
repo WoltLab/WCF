@@ -15,6 +15,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Page
  * @since   3.0
+ * @deprecated 5.5 Support for AMP will be removed in 6.0
  */
 class ArticleAmpPage extends AbstractArticlePage
 {
