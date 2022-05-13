@@ -36,7 +36,6 @@ use wcf\util\XML;
 
 // define
 \define('PACKAGE_ID', 0);
-\define('HTTP_SEND_X_FRAME_OPTIONS', 1);
 \define('CACHE_SOURCE_TYPE', 'disk');
 \define('ENABLE_DEBUG_MODE', 1);
 \define('ENABLE_BENCHMARK', 0);
@@ -600,7 +599,7 @@ class WCFSetup extends WCF
             $relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
             foreach ($packages as $application => $packageData) {
                 $dir = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
-                if (\mb_strpos($dir, './') === 0) {
+                if (\str_starts_with($dir, './')) {
                     $dir = \mb_substr($dir, 1);
                 }
 
@@ -651,7 +650,6 @@ class WCFSetup extends WCF
             $dbUser = $_ENV['WCFSETUP_DBUSER'];
             $dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];
             $dbName = $_ENV['WCFSETUP_DBNAME'];
-            $dbNumber = 1;
 
             $attemptConnection = true;
         } elseif (self::$developerMode && ($config = DevtoolsSetup::getInstance()->getDatabaseConfig()) !== null) {
@@ -659,7 +657,6 @@ class WCFSetup extends WCF
             $dbUser = $config['username'];
             $dbPassword = $config['password'];
             $dbName = $config['dbName'];
-            $dbNumber = $config['dbNumber'];
 
             if ($config['auto']) {
                 $attemptConnection = true;
@@ -669,7 +666,6 @@ class WCFSetup extends WCF
             $dbUser = 'root';
             $dbPassword = '';
             $dbName = 'wcf';
-            $dbNumber = 1;
         }
 
         if ($attemptConnection) {
@@ -684,11 +680,6 @@ class WCFSetup extends WCF
             }
             if (isset($_POST['dbName'])) {
                 $dbName = $_POST['dbName'];
-            }
-
-            // ensure that $dbNumber is zero or a positive integer
-            if (isset($_POST['dbNumber'])) {
-                $dbNumber = \max(0, \intval($_POST['dbNumber']));
             }
 
             // get port
@@ -735,7 +726,7 @@ class WCFSetup extends WCF
 
                         // work-around for older MySQL versions that don't know utf8mb4
                         case 1115:
-                            throw new SystemException("Insufficient MySQL version. Version '5.7.31' or greater is needed.");
+                            throw new SystemException("Insufficient MySQL version. Version '8.0.29' or greater is needed.");
                             break;
 
                         default:
@@ -747,18 +738,12 @@ class WCFSetup extends WCF
                 $sqlVersion = $db->getVersion();
                 $compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
                 if (\stripos($sqlVersion, 'MariaDB')) {
-                    if (!(\version_compare($compareSQLVersion, '10.1.44') >= 0)) {
-                        throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.1.44' or greater is needed.");
+                    if (!(\version_compare($compareSQLVersion, '10.5.12') >= 0)) {
+                        throw new SystemException("Insufficient MariaDB version '" . $compareSQLVersion . "'. Version '10.5.12' or greater is needed.");
                     }
                 } else {
-                    if ($compareSQLVersion[0] === '8') {
-                        // MySQL 8.0.19+
-                        if (!(\version_compare($compareSQLVersion, '8.0.19') >= 0)) {
-                            throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
-                        }
-                    } elseif (!(\version_compare($compareSQLVersion, '5.7.31') >= 0)) {
-                        // MySQL 5.7.31+
-                        throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
+                    if (!(\version_compare($compareSQLVersion, '8.0.29') >= 0)) {
+                        throw new SystemException("Insufficient MySQL version '" . $compareSQLVersion . "'. Version '8.0.29' or greater is needed.");
                     }
                 }
 
@@ -790,7 +775,7 @@ class WCFSetup extends WCF
                 */
 
                 // check for table conflicts
-                $conflictedTables = $this->getConflictedTables($db, $dbNumber);
+                $conflictedTables = $this->getConflictedTables($db);
 
                 // write config.inc
                 if (empty($conflictedTables)) {
@@ -803,7 +788,7 @@ class WCFSetup extends WCF
                     $file->write("\$dbUser = '" . \str_replace("'", "\\'", $dbUser) . "';\n");
                     $file->write("\$dbPassword = '" . \str_replace("'", "\\'", $dbPassword) . "';\n");
                     $file->write("\$dbName = '" . \str_replace("'", "\\'", $dbName) . "';\n");
-                    $file->write("if (!defined('WCF_N')) define('WCF_N', {$dbNumber});\n");
+                    $file->write("if (!defined('WCF_N')) define('WCF_N', 1);\n");
                     $file->close();
 
                     // go to next step
@@ -823,7 +808,6 @@ class WCFSetup extends WCF
             'dbUser' => $dbUser,
             'dbPassword' => $dbPassword,
             'dbName' => $dbName,
-            'dbNumber' => $dbNumber,
             'nextStep' => 'configureDB',
         ]);
         WCF::getTPL()->display('stepConfigureDB');
@@ -834,16 +818,12 @@ class WCFSetup extends WCF
      * which will be created in the next step.
      *
      * @param \wcf\system\database\Database $db
-     * @param int $dbNumber
      * @return  string[]    list of already existing tables
      */
-    protected function getConflictedTables($db, $dbNumber)
+    protected function getConflictedTables($db)
     {
         // get content of the sql structure file
         $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');
-
-        // installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-        $sql = \str_replace('wcf1_', 'wcf' . $dbNumber . '_', $sql);
 
         // get all tablenames which should be created
         \preg_match_all("%CREATE\\s+TABLE\\s+(\\w+)%", $sql, $matches);
@@ -1187,7 +1167,7 @@ class WCFSetup extends WCF
         $otherPackages = [];
         $tar = new Tar(SETUP_FILE);
         foreach ($tar->getContentList() as $file) {
-            if ($file['type'] != 'folder' && \mb_strpos($file['filename'], 'install/packages/') === 0) {
+            if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
                 $packageFile = \basename($file['filename']);
 
                 // ignore any files which aren't an archive
@@ -1332,7 +1312,7 @@ class WCFSetup extends WCF
         if ($useRandomCookiePrefix) {
             $cookieNames = \array_keys($_COOKIE);
             while (true) {
-                $prefix = 'wsc_' . \substr(\sha1((string)\mt_rand()), 0, 6) . '_';
+                $prefix = 'wsc_' . \bin2hex(\random_bytes(3)) . '_';
                 $isValid = true;
                 foreach ($cookieNames as $cookieName) {
                     if (\strpos($cookieName, $prefix) === 0) {
@@ -1406,7 +1386,7 @@ class WCFSetup extends WCF
         $packageNames = [];
         $tar = new Tar(SETUP_FILE);
         foreach ($tar->getContentList() as $file) {
-            if ($file['type'] != 'folder' && \mb_strpos($file['filename'], 'install/packages/') === 0) {
+            if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
                 $packageFile = \basename($file['filename']);
 
                 try {

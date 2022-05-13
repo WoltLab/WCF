@@ -91,10 +91,9 @@ class MembersListPage extends SortablePage
 
         // letter
         if (
-            isset($_REQUEST['letter']) && \mb_strlen($_REQUEST['letter']) == 1 && \mb_strpos(
-                self::$availableLetters,
-                $_REQUEST['letter']
-            ) !== false
+            isset($_REQUEST['letter'])
+            && \mb_strlen($_REQUEST['letter']) == 1
+            && \str_contains(self::$availableLetters, $_REQUEST['letter'])
         ) {
             $this->letter = $_REQUEST['letter'];
         }

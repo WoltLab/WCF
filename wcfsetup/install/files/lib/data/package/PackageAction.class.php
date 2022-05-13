@@ -2,13 +2,13 @@
 
 namespace wcf\data\package;
 
+use GuzzleHttp\Psr7\Request;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\io\RemoteFile;
+use wcf\system\io\HttpFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HTTPRequest;
 use wcf\util\JSON;
 
 /**
@@ -91,40 +91,44 @@ class PackageAction extends AbstractDatabaseObjectAction
      */
     public function searchForPurchasedItems()
     {
-        if (!RemoteFile::supportsSSL()) {
-            return [
-                'noSSL' => WCF::getLanguage()->get('wcf.acp.pluginStore.api.noSSL'),
-            ];
-        }
-
         if (empty($this->parameters['username']) || empty($this->parameters['password'])) {
             return [
                 'template' => $this->renderAuthorizationDialog(false),
             ];
         }
 
-        $request = new HTTPRequest('https://api.woltlab.com/1.1/customer/purchases/list.json', [
-            'method' => 'POST',
-        ], [
-            'username' => $this->parameters['username'],
-            'password' => $this->parameters['password'],
-            'wcfVersion' => WCF_VERSION,
-        ]);
+        $client = HttpFactory::makeClientWithTimeout(5);
+        $request = new Request(
+            'POST',
+            'https://api.woltlab.com/1.1/customer/purchases/list.json',
+            [
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            \http_build_query(
+                [
+                    'username' => $this->parameters['username'],
+                    'password' => $this->parameters['password'],
+                    'wcfVersion' => WCF_VERSION,
+                ],
+                '',
+                '&',
+                \PHP_QUERY_RFC1738
+            )
+        );
 
-        $request->execute();
-        $reply = $request->getReply();
-        $response = JSON::decode($reply['body']);
+        $response = $client->send($request);
+        $payload = JSON::decode((string)$response->getBody());
 
-        $code = $response['status'] ?? 500;
+        $code = $payload['status'] ?? 500;
         switch ($code) {
             case 200:
-                if (empty($response['products'])) {
+                if (empty($payload['products'])) {
                     return [
                         'noResults' => WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.purchasedItems.noResults'),
                     ];
                 } else {
-                    WCF::getSession()->register('__pluginStoreProducts', $response['products']);
-                    WCF::getSession()->register('__pluginStoreWcfMajorReleases', $response['wcfMajorReleases']);
+                    WCF::getSession()->register('__pluginStoreProducts', $payload['products']);
+                    WCF::getSession()->register('__pluginStoreWcfMajorReleases', $payload['wcfMajorReleases']);
 
                     return [
                         'redirectURL' => LinkHandler::getInstance()->getLink('PluginStorePurchasedItems'),

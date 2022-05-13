@@ -79,7 +79,6 @@ class DevtoolsSetup extends SingletonFactory
             'password' => $dbConfig['password'],
             'username' => $dbConfig['username'],
             'dbName' => $dbName,
-            'dbNumber' => $dbConfig['dbNumber'],
         ];
     }
 

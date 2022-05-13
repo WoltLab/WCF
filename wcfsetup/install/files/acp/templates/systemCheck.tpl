@@ -72,6 +72,18 @@
 			<small>{lang}wcf.acp.systemCheck.php.version.description{/lang}</small>
 		</dd>
 	</dl>
+
+	<dl{if !$results[php][x64]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.php.x64{/lang}</dt>
+		<dd>
+			{if $results[php][x64]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.php.x64.description{/lang}</small>
+		</dd>
+	</dl>
 	
 	<dl{if !$results[php][extension]|empty} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.php.extension{/lang}</dt>

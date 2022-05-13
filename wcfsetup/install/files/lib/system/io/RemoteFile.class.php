@@ -158,9 +158,7 @@ class RemoteFile extends File
     }
 
     /**
-     * Returns true if PHP supports SSL/TLS.
-     *
-     * @return  bool
+     * @deprecated 5.6 This method is effectively returning bogus data, because the majority of TLS communication uses Guzzle/cURL.
      */
     public static function supportsSSL()
     {
@@ -180,10 +178,9 @@ class RemoteFile extends File
     }
 
     /**
-     * Disables SSL/TLS support on runtime regardless if PHP is theoretically capable of it.
+     * @deprecated 5.6 See RemoteFile::supportsSSL(). The implementation is a noop.
      */
     public static function disableSSL()
     {
-        static::$hasSSLSupport = false;
     }
 }

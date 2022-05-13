@@ -930,9 +930,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Web Server]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.index.system.php.version"><![CDATA[PHP Version]]></item>
-		<item name="wcf.acp.index.system.php.sslSupport"><![CDATA[SSL Support]]></item>
-		<item name="wcf.acp.index.system.php.sslSupport.available"><![CDATA[available]]></item>
-		<item name="wcf.acp.index.system.php.sslSupport.notAvailable"><![CDATA[not available]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
@@ -1304,8 +1301,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Under the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLong"><![CDATA[The entered text is too long.]]></item>
 		<item name="wcf.acp.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame (deprecated)]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[The option to control embedding within a frame is deprecated, will be removed in a future version and embedding will be prevented in all cases. Allowing embedding reduces security by allowing <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">Clickjacking attacks</a> to happen. In addition certain security features for cookies are not available within frames.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
@@ -1735,8 +1730,8 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Block]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
-		<item name="wcf.acp.option.module_amp"><![CDATA[AMP]]></item>
-		<item name="wcf.acp.option.module_amp.description"><![CDATA[Enables <abbr title="Accelerated Mobile Pages">AMP</abbr> versions of certain pages (e.g. articles).]]></item>
+		<item name="wcf.acp.option.module_amp"><![CDATA[AMP (Not Recommended)]]></item>
+		<item name="wcf.acp.option.module_amp.description"><![CDATA[Enabling <abbr title="Accelerated Mobile Pages">AMP</abbr> is not recommended due to privacy concerns. This function will be removed in a future version.]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be deleted after the entered amount of days. To disable deleting old modification logs, enter “0”.]]></item>
@@ -2034,7 +2029,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.pluginStore">
 		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Error {@$status}: The server was unable to process your request.]]></item>
-		<item name="wcf.acp.pluginStore.api.noSSL"><![CDATA[Querying the Plugin-Store to fetch the purchased products requires a secure connection.<br><br>Your PHP version has been compiled without OpenSSL support, it is required to establish secure connections, please contact your hosting company or system-administrator to resolve this shortcoming.]]></item>
 		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Please enter the license and serial number of one of your licenses on WoltLab.com.]]></item>
@@ -2738,6 +2732,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.memoryLimit.description"><![CDATA[Processes may require large amounts of memory at peak, requiring a limit of at least {$phpMemoryLimit} MB.]]></item>
 		<item name="wcf.acp.systemCheck.php.sha256"><![CDATA[Support for SHA-256]]></item>
 		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[The cryptographic function SHA-256 is required for a safe and secure operation of the software.]]></item>
+		<item name="wcf.acp.systemCheck.php.x64"><![CDATA[64-bit Support]]></item>
+		<item name="wcf.acp.systemCheck.php.x64.description"><![CDATA[The PHP version must support 64-bit integers to correctly process numbers larger than ~2.1 billion.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB available]]></item>
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB when using MariaDB) is a transaction storage engine for MySQL and is required for the operation of the software. This is a built-in feature of MySQL.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.bufferPool"><![CDATA[Bufferpool Size]]></item>
@@ -2761,6 +2757,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[The address is invalid.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.invalidScheme"><![CDATA[The address must use the <kbd>https://</kbd> scheme.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.nonStandardPort"><![CDATA[The address must not use a non-standard port.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.userinfo"><![CDATA[The address may not contain credentials.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already set up and correctly configured.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The entered server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
@@ -5560,5 +5559,11 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.option.desktop_notification_package_id"/>
 	<item name="wcf.acp.option.desktop_notification_package_id.description"/>
 	<item name="wcf.acp.application.multiDomain"/>
+	<item name="wcf.acp.pluginStore.api.noSSL"/>
+	<item name="wcf.acp.index.system.php.sslSupport"/>
+	<item name="wcf.acp.index.system.php.sslSupport.available"/>
+	<item name="wcf.acp.index.system.php.sslSupport.notAvailable"/>
+	<item name="wcf.acp.option.http_send_x_frame_options"/>
+	<item name="wcf.acp.option.http_send_x_frame_options.description"/>
 </delete>
 </language>

@@ -491,10 +491,6 @@ final class SessionHandler extends SingletonFactory
 
             $sameSite = '; SameSite=lax';
 
-            if (!HTTP_SEND_X_FRAME_OPTIONS) {
-                $sameSite = '; SameSite=none';
-            }
-
             \header(
                 'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
                 false
@@ -592,9 +588,9 @@ final class SessionHandler extends SingletonFactory
     protected function getExistingSession(string $sessionID): bool
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_session
+                FROM    wcf1_user_session
                 WHERE   sessionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $sessionID,
         ]);
@@ -626,12 +622,12 @@ final class SessionHandler extends SingletonFactory
         // The former two fields are not going to rapidly change and the latter is just
         // used for session expiry, where accuracy to the second is not required.
         if ($row['lastActivityTime'] < (TIME_NOW - 60)) {
-            $sql = "UPDATE  wcf" . WCF_N . "_user_session
+            $sql = "UPDATE  wcf1_user_session
                     SET     ipAddress = ?,
                             userAgent = ?,
                             lastActivityTime = ?
                     WHERE   sessionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 UserUtil::getIpAddress(),
                 UserUtil::getUserAgent(),
@@ -658,9 +654,9 @@ final class SessionHandler extends SingletonFactory
             }
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_session
-                    " . $condition;
-            $legacySessionStatement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_session
+                    {$condition}";
+            $legacySessionStatement = WCF::getDB()->prepare($sql);
             $legacySessionStatement->execute($condition->getParameters());
             $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
 
@@ -701,10 +697,10 @@ final class SessionHandler extends SingletonFactory
         ];
 
         // Create new session.
-        $sql = "INSERT INTO wcf" . WCF_N . "_user_session
+        $sql = "INSERT INTO wcf1_user_session
                             (sessionID, ipAddress, userAgent, creationTime, lastActivityTime, sessionVariables)
                 VALUES      (?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->sessionID,
             UserUtil::getIpAddress(),
@@ -732,11 +728,11 @@ final class SessionHandler extends SingletonFactory
             $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
             if ($spiderID) {
                 $sql = "SELECT      *
-                        FROM        wcf" . WCF_N . "_session
+                        FROM        wcf1_session
                         WHERE       spiderID = ?
                                 AND userID IS NULL
                         ORDER BY    lastActivityTime DESC";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$spiderID]);
                 $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
             }
@@ -834,9 +830,9 @@ final class SessionHandler extends SingletonFactory
         // work-around for setup process (package wcf does not exist yet)
         if (!PACKAGE_ID) {
             $sql = "SELECT  groupID
-                    FROM    wcf" . WCF_N . "_user_to_group
+                    FROM    wcf1_user_to_group
                     WHERE   userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->user->userID]);
             $groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
         } else {
@@ -880,9 +876,9 @@ final class SessionHandler extends SingletonFactory
         // work-around for setup process (package wcf does not exist yet)
         if (!PACKAGE_ID) {
             $sql = "SELECT  languageID
-                    FROM    wcf" . WCF_N . "_user_to_language
+                    FROM    wcf1_user_to_language
                     WHERE   userID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->user->userID]);
             $this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
         } else {
@@ -1042,16 +1038,16 @@ final class SessionHandler extends SingletonFactory
             $this->create();
 
             // ... delete the newly created legacy session ...
-            $sql = "DELETE FROM wcf" . WCF_N . "_session
+            $sql = "DELETE FROM wcf1_session
                     WHERE       sessionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->sessionID]);
 
             // ... perform the login ...
-            $sql = "UPDATE  wcf" . WCF_N . "_user_session
+            $sql = "UPDATE  wcf1_user_session
                     SET     userID = ?
                     WHERE   sessionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $user->userID,
                 $this->sessionID,
@@ -1059,20 +1055,21 @@ final class SessionHandler extends SingletonFactory
 
             // ... delete any user sessions exceeding the limit ...
             $sql = "SELECT  all_sessions.sessionID
-                    FROM    wcf" . WCF_N . "_user_session all_sessions
+                    FROM    wcf1_user_session all_sessions
                     LEFT JOIN (
                         SELECT      sessionID
-                        FROM        wcf" . WCF_N . "_user_session
+                        FROM        wcf1_user_session
                         WHERE       userID = ?
                         ORDER BY    lastActivityTime DESC
-                        LIMIT       " . self::USER_SESSION_LIMIT . "
+                        LIMIT       ?
                     ) newest_sessions
                     ON      newest_sessions.sessionID = all_sessions.sessionID
                     WHERE   all_sessions.userID = ?
                         AND newest_sessions.sessionID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $user->userID,
+                self::USER_SESSION_LIMIT,
                 $user->userID,
             ]);
             foreach ($statement->fetchAll(\PDO::FETCH_COLUMN) as $sessionID) {
@@ -1226,10 +1223,10 @@ final class SessionHandler extends SingletonFactory
         }
 
         if ($this->variablesChanged) {
-            $sql = "UPDATE  wcf" . WCF_N . "_user_session
+            $sql = "UPDATE  wcf1_user_session
                     SET     sessionVariables = ?
                     WHERE   sessionID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 \serialize($this->variables),
                 $this->sessionID,
@@ -1300,19 +1297,19 @@ final class SessionHandler extends SingletonFactory
      */
     public function prune()
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_session
+        $sql = "DELETE FROM wcf1_user_session
                 WHERE       (lastActivityTime < ? AND userID IS NULL)
                          OR (lastActivityTime < ? AND userID IS NOT NULL)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             TIME_NOW - self::GUEST_SESSION_LIFETIME,
             TIME_NOW - self::USER_SESSION_LIFETIME,
         ]);
 
         // Legacy sessions live 120 minutes, they will be re-created on demand.
-        $sql = "DELETE FROM wcf" . WCF_N . "_session
+        $sql = "DELETE FROM wcf1_session
                 WHERE       lastActivityTime < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             TIME_NOW - (3600 * 2),
         ]);
@@ -1434,9 +1431,9 @@ final class SessionHandler extends SingletonFactory
         }
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_session
+                FROM    wcf1_user_session
                 WHERE   userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$user->userID]);
 
         $sessions = [];
@@ -1468,15 +1465,15 @@ final class SessionHandler extends SingletonFactory
             $conditionBuilder->add('sessionID <> ?', [$sessionID]);
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_session
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_user_session
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         // Delete legacy session.
-        $sql = "DELETE FROM wcf" . WCF_N . "_session
-            " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_session
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
     }
 
@@ -1487,15 +1484,15 @@ final class SessionHandler extends SingletonFactory
      */
     public function deleteUserSession(string $sessionID): void
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_session
+        $sql = "DELETE FROM wcf1_user_session
                 WHERE       sessionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$sessionID]);
 
         // Delete legacy session.
-        $sql = "DELETE FROM wcf" . WCF_N . "_session
+        $sql = "DELETE FROM wcf1_session
                 WHERE       sessionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$sessionID]);
     }
 }

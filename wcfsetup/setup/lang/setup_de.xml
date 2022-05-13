@@ -51,7 +51,7 @@
 		<item name="wcf.global.systemRequirements.tls"><![CDATA[Verschlüsselte HTTPS-Verbindung (SSL/TLS)]]></item>
 		<item name="wcf.global.systemRequirements.tls.description"><![CDATA[Die Installation wird über eine unverschlüsselte HTTP-Verbindung aufgerufen. Aus Gründen des Datenschutzes sollte der Zugriff generell über eine verschlüsselte HTTPS-Verbindung erfolgen. Unverschlüsselte Anfragen sollten auf die verschlüsselte Version umgeleitet werden. Bei der Verwendung von unverschlüsselten Verbindungen kann es zu einer Einschränkung des Funktionsumfangs kommen, da Webbrowser bestimmte Funktionen lediglich zur Verwendung mit verschlüsselten Verbindungen zulassen.]]></item>
 		<item name="wcf.global.systemRequirements.x64"><![CDATA[64-Bit-Unterstützung]]></item>
-		<item name="wcf.global.systemRequirements.x64.description"><![CDATA[Eine PHP-Version mit Unterstützung für 64-Bit-Ganzzahlen wird benötigt, um Zahlwerte größer als etwa 2,1 Milliarden korrekt zu verarbeiten. Ohne 64-Bit-Unterstützung können bestimmte Funktionen eingeschränkt sein oder fehlerhafte Werte liefern. Darüber hinaus ist die Verarbeitungsgeschwindigkeit von Anfragen in 64-Bit-PHP gegenüber 32-Bit-PHP erhöht.]]></item>
+		<item name="wcf.global.systemRequirements.x64.description"><![CDATA[Die eingesetzte PHP-Version muss die Verarbeitung von 64-Bit-Ganzzahlen unterstützen, um Zahlwerte größer als etwa 2,1 Milliarden korrekt zu verarbeiten.]]></item>
 		<item name="wcf.global.next"><![CDATA[Lade nächsten Schritt …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[Die Installation lädt im Moment den nächsten Schritt. Bitte haben Sie einen Augenblick Geduld.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
@@ -61,11 +61,9 @@
 		<item name="wcf.global.configureDB.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.global.configureDB.database"><![CDATA[Datenbankname]]></item>
 		<item name="wcf.global.configureDB.database.description"><![CDATA[Die spezifizierte Datenbank muss bereits angelegt sein.]]></item>
-		<item name="wcf.global.configureDB.number"><![CDATA[Installationsnummer]]></item>
-		<item name="wcf.global.configureDB.number.description"><![CDATA[Die Installationsnummer erlaubt Ihnen mehrere Installationen der Software in der gleichen Datenbank zu speichern. Wenn dies Ihre erste Installation der Software in dieser Datenbank ist, sollten Sie hier den Wert <em>1</em> wählen.]]></item>
 		<item name="wcf.global.configureDB.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
 		<br><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br>{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
-		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank „{$dbName}“:<br>{implode from=$conflictedTables item="table"}{$table}{/implode}.<br><br>Um dieses Problem zu beheben, können Sie:<br>1. diese Tabelle{if $conflictedTables|count > 1}n{/if} manuell löschen und die „Weiter“ Schaltfläche betätigen, oder<br>2. Sie geben die Daten einer anderen Datenbank ein und betätigen die „Weiter“ Schaltfläche, oder<br>3. Sie geben eine von „{$dbNumber}“ unterschiedliche Installationsnummer an und betätigen die „Weiter“ Schaltfläche.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank „{$dbName}“:<br>{implode from=$conflictedTables item="table"}{$table}{/implode}.<br><br>Um dieses Problem zu beheben, können Sie:<br>1. diese Tabelle{if $conflictedTables|count > 1}n{/if} manuell löschen und die „Weiter“ Schaltfläche betätigen, oder<br>2. Sie geben die Daten einer anderen Datenbank ein und betätigen die „Weiter“ Schaltfläche.]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Administrator erstellen]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[Der Installationsassistent erstellt nun ein Administrator-Konto für Sie. Bitte geben Sie dazu einen Benutzernamen, eine E-Mail-Adresse und ein Kennwort ein.]]></item>
 		<item name="wcf.global.createUser.username"><![CDATA[Benutzername]]></item>

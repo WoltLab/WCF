@@ -2,6 +2,8 @@
 
 namespace wcf\system\package;
 
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\package\Package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
@@ -9,7 +11,7 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
-use wcf\system\io\RemoteFile;
+use wcf\system\io\HttpFactory;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -48,20 +50,11 @@ class PackageUpdateDispatcher extends SingletonFactory
 
         // loop servers
         $updateServers = [];
-        $foundWoltLabServer = false;
         $requirePurchasedVersions = false;
         foreach ($tmp as $updateServer) {
             if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
                 if (\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
                     $requirePurchasedVersions = true;
-
-                    // move a woltlab.com update server to the front of the queue to probe for SSL support
-                    if (!$foundWoltLabServer) {
-                        \array_unshift($updateServers, $updateServer);
-                        $foundWoltLabServer = true;
-
-                        continue;
-                    }
                 }
 
                 $updateServers[] = $updateServer;
@@ -112,19 +105,23 @@ class PackageUpdateDispatcher extends SingletonFactory
 
     protected function getPurchasedVersions()
     {
-        if (!RemoteFile::supportsSSL()) {
-            return;
-        }
-
-        $request = new HTTPRequest(
+        $client = HttpFactory::makeClientWithTimeout(5);
+        $request = new Request(
+            'POST',
             'https://api.woltlab.com/1.0/customer/license/list.json',
-            ['timeout' => 5],
-            ['authCode' => PACKAGE_SERVER_AUTH_CODE]
+            [
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            \http_build_query([
+                'authCode' => PACKAGE_SERVER_AUTH_CODE,
+            ], '', '&', \PHP_QUERY_RFC1738)
         );
 
         try {
-            $request->execute();
-            $reply = JSON::decode($request->getReply()['body']);
+            $response = $client->send($request);
+
+            $reply = JSON::decode((string)$response->getBody());
+
             if ($reply['status'] == 200) {
                 $this->hasAuthCode = true;
                 $this->purchasedVersions = [
@@ -132,7 +129,7 @@ class PackageUpdateDispatcher extends SingletonFactory
                     'pluginstore' => ($reply['pluginstore'] ?? []),
                 ];
             }
-        } catch (SystemException $e) {
+        } catch (ClientExceptionInterface) {
             // ignore
         }
     }
@@ -141,11 +138,10 @@ class PackageUpdateDispatcher extends SingletonFactory
      * Fetches the package_update.xml from an update server.
      *
      * @param PackageUpdateServer $updateServer
-     * @param bool $forceHTTP
      * @throws  PackageUpdateUnauthorizedException
      * @throws  SystemException
      */
-    protected function getPackageUpdateXML(PackageUpdateServer $updateServer, $forceHTTP = false)
+    protected function getPackageUpdateXML(PackageUpdateServer $updateServer)
     {
         $settings = [];
         $authData = $updateServer->getAuthData();
@@ -153,12 +149,7 @@ class PackageUpdateDispatcher extends SingletonFactory
             $settings['auth'] = $authData;
         }
 
-        $secureConnection = $updateServer->attemptSecureConnection();
-        if ($secureConnection && !$forceHTTP) {
-            $settings['timeout'] = 5;
-        }
-
-        $request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
+        $request = new HTTPRequest($updateServer->getListURL(), $settings);
 
         $requestedVersion = \wcf\getMinorVersion();
         if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
@@ -196,19 +187,6 @@ class PackageUpdateDispatcher extends SingletonFactory
             $reply = $request->getReply();
 
             $statusCode = \is_array($reply['statusCode']) ? \reset($reply['statusCode']) : $reply['statusCode'];
-            // status code 0 is a connection timeout
-            if (!$statusCode && $secureConnection) {
-                if (\preg_match('~https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
-                    // woltlab.com servers are most likely to be available,
-                    // thus we assume that SSL connections are dropped
-                    RemoteFile::disableSSL();
-                }
-
-                // retry via http
-                $this->getPackageUpdateXML($updateServer, true);
-
-                return;
-            }
 
             throw new SystemException(
                 WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $statusCode . ')'
@@ -241,8 +219,6 @@ class PackageUpdateDispatcher extends SingletonFactory
         if (\in_array($apiVersion, ['2.1', '3.1'])) {
             if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
                 throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
-            } elseif (empty($reply['httpHeaders']['wcf-update-server-ssl'])) {
-                throw new SystemException("Missing required HTTP header 'wcf-update-server-ssl'.");
             }
 
             $metaData['list'] = [];
@@ -252,8 +228,6 @@ class PackageUpdateDispatcher extends SingletonFactory
             if (!empty($reply['httpHeaders']['last-modified'])) {
                 $metaData['list']['lastModified'] = \reset($reply['httpHeaders']['last-modified']);
             }
-
-            $metaData['ssl'] = (\reset($reply['httpHeaders']['wcf-update-server-ssl']) == 'true') ? true : false;
         }
         $data['metaData'] = \serialize($metaData);
 

@@ -269,12 +269,11 @@ abstract class AbstractPage implements IPage
 
         // check if current request URL matches the canonical URL
         if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
-            $canonicalURL = Url::parse(\preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
+            $canonicalURL = Url::parse($this->canonicalURL);
 
             // use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
             // IIS Rewrite-Module has a bug causing the REQUEST_URI to be ISO-encoded
             $requestURI = (!empty($_SERVER['UNENCODED_URL'])) ? $_SERVER['UNENCODED_URL'] : $_SERVER['REQUEST_URI'];
-            $requestURI = \preg_replace('~[?&]s=[a-f0-9]{40}~', '', $requestURI);
 
             if (!StringUtil::isUTF8($requestURI)) {
                 $requestURI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $requestURI);
@@ -332,10 +331,8 @@ abstract class AbstractPage implements IPage
                     }
 
                     if (!empty($rQueryString)) {
-                        $redirectURL .= (\mb_strpos(
-                            $redirectURL,
-                            '?'
-                        ) === false ? '?' : '&') . \http_build_query($rQueryString, '', '&');
+                        $redirectURL .= !\str_contains($redirectURL, '?') ? '?' : '&';
+                        $redirectURL .= \http_build_query($rQueryString, '', '&');
                     }
                 }
 

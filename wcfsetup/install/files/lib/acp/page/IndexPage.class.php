@@ -9,7 +9,6 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Environment;
-use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
@@ -51,7 +50,6 @@ class IndexPage extends AbstractPage
             'memoryLimit' => @\ini_get('memory_limit'),
             'upload_max_filesize' => @\ini_get('upload_max_filesize'),
             'postMaxSize' => @\ini_get('post_max_size'),
-            'sslSupport' => RemoteFile::supportsSSL(),
             'innodbFlushLogAtTrxCommit' => $innodbFlushLogAtTrxCommit,
         ];
 
@@ -108,15 +106,6 @@ class IndexPage extends AbstractPage
                 '#category_security.antispam'
             );
         }
-
-        $xFrameOptionsLink = LinkHandler::getInstance()->getLink(
-            'Option',
-            [
-                'id' => $optionCategories['general']->categoryID,
-                'optionName' => 'http_send_x_frame_options',
-            ],
-            '#category_general.system'
-        );
 
         $evaluationExpired = $evaluationPending = [];
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
@@ -189,7 +178,6 @@ class IndexPage extends AbstractPage
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
-            'xFrameOptionsLink' => $xFrameOptionsLink,
             'server' => $this->server,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,

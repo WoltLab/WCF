@@ -32,30 +32,10 @@ class TemplateScriptingCompiler
     protected $unknownPHPFunctions = ['isset', 'unset', 'empty'];
 
     /**
-     * PHP functions that can not be used in the modifier syntax
+     * PHP functions that may be used as a template modifier
      * @var string[]
      */
-    protected $disabledPHPFunctions = [
-        'system',
-        'exec',
-        'passthru',
-        'shell_exec', // command line execution
-        'include',
-        'require',
-        'include_once',
-        'require_once', // includes
-        'eval',
-        'virtual',
-        'call_user_func_array',
-        'call_user_func',
-        'assert', // code execution
-    ];
-
-    /**
-     * PHP functions and modifiers that can be used in enterprise mode
-     * @var string[]
-     */
-    protected $enterpriseFunctions = [
+    protected $allowedModifierFunctions = [
         'abs',
         'addslashes',
         'array_diff',
@@ -1190,12 +1170,12 @@ class TemplateScriptingCompiler
 
             // reinserts strings
             foreach (StringStack::getStack('singleQuote') as $hash => $value) {
-                if (\mb_strpos($string, $hash) !== false) {
+                if (\str_contains($string, $hash)) {
                     $string = \str_replace($hash, $value, $string);
                 }
             }
             foreach (StringStack::getStack('doubleQuote') as $hash => $value) {
-                if (\mb_strpos($string, $hash) !== false) {
+                if (\str_contains($string, $hash)) {
                     $string = \str_replace($hash, $value, $string);
                 }
             }
@@ -1622,12 +1602,9 @@ class TemplateScriptingCompiler
                                 $this->currentIdentifier,
                                 $this->currentLineNo
                             ));
-                        } elseif (
-                            \in_array($modifierData['name'], $this->disabledPHPFunctions)
-                            || (ENABLE_ENTERPRISE_MODE && !\in_array($modifierData['name'], $this->enterpriseFunctions))
-                        ) {
+                        } elseif (!\in_array($modifierData['name'], $this->allowedModifierFunctions)) {
                             throw new SystemException(static::formatSyntaxError(
-                                "disabled function '" . $values[$i] . "'",
+                                "function '" . $values[$i] . "' may not be called within a template",
                                 $this->currentIdentifier,
                                 $this->currentLineNo
                             ));
@@ -2194,7 +2171,7 @@ class TemplateScriptingCompiler
      */
     public function replacePHPTags($string)
     {
-        if (\mb_strpos($string, '<?') !== false) {
+        if (\str_contains($string, '<?')) {
             $string = \str_replace('<?php', '@@PHP_START_TAG@@', $string);
             $string = \str_replace('<?', '@@PHP_SHORT_START_TAG@@', $string);
             $string = \str_replace('?>', '@@PHP_END_TAG@@', $string);

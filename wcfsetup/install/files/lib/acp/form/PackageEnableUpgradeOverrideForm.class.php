@@ -89,15 +89,11 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         $sqlVersion = WCF::getDB()->getVersion();
         $compareSQLVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
         if (\stripos($sqlVersion, 'MariaDB') !== false) {
-            $neededSqlVersion = '10.1.44';
+            $neededSqlVersion = '10.5.12';
             $sqlFork = 'MariaDB';
         } else {
             $sqlFork = 'MySQL';
-            if ($compareSQLVersion[0] === '5') {
-                $neededSqlVersion = '5.7.31';
-            } else {
-                $neededSqlVersion = '8.0.19';
-            }
+            $neededSqlVersion = '8.0.29';
         }
 
         if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {

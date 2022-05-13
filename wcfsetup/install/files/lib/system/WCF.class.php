@@ -9,7 +9,6 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
-use wcf\data\style\StyleAction;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
@@ -24,9 +23,7 @@ use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
@@ -159,12 +156,6 @@ class WCF
     protected static $zendOpcacheEnabled;
 
     /**
-     * force logout during destructor call
-     * @var bool
-     */
-    protected static $forceLogout = false;
-
-    /**
      * Calls all init functions of the WCF class.
      */
     public function __construct()
@@ -221,12 +212,7 @@ class WCF
 
             // update session
             if (\is_object(self::getSession())) {
-                if (self::$forceLogout) {
-                    // do logout
-                    self::getSession()->delete();
-                } else {
-                    self::getSession()->update();
-                }
+                self::getSession()->update();
             }
 
             // execute shutdown actions of storage handlers
@@ -311,7 +297,7 @@ class WCF
             }
         }
 
-        @\header('HTTP/1.1 503 Service Unavailable');
+        @\header('HTTP/1.1 500 Internal Server Error');
         try {
             \wcf\functions\exception\printThrowable($e);
         } catch (\Throwable $e2) {
@@ -498,6 +484,9 @@ class WCF
 
         // Multi-domain setups were removed in 5.6.
         \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
+
+        // Disabling X-Frame-Options is no longer possible since 5.6.
+        \define('HTTP_SEND_X_FRAME_OPTIONS', 1);
     }
 
     /**
@@ -548,27 +537,10 @@ class WCF
      */
     protected function initStyle()
     {
-        $styleID = 0;
-
-        /** @deprecated The 'styleID' parameter is deprecated. */
-        if (isset($_REQUEST['styleID'])) {
-            $styleID = \intval($_REQUEST['styleID']);
-
-            try {
-                $action = new StyleAction([$styleID], 'changeStyle');
-                $action->validateAction();
-                $action->executeAction();
-            } catch (PermissionDeniedException | UserInputException $e) {
-                $styleID = 0;
-            }
-        }
-
-        if ($styleID === 0) {
-            if (self::getSession()->getUser()->userID) {
-                $styleID = self::getSession()->getUser()->styleID ?: 0;
-            } else {
-                $styleID = self::getSession()->getVar('styleID') ?: 0;
-            }
+        if (self::getSession()->getUser()->userID) {
+            $styleID = self::getSession()->getUser()->styleID ?: 0;
+        } else {
+            $styleID = self::getSession()->getVar('styleID') ?: 0;
         }
 
         $styleHandler = StyleHandler::getInstance();
@@ -590,7 +562,7 @@ class WCF
                     AJAXException::INSUFFICIENT_PERMISSIONS
                 );
             } else {
-                self::$forceLogout = true;
+                self::getSession()->delete();
 
                 throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
             }

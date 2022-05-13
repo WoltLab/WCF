@@ -127,7 +127,10 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
             return false;
         }
 
-        return parent::hasContent();
+        // Call parent method, as it loads the statistics.
+        parent::hasContent();
+
+        return $this->objectList->stats['total'] > 0;
     }
 
     /**

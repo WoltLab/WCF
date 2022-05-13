@@ -133,7 +133,7 @@ class Installer
         $directories = [];
         $files = [];
         foreach ($tar->getContentList() as $index => $file) {
-            if (empty($this->folder) || \mb_strpos($file['filename'], $this->folder) === 0) {
+            if (empty($this->folder) || \str_starts_with($file['filename'], $this->folder)) {
                 if (!empty($this->folder)) {
                     $file['filename'] = \str_replace($this->folder, '', $file['filename']);
                 }

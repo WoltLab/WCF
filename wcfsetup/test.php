@@ -267,8 +267,8 @@ $phrases = [
 		'en' => 'MySQL Requirements'
 	],
 	'mysql_version' => [
-		'de' => 'Bitte stellen Sie sicher, dass MySQL 5.7.31+/MySQL 8.0.19+  oder MariaDB 10.1.44+ mit InnoDB-Unterstützung vorhanden ist.',
-		'en' => 'Please make sure that MySQL 5.7.31+/MySQL 8.0.19+ or MariaDB 10.1.44+, with InnoDB support is available.'
+		'de' => 'Bitte stellen Sie sicher, dass MySQL 8.0.29+  oder MariaDB 10.5.12+ mit InnoDB-Unterstützung vorhanden ist.',
+		'en' => 'Please make sure that MySQL 8.0.29+ or MariaDB 10.5.12+, with InnoDB support is available.'
 	],
 	'result' => [
 		'de' => 'Ergebnis',

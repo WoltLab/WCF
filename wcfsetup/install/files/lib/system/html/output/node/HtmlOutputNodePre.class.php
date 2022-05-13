@@ -166,45 +166,45 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
     public function guessHighlighter($content)
     {
         // PHP at the beginning is almost surely PHP.
-        if (\mb_strpos($content, '<?php') === 0) {
+        if (\str_starts_with($content, '<?php')) {
             return 'php';
         }
 
         if (
-            \mb_strpos($content, 'SELECT') === 0
-            || \mb_strpos($content, 'UPDATE') === 0
-            || \mb_strpos($content, 'INSERT') === 0
-            || \mb_strpos($content, 'DELETE') === 0
+            \str_starts_with($content, 'SELECT')
+            || \str_starts_with($content, 'UPDATE')
+            || \str_starts_with($content, 'INSERT')
+            || \str_starts_with($content, 'DELETE')
         ) {
             return 'sql';
         }
 
-        if (\mb_strpos($content, 'import java.') !== false) {
+        if (\str_contains($content, 'import java.')) {
             return 'java';
         }
 
-        if (\mb_strpos($content, 'using System;') !== false) {
+        if (\str_contains($content, 'using System;')) {
             return 'csharp';
         }
 
         if (
-            \mb_strpos($content, "---") !== false
-            && \mb_strpos($content, "\n+++") !== false
+            \str_contains($content, "---")
+            && \str_contains($content, "\n+++")
         ) {
             return 'diff';
         }
 
-        if (\mb_strpos($content, "\n#include ") !== false) {
+        if (\str_contains($content, "\n#include ")) {
             return 'c';
         }
 
-        if (\mb_strpos($content, '#!/usr/bin/perl') === 0) {
+        if (\str_starts_with($content, '#!/usr/bin/perl')) {
             return 'perl';
         }
 
         if (
-            \mb_strpos($content, '#!/usr/bin/python') === 0
-            || \mb_strpos($content, 'def __init__(self') !== false
+            \str_starts_with($content, '#!/usr/bin/python')
+            || \str_contains($content, 'def __init__(self')
             || Regex::compile("from (\\S+) import (\\S+)")->match($content)
         ) {
             return 'python';
@@ -215,51 +215,53 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
         }
 
         if (
-            \mb_strpos($content, 'FROM') === 0
-            && \mb_strpos($content, "RUN") !== false
+            \str_starts_with($content, 'FROM')
+            && \str_contains($content, "RUN")
         ) {
             return 'docker';
         }
 
         if (
-            \mb_stripos($content, "RewriteRule") !== false
-            || \mb_stripos($content, "RewriteEngine On") !== false
-            || \mb_stripos($content, "AuthUserFile") !== false
+            \stripos($content, "RewriteRule") !== false
+            || \stripos($content, "RewriteEngine On") !== false
+            || \stripos($content, "AuthUserFile") !== false
         ) {
             return 'apacheconf';
         }
 
-        if (\mb_strpos($content, '\\documentclass') !== false) {
+        if (\str_contains($content, '\\documentclass')) {
             return 'latex';
         }
 
         // PHP somewhere later might not necessarily be PHP, it could also be
         // a .patch or a Dockerfile.
-        if (\mb_strpos($content, '<?php') !== false) {
+        if (\str_contains($content, '<?php')) {
             return 'php';
         }
 
         if (
-            \mb_strpos($content, '{/if}') !== false
-            && (\mb_strpos($content, '<div') !== false
-                || \mb_strpos($content, '<span') !== false)
+            \str_contains($content, '{/if}')
+            && (
+                \str_contains($content, '<div')
+                || \str_contains($content, '<span')
+            )
         ) {
             return 'smarty';
         }
 
-        if (\mb_strpos($content, '<html') !== false) {
+        if (\str_contains($content, '<html')) {
             return 'html';
         }
 
-        if (\mb_strpos($content, '<?xml') === 0) {
+        if (\str_starts_with($content, '<?xml')) {
             return 'xml';
         }
 
-        if (\mb_strpos($content, '@mixin') !== false) {
+        if (\str_contains($content, '@mixin')) {
             return 'scss';
         }
 
-        if (\mb_strpos($content, '!important;') !== false) {
+        if (\str_contains($content, '!important;')) {
             return 'css';
         }
 

@@ -36,8 +36,6 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
      */
     public function loginManually(
         $username,
-        // phpcs:disable Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint
-        // https://github.com/squizlabs/PHP_CodeSniffer/pull/3320
         #[\wcf\SensitiveArgument()]
         $password,
         $userClassname = User::class
