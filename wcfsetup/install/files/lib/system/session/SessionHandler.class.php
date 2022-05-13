@@ -1072,7 +1072,7 @@ final class SessionHandler extends SingletonFactory
                         FROM        wcf1_user_session
                         WHERE       userID = ?
                         ORDER BY    lastActivityTime DESC
-                        LIMIT       " . self::USER_SESSION_LIMIT . "
+                        LIMIT       ?
                     ) newest_sessions
                     ON      newest_sessions.sessionID = all_sessions.sessionID
                     WHERE   all_sessions.userID = ?
@@ -1080,6 +1080,7 @@ final class SessionHandler extends SingletonFactory
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $user->userID,
+                self::USER_SESSION_LIMIT,
                 $user->userID,
             ]);
             foreach ($statement->fetchAll(\PDO::FETCH_COLUMN) as $sessionID) {
