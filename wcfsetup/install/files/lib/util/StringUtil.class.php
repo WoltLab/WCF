@@ -535,13 +535,6 @@ final class StringUtil
      */
     public static function convertEncoding($inCharset, $outCharset, $string)
     {
-        if ($inCharset == 'ISO-8859-1' && $outCharset == 'UTF-8') {
-            return \utf8_encode($string);
-        }
-        if ($inCharset == 'UTF-8' && $outCharset == 'ISO-8859-1') {
-            return \utf8_decode($string);
-        }
-
         return \mb_convert_encoding($string, $outCharset, $inCharset);
     }
 
