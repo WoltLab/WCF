@@ -723,7 +723,10 @@ EXPLANATION;
 						$isSensitive = false;
 						if (
 							\method_exists($parameter, 'getAttributes')
-							&& !empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
+							&& (
+								!empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
+								|| !empty($parameter->getAttributes(\SensitiveParameter::class))
+							)
 						) {
 							$isSensitive = true;
 						}
