@@ -60,7 +60,6 @@ class WCFACP extends WCF
         // start initialization
         $this->initDB();
         $this->loadOptions();
-        $this->initPackage();
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
@@ -281,17 +280,6 @@ class WCFACP extends WCF
             'baseHref' => $host . $path,
             'availableAcpSearchProviders' => $availableAcpSearchProviders,
         ]);
-    }
-
-    /**
-     * Initializes the active package.
-     */
-    protected function initPackage()
-    {
-        // define active package id
-        if (!\defined('PACKAGE_ID')) {
-            \define('PACKAGE_ID', 1);
-        }
     }
 
     /**
