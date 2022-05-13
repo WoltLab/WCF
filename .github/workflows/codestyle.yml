@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: phpcs
-      uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
     - name: Setup PHP with tools
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
         extensions: ctype, dom, exif, gd, gmp, hash, intl, json, libxml, mbstring, opcache, pcre, pdo, pdo_mysql, zlib
-        tools: php-cs-fixer
+        tools: cs2pr, phpcs, php-cs-fixer
+    - name: phpcs
+      run: phpcs -n -q --report=checkstyle | cs2pr
     - name: php-cs-fixer
       run: php-cs-fixer fix --dry-run --diff
   ts:
