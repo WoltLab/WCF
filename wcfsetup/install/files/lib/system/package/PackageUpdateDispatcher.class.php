@@ -2,6 +2,8 @@
 
 namespace wcf\system\package;
 
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\package\Package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
@@ -9,6 +11,7 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
+use wcf\system\io\HttpFactory;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -102,15 +105,23 @@ class PackageUpdateDispatcher extends SingletonFactory
 
     protected function getPurchasedVersions()
     {
-        $request = new HTTPRequest(
+        $client = HttpFactory::makeClientWithTimeout(5);
+        $request = new Request(
+            'POST',
             'https://api.woltlab.com/1.0/customer/license/list.json',
-            ['timeout' => 5],
-            ['authCode' => PACKAGE_SERVER_AUTH_CODE]
+            [
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            \http_build_query([
+                'authCode' => PACKAGE_SERVER_AUTH_CODE,
+            ], '', '&', \PHP_QUERY_RFC1738)
         );
 
         try {
-            $request->execute();
-            $reply = JSON::decode($request->getReply()['body']);
+            $response = $client->send($request);
+
+            $reply = JSON::decode((string)$response->getBody());
+
             if ($reply['status'] == 200) {
                 $this->hasAuthCode = true;
                 $this->purchasedVersions = [
@@ -118,7 +129,7 @@ class PackageUpdateDispatcher extends SingletonFactory
                     'pluginstore' => ($reply['pluginstore'] ?? []),
                 ];
             }
-        } catch (SystemException $e) {
+        } catch (ClientExceptionInterface) {
             // ignore
         }
     }
