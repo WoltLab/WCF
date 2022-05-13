@@ -101,7 +101,7 @@ class Censorship extends SingletonFactory
 
                     continue 2;
                 } // check for asterisk matches ("*badword*" == "FooBadwordBar")
-                elseif (\mb_strpos($censoredWord, '*') !== false) {
+                elseif (\str_contains($censoredWord, '*')) {
                     $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord, '!'));
                     if (\preg_match('!^' . $censoredWord . '$!', $word)) {
                         // store censored word
@@ -114,7 +114,7 @@ class Censorship extends SingletonFactory
                         continue 2;
                     }
                 } // check for partial matches ("~badword~" == "bad-word")
-                elseif (\mb_strpos($censoredWord, '~') !== false) {
+                elseif (\str_contains($censoredWord, '~')) {
                     $censoredWord = \str_replace('~', '', $censoredWord);
                     if (($position = \mb_strpos($censoredWord, $word)) !== false) {
                         if ($position > 0) {
@@ -203,9 +203,9 @@ class Censorship extends SingletonFactory
     protected function lookAhead($index, $search)
     {
         if (isset($this->words[$index])) {
-            if (\mb_strpos($this->words[$index], $search) === 0) {
+            if (\str_starts_with($this->words[$index], $search)) {
                 return $index;
-            } elseif (\mb_strpos($search, $this->words[$index]) === 0) {
+            } elseif (\str_starts_with($search, $this->words[$index])) {
                 return $this->lookAhead($index + 1, \mb_substr($search, \mb_strlen($this->words[$index])));
             }
         }

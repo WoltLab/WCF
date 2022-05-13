@@ -110,7 +110,7 @@ class ExceptionLogViewPage extends MultipleLinkPage
             foreach ($this->logFiles as $logFile) {
                 $contents = \file_get_contents($logFile);
 
-                if (\mb_strpos($contents, '<<<<<<<<' . $this->exceptionID . '<<<<') !== false) {
+                if (\str_contains($contents, '<<<<<<<<' . $this->exceptionID . '<<<<')) {
                     $fileNameRegex->match($logFile);
                     $matches = $fileNameRegex->getMatches();
                     $this->logFile = $matches[0];

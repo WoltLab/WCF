@@ -235,7 +235,7 @@ class HtmlInputNodeTextParser
      */
     protected function detectMention(\DOMText $text, $value, array &$usernames)
     {
-        if (\mb_strpos($value, '@') === false) {
+        if (!\str_contains($value, '@')) {
             return;
         }
 
@@ -271,7 +271,7 @@ class HtmlInputNodeTextParser
         $exactValues = [];
         $likeValues = [];
         foreach ($usernames as $username) {
-            if (\mb_strpos($username, ' ') !== false) {
+            if (\str_contains($username, ' ')) {
                 // string contains a whitespace, account for names that
                 // are built up with more than two words
                 $likeValues[] = $username;
@@ -365,7 +365,7 @@ class HtmlInputNodeTextParser
      */
     protected function parseMention(\DOMText $text, $value, array $users, array $groups)
     {
-        if (\mb_strpos($value, '@') === false) {
+        if (!\str_contains($value, '@')) {
             return $value;
         }
 
@@ -475,7 +475,7 @@ class HtmlInputNodeTextParser
      */
     protected function parseEmail(\DOMText $text, $value)
     {
-        if (\mb_strpos($value, '@') === false) {
+        if (!\str_contains($value, '@')) {
             return $value;
         }
 

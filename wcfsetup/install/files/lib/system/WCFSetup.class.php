@@ -599,7 +599,7 @@ class WCFSetup extends WCF
             $relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
             foreach ($packages as $application => $packageData) {
                 $dir = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
-                if (\mb_strpos($dir, './') === 0) {
+                if (\str_starts_with($dir, './')) {
                     $dir = \mb_substr($dir, 1);
                 }
 
@@ -1167,7 +1167,7 @@ class WCFSetup extends WCF
         $otherPackages = [];
         $tar = new Tar(SETUP_FILE);
         foreach ($tar->getContentList() as $file) {
-            if ($file['type'] != 'folder' && \mb_strpos($file['filename'], 'install/packages/') === 0) {
+            if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
                 $packageFile = \basename($file['filename']);
 
                 // ignore any files which aren't an archive
@@ -1386,7 +1386,7 @@ class WCFSetup extends WCF
         $packageNames = [];
         $tar = new Tar(SETUP_FILE);
         foreach ($tar->getContentList() as $file) {
-            if ($file['type'] != 'folder' && \mb_strpos($file['filename'], 'install/packages/') === 0) {
+            if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
                 $packageFile = \basename($file['filename']);
 
                 try {

@@ -331,10 +331,8 @@ abstract class AbstractPage implements IPage
                     }
 
                     if (!empty($rQueryString)) {
-                        $redirectURL .= (\mb_strpos(
-                            $redirectURL,
-                            '?'
-                        ) === false ? '?' : '&') . \http_build_query($rQueryString, '', '&');
+                        $redirectURL .= !\str_contains($redirectURL, '?') ? '?' : '&';
+                        $redirectURL .= \http_build_query($rQueryString, '', '&');
                     }
                 }
 

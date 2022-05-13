@@ -54,7 +54,7 @@ class UserUsernameCondition extends AbstractTextCondition implements
      */
     public function checkUser(Condition $condition, User $user)
     {
-        return \mb_strpos($user->username, $condition->username) !== false;
+        return \str_contains($user->username, $condition->username);
     }
 
     /**

@@ -35,7 +35,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter
         $xpath = new \DOMXPath($element->ownerDocument);
         /** @var \DOMText $node */
         foreach ($xpath->query('.//text()', $element) as $node) {
-            if (\mb_strpos($node->textContent, '[*]') !== false && !$this->isInsideList($node)) {
+            if (\str_contains($node->textContent, '[*]') && !$this->isInsideList($node)) {
                 $nodes[] = $node;
             }
         }

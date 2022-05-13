@@ -460,7 +460,7 @@ final class CronjobUtil
         elseif ($char == '*') {
             $step = 1;
 
-            if (\mb_strpos($fieldValue, '/') !== false) {
+            if (\str_contains($fieldValue, '/')) {
                 $rangeData = \explode('/', $fieldValue);
                 $step = $rangeData[1];
             }
@@ -481,7 +481,7 @@ final class CronjobUtil
      */
     protected static function getListItems($fieldValue)
     {
-        if (\mb_strpos($fieldValue, ',') !== false) {
+        if (\str_contains($fieldValue, ',')) {
             return \explode(',', $fieldValue);
         }
 
@@ -497,12 +497,12 @@ final class CronjobUtil
     protected static function getRanges($value)
     {
         // this is a single value
-        if (\mb_strpos($value, '-') === false) {
+        if (!\str_contains($value, '-')) {
             return [$value];
         }
 
         $step = 1;
-        if (\mb_strpos($value, '/') !== false) {
+        if (\str_contains($value, '/')) {
             $data = \explode('/', $value);
             $step = $data[1];
             $value = $data[0];

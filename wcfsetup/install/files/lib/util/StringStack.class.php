@@ -57,7 +57,7 @@ final class StringStack
     {
         if (isset(self::$stringStack[$type])) {
             foreach (self::$stringStack[$type] as $hash => $value) {
-                if (\mb_strpos($string, $hash) !== false) {
+                if (\str_contains($string, $hash)) {
                     $string = \str_replace($hash, $value, $string);
                     unset(self::$stringStack[$type][$hash]);
                 }

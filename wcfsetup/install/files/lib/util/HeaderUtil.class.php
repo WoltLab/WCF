@@ -57,10 +57,10 @@ final class HeaderUtil
     public static function getCookieDomain(): ?string
     {
         $application = ApplicationHandler::getInstance()->getActiveApplication();
-        $addDomain = (\mb_strpos(
+        $addDomain = (!\str_contains(
             $application->cookieDomain,
             '.'
-        ) === false || \str_ends_with(
+        ) || \str_ends_with(
             $application->cookieDomain,
             '.lan'
         ) || \str_ends_with($application->cookieDomain, '.local')) ? false : true;

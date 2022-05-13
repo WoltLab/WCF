@@ -95,7 +95,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
             foreach ($pre->childNodes as $node) {
                 if (
                     $node->nodeType === \XML_TEXT_NODE
-                    && \mb_strpos($node->textContent, '@@@WCF_PRE_LINEBREAK@@@') !== false
+                    && \str_contains($node->textContent, '@@@WCF_PRE_LINEBREAK@@@')
                 ) {
                     $node->nodeValue = \str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $node->textContent);
                 }
@@ -126,16 +126,14 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
                     $string = $obj->replaceTag($data['data']);
 
                     if (!isset($data['data']['skipInnerContent']) || $data['data']['skipInnerContent'] !== true) {
-                        if (\mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
+                        if (\str_contains($string, '<!-- META_CODE_INNER_CONTENT -->')) {
                             return \str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
-                        } else {
-                            if (\mb_strpos($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;') !== false) {
-                                return \str_replace(
-                                    '&lt;!-- META_CODE_INNER_CONTENT --&gt;',
-                                    $matches['content'],
-                                    $string
-                                );
-                            }
+                        } elseif (\str_contains($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;')) {
+                            return \str_replace(
+                                '&lt;!-- META_CODE_INNER_CONTENT --&gt;',
+                                $matches['content'],
+                                $string
+                            );
                         }
                     }
 
