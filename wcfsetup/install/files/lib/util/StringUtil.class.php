@@ -525,13 +525,7 @@ final class StringUtil
     }
 
     /**
-     * Converts a string to requested character encoding.
-     * @param string $inCharset
-     * @param string $outCharset
-     * @param string $string
-     * @return  string      converted string
-     * @see     mb_convert_encoding()
-     *
+     * @deprecated 5.6 Use `\mb_convert_encoding()` directly.
      */
     public static function convertEncoding($inCharset, $outCharset, $string)
     {
