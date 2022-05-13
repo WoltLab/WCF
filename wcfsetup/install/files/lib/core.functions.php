@@ -97,6 +97,9 @@ namespace wcf {
 		return preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
 	}
 
+	/**
+	 * @deprecated 5.6 Use #[\SensitiveParameter] instead.
+	 */
 	#[\Attribute(\Attribute::TARGET_PARAMETER)]
 	class SensitiveArgument
 	{
