@@ -153,7 +153,7 @@ final class UnfurlResponse
 
         if ($this->responseCharset !== 'UTF-8') {
             try {
-                $this->body = StringUtil::convertEncoding($this->responseCharset, 'UTF-8', $this->body);
+                $this->body = \mb_convert_encoding($this->body, 'UTF-8', $this->responseCharset);
             } catch (Exception | ValueError $e) {
                 throw new ParsingFailed(
                     "Could not parse body, due an invalid charset.",
