@@ -21,7 +21,7 @@ jobs:
     - name: phpcs
       run: phpcs -n -q --report=checkstyle | cs2pr
     - name: php-cs-fixer
-      run: php-cs-fixer fix --dry-run --diff
+      run: php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
   ts:
     name: TS Prettier
     runs-on: ubuntu-latest
