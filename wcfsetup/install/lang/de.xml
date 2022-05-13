@@ -959,9 +959,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.index.system.php.version"><![CDATA[PHP-Version]]></item>
-		<item name="wcf.acp.index.system.php.sslSupport"><![CDATA[Unterstützung von SSL-Verbindungen]]></item>
-		<item name="wcf.acp.index.system.php.sslSupport.available"><![CDATA[vorhanden]]></item>
-		<item name="wcf.acp.index.system.php.sslSupport.notAvailable"><![CDATA[nicht vorhanden]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
@@ -2110,7 +2107,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 	</category>
 	<category name="wcf.acp.pluginStore">
 		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Fehler {@$status}: Der Server konnte die Anfrage nicht erfolgreich bearbeiten.]]></item>
-		<item name="wcf.acp.pluginStore.api.noSSL"><![CDATA[Die Abfrage der erworbenen Produkte aus dem Plugin-Store kann nur über eine sichere Verbindung erfolgen.<br><br>{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} PHP-Version wurde ohne Unterstützung für OpenSSL kompiliert und kann daher keine sicheren Verbindungen aufbauen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter oder System-Administrator, um diesen Umstand zu korrigieren.]]></item>
 		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Autorisierung erforderlich]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} Lizenz- und Seriennummer einer {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Lizenzen auf WoltLab.com ein.]]></item>
@@ -2840,6 +2836,9 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Adresse]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[Die eingetragene Adresse ist ungültig.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.invalidScheme"><![CDATA[Die eingetragene Adresse muss das <kbd>https://</kbd>-Protokoll verwenden.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.nonStandardPort"><![CDATA[Die eingetragene Adresse darf keinen abweichenden Port verwenden.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.userinfo"><![CDATA[Die eingetragene Adresse darf keine Login-Informationen enthalten.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[Die offiziellen Paketserver sind bereits hinterlegt und korrekt konfiguriert.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[Dieser Paketserver ist bereits hinterlegt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>den bestehenden Paketserver bearbeiten</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
@@ -5565,6 +5564,10 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	</category>
 </import>
 <delete>
+	<item name="wcf.acp.pluginStore.api.noSSL"/>
+	<item name="wcf.acp.index.system.php.sslSupport"/>
+	<item name="wcf.acp.index.system.php.sslSupport.available"/>
+	<item name="wcf.acp.index.system.php.sslSupport.notAvailable"/>
 	<item name="wcf.acp.option.http_send_x_frame_options"/>
 	<item name="wcf.acp.option.http_send_x_frame_options.description"/>
 </delete>

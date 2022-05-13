@@ -2,7 +2,7 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\package\update\server\PackageUpdateServer;
+use Laminas\Diactoros\Uri;
 use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\form\AbstractForm;
@@ -10,7 +10,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
-use wcf\util\Url;
 
 /**
  * Shows the server add form.
@@ -89,12 +88,29 @@ class PackageUpdateServerAddForm extends AbstractForm
             throw new UserInputException('serverURL');
         }
 
-        if (!PackageUpdateServer::isValidServerURL($this->serverURL)) {
-            throw new UserInputException('serverURL', 'invalid');
-        }
+        try {
+            $url = new Uri($this->serverURL);
+            $this->serverURL = (string)$url;
 
-        if (\str_ends_with(\strtolower(Url::parse($this->serverURL)['host']), '.woltlab.com')) {
-            throw new UserInputException('serverURL', 'woltlab');
+            if (!$url->getHost()) {
+                throw new UserInputException('serverURL', 'invalid');
+            }
+            if ($url->getHost() !== 'localhost') {
+                if ($url->getScheme() !== 'https') {
+                    throw new UserInputException('serverURL', 'invalidScheme');
+                }
+                if ($url->getPort()) {
+                    throw new UserInputException('serverURL', 'nonStandardPort');
+                }
+            }
+            if ($url->getUserInfo()) {
+                throw new UserInputException('serverURL', 'userinfo');
+            }
+            if (\str_ends_with(\strtolower($url->getHost()), '.woltlab.com')) {
+                throw new UserInputException('serverURL', 'woltlab');
+            }
+        } catch (\InvalidArgumentException) {
+            throw new UserInputException('serverURL', 'invalid');
         }
 
         if (($duplicate = $this->findDuplicateServer())) {
