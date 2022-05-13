@@ -22,8 +22,6 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 \define('COOKIE_PATH', '');
 \define('COOKIE_DOMAIN', '');
 
-\define('HTTP_SEND_X_FRAME_OPTIONS', 1);
-
 \define('CACHE_SOURCE_TYPE', 'disk');
 \define('IMAGE_ADAPTER_TYPE', 'gd');
 \define('TIMEZONE', 'Europe/Berlin');
