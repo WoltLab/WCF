@@ -67,6 +67,8 @@ class ArticleImporter extends AbstractImporter
                 'imageID' => $imageID,
                 'teaserImageID' => $teaserImageID,
                 'tags' => (!empty($contentData['tags']) ? $contentData['tags'] : []),
+                'metaTitle' => (!empty($contentData['metaTitle']) ? $contentData['metaTitle'] : ''),
+                'metaDescription' => (!empty($contentData['metaDescription']) ? $contentData['metaDescription'] : ''),
             ];
         }
         if (empty($contents)) {
@@ -113,6 +115,8 @@ class ArticleImporter extends AbstractImporter
                 'content' => $contentData['content'],
                 'imageID' => $contentData['imageID'],
                 'teaserImageID' => $contentData['teaserImageID'],
+                'metaTitle' => $contentData['metaTitle'],
+                'metaDescription' => $contentData['metaDescription'],
             ]);
 
             // save tags
