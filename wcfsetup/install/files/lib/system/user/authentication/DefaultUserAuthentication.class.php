@@ -36,7 +36,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
      */
     public function loginManually(
         $username,
-        #[\wcf\SensitiveArgument()]
+        #[\SensitiveParameter]
         $password,
         $userClassname = User::class
     ) {
