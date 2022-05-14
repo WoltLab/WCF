@@ -58,11 +58,12 @@
 	
 	<!-- instructions elements -->
 	<xs:complexType name="instructions">
-		<xs:sequence>
+		<xs:choice maxOccurs="1">
+			<xs:element name="void" type="xs:string" fixed=""/>
 			<xs:sequence>
 				<xs:element name="instruction" maxOccurs="unbounded" type="instructionType"/>
 			</xs:sequence>
-		</xs:sequence>
+		</xs:choice>
 		<xs:attribute name="type" type="instructionTypes" use="required" />
 		<xs:attribute name="fromversion" type="woltlab_varchar" />
 	</xs:complexType>
