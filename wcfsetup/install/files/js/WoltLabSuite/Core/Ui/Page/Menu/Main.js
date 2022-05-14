@@ -87,6 +87,13 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                         button === null || button === void 0 ? void 0 : button.setAttribute("aria-expanded", "true");
                     }
                 }
+                // Expand the current item, if it contains menu items itself.
+                const button = activeMenuItem.nextElementSibling;
+                if (button) {
+                    button.setAttribute("aria-expanded", "true");
+                    const itemList = button.nextElementSibling;
+                    itemList.hidden = false;
+                }
             }
         }
         buildFooterMenu() {

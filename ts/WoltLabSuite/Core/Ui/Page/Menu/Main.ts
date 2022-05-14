@@ -116,6 +116,15 @@ export class PageMenuMain implements PageMenuProvider {
           button?.setAttribute("aria-expanded", "true");
         }
       }
+
+      // Expand the current item, if it contains menu items itself.
+      const button = activeMenuItem.nextElementSibling as HTMLElement | null;
+      if (button) {
+        button.setAttribute("aria-expanded", "true");
+
+        const itemList = button.nextElementSibling as HTMLElement;
+        itemList.hidden = false;
+      }
     }
   }
 
