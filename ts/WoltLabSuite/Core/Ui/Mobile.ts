@@ -266,6 +266,7 @@ function toggleMobileNavigation(message: HTMLElement, quickOptions: HTMLElement,
 
       return false;
     },
+    setReturnFocus: quickOptions,
   });
   _focusTrap.activate();
 }

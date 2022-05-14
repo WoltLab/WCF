@@ -232,6 +232,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
                 toggleMobileNavigation(message, quickOptions, navigation);
                 return false;
             },
+            setReturnFocus: quickOptions,
         });
         _focusTrap.activate();
     }
