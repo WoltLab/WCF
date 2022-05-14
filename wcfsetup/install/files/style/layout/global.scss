@@ -195,13 +195,12 @@ ol.nativeList {
 }
 
 a.externalURL::after {
-	content: $fa-var-external-link;
-	display: inline-block;
+	content: "\00a0#{$fa-var-external-link}";
 	font-family: FontAwesome !important;
 	font-size: 14px !important;
 	font-weight: normal !important;
 	font-style: normal !important;
-	margin-left: 4px;
+	line-height: 0;
 	vertical-align: -1px;
 }
 
