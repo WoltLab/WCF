@@ -153,7 +153,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                     'cronjobID' => $cronjob->cronjobID,
                     'execTime' => TIME_NOW,
                     'success' => $exception ? 0 : 1,
-                    'error' => $exception ? $exception->getMessage() : '',
+                    'error' => $exception ? \mb_substr($exception->getMessage(), 0, 65000) : '',
                 ]);
 
                 // calculate next exec-time
