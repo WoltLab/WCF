@@ -276,7 +276,7 @@ abstract class AbstractPage implements IPage
             $requestURI = (!empty($_SERVER['UNENCODED_URL'])) ? $_SERVER['UNENCODED_URL'] : $_SERVER['REQUEST_URI'];
 
             if (!StringUtil::isUTF8($requestURI)) {
-                $requestURI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $requestURI);
+                $requestURI = \mb_convert_encoding($requestURI, 'UTF-8', 'ISO-8859-1');
             }
 
             // some webservers output lower-case encoding (e.g. %c3 instead of %C3)

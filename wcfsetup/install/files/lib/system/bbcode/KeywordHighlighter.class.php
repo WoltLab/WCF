@@ -101,7 +101,7 @@ class KeywordHighlighter extends SingletonFactory
     {
         // convert encoding if necessary
         if (!StringUtil::isUTF8($keywordString)) {
-            $keywordString = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $keywordString);
+            $keywordString = \mb_convert_encoding($keywordString, 'UTF-8', 'ISO-8859-1');
         }
 
         // remove bad wildcards
