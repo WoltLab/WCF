@@ -14,12 +14,11 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class PageMenuContainer {
-        constructor(provider, orientation) {
+        constructor(provider) {
             this.container = document.createElement("div");
             this.content = document.createElement("div");
             this.focusTrap = undefined;
             this.provider = provider;
-            this.orientation = orientation;
             // Set the container to be initially hidden, otherwise the detection in
             // `toggle()` incorrectly assumes the container to be visible on first click.
             this.container.hidden = true;
@@ -67,7 +66,6 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
                 return;
             }
             this.container.classList.add("pageMenuContainer");
-            this.container.dataset.orientation = this.orientation;
             this.container.hidden = true;
             this.container.addEventListener("click", (event) => {
                 if (event.target === this.container) {

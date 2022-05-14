@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         constructor(menuItemProvider) {
             this.mainMenu = document.querySelector(".mainMenu");
             this.menuItemProvider = menuItemProvider;
-            this.container = new Container_1.default(this, "left" /* Left */);
+            this.container = new Container_1.default(this);
             this.callbackOpen = (event) => {
                 event.preventDefault();
                 event.stopPropagation();

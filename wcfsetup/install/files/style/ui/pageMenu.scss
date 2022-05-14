@@ -269,12 +269,9 @@
 		width: 400px;
 	}
 
-	.pageMenuContainer[data-orientation="right"] .pageMenuContent {
-		margin-left: auto;
-	}
-
 	.pageMenuContent {
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
+		margin-left: auto;
 		width: 400px;
 	}
 }
