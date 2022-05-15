@@ -783,7 +783,18 @@ const UiDialog = {
       throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
     }
 
-    data.focusTrap.deactivate();
+    try {
+      data.focusTrap.deactivate();
+    } catch (e) {
+      // Suppress error messages if the focus could not be returned
+      // to the source element because it is no longer available or
+      // unknown.
+      const ignoreMessage =
+        "Your focus-trap must have at least one container with at least one tabbable node in it at all times";
+      if (e.message !== ignoreMessage) {
+        throw e;
+      }
+    }
 
     data.dialog.setAttribute("aria-hidden", "true");
 
