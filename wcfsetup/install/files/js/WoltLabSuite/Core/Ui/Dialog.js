@@ -341,7 +341,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                             ? entry.contentBoxSize[0]
                             : entry.contentBoxSize;
                         const offset = Math.floor(contentBoxSize.inlineSize / 2);
-                        dialog.style.setProperty("transform", `translateX(-${offset}px)`);
+                        dialog.style.setProperty("--translate-x", `-${offset}px`);
                     }
                 }
             });
