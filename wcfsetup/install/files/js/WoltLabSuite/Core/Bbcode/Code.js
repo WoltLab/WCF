@@ -30,6 +30,7 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             this.codeContainer = this.container.querySelector(".codeBoxCode > code");
             this.language = (_a = Array.from(this.codeContainer.classList)
                 .find((klass) => /^language-([a-z0-9_-]+)$/.test(klass))) === null || _a === void 0 ? void 0 : _a.replace(/^language-/, "");
+            this.calculateLineNumberWidth();
         }
         static processAll() {
             document.querySelectorAll(".codeBox:not([data-processed])").forEach((codeBox) => {
@@ -100,6 +101,23 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             }
             this.container.classList.remove("highlighting");
             this.container.classList.add("highlighted");
+        }
+        calculateLineNumberWidth() {
+            if (!this.codeContainer) {
+                return;
+            }
+            let maxLength = 0;
+            this.codeContainer.querySelectorAll(".lineAnchor").forEach((anchor) => {
+                const length = anchor.title.length;
+                if (length > maxLength) {
+                    maxLength = length;
+                }
+            });
+            // Clamp the max length to 6 (up to line 999,999) to prevent layout issues.
+            if (maxLength > 6) {
+                maxLength = 6;
+            }
+            this.container.style.setProperty("--line-number-width", maxLength.toString());
         }
     }
     Code.chunkSize = 50;
