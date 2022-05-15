@@ -147,12 +147,16 @@
 				}
 
 				> span {
-					white-space: pre-wrap;
-					word-break: break-all;
+					white-space: pre;
 
 					/* Prevent empty lines from collapsing. */
 					&:empty {
 						display: inline-block;
+					}
+
+					@include screen-md-up {
+						white-space: pre-wrap;
+						word-break: break-all;
 					}
 				}
 
