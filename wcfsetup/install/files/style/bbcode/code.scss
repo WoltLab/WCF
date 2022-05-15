@@ -99,7 +99,7 @@
 
 		> .codeBoxHeadline {
 			flex: 1 1 auto;
-			padding: 0 10px;
+			margin-right: 10px;
 
 			@include wcfFontHeadline;
 
@@ -111,6 +111,10 @@
 
 		.icon {
 			flex: 0 0 auto;
+
+			&:not(:last-child) {
+				margin-right: 10px;
+			}
 		}
 	}
 
