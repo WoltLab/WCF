@@ -37,8 +37,6 @@ class Code {
     this.language = Array.from(this.codeContainer.classList)
       .find((klass) => /^language-([a-z0-9_-]+)$/.test(klass))
       ?.replace(/^language-/, "");
-
-    this.calculateLineNumberWidth();
   }
 
   public static processAll(): void {
@@ -133,27 +131,6 @@ class Code {
 
     this.container.classList.remove("highlighting");
     this.container.classList.add("highlighted");
-  }
-
-  private calculateLineNumberWidth(): void {
-    if (!this.codeContainer) {
-      return;
-    }
-
-    let maxLength = 0;
-    this.codeContainer.querySelectorAll(".lineAnchor").forEach((anchor: HTMLAnchorElement) => {
-      const length = anchor.title.length;
-      if (length > maxLength) {
-        maxLength = length;
-      }
-    });
-
-    // Clamp the max length to 6 (up to line 999,999) to prevent layout issues.
-    if (maxLength > 6) {
-      maxLength = 6;
-    }
-
-    this.container.style.setProperty("--line-number-width", maxLength.toString());
   }
 }
 

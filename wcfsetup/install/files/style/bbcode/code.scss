@@ -120,7 +120,7 @@
 
 	.codeBoxCode {
 		position: relative;
-		padding-left: calc((var(--line-number-width, 6) + 1) * 1ch);
+		padding-left: 7ch;
 
 		> code {
 			display: block;
@@ -132,13 +132,14 @@
 				display: block;
 
 				> a {
-					margin-left: calc((var(--line-number-width, 6) + 1) * -1ch);
+					margin-left: -7ch;
 					overflow: hidden;
 					position: absolute;
 					text-align: right;
 					text-overflow: ellipsis;
 					white-space: nowrap;
-					width: calc(var(--line-number-width, 6) * 1ch);
+					/* No one has line numbers greater than 999999 */
+					width: 6ch;
 
 					&::before {
 						content: attr(title);
