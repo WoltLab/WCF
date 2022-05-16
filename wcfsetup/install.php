@@ -49,11 +49,8 @@ function sanitizeStacktrace(\Throwable $e, bool $ignorePaths = false) {
 				foreach ($parameters as $parameter) {
 					$isSensitive = false;
 					if (
-						\method_exists($parameter, 'getAttributes')
-						&& (
-							!empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
-							|| !empty($parameter->getAttributes(\SensitiveParameter::class))
-						)
+						!empty($parameter->getAttributes(\wcf\SensitiveArgument::class))
+						|| !empty($parameter->getAttributes(\SensitiveParameter::class))
 					) {
 						$isSensitive = true;
 					}
