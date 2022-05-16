@@ -24,13 +24,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                         noRedirect: 1,
                     },
                     silent: true,
-                    failure: (_data, _responseText, xhr) => {
-                        if (xhr.status === 204) {
-                            this.showCompletedDialog();
-                            return false;
-                        }
-                        return true;
-                    },
+                    success: () => this.showCompletedDialog(),
                 });
             }
             else {
