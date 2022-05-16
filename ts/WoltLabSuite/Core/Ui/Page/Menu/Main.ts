@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Ui/Page/Menu/Main
  */
 
-import PageMenuContainer, { Orientation } from "./Container";
+import PageMenuContainer from "./Container";
 import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
 import DomUtil from "../../../Dom/Util";
@@ -25,7 +25,7 @@ export class PageMenuMain implements PageMenuProvider {
     this.mainMenu = document.querySelector(".mainMenu")!;
     this.menuItemProvider = menuItemProvider;
 
-    this.container = new PageMenuContainer(this, Orientation.Left);
+    this.container = new PageMenuContainer(this);
 
     this.callbackOpen = (event) => {
       event.preventDefault();
@@ -115,6 +115,15 @@ export class PageMenuMain implements PageMenuProvider {
           const button = element.previousElementSibling;
           button?.setAttribute("aria-expanded", "true");
         }
+      }
+
+      // Expand the current item, if it contains menu items itself.
+      const button = activeMenuItem.nextElementSibling as HTMLElement | null;
+      if (button) {
+        button.setAttribute("aria-expanded", "true");
+
+        const itemList = button.nextElementSibling as HTMLElement;
+        itemList.hidden = false;
       }
     }
   }

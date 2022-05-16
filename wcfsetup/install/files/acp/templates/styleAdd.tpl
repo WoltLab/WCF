@@ -1107,7 +1107,7 @@
 							</dd>
 						</dl>
 					</section>
-					{include file='codemirror' codemirrorMode='sass' codemirrorSelector='#individualScssCustom, #overrideScssCustom'}
+					{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #overrideScssCustom'}
 					
 					{event name='syntaxFieldsetsCustom'}
 				</div>
@@ -1156,7 +1156,7 @@
 					</dd>
 				</dl>
 			</section>
-			{include file='codemirror' codemirrorMode='sass' codemirrorSelector='#individualScss, #overrideScss' editable=$isTainted}
+			{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #overrideScss' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
 			

@@ -54,9 +54,6 @@
 	}
 
 	@include screen-sm-down {
-		/* The iOS bottom touch zone is approximately 30px high. Any touches within will show the
-		   menu instead of registering any touch on a button. */
-		bottom: 30px;
 		transition: bottom 0.12s linear;
 
 		&:not(.pageActionHasContextButtons) {

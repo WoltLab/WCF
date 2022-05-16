@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         constructor(menuItemProvider) {
             this.mainMenu = document.querySelector(".mainMenu");
             this.menuItemProvider = menuItemProvider;
-            this.container = new Container_1.default(this, "left" /* Left */);
+            this.container = new Container_1.default(this);
             this.callbackOpen = (event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -86,6 +86,13 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                         const button = element.previousElementSibling;
                         button === null || button === void 0 ? void 0 : button.setAttribute("aria-expanded", "true");
                     }
+                }
+                // Expand the current item, if it contains menu items itself.
+                const button = activeMenuItem.nextElementSibling;
+                if (button) {
+                    button.setAttribute("aria-expanded", "true");
+                    const itemList = button.nextElementSibling;
+                    itemList.hidden = false;
                 }
             }
         }

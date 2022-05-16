@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.tabPanels = new Map();
             this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
-            this.container = new Container_1.default(this, "right" /* Right */);
+            this.container = new Container_1.default(this);
             const isReady = new Promise((resolve) => {
                 if (document.readyState === "complete") {
                     resolve();

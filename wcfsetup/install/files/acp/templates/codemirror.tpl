@@ -9,6 +9,8 @@
 			{elseif $codemirrorMode === 'text/x-less'}
 				{* deprecated, legacy support *}
 				'codemirror/mode/css/css',
+			{elseif $codemirrorMode === 'text/x-scss'}
+				'codemirror/mode/css/css',
 			{else}
 				'codemirror/mode/{@$codemirrorMode}/{@$codemirrorMode}',
 			{/if}

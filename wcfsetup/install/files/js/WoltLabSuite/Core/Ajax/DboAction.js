@@ -112,6 +112,12 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
                     throw error;
                 }
                 else {
+                    if (error instanceof DOMException && error.name === "AbortError") {
+                        // `fetch()` will reject the promise with an `AbortError` when
+                        // the request is either explicitly (through an `AbortController`)
+                        // or implicitly (page navigation) aborted.
+                        return;
+                    }
                     if (!ignoreConnectionErrors) {
                         // Re-package the error for use in our global "unhandledrejection" handler.
                         throw new Error_1.ConnectionError(error);

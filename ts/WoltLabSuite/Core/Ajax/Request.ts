@@ -140,11 +140,16 @@ class AjaxRequest {
     xhr.onload = () => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-          if (options.responseType && xhr.getResponseHeader("Content-Type")!.indexOf(options.responseType) !== 0) {
-            // request succeeded but invalid response type
-            this._failure(xhr, options);
-          } else {
+          if (xhr.status === 204) {
+            // HTTP 204 does not contain a body, the `content-type` is undefined.
             this._success(xhr, options);
+          } else {
+            if (options.responseType && this.getContentType(xhr) !== options.responseType) {
+              // request succeeded but invalid response type
+              this._failure(xhr, options);
+            } else {
+              this._success(xhr, options);
+            }
           }
         } else {
           this._failure(xhr, options);
@@ -229,7 +234,7 @@ class AjaxRequest {
 
     if (typeof options.success === "function") {
       let data: ResponseData | null = null;
-      if (xhr.getResponseHeader("Content-Type")!.split(";", 1)[0].trim() === "application/json") {
+      if (this.getContentType(xhr) === "application/json") {
         try {
           data = JSON.parse(xhr.responseText) as ResponseData;
         } catch (e) {
@@ -250,7 +255,7 @@ class AjaxRequest {
         }
       }
 
-      options.success(data!, xhr.responseText, xhr, options.data!);
+      options.success(data || {}, xhr.responseText, xhr, options.data!);
     }
 
     this._finalize(options);
@@ -363,6 +368,15 @@ class AjaxRequest {
         link.href = document.location.toString().replace(/#.*/, "") + href;
       }
     });
+  }
+
+  private getContentType(xhr: XMLHttpRequest): string | null {
+    const contentType = xhr.getResponseHeader("content-type");
+    if (contentType === null) {
+      return null;
+    }
+
+    return contentType.split(";", 1)[0].trim();
   }
 }
 

@@ -112,12 +112,18 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             xhr.onload = () => {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-                        if (options.responseType && xhr.getResponseHeader("Content-Type").indexOf(options.responseType) !== 0) {
-                            // request succeeded but invalid response type
-                            this._failure(xhr, options);
+                        if (xhr.status === 204) {
+                            // HTTP 204 does not contain a body, the `content-type` is undefined.
+                            this._success(xhr, options);
                         }
                         else {
-                            this._success(xhr, options);
+                            if (options.responseType && this.getContentType(xhr) !== options.responseType) {
+                                // request succeeded but invalid response type
+                                this._failure(xhr, options);
+                            }
+                            else {
+                                this._success(xhr, options);
+                            }
                         }
                     }
                     else {
@@ -191,7 +197,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             }
             if (typeof options.success === "function") {
                 let data = null;
-                if (xhr.getResponseHeader("Content-Type").split(";", 1)[0].trim() === "application/json") {
+                if (this.getContentType(xhr) === "application/json") {
                     try {
                         data = JSON.parse(xhr.responseText);
                     }
@@ -209,7 +215,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                         void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((backgroundQueue) => backgroundQueue.invoke());
                     }
                 }
-                options.success(data, xhr.responseText, xhr, options.data);
+                options.success(data || {}, xhr.responseText, xhr, options.data);
             }
             this._finalize(options);
         }
@@ -304,6 +310,13 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     link.href = document.location.toString().replace(/#.*/, "") + href;
                 }
             });
+        }
+        getContentType(xhr) {
+            const contentType = xhr.getResponseHeader("content-type");
+            if (contentType === null) {
+                return null;
+            }
+            return contentType.split(";", 1)[0].trim();
         }
     }
     Core.enableLegacyInheritance(AjaxRequest);
