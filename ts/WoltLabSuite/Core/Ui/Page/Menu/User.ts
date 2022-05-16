@@ -8,7 +8,7 @@
  * @woltlabExcludeBundle tiny
  */
 
-import PageMenuContainer, { Orientation } from "./Container";
+import PageMenuContainer from "./Container";
 import { PageMenuProvider } from "./Provider";
 import * as Language from "../../../Language";
 import { getUserMenuProviders } from "../../User/Menu/Manager";
@@ -54,7 +54,7 @@ export class PageMenuUser implements PageMenuProvider {
   constructor() {
     this.userMenu = document.querySelector(".userPanel")!;
 
-    this.container = new PageMenuContainer(this, Orientation.Right);
+    this.container = new PageMenuContainer(this);
 
     const isReady = new Promise<void>((resolve) => {
       if (document.readyState === "complete") {

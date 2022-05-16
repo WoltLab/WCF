@@ -14,21 +14,14 @@ import { pageOverlayClose, pageOverlayOpen, scrollDisable, scrollEnable } from "
 import UiCloseOverlay from "../../CloseOverlay";
 import DomUtil from "../../../Dom/Util";
 
-export const enum Orientation {
-  Left = "left",
-  Right = "right",
-}
-
 export class PageMenuContainer {
   private readonly container = document.createElement("div");
   private readonly content = document.createElement("div");
   private focusTrap?: FocusTrap = undefined;
-  private readonly orientation: Orientation;
   private readonly provider: PageMenuProvider;
 
-  constructor(provider: PageMenuProvider, orientation: Orientation) {
+  constructor(provider: PageMenuProvider) {
     this.provider = provider;
-    this.orientation = orientation;
 
     // Set the container to be initially hidden, otherwise the detection in
     // `toggle()` incorrectly assumes the container to be visible on first click.
@@ -92,7 +85,6 @@ export class PageMenuContainer {
     }
 
     this.container.classList.add("pageMenuContainer");
-    this.container.dataset.orientation = this.orientation;
     this.container.hidden = true;
     this.container.addEventListener("click", (event) => {
       if (event.target === this.container) {

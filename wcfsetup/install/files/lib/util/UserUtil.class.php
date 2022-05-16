@@ -106,7 +106,7 @@ final class UserUtil
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
             if (!StringUtil::isUTF8($userAgent)) {
-                $userAgent = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $userAgent);
+                $userAgent = \mb_convert_encoding($userAgent, 'UTF-8', 'ISO-8859-1');
             }
 
             return \mb_substr($userAgent, 0, 191);
@@ -247,7 +247,7 @@ final class UserUtil
 
         // fix encoding
         if (!StringUtil::isUTF8($REQUEST_URI)) {
-            $REQUEST_URI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $REQUEST_URI);
+            $REQUEST_URI = \mb_convert_encoding($REQUEST_URI, 'UTF-8', 'ISO-8859-1');
         }
 
         return \mb_substr(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);

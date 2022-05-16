@@ -525,23 +525,10 @@ final class StringUtil
     }
 
     /**
-     * Converts a string to requested character encoding.
-     * @param string $inCharset
-     * @param string $outCharset
-     * @param string $string
-     * @return  string      converted string
-     * @see     mb_convert_encoding()
-     *
+     * @deprecated 5.6 Use `\mb_convert_encoding()` directly.
      */
     public static function convertEncoding($inCharset, $outCharset, $string)
     {
-        if ($inCharset == 'ISO-8859-1' && $outCharset == 'UTF-8') {
-            return \utf8_encode($string);
-        }
-        if ($inCharset == 'UTF-8' && $outCharset == 'ISO-8859-1') {
-            return \utf8_decode($string);
-        }
-
         return \mb_convert_encoding($string, $outCharset, $inCharset);
     }
 

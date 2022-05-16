@@ -456,12 +456,6 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<enableoptions>enable_desktop_notifications</enableoptions>
-			</option>
-			<option name="enable_desktop_notifications">
-				<categoryname>general.page</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="page_logo_link_to_app_default">
 				<categoryname>general.page</categoryname>

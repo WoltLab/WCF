@@ -482,11 +482,15 @@ class WCF
         // The captcha option related to the removed SearchForm was removed in 5.5.
         \define('SEARCH_USE_CAPTCHA', 0);
 
-        // Multi-domain setups were removed in 5.6.
-        \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
+        // The prompt for desktop notifications is no longer obtrusive since 5.5.
+        // https://github.com/WoltLab/WCF/issues/4806
+        \define('ENABLE_DESKTOP_NOTIFICATIONS', 1);
 
         // Disabling X-Frame-Options is no longer possible since 5.6.
         \define('HTTP_SEND_X_FRAME_OPTIONS', 1);
+
+        // Multi-domain setups were removed in 5.6.
+        \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
     }
 
     /**
@@ -1139,10 +1143,6 @@ class WCF
      */
     public function useDesktopNotifications()
     {
-        if (!ENABLE_DESKTOP_NOTIFICATIONS) {
-            return false;
-        }
-
         return true;
     }
 

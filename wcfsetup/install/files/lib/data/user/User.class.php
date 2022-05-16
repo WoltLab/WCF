@@ -154,7 +154,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @return  bool        password correct
      */
     public function checkPassword(
-        #[\wcf\SensitiveArgument()]
+        #[\SensitiveParameter]
         $password
     ) {
         $isValid = false;

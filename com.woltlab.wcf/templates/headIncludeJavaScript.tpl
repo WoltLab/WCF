@@ -96,6 +96,7 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.global.decimalPoint': '{jslang}wcf.global.decimalPoint{/jslang}',
 			'wcf.global.error.ajax.network': '{jslang __literal=true}wcf.global.error.ajax.network{/jslang}',
 			'wcf.global.error.timeout': '{jslang}wcf.global.error.timeout{/jslang}',
+			'wcf.global.error.title': '{jslang}wcf.global.error.title{/jslang}'
 			'wcf.global.form.error.empty': '{jslang}wcf.global.form.error.empty{/jslang}',
 			'wcf.global.form.error.greaterThan': '{jslang __literal=true}wcf.global.form.error.greaterThan{/jslang}',
 			'wcf.global.form.error.lessThan': '{jslang __literal=true}wcf.global.form.error.lessThan{/jslang}',

@@ -8,7 +8,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\io\HttpFactory;
 use wcf\system\payment\type\IPaymentType;
-use wcf\util\StringUtil;
 
 /**
  * Handles Paypal callbacks.
@@ -69,7 +68,7 @@ class PaypalCallbackAction extends AbstractAction
             // fix encoding
             if (!empty($_POST['charset']) && \strtoupper($_POST['charset']) != 'UTF-8') {
                 foreach ($_POST as &$value) {
-                    $value = StringUtil::convertEncoding(\strtoupper($_POST['charset']), 'UTF-8', $value);
+                    $value = \mb_convert_encoding($value, 'UTF-8', \strtoupper($_POST['charset']));
                 }
             }
 

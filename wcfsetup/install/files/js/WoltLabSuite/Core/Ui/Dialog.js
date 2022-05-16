@@ -341,7 +341,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                             ? entry.contentBoxSize[0]
                             : entry.contentBoxSize;
                         const offset = Math.floor(contentBoxSize.inlineSize / 2);
-                        dialog.style.setProperty("transform", `translateX(-${offset}px)`);
+                        dialog.style.setProperty("--translate-x", `-${offset}px`);
                     }
                 }
             });
@@ -644,7 +644,20 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             if (data === undefined) {
                 throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
             }
-            data.focusTrap.deactivate();
+            try {
+                data.focusTrap.deactivate();
+            }
+            catch (e) {
+                // The focus trap is unable to return the focus if
+                // the origin is no longer focusable. This can happen
+                // when the source is removed or is not longer visible,
+                // the latter typically caused by collapsing menus
+                // on mobile devices.
+                const ignoreErrorMessage = "Your focus-trap must have at least one container with at least one tabbable node in it at all times";
+                if (e.message !== ignoreErrorMessage) {
+                    throw e;
+                }
+            }
             data.dialog.setAttribute("aria-hidden", "true");
             // Move the keyboard focus away from a now hidden element.
             const activeElement = document.activeElement;

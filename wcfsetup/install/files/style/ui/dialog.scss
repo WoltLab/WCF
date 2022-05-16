@@ -53,9 +53,6 @@
 		position: fixed;
 		right: 0 !important;
 		top: 0 !important;
-
-		// Remove the offsets for the dialog position.
-		transform: none !important;
 	}
 
 	@include screen-sm-up {
@@ -76,6 +73,7 @@
 		// this causes a blurry text rendering in Chromium.
 		// The offset is calculated using a `ResizeObserver`.
 		left: 50%;
+		transform: translateX(var(--translate-x, 0));
 
 		&[aria-hidden="false"] {
 			animation: wcfDialog 0.3s;
