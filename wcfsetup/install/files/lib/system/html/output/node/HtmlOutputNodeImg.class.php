@@ -207,11 +207,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
 
         if ($matcher === null) {
             $whitelist = \explode("\n", StringUtil::unifyNewlines(IMAGE_PROXY_HOST_WHITELIST));
-
-            foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-                $host = \mb_strtolower($application->domainName);
-                $whitelist[] = $host;
-            }
+            $whitelist[] = \mb_strtolower(ApplicationHandler::getInstance()->getDomainName());
 
             $matcher = Url::getHostnameMatcher($whitelist);
         }
@@ -244,11 +240,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
         static $matcher = null;
         if ($matcher === null) {
             $whitelist = \explode("\n", StringUtil::unifyNewlines(IMAGE_EXTERNAL_SOURCE_WHITELIST));
-
-            foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-                $host = \mb_strtolower($application->domainName);
-                $whitelist[] = $host;
-            }
+            $whitelist[] = \mb_strtolower(ApplicationHandler::getInstance()->getDomainName());
 
             $matcher = Url::getHostnameMatcher($whitelist);
         }

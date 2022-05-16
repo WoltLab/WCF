@@ -126,7 +126,7 @@ class Email
     public static function getHost()
     {
         if (self::$host === null) {
-            self::$host = ApplicationHandler::getInstance()->getApplication('wcf')->domainName;
+            self::$host = ApplicationHandler::getInstance()->getDomainName();
         }
 
         return self::$host;
@@ -842,8 +842,7 @@ class Email
     %s
     </fieldset>
 </fieldset>
-EOT
-                ,
+EOT,
                 StringUtil::encodeHTML($recipient['mailbox']),
                 StringUtil::encodeHTML($this->getHeaderString()),
                 $dumpBody($this->body)

@@ -205,14 +205,12 @@ class ApplicationHandler extends SingletonFactory
     public function isInternalURL($url)
     {
         if (empty($this->pageURLs)) {
-            foreach ($this->getApplications() as $application) {
-                $this->pageURLs[] = $application->domainName;
-            }
+            $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
 
-            $this->pageURLs = \array_unique(\array_merge(
-                $this->pageURLs,
-                ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)))
-            ));
+            $this->pageURLs = \array_unique([
+                $this->getDomainName(),
+                ...$internalHostnames
+            ]);
         }
 
         $host = Url::parse($url)['host'];
@@ -243,6 +241,14 @@ class ApplicationHandler extends SingletonFactory
      */
     public function rebuildActiveApplication()
     {
+    }
+
+    /**
+     * @since 5.6
+     */
+    public function getDomainName(): string
+    {
+        return $this->getApplicationByID(1)->domainName;
     }
 
     /**

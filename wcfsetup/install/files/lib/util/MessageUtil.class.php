@@ -185,16 +185,7 @@ class MessageUtil
      */
     public static function getQuotedUsers(HtmlInputProcessor $htmlInputProcessor)
     {
-        static $ownHosts;
-        if ($ownHosts === null) {
-            $ownHosts = [];
-            foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-                if (!\in_array($application->domainName, $ownHosts)) {
-                    $ownHosts[] = $application->domainName;
-                }
-            }
-        }
-
+        $ownHost = ApplicationHandler::getInstance()->getDomainName();
         $usernames = [];
 
         $elements = $htmlInputProcessor
@@ -208,7 +199,7 @@ class MessageUtil
                 // check if there is a link set and if it points to any of the apps
                 $link = $element->getAttribute('data-link');
                 $host = ($link) ? Url::parse($link)['host'] : '';
-                if ($host && !\in_array($host, $ownHosts)) {
+                if ($host === $ownHost) {
                     // links mismatch, do not treat this occurrence as a username
                     continue;
                 }
