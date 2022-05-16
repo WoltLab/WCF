@@ -265,7 +265,6 @@ window.addEventListener('pageshow', function(event) {
 		{if ENABLE_POLLING && $__wcf->user->userID}
 			require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
 				NotificationHandler.setup({
-					enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
 					icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
 				});
 			});

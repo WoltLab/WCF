@@ -1137,9 +1137,7 @@ class WCF
     }
 
     /**
-     * Returns true if the desktop notifications should be enabled.
-     *
-     * @return      bool
+     * @deprecated 5.6 This method always returns true.
      */
     public function useDesktopNotifications()
     {
