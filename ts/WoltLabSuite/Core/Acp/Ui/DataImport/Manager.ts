@@ -10,7 +10,7 @@
 import * as Ajax from "../../../Ajax";
 import * as Core from "../../../Core";
 import * as Language from "../../../Language";
-import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../../Ajax/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
 import { AjaxResponse } from "../../../Controller/Clipboard/Data";
 import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import DomUtil from "../../../Dom/Util";
@@ -38,15 +38,7 @@ export class AcpUiDataImportManager implements AjaxCallbackObject {
           noRedirect: 1,
         },
         silent: true,
-        failure: (_data: ResponseData, _responseText: string, xhr: XMLHttpRequest) => {
-          if (xhr.status === 204) {
-            this.showCompletedDialog();
-
-            return false;
-          }
-
-          return true;
-        },
+        success: () => this.showCompletedDialog(),
       });
     } else {
       this.run(Language.get("wcf.acp.dataImport.data." + this.queue[this.index]), this.queue[this.index]);
