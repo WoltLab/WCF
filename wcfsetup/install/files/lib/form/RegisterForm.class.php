@@ -216,7 +216,9 @@ class RegisterForm extends UserAddForm
                 UserUtil::getIpAddress()
             );
             if (!empty($this->blacklistMatches) && BLACKLIST_SFS_ACTION === 'block') {
-                throw new NamedUserException('wcf.user.register.error.blacklistMatches');
+                throw new NamedUserException(
+                    WCF::getLanguage()->getDynamicVariable('wcf.user.register.error.blacklistMatches')
+                );
             }
         }
     }
