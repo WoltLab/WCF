@@ -2622,10 +2622,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
 		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Apps]]></item>
-		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust both domain and path for each app listed below to match the changed settings. The domain must be provided without an explicit protocol such as “http://” or “https://”.]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust the path for each app listed below to match the updated settings.]]></item>
 		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Changes to the configuration require valid credentials of an administrator with the permissions to manage installed apps.]]></item>
 		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
+		<item name="wcf.acp.rescueMode.domain"><![CDATA[Domain]]></item>
+		<item name="wcf.acp.rescueMode.domain.description"><![CDATA[The domain that is used to access your site, please do not specify a protocol (e.g. “https://”) or path.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed apps.]]></item>
 	</category>
 	<category name="wcf.acp.rewrite">
