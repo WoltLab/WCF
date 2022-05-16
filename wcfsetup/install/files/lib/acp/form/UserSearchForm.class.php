@@ -115,6 +115,11 @@ class UserSearchForm extends UserOptionListForm
 
                 $this->columns = $defaultColumns;
 
+                // add email column for authorized users
+                if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+                    \array_unshift($this->columns, 'email');
+                }
+
                 // disable check for security token for GET requests
                 $_POST['t'] = WCF::getSession()->getSecurityToken();
 
