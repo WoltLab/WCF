@@ -311,7 +311,7 @@ class Tar implements IArchive
         $checksum = 0;
         // First part of the header
         for ($i = 0; $i < 148; $i++) {
-            $checksum += \ord(\substr($binaryData, $i, 1));
+            $checksum += \ord($binaryData[$i]);
         }
         // Calculate the checksum
         // Ignore the checksum value and replace it by ' ' (space)
@@ -320,7 +320,7 @@ class Tar implements IArchive
         }
         // Last part of the header
         for ($i = 156; $i < 512; $i++) {
-            $checksum += \ord(\substr($binaryData, $i, 1));
+            $checksum += \ord($binaryData[$i]);
         }
 
         // extract values
