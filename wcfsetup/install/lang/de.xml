@@ -282,7 +282,7 @@
 		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
 		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
-		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached (Obsolet)]]></item>
+		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached (veraltet / nicht empfohlen)]]></item>
 		<item name="wcf.acp.cache.source.type.RedisCacheSource"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
@@ -1268,12 +1268,12 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached (Obsolet)]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached (veraltet / nicht empfohlen)]]></item>
 		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (Obsolet)]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (veraltet / nicht empfohlen)]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Die Unterstützung für Memcached ist veraltet und wird in einer zukünftigen Version von WoltLab Suite™ entfernt. Benutzern von Memcached wird empfohlen auf Redis zu wechseln.]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="https://redis.io/" class="externalURL">redis.io</a>.]]></item>
@@ -1455,7 +1455,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Authentifizierung über Drittanbieter]]></item>
-		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare (Obsolet)]]></item>
+		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare (veraltet / nicht empfohlen)]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Aus Datenschutzgründen ist die Verwendung von Gravataren nicht empfohlen. Sie wird in einer zukünftigen Version entfernt.]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[„Benutzer online“-Anzeige]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[Benutzerränge]]></item>
@@ -1752,7 +1752,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Blockieren]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
-		<item name="wcf.acp.option.module_amp"><![CDATA[AMP (Obsolet)]]></item>
+		<item name="wcf.acp.option.module_amp"><![CDATA[AMP (veraltet / nicht empfohlen)]]></item>
 		<item name="wcf.acp.option.module_amp.description"><![CDATA[Aus Datenschutzgründen ist die Verwendung von <abbr title="Accelerated Mobile Pages">AMP</abbr> nicht empfohlen. Die Funktion wird in einer zukünftigen Version entfernt.]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzeigen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
