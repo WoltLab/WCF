@@ -2,8 +2,6 @@
 
 namespace wcf\system;
 
-use wcf\data\menu\Menu;
-use wcf\data\menu\MenuCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
@@ -75,17 +73,6 @@ class WCFACP extends WCF
         $this->initAuth();
 
         EventHandler::getInstance()->fireAction($this, 'initialized');
-    }
-
-    /**
-     * Returns the main menu object.
-     *
-     * @return  Menu|null   menu object
-     * @since   3.0
-     */
-    public function getFrontendMenu()
-    {
-        return MenuCache::getInstance()->getMainMenu();
     }
 
     /**
@@ -221,7 +208,8 @@ class WCFACP extends WCF
                 // thus we are unable to use the trait directly.
                 //
                 // Workaround this issue by using an anonymous class.
-                (new class {
+                (new class
+                {
                     use TMultifactorRequirementEnforcer {
                         enforceMultifactorAuthentication as public enforce;
                     }
