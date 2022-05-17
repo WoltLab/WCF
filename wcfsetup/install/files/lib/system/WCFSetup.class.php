@@ -179,7 +179,6 @@ class WCFSetup extends WCF
         self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
         self::getTPL()->setCompileDir(TMP_DIR);
         self::getTPL()->addApplication('wcf', TMP_DIR);
-        self::getTPL()->registerPrefilter(['lang']);
         self::getTPL()->assign([
             '__wcf' => $this,
             'tmpFilePrefix' => TMP_FILE_PREFIX,
