@@ -1210,7 +1210,7 @@ class File {
  *
  * @author	Marcel Werk
  */
-class GZipFile extends File {
+final class GZipFile extends File {
 	/**
 	 * @deprecated 5.5 The bug this worked around is fixed.
 	 */

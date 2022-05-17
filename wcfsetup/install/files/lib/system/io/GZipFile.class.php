@@ -15,7 +15,7 @@ use wcf\system\exception\SystemException;
  * @method  resource    open($mode, $use_include_path = 0)
  * @method  bool        rewind()
  */
-class GZipFile extends File
+final class GZipFile extends File
 {
     /**
      * @deprecated 5.5 The bug this worked around is fixed.
