@@ -15,13 +15,8 @@ use wcf\system\exception\SystemException;
  * @method  resource    open($mode, $use_include_path = 0)
  * @method  bool        rewind()
  */
-class GZipFile extends File
+final class GZipFile extends File
 {
-    /**
-     * @deprecated 5.5 The bug this worked around is fixed.
-     */
-    protected static $gzopen64 = false;
-
     /** @noinspection PhpMissingParentConstructorInspection */
 
     /**
@@ -61,6 +56,30 @@ class GZipFile extends File
         } else {
             throw new SystemException('Can not call method ' . $function);
         }
+    }
+
+    /**
+     * @see \gzread()
+     */
+    public function read(int $length): string|false
+    {
+        return \gzread($this->resource, $length);
+    }
+
+    /**
+     * @see \gztell()
+     */
+    public function tell(): int|false
+    {
+        return \gztell($this->resource);
+    }
+
+    /**
+     * @see \gzseek()
+     */
+    public function seek(int $offset, int $whence = \SEEK_SET): int
+    {
+        return \gzseek($this->resource, $offset, $whence);
     }
 
     /**
