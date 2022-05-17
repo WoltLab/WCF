@@ -456,12 +456,6 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<enableoptions>desktop_notification_package_id</enableoptions>
-			</option>
-			<option name="desktop_notification_package_id">
-				<categoryname>general.page</categoryname>
-				<optiontype>desktopNotificationApplicationSelect</optiontype>
-				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="page_logo_link_to_app_default">
 				<categoryname>general.page</categoryname>
@@ -1654,6 +1648,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
+		<option name="desktop_notification_package_id"/>
 		<option name="http_send_x_frame_options"/>
 	</delete>
 </data>

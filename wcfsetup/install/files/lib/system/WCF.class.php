@@ -488,6 +488,9 @@ class WCF
 
         // Disabling X-Frame-Options is no longer possible since 5.6.
         \define('HTTP_SEND_X_FRAME_OPTIONS', 1);
+
+        // Multi-domain setups were removed in 5.6.
+        \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
     }
 
     /**
@@ -653,19 +656,17 @@ class WCF
 
         // class was not found, possibly the app was moved, but `packageDir` has not been adjusted
         if (!\class_exists($className)) {
-            // check if both the Core and the app are on the same domain
             $coreApp = ApplicationHandler::getInstance()->getApplicationByID(1);
-            if ($coreApp->domainName === $application->domainName) {
-                // resolve the relative path and use it to construct the autoload directory
-                $relativePath = FileUtil::getRelativePath($coreApp->domainPath, $application->domainPath);
-                if ($relativePath !== './') {
-                    $packageDir = FileUtil::getRealPath(WCF_DIR . $relativePath);
-                    self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 
-                    if (\class_exists($className)) {
-                        // the class can now be found, update the `packageDir` value
-                        (new PackageEditor($package))->update(['packageDir' => $relativePath]);
-                    }
+            // resolve the relative path and use it to construct the autoload directory
+            $relativePath = FileUtil::getRelativePath($coreApp->domainPath, $application->domainPath);
+            if ($relativePath !== './') {
+                $packageDir = FileUtil::getRealPath(WCF_DIR . $relativePath);
+                self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+
+                if (\class_exists($className)) {
+                    // the class can now be found, update the `packageDir` value
+                    (new PackageEditor($package))->update(['packageDir' => $relativePath]);
                 }
             }
         }
@@ -1126,48 +1127,20 @@ class WCF
     }
 
     /**
-     * Returns the favicon URL or a base64 encoded image.
-     *
-     * @return  string
+     * @deprecated 5.6 Use ActiveStyle::getRelativeFavicon() directly.
      */
     public function getFavicon()
     {
-        $activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-        $wcf = ApplicationHandler::getInstance()->getWCF();
         $favicon = StyleHandler::getInstance()->getStyle()->getRelativeFavicon();
-
-        if ($activeApplication->domainName !== $wcf->domainName) {
-            if (\file_exists(WCF_DIR . $favicon)) {
-                $favicon = \file_get_contents(WCF_DIR . $favicon);
-
-                return 'data:image/x-icon;base64,' . \base64_encode($favicon);
-            }
-        }
 
         return self::getPath() . $favicon;
     }
 
     /**
-     * Returns true if the desktop notifications should be enabled.
-     *
-     * @return      bool
+     * @deprecated 5.6 This method always returns true.
      */
     public function useDesktopNotifications()
     {
-        if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            $application = ApplicationHandler::getInstance()->getApplicationByID(DESKTOP_NOTIFICATION_PACKAGE_ID);
-            // mismatch, default to Core
-            if ($application === null) {
-                $application = ApplicationHandler::getInstance()->getApplicationByID(1);
-            }
-
-            $currentApplication = ApplicationHandler::getInstance()->getActiveApplication();
-            if ($currentApplication->domainName != $application->domainName) {
-                // different domain
-                return false;
-            }
-        }
-
         return true;
     }
 

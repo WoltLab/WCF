@@ -14,6 +14,8 @@ use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
+use wcf\system\Regex;
+use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
@@ -31,7 +33,7 @@ use wcf\util\UserUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Form
  */
-class RescueModeForm extends AbstractCaptchaForm
+final class RescueModeForm extends AbstractCaptchaForm
 {
     /**
      * @var Application[]
@@ -64,6 +66,8 @@ class RescueModeForm extends AbstractCaptchaForm
      * @inheritDoc
      */
     public $useCaptcha = false;
+
+    public $domainName = '';
 
     /**
      * @inheritDoc
@@ -131,6 +135,9 @@ class RescueModeForm extends AbstractCaptchaForm
         if (isset($_POST['password'])) {
             $this->password = $_POST['password'];
         }
+        if (isset($_POST['domainName'])) {
+            $this->domainName = StringUtil::trim($_POST['domainName']);
+        }
         if (isset($_POST['applicationValues']) && \is_array($_POST['applicationValues'])) {
             $this->applicationValues = $_POST['applicationValues'];
         }
@@ -173,41 +180,41 @@ class RescueModeForm extends AbstractCaptchaForm
         }
     }
 
+    private function validateDomainName(): void
+    {
+        if (empty($this->domainName)) {
+            throw new UserInputException('domainName');
+        }
+
+        $regex = new Regex('^https?\://');
+        $this->domainName = FileUtil::removeTrailingSlash($regex->replace($this->domainName, ''));
+
+        // domain may not contain path components
+        $regex = new Regex('[/#\?&]');
+        if ($regex->match($this->domainName)) {
+            throw new UserInputException('domainName', 'containsPath');
+        }
+    }
+
     protected function validateApplications()
     {
         $usedPaths = [];
         foreach ($this->applications as $application) {
             $packageID = $application->packageID;
 
-            $domainName = $this->applicationValues[$packageID]['domainName'];
-            $domainName = \preg_replace('~^https?://~', '', $domainName);
-            $domainName = FileUtil::removeTrailingSlash($domainName);
-            $domainName = StringUtil::trim($domainName);
+            $domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->applicationValues[$packageID]));
 
-            if (empty($domainName)) {
-                throw new UserInputException("application_{$packageID}_domainName");
-            } elseif (\preg_match('~[/#\?&]~', $domainName)) {
-                throw new UserInputException("application_{$packageID}_domainName", 'containsPath');
+            $this->applicationValues[$packageID] = $domainPath;
+
+            if (isset($usedPaths[$domainPath])) {
+                WCF::getTPL()->assign(
+                    'conflictApplication',
+                    $this->applications[$usedPaths[$domainPath]]->getPackage()
+                );
+                throw new UserInputException("application_{$packageID}", 'conflict');
             }
 
-            $domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->applicationValues[$packageID]['domainPath']));
-
-            $this->applicationValues[$packageID]['domainName'] = $domainName;
-            $this->applicationValues[$packageID]['domainPath'] = $domainPath;
-
-            if (isset($usedPaths[$domainName])) {
-                if (isset($usedPaths[$domainName][$domainPath])) {
-                    WCF::getTPL()->assign(
-                        'conflictApplication',
-                        $this->applications[$usedPaths[$domainName][$domainPath]]->getPackage()
-                    );
-                    throw new UserInputException("application_{$packageID}_domainPath", 'conflict');
-                }
-            } else {
-                $usedPaths[$domainName] = [];
-            }
-
-            $usedPaths[$domainName][$domainPath] = $packageID;
+            $usedPaths[$domainPath] = $packageID;
         }
     }
 
@@ -261,6 +268,7 @@ class RescueModeForm extends AbstractCaptchaForm
         }
 
         $this->validateUser();
+        $this->validateDomainName();
         $this->validateApplications();
     }
 
@@ -271,13 +279,15 @@ class RescueModeForm extends AbstractCaptchaForm
     {
         parent::save();
 
-        // update applications
+        // strip port from cookie domain
+        $regex = new Regex(':[0-9]+$');
+        $cookieDomain = $regex->replace($this->domainName, '');
+
         foreach ($this->applications as $application) {
-            $applicationEditor = new ApplicationEditor($application);
-            $applicationEditor->update([
-                'domainName' => $this->applicationValues[$application->packageID]['domainName'],
-                'domainPath' => $this->applicationValues[$application->packageID]['domainPath'],
-                'cookieDomain' => $this->applicationValues[$application->packageID]['domainName'],
+            (new ApplicationEditor($application))->update([
+                'domainName' => $this->domainName,
+                'domainPath' => $this->applicationValues[$application->packageID],
+                'cookieDomain' => $cookieDomain,
             ]);
         }
 
@@ -303,11 +313,10 @@ class RescueModeForm extends AbstractCaptchaForm
         parent::readData();
 
         if (empty($_POST)) {
+            $this->domainName = $_SERVER['HTTP_HOST'] ?? '';
+
             foreach ($this->applications as $application) {
-                $this->applicationValues[$application->packageID] = [
-                    'domainName' => $application->domainName,
-                    'domainPath' => $application->domainPath,
-                ];
+                $this->applicationValues[$application->packageID] = $application->domainPath;
             }
         }
     }
@@ -325,6 +334,8 @@ class RescueModeForm extends AbstractCaptchaForm
             'pageURL' => WCFACP::getRescueModePageURL() . 'acp/index.php?rescue-mode/',
             'password' => $this->password,
             'username' => $this->username,
+            'domainName' => $this->domainName,
+            'protocol' => RouteHandler::getProtocol(),
             'assets' => [
                 'woltlabSuite.png' => \sprintf(
                     'data:image/png;base64,%s',

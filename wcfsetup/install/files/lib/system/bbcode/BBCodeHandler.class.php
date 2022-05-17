@@ -177,9 +177,7 @@ class BBCodeHandler extends SingletonFactory
             $hosts = ArrayUtil::trim(\explode("\n", IMAGE_EXTERNAL_SOURCE_WHITELIST));
         }
 
-        foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-            $hosts[] = $application->domainName;
-        }
+        $hosts[] = ApplicationHandler::getInstance()->getDomainName();
 
         return \array_unique($hosts);
     }

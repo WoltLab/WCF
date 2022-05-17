@@ -523,26 +523,18 @@ final class StyleCompiler extends SingletonFactory
             }
 EOT;
 
-        if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            $content .= <<<'EOT'
-                @function getFont($filename, $family: "/", $version: "") {
-                    @return "../font/getFont.php?family=" + $family + "&filename=" + $filename + "&v=" + $version;
+        $content .= <<<'EOT'
+            @function getFont($filename, $family: "/", $version: "") {
+                @if ($family != "") {
+                    $family: "families/" + $family + "/";
                 }
-EOT;
-        } else {
-            $content .= <<<'EOT'
-                @function getFont($filename, $family: "/", $version: "") {
-                    @if ($family != "") {
-                        $family: "families/" + $family + "/";
-                    }
-                    @if ($version != "") {
-                        $version: "?v=" + $version;
-                    }
-                    
-                    @return "../font/" + $family + $filename + $version;
+                @if ($version != "") {
+                    $version: "?v=" + $version;
                 }
+                
+                @return "../font/" + $family + $filename + $version;
+            }
 EOT;
-        }
 
         if (!empty($variables['wcfFontFamilyGoogle'])) {
             $content .= $this->getGoogleFontScss($variables['wcfFontFamilyGoogle']);

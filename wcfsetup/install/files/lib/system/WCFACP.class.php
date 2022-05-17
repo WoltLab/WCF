@@ -98,18 +98,16 @@ class WCFACP extends WCF
         if (self::$inRescueMode === null) {
             self::$inRescueMode = false;
 
-            if (PACKAGE_ID && isset($_SERVER['HTTP_HOST'])) {
+            if (\PACKAGE_ID && isset($_SERVER['HTTP_HOST'])) {
                 self::$inRescueMode = true;
 
-                foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-                    if ($application->domainName === $_SERVER['HTTP_HOST']) {
-                        self::$inRescueMode = false;
-                        break;
-                    }
+                $activeApplication = ApplicationHandler::getInstance()->getApplicationByID(\PACKAGE_ID);
+                if ($activeApplication->domainName === $_SERVER['HTTP_HOST']) {
+                    self::$inRescueMode = false;
                 }
 
                 if (!self::$inRescueMode) {
-                    if (ApplicationHandler::getInstance()->getApplicationByID(PACKAGE_ID)->domainPath !== RouteHandler::getPath(['acp'])) {
+                    if ($activeApplication->domainPath !== RouteHandler::getPath(['acp'])) {
                         self::$inRescueMode = true;
                     }
                 }

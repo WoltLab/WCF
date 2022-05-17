@@ -93,10 +93,7 @@ class RequestHandler extends SingletonFactory
 
             $this->checkOfflineMode();
 
-            if (
-                $this->isACPRequest()
-                && !ApplicationHandler::getInstance()->isMultiDomainSetup()
-            ) {
+            if ($this->isACPRequest()) {
                 \header('referrer-policy: same-origin');
                 \header('cross-origin-opener-policy: same-origin');
                 \header('cross-origin-resource-policy: same-site');
@@ -170,23 +167,21 @@ class RequestHandler extends SingletonFactory
                 $this->handleDefaultController($application, $routeData);
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
-                if (!\defined('WCF_RUN_MODE') || WCF_RUN_MODE !== 'embedded') {
-                    $applicationObject = ApplicationHandler::getInstance()->getApplication($application);
-                    if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
-                        // build URL, e.g. http://example.net/forum/
-                        $url = FileUtil::addTrailingSlash(
-                            RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath()
-                        );
+                $domainName = ApplicationHandler::getInstance()->getDomainName();
+                if ($domainName !== $_SERVER['HTTP_HOST']) {
+                    // build URL, e.g. http://example.net/forum/
+                    $url = FileUtil::addTrailingSlash(
+                        RouteHandler::getProtocol() . $domainName . RouteHandler::getPath()
+                    );
 
-                        // query string, e.g. ?foo=bar
-                        if (!empty($_SERVER['QUERY_STRING'])) {
-                            $url .= '?' . $_SERVER['QUERY_STRING'];
-                        }
-
-                        HeaderUtil::redirect($url, true, false);
-
-                        exit;
+                    // query string, e.g. ?foo=bar
+                    if (!empty($_SERVER['QUERY_STRING'])) {
+                        $url .= '?' . $_SERVER['QUERY_STRING'];
                     }
+
+                    HeaderUtil::redirect($url, true, false);
+
+                    exit;
                 }
             } elseif (empty($routeData['controller'])) {
                 $routeData['controller'] = 'index';

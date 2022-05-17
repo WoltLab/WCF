@@ -77,14 +77,6 @@
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Standard)]]></item>
 		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Seite an, die angezeigt wird, wenn diese App direkt aufgerufen wird.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Apps]]></item>
-		<item name="wcf.acp.application.multiDomain"><![CDATA[<p style="font-size: 18px">Die Unterstützung für Installationen mit mehreren Domains wird eingestellt.</p>
-<p><br></p>
-<p>Es wird dringend empfohlen die Apps auf eine gemeinsame Domain zu verschieben, bitte passen Sie dazu die Domain- und Pfadkonfiguration der installierten Apps an:</p>
-<ul class="nativeList">
-	{foreach from=$applicationList item=application}
-		<li><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a></li>
-	{/foreach}
-</ul>]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain-Konfiguration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.management.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Domain-Namen ohne Protokoll und Pfad ein, beispielsweise „www.example.com“.]]></item>
@@ -1699,8 +1691,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.force_login"><![CDATA[Anmeldung erzwingen]]></item>
 		<item name="wcf.acp.option.force_login.description"><![CDATA[Besucher werden aufgefordert sich anzumelden, um auf die Inhalte zugreifen zu können.]]></item>
-		<item name="wcf.acp.option.desktop_notification_package_id"><![CDATA[Primäre Domain für Desktop-Benachrichtigungen]]></item>
-		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop-Benachrichtigungen werden nur für die ausgewählte App aktiviert, einschließlich aller anderen Apps die auf der identischen Domain laufen.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Seitenlogo verlinkt auf die Startseite der aktiven App]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Deaktiviere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} diese Option, damit das Logo stets auf die globale Startseite verlinkt. Die Deaktivierung entspricht dem Verhalten in früheren Versionen.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
@@ -2701,10 +2691,12 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>
 		<item name="wcf.acp.rescueMode.application"><![CDATA[Installierte Apps]]></item>
-		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}passe{else}passen Sie{/if} sowohl die Domain als auch den Pfad jeder aufgeführten App an die geänderten Einstellungen an, die Angabe der Domain erfolgt ohne Protokoll („http://“ bzw. „https://“).]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}passe{else}passen Sie{/if} den Pfad jeder aufgeführten App an die geänderten Einstellungen an.]]></item>
 		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Die Änderung der Konfiguration erfordert gültige Zugangsdaten für ein Administrator-Konto, mit der Berechtigung die installierten Apps zu verwalten.]]></item>
 		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellten Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann infolge eines Umzugs auf eine andere Domain, oder durch eine Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des untenstehenden Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Angaben schnell und einfach anpassen.]]></item>
+		<item name="wcf.acp.rescueMode.domain"><![CDATA[Domain]]></item>
+		<item name="wcf.acp.rescueMode.domain.description"><![CDATA[Die Domain über die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Seite erreichbar ist, die Angabe erfolgt ohne Protokoll (beispielsweise „https://“) und Pfad.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Dieser Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
 	</category>
 	<category name="wcf.acp.rewrite">
@@ -5562,6 +5554,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	</category>
 </import>
 <delete>
+	<item name="wcf.acp.option.desktop_notification_package_id"/>
+	<item name="wcf.acp.option.desktop_notification_package_id.description"/>
+	<item name="wcf.acp.application.multiDomain"/>
 	<item name="wcf.acp.pluginStore.api.noSSL"/>
 	<item name="wcf.acp.index.system.php.sslSupport"/>
 	<item name="wcf.acp.index.system.php.sslSupport.available"/>

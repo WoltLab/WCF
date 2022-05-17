@@ -11,7 +11,6 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -98,36 +97,29 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::validate();
 
-        if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            // Changes to the domain for all apps are only possible for setups using the same domain.
-            if (!empty($this->cookieDomain) || !empty($this->domainName)) {
-                throw new PermissionDeniedException();
-            }
-        } else {
-            if (empty($this->domainName)) {
-                throw new UserInputException('domainName');
-            }
+        if (empty($this->domainName)) {
+            throw new UserInputException('domainName');
+        }
 
-            $regex = new Regex('^https?\://');
-            $this->domainName = FileUtil::removeTrailingSlash($regex->replace($this->domainName, ''));
-            $this->cookieDomain = FileUtil::removeTrailingSlash($regex->replace($this->cookieDomain, ''));
+        $regex = new Regex('^https?\://');
+        $this->domainName = FileUtil::removeTrailingSlash($regex->replace($this->domainName, ''));
+        $this->cookieDomain = FileUtil::removeTrailingSlash($regex->replace($this->cookieDomain, ''));
 
-            // domain may not contain path components
-            $regex = new Regex('[/#\?&]');
-            if ($regex->match($this->domainName)) {
-                throw new UserInputException('domainName', 'containsPath');
-            } elseif ($regex->match($this->cookieDomain)) {
-                throw new UserInputException('cookieDomain', 'containsPath');
-            }
+        // domain may not contain path components
+        $regex = new Regex('[/#\?&]');
+        if ($regex->match($this->domainName)) {
+            throw new UserInputException('domainName', 'containsPath');
+        } elseif ($regex->match($this->cookieDomain)) {
+            throw new UserInputException('cookieDomain', 'containsPath');
+        }
 
-            // strip port from cookie domain
-            $regex = new Regex(':[0-9]+$');
-            $this->cookieDomain = $regex->replace($this->cookieDomain, '');
+        // strip port from cookie domain
+        $regex = new Regex(':[0-9]+$');
+        $this->cookieDomain = $regex->replace($this->cookieDomain, '');
 
-            // check if cookie domain shares the same domain (may exclude subdomains)
-            if (!\str_ends_with($regex->replace($this->domainName, ''), $this->cookieDomain)) {
-                throw new UserInputException('cookieDomain', 'invalid');
-            }
+        // check if cookie domain shares the same domain (may exclude subdomains)
+        if (!\str_ends_with($regex->replace($this->domainName, ''), $this->cookieDomain)) {
+            throw new UserInputException('cookieDomain', 'invalid');
         }
 
         foreach ($this->landingPageID as $landingPageID) {
@@ -154,27 +146,23 @@ final class ApplicationManagementForm extends AbstractForm
         $this->applicationList = new ViewableApplicationList();
         $this->applicationList->readObjects();
 
-        if (!ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            $core = ApplicationHandler::getInstance()->getApplicationByID(1);
-            $this->domainName = $core->domainName;
-            $this->cookieDomain = $core->cookieDomain;
-        }
+        $core = ApplicationHandler::getInstance()->getApplicationByID(1);
+        $this->domainName = $core->domainName;
+        $this->cookieDomain = $core->cookieDomain;
     }
 
     public function save()
     {
         parent::save();
 
-        if (!ApplicationHandler::getInstance()->isMultiDomainSetup()) {
-            $sql = "UPDATE  wcf" . WCF_N . "_application
-                    SET     domainName = ?,
-                            cookieDomain = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([
-                $this->domainName,
-                $this->cookieDomain,
-            ]);
-        }
+        $sql = "UPDATE  wcf" . WCF_N . "_application
+                SET     domainName = ?,
+                        cookieDomain = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([
+            $this->domainName,
+            $this->cookieDomain,
+        ]);
 
         $sql = "UPDATE  wcf" . WCF_N . "_application
                 SET     landingPageID = ?
@@ -231,7 +219,6 @@ final class ApplicationManagementForm extends AbstractForm
             'applicationList' => $this->applicationList,
             'cookieDomain' => $this->cookieDomain,
             'domainName' => $this->domainName,
-            'isMultiDomainSetup' => ApplicationHandler::getInstance()->isMultiDomainSetup(),
             'pageNodeList' => $this->pageNodeList,
             'pageList' => $pageList->getObjects(),
         ]);

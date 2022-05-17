@@ -4,7 +4,6 @@ namespace wcf\system\search\acp;
 
 use wcf\data\option\category\OptionCategoryList;
 use wcf\data\option\Option;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -93,14 +92,6 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 
             // option is not accessible
             if (!$this->validate($option) || $option->hidden) {
-                continue;
-            }
-
-            // hide special option for multi-domain setups if not applicable
-            if (
-                $option->optionName === 'desktop_notification_package_id'
-                && !ApplicationHandler::getInstance()->isMultiDomainSetup()
-            ) {
                 continue;
             }
 

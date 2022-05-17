@@ -16,7 +16,6 @@ import * as EventHandler from "../Event/Handler";
 import * as StringUtil from "../StringUtil";
 
 interface NotificationHandlerOptions {
-  enableNotifications: boolean;
   icon: string;
 }
 
@@ -49,7 +48,6 @@ class NotificationHandler {
   constructor(options: NotificationHandlerOptions) {
     options = Core.extend(
       {
-        enableNotifications: false,
         icon: "",
       },
       options,
@@ -64,10 +62,8 @@ class NotificationHandler {
 
     this.onVisibilityChange();
 
-    if (options.enableNotifications) {
-      if ("Notification" in window && Notification.permission === "granted") {
-        this.allowNotification = true;
-      }
+    if ("Notification" in window && Notification.permission === "granted") {
+      this.allowNotification = true;
     }
   }
 

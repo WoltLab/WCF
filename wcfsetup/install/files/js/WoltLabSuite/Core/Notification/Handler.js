@@ -25,7 +25,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             this.lastRequestTimestamp = window.TIME_NOW;
             this.requestTimer = undefined;
             options = Core.extend({
-                enableNotifications: false,
                 icon: "",
             }, options);
             this.icon = options.icon;
@@ -33,10 +32,8 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             document.addEventListener("visibilitychange", (ev) => this.onVisibilityChange(ev));
             window.addEventListener("storage", () => this.onStorage());
             this.onVisibilityChange();
-            if (options.enableNotifications) {
-                if ("Notification" in window && Notification.permission === "granted") {
-                    this.allowNotification = true;
-                }
+            if ("Notification" in window && Notification.permission === "granted") {
+                this.allowNotification = true;
             }
         }
         enableNotifications() {

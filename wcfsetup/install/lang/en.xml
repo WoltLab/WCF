@@ -77,14 +77,6 @@
 		<item name="wcf.acp.application.landingPage.default"><![CDATA[(Default)]]></item>
 		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: This page will be shown when a user is navigating to this app.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
-		<item name="wcf.acp.application.multiDomain"><![CDATA[<p style="font-size: 18px">The support for setups with multiple domains is discontinued.</p>
-<p><br></p>
-<p>It is strongly recommended to consolidate all apps on a shared domain, please adjust the domain and path settings for these apps:</p>
-<ul class="nativeList">
-	{foreach from=$applicationList item=application}
-		<li><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a></li>
-	{/foreach}
-</ul>]]></item>
 		<item name="wcf.acp.application.management.domain"><![CDATA[Domain Configuration]]></item>
 		<item name="wcf.acp.application.management.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.management.domainName.description"><![CDATA[Provide the domain name excluding any protocol or path, for example “www.example.com”.]]></item>
@@ -1685,8 +1677,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Enables a set of specialized tools that are used for plugin development. Should always be disabled in production environments.]]></item>
 		<item name="wcf.acp.option.force_login"><![CDATA[Force login]]></item>
 		<item name="wcf.acp.option.force_login.description"><![CDATA[Visitors are required to log-in themselves to access the page.]]></item>
-		<item name="wcf.acp.option.desktop_notification_package_id"><![CDATA[Primary Domain for Desktop Notifications]]></item>
-		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop Notifications will be enabled for the selected app only, including all other apps that use the exact same domain.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Page logo links to the start page of the active app]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Disabling this option will cause the link to always point to the global landing page instead. This option enforces the behavior known from previous versions when disabled.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
@@ -2632,10 +2622,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
 		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Apps]]></item>
-		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust both domain and path for each app listed below to match the changed settings. The domain must be provided without an explicit protocol such as “http://” or “https://”.]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust the path for each app listed below to match the updated settings.]]></item>
 		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Changes to the configuration require valid credentials of an administrator with the permissions to manage installed apps.]]></item>
 		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
+		<item name="wcf.acp.rescueMode.domain"><![CDATA[Domain]]></item>
+		<item name="wcf.acp.rescueMode.domain.description"><![CDATA[The domain that is used to access your site, please do not specify a protocol (e.g. “https://”) or path.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed apps.]]></item>
 	</category>
 	<category name="wcf.acp.rewrite">
@@ -5564,6 +5556,9 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	</category>
 </import>
 <delete>
+	<item name="wcf.acp.option.desktop_notification_package_id"/>
+	<item name="wcf.acp.option.desktop_notification_package_id.description"/>
+	<item name="wcf.acp.application.multiDomain"/>
 	<item name="wcf.acp.pluginStore.api.noSSL"/>
 	<item name="wcf.acp.index.system.php.sslSupport"/>
 	<item name="wcf.acp.index.system.php.sslSupport.available"/>

@@ -11,7 +11,6 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -32,12 +31,6 @@ class ApplicationHandler extends SingletonFactory
      * @var mixed[][]
      */
     protected $cache;
-
-    /**
-     * true for multi-domain setups
-     * @var bool
-     */
-    protected $isMultiDomain;
 
     /**
      * list of page URLs
@@ -212,14 +205,12 @@ class ApplicationHandler extends SingletonFactory
     public function isInternalURL($url)
     {
         if (empty($this->pageURLs)) {
-            foreach ($this->getApplications() as $application) {
-                $this->pageURLs[] = $application->domainName;
-            }
+            $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
 
-            $this->pageURLs = \array_unique(\array_merge(
-                $this->pageURLs,
-                ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)))
-            ));
+            $this->pageURLs = \array_unique([
+                $this->getDomainName(),
+                ...$internalHostnames,
+            ]);
         }
 
         $host = Url::parse($url)['host'];
@@ -233,7 +224,7 @@ class ApplicationHandler extends SingletonFactory
     }
 
     /**
-     * Returns true if this is a multi-domain setup.
+     * Always returns false.
      *
      * @return      bool
      * @since       3.1
@@ -241,19 +232,7 @@ class ApplicationHandler extends SingletonFactory
      */
     public function isMultiDomainSetup()
     {
-        if ($this->isMultiDomain === null) {
-            $this->isMultiDomain = false;
-
-            $domainName = $this->getApplicationByID(1)->domainName;
-            foreach ($this->getApplications() as $application) {
-                if ($application->domainName !== $domainName) {
-                    $this->isMultiDomain = true;
-                    break;
-                }
-            }
-        }
-
-        return $this->isMultiDomain;
+        return false;
     }
 
     /**
@@ -262,6 +241,14 @@ class ApplicationHandler extends SingletonFactory
      */
     public function rebuildActiveApplication()
     {
+    }
+
+    /**
+     * @since 5.6
+     */
+    public function getDomainName(): string
+    {
+        return $this->getApplicationByID(1)->domainName;
     }
 
     /**
