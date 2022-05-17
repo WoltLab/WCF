@@ -849,6 +849,8 @@ class Tar {
 	 * @var	int
 	 */
 	const CHUNK_SIZE = 8192;
+
+	private static array $asciiMap;
 	
 	/**
 	 * Creates a new Tar object.
@@ -860,6 +862,13 @@ class Tar {
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
 			throw new SystemException("unable to find tar archive '".$archiveName."'");
+		}
+
+		if (!isset(self::$asciiMap)) {
+			self::$asciiMap = [];
+			for ($i = 0; $i <= 0xFF; $i++) {
+				self::$asciiMap[\chr($i)] = $i;
+			}
 		}
 		
 		$this->archiveName = $archiveName;
@@ -1074,16 +1083,16 @@ class Tar {
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {
-			$checksum += ord($binaryData[$i]);
+			$checksum += self::$asciiMap[$binaryData[$i]];
 		}
 		// Calculate the checksum
 		// Ignore the checksum value and replace it by ' ' (space)
 		for ($i = 148; $i < 156; $i++) {
-			$checksum += ord(' ');
+			$checksum += self::$asciiMap[' '];
 		}
 		// Last part of the header
 		for ($i = 156; $i < 512; $i++) {
-			$checksum += ord($binaryData[$i]);
+			$checksum += self::$asciiMap[$binaryData[$i]];
 		}
 		
 		// extract values
