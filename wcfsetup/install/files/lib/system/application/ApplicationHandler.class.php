@@ -209,7 +209,7 @@ class ApplicationHandler extends SingletonFactory
 
             $this->pageURLs = \array_unique([
                 $this->getDomainName(),
-                ...$internalHostnames
+                ...$internalHostnames,
             ]);
         }
 
