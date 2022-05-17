@@ -17,11 +17,6 @@ use wcf\system\exception\SystemException;
  */
 final class GZipFile extends File
 {
-    /**
-     * @deprecated 5.5 The bug this worked around is fixed.
-     */
-    protected static $gzopen64 = false;
-
     /** @noinspection PhpMissingParentConstructorInspection */
 
     /**
