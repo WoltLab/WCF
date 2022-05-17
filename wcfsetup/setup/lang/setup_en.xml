@@ -90,6 +90,5 @@
 		<item name="wcf.global.applicationDirectory.error.outsideDocumentRoot"><![CDATA[The directory is outside the website’s document root.]]></item>
 		<item name="wcf.global.applicationDirectory.url"><![CDATA[App URLs]]></item>
 		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Apps will be accessible through these URLs after setup has completed.]]></item>
-		<item name="wcf.global.title.apps"><![CDATA[Apps:]]></item>
 	</category>
 </language>

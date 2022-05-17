@@ -97,7 +97,6 @@ class WCFSetup extends WCF
         $this->initTPL();
         /** @noinspection PhpUndefinedMethodInspection */
         self::getLanguage()->loadLanguage();
-        static::getPackageNames();
 
         // start setup
         $this->setup();
@@ -1375,34 +1374,5 @@ class WCFSetup extends WCF
         $fileHandler = new SetupFileHandler();
         new Installer(self::$directories['wcf'], SETUP_FILE, $fileHandler, 'install/files/');
         $fileHandler->dumpToFile(self::$directories['wcf'] . 'files.log');
-    }
-
-    /**
-     * Reads the package names of the bundled applications in WCFSetup.tar.gz.
-     */
-    protected static function getPackageNames()
-    {
-        // get package name
-        $packageNames = [];
-        $tar = new Tar(SETUP_FILE);
-        foreach ($tar->getContentList() as $file) {
-            if ($file['type'] != 'folder' && \str_starts_with($file['filename'], 'install/packages/')) {
-                $packageFile = \basename($file['filename']);
-
-                try {
-                    $archive = new PackageArchive(TMP_DIR . 'install/packages/' . $packageFile);
-                    $archive->openArchive();
-                    $packageNames[] = $archive->getLocalizedPackageInfo('packageName');
-                    $archive->getTar()->close();
-                } catch (SystemException $e) {
-                }
-            }
-        }
-        $tar->close();
-
-        \sort($packageNames);
-
-        // assign package name
-        WCF::getTPL()->assign(['setupPackageNames' => $packageNames]);
     }
 }

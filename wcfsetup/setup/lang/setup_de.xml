@@ -90,6 +90,5 @@
 		<item name="wcf.global.applicationDirectory.error.outsideDocumentRoot"><![CDATA[Das Verzeichnis befindet sich außerhalb des Hauptverzeichnis der Website.]]></item>
 		<item name="wcf.global.applicationDirectory.url"><![CDATA[Endgültige URL für Apps]]></item>
 		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Nach der Installation werden die Apps unter den folgenden URLs erreichbar sein.]]></item>
-		<item name="wcf.global.title.apps"><![CDATA[Apps:]]></item>
 	</category>
 </language>
