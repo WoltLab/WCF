@@ -1200,15 +1200,10 @@ class WCFSetup extends WCF
         $tar->close();
 
         // delete install files
-        $installPhpDeleted = @\unlink('./install.php');
+        @\unlink('./install.php');
         @\unlink('./test.php');
-        $wcfSetupTarDeleted = @\unlink('./WCFSetup.tar.gz');
+        @\unlink('./WCFSetup.tar.gz');
 
-        // render page
-        WCF::getTPL()->assign([
-            'installPhpDeleted' => $installPhpDeleted,
-            'wcfSetupTarDeleted' => $wcfSetupTarDeleted,
-        ]);
         $output = WCF::getTPL()->fetch('stepInstallPackages');
 
         // register packages in queue
