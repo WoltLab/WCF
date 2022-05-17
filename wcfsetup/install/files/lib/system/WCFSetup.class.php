@@ -1200,14 +1200,10 @@ class WCFSetup extends WCF
         $tar->close();
 
         // delete install files
-        if (\file_exists(\INSTALL_SCRIPT)) {
-            \unlink(\INSTALL_SCRIPT);
-        }
+        \unlink(\INSTALL_SCRIPT);
+        \unlink(\SETUP_FILE);
         if (\file_exists(\INSTALL_SCRIPT_DIR . 'test.php')) {
             \unlink(\INSTALL_SCRIPT_DIR . 'test.php');
-        }
-        if (\file_exists(\SETUP_FILE)) {
-            \unlink(\SETUP_FILE);
         }
 
         $output = WCF::getTPL()->fetch('stepInstallPackages');
