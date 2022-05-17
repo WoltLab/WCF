@@ -1253,6 +1253,30 @@ class GZipFile extends File {
 			throw new SystemException('Can not call method ' . $function);
 		}
 	}
+
+	/**
+	 * @see \gzread()
+	 */
+	public function read(int $length): string|false
+	{
+		return \gzread($this->resource, $length);
+	}
+
+	/**
+	 * @see \gztell()
+	 */
+	public function tell(): int|false
+	{
+		return \gztell($this->resource);
+	}
+
+	/**
+	 * @see \gzseek()
+	 */
+	public function seek(int $offset, int $whence = \SEEK_SET): int
+	{
+		return \gzseek($this->resource, $offset, $whence);
+	}
 	
 	/**
 	 * Returns the filesize of the unzipped file.
