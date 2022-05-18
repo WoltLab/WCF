@@ -738,7 +738,12 @@ const UiDialog = {
   _close(event: MouseEvent): boolean {
     event.preventDefault();
 
-    const data = _dialogs.get(_activeDialog!) as DialogData;
+    const data = _dialogs.get(_activeDialog!);
+    if (data === undefined) {
+      // Closing the dialog while it is already being closed
+      // could cause the dialog data to be already discarded.
+      return true;
+    }
 
     // The current dialog might be unclosable, but another open, but closable,
     // dialog could have spawned this event listener.
