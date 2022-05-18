@@ -293,7 +293,7 @@ $wcfAcpSubMenuWidth: 300px;
 
 @include screen-md-down {
 	.pageHeader {
-		grid-template-areas: "logo woltlab jumpToPage search menu user";
+		grid-template-areas: "logo woltlab jumpToPage search user menu";
 		grid-template-columns: auto repeat(5, max-content);
 
 		&[data-is-login="true"] {
