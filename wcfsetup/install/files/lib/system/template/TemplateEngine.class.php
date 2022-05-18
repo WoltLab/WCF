@@ -2,6 +2,8 @@
 
 namespace wcf\system\template;
 
+use Laminas\Diactoros\Stream;
+use Psr\Http\Message\StreamInterface;
 use wcf\data\template\Template;
 use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
@@ -599,6 +601,52 @@ class TemplateEngine extends SingletonFactory
         }
 
         return $output;
+    }
+
+    /**
+     * Renders the template into a fresh PSR-7 StreamInterface.
+     *
+     * @since 5.6
+     */
+    public function fetchStream(
+        string $templateName,
+        string $application = 'wcf',
+        array $variables = [],
+        bool $sandbox = false
+    ): StreamInterface {
+        // enable sandbox
+        if ($sandbox) {
+            $this->enableSandbox();
+        }
+
+        // add new template variables
+        if (!empty($variables)) {
+            $this->v = \array_merge($this->v, $variables);
+        }
+
+        // get output
+        try {
+            $stream = new Stream(\fopen('php://temp', 'r+'));
+
+            \ob_start(static function (string $buffer, int $phase) use (&$stream) {
+                $stream->write($buffer);
+
+                return '';
+            }, 1024 * 1024);
+
+            $this->display($templateName, $application, false);
+        } finally {
+            \ob_end_clean();
+        }
+
+        // disable sandbox
+        if ($sandbox) {
+            $this->disableSandbox();
+        }
+
+        $stream->rewind();
+
+        return $stream;
     }
 
     /**
