@@ -17,9 +17,9 @@
 if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('installPackages');
 </script>
 <script>
-	window.onload = function() {
-		document.forms[0].submit();
-	}
+window.addEventListener('DOMContentLoaded', (event) => {
+	document.forms[0].submit();
+});
 </script>
 
 {include file='footer'}
