@@ -208,8 +208,7 @@ class WCFACP extends WCF
                 // thus we are unable to use the trait directly.
                 //
                 // Workaround this issue by using an anonymous class.
-                (new class
-                {
+                (new class {
                     use TMultifactorRequirementEnforcer {
                         enforceMultifactorAuthentication as public enforce;
                     }
