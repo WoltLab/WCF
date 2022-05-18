@@ -20,9 +20,10 @@
 		
 			<div class="searchFilters defaultSearchFilters">
 				<dl>
-					<dt></dt>
+					<dt><label>{lang}wcf.search.searchIn{/lang}</label></dt>
 					<dd>
-						<label><input type="checkbox" name="subjectOnly" value="1"> {lang}wcf.search.subjectOnly{/lang}</label>
+						<label><input type="radio" name="subjectOnly" value="" checked> {lang}wcf.search.searchIn.subjectAndMessage{/lang}</label>
+						<label><input type="radio" name="subjectOnly" value="1"> {lang}wcf.search.searchIn.subjectOnly{/lang}</label>
 						{* deprecated *}{event name='queryOptions'}
 					</dd>
 				</dl>

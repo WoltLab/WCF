@@ -4516,8 +4516,10 @@ Attachments:
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevance]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Author]]></item>
-		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
-		<item name="wcf.search.type"><![CDATA[Search in]]></item>
+		<item name="wcf.search.searchIn"><![CDATA[Search In]]></item>
+		<item name="wcf.search.searchIn.subjectAndMessage"><![CDATA[Subject and message]]></item>
+		<item name="wcf.search.searchIn.subjectOnly"><![CDATA[Subject only]]></item>
+		<item name="wcf.search.type"><![CDATA[Content Type]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Article]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
@@ -5620,5 +5622,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.user.profile.customization" />
 	<item name="wcf.acp.option.enable_desktop_notifications"/>
 	<item name="wcf.acp.option.enable_desktop_notifications.description"/>
+	<item name="wcf.search.subjectOnly" />
 </delete>
 </language>
