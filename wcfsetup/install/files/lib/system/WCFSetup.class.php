@@ -27,7 +27,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\setup\SetupFileHandler;
 use wcf\system\template\SetupTemplateEngine;
-use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -1286,9 +1285,22 @@ class WCFSetup extends WCF
         HeaderUtil::sendHeaders();
         echo $output;
 
-        // delete tmp files
-        $directory = TMP_DIR . '/';
-        DirectoryUtil::getInstance($directory)->removePattern(new Regex('\.tar(\.gz)?$'), true);
+        // Delete tmp files
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
+                TMP_DIR . '/',
+                \RecursiveDirectoryIterator::CURRENT_AS_FILEINFO | \RecursiveDirectoryIterator::SKIP_DOTS
+            ),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($iterator as $path) {
+            if ($path->isDir()) {
+                \rmdir($path);
+            } else {
+                \unlink($path);
+            }
+        }
+        \rmdir(TMP_DIR . '/');
     }
 
     /**
