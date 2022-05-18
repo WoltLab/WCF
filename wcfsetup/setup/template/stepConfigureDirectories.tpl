@@ -52,7 +52,7 @@
 	</div>
 </form>
 
-<script data-relocate="true">
+<script>
 	(function() {
 		function updateUrl(event, directory) {
 			directory = (directory) ? directory : event.currentTarget;

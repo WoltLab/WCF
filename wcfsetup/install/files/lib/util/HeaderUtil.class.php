@@ -92,7 +92,9 @@ final class HeaderUtil
 
         @\header('X-Frame-Options: SAMEORIGIN');
 
-        \ob_start([self::class, 'parseOutput']);
+        if (!\defined('NO_IMPORTS')) {
+            \ob_start([self::class, 'parseOutput']);
+        }
     }
 
     /**
@@ -145,7 +147,7 @@ final class HeaderUtil
     {
         self::$output = $output;
 
-        if (!PACKAGE_ID || RequestHandler::getInstance()->isACPRequest()) {
+        if (RequestHandler::getInstance()->isACPRequest()) {
             // force javascript relocation
             self::$output = \preg_replace('~<script([^>]*)>~', '<script data-relocate="true"\\1>', self::$output);
         }
@@ -171,9 +173,7 @@ final class HeaderUtil
         // 3rd party plugins may differ the actual output before it is sent to the browser
         // please be aware, that $eventObj is not available here due to this being a static
         // class. Use HeaderUtil::$output to modify it.
-        if (!\defined('NO_IMPORTS')) {
-            EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
-        }
+        EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
 
         return self::$output;
     }

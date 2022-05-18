@@ -11,9 +11,6 @@
 		</footer>
 	</div>
 	
-	<!-- JAVASCRIPT_RELOCATE_POSITION -->
-	
 	<a id="bottom"></a>
-
 </body>
 </html>
