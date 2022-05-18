@@ -1200,27 +1200,19 @@ class WCFSetup extends WCF
         $result = $statement->fetchArray();
         $processNo = \intval($result['processNo']) + 1;
 
-        // search existing wcf package
-        $sql = "SELECT  COUNT(*) AS count
-                FROM    wcf" . WCF_N . "_package
-                WHERE   package = 'com.woltlab.wcf'";
-        $statement = self::getDB()->prepareStatement($sql);
-        $statement->execute();
-        if (!$statement->fetchSingleColumn()) {
-            if (empty($wcfPackageFile)) {
-                throw new SystemException('the essential package com.woltlab.wcf is missing.');
-            }
-
-            // register essential wcf package
-            $queue = PackageInstallationQueueEditor::create([
-                'processNo' => $processNo,
-                'userID' => $admin->userID,
-                'package' => 'com.woltlab.wcf',
-                'packageName' => 'WoltLab Suite Core',
-                'archive' => TMP_DIR . 'install/packages/' . $wcfPackageFile,
-                'isApplication' => 1,
-            ]);
+        if (empty($wcfPackageFile)) {
+            throw new SystemException('the essential package com.woltlab.wcf is missing.');
         }
+
+        // register essential wcf package
+        $queue = PackageInstallationQueueEditor::create([
+            'processNo' => $processNo,
+            'userID' => $admin->userID,
+            'package' => 'com.woltlab.wcf',
+            'packageName' => 'WoltLab Suite Core',
+            'archive' => TMP_DIR . 'install/packages/' . $wcfPackageFile,
+            'isApplication' => 1,
+        ]);
 
         // register all other delivered packages
         \asort($otherPackages);
