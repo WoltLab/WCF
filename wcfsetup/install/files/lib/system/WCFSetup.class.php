@@ -48,7 +48,7 @@ use wcf\util\XML;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System
  */
-class WCFSetup extends WCF
+final class WCFSetup extends WCF
 {
     /**
      * list of available languages
