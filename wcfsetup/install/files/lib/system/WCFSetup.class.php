@@ -27,7 +27,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\setup\SetupFileHandler;
 use wcf\system\template\SetupTemplateEngine;
-use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -1175,23 +1174,6 @@ class WCFSetup extends WCF
                     if ($packageName == 'com.woltlab.wcf') {
                         $wcfPackageFile = $packageFile;
                     } else {
-                        $isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (\strpos(
-                            $_SERVER['DOCUMENT_ROOT'],
-                            'strato'
-                        ) !== false));
-                        if (!$isStrato && \preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
-                            // try to unzip zipped package files
-                            if (
-                                FileUtil::uncompressFile(
-                                    TMP_DIR . 'install/packages/' . $packageFile,
-                                    TMP_DIR . 'install/packages/' . $packageName . '.tar'
-                                )
-                            ) {
-                                @\unlink(TMP_DIR . 'install/packages/' . $packageFile);
-                                $packageFile = $packageName . '.tar';
-                            }
-                        }
-
                         $otherPackages[$packageName] = $packageFile;
                     }
                 }
@@ -1209,81 +1191,38 @@ class WCFSetup extends WCF
         $output = WCF::getTPL()->fetch('stepInstallPackages');
 
         // register packages in queue
-        // get new process id
-        $sql = "SELECT  MAX(processNo) AS processNo
-                FROM    wcf" . WCF_N . "_package_installation_queue";
-        $statement = self::getDB()->prepareStatement($sql);
-        $statement->execute();
-        $result = $statement->fetchArray();
-        $processNo = \intval($result['processNo']) + 1;
+        $processNo = 1;
 
-        // search existing wcf package
-        $sql = "SELECT  COUNT(*) AS count
-                FROM    wcf" . WCF_N . "_package
-                WHERE   package = 'com.woltlab.wcf'";
-        $statement = self::getDB()->prepareStatement($sql);
-        $statement->execute();
-        if (!$statement->fetchSingleColumn()) {
-            if (empty($wcfPackageFile)) {
-                throw new SystemException('the essential package com.woltlab.wcf is missing.');
-            }
-
-            // register essential wcf package
-            $queue = PackageInstallationQueueEditor::create([
-                'processNo' => $processNo,
-                'userID' => $admin->userID,
-                'package' => 'com.woltlab.wcf',
-                'packageName' => 'WoltLab Suite Core',
-                'archive' => TMP_DIR . 'install/packages/' . $wcfPackageFile,
-                'isApplication' => 1,
-            ]);
+        if (empty($wcfPackageFile)) {
+            throw new SystemException('the essential package com.woltlab.wcf is missing.');
         }
+
+        $from = TMP_DIR . 'install/packages/' . $wcfPackageFile;
+        $to = WCF_DIR . 'tmp/' . TMP_FILE_PREFIX . '-' . $wcfPackageFile;
+
+        \rename($from, $to);
+
+        // register essential wcf package
+        $queue = PackageInstallationQueueEditor::create([
+            'processNo' => $processNo,
+            'userID' => $admin->userID,
+            'package' => 'com.woltlab.wcf',
+            'packageName' => 'WoltLab Suite Core',
+            'archive' => $to,
+            'isApplication' => 1,
+        ]);
 
         // register all other delivered packages
         \asort($otherPackages);
         foreach ($otherPackages as $packageName => $packageFile) {
+            $from = TMP_DIR . 'install/packages/' . $packageFile;
+            $to = WCF_DIR . 'tmp/' . TMP_FILE_PREFIX . '-' . $packageFile;
+
             // extract packageName from archive's package.xml
-            $archive = new PackageArchive(TMP_DIR . 'install/packages/' . $packageFile);
-            try {
-                $archive->openArchive();
-            } catch (\Exception $e) {
-                // we've encountered a broken archive, revert everything and then fail
-                $sql = "SELECT  queueID, parentQueueID
-                        FROM    wcf" . WCF_N . "_package_installation_queue";
-                $statement = WCF::getDB()->prepareStatement($sql);
-                $statement->execute();
-                $queues = $statement->fetchMap('queueID', 'parentQueueID');
+            $archive = new PackageArchive($from);
+            $archive->openArchive();
 
-                $queueIDs = [];
-                /** @noinspection PhpUndefinedVariableInspection */
-                $queueID = $queue->queueID;
-                while ($queueID) {
-                    $queueIDs[] = $queueID;
-
-                    $queueID = $queues[$queueID] ?? 0;
-                }
-
-                // remove previously created queues
-                if (!empty($queueIDs)) {
-                    $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_queue
-                            WHERE       queueID = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
-                    WCF::getDB()->beginTransaction();
-                    foreach ($queueIDs as $queueID) {
-                        $statement->execute([$queueID]);
-                    }
-                    WCF::getDB()->commitTransaction();
-                }
-
-                // remove package files
-                @\unlink(TMP_DIR . 'install/packages/' . $wcfPackageFile);
-                foreach ($otherPackages as $otherPackageFile) {
-                    @\unlink(TMP_DIR . 'install/packages/' . $otherPackageFile);
-                }
-
-                // throw exception again
-                throw new SystemException('', 0, '', $e);
-            }
+            \rename($from, $to);
 
             /** @noinspection PhpUndefinedVariableInspection */
             $queue = PackageInstallationQueueEditor::create([
@@ -1292,7 +1231,7 @@ class WCFSetup extends WCF
                 'userID' => $admin->userID,
                 'package' => $packageName,
                 'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-                'archive' => TMP_DIR . 'install/packages/' . $packageFile,
+                'archive' => $to,
                 'isApplication' => 1,
             ]);
         }
@@ -1346,9 +1285,22 @@ class WCFSetup extends WCF
         HeaderUtil::sendHeaders();
         echo $output;
 
-        // delete tmp files
-        $directory = TMP_DIR . '/';
-        DirectoryUtil::getInstance($directory)->removePattern(new Regex('\.tar(\.gz)?$'), true);
+        // Delete tmp files
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
+                TMP_DIR . '/',
+                \RecursiveDirectoryIterator::CURRENT_AS_FILEINFO | \RecursiveDirectoryIterator::SKIP_DOTS
+            ),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($iterator as $path) {
+            if ($path->isDir()) {
+                \rmdir($path);
+            } else {
+                \unlink($path);
+            }
+        }
+        \rmdir(TMP_DIR . '/');
     }
 
     /**
