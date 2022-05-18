@@ -1175,11 +1175,7 @@ class WCFSetup extends WCF
                     if ($packageName == 'com.woltlab.wcf') {
                         $wcfPackageFile = $packageFile;
                     } else {
-                        $isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (\strpos(
-                            $_SERVER['DOCUMENT_ROOT'],
-                            'strato'
-                        ) !== false));
-                        if (!$isStrato && \preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
+                        if (\preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
                             // try to unzip zipped package files
                             if (
                                 FileUtil::uncompressFile(
