@@ -1188,6 +1188,9 @@ class WCFSetup extends WCF
             \unlink(\INSTALL_SCRIPT_DIR . 'test.php');
         }
 
+        WCF::getTPL()->assign([
+            'wcfAcp' => \RELATIVE_WCF_DIR . 'acp/index.php',
+        ]);
         $output = WCF::getTPL()->fetch('stepInstallPackages');
 
         // register packages in queue

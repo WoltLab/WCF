@@ -7,7 +7,7 @@
 	
 	<p>{lang}wcf.global.next.description{/lang}</p>
 	
-	<form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
+	<form method="get" action="{$wcfAcp}">
 		<div class="formSubmit">
 			<input type="hidden" name="action" value="WCFSetup">
 		</div>
