@@ -1198,22 +1198,32 @@ class WCFSetup extends WCF
             throw new SystemException('the essential package com.woltlab.wcf is missing.');
         }
 
+        $from = TMP_DIR . 'install/packages/' . $wcfPackageFile;
+        $to = WCF_DIR . 'tmp/' . TMP_FILE_PREFIX . '-' . $wcfPackageFile;
+
+        \rename($from, $to);
+
         // register essential wcf package
         $queue = PackageInstallationQueueEditor::create([
             'processNo' => $processNo,
             'userID' => $admin->userID,
             'package' => 'com.woltlab.wcf',
             'packageName' => 'WoltLab Suite Core',
-            'archive' => TMP_DIR . 'install/packages/' . $wcfPackageFile,
+            'archive' => $to,
             'isApplication' => 1,
         ]);
 
         // register all other delivered packages
         \asort($otherPackages);
         foreach ($otherPackages as $packageName => $packageFile) {
+            $from = TMP_DIR . 'install/packages/' . $packageFile;
+            $to = WCF_DIR . 'tmp/' . TMP_FILE_PREFIX . '-' . $packageFile;
+
             // extract packageName from archive's package.xml
-            $archive = new PackageArchive(TMP_DIR . 'install/packages/' . $packageFile);
+            $archive = new PackageArchive($from);
             $archive->openArchive();
+
+            \rename($from, $to);
 
             /** @noinspection PhpUndefinedVariableInspection */
             $queue = PackageInstallationQueueEditor::create([
@@ -1222,7 +1232,7 @@ class WCFSetup extends WCF
                 'userID' => $admin->userID,
                 'package' => $packageName,
                 'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-                'archive' => TMP_DIR . 'install/packages/' . $packageFile,
+                'archive' => $to,
                 'isApplication' => 1,
             ]);
         }
