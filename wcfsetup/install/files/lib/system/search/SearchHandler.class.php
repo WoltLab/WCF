@@ -224,9 +224,9 @@ final class SearchHandler
             if (!empty($this->parameters['username'])) {
                 $sql = "SELECT  userID
                         FROM    wcf" . WCF_N . "_user
-                        WHERE   username " . (!empty($this->parameters['nameExactly']) ? "= ?" : "LIKE ?");
+                        WHERE   username = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, 100);
-                $statement->execute([$this->parameters['username'] . (empty($this->parameters['nameExactly']) ? '%' : '')]);
+                $statement->execute([$this->parameters['username']]);
                 $this->userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
             }
 
@@ -311,7 +311,6 @@ final class SearchHandler
             'additionalData' => $this->getAdditionalData(),
             'sortField' => $this->parameters['sortField'] ?? '',
             'sortOrder' => $this->parameters['sortOrder'] ?? '',
-            'nameExactly' => $this->parameters['nameExactly'] ?? '',
             'subjectOnly' => $this->parameters['subjectOnly'] ?? '',
             'startDate' => $this->parameters['startDate'] ?? '',
             'endDate' => $this->parameters['endDate'] ?? '',

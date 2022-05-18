@@ -54,7 +54,6 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readString('q', true);
         $this->readString('type', true);
         $this->readString('username', true);
-        $this->readBoolean('nameExactly', true);
         $this->readBoolean('subjectOnly', true);
         $this->readString('startDate', true);
         $this->readString('endDate', true);

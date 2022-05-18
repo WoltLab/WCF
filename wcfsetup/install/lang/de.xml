@@ -4508,7 +4508,6 @@ Dateianhänge:
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Suche nach Autor]]></item>
 		<item name="wcf.search.extended"><![CDATA[Erweiterte Suche]]></item>
-		<item name="wcf.search.matchExactly"><![CDATA[Exakter Treffer]]></item>
 		<item name="wcf.search.period"><![CDATA[Im Zeitraum]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sortierung]]></item>
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevanz]]></item>
@@ -5618,5 +5617,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.profile.customization" />
 	<item name="wcf.acp.option.enable_desktop_notifications"/>
 	<item name="wcf.acp.option.enable_desktop_notifications.description"/>
+	<item name="wcf.search.matchExactly" />
 </delete>
 </language>
