@@ -650,7 +650,9 @@ final class WCFSetup extends WCF
             );
         }
 
-        static::installFiles();
+        $fileHandler = new SetupFileHandler();
+        new Installer(self::$directories['wcf'], SETUP_FILE, $fileHandler, 'install/files/');
+        $fileHandler->dumpToFile(self::$directories['wcf'] . 'files.log');
 
         return $this->gotoNextStep('configureDB');
     }
@@ -1348,15 +1350,5 @@ final class WCFSetup extends WCF
                 ]
             )
         );
-    }
-
-    /**
-     * Installs the files of the tar archive.
-     */
-    protected static function installFiles()
-    {
-        $fileHandler = new SetupFileHandler();
-        new Installer(self::$directories['wcf'], SETUP_FILE, $fileHandler, 'install/files/');
-        $fileHandler->dumpToFile(self::$directories['wcf'] . 'files.log');
     }
 }
