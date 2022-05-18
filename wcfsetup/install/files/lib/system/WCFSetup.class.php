@@ -1188,11 +1188,6 @@ class WCFSetup extends WCF
             \unlink(\INSTALL_SCRIPT_DIR . 'test.php');
         }
 
-        WCF::getTPL()->assign([
-            'wcfAcp' => \RELATIVE_WCF_DIR . 'acp/index.php',
-        ]);
-        $output = WCF::getTPL()->fetch('stepInstallPackages');
-
         // register packages in queue
         $processNo = 1;
 
@@ -1267,9 +1262,16 @@ class WCFSetup extends WCF
             \file_put_contents(WCF_DIR . 'cookiePrefix.txt', $prefix);
         }
 
-        // login as admin
         \define('COOKIE_PREFIX', $prefix);
 
+        // Generate the output. This must happen before the session updates, because the
+        // language won't work correctly otherwise.
+        WCF::getTPL()->assign([
+            'wcfAcp' => \RELATIVE_WCF_DIR . 'acp/index.php',
+        ]);
+        $output = WCF::getTPL()->fetch('stepInstallPackages');
+
+        // Set up the session and login as the administrator.
         $factory = new ACPSessionFactory();
         $factory->load();
 
