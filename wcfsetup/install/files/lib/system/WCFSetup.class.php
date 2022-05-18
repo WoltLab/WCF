@@ -1192,13 +1192,7 @@ class WCFSetup extends WCF
         $output = WCF::getTPL()->fetch('stepInstallPackages');
 
         // register packages in queue
-        // get new process id
-        $sql = "SELECT  MAX(processNo) AS processNo
-                FROM    wcf" . WCF_N . "_package_installation_queue";
-        $statement = self::getDB()->prepareStatement($sql);
-        $statement->execute();
-        $result = $statement->fetchArray();
-        $processNo = \intval($result['processNo']) + 1;
+        $processNo = 1;
 
         if (empty($wcfPackageFile)) {
             throw new SystemException('the essential package com.woltlab.wcf is missing.');
