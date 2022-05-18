@@ -1213,46 +1213,7 @@ class WCFSetup extends WCF
         foreach ($otherPackages as $packageName => $packageFile) {
             // extract packageName from archive's package.xml
             $archive = new PackageArchive(TMP_DIR . 'install/packages/' . $packageFile);
-            try {
-                $archive->openArchive();
-            } catch (\Exception $e) {
-                // we've encountered a broken archive, revert everything and then fail
-                $sql = "SELECT  queueID, parentQueueID
-                        FROM    wcf" . WCF_N . "_package_installation_queue";
-                $statement = WCF::getDB()->prepareStatement($sql);
-                $statement->execute();
-                $queues = $statement->fetchMap('queueID', 'parentQueueID');
-
-                $queueIDs = [];
-                /** @noinspection PhpUndefinedVariableInspection */
-                $queueID = $queue->queueID;
-                while ($queueID) {
-                    $queueIDs[] = $queueID;
-
-                    $queueID = $queues[$queueID] ?? 0;
-                }
-
-                // remove previously created queues
-                if (!empty($queueIDs)) {
-                    $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_queue
-                            WHERE       queueID = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
-                    WCF::getDB()->beginTransaction();
-                    foreach ($queueIDs as $queueID) {
-                        $statement->execute([$queueID]);
-                    }
-                    WCF::getDB()->commitTransaction();
-                }
-
-                // remove package files
-                @\unlink(TMP_DIR . 'install/packages/' . $wcfPackageFile);
-                foreach ($otherPackages as $otherPackageFile) {
-                    @\unlink(TMP_DIR . 'install/packages/' . $otherPackageFile);
-                }
-
-                // throw exception again
-                throw new SystemException('', 0, '', $e);
-            }
+            $archive->openArchive();
 
             /** @noinspection PhpUndefinedVariableInspection */
             $queue = PackageInstallationQueueEditor::create([
