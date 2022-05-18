@@ -1175,19 +1175,6 @@ class WCFSetup extends WCF
                     if ($packageName == 'com.woltlab.wcf') {
                         $wcfPackageFile = $packageFile;
                     } else {
-                        if (\preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
-                            // try to unzip zipped package files
-                            if (
-                                FileUtil::uncompressFile(
-                                    TMP_DIR . 'install/packages/' . $packageFile,
-                                    TMP_DIR . 'install/packages/' . $packageName . '.tar'
-                                )
-                            ) {
-                                @\unlink(TMP_DIR . 'install/packages/' . $packageFile);
-                                $packageFile = $packageName . '.tar';
-                            }
-                        }
-
                         $otherPackages[$packageName] = $packageFile;
                     }
                 }
