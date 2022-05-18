@@ -449,12 +449,12 @@ fieldset {
 	align-self: center;
 	display: flex;
 	margin-left: auto;
-	overflow: auto;
 }
 
 .contentInteractionButtons {
 	display: flex;
-	flex: 0 0 auto;
+	flex: 0 auto;
+	overflow: auto;
 }
 
 .contentInteractionButton {
@@ -484,7 +484,7 @@ fieldset {
 
 .contentInteractionDropdown {
 	display: flex;
-	flex: 0 0 auto;
+	flex: 1 auto;
 	margin-left: 5px;
 
 	.dropdownToggle {
