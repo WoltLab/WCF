@@ -27,9 +27,7 @@
 if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('next');
 </script>
 <script>
-	window.onload = function() {
-		document.forms[0].submit();
-	}
+document.forms[0].submit();
 </script>
 
 {include file='footer'}
