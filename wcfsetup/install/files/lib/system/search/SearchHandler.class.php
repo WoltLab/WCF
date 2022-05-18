@@ -68,6 +68,12 @@ final class SearchHandler
     {
         $this->initParameters();
         $this->buildConditions();
+
+        // Check if at least one author exists when searching for author.
+        if (!empty($this->parameters['usernames']) && empty($this->getUserIDs())) {
+            return null;
+        }
+
         $this->buildSearchHash();
 
         if (($search = $this->getExistingSearch()) !== null) {
