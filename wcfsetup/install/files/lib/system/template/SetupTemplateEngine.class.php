@@ -23,18 +23,6 @@ class SetupTemplateEngine extends TemplateEngine
     /**
      * @inheritDoc
      */
-    public function getCompiler()
-    {
-        if ($this->compilerObj === null) {
-            $this->compilerObj = new SetupTemplateCompiler($this);
-        }
-
-        return $this->compilerObj;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getSourceFilename($templateName, $application)
     {
         return $this->compileDir . 'setup/template/' . $templateName . '.tpl';
