@@ -2,6 +2,9 @@
 
 namespace wcf\system;
 
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -97,8 +100,11 @@ final class WCFSetup extends WCF
         /** @noinspection PhpUndefinedMethodInspection */
         self::getLanguage()->loadLanguage();
 
-        // start setup
-        $this->setup();
+        $emitter = new SapiEmitter();
+        $response = $this->dispatch();
+        $response = HeaderUtil::withNoCacheHeaders($response);
+        $response = $response->withHeader('x-frame-options', 'SAMEORIGIN');
+        $emitter->emit($response);
     }
 
     /**
@@ -240,7 +246,7 @@ final class WCFSetup extends WCF
     /**
      * Executes the setup steps.
      */
-    protected function setup()
+    protected function dispatch(): ResponseInterface
     {
         // get current step
         if (isset($_REQUEST['step'])) {
@@ -261,8 +267,8 @@ final class WCFSetup extends WCF
             case 'selectSetupLanguage':
                 if (!self::$developerMode) {
                     $this->calcProgress(0);
-                    $this->selectSetupLanguage();
-                    break;
+
+                    return $this->selectSetupLanguage();
                 }
 
             /** @noinspection PhpMissingBreakStatementInspection */
@@ -270,8 +276,8 @@ final class WCFSetup extends WCF
             case 'showLicense':
                 if (!self::$developerMode) {
                     $this->calcProgress(1);
-                    $this->showLicense();
-                    break;
+
+                    return $this->showLicense();
                 }
 
             /** @noinspection PhpMissingBreakStatementInspection */
@@ -279,25 +285,25 @@ final class WCFSetup extends WCF
             case 'showSystemRequirements':
                 if (!self::$developerMode) {
                     $this->calcProgress(2);
-                    $this->showSystemRequirements();
-                    break;
+
+                    return $this->showSystemRequirements();
                 }
 
             // no break
             case 'configureDirectories':
                 $this->calcProgress(3);
-                $this->configureDirectories();
-                break;
+
+                return $this->configureDirectories();
 
             case 'unzipFiles':
                 $this->calcProgress(4);
-                $this->unzipFiles();
-                break;
+
+                return $this->unzipFiles();
 
             case 'configureDB':
                 $this->calcProgress(5);
-                $this->configureDB();
-                break;
+
+                return $this->configureDB();
 
             case 'createDB':
                 $currentStep = 6;
@@ -306,55 +312,60 @@ final class WCFSetup extends WCF
                 }
 
                 $this->calcProgress($currentStep);
-                $this->createDB();
-                break;
+
+                return $this->createDB();
 
             case 'logFiles':
                 $this->calcProgress(20);
-                $this->logFiles();
-                break;
+
+                return $this->logFiles();
 
             case 'installLanguage':
                 $this->calcProgress(21);
-                $this->installLanguage();
-                break;
+
+                return $this->installLanguage();
 
             case 'createUser':
                 $this->calcProgress(22);
-                $this->createUser();
-                break;
+
+                return $this->createUser();
 
             case 'installPackages':
                 $this->calcProgress(23);
-                $this->installPackages();
-                break;
+
+                return $this->installPackages();
         }
     }
 
     /**
      * Shows the first setup page.
      */
-    protected function selectSetupLanguage()
+    protected function selectSetupLanguage(): ResponseInterface
     {
-        WCF::getTPL()->assign([
-            'availableLanguages' => self::$availableLanguages,
-            'nextStep' => 'showLicense',
-        ]);
-        WCF::getTPL()->display('stepSelectSetupLanguage');
+        return new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepSelectSetupLanguage',
+                'wcf',
+                [
+                    'availableLanguages' => self::$availableLanguages,
+                    'nextStep' => 'showLicense',
+                ]
+            )
+        );
     }
 
     /**
      * Shows the license agreement.
      */
-    protected function showLicense()
+    protected function showLicense(): ResponseInterface
     {
+        $missingAcception = false;
+
         if (isset($_POST['send'])) {
             if (isset($_POST['accepted'])) {
-                $this->gotoNextStep('showSystemRequirements');
-
-                exit;
+                return $this->gotoNextStep('showSystemRequirements');
             } else {
-                WCF::getTPL()->assign(['missingAcception' => true]);
+                $missingAcception = true;
             }
         }
 
@@ -364,17 +375,23 @@ final class WCFSetup extends WCF
             $license = \file_get_contents(TMP_DIR . 'setup/license/license_en.txt');
         }
 
-        WCF::getTPL()->assign([
-            'license' => $license,
-            'nextStep' => 'showLicense',
-        ]);
-        WCF::getTPL()->display('stepShowLicense');
+        return new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepShowLicense',
+                'wcf',
+                [
+                    'license' => $license,
+                    'missingAcception' => $missingAcception,
+                    'nextStep' => 'showLicense',
+                ]
+            )
+        );
     }
 
     /**
      * Shows the system requirements.
      */
-    protected function showSystemRequirements()
+    protected function showSystemRequirements(): ResponseInterface
     {
         $system = [];
 
@@ -438,19 +455,21 @@ final class WCFSetup extends WCF
 
         foreach ($system as $result) {
             if (!$result['result']) {
-                WCF::getTPL()->assign([
-                    'system' => $system,
-                    'nextStep' => 'configureDirectories',
-                ]);
-
-                WCF::getTPL()->display('stepShowSystemRequirements');
-
-                return;
+                return new HtmlResponse(
+                    WCF::getTPL()->fetchStream(
+                        'stepShowSystemRequirements',
+                        'wcf',
+                        [
+                            'system' => $system,
+                            'nextStep' => 'configureDirectories',
+                        ]
+                    )
+                );
             }
         }
 
         // If all system requirements are met, directly go to next step.
-        $this->gotoNextStep('configureDirectories');
+        return $this->gotoNextStep('configureDirectories');
     }
 
     /**
@@ -587,9 +606,7 @@ final class WCFSetup extends WCF
                 self::$directories = \array_merge(self::$directories, $applicationPaths);
                 WCF::getTPL()->assign(['directories' => self::$directories]);
 
-                $this->unzipFiles();
-
-                return;
+                return $this->unzipFiles();
             }
         } else {
             // resolve path relative to document root
@@ -604,41 +621,44 @@ final class WCFSetup extends WCF
             }
         }
 
-        WCF::getTPL()->assign([
-            'directories' => self::$directories,
-            'documentRoot' => $documentRoot,
-            'errors' => $errors,
-            'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR),
-            'nextStep' => 'configureDirectories', // call this step again to validate paths
-            'packages' => $packages,
-            'showOrder' => $showOrder,
-        ]);
-
-        WCF::getTPL()->display('stepConfigureDirectories');
+        return new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepConfigureDirectories',
+                'wcf',
+                [
+                    'directories' => self::$directories,
+                    'documentRoot' => $documentRoot,
+                    'errors' => $errors,
+                    'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR),
+                    'nextStep' => 'configureDirectories', // call this step again to validate paths
+                    'packages' => $packages,
+                    'showOrder' => $showOrder,
+                ]
+            )
+        );
     }
 
     /**
      * Unzips the files of the wcfsetup tar archive.
      */
-    protected function unzipFiles()
+    protected function unzipFiles(): ResponseInterface
     {
         // WCF seems to be installed, abort
         if (@\is_file(self::$directories['wcf'] . 'lib/system/WCF.class.php')) {
             throw new SystemException(
                 'Target directory seems to be an existing installation of WCF, unable to continue.'
             );
-        } // WCF not yet installed, install files first
-        else {
-            static::installFiles();
-
-            $this->gotoNextStep('configureDB');
         }
+
+        static::installFiles();
+
+        return $this->gotoNextStep('configureDB');
     }
 
     /**
      * Shows the page for configuring the database connection.
      */
-    protected function configureDB()
+    protected function configureDB(): ResponseInterface
     {
         $attemptConnection = isset($_POST['send']);
 
@@ -774,7 +794,6 @@ final class WCFSetup extends WCF
                 // check for table conflicts
                 $conflictedTables = $this->getConflictedTables($db);
 
-                // write config.inc
                 if (empty($conflictedTables)) {
                     // connection successfully established
                     // write configuration to config.inc.php
@@ -788,26 +807,29 @@ final class WCFSetup extends WCF
                     $file->write("if (!defined('WCF_N')) define('WCF_N', 1);\n");
                     $file->close();
 
-                    // go to next step
-                    $this->gotoNextStep('createDB');
-
-                    exit;
-                } // show configure template again
-                else {
+                    return $this->gotoNextStep('createDB');
+                } else {
+                    // show configure template again
                     WCF::getTPL()->assign(['conflictedTables' => $conflictedTables]);
                 }
             } catch (SystemException $e) {
                 WCF::getTPL()->assign(['exception' => $e]);
             }
         }
-        WCF::getTPL()->assign([
-            'dbHost' => $dbHost,
-            'dbUser' => $dbUser,
-            'dbPassword' => $dbPassword,
-            'dbName' => $dbName,
-            'nextStep' => 'configureDB',
-        ]);
-        WCF::getTPL()->display('stepConfigureDB');
+
+        return new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepConfigureDB',
+                'wcf',
+                [
+                    'dbHost' => $dbHost,
+                    'dbUser' => $dbUser,
+                    'dbPassword' => $dbPassword,
+                    'dbName' => $dbName,
+                    'nextStep' => 'configureDB',
+                ]
+            )
+        );
     }
 
     /**
@@ -844,7 +866,7 @@ final class WCFSetup extends WCF
     /**
      * Creates the database structure of the wcf.
      */
-    protected function createDB()
+    protected function createDB(): ResponseInterface
     {
         $this->initDB();
 
@@ -886,7 +908,7 @@ final class WCFSetup extends WCF
                 ],
             ]);
 
-            $this->gotoNextStep('createDB');
+            return $this->gotoNextStep('createDB');
         } else {
             /*
              * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
@@ -902,14 +924,14 @@ final class WCFSetup extends WCF
                 'wcf\system\package\plugin\PIPPackageInstallationPlugin',
             ]);
 
-            $this->gotoNextStep('logFiles');
+            return $this->gotoNextStep('logFiles');
         }
     }
 
     /**
      * Logs the unzipped files.
      */
-    protected function logFiles()
+    protected function logFiles(): ResponseInterface
     {
         $this->initDB();
 
@@ -954,7 +976,7 @@ final class WCFSetup extends WCF
             self::getDB()->commitTransaction();
         }
 
-        $this->gotoNextStep('installLanguage');
+        return $this->gotoNextStep('installLanguage');
     }
 
     /**
@@ -978,7 +1000,7 @@ final class WCFSetup extends WCF
     /**
      * Installs the selected languages.
      */
-    protected function installLanguage()
+    protected function installLanguage(): ResponseInterface
     {
         $this->initDB();
 
@@ -1012,14 +1034,13 @@ final class WCFSetup extends WCF
         // rebuild language cache
         LanguageCacheBuilder::getInstance()->reset();
 
-        // go to next step
-        $this->gotoNextStep('createUser');
+        return $this->gotoNextStep('createUser');
     }
 
     /**
      * Shows the page for creating the admin account.
      */
-    protected function createUser()
+    protected function createUser(): ResponseInterface
     {
         $errorType = $errorField = $username = $email = $confirmEmail = $password = $confirmPassword = '';
 
@@ -1125,33 +1146,35 @@ final class WCFSetup extends WCF
                 $userAction = new UserAction([], 'create', $data);
                 $userAction->executeAction();
 
-                // go to next step
-                $this->gotoNextStep('installPackages');
-
-                exit;
+                return $this->gotoNextStep('installPackages');
             } catch (UserInputException $e) {
                 $errorField = $e->getField();
                 $errorType = $e->getType();
             }
         }
 
-        WCF::getTPL()->assign([
-            'errorField' => $errorField,
-            'errorType' => $errorType,
-            'username' => $username,
-            'email' => $email,
-            'confirmEmail' => $confirmEmail,
-            'password' => $password,
-            'confirmPassword' => $confirmPassword,
-            'nextStep' => 'createUser',
-        ]);
-        WCF::getTPL()->display('stepCreateUser');
+        return new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepCreateUser',
+                'wcf',
+                [
+                    'errorField' => $errorField,
+                    'errorType' => $errorType,
+                    'username' => $username,
+                    'email' => $email,
+                    'confirmEmail' => $confirmEmail,
+                    'password' => $password,
+                    'confirmPassword' => $confirmPassword,
+                    'nextStep' => 'createUser',
+                ]
+            )
+        );
     }
 
     /**
      * Registers with wcf setup delivered packages in the package installation queue.
      */
-    protected function installPackages()
+    protected function installPackages(): ResponseInterface
     {
         // init database connection
         $this->initDB();
@@ -1266,10 +1289,15 @@ final class WCFSetup extends WCF
 
         // Generate the output. This must happen before the session updates, because the
         // language won't work correctly otherwise.
-        WCF::getTPL()->assign([
-            'wcfAcp' => \RELATIVE_WCF_DIR . 'acp/index.php',
-        ]);
-        $output = WCF::getTPL()->fetch('stepInstallPackages');
+        $output = new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepInstallPackages',
+                'wcf',
+                [
+                    'wcfAcp' => \RELATIVE_WCF_DIR . 'acp/index.php',
+                ]
+            )
+        );
 
         // Set up the session and login as the administrator.
         $factory = new ACPSessionFactory();
@@ -1285,10 +1313,6 @@ final class WCFSetup extends WCF
         SessionHandler::getInstance()->register('__wcfSetup_imagick', $useImagick);
         SessionHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
-
-        // print page
-        HeaderUtil::sendHeaders();
-        echo $output;
 
         // Delete tmp files
         $iterator = new \RecursiveIteratorIterator(
@@ -1306,17 +1330,24 @@ final class WCFSetup extends WCF
             }
         }
         \rmdir(TMP_DIR . '/');
+
+        return $output;
     }
 
     /**
      * Goes to the next step.
-     *
-     * @param string $nextStep
      */
-    protected function gotoNextStep($nextStep)
+    protected function gotoNextStep(string $nextStep): ResponseInterface
     {
-        WCF::getTPL()->assign(['nextStep' => $nextStep]);
-        WCF::getTPL()->display('stepNext');
+        return new HtmlResponse(
+            WCF::getTPL()->fetchStream(
+                'stepNext',
+                'wcf',
+                [
+                    'nextStep' => $nextStep,
+                ]
+            )
+        );
     }
 
     /**
