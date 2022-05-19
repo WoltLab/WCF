@@ -7,6 +7,7 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
+use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
@@ -103,8 +104,10 @@ class RequestHandler extends SingletonFactory
                 \header('cross-origin-resource-policy: same-site');
             }
 
+            $pipeline = new Pipeline([]);
+
             $this->sendPsr7Response(
-                $this->getActiveRequest()->handle($psrRequest)
+                $pipeline->process($psrRequest, $this->getActiveRequest())
             );
         } catch (NamedUserException $e) {
             $e->show();
