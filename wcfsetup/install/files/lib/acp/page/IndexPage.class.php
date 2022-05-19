@@ -194,7 +194,7 @@ class IndexPage extends AbstractPage
     public function show()
     {
         // check package installation queue
-        if ($this->action == 'WCFSetup') {
+        if (!\PACKAGE_ID && $this->action == 'WCFSetup') {
             $queueID = PackageInstallationDispatcher::checkPackageInstallationQueue();
 
             if ($queueID) {

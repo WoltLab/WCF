@@ -4,7 +4,7 @@
 	<div class="section">
 		<div class="searchBar">
 			<input id="searchQuery" class="searchQuery long" type="text" name="q" value="" maxlength="255" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" autofocus>
-			<select id="searchType" class="searchType" name="type" aria-label="wcf.search.type">
+			<select id="searchType" class="searchType" name="type" aria-label="{lang}wcf.search.type{/lang}">
 				<option value="">{lang}wcf.search.type.everywhere{/lang}</option>
 				{foreach from=$objectTypes key=objectTypeName item=objectType}
 					{if $objectType->isAccessible()}

@@ -27,6 +27,28 @@
 }
 
 .contentHeader {
+	align-items: flex-start;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -10px;
+
+	.contentHeaderIcon {
+		flex: 0 0 64px;
+		margin-right: 15px;
+	}
+
+	.contentHeaderTitle {
+		flex: 1 auto;
+		margin-top: 10px;
+	}
+
+	.contentHeaderNavigation {
+		flex: 0 0 auto;
+		margin-left: 15px;
+		margin-top: 10px;
+		max-width: 50%;
+	}
+
 	.contentHeaderDescription {
 		color: $wcfContentDimmedText;
 		margin-top: 5px;
@@ -79,31 +101,15 @@
 	}
 
 	@include screen-sm-down {
+		flex-wrap: wrap;
+
 		.contentHeaderIcon {
 			display: none;
-		}
-
-		.contentHeaderNavigation > ul {
-			margin-top: 10px;
 		}
 	}
 
 	@include screen-md-up {
-		display: flex;
-		align-items: flex-start;
-
-		.contentHeaderIcon {
-			flex: 0 0 64px;
-			margin-right: 15px;
-		}
-
-		.contentHeaderTitle {
-			flex: 1 1 0%;
-		}
-
 		.contentHeaderNavigation {
-			flex: 0 0 auto;
-			margin-left: 15px;
 			max-width: 50%;
 		}
 	}
@@ -433,16 +439,22 @@ fieldset {
 	}
 }
 
+@include screen-sm-down {
+	.contentHeader + .contentInteraction {
+		margin-top: 10px;
+	}
+}
+
 .contentInteractionButtonContainer {
 	align-self: center;
 	display: flex;
 	margin-left: auto;
-	overflow: auto;
 }
 
 .contentInteractionButtons {
 	display: flex;
-	flex: 0 0 auto;
+	flex: 0 auto;
+	overflow: auto;
 }
 
 .contentInteractionButton {
@@ -472,7 +484,7 @@ fieldset {
 
 .contentInteractionDropdown {
 	display: flex;
-	flex: 0 0 auto;
+	flex: 1 auto;
 	margin-left: 5px;
 
 	.dropdownToggle {
