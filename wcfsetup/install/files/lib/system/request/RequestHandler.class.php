@@ -2,11 +2,11 @@
 
 namespace wcf\system\request;
 
-use GuzzleHttp\Psr7\Header;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
+use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\box\BoxHandler;
@@ -104,7 +104,9 @@ class RequestHandler extends SingletonFactory
                 \header('cross-origin-resource-policy: same-site');
             }
 
-            $pipeline = new Pipeline([]);
+            $pipeline = new Pipeline([
+                new EnforceCacheControlPrivate(),
+            ]);
 
             $this->sendPsr7Response(
                 $pipeline->process($psrRequest, $this->getActiveRequest())
@@ -124,34 +126,6 @@ class RequestHandler extends SingletonFactory
         if ($response instanceof LegacyPlaceholderResponse) {
             return;
         }
-
-        // Storing responses in a shared cache is unsafe, because they all contain session specific information.
-        // Add the 'private' value to the cache-control header and remove any 'public' value.
-        $cacheControl = [
-            'private',
-        ];
-        foreach (Header::normalize($response->getHeader('cache-control')) as $value) {
-            [$field] = \explode('=', $value, 2);
-
-            // Prevent duplication of the 'private' field.
-            if ($field === 'private') {
-                continue;
-            }
-
-            // Drop the 'public' field.
-            if ($field === 'public') {
-                continue;
-            }
-
-            $cacheControl[] = $value;
-        }
-
-        $response = $response->withHeader(
-            'cache-control',
-            // Manually imploding the fields is not required as per strict reading of the HTTP standard,
-            // but having duplicate 'cache-control' headers in the response certainly looks odd.
-            \implode(', ', $cacheControl)
-        );
 
         $response->withHeader('x-frame-options', 'SAMEORIGIN');
 
