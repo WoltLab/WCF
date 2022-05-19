@@ -86,15 +86,13 @@ final class HeaderUtil
         @\header('Content-Type: text/html; charset=UTF-8');
 
         // send no cache headers
-        if (!PACKAGE_ID || !WCF::getSession()->spiderID) {
+        if (!WCF::getSession()->spiderID) {
             self::sendNoCacheHeaders();
         }
 
         @\header('X-Frame-Options: SAMEORIGIN');
 
-        if (!\defined('NO_IMPORTS')) {
-            \ob_start([self::class, 'parseOutput']);
-        }
+        \ob_start([self::class, 'parseOutput']);
     }
 
     /**

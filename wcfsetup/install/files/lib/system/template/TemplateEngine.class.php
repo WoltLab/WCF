@@ -318,10 +318,7 @@ class TemplateEngine extends SingletonFactory
         if ($sendHeaders) {
             HeaderUtil::sendHeaders();
 
-            // call beforeDisplay event
-            if (!\defined('NO_IMPORTS')) {
-                EventHandler::getInstance()->fireAction($this, 'beforeDisplay');
-            }
+            EventHandler::getInstance()->fireAction($this, 'beforeDisplay');
         }
 
         $sourceFilename = $this->getSourceFilename($templateName, $application);
@@ -348,10 +345,7 @@ class TemplateEngine extends SingletonFactory
         include($compiledFilename);
 
         if ($sendHeaders) {
-            // call afterDisplay event
-            if (!\defined('NO_IMPORTS')) {
-                EventHandler::getInstance()->fireAction($this, 'afterDisplay');
-            }
+            EventHandler::getInstance()->fireAction($this, 'afterDisplay');
         }
     }
 
