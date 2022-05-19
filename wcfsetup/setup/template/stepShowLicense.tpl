@@ -7,12 +7,12 @@
 			<p class="sectionDescription">{lang}wcf.global.license.description{/lang}</p>
 		</header>
 		
-		<dl{if $missingAcception|isset} class="formError"{/if}>
+		<dl{if $missingAcception|isset && $missingAcception} class="formError"{/if}>
 			<dt></dt>
 			<dd>
 				<textarea rows="20" cols="40" readonly autofocus id="license">{$license}</textarea>
 				<label><input type="checkbox" name="accepted" value="1"> {lang}wcf.global.license.accept.description{/lang}</label>
-				{if $missingAcception|isset}
+				{if $missingAcception|isset && $missingAcception}
 					<small class="innerError">
 						{lang}wcf.global.license.missingAcception{/lang}
 					</small>
