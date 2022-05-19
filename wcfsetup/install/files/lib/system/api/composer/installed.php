@@ -199,6 +199,15 @@
             'reference' => 'aff2f80e33b7f026ec96bb42f63242dc50ffcae7',
             'dev_requirement' => false,
         ),
+        'psr/http-server-middleware' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-server-middleware',
+            'aliases' => array(),
+            'reference' => '2296f45510945530b9dceb8bcedb5cb84d40c5f5',
+            'dev_requirement' => false,
+        ),
         'ralouphie/getallheaders' => array(
             'pretty_version' => '3.0.3',
             'version' => '3.0.3.0',

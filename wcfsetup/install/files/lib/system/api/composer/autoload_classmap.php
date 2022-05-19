@@ -488,6 +488,7 @@ return array(
     'Psr\\Http\\Message\\UploadedFileInterface' => $vendorDir . '/psr/http-message/src/UploadedFileInterface.php',
     'Psr\\Http\\Message\\UriFactoryInterface' => $vendorDir . '/psr/http-factory/src/UriFactoryInterface.php',
     'Psr\\Http\\Message\\UriInterface' => $vendorDir . '/psr/http-message/src/UriInterface.php',
+    'Psr\\Http\\Server\\MiddlewareInterface' => $vendorDir . '/psr/http-server-middleware/src/MiddlewareInterface.php',
     'Psr\\Http\\Server\\RequestHandlerInterface' => $vendorDir . '/psr/http-server-handler/src/RequestHandlerInterface.php',
     'Sabberworm\\CSS\\CSSList\\AtRuleBlockList' => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/AtRuleBlockList.php',
     'Sabberworm\\CSS\\CSSList\\CSSBlockList' => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/CSSBlockList.php',

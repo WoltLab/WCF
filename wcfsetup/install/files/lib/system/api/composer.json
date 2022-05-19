@@ -23,6 +23,7 @@
         "scssphp/scssphp": "^1.10.2",
         "true/punycode": "^2.1.1",
         "psr/http-server-handler": "^1.0",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     }
 }
