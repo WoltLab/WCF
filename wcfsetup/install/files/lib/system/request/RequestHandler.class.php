@@ -5,6 +5,7 @@ namespace wcf\system\request;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use wcf\http\LegacyPlaceholderResponse;
+use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\Pipeline;
@@ -98,13 +99,8 @@ class RequestHandler extends SingletonFactory
 
             $this->checkOfflineMode();
 
-            if ($this->isACPRequest()) {
-                \header('referrer-policy: same-origin');
-                \header('cross-origin-opener-policy: same-origin');
-                \header('cross-origin-resource-policy: same-site');
-            }
-
             $pipeline = new Pipeline([
+                new AddAcpSecurityHeaders(),
                 new EnforceCacheControlPrivate(),
                 new EnforceFrameOptions(),
             ]);
