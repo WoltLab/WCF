@@ -1508,8 +1508,6 @@ CREATE TABLE wcf1_user (
 	disableAvatar TINYINT(1) NOT NULL DEFAULT 0,
 	disableAvatarReason TEXT,
 	disableAvatarExpires INT(10) NOT NULL DEFAULT 0,
-	enableGravatar TINYINT(1) NOT NULL DEFAULT 0,
-	gravatarFileExtension VARCHAR(3) NOT NULL DEFAULT '',
 	signature TEXT,
 	signatureEnableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	disableSignature TINYINT(1) NOT NULL DEFAULT 0,

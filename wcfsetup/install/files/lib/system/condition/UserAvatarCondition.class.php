@@ -47,8 +47,7 @@ class UserAvatarCondition extends AbstractSelectCondition implements
     const AVATAR = 1;
 
     /**
-     * value of the "user has a gravatar" option
-     * @var int
+     * @deprecated 6.0 This value is reserved for backwards compatibility with existing conditions.
      */
     const GRAVATAR = 2;
 
@@ -72,7 +71,7 @@ class UserAvatarCondition extends AbstractSelectCondition implements
                 break;
 
             case self::GRAVATAR:
-                $objectList->getConditionBuilder()->add('user_table.enableGravatar = ?', [1]);
+                $objectList->getConditionBuilder()->add('1 = 0');
                 break;
         }
     }
@@ -84,16 +83,13 @@ class UserAvatarCondition extends AbstractSelectCondition implements
     {
         switch ($condition->userAvatar) {
             case self::NO_AVATAR:
-                return !$user->avatarID && !$user->enableGravatar;
-                break;
+                return !$user->avatarID;
 
             case self::AVATAR:
                 return $user->avatarID != 0;
-                break;
 
             case self::GRAVATAR:
-                return $user->enableGravatar;
-                break;
+                return false;
         }
     }
 
@@ -107,9 +103,6 @@ class UserAvatarCondition extends AbstractSelectCondition implements
             self::NO_AVATAR => 'wcf.user.condition.avatar.noAvatar',
             self::AVATAR => 'wcf.user.condition.avatar.avatar',
         ];
-        if (MODULE_GRAVATAR) {
-            $options[self::GRAVATAR] = 'wcf.user.condition.avatar.gravatar';
-        }
 
         return $options;
     }

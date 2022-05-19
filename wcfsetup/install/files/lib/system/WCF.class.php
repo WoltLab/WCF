@@ -497,6 +497,10 @@ class WCF
 
         // Multi-domain setups were removed in 5.6.
         \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
+
+        // Gravatars were removed in 6.0.
+        \define('MODULE_GRAVATAR', 0);
+        \define('GRAVATAR_DEFAULT_TYPE', '404');
     }
 
     /**

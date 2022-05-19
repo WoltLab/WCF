@@ -51,4 +51,11 @@ return [
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
         ]),
+    PartialDatabaseTable::create('wcf1_user')
+        ->columns([
+            TinyintDatabaseTableColumn::create('enableGravatar')
+                ->drop(),
+            VarcharDatabaseTableColumn::create('gravatarFileExtension')
+                ->drop(),
+        ]),
 ];

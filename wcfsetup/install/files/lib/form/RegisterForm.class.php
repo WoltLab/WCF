@@ -6,7 +6,6 @@ use ParagonIE\ConstantTime\Hex;
 use wcf\acp\form\UserAddForm;
 use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
-use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
@@ -417,11 +416,6 @@ class RegisterForm extends UserAddForm
             $this->additionalFields['emailConfirmed'] = $emailConfirmCode;
             $addDefaultGroups = false;
             $this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
-        }
-
-        // check gravatar support
-        if (MODULE_GRAVATAR && Gravatar::test($this->email)) {
-            $this->additionalFields['enableGravatar'] = 1;
         }
 
         // create user

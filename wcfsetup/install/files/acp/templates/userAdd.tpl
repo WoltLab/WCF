@@ -648,21 +648,6 @@
 						</dd>
 					</dl>
 
-					{if MODULE_GRAVATAR}
-						<dl class="avatarType{if $errorType[gravatar]|isset} formError{/if}">
-							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
-							<dd>
-								<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
-
-								{if $errorType[gravatar]|isset}
-									<small class="innerError">
-										{if $errorType[gravatar] == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}
-									</small>
-								{/if}
-							</dd>
-						</dl>
-					{/if}
-
 					{event name='avatarFields'}
 				</section>
 

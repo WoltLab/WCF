@@ -1441,8 +1441,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Authentifizierung über Drittanbieter]]></item>
-		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare (veraltet / nicht empfohlen)]]></item>
-		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Aus Datenschutzgründen ist die Verwendung von Gravataren nicht empfohlen. Sie wird in einer zukünftigen Version entfernt.]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[„Benutzer online“-Anzeige]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
@@ -1591,13 +1589,6 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Legt fest nach welchem Zeitraum protokollierte Anmeldeversuche gelöscht werden.]]></item>
 		<item name="wcf.acp.option.signature_secret"><![CDATA[Geheimer Schlüssel]]></item>
 		<item name="wcf.acp.option.signature_secret.description"><![CDATA[Ein geheimer Schlüssel, welcher zur Überprüfung von übertragenen Daten bestimmter Funktionen dient. Dieser Schlüssel ist vertraulich zu behandeln! Der Schlüssel wurde bei der Installation zufällig generiert und sollte nur in Ausnahmefällen geändert werden. <strong>Achtung</strong>: Dieser Schlüssel muss mindestens 15 Zeichen lang sein.]]></item>
-		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Standard Gravatar-Typ]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[Der <a class="externalURL" href="https://de.gravatar.com/site/implement/images/#default-image">Standard-Gravatar-Typ</a>, wenn einer E-Mail kein Gravatar zugeordnet werden kann.]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[Kein Standard-Gravatar]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.identicon"><![CDATA[Identicon]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster-ID]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (Standard)]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Empfohlene Plugins anzeigen]]></item>
@@ -5178,12 +5169,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar verwalten]]></item>
-		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID || $__wcf->user->enableGravatar} {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} derzeitigen Avatar gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
+		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID} {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} derzeitigen Avatar gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} und maximal eine Dateigröße von {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
-		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Gravatar verwenden]]></item>
-		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Bei einem Gravatar handelt es sich um einen global verfügbaren Avatar (Global Recognized Avatar), welcher mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse („{$__wcf->user->email}“) verknüpft ist. Auf der folgenden Website {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} einen Gravatar anlegen: <a href="https://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a>]]></item>
-		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Zu {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse konnte kein Gravatar gefunden werden.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Keinen Avatar verwenden]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Bereits hochgeladene Avatare werden bei Auswahl dieser Option gelöscht.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
@@ -5197,7 +5185,6 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Punkte]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Eigener Avatar]]></item>
-		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
 		<item name="wcf.user.condition.avatar.noAvatar"><![CDATA[Kein Avatar]]></item>
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Inhalte]]></item>
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[Allgemeine Daten]]></item>
@@ -5567,5 +5554,18 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.option.category.general.cache.memcached"/>
 	<item name="wcf.acp.option.category.general.cache.memcached.description"/>
 	<item name="wcf.acp.option.cache_source_type.memcached"/>
+	<item name="wcf.acp.option.module_gravatar"/>
+	<item name="wcf.acp.option.module_gravatar.description"/>
+	<item name="wcf.acp.option.gravatar_default_type"/>
+	<item name="wcf.acp.option.gravatar_default_type.description"/>
+	<item name="wcf.acp.option.gravatar_default_type.404"/>
+	<item name="wcf.acp.option.gravatar_default_type.identicon"/>
+	<item name="wcf.acp.option.gravatar_default_type.wavatar"/>
+	<item name="wcf.acp.option.gravatar_default_type.monsterid"/>
+	<item name="wcf.acp.option.gravatar_default_type.retro"/>
+	<item name="wcf.user.avatar.type.gravatar"/>
+	<item name="wcf.user.avatar.type.gravatar.description"/>
+	<item name="wcf.user.avatar.type.gravatar.error.notFound"/>
+	<item name="wcf.user.condition.avatar.gravatar"/>
 </delete>
 </language>

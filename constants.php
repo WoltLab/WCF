@@ -29,7 +29,6 @@
 \define('MODULE_COOKIE_POLICY_PAGE', 1);
 \define('MODULE_ATTACHMENT', 1);
 \define('MODULE_SMILEY', 1);
-\define('MODULE_GRAVATAR', 1);
 \define('MODULE_USERS_ONLINE', 1);
 \define('MODULE_USER_RANK', 1);
 \define('MODULE_USER_SIGNATURE', 1);
@@ -137,7 +136,6 @@
 \define('FACEBOOK_PRIVATE_KEY', '');
 \define('GOOGLE_PUBLIC_KEY', '');
 \define('GOOGLE_PRIVATE_KEY', '');
-\define('GRAVATAR_DEFAULT_TYPE', '404');
 \define('SIGNATURE_MAX_IMAGE_HEIGHT', 150);
 \define('USER_TITLE_MAX_LENGTH', 25);
 \define('USER_FORBIDDEN_TITLES', '');

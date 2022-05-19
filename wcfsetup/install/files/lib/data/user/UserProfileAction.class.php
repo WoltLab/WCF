@@ -636,7 +636,6 @@ class UserProfileAction extends UserAction implements IPopoverAction
             $userEditor = new UserEditor($user->getDecoratedObject());
             $userEditor->update([
                 'avatarID' => $avatar->avatarID,
-                'enableGravatar' => 0,
             ]);
         } catch (\Exception $e) {
             $editor = new UserAvatarEditor($avatar);
