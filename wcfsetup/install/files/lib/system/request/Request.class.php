@@ -92,13 +92,17 @@ final class Request implements RequestHandlerInterface
             $this->requestObject = new $this->className();
         }
 
-        $response = $this->requestObject->__run();
+        if ($this->requestObject instanceof RequestHandlerInterface) {
+            return $this->requestObject->handle($request);
+        } else {
+            $response = $this->requestObject->__run();
 
-        if ($response instanceof ResponseInterface) {
-            return $response;
+            if ($response instanceof ResponseInterface) {
+                return $response;
+            } else {
+                return new LegacyPlaceholderResponse();
+            }
         }
-
-        return new LegacyPlaceholderResponse();
     }
 
     /**
