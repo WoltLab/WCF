@@ -145,6 +145,8 @@ class RequestHandler extends SingletonFactory
             \implode(', ', $cacheControl)
         );
 
+        $response->withHeader('x-frame-options', 'SAMEORIGIN');
+
         $emitter = new SapiEmitter();
         $emitter->emit($response);
     }
