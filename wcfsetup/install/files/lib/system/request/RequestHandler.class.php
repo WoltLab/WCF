@@ -100,12 +100,9 @@ class RequestHandler extends SingletonFactory
                 \header('cross-origin-resource-policy: same-site');
             }
 
-            // start request
-            $result = $this->getActiveRequest()->execute();
-
-            if ($result instanceof ResponseInterface) {
-                $this->sendPsr7Response($result);
-            }
+            $this->sendPsr7Response(
+                $this->getActiveRequest()->execute()
+            );
         } catch (NamedUserException $e) {
             $e->show();
 
