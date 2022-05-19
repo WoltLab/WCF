@@ -7,6 +7,7 @@ use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\EnforceCacheControlPrivate;
+use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\box\BoxHandler;
@@ -106,6 +107,7 @@ class RequestHandler extends SingletonFactory
 
             $pipeline = new Pipeline([
                 new EnforceCacheControlPrivate(),
+                new EnforceFrameOptions(),
             ]);
 
             $this->sendPsr7Response(
@@ -126,8 +128,6 @@ class RequestHandler extends SingletonFactory
         if ($response instanceof LegacyPlaceholderResponse) {
             return;
         }
-
-        $response->withHeader('x-frame-options', 'SAMEORIGIN');
 
         $emitter = new SapiEmitter();
         $emitter->emit($response);
