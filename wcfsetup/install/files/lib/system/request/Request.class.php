@@ -2,7 +2,9 @@
 
 namespace wcf\system\request;
 
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\page\PageCache;
+use wcf\http\LegacyPlaceholderResponse;
 
 /**
  * Represents a page request.
@@ -82,12 +84,18 @@ class Request
     /**
      * Executes this request.
      */
-    public function execute()
+    public function execute(): ResponseInterface
     {
         if ($this->requestObject === null) {
             $this->requestObject = new $this->className();
 
-            return $this->requestObject->__run();
+            $response = $this->requestObject->__run();
+
+            if ($response instanceof ResponseInterface) {
+                return $response;
+            }
+
+            return new LegacyPlaceholderResponse();
         }
     }
 
