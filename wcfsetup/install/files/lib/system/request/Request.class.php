@@ -10,11 +10,11 @@ use wcf\http\LegacyPlaceholderResponse;
  * Represents a page request.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
-class Request
+final class Request
 {
     /**
      * page class name
