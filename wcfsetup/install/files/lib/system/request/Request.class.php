@@ -3,6 +3,8 @@
 namespace wcf\system\request;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\page\PageCache;
 use wcf\http\LegacyPlaceholderResponse;
 
@@ -14,7 +16,7 @@ use wcf\http\LegacyPlaceholderResponse;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
-final class Request
+final class Request implements RequestHandlerInterface
 {
     /**
      * page class name
@@ -82,21 +84,21 @@ final class Request
     }
 
     /**
-     * Executes this request.
+     * @inheritDoc
      */
-    public function execute(): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->requestObject === null) {
             $this->requestObject = new $this->className();
-
-            $response = $this->requestObject->__run();
-
-            if ($response instanceof ResponseInterface) {
-                return $response;
-            }
-
-            return new LegacyPlaceholderResponse();
         }
+
+        $response = $this->requestObject->__run();
+
+        if ($response instanceof ResponseInterface) {
+            return $response;
+        }
+
+        return new LegacyPlaceholderResponse();
     }
 
     /**

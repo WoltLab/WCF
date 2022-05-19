@@ -3,6 +3,7 @@
 namespace wcf\system\request;
 
 use GuzzleHttp\Psr7\Header;
+use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
@@ -76,6 +77,8 @@ class RequestHandler extends SingletonFactory
                 }
             }
 
+            $psrRequest = ServerRequestFactory::fromGlobals();
+
             // build request
             $this->buildRequest($application);
 
@@ -101,7 +104,7 @@ class RequestHandler extends SingletonFactory
             }
 
             $this->sendPsr7Response(
-                $this->getActiveRequest()->execute()
+                $this->getActiveRequest()->handle($psrRequest)
             );
         } catch (NamedUserException $e) {
             $e->show();
