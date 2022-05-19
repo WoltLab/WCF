@@ -5,6 +5,7 @@ namespace wcf\system\request;
 use GuzzleHttp\Psr7\Header;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\ResponseInterface;
+use wcf\http\LegacyPlaceholderResponse;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
@@ -117,6 +118,10 @@ class RequestHandler extends SingletonFactory
      */
     private function sendPsr7Response(ResponseInterface $response)
     {
+        if ($response instanceof LegacyPlaceholderResponse) {
+            return;
+        }
+
         // Storing responses in a shared cache is unsafe, because they all contain session specific information.
         // Add the 'private' value to the cache-control header and remove any 'public' value.
         $cacheControl = [
