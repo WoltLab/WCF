@@ -4,7 +4,6 @@ namespace wcf\system\request;
 
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
-use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
@@ -110,27 +109,19 @@ class RequestHandler extends SingletonFactory
                 new EnforceFrameOptions(),
             ]);
 
-            $this->sendPsr7Response(
-                $pipeline->process($psrRequest, $this->getActiveRequest())
-            );
+            $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+
+            if ($response instanceof LegacyPlaceholderResponse) {
+                return;
+            }
+
+            $emitter = new SapiEmitter();
+            $emitter->emit($response);
         } catch (NamedUserException $e) {
             $e->show();
 
             exit;
         }
-    }
-
-    /**
-     * @since 5.5
-     */
-    private function sendPsr7Response(ResponseInterface $response)
-    {
-        if ($response instanceof LegacyPlaceholderResponse) {
-            return;
-        }
-
-        $emitter = new SapiEmitter();
-        $emitter->emit($response);
     }
 
     /**
