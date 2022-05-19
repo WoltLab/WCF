@@ -24,11 +24,19 @@ final class EnforceFrameOptions implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        // Also set the headers using the regular `\header()` call, because we might receive a
+        // LegacyPlaceholderResponse and we also need to protect requests to legacy controllers.
+        // If a proper PSR-7 response is returned the headers will be removed again and set on
+        // the response object.
+        \header('x-frame-options: SAMEORIGIN');
+
         $response = $handler->handle($request);
 
         if ($response instanceof LegacyPlaceholderResponse) {
             return $response;
         }
+
+        \header_remove('x-frame-options');
 
         return $response->withHeader('x-frame-options', 'SAMEORIGIN');
     }
