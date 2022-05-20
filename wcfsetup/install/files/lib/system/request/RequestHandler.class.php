@@ -6,16 +6,15 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
+use wcf\http\middleware\CheckForOfflineMode;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
-use wcf\system\notice\NoticeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -97,12 +96,11 @@ class RequestHandler extends SingletonFactory
 
             $this->checkAppEvaluation();
 
-            $this->checkOfflineMode();
-
             $pipeline = new Pipeline([
                 new AddAcpSecurityHeaders(),
                 new EnforceCacheControlPrivate(),
                 new EnforceFrameOptions(),
+                new CheckForOfflineMode(),
             ]);
 
             $response = $pipeline->process($psrRequest, $this->getActiveRequest());
@@ -248,40 +246,6 @@ class RequestHandler extends SingletonFactory
             }
 
             throw new IllegalLinkException();
-        }
-    }
-
-    /**
-     * @since 5.5
-     */
-    private function checkOfflineMode()
-    {
-        if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
-            if (
-                !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
-                && !$this->getActiveRequest()->isAvailableDuringOfflineMode()
-            ) {
-                if (
-                    isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-                    && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
-                ) {
-                    throw new AJAXException(
-                        WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    @\header('HTTP/1.1 503 Service Unavailable');
-                    BoxHandler::disablePageLayout();
-                    NoticeHandler::disableNotices();
-                    WCF::getTPL()->assign([
-                        'templateName' => 'offline',
-                        'templateNameApplication' => 'wcf',
-                    ]);
-                    WCF::getTPL()->display('offline');
-                }
-
-                exit;
-            }
         }
     }
 
