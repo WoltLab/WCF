@@ -354,17 +354,16 @@ class ControllerMap extends SingletonFactory
     /**
      * Returns true if currently active request represents the landing page.
      *
-     * @param string[] $classData
      * @param array $metaData
      * @return  bool
      */
-    public function isLandingPage(array $classData, array $metaData)
+    public function isLandingPage(string $className, array $metaData)
     {
-        if ($classData['className'] !== $this->landingPages['wcf'][2]) {
+        if ($className !== $this->landingPages['wcf'][2]) {
             return false;
         }
 
-        if ($classData['className'] === CmsPage::class) {
+        if ($className === CmsPage::class) {
             // check if page id matches
             if ($this->landingPages['wcf'][1] !== '__WCF_CMS__' . $metaData['cms']['pageID']) {
                 return false;
