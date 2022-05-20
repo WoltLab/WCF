@@ -511,7 +511,12 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_bindListener: function() {
 		$(document).on('keydown.' + this._eventNamespace, $.proxy(this._keyDown, this));
-		$(window).on('resize.' + this._eventNamespace, $.proxy(this._renderImage, this));
+		$(window).on('resize.' + this._eventNamespace, () => {
+			// The resize event can trigger before the mobile UI has
+			// adapted to the new screen size (`screen-sm-down` no
+			// longer matches or previously did not match).
+			window.setTimeout(() => this._renderImage(), 0);
+		});
 	},
 	
 	/**

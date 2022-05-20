@@ -4,7 +4,7 @@
 	<div class="section">
 		<div class="searchBar">
 			<input id="searchQuery" class="searchQuery long" type="text" name="q" value="" maxlength="255" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" autofocus>
-			<select id="searchType" class="searchType" name="type" aria-label="wcf.search.type">
+			<select id="searchType" class="searchType" name="type" aria-label="{lang}wcf.search.type{/lang}">
 				<option value="">{lang}wcf.search.type.everywhere{/lang}</option>
 				{foreach from=$objectTypes key=objectTypeName item=objectType}
 					{if $objectType->isAccessible()}
@@ -20,9 +20,10 @@
 		
 			<div class="searchFilters defaultSearchFilters">
 				<dl>
-					<dt></dt>
+					<dt><label>{lang}wcf.search.searchIn{/lang}</label></dt>
 					<dd>
-						<label><input type="checkbox" name="subjectOnly" value="1"> {lang}wcf.search.subjectOnly{/lang}</label>
+						<label><input type="radio" name="subjectOnly" value="" checked> {lang}wcf.search.searchIn.subjectAndMessage{/lang}</label>
+						<label><input type="radio" name="subjectOnly" value="1"> {lang}wcf.search.searchIn.subjectOnly{/lang}</label>
 						{* deprecated *}{event name='queryOptions'}
 					</dd>
 				</dl>

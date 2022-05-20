@@ -4513,8 +4513,10 @@ Dateianhänge:
 		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevanz]]></item>
 		<item name="wcf.search.sortBy.time"><![CDATA[Datum]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Autor]]></item>
-		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
-		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
+		<item name="wcf.search.searchIn"><![CDATA[Suchen in]]></item>
+		<item name="wcf.search.searchIn.subjectAndMessage"><![CDATA[Betreff und Nachricht]]></item>
+		<item name="wcf.search.searchIn.subjectOnly"><![CDATA[Nur Betreff]]></item>
+		<item name="wcf.search.type"><![CDATA[Art der Inhalte]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Alles]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
@@ -5618,5 +5620,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.option.enable_desktop_notifications"/>
 	<item name="wcf.acp.option.enable_desktop_notifications.description"/>
 	<item name="wcf.search.matchExactly" />
+	<item name="wcf.search.subjectOnly" />
 </delete>
 </language>
