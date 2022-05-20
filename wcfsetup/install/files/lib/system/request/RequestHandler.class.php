@@ -147,8 +147,6 @@ class RequestHandler extends SingletonFactory
                 $routeData['controller'] = 'index';
             }
 
-            $controller = $routeData['controller'];
-
             if (isset($routeData['className'])) {
                 $classData = [
                     'className' => $routeData['className'],
@@ -158,6 +156,8 @@ class RequestHandler extends SingletonFactory
                 unset($routeData['className']);
                 unset($routeData['controller']);
             } else {
+                $controller = $routeData['controller'];
+
                 if (
                     $this->isACPRequest()
                     && ($controller === 'login' || $controller === 'index')
