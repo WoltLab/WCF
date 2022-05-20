@@ -90,8 +90,6 @@ final class HeaderUtil
             self::sendNoCacheHeaders();
         }
 
-        @\header('X-Frame-Options: SAMEORIGIN');
-
         \ob_start([self::class, 'parseOutput']);
     }
 

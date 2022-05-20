@@ -2,16 +2,21 @@
 
 namespace wcf\system\request;
 
-use GuzzleHttp\Psr7\Header;
+use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
-use Psr\Http\Message\ResponseInterface;
+use wcf\http\LegacyPlaceholderResponse;
+use wcf\http\middleware\AddAcpSecurityHeaders;
+use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
+use wcf\http\middleware\CheckForExpiredAppEvaluation;
+use wcf\http\middleware\CheckForOfflineMode;
+use wcf\http\middleware\EnforceCacheControlPrivate;
+use wcf\http\middleware\EnforceFrameOptions;
+use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
-use wcf\system\notice\NoticeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -75,80 +80,33 @@ class RequestHandler extends SingletonFactory
                 }
             }
 
+            $psrRequest = ServerRequestFactory::fromGlobals();
+
             // build request
             $this->buildRequest($application);
 
-            // enforce that certain ACP pages are not available for non-owners in enterprise mode
-            if (
-                $this->isACPRequest()
-                && ENABLE_ENTERPRISE_MODE
-                && \defined($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
-                && \constant($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
-                && !WCF::getUser()->hasOwnerAccess()
-            ) {
-                throw new IllegalLinkException();
+            $pipeline = new Pipeline([
+                new AddAcpSecurityHeaders(),
+                new EnforceCacheControlPrivate(),
+                new EnforceFrameOptions(),
+                new CheckForEnterpriseNonOwnerAccess(),
+                new CheckForExpiredAppEvaluation(),
+                new CheckForOfflineMode(),
+            ]);
+
+            $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+
+            if ($response instanceof LegacyPlaceholderResponse) {
+                return;
             }
 
-            $this->checkAppEvaluation();
-
-            $this->checkOfflineMode();
-
-            if ($this->isACPRequest()) {
-                \header('referrer-policy: same-origin');
-                \header('cross-origin-opener-policy: same-origin');
-                \header('cross-origin-resource-policy: same-site');
-            }
-
-            // start request
-            $result = $this->getActiveRequest()->execute();
-
-            if ($result instanceof ResponseInterface) {
-                $this->sendPsr7Response($result);
-            }
+            $emitter = new SapiEmitter();
+            $emitter->emit($response);
         } catch (NamedUserException $e) {
             $e->show();
 
             exit;
         }
-    }
-
-    /**
-     * @since 5.5
-     */
-    private function sendPsr7Response(ResponseInterface $response)
-    {
-        // Storing responses in a shared cache is unsafe, because they all contain session specific information.
-        // Add the 'private' value to the cache-control header and remove any 'public' value.
-        $cacheControl = [
-            'private',
-        ];
-        foreach (Header::normalize($response->getHeader('cache-control')) as $value) {
-            [$field] = \explode('=', $value, 2);
-
-            // Prevent duplication of the 'private' field.
-            if ($field === 'private') {
-                continue;
-            }
-
-            // Drop the 'public' field.
-            if ($field === 'public') {
-                continue;
-            }
-
-            $cacheControl[] = $value;
-        }
-
-        $response = $response->withHeader(
-            'cache-control',
-            // Manually imploding the fields is not required as per strict reading of the HTTP standard,
-            // but having duplicate 'cache-control' headers in the response certainly looks odd.
-            \implode(', ', $cacheControl)
-        );
-
-        $response->withHeader('x-frame-options', 'SAMEORIGIN');
-
-        $emitter = new SapiEmitter();
-        $emitter->emit($response);
     }
 
     /**
@@ -279,71 +237,6 @@ class RequestHandler extends SingletonFactory
             }
 
             throw new IllegalLinkException();
-        }
-    }
-
-    /**
-     * @since 5.5
-     */
-    private function checkOfflineMode()
-    {
-        if (!$this->isACPRequest() && \defined('OFFLINE') && OFFLINE) {
-            if (
-                !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
-                && !$this->getActiveRequest()->isAvailableDuringOfflineMode()
-            ) {
-                if (
-                    isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-                    && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
-                ) {
-                    throw new AJAXException(
-                        WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    @\header('HTTP/1.1 503 Service Unavailable');
-                    BoxHandler::disablePageLayout();
-                    NoticeHandler::disableNotices();
-                    WCF::getTPL()->assign([
-                        'templateName' => 'offline',
-                        'templateNameApplication' => 'wcf',
-                    ]);
-                    WCF::getTPL()->display('offline');
-                }
-
-                exit;
-            }
-        }
-    }
-
-    /**
-     * @since 5.5
-     */
-    private function checkAppEvaluation()
-    {
-        // check if the controller matches an app that has an expired evaluation date
-        [$abbreviation] = \explode('\\', $this->getActiveRequest()->getClassName(), 2);
-        if ($abbreviation !== 'wcf') {
-            $applicationObject = ApplicationHandler::getInstance()->getApplication($abbreviation);
-            $endDate = WCF::getApplicationObject($applicationObject)->getEvaluationEndDate();
-            if ($endDate && $endDate < TIME_NOW) {
-                $package = $applicationObject->getPackage();
-
-                $pluginStoreFileID = WCF::getApplicationObject($applicationObject)->getEvaluationPluginStoreID();
-                $isWoltLab = false;
-                if ($pluginStoreFileID === 0 && \strpos($package->package, 'com.woltlab.') === 0) {
-                    $isWoltLab = true;
-                }
-
-                throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                    'wcf.acp.package.evaluation.expired',
-                    [
-                        'packageName' => $package->getName(),
-                        'pluginStoreFileID' => $pluginStoreFileID,
-                        'isWoltLab' => $isWoltLab,
-                    ]
-                ));
-            }
         }
     }
 
