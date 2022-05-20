@@ -241,15 +241,11 @@ final class RequestHandler extends SingletonFactory
      * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
      *
      * @param string[] $routeData
-     * @param string $application
-     * @param string $controller
      */
-    protected function redirect(array $routeData, $application, $controller = null)
+    protected function redirect(array $routeData, string $application, string $controller)
     {
         $routeData['application'] = $application;
-        if ($controller !== null) {
-            $routeData['controller'] = $controller;
-        }
+        $routeData['controller'] = $controller;
 
         // append the remaining query parameters
         foreach ($_GET as $key => $value) {
