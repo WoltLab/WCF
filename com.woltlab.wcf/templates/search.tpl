@@ -31,8 +31,7 @@
 				<dl>
 					<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
 					<dd>
-						<input type="text" id="searchAuthor" name="username" value="" class="medium" maxlength="255" autocomplete="off">
-						<label><input type="checkbox" name="nameExactly" value="1"> {lang}wcf.search.matchExactly{/lang}</label>
+						<input type="text" id="searchAuthor" name="usernames" value="" class="medium" autocomplete="off">
 						{* deprecated *}{event name='authorOptions'}
 					</dd>
 				</dl>
@@ -82,8 +81,10 @@
 </form>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
-		new UiUserSearchInput(document.getElementById('searchAuthor'));
+	require(['WoltLabSuite/Core/Ui/ItemList/User'], function(UiItemListUser) {
+		UiItemListUser.init('searchAuthor', {
+			maxItems: 5
+		});
 	});
 	require(['WoltLabSuite/Core/Ui/Search/Extended'], ({ UiSearchExtended }) => {
 		new UiSearchExtended();
