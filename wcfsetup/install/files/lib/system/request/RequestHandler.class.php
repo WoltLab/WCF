@@ -6,6 +6,7 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
+use wcf\http\middleware\CheckForExpiredAppEvaluation;
 use wcf\http\middleware\CheckForOfflineMode;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
@@ -94,12 +95,11 @@ class RequestHandler extends SingletonFactory
                 throw new IllegalLinkException();
             }
 
-            $this->checkAppEvaluation();
-
             $pipeline = new Pipeline([
                 new AddAcpSecurityHeaders(),
                 new EnforceCacheControlPrivate(),
                 new EnforceFrameOptions(),
+                new CheckForExpiredAppEvaluation(),
                 new CheckForOfflineMode(),
             ]);
 
@@ -246,37 +246,6 @@ class RequestHandler extends SingletonFactory
             }
 
             throw new IllegalLinkException();
-        }
-    }
-
-    /**
-     * @since 5.5
-     */
-    private function checkAppEvaluation()
-    {
-        // check if the controller matches an app that has an expired evaluation date
-        [$abbreviation] = \explode('\\', $this->getActiveRequest()->getClassName(), 2);
-        if ($abbreviation !== 'wcf') {
-            $applicationObject = ApplicationHandler::getInstance()->getApplication($abbreviation);
-            $endDate = WCF::getApplicationObject($applicationObject)->getEvaluationEndDate();
-            if ($endDate && $endDate < TIME_NOW) {
-                $package = $applicationObject->getPackage();
-
-                $pluginStoreFileID = WCF::getApplicationObject($applicationObject)->getEvaluationPluginStoreID();
-                $isWoltLab = false;
-                if ($pluginStoreFileID === 0 && \strpos($package->package, 'com.woltlab.') === 0) {
-                    $isWoltLab = true;
-                }
-
-                throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
-                    'wcf.acp.package.evaluation.expired',
-                    [
-                        'packageName' => $package->getName(),
-                        'pluginStoreFileID' => $pluginStoreFileID,
-                        'isWoltLab' => $isWoltLab,
-                    ]
-                ));
-            }
         }
     }
 
