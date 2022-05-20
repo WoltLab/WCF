@@ -122,6 +122,8 @@ final class RequestHandler extends SingletonFactory
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
 
+            \assert(RouteHandler::getInstance()->isDefaultController() || $routeData['controller']);
+
             if ($this->isACPRequest()) {
                 if (empty($routeData['controller'])) {
                     $routeData['controller'] = 'index';
