@@ -270,10 +270,7 @@ final class RequestHandler extends SingletonFactory
         }
 
         $data = ControllerMap::getInstance()->lookupDefaultController($application);
-        if ($data === null) {
-            // handle WCF which does not have a default controller
-            throw new IllegalLinkException();
-        } elseif (!empty($data['redirect'])) {
+        if (!empty($data['redirect'])) {
             // force a redirect
             HeaderUtil::redirect($data['redirect'], true, false);
 
