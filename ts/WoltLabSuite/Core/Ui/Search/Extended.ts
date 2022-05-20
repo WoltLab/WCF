@@ -194,7 +194,10 @@ export class UiSearchExtended {
           });
           if (id) {
             DatePicker.setDate(id, new Date(value));
+            return;
           }
+
+          element.value = value;
         } else if (element instanceof HTMLInputElement) {
           if (element.type === "checkbox") {
             element.checked = true;

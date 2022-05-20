@@ -149,7 +149,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                         });
                         if (id) {
                             Picker_1.default.setDate(id, new Date(value));
+                            return;
                         }
+                        element.value = value;
                     }
                     else if (element instanceof HTMLInputElement) {
                         if (element.type === "checkbox") {
