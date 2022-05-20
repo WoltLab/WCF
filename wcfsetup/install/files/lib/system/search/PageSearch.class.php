@@ -7,6 +7,7 @@ use wcf\data\page\content\SearchResultPageContent;
 use wcf\data\page\content\SearchResultPageContentList;
 use wcf\data\search\ISearchResultObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -95,6 +96,11 @@ class PageSearch extends AbstractSearchProvider
         $conditionBuilder->add(
             'wcf' . WCF_N . '_page.pageType IN (?) AND wcf' . WCF_N . '_page.isDisabled = ?',
             [['text', 'html'], 0]
+        );
+        // Exclude versions of disabled languages.
+        $conditionBuilder->add(
+            '(wcf' . WCF_N . '_page_content.languageID IS NULL OR wcf' . WCF_N . '_page_content.languageID IN (?))',
+            [\array_keys(LanguageFactory::getInstance()->getLanguages())]
         );
         $this->initAclCondition($conditionBuilder);
 
