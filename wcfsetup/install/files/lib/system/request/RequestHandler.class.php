@@ -153,12 +153,10 @@ class RequestHandler extends SingletonFactory
                 $classData = [
                     'className' => $routeData['className'],
                     'controller' => $routeData['controller'],
-                    'pageType' => $routeData['pageType'],
                 ];
 
                 unset($routeData['className']);
                 unset($routeData['controller']);
-                unset($routeData['pageType']);
             } else {
                 if (
                     $this->isACPRequest()
@@ -216,7 +214,6 @@ class RequestHandler extends SingletonFactory
             $this->activeRequest = new Request(
                 $classData['className'],
                 $classData['controller'],
-                $classData['pageType'],
                 $metaData
             );
 

@@ -68,7 +68,7 @@ class ControllerMap extends SingletonFactory
      * @param string $controller url controller
      * @param bool $isAcpRequest true if this is an ACP request
      * @param bool $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
-     * @return  mixed       array containing className, controller and pageType or a string containing the controller name for aliased controllers
+     * @return  mixed       array containing className and controller or a string containing the controller name for aliased controllers
      * @throws  SystemException
      */
     public function resolve($application, $controller, $isAcpRequest, $skipCustomUrls = false)
@@ -167,7 +167,6 @@ class ControllerMap extends SingletonFactory
                 return [
                     'className' => CmsPage::class,
                     'controller' => 'cms',
-                    'pageType' => 'page',
 
                     // CMS page meta data
                     'cmsPageID' => $matches['pageID'],
@@ -179,7 +178,6 @@ class ControllerMap extends SingletonFactory
                 return [
                     'className' => $data,
                     'controller' => $matches[1],
-                    'pageType' => \strtolower($matches[2]),
                 ];
             }
         }
@@ -399,7 +397,7 @@ class ControllerMap extends SingletonFactory
      * @param string $application application identifier
      * @param string $controller controller name
      * @param bool $isAcpRequest true if this is an ACP request
-     * @return      string[]|null   className, controller and pageType, or null if this is not a legacy controller name
+     * @return      string[]|null   className and controller, or null if this is not a legacy controller name
      */
     protected function getLegacyClassData($application, $controller, $isAcpRequest)
     {
@@ -407,11 +405,10 @@ class ControllerMap extends SingletonFactory
         if (isset($this->ciControllers['lookup'][$application][$environment][$controller])) {
             $className = $this->ciControllers['lookup'][$application][$environment][$controller];
 
-            if (\preg_match('~\\\\(?P<controller>[^\\\\]+)(?P<pageType>Action|Form|Page)$~', $className, $matches)) {
+            if (\preg_match('~\\\\(?P<controller>[^\\\\]+)(Action|Form|Page)$~', $className, $matches)) {
                 return [
                     'className' => $className,
                     'controller' => $matches['controller'],
-                    'pageType' => \strtolower($matches['pageType']),
                 ];
             }
         }
@@ -427,7 +424,7 @@ class ControllerMap extends SingletonFactory
      * @param string $controller controller name
      * @param bool $isAcpRequest true if this is an ACP request
      * @param string $pageType page type, e.g. 'form' or 'action'
-     * @return  string[]|null   className, controller and pageType
+     * @return  string[]|null   className and controller
      */
     protected function getClassData($application, $controller, $isAcpRequest, $pageType)
     {
@@ -453,7 +450,6 @@ class ControllerMap extends SingletonFactory
         return [
             'className' => $className,
             'controller' => $controller,
-            'pageType' => $pageType,
         ];
     }
 
