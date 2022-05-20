@@ -148,10 +148,7 @@ final class RequestHandler extends SingletonFactory
             }
 
             if (isset($routeData['className'])) {
-                $classData = [
-                    'className' => $routeData['className'],
-                    'controller' => $routeData['controller'],
-                ];
+                $className = $routeData['className'];
             } else {
                 $controller = $routeData['controller'];
 
@@ -186,6 +183,8 @@ final class RequestHandler extends SingletonFactory
                 );
                 if (\is_string($classData)) {
                     $this->redirect($routeData, $application, $classData);
+                } else {
+                    $className = $classData['className'];
                 }
             }
 
@@ -206,13 +205,13 @@ final class RequestHandler extends SingletonFactory
             }
 
             $this->activeRequest = new Request(
-                $classData['className'],
+                $className,
                 $metaData
             );
 
             if (!$this->isACPRequest()) {
                 // determine if current request matches the landing page
-                if (ControllerMap::getInstance()->isLandingPage($classData['className'], $metaData)) {
+                if (ControllerMap::getInstance()->isLandingPage($className, $metaData)) {
                     $this->activeRequest->setIsLandingPage();
                 }
             }
