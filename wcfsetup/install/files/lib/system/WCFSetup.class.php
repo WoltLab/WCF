@@ -1317,21 +1317,33 @@ final class WCFSetup extends WCF
         SessionHandler::getInstance()->update();
 
         // Delete tmp files
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(
-                TMP_DIR . '/',
-                \RecursiveDirectoryIterator::CURRENT_AS_FILEINFO | \RecursiveDirectoryIterator::SKIP_DOTS
-            ),
-            \RecursiveIteratorIterator::CHILD_FIRST
-        );
-        foreach ($iterator as $path) {
-            if ($path->isDir()) {
-                \rmdir($path);
-            } else {
-                \unlink($path);
+        foreach (new \DirectoryIterator(\INSTALL_SCRIPT_DIR) as $fileInfo) {
+            if (!$fileInfo->isDir()) {
+                continue;
             }
+
+            if (!\preg_match('/^WCFSetup-[0-9a-f]{16}$/', $fileInfo->getBasename())) {
+                continue;
+            }
+
+            $tmpDirectory = $fileInfo->getPathname();
+
+            $tmpDirectoryIterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator(
+                    $tmpDirectory,
+                    \RecursiveDirectoryIterator::CURRENT_AS_FILEINFO | \RecursiveDirectoryIterator::SKIP_DOTS
+                ),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($tmpDirectoryIterator as $tmpFile) {
+                if ($tmpFile->isDir()) {
+                    \rmdir($tmpFile);
+                } else {
+                    \unlink($tmpFile);
+                }
+            }
+            \rmdir($tmpDirectory);
         }
-        \rmdir(TMP_DIR . '/');
 
         return $output;
     }

@@ -619,7 +619,7 @@ class BasicFileUtil {
 	 * Returns the temp folder for the installation.
 	 */
 	public static function getInstallTempFolder(): string {
-		$dir = __DIR__ . '/WCFSetup-' . TMP_FILE_PREFIX . '/';
+		$dir = INSTALL_SCRIPT_DIR . '/WCFSetup-' . TMP_FILE_PREFIX . '/';
 		@mkdir($dir);
 		self::makeWritable($dir);
 		
