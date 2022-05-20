@@ -249,17 +249,15 @@ class ControllerMap extends SingletonFactory
      * Lookups default controller for given application.
      *
      * @param string $application application identifier
-     * @return  null|string[]   default controller
+     * @return  string[]   default controller
      * @throws  SystemException
      */
-    public function lookupDefaultController($application)
+    public function lookupDefaultController($application): array
     {
         $data = $this->landingPages[$application];
         $controller = $data[1];
 
-        if ($application === 'wcf' && empty($controller)) {
-            return null;
-        } elseif (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
+        if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
             $cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
             if ($cmsPageData === null) {
                 // page is multilingual, use the language id that matches the URL
