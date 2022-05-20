@@ -213,7 +213,6 @@ final class RequestHandler extends SingletonFactory
 
             $this->activeRequest = new Request(
                 $classData['className'],
-                $classData['controller'],
                 $metaData
             );
 
