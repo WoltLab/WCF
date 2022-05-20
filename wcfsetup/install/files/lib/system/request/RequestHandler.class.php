@@ -152,9 +152,6 @@ final class RequestHandler extends SingletonFactory
                     'className' => $routeData['className'],
                     'controller' => $routeData['controller'],
                 ];
-
-                unset($routeData['className']);
-                unset($routeData['controller']);
             } else {
                 $controller = $routeData['controller'];
 
@@ -206,9 +203,6 @@ final class RequestHandler extends SingletonFactory
                 ) {
                     WCF::setLanguage($routeData['cmsPageLanguageID']);
                 }
-
-                unset($routeData['cmsPageID']);
-                unset($routeData['cmsPageLanguageID']);
             }
 
             $this->activeRequest = new Request(
