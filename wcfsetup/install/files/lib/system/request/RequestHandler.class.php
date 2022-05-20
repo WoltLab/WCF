@@ -122,8 +122,12 @@ final class RequestHandler extends SingletonFactory
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
 
-            // handle landing page for frontend requests
-            if (!$this->isACPRequest()) {
+            if ($this->isACPRequest()) {
+                if (empty($routeData['controller'])) {
+                    $routeData['controller'] = 'index';
+                }
+            } else {
+                // handle landing page for frontend requests
                 $routeData = $this->handleDefaultController($application, $routeData);
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
@@ -143,8 +147,6 @@ final class RequestHandler extends SingletonFactory
 
                     exit;
                 }
-            } elseif (empty($routeData['controller'])) {
-                $routeData['controller'] = 'index';
             }
 
             if (isset($routeData['className'])) {
