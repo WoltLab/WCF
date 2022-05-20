@@ -6,6 +6,7 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
+use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
 use wcf\http\middleware\CheckForExpiredAppEvaluation;
 use wcf\http\middleware\CheckForOfflineMode;
 use wcf\http\middleware\EnforceCacheControlPrivate;
@@ -84,21 +85,11 @@ class RequestHandler extends SingletonFactory
             // build request
             $this->buildRequest($application);
 
-            // enforce that certain ACP pages are not available for non-owners in enterprise mode
-            if (
-                $this->isACPRequest()
-                && ENABLE_ENTERPRISE_MODE
-                && \defined($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
-                && \constant($this->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
-                && !WCF::getUser()->hasOwnerAccess()
-            ) {
-                throw new IllegalLinkException();
-            }
-
             $pipeline = new Pipeline([
                 new AddAcpSecurityHeaders(),
                 new EnforceCacheControlPrivate(),
                 new EnforceFrameOptions(),
+                new CheckForEnterpriseNonOwnerAccess(),
                 new CheckForExpiredAppEvaluation(),
                 new CheckForOfflineMode(),
             ]);
