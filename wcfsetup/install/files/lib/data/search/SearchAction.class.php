@@ -53,8 +53,7 @@ class SearchAction extends AbstractDatabaseObjectAction
     {
         $this->readString('q', true);
         $this->readString('type', true);
-        $this->readString('username', true);
-        $this->readBoolean('nameExactly', true);
+        $this->readString('usernames', true);
         $this->readBoolean('subjectOnly', true);
         $this->readString('startDate', true);
         $this->readString('endDate', true);
@@ -62,7 +61,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readString('sortOrder', true);
         $this->readInteger('pageNo', true);
 
-        if (empty($this->parameters['q']) && empty($this->parameters['username'])) {
+        if (empty($this->parameters['q']) && empty($this->parameters['usernames'])) {
             throw new UserInputException('q');
         }
 

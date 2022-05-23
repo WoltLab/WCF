@@ -14,7 +14,8 @@ import * as DomUtil from "../../Dom/Util";
 import { ucfirst } from "../../StringUtil";
 import UiPagination from "../Pagination";
 import UiSearchInput from "./Input";
-import * as UiScroll from "./../Scroll";
+import * as UiScroll from "../Scroll";
+import { setValues as setItemListValues } from "../ItemList";
 
 type ResponseSearch = {
   count: number;
@@ -194,8 +195,28 @@ export class UiSearchExtended {
           });
           if (id) {
             DatePicker.setDate(id, new Date(value));
+            return;
           }
+
+          element.value = value;
         } else if (element instanceof HTMLInputElement) {
+          if (element.classList.contains("itemListInputShadow")) {
+            const itemList = element.nextElementSibling as HTMLElement;
+            if (itemList?.classList.contains("inputItemList")) {
+              setItemListValues(
+                itemList.dataset.elementId!,
+                value.split(",").map((value) => {
+                  return {
+                    objectId: 0,
+                    value: value.trim(),
+                  };
+                }),
+              );
+            }
+
+            return;
+          }
+
           if (element.type === "checkbox") {
             element.checked = true;
           } else {

@@ -5,11 +5,13 @@ namespace wcf\system\search;
 use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
+use wcf\data\user\UserList;
 use wcf\form\SearchForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Performs full-text search.
@@ -66,6 +68,12 @@ final class SearchHandler
     {
         $this->initParameters();
         $this->buildConditions();
+
+        // Check if at least one author exists when searching for author.
+        if (!empty($this->parameters['usernames']) && empty($this->getUserIDs())) {
+            return null;
+        }
+
         $this->buildSearchHash();
 
         if (($search = $this->getExistingSearch()) !== null) {
@@ -221,13 +229,11 @@ final class SearchHandler
         if ($this->userIDs === null) {
             $this->userIDs = [];
 
-            if (!empty($this->parameters['username'])) {
-                $sql = "SELECT  userID
-                        FROM    wcf" . WCF_N . "_user
-                        WHERE   username " . (!empty($this->parameters['nameExactly']) ? "= ?" : "LIKE ?");
-                $statement = WCF::getDB()->prepareStatement($sql, 100);
-                $statement->execute([$this->parameters['username'] . (empty($this->parameters['nameExactly']) ? '%' : '')]);
-                $this->userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+            if (!empty($this->parameters['usernames'])) {
+                $userList = new UserList();
+                $userList->getConditionBuilder()->add('username IN (?)', [ArrayUtil::trim(\explode(',', $this->parameters['usernames']))]);
+                $userList->readObjectIDs();
+                $this->userIDs = $userList->getObjectIDs();
             }
 
             if (!empty($this->parameters['userID'])) {
@@ -311,11 +317,10 @@ final class SearchHandler
             'additionalData' => $this->getAdditionalData(),
             'sortField' => $this->parameters['sortField'] ?? '',
             'sortOrder' => $this->parameters['sortOrder'] ?? '',
-            'nameExactly' => $this->parameters['nameExactly'] ?? '',
             'subjectOnly' => $this->parameters['subjectOnly'] ?? '',
             'startDate' => $this->parameters['startDate'] ?? '',
             'endDate' => $this->parameters['endDate'] ?? '',
-            'username' => $this->parameters['username'] ?? '',
+            'usernames' => $this->parameters['usernames'] ?? '',
             'userID' => $this->parameters['userID'] ?? '',
             'objectTypeNames' => $this->objectTypeNames,
         ];

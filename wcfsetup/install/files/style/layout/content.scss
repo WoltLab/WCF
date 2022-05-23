@@ -37,7 +37,8 @@
 		margin-right: 15px;
 	}
 
-	.contentHeaderTitle {
+	.contentHeaderTitle,
+	> .contentTitle {
 		flex: 1 auto;
 		margin-top: 10px;
 	}

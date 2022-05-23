@@ -89,14 +89,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         // fix the `<pre>` linebreaks again
         $pres = $this->document->getElementsByTagName('pre');
         for ($i = 0, $length = $pres->length; $i < $length; $i++) {
-            /** @var \DOMElement $pre */
-            $pre = $pres->item($i);
             /** @var \DOMNode $node */
-            foreach ($pre->childNodes as $node) {
-                if (
-                    $node->nodeType === \XML_TEXT_NODE
-                    && \str_contains($node->textContent, '@@@WCF_PRE_LINEBREAK@@@')
-                ) {
+            foreach ($this->getXPath()->query('./text()', $pres->item($i)) as $node) {
+                if (\str_contains($node->textContent, '@@@WCF_PRE_LINEBREAK@@@')) {
                     $node->nodeValue = \str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $node->textContent);
                 }
             }

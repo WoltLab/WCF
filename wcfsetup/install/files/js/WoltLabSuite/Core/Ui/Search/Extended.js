@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Search/Extended
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input", "./../Scroll"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Pagination_1, Input_1, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "../Pagination", "./Input", "../Scroll", "../ItemList"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Pagination_1, Input_1, UiScroll, ItemList_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiSearchExtended = void 0;
@@ -149,9 +149,23 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                         });
                         if (id) {
                             Picker_1.default.setDate(id, new Date(value));
+                            return;
                         }
+                        element.value = value;
                     }
                     else if (element instanceof HTMLInputElement) {
+                        if (element.classList.contains("itemListInputShadow")) {
+                            const itemList = element.nextElementSibling;
+                            if (itemList === null || itemList === void 0 ? void 0 : itemList.classList.contains("inputItemList")) {
+                                (0, ItemList_1.setValues)(itemList.dataset.elementId, value.split(",").map((value) => {
+                                    return {
+                                        objectId: 0,
+                                        value: value.trim(),
+                                    };
+                                }));
+                            }
+                            return;
+                        }
                         if (element.type === "checkbox") {
                             element.checked = true;
                         }
