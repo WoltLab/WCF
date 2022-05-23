@@ -52,10 +52,10 @@
 					<div class="userMenuContent">
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-user-circle-o"></span>
+								<span class="icon icon32 fa-pencil"></span>
 							</div>
 							<div class="userMenuItemContent">
-								<a href="{$__wcf->user->getLink()}" class="userMenuItemLink">{lang}wcf.user.myProfile{/lang}</a>
+								<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
 							</div>
 						</div>
 						{if $__wcf->session->getPermission('admin.general.canUseAcp')}
