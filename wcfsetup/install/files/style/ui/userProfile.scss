@@ -75,6 +75,7 @@
 
 /* user profile cover photo */
 .userProfileUserWithCoverPhoto {
+	margin-top: 0;
 	padding-top: 165px;
 	position: relative;
 
@@ -110,6 +111,7 @@
 	}
 
 	.contentHeaderTitle {
+		margin-top: 0;
 		/* avoid being covered by the photo */
 		z-index: 10;
 	}
@@ -127,7 +129,7 @@
 		}
 
 		.contentHeaderDescription {
-			margin-top: 15px !important;
+			margin-top: 10px !important;
 		}
 
 		.contentHeaderNavigation {
