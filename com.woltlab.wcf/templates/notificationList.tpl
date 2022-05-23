@@ -1,26 +1,8 @@
-{capture assign='contentHeader'}
-	<header class="contentHeader">
-		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
-		</div>
-		
-		{hascontent}
-			<nav class="contentHeaderNavigation">
-				<ul>
-					{content}
-						{event name='contentHeaderNavigation'}
-					{/content}
-				</ul>
-			</nav>
-		{/hascontent}
-	</header>
-{/capture}
+{capture assign='contentTitleBadge'}<span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span>{/capture}
 
 {capture assign='headContent'}
 	<link rel="alternate" type="application/rss+xml" title="{lang}wcf.global.button.rss{/lang}" href="{link controller='NotificationFeed'}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}">
 {/capture}
-
-{include file='userMenuSidebar'}
 
 {capture assign='contentInteractionPagination'}
 	{pages print=true assign=pagesLinks controller='NotificationList' link="pageNo=%d"}

@@ -431,7 +431,6 @@
 			<name language="de">Benachrichtigungen</name>
 			<name language="en">Notifications</name>
 			<hasFixedParent>1</hasFixedParent>
-			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<content language="en">
 				<title>Notifications</title>
 			</content>
@@ -877,4 +876,8 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 			</content>
 		</page>
 	</import>
+	<delete>
+		<!-- The notification list is no longer part of the user menu. -->
+		<page identifier="com.woltlab.wcf.NotificationList"/>
+	</delete>
 </data>
