@@ -50,20 +50,18 @@
 			<showorder>3</showorder>
 			<iconclassname>fa-globe</iconclassname>
 		</usermenuitem>
-		<usermenuitem name="wcf.user.menu.community.notification">
-			<controller>wcf\page\NotificationListPage</controller>
-			<parent>wcf.user.menu.community</parent>
-			<showorder>1</showorder>
-		</usermenuitem>
 		<usermenuitem name="wcf.user.menu.community.following">
 			<controller>wcf\page\FollowingPage</controller>
 			<parent>wcf.user.menu.community</parent>
-			<showorder>2</showorder>
+			<showorder>1</showorder>
 		</usermenuitem>
 		<usermenuitem name="wcf.user.menu.community.ignoredUsers">
 			<controller>wcf\page\IgnoredUsersPage</controller>
 			<parent>wcf.user.menu.community</parent>
-			<showorder>3</showorder>
+			<showorder>2</showorder>
 		</usermenuitem>
 	</import>
+	<delete>
+		<usermenuitem name="wcf.user.menu.community.notification"/>
+	</delete>
 </data>

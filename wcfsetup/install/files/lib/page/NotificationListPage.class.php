@@ -2,7 +2,6 @@
 
 namespace wcf\page;
 
-use wcf\system\menu\user\UserMenu;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
@@ -73,16 +72,5 @@ class NotificationListPage extends MultipleLinkPage
         WCF::getTPL()->assign([
             'notifications' => $this->notifications,
         ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function show()
-    {
-        // set active tab
-        UserMenu::getInstance()->setActiveMenuItem('wcf.user.menu.community.notification');
-
-        parent::show();
     }
 }
