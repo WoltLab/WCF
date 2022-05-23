@@ -272,7 +272,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      *
      * @param int $depth
      */
-    public function enforceQuoteDepth($depth)
+    public function enforceQuoteDepth($depth, bool $isFullQuote = false)
     {
         $quotes = [];
         /** @var \DOMElement $quote */
@@ -280,6 +280,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
             $quotes[] = $quote;
         }
 
+        $checkQuotes = [];
         foreach ($quotes as $quote) {
             if (!$quote->parentNode) {
                 continue;
@@ -300,7 +301,28 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                     continue;
                 }
 
+                $checkQuotes[] = $quote->parentNode;
                 DOMUtil::removeNode($quote);
+            }
+        }
+
+        /**
+         * @var \DOMElement $quote
+         */
+        foreach ($checkQuotes as $quote) {
+            if ($quote->childNodes->length === 0) {
+                $quote->textContent = "[\u{2026}]";
+            }
+        }
+
+        // Check if the quoted message is now empty.
+        if ($depth === 0 && $isFullQuote && \count($quotes) > 0) {
+            /** @var \DOMElement $body */
+            $body = $this->getDocument()->getElementsByTagName('body')[0];
+            if ($body->childElementCount === 0) {
+                $p = $body->ownerDocument->createElement('p');
+                $p->textContent = "[\u{2026}]";
+                $body->appendChild($p);
             }
         }
     }
