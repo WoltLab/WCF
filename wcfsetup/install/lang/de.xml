@@ -3313,7 +3313,6 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Hat mit <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Hat einen Kommentar zum Artikel <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a> geschrieben.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> geantwortet.]]></item>
-		<item name="wcf.article.search.categories"><![CDATA[Folgende Kategorien durchsuchen]]></item>
 		<item name="wcf.article.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.article.comment"><![CDATA[Artikel-Kommentar]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
@@ -3914,7 +3913,7 @@ Dateianhänge:
 		<item name="wcf.global.button.rss"><![CDATA[RSS-Feed]]></item>
 		<item name="wcf.global.button.save"><![CDATA[Speichern]]></item>
 		<item name="wcf.global.button.saveSorting"><![CDATA[Sortierung speichern]]></item>
-		<item name="wcf.global.button.search"><![CDATA[Suche]]></item>
+		<item name="wcf.global.button.search"><![CDATA[Suchen]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Absenden]]></item>
 		<item name="wcf.global.button.trash"><![CDATA[In den Papierkorb verschieben]]></item>
 		<item name="wcf.global.button.upload"><![CDATA[Hochladen]]></item>
@@ -4526,6 +4525,7 @@ Dateianhänge:
 		<item name="wcf.search.type.tags.popular"><![CDATA[Beliebte Tags]]></item>
 		<item name="wcf.search.results.title"><![CDATA[{plural value=$count 0='Keine Ergebnisse' one='Ein Ergebnis' other='# Ergebnisse'}{if $query} für „{@$query}“{/if}]]></item>
 		<item name="wcf.search.button.showMoreFilters"><![CDATA[Erweiterte Filter]]></item>
+		<item name="wcf.search.searchInCategories"><![CDATA[Folgende Kategorien durchsuchen]]></item>
 	</category>
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
@@ -5621,5 +5621,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.option.enable_desktop_notifications.description"/>
 	<item name="wcf.search.matchExactly" />
 	<item name="wcf.search.subjectOnly" />
+	<item name="wcf.article.search.categories" />
 </delete>
 </language>

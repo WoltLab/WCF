@@ -3240,7 +3240,6 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Reacted with <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.article.search.categories"><![CDATA[Search in Categories]]></item>
 		<item name="wcf.article.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.article.comment"><![CDATA[Article Comment]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Reply to Article Comment]]></item>
@@ -4518,6 +4517,7 @@ Attachments:
 		<item name="wcf.search.searchIn"><![CDATA[Search In]]></item>
 		<item name="wcf.search.searchIn.subjectAndMessage"><![CDATA[Subject and message]]></item>
 		<item name="wcf.search.searchIn.subjectOnly"><![CDATA[Subject only]]></item>
+		<item name="wcf.search.searchInCategories"><![CDATA[Search in Categories]]></item>
 		<item name="wcf.search.type"><![CDATA[Content Type]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Article]]></item>
@@ -5623,5 +5623,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.option.enable_desktop_notifications.description"/>
 	<item name="wcf.search.matchExactly" />
 	<item name="wcf.search.subjectOnly" />
+	<item name="wcf.article.search.categories" />
 </delete>
 </language>

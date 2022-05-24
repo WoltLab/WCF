@@ -1,5 +1,5 @@
 <dl>
-	<dt><label for="articleCategoryID">{lang}wcf.article.search.categories{/lang}</label></dt>
+	<dt><label for="articleCategoryID">{lang}wcf.search.searchInCategories{/lang}</label></dt>
 	<dd>
 		<select name="articleCategoryID" id="articleCategoryID">
 			<option value="">{lang}wcf.global.noSelection{/lang}</option>

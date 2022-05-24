@@ -12,7 +12,7 @@
 					{/if}
 				{/foreach}
 			</select>
-			<button class="searchButton button buttonPrimary">{lang}wcf.global.search{/lang}</button>
+			<button class="searchButton button buttonPrimary">{lang}wcf.global.button.search{/lang}</button>
 		</div>
 
 		<details class="searchFiltersContainer"{if $extended} open{/if}>
@@ -75,7 +75,7 @@
 				{/if}
 			{/foreach}
 
-			<button class="searchButton button buttonPrimary">{lang}wcf.global.search{/lang}</button>
+			<button class="searchButton button buttonPrimary">{lang}wcf.global.button.search{/lang}</button>
 		</details>
 	</div>
 </form>
