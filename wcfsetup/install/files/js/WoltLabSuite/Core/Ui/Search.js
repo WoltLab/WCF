@@ -52,7 +52,10 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             }
         });
         CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Search", (origin, identifier) => {
-            if (origin === CloseOverlay_1.Origin.DropDown) {
+            if (origin === CloseOverlay_1.Origin.Search) {
+                return;
+            }
+            else if (origin === CloseOverlay_1.Origin.DropDown) {
                 const button = document.getElementById("pageHeaderSearchTypeSelect");
                 if (button.dataset.target === identifier) {
                     return;
@@ -104,7 +107,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         });
     }
     function openSearch() {
-        CloseOverlay_1.default.execute();
+        CloseOverlay_1.default.execute(CloseOverlay_1.Origin.Search);
         _pageHeader.classList.add("searchBarOpen");
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.add("open");
         if (!_isMobile) {
