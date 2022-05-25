@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -74,12 +74,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
-            'pretty_version' => '2.10.0',
-            'version' => '2.10.0.0',
+            'pretty_version' => '2.11.0',
+            'version' => '2.11.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
             'aliases' => array(),
-            'reference' => 'a3f03b3c158a3a7014c6ba553b0cb83bf7da19c4',
+            'reference' => 'd1bc565b23c2040fafde398a8a5db083c47928c0',
             'dev_requirement' => false,
         ),
         'laminas/laminas-httphandlerrunner' => array(
@@ -227,12 +227,12 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.10.2',
-            'version' => '1.10.2.0',
+            'pretty_version' => 'v1.10.3',
+            'version' => '1.10.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => '387f4f4abf5d99f16be16314c5ab856f81c82f46',
+            'reference' => '0f1e1516ed2412ad43e42a6a319e77624ba1f713',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
