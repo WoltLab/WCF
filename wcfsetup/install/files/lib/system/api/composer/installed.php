@@ -47,12 +47,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.3.0',
-            'version' => '7.3.0.0',
+            'pretty_version' => 'dev-7.3.0-woltlab',
+            'version' => 'dev-7.3.0-woltlab',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '7008573787b430c1c1f650e3722d9bba59967628',
+            'reference' => '8d6f25546061237fb3fcf41df57f8a1c854af519',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(

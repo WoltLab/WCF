@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dedda25ad717fc2da2d1f7919eab92fa",
+    "content-hash": "1a6b4a2f6ca794c5f28b6434753e00e4",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -159,16 +159,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.3.0",
+            "version": "dev-7.3.0-woltlab",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "7008573787b430c1c1f650e3722d9bba59967628"
+                "url": "https://github.com/WoltLab/guzzle",
+                "reference": "8d6f25546061237fb3fcf41df57f8a1c854af519"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7008573787b430c1c1f650e3722d9bba59967628",
-                "reference": "7008573787b430c1c1f650e3722d9bba59967628",
+                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/8d6f25546061237fb3fcf41df57f8a1c854af519",
+                "reference": "8d6f25546061237fb3fcf41df57f8a1c854af519",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,11 @@
                     "src/functions_include.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "GuzzleHttp\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -226,39 +230,17 @@
             "description": "Guzzle is a PHP HTTP client library",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
+                "HTTP client",
+                "PSR-18",
+                "PSR-7",
                 "client",
                 "curl",
                 "framework",
                 "http",
-                "http client",
-                "psr-18",
-                "psr-7",
                 "rest",
                 "web service"
             ],
-            "support": {
-                "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.3.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/Nyholm",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/alexeyshockov",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/gmponos",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-03-23T11:33:13+00:00"
+            "time": "2022-05-25T13:24:33+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1094,10 +1076,18 @@
         }
     ],
     "packages-dev": [],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "guzzlehttp/guzzle",
+            "version": "dev-7.3.0-woltlab",
+            "alias": "7.3.0",
+            "alias_normalized": "7.3.0.0"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "scssphp/scssphp": 20
+        "scssphp/scssphp": 20,
+        "guzzlehttp/guzzle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -1107,5 +1097,5 @@
         "php": "7.2.24",
         "ext-gd": "0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
