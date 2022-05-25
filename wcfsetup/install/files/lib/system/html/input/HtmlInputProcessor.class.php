@@ -185,9 +185,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      *
      * @param int $depth
      */
-    public function enforceQuoteDepth($depth)
+    public function enforceQuoteDepth($depth, bool $isFullQuote = false)
     {
-        $this->getHtmlInputNodeProcessor()->enforceQuoteDepth($depth);
+        $this->getHtmlInputNodeProcessor()->enforceQuoteDepth($depth, $isFullQuote);
     }
 
     /**

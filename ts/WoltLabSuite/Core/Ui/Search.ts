@@ -57,7 +57,9 @@ function initSearchBar(): void {
   });
 
   UiCloseOverlay.add("WoltLabSuite/Core/Ui/Search", (origin, identifier) => {
-    if (origin === Origin.DropDown) {
+    if (origin === Origin.Search) {
+      return;
+    } else if (origin === Origin.DropDown) {
       const button = document.getElementById("pageHeaderSearchTypeSelect")!;
       if (button.dataset.target === identifier) {
         return;
@@ -124,7 +126,7 @@ function initMobileSearch(): void {
 }
 
 function openSearch(): void {
-  UiCloseOverlay.execute();
+  UiCloseOverlay.execute(Origin.Search);
 
   _pageHeader.classList.add("searchBarOpen");
   _userPanelSearchButton?.parentElement!.classList.add("open");

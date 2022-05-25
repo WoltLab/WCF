@@ -15,6 +15,7 @@ const _callbackList = new CallbackList();
 export enum Origin {
   Document = "document",
   DropDown = "dropdown",
+  Search = "search",
 }
 
 type Callback = (origin?: string | Origin, identifier?: string) => void;

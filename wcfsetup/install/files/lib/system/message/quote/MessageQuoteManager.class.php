@@ -145,7 +145,7 @@ class MessageQuoteManager extends SingletonFactory
                 $htmlInputProcessor->processIntermediate($fullQuote);
 
                 if (MESSAGE_MAX_QUOTE_DEPTH) {
-                    $htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1);
+                    $htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1, true);
                 }
 
                 $parameters = ['htmlInputProcessor' => $htmlInputProcessor];
