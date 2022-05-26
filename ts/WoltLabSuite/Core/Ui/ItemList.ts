@@ -26,6 +26,7 @@ function createUI(element: ItemListInputElement, options: ItemListOptions): UiDa
 
   const list = document.createElement("ol");
   list.className = "inputItemList" + (element.disabled ? " disabled" : "");
+  list.dataset.acceptsNewItems = "true";
   list.dataset.elementId = element.id;
   list.addEventListener("click", (event) => {
     if (event.target === list) {
@@ -123,9 +124,11 @@ function handleLimit(elementId: string): void {
   if (acceptsNewItems(elementId)) {
     DomUtil.show(data.element);
     DomUtil.hide(data.limitReached);
+    data.list.dataset.acceptsNewItems = "true";
   } else {
     DomUtil.hide(data.element);
     DomUtil.show(data.limitReached);
+    data.list.dataset.acceptsNewItems = "false";
   }
 }
 

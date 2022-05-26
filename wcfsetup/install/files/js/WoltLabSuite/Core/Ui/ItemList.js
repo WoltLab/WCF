@@ -25,6 +25,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         const parentElement = element.parentElement;
         const list = document.createElement("ol");
         list.className = "inputItemList" + (element.disabled ? " disabled" : "");
+        list.dataset.acceptsNewItems = "true";
         list.dataset.elementId = element.id;
         list.addEventListener("click", (event) => {
             if (event.target === list) {
@@ -109,10 +110,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         if (acceptsNewItems(elementId)) {
             Util_1.default.show(data.element);
             Util_1.default.hide(data.limitReached);
+            data.list.dataset.acceptsNewItems = "true";
         }
         else {
             Util_1.default.hide(data.element);
             Util_1.default.show(data.limitReached);
+            data.list.dataset.acceptsNewItems = "false";
         }
     }
     /**
