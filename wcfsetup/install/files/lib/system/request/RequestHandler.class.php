@@ -39,12 +39,6 @@ final class RequestHandler extends SingletonFactory
     protected $activeRequest;
 
     /**
-     * true, if current domain mismatch any known domain
-     * @var bool
-     */
-    protected $inRescueMode = false;
-
-    /**
      * indicates if the request is an acp request
      * @var bool
      */
@@ -327,12 +321,10 @@ final class RequestHandler extends SingletonFactory
     }
 
     /**
-     * Returns true, if current host mismatches any known domain.
-     *
-     * @return  bool
+     * @deprecated 5.6 - This method always returns false.
      */
     public function inRescueMode()
     {
-        return $this->inRescueMode;
+        return false;
     }
 }
