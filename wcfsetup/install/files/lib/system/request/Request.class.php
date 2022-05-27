@@ -42,18 +42,6 @@ final class Request implements RequestHandlerInterface
     protected $pageID;
 
     /**
-     * page name
-     * @var string
-     */
-    protected $pageName = '';
-
-    /**
-     * page type
-     * @var string
-     */
-    protected $pageType = '';
-
-    /**
      * request object
      * @var object
      */
@@ -63,16 +51,12 @@ final class Request implements RequestHandlerInterface
      * Creates a new request object.
      *
      * @param string $className fully qualified name
-     * @param string $pageName class name
-     * @param string $pageType can be 'action', 'form' or 'page'
      * @param string[] $metaData additional meta data
      */
-    public function __construct($className, $pageName, $pageType, array $metaData)
+    public function __construct($className, array $metaData)
     {
         $this->className = $className;
         $this->metaData = $metaData;
-        $this->pageName = $pageName;
-        $this->pageType = $pageType;
     }
 
     /**
@@ -142,26 +126,6 @@ final class Request implements RequestHandlerInterface
     public function getMetaData()
     {
         return $this->metaData;
-    }
-
-    /**
-     * Returns the page name of this request.
-     *
-     * @return  string
-     */
-    public function getPageName()
-    {
-        return $this->pageName;
-    }
-
-    /**
-     * Returns the page type of this request.
-     *
-     * @return  string
-     */
-    public function getPageType()
-    {
-        return $this->pageType;
     }
 
     /**

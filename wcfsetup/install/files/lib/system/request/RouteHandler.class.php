@@ -144,6 +144,15 @@ class RouteHandler extends SingletonFactory
                 $this->isDefaultController = $this->routeData['isDefaultController'];
                 unset($this->routeData['isDefaultController']);
 
+                if (!isset($this->routeData['controller']) || $this->routeData['controller'] === '') {
+                    if (!$this->isDefaultController()) {
+                        throw new \DomainException(\sprintf(
+                            "Route implementation '%s' is buggy: Matched route is not the default controller, but no controller was returned.",
+                            $route::class
+                        ));
+                    }
+                }
+
                 if (isset($this->routeData['isRenamedController'])) {
                     $this->isRenamedController = $this->routeData['isRenamedController'];
                     unset($this->routeData['isRenamedController']);

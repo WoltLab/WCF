@@ -26,11 +26,11 @@ use wcf\util\HeaderUtil;
  * Handles http requests.
  *
  * @author  Marcel Werk
- * @copyright   2001-2020 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
-class RequestHandler extends SingletonFactory
+final class RequestHandler extends SingletonFactory
 {
     /**
      * active request object
@@ -122,9 +122,15 @@ class RequestHandler extends SingletonFactory
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
 
-            // handle landing page for frontend requests
-            if (!$this->isACPRequest()) {
-                $this->handleDefaultController($application, $routeData);
+            \assert(RouteHandler::getInstance()->isDefaultController() || $routeData['controller']);
+
+            if ($this->isACPRequest()) {
+                if (empty($routeData['controller'])) {
+                    $routeData['controller'] = 'index';
+                }
+            } else {
+                // handle landing page for frontend requests
+                $routeData = $this->handleDefaultController($application, $routeData);
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
                 $domainName = ApplicationHandler::getInstance()->getDomainName();
@@ -143,23 +149,13 @@ class RequestHandler extends SingletonFactory
 
                     exit;
                 }
-            } elseif (empty($routeData['controller'])) {
-                $routeData['controller'] = 'index';
             }
 
-            $controller = $routeData['controller'];
-
             if (isset($routeData['className'])) {
-                $classData = [
-                    'className' => $routeData['className'],
-                    'controller' => $routeData['controller'],
-                    'pageType' => $routeData['pageType'],
-                ];
-
-                unset($routeData['className']);
-                unset($routeData['controller']);
-                unset($routeData['pageType']);
+                $className = $routeData['className'];
             } else {
+                $controller = $routeData['controller'];
+
                 if (
                     $this->isACPRequest()
                     && ($controller === 'login' || $controller === 'index')
@@ -191,6 +187,8 @@ class RequestHandler extends SingletonFactory
                 );
                 if (\is_string($classData)) {
                     $this->redirect($routeData, $application, $classData);
+                } else {
+                    $className = $classData['className'];
                 }
             }
 
@@ -208,21 +206,16 @@ class RequestHandler extends SingletonFactory
                 ) {
                     WCF::setLanguage($routeData['cmsPageLanguageID']);
                 }
-
-                unset($routeData['cmsPageID']);
-                unset($routeData['cmsPageLanguageID']);
             }
 
             $this->activeRequest = new Request(
-                $classData['className'],
-                $classData['controller'],
-                $classData['pageType'],
+                $className,
                 $metaData
             );
 
             if (!$this->isACPRequest()) {
                 // determine if current request matches the landing page
-                if (ControllerMap::getInstance()->isLandingPage($classData, $metaData)) {
+                if (ControllerMap::getInstance()->isLandingPage($className, $metaData)) {
                     $this->activeRequest->setIsLandingPage();
                 }
             }
@@ -244,15 +237,11 @@ class RequestHandler extends SingletonFactory
      * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
      *
      * @param string[] $routeData
-     * @param string $application
-     * @param string $controller
      */
-    protected function redirect(array $routeData, $application, $controller = null)
+    protected function redirect(array $routeData, string $application, string $controller)
     {
         $routeData['application'] = $application;
-        if ($controller !== null) {
-            $routeData['controller'] = $controller;
-        }
+        $routeData['controller'] = $controller;
 
         // append the remaining query parameters
         foreach ($_GET as $key => $value) {
@@ -274,10 +263,10 @@ class RequestHandler extends SingletonFactory
      * @param string[] $routeData
      * @throws  IllegalLinkException
      */
-    protected function handleDefaultController($application, array &$routeData)
+    protected function handleDefaultController(string $application, array $routeData): array
     {
         if (!RouteHandler::getInstance()->isDefaultController()) {
-            return;
+            return $routeData;
         }
 
         $data = ControllerMap::getInstance()->lookupDefaultController($application);
@@ -315,6 +304,8 @@ class RequestHandler extends SingletonFactory
         }
 
         $routeData['isDefaultController'] = true;
+
+        return $routeData;
     }
 
     /**
