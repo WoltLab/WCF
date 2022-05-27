@@ -429,15 +429,7 @@ class ControllerMap extends SingletonFactory
     {
         $className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . \ucfirst($pageType);
         if (!\class_exists($className)) {
-            // avoid CORS by allowing action classes invoked form every application domain
-            if ($pageType === 'action' && $application !== 'wcf') {
-                $className = 'wcf\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . \ucfirst($pageType);
-                if (!\class_exists($className)) {
-                    return null;
-                }
-            } else {
-                return null;
-            }
+            return null;
         }
 
         // check for abstract classes
