@@ -130,7 +130,9 @@ final class RequestHandler extends SingletonFactory
                 }
             } else {
                 // handle landing page for frontend requests
-                $routeData = $this->handleDefaultController($application, $routeData);
+                if (RouteHandler::getInstance()->isDefaultController()) {
+                    $routeData = $this->handleDefaultController($application, $routeData);
+                }
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
                 $domainName = ApplicationHandler::getInstance()->getDomainName();
@@ -265,10 +267,6 @@ final class RequestHandler extends SingletonFactory
      */
     protected function handleDefaultController(string $application, array $routeData): array
     {
-        if (!RouteHandler::getInstance()->isDefaultController()) {
-            return $routeData;
-        }
-
         $data = ControllerMap::getInstance()->lookupDefaultController($application);
         if ($data === null) {
             // handle WCF which does not have a default controller
