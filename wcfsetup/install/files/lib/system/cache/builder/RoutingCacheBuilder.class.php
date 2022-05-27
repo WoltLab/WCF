@@ -410,11 +410,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         $controllers = [$landingPageController];
 
         // The controller may be the custom url of a CMS page.
-        if (\strpos($landingPageController, '__WCF_CMS__') === 0) {
+        if (\str_starts_with($landingPageController, '__WCF_CMS__')) {
             $controllers = \array_filter(
                 $data['customUrls']['reverse']['wcf'],
                 static function ($controller) use ($landingPageController) {
-                    return \strpos($controller, "{$landingPageController}-") === 0;
+                    return \str_starts_with($controller, "{$landingPageController}-");
                 },
                 \ARRAY_FILTER_USE_KEY
             );
