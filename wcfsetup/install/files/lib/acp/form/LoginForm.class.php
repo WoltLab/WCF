@@ -13,7 +13,6 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
-use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -252,12 +251,8 @@ class LoginForm extends AbstractCaptchaForm
         if (!empty($this->url)) {
             HeaderUtil::redirect($this->url);
         } else {
-            if (RequestHandler::getInstance()->inRescueMode()) {
-                $path = RouteHandler::getHost() . RouteHandler::getPath();
-            } else {
-                $application = ApplicationHandler::getInstance()->getActiveApplication();
-                $path = $application->getPageURL() . 'acp/';
-            }
+            $application = ApplicationHandler::getInstance()->getActiveApplication();
+            $path = $application->getPageURL() . 'acp/';
 
             HeaderUtil::redirect($path);
         }

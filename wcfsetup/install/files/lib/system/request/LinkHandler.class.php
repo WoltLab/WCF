@@ -250,16 +250,12 @@ class LinkHandler extends SingletonFactory
         if (!PACKAGE_ID) {
             $url = RouteHandler::getHost() . RouteHandler::getPath(['acp']) . ($isACP ? 'acp/' : '') . $url;
         } else {
-            if (RequestHandler::getInstance()->inRescueMode()) {
-                $pageURL = RouteHandler::getHost() . \str_replace('//', '/', RouteHandler::getPath(['acp']));
-            } else {
-                $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
-                if ($application === null) {
-                    throw new \InvalidArgumentException("Unknown application identifier '{$abbreviation}'.");
-                }
-
-                $pageURL = $application->getPageURL();
+            $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+            if ($application === null) {
+                throw new \InvalidArgumentException("Unknown application identifier '{$abbreviation}'.");
             }
+
+            $pageURL = $application->getPageURL();
 
             $url = $pageURL . ($isACP ? 'acp/' : '') . $url;
         }
