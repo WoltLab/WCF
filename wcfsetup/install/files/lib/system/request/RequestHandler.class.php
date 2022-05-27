@@ -127,6 +127,10 @@ final class RequestHandler extends SingletonFactory
             if ($this->isACPRequest()) {
                 if (empty($routeData['controller'])) {
                     $routeData['controller'] = 'index';
+
+                    if ($application !== 'wcf') {
+                        $this->redirect($routeData, 'wcf', 'index');
+                    }
                 }
             } else {
                 // handle landing page for frontend requests
@@ -157,20 +161,6 @@ final class RequestHandler extends SingletonFactory
                 $className = $routeData['className'];
             } else {
                 $controller = $routeData['controller'];
-
-                if (
-                    $this->isACPRequest()
-                    && ($controller === 'login' || $controller === 'index')
-                    && $application !== 'wcf'
-                ) {
-                    HeaderUtil::redirect(
-                        LinkHandler::getInstance()->getLink(\ucfirst($controller)),
-                        true,
-                        false
-                    );
-
-                    exit;
-                }
 
                 $classApplication = $application;
                 if (

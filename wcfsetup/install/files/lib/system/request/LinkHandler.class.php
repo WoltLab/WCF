@@ -170,6 +170,9 @@ class LinkHandler extends SingletonFactory
         if ($controller === null) {
             if ($isACP) {
                 $controller = 'Index';
+                if ($abbreviation !== 'wcf') {
+                    throw new \InvalidArgumentException("A 'controller' must be specified for non-'wcf' links in ACP.");
+                }
             } else {
                 if (!empty($parameters['application']) && $abbreviation !== 'wcf') {
                     $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
