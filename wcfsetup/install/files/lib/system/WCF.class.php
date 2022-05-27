@@ -986,10 +986,7 @@ class WCF
     }
 
     /**
-     * Returns the domain path for the currently active application,
-     * used to avoid CORS requests.
-     *
-     * @return      string
+     * @deprecated 5.6 - This was a workaround for multi-domain setups.
      */
     public static function getActivePath()
     {
