@@ -160,20 +160,6 @@ final class RequestHandler extends SingletonFactory
             } else {
                 $controller = $routeData['controller'];
 
-                if (
-                    $this->isACPRequest()
-                    && ($controller === 'login' || $controller === 'index')
-                    && $application !== 'wcf'
-                ) {
-                    HeaderUtil::redirect(
-                        LinkHandler::getInstance()->getLink(\ucfirst($controller)),
-                        true,
-                        false
-                    );
-
-                    exit;
-                }
-
                 $classApplication = $application;
                 if (
                     !empty($routeData['isDefaultController'])
