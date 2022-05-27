@@ -94,8 +94,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             $overrideApplication = $abbreviations[$row['overrideApplicationPackageID']];
 
             if ($row['pageType'] === 'system') {
-                $tmp = \explode('\\', $row['controller']);
-                $controller = \preg_replace('/(?:Action|Form|Page)$/', '', \array_pop($tmp));
+                $controller = $this->classNameToControllerName($row['controller']);
                 $data['lookup'][$overrideApplication][$controller] = $application;
                 $data['reverse'][$application][$controller] = $overrideApplication;
 
@@ -288,11 +287,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
             if (isset($row['controller'])) {
                 $data['lookup'][$abbreviations[$packageID]][$customUrl] = $row['controller'];
-                $data['reverse'][$abbreviations[$packageID]][\preg_replace(
-                    '~^.*?([A-Za-z0-9]+)(?:Action|Form|Page)~',
-                    '$1',
-                    $row['controller']
-                )] = $customUrl;
+                $data['reverse'][$abbreviations[$packageID]][$this->classNameToControllerName($row['controller'])] = $customUrl;
             } else {
                 $cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
 
@@ -386,7 +381,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
             if (\is_string($controller)) {
                 $fqnController = $controller;
-                $controller = \preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $controller);
+                $controller = $this->classNameToControllerName($fqnController);
                 $controller = [
                     $controller,
                     ControllerMap::transformController($controller),
@@ -432,5 +427,13 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         }
 
         return $data;
+    }
+
+    /**
+     * @since 5.6
+     */
+    private function classNameToControllerName(string $className): string
+    {
+        return \preg_replace('~^.*?\\\([^\\\]+)(?:Action|Form|Page)$~', '\\1', $className);
     }
 }
