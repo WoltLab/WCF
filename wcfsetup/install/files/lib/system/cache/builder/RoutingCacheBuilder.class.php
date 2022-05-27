@@ -265,7 +265,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         }
 
         $cmsPageID = 0;
-        if (\preg_match('~^__WCF_CMS__(\d+)$~', $landingPages['wcf'][0], $matches)) {
+        if (\preg_match('~^__WCF_CMS__(\d+)$~', $landingPages['wcf']['controller'], $matches)) {
             $cmsPageID = $matches[1];
         }
 
@@ -288,7 +288,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 // Discard the custom url if this CMS page is the landing page of its associated app.
                 if (
                     !empty($landingPages[$abbreviation])
-                    && $landingPages[$abbreviation][0] === '__WCF_CMS__' . $row['pageID']
+                    && $landingPages[$abbreviation]['controller'] === '__WCF_CMS__' . $row['pageID']
                     && !$row['languageID']
                 ) {
                     $customUrl = '';
@@ -350,7 +350,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                     $controller = $page->controller;
                 } else {
                     $controller = '__WCF_CMS__' . $page->pageID;
-                    $controller = [$controller, $controller, CmsPage::class];
+                    $controller = [
+                        'controller' => $controller,
+                        'routePart' => $controller,
+                        'className' => CmsPage::class,
+                    ];
                 }
             } else {
                 if ($application->landingPageID) {
@@ -360,7 +364,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                             $controller = $page->controller;
                         } else {
                             $controller = '__WCF_CMS__' . $page->pageID;
-                            $controller = [$controller, $controller, CmsPage::class];
+                            $controller = [
+                                'controller' => $controller,
+                                'routePart' => $controller,
+                                'className' => CmsPage::class,
+                            ];
                         }
                     }
                 }
@@ -372,11 +380,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
             if (\is_string($controller)) {
                 $fqnController = $controller;
-                $controller = $this->classNameToControllerName($fqnController);
+                $controller = $this->classNameToControllerName($controller);
                 $controller = [
-                    $controller,
-                    ControllerMap::transformController($controller),
-                    $fqnController,
+                    'controller' => $controller,
+                    'routePart' => ControllerMap::transformController($controller),
+                    'className' => $fqnController,
                 ];
             }
 
@@ -392,7 +400,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             return $data;
         }
 
-        $landingPageController = $data['landingPages']['wcf'][0];
+        $landingPageController = $data['landingPages']['wcf']['controller'];
         $controllers = [$landingPageController];
 
         // The controller may be the custom url of a CMS page.
@@ -413,7 +421,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 // The original landing page of the target app has been implicitly overridden, thus we need to
                 // replace the data of the affected app. This is necessary in order to avoid the original landing
                 // page to be conflicting with the global landing page, eventually overshadowing it.
-                $data['landingPages'][$overriddenApplication] = \array_slice($data['landingPages']['wcf'], 0);
+                $data['landingPages'][$overriddenApplication] = $data['landingPages']['wcf'];
             }
         }
 
