@@ -417,7 +417,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 // The original landing page of the target app has been implicitly overridden, thus we need to
                 // replace the data of the affected app. This is necessary in order to avoid the original landing
                 // page to be conflicting with the global landing page, eventually overshadowing it.
-                $data['landingPages'][$overriddenApplication] = \array_slice($data['landingPages']['wcf'], 0);
+                $data['landingPages'][$overriddenApplication] = $data['landingPages']['wcf'];
             }
         }
 
