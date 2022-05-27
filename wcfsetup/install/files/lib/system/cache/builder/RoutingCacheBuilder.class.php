@@ -46,7 +46,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         $data['customUrls'] = $this->getCustomUrls($data['landingPages']);
         $data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
 
-        $this->handleLandingPageWithOverriddenApplication($data);
+        $data = $this->handleLandingPageWithOverriddenApplication($data);
 
         return $data;
     }
@@ -400,10 +400,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         return $data;
     }
 
-    protected function handleLandingPageWithOverriddenApplication(array &$data)
+    protected function handleLandingPageWithOverriddenApplication(array $data): array
     {
         if (!PACKAGE_ID) {
-            return;
+            return $data;
         }
 
         $landingPageController = $data['landingPages']['wcf'][0];
@@ -430,5 +430,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 $data['landingPages'][$overriddenApplication] = \array_slice($data['landingPages']['wcf'], 0);
             }
         }
+
+        return $data;
     }
 }
