@@ -257,7 +257,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                             page_content.languageID,
                             page.applicationPackageID
                 FROM        wcf1_page_content page_content
-                LEFT JOIN   wcf1_page page
+                INNER JOIN  wcf1_page page
                 ON          page.pageID = page_content.pageID";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
