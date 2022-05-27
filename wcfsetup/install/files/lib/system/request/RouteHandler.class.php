@@ -2,14 +2,12 @@
 
 namespace wcf\system\request;
 
-use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\route\DynamicRequestRoute;
 use wcf\system\request\route\IRequestRoute;
 use wcf\system\request\route\LookupRequestRoute;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
@@ -54,12 +52,6 @@ class RouteHandler extends SingletonFactory
      * @var bool
      */
     protected static $secure;
-
-    /**
-     * list of application abbreviation and default controller name
-     * @var string[]
-     */
-    protected $defaultControllers;
 
     /**
      * true if the default controller is used (support for custom landing page)
@@ -387,51 +379,5 @@ class RouteHandler extends SingletonFactory
         }
 
         return self::$pathInfo;
-    }
-
-    /**
-     * Returns the default controller name for given application.
-     *
-     * @param string $application
-     * @return  string
-     */
-    public function getDefaultController($application)
-    {
-        $this->loadDefaultControllers();
-
-        if (isset($this->defaultControllers[$application])) {
-            return $this->defaultControllers[$application];
-        }
-
-        return '';
-    }
-
-    /**
-     * Loads the default controllers for each active application.
-     */
-    protected function loadDefaultControllers()
-    {
-        if ($this->defaultControllers === null) {
-            $this->defaultControllers = [];
-
-            foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-                $app = WCF::getApplicationObject($application);
-
-                if (!$app) {
-                    continue;
-                }
-
-                $controller = $app->getPrimaryController();
-
-                if (!$controller) {
-                    continue;
-                }
-
-                $controller = \explode('\\', $controller);
-                $controllerName = \preg_replace('~(Action|Form|Page)$~', '', \array_pop($controller));
-
-                $this->defaultControllers[$controller[0]] = $controllerName;
-            }
-        }
     }
 }
