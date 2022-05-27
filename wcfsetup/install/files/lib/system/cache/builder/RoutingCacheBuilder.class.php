@@ -79,10 +79,15 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             $languageIDs[] = $language->languageID;
         }
 
-        $sql = "SELECT  pageID, pageType, controller, controllerCustomURL, applicationPackageID, overrideApplicationPackageID
-                FROM    wcf" . WCF_N . "_page
+        $sql = "SELECT  pageID,
+                        pageType,
+                        controller,
+                        controllerCustomURL,
+                        applicationPackageID,
+                        overrideApplicationPackageID
+                FROM    wcf1_page
                 WHERE   overrideApplicationPackageID IS NOT NULL";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $application = $abbreviations[$row['applicationPackageID']];
@@ -240,20 +245,25 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         }
 
         // fetch pages with a controller and a custom url
-        $sql = "SELECT  controller, controllerCustomURL, applicationPackageID
-                FROM    wcf" . WCF_N . "_page
+        $sql = "SELECT  controller,
+                        controllerCustomURL,
+                        applicationPackageID
+                FROM    wcf1_page
                 WHERE   controller <> ''
                     AND controllerCustomURL <> ''";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $rows = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         // fetch content pages using the common page controller
-        $sql = "SELECT      page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.applicationPackageID
-                FROM        wcf" . WCF_N . "_page_content page_content
-                LEFT JOIN   wcf" . WCF_N . "_page page
+        $sql = "SELECT      page_content.customURL AS controllerCustomURL,
+                            page_content.pageID,
+                            page_content.languageID,
+                            page.applicationPackageID
+                FROM        wcf1_page_content page_content
+                LEFT JOIN   wcf1_page page
                 ON          page.pageID = page_content.pageID";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $rows[] = $row;
