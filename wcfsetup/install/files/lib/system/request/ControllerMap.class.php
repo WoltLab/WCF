@@ -255,7 +255,7 @@ class ControllerMap extends SingletonFactory
     public function lookupDefaultController($application)
     {
         $data = $this->landingPages[$application];
-        $controller = $data[1];
+        $controller = $data['routePart'];
 
         if ($application === 'wcf' && empty($controller)) {
             return null;
@@ -302,7 +302,7 @@ class ControllerMap extends SingletonFactory
         }
 
         return [
-            'application' => \mb_substr($data[2], 0, \mb_strpos($data[2], '\\')),
+            'application' => \mb_substr($data['className'], 0, \mb_strpos($data['className'], '\\')),
             'controller' => $controller,
         ];
     }
@@ -327,7 +327,7 @@ class ControllerMap extends SingletonFactory
                     return false;
                 } else {
                     if (
-                        $matches['controller'] == $this->landingPages[$application][0]
+                        $matches['controller'] == $this->landingPages[$application]['controller']
                         && isset($this->customUrls['lookup'][$application][''])
                         && $this->customUrls['lookup'][$application][''] !== $controller
                     ) {
@@ -344,7 +344,7 @@ class ControllerMap extends SingletonFactory
             }
         }
 
-        if ($this->landingPages[$application][0] === $controller) {
+        if ($this->landingPages[$application]['controller'] === $controller) {
             return true;
         }
 
@@ -359,13 +359,13 @@ class ControllerMap extends SingletonFactory
      */
     public function isLandingPage(string $className, array $metaData)
     {
-        if ($className !== $this->landingPages['wcf'][2]) {
+        if ($className !== $this->landingPages['wcf']['className']) {
             return false;
         }
 
         if ($className === CmsPage::class) {
             // check if page id matches
-            if ($this->landingPages['wcf'][1] !== '__WCF_CMS__' . $metaData['cms']['pageID']) {
+            if ($this->landingPages['wcf']['routePart'] !== '__WCF_CMS__' . $metaData['cms']['pageID']) {
                 return false;
             }
         }
