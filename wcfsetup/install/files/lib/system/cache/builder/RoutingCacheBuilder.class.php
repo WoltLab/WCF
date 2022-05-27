@@ -270,42 +270,39 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             $cmsPageID = $matches[1];
         }
 
-        $abbreviations = [];
         foreach ($rows as $row) {
             $customUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($row['controllerCustomURL']));
             $packageID = $row['applicationPackageID'];
-            if (!isset($abbreviations[$packageID])) {
-                $abbreviations[$packageID] = ApplicationHandler::getInstance()->getAbbreviation($packageID);
-            }
+            $abbreviation = ApplicationHandler::getInstance()->getAbbreviation($packageID);
 
-            if (!isset($data['lookup'][$abbreviations[$packageID]])) {
-                $data['lookup'][$abbreviations[$packageID]] = [];
-                $data['reverse'][$abbreviations[$packageID]] = [];
+            if (!isset($data['lookup'][$abbreviation])) {
+                $data['lookup'][$abbreviation] = [];
+                $data['reverse'][$abbreviation] = [];
             }
 
             if (isset($row['controller'])) {
-                $data['lookup'][$abbreviations[$packageID]][$customUrl] = $row['controller'];
-                $data['reverse'][$abbreviations[$packageID]][$this->classNameToControllerName($row['controller'])] = $customUrl;
+                $data['lookup'][$abbreviation][$customUrl] = $row['controller'];
+                $data['reverse'][$abbreviation][$this->classNameToControllerName($row['controller'])] = $customUrl;
             } else {
                 $cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
 
                 // Discard the custom url if this CMS page is the landing page of its associated app.
                 if (
-                    !empty($landingPages[$abbreviations[$packageID]])
-                    && $landingPages[$abbreviations[$packageID]][0] === '__WCF_CMS__' . $row['pageID']
+                    !empty($landingPages[$abbreviation])
+                    && $landingPages[$abbreviation][0] === '__WCF_CMS__' . $row['pageID']
                     && !$row['languageID']
                 ) {
                     $customUrl = '';
                 }
-                $data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
+                $data['reverse'][$abbreviation][$cmsIdentifier] = $customUrl;
 
-                if ($cmsPageID && $abbreviations[$packageID] === 'wcf') {
+                if ($cmsPageID && $abbreviation === 'wcf') {
                     if ($customUrl === '' && $cmsPageID != $row['pageID']) {
                         continue;
                     }
                 }
 
-                $data['lookup'][$abbreviations[$packageID]][$customUrl] = $cmsIdentifier;
+                $data['lookup'][$abbreviation][$customUrl] = $cmsIdentifier;
             }
         }
 
