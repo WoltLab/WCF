@@ -6,6 +6,10 @@
 	padding-bottom: 0;
 	padding-top: 5px;
 
+	&[data-accepts-new-items="true"] {
+		cursor: text;
+	}
+
 	> .item,
 	> .input {
 		flex: 0 0 auto;

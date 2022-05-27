@@ -27,22 +27,7 @@
 						{* deprecated *}{event name='queryOptions'}
 					</dd>
 				</dl>
-				
-				<dl>
-					<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
-					<dd>
-						<input type="text" id="searchAuthor" name="usernames" value="" class="medium" autocomplete="off">
-						{* deprecated *}{event name='authorOptions'}
-					</dd>
-				</dl>
-				<dl>
-					<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
-					<dd>
-						<input type="date" id="startDate" name="startDate" value="" data-placeholder="{lang}wcf.date.period.start{/lang}">
-						<input type="date" id="endDate" name="endDate" value="" data-placeholder="{lang}wcf.date.period.end{/lang}">
-						{* deprecated *}{event name='periodOptions'}
-					</dd>
-				</dl>
+
 				<dl>
 					<dt><label for="sortField">{lang}wcf.search.sortBy{/lang}</label></dt>
 					<dd>
@@ -58,6 +43,23 @@
 							<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 						</select>
 						{* deprecated *}{event name='displayOptions'}
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
+					<dd>
+						<input type="text" id="searchAuthor" name="usernames" value="" class="medium" autocomplete="off">
+						{* deprecated *}{event name='authorOptions'}
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
+					<dd>
+						<input type="date" id="startDate" name="startDate" value="" data-placeholder="{lang}wcf.date.period.start{/lang}">
+						<input type="date" id="endDate" name="endDate" value="" data-placeholder="{lang}wcf.date.period.end{/lang}">
+						{* deprecated *}{event name='periodOptions'}
 					</dd>
 				</dl>
 				
