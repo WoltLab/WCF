@@ -46,9 +46,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         $data['customUrls'] = $this->getCustomUrls($data['landingPages']);
         $data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
 
-        $data = $this->handleLandingPageWithOverriddenApplication($data);
-
-        return $data;
+        return $this->handleLandingPageWithOverriddenApplication($data);
     }
 
     /**
