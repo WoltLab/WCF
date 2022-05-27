@@ -84,19 +84,6 @@ class ControllerMap extends SingletonFactory
             $parts = \array_map('ucfirst', $parts);
             $controller = \implode('', $parts);
 
-            // work-around for legacy action controllers for upgrade and CORS avoidance
-            if ($controller === 'AjaxProxy') {
-                $controller = 'AJAXProxy';
-            } elseif ($controller === 'AjaxUpload') {
-                $controller = 'AJAXUpload';
-            } elseif ($controller === 'AjaxInvoke') {
-                $controller = 'AJAXInvoke';
-            } elseif ($controller === 'AjaxFileUpload') {
-                $controller = 'AJAXFileUpload';
-            } elseif ($controller === 'AjaxFileDelete') {
-                $controller = 'AJAXFileDelete';
-            }
-
             // Map virtual controllers to their true application
             if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
                 $application = $this->applicationOverrides['lookup'][$application][$controller];
