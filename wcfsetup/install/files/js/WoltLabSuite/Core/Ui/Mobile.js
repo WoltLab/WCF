@@ -303,7 +303,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
     function setup(enableMobileMenu, pageMenuMainProvider) {
         _enableMobileMenu = enableMobileMenu;
         _pageMenuMainProvider = pageMenuMainProvider;
-        document.querySelectorAll(".sidebar").forEach((sidebar) => {
+        document.querySelectorAll(".boxesSidebarLeft").forEach((sidebar) => {
             _sidebars.push(sidebar);
         });
         if (Environment.touch()) {

@@ -362,7 +362,7 @@ export function setup(enableMobileMenu: boolean, pageMenuMainProvider: PageMenuM
   _enableMobileMenu = enableMobileMenu;
   _pageMenuMainProvider = pageMenuMainProvider;
 
-  document.querySelectorAll(".sidebar").forEach((sidebar: HTMLElement) => {
+  document.querySelectorAll(".boxesSidebarLeft").forEach((sidebar: HTMLElement) => {
     _sidebars.push(sidebar);
   });
 
