@@ -337,6 +337,18 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 
 			if ($message.trim().length === 0) {
+				const innerError = this._textarea[0].parentElement.querySelector(".innerError");
+				if (innerError) {
+					innerError.remove();
+				} else {
+					// Error messages that are present on page load are placed after
+					// the `.redactor-box` parent.
+					const sibling = this._textarea[0].parentElement.nextElementSibling;
+					if (sibling && sibling.classList.contains("innerError")) {
+						sibling.remove();
+					}
+				}
+
 				elInnerError(this._textarea.redactor("core.editor")[0], WCF.Language.get("wcf.global.form.error.empty"));
 				return;
 			}
