@@ -1,3 +1,11 @@
+button {
+	all: unset;
+
+	&.focus-visible:focus {
+		outline: 5px auto -webkit-focus-ring-color;
+	}
+}
+
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
