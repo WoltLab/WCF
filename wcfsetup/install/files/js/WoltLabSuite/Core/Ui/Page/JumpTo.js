@@ -86,7 +86,7 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
         </dd>
       </dl>
       <div class="formSubmit">
-        <button class="buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
+        <button class="button buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
       </div>`;
             return {
                 id: "paginationOverlay",

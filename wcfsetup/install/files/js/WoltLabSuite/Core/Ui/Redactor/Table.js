@@ -56,7 +56,7 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
           </dd>
         </dl>
         <div class="formSubmit">
-          <button id="redactor-modal-button-action" class="buttonPrimary" data-type="submit">${Language.get("wcf.global.button.insert")}</button>
+          <button id="redactor-modal-button-action" class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.insert")}</button>
         </div>`,
             };
         }

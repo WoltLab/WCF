@@ -150,7 +150,7 @@ function openDialog(event: MouseEvent): void {
         <dl>
           <dt></dt>
           <dd>
-              <button class="shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
+              <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
                 target.href,
               )}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get(
         "wcf.message.share.nativeShare",

@@ -29,7 +29,8 @@ class UiUserActivityRecent implements AjaxCallbackObject {
     const showMoreItem = document.createElement("li");
     showMoreItem.className = "showMore";
     if (this.list.childElementCount) {
-      showMoreItem.innerHTML = '<button class="small">' + Language.get("wcf.user.recentActivity.more") + "</button>";
+      showMoreItem.innerHTML =
+        '<button class="button small">' + Language.get("wcf.user.recentActivity.more") + "</button>";
 
       const button = showMoreItem.children[0] as HTMLButtonElement;
       button.addEventListener("click", (ev) => this.showMore(ev));

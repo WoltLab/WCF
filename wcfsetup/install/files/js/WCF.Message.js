@@ -1376,8 +1376,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			// add 'insert' and 'delete' buttons
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-			if (this._supportPaste) this._buttons.insert = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.message.quote.insertAllQuotes') + '</button>').click($.proxy(this._insertSelected, this)).appendTo($formSubmit);
-			this._buttons.remove = $('<button>' + WCF.Language.get('wcf.message.quote.removeAllQuotes') + '</button>').click($.proxy(this._removeSelected, this)).appendTo($formSubmit);
+			if (this._supportPaste) this._buttons.insert = $('<button class="button buttonPrimary">' + WCF.Language.get('wcf.message.quote.insertAllQuotes') + '</button>').click($.proxy(this._insertSelected, this)).appendTo($formSubmit);
+			this._buttons.remove = $('<button class="button">' + WCF.Language.get('wcf.message.quote.removeAllQuotes') + '</button>').click($.proxy(this._removeSelected, this)).appendTo($formSubmit);
 			
 			// show dialog
 			this._dialog.wcfDialog({

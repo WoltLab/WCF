@@ -7392,8 +7392,8 @@
 						'link': String() + '<div class="redactor-modal-tab" data-title="General">' + '<section>' + '<label>URL</label>' + '<input type="url" id="redactor-link-url" aria-label="URL" />' + '</section>' + '<section>' + '<label>' + this.lang.get(
 							'text') + '</label>' + '<input type="text" id="redactor-link-url-text" aria-label="' + this.lang.get(
 							'text') + '" />' + '</section>' + '<section>' + '<label class="checkbox"><input type="checkbox" id="redactor-link-blank"> ' + this.lang.get(
-							'link-in-new-tab') + '</label>' + '</section>' + '<section>' + '<button id="redactor-modal-button-action">' + this.lang.get(
-							'insert') + '</button>' + '<button id="redactor-modal-button-cancel">' + this.lang.get(
+							'link-in-new-tab') + '</label>' + '</section>' + '<section>' + '<button class="button" id="redactor-modal-button-action">' + this.lang.get(
+							'insert') + '</button>' + '<button class="button" id="redactor-modal-button-cancel">' + this.lang.get(
 							'cancel') + '</button>' + '</section>' + '</div>'
 					};
 					
@@ -7441,7 +7441,7 @@
 					this.$modal = $('<div id="redactor-modal" role="dialog" />');
 					this.$modalHeader = $('<div id="redactor-modal-header" />');
 					this.$modalClose = $(
-						'<button type="button" id="redactor-modal-close" aria-label="' + this.lang.get(
+						'<button class="button" type="button" id="redactor-modal-close" aria-label="' + this.lang.get(
 						'close') + '" />').html('&times;');
 					this.$modalBody = $('<div id="redactor-modal-body" />');
 					

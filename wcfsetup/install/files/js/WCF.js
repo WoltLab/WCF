@@ -5463,7 +5463,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				
 				// display continue button
 				var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo(
+				$('<button class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo(
 					$formSubmit).focus().click(function () {
 					if (data.returnValues.redirectURL) {
 						window.location = data.returnValues.redirectURL;

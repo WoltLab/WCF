@@ -185,8 +185,6 @@ function setupA11y(): void {
 
     const showMenuButton = document.createElement("button");
     showMenuButton.className = "visuallyHidden";
-    showMenuButton.tabIndex = 0;
-    showMenuButton.setAttribute("role", "button");
     showMenuButton.setAttribute("aria-label", Language.get("wcf.global.button.showMenu"));
     element.insertBefore(showMenuButton, link.nextSibling);
 

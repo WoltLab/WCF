@@ -265,7 +265,7 @@ WCF.Comment.Handler = Class.extend({
 	_handleLoadNextComments: function() {
 		if (this._displayedComments < this._container.data('comments')) {
 			if (this._loadNextComments === null) {
-				this._loadNextComments = $('<li class="commentLoadNext showMore"><button class="small">' + WCF.Language.get('wcf.comment.more') + '</button></li>').appendTo(this._container);
+				this._loadNextComments = $('<li class="commentLoadNext showMore"><button class="button small">' + WCF.Language.get('wcf.comment.more') + '</button></li>').appendTo(this._container);
 				this._loadNextComments.children('button').click($.proxy(this._loadComments, this));
 			}
 			
