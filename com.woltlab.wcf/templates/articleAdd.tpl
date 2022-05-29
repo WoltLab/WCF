@@ -560,7 +560,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<button id="buttonMessagePreview" class="jsOnly">{lang}wcf.global.button.preview{/lang}</button>
+		<button id="buttonMessagePreview" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
 		<input type="hidden" name="timeNowReference" value="{@TIME_NOW}">
 		{csrfToken}

@@ -46,9 +46,9 @@
 <input type="hidden" name="languageItemID" id="overlayLanguageItemID" value="{@$item->languageItemID}">
 
 <div class="formSubmit">
-	<button class="jsSubmitLanguageItem buttonPrimary" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
+	<button class="button buttonPrimary jsSubmitLanguageItem" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
 	
 	{if $item->isCustomLanguageItem}
-		<button class="jsDeleteLanguageItem">{lang}wcf.global.button.delete{/lang}</button>
+		<button class="button jsDeleteLanguageItem">{lang}wcf.global.button.delete{/lang}</button>
 	{/if}
 </div>

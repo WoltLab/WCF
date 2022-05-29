@@ -60,7 +60,7 @@
 	{if !$__wcf->user->disableSignature}
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-			<button id="previewButton" class="jsOnly" accesskey="p">{lang}wcf.global.button.preview{/lang}</button>
+			<button id="previewButton" class="button jsOnly" accesskey="p">{lang}wcf.global.button.preview{/lang}</button>
 			{csrfToken}
 		</div>
 	{/if}

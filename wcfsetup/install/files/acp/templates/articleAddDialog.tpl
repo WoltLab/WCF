@@ -11,7 +11,7 @@
 		</dl>
 		
 		<div class="formSubmit">
-			<button class="buttonPrimary">{lang}wcf.global.button.next{/lang}</button>
+			<button class="button buttonPrimary">{lang}wcf.global.button.next{/lang}</button>
 		</div>
 	</div>
 </div>

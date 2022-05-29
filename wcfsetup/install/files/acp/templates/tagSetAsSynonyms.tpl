@@ -9,5 +9,5 @@
 </ul>
 
 <div class="formSubmit">
-	<button data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
+	<button class="button" data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
 </div>

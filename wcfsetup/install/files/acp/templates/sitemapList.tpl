@@ -7,7 +7,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><button id="sitemapRebuildButton"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}</span></button></li>
+			<li><button class="button" id="sitemapRebuildButton"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}</span></button></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>

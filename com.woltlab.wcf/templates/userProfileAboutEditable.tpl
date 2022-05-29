@@ -24,8 +24,8 @@
 {/foreach}
 
 <div class="formSubmit">
-	<button class="buttonPrimary" accesskey="s" data-type="save">{lang}wcf.global.button.save{/lang}</button>
-	<button data-type="restore">{lang}wcf.global.button.cancel{/lang}</button>
+	<button class="button buttonPrimary" accesskey="s" data-type="save">{lang}wcf.global.button.save{/lang}</button>
+	<button class="button" data-type="restore">{lang}wcf.global.button.cancel{/lang}</button>
 </div>
 
 <script data-relocate="true">

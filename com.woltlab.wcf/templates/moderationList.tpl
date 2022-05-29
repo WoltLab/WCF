@@ -81,7 +81,7 @@
 						</li>
 					{/hascontent}
 					<li class="columnApplyFilter jsOnly">
-						<button class="small jsStaticDialog" data-dialog-id="moderationListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wcf.global.filter{/lang}</button>
+						<button class="button small jsStaticDialog" data-dialog-id="moderationListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wcf.global.filter{/lang}</button>
 					</li>
 				</ol>
 			</li>

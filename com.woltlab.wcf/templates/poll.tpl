@@ -54,12 +54,12 @@
 		<div class="formSubmit jsOnly"{if !$poll->canVote() && $__pollView === 'result' && !$poll->canSeeResult()} style="display: none"{/if}>
 			{content}
 				{if $__wcf->getUser()->userID}
-					<button class="small votePollButton"{if $poll->canVote() && $__pollView === 'vote'} disabled{else} hidden{/if}>{lang}wcf.poll.button.vote{/lang}</button>
-					<button class="small showVoteFormButton"{if $__pollView === 'vote' || !$poll->canVote()} hidden{/if}>{lang}wcf.poll.button.showVote{/lang}</button>
-					<button class="small showResultsButton"{if $__pollView === 'result' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showResult{/lang}</button>
+					<button class="button small votePollButton"{if $poll->canVote() && $__pollView === 'vote'} disabled{else} hidden{/if}>{lang}wcf.poll.button.vote{/lang}</button>
+					<button class="button small showVoteFormButton"{if $__pollView === 'vote' || !$poll->canVote()} hidden{/if}>{lang}wcf.poll.button.showVote{/lang}</button>
+					<button class="button small showResultsButton"{if $__pollView === 'result' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showResult{/lang}</button>
 				{/if}
 				{if $poll->canViewParticipants() || ($poll->canVote() && $poll->isPublic)}
-					<button class="small showPollParticipantsButton"{if $__pollView === 'vote' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showParticipants{/lang}</button>
+					<button class="button small showPollParticipantsButton"{if $__pollView === 'vote' || !$poll->canSeeResult()} hidden{/if}>{lang}wcf.poll.button.showParticipants{/lang}</button>
 				{/if}
 
 				{event name='pollButtons'}
