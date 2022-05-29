@@ -21,6 +21,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          */
         constructor(element, options) {
             this.alphaInput = null;
+            this.channels = new Map();
             this.colorInput = null;
             this.colorTextInput = null;
             this.newColor = null;
@@ -48,7 +49,18 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
       <dl>
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
         <dd>
-          <input type="color">
+          <div class="inputAddon colorPickerChannel">
+            <span class="inputPrefix">R</span>
+            <input type="number" min="0" max="255" data-channel="r">
+          </div>
+          <div class="inputAddon colorPickerChannel">
+            <span class="inputPrefix">G</span>
+            <input type="number" min="0" max="255" data-channel="g">
+          </div>
+          <div class="inputAddon colorPickerChannel">
+            <span class="inputPrefix">B</span>
+            <input type="number" min="0" max="255" data-channel="b">
+          </div>
         </dd>
       </dl>
       <dl>
@@ -84,8 +96,12 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
 </div>`,
                 options: {
                     onSetup: (content) => {
-                        this.colorInput = content.querySelector("input[type=color]");
-                        this.colorInput.addEventListener("input", () => this.updateColor());
+                        this.channels.set(0 /* R */, content.querySelector('input[data-channel="r"]'));
+                        this.channels.set(1 /* G */, content.querySelector('input[data-channel="g"]'));
+                        this.channels.set(2 /* B */, content.querySelector('input[data-channel="b"]'));
+                        this.channels.forEach((input) => {
+                            input.addEventListener("input", () => this.updateColor());
+                        });
                         this.alphaInput = content.querySelector("input[type=range]");
                         this.alphaInput.addEventListener("input", () => this.updateColor());
                         this.newColor = content.querySelector(".colorPickerColorNew > span");
@@ -154,9 +170,12 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          * @since 5.5
          */
         getColor() {
-            const color = this.colorInput.value;
-            const alpha = this.alphaInput.value;
-            return Object.assign(Object.assign({}, ColorUtil.hexToRgb(color)), { a: +alpha });
+            return {
+                r: parseInt(this.channels.get(0 /* R */).value, 10),
+                g: parseInt(this.channels.get(1 /* G */).value, 10),
+                b: parseInt(this.channels.get(2 /* B */).value, 10),
+                a: parseInt(this.alphaInput.value, 10),
+            };
         }
         /**
          * Opens the color picker after clicking on the picker button.
@@ -175,7 +194,9 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             if (typeof color === "string") {
                 color = ColorUtil.stringToRgba(color);
             }
-            this.colorInput.value = `#${ColorUtil.rgbToHex(color.r, color.g, color.b)}`;
+            this.channels.get(0 /* R */).value = color.r.toString();
+            this.channels.get(1 /* G */).value = color.g.toString();
+            this.channels.get(2 /* B */).value = color.b.toString();
             this.alphaInput.value = color.a.toString();
             this.newColor.style.backgroundColor = ColorUtil.rgbaToString(color);
             this.colorTextInput.value = ColorUtil.rgbaToHex(color);

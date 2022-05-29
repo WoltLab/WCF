@@ -18,12 +18,19 @@ import * as ColorUtil from "../../ColorUtil";
 
 type CallbackSubmit = (data: ColorUtil.RGBA) => void;
 
+const enum Channel {
+  R,
+  G,
+  B,
+}
+
 interface ColorPickerOptions {
   callbackSubmit: CallbackSubmit;
 }
 
 class UiColorPicker implements DialogCallbackObject {
   protected alphaInput: HTMLInputElement | null = null;
+  private readonly channels = new Map<Channel, HTMLInputElement>();
   protected colorInput: HTMLInputElement | null = null;
   protected colorTextInput: HTMLInputElement | null = null;
   protected readonly element: HTMLElement;
@@ -68,7 +75,18 @@ class UiColorPicker implements DialogCallbackObject {
       <dl>
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
         <dd>
-          <input type="color">
+          <div class="inputAddon colorPickerChannel">
+            <span class="inputPrefix">R</span>
+            <input type="number" min="0" max="255" data-channel="r">
+          </div>
+          <div class="inputAddon colorPickerChannel">
+            <span class="inputPrefix">G</span>
+            <input type="number" min="0" max="255" data-channel="g">
+          </div>
+          <div class="inputAddon colorPickerChannel">
+            <span class="inputPrefix">B</span>
+            <input type="number" min="0" max="255" data-channel="b">
+          </div>
         </dd>
       </dl>
       <dl>
@@ -104,8 +122,13 @@ class UiColorPicker implements DialogCallbackObject {
 </div>`,
       options: {
         onSetup: (content) => {
-          this.colorInput = content.querySelector("input[type=color]") as HTMLInputElement;
-          this.colorInput.addEventListener("input", () => this.updateColor());
+          this.channels.set(Channel.R, content.querySelector('input[data-channel="r"]') as HTMLInputElement);
+          this.channels.set(Channel.G, content.querySelector('input[data-channel="g"]') as HTMLInputElement);
+          this.channels.set(Channel.B, content.querySelector('input[data-channel="b"]') as HTMLInputElement);
+          this.channels.forEach((input) => {
+            input.addEventListener("input", () => this.updateColor());
+          });
+
           this.alphaInput = content.querySelector("input[type=range]") as HTMLInputElement;
           this.alphaInput.addEventListener("input", () => this.updateColor());
 
@@ -182,10 +205,12 @@ class UiColorPicker implements DialogCallbackObject {
    * @since 5.5
    */
   protected getColor(): ColorUtil.RGBA {
-    const color = this.colorInput!.value;
-    const alpha = this.alphaInput!.value;
-
-    return { ...(ColorUtil.hexToRgb(color) as ColorUtil.RGB), a: +alpha };
+    return {
+      r: parseInt(this.channels.get(Channel.R)!.value, 10),
+      g: parseInt(this.channels.get(Channel.G)!.value, 10),
+      b: parseInt(this.channels.get(Channel.B)!.value, 10),
+      a: parseInt(this.alphaInput!.value, 10),
+    };
   }
 
   /**
@@ -207,7 +232,9 @@ class UiColorPicker implements DialogCallbackObject {
       color = ColorUtil.stringToRgba(color);
     }
 
-    this.colorInput!.value = `#${ColorUtil.rgbToHex(color.r, color.g, color.b)}`;
+    this.channels.get(Channel.R)!.value = color.r.toString();
+    this.channels.get(Channel.G)!.value = color.g.toString();
+    this.channels.get(Channel.B)!.value = color.b.toString();
     this.alphaInput!.value = color.a.toString();
 
     this.newColor!.style.backgroundColor = ColorUtil.rgbaToString(color);
