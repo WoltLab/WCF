@@ -11,7 +11,7 @@ import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
 import * as UiStyleFontAwesome from "../../../Ui/Style/FontAwesome";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
-import * as ColorPicker from "../../../Ui/Color/Picker";
+import ColorPicker from "../../../Ui/Color/Picker";
 
 interface Rgba {
   r: number;

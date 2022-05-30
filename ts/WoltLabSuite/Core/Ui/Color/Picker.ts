@@ -111,11 +111,11 @@ class UiColorPicker implements DialogCallbackObject {
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
         <dd class="colorPickerChannels">
           rgba(
-          <input type="number" min="0" max="255" class="colorPickerChannel" data-channel="r">
-          <input type="number" min="0" max="255" class="colorPickerChannel" data-channel="g">
-          <input type="number" min="0" max="255" class="colorPickerChannel" data-channel="b">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="g">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="b">
           /
-          <input type="number" min="0" max="1" step="0.01" class="colorPickerChannel" data-channel="a">
+          <input type="number" min="0" max="1" step="0.01" size="3" class="colorPickerChannel" data-channel="a">
           )
         </dd>
       </dl>

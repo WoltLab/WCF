@@ -645,6 +645,8 @@
 		<file>icon/write1.svg</file>
 		<file>images/apple-touch-icon.png</file>
 		<file>images/avatars/generateAvatar.php</file>
+		<file>images/colorPickerBar.png</file>
+		<file>images/colorPickerGradient.png</file>
 		<file>images/favicon.ico</file>
 		<file>images/imageViewer/blank.png</file>
 		<file>images/imageViewer/menu.png</file>
