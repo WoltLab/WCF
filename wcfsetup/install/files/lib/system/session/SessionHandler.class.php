@@ -1375,9 +1375,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Returns currently active style id.
-     *
-     * @return  int
+     * @deprecated 5.5 - Use `StyleHandler::getInstance()->getStyle()->styleID` instead.
      */
     public function getStyleID()
     {
@@ -1385,9 +1383,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Sets the currently active style id.
-     *
-     * @param int $styleID
+     * @deprecated 5.5 - Set the style directly with the `StyleAction::changeStyle()`.
      */
     public function setStyleID($styleID)
     {
