@@ -98,11 +98,55 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.hsvToRgb = hsvToRgb;
     /**
-     * Converts a RGB color into HSVL.
+     * Converts a RGB color into HSL.
      *
-     * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
+     * @see https://www.rapidtables.com/convert/color/rgb-to-hsl.html
      */
-    function rgbToHsvl(r, g, b) {
+    function rgbToHsl(r, g, b) {
+        let h, s;
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        const max = Math.max(Math.max(r, g), b);
+        const min = Math.min(Math.min(r, g), b);
+        const diff = max - min;
+        h = 0;
+        if (max !== min) {
+            switch (max) {
+                case r:
+                    h = 60 * ((g - b) / diff);
+                    break;
+                case g:
+                    h = 60 * (2 + (b - r) / diff);
+                    break;
+                case b:
+                    h = 60 * (4 + (r - g) / diff);
+                    break;
+            }
+            if (h < 0) {
+                h += 360;
+            }
+        }
+        const l = (max + min) / 2;
+        if (max === 0) {
+            s = 0;
+        }
+        else {
+            s = diff / (1 - Math.abs(2 * l - 1));
+        }
+        return {
+            h: Math.round(h),
+            s: Math.round(s * 100),
+            l: Math.round(l * 100),
+        };
+    }
+    exports.rgbToHsl = rgbToHsl;
+    /**
+     * Converts a RGB color into HSV.
+     *
+     * @see https://www.rapidtables.com/convert/color/rgb-to-hsv.html
+     */
+    function rgbToHsv(r, g, b) {
         let h, s;
         r /= 255;
         g /= 255;
@@ -133,28 +177,11 @@ define(["require", "exports"], function (require, exports) {
         else {
             s = diff / max;
         }
-        const l = (max + min) / 2;
         return {
             h: Math.round(h),
             s: Math.round(s * 100),
             v: Math.round(max * 100),
-            l: Math.round(l * 100),
         };
-    }
-    /**
-     * Converts a RGB color into HSL.
-     */
-    function rgbToHsl(r, g, b) {
-        const { h, s, l } = rgbToHsvl(r, g, b);
-        return { h, s, l };
-    }
-    exports.rgbToHsl = rgbToHsl;
-    /**
-     * Converts a RGB color into HSV.
-     */
-    function rgbToHsv(r, g, b) {
-        const { h, s, v } = rgbToHsvl(r, g, b);
-        return { h, s, v };
     }
     exports.rgbToHsv = rgbToHsv;
     /**
