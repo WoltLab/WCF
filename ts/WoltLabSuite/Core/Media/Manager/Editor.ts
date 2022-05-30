@@ -266,11 +266,17 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
         link = media[thumbnailSize + "ThumbnailLink"];
       }
 
-      this._options.editor!.insert.html(
-        `<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`,
-      );
+      Core.interactWithRedactor(() => {
+        this._options.editor!.insert.html(
+          `<img src="${link}" class="woltlabSuiteMedia" data-media-id="${
+            media.mediaID
+          }" data-media-size="${thumbnailSize!}">`,
+        );
+      });
     } else {
-      this._options.editor!.insert.text(`[wsm='${media.mediaID}'][/wsm]`);
+      Core.interactWithRedactor(() => {
+        this._options.editor!.insert.text(`[wsm='${media.mediaID}'][/wsm]`);
+      });
     }
   }
 

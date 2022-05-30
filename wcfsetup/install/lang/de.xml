@@ -3987,7 +3987,6 @@ Dateianhänge:
 		<item name="wcf.global.button.hideSidebar"><![CDATA[Sidebar verbergen]]></item>
 		<item name="wcf.global.button.showSidebar"><![CDATA[Sidebar anzeigen]]></item>
 		<item name="wcf.global.button.showSidebarLeft"><![CDATA[Linke Sidebar]]></item>
-		<item name="wcf.global.button.showSidebarRight"><![CDATA[Rechte Sidebar]]></item>
 		<item name="wcf.global.button.showMenu"><![CDATA[Menü anzeigen]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Menü verbergen]]></item>
 		<item name="wcf.global.button.markAsRead"><![CDATA[Als gelesen markieren]]></item>

@@ -42,7 +42,6 @@ export class UiSearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
   private readonly typeInput: HTMLSelectElement;
-  private readonly usernameInput: HTMLInputElement;
   private readonly delimiter: HTMLDivElement;
   private searchID: number | undefined = undefined;
   private pages = 0;
@@ -55,7 +54,6 @@ export class UiSearchExtended {
     this.form = document.getElementById("extendedSearchForm") as HTMLFormElement;
     this.queryInput = document.getElementById("searchQuery") as HTMLInputElement;
     this.typeInput = document.getElementById("searchType") as HTMLSelectElement;
-    this.usernameInput = document.getElementById("searchAuthor") as HTMLInputElement;
     this.delimiter = document.createElement("div");
 
     this.form.insertAdjacentElement("afterend", this.delimiter);
@@ -109,7 +107,7 @@ export class UiSearchExtended {
   }
 
   private async search(searchAction: SearchAction): Promise<void> {
-    if (!this.queryInput.value.trim() && !this.usernameInput.value.trim()) {
+    if (!this.queryInput.value.trim() && !this.form["usernames"].value) {
       return;
     }
 

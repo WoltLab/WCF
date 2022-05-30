@@ -205,12 +205,6 @@
 				}
 			}
 		}
-
-		/* Chrome and Safari use heavy anti-aliasing when the dialog's width
-		   cannot be evenly divided, causing the whole text to become blurry */
-		&.jsWebKitFractionalPixelFix {
-			backface-visibility: hidden;
-		}
 	}
 }
 

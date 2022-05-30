@@ -520,18 +520,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             unavailableHeight += Util_1.default.outerHeight(data.header);
             const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
             contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
-            // Chrome and Safari use heavy anti-aliasing when the dialog's width
-            // cannot be evenly divided, causing the whole text to become blurry
-            if (Environment.browser() === "chrome" || Environment.browser() === "safari") {
-                // The new Microsoft Edge is detected as "chrome", because effectively we're detecting
-                // Chromium rather than Chrome specifically. The workaround for fractional pixels does
-                // not work well in Edge, there seems to be a different logic for fractional positions,
-                // causing the text to be blurry.
-                //
-                // We can use `backface-visibility: hidden` to prevent the anti aliasing artifacts in
-                // WebKit/Blink, which will also prevent some weird font rendering issues when resizing.
-                contentContainer.classList.add("jsWebKitFractionalPixelFix");
-            }
             const callbackObject = _dialogToObject.get(id);
             //noinspection JSUnresolvedVariable
             if (callbackObject !== undefined && typeof callbackObject._dialogSubmit === "function") {
