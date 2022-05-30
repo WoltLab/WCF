@@ -541,14 +541,8 @@ class WCF
      */
     protected function initStyle()
     {
-        if (self::getSession()->getUser()->userID) {
-            $styleID = self::getSession()->getUser()->styleID ?: 0;
-        } else {
-            $styleID = self::getSession()->getVar('styleID') ?: 0;
-        }
-
         $styleHandler = StyleHandler::getInstance();
-        $styleHandler->changeStyle($styleID);
+        $styleHandler->changeStyle(self::getSession()->getStyleID());
     }
 
     /**

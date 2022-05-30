@@ -685,6 +685,8 @@ BROWSERCONFIG;
     {
         StyleHandler::getInstance()->changeStyle($this->style->styleID);
         if (StyleHandler::getInstance()->getStyle()->styleID == $this->style->styleID) {
+            WCF::getSession()->setStyleID($this->style->styleID);
+
             if (WCF::getUser()->userID) {
                 // set this as the permanent style
                 $userAction = new UserAction([WCF::getUser()], 'update', [
@@ -693,8 +695,6 @@ BROWSERCONFIG;
                     ],
                 ]);
                 $userAction->executeAction();
-            } else {
-                WCF::getSession()->register('styleID', $this->style->styleID);
             }
         }
     }
