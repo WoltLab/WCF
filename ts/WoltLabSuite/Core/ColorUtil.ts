@@ -8,6 +8,44 @@
  * @module      WoltLabSuite/Core/ColorUtil
  */
 
+type HSVL = {
+  h: number;
+  s: number;
+  v: number;
+  l: number;
+};
+
+/**
+ * Converts a HSL color into RGB.
+ *
+ * @see https://www.rapidtables.com/convert/color/hsl-to-rgb.html
+ */
+export function hslToRgb(hue: number, saturation: number, lightness: number): RGB {
+  if (hue > 359) {
+    throw new TypeError("Hue cannot be larger than 359°");
+  }
+
+  saturation /= 100;
+  lightness /= 100;
+
+  const C = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const X = C * (1 - Math.abs(((hue / 60) % 2) - 1));
+  const m = lightness - C / 2;
+
+  const [R, G, B] = ((0 <= hue && hue < 60 && [C, X, 0]) ||
+    (60 <= hue && hue < 120 && [X, C, 0]) ||
+    (120 <= hue && hue < 180 && [0, C, X]) ||
+    (180 <= hue && hue < 240 && [0, X, C]) ||
+    (240 <= hue && hue < 300 && [X, 0, C]) ||
+    (300 <= hue && hue < 360 && [C, 0, X])) as number[];
+
+  return {
+    r: Math.round((R + m) * 255),
+    g: Math.round((G + m) * 255),
+    b: Math.round((B + m) * 255),
+  };
+}
+
 /**
  * Converts a HSV color into RGB.
  *
@@ -77,11 +115,11 @@ export function hsvToRgb(h: number, s: number, v: number): RGB {
 }
 
 /**
- * Converts a RGB color into HSV.
+ * Converts a RGB color into HSVL.
  *
  * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
  */
-export function rgbToHsv(r: number, g: number, b: number): HSV {
+function rgbToHsvl(r: number, g: number, b: number): HSVL {
   let h: number, s: number;
 
   r /= 255;
@@ -119,11 +157,32 @@ export function rgbToHsv(r: number, g: number, b: number): HSV {
     s = diff / max;
   }
 
+  const l = (max + min) / 2;
+
   return {
     h: Math.round(h),
     s: Math.round(s * 100),
     v: Math.round(max * 100),
+    l: Math.round(l * 100),
   };
+}
+
+/**
+ * Converts a RGB color into HSL.
+ */
+export function rgbToHsl(r: number, g: number, b: number): HSL {
+  const { h, s, l } = rgbToHsvl(r, g, b);
+
+  return { h, s, l };
+}
+
+/**
+ * Converts a RGB color into HSV.
+ */
+export function rgbToHsv(r: number, g: number, b: number): HSV {
+  const { h, s, v } = rgbToHsvl(r, g, b);
+
+  return { h, s, v };
 }
 
 /**
@@ -300,33 +359,41 @@ export function stringToRgba(color: string): RGBA {
   throw new Error(`Cannot process color '${color}'.`);
 }
 
-export interface RGB {
+export type RGB = {
   r: number;
   g: number;
   b: number;
-}
+};
 
-export interface RGBA {
+export type RGBA = {
   r: number;
   g: number;
   b: number;
   a: number;
-}
+};
 
-export interface HSV {
+export type HSV = {
   h: number;
   s: number;
   v: number;
-}
+};
+
+export type HSL = {
+  h: number;
+  s: number;
+  l: number;
+};
 
 // WCF.ColorPicker compatibility (color format conversion)
 window.__wcf_bc_colorUtil = {
   hexToRgb,
+  hslToRgb,
   hsvToRgb,
   isValidColor,
   rgbaToHex,
   rgbaToString,
   rgbToHex,
   rgbToHsv,
+  rgbToHsl,
   stringToRgba,
 };
