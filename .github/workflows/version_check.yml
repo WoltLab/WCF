@@ -1,0 +1,23 @@
+name: Version Check
+
+on:
+  push:
+    paths:
+    - 'com.woltlab.wcf/package.xml'
+    - 'wcfsetup/install/files/lib/system/WCF.class.php'
+
+jobs:
+  wcf_version:
+    name: "Check that WCF_VERSION is in sync"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        set -x
+        PACKAGE_VERSION="$(sed '/<version>/!d;s!^.*<version>!!;s!</version>$!!' com.woltlab.wcf/package.xml)"
+        WCF_VERSION="$(sed -r '/WCF_VERSION/!d;s!^.?define..WCF_VERSION., .!!;s!..;$!!' wcfsetup/install/files/lib/system/WCF.class.php)"
+        if [ "$PACKAGE_VERSION" != "$WCF_VERSION" ]; then
+          echo "::error file=com.woltlab.wcf/package.xml,line=$(awk '/<version>/{print NR}' com.woltlab.wcf/package.xml),title=Mismatching WCF version::This version $PACKAGE_VERSION does not match WCF.class.php."
+          echo "::error file=wcfsetup/install/files/lib/system/WCF.class.php,line=$(awk '/WCF_VERSION/{print NR}' wcfsetup/install/files/lib/system/WCF.class.php),title=Mismatching WCF version::This version $WCF_VERSION does not match package.xml."
+          exit 1
+        fi
