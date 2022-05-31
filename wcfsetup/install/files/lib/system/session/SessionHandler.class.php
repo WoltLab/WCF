@@ -73,12 +73,6 @@ final class SessionHandler extends SingletonFactory
     protected $languageID = 0;
 
     /**
-     * language ids for active user
-     * @var int[]
-     */
-    protected $languageIDs;
-
-    /**
      * @var string
      */
     private $sessionID;
@@ -844,43 +838,15 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * Returns language ids for active user.
-     *
-     * @return  int[]
+     * @deprecated 5.6 Use User::getLanguageIDs() instead.
      */
     public function getLanguageIDs()
     {
-        $this->loadLanguageIDs();
-
-        return $this->languageIDs;
-    }
-
-    /**
-     * Loads language ids for active user.
-     */
-    protected function loadLanguageIDs()
-    {
-        if ($this->languageIDs !== null) {
-            return;
-        }
-
-        $this->languageIDs = [];
-
         if (!$this->user->userID) {
-            return;
+            return [];
         }
 
-        // work-around for setup process (package wcf does not exist yet)
-        if (!PACKAGE_ID) {
-            $sql = "SELECT  languageID
-                    FROM    wcf1_user_to_language
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->user->userID]);
-            $this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        } else {
-            $this->languageIDs = $this->user->getLanguageIDs();
-        }
+        return $this->user->getLanguageIDs();
     }
 
     /**
@@ -1006,7 +972,6 @@ final class SessionHandler extends SingletonFactory
 
         // reset caches
         $this->groupData = null;
-        $this->languageIDs = null;
         $this->languageID = $this->user->languageID;
 
         // change language
