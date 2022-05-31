@@ -107,8 +107,8 @@ define(["require", "exports"], function (require, exports) {
         r /= 255;
         g /= 255;
         b /= 255;
-        const max = Math.max(Math.max(r, g), b);
-        const min = Math.min(Math.min(r, g), b);
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
         const diff = max - min;
         h = 0;
         if (max !== min) {
