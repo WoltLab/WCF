@@ -4,7 +4,7 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
-{if !(70200 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80199)}
+{if !(80100 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80199)}
 	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
 {/if}
 {foreach from=$evaluationExpired item=$expiredApp}
