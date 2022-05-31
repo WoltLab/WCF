@@ -286,10 +286,10 @@
 
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.x64.result || !$system.sql.result || !$system.memoryLimit.result || !$system.graphicsLibrary.result || !$system.hostname.result || !$system.cookie.result} disabled{/if} accesskey="s">
-		<input type="hidden" name="step" value="{@$nextStep}">
-		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}">
-		<input type="hidden" name="languageCode" value="{@$languageCode}">
-		<input type="hidden" name="dev" value="{@$developerMode}">
+		<input type="hidden" name="step" value="{$nextStep}">
+		<input type="hidden" name="tmpFilePrefix" value="{$tmpFilePrefix}">
+		<input type="hidden" name="languageCode" value="{$languageCode}">
+		<input type="hidden" name="dev" value="{$developerMode}">
 	</div>
 </form>
 

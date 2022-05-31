@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
+<html dir="{$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
 	<meta charset="utf-8">
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
@@ -49,6 +49,6 @@
 					<header class="contentHeader">
 						<div class="contentHeaderTitle">
 							<h1 class="contentTitle">{lang}wcf.global.title{/lang}</h1>
-							<p class="contentHeaderDescription"><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
+							<p class="contentHeaderDescription"><progress id="packageInstallationProgress" value="{$progress}" max="100" style="width: 300px;" title="{$progress}%">{$progress}%</progress></p>
 						</div>
 					</header>
