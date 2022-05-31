@@ -3010,6 +3010,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.showNavigation"><![CDATA[Navigation anzeigen]]></item>
 		<item name="wcf.global.button.hideSidebar"><![CDATA[Sidebar verbergen]]></item>
 		<item name="wcf.global.button.showSidebar"><![CDATA[Sidebar anzeigen]]></item>
+		<item name="wcf.global.incompatiblePhpVersion"><![CDATA[Fehlerhafte Server-Konfiguration: Die eingesetzte Version von „PHP” ist nicht kompatibel, ein Betrieb ist nicht möglich. Es wird mindestens PHP in Version 5.5 benötigt, unterstützt werden die Versionen bis PHP 7.4. Für den Einsatz höherer PHP-Versionen muss die Software auf eine aktuelle Version umgestellt werden.]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
