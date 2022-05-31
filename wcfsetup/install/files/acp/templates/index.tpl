@@ -4,6 +4,9 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
+{if !(70000 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)}
+	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
+{/if}
 {if !$evaluationExpired|empty}
 	{foreach from=$evaluationExpired item=$expiredApp}
 		<p class="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</p>

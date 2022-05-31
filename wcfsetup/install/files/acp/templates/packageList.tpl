@@ -58,6 +58,9 @@
 	{/hascontent}
 </header>
 
+{if !(70000 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)}
+	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
+{/if}
 {if $recentlyDisabledCustomValues > 0}
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}

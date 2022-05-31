@@ -3896,6 +3896,7 @@ Attachments:
 		<item name="wcf.global.button.showSidebarRight"><![CDATA[Sidebar Right]]></item>
 		<item name="wcf.global.button.showMenu"><![CDATA[Show Menu]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Hide Menu]]></item>
+		<item name="wcf.global.incompatiblePhpVersion"><![CDATA[Bad server configuration: The configured version of “PHP” is not compatible, operation is not possible. At least PHP in version 7.0 is required, versions up to PHP 7.4 are supported. For the use of higher PHP versions the software must be updated to a current version.]]></item>
 	</category>
 	<category name="wcf.global.form">
 		<item name="wcf.global.form.boolean.no"><![CDATA[No]]></item>
