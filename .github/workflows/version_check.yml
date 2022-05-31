@@ -1,10 +1,10 @@
-name: Misc
+name: Version Check
 
 on:
   push:
-    branches:
-    - "[0-9]+.[0-9]+"
-    - master
+    paths:
+    - 'com.woltlab.wcf/package.xml'
+    - 'wcfsetup/install/files/lib/system/WCF.class.php'
 
 jobs:
   wcf_version:
