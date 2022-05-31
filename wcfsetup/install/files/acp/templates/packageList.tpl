@@ -58,7 +58,7 @@
 	{/hascontent}
 </header>
 
-{if !(70200 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80099)}
+{if !(70200 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80199)}
 	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
 {/if}
 {foreach from=$taintedApplications item=$taintedApplication}
