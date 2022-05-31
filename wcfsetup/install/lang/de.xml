@@ -3909,6 +3909,7 @@ Dateianhänge:
 		<item name="wcf.global.button.showSidebarRight"><![CDATA[Rechte Sidebar]]></item>
 		<item name="wcf.global.button.showMenu"><![CDATA[Menü anzeigen]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Menü verbergen]]></item>
+		<item name="wcf.global.incompatiblePhpVersion"><![CDATA[Fehlerhafte Server-Konfiguration: Die eingesetzte Version von „PHP” ist nicht kompatibel, ein Betrieb ist nicht möglich. Es wird mindestens PHP in Version 5.5 benötigt, unterstützt werden die Versionen bis PHP 7.4. Für den Einsatz höherer PHP-Versionen muss die Software auf eine aktuelle Version umgestellt werden.]]></item>
 	</category>
 	<category name="wcf.global.form">
 		<item name="wcf.global.form.boolean.no"><![CDATA[Nein]]></item>

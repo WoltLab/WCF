@@ -57,7 +57,7 @@
 						<td class="columnTitle columnServerURL"><a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.acp.updateServer.edit{/lang}">{$updateServer->serverURL}</a></td>
 						<td class="columnDigits columnPackages">{#$updateServer->packages}</td>
 						<td class="columnStatus"><span class="badge{if $updateServer->status == 'online'} green{else} red{/if}">{@$updateServer->status}</span></td>
-						<td class="columnText columnErrorText" title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</td>
+						<td class="columnText columnErrorText" title="{$updateServer->errorMessage}">{$updateServer->errorMessage|truncate:"30"}</td>
 						<td class="columnDate columnTimestamp">{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</td>
 						
 						{event name='columns'}

@@ -4,6 +4,10 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
+{if !(50500 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)}
+	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
+{/if}
+
 {if TIME_NOW < 1641038400}
 	<div class="warning">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
 {elseif TIME_NOW < 1656676800}

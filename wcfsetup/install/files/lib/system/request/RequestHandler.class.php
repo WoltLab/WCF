@@ -67,6 +67,8 @@ class RequestHandler extends SingletonFactory {
 					throw new IllegalLinkException();
 				}
 			}
+
+			$this->checkSystemEnvironment();
 			
 			// build request
 			$this->buildRequest($application);
@@ -109,6 +111,19 @@ class RequestHandler extends SingletonFactory {
 		catch (NamedUserException $e) {
 			$e->show();
 			exit;
+		}
+	}
+
+	private function checkSystemEnvironment()
+	{
+		if ($this->isACPRequest()) {
+			return;
+		}
+
+		if (!(50500 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)) {
+			\header('HTTP/1.1 500 Internal Server Error');
+
+			throw new NamedUserException(WCF::getLanguage()->get('wcf.global.incompatiblePhpVersion'));
 		}
 	}
 	
