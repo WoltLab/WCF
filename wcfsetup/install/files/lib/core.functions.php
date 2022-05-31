@@ -605,7 +605,6 @@ EXPLANATION;
 
 								$reflection = new \ReflectionClass($e);
 								$property = $reflection->getProperty('information');
-								$property->setAccessible(true);
 								if ($property->getValue($e)) {
 									throw new \Exception("Using the 'information' property of SystemException is not supported any more.");
 								}

@@ -101,7 +101,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
         // avoid issues with links
         $reflectionClass = new \ReflectionClass(RequestHandler::class);
         $reflectionProperty = $reflectionClass->getProperty('isACPRequest');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(RequestHandler::getInstance(), false);
 
         /**

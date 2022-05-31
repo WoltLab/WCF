@@ -311,7 +311,6 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     {
         $reflectionClass = new \ReflectionClass(\get_class($cacheBuilder));
         $reflectionProperty = $reflectionClass->getProperty('cache');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($cacheBuilder, []);
     }
 }

@@ -74,13 +74,11 @@ trait TTestablePageUserNotificationEvent
         // reset page cache
         $reflectionClass = new \ReflectionClass(PageCache::class);
         $reflectionProperty = $reflectionClass->getProperty('cache');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(PageCache::getInstance(), PageCacheBuilder::getInstance()->getData());
 
         // reset controller map
         $reflectionClass = new \ReflectionClass(ControllerMap::class);
         $reflectionMethod = $reflectionClass->getMethod('init');
-        $reflectionMethod->setAccessible(true);
         $reflectionMethod->invoke(ControllerMap::getInstance());
     }
 }
