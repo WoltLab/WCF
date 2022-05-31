@@ -74,6 +74,8 @@ class RequestHandler extends SingletonFactory
                 }
             }
 
+            $this->checkSystemEnvironment();
+
             // build request
             $this->buildRequest($application);
 
@@ -113,6 +115,20 @@ class RequestHandler extends SingletonFactory
             exit;
         }
     }
+
+    private function checkSystemEnvironment()
+    {
+        if ($this->isACPRequest()) {
+            return;
+        }
+
+        if (!(70200 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80099)) {
+            \header('HTTP/1.1 500 Internal Server Error');
+
+            throw new NamedUserException(WCF::getLanguage()->get('wcf.global.incompatiblePhpVersion'));
+        }
+    }
+
 
     /**
      * Splits the given array of cache-control values at commas, while properly

@@ -3953,6 +3953,7 @@ Attachments:
 		<item name="wcf.global.rss.accessToken.info"><![CDATA[The link to the anonymous RSS feed only contains contents that guests can access. The link to the personalized RSS feed contains all contents that you can access.]]></item>
 		<item name="wcf.global.rss.withAccessToken"><![CDATA[Personalized RSS Feed]]></item>
 		<item name="wcf.global.rss.withoutAccessToken"><![CDATA[Anonymous RSS Feed]]></item>
+		<item name="wcf.global.incompatiblePhpVersion"><![CDATA[Bad server configuration: The configured version of “PHP” is not compatible, operation is not possible. At least PHP in version 7.2 is required, versions up to PHP 8.0 are supported. For the use of higher PHP versions the software must be updated to a current version.]]></item>
 	</category>
 	<category name="wcf.global.form">
 		<item name="wcf.global.form.boolean.no"><![CDATA[No]]></item>
