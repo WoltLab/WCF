@@ -11,6 +11,7 @@ import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
 import * as UiStyleFontAwesome from "../../../Ui/Style/FontAwesome";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
+import ColorPicker from "../../../Ui/Color/Picker";
 
 interface Rgba {
   r: number;
@@ -173,8 +174,9 @@ class AcpUiTrophyBadge implements DialogCallbackObject {
             picker.click();
           });
 
-          const colorPicker = new window.WCF.ColorPicker(".jsColorPicker");
-          colorPicker.setCallbackSubmit(() => this.renderIcon());
+          document.querySelectorAll(".jsColorPicker").forEach((element: HTMLElement) => {
+            new ColorPicker(element, { callbackSubmit: () => this.renderIcon() });
+          });
 
           const submitButton = context.querySelector(".formSubmit > .buttonPrimary") as HTMLElement;
           submitButton.addEventListener("click", (ev) => this.save(ev));

@@ -6,13 +6,14 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/Trophy/Badge
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog", "../../../Ui/Style/FontAwesome"], function (require, exports, tslib_1, Language, Dialog_1, UiStyleFontAwesome) {
+define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog", "../../../Ui/Style/FontAwesome", "../../../Ui/Color/Picker"], function (require, exports, tslib_1, Language, Dialog_1, UiStyleFontAwesome, Picker_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiStyleFontAwesome = tslib_1.__importStar(UiStyleFontAwesome);
+    Picker_1 = tslib_1.__importDefault(Picker_1);
     /**
      * @exports     WoltLabSuite/Core/Acp/Ui/Trophy/Badge
      */
@@ -131,8 +132,9 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
                             const picker = badgeColorContainer.querySelector(".jsColorPicker");
                             picker.click();
                         });
-                        const colorPicker = new window.WCF.ColorPicker(".jsColorPicker");
-                        colorPicker.setCallbackSubmit(() => this.renderIcon());
+                        document.querySelectorAll(".jsColorPicker").forEach((element) => {
+                            new Picker_1.default(element, { callbackSubmit: () => this.renderIcon() });
+                        });
                         const submitButton = context.querySelector(".formSubmit > .buttonPrimary");
                         submitButton.addEventListener("click", (ev) => this.save(ev));
                     },

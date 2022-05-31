@@ -3,30 +3,20 @@
 <link href="{@$__wcf->getPath()}acp/style/acpStyleEditor.css" type="text/css" rel="stylesheet">
 
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
-{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
+{include file='colorPickerJavaScript'}
+
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Style/Editor'], function(AcpUiStyleEditor) {
+	require(["WoltLabSuite/Core/Acp/Ui/Style/Editor", "WoltLabSuite/Core/Ui/Color/Picker"], (AcpUiStyleEditor, ColorPicker) => {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
 			styleRuleMap: styleRuleMap
 		});
+
+		ColorPicker.fromSelector(".jsColorPicker");
 	});
 	
 	$(function() {
-		new WCF.ColorPicker('.jsColorPicker');
-		
-		WCF.Language.addObject({
-			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
-			'wcf.style.colorPicker.alpha': '{jslang}wcf.style.colorPicker.alpha{/jslang}',
-			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
-			'wcf.style.colorPicker.color': '{jslang}wcf.style.colorPicker.color{/jslang}',
-			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
-			'wcf.style.colorPicker.error.invalidColor': '{jslang}wcf.style.colorPicker.error.invalidColor{/jslang}',
-			'wcf.style.colorPicker.hexAlpha': '{jslang}wcf.style.colorPicker.hexAlpha{/jslang}',
-			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
-		});
-		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 			

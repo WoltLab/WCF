@@ -20,11 +20,13 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          * Initializes a new color picker instance.
          */
         constructor(element, options) {
-            this.alphaInput = null;
+            this.channels = new Map();
             this.colorInput = null;
             this.colorTextInput = null;
-            this.newColor = null;
-            this.oldColor = null;
+            this.hsl = new Map();
+            this.hslContainer = undefined;
+            this.newColor = undefined;
+            this.oldColor = undefined;
             if (!(element instanceof Element)) {
                 throw new TypeError("Expected a valid DOM element, use `UiColorPicker.fromSelector()` if you want to use a CSS selector.");
             }
@@ -43,18 +45,38 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                 id: `${Util_1.default.identify(this.element)}_colorPickerDialog`,
                 source: `
 <div class="colorPickerDialog">
-  <div class="row rowColGap formGrid">
-    <div class="col-xs-12 col-md-8">
+  <div class="colorPickerHsvContainer" style="--hue: 0; --saturation: 0%; --lightness: 0%">
+    <dl>
+        <dt>${Language.get("wcf.style.colorPicker.hue")}</dt>
+        <dd>
+          <input type="range" min="0" max="359" class="colorPickerHslRange" data-coordinate="hue">
+        </dd>
+    </dl>
+    <dl>
+        <dt>${Language.get("wcf.style.colorPicker.saturation")}</dt>
+        <dd>
+          <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="saturation">
+        </dd>
+    </dl>
+    <dl>
+        <dt>${Language.get("wcf.style.colorPicker.lightness")}</dt>
+        <dd>
+          <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="lightness">
+        </dd>
+    </dl>
+  </div>
+  <div class="colorPickerValueContainer">
+    <div>
       <dl>
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
-        <dd>
-          <input type="color">
-        </dd>
-      </dl>
-      <dl>
-        <dt>${Language.get("wcf.style.colorPicker.alpha")}</dt>
-        <dd>
-          <input type="range" min="0" max="1" step="0.01">
+        <dd class="colorPickerChannels">
+          rgba(
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="g">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="b">
+          /
+          <input type="number" min="0" max="1" step="0.01" size="3" class="colorPickerChannel" data-channel="a">
+          )
         </dd>
       </dl>
       <dl>
@@ -67,7 +89,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         </dd>
       </dl>
     </div>
-    <div class="col-xs-12 col-md-4 colorPickerComparison">
+    <div class="colorPickerComparison">
       <small>${Language.get("wcf.style.colorPicker.new")}</small>
       <div class="colorPickerColorNew">
         <span style="background-color: ${this.input.value}"></span>
@@ -79,15 +101,25 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
     </div>
   </div>
   <div class="formSubmit">
-    <button class="buttonPrimary">${Language.get("wcf.style.colorPicker.button.apply")}</button>
+    <button class="button buttonPrimary">${Language.get("wcf.style.colorPicker.button.apply")}</button>
   </div>
 </div>`,
                 options: {
                     onSetup: (content) => {
-                        this.colorInput = content.querySelector("input[type=color]");
-                        this.colorInput.addEventListener("input", () => this.updateColor());
-                        this.alphaInput = content.querySelector("input[type=range]");
-                        this.alphaInput.addEventListener("input", () => this.updateColor());
+                        this.channels.set("r" /* R */, content.querySelector('input[data-channel="r"]'));
+                        this.channels.set("g" /* G */, content.querySelector('input[data-channel="g"]'));
+                        this.channels.set("b" /* B */, content.querySelector('input[data-channel="b"]'));
+                        this.channels.set("a" /* A */, content.querySelector('input[data-channel="a"]'));
+                        this.channels.forEach((input) => {
+                            input.addEventListener("input", () => this.updateColor("rgba" /* RGBA */));
+                        });
+                        this.hslContainer = content.querySelector(".colorPickerHsvContainer");
+                        this.hsl.set("hue" /* Hue */, content.querySelector('input[data-coordinate="hue"]'));
+                        this.hsl.set("saturation" /* Saturation */, content.querySelector('input[data-coordinate="saturation"]'));
+                        this.hsl.set("lightness" /* Lightness */, content.querySelector('input[data-coordinate="lightness"]'));
+                        this.hsl.forEach((input) => {
+                            input.addEventListener("input", () => this.updateColor("hsl" /* HSL */));
+                        });
                         this.newColor = content.querySelector(".colorPickerColorNew > span");
                         this.oldColor = content.querySelector(".colorPickerColorOld > span");
                         this.colorTextInput = content.querySelector("input[type=text]");
@@ -122,8 +154,8 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          *
          * @since 5.5
          */
-        updateColor() {
-            this.setColor(this.getColor());
+        updateColor(source) {
+            this.setColor(this.getColor(source), source);
         }
         /**
          * Updates the current color after the hex input changes its value.
@@ -146,17 +178,25 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                     return;
                 }
             }
-            this.setColor(color);
+            this.setColor(color, "hex" /* HEX */);
         }
         /**
          * Returns the current RGBA color set via the color and alpha input.
          *
          * @since 5.5
          */
-        getColor() {
-            const color = this.colorInput.value;
-            const alpha = this.alphaInput.value;
-            return Object.assign(Object.assign({}, ColorUtil.hexToRgb(color)), { a: +alpha });
+        getColor(source) {
+            const a = parseFloat(this.channels.get("a" /* A */).value);
+            if (source === "hsl" /* HSL */) {
+                const rgb = ColorUtil.hslToRgb(parseInt(this.hsl.get("hue" /* Hue */).value, 10), parseInt(this.hsl.get("saturation" /* Saturation */).value, 10), parseInt(this.hsl.get("lightness" /* Lightness */).value, 10));
+                return Object.assign(Object.assign({}, rgb), { a });
+            }
+            return {
+                r: parseInt(this.channels.get("r" /* R */).value, 10),
+                g: parseInt(this.channels.get("g" /* G */).value, 10),
+                b: parseInt(this.channels.get("b" /* B */).value, 10),
+                a,
+            };
         }
         /**
          * Opens the color picker after clicking on the picker button.
@@ -171,14 +211,30 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          *
          * @since 5.5
          */
-        setColor(color) {
+        setColor(color, source) {
             if (typeof color === "string") {
                 color = ColorUtil.stringToRgba(color);
             }
-            this.colorInput.value = `#${ColorUtil.rgbToHex(color.r, color.g, color.b)}`;
-            this.alphaInput.value = color.a.toString();
+            const { r, g, b, a } = color;
+            const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
+            if (source !== "hsl" /* HSL */) {
+                this.hsl.get("hue" /* Hue */).value = h.toString();
+                this.hsl.get("saturation" /* Saturation */).value = s.toString();
+                this.hsl.get("lightness" /* Lightness */).value = l.toString();
+            }
+            this.hslContainer.style.setProperty(`--${"hue" /* Hue */}`, `${h}`);
+            this.hslContainer.style.setProperty(`--${"saturation" /* Saturation */}`, `${s}%`);
+            this.hslContainer.style.setProperty(`--${"lightness" /* Lightness */}`, `${l}%`);
+            if (source !== "rgba" /* RGBA */) {
+                this.channels.get("r" /* R */).value = r.toString();
+                this.channels.get("g" /* G */).value = g.toString();
+                this.channels.get("b" /* B */).value = b.toString();
+                this.channels.get("a" /* A */).value = a.toString();
+            }
             this.newColor.style.backgroundColor = ColorUtil.rgbaToString(color);
-            this.colorTextInput.value = ColorUtil.rgbaToHex(color);
+            if (source !== "hex" /* HEX */) {
+                this.colorTextInput.value = ColorUtil.rgbaToHex(color);
+            }
         }
         /**
          * Updates the UI to show the given color as the initial color.
@@ -189,7 +245,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             if (typeof color === "string") {
                 color = ColorUtil.stringToRgba(color);
             }
-            this.setColor(color);
+            this.setColor(color, "setup" /* Setup */);
             this.oldColor.style.backgroundColor = ColorUtil.rgbaToString(color);
         }
         /**
@@ -198,7 +254,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          * @since 5.5
          */
         submitDialog() {
-            const color = this.getColor();
+            const color = this.getColor("rgba" /* RGBA */);
             const colorString = ColorUtil.rgbaToString(color);
             this.oldColor.style.backgroundColor = colorString;
             this.input.value = colorString;

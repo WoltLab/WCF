@@ -18,18 +18,40 @@ import * as ColorUtil from "../../ColorUtil";
 
 type CallbackSubmit = (data: ColorUtil.RGBA) => void;
 
+const enum Channel {
+  R = "r",
+  G = "g",
+  B = "b",
+  A = "a",
+}
+
+const enum HSL {
+  Hue = "hue",
+  Saturation = "saturation",
+  Lightness = "lightness",
+}
+
+const enum ColorSource {
+  HEX = "hex",
+  HSL = "hsl",
+  RGBA = "rgba",
+  Setup = "setup",
+}
+
 interface ColorPickerOptions {
   callbackSubmit: CallbackSubmit;
 }
 
 class UiColorPicker implements DialogCallbackObject {
-  protected alphaInput: HTMLInputElement | null = null;
+  private readonly channels = new Map<Channel, HTMLInputElement>();
   protected colorInput: HTMLInputElement | null = null;
   protected colorTextInput: HTMLInputElement | null = null;
   protected readonly element: HTMLElement;
+  private readonly hsl = new Map<HSL, HTMLInputElement>();
+  private hslContainer?: HTMLElement = undefined;
   protected readonly input: HTMLInputElement;
-  protected newColor: HTMLSpanElement | null = null;
-  protected oldColor: HTMLSpanElement | null = null;
+  protected newColor?: HTMLElement = undefined;
+  protected oldColor?: HTMLElement = undefined;
   protected readonly options: ColorPickerOptions;
 
   /**
@@ -63,18 +85,38 @@ class UiColorPicker implements DialogCallbackObject {
       id: `${DomUtil.identify(this.element)}_colorPickerDialog`,
       source: `
 <div class="colorPickerDialog">
-  <div class="row rowColGap formGrid">
-    <div class="col-xs-12 col-md-8">
+  <div class="colorPickerHsvContainer" style="--hue: 0; --saturation: 0%; --lightness: 0%">
+    <dl>
+        <dt>${Language.get("wcf.style.colorPicker.hue")}</dt>
+        <dd>
+          <input type="range" min="0" max="359" class="colorPickerHslRange" data-coordinate="hue">
+        </dd>
+    </dl>
+    <dl>
+        <dt>${Language.get("wcf.style.colorPicker.saturation")}</dt>
+        <dd>
+          <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="saturation">
+        </dd>
+    </dl>
+    <dl>
+        <dt>${Language.get("wcf.style.colorPicker.lightness")}</dt>
+        <dd>
+          <input type="range" min="0" max="100" class="colorPickerHslRange" data-coordinate="lightness">
+        </dd>
+    </dl>
+  </div>
+  <div class="colorPickerValueContainer">
+    <div>
       <dl>
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
-        <dd>
-          <input type="color">
-        </dd>
-      </dl>
-      <dl>
-        <dt>${Language.get("wcf.style.colorPicker.alpha")}</dt>
-        <dd>
-          <input type="range" min="0" max="1" step="0.01">
+        <dd class="colorPickerChannels">
+          rgba(
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="g">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="b">
+          /
+          <input type="number" min="0" max="1" step="0.01" size="3" class="colorPickerChannel" data-channel="a">
+          )
         </dd>
       </dl>
       <dl>
@@ -87,7 +129,7 @@ class UiColorPicker implements DialogCallbackObject {
         </dd>
       </dl>
     </div>
-    <div class="col-xs-12 col-md-4 colorPickerComparison">
+    <div class="colorPickerComparison">
       <small>${Language.get("wcf.style.colorPicker.new")}</small>
       <div class="colorPickerColorNew">
         <span style="background-color: ${this.input.value}"></span>
@@ -99,18 +141,32 @@ class UiColorPicker implements DialogCallbackObject {
     </div>
   </div>
   <div class="formSubmit">
-    <button class="buttonPrimary">${Language.get("wcf.style.colorPicker.button.apply")}</button>
+    <button class="button buttonPrimary">${Language.get("wcf.style.colorPicker.button.apply")}</button>
   </div>
 </div>`,
       options: {
         onSetup: (content) => {
-          this.colorInput = content.querySelector("input[type=color]") as HTMLInputElement;
-          this.colorInput.addEventListener("input", () => this.updateColor());
-          this.alphaInput = content.querySelector("input[type=range]") as HTMLInputElement;
-          this.alphaInput.addEventListener("input", () => this.updateColor());
+          this.channels.set(Channel.R, content.querySelector('input[data-channel="r"]') as HTMLInputElement);
+          this.channels.set(Channel.G, content.querySelector('input[data-channel="g"]') as HTMLInputElement);
+          this.channels.set(Channel.B, content.querySelector('input[data-channel="b"]') as HTMLInputElement);
+          this.channels.set(Channel.A, content.querySelector('input[data-channel="a"]') as HTMLInputElement);
+          this.channels.forEach((input) => {
+            input.addEventListener("input", () => this.updateColor(ColorSource.RGBA));
+          });
 
-          this.newColor = content.querySelector(".colorPickerColorNew > span") as HTMLSpanElement;
-          this.oldColor = content.querySelector(".colorPickerColorOld > span") as HTMLSpanElement;
+          this.hslContainer = content.querySelector(".colorPickerHsvContainer") as HTMLElement;
+          this.hsl.set(HSL.Hue, content.querySelector('input[data-coordinate="hue"]') as HTMLInputElement);
+          this.hsl.set(
+            HSL.Saturation,
+            content.querySelector('input[data-coordinate="saturation"]') as HTMLInputElement,
+          );
+          this.hsl.set(HSL.Lightness, content.querySelector('input[data-coordinate="lightness"]') as HTMLInputElement);
+          this.hsl.forEach((input) => {
+            input.addEventListener("input", () => this.updateColor(ColorSource.HSL));
+          });
+
+          this.newColor = content.querySelector(".colorPickerColorNew > span") as HTMLElement;
+          this.oldColor = content.querySelector(".colorPickerColorOld > span") as HTMLElement;
 
           this.colorTextInput = content.querySelector("input[type=text]") as HTMLInputElement;
           this.colorTextInput.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
@@ -146,8 +202,8 @@ class UiColorPicker implements DialogCallbackObject {
    *
    * @since 5.5
    */
-  protected updateColor(): void {
-    this.setColor(this.getColor());
+  protected updateColor(source: ColorSource): void {
+    this.setColor(this.getColor(source), source);
   }
 
   /**
@@ -173,7 +229,7 @@ class UiColorPicker implements DialogCallbackObject {
       }
     }
 
-    this.setColor(color);
+    this.setColor(color, ColorSource.HEX);
   }
 
   /**
@@ -181,11 +237,28 @@ class UiColorPicker implements DialogCallbackObject {
    *
    * @since 5.5
    */
-  protected getColor(): ColorUtil.RGBA {
-    const color = this.colorInput!.value;
-    const alpha = this.alphaInput!.value;
+  protected getColor(source: ColorSource): ColorUtil.RGBA {
+    const a = parseFloat(this.channels.get(Channel.A)!.value);
 
-    return { ...(ColorUtil.hexToRgb(color) as ColorUtil.RGB), a: +alpha };
+    if (source === ColorSource.HSL) {
+      const rgb = ColorUtil.hslToRgb(
+        parseInt(this.hsl.get(HSL.Hue)!.value, 10),
+        parseInt(this.hsl.get(HSL.Saturation)!.value, 10),
+        parseInt(this.hsl.get(HSL.Lightness)!.value, 10),
+      );
+
+      return {
+        ...rgb,
+        a,
+      };
+    }
+
+    return {
+      r: parseInt(this.channels.get(Channel.R)!.value, 10),
+      g: parseInt(this.channels.get(Channel.G)!.value, 10),
+      b: parseInt(this.channels.get(Channel.B)!.value, 10),
+      a,
+    };
   }
 
   /**
@@ -202,16 +275,36 @@ class UiColorPicker implements DialogCallbackObject {
    *
    * @since 5.5
    */
-  protected setColor(color: ColorUtil.RGBA | string): void {
+  protected setColor(color: ColorUtil.RGBA | string, source: ColorSource): void {
     if (typeof color === "string") {
       color = ColorUtil.stringToRgba(color);
     }
 
-    this.colorInput!.value = `#${ColorUtil.rgbToHex(color.r, color.g, color.b)}`;
-    this.alphaInput!.value = color.a.toString();
+    const { r, g, b, a } = color;
+    const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
+
+    if (source !== ColorSource.HSL) {
+      this.hsl.get(HSL.Hue)!.value = h.toString();
+      this.hsl.get(HSL.Saturation)!.value = s.toString();
+      this.hsl.get(HSL.Lightness)!.value = l.toString();
+    }
+
+    this.hslContainer!.style.setProperty(`--${HSL.Hue}`, `${h}`);
+    this.hslContainer!.style.setProperty(`--${HSL.Saturation}`, `${s}%`);
+    this.hslContainer!.style.setProperty(`--${HSL.Lightness}`, `${l}%`);
+
+    if (source !== ColorSource.RGBA) {
+      this.channels.get(Channel.R)!.value = r.toString();
+      this.channels.get(Channel.G)!.value = g.toString();
+      this.channels.get(Channel.B)!.value = b.toString();
+      this.channels.get(Channel.A)!.value = a.toString();
+    }
 
     this.newColor!.style.backgroundColor = ColorUtil.rgbaToString(color);
-    this.colorTextInput!.value = ColorUtil.rgbaToHex(color);
+
+    if (source !== ColorSource.HEX) {
+      this.colorTextInput!.value = ColorUtil.rgbaToHex(color);
+    }
   }
 
   /**
@@ -224,7 +317,7 @@ class UiColorPicker implements DialogCallbackObject {
       color = ColorUtil.stringToRgba(color);
     }
 
-    this.setColor(color);
+    this.setColor(color, ColorSource.Setup);
 
     this.oldColor!.style.backgroundColor = ColorUtil.rgbaToString(color);
   }
@@ -235,7 +328,7 @@ class UiColorPicker implements DialogCallbackObject {
    * @since 5.5
    */
   protected submitDialog(): void {
-    const color = this.getColor();
+    const color = this.getColor(ColorSource.RGBA);
     const colorString = ColorUtil.rgbaToString(color);
 
     this.oldColor!.style.backgroundColor = colorString;

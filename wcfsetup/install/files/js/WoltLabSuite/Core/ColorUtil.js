@@ -10,7 +10,34 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.stringToRgba = exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.hsvToRgb = void 0;
+    exports.stringToRgba = exports.isValidColor = exports.rgbaToString = exports.rgbaToHex = exports.rgbToHex = exports.hexToRgb = exports.rgbToHsv = exports.rgbToHsl = exports.hsvToRgb = exports.hslToRgb = void 0;
+    /**
+     * Converts a HSL color into RGB.
+     *
+     * @see https://www.rapidtables.com/convert/color/hsl-to-rgb.html
+     */
+    function hslToRgb(hue, saturation, lightness) {
+        if (hue > 359) {
+            throw new TypeError("Hue cannot be larger than 359°");
+        }
+        saturation /= 100;
+        lightness /= 100;
+        const C = (1 - Math.abs(2 * lightness - 1)) * saturation;
+        const X = C * (1 - Math.abs(((hue / 60) % 2) - 1));
+        const m = lightness - C / 2;
+        const [R, G, B] = ((0 <= hue && hue < 60 && [C, X, 0]) ||
+            (60 <= hue && hue < 120 && [X, C, 0]) ||
+            (120 <= hue && hue < 180 && [0, C, X]) ||
+            (180 <= hue && hue < 240 && [0, X, C]) ||
+            (240 <= hue && hue < 300 && [X, 0, C]) ||
+            (300 <= hue && hue < 360 && [C, 0, X]));
+        return {
+            r: Math.round((R + m) * 255),
+            g: Math.round((G + m) * 255),
+            b: Math.round((B + m) * 255),
+        };
+    }
+    exports.hslToRgb = hslToRgb;
     /**
      * Converts a HSV color into RGB.
      *
@@ -71,9 +98,53 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.hsvToRgb = hsvToRgb;
     /**
+     * Converts a RGB color into HSL.
+     *
+     * @see https://www.rapidtables.com/convert/color/rgb-to-hsl.html
+     */
+    function rgbToHsl(r, g, b) {
+        let h, s;
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        const max = Math.max(Math.max(r, g), b);
+        const min = Math.min(Math.min(r, g), b);
+        const diff = max - min;
+        h = 0;
+        if (max !== min) {
+            switch (max) {
+                case r:
+                    h = 60 * ((g - b) / diff);
+                    break;
+                case g:
+                    h = 60 * (2 + (b - r) / diff);
+                    break;
+                case b:
+                    h = 60 * (4 + (r - g) / diff);
+                    break;
+            }
+            if (h < 0) {
+                h += 360;
+            }
+        }
+        const l = (max + min) / 2;
+        if (max === 0) {
+            s = 0;
+        }
+        else {
+            s = diff / (1 - Math.abs(2 * l - 1));
+        }
+        return {
+            h: Math.round(h),
+            s: Math.round(s * 100),
+            l: Math.round(l * 100),
+        };
+    }
+    exports.rgbToHsl = rgbToHsl;
+    /**
      * Converts a RGB color into HSV.
      *
-     * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
+     * @see https://www.rapidtables.com/convert/color/rgb-to-hsv.html
      */
     function rgbToHsv(r, g, b) {
         let h, s;
@@ -264,12 +335,14 @@ define(["require", "exports"], function (require, exports) {
     // WCF.ColorPicker compatibility (color format conversion)
     window.__wcf_bc_colorUtil = {
         hexToRgb,
+        hslToRgb,
         hsvToRgb,
         isValidColor,
         rgbaToHex,
         rgbaToString,
         rgbToHex,
         rgbToHsv,
+        rgbToHsl,
         stringToRgba,
     };
 });
