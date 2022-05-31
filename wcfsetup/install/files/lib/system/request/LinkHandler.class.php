@@ -136,10 +136,6 @@ class LinkHandler extends SingletonFactory
             $isRaw = $parameters['isRaw'];
             unset($parameters['isRaw']);
         }
-        if (isset($parameters['appendSession'])) {
-            /** @deprecated 3.0 */
-            unset($parameters['appendSession']);
-        }
         if (isset($parameters['isACP'])) {
             $isACP = (bool)$parameters['isACP'];
             unset($parameters['isACP']);
@@ -150,15 +146,15 @@ class LinkHandler extends SingletonFactory
             }
             unset($parameters['forceFrontend']);
         }
-        if (isset($parameters['forceWCF'])) {
-            /** @deprecated 3.0 */
-            unset($parameters['forceWCF']);
-        }
-
         if (isset($parameters['encodeTitle'])) {
             $encodeTitle = $parameters['encodeTitle'];
             unset($parameters['encodeTitle']);
         }
+
+        /** @deprecated 3.0 */
+        unset($parameters['appendSession']);
+        /** @deprecated 3.0 */
+        unset($parameters['forceWCF']);
 
         // remove anchor before parsing
         if (($pos = \strpos($url, '#')) !== false) {
