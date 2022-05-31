@@ -58,7 +58,7 @@
 	{/hascontent}
 </header>
 
-{if !(50500 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)}
+{if !(70000 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)}
 	<div class="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</div>
 {/if}
 

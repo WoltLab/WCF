@@ -120,7 +120,7 @@ class RequestHandler extends SingletonFactory {
 			return;
 		}
 
-		if (!(50500 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)) {
+		if (!(70000 <= PHP_VERSION_ID && PHP_VERSION_ID <= 70499)) {
 			\header('HTTP/1.1 500 Internal Server Error');
 
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.global.incompatiblePhpVersion'));
