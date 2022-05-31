@@ -119,8 +119,8 @@ export function rgbToHsl(r: number, g: number, b: number): HSL {
   g /= 255;
   b /= 255;
 
-  const max = Math.max(Math.max(r, g), b);
-  const min = Math.min(Math.min(r, g), b);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
   const diff = max - min;
 
   h = 0;
