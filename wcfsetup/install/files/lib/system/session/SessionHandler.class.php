@@ -89,12 +89,6 @@ final class SessionHandler extends SingletonFactory
     protected $legacySession;
 
     /**
-     * style id
-     * @var int
-     */
-    protected $styleID;
-
-    /**
      * user object
      * @var User
      */
@@ -414,9 +408,8 @@ final class SessionHandler extends SingletonFactory
     {
         $this->defineConstants();
 
-        // assign language and style id
+        // assign language
         $this->languageID = $this->getVar('languageID') ?: $this->user->languageID;
-        $this->styleID = $this->getVar('styleID') ?: $this->user->styleID;
 
         // https://github.com/WoltLab/WCF/issues/2568
         if ($this->getVar('__wcfIsFirstVisit') === true) {
@@ -1015,7 +1008,6 @@ final class SessionHandler extends SingletonFactory
         $this->groupData = null;
         $this->languageIDs = null;
         $this->languageID = $this->user->languageID;
-        $this->styleID = $this->user->styleID;
 
         // change language
         WCF::setLanguage($this->languageID ?: 0);
@@ -1358,23 +1350,6 @@ final class SessionHandler extends SingletonFactory
     {
         $this->languageID = $languageID;
         $this->register('languageID', $this->languageID);
-    }
-
-    /**
-     * @deprecated 5.5 - Use `StyleHandler::getInstance()->getStyle()->styleID` instead.
-     */
-    public function getStyleID()
-    {
-        return $this->styleID;
-    }
-
-    /**
-     * @deprecated 5.5 - Set the style directly with the `StyleAction::changeStyle()`.
-     */
-    public function setStyleID($styleID)
-    {
-        $this->styleID = $styleID;
-        $this->register('styleID', $this->styleID);
     }
 
     /**
