@@ -295,12 +295,8 @@ class ControllerMap extends SingletonFactory
 
     /**
      * Returns true if given controller is the application's default.
-     *
-     * @param string $application application identifier
-     * @param string $controller url controller name
-     * @return  bool        true if controller is the application's default
      */
-    public function isDefaultController($application, $controller)
+    public function isDefaultController(string $application, string $controller): bool
     {
         // lookup custom urls first
         if (isset($this->customUrls['lookup'][$application][$controller])) {
