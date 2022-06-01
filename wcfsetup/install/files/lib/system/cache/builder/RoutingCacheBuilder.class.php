@@ -4,6 +4,7 @@ namespace wcf\system\cache\builder;
 
 use wcf\data\application\Application;
 use wcf\data\page\PageCache;
+use wcf\page\ArticleListPage;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
@@ -343,37 +344,26 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
             $controller = null;
 
-            if ($application->packageID == 1) {
-                // handle WCF
-                $page = PageCacheBuilder::getInstance()->getData([], 'landingPage');
-                if ($page->controller) {
-                    $controller = $page->controller;
-                } else {
-                    $controller = '__WCF_CMS__' . $page->pageID;
-                    $controller = [
-                        'controller' => $controller,
-                        'routePart' => $controller,
-                        'className' => CmsPage::class,
-                    ];
-                }
-            } else {
-                if ($application->landingPageID) {
-                    $page = PageCache::getInstance()->getPage($application->landingPageID);
-                    if ($page !== null) {
-                        if ($page->controller) {
-                            $controller = $page->controller;
-                        } else {
-                            $controller = '__WCF_CMS__' . $page->pageID;
-                            $controller = [
-                                'controller' => $controller,
-                                'routePart' => $controller,
-                                'className' => CmsPage::class,
-                            ];
-                        }
+            if ($application->landingPageID) {
+                $page = PageCache::getInstance()->getPage($application->landingPageID);
+                if ($page !== null) {
+                    if ($page->controller) {
+                        $controller = $page->controller;
+                    } else {
+                        $controller = '__WCF_CMS__' . $page->pageID;
+                        $controller = [
+                            'controller' => $controller,
+                            'routePart' => $controller,
+                            'className' => CmsPage::class,
+                        ];
                     }
                 }
+            }
 
-                if ($controller === null) {
+            if ($controller === null) {
+                if ($application->getAbbreviation() === 'wcf') {
+                    $controller = ArticleListPage::class;
+                } else {
                     $controller = WCF::getApplicationObject($application)->getPrimaryController();
                 }
             }
