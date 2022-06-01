@@ -311,17 +311,17 @@ class ControllerMap extends SingletonFactory
                     && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()
                 ) {
                     return false;
-                } else {
-                    if (
-                        $matches['controller'] == $this->landingPages[$application]['controller']
-                        && isset($this->customUrls['lookup'][$application][''])
-                        && $this->customUrls['lookup'][$application][''] !== $controller
-                    ) {
-                        return false;
-                    }
-
-                    $controller = $matches['controller'];
                 }
+
+                if (
+                    $matches['controller'] == $this->landingPages[$application]['controller']
+                    && isset($this->customUrls['lookup'][$application][''])
+                    && $this->customUrls['lookup'][$application][''] !== $controller
+                ) {
+                    return false;
+                }
+
+                $controller = $matches['controller'];
             }
 
             if (\strpos($controller, '__WCF_CMS__') !== false) {
