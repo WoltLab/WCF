@@ -8,13 +8,17 @@ use wcf\data\user\UserProfileAction;
 use wcf\system\WCF;
 
 // set default landing page
-$sql = "UPDATE  wcf" . WCF_N . "_page
-        SET     isLandingPage = ?
-        WHERE   identifier = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
+$sql = "UPDATE  wcf1_application
+        SET     landingPageID = (
+                    SELECT  pageID
+                    FROM    wcf1_page
+                    WHERE   identifier = ?
+                )
+        WHERE   packageID = ?";
+$statement = WCF::getDB()->prepare($sql);
 $statement->execute([
-    1,
     'com.woltlab.wcf.Dashboard',
+    1,
 ]);
 
 // update administrator user rank and user online marking

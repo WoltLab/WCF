@@ -177,19 +177,6 @@ final class ApplicationManagementForm extends AbstractForm
 
         $this->saved();
 
-        if (!empty($this->landingPageID[1])) {
-            (new Page($this->landingPageID[1]))->setAsLandingPage();
-        } else {
-            $sql = "UPDATE  wcf" . WCF_N . "_page
-                    SET     isLandingPage = ?
-                    WHERE   isLandingPage = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([
-                0,
-                1,
-            ]);
-        }
-
         ApplicationHandler::rebuild();
 
         // Reset caches to reflect the new landing pages.

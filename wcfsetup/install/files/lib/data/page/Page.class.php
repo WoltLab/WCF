@@ -34,7 +34,6 @@ use wcf\system\WCF;
  * @property-read   string $name                   monolingual name of the page shown in the ACP
  * @property-read   string $pageType               type of the page, default types: `text`, `html`, `tpl` `system`
  * @property-read   int $isDisabled             is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
- * @property-read   int $isLandingPage              is `1` if the page is the landing page, otherwise `0`
  * @property-read   int $isMultilingual             is `1` if the page is available in different languages, otherwise `0`
  * @property-read   int $originIsSystem             is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
  * @property-read   int $packageID              id of the package the which delivers the page or `1` if it has been created in the ACP
@@ -96,7 +95,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public function canDelete()
     {
-        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem && !$this->isLandingPage) {
+        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem) {
             return true;
         }
 
@@ -110,7 +109,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public function canDisable()
     {
-        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system') && !$this->isLandingPage) {
+        if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system')) {
             return true;
         }
 
@@ -277,9 +276,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     }
 
     /**
-     * Sets the current page as landing page.
-     *
-     * @throws  SystemException
+     * @deprecated 5.6 The landing page is a property of the 'wcf' app.
      */
     public function setAsLandingPage()
     {
@@ -288,24 +285,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         }
 
         WCF::getDB()->beginTransaction();
-        // unmark existing landing page
-        $sql = "UPDATE  wcf" . WCF_N . "_page
-                SET     isLandingPage = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            0,
-        ]);
-
-        // set current page as landing page
-        $sql = "UPDATE  wcf" . WCF_N . "_page
-                SET     isLandingPage = ?
-                WHERE   pageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            1,
-            $this->pageID,
-        ]);
-
         $sql = "UPDATE  wcf" . WCF_N . "_application
                 SET     landingPageID = ?
                 WHERE   packageID = ?";

@@ -2028,7 +2028,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.page.i18n.i18n.description"><![CDATA[Inhalt, URL und Meta-Daten werden individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.page.i18n.none"><![CDATA[Einsprachige Seite]]></item>
 		<item name="wcf.acp.page.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verfasst werden.]]></item>
-		<item name="wcf.acp.page.isLandingPage"><![CDATA[Seite ist Startseite]]></item>
 		<item name="wcf.acp.page.isDisabled"><![CDATA[Seite deaktivieren]]></item>
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Letzte Aktualisierung]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Seiten]]></item>

@@ -1,34 +1,5 @@
 {include file='header' pageTitle='wcf.acp.page.'|concat:$action}
 
-<script data-relocate="true">
-	$(function() {
-		var isDisabled = elById('isDisabled');
-		if (isDisabled !== null) {
-			$('#isLandingPage').change(function() {
-				if ($('#isLandingPage')[0].checked) {
-					isDisabled.checked = false;
-					isDisabled.disabled = true;
-				}
-				else {
-					isDisabled.disabled = false;
-				}
-			}).trigger('change');
-		}
-
-		{if $action != 'edit' || !$page->isLandingPage}
-			$('#isDisabled').change(function(event) {
-				if ($('#isDisabled')[0].checked) {
-					$('#isLandingPage')[0].checked = false;
-					$('#isLandingPage')[0].disabled = true;
-				}
-				else {
-					$('#isLandingPage')[0].disabled = false;
-				}
-			}).trigger('change');
-		{/if}
-	});
-</script>
-
 {if $action == 'add'}
 	<script data-relocate="true">
 		elById('name').addEventListener('blur', function() {
@@ -254,15 +225,6 @@
 						{/if}
 					</dd>
 				</dl>
-
-				{if $action != 'edit' || (!$page->requireObjectID && !$page->excludeFromLandingPage)}
-					<dl>
-						<dt></dt>
-						<dd>
-							<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1"{if $isLandingPage} checked{/if}{if $action == 'edit' && $page->isLandingPage} disabled{/if}> {lang}wcf.acp.page.isLandingPage{/lang}</label>
-						</dd>
-					</dl>
-				{/if}
 
 				{if $action != 'edit' || $page->pageType != 'system'}
 					<dl>

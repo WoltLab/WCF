@@ -84,12 +84,6 @@ class PageAddForm extends AbstractForm
     public $isDisabled = 0;
 
     /**
-     * true if page is landing page
-     * @var bool
-     */
-    public $isLandingPage = 0;
-
-    /**
      * application id of the page
      * @var int
      */
@@ -302,9 +296,6 @@ class PageAddForm extends AbstractForm
         }
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;
-        }
-        if (isset($_POST['isLandingPage'])) {
-            $this->isLandingPage = 1;
         }
         if (isset($_POST['availableDuringOfflineMode'])) {
             $this->availableDuringOfflineMode = 1;
@@ -628,7 +619,6 @@ class PageAddForm extends AbstractForm
                 'name' => $this->name,
                 'cssClassName' => $this->cssClassName,
                 'isDisabled' => $this->isDisabled ? 1 : 0,
-                'isLandingPage' => 0,
                 'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
                 'allowSpidersToIndex' => $this->allowSpidersToIndex,
                 'enableShareButtons' => $this->enableShareButtons,
@@ -651,10 +641,6 @@ class PageAddForm extends AbstractForm
         $pageEditor->update([
             'identifier' => 'com.woltlab.wcf.generic' . $page->pageID,
         ]);
-
-        if ($this->isLandingPage) {
-            $page->setAsLandingPage();
-        }
 
         // save acl
         SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $page->pageID, $this->aclValues);
@@ -717,7 +703,7 @@ class PageAddForm extends AbstractForm
         ]);
 
         // reset variables
-        $this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = $this->enableShareButtons = $this->addPageToMainMenu = 0;
+        $this->parentPageID = $this->isDisabled = $this->availableDuringOfflineMode = $this->enableShareButtons = $this->addPageToMainMenu = 0;
         $this->parentMenuItemID = null;
         $this->applicationPackageID = 1;
         $this->cssClassName = $this->name = '';
@@ -745,7 +731,6 @@ class PageAddForm extends AbstractForm
                 if ($this->presetPage->controllerCustomURL) {
                     $this->customURL[0] = $this->presetPage->controllerCustomURL;
                 }
-                $this->isLandingPage = 0;
                 $this->isDisabled = 1;
                 if ($this->presetPage->availableDuringOfflineMode) {
                     $this->availableDuringOfflineMode = 1;
@@ -821,7 +806,6 @@ class PageAddForm extends AbstractForm
             'name' => $this->name,
             'cssClassName' => $this->cssClassName,
             'isDisabled' => $this->isDisabled,
-            'isLandingPage' => $this->isLandingPage,
             'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
             'allowSpidersToIndex' => $this->allowSpidersToIndex,
             'isMultilingual' => $this->isMultilingual,
