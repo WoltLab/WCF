@@ -266,11 +266,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             $rows[] = $row;
         }
 
-        $cmsPageID = 0;
-        if (\preg_match('~^__WCF_CMS__(\d+)$~', $landingPages['wcf']['controller'], $matches)) {
-            $cmsPageID = $matches[1];
-        }
-
         foreach ($rows as $row) {
             $customUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($row['controllerCustomURL']));
             $packageID = $row['applicationPackageID'];
@@ -286,23 +281,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 $data['reverse'][$abbreviation][$this->classNameToControllerName($row['controller'])] = $customUrl;
             } else {
                 $cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
-
-                // Discard the custom url if this CMS page is the landing page of its associated app.
-                if (
-                    !empty($landingPages[$abbreviation])
-                    && $landingPages[$abbreviation]['controller'] === '__WCF_CMS__' . $row['pageID']
-                    && !$row['languageID']
-                ) {
-                    $customUrl = '';
-                }
                 $data['reverse'][$abbreviation][$cmsIdentifier] = $customUrl;
-
-                if ($cmsPageID && $abbreviation === 'wcf') {
-                    if ($customUrl === '' && $cmsPageID != $row['pageID']) {
-                        continue;
-                    }
-                }
-
                 $data['lookup'][$abbreviation][$customUrl] = $cmsIdentifier;
             }
         }
