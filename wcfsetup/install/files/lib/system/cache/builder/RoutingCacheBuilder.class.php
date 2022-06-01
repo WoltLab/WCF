@@ -43,7 +43,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             'landingPages' => $this->getLandingPages(),
         ];
 
-        $data['customUrls'] = $this->getCustomUrls($data['landingPages']);
+        $data['customUrls'] = $this->getCustomUrls();
         $data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
 
         return $this->handleLandingPageWithOverriddenApplication($data);
@@ -226,10 +226,9 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
      * Builds up a lookup and a reverse lookup list per application in order to resolve
      * custom page mappings.
      *
-     * @param array $landingPages
      * @return  array
      */
-    protected function getCustomUrls(array $landingPages)
+    protected function getCustomUrls()
     {
         $data = [
             'lookup' => [],
