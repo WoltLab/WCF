@@ -117,7 +117,7 @@
 			</dd>
 		</dl>
 		
-		{if $action == 'add' || !$menuItem->isLandingPage}
+		{if $action == 'add'}
 			<dl>
 				<dt></dt>
 				<dd>
