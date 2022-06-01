@@ -43,7 +43,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             'landingPages' => $this->getLandingPages(),
         ];
 
-        $data['customUrls'] = $this->getCustomUrls($data['landingPages']);
+        $data['customUrls'] = $this->getCustomUrls();
         $data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
 
         return $this->handleLandingPageWithOverriddenApplication($data);
@@ -226,10 +226,9 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
      * Builds up a lookup and a reverse lookup list per application in order to resolve
      * custom page mappings.
      *
-     * @param array $landingPages
      * @return  array
      */
-    protected function getCustomUrls(array $landingPages)
+    protected function getCustomUrls()
     {
         $data = [
             'lookup' => [],
@@ -258,16 +257,12 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                             page.applicationPackageID
                 FROM        wcf1_page_content page_content
                 INNER JOIN  wcf1_page page
-                ON          page.pageID = page_content.pageID";
+                ON          page.pageID = page_content.pageID
+                WHERE       page_content.customURL <> ''";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
             $rows[] = $row;
-        }
-
-        $cmsPageID = 0;
-        if (\preg_match('~^__WCF_CMS__(\d+)$~', $landingPages['wcf']['controller'], $matches)) {
-            $cmsPageID = $matches[1];
         }
 
         foreach ($rows as $row) {
@@ -285,23 +280,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 $data['reverse'][$abbreviation][$this->classNameToControllerName($row['controller'])] = $customUrl;
             } else {
                 $cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
-
-                // Discard the custom url if this CMS page is the landing page of its associated app.
-                if (
-                    !empty($landingPages[$abbreviation])
-                    && $landingPages[$abbreviation]['controller'] === '__WCF_CMS__' . $row['pageID']
-                    && !$row['languageID']
-                ) {
-                    $customUrl = '';
-                }
                 $data['reverse'][$abbreviation][$cmsIdentifier] = $customUrl;
-
-                if ($cmsPageID && $abbreviation === 'wcf') {
-                    if ($customUrl === '' && $cmsPageID != $row['pageID']) {
-                        continue;
-                    }
-                }
-
                 $data['lookup'][$abbreviation][$customUrl] = $cmsIdentifier;
             }
         }

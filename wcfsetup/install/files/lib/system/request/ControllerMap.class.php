@@ -141,6 +141,10 @@ class ControllerMap extends SingletonFactory
      */
     public function resolveCustomController($application, $controller)
     {
+        if ($controller === '') {
+            throw new \InvalidArgumentException('The given controller must not be empty.');
+        }
+
         if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
             $application = $this->applicationOverrides['lookup'][$application][$controller];
         }
@@ -301,14 +305,6 @@ class ControllerMap extends SingletonFactory
                 if (
                     $matches['languageID']
                     && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()
-                ) {
-                    return false;
-                }
-
-                if (
-                    $matches['controller'] == $this->landingPages[$application]['controller']
-                    && isset($this->customUrls['lookup'][$application][''])
-                    && $this->customUrls['lookup'][$application][''] !== $controller
                 ) {
                     return false;
                 }
