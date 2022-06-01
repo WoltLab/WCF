@@ -302,7 +302,7 @@ class ControllerMap extends SingletonFactory
     public function isDefaultController($application, $controller)
     {
         // lookup custom urls first
-        if (isset($this->customUrls['lookup'][$application], $this->customUrls['lookup'][$application][$controller])) {
+        if (isset($this->customUrls['lookup'][$application][$controller])) {
             $controller = $this->customUrls['lookup'][$application][$controller];
             if (\preg_match('~^(?P<controller>__WCF_CMS__\d+)(?:-(?P<languageID>\d+))?$~', $controller, $matches)) {
                 if (
