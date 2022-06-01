@@ -108,7 +108,8 @@ class PageLocationManager extends SingletonFactory
             $title = $page->getTitle();
         }
 
-        if ($page->isLandingPage && BREADCRUMBS_HOME_USE_PAGE_TITLE) {
+        $landingPage = PageCache::getInstance()->getLandingPage();
+        if ($page->pageID == $landingPage->pageID && BREADCRUMBS_HOME_USE_PAGE_TITLE) {
             $title = WCF::getLanguage()->get(PAGE_TITLE);
         }
 
@@ -148,13 +149,14 @@ class PageLocationManager extends SingletonFactory
 
             if ($location['pageID']) {
                 $page = PageCache::getInstance()->getPage($location['pageID']);
+                $landingPage = PageCache::getInstance()->getLandingPage();
                 while ($page !== null && $page->parentPageID) {
                     $page = PageCache::getInstance()->getPage($page->parentPageID);
                     if (!$page->isVisible()) {
                         continue;
                     }
 
-                    if ($page->isLandingPage && BREADCRUMBS_HOME_USE_PAGE_TITLE) {
+                    if ($page->pageID == $landingPage->pageID && BREADCRUMBS_HOME_USE_PAGE_TITLE) {
                         $title = WCF::getLanguage()->get(PAGE_TITLE);
                     } else {
                         $title = $page->getTitle();
