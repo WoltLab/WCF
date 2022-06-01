@@ -141,6 +141,10 @@ class ControllerMap extends SingletonFactory
      */
     public function resolveCustomController($application, $controller)
     {
+        if ($controller === '') {
+            throw new \InvalidArgumentException('The given controller must not be empty.');
+        }
+
         if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
             $application = $this->applicationOverrides['lookup'][$application][$controller];
         }
@@ -291,12 +295,8 @@ class ControllerMap extends SingletonFactory
 
     /**
      * Returns true if given controller is the application's default.
-     *
-     * @param string $application application identifier
-     * @param string $controller url controller name
-     * @return  bool        true if controller is the application's default
      */
-    public function isDefaultController($application, $controller)
+    public function isDefaultController(string $application, string $controller): bool
     {
         // lookup custom urls first
         if (isset($this->customUrls['lookup'][$application][$controller])) {
@@ -307,22 +307,17 @@ class ControllerMap extends SingletonFactory
                     && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()
                 ) {
                     return false;
-                } else {
-                    if (
-                        $matches['controller'] == $this->landingPages[$application]['controller']
-                        && isset($this->customUrls['lookup'][$application][''])
-                        && $this->customUrls['lookup'][$application][''] !== $controller
-                    ) {
-                        return false;
-                    }
-
-                    $controller = $matches['controller'];
                 }
-            }
 
-            if (\strpos($controller, '__WCF_CMS__') !== false) {
-                // remove language id component
-                $controller = \preg_replace('~\-\d+$~', '', $controller);
+                if (
+                    $matches['controller'] == $this->landingPages[$application]['controller']
+                    && isset($this->customUrls['lookup'][$application][''])
+                    && $this->customUrls['lookup'][$application][''] !== $controller
+                ) {
+                    return false;
+                }
+
+                $controller = $matches['controller'];
             }
         }
 
