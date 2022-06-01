@@ -324,7 +324,7 @@ class ControllerMap extends SingletonFactory
                 $controller = $matches['controller'];
             }
 
-            if (\strpos($controller, '__WCF_CMS__') !== false) {
+            if (\str_starts_with($controller, '__WCF_CMS__')) {
                 // remove language id component
                 $controller = \preg_replace('~\-\d+$~', '', $controller);
             }
