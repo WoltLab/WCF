@@ -309,14 +309,6 @@ class ControllerMap extends SingletonFactory
                     return false;
                 }
 
-                if (
-                    $matches['controller'] == $this->landingPages[$application]['controller']
-                    && isset($this->customUrls['lookup'][$application][''])
-                    && $this->customUrls['lookup'][$application][''] !== $controller
-                ) {
-                    return false;
-                }
-
                 $controller = $matches['controller'];
             }
         }
