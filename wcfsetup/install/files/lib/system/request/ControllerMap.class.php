@@ -145,10 +145,7 @@ class ControllerMap extends SingletonFactory
             $application = $this->applicationOverrides['lookup'][$application][$controller];
         }
 
-        if (
-            isset($this->customUrls['lookup'][$application])
-            && isset($this->customUrls['lookup'][$application][$controller])
-        ) {
+        if (isset($this->customUrls['lookup'][$application][$controller])) {
             $data = $this->customUrls['lookup'][$application][$controller];
             if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
                 return [
