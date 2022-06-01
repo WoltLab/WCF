@@ -141,10 +141,6 @@ class ControllerMap extends SingletonFactory
      */
     public function resolveCustomController($application, $controller)
     {
-        if ($controller === '') {
-            throw new \InvalidArgumentException('The given controller must not be empty.');
-        }
-
         if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
             $application = $this->applicationOverrides['lookup'][$application][$controller];
         }
