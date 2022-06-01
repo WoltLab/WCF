@@ -139,7 +139,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnPageID">{@$page->pageID}</td>
-						<td class="columnTitle columnName">{if $page->isLandingPage}<span class="icon icon16 fa-home jsTooltip" title="{lang}wcf.acp.page.isLandingPage{/lang}"></span> {/if}<a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
+						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnURL">
 							{if $page->applicationPackageID === null}
 								<span class="icon icon16 fa-exclamation-triangle red"></span> <span>{lang}wcf.acp.page.application.error.missing{/lang}</span>

@@ -97,11 +97,6 @@ class PageEditForm extends PageAddForm
         } else {
             $this->overrideApplicationPackageID = null;
         }
-
-        if ($this->page->requireObjectID || $this->page->excludeFromLandingPage) {
-            // pages that require an object id can never be set as landing page
-            $this->isLandingPage = 0;
-        }
     }
 
     /**
@@ -257,10 +252,6 @@ class PageEditForm extends PageAddForm
             $this->objectAction->executeAction();
         }
 
-        if ($this->isLandingPage != $this->page->isLandingPage) {
-            $this->page->setAsLandingPage();
-        }
-
         // save acl
         if ($this->page->pageType != 'system') {
             SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $this->page->pageID, $this->aclValues);
@@ -289,9 +280,6 @@ class PageEditForm extends PageAddForm
             $this->cssClassName = $this->page->cssClassName;
             if ($this->page->controllerCustomURL) {
                 $this->customURL[0] = $this->page->controllerCustomURL;
-            }
-            if ($this->page->isLandingPage) {
-                $this->isLandingPage = 1;
             }
             if ($this->page->isDisabled) {
                 $this->isDisabled = 1;

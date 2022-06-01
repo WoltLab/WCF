@@ -55,13 +55,20 @@ class PageCacheBuilder extends AbstractCacheBuilder
             $data['pageMetaDescriptions'][$pageID][$row['languageID'] ?: 0] = $row['metaDescription'];
         }
 
+        $sql = "SELECT  landingPageID
+                FROM    wcf1_application
+                WHERE   packageID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([1]);
+        $landingPageID = $statement->fetchSingleColumn();
+
         // build lookup table
         /** @var Page $page */
         foreach ($pageList as $page) {
             $data['identifier'][$page->identifier] = $page->pageID;
             $data['controller'][$page->controller] = $page->pageID;
 
-            if ($page->isLandingPage || ($data['landingPage'] === null && $page->identifier === 'com.woltlab.wcf.ArticleList')) {
+            if ($page->pageID == $landingPageID || ($data['landingPage'] === null && $page->identifier === 'com.woltlab.wcf.ArticleList')) {
                 $data['landingPage'] = $page;
             }
         }
