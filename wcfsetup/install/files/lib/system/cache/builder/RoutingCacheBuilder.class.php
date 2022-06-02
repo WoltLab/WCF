@@ -239,6 +239,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             return $data;
         }
 
+        foreach (ApplicationHandler::getInstance()->getAbbreviations() as $abbreviation) {
+            $data['lookup'][$abbreviation] = [];
+            $data['reverse'][$abbreviation] = [];
+        }
+
         // fetch pages with a controller and a custom url
         $sql = "SELECT  controller,
                         controllerCustomURL,
@@ -270,11 +275,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             $packageID = $row['applicationPackageID'];
             $abbreviation = ApplicationHandler::getInstance()->getAbbreviation($packageID);
 
-            if (!isset($data['lookup'][$abbreviation])) {
-                $data['lookup'][$abbreviation] = [];
-                $data['reverse'][$abbreviation] = [];
-            }
-
             if (isset($row['controller'])) {
                 $data['lookup'][$abbreviation][$customUrl] = $row['controller'];
                 $data['reverse'][$abbreviation][$this->classNameToControllerName($row['controller'])] = $customUrl;
@@ -289,10 +289,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         foreach ($this->brokenControllers as $type => $brokenControllers) {
             foreach ($brokenControllers as $application => $controllers) {
                 foreach ($controllers as $key => $value) {
-                    if (!isset($data[$type][$application])) {
-                        $data[$type][$application] = [];
-                    }
-
                     if (!isset($data[$type][$application][$key])) {
                         $data[$type][$application][$key] = $value;
                     }
