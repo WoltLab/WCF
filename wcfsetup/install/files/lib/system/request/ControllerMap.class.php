@@ -362,8 +362,8 @@ class ControllerMap extends SingletonFactory
     protected function getLegacyClassData($application, $controller, $isAcpRequest)
     {
         $environment = $isAcpRequest ? 'acp' : 'frontend';
-        if (isset($this->ciControllers['lookup'][$application][$environment][$controller])) {
-            $className = $this->ciControllers['lookup'][$application][$environment][$controller];
+        if (isset($this->ciControllers[$application][$environment][$controller])) {
+            $className = $this->ciControllers[$application][$environment][$controller];
 
             if (\preg_match('~\\\\(?P<controller>[^\\\\]+)(Action|Form|Page)$~', $className, $matches)) {
                 return [
