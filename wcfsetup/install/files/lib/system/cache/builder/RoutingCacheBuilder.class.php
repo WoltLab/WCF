@@ -272,8 +272,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
         foreach ($rows as $row) {
             $customUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($row['controllerCustomURL']));
-            $packageID = $row['applicationPackageID'];
-            $abbreviation = ApplicationHandler::getInstance()->getAbbreviation($packageID);
+            $abbreviation = ApplicationHandler::getInstance()->getAbbreviation($row['applicationPackageID']);
 
             if (isset($row['controller'])) {
                 $data['lookup'][$abbreviation][$customUrl] = $row['controller'];
