@@ -60,59 +60,61 @@ class UiRedactorQuote {
       return;
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "showEditor");
+    Core.interactWithRedactor(() => {
+      EventHandler.fire("com.woltlab.wcf.redactor2", "showEditor");
 
-    const editor = this._editor.core.editor()[0];
-    this._editor.selection.restore();
+      const editor = this._editor.core.editor()[0];
+      this._editor.selection.restore();
 
-    this._editor.buffer.set();
+      this._editor.buffer.set();
 
-    // caret must be within a `<p>`, if it is not: move it
-    let block = this._editor.selection.block();
-    if (block === false) {
-      this._editor.focus.end();
-      block = this._editor.selection.block() as HTMLElement;
-    }
+      // caret must be within a `<p>`, if it is not: move it
+      let block = this._editor.selection.block();
+      if (block === false) {
+        this._editor.focus.end();
+        block = this._editor.selection.block() as HTMLElement;
+      }
 
-    while (block && block.parentElement !== editor) {
-      block = block.parentElement!;
-    }
+      while (block && block.parentElement !== editor) {
+        block = block.parentElement!;
+      }
 
-    const quote = document.createElement("woltlab-quote");
-    quote.dataset.author = data.author;
-    quote.dataset.link = data.link;
+      const quote = document.createElement("woltlab-quote");
+      quote.dataset.author = data.author;
+      quote.dataset.link = data.link;
 
-    let content = data.content;
-    if (data.isText) {
-      content = StringUtil.escapeHTML(content);
-      content = `<p>${content}</p>`;
-      content = content.replace(/\n\n/g, "</p><p>");
-      content = content.replace(/\n/g, "<br>");
-    } else {
-      content = UiRedactorMetacode.convertFromHtml(this._editor.$element[0].id, content);
-    }
+      let content = data.content;
+      if (data.isText) {
+        content = StringUtil.escapeHTML(content);
+        content = `<p>${content}</p>`;
+        content = content.replace(/\n\n/g, "</p><p>");
+        content = content.replace(/\n/g, "<br>");
+      } else {
+        content = UiRedactorMetacode.convertFromHtml(this._editor.$element[0].id, content);
+      }
 
-    // bypass the editor as `insert.html()` doesn't like us
-    quote.innerHTML = content;
+      // bypass the editor as `insert.html()` doesn't like us
+      quote.innerHTML = content;
 
-    const blockParent = block.parentElement!;
-    blockParent.insertBefore(quote, block.nextSibling);
+      const blockParent = block.parentElement!;
+      blockParent.insertBefore(quote, block.nextSibling);
 
-    if (block.nodeName === "P" && (block.innerHTML === "<br>" || block.innerHTML.replace(/\u200B/g, "") === "")) {
-      blockParent.removeChild(block);
-    }
+      if (block.nodeName === "P" && (block.innerHTML === "<br>" || block.innerHTML.replace(/\u200B/g, "") === "")) {
+        blockParent.removeChild(block);
+      }
 
-    // avoid adjacent blocks that are not paragraphs
-    let sibling = quote.previousElementSibling;
-    if (sibling && sibling.nodeName !== "P") {
-      sibling = document.createElement("p");
-      sibling.textContent = "\u200B";
-      quote.insertAdjacentElement("beforebegin", sibling);
-    }
+      // avoid adjacent blocks that are not paragraphs
+      let sibling = quote.previousElementSibling;
+      if (sibling && sibling.nodeName !== "P") {
+        sibling = document.createElement("p");
+        sibling.textContent = "\u200B";
+        quote.insertAdjacentElement("beforebegin", sibling);
+      }
 
-    this._editor.WoltLabCaret.paragraphAfterBlock(quote);
+      this._editor.WoltLabCaret.paragraphAfterBlock(quote);
 
-    this._editor.buffer.set();
+      this._editor.buffer.set();
+    });
   }
 
   /**
