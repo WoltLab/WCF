@@ -99,6 +99,15 @@
 						scrollPosition = element.codemirror.getScrollInfo().top;
 					}
 				});
+
+				const parentTabMenu = tabMenu.closest(".tabMenuContainer")
+				if (parentTabMenu) {
+					EventHandler.add("com.woltlab.wcf.simpleTabMenu_" + parentTabMenu.id, "select", (data) => {
+						if (data.activeName === tabMenu.dataset.name) {
+							element.codemirror.refresh();
+						}
+					});
+				}
 			}
 			
 			var scrollOffsetStorage = element;
