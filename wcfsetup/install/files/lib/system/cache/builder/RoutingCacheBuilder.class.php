@@ -130,10 +130,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
      */
     protected function getCaseInsensitiveControllers()
     {
-        $data = [
-            'lookup' => [],
-            'reverse' => [],
-        ];
+        $data = [];
 
         if (!PACKAGE_ID) {
             return $data;
@@ -142,6 +139,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         $applications = ApplicationHandler::getInstance()->getApplications();
         foreach ($applications as $application) {
             $abbreviation = $application->getAbbreviation();
+
+            $data[$abbreviation] = ['acp' => [], 'frontend' => []];
+            $this->brokenControllers['lookup'][$abbreviation] = [];
+            $this->brokenControllers['reverse'][$abbreviation] = [];
+
             $directory = Application::getDirectory($abbreviation);
             foreach (['lib', 'lib/acp'] as $libDirectory) {
                 foreach (['action', 'form', 'page'] as $pageType) {
@@ -192,21 +194,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                             $ciController = \implode('-', \array_map('strtolower', $parts));
                             $className = $abbreviation . '\\' . ($libDirectory === 'lib/acp' ? 'acp\\' : '') . $pageType . '\\' . $filename;
 
-                            if (!isset($data['lookup'][$abbreviation])) {
-                                $data['lookup'][$abbreviation] = ['acp' => [], 'frontend' => []];
-                            }
-                            $data['lookup'][$abbreviation][$libDirectory === 'lib' ? 'frontend' : 'acp'][$ciController] = $className;
-                            $data['reverse'][$filename] = $ciController;
+                            $data[$abbreviation][$libDirectory === 'lib' ? 'frontend' : 'acp'][$ciController] = $className;
 
                             if ($isBrokenController) {
-                                if (!isset($this->brokenControllers['lookup'][$abbreviation])) {
-                                    $this->brokenControllers['lookup'][$abbreviation] = [];
-                                }
                                 $this->brokenControllers['lookup'][$abbreviation][$ciController] = $className;
-
-                                if (!isset($this->brokenControllers['reverse'][$abbreviation])) {
-                                    $this->brokenControllers['reverse'][$abbreviation] = [];
-                                }
                                 $this->brokenControllers['reverse'][$abbreviation][\preg_replace(
                                     '~(?:Page|Form|Action)$~',
                                     '',
