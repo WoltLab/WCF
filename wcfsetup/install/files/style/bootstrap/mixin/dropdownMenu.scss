@@ -140,11 +140,6 @@
 		}
 	}
 
-	@include screen-xs {
-		left: 0 !important;
-		right: 0 !important;
-	}
-
 	@include screen-md-down {
 		li {
 			overflow: hidden;

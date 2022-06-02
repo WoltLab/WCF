@@ -161,21 +161,23 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                     )
                 ));
 
-                if (!$user->signatureEnableHtml) {
-                    $htmlInputProcessor->process(
-                        $user->signature,
-                        'com.woltlab.wcf.user.signature',
-                        $user->userID,
-                        true
-                    );
+                if ($user->signature) {
+                    if (!$user->signatureEnableHtml) {
+                        $htmlInputProcessor->process(
+                            $user->signature,
+                            'com.woltlab.wcf.user.signature',
+                            $user->userID,
+                            true
+                        );
 
-                    $user->update([
-                        'signature' => $htmlInputProcessor->getHtml(),
-                        'signatureEnableHtml' => 1,
-                    ]);
-                } else {
-                    $htmlInputProcessor->reprocess($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
-                    $user->update(['signature' => $htmlInputProcessor->getHtml()]);
+                        $user->update([
+                            'signature' => $htmlInputProcessor->getHtml(),
+                            'signatureEnableHtml' => 1,
+                        ]);
+                    } else {
+                        $htmlInputProcessor->reprocess($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
+                        $user->update(['signature' => $htmlInputProcessor->getHtml()]);
+                    }
                 }
 
                 if ($user->aboutMe) {

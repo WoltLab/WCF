@@ -1133,6 +1133,7 @@ final class WCFSetup extends WCF
                         'languageID' => $languageID,
                         'password' => $password,
                         'username' => $username,
+                        'signature' => '',
                         'signatureEnableHtml' => 1,
                     ],
                     'groups' => [
