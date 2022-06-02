@@ -230,7 +230,9 @@ const UiDialog = {
    * element will be appended to the content element instead.
    */
   openStatic(id: string, html: DialogHtml, options?: DialogOptions): DialogData {
-    UiScreen.pageOverlayOpen();
+    if (!this.isOpen(id)) {
+      UiScreen.pageOverlayOpen();
+    }
 
     if (Environment.platform() !== "desktop") {
       if (!this.isOpen(id)) {
