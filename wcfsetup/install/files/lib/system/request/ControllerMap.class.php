@@ -110,18 +110,11 @@ class ControllerMap extends SingletonFactory
                 // handle controllers with a custom url
                 $controller = $classData['controller'];
 
-                if (
-                    isset($this->customUrls['reverse'][$application])
-                    && isset($this->customUrls['reverse'][$application][$controller])
-                ) {
+                if (isset($this->customUrls['reverse'][$application][$controller])) {
                     return $this->customUrls['reverse'][$application][$controller];
-                } elseif ($application !== 'wcf') {
-                    if (
-                        isset($this->customUrls['reverse']['wcf'])
-                        && isset($this->customUrls['reverse']['wcf'][$controller])
-                    ) {
-                        return $this->customUrls['reverse']['wcf'][$controller];
-                    }
+                }
+                if (isset($this->customUrls['reverse']['wcf'][$controller])) {
+                    return $this->customUrls['reverse']['wcf'][$controller];
                 }
             }
         }
