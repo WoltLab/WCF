@@ -190,7 +190,6 @@ class ControllerMap extends SingletonFactory
 
         if (
             $forceFrontend
-            && isset($this->customUrls['reverse'][$application])
             && isset($this->customUrls['reverse'][$application][$controller])
         ) {
             $urlController = $this->customUrls['reverse'][$application][$controller];
