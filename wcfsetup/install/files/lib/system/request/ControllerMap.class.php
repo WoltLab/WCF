@@ -5,7 +5,6 @@ namespace wcf\system\request;
 use wcf\page\CmsPage;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -240,29 +239,9 @@ class ControllerMap extends SingletonFactory
         if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
             $cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
             if ($cmsPageData === null) {
-                // page is multilingual, use the language id that matches the URL
-                // do *not* use the client language id, Google's bot is stubborn
+                // page is multilingual
 
-                $languageID = null;
-                // use a reverse search to find the page
-                if (
-                    isset($this->customUrls['lookup']['wcf'])
-                    && isset($this->customUrls['lookup']['wcf'][''])
-                    && \preg_match(
-                        '~^__WCF_CMS__\d+\-(?P<languageID>\d+)$~',
-                        $this->customUrls['lookup']['wcf'][''],
-                        $match
-                    )
-                ) {
-                    $languageID = $match['languageID'];
-                }
-
-                if ($languageID === null) {
-                    // something went wrong, use the current language id
-                    $languageID = WCF::getLanguage()->languageID;
-                }
-
-                $cmsPageData = $this->lookupCmsPage($matches['pageID'], $languageID);
+                $cmsPageData = $this->lookupCmsPage($matches['pageID'], WCF::getLanguage()->languageID);
                 if ($cmsPageData === null) {
                     throw new SystemException("Unable to resolve CMS page");
                 }
@@ -294,10 +273,7 @@ class ControllerMap extends SingletonFactory
         if (isset($this->customUrls['lookup'][$application][$controller])) {
             $controller = $this->customUrls['lookup'][$application][$controller];
             if (\preg_match('~^(?P<controller>__WCF_CMS__\d+)(?:-(?P<languageID>\d+))?$~', $controller, $matches)) {
-                if (
-                    $matches['languageID']
-                    && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()
-                ) {
+                if ($matches['languageID']) {
                     return false;
                 }
 
