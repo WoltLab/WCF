@@ -187,7 +187,10 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
     }
 
     if (isValid) {
-      const packageUpdateServerID = +this.submitButton.dataset.packageUpdateServerId!;
+      const dialog = document.getElementById("acpUiPackageUpdateManager")!;
+      const submitButton = dialog.querySelector('button[data-type="submit"]') as HTMLElement;
+
+      const packageUpdateServerID = parseInt(submitButton.dataset.packageUpdateServerId!, 10);
       const saveCredentials = (document.getElementById("packageUpdateServerSaveCredentials") as HTMLInputElement)
         .checked;
 
