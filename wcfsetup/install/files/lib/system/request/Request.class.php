@@ -53,18 +53,11 @@ final class Request implements RequestHandlerInterface
      * @param string $className fully qualified name
      * @param string[] $metaData additional meta data
      */
-    public function __construct($className, array $metaData)
+    public function __construct($className, array $metaData, bool $isLandingPage)
     {
         $this->className = $className;
         $this->metaData = $metaData;
-    }
-
-    /**
-     * Marks this request as landing page.
-     */
-    public function setIsLandingPage()
-    {
-        $this->isLandingPage = true;
+        $this->isLandingPage = $isLandingPage;
     }
 
     /**
