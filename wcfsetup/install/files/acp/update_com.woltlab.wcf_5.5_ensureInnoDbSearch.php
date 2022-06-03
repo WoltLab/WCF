@@ -26,7 +26,7 @@ if ($nonInnoDbSearch) {
     if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
         $message = "Es wurden noch nicht alle Tabellen auf InnoDB migriert.";
     } else {
-        $message = "The migration to InnoDB was not yet performed for all database tables.";
+        $message = "Not all tables have been migrated to InnoDB yet.";
     }
 
     throw new \RuntimeException($message);
