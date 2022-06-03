@@ -15,23 +15,30 @@
 				'codemirror/mode/{@$codemirrorMode}/{@$codemirrorMode}',
 			{/if}
 		{/if}
+		'codemirror/addon/search/search',
 		'EventHandler',
 		'Dom/Traverse',
 		'Dom/Util'
 	], (
 		CodeMirror,
 		{if $codemirrorMode|isset}
-			CoreMirrorMode,
+			CodeMirrorMode,
 		{/if}
+		CodeMirrorSearchAddon,
 		EventHandler,
 		DomTraverse,
 		DomUtil,
 	) => {
 		const codemirrorCss = document.head.querySelector('link[href$="codemirror.css"]');
 		if (codemirrorCss === null) {
-			const link = document.createElement('link');
+			let link = document.createElement('link');
 			link.rel = 'stylesheet';
 			link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css';
+			document.head.appendChild(link);
+
+			link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.css';
 			document.head.appendChild(link);
 		}
 		
@@ -99,6 +106,15 @@
 						scrollPosition = element.codemirror.getScrollInfo().top;
 					}
 				});
+
+				const parentTabMenu = tabMenu.closest(".tabMenuContainer")
+				if (parentTabMenu) {
+					EventHandler.add("com.woltlab.wcf.simpleTabMenu_" + parentTabMenu.id, "select", (data) => {
+						if (data.activeName === tabMenu.dataset.name) {
+							element.codemirror.refresh();
+						}
+					});
+				}
 			}
 			
 			var scrollOffsetStorage = element;

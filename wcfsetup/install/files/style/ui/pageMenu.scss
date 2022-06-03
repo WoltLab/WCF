@@ -265,7 +265,7 @@
 @include screen-sm-md {
 	.pageMenuMainContainer::after,
 	.pageMenuMainContainer::before {
-		right: auto;
+		left: auto;
 		width: 400px;
 	}
 

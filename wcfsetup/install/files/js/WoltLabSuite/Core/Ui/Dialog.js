@@ -188,7 +188,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
          * element will be appended to the content element instead.
          */
         openStatic(id, html, options) {
-            UiScreen.pageOverlayOpen();
+            if (!this.isOpen(id)) {
+                UiScreen.pageOverlayOpen();
+            }
             if (Environment.platform() !== "desktop") {
                 if (!this.isOpen(id)) {
                     UiScreen.scrollDisable();

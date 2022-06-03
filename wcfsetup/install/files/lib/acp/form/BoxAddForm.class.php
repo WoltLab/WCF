@@ -781,6 +781,7 @@ class BoxAddForm extends AbstractForm
                 }
             }
 
+            $this->invertPermissions = $this->presetBox->invertPermissions;
             $this->aclValues = SimpleAclHandler::getInstance()->getValues(
                 'com.woltlab.wcf.box',
                 $this->presetBox->boxID
