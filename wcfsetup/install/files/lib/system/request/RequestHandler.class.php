@@ -129,7 +129,6 @@ class RequestHandler extends SingletonFactory
         }
     }
 
-
     /**
      * Splits the given array of cache-control values at commas, while properly
      * taking into account that each value might itself contain commas within a
