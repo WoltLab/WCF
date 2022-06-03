@@ -95,7 +95,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
                 $description = "Es wurden noch nicht alle Tabellen auf InnoDB migriert.";
             } else {
                 $title = "Migration to InnoDB Search Index";
-                $description = "The migration to InnoDB was not yet performed for all database tables.";
+                $description = "Not all tables have been migrated to InnoDB yet.";
             }
 
             $issues[] = [
