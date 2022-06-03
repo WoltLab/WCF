@@ -91,12 +91,17 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
         if ($nonInnoDbSearch) {
             if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-                $message = "Es wurden noch nicht alle Tabellen auf InnoDB migriert.";
+                $title = "Umstellung auf InnoDB-Suchindex";
+                $description = "Es wurden noch nicht alle Tabellen auf InnoDB migriert.";
             } else {
-                $message = "The migration to InnoDB was not yet performed for all database tables.";
+                $title = "Migration to InnoDB Search Index";
+                $description = "The migration to InnoDB was not yet performed for all database tables.";
             }
 
-            $issues[] = $message;
+            $issues[] = [
+                'title' => $title,
+                'description' => $description,
+            ];
         }
 
         return $issues;
