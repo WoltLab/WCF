@@ -90,14 +90,6 @@ final class Request implements RequestHandlerInterface
     }
 
     /**
-     * @deprecated 5.5 This method is of questionable value, currently unused and might not play nicely along with the future PSR-7 evaluation.
-     */
-    public function isExecuted()
-    {
-        return $this->requestObject !== null;
-    }
-
-    /**
      * Returns true if this request represents the landing page.
      *
      * @return bool
