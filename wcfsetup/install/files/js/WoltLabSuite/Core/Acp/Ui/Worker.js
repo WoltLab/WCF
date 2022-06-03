@@ -57,7 +57,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 });
             }
             else {
-                Dialog_1.default.removeCallback(this, "onClose");
+                // Suppress the close callback once and then restore it.
+                Dialog_1.default.setCallback(this, "onClose", () => {
+                    Dialog_1.default.setCallback(this, "onClose", () => this.onClose());
+                });
                 const spinner = content.querySelector(".fa-spinner");
                 spinner.classList.remove("fa-spinner");
                 spinner.classList.add("fa-check", "green");
@@ -105,20 +108,21 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 id: this.options.dialogId,
                 options: {
                     backdropCloseOnClick: false,
-                    onClose: () => {
-                        this.aborted = true;
-                        this.request.abortPrevious();
-                        if (typeof this.options.callbackAbort === "function") {
-                            this.options.callbackAbort();
-                        }
-                        else {
-                            window.location.reload();
-                        }
-                    },
+                    onClose: () => this.onClose(),
                     title: this.options.dialogTitle,
                 },
                 source: null,
             };
+        }
+        onClose() {
+            this.aborted = true;
+            this.request.abortPrevious();
+            if (typeof this.options.callbackAbort === "function") {
+                this.options.callbackAbort();
+            }
+            else {
+                window.location.reload();
+            }
         }
     }
     Core.enableLegacyInheritance(AcpUiWorker);
