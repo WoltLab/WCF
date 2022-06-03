@@ -72,9 +72,9 @@
 {if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 	{if $availableUpgradeVersion !== null}
 		{if $upgradeOverrideEnabled}
-			<p class="success">{lang version=$availableUpgradeVersion}wcf.acp.package.upgradeOverrideEnabled{/lang}</p>
+			<p class="info">{lang version=$availableUpgradeVersion}wcf.acp.package.upgradeOverrideEnabled{/lang}</p>
 		{else}
-			<p class="success">{lang version=$availableUpgradeVersion}wcf.acp.package.availableUpgradeVersion{/lang}</p>
+			<p class="info">{lang version=$availableUpgradeVersion}wcf.acp.package.availableUpgradeVersion{/lang}</p>
 		{/if}
 	{/if}
 {/if}
