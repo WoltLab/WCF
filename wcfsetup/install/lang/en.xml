@@ -2008,7 +2008,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.enableUpgradeOverride"><![CDATA[Upgrade to WoltLab Suite {$version}]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride.enable"><![CDATA[Enable Upgrading to the Evaluation Version]]></item>
 		<item name="wcf.acp.package.enableUpgradeOverride.issues"><![CDATA[The following issues currently prevent an upgrade:]]></item>
-		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[The new WoltLab Suite {$version} is available for installation. We have provided a guide with the instructions for the upgrade in our <a href="https://manual.woltlab.com/en/updates/#upgrading-woltlab-suite-52-to-53" class="externalURL">manual</a>.<br>
+		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[The new WoltLab Suite {$version} is available for installation. We have provided a guide with the instructions for the upgrade in our <a href="https://manual.woltlab.com/en/updates/#upgrading-woltlab-suite-54-to-55" class="externalURL">manual</a>.<br>
 <br>
 WARNING: This is an unstable version intended for test purposes only, do not upgrade your production site at this time.<br>
 <br>
