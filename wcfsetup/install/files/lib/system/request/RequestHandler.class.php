@@ -139,7 +139,6 @@ class RequestHandler extends SingletonFactory
         }
     }
 
-
     /**
      * Builds a new request.
      *
