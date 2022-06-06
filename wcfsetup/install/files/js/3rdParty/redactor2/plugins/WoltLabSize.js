@@ -1,5 +1,7 @@
 $.Redactor.prototype.WoltLabSize = function() {
 	"use strict";
+
+	let uiRedactorFormat;
 	
 	return {
 		init: function() {
@@ -34,34 +36,26 @@ $.Redactor.prototype.WoltLabSize = function() {
 			});
 			
 			$('<li class="dropdownDivider"></li>').insertBefore(dropdownMenu.children('li').last());
+
+			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (UiRedactorFormat) => {
+				uiRedactorFormat = UiRedactorFormat;
+			});
 		},
 		
-		setSize: function(key) {
-			this.selection.save();
+		setSize(key) {
+			this.buffer.set();
+
+			if ($.browser.iOS && !this.detect.isIpad()) {
+				this.selection.restore();
+			}
 			
-			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.buffer.set();
-				
-				UiRedactorFormat.format(this.$editor[0], 'font-size', key.replace(/^size_/, '') + 'pt');
-				
-				this.buffer.set();
-			}).bind(this));
-			
-			this.selection.restore();
+			uiRedactorFormat.format(this.$editor[0], 'font-size', key.replace(/^size_/, '') + 'pt');
 		},
 		
-		removeSize: function() {
-			this.selection.save();
+		removeSize() {
+			this.buffer.set();
 			
-			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.buffer.set();
-				
-				UiRedactorFormat.removeFormat(this.$editor[0], 'font-size');
-				
-				this.buffer.set();
-			}).bind(this));
-			
-			this.selection.restore();
+			uiRedactorFormat.removeFormat(this.$editor[0], 'font-size');
 		}
 	};
 };

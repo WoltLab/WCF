@@ -1,5 +1,7 @@
 $.Redactor.prototype.WoltLabColor = function() {
 	"use strict";
+
+	let uiRedactorFormat;
 	
 	// these are hex values, but the '#' was left out for convenience
 	var _defaultColors = [
@@ -41,36 +43,28 @@ $.Redactor.prototype.WoltLabColor = function() {
 			});
 			
 			$('<li class="dropdownDivider"></li>').insertBefore(dropdownMenu.children('li').last());
+
+			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (UiRedactorFormat) => {
+				uiRedactorFormat = UiRedactorFormat;
+			});
 		},
 		
-		setColor: function(key) {
+		setColor(key) {
 			key = key.replace(/^color_/, '');
+
+			if ($.browser.iOS && !this.detect.isIpad()) {
+				this.selection.restore();
+			}
 			
-			this.selection.save();
+			this.buffer.set();
 			
-			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.buffer.set();
-				
-				UiRedactorFormat.format(this.$editor[0], 'color', '#' + key);
-				
-				this.buffer.set();
-			}).bind(this));
-			
-			this.selection.restore();
+			uiRedactorFormat.format(this.$editor[0], 'color', '#' + key);
 		},
 		
-		removeColor: function() {
-			this.selection.save();
+		removeColor() {
+			this.buffer.set();
 			
-			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.buffer.set();
-				
-				UiRedactorFormat.removeFormat(this.$editor[0], 'color');
-				
-				this.buffer.set();
-			}).bind(this));
-			
-			this.selection.restore();
+			uiRedactorFormat.removeFormat(this.$editor[0], 'color');
 		}
 	};
 };
