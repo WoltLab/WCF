@@ -11,60 +11,36 @@ use wcf\http\LegacyPlaceholderResponse;
 /**
  * Represents a page request.
  *
- * @author  Marcel Werk
+ * @author  Tim Duesterhus, Marcel Werk
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
 final class Request implements RequestHandlerInterface
 {
-    /**
-     * page class name
-     * @var string
-     */
-    protected $className = '';
+    private readonly string $className;
 
-    /**
-     * @var bool
-     */
-    protected $isLandingPage = false;
+    private readonly bool $isLandingPage;
 
-    /**
-     * request meta data
-     * @var string[]
-     */
-    protected $metaData;
+    private readonly array $metaData;
 
     /**
      * current page id
      * @var int
      */
-    protected $pageID;
+    private $pageID;
 
     /**
      * request object
      * @var object
      */
-    protected $requestObject;
+    private $requestObject;
 
-    /**
-     * Creates a new request object.
-     *
-     * @param string $className fully qualified name
-     * @param string[] $metaData additional meta data
-     */
-    public function __construct($className, array $metaData)
+    public function __construct(string $className, array $metaData, bool $isLandingPage)
     {
         $this->className = $className;
         $this->metaData = $metaData;
-    }
-
-    /**
-     * Marks this request as landing page.
-     */
-    public function setIsLandingPage()
-    {
-        $this->isLandingPage = true;
+        $this->isLandingPage = $isLandingPage;
     }
 
     /**
@@ -90,29 +66,17 @@ final class Request implements RequestHandlerInterface
     }
 
     /**
-     * @deprecated 5.5 This method is of questionable value, currently unused and might not play nicely along with the future PSR-7 evaluation.
-     */
-    public function isExecuted()
-    {
-        return $this->requestObject !== null;
-    }
-
-    /**
      * Returns true if this request represents the landing page.
-     *
-     * @return bool
      */
-    public function isLandingPage()
+    public function isLandingPage(): bool
     {
         return $this->isLandingPage;
     }
 
     /**
      * Returns the page class name of this request.
-     *
-     * @return  string
      */
-    public function getClassName()
+    public function getClassName(): string
     {
         return $this->className;
     }
@@ -140,10 +104,8 @@ final class Request implements RequestHandlerInterface
 
     /**
      * Returns true if the requested page is available during the offline mode.
-     *
-     * @return  bool
      */
-    public function isAvailableDuringOfflineMode()
+    public function isAvailableDuringOfflineMode(): bool
     {
         if (
             \defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')
@@ -168,7 +130,7 @@ final class Request implements RequestHandlerInterface
      */
     public function getPageID()
     {
-        if ($this->pageID === null) {
+        if (!isset($this->pageID)) {
             if (isset($this->metaData['cms'])) {
                 $this->pageID = $this->metaData['cms']['pageID'];
             } else {

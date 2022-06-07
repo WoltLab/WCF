@@ -77,8 +77,7 @@ final class RequestHandler extends SingletonFactory
 
             $psrRequest = ServerRequestFactory::fromGlobals();
 
-            // build request
-            $this->buildRequest($application);
+            $this->activeRequest = $this->buildRequest($application);
 
             $pipeline = new Pipeline([
                 new AddAcpSecurityHeaders(),
@@ -108,12 +107,11 @@ final class RequestHandler extends SingletonFactory
     /**
      * Builds a new request.
      *
-     * @param string $application
      * @throws  IllegalLinkException
      * @throws  NamedUserException
      * @throws  SystemException
      */
-    protected function buildRequest($application)
+    protected function buildRequest(string $application): Request
     {
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
@@ -198,17 +196,11 @@ final class RequestHandler extends SingletonFactory
                 }
             }
 
-            $this->activeRequest = new Request(
+            return new Request(
                 $className,
-                $metaData
+                $metaData,
+                !$this->isACPRequest() && ControllerMap::getInstance()->isLandingPage($className, $metaData)
             );
-
-            if (!$this->isACPRequest()) {
-                // determine if current request matches the landing page
-                if (ControllerMap::getInstance()->isLandingPage($className, $metaData)) {
-                    $this->activeRequest->setIsLandingPage();
-                }
-            }
         } catch (SystemException $e) {
             if (
                 \defined('ENABLE_DEBUG_MODE')
