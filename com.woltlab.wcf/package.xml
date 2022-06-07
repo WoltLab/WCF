@@ -95,6 +95,8 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="page" />
 		<instruction type="userGroupOption" />
 		<instruction type="userMenu"/>
+		<instruction type="userNotificationEvent" />
+		<instruction type="userOption" />
 
 		<!-- Clean Up. -->
 		<instruction type="acpTemplateDelete" />
