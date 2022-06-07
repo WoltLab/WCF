@@ -129,7 +129,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                 Util_1.default.innerError(passwordField, false);
             }
             if (isValid) {
-                const packageUpdateServerID = +this.submitButton.dataset.packageUpdateServerId;
+                const dialog = document.getElementById("acpUiPackageUpdateManager");
+                const submitButton = dialog.querySelector('button[data-type="submit"]');
+                const packageUpdateServerID = parseInt(submitButton.dataset.packageUpdateServerId, 10);
                 const saveCredentials = document.getElementById("packageUpdateServerSaveCredentials")
                     .checked;
                 void this.prepareUpdate({

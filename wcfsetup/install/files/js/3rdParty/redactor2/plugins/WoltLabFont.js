@@ -1,5 +1,7 @@
 $.Redactor.prototype.WoltLabFont = function() {
 	"use strict";
+
+	let uiRedactorFormat;
 	
 	return {
 		_fonts: [
@@ -42,36 +44,28 @@ $.Redactor.prototype.WoltLabFont = function() {
 			}).bind(this));
 			
 			$('<li class="dropdownDivider"></li>').insertBefore(dropdownMenu.children('li').last());
+
+			require(["WoltLabSuite/Core/Ui/Redactor/Format"], (UiRedactorFormat) => {
+				uiRedactorFormat = UiRedactorFormat;
+			});
 		},
 		
-		setFont: function(key) {
+		setFont(key) {
 			key = key.replace(/^fontFamily_/, '');
-			
-			this.selection.save();
-			
-			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.buffer.set();
-				
-				UiRedactorFormat.format(this.$editor[0], 'font-family', this.WoltLabFont._fonts[key]);
-				
-				this.buffer.set();
-			}).bind(this));
-			
-			this.selection.restore();
+
+			if ($.browser.iOS && !this.detect.isIpad()) {
+				this.selection.restore();
+			}
+
+			this.buffer.set();
+
+			uiRedactorFormat.format(this.$editor[0], 'font-family', this.WoltLabFont._fonts[key]);
 		},
 		
-		removeFont: function() {
-			this.selection.save();
+		removeFont() {
+			this.buffer.set();
 			
-			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.buffer.set();
-				
-				UiRedactorFormat.removeFormat(this.$editor[0], 'font-family');
-				
-				this.buffer.set();
-			}).bind(this));
-			
-			this.selection.restore();
+			uiRedactorFormat.removeFormat(this.$editor[0], 'font-family');
 		}
 	};
 };

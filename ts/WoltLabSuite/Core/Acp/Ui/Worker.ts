@@ -102,7 +102,10 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
         parameters: data.parameters,
       });
     } else {
-      UiDialog.removeCallback(this, "onClose");
+      // Suppress the close callback once and then restore it.
+      UiDialog.setCallback(this, "onClose", () => {
+        UiDialog.setCallback(this, "onClose", () => this.onClose());
+      });
 
       const spinner = content.querySelector(".fa-spinner") as HTMLSpanElement;
       spinner.classList.remove("fa-spinner");
@@ -171,20 +174,22 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
       id: this.options.dialogId,
       options: {
         backdropCloseOnClick: false,
-        onClose: () => {
-          this.aborted = true;
-          this.request.abortPrevious();
-
-          if (typeof this.options.callbackAbort === "function") {
-            this.options.callbackAbort();
-          } else {
-            window.location.reload();
-          }
-        },
+        onClose: () => this.onClose(),
         title: this.options.dialogTitle,
       },
       source: null,
     };
+  }
+
+  private onClose(): void {
+    this.aborted = true;
+    this.request.abortPrevious();
+
+    if (typeof this.options.callbackAbort === "function") {
+      this.options.callbackAbort();
+    } else {
+      window.location.reload();
+    }
   }
 }
 
