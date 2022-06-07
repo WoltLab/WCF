@@ -91,6 +91,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
         $host = MAIL_SMTP_HOST,
         $port = MAIL_SMTP_PORT,
         $username = MAIL_SMTP_USER,
+        #[\SensitiveParameter]
         $password = MAIL_SMTP_PASSWORD,
         $starttls = MAIL_SMTP_STARTTLS
     ) {

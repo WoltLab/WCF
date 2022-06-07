@@ -31,16 +31,21 @@ final class Wcf2 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         return $this->doubleBcrypt->verify($password, $hash);
     }
 
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         return $this->doubleBcrypt->hash($password);
     }
 

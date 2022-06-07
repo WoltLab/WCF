@@ -383,8 +383,12 @@ class UserAddForm extends UserOptionListForm
      * @param string $confirmPassword
      * @throws  UserInputException
      */
-    protected function validatePassword($password, $confirmPassword)
-    {
+    protected function validatePassword(
+        #[\SensitiveParameter]
+        $password,
+        #[\SensitiveParameter]
+        $confirmPassword
+    ) {
         if (empty($password)) {
             throw new UserInputException('password');
         }

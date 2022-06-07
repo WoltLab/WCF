@@ -581,8 +581,12 @@ class UserEditForm extends UserAddForm
     /**
      * @inheritDoc
      */
-    protected function validatePassword($password, $confirmPassword)
-    {
+    protected function validatePassword(
+        #[\SensitiveParameter]
+        $password,
+        #[\SensitiveParameter]
+        $confirmPassword
+    ) {
         if (!empty($password) || !empty($confirmPassword)) {
             parent::validatePassword($password, $confirmPassword);
         }

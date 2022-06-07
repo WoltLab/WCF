@@ -20,8 +20,11 @@ trait TPhpass
     /**
      * Returns the hashed password, with the given settings.
      */
-    private function hashPhpass(string $password, string $settings): string
-    {
+    private function hashPhpass(
+        #[\SensitiveParameter]
+        string $password,
+        string $settings
+    ): string {
         $output = '*';
 
         // Check for correct hash
@@ -107,8 +110,11 @@ trait TPhpass
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         // The passwords are stored differently when importing. Sometimes they are saved with the salt,
         // but sometimes also without the salt. We don't need the salt, because the salt is saved with the hash.
         [$hash] = \explode(':', $hash, 2);
@@ -123,8 +129,10 @@ trait TPhpass
     /**
      * @deprecated 5.5 Use Phpass::hash() instead.
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         $settings = '$H$8';
         $settings .= Hex::encode(\random_bytes(4));
 

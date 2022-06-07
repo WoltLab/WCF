@@ -33,16 +33,21 @@ final class DoubleBcrypt implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         return \hash_equals($hash, self::getDoubleSaltedHash($password, $hash));
     }
 
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         return self::getDoubleSaltedHash($password);
     }
 
@@ -69,8 +74,11 @@ final class DoubleBcrypt implements IPasswordAlgorithm
      * @param string $salt
      * @return  string
      */
-    private static function getDoubleSaltedHash($password, $salt = null)
-    {
+    private static function getDoubleSaltedHash(
+        #[\SensitiveParameter]
+        $password,
+        $salt = null
+    ) {
         if ($salt === null) {
             $salt = self::getRandomSalt();
         }
@@ -85,8 +93,11 @@ final class DoubleBcrypt implements IPasswordAlgorithm
      * @param string $salt
      * @return  string
      */
-    private static function getSaltedHash($password, $salt = null)
-    {
+    private static function getSaltedHash(
+        #[\SensitiveParameter]
+        $password,
+        $salt = null
+    ) {
         if ($salt === null) {
             $salt = self::getRandomSalt();
         }

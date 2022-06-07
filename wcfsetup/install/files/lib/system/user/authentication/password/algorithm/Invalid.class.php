@@ -18,16 +18,21 @@ final class Invalid implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         return false;
     }
 
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         return '';
     }
 

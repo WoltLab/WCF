@@ -40,8 +40,10 @@ final class Totp
      */
     private $secret;
 
-    public function __construct(string $secret)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        string $secret
+    ) {
         $this->secret = $secret;
     }
 

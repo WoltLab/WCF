@@ -371,8 +371,13 @@ class TwitterAuthAction extends AbstractAction
      * @param string $method
      * @return  string
      */
-    public function createSignature($url, array $parameters, $tokenSecret = '', $method = 'POST')
-    {
+    public function createSignature(
+        $url,
+        array $parameters,
+        #[\SensitiveParameter]
+        $tokenSecret = '',
+        $method = 'POST'
+    ) {
         $tmp = [];
         foreach ($parameters as $key => $val) {
             $tmp[\rawurlencode($key)] = \rawurlencode($val);

@@ -31,16 +31,21 @@ final class Xf12 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         return $this->bcrypt->verify($password, $hash);
     }
 
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         return $this->bcrypt->hash($password);
     }
 

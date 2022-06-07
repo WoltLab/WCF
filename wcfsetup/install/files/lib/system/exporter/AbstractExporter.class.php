@@ -94,6 +94,7 @@ abstract class AbstractExporter implements IExporter
     public function setData(
         $databaseHost,
         $databaseUser,
+        #[\SensitiveParameter]
         $databasePassword,
         $databaseName,
         $databasePrefix,

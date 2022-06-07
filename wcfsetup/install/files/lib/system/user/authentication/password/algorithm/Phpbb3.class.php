@@ -20,8 +20,11 @@ final class Phpbb3 implements IPasswordAlgorithm
         verify as phpassVerify;
     }
 
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         if ($this->phpassVerify($password, $hash)) {
             return true;
         }
@@ -70,8 +73,10 @@ final class Phpbb3 implements IPasswordAlgorithm
         return false;
     }
 
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         throw new NotImplementedException();
     }
 }

@@ -18,8 +18,11 @@ final class Wbb2 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         if (\hash_equals($hash, \md5($password))) {
             return true;
         } elseif (\hash_equals($hash, \sha1($password))) {
@@ -32,8 +35,10 @@ final class Wbb2 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         return \sha1($password);
     }
 

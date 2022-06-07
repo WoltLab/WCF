@@ -19,8 +19,11 @@ final class CryptMD5 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         // The passwords are stored differently when importing. Sometimes they are saved with the salt,
         // but sometimes also without the salt. We don't need the salt, because the salt is saved with the hash.
         [$hash] = \explode(':', $hash, 2);
@@ -31,8 +34,10 @@ final class CryptMD5 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         $salt = '$1$' . Hex::encode(\random_bytes(6)) . '$';
 
         return $this->hashWithSalt($password, $salt);
@@ -41,8 +46,11 @@ final class CryptMD5 implements IPasswordAlgorithm
     /**
      * Returns the hashed password, hashed with a given salt.
      */
-    private function hashWithSalt(string $password, string $salt): string
-    {
+    private function hashWithSalt(
+        #[\SensitiveParameter]
+        string $password,
+        string $salt
+    ): string {
         return \crypt($password, $salt);
     }
 

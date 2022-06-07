@@ -19,8 +19,11 @@ final class Wcf1 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         $parts = \explode(':', $hash, 2);
         $hash = $parts[0];
         $salt = $parts[1] ?? '';
@@ -31,8 +34,10 @@ final class Wcf1 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         $salt = Hex::encode(\random_bytes(20));
 
         return $this->hashWithSalt($password, $salt) . ':' . $salt;
@@ -41,8 +46,11 @@ final class Wcf1 implements IPasswordAlgorithm
     /**
      * Returns the hashed password, hashed with a given salt.
      */
-    private function hashWithSalt(string $password, string $salt): string
-    {
+    private function hashWithSalt(
+        #[\SensitiveParameter]
+        string $password,
+        string $salt
+    ): string {
         return \sha1($salt . \sha1($salt . \sha1($password)));
     }
 

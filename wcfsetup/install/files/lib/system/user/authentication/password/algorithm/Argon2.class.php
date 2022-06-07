@@ -24,16 +24,21 @@ final class Argon2 implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
-    {
+    public function verify(
+        #[\SensitiveParameter]
+        string $password,
+        string $hash
+    ): bool {
         return \password_verify($password, $hash);
     }
 
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         return \password_hash($password, \PASSWORD_ARGON2I, self::OPTIONS);
     }
 

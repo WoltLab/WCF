@@ -23,8 +23,10 @@ final class Phpass implements IPasswordAlgorithm
     /**
      * @inheritDoc
      */
-    public function hash(string $password): string
-    {
+    public function hash(
+        #[\SensitiveParameter]
+        string $password
+    ): string {
         $salt = Hex::encode(\random_bytes(4));
 
         return $this->hashPhpass($password, $this->getSettings() . $salt) . ':';

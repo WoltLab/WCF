@@ -331,8 +331,12 @@ class RegisterForm extends UserAddForm
     /**
      * @inheritDoc
      */
-    protected function validatePassword($password, $confirmPassword)
-    {
+    protected function validatePassword(
+        #[\SensitiveParameter]
+        $password,
+        #[\SensitiveParameter]
+        $confirmPassword
+    ) {
         if (!$this->isExternalAuthentication) {
             parent::validatePassword($password, $confirmPassword);
 

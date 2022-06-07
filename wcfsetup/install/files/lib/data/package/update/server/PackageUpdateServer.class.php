@@ -194,8 +194,13 @@ class PackageUpdateServer extends DatabaseObject
      * @param string $password
      * @param bool $saveCredentials
      */
-    public static function storeAuthData($packageUpdateServerID, $username, $password, $saveCredentials = false)
-    {
+    public static function storeAuthData(
+        $packageUpdateServerID,
+        $username,
+        #[\SensitiveParameter]
+        $password,
+        $saveCredentials = false
+    ) {
         $packageUpdateAuthData = @\unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
         if ($packageUpdateAuthData === null || !\is_array($packageUpdateAuthData)) {
             $packageUpdateAuthData = [];

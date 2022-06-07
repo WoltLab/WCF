@@ -122,6 +122,7 @@ abstract class Database
     public function __construct(
         $host,
         $user,
+        #[\SensitiveParameter]
         $password,
         $database,
         $port,
