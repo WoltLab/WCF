@@ -80,7 +80,7 @@ class WCF
      * @var ?string
      * @since 5.3
      */
-    public const AVAILABLE_UPGRADE_VERSION = '5.5';
+    public const AVAILABLE_UPGRADE_VERSION = null;
 
     /**
      * list of supported legacy API versions
