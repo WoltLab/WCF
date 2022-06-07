@@ -24,6 +24,7 @@
         "true/punycode": "^2.1.1",
         "psr/http-server-handler": "^1.0.1",
         "psr/http-message": "^1.0.1",
-        "psr/http-server-middleware": "^1.0.1"
+        "psr/http-server-middleware": "^1.0.1",
+        "symfony/polyfill-php82": "^1.26"
     }
 }
