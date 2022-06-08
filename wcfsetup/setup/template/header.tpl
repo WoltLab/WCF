@@ -5,16 +5,8 @@
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
 	<link rel="stylesheet" type="text/css" media="screen" href="{$setupAssets['WCFSetup.css']}">
-
-	<style type="text/css">
-		@font-face {
-			font-family: 'FontAwesome';
-			src: url('{$setupAssets['fontawesome-webfont.woff2']}') format('woff2');
-			font-weight: normal;
-			font-style: normal;
-		}
-	</style>
 
 	<style type="text/css">
 		#pageHeaderContainer {
