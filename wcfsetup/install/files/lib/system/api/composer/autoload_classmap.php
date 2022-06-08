@@ -636,10 +636,5 @@ return array(
     'Symfony\\Polyfill\\Intl\\Idn\\Resources\\unidata\\DisallowedRanges' => $vendorDir . '/symfony/polyfill-intl-idn/Resources/unidata/DisallowedRanges.php',
     'Symfony\\Polyfill\\Intl\\Idn\\Resources\\unidata\\Regex' => $vendorDir . '/symfony/polyfill-intl-idn/Resources/unidata/Regex.php',
     'Symfony\\Polyfill\\Intl\\Normalizer\\Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Normalizer.php',
-    'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
     'Symfony\\Polyfill\\Php82\\SensitiveParameterValue' => $vendorDir . '/symfony/polyfill-php82/SensitiveParameterValue.php',
-    'TrueBV\\Exception\\DomainOutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/DomainOutOfBoundsException.php',
-    'TrueBV\\Exception\\LabelOutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/LabelOutOfBoundsException.php',
-    'TrueBV\\Exception\\OutOfBoundsException' => $vendorDir . '/true/punycode/src/Exception/OutOfBoundsException.php',
-    'TrueBV\\Punycode' => $vendorDir . '/true/punycode/src/Punycode.php',
 );
