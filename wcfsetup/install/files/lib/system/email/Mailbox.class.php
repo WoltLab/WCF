@@ -86,7 +86,7 @@ class Mailbox
 
         try {
             // punycode the domain ...
-            $domain = (new Punycode())->encode($domain);
+            $domain = @(new Punycode())->encode($domain);
         } catch (OutOfBoundsException $e) {
             throw new \DomainException($e->getMessage(), 0, $e);
         }
