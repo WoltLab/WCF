@@ -211,7 +211,6 @@
 				if (link.classList.contains('externalURL')) {
 					var rel = (link.rel === '') ? [] : link.rel.split(' ');
 					if (rel.indexOf('noopener') === -1) rel.push('noopener');
-					if (rel.indexOf('noreferrer') === -1) rel.push('noreferrer');
 					
 					link.rel = rel.join(' ');
 				}

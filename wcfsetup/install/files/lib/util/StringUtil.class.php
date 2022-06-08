@@ -763,7 +763,7 @@ final class StringUtil
             $attributes .= ' class="externalURL"';
             $rel = 'nofollow';
             if (EXTERNAL_LINK_TARGET_BLANK) {
-                $rel .= ' noopener noreferrer';
+                $rel .= ' noopener';
                 $attributes .= 'target="_blank"';
             }
             if ($isUgc) {
