@@ -44,7 +44,6 @@ use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
-use wcf\util\StringUtil;
 
 /**
  * PackageInstallationDispatcher handles the whole installation process.
@@ -213,11 +212,6 @@ class PackageInstallationDispatcher
                             WHERE   optionName = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
 
-                    $statement->execute([
-                        StringUtil::getUUID(),
-                        'wcf_uuid',
-                    ]);
-
                     if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
                         $statement->execute([
                             COOKIE_PREFIX,
@@ -226,20 +220,6 @@ class PackageInstallationDispatcher
 
                         @\unlink(WCF_DIR . 'cookiePrefix.txt');
                     }
-
-                    $user = new User(1);
-                    $statement->execute([
-                        $user->username,
-                        'mail_from_name',
-                    ]);
-                    $statement->execute([
-                        $user->email,
-                        'mail_from_address',
-                    ]);
-                    $statement->execute([
-                        $user->email,
-                        'mail_admin_address',
-                    ]);
 
                     $statement->execute([
                         // We do not use the cache-timing safe class Hex, because we run the
@@ -264,13 +244,6 @@ class PackageInstallationDispatcher
 
                     if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
                         $this->setupDeveloperMode();
-                    }
-
-                    if (WCF::getSession()->getVar('__wcfSetup_imagick')) {
-                        $statement->execute([
-                            'imagick',
-                            'image_adapter_type',
-                        ]);
                     }
 
                     // update options.inc.php

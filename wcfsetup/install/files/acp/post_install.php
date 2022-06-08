@@ -5,7 +5,9 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\PackageCache;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
+use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 // set default landing page
 $sql = "UPDATE  wcf1_application
@@ -79,4 +81,40 @@ $statement->execute([
 
     $this->installation->getPackageID(),
     'com.woltlab.wcf.refreshSearchRobots',
+]);
+
+// Configure dynamic option values
+
+$sql = "UPDATE  wcf1_option
+        SET     optionValue = ?
+        WHERE   optionName = ?";
+$statement = WCF::getDB()->prepare($sql);
+$statement->execute([
+    StringUtil::getUUID(),
+    'wcf_uuid',
+]);
+
+if (
+    ImagickImageAdapter::isSupported()
+    && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
+    && ImagickImageAdapter::supportsWebp()
+) {
+    $statement->execute([
+        'imagick',
+        'image_adapter_type',
+    ]);
+}
+
+$user = WCF::getUser();
+$statement->execute([
+    $user->username,
+    'mail_from_name',
+]);
+$statement->execute([
+    $user->email,
+    'mail_from_address',
+]);
+$statement->execute([
+    $user->email,
+    'mail_admin_address',
 ]);
