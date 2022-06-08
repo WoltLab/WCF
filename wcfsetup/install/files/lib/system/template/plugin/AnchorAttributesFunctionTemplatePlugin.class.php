@@ -59,7 +59,7 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
             $rel = 'nofollow';
             if (EXTERNAL_LINK_TARGET_BLANK) {
-                $rel .= ' noopener noreferrer';
+                $rel .= ' noopener';
                 $attributes .= ' target="_blank"';
             }
             if ($isUgc) {

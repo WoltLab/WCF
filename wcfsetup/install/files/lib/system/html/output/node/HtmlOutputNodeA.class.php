@@ -77,7 +77,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
 
         $rel = 'nofollow';
         if (EXTERNAL_LINK_TARGET_BLANK) {
-            $rel .= ' noopener noreferrer';
+            $rel .= ' noopener';
 
             $element->setAttribute('target', '_blank');
         }
