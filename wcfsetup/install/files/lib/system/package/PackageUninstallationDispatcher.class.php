@@ -4,7 +4,6 @@ namespace wcf\system\package;
 
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
@@ -172,49 +171,5 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     public function deleteFiles($targetDir, $files, $deleteEmptyTargetDir = false, $deleteEmptyDirectories = true)
     {
         new Uninstaller($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories);
-    }
-
-    /**
-     * Adds an uninstall entry to the package installation queue.
-     *
-     * @param Package $package
-     * @param array $packages
-     */
-    public static function addQueueEntries(Package $package, $packages = [])
-    {
-        // get new process no
-        $processNo = PackageInstallationQueue::getNewProcessNo();
-
-        // add dependent packages to queue
-        $statementParameters = [];
-        foreach ($packages as $dependentPackage) {
-            $statementParameters[] = [
-                'packageName' => $dependentPackage['packageName'],
-                'packageID' => $dependentPackage['packageID'],
-            ];
-        }
-
-        // add uninstalling package to queue
-        $statementParameters[] = [
-            'packageName' => $package->getName(),
-            'packageID' => $package->packageID,
-        ];
-
-        // insert queue entry (entries)
-        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_queue
-                            (processNo, userID, package, packageID, action)
-                VALUES      (?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        foreach ($statementParameters as $parameter) {
-            $statement->execute([
-                $processNo,
-                WCF::getUser()->userID,
-                $parameter['packageName'],
-                $parameter['packageID'],
-                'uninstall',
-            ]);
-        }
-
-        self::openQueue(0, $processNo);
     }
 }
