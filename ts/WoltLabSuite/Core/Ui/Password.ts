@@ -35,11 +35,9 @@ function initElement(input: HTMLInputElement): void {
   input.insertAdjacentElement("beforebegin", inputAddon);
   inputAddon.appendChild(input);
 
-  const button = document.createElement("span");
+  const button = document.createElement("button");
   button.title = Language.get("wcf.global.form.password.button.show");
   button.classList.add("button", "inputSuffix", "jsTooltip");
-  button.setAttribute("role", "button");
-  button.tabIndex = 0;
   button.setAttribute("aria-hidden", "true");
   inputAddon.appendChild(button);
 
@@ -49,12 +47,6 @@ function initElement(input: HTMLInputElement): void {
 
   button.addEventListener("click", () => {
     toggle(input, button, icon);
-  });
-  button.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      toggle(input, button, icon);
-    }
   });
 
   // Hide the password when the form is being submitted to prevent

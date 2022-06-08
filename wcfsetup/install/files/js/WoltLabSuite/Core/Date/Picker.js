@@ -47,15 +47,12 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         });
         const header = document.createElement("header");
         _datePicker.appendChild(header);
-        _dateMonthPrevious = document.createElement("a");
+        _dateMonthPrevious = document.createElement("button");
         _dateMonthPrevious.className = "previous jsTooltip";
-        _dateMonthPrevious.href = "#";
-        _dateMonthPrevious.setAttribute("role", "button");
-        _dateMonthPrevious.tabIndex = 0;
         _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
         _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
         _dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
-        _dateMonthPrevious.addEventListener("click", (ev) => DatePicker.previousMonth(ev));
+        _dateMonthPrevious.addEventListener("click", () => DatePicker.previousMonth());
         header.appendChild(_dateMonthPrevious);
         const monthYearContainer = document.createElement("span");
         header.appendChild(monthYearContainer);
@@ -77,15 +74,12 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         _dateYear.setAttribute("aria-label", Language.get("wcf.date.datePicker.year"));
         _dateYear.addEventListener("change", changeYear);
         monthYearContainer.appendChild(_dateYear);
-        _dateMonthNext = document.createElement("a");
+        _dateMonthNext = document.createElement("button");
         _dateMonthNext.className = "next jsTooltip";
-        _dateMonthNext.href = "#";
-        _dateMonthNext.setAttribute("role", "button");
-        _dateMonthNext.tabIndex = 0;
         _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
         _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
         _dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
-        _dateMonthNext.addEventListener("click", (ev) => DatePicker.nextMonth(ev));
+        _dateMonthNext.addEventListener("click", () => DatePicker.nextMonth());
         header.appendChild(_dateMonthNext);
         _dateGrid = document.createElement("ul");
         _datePicker.appendChild(_dateGrid);
@@ -213,8 +207,6 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
      * Opens the date picker.
      */
     function open(event) {
-        event.preventDefault();
-        event.stopPropagation();
         createPicker();
         const target = event.currentTarget;
         const input = target.nodeName === "INPUT" ? target : target.previousElementSibling;
@@ -632,11 +624,8 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 // create input addon
                 const container = document.createElement("div");
                 container.className = "inputAddon";
-                const openButton = document.createElement("a");
+                const openButton = document.createElement("button");
                 openButton.className = "inputSuffix button jsTooltip";
-                openButton.href = "#";
-                openButton.setAttribute("role", "button");
-                openButton.tabIndex = 0;
                 openButton.title = Language.get("wcf.date.datePicker");
                 openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
                 openButton.setAttribute("aria-haspopup", "true");
@@ -713,8 +702,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         /**
          * Shows the previous month.
          */
-        previousMonth(event) {
-            event.preventDefault();
+        previousMonth() {
             if (_dateMonth.value === "0") {
                 _dateMonth.value = "11";
                 _dateYear.value = (+_dateYear.value - 1).toString();
@@ -727,8 +715,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         /**
          * Shows the next month.
          */
-        nextMonth(event) {
-            event.preventDefault();
+        nextMonth() {
             if (_dateMonth.value === "11") {
                 _dateMonth.value = "0";
                 _dateYear.value = (+_dateYear.value + 1).toString();

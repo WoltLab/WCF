@@ -107,7 +107,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 this._toggleReactPopover(elementData.objectId, elementData.reactButton, ev);
             });
             elementData.reactButton.addEventListener("keydown", (event) => {
-                if (event.key === "Enter") {
+                if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
                     this._toggleReactPopover(elementData.objectId, elementData.reactButton, null);
                 }

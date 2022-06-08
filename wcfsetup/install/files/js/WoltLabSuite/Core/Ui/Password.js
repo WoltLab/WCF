@@ -33,11 +33,9 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         inputAddon.classList.add("inputAddon");
         input.insertAdjacentElement("beforebegin", inputAddon);
         inputAddon.appendChild(input);
-        const button = document.createElement("span");
+        const button = document.createElement("button");
         button.title = Language.get("wcf.global.form.password.button.show");
         button.classList.add("button", "inputSuffix", "jsTooltip");
-        button.setAttribute("role", "button");
-        button.tabIndex = 0;
         button.setAttribute("aria-hidden", "true");
         inputAddon.appendChild(button);
         const icon = document.createElement("span");
@@ -45,12 +43,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         button.appendChild(icon);
         button.addEventListener("click", () => {
             toggle(input, button, icon);
-        });
-        button.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                toggle(input, button, icon);
-            }
         });
         // Hide the password when the form is being submitted to prevent
         // it from being stored within the web browser's autocomplete list.

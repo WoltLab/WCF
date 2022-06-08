@@ -221,10 +221,8 @@ export class PageMenuMain implements PageMenuProvider {
 
       const menuId = DomUtil.getUniqueId();
 
-      const button = document.createElement("a");
+      const button = document.createElement("button");
       button.classList.add("pageMenuMainItemToggle");
-      button.tabIndex = 0;
-      button.setAttribute("role", "button");
       button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-controls", menuId);
       button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
@@ -239,17 +237,8 @@ export class PageMenuMain implements PageMenuProvider {
       list.id = menuId;
       list.hidden = true;
 
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-
+      button.addEventListener("click", () => {
         this.toggleList(button, list);
-      });
-      button.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-
-          button.click();
-        }
       });
 
       list.addEventListener("keydown", (event) => {
@@ -267,7 +256,7 @@ export class PageMenuMain implements PageMenuProvider {
     return listItem;
   }
 
-  private toggleList(button: HTMLAnchorElement, list: HTMLUListElement): void {
+  private toggleList(button: HTMLButtonElement, list: HTMLUListElement): void {
     if (list.hidden) {
       button.setAttribute("aria-expanded", "true");
       list.hidden = false;

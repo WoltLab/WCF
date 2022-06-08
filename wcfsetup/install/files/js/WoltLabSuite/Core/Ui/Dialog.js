@@ -318,14 +318,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             title.id = titleId;
             header.appendChild(title);
             if (options.closable) {
-                const closeButton = document.createElement("a");
+                const closeButton = document.createElement("button");
                 closeButton.className = "dialogCloseButton jsTooltip";
-                closeButton.href = "#";
-                closeButton.setAttribute("role", "button");
-                closeButton.tabIndex = 0;
                 closeButton.title = options.closeButtonLabel;
                 closeButton.setAttribute("aria-label", options.closeButtonLabel);
-                closeButton.addEventListener("click", (ev) => this._close(ev));
+                closeButton.addEventListener("click", () => this._close());
                 header.appendChild(closeButton);
                 const span = document.createElement("span");
                 span.className = "icon icon24 fa-times";
@@ -596,8 +593,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
         /**
          * Handles clicks on the close button or the backdrop if enabled.
          */
-        _close(event) {
-            event.preventDefault();
+        _close() {
             const data = _dialogs.get(_activeDialog);
             if (data === undefined) {
                 // Closing the dialog while it is already being closed
@@ -624,7 +620,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 return;
             }
             if (Core.stringToBool(_container.getAttribute("close-on-click"))) {
-                this._close(event);
+                event.preventDefault();
+                this._close();
             }
             else {
                 event.preventDefault();
