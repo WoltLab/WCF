@@ -630,6 +630,13 @@ class PackageInstallationDispatcher
      */
     protected function createPackage(array $packageData)
     {
+        if (!PACKAGE_ID && $packageData['package'] === 'com.woltlab.wcf') {
+            $packageEditor = new PackageEditor(new Package(1));
+            $packageEditor->update($packageData);
+
+            return new Package(1);
+        }
+
         return PackageEditor::create($packageData);
     }
 

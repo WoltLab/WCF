@@ -5,7 +5,7 @@
 */
 DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
 CREATE TABLE wcf1_package_installation_sql_log (
-	packageID INT(10),
+	packageID INT(10) NOT NULL,
 	sqlTable VARCHAR(100) NOT NULL DEFAULT '',
 	sqlColumn VARCHAR(100) NOT NULL DEFAULT '',
 	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
@@ -120,7 +120,7 @@ CREATE TABLE wcf1_acp_session_log (
 DROP TABLE IF EXISTS wcf1_acp_template;
 CREATE TABLE wcf1_acp_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10),
+	packageID INT(10) NOT NULL,
 	templateName VARCHAR(191) NOT NULL,
 	application VARCHAR(20) NOT NULL,
 	UNIQUE KEY applicationTemplate (application, templateName)
@@ -670,7 +670,7 @@ CREATE TABLE wcf1_language_item (
 	languageUseCustomValue TINYINT(1) NOT NULL DEFAULT 0,
 	languageItemOriginIsSystem TINYINT(1) NOT NULL DEFAULT 1,
 	languageCategoryID INT(10) NOT NULL,
-	packageID INT(10),
+	packageID INT(10) NOT NULL,
 	languageItemOldValue MEDIUMTEXT,
 	languageCustomItemDisableTime INT(10),
 	isCustomLanguageItem TINYINT(1) NOT NULL DEFAULT 0,
@@ -953,7 +953,7 @@ CREATE TABLE wcf1_package_exclusion (
 
 DROP TABLE IF EXISTS wcf1_package_installation_file_log;
 CREATE TABLE wcf1_package_installation_file_log (
-	packageID INT(10),
+	packageID INT(10) NOT NULL,
 	filename VARBINARY(765) NOT NULL, -- VARBINARY(765) roughly equals VARCHAR(255)
 	application VARCHAR(20) NOT NULL,
 	UNIQUE KEY applicationFile (application, filename)
@@ -982,7 +982,7 @@ CREATE TABLE wcf1_package_installation_node (
 DROP TABLE IF EXISTS wcf1_package_installation_plugin;
 CREATE TABLE wcf1_package_installation_plugin (
 	pluginName VARCHAR(191) NOT NULL PRIMARY KEY,
-	packageID INT(10),
+	packageID INT(10) NOT NULL,
 	priority TINYINT(1) NOT NULL DEFAULT 0,
 	className VARCHAR(255) NOT NULL
 );
@@ -1636,7 +1636,7 @@ CREATE TABLE wcf1_user_group_assignment (
 DROP TABLE IF EXISTS wcf1_user_group_option;
 CREATE TABLE wcf1_user_group_option (
 	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10),
+	packageID INT(10) NOT NULL,
 	optionName VARCHAR(191) NOT NULL DEFAULT '',
 	categoryName VARCHAR(191) NOT NULL DEFAULT '',
 	optionType VARCHAR(255) NOT NULL DEFAULT '',
@@ -1948,6 +1948,9 @@ CREATE TABLE wcf1_user_to_language (
 	languageID INT(10) NOT NULL,
 	UNIQUE KEY userID (userID, languageID)
 );
+
+-- Create the package early. This is required for the FOREIGN KEYs.
+INSERT INTO wcf1_package (packageID, package) VALUES (1, 'com.woltlab.wcf');
 
 /* SQL_PARSER_OFFSET */
 
@@ -2334,9 +2337,9 @@ INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VA
 INSERT INTO wcf1_user_group (groupID, groupName, groupDescription, groupType) VALUES (5, 'wcf.acp.group.group5', '', 4); -- Moderators
 
 -- default user group options
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (2, 'admin.configuration.package.canInstallPackage', 'admin.configuration.package', 'boolean', '0', 1, 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (packageID, optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (packageID, optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 2, 'admin.configuration.package.canInstallPackage', 'admin.configuration.package', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (packageID, optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1, 1);
 
 -- default user group option values
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (1, 1, '0');	-- Everyone

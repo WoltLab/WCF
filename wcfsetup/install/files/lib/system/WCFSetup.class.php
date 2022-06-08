@@ -891,11 +891,11 @@ final class WCFSetup extends WCF
 
         if (!empty($matches[1])) {
             $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
-                                (sqlTable)
-                    VALUES      (?)";
+                                (packageID, sqlTable)
+                    VALUES      (?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
             foreach ($matches[1] as $tableName) {
-                $statement->execute([$tableName]);
+                $statement->execute([1, $tableName]);
             }
         }
 
@@ -913,10 +913,11 @@ final class WCFSetup extends WCF
             * in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
             */
             $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_plugin
-                                (pluginName, priority, className)
-                    VALUES      (?, ?, ?)";
+                                (packageID, pluginName, priority, className)
+                    VALUES      (?, ?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
             $statement->execute([
+                1,
                 'packageInstallationPlugin',
                 1,
                 'wcf\system\package\plugin\PIPPackageInstallationPlugin',
@@ -949,13 +950,13 @@ final class WCFSetup extends WCF
         // save acp template log
         if (!empty($acpTemplateInserts)) {
             $sql = "INSERT INTO wcf" . WCF_N . "_acp_template
-                                (templateName, application)
-                    VALUES      (?, ?)";
+                                (packageID, templateName, application)
+                    VALUES      (?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
 
             self::getDB()->beginTransaction();
             foreach ($acpTemplateInserts as $acpTemplate) {
-                $statement->execute([$acpTemplate, 'wcf']);
+                $statement->execute([1, $acpTemplate, 'wcf']);
             }
             self::getDB()->commitTransaction();
         }
@@ -963,13 +964,13 @@ final class WCFSetup extends WCF
         // save file log
         if (!empty($fileInserts)) {
             $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_file_log
-                                (filename, application)
-                    VALUES      (?, ?)";
+                                (packageID, filename, application)
+                    VALUES      (?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
 
             self::getDB()->beginTransaction();
             foreach ($fileInserts as $file) {
-                $statement->execute([$file, 'wcf']);
+                $statement->execute([1, $file, 'wcf']);
             }
             self::getDB()->commitTransaction();
         }
@@ -1017,7 +1018,7 @@ final class WCFSetup extends WCF
             $xml->load($filename);
 
             // import xml
-            LanguageEditor::importFromXML($xml, 0);
+            LanguageEditor::importFromXML($xml, 1);
         }
 
         // set default language
