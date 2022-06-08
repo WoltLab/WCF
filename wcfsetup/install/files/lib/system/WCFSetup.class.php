@@ -1306,14 +1306,9 @@ final class WCFSetup extends WCF
         $factory = new ACPSessionFactory();
         $factory->load();
 
-        $useImagick = ImagickImageAdapter::isSupported()
-            && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
-            && ImagickImageAdapter::supportsWebp();
-
         SessionHandler::getInstance()->changeUser($admin);
         SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
         SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
-        SessionHandler::getInstance()->register('__wcfSetup_imagick', $useImagick);
         SessionHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
 
