@@ -200,10 +200,6 @@ final class WCFSetup extends WCF
                     'data:image/png;base64,%s',
                     \base64_encode(\file_get_contents(TMP_DIR . 'install/files/acp/images/woltlabSuite.png'))
                 ),
-                'fontawesome-webfont.woff2' => \sprintf(
-                    'data:font/woff2;base64,%s',
-                    \base64_encode(\file_get_contents(TMP_DIR . 'install/files/font/fontawesome-webfont.woff2'))
-                ),
             ],
         ]);
     }

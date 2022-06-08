@@ -8,15 +8,6 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="{$setupAssets['WCFSetup.css']}">
 
 	<style type="text/css">
-		@font-face {
-			font-family: 'FontAwesome';
-			src: url('{$setupAssets['fontawesome-webfont.woff2']}') format('woff2');
-			font-weight: normal;
-			font-style: normal;
-		}
-	</style>
-
-	<style type="text/css">
 		#pageHeaderContainer {
 			height: 100px;
 		}
