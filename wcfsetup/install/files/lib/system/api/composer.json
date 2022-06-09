@@ -18,7 +18,6 @@
         "laminas/laminas-httphandlerrunner": "^2.1.0",
         "laminas/laminas-progressbar": "^2.10.0",
         "paragonie/constant_time_encoding": "^2.5.0",
-        "pear/net_idna2": "^0.2.0",
         "pelago/emogrifier": "^6.0.0",
         "scssphp/scssphp": "^1.10.3",
         "psr/http-server-handler": "^1.0.1",
