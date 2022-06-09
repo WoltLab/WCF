@@ -123,20 +123,34 @@
 	@include screen-md-up {
 		align-self: flex-start;
 		border-radius: 3px;
-		flex: 0 0 240px;
-		padding: 20px;
 		text-align: center;
-
-		& + .messageContent {
-			flex-basis: calc(100% - 270px);
-			margin-left: 30px;
-			max-width: calc(100% - 270px);
-		}
 
 		.username {
 			/* required to fix wrapping behavior in combination with
 			   `overflow-wrap` / `word-wrap` */
 			display: block;
+		}
+	}
+
+	@include screen-md {
+		flex: 0 0 200px;
+		padding: 15px;
+		
+		& + .messageContent {
+			flex-basis: calc(100% - 220px);
+			margin-left: 20px;
+			max-width: calc(100% - 220px);
+		}
+	}
+
+	@include screen-lg {
+		flex: 0 0 240px;
+		padding: 20px;
+		
+		& + .messageContent {
+			flex-basis: calc(100% - 270px);
+			margin-left: 30px;
+			max-width: calc(100% - 270px);
 		}
 	}
 
