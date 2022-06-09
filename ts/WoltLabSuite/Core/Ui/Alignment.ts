@@ -235,6 +235,33 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
         horizontal = horizontalFlipped;
       } else if (alignCenter) {
         horizontal = horizontalCenter;
+      } else {
+        // The element fits neither to the left nor the right, but the center
+        // position is not requested either. This is especially an issue on mobile
+        // devices where the element might exceed the window boundary if we are
+        // stubborn about the alignment.
+        //
+        // The last thing we can try is to check if the element fits inside the
+        // viewport and then align it at the left / right boundary, whichever
+        // is closest to the boundary of the reference element.
+        if (elDimensions.width === windowWidth) {
+          horizontal = {
+            align: "left",
+            left: 0,
+            result: true,
+            right: 0,
+          };
+        } else if (elDimensions.width < windowWidth) {
+          const distanceToRightBoundary = windowWidth - (refOffsets.left + refDimensions.width);
+          const preferLeft = refOffsets.left <= distanceToRightBoundary;
+
+          horizontal = {
+            align: preferLeft ? "left" : "right",
+            left: preferLeft ? 0 : "auto",
+            result: true,
+            right: preferLeft ? "auto" : 0,
+          };
+        }
       }
     }
   }

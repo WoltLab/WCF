@@ -140,18 +140,6 @@
 		}
 	}
 
-	@include screen-md-down {
-		li {
-			overflow: hidden;
-
-			> a,
-			> span {
-				max-width: none;
-				white-space: normal;
-			}
-		}
-	}
-
 	@include screen-md-up {
 		.dropdownMenu.pageHeaderSearchDropdown {
 			transform: translateY(-10px);
