@@ -23,6 +23,11 @@ use const PHP_INT_MAX;
  *
  * Also, provides predictable heap order for datums added with the same priority
  * (i.e., they will be emitted in the same order they are enqueued).
+ *
+ * @psalm-type InternalPriority = array{0: mixed, 1: int}
+ * @template TValue
+ * @template TPriority of InternalPriority
+ * @extends \SplPriorityQueue<TPriority, TValue>
  */
 class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 {
@@ -35,8 +40,8 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * Utilizes {@var $serial} to ensure that values of equal priority are
      * emitted in the same order in which they are inserted.
      *
-     * @param  mixed $datum
-     * @param  mixed $priority
+     * @param  TValue          $datum
+     * @param  TPriority|mixed $priority
      * @return void
      */
     public function insert($datum, $priority)
@@ -44,6 +49,9 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
         if (! is_array($priority)) {
             $priority = [$priority, $this->serial--];
         }
+
+        /** @psalm-var TPriority $priority */
+
         parent::insert($datum, $priority);
     }
 
@@ -52,7 +60,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * Array will be priority => data pairs
      *
-     * @return array
+     * @return list<TValue>
      */
     public function toArray()
     {
@@ -139,6 +147,8 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
             if (array_key_exists('priority', $item)) {
                 $priority = (int) $item['priority'];
             }
+
+            /** @psalm-var TValue $item['data'] */
 
             $this->insert($item['data'], $priority);
         }

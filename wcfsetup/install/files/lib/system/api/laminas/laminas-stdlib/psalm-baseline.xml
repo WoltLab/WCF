@@ -221,75 +221,6 @@
       <code>(int) $priority</code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/PriorityQueue.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>null === $this-&gt;queue</code>
-    </DocblockTypeContradiction>
-    <InvalidStringClass occurrences="1">
-      <code>new $this-&gt;queueClass()</code>
-    </InvalidStringClass>
-    <LessSpecificReturnStatement occurrences="1">
-      <code>$this-&gt;queue</code>
-    </LessSpecificReturnStatement>
-    <MissingClosureReturnType occurrences="2">
-      <code>function ($item) {</code>
-      <code>function ($item) {</code>
-    </MissingClosureReturnType>
-    <MissingConstructor occurrences="1">
-      <code>$queue</code>
-    </MissingConstructor>
-    <MixedArgument occurrences="1">
-      <code>$item['priority']</code>
-    </MixedArgument>
-    <MixedArrayAccess occurrences="13">
-      <code>$item['data']</code>
-      <code>$item['data']</code>
-      <code>$item['data']</code>
-      <code>$item['data']</code>
-      <code>$item['data']</code>
-      <code>$item['data']</code>
-      <code>$item['priority']</code>
-      <code>$item['priority']</code>
-      <code>$item['priority']</code>
-      <code>$item['priority']</code>
-      <code>$item['priority']</code>
-      <code>$item['priority']</code>
-      <code>$item['priority']</code>
-    </MixedArrayAccess>
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;items[$key]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="9">
-      <code>$highestPriority</code>
-      <code>$highestPriority</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$value</code>
-    </MixedAssignment>
-    <MoreSpecificReturnType occurrences="1">
-      <code>SplPriorityQueue</code>
-    </MoreSpecificReturnType>
-    <PossiblyNullPropertyAssignmentValue occurrences="1">
-      <code>null</code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PossiblyUndefinedVariable occurrences="1">
-      <code>$key</code>
-    </PossiblyUndefinedVariable>
-    <PropertyTypeCoercion occurrences="1">
-      <code>new $this-&gt;queueClass()</code>
-    </PropertyTypeCoercion>
-    <RedundantCastGivenDocblockType occurrences="2">
-      <code>(int) $priority</code>
-      <code>(string) $class</code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>null !== $this-&gt;queue</code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/SplPriorityQueue.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>void</code>
@@ -297,12 +228,6 @@
     <MethodSignatureMismatch occurrences="1">
       <code>public function insert($datum, $priority)</code>
     </MethodSignatureMismatch>
-    <MixedAssignment occurrences="4">
-      <code>$array[]</code>
-      <code>$data[]</code>
-      <code>$item</code>
-      <code>$item</code>
-    </MixedAssignment>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction occurrences="1">

@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -65,12 +65,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '2.2.1',
-            'version' => '2.2.1.0',
+            'pretty_version' => '2.2.2',
+            'version' => '2.2.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => 'c94a94f120803a18554c1805ef2e539f8285f9a2',
+            'reference' => 'a119247127ff95789a2d95c347cd74721fbedaa4',
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
@@ -101,12 +101,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-stdlib' => array(
-            'pretty_version' => '3.7.1',
-            'version' => '3.7.1.0',
+            'pretty_version' => '3.9.1',
+            'version' => '3.9.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
-            'reference' => 'bcd869e2fe88d567800057c1434f2380354fe325',
+            'reference' => '1df1cc0b9c2b8c7d1e322da1669a576386b5da46',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
