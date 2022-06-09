@@ -253,14 +253,29 @@
             'reference' => '07f1b9cc2ffee6aaafcf4b710fbc38ff736bd918',
             'dev_requirement' => false,
         ),
-        'symfony/polyfill-mbstring' => array(
+        'symfony/polyfill-intl-idn' => array(
             'pretty_version' => 'v1.26.0',
             'version' => '1.26.0.0',
             'type' => 'library',
-            'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
+            'install_path' => __DIR__ . '/../symfony/polyfill-intl-idn',
             'aliases' => array(),
-            'reference' => '9344f9cb97f3b19424af1a21a3b0e75b0a7d8d7e',
+            'reference' => '59a8d271f00dd0e4c2e518104cc7963f655a1aa8',
             'dev_requirement' => false,
+        ),
+        'symfony/polyfill-intl-normalizer' => array(
+            'pretty_version' => 'v1.26.0',
+            'version' => '1.26.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-intl-normalizer',
+            'aliases' => array(),
+            'reference' => '219aa369ceff116e673852dce47c3a41794c14bd',
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-php72' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
         ),
         'symfony/polyfill-php82' => array(
             'pretty_version' => 'v1.26.0',
@@ -269,15 +284,6 @@
             'install_path' => __DIR__ . '/../symfony/polyfill-php82',
             'aliases' => array(),
             'reference' => 'a88014fcea4120c9f77b4fefd48942ce38e412e7',
-            'dev_requirement' => false,
-        ),
-        'true/punycode' => array(
-            'pretty_version' => 'v2.1.1',
-            'version' => '2.1.1.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../true/punycode',
-            'aliases' => array(),
-            'reference' => 'a4d0c11a36dd7f4e7cd7096076cab6d3378a071e',
             'dev_requirement' => false,
         ),
     ),

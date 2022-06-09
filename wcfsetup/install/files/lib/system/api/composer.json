@@ -21,10 +21,13 @@
         "pear/net_idna2": "^0.2.0",
         "pelago/emogrifier": "^6.0.0",
         "scssphp/scssphp": "^1.10.3",
-        "true/punycode": "^2.1.1",
         "psr/http-server-handler": "^1.0.1",
         "psr/http-message": "^1.0.1",
         "psr/http-server-middleware": "^1.0.1",
-        "symfony/polyfill-php82": "^1.26"
+        "symfony/polyfill-php82": "^1.26",
+        "symfony/polyfill-intl-idn": "^1.26"
+    },
+    "replace": {
+        "symfony/polyfill-php72": "*"
     }
 }

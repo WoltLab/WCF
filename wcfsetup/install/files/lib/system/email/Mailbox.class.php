@@ -2,7 +2,8 @@
 
 namespace wcf\system\email;
 
-use TrueBV\Exception\OutOfBoundsException;
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Utils;
 use TrueBV\Punycode;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
@@ -84,10 +85,14 @@ class Mailbox
             }
         }
 
+        // punycode the domain ...
         try {
-            // punycode the domain ...
-            $domain = @(new Punycode())->encode($domain);
-        } catch (OutOfBoundsException $e) {
+            $uri = (new Uri())->withHost($domain);
+            $domain = Utils::idnUriConvert(
+                $uri,
+                \IDNA_DEFAULT | \IDNA_USE_STD3_RULES | \IDNA_CHECK_BIDI | \IDNA_CHECK_CONTEXTJ | \IDNA_NONTRANSITIONAL_TO_ASCII
+            )->getHost();
+        } catch (\InvalidArgumentException $e) {
             throw new \DomainException($e->getMessage(), 0, $e);
         }
 
