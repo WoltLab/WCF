@@ -1,0 +1,125 @@
+.gridList {
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: 20px;
+}
+
+.gridListItem {
+    --padding: 10px;
+
+    border-radius: 5px;
+    display: grid;
+    padding: var(--padding);
+    position: relative;
+
+    &:not(:first-child)::before {
+        border-top: 1px solid $wcfContentBorderInner;
+        content: "";
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: -11px;
+    }
+}
+
+html:not(.touch) .gridListItem:hover {
+    background-color: $wcfTabularBoxBackgroundActive;
+}
+
+.gridListItemMessage {
+    column-gap: 10px;
+    grid-template-areas:
+        "image title   type"
+        "image meta    meta"
+        "image content content";
+    grid-template-columns: 48px auto minmax(0, min-content);
+}
+
+.gridListItemImage {
+    grid-area: image;
+}
+
+.gridListItemTitle {
+    grid-area: title;
+}
+
+.gridListItemMeta {
+    color: $wcfContentDimmedText;
+    grid-area: meta;
+}
+
+.gridListItemType {
+    color: $wcfContentDimmedText;
+    grid-area: type;
+    justify-self: end;
+}
+
+.gridListItemContent {
+    grid-area: content;
+    margin-top: 10px;
+}
+
+@include screen-xs {
+    .gridListItem {
+        padding: var(--padding) 0;
+    }
+
+    .gridListItemMessage {
+        grid-template-areas:
+            "image   title"
+            "image   meta"
+            "content content";
+        grid-template-columns: 32px auto;
+    }
+
+    .gridListItemImage {
+        position: relative;
+        top: 4px;
+
+        .userAvatarImage {
+            height: 32px;
+            width: 32px;
+        }
+
+        .icon {
+            font-size: 28px;
+            height: 32px;
+            line-height: 32px;
+            width: 32px;
+            vertical-align: -5px;
+        }
+    }
+
+    .gridListItemMeta a {
+        color: inherit;
+        pointer-events: none;
+    }
+
+    .gridListItemType {
+        display: none;
+    }
+}
+
+@include screen-sm-down {
+    .gridListItemTitle {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+@include screen-sm-up {
+    .gridListItemTitle {
+        @include wcfFontHeadline;
+    }
+}
+
+@include screen-md-up {
+    .gridListItemTitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
