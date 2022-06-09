@@ -151,13 +151,6 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
             ),
         ),
-        'N' => 
-        array (
-            'Net' => 
-            array (
-                0 => __DIR__ . '/..' . '/pear/net_idna2',
-            ),
-        ),
         'H' => 
         array (
             'HTMLPurifier' => 
@@ -607,11 +600,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Laminas\\Stdlib\\StringWrapper\\MbString' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/MbString.php',
         'Laminas\\Stdlib\\StringWrapper\\Native' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/Native.php',
         'Laminas\\Stdlib\\StringWrapper\\StringWrapperInterface' => __DIR__ . '/..' . '/laminas/laminas-stdlib/src/StringWrapper/StringWrapperInterface.php',
-        'Net_IDNA2' => __DIR__ . '/..' . '/pear/net_idna2/Net/IDNA2.php',
-        'Net_IDNA2_Exception' => __DIR__ . '/..' . '/pear/net_idna2/Net/IDNA2/Exception.php',
-        'Net_IDNA2_Exception_Nameprep' => __DIR__ . '/..' . '/pear/net_idna2/Net/IDNA2/Exception/Nameprep.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
-        'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
         'PHP_ICO' => __DIR__ . '/..' . '/chrisjean/php-ico/class-php-ico.php',
         'ParagonIE\\ConstantTime\\Base32' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Base32.php',
         'ParagonIE\\ConstantTime\\Base32Hex' => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src/Base32Hex.php',

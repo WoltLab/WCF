@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
@@ -116,24 +116,6 @@
             'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
             'aliases' => array(),
             'reference' => '9229e15f2e6ba772f0c55dd6986c563b937170a8',
-            'dev_requirement' => false,
-        ),
-        'pear/net_idna2' => array(
-            'pretty_version' => 'v0.2.0',
-            'version' => '0.2.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../pear/net_idna2',
-            'aliases' => array(),
-            'reference' => '51734eaf8be2df58e8aad5835b9966459b2fb37c',
-            'dev_requirement' => false,
-        ),
-        'pear/pear_exception' => array(
-            'pretty_version' => 'v1.0.2',
-            'version' => '1.0.2.0',
-            'type' => 'class',
-            'install_path' => __DIR__ . '/../pear/pear_exception',
-            'aliases' => array(),
-            'reference' => 'b14fbe2ddb0b9f94f5b24cf08783d599f776fff0',
             'dev_requirement' => false,
         ),
         'pelago/emogrifier' => array(
