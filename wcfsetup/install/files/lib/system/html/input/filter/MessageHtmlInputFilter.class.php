@@ -64,9 +64,6 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
 
             $this->setAttributeDefinitions($config);
 
-            // enable IDN support, requires PEAR Net_IDNA2
-            $config->set('Core.EnableIDNA', true);
-
             // enable finalization again, mimics the default behavior
             $config->autoFinalize = true;
             $config->finalize();
