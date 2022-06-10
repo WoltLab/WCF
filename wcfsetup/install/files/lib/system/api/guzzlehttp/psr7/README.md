@@ -527,6 +527,17 @@ When fopen fails, PHP normally raises a warning. This function adds an
 error handler that checks for errors and throws an exception instead.
 
 
+## `GuzzleHttp\Psr7\Utils::tryGetContents`
+
+`public static function tryGetContents(resource $stream): string`
+
+Safely gets the contents of a given stream.
+
+When stream_get_contents fails, PHP normally raises a warning. This
+function adds an error handler that checks for errors and throws an
+exception instead.
+
+
 ## `GuzzleHttp\Psr7\Utils::uriFor`
 
 `public static function uriFor(string|UriInterface $uri): UriInterface`

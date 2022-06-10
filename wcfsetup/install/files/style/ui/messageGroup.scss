@@ -5,8 +5,15 @@
 		}
 
 		.columnStats {
-			flex: 0 0 150px;
 			text-align: center;
+			
+			@include screen-lg {
+				flex: 0 0 150px;
+			}
+
+			@include screen-md-down {
+				flex: 0 0 100px;
+			}
 		}
 
 		.columnLastPost {
@@ -242,13 +249,29 @@
 		}
 	}
 
-	@include screen-sm-down {
+	@include screen-md-down {
 		.tabularListColumns > .columnMark {
 			display: none;
 		}
 
 		.tabularListRowHead {
-			.columnMark,
+			.columnMark {
+				display: none;
+			}
+
+			.columnSubject {
+				padding: 0;
+			}
+
+			.columnLastPost {
+				flex-basis: auto;
+				padding: 0;
+			}
+		}
+	}
+
+	@include screen-sm-down {
+		.tabularListRowHead {
 			.columnStats {
 				display: none;
 			}
