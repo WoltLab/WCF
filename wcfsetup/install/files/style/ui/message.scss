@@ -135,7 +135,7 @@
 	@include screen-md {
 		flex: 0 0 200px;
 		padding: 15px;
-		
+
 		& + .messageContent {
 			flex-basis: calc(100% - 220px);
 			margin-left: 20px;
@@ -146,7 +146,7 @@
 	@include screen-lg {
 		flex: 0 0 240px;
 		padding: 20px;
-		
+
 		& + .messageContent {
 			flex-basis: calc(100% - 270px);
 			margin-left: 30px;
