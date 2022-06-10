@@ -12,8 +12,8 @@
         "chrisjean/php-ico": "^1.0.4",
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "4.14.*",
-        "guzzlehttp/guzzle": "^7.4.3",
-        "guzzlehttp/psr7": "^2.2.1",
+        "guzzlehttp/guzzle": "^7.4.4",
+        "guzzlehttp/psr7": "^2.3.0",
         "laminas/laminas-diactoros": "^2.11.0",
         "laminas/laminas-httphandlerrunner": "^2.1.0",
         "laminas/laminas-progressbar": "^2.10.0",
@@ -23,8 +23,8 @@
         "psr/http-server-handler": "^1.0.1",
         "psr/http-server-middleware": "^1.0.1",
         "scssphp/scssphp": "^1.10.3",
-        "symfony/polyfill-intl-idn": "^1.26",
-        "symfony/polyfill-php82": "^1.26"
+        "symfony/polyfill-intl-idn": "^1.26.0",
+        "symfony/polyfill-php82": "^1.26.0"
     },
     "replace": {
         "symfony/polyfill-php72": "*"
