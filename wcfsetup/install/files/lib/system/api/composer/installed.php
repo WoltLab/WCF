@@ -51,8 +51,10 @@
             'version' => 'dev-7.3.0-woltlab',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
-            'aliases' => array(),
-            'reference' => '8d6f25546061237fb3fcf41df57f8a1c854af519',
+            'aliases' => array(
+                0 => '7.3.0',
+            ),
+            'reference' => 'e1a9c5c21b467b2d477a8509deb793685be85270',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
