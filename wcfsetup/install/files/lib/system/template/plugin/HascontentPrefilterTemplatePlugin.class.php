@@ -37,7 +37,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
 
         return \preg_replace_callback(
             "~{$ldq}hascontent( assign='(?P<assign>.*)')?{$rdq}(?P<before>.*){$ldq}content{$rdq}(?P<content>.*){$ldq}\\/content{$rdq}(?P<after>.*)({$ldq}hascontentelse{$rdq}(?P<else>.*))?{$ldq}\\/hascontent{$rdq}~sU",
-            ['self', 'replaceContentCallback'],
+            [self::class, 'replaceContentCallback'],
             $sourceContent
         );
     }
