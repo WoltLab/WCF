@@ -217,18 +217,19 @@ abstract class ArrayUtils
     }
 
     /**
-     * Convert an iterator to an array.
-     *
      * Converts an iterator to an array. The $recursive flag, on by default,
      * hints whether or not you want to do so recursively.
      *
-     * @param  array|Traversable  $iterator     The array or Traversable object to convert
-     * @param  bool               $recursive    Recursively check all nested structures
+     * @template TKey
+     * @template TValue
+     * @param  array<TKey, TValue>|Traversable<TKey, TValue> $iterator  The array or Traversable object to convert
+     * @param  bool                                          $recursive Recursively check all nested structures
      * @throws Exception\InvalidArgumentException If $iterator is not an array or a Traversable object.
-     * @return array
+     * @return array<TKey, TValue>
      */
     public static function iteratorToArray($iterator, $recursive = true)
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_array($iterator) && ! $iterator instanceof Traversable) {
             throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable object');
         }
@@ -246,7 +247,10 @@ abstract class ArrayUtils
             && ! $iterator instanceof Iterator
             && method_exists($iterator, 'toArray')
         ) {
-            return $iterator->toArray();
+            /** @psalm-var array<TKey, TValue> $array */
+            $array = $iterator->toArray();
+
+            return $array;
         }
 
         $array = [];
@@ -268,6 +272,8 @@ abstract class ArrayUtils
 
             $array[$key] = $value;
         }
+
+        /** @psalm-var array<TKey, TValue> $array */
 
         return $array;
     }

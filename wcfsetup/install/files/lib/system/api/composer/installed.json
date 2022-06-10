@@ -721,17 +721,17 @@
         },
         {
             "name": "laminas/laminas-stdlib",
-            "version": "3.9.1",
-            "version_normalized": "3.9.1.0",
+            "version": "3.10.0",
+            "version_normalized": "3.10.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "1df1cc0b9c2b8c7d1e322da1669a576386b5da46"
+                "reference": "449c0405e182bfe77702604a474668fbb63e9907"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/1df1cc0b9c2b8c7d1e322da1669a576386b5da46",
-                "reference": "1df1cc0b9c2b8c7d1e322da1669a576386b5da46",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/449c0405e182bfe77702604a474668fbb63e9907",
+                "reference": "449c0405e182bfe77702604a474668fbb63e9907",
                 "shasum": ""
             },
             "require": {
@@ -747,7 +747,7 @@
                 "psalm/plugin-phpunit": "^0.16.0",
                 "vimeo/psalm": "^4.7"
             },
-            "time": "2022-06-08T11:33:13+00:00",
+            "time": "2022-06-09T08:43:49+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1789,6 +1789,6 @@
             "install-path": "../symfony/polyfill-php82"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

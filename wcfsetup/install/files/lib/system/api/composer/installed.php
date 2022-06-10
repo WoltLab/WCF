@@ -7,7 +7,7 @@
         'aliases' => array(),
         'reference' => NULL,
         'name' => '__root__',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -101,12 +101,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-stdlib' => array(
-            'pretty_version' => '3.9.1',
-            'version' => '3.9.1.0',
+            'pretty_version' => '3.10.0',
+            'version' => '3.10.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
-            'reference' => '1df1cc0b9c2b8c7d1e322da1669a576386b5da46',
+            'reference' => '449c0405e182bfe77702604a474668fbb63e9907',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
