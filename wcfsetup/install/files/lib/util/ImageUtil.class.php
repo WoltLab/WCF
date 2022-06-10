@@ -216,7 +216,7 @@ final class ImageUtil
                     [$mimeType] = ArrayUtil::trim(\explode(";", $acceptableMimeType), false);
 
                     return $mimeType;
-                }, Header::normalize($_SERVER["HTTP_ACCEPT"]));
+                }, Header::splitList($_SERVER["HTTP_ACCEPT"]));
 
                 if (\in_array("image/webp", $acceptableMimeTypes)) {
                     $supportsWebP = true;

@@ -36,7 +36,7 @@ final class EnforceCacheControlPrivate implements MiddlewareInterface
         $cacheControl = [
             'private',
         ];
-        foreach (Header::normalize($response->getHeader('cache-control')) as $value) {
+        foreach (Header::splitList($response->getHeader('cache-control')) as $value) {
             [$field] = \explode('=', $value, 2);
 
             // Prevent duplication of the 'private' field.
