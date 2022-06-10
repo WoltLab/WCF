@@ -3871,7 +3871,6 @@ Dateianhänge:
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {@$author}{else}Zitat{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Link zu der Quelle an.]]></item>
-		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
 		<item name="wcf.editor.source.error.active"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}kehre{else}kehren Sie{/if} zum Absenden in die normale Ansicht zurück.]]></item>
 		<item name="wcf.editor.spoiler.label"><![CDATA[Beschriftung]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Beschriftung für den Spoiler-Button ein.]]></item>
@@ -5628,5 +5627,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.article.search.categories" />
 	<item name="wcf.global.button.showSidebarRight" />
 	<item name="wcf.style.colorPicker.alpha" />
+	<item name="wcf.editor.quote.url.error.invalid" />
 </delete>
 </language>
