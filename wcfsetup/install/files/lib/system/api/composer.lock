@@ -148,12 +148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/guzzle",
-                "reference": "55f5df5ac12cbd2a57af9847f982e734e86c7647"
+                "reference": "6906ae0aa4350d64ff2d075b0f162a9c165e34a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/55f5df5ac12cbd2a57af9847f982e734e86c7647",
-                "reference": "55f5df5ac12cbd2a57af9847f982e734e86c7647",
+                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/6906ae0aa4350d64ff2d075b0f162a9c165e34a8",
+                "reference": "6906ae0aa4350d64ff2d075b0f162a9c165e34a8",
                 "shasum": ""
             },
             "require": {
@@ -241,7 +241,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2022-05-25T13:29:19+00:00"
+            "time": "2022-06-09T21:36:50+00:00"
         },
         {
             "name": "guzzlehttp/promises",

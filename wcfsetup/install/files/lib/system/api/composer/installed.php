@@ -52,7 +52,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '55f5df5ac12cbd2a57af9847f982e734e86c7647',
+            'reference' => '6906ae0aa4350d64ff2d075b0f162a9c165e34a8',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
