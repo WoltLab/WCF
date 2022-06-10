@@ -337,7 +337,7 @@ final class CronjobUtil
      *
      * @param array $values
      * @param int $timeBase
-     * @return  int
+     * @return  bool
      */
     protected static function calculateHour(array &$values, &$timeBase)
     {
