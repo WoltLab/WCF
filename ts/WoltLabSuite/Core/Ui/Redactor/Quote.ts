@@ -182,7 +182,7 @@ class UiRedactorQuote {
 
     let url = urlInput.value.replace(/\u200B/g, "").trim();
     if (url.length && !/^https?:\/\/[^/]+/.test(url)) {
-      url = `https://${url}`
+      url = `https://${url}`;
     }
 
     const quote = this._quote!;
