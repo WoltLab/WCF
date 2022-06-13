@@ -247,15 +247,7 @@ class ControllerMap extends SingletonFactory
                 }
             }
 
-            // different application, redirect instead
-            if (
-                $cmsPageData['application'] !== $application
-                && $this->getApplicationOverride($application, $cmsPageData['controller']) !== $application
-            ) {
-                return ['redirect' => LinkHandler::getInstance()->getCmsLink($matches['pageID'])];
-            } else {
-                return $this->resolveCustomController($cmsPageData['application'], $cmsPageData['controller']);
-            }
+            return $this->resolveCustomController($cmsPageData['application'], $cmsPageData['controller']);
         }
 
         return [
