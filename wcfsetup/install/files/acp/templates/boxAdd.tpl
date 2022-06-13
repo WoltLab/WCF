@@ -448,6 +448,34 @@
 					<h2 class="sectionTitle">{lang}wcf.acp.box.conditions.page{/lang}</h2>
 				</header>
 
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+						<script data-relocate="true">
+							require([], function() {
+								// visibility toggle
+								var visibilityExceptionHidden = elById('visibilityExceptionHidden');
+								var visibilityExceptionVisible = elById('visibilityExceptionVisible');
+								elById('visibleEverywhere').addEventListener('change', function() {
+									window[this.checked ? 'elShow' : 'elHide'](visibilityExceptionHidden);
+									window[this.checked ? 'elHide' : 'elShow'](visibilityExceptionVisible);
+								});
+							});
+						</script>
+					</dd>
+				</dl>
+
+				<dl>
+					<dt>
+						<span id="visibilityExceptionVisible"{if $visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.visible{/lang}</span>
+						<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
+					</dt>
+					<dd>
+						{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
+					</dd>
+				</dl>
+
 				{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
 					{@$pageConditionObjectType->getProcessor()->getHtml()}
 				{/foreach}
