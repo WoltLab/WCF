@@ -5,7 +5,7 @@ namespace wcf\system\form\builder\field;
 use wcf\system\WCF;
 
 /**
- * Implementation of a checkbox form field for boolen values.
+ * Implementation of a checkbox form field for boolean values.
  *
  * @author  Peter Lohse
  * @copyright   2001-2020 WoltLab GmbH
