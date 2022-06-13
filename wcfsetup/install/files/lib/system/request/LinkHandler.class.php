@@ -280,35 +280,29 @@ class LinkHandler extends SingletonFactory
      */
     public function getCmsLink($pageID, $languageID = -1)
     {
+        $data = null;
+
         // use current language
         if ($languageID === -1) {
             $data = ControllerMap::getInstance()->lookupCmsPage($pageID, WCF::getLanguage()->languageID);
 
-            // no result
+            // no result, attempt to use the default language instead
+            $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+            if ($data === null && $defaultLanguageID != WCF::getLanguage()->languageID) {
+                $data = ControllerMap::getInstance()->lookupCmsPage($pageID, $defaultLanguageID);
+            }
+
+            // no result, possibly this is a non-multilingual page
             if ($data === null) {
-                // attempt to use the default language instead
-                if (LanguageFactory::getInstance()->getDefaultLanguageID() != WCF::getLanguage()->languageID) {
-                    $data = ControllerMap::getInstance()
-                        ->lookupCmsPage($pageID, LanguageFactory::getInstance()->getDefaultLanguageID());
-                }
-
-                // no result, possibly this is a non-multilingual page
-                if ($data === null) {
-                    $data = ControllerMap::getInstance()->lookupCmsPage($pageID, null);
-                }
-
-                // still no result, page does not exist at all
-                if ($data === null) {
-                    return '';
-                }
+                $data = ControllerMap::getInstance()->lookupCmsPage($pageID, null);
             }
         } else {
             $data = ControllerMap::getInstance()->lookupCmsPage($pageID, $languageID);
+        }
 
-            // no result, page does not exist or at least not in the given language
-            if ($data === null) {
-                return '';
-            }
+        // no result, page does not exist or at least not in the given language
+        if ($data === null) {
+            return '';
         }
 
         return $this->getLink($data['controller'], [
