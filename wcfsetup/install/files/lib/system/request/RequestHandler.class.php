@@ -248,12 +248,7 @@ final class RequestHandler extends SingletonFactory
     protected function handleDefaultController(string $application, array $routeData): array
     {
         $data = ControllerMap::getInstance()->lookupDefaultController($application);
-        if (!empty($data['redirect'])) {
-            // force a redirect
-            HeaderUtil::redirect($data['redirect'], true, false);
-
-            exit;
-        } elseif (!empty($data['application']) && $data['application'] !== $application) {
+        if (!empty($data['application']) && $data['application'] !== $application) {
             $override = ControllerMap::getInstance()->getApplicationOverride($application, $data['controller']);
             if ($application !== $override) {
                 HeaderUtil::redirect(
