@@ -658,6 +658,10 @@
 			content: attr(data-hide-navigation);
 		}
 	}
+
+	.boxesSidebarRight {
+		flex: 1 0 100%;
+	}
 }
 
 /* styling for boxes in <contentTop>/<contentBottom> position */

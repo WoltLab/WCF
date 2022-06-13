@@ -126,6 +126,13 @@ class KeywordHighlighter extends SingletonFactory
                 $this->keywords = \array_merge($this->keywords, $keywords);
             }
         }
+
+        // Exclude words that are less than 3 characters, because those
+        // are often times stoppwords that are not matched by the search
+        // engine, but can appear a lot of times in regular text.
+        $this->keywords = \array_filter($this->keywords, static function (string $keyword): bool {
+            return \mb_strlen($keyword) > 2;
+        });
     }
 
     /**

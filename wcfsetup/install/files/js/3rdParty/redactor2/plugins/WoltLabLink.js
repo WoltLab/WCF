@@ -20,7 +20,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 				// add protocol
 				if (url.search(re1) === -1 && url.search(re2) !== -1 && url.search(re3) === -1 && url.substring(0, 1) !== '/')
 				{
-					url = 'http://' + url;
+					url = 'https://' + url;
 				}
 				
 				if (url.search(re1) !== -1 || url.search(re3) !== -1 || url.search(re4) !== -1 || url.search(re5) !== -1)
@@ -45,7 +45,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 					if (this.opts.linkValidation)
 					{
 						var url = this.link.isUrl(link.url);
-						if (url === false) url = 'http://' + link.url;
+						if (url === false) url = 'https://' + link.url;
 						
 						link.url = url;
 					}

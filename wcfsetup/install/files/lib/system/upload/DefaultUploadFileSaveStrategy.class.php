@@ -310,7 +310,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
             return;
         }
 
-        $adapter->loadFile($file->getLocation());
+        try {
+            $adapter->loadFile($file->getLocation());
+        } catch (\Exception $e) {
+            \wcf\functions\exception\logThrowable($e);
+
+            return;
+        }
 
         $updateData = [];
         foreach ($this->options['thumbnailSizes'] as $type => $sizeData) {
@@ -331,11 +337,18 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
             }
 
             if ($file->width > $sizeData['width'] || $file->height > $sizeData['height']) {
-                $thumbnail = $adapter->createThumbnail(
-                    $sizeData['width'],
-                    $sizeData['height'],
-                    $sizeData['retainDimensions'] ?? true
-                );
+                try {
+                    $thumbnail = $adapter->createThumbnail(
+                        $sizeData['width'],
+                        $sizeData['height'],
+                        $sizeData['retainDimensions'] ?? true
+                    );
+                } catch (\Exception $e) {
+                    \wcf\functions\exception\logThrowable($e);
+
+                    continue;
+                }
+
                 $adapter->writeImage($thumbnail, $thumbnailLocation);
                 // Clear thumbnail as soon as possible to free up the memory for the next size.
                 $thumbnail = null;

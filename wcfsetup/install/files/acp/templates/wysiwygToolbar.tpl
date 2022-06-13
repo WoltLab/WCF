@@ -18,7 +18,7 @@ buttonOptions = {
 	woltlabFullscreen: { icon: 'fa-expand', title: '{jslang}wcf.editor.button.fullscreen{/jslang}' },
 	woltlabImage: { icon: 'fa-picture-o', title: '{jslang}wcf.editor.button.image{/jslang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{jslang}wcf.editor.button.media{/jslang}' },
-	woltlabQuote: { icon: 'fa-comment', title: '{jslang}wcf.editor.button.quote{/jslang}' },
+	woltlabQuote: { icon: 'fa-quote-left', title: '{jslang}wcf.editor.button.quote{/jslang}' },
 	woltlabSize: { icon: 'fa-text-height', title: '{jslang}wcf.editor.button.size{/jslang}' }
 };
 

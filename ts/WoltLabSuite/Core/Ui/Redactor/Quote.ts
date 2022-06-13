@@ -180,14 +180,9 @@ class UiRedactorQuote {
     const id = `redactor-quote-${this._elementId}`;
     const urlInput = document.getElementById(`${id}-url`) as HTMLInputElement;
 
-    const url = urlInput.value.replace(/\u200B/g, "").trim();
-    // simple test to check if it at least looks like it could be a valid url
+    let url = urlInput.value.replace(/\u200B/g, "").trim();
     if (url.length && !/^https?:\/\/[^/]+/.test(url)) {
-      DomUtil.innerError(urlInput, Language.get("wcf.editor.quote.url.error.invalid"));
-
-      return;
-    } else {
-      DomUtil.innerError(urlInput, false);
+      url = `https://${url}`
     }
 
     const quote = this._quote!;

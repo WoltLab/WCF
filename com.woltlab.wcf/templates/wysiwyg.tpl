@@ -103,7 +103,6 @@
 				'wcf.editor.quote.title': '{jslang __literal=true}wcf.editor.quote.title{/jslang}',
 				'wcf.editor.quote.url': '{jslang}wcf.editor.quote.url{/jslang}',
 				'wcf.editor.quote.url.description': '{jslang}wcf.editor.quote.url.description{/jslang}',
-				'wcf.editor.quote.url.error.invalid': '{jslang}wcf.editor.quote.url.error.invalid{/jslang}',
 				
 				'wcf.editor.table.cols': '{jslang}wcf.editor.table.cols{/jslang}',
 				'wcf.editor.table.insertTable': '{jslang}wcf.editor.table.insertTable{/jslang}',
