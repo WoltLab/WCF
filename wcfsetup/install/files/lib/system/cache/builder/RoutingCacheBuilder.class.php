@@ -41,12 +41,12 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         $data = [
             'ciControllers' => $this->getCaseInsensitiveControllers(),
             'landingPages' => $this->getLandingPages(),
+            'customUrls' => $this->getCustomUrls(),
         ];
 
-        $data['customUrls'] = $this->getCustomUrls();
         $data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
 
-        return $this->handleLandingPageWithOverriddenApplication($data);
+        return $data;
     }
 
     /**
@@ -344,40 +344,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             }
 
             $data[ApplicationHandler::getInstance()->getAbbreviation($application->packageID)] = $controller;
-        }
-
-        return $data;
-    }
-
-    protected function handleLandingPageWithOverriddenApplication(array $data): array
-    {
-        if (!PACKAGE_ID) {
-            return $data;
-        }
-
-        $landingPageController = $data['landingPages']['wcf']['controller'];
-        $controllers = [$landingPageController];
-
-        // The controller may be the custom url of a CMS page.
-        if (\str_starts_with($landingPageController, '__WCF_CMS__')) {
-            $controllers = \array_filter(
-                $data['customUrls']['reverse']['wcf'],
-                static function ($controller) use ($landingPageController) {
-                    return \str_starts_with($controller, "{$landingPageController}-");
-                },
-                \ARRAY_FILTER_USE_KEY
-            );
-        }
-
-        foreach ($controllers as $controller) {
-            if (isset($data['applicationOverrides']['reverse']['wcf'][$controller])) {
-                $overriddenApplication = $data['applicationOverrides']['reverse']['wcf'][$controller];
-
-                // The original landing page of the target app has been implicitly overridden, thus we need to
-                // replace the data of the affected app. This is necessary in order to avoid the original landing
-                // page to be conflicting with the global landing page, eventually overshadowing it.
-                $data['landingPages'][$overriddenApplication] = $data['landingPages']['wcf'];
-            }
         }
 
         return $data;
