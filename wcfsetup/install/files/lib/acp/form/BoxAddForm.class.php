@@ -17,7 +17,6 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\condition\ConditionHandler;
-use wcf\system\condition\page\MultiPageCondition;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -339,6 +338,9 @@ class BoxAddForm extends AbstractForm
         if (isset($_POST['showOrder'])) {
             $this->showOrder = \intval($_POST['showOrder']);
         }
+        if (isset($_POST['visibleEverywhere'])) {
+            $this->visibleEverywhere = \intval($_POST['visibleEverywhere']);
+        }
         if (isset($_POST['cssClassName'])) {
             $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
         }
@@ -347,6 +349,9 @@ class BoxAddForm extends AbstractForm
         }
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;
+        }
+        if (isset($_POST['pageIDs']) && \is_array($_POST['pageIDs'])) {
+            $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
         }
         if (isset($_POST['linkType'])) {
             $this->linkType = $_POST['linkType'];
@@ -399,36 +404,8 @@ class BoxAddForm extends AbstractForm
 
     private function readConditions(): void
     {
-        $pageConditionObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
-            Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME,
-            'com.woltlab.wcf.page'
-        );
-
-        $this->pageIDs = $this->visibleEverywhere = null;
         foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
             $objectType->getProcessor()->readFormParameters();
-            if ($objectType->objectTypeID == $pageConditionObjectTypeID) {
-                \assert($objectType->getProcessor() instanceof MultiPageCondition);
-
-                $data = $objectType->getProcessor()->getData();
-                if ($data !== null) {
-                    $this->pageIDs = $data['pageIDs'];
-                    $this->visibleEverywhere = $data['pageIDs_reverseLogic'] ? 1 : 0;
-                } else {
-                    $this->pageIDs = [];
-                    $this->visibleEverywhere = 1;
-                }
-            }
-        }
-
-        if ($this->pageIDs === null || $this->visibleEverywhere === null) {
-            throw new \LogicException(
-                \sprintf(
-                    "The '%s' condition for the definition '%s' is missing.",
-                    'com.woltlab.wcf.page',
-                    Box::VISIBILITY_CONDITIONS_OBJECT_TYPE_NAME
-                )
-            );
         }
     }
 
