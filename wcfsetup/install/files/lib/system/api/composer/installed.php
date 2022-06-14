@@ -101,12 +101,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-stdlib' => array(
-            'pretty_version' => '3.10.0',
-            'version' => '3.10.0.0',
+            'pretty_version' => '3.10.1',
+            'version' => '3.10.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
-            'reference' => '449c0405e182bfe77702604a474668fbb63e9907',
+            'reference' => '0d669074845fc80a99add0f64025192f143ef836',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(

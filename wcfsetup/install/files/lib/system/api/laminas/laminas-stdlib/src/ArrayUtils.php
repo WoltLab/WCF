@@ -222,8 +222,8 @@ abstract class ArrayUtils
      *
      * @template TKey
      * @template TValue
-     * @param  array<TKey, TValue>|Traversable<TKey, TValue> $iterator  The array or Traversable object to convert
-     * @param  bool                                          $recursive Recursively check all nested structures
+     * @param  iterable<TKey, TValue> $iterator  The array or Traversable object to convert
+     * @param  bool                   $recursive Recursively check all nested structures
      * @throws Exception\InvalidArgumentException If $iterator is not an array or a Traversable object.
      * @return array<TKey, TValue>
      */
