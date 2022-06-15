@@ -82,8 +82,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 
 		<!-- Migrate the database as early as possible. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.5.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.5_boxConditions.php</instruction>
-
+		
 		<!-- Install new PIPs (fileDelete, templateDelete, acpTemplateDelete). -->
 		<instruction type="packageInstallationPlugin" />
 
