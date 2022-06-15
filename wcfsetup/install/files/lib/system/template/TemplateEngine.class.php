@@ -122,6 +122,10 @@ class TemplateEngine extends SingletonFactory
      */
     protected $environment = 'user';
 
+    protected $pluginObjects = [];
+
+    protected $tagStack = [];
+
     /**
      * @inheritDoc
      */
