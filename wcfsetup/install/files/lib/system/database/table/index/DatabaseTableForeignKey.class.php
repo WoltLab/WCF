@@ -142,7 +142,7 @@ class DatabaseTableForeignKey
     {
         return [
             'columns' => \implode(',', $this->getColumns()),
-            'referencedColumns' => \implode(',', $this->getReferencedColumns()),
+            'referencedColumns' => \strtolower(\implode(',', $this->getReferencedColumns())),
             'referencedTable' => $this->getReferencedTable(),
         ];
     }
