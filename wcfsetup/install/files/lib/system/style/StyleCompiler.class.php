@@ -521,7 +521,7 @@ final class StyleCompiler extends SingletonFactory
                     @return preload_dummy($filename, $as, 0, $type);
                 }
             }
-EOT;
+        EOT;
 
         $content .= <<<'EOT'
             @function getFont($filename, $family: "/", $version: "") {
@@ -531,10 +531,10 @@ EOT;
                 @if ($version != "") {
                     $version: "?v=" + $version;
                 }
-                
+
                 @return "../font/" + $family + $filename + $version;
             }
-EOT;
+        EOT;
 
         if (!empty($variables['wcfFontFamilyGoogle'])) {
             $content .= $this->getGoogleFontScss($variables['wcfFontFamilyGoogle']);
