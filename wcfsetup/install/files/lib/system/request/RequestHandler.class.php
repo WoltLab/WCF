@@ -132,9 +132,10 @@ final class RequestHandler extends SingletonFactory
                     $routeData['controller'] = 'index';
 
                     if ($application !== 'wcf') {
-                        HeaderUtil::redirect(LinkHandler::getInstance()->getLink(), true, false);
-
-                        exit;
+                        return new RedirectResponse(
+                            LinkHandler::getInstance()->getLink(),
+                            301
+                        );
                     }
                 }
             } else {
