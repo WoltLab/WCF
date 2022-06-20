@@ -4,6 +4,7 @@ namespace wcf\system\request;
 
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
@@ -78,7 +79,7 @@ final class RequestHandler extends SingletonFactory
 
             $psrRequest = ServerRequestFactory::fromGlobals();
 
-            $builtRequest = $this->buildRequest($application);
+            $builtRequest = $this->buildRequest($psrRequest, $application);
 
             if ($builtRequest instanceof Request) {
                 $this->activeRequest = $builtRequest;
@@ -119,7 +120,7 @@ final class RequestHandler extends SingletonFactory
      * @throws  NamedUserException
      * @throws  SystemException
      */
-    protected function buildRequest(string $application): Request|ResponseInterface
+    protected function buildRequest(RequestInterface $psrRequest, string $application): Request|ResponseInterface
     {
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
