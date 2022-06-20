@@ -2,6 +2,7 @@
 
 namespace wcf\system\request;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
@@ -22,7 +23,6 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
 /**
@@ -145,20 +145,13 @@ final class RequestHandler extends SingletonFactory
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
                 $domainName = ApplicationHandler::getInstance()->getDomainName();
-                if ($domainName !== $_SERVER['HTTP_HOST']) {
-                    // build URL, e.g. http://example.net/forum/
-                    $url = FileUtil::addTrailingSlash(
-                        RouteHandler::getProtocol() . $domainName . RouteHandler::getPath()
+                if ($domainName !== $psrRequest->getUri()->getHost()) {
+                    $targetUrl = $psrRequest->getUri()->withHost($domainName);
+
+                    return new RedirectResponse(
+                        $targetUrl,
+                        301
                     );
-
-                    // query string, e.g. ?foo=bar
-                    if (!empty($_SERVER['QUERY_STRING'])) {
-                        $url .= '?' . $_SERVER['QUERY_STRING'];
-                    }
-
-                    HeaderUtil::redirect($url, true, false);
-
-                    exit;
                 }
             }
 
