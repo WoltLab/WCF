@@ -261,23 +261,22 @@ class ControllerMap extends SingletonFactory
      */
     public function isDefaultController(string $application, string $controller): bool
     {
-        // lookup custom urls first
-        if (isset($this->customUrls['lookup'][$application][$controller])) {
-            $controller = $this->customUrls['lookup'][$application][$controller];
-            if (\preg_match('~^(?P<controller>__WCF_CMS__\d+)(?:-(?P<languageID>\d+))?$~', $controller, $matches)) {
-                if ($matches['languageID']) {
+        $customController = $this->resolveCustomController($application, $controller);
+
+        if ($customController !== []) {
+            if ($customController['className'] === CmsPage::class) {
+                // i18n CMS pages must preserve the controller within the URL.
+                if ($customController['cmsPageLanguageID']) {
                     return false;
                 }
 
-                $controller = $matches['controller'];
+                return $this->landingPages[$application]['controller'] === "__WCF_CMS__{$customController['cmsPageID']}";
+            } else {
+                return $this->landingPages[$application]['controller'] === $customController['controller'];
             }
         }
 
-        if ($this->landingPages[$application]['controller'] === $controller) {
-            return true;
-        }
-
-        return false;
+        return $this->landingPages[$application]['controller'] === $controller;
     }
 
     /**
