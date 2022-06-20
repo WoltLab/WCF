@@ -126,6 +126,10 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         }, 1);
     }
     function closeSearch() {
+        const wasOpen = _pageHeader.classList.contains("searchBarOpen") || _pageHeaderSearch.classList.contains("open");
+        if (!wasOpen) {
+            return;
+        }
         _pageHeader.classList.remove("searchBarOpen");
         _pageHeaderSearch.classList.remove("open");
         _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.remove("open");

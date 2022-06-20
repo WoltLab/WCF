@@ -150,6 +150,11 @@ function openSearch(): void {
 }
 
 function closeSearch(): void {
+  const wasOpen = _pageHeader.classList.contains("searchBarOpen") || _pageHeaderSearch.classList.contains("open");
+  if (!wasOpen) {
+    return;
+  }
+
   _pageHeader.classList.remove("searchBarOpen");
   _pageHeaderSearch.classList.remove("open");
   _userPanelSearchButton?.parentElement!.classList.remove("open");
