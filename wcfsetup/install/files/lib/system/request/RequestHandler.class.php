@@ -4,6 +4,7 @@ namespace wcf\system\request;
 
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
@@ -77,22 +78,29 @@ final class RequestHandler extends SingletonFactory
 
             $psrRequest = ServerRequestFactory::fromGlobals();
 
-            $this->activeRequest = $this->buildRequest($application);
+            $builtRequest = $this->buildRequest($application);
 
-            $pipeline = new Pipeline([
-                new AddAcpSecurityHeaders(),
-                new EnforceCacheControlPrivate(),
-                new EnforceFrameOptions(),
-                new CheckSystemEnvironment(),
-                new CheckForEnterpriseNonOwnerAccess(),
-                new CheckForExpiredAppEvaluation(),
-                new CheckForOfflineMode(),
-            ]);
+            if ($builtRequest instanceof Request) {
+                $this->activeRequest = $builtRequest;
 
-            $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+                $pipeline = new Pipeline([
+                    new AddAcpSecurityHeaders(),
+                    new EnforceCacheControlPrivate(),
+                    new EnforceFrameOptions(),
+                    new CheckSystemEnvironment(),
+                    new CheckForEnterpriseNonOwnerAccess(),
+                    new CheckForExpiredAppEvaluation(),
+                    new CheckForOfflineMode(),
+                ]);
 
-            if ($response instanceof LegacyPlaceholderResponse) {
-                return;
+                $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+
+                if ($response instanceof LegacyPlaceholderResponse) {
+                    return;
+                }
+            } else {
+                \assert($builtRequest instanceof ResponseInterface);
+                $response = $builtRequest;
             }
 
             $emitter = new SapiEmitter();
@@ -111,7 +119,7 @@ final class RequestHandler extends SingletonFactory
      * @throws  NamedUserException
      * @throws  SystemException
      */
-    protected function buildRequest(string $application): Request
+    protected function buildRequest(string $application): Request|ResponseInterface
     {
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
