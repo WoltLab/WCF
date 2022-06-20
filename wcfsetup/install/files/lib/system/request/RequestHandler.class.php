@@ -2,8 +2,11 @@
 
 namespace wcf\system\request;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
@@ -20,7 +23,6 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
 /**
@@ -77,22 +79,29 @@ final class RequestHandler extends SingletonFactory
 
             $psrRequest = ServerRequestFactory::fromGlobals();
 
-            $this->activeRequest = $this->buildRequest($application);
+            $builtRequest = $this->buildRequest($psrRequest, $application);
 
-            $pipeline = new Pipeline([
-                new AddAcpSecurityHeaders(),
-                new EnforceCacheControlPrivate(),
-                new EnforceFrameOptions(),
-                new CheckSystemEnvironment(),
-                new CheckForEnterpriseNonOwnerAccess(),
-                new CheckForExpiredAppEvaluation(),
-                new CheckForOfflineMode(),
-            ]);
+            if ($builtRequest instanceof Request) {
+                $this->activeRequest = $builtRequest;
 
-            $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+                $pipeline = new Pipeline([
+                    new AddAcpSecurityHeaders(),
+                    new EnforceCacheControlPrivate(),
+                    new EnforceFrameOptions(),
+                    new CheckSystemEnvironment(),
+                    new CheckForEnterpriseNonOwnerAccess(),
+                    new CheckForExpiredAppEvaluation(),
+                    new CheckForOfflineMode(),
+                ]);
 
-            if ($response instanceof LegacyPlaceholderResponse) {
-                return;
+                $response = $pipeline->process($psrRequest, $this->getActiveRequest());
+
+                if ($response instanceof LegacyPlaceholderResponse) {
+                    return;
+                }
+            } else {
+                \assert($builtRequest instanceof ResponseInterface);
+                $response = $builtRequest;
             }
 
             $emitter = new SapiEmitter();
@@ -111,7 +120,7 @@ final class RequestHandler extends SingletonFactory
      * @throws  NamedUserException
      * @throws  SystemException
      */
-    protected function buildRequest(string $application): Request
+    protected function buildRequest(RequestInterface $psrRequest, string $application): Request|ResponseInterface
     {
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
@@ -123,9 +132,10 @@ final class RequestHandler extends SingletonFactory
                     $routeData['controller'] = 'index';
 
                     if ($application !== 'wcf') {
-                        HeaderUtil::redirect(LinkHandler::getInstance()->getLink(), true, false);
-
-                        exit;
+                        return new RedirectResponse(
+                            LinkHandler::getInstance()->getLink(),
+                            301
+                        );
                     }
                 }
             } else {
@@ -136,20 +146,13 @@ final class RequestHandler extends SingletonFactory
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
                 $domainName = ApplicationHandler::getInstance()->getDomainName();
-                if ($domainName !== $_SERVER['HTTP_HOST']) {
-                    // build URL, e.g. http://example.net/forum/
-                    $url = FileUtil::addTrailingSlash(
-                        RouteHandler::getProtocol() . $domainName . RouteHandler::getPath()
+                if ($domainName !== $psrRequest->getUri()->getHost()) {
+                    $targetUrl = $psrRequest->getUri()->withHost($domainName);
+
+                    return new RedirectResponse(
+                        $targetUrl,
+                        301
                     );
-
-                    // query string, e.g. ?foo=bar
-                    if (!empty($_SERVER['QUERY_STRING'])) {
-                        $url .= '?' . $_SERVER['QUERY_STRING'];
-                    }
-
-                    HeaderUtil::redirect($url, true, false);
-
-                    exit;
                 }
             }
 
