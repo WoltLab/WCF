@@ -152,12 +152,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/guzzle",
-                "reference": "6906ae0aa4350d64ff2d075b0f162a9c165e34a8"
+                "reference": "395fb910f2fadbf6eb2973aef46400cc28c5121a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/6906ae0aa4350d64ff2d075b0f162a9c165e34a8",
-                "reference": "6906ae0aa4350d64ff2d075b0f162a9c165e34a8",
+                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/395fb910f2fadbf6eb2973aef46400cc28c5121a",
+                "reference": "395fb910f2fadbf6eb2973aef46400cc28c5121a",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +165,7 @@
                 "guzzlehttp/promises": "^1.0",
                 "guzzlehttp/psr7": "^1.6.1",
                 "php": ">=5.5",
-                "symfony/polyfill-intl-idn": "^1.17.0"
+                "symfony/polyfill-intl-idn": "^1.17"
             },
             "require-dev": {
                 "ext-curl": "*",
@@ -175,7 +175,7 @@
             "suggest": {
                 "psr/log": "Required for using the Log middleware"
             },
-            "time": "2022-06-09T21:36:50+00:00",
+            "time": "2022-06-21T08:51:38+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
