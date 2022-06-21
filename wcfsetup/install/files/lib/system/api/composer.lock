@@ -300,12 +300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/guzzle-psr7",
-                "reference": "986596de01529f6e837a5cadfef9ec714ace7914"
+                "reference": "3dffed9d5f5a762bcc843155a2f85c36614a299e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/guzzle-psr7/zipball/986596de01529f6e837a5cadfef9ec714ace7914",
-                "reference": "986596de01529f6e837a5cadfef9ec714ace7914",
+                "url": "https://api.github.com/repos/WoltLab/guzzle-psr7/zipball/3dffed9d5f5a762bcc843155a2f85c36614a299e",
+                "reference": "3dffed9d5f5a762bcc843155a2f85c36614a299e",
                 "shasum": ""
             },
             "require": {
@@ -367,7 +367,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2022-03-20T21:51:18+00:00"
+            "time": "2022-06-20T21:43:03+00:00"
         },
         {
             "name": "pear/net_idna2",

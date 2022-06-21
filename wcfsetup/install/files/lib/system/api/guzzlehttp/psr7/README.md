@@ -1,6 +1,6 @@
 # PSR-7 Message Implementation
 
-This repository contains a full [PSR-7](http://www.php-fig.org/psr/psr-7/)
+This repository contains a full [PSR-7](https://www.php-fig.org/psr/psr-7/)
 message implementation, several stream decorators, and some helpful
 functionality like query string parsing.
 
@@ -595,7 +595,7 @@ manually but instead is used indirectly via `Psr\Http\Message\UriInterface::__to
 
 `public static function fromParts(array $parts): UriInterface`
 
-Creates a URI from a hash of [`parse_url`](http://php.net/manual/en/function.parse-url.php) components.
+Creates a URI from a hash of [`parse_url`](https://www.php.net/manual/en/function.parse-url.php) components.
 
 
 ### `GuzzleHttp\Psr7\Uri::withQueryValue`
@@ -619,6 +619,16 @@ associative array of key => value.
 
 Creates a new URI with a specific query string value removed. Any existing query string values that exactly match the
 provided key are removed.
+
+## Cross-Origin Detection
+
+`GuzzleHttp\Psr7\UriComparator` provides methods to determine if a modified URL should be considered cross-origin.
+
+### `GuzzleHttp\Psr7\UriComparator::isCrossOrigin`
+
+`public static function isCrossOrigin(UriInterface $original, UriInterface $modified): bool`
+
+Determines if a modified URL should be considered cross-origin with respect to an original URL.
 
 ## Reference Resolution
 
