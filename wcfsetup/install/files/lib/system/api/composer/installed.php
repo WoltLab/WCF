@@ -67,9 +67,9 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '1.8.5',
-            'version' => '1.8.5.0',
-            'reference' => '337e3ad8e5716c15f9657bd214d16cc5e69df268',
+            'pretty_version' => '1.9.0',
+            'version' => '1.9.0.0',
+            'reference' => 'e98e3e6d4f86621a9b75f623996e6bbdeb4b9318',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),

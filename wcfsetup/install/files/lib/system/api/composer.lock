@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a6b4a2f6ca794c5f28b6434753e00e4",
+    "content-hash": "f5fe9f8a33abba6955c7e0e58e52e8b6",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -299,16 +299,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.8.5",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "337e3ad8e5716c15f9657bd214d16cc5e69df268"
+                "reference": "e98e3e6d4f86621a9b75f623996e6bbdeb4b9318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/337e3ad8e5716c15f9657bd214d16cc5e69df268",
-                "reference": "337e3ad8e5716c15f9657bd214d16cc5e69df268",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/e98e3e6d4f86621a9b75f623996e6bbdeb4b9318",
+                "reference": "e98e3e6d4f86621a9b75f623996e6bbdeb4b9318",
                 "shasum": ""
             },
             "require": {
@@ -329,7 +329,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7-dev"
+                    "dev-master": "1.9-dev"
                 }
             },
             "autoload": {
@@ -389,7 +389,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/1.8.5"
+                "source": "https://github.com/guzzle/psr7/tree/1.9.0"
             },
             "funding": [
                 {
@@ -405,7 +405,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T21:51:18+00:00"
+            "time": "2022-06-20T21:43:03+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

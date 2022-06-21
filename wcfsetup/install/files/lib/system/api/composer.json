@@ -17,7 +17,7 @@
         "scssphp/scssphp": "dev-woltlab-1.4",
         "guzzlehttp/guzzle": "dev-7.3.0-woltlab as 7.3.0",
         "paragonie/constant_time_encoding": "^2.3",
-        "guzzlehttp/psr7": "1.8.*"
+        "guzzlehttp/psr7": "1.9.*"
     },
     "repositories": [
         {
