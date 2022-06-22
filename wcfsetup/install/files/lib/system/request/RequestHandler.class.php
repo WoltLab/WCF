@@ -125,10 +125,10 @@ final class RequestHandler extends SingletonFactory
         try {
             $routeData = RouteHandler::getInstance()->getRouteData();
 
-            \assert(RouteHandler::getInstance()->isDefaultController() || $routeData['controller']);
+            \assert(RouteHandler::getInstance()->isDefaultController() xor ($routeData['controller'] ?? false));
 
-            if ($this->isACPRequest()) {
-                if (empty($routeData['controller'])) {
+            if (RouteHandler::getInstance()->isDefaultController()) {
+                if ($this->isACPRequest()) {
                     $routeData['controller'] = 'index';
 
                     if ($application !== 'wcf') {
@@ -137,10 +137,7 @@ final class RequestHandler extends SingletonFactory
                             301
                         );
                     }
-                }
-            } else {
-                // handle landing page for frontend requests
-                if (RouteHandler::getInstance()->isDefaultController()) {
+                } else {
                     $data = ControllerMap::getInstance()->lookupDefaultController($application);
 
                     // copy route data
@@ -150,7 +147,9 @@ final class RequestHandler extends SingletonFactory
 
                     $routeData['isDefaultController'] = true;
                 }
+            }
 
+            if (!$this->isACPRequest()) {
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
                 $domainName = ApplicationHandler::getInstance()->getDomainName();
                 if ($domainName !== $psrRequest->getUri()->getHost()) {
