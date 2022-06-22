@@ -59,14 +59,14 @@ class LookupRequestRoute implements IRequestRoute
                 );
 
                 // lookup WCF controllers unless initial request targeted WCF itself
-                if (empty($this->routeData) && $application !== 'wcf') {
+                if ($this->routeData === [] && $application !== 'wcf') {
                     $this->routeData = ControllerMap::getInstance()->resolveCustomController(
                         'wcf',
                         FileUtil::removeTrailingSlash($matches['controller'])
                     );
                 }
 
-                if (!empty($this->routeData)) {
+                if ($this->routeData !== []) {
                     if (!empty($matches['id'])) {
                         $this->routeData['id'] = $matches['id'];
 
@@ -77,7 +77,7 @@ class LookupRequestRoute implements IRequestRoute
                 }
             }
 
-            if (empty($this->routeData)) {
+            if ($this->routeData === []) {
                 // try to match the entire url
                 $this->routeData = ControllerMap::getInstance()->resolveCustomController(
                     $application,
@@ -85,7 +85,7 @@ class LookupRequestRoute implements IRequestRoute
                 );
 
                 // lookup WCF controllers unless initial request targeted WCF itself
-                if (empty($this->routeData) && $application !== 'wcf') {
+                if ($this->routeData === [] && $application !== 'wcf') {
                     $this->routeData = ControllerMap::getInstance()->resolveCustomController(
                         'wcf',
                         FileUtil::removeTrailingSlash($requestURL)
@@ -94,7 +94,7 @@ class LookupRequestRoute implements IRequestRoute
             }
         }
 
-        if (!empty($this->routeData)) {
+        if ($this->routeData !== []) {
             $this->routeData['isDefaultController'] = false;
 
             return true;
