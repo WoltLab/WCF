@@ -141,7 +141,14 @@ final class RequestHandler extends SingletonFactory
             } else {
                 // handle landing page for frontend requests
                 if (RouteHandler::getInstance()->isDefaultController()) {
-                    $routeData = $this->handleDefaultController($application, $routeData);
+                    $data = ControllerMap::getInstance()->lookupDefaultController($application);
+
+                    // copy route data
+                    foreach ($data as $key => $value) {
+                        $routeData[$key] = $value;
+                    }
+
+                    $routeData['isDefaultController'] = true;
                 }
 
                 // check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
@@ -239,27 +246,6 @@ final class RequestHandler extends SingletonFactory
         HeaderUtil::redirect($redirectURL, true, false);
 
         exit;
-    }
-
-    /**
-     * Checks page access for possible mandatory redirects.
-     *
-     * @param string $application
-     * @param string[] $routeData
-     * @throws  IllegalLinkException
-     */
-    protected function handleDefaultController(string $application, array $routeData): array
-    {
-        $data = ControllerMap::getInstance()->lookupDefaultController($application);
-
-        // copy route data
-        foreach ($data as $key => $value) {
-            $routeData[$key] = $value;
-        }
-
-        $routeData['isDefaultController'] = true;
-
-        return $routeData;
     }
 
     /**
