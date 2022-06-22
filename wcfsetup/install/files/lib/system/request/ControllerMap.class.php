@@ -18,7 +18,7 @@ use wcf\system\WCFACP;
  * @package WoltLabSuite\Core\System\Request
  * @since   3.0
  */
-class ControllerMap extends SingletonFactory
+final class ControllerMap extends SingletonFactory
 {
     /**
      * @var array
