@@ -233,8 +233,7 @@ final class ControllerMap extends SingletonFactory
      */
     public function lookupDefaultController($application): array
     {
-        $data = $this->landingPages[$application];
-        $controller = $data['routePart'];
+        $controller = $this->landingPages[$application]['routePart'];
 
         if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
             $cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
@@ -250,8 +249,14 @@ final class ControllerMap extends SingletonFactory
             return $this->resolveCustomController($cmsPageData['application'], $cmsPageData['controller']);
         }
 
+        $parts = \explode('\\', $this->landingPages[$application]['className']);
+        $application = \array_shift($parts);
+        if ($application === '') {
+            $application = \array_shift($parts);
+        }
+
         return [
-            'application' => \mb_substr($data['className'], 0, \mb_strpos($data['className'], '\\')),
+            'application' => $application,
             'controller' => $controller,
         ];
     }
