@@ -131,7 +131,7 @@ final class ControllerMap extends SingletonFactory
      * @param string $controller url controller
      * @return  array       empty array if there is no exact match
      */
-    public function resolveCustomController($application, $controller)
+    public function resolveCustomController($application, $controller): array
     {
         if ($controller === '') {
             throw new \InvalidArgumentException('The given controller must not be empty.');
