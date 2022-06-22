@@ -128,7 +128,7 @@ final class RequestHandler extends SingletonFactory
             \assert(RouteHandler::getInstance()->isDefaultController() xor ($routeData['controller'] ?? false));
 
             if ($this->isACPRequest()) {
-                if (empty($routeData['controller'])) {
+                if (RouteHandler::getInstance()->isDefaultController()) {
                     $routeData['controller'] = 'index';
 
                     if ($application !== 'wcf') {
