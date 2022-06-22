@@ -233,9 +233,9 @@ final class ControllerMap extends SingletonFactory
      */
     public function lookupDefaultController($application): array
     {
-        $controller = $this->landingPages[$application]['routePart'];
+        $routePart = $this->landingPages[$application]['routePart'];
 
-        if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
+        if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $routePart, $matches)) {
             $cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
             if ($cmsPageData === null) {
                 // page is multilingual
@@ -257,7 +257,7 @@ final class ControllerMap extends SingletonFactory
 
         return [
             'application' => $application,
-            'controller' => $controller,
+            'controller' => $routePart,
         ];
     }
 
