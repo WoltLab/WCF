@@ -27,8 +27,12 @@ define(["require", "exports"], function (require, exports) {
     function getMenuItems(category) {
         return Array.from(category.querySelectorAll(".acpPageSubMenuLink")).map((link) => {
             const children = getMenuItemActions(link);
+            let active = link.classList.contains("active");
+            if (children.length === 0 && link.parentElement.classList.contains("active")) {
+                active = true;
+            }
             return {
-                active: link.classList.contains("active"),
+                active,
                 children,
                 counter: 0,
                 depth: 2,

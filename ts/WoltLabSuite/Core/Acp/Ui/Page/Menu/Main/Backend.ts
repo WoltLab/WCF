@@ -29,8 +29,13 @@ function getMenuItems(category: HTMLOListElement): MenuItem[] {
   return Array.from(category.querySelectorAll(".acpPageSubMenuLink")).map((link: HTMLAnchorElement) => {
     const children = getMenuItemActions(link);
 
+    let active = link.classList.contains("active");
+    if (children.length === 0 && link.parentElement!.classList.contains("active")) {
+      active = true;
+    }
+
     return {
-      active: link.classList.contains("active"),
+      active,
       children,
       counter: 0,
       depth: 2,
