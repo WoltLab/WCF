@@ -197,9 +197,7 @@ final class RequestHandler extends SingletonFactory
             }
 
             // handle CMS page meta data
-            $metaData = [
-                'isDefaultController' => RouteHandler::getInstance()->isDefaultController()
-            ];
+            $metaData = [];
             if (isset($routeData['cmsPageID'])) {
                 $metaData['cms'] = [
                     'pageID' => $routeData['cmsPageID'],
