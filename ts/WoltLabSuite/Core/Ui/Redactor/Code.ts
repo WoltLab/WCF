@@ -28,6 +28,7 @@ class UiRedactorCode implements DialogCallbackObject {
   protected readonly _editor: RedactorEditor;
   protected readonly _elementId: string;
   protected _pre: HTMLElement | null = null;
+  private readonly knownElements = new WeakSet<HTMLElement>();
 
   /**
    * Initializes the source code management.
@@ -84,7 +85,12 @@ class UiRedactorCode implements DialogCallbackObject {
    */
   protected _observeLoad(): void {
     this._editor.$editor[0].querySelectorAll("pre:not(.woltlabHtml)").forEach((pre: HTMLElement) => {
-      pre.addEventListener("mousedown", this._callbackEdit);
+      if (!this.knownElements.has(pre)) {
+        this.knownElements.add(pre);
+
+        pre.addEventListener("mousedown", this._callbackEdit);
+      }
+
       this._setTitle(pre);
     });
   }

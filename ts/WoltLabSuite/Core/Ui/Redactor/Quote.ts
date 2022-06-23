@@ -140,10 +140,11 @@ class UiRedactorQuote {
     document.querySelectorAll("woltlab-quote").forEach((quote: HTMLElement) => {
       if (!this._knownElements.has(quote)) {
         quote.addEventListener("mousedown", (ev) => this._edit(ev));
-        this._setTitle(quote);
 
         this._knownElements.add(quote);
       }
+
+      this._setTitle(quote);
     });
   }
 
