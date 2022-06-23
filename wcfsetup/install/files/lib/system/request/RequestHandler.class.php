@@ -36,15 +36,13 @@ final class RequestHandler extends SingletonFactory
 {
     /**
      * active request object
-     * @var Request
      */
-    protected $activeRequest;
+    protected ?Request $activeRequest = null;
 
     /**
      * indicates if the request is an acp request
-     * @var bool
      */
-    protected $isACPRequest = false;
+    protected bool $isACPRequest = false;
 
     /**
      * @inheritDoc
@@ -57,13 +55,11 @@ final class RequestHandler extends SingletonFactory
     /**
      * Handles a http request.
      *
-     * @param string $application
-     * @param bool $isACPRequest
      * @throws  AJAXException
      * @throws  IllegalLinkException
      * @throws  SystemException
      */
-    public function handle($application = 'wcf', $isACPRequest = false)
+    public function handle(string $application = 'wcf', bool $isACPRequest = false): void
     {
         try {
             $this->isACPRequest = $isACPRequest;
@@ -238,20 +234,16 @@ final class RequestHandler extends SingletonFactory
 
     /**
      * Returns the active request object.
-     *
-     * @return  Request
      */
-    public function getActiveRequest()
+    public function getActiveRequest(): ?Request
     {
         return $this->activeRequest;
     }
 
     /**
      * Returns true if the request is an acp request.
-     *
-     * @return  bool
      */
-    public function isACPRequest()
+    public function isACPRequest(): bool
     {
         return $this->isACPRequest;
     }
@@ -259,7 +251,7 @@ final class RequestHandler extends SingletonFactory
     /**
      * @deprecated 5.6 - This method always returns false.
      */
-    public function inRescueMode()
+    public function inRescueMode(): bool
     {
         return false;
     }
