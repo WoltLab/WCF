@@ -121,6 +121,7 @@ final class RequestHandler extends SingletonFactory
             $routeData = RouteHandler::getInstance()->getRouteData();
 
             \assert(RouteHandler::getInstance()->isDefaultController() xor ($routeData['controller'] ?? false));
+            \assert(!isset($routeData['isDefaultController']));
 
             if (RouteHandler::getInstance()->isDefaultController()) {
                 if ($this->isACPRequest()) {
