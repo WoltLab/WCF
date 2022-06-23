@@ -113,14 +113,6 @@ class LookupRequestRoute implements IRequestRoute
 
     /**
      * @inheritDoc
-     */
-    public function setIsACP($isACP)
-    {
-        throw new \BadMethodCallException('lookups are not supported for ACP requests');
-    }
-
-    /**
-     * @inheritDoc
      * @throws  \BadMethodCallException
      */
     public function buildLink(array $components)
