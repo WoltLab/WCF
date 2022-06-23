@@ -58,14 +58,6 @@ class LookupRequestRoute implements IRequestRoute
                     FileUtil::removeTrailingSlash($matches['controller'])
                 );
 
-                // lookup WCF controllers unless initial request targeted WCF itself
-                if ($this->routeData === [] && $application !== 'wcf') {
-                    $this->routeData = ControllerMap::getInstance()->resolveCustomController(
-                        'wcf',
-                        FileUtil::removeTrailingSlash($matches['controller'])
-                    );
-                }
-
                 if ($this->routeData !== []) {
                     if (!empty($matches['id'])) {
                         $this->routeData['id'] = $matches['id'];
@@ -83,14 +75,6 @@ class LookupRequestRoute implements IRequestRoute
                     $application,
                     FileUtil::removeTrailingSlash($requestURL)
                 );
-
-                // lookup WCF controllers unless initial request targeted WCF itself
-                if ($this->routeData === [] && $application !== 'wcf') {
-                    $this->routeData = ControllerMap::getInstance()->resolveCustomController(
-                        'wcf',
-                        FileUtil::removeTrailingSlash($requestURL)
-                    );
-                }
             }
         }
 
