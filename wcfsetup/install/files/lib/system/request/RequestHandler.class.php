@@ -183,7 +183,20 @@ final class RequestHandler extends SingletonFactory
                     RouteHandler::getInstance()->isRenamedController()
                 );
                 if (\is_string($classData)) {
-                    $this->redirect($routeData, $application, $classData);
+                    $routeData['application'] = $application;
+                    $routeData['controller'] = $classData;
+
+                    // append the remaining query parameters
+                    foreach ($_GET as $key => $value) {
+                        if (!empty($value) && $key != 'controller') {
+                            $routeData[$key] = $value;
+                        }
+                    }
+
+                    return new RedirectResponse(
+                        LinkHandler::getInstance()->getLink($routeData['controller'], $routeData),
+                        301
+                    );
                 } else {
                     $className = $classData['className'];
                 }
@@ -222,29 +235,6 @@ final class RequestHandler extends SingletonFactory
 
             throw new IllegalLinkException();
         }
-    }
-
-    /**
-     * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
-     *
-     * @param string[] $routeData
-     */
-    protected function redirect(array $routeData, string $application, string $controller)
-    {
-        $routeData['application'] = $application;
-        $routeData['controller'] = $controller;
-
-        // append the remaining query parameters
-        foreach ($_GET as $key => $value) {
-            if (!empty($value) && $key != 'controller') {
-                $routeData[$key] = $value;
-            }
-        }
-
-        $redirectURL = LinkHandler::getInstance()->getLink($routeData['controller'], $routeData);
-        HeaderUtil::redirect($redirectURL, true, false);
-
-        exit;
     }
 
     /**
