@@ -42,7 +42,6 @@
 			document.head.appendChild(link);
 		}
 		
-		var elements = document.querySelectorAll('{@$codemirrorSelector|encodeJS}');
 		var config = {
 			{if $codemirrorMode|isset}
 				{if $codemirrorMode === 'smartymixed'}
@@ -62,7 +61,7 @@
 			readOnly: {if !$editable|isset || $editable}false{else}true{/if}
 		};
 		
-		[].forEach.call(elements, function (element) {
+		document.querySelectorAll('{@$codemirrorSelector|encodeJS}').forEach((element) => {
 			{event name='javascriptInit'}
 			
 			if (element.codemirror) {
@@ -122,10 +121,16 @@
 				scrollOffsetStorage = scrollOffsetStorage.nextElementSibling;
 			} while (scrollOffsetStorage && !scrollOffsetStorage.classList.contains('codeMirrorScrollOffset'));
 			if (scrollOffsetStorage) {
-				element.codemirror.scrollTo(null, scrollOffsetStorage.value);
+				const offset = scrollOffsetStorage.value
 				element.codemirror.on('scroll', function (cm) {
 					scrollOffsetStorage.value = cm.getScrollInfo().top;
 				});
+
+				// Delay the scrolling to the next event cycle to allow
+				// CodeMirror to fully initialize itself.
+				setTimeout(() => {
+					element.codemirror.scrollTo(null, offset)
+				}, 0);
 			}
 		});
 	});
