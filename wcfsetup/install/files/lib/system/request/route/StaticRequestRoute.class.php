@@ -34,12 +34,19 @@ class StaticRequestRoute extends DynamicRequestRoute
     protected $staticController = '';
 
     /**
-     * @inheritDoc
+     * Always throws. This method only exists because StaticRequestRoute inherits from DynamicRequestRoute.
      */
     public function setIsACP($isACP)
     {
-        // static routes are disallowed for ACP
-        parent::setIsACP(false);
+        throw new \BadMethodCallException('Calling setIsAcp() is not allowed.');
+    }
+
+    /**
+     * Always returns false.
+     */
+    public function isACP()
+    {
+        return false;
     }
 
     /**
