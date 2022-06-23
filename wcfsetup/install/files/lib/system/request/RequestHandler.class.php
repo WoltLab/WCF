@@ -23,7 +23,6 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Handles http requests.
