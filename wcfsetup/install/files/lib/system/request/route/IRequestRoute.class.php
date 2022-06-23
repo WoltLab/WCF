@@ -50,11 +50,4 @@ interface IRequestRoute
      * @return  bool
      */
     public function matches($requestURL);
-
-    /**
-     * Configures this route to handle either ACP or frontend requests.
-     *
-     * @param bool $isACP true if route handles ACP requests
-     */
-    public function setIsACP($isACP);
 }

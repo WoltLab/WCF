@@ -16,7 +16,7 @@ use wcf\util\FileUtil;
  * @package WoltLabSuite\Core\System\Request
  * @since   3.0
  */
-class LookupRequestRoute implements IRequestRoute
+final class LookupRequestRoute implements IRequestRoute
 {
     /**
      * list of parsed route information
@@ -109,14 +109,6 @@ class LookupRequestRoute implements IRequestRoute
     public function getRouteData()
     {
         return $this->routeData;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setIsACP($isACP)
-    {
-        throw new \BadMethodCallException('lookups are not supported for ACP requests');
     }
 
     /**
