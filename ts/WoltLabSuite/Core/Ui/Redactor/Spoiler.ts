@@ -23,6 +23,7 @@ class UiRedactorSpoiler implements DialogCallbackObject {
   protected readonly _editor: RedactorEditor;
   protected readonly _elementId: string;
   protected _spoiler: HTMLElement | null = null;
+  private readonly knownElements = new WeakSet<HTMLElement>();
 
   /**
    * Initializes the spoiler management.
@@ -73,7 +74,11 @@ class UiRedactorSpoiler implements DialogCallbackObject {
    */
   protected _observeLoad(): void {
     this._editor.$editor[0].querySelectorAll("woltlab-spoiler").forEach((spoiler: HTMLElement) => {
-      spoiler.addEventListener("mousedown", (ev) => this._edit(ev));
+      if (!this.knownElements.has(spoiler)) {
+        this.knownElements.add(spoiler);
+
+        spoiler.addEventListener("mousedown", (ev) => this._edit(ev));
+      }
       this._setTitle(spoiler);
     });
   }

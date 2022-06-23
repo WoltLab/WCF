@@ -24,6 +24,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
          */
         constructor(editor) {
             this._pre = null;
+            this.knownElements = new WeakSet();
             this._editor = editor;
             this._elementId = this._editor.$element[0].id;
             EventHandler.add("com.woltlab.wcf.redactor2", `bbcode_code_${this._elementId}`, (data) => this._bbcodeCode(data));
@@ -63,7 +64,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
          */
         _observeLoad() {
             this._editor.$editor[0].querySelectorAll("pre:not(.woltlabHtml)").forEach((pre) => {
-                pre.addEventListener("mousedown", this._callbackEdit);
+                if (!this.knownElements.has(pre)) {
+                    this.knownElements.add(pre);
+                    pre.addEventListener("mousedown", this._callbackEdit);
+                }
                 this._setTitle(pre);
             });
         }
