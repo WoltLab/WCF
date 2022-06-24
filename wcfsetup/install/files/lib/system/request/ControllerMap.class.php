@@ -63,14 +63,11 @@ final class ControllerMap extends SingletonFactory
      *
      * URL -> Controller
      *
-     * @param string $application application identifier
-     * @param string $controller url controller
-     * @param bool $isAcpRequest true if this is an ACP request
-     * @param bool $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
+     * @param $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
      * @return  mixed       array containing className and controller or a string containing the controller name for aliased controllers
      * @throws  SystemException
      */
-    public function resolve($application, $controller, $isAcpRequest, $skipCustomUrls = false)
+    public function resolve(string $application, string $controller, bool $isAcpRequest, bool $skipCustomUrls = false)
     {
         // validate controller
         if (!\preg_match('~^[a-z][a-z0-9]+(?:\-[a-z][a-z0-9]+)*$~', $controller)) {
@@ -127,11 +124,9 @@ final class ControllerMap extends SingletonFactory
      *
      * URL -> Controller
      *
-     * @param string $application application identifier
-     * @param string $controller url controller
      * @return  array       empty array if there is no exact match
      */
-    public function resolveCustomController($application, $controller): array
+    public function resolveCustomController(string $application, strign $controller): array
     {
         if ($controller === '') {
             throw new \InvalidArgumentException('The given controller must not be empty.');
@@ -170,12 +165,11 @@ final class ControllerMap extends SingletonFactory
      *
      * Controller -> URL
      *
-     * @param string $application application identifier
-     * @param string $controller controller class, e.g. 'MembersList'
+     * @param $controller controller class, e.g. 'MembersList'
      * @param bool $forceFrontend force transformation for frontend
      * @return  string      url representation of controller, e.g. 'members-list'
      */
-    public function lookup($application, $controller, $forceFrontend = null)
+    public function lookup(string $application, string $controller, $forceFrontend = null)
     {
         if ($forceFrontend === null) {
             $forceFrontend = !\class_exists(WCFACP::class, false);
@@ -227,11 +221,10 @@ final class ControllerMap extends SingletonFactory
     /**
      * Lookups default controller for given application.
      *
-     * @param string $application application identifier
      * @return  string[]   default controller
      * @throws  SystemException
      */
-    public function lookupDefaultController($application): array
+    public function lookupDefaultController(string $application): array
     {
         $routePart = $this->landingPages[$application]['routePart'];
 
@@ -285,12 +278,11 @@ final class ControllerMap extends SingletonFactory
     }
 
     /**
-     * Returns true if currently active request represents the landing page.
+     * Returns true if currently active request represents the global landing page.
      *
      * @param array $metaData
-     * @return  bool
      */
-    public function isLandingPage(string $className, array $metaData)
+    public function isLandingPage(string $className, array $metaData): bool
     {
         if ($className !== $this->landingPages['wcf']['className']) {
             return false;
@@ -307,13 +299,10 @@ final class ControllerMap extends SingletonFactory
     }
 
     /**
-     * Returns the virtual application abbreviation for the provided controller.
-     *
-     * @param string $application
-     * @param string $controller
-     * @return string
+     * Returns the virtual application abbreviation for the provided controller, returns the
+     * given application as-is if no override exists.
      */
-    public function getApplicationOverride($application, $controller)
+    public function getApplicationOverride(string $application, string $controller): string
     {
         if (isset($this->applicationOverrides['reverse'][$application][$controller])) {
             return $this->applicationOverrides['reverse'][$application][$controller];
@@ -326,12 +315,9 @@ final class ControllerMap extends SingletonFactory
      * Lookups the list of legacy controller names that violate the name
      * schema, e.g. are named 'BBCodeList' instead of `BbCodeList`.
      *
-     * @param string $application application identifier
-     * @param string $controller controller name
-     * @param bool $isAcpRequest true if this is an ACP request
      * @return      string[]|null   className and controller, or null if this is not a legacy controller name
      */
-    protected function getLegacyClassData($application, $controller, $isAcpRequest)
+    protected function getLegacyClassData(string $application, string $controller, bool $isAcpRequest)
     {
         $environment = $isAcpRequest ? 'acp' : 'frontend';
         if (isset($this->ciControllers[$application][$environment][$controller])) {
@@ -352,13 +338,10 @@ final class ControllerMap extends SingletonFactory
      * Returns the class data for the active request or `null` if no proper class exists
      * for the given configuration.
      *
-     * @param string $application application identifier
-     * @param string $controller controller name
-     * @param bool $isAcpRequest true if this is an ACP request
-     * @param string $pageType page type, e.g. 'form' or 'action'
+     * @param $pageType page type, e.g. 'form' or 'action'
      * @return  string[]|null   className and controller
      */
-    protected function getClassData($application, $controller, $isAcpRequest, $pageType)
+    protected function getClassData(string $application, string $controller, bool $isAcpRequest, string $pageType)
     {
         $className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . \ucfirst($pageType);
         if (!\class_exists($className)) {
@@ -378,12 +361,9 @@ final class ControllerMap extends SingletonFactory
     }
 
     /**
-     * Transforms a controller into its URL representation.
-     *
-     * @param string $controller controller, e.g. 'BoardList'
-     * @return  string      url representation, e.g. 'board-list'
+     * Transforms a controller (e.g. BoardList) into its URL representation (e.g. board-list).
      */
-    public static function transformController($controller)
+    public static function transformController(string $controller): string
     {
         // work-around for broken controllers that violate the strict naming rules
         if (\preg_match('~[A-Z]{2,}~', $controller)) {
