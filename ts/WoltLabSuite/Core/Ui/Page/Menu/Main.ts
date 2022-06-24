@@ -20,6 +20,7 @@ export class PageMenuMain implements PageMenuProvider {
   private readonly container: PageMenuContainer;
   private readonly mainMenu: HTMLElement;
   private readonly menuItemProvider: PageMenuMainProvider;
+  private readonly observer: MutationObserver;
 
   constructor(menuItemProvider: PageMenuMainProvider) {
     this.mainMenu = document.querySelector(".mainMenu")!;
@@ -33,6 +34,22 @@ export class PageMenuMain implements PageMenuProvider {
 
       this.container.toggle();
     };
+
+    this.observer = new MutationObserver((mutations) => {
+      let refreshUnreadIndicator = false;
+
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0 || mutation.type === "characterData") {
+          refreshUnreadIndicator = true;
+        }
+      });
+
+      if (refreshUnreadIndicator) {
+        this.refreshUnreadIndicator();
+      }
+    });
+
+    this.watchForChanges();
   }
 
   enable(): void {
@@ -84,11 +101,20 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   sleep(): void {
-    /* Does nothing */
+    this.watchForChanges();
   }
 
   wakeup(): void {
+    this.observer.disconnect();
+
     this.refreshUnreadIndicator();
+  }
+
+  private watchForChanges(): void {
+    this.observer.observe(this.mainMenu, {
+      childList: true,
+      subtree: true,
+    });
   }
 
   private buildMainMenu(): HTMLElement {

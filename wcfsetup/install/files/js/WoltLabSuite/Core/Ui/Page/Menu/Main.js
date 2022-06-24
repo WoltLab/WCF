@@ -23,6 +23,18 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 event.stopPropagation();
                 this.container.toggle();
             };
+            this.observer = new MutationObserver((mutations) => {
+                let refreshUnreadIndicator = false;
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0 || mutation.type === "characterData") {
+                        refreshUnreadIndicator = true;
+                    }
+                });
+                if (refreshUnreadIndicator) {
+                    this.refreshUnreadIndicator();
+                }
+            });
+            this.watchForChanges();
         }
         enable() {
             this.mainMenu.setAttribute("aria-expanded", "false");
@@ -62,10 +74,17 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return this.mainMenu;
         }
         sleep() {
-            /* Does nothing */
+            this.watchForChanges();
         }
         wakeup() {
+            this.observer.disconnect();
             this.refreshUnreadIndicator();
+        }
+        watchForChanges() {
+            this.observer.observe(this.mainMenu, {
+                childList: true,
+                subtree: true,
+            });
         }
         buildMainMenu() {
             const boxMenu = this.mainMenu.querySelector(".boxMenu");
