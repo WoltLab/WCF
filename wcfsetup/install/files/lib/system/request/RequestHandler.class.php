@@ -121,6 +121,7 @@ final class RequestHandler extends SingletonFactory
             $routeData = RouteHandler::getInstance()->getRouteData();
 
             \assert(RouteHandler::getInstance()->isDefaultController() xor ($routeData['controller'] ?? false));
+            \assert(!isset($routeData['isDefaultController']));
 
             if (RouteHandler::getInstance()->isDefaultController()) {
                 if ($this->isACPRequest()) {
@@ -139,8 +140,6 @@ final class RequestHandler extends SingletonFactory
                     foreach ($data as $key => $value) {
                         $routeData[$key] = $value;
                     }
-
-                    $routeData['isDefaultController'] = true;
                 }
             }
 
@@ -164,7 +163,7 @@ final class RequestHandler extends SingletonFactory
 
                 $classApplication = $application;
                 if (
-                    !empty($routeData['isDefaultController'])
+                    RouteHandler::getInstance()->isDefaultController()
                     && !empty($routeData['application'])
                     && $routeData['application'] !== $application
                 ) {
@@ -198,7 +197,7 @@ final class RequestHandler extends SingletonFactory
             }
 
             // handle CMS page meta data
-            $metaData = ['isDefaultController' => (!empty($routeData['isDefaultController']))];
+            $metaData = [];
             if (isset($routeData['cmsPageID'])) {
                 $metaData['cms'] = [
                     'pageID' => $routeData['cmsPageID'],
