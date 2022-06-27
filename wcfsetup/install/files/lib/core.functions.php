@@ -736,8 +736,12 @@ EXPLANATION;
 							$isSensitive = true;
 						}
 
-						if ($isSensitive && isset($item['args'][$i])) {
-							$item['args'][$i] = '[redacted]';
+						if (
+							$isSensitive
+							&& isset($item['args'][$i])
+							&& !($item['args'][$i] instanceof \SensitiveParameterValue)
+						) {
+							$item['args'][$i] = new \SensitiveParameterValue($item['args'][$i]);
 						}
 						$i++;
 					}
@@ -748,8 +752,12 @@ EXPLANATION;
 						|| $item['class'] === 'PDO'
 					) {
 						if ($item['function'] === '__construct') {
-							$item['args'] = array_map(function () {
-								return '[redacted]';
+							$item['args'] = array_map(function ($value) {
+								if (!($value instanceof \SensitiveParameterValue)) {
+									$value = new \SensitiveParameterValue($value);
+								}
+
+								return $value;
 							}, $item['args']);
 						}
 					}
