@@ -36,80 +36,47 @@ final class FileUtil
     protected static $mode;
 
     /**
-     * Tries to find the temp folder.
+     * Prepares the temporary folder and returns its path.
      *
-     * @return  string
-     * @throws  SystemException
+     * @throws \RuntimeException if the temporary folder is not usable.
      */
-    public static function getTempFolder()
+    public static function getTempFolder(): string
     {
-        try {
-            $path = WCF_DIR . 'tmp/';
+        $path = WCF_DIR . 'tmp/';
 
-            if (\is_file($path)) {
-                // wat
-                \unlink($path);
-            }
-
-            if (!\file_exists($path)) {
-                \mkdir($path, 0777);
-            }
-
-            if (!\is_dir($path)) {
-                throw new SystemException("Temporary folder '" . $path . "' does not exist and could not be created. Please check the permissions of the '" . WCF_DIR . "' folder using your favorite ftp program.");
-            }
-
-            if (!\is_writable($path)) {
-                self::makeWritable($path);
-            }
-
-            if (!\is_writable($path)) {
-                throw new SystemException("Temporary folder '" . $path . "' is not writable. Please check the permissions using your favorite ftp program.");
-            }
-
-            if (@\md5_file($path . '/.htaccess') !== '62745e850958bfd8a1fd77f90e74184b') {
-                \file_put_contents($path . '/.htaccess', "Require all denied\n");
-            }
-
-            return $path;
-        } catch (SystemException $e) {
-            // use tmp folder in document root by default
-            if (!empty($_SERVER['DOCUMENT_ROOT'])) {
-                if (\strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false) {
-                    // strato bugfix
-                    // create tmp folder in document root automatically
-                    if (!@\file_exists($_SERVER['DOCUMENT_ROOT'] . '/tmp')) {
-                        @\mkdir($_SERVER['DOCUMENT_ROOT'] . '/tmp/', 0777);
-                        self::makeWritable($_SERVER['DOCUMENT_ROOT'] . '/tmp/');
-                    }
-                }
-                if (@\file_exists($_SERVER['DOCUMENT_ROOT'] . '/tmp') && @\is_writable($_SERVER['DOCUMENT_ROOT'] . '/tmp')) {
-                    return $_SERVER['DOCUMENT_ROOT'] . '/tmp/';
-                }
-            }
-
-            if (isset($_ENV['TMP']) && @\is_writable($_ENV['TMP'])) {
-                return $_ENV['TMP'] . '/';
-            }
-            if (isset($_ENV['TEMP']) && @\is_writable($_ENV['TEMP'])) {
-                return $_ENV['TEMP'] . '/';
-            }
-            if (isset($_ENV['TMPDIR']) && @\is_writable($_ENV['TMPDIR'])) {
-                return $_ENV['TMPDIR'] . '/';
-            }
-
-            if (($path = \ini_get('upload_tmp_dir')) && @\is_writable($path)) {
-                return $path . '/';
-            }
-            if (@\file_exists('/tmp/') && @\is_writable('/tmp/')) {
-                return '/tmp/';
-            }
-            if (\function_exists('session_save_path') && ($path = \session_save_path()) && @\is_writable($path)) {
-                return $path . '/';
-            }
-
-            throw new SystemException('There is no access to the system temporary folder due to an unknown reason and no user specific temporary folder exists in ' . WCF_DIR . '! This is a misconfiguration of your webserver software! Please create a folder called ' . $path . ' using your favorite ftp program, make it writable and then retry this installation.');
+        if (\is_file($path)) {
+            // wat
+            \unlink($path);
         }
+
+        if (!\file_exists($path)) {
+            \mkdir($path, 0777);
+        }
+
+        if (!\is_dir($path)) {
+            throw new \RuntimeException(\sprintf(
+                "Temporary folder '%s' does not exist and could not be created. Please check the permissions of the '%s' folder using your favorite ftp program.",
+                $path,
+                \dirname($path)
+            ));
+        }
+
+        if (!\is_writable($path)) {
+            self::makeWritable($path);
+        }
+
+        if (!\is_writable($path)) {
+            throw new \RuntimeException(\sprintf(
+                "Temporary folder '%s' is not writable. Please check the permissions using your favorite ftp program.",
+                $path
+            ));
+        }
+
+        if (@\md5_file($path . '/.htaccess') !== '62745e850958bfd8a1fd77f90e74184b') {
+            \file_put_contents($path . '/.htaccess', "Require all denied\n");
+        }
+
+        return $path;
     }
 
     /**
