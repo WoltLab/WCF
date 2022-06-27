@@ -70,7 +70,7 @@ final class ControllerMap extends SingletonFactory
     public function resolve(string $application, string $controller, bool $isAcpRequest, bool $skipCustomUrls = false)
     {
         // validate controller
-        if (!\preg_match('~^[a-z][a-z0-9]+(?:\-[a-z][a-z0-9]+)*$~', $controller)) {
+        if (!\preg_match('/^[a-z][a-z0-9]+(?:-[a-z][a-z0-9]+)*$/', $controller)) {
             throw new SystemException("Malformed controller name '" . $controller . "'");
         }
 
@@ -135,7 +135,7 @@ final class ControllerMap extends SingletonFactory
 
         if (isset($this->customUrls['lookup'][$application][$controller])) {
             $data = $this->customUrls['lookup'][$application][$controller];
-            if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
+            if (\preg_match('/^__WCF_CMS__(?P<pageID>\\d+)-(?P<languageID>\\d+)$/', $data, $matches)) {
                 return [
                     'className' => CmsPage::class,
                     'controller' => 'cms',
@@ -145,7 +145,7 @@ final class ControllerMap extends SingletonFactory
                     'cmsPageLanguageID' => $matches['languageID'],
                 ];
             } else {
-                \preg_match('~([^\\\]+)(Action|Form|Page)$~', $data, $matches);
+                \preg_match('/([^\\\\]+)(Action|Form|Page)$/', $data, $matches);
 
                 return [
                     'className' => $data,
@@ -225,7 +225,7 @@ final class ControllerMap extends SingletonFactory
     {
         $routePart = $this->landingPages[$application]['routePart'];
 
-        if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $routePart, $matches)) {
+        if (\preg_match('/^__WCF_CMS__(?P<pageID>\\d+)$/', $routePart, $matches)) {
             $cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
             if ($cmsPageData === null) {
                 // page is multilingual
@@ -320,7 +320,7 @@ final class ControllerMap extends SingletonFactory
         if (isset($this->ciControllers[$application][$environment][$controller])) {
             $className = $this->ciControllers[$application][$environment][$controller];
 
-            if (\preg_match('~\\\\(?P<controller>[^\\\\]+)(Action|Form|Page)$~', $className, $matches)) {
+            if (\preg_match('/\\\\(?P<controller>[^\\\\]+)(Action|Form|Page)$/', $className, $matches)) {
                 return [
                     'className' => $className,
                     'controller' => $matches['controller'],
@@ -363,9 +363,9 @@ final class ControllerMap extends SingletonFactory
     public static function transformController(string $controller): string
     {
         // work-around for broken controllers that violate the strict naming rules
-        if (\preg_match('~[A-Z]{2,}~', $controller)) {
+        if (\preg_match('/[A-Z]{2,}/', $controller)) {
             $parts = \preg_split(
-                '~([A-Z][a-z0-9]+)~',
+                '/([A-Z][a-z0-9]+)/',
                 $controller,
                 -1,
                 \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
@@ -389,7 +389,7 @@ final class ControllerMap extends SingletonFactory
             $parts = $sanitizedParts;
         } else {
             $parts = \preg_split(
-                '~([A-Z][a-z0-9]+)~',
+                '/([A-Z][a-z0-9]+)/',
                 $controller,
                 -1,
                 \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
