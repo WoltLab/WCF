@@ -396,8 +396,6 @@ final class ControllerMap extends SingletonFactory
             );
         }
 
-        $parts = \array_map('strtolower', $parts);
-
-        return \implode('-', $parts);
+        return \strtolower(\implode('-', $parts));
     }
 }

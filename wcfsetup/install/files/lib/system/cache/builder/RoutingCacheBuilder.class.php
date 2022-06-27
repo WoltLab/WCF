@@ -150,35 +150,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
                         // search for files with two consecutive upper-case letters but ignore interfaces such as `IPage`
                         if (!\preg_match('~^I[A-Z][a-z]~', $filename) && \preg_match('~[A-Z]{2,}~', $filename)) {
-                            $parts = \preg_split(
-                                '~([A-Z][a-z0-9]+)~',
-                                $filename,
-                                -1,
-                                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
-                            );
-
-                            // drop the last part containing `Action` or `Page`
-                            \array_pop($parts);
-
-                            // fix for invalid pages that would cause single character fragments
-                            $sanitizedParts = [];
-                            $tmp = '';
-                            foreach ($parts as $part) {
-                                if (\strlen($part) === 1) {
-                                    $tmp .= $part;
-                                    continue;
-                                }
-
-                                $sanitizedParts[] = $tmp . $part;
-                                $tmp = '';
-                            }
-                            if ($tmp) {
-                                $sanitizedParts[] = $tmp;
-                            }
-                            $parts = $sanitizedParts;
-
-                            $ciController = \implode('-', \array_map('strtolower', $parts));
                             $className = $abbreviation . '\\' . ($libDirectory === 'lib/acp' ? 'acp\\' : '') . $pageType . '\\' . $filename;
+
+                            $ciController = ControllerMap::transformController(
+                                $this->classNameToControllerName($className)
+                            );
 
                             $data[$abbreviation][$libDirectory === 'lib' ? 'frontend' : 'acp'][$ciController] = $className;
                         }
