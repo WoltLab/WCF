@@ -24,16 +24,6 @@ use wcf\util\FileUtil;
 class RoutingCacheBuilder extends AbstractCacheBuilder
 {
     /**
-     * list of controllers violating the url schema, but are
-     * supported for legacy reasons
-     * @var array
-     */
-    protected $brokenControllers = [
-        'lookup' => [],
-        'reverse' => [],
-    ];
-
-    /**
      * @inheritDoc
      */
     protected function rebuild(array $parameters)
@@ -175,10 +165,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                             // fix for invalid pages that would cause single character fragments
                             $sanitizedParts = [];
                             $tmp = '';
-                            $isBrokenController = false;
                             foreach ($parts as $part) {
                                 if (\strlen($part) === 1) {
-                                    $isBrokenController = true;
                                     $tmp .= $part;
                                     continue;
                                 }
@@ -195,15 +183,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                             $className = $abbreviation . '\\' . ($libDirectory === 'lib/acp' ? 'acp\\' : '') . $pageType . '\\' . $filename;
 
                             $data[$abbreviation][$libDirectory === 'lib' ? 'frontend' : 'acp'][$ciController] = $className;
-
-                            if ($isBrokenController) {
-                                $this->brokenControllers['lookup'][$abbreviation][$ciController] = $className;
-                                $this->brokenControllers['reverse'][$abbreviation][\preg_replace(
-                                    '~(?:Page|Form|Action)$~',
-                                    '',
-                                    $filename
-                                )] = $ciController;
-                            }
                         }
                     }
                 }
@@ -272,17 +251,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                 $cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
                 $data['reverse'][$abbreviation][$cmsIdentifier] = $customUrl;
                 $data['lookup'][$abbreviation][$customUrl] = $cmsIdentifier;
-            }
-        }
-
-        // masquerade broken controllers as custom urls
-        foreach ($this->brokenControllers as $type => $brokenControllers) {
-            foreach ($brokenControllers as $application => $controllers) {
-                foreach ($controllers as $key => $value) {
-                    if (!isset($data[$type][$application][$key])) {
-                        $data[$type][$application][$key] = $value;
-                    }
-                }
             }
         }
 
