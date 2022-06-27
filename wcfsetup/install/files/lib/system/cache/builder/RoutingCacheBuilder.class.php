@@ -150,11 +150,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
                         // search for files with two consecutive upper-case letters but ignore interfaces such as `IPage`
                         if (!\preg_match('~^I[A-Z][a-z]~', $filename) && \preg_match('~[A-Z]{2,}~', $filename)) {
-                            $ciController = ControllerMap::transformController(
-                                \preg_replace('/(Action|Form|Page)$/', '', $filename)
-                            );
-
                             $className = $abbreviation . '\\' . ($libDirectory === 'lib/acp' ? 'acp\\' : '') . $pageType . '\\' . $filename;
+
+                            $ciController = ControllerMap::transformController(
+                                $this->classNameToControllerName($className)
+                            );
 
                             $data[$abbreviation][$libDirectory === 'lib' ? 'frontend' : 'acp'][$ciController] = $className;
                         }
