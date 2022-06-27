@@ -131,8 +131,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
             $abbreviation = $application->getAbbreviation();
 
             $data[$abbreviation] = ['acp' => [], 'frontend' => []];
-            $this->brokenControllers['lookup'][$abbreviation] = [];
-            $this->brokenControllers['reverse'][$abbreviation] = [];
 
             $directory = Application::getDirectory($abbreviation);
             foreach (['lib', 'lib/acp'] as $libDirectory) {
