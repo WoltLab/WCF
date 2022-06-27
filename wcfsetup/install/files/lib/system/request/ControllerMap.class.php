@@ -109,9 +109,6 @@ final class ControllerMap extends SingletonFactory
                 if (isset($this->customUrls['reverse'][$application][$controller])) {
                     return $this->customUrls['reverse'][$application][$controller];
                 }
-                if (isset($this->customUrls['reverse']['wcf'][$controller])) {
-                    return $this->customUrls['reverse']['wcf'][$controller];
-                }
             }
         }
 
