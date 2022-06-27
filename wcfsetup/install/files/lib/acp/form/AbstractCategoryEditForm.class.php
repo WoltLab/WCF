@@ -24,7 +24,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Form
  */
-class AbstractCategoryEditForm extends AbstractCategoryAddForm
+abstract class AbstractCategoryEditForm extends AbstractCategoryAddForm
 {
     /**
      * edited category
