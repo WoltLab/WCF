@@ -49,7 +49,6 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
      */
     public $validSortFields = [
         'time',
-        'comments',
         'views',
         'random',
     ];
@@ -74,9 +73,6 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
         $objectList = new AccessibleArticleList();
 
         switch ($this->sortField) {
-            case 'comments':
-                $objectList->getConditionBuilder()->add('article.comments > ?', [0]);
-                break;
             case 'views':
                 $objectList->getConditionBuilder()->add('article.views > ?', [0]);
                 break;
