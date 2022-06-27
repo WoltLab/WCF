@@ -444,9 +444,11 @@ class ControllerMap extends SingletonFactory
             }
         }
 
-        // check for abstract classes
+        // Verify that the class can be instantiated. This excludes
+        // abstract classes, interfaces, classes with a private constructor
+        // and more.
         $reflectionClass = new \ReflectionClass($className);
-        if ($reflectionClass->isAbstract()) {
+        if (!$reflectionClass->isInstantiable()) {
             return null;
         }
 
