@@ -121,8 +121,15 @@ $.Redactor.prototype.WoltLabLink = function() {
 					this.selection.save();
 
 					// Closing the dialog might move the focus somewhere else.
+					//
+					// On iPadOS the focus handling is inconsistent with iOS and
+					// causes the marker to persist in the editor, causing strange
+					// side-effects.
 					window.setTimeout(() => {
-						if (document.activeElement !== this.core.editor()[0]) {
+						if (
+							document.activeElement !== this.core.editor()[0]
+							|| this.core.editor()[0].querySelector(".redactor-selection-marker") !== null
+						) {
 							this.selection.restore();
 						}
 					}, 0);
