@@ -699,6 +699,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             $this->readString('password', false, 'authData');
             $this->readString('username', false, 'authData');
             $this->readBoolean('saveCredentials', true, 'authData');
+            $this->readBoolean('isStoreCode', true, 'authData');
         }
     }
 
@@ -744,6 +745,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 $this->parameters['authData']['password'],
                 $this->parameters['authData']['saveCredentials']
             );
+
+            if ($this->parameters['authData']['isStoreCode']) {
+                PackageUpdateServer::enableSecureMode();
+            }
         }
 
         $scheduler = new PackageInstallationScheduler($this->parameters['packages']);

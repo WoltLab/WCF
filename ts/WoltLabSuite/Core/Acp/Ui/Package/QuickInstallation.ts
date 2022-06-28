@@ -36,8 +36,8 @@ function detectCode(): void {
   const value = codeInput.value.trim();
 
   let isValid = false;
-  if (value.length > 0) {
-    const decodedValue = window.atob(value);
+  if (value.startsWith("WoltLab_StoreCode_Do_Not_Share_")) {
+    const decodedValue = window.atob(value.replace(/^WoltLab_StoreCode_Do_Not_Share_/, ""));
 
     let maybeJson: unknown;
     try {
@@ -73,6 +73,7 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
         username: data.username,
         password: data.password,
         saveCredentials: false,
+        isStoreCode: true,
       },
     })
     .dispatch()) as Response;
