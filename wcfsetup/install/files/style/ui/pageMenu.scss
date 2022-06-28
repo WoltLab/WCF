@@ -19,6 +19,7 @@
 	--color-indicator: #{$wcfUserMenuIndicator};
 
 	background-color: var(--background-color);
+	color: var(--color);
 	grid-area: content;
 }
 
@@ -117,6 +118,7 @@
 	}
 
 	.icon {
+		color: var(--color);
 		transform: rotate(0);
 	}
 
@@ -219,6 +221,10 @@
 		right: 5px;
 		top: 5px;
 		width: 10px;
+	}
+
+	.icon {
+		color: var(--color);
 	}
 }
 
