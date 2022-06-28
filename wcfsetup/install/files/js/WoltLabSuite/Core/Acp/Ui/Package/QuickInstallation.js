@@ -51,6 +51,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 username: data.username,
                 password: data.password,
                 saveCredentials: false,
+                isStoreCode: true,
             },
         })
             .dispatch());

@@ -73,6 +73,7 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
         username: data.username,
         password: data.password,
         saveCredentials: false,
+        isStoreCode: true,
       },
     })
     .dispatch()) as Response;
