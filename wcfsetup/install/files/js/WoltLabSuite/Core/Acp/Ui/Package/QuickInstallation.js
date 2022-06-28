@@ -17,8 +17,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     function detectCode() {
         const value = codeInput.value.trim();
         let isValid = false;
-        if (value.length > 0) {
-            const decodedValue = window.atob(value);
+        if (value.startsWith("WoltLab_StoreCode_Do_Not_Share_")) {
+            const decodedValue = window.atob(value.replace(/^WoltLab_StoreCode_Do_Not_Share_/, ""));
             let maybeJson;
             try {
                 maybeJson = JSON.parse(decodedValue);
@@ -51,6 +51,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 username: data.username,
                 password: data.password,
                 saveCredentials: false,
+                isStoreCode: true,
             },
         })
             .dispatch());
