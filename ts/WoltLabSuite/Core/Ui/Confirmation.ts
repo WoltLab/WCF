@@ -122,8 +122,10 @@ class UiConfirmation implements DialogCallbackObject {
    * Sets the focus on the confirm button on dialog open for proper keyboard support.
    */
   _onShow(): void {
-    this.confirmButton.blur();
-    this.confirmButton.focus();
+    window.setTimeout(() => {
+      this.confirmButton.blur();
+      this.confirmButton.focus();
+    }, 1);
   }
 
   _dialogSetup(): ReturnType<DialogCallbackSetup> {

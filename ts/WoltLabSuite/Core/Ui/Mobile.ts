@@ -48,6 +48,8 @@ function init(): void {
     initButtonGroupNavigation();
     initMessages();
   });
+
+  document.addEventListener("scroll", () => closeDropdown(), { passive: true });
 }
 
 function initButtonGroupNavigation(): void {

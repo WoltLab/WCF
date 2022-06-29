@@ -27,7 +27,7 @@
 						<div class="userMenuTitle">{lang}wcf.user.controlPanel{/lang}</div>
 					</div>
 					<div class="userMenuContent">
-						<div class="userMenuItem{if !MODULE_USER_RANK} userMenuItemSingleLine{/if}">
+						<div class="userMenuItem{if !MODULE_USER_RANK} userMenuItemSingleLine userMenuItemUserHeader{/if}">
 							<div class="userMenuItemImage">
 								{@$__wcf->getUserProfileHandler()->getUserProfile()->getAvatar()->getImageTag(48)}
 							</div>

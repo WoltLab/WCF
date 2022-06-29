@@ -475,9 +475,11 @@
 					</dd>
 				</dl>
 
-				{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
-					{@$pageConditionObjectType->getProcessor()->getHtml()}
-				{/foreach}
+				{if $groupedConditionObjectTypes['com.woltlab.wcf.page']|isset}
+					{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
+						{@$pageConditionObjectType->getProcessor()->getHtml()}
+					{/foreach}
+				{/if}
 			</section>
 
 			{if $groupedConditionObjectTypes['com.woltlab.wcf.pointInTime']|isset}

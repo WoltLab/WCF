@@ -43,6 +43,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             initButtonGroupNavigation();
             initMessages();
         });
+        document.addEventListener("scroll", () => closeDropdown(), { passive: true });
     }
     function initButtonGroupNavigation() {
         document.querySelectorAll(".buttonGroupNavigation").forEach((navigation) => {

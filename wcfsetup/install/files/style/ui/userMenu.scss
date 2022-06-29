@@ -142,7 +142,10 @@ html:not(.touch) .userMenuButton {
 	&.userMenuItemSingleLine {
 		grid-template-areas: "image content";
 		grid-template-rows: auto;
-		min-height: 0;
+
+		&:not(.userMenuItemUserHeader) {
+			min-height: 0;
+		}
 
 		.userMenuItemContent {
 			align-self: center;
