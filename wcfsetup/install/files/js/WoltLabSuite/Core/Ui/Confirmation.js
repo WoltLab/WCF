@@ -93,8 +93,10 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
          * Sets the focus on the confirm button on dialog open for proper keyboard support.
          */
         _onShow() {
-            this.confirmButton.blur();
-            this.confirmButton.focus();
+            window.setTimeout(() => {
+                this.confirmButton.blur();
+                this.confirmButton.focus();
+            }, 1);
         }
         _dialogSetup() {
             return {
