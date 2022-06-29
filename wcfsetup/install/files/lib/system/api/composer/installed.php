@@ -74,9 +74,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
-            'pretty_version' => '2.11.0',
-            'version' => '2.11.0.0',
-            'reference' => 'd1bc565b23c2040fafde398a8a5db083c47928c0',
+            'pretty_version' => '2.11.1',
+            'version' => '2.11.1.0',
+            'reference' => '25b11d422c2e5dad868f68619888763b30f91e2d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
             'aliases' => array(),
@@ -227,8 +227,8 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v3.1.0',
-            'version' => '3.1.0.0',
+            'pretty_version' => 'v3.1.1',
+            'version' => '3.1.1.0',
             'reference' => '07f1b9cc2ffee6aaafcf4b710fbc38ff736bd918',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
