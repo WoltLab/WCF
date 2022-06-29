@@ -43,6 +43,13 @@ class PackageUpdateServer extends DatabaseObject
     protected $metaData = [];
 
     /**
+     * Restricts the package server selection to include only
+     * official package servers in case a secure download is
+     * requested.
+     */
+    private static $secureMode = false;
+
+    /**
      * @inheritDoc
      */
     protected function handleData($data)
@@ -100,6 +107,10 @@ class PackageUpdateServer extends DatabaseObject
                 $woltlabStoreServer = $packageServer;
             } elseif ($packageServer->isDisabled) {
                 continue;
+            } elseif (self::$secureMode) {
+                // Skip any unofficial servers when the secure mode
+                // was requested.
+                continue;
             }
 
             $results[$packageServer->packageUpdateServerID] = $packageServer;
@@ -139,6 +150,15 @@ class PackageUpdateServer extends DatabaseObject
         });
 
         return \current($pluginStoreServer);
+    }
+
+    /**
+     * Restricts the available sources to official package
+     * servers when a secure download is requested.
+     */
+    final public static function enableSecureMode(): void
+    {
+        self::$secureMode = true;
     }
 
     /**
