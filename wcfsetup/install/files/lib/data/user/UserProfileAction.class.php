@@ -621,6 +621,11 @@ class UserProfileAction extends UserAction implements IPopoverAction
 
             \rename($this->parameters['fileLocation'], $avatar->getLocation(null, false));
 
+            // Fix the permissions of the file in case the source file was created with restricted
+            // permissions (e.g. 0600 instead of 0644). Without this the file might not be readable
+            // for the web server if it runs with a different system user.
+            FileUtil::makeWritable($avatar->getLocation(null, false));
+
             // Create the WebP variant or the JPEG fallback of the avatar.
             $avatarEditor = new UserAvatarEditor($avatar);
             if ($avatarEditor->createAvatarVariant()) {
