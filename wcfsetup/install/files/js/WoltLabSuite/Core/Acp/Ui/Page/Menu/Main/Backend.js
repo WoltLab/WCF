@@ -20,6 +20,7 @@ define(["require", "exports"], function (require, exports) {
                 children,
                 counter: 0,
                 depth: 1,
+                identifier: false,
                 title,
             };
         });
@@ -36,6 +37,7 @@ define(["require", "exports"], function (require, exports) {
                 children,
                 counter: 0,
                 depth: 2,
+                identifier: false,
                 link: link.href,
                 title: link.textContent,
             };
@@ -52,6 +54,7 @@ define(["require", "exports"], function (require, exports) {
                 children: [],
                 counter: 0,
                 depth: 2,
+                identifier: false,
                 link: action.href,
                 title: action.dataset.tooltip || action.title,
             };
@@ -70,6 +73,7 @@ define(["require", "exports"], function (require, exports) {
                     children,
                     counter: 0,
                     depth: 0,
+                    identifier: false,
                     title,
                 };
             });

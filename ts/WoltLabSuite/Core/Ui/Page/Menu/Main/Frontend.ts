@@ -41,11 +41,14 @@ function normalizeMenuItem(menuItem: HTMLElement, depth: MenuItemDepth): MenuIte
 
   const active = menuItem.classList.contains("active");
 
+  const identifier = anchor.parentElement!.dataset.identifier!;
+
   return {
     active,
     children,
     counter,
     depth,
+    identifier,
     link,
     title,
   };

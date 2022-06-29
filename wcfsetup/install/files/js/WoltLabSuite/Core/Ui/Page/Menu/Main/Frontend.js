@@ -36,11 +36,13 @@ define(["require", "exports"], function (require, exports) {
             link = anchor.href;
         }
         const active = menuItem.classList.contains("active");
+        const identifier = anchor.parentElement.dataset.identifier;
         return {
             active,
             children,
             counter,
             depth,
+            identifier,
             link,
             title,
         };
