@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e637691158284f6fb37496c3992b646b",
+    "content-hash": "f2c4d9a2cde0d0294596518c7ed79938",
     "packages": [
         {
             "name": "chrisjean/php-ico",
