@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     Util_1 = tslib_1.__importDefault(Util_1);
     class PageMenuMain {
         constructor(menuItemProvider) {
+            this.menuItemBadges = new Map();
             this.mainMenu = document.querySelector(".mainMenu");
             this.menuItemProvider = menuItemProvider;
             this.container = new Container_1.default(this);
@@ -167,6 +168,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
                     counter.setAttribute("aria-hidden", "true");
                     counter.textContent = menuItem.counter.toString();
+                    if (menuItem.identifier !== false) {
+                        this.menuItemBadges.set(menuItem.identifier, counter);
+                    }
                     link.append(counter);
                 }
                 listItem.append(link);
@@ -245,6 +249,26 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             else {
                 this.mainMenu.classList.remove("pageMenuMobileButtonHasContent");
             }
+            const menuItems = this.menuItemProvider.getMenuItems(this.mainMenu);
+            menuItems.forEach((menuItem) => this.refreshUnreadBage(menuItem));
+        }
+        refreshUnreadBage(menuItem) {
+            if (menuItem.identifier !== false) {
+                const counter = this.menuItemBadges.get(menuItem.identifier);
+                if (counter) {
+                    if (menuItem.counter === 0) {
+                        counter.remove();
+                        this.menuItemBadges.delete(menuItem.identifier);
+                    }
+                    else {
+                        const value = parseInt(counter.textContent, 10);
+                        if (value !== menuItem.counter) {
+                            counter.textContent = menuItem.counter.toString();
+                        }
+                    }
+                }
+            }
+            menuItem.children.forEach((child) => this.refreshUnreadBage(child));
         }
         updateOverflowIndicator(container) {
             const hasOverflow = container.clientHeight < container.scrollHeight;
