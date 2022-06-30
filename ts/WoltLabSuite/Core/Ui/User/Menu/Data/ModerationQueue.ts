@@ -22,6 +22,11 @@ type Options = {
   title: string;
 };
 
+type ResponseGetData = {
+  items: UserMenuData[];
+  totalCount: number;
+};
+
 type ResponseMarkAsRead = {
   markAsRead: number;
   totalCount: number;
@@ -65,14 +70,13 @@ class UserMenuDataModerationQueue implements UserMenuProvider {
   async getData(): Promise<UserMenuData[]> {
     const data = (await dboAction("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
       .disableLoadingIndicator()
-      .dispatch()) as UserMenuData[];
+      .dispatch()) as ResponseGetData;
 
-    const counter = data.filter((item) => item.isUnread).length;
-    this.updateCounter(counter);
+    this.updateCounter(data.totalCount);
 
     this.stale = false;
 
-    return data;
+    return data.items;
   }
 
   getFooter(): UserMenuFooter | null {
