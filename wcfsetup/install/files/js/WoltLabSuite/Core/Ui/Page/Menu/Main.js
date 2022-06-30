@@ -168,7 +168,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
                     counter.setAttribute("aria-hidden", "true");
                     counter.textContent = menuItem.counter.toString();
-                    if (menuItem.identifier !== false) {
+                    if (menuItem.identifier !== null) {
                         this.menuItemBadges.set(menuItem.identifier, counter);
                     }
                     link.append(counter);
@@ -253,7 +253,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             menuItems.forEach((menuItem) => this.refreshUnreadBage(menuItem));
         }
         refreshUnreadBage(menuItem) {
-            if (menuItem.identifier !== false) {
+            if (menuItem.identifier !== null) {
                 const counter = this.menuItemBadges.get(menuItem.identifier);
                 if (counter) {
                     if (menuItem.counter === 0) {

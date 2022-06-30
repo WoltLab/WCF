@@ -20,7 +20,7 @@ function getSubMenuItems(subMenu: HTMLElement, menuItem: string): MenuItem[] {
       children,
       counter: 0,
       depth: 1,
-      identifier: false,
+      identifier: null,
       title,
     };
   });
@@ -40,7 +40,7 @@ function getMenuItems(category: HTMLOListElement): MenuItem[] {
       children,
       counter: 0,
       depth: 2,
-      identifier: false,
+      identifier: null,
       link: link.href,
       title: link.textContent!,
     };
@@ -59,7 +59,7 @@ function getMenuItemActions(link: HTMLAnchorElement): MenuItem[] {
       children: [],
       counter: 0,
       depth: 2,
-      identifier: false,
+      identifier: null,
       link: action.href,
       title: action.dataset.tooltip || action.title,
     };
@@ -82,7 +82,7 @@ export class AcpUiPageMenuMainBackend implements PageMenuMainProvider {
           children,
           counter: 0,
           depth: 0,
-          identifier: false,
+          identifier: null,
           title,
         };
       },

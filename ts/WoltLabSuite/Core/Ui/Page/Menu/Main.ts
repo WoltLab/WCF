@@ -221,7 +221,7 @@ export class PageMenuMain implements PageMenuProvider {
         counter.setAttribute("aria-hidden", "true");
         counter.textContent = menuItem.counter.toString();
 
-        if (menuItem.identifier !== false) {
+        if (menuItem.identifier !== null) {
           this.menuItemBadges.set(menuItem.identifier, counter);
         }
 
@@ -325,7 +325,7 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   private refreshUnreadBage(menuItem: MenuItem): void {
-    if (menuItem.identifier !== false) {
+    if (menuItem.identifier !== null) {
       const counter = this.menuItemBadges.get(menuItem.identifier);
       if (counter) {
         if (menuItem.counter === 0) {
