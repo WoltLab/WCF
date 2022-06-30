@@ -74,7 +74,12 @@ final class RequestHandler extends SingletonFactory
             }
 
             $psrRequest = ServerRequestFactory::fromGlobals(
-                requestFilter: FilterUsingXForwardedHeaders::trustProxies(
+                $_SERVER,
+                $_GET,
+                $_POST,
+                $_COOKIE,
+                $_FILES,
+                FilterUsingXForwardedHeaders::trustProxies(
                     ['*'],
                     [FilterUsingXForwardedHeaders::HEADER_PROTO]
                 )
