@@ -4,6 +4,7 @@ namespace wcf\system\request;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -72,7 +73,17 @@ final class RequestHandler extends SingletonFactory
                 }
             }
 
-            $psrRequest = ServerRequestFactory::fromGlobals();
+            $psrRequest = ServerRequestFactory::fromGlobals(
+                null, // $_SERVER
+                null, // $_GET
+                null, // $_POST
+                null, // $_COOKIE
+                null, // $_FILES
+                FilterUsingXForwardedHeaders::trustProxies(
+                    ['*'],
+                    [FilterUsingXForwardedHeaders::HEADER_PROTO]
+                )
+            );
 
             $builtRequest = $this->buildRequest($psrRequest, $application);
 
