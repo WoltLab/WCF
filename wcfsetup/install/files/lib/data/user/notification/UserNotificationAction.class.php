@@ -265,7 +265,10 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             ];
         }
 
-        return $notifications;
+        return [
+            'items' => $notifications,
+            'totalCount' => $data['notificationCount'],
+        ];
     }
 
     /**
