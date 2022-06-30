@@ -16,6 +16,7 @@ export type MenuItem = {
   children: MenuItem[];
   counter: number;
   depth: MenuItemDepth;
+  identifier: string | null;
   link?: string;
   title: string;
 };
