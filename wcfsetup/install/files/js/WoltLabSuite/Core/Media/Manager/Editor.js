@@ -166,7 +166,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 thumbnailSize = thumbnailSizeSelect.value;
             }
             if (this._options.callbackInsert !== null) {
-                this._options.callbackInsert(this._mediaToInsert, "separate" /* Separate */, thumbnailSize);
+                this._options.callbackInsert(this._mediaToInsert, "separate" /* MediaInsertType.Separate */, thumbnailSize);
             }
             else {
                 this._options.editor.buffer.set();

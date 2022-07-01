@@ -144,14 +144,14 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                 const isOpen = this.menu.classList.contains("open");
                 // check whether we touch the edges of the menu
                 if (appearsAt === "left") {
-                    isLeftEdge = !isOpen && touches[0].clientX < 20 /* AtEdge */;
-                    isRightEdge = isOpen && Math.abs(this.menu.offsetWidth - touches[0].clientX) < 20 /* AtEdge */;
+                    isLeftEdge = !isOpen && touches[0].clientX < 20 /* TouchPosition.AtEdge */;
+                    isRightEdge = isOpen && Math.abs(this.menu.offsetWidth - touches[0].clientX) < 20 /* TouchPosition.AtEdge */;
                 }
                 else {
                     isLeftEdge =
                         isOpen &&
-                            Math.abs(document.body.clientWidth - this.menu.offsetWidth - touches[0].clientX) < 20 /* AtEdge */;
-                    isRightEdge = !isOpen && document.body.clientWidth - touches[0].clientX < 20 /* AtEdge */;
+                            Math.abs(document.body.clientWidth - this.menu.offsetWidth - touches[0].clientX) < 20 /* TouchPosition.AtEdge */;
+                    isRightEdge = !isOpen && document.body.clientWidth - touches[0].clientX < 20 /* TouchPosition.AtEdge */;
                 }
                 // abort if more than one touch
                 if (touches.length > 1) {
@@ -248,12 +248,12 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                 // this avoids false positives, in case the user just wanted to tap
                 let movedFromEdge = false;
                 if (_androidTouching === "left") {
-                    movedFromEdge = touches[0].clientX > touchStart.x + 5 /* MovedHorizontally */;
+                    movedFromEdge = touches[0].clientX > touchStart.x + 5 /* TouchPosition.MovedHorizontally */;
                 }
                 if (_androidTouching === "right") {
-                    movedFromEdge = touches[0].clientX < touchStart.x - 5 /* MovedHorizontally */;
+                    movedFromEdge = touches[0].clientX < touchStart.x - 5 /* TouchPosition.MovedHorizontally */;
                 }
-                const movedVertically = Math.abs(touches[0].clientY - touchStart.y) > 20 /* MovedVertically */;
+                const movedVertically = Math.abs(touches[0].clientY - touchStart.y) > 20 /* TouchPosition.MovedVertically */;
                 let isOpen = this.menu.classList.contains("open");
                 if (!isOpen && movedFromEdge && !movedVertically) {
                     // the menu is not yet open, but the user moved into the right direction

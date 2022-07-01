@@ -208,8 +208,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
             }
         }
         else if (options.pointerClassNames.length === 2) {
-            element.classList[top === "auto" ? "add" : "remove"](options.pointerClassNames[0 /* Bottom */]);
-            element.classList[left === "auto" ? "add" : "remove"](options.pointerClassNames[1 /* Right */]);
+            element.classList[top === "auto" ? "add" : "remove"](options.pointerClassNames[0 /* PointerClass.Bottom */]);
+            element.classList[left === "auto" ? "add" : "remove"](options.pointerClassNames[1 /* PointerClass.Right */]);
         }
         Util_1.default.setStyles(element, {
             bottom: bottom === "auto" ? bottom : Math.round(bottom).toString() + "px",
