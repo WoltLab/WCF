@@ -115,7 +115,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                 if (element.closest(".popover") !== null) {
                     this.cache.set(id, {
                         content: null,
-                        state: 0 /* None */,
+                        state: 0 /* State.None */,
                     });
                     return;
                 }
@@ -138,7 +138,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                 if (!this.cache.has(cacheId)) {
                     this.cache.set(cacheId, {
                         content: null,
-                        state: 0 /* None */,
+                        state: 0 /* State.None */,
                     });
                 }
             });
@@ -157,7 +157,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                 fragment = Util_1.default.createFragmentFromHtml("<p>" + content + "</p>");
             }
             data.content = fragment;
-            data.state = 2 /* Ready */;
+            data.state = 2 /* State.Ready */;
             if (this.activeId) {
                 const activeElement = this.elements.get(this.activeId).element;
                 if (activeElement.dataset.cacheId === cacheId) {
@@ -187,7 +187,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                 if (this.hoverId === id) {
                     this.show();
                 }
-            }, 800 /* Show */);
+            }, 800 /* Delay.Show */);
         }
         /**
          * Handles the mouse leaving the popover-enabled element or the popover itself.
@@ -197,7 +197,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             if (this.timerLeave) {
                 return;
             }
-            this.timerLeave = window.setTimeout(() => this.hidePopover(), 500 /* Hide */);
+            this.timerLeave = window.setTimeout(() => this.hidePopover(), 500 /* Delay.Hide */);
         }
         /**
          * Handles the mouse start hovering the popover element.
@@ -243,13 +243,13 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             const cacheId = elementData.element.dataset.cacheId;
             const data = this.cache.get(cacheId);
             switch (data.state) {
-                case 2 /* Ready */: {
+                case 2 /* State.Ready */: {
                     this.popoverContent.appendChild(data.content);
                     this.rebuild();
                     break;
                 }
-                case 0 /* None */: {
-                    data.state = 1 /* Loading */;
+                case 0 /* State.None */: {
+                    data.state = 1 /* State.Loading */;
                     const handler = this.handlers.get(elementData.identifier);
                     if (handler.loadCallback) {
                         handler.loadCallback(elementData.objectId, this, elementData.element);
@@ -268,7 +268,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
                     }
                     break;
                 }
-                case 1 /* Loading */: {
+                case 1 /* State.Loading */: {
                     // Do not interrupt inflight requests.
                     break;
                 }

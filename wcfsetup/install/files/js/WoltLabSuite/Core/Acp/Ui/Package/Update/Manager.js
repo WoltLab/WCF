@@ -71,13 +71,13 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                 this.submitButton.disabled = false;
             }
             switch (response.type) {
-                case "authorizationRequired" /* AuthorizationRequired */:
+                case "authorizationRequired" /* ResponseType.AuthorizationRequired */:
                     this.promptCredentials(response.template);
                     break;
-                case "conflict" /* Conflict */:
+                case "conflict" /* ResponseType.Conflict */:
                     this.showConflict(response.template);
                     break;
-                case "queue" /* Queue */:
+                case "queue" /* ResponseType.Queue */:
                     this.startInstallation(response.queueID);
                     break;
                 default:
