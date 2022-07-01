@@ -2343,7 +2343,7 @@
 					// remove rel attribute from img
 					$div.find('img').removeAttr('rel');
 					
-					$div.find('.redactor-selection-marker, #redactor-insert-marker').remove();
+					$div.find('.redactor-selection-marker, #redactor-insert-marker').contents().unwrap();
 					
 					html = $div.html();
 					

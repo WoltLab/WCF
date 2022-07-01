@@ -19,6 +19,7 @@ export class PageMenuMain implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly mainMenu: HTMLElement;
+  private readonly menuItemBadges = new Map<string, HTMLElement>();
   private readonly menuItemProvider: PageMenuMainProvider;
   private readonly observer: MutationObserver;
 
@@ -220,6 +221,10 @@ export class PageMenuMain implements PageMenuProvider {
         counter.setAttribute("aria-hidden", "true");
         counter.textContent = menuItem.counter.toString();
 
+        if (menuItem.identifier !== null) {
+          this.menuItemBadges.set(menuItem.identifier, counter);
+        }
+
         link.append(counter);
       }
 
@@ -314,6 +319,28 @@ export class PageMenuMain implements PageMenuProvider {
     } else {
       this.mainMenu.classList.remove("pageMenuMobileButtonHasContent");
     }
+
+    const menuItems = this.menuItemProvider.getMenuItems(this.mainMenu);
+    menuItems.forEach((menuItem) => this.refreshUnreadBage(menuItem));
+  }
+
+  private refreshUnreadBage(menuItem: MenuItem): void {
+    if (menuItem.identifier !== null) {
+      const counter = this.menuItemBadges.get(menuItem.identifier);
+      if (counter) {
+        if (menuItem.counter === 0) {
+          counter.remove();
+          this.menuItemBadges.delete(menuItem.identifier);
+        } else {
+          const value = parseInt(counter.textContent!, 10);
+          if (value !== menuItem.counter) {
+            counter.textContent = menuItem.counter.toString();
+          }
+        }
+      }
+    }
+
+    menuItem.children.forEach((child) => this.refreshUnreadBage(child));
   }
 
   private updateOverflowIndicator(container: HTMLElement): void {

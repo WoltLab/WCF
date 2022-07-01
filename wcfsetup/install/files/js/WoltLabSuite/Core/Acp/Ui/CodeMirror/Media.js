@@ -14,7 +14,7 @@ define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../.
         }
         insert(mediaList, insertType, thumbnailSize) {
             switch (insertType) {
-                case "separate" /* Separate */: {
+                case "separate" /* MediaInsertType.Separate */: {
                     let sizeArgument = "";
                     if (thumbnailSize) {
                         sizeArgument = ` size="${thumbnailSize}"`;

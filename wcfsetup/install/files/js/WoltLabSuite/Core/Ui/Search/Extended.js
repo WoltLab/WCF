@@ -37,7 +37,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
                 this.activePage = 1;
-                void this.search(0 /* Modify */);
+                void this.search(0 /* SearchAction.Modify */);
             });
             this.typeInput.addEventListener("change", () => this.changeType());
             window.addEventListener("popstate", () => {
@@ -95,7 +95,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
         updateQueryString(searchAction) {
             const url = new URL(this.form.action);
             url.search += url.search !== "" ? "&" : "?";
-            if (searchAction !== 1 /* Navigation */) {
+            if (searchAction !== 1 /* SearchAction.Navigation */) {
                 this.searchParameters = [];
                 new FormData(this.form).forEach((value, key) => {
                     if (value.toString().trim()) {
@@ -108,7 +108,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 parameters.push(["pageNo", this.activePage.toString()]);
             }
             url.search += new URLSearchParams(parameters);
-            if (searchAction === 2 /* Init */) {
+            if (searchAction === 2 /* SearchAction.Init */) {
                 window.history.replaceState({}, document.title, url.toString());
             }
             else {
@@ -178,7 +178,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 }
             });
             this.typeInput.dispatchEvent(new Event("change"));
-            void this.search(2 /* Init */);
+            void this.search(2 /* SearchAction.Init */);
         }
         initPagination(position) {
             const wrapperDiv = document.createElement("div");
@@ -210,7 +210,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.activePage = pageNo;
             this.removeSearchResults();
             this.showSearchResults(template);
-            this.updateQueryString(1 /* Navigation */);
+            this.updateQueryString(1 /* SearchAction.Navigation */);
         }
         removeSearchResults() {
             while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {

@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check for GitHub's default message.
-        uses: gsactions/commit-message-checker@c61c81192182bbc0d5e41b4796e3b71684228c77
+        uses: gsactions/commit-message-checker@8c8c0d18ba9b1fcfed6e7385fd2bf357dfc8dccb
         with:
           pattern: '^(?!Update\s+\S*$).*$'
           error: 'Please use a meaningful commit message.'
@@ -26,7 +26,7 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Check for unsquashed `fixup!` commits.
         if: ${{ ! github.event.pull_request.draft }}
-        uses: gsactions/commit-message-checker@c61c81192182bbc0d5e41b4796e3b71684228c77
+        uses: gsactions/commit-message-checker@8c8c0d18ba9b1fcfed6e7385fd2bf357dfc8dccb
         with:
           pattern: '^(?!fixup!(\s|$))'
           error: 'A `fixup!` commit was found.'

@@ -239,7 +239,7 @@
 			restoreAfterDelete: function($table)
 			{
 				this.selection.restore();
-				$table.find('span.redactor-selection-marker').remove();
+				$table.find('span.redactor-selection-marker').contents().unwrap();
 
 			},
 			deleteTable: function()
