@@ -44,7 +44,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             let triggerChange = false;
             this.target.querySelectorAll("li.uploadedFile").forEach((element) => {
                 const uniqueFileId = element.dataset.uniqueFileId;
-                if (this.containers.has(uniqueFileId)) {
+                // If the uniqueFileId is undefined, the upload has not succeded. For non succeded uploads
+                // we do not want a delete button, because the file is cleared automatically
+                // with the next upload.
+                if (uniqueFileId === undefined || this.containers.has(uniqueFileId)) {
                     return;
                 }
                 const elementData = {
