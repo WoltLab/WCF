@@ -44,7 +44,7 @@
 	}
 
 	.contentHeaderNavigation {
-		flex: 0 1 auto;
+		flex: 0 0 auto;
 		margin-left: 15px;
 		margin-top: 10px;
 	}
@@ -103,6 +103,10 @@
 	@include screen-sm-down {
 		flex-wrap: wrap;
 
+		.contentHeaderNavigation {
+			flex-shrink: 1;
+		}
+
 		.contentHeaderIcon {
 			display: none;
 		}
@@ -110,7 +114,7 @@
 
 	@include screen-md-up {
 		.contentHeaderNavigation {
-			max-width: 50%;
+			max-width: 40%;
 		}
 	}
 }

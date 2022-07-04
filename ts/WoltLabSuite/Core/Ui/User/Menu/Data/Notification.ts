@@ -123,6 +123,11 @@ type Options = {
   title: string;
 };
 
+type ResponseGetData = {
+  items: UserMenuData[];
+  totalCount: number;
+};
+
 type ResponseMarkAsRead = {
   markAsRead: number;
   totalCount: number;
@@ -179,14 +184,13 @@ class UserMenuDataNotification implements DesktopNotifications, UserMenuProvider
   async getData(): Promise<UserMenuData[]> {
     const data = (await dboAction("getNotificationData", "wcf\\data\\user\\notification\\UserNotificationAction")
       .disableLoadingIndicator()
-      .dispatch()) as UserMenuData[];
+      .dispatch()) as ResponseGetData;
 
-    const counter = data.filter((item) => item.isUnread).length;
-    this.updateCounter(counter);
+    this.updateCounter(data.totalCount);
 
     this.stale = false;
 
-    return data;
+    return data.items;
   }
 
   getFooter(): UserMenuFooter | null {

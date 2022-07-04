@@ -143,10 +143,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     {
         ['queues' => $queues, 'totalCount' => $totalCount] = $this->getModerationQueues();
 
-        $data = [];
-        /** @var ViewableModerationQueue $queue */
-        foreach ($queues as $queue) {
-            $data[] = [
+        $items = \array_map(static function (ViewableModerationQueue $queue) {
+            return [
                 'content' => $queue->getAffectedObject()->getTitle(),
                 'image' => '<span class="icon icon48 ' . $queue->getIconName() . '"></span>',
                 'isUnread' => $queue->isNew(),
@@ -155,9 +153,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
                 'time' => $queue->lastChangeTime,
                 'usernames' => [],
             ];
-        }
+        }, $queues);
 
-        return $data;
+        return [
+            'items' => $items,
+            'totalCount' => $totalCount,
+        ];
     }
 
     /**

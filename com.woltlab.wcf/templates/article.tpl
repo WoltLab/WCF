@@ -123,7 +123,7 @@
 	<p class="info">{lang publicationDate=$article->publicationDate}wcf.article.publicationStatus.{@$article->publicationStatus}{/lang}</p>
 {/if}
 
-<div class="section">
+<div class="section articleContainer">
 	{if $articleContent->teaser}
 		<div class="section articleTeaserContainer">
 			<div class="htmlContent">

@@ -44,10 +44,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             const data = (await (0, Ajax_1.dboAction)("getModerationQueueData", "wcf\\data\\moderation\\queue\\ModerationQueueAction")
                 .disableLoadingIndicator()
                 .dispatch());
-            const counter = data.filter((item) => item.isUnread).length;
-            this.updateCounter(counter);
+            this.updateCounter(data.totalCount);
             this.stale = false;
-            return data;
+            return data.items;
         }
         getFooter() {
             return {

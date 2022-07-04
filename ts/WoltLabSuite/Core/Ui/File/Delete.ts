@@ -70,8 +70,12 @@ class UiFileDelete implements AjaxCallbackObject {
   private createButtons(): void {
     let triggerChange = false;
     this.target.querySelectorAll("li.uploadedFile").forEach((element: HTMLElement) => {
-      const uniqueFileId = element.dataset.uniqueFileId!;
-      if (this.containers.has(uniqueFileId)) {
+      const uniqueFileId = element.dataset.uniqueFileId;
+
+      // If the uniqueFileId is undefined, the upload has not succeded. For non succeded uploads
+      // we do not want a delete button, because the file is cleared automatically
+      // with the next upload.
+      if (uniqueFileId === undefined || this.containers.has(uniqueFileId)) {
         return;
       }
 
