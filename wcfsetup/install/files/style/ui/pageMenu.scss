@@ -211,7 +211,7 @@
 		background-color: var(--background-color-active);
 	}
 
-	&[aria-selected="false"][data-has-unread-content="true"]::after {
+	&[data-has-unread-content="true"]::after {
 		background-color: var(--color-indicator);
 		border-radius: 50%;
 		content: "";
