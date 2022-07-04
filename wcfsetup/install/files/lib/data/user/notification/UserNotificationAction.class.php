@@ -224,9 +224,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
     public function getNotificationData(): array
     {
         $data = UserNotificationHandler::getInstance()->getMixedNotifications();
-        if ($data['count'] === 0) {
-            return [];
-        }
 
         $notifications = [];
         foreach ($data['notifications'] as $notificationData) {
