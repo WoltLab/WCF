@@ -15,6 +15,7 @@
 	--background-color-active: #{$wcfUserMenuBackgroundActive};
 	--border-color: #{$wcfUserMenuBorder};
 	--color: #{$wcfUserMenuText};
+	--color-active: #{$wcfUserMenuTextActive};
 	--color-dimmed: #{$wcfUserMenuTextDimmed};
 	--color-indicator: #{$wcfUserMenuIndicator};
 
@@ -209,9 +210,13 @@
 
 	&[aria-selected="true"] {
 		background-color: var(--background-color-active);
+
+		.icon {
+			color: var(--color-active);
+		}
 	}
 
-	&[aria-selected="false"][data-has-unread-content="true"]::after {
+	&[data-has-unread-content="true"]::after {
 		background-color: var(--color-indicator);
 		border-radius: 50%;
 		content: "";

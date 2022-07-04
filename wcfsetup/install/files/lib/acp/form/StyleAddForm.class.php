@@ -155,7 +155,8 @@ class StyleAddForm extends AbstractForm
         'wcfUserMenuBackground' => '5.5',
         'wcfUserMenuBackgroundActive' => '5.5',
         'wcfUserMenuText' => '5.5',
-        'wcfUserMenuDimmedText' => '5.5',
+        'wcfUserMenuTextActive' => '5.5',
+        'wcfUserMenuTextDimmed' => '5.5',
         'wcfUserMenuIndicator' => '5.5',
         'wcfUserMenuBorder' => '5.5',
     ];
@@ -834,7 +835,7 @@ class StyleAddForm extends AbstractForm
             'wcfEditorButton' => ['background', 'backgroundActive', 'text', 'textActive', 'textDisabled'],
             'wcfEditorTable' => ['border'],
             'wcfDropdown' => ['background', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
-            'wcfUserMenu' => ['background', 'text', 'textDimmed', 'backgroundActive', 'indicator', 'border'],
+            'wcfUserMenu' => ['background', 'text', 'textActive', 'textDimmed', 'backgroundActive', 'indicator', 'border'],
             'wcfStatusInfo' => ['background', 'border', 'text', 'link', 'linkActive'],
             'wcfStatusSuccess' => ['background', 'border', 'text', 'link', 'linkActive'],
             'wcfStatusWarning' => ['background', 'border', 'text', 'link', 'linkActive'],

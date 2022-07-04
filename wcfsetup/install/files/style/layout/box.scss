@@ -423,6 +423,10 @@
 		&.boxInfo,
 		&.boxSuccess,
 		&.boxWarning {
+			.boxTitle {
+				color: inherit;
+			}
+
 			a:not(.button) {
 				@include wcfFontBold;
 

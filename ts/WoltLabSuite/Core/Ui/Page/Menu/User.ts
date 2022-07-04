@@ -45,6 +45,7 @@ export class PageMenuUser implements PageMenuProvider {
   private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly legacyUserPanels = new Map<Tab, LegacyUserPanelApi>();
+  private readonly observer: MutationObserver;
   private readonly userMenuProviders = new Map<Tab, UserMenuProvider>();
   private readonly tabOrigins = new Map<HTMLElement, HTMLElement>();
   private readonly tabPanels = new Map<Tab, HTMLElement>();
@@ -80,6 +81,10 @@ export class PageMenuUser implements PageMenuProvider {
     onMediaQueryChange("screen-lg", {
       match: () => this.detachViewsFromPanel(),
       unmatch: () => this.detachViewsFromPanel(),
+    });
+
+    this.observer = new MutationObserver(() => {
+      this.refreshTabUnreadIndicators();
     });
   }
 
@@ -171,6 +176,11 @@ export class PageMenuUser implements PageMenuProvider {
     this.attachViewToPanel(tab);
 
     this.activeTab = tab;
+    this.observer.observe(tabPanel, {
+      attributeFilter: ["data-is-unread"],
+      childList: true,
+      subtree: true,
+    });
   }
 
   private closeActiveTab(): void {
@@ -195,6 +205,7 @@ export class PageMenuUser implements PageMenuProvider {
       legacyPanel.close();
     }
 
+    this.observer.disconnect();
     this.refreshTabUnreadIndicators();
   }
 

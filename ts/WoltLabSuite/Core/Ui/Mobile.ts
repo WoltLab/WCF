@@ -226,7 +226,7 @@ function setupMobileSidebar(): void {
 }
 
 function closeDropdown(): void {
-  _dropdownMenu!.classList.remove("dropdownOpen");
+  _dropdownMenu?.classList.remove("dropdownOpen");
 }
 
 function toggleMobileNavigation(message: HTMLElement, quickOptions: HTMLElement, navigation: HTMLElement): void {

@@ -3,6 +3,7 @@
 	--background-color-active: #{$wcfUserMenuBackgroundActive};
 	--border-color: #{$wcfUserMenuBorder};
 	--color: #{$wcfUserMenuText};
+	--color-active: #{$wcfUserMenuTextActive};
 	--color-dimmed: #{$wcfUserMenuTextDimmed};
 	--color-indicator: #{$wcfUserMenuIndicator};
 
@@ -163,6 +164,7 @@ html:not(.touch) .userMenuButton {
 
 html:not(.touch) .userMenuItem:hover {
 	background-color: var(--background-color-active);
+	color: var(--color-active);
 }
 
 .userMenuItemLinkPlain {

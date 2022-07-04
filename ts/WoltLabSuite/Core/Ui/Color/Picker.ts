@@ -182,6 +182,10 @@ class UiColorPicker implements DialogCallbackObject {
             this.setInitialColor("#FFF0");
           }
         },
+        onShow: () => {
+          this.colorTextInput!.focus();
+          this.colorTextInput!.select();
+        },
         title: Language.get("wcf.style.colorPicker"),
       },
     };
