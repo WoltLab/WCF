@@ -60,6 +60,10 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	 * @inheritDoc
 	 */
 	protected function checkCategoryPermissions() {
+		if ($this->category->objectTypeID != $this->objectType->objectTypeID) {
+			throw new IllegalLinkException();
+		}
+
 		if (!$this->objectType->getProcessor()->canEditCategory()) {
 			throw new PermissionDeniedException();
 		}
