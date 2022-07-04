@@ -194,7 +194,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
         _mobileSidebarEnabled = true;
     }
     function closeDropdown() {
-        _dropdownMenu.classList.remove("dropdownOpen");
+        _dropdownMenu === null || _dropdownMenu === void 0 ? void 0 : _dropdownMenu.classList.remove("dropdownOpen");
     }
     function toggleMobileNavigation(message, quickOptions, navigation) {
         if (_dropdownMenu === null) {
