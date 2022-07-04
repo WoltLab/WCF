@@ -993,6 +993,7 @@
 				'wcfUserMenuBorder': '#spUserMenu { --border-color: VALUE; }',
 				'wcfUserMenuIndicator': '#spUserMenu { --color-indicator: VALUE; }',
 				'wcfUserMenuText': '#spUserMenu { --color: VALUE; }',
+				'wcfUserMenuTextActive': '#spUserMenu { --color-active: VALUE; }',
 				'wcfUserMenuTextDimmed': '#spUserMenu { --color-dimmed: VALUE; }',
 				'wcfFooterBoxBackground': '#spFooterBox { background-color: VALUE; }',
 				'wcfFooterBoxText': '#spFooterBox { color: VALUE; }',
