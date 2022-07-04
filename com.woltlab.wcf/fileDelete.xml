@@ -13,6 +13,7 @@
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
+		<file>acp/database/update_com.woltlab.wcf_5.5.php</file>
 		<file>acp/dereferrer.php</file>
 		<file>acp/images/acpLogo.png</file>
 		<file>acp/images/blueTemptation/blueTemptationHeader.png</file>
@@ -50,11 +51,13 @@
 		<file>acp/templates/__multifactorEmailCodeField.tpl</file>
 		<file>acp/templates/__multifactorTotpCodeField.tpl</file>
 		<file>acp/templates/__wysiwygSmileyFormField.tpl</file>
+		<file>acp/templates/applicationEdit.tpl</file>
 		<file>acp/templates/applicationGroupAdd.tpl</file>
 		<file>acp/templates/avatarCropDialog.tpl</file>
 		<file>acp/templates/categorySelectList.tpl</file>
 		<file>acp/templates/dashboardList.tpl</file>
 		<file>acp/templates/dashboardOption.tpl</file>
+		<file>acp/templates/desktopNotificationApplicationSelectOptionType.tpl</file>
 		<file>acp/templates/detailedPackageList.tpl</file>
 		<file>acp/templates/devtoolsFormBuilderTest.tpl</file>
 		<file>acp/templates/languageServerAdd.tpl</file>
@@ -172,6 +175,7 @@
 		<file>acp/update_com.woltlab.wcf_5.3_preUpdate.php</file>
 		<file>acp/update_com.woltlab.wcf_5.3_sitemaps.php</file>
 		<file>acp/update_com.woltlab.wcf_5.3_style.php</file>
+		<file>acp/update_com.woltlab.wcf_5.4.15_deleteDsStore.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4.2_deleteInvalidSessions.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4.3_deleteDsStore.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4.3_resetAvatarCache.php</file>
@@ -200,16 +204,28 @@
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_boxConditions.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_boxCondtions.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_checkSystemRequirements.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_checkUpdateServers.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_cleanupPackageExclusion.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_clearPackageCompatibility.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_clearPackageDeprecations.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_ensureInnoDbSearch.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_randomize_cronjobs.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_starttls.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_styleVariables.php</file>
 		<file>acp/update_com.woltlab.wcf_beta1_to_beta2.php</file>
 		<file>acp/update_com.woltlab.wcf_embeddedObjectOrphans.php</file>
 		<file>acp/update_com.woltlab.wcf_preventMailAbuse.php</file>
 		<file>acp/update_mqc_com.woltlab.wcf_2.1.php</file>
 		<file>acp/update_rc1.php</file>
 		<file>acp/update_rc3.php</file>
+		<file>bootstrap.php</file>
 		<file>cache/templateListener/.htaccess</file>
 		<file>font/fontawesome-webfont.svg</file>
+		<file>font/getFont.php</file>
 		<file>icon/add.svg</file>
 		<file>icon/add1.svg</file>
 		<file>icon/addColored.svg</file>
@@ -648,6 +664,7 @@
 		<file>images/colorPickerBar.png</file>
 		<file>images/colorPickerGradient.png</file>
 		<file>images/favicon.ico</file>
+		<file>images/favicon/corsProxy.php</file>
 		<file>images/imageViewer/blank.png</file>
 		<file>images/imageViewer/menu.png</file>
 		<file>images/reaction/reactionIcon.svg</file>
@@ -1399,6 +1416,7 @@
 		<file>lib/acp/action/ClipboardProxyAction.class.php</file>
 		<file>lib/acp/action/OptionExportAction.class.php</file>
 		<file>lib/acp/form/ACPForm.class.php</file>
+		<file>lib/acp/form/ApplicationEditForm.class.php</file>
 		<file>lib/acp/form/ApplicationGroupAddForm.class.php</file>
 		<file>lib/acp/form/ApplicationGroupEditForm.class.php</file>
 		<file>lib/acp/form/DashboardOptionForm.class.php</file>
@@ -1531,6 +1549,7 @@
 		<file>lib/page/PrivacyPolicyPage.class.php</file>
 		<file>lib/page/util/InlineCalendar.class.php</file>
 		<file>lib/system/api/bin/pscss.bat</file>
+		<file>lib/system/api/composer/include_paths.php</file>
 		<file>lib/system/api/container-interop/container-interop/.gitignore</file>
 		<file>lib/system/api/container-interop/container-interop/LICENSE</file>
 		<file>lib/system/api/container-interop/container-interop/README.md</file>
@@ -1655,8 +1674,8 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
-		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
+		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
 		<file>lib/system/api/ezyang/htmlpurifier/README</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
@@ -1737,6 +1756,31 @@
 		<file>lib/system/api/guzzlehttp/psr7/.php_cs.dist</file>
 		<file>lib/system/api/guzzlehttp/psr7/src/functions.php</file>
 		<file>lib/system/api/guzzlehttp/psr7/src/functions_include.php</file>
+		<file>lib/system/api/laminas/laminas-diactoros/.laminas-ci.json</file>
+		<file>lib/system/api/laminas/laminas-diactoros/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-httphandlerrunner/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm-baseline.xml</file>
+		<file>lib/system/api/laminas/laminas-progressbar/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-stdlib/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/.github/FUNDING.yml</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/.github/workflows/continuous-integration.yml</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/.github/workflows/release-on-milestone-closed.yml</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/.laminas-ci.json</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/COPYRIGHT.md</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/LICENSE.md</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/README.md</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/composer.json</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/composer.lock</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/config/replacements.php</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/psalm-baseline.xml</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/psalm.xml.dist</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/src/Autoloader.php</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/src/ConfigPostProcessor.php</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/src/Module.php</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/src/Replacements.php</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/src/RewriteRules.php</file>
+		<file>lib/system/api/laminas/laminas-zendframework-bridge/src/autoload.php</file>
 		<file>lib/system/api/leafo/scssphp/LICENSE.md</file>
 		<file>lib/system/api/leafo/scssphp/README.md</file>
 		<file>lib/system/api/leafo/scssphp/bin/pscss</file>
@@ -1770,6 +1814,7 @@
 		<file>lib/system/api/leafo/scssphp/src/Type.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Util.php</file>
 		<file>lib/system/api/leafo/scssphp/src/Version.php</file>
+		<file>lib/system/api/paragonie/constant_time_encoding/.gitattributes</file>
 		<file>lib/system/api/paragonie/constant_time_encoding/.gitignore</file>
 		<file>lib/system/api/paragonie/constant_time_encoding/.travis.yml</file>
 		<file>lib/system/api/paragonie/constant_time_encoding/phpunit.xml.dist</file>
@@ -1786,8 +1831,8 @@
 		<file>lib/system/api/paragonie/random_compat/LICENSE</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
-		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
+		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/lib/random.php</file>
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
@@ -1796,8 +1841,22 @@
 		<file>lib/system/api/parsedown/Parsedown.php</file>
 		<file>lib/system/api/parsedown/README.md</file>
 		<file>lib/system/api/parsedown/version</file>
+		<file>lib/system/api/pear/net_idna2/.gitignore</file>
+		<file>lib/system/api/pear/net_idna2/.travis.yml</file>
+		<file>lib/system/api/pear/net_idna2/Net/IDNA2.php</file>
+		<file>lib/system/api/pear/net_idna2/Net/IDNA2/Exception.php</file>
+		<file>lib/system/api/pear/net_idna2/Net/IDNA2/Exception/Nameprep.php</file>
+		<file>lib/system/api/pear/net_idna2/README.md</file>
+		<file>lib/system/api/pear/net_idna2/composer.json</file>
+		<file>lib/system/api/pear/net_idna2/package.xml</file>
+		<file>lib/system/api/pear/net_idna2/phpunit.xml.dist</file>
+		<file>lib/system/api/pear/net_idna2/tests/Net_IDNA2Test.php</file>
+		<file>lib/system/api/pear/net_idna2/tests/draft-josefsson-idn-test-vectors.php</file>
 		<file>lib/system/api/pear/pear_exception/.gitignore</file>
 		<file>lib/system/api/pear/pear_exception/.travis.yml</file>
+		<file>lib/system/api/pear/pear_exception/LICENSE</file>
+		<file>lib/system/api/pear/pear_exception/PEAR/Exception.php</file>
+		<file>lib/system/api/pear/pear_exception/composer.json</file>
 		<file>lib/system/api/pear/pear_exception/package.xml</file>
 		<file>lib/system/api/pear/pear_exception/tests/PEAR/ExceptionTest.php</file>
 		<file>lib/system/api/pelago/emogrifier/.github/CONTRIBUTING.md</file>
@@ -2063,31 +2122,15 @@
 		<file>lib/system/api/symfony/css-selector/Tests/XPath/Fixtures/shakespear.html</file>
 		<file>lib/system/api/symfony/css-selector/Tests/XPath/TranslatorTest.php</file>
 		<file>lib/system/api/symfony/css-selector/phpunit.xml.dist</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Idn.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Info.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/LICENSE</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/README.md</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/DisallowedRanges.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/Regex.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/deviation.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/disallowed.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/disallowed_STD3_mapped.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/disallowed_STD3_valid.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/ignored.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/mapped.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/virama.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/bootstrap.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-idn/composer.json</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/LICENSE</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/Normalizer.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/README.md</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/canonicalComposition.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/canonicalDecomposition.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/combiningClass.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/compatibilityDecomposition.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/bootstrap.php</file>
-		<file>lib/system/api/symfony/polyfill-intl-normalizer/composer.json</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/LICENSE</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/Mbstring.php</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/README.md</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/Resources/unidata/lowerCase.php</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/Resources/unidata/titleCaseRegexp.php</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/Resources/unidata/upperCase.php</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/bootstrap.php</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/bootstrap80.php</file>
+		<file>lib/system/api/symfony/polyfill-mbstring/composer.json</file>
 		<file>lib/system/api/symfony/polyfill-php70/LICENSE</file>
 		<file>lib/system/api/symfony/polyfill-php70/Php70.php</file>
 		<file>lib/system/api/symfony/polyfill-php70/README.md</file>
@@ -2105,6 +2148,36 @@
 		<file>lib/system/api/symfony/polyfill-php72/README.md</file>
 		<file>lib/system/api/symfony/polyfill-php72/bootstrap.php</file>
 		<file>lib/system/api/symfony/polyfill-php72/composer.json</file>
+		<file>lib/system/api/symfony/polyfill-php73/LICENSE</file>
+		<file>lib/system/api/symfony/polyfill-php73/Php73.php</file>
+		<file>lib/system/api/symfony/polyfill-php73/README.md</file>
+		<file>lib/system/api/symfony/polyfill-php73/Resources/stubs/JsonException.php</file>
+		<file>lib/system/api/symfony/polyfill-php73/bootstrap.php</file>
+		<file>lib/system/api/symfony/polyfill-php73/composer.json</file>
+		<file>lib/system/api/symfony/polyfill-php74/LICENSE</file>
+		<file>lib/system/api/symfony/polyfill-php74/Php74.php</file>
+		<file>lib/system/api/symfony/polyfill-php74/README.md</file>
+		<file>lib/system/api/symfony/polyfill-php74/bootstrap.php</file>
+		<file>lib/system/api/symfony/polyfill-php74/composer.json</file>
+		<file>lib/system/api/symfony/polyfill-php80/LICENSE</file>
+		<file>lib/system/api/symfony/polyfill-php80/Php80.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/PhpToken.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/README.md</file>
+		<file>lib/system/api/symfony/polyfill-php80/Resources/stubs/Attribute.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/Resources/stubs/PhpToken.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/Resources/stubs/Stringable.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/Resources/stubs/ValueError.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/bootstrap.php</file>
+		<file>lib/system/api/symfony/polyfill-php80/composer.json</file>
+		<file>lib/system/api/true/punycode/CHANGELOG.md</file>
+		<file>lib/system/api/true/punycode/LICENSE</file>
+		<file>lib/system/api/true/punycode/README.md</file>
+		<file>lib/system/api/true/punycode/composer.json</file>
+		<file>lib/system/api/true/punycode/src/Exception/DomainOutOfBoundsException.php</file>
+		<file>lib/system/api/true/punycode/src/Exception/LabelOutOfBoundsException.php</file>
+		<file>lib/system/api/true/punycode/src/Exception/OutOfBoundsException.php</file>
+		<file>lib/system/api/true/punycode/src/Punycode.php</file>
 		<file>lib/system/api/zend/ProgressBar/Adapter/AbstractAdapter.php</file>
 		<file>lib/system/api/zend/ProgressBar/Adapter/Console.php</file>
 		<file>lib/system/api/zend/ProgressBar/Adapter/Exception/ExceptionInterface.php</file>
@@ -2314,6 +2387,7 @@
 		<file>lib/system/message/unfurl/ParsingFailed.class.php</file>
 		<file>lib/system/message/unfurl/UrlInaccessible.class.php</file>
 		<file>lib/system/option/CustomselectOptionType.class.php</file>
+		<file>lib/system/option/DesktopNotificationApplicationSelectOptionType.class.php</file>
 		<file>lib/system/option/OptionType.class.php</file>
 		<file>lib/system/option/OptionTypeBoolean.class.php</file>
 		<file>lib/system/option/OptionTypeCustomselect.class.php</file>
@@ -2436,6 +2510,7 @@
 		<file>lib/system/template/ITemplatePluginModifier.class.php</file>
 		<file>lib/system/template/ITemplatePluginPrefilter.class.php</file>
 		<file>lib/system/template/SetupTemplate.class.php</file>
+		<file>lib/system/template/SetupTemplateCompiler.class.php</file>
 		<file>lib/system/template/TemplatePluginBlock.class.php</file>
 		<file>lib/system/template/TemplatePluginCompiler.class.php</file>
 		<file>lib/system/template/TemplatePluginFunction.class.php</file>
