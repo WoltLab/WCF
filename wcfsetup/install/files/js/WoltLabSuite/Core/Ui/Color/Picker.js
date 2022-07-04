@@ -136,6 +136,10 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                             this.setInitialColor("#FFF0");
                         }
                     },
+                    onShow: () => {
+                        this.colorTextInput.focus();
+                        this.colorTextInput.select();
+                    },
                     title: Language.get("wcf.style.colorPicker"),
                 },
             };
