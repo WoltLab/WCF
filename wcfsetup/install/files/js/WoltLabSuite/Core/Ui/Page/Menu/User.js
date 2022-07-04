@@ -48,6 +48,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 match: () => this.detachViewsFromPanel(),
                 unmatch: () => this.detachViewsFromPanel(),
             });
+            this.observer = new MutationObserver(() => {
+                this.refreshTabUnreadIndicators();
+            });
         }
         enable() {
             this.userMenu.setAttribute("aria-expanded", "false");
@@ -119,6 +122,11 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             }
             this.attachViewToPanel(tab);
             this.activeTab = tab;
+            this.observer.observe(tabPanel, {
+                attributeFilter: ["data-is-unread"],
+                childList: true,
+                subtree: true,
+            });
         }
         closeActiveTab() {
             if (!this.activeTab) {
@@ -136,6 +144,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             if (legacyPanel) {
                 legacyPanel.close();
             }
+            this.observer.disconnect();
             this.refreshTabUnreadIndicators();
         }
         attachViewToPanel(tab) {
