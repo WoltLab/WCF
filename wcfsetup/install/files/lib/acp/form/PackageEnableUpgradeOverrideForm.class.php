@@ -41,6 +41,11 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
     public $neededPermissions = ['admin.configuration.package.canUpdatePackage'];
 
     /**
+     * @var bool
+     */
+    private $isEnabled;
+
+    /**
      * @inheritDoc
      */
     protected function createForm()
@@ -49,7 +54,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
         $issues = $this->getIssuesPreventingUpgrade();
 
-        if (empty($issues)) {
+        if (empty($issues) || $this->isEnabled()) {
             $this->form->appendChildren([
                 BooleanFormField::create('enable')
                     ->label('wcf.acp.package.enableUpgradeOverride.enable')
@@ -66,6 +71,15 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
                 RejectEverythingFormField::create(),
             ]);
         }
+    }
+
+    private function isEnabled()
+    {
+        if (!isset($this->isEnabled)) {
+            $this->isEnabled = PackageUpdateServer::isUpgradeOverrideEnabled();
+        }
+
+        return $this->isEnabled;
     }
 
     private function getIssuesPreventingUpgrade()
@@ -116,12 +130,17 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
         $formData = $this->form->getData();
         if ($formData['data']['enable']) {
+            $this->isEnabled = true;
             RegistryHandler::getInstance()->set('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride", \TIME_NOW);
         } else {
+            $this->isEnabled = false;
             RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride");
         }
 
         PackageUpdateServer::resetAll();
+
+        $this->form->cleanup();
+        $this->buildForm();
 
         $this->saved();
     }
