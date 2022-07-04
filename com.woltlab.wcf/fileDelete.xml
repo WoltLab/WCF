@@ -2517,6 +2517,7 @@
 		<file>lib/system/template/TemplatePluginModifier.class.php</file>
 		<file>lib/system/template/TemplatePluginPrefilter.class.php</file>
 		<file>lib/system/template/plugin/ArrayfromlistModifierTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/FetchCompilerTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconCompilerTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconPrefilterTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/StaticlangTemplatePluginCompiler.class.php</file>
