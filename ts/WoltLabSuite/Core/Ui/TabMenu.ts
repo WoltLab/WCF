@@ -95,7 +95,9 @@ function init() {
             return;
           }
 
-          for (const element of container.querySelectorAll<HTMLInputElement | HTMLSelectElement>("input, select")) {
+          for (const element of container.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+            "input, select, textarea",
+          )) {
             if (!element.checkValidity()) {
               event.preventDefault();
 
