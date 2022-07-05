@@ -11,6 +11,7 @@
     "outDir": "wcfsetup/install/files/js/",
     "lib": [
       "dom",
+      "DOM.Iterable",
       "es2017"
     ],
     "strictNullChecks": true,
