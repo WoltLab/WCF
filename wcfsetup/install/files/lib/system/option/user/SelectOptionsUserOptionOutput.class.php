@@ -23,9 +23,12 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput
     public function getOutput(User $user, UserOption $option, $value)
     {
         $result = self::getResult($option, $value);
+
         if ($result === null) {
             return '';
-        } elseif (\is_array($result)) {
+        }
+
+        if (\is_array($result)) {
             $output = '';
             foreach ($result as $resultValue) {
                 if (!empty($output)) {
@@ -49,6 +52,10 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput
      */
     protected static function getResult(UserOption $option, $value)
     {
+        if ($value === null) {
+            return null;
+        }
+
         $options = OptionUtil::parseSelectOptions($option->selectOptions);
 
         // multiselect
@@ -67,7 +74,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput
                 return $options[$value];
             }
 
-            return;
+            return null;
         }
     }
 }
