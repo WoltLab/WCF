@@ -84,7 +84,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                         if (event.defaultPrevented) {
                             return;
                         }
-                        container.querySelectorAll("input, select").forEach((element) => {
+                        for (const element of container.querySelectorAll("input, select, textarea")) {
                             if (!element.checkValidity()) {
                                 event.preventDefault();
                                 // Select the tab that contains the erroneous element.
@@ -96,7 +96,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                                 });
                                 return;
                             }
-                        });
+                        }
                     });
                 }
             }
