@@ -21,6 +21,10 @@ class NewlineToBreakUserOptionOutput implements IUserOptionOutput
      */
     public function getOutput(User $user, UserOption $option, $value)
     {
+        if ($value === null) {
+            return '';
+        }
+
         return \nl2br(StringUtil::encodeHTML($value), false);
     }
 }
