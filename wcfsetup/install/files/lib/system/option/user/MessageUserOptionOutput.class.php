@@ -25,8 +25,13 @@ class MessageUserOptionOutput implements IUserOptionOutput
      */
     public function getOutput(User $user, UserOption $option, $value)
     {
+        if ($value === null) {
+            return '';
+        }
+
         $value = StringUtil::trim($value);
-        if (empty($value)) {
+
+        if ($value === '') {
             return '';
         }
 
