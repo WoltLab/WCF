@@ -95,7 +95,7 @@ function init() {
             return;
           }
 
-          container.querySelectorAll("input, select").forEach((element: HTMLInputElement | HTMLSelectElement) => {
+          for (const element of container.querySelectorAll<HTMLInputElement | HTMLSelectElement>("input, select")) {
             if (!element.checkValidity()) {
               event.preventDefault();
 
@@ -109,7 +109,7 @@ function init() {
 
               return;
             }
-          });
+          }
         });
       }
     }
