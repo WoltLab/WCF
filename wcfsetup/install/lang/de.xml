@@ -2025,8 +2025,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.enableUpgradeOverride.issues"><![CDATA[Die folgenden Probleme verhindern aktuell eine Aktualisierung:]]></item>
 		<item name="wcf.acp.package.availableUpgradeVersion"><![CDATA[Die neue WoltLab Suite {$version} steht zur Installation bereit. Eine Anleitung zur Durchführung des Upgrades steht im <a href="https://manual.woltlab.com/de/updates/#update-von-woltlab-suite-54-auf-55" class="externalURL">Handbuch</a> zur Verfügung.<br>
 <br>
-ACHTUNG: Es handelt sich aktuell noch um eine Testversion, die nicht für den produktiven Einsatz geeignet ist!<br>
-<br>
 <a href="{link controller='PackageEnableUpgradeOverride' application='wcf'}{/link}">Systemvoraussetzungen prüfen, um das Upgrade freizugeben</a>]]></item>
 		<item name="wcf.acp.package.upgradeOverrideEnabled"><![CDATA[Die Installation der neuen WoltLab Suite {$version} wurde freigegeben. Zur Durchführung des Upgrades klicken Sie bitte auf den Button „Updates suchen“.<br>
 <br>
