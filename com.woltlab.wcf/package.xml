@@ -114,5 +114,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 
 	<instructions type="update" fromversion="5.5.0">
 		<instruction type="file">files_update.tar</instruction>
+
+		<instruction type="script">acp/update_com.woltlab.wcf_5.5_styleVariables.php</instruction>
 	</instructions>
 </package>
