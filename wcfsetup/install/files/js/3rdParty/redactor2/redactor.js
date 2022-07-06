@@ -6815,9 +6815,7 @@
 					));
 				},
 				cleanText: function (text) {
-					return (typeof text === 'undefined') ? '' : $.trim(text.replace(/(<([^>]+)>)/gi,
-						''
-					));
+					return (typeof text === 'undefined') ? '' : text.trim();
 				},
 				getText: function (link) {
 					return (link.text === '' && link.url !== '') ? this.link.truncateUrl(link.url.replace(/<|>/g,
