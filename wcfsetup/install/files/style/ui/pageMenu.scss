@@ -56,7 +56,7 @@
 }
 
 .pageMenuMainNavigationFooter {
-	/* This is a workaround for the lack of `max(40px, auto)`. */
+	/* This is a workaround for the lack of the pseudo value `max(40px, auto)`. */
 	padding-top: 30px;
 	margin-top: auto;
 }
