@@ -4,7 +4,7 @@
  * Inserts new style variables introduced with WoltLab Suite 5.5.
  *
  * @author Alexander Ebert
- * @copyright 2001-2021 WoltLab GmbH
+ * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core
  */
