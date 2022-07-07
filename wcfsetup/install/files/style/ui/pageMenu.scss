@@ -56,7 +56,15 @@
 }
 
 .pageMenuMainNavigationFooter {
-	/* This is a workaround for the lack of the pseudo value `max(40px, auto)`. */
+	/* The footer is placed at the very bottom of the main menu which
+	   is accomplished by setting `margin-top: auto`. However, this
+	   prevents us from using `margin-top` to define a minimum gap between
+	   the footer and the regular items.
+	   
+	   Setting `margin-bottom` on the regular menu items is not an option
+	   because it violates the principle of using only `margin-top`. The
+	   only option left is to abuse the `padding-top` to define a mimimum
+	   gap between these sections. */
 	padding-top: 30px;
 	margin-top: auto;
 }

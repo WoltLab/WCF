@@ -188,7 +188,9 @@ html:not(.touch) .userMenuItem:hover {
 
 .userMenuItemImage {
 	grid-area: image;
-	/* Prevent the image from being part of the `grid-template-rows` calculation. */
+	/* Setting an element‘s position to `absolute` will remove it from the
+	   regular flow, causing it to be ignored for the calculation of the
+	   `grid-template-rows`. */
 	position: absolute;
 }
 
