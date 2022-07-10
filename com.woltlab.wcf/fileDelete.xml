@@ -2485,7 +2485,6 @@
 		<file>lib/system/user/authentication/UserMultifactorSucceeded.class.php</file>
 		<file>lib/system/user/authentication/password/algorithm/Invalid.php</file>
 		<file>lib/system/user/collapsible/content/ICollapsibleContentAction.class.php</file>
-		<file>lib/system/user/collapsible/content/UserCollapsibleSidebarHandler.class.php</file>
 		<file>lib/system/user/notification/event/PaidSubscriptionUserUserNotificationEvent.class.php</file>
 		<file>lib/system/user/notification/object/CommentLikeUserNotificationObject.class.php</file>
 		<file>lib/system/user/notification/object/CommentResponseLikeUserNotificationObject.class.php</file>
