@@ -99,7 +99,7 @@
 		}
 	}
 
-	& + .tabMenuContent {
+	& ~ .tabMenuContent {
 		margin-top: 20px;
 	}
 }
