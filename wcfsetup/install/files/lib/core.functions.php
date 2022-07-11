@@ -12,6 +12,11 @@ namespace {
 	set_exception_handler([WCF::class, 'handleException']);
 	// set php error handler
 	set_error_handler([WCF::class, 'handleError'], E_ALL);
+
+	if (PHP_VERSION_ID >= 80200) {
+		@ini_set('zend.exception_ignore_args', 0);
+	}
+
 	// set shutdown function
 	register_shutdown_function([WCF::class, 'destruct']);
 	// set autoload function
