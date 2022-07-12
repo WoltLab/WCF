@@ -19,9 +19,15 @@
         "forum": "https://discourse.laminas.dev"
     },
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
         "sort-packages": true,
         "platform": {
             "php": "7.3.99"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
@@ -40,13 +46,13 @@
         "ext-dom": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
-        "http-interop/http-factory-tests": "^0.8.0",
-        "laminas/laminas-coding-standard": "~1.0.0",
-        "php-http/psr7-integration-tests": "^1.1",
+        "http-interop/http-factory-tests": "^0.9.0",
+        "laminas/laminas-coding-standard": "~2.3.0",
+        "php-http/psr7-integration-tests": "^1.1.1",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.1",
-        "psalm/plugin-phpunit": "^0.14.0",
-        "vimeo/psalm": "^4.3"
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "vimeo/psalm": "^4.24.0"
     },
     "provide": {
         "psr/http-factory-implementation": "1.0",
