@@ -36,33 +36,27 @@ class FileSizeOptionType extends TextOptionType
         $number = $matches[0];
         if (\preg_match('/[kmgt]i?b$/i', $newValue, $multiplier)) {
             switch (\mb_strtolower($multiplier[0])) {
-                /** @noinspection PhpMissingBreakStatementInspection */
                 case 'tb':
                     $number *= 1000;
-                /** @noinspection PhpMissingBreakStatementInspection */
-                // no break
+                    // no break
                 case 'gb':
                     $number *= 1000;
-                /** @noinspection PhpMissingBreakStatementInspection */
-                // no break
+                    // no break
                 case 'mb':
                     $number *= 1000;
-                // no break
+                    // no break
                 case 'kb':
                     $number *= 1000;
                     break;
-                /** @noinspection PhpMissingBreakStatementInspection */
                 case 'tib':
                     $number *= 1024;
-                /** @noinspection PhpMissingBreakStatementInspection */
-                // no break
+                    // no break
                 case 'gib':
                     $number *= 1024;
-                /** @noinspection PhpMissingBreakStatementInspection */
-                // no break
+                    // no break
                 case 'mib':
                     $number *= 1024;
-                // no break
+                    // no break
                 case 'kib':
                     $number *= 1024;
                     break;

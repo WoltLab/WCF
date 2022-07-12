@@ -570,30 +570,30 @@ final class CronjobUtil
         $namesArr = [];
 
         switch ($name) {
-            // check if startMinute is a valid minute or a list of valid minutes.
             case 'startMinute':
+                // check if startMinute is a valid minute or a list of valid minutes.
                 $pattern = '[ ]*(\b[0-5]?[0-9]\b)[ ]*';
                 break;
 
-            // check if startHour is a valid hour or a list of valid hours.
             case 'startHour':
+                // check if startHour is a valid hour or a list of valid hours.
                 $pattern = '[ ]*(\b[01]?[0-9]\b|\b2[0-3]\b)[ ]*';
                 break;
 
-            // check if startDom is a valid day of month or a list of valid days of month.
             case 'startDom':
+                // check if startDom is a valid day of month or a list of valid days of month.
                 $pattern = '[ ]*(\b[01]?[1-9]\b|\b2[0-9]\b|\b3[01]\b)[ ]*';
                 break;
 
-            // check if startMonth is a valid month or a list of valid months.
             case 'startMonth':
+                // check if startMonth is a valid month or a list of valid months.
                 $digits = '[ ]*(\b[0-1]?[0-9]\b)[ ]*';
                 $namesArr = \explode('|', $months);
                 $pattern = '(' . $digits . ')|([ ]*(' . $months . ')[ ]*)';
                 break;
 
-            // check if startDow is a valid day of week or a list of valid days of week.
             case 'startDow':
+                // check if startDow is a valid day of week or a list of valid days of week.
                 $digits = '[ ]*(\b[0]?[0-7]\b)[ ]*';
                 $namesArr = \explode('|', $days);
                 $pattern = '(' . $digits . ')|([ ]*(' . $days . ')[ ]*)';

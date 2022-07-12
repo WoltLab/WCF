@@ -1379,18 +1379,15 @@ class PackageInstallationDispatcher
         // convert into bytes
         $lastCharacter = \mb_substr($value, -1);
         switch ($lastCharacter) {
-            // gigabytes
-            case 'g':
+            case 'g': // gigabytes
                 return (int)$value * 1073741824;
                 break;
 
-            // megabytes
-            case 'm':
+            case 'm': // megabytes
                 return (int)$value * 1048576;
                 break;
 
-            // kilobytes
-            case 'k':
+            case 'k': // kilobytes
                 return (int)$value * 1024;
                 break;
 
