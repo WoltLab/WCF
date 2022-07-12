@@ -136,15 +136,13 @@ class PackageAction extends AbstractDatabaseObjectAction
                 }
                 break;
 
-            // authentication error
-            case 401:
+            case 401: // authentication error
                 return [
                     'template' => $this->renderAuthorizationDialog(true),
                 ];
                 break;
 
-            // any other kind of errors
-            default:
+            default: // any other kind of errors
                 throw new SystemException(WCF::getLanguage()->getDynamicVariable(
                     'wcf.acp.pluginStore.api.error',
                     ['status' => $code]

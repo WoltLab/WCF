@@ -251,7 +251,10 @@ final class ImageUtil
                 break;
 
             default:
-                throw new \InvalidArgumentException("Unsupported image format, expecting one of 'gif', 'jpg', 'png' or 'webp'.");
+                throw new \InvalidArgumentException(\sprintf(
+                    "Unsupported image format '%s', expecting one of 'gif', 'jpg', 'png' or 'webp'.",
+                    $extension
+                ));
         }
 
         $imageAdapter = ImageHandler::getInstance()->getAdapter();

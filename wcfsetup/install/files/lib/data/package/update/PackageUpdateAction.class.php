@@ -662,6 +662,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             $this->readString('password', false, 'authData');
             $this->readString('username', false, 'authData');
             $this->readBoolean('saveCredentials', true, 'authData');
+            $this->parameters['authData']['isStoreCode'] = false;
         }
     }
 

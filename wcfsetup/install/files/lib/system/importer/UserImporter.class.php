@@ -96,7 +96,7 @@ class UserImporter extends AbstractImporter
                     $performMerge = true;
                     break;
                 }
-            // no break
+                // no break
             case self::MERGE_MODE_EMAIL:
                 // fetch merge target
                 $targetUser = User::getUserByEmail($data['email']);

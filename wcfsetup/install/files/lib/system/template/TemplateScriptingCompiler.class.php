@@ -1650,8 +1650,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // object access
-                    case '->':
+                    case '->': // object access
                         if ($status == 'variable' || $status == 'object') {
                             $result .= $operator;
                             $statusStack[\count($statusStack) - 1] = 'object access';
@@ -1667,8 +1666,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // left parenthesis
-                    case '(':
+                    case '(': // left parenthesis
                         if ($status == 'object') {
                             $statusStack[\count($statusStack) - 1] = 'variable';
                             $statusStack[] = 'object method start';
@@ -1698,8 +1696,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // right parenthesis
-                    case ')':
+                    case ')': // right parenthesis
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
                                 $oldStatus != 'variable'
@@ -1729,8 +1726,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // bracket open
-                    case '[':
+                    case '[': // bracket open
                         if ($status == 'variable' || $status == 'object') {
                             if ($status == 'object') {
                                 $statusStack[\count($statusStack) - 1] = 'variable';
@@ -1749,8 +1745,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // bracket close
-                    case ']':
+                    case ']': // bracket close
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
                                 $oldStatus != 'variable'
@@ -1776,8 +1771,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // modifier
-                    case '|':
+                    case '|': // modifier
                         // handle previous modifier
                         if ($modifierData !== null) {
                             if ($result !== '') {
@@ -1810,8 +1804,7 @@ class TemplateScriptingCompiler
                         $result = '';
                         break;
 
-                    // modifier parameter
-                    case ':':
+                    case ':': // modifier parameter
                         while ($oldStatus = \array_pop($statusStack)) {
                             if (
                                 $oldStatus != 'variable'
@@ -1869,8 +1862,7 @@ class TemplateScriptingCompiler
                         );
                         break;
 
-                    // math operators
-                    case '+':
+                    case '+': // math operators
                     case '-':
                     case '*':
                     case '/':

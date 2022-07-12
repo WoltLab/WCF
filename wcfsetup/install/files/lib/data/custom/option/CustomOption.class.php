@@ -194,30 +194,21 @@ abstract class CustomOption extends Option implements ITitledObject
 
                 return $result;
 
-            /** @noinspection PhpMissingBreakStatementInspection */
             case 'textarea':
                 if (!$forcePlaintext) {
                     return SimpleMessageParser::getInstance()->parse($this->optionValue);
                 }
-            // fallthrough
-
-            /** @noinspection PhpMissingBreakStatementInspection */
-            // no break
+                // no break
             case 'message':
                 if (!$forcePlaintext) {
                     return MessageParser::getInstance()->parse($this->optionValue);
                 }
-            // fallthrough
-
-            /** @noinspection PhpMissingBreakStatementInspection */
-            // no break
+                // no break
             case 'URL':
                 if (!$forcePlaintext) {
                     return StringUtil::getAnchorTag($this->optionValue, '', true, true);
                 }
-            // fallthrough
-
-            // no break
+                // no break
             default:
                 if (!$forcePlaintext) {
                     return StringUtil::encodeHTML($this->optionValue);

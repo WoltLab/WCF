@@ -207,7 +207,6 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         }
 
         switch ($boxType) {
-                /** @noinspection PhpMissingBreakStatementInspection */
             case 'system':
                 if (empty($data['elements']['objectType'])) {
                     throw new SystemException("Missing required element 'objectType' for 'system'-type box '{$identifier}'");
@@ -227,8 +226,6 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 }
 
                 $isMultilingual = true;
-
-                // fallthrough
 
                 // no break
             case 'html':

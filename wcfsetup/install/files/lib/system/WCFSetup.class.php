@@ -259,7 +259,6 @@ final class WCFSetup extends WCF
 
         // execute current step
         switch ($step) {
-            /** @noinspection PhpMissingBreakStatementInspection */
             case 'selectSetupLanguage':
                 if (!self::$developerMode) {
                     $this->calcProgress(0);
@@ -267,8 +266,7 @@ final class WCFSetup extends WCF
                     return $this->selectSetupLanguage();
                 }
 
-            /** @noinspection PhpMissingBreakStatementInspection */
-            // no break
+                // no break
             case 'showLicense':
                 if (!self::$developerMode) {
                     $this->calcProgress(1);
@@ -276,8 +274,7 @@ final class WCFSetup extends WCF
                     return $this->showLicense();
                 }
 
-            /** @noinspection PhpMissingBreakStatementInspection */
-            // no break
+                // no break
             case 'showSystemRequirements':
                 if (!self::$developerMode) {
                     $this->calcProgress(2);
@@ -285,7 +282,7 @@ final class WCFSetup extends WCF
                     return $this->showSystemRequirements();
                 }
 
-            // no break
+                // no break
             case 'configureDirectories':
                 $this->calcProgress(3);
 
@@ -721,8 +718,7 @@ final class WCFSetup extends WCF
                     );
                 } catch (DatabaseException $e) {
                     switch ($e->getPrevious()->getCode()) {
-                        // try to manually create non-existing database
-                        case 1049:
+                        case 1049: // try to manually create non-existing database
                             try {
                                 $db = new MySQLDatabase(
                                     $dbHostWithoutPort,
@@ -739,8 +735,7 @@ final class WCFSetup extends WCF
 
                             break;
 
-                        // work-around for older MySQL versions that don't know utf8mb4
-                        case 1115:
+                        case 1115: // work-around for older MySQL versions that don't know utf8mb4
                             throw new SystemException("Insufficient MySQL version. Version '8.0.29' or greater is needed.");
                             break;
 

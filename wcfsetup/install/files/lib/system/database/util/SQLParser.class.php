@@ -274,8 +274,7 @@ class SQLParser
                 }
                 break;
 
-            // standard sql; execute directly
-            case 'INSERT':
+            case 'INSERT': // standard sql; execute directly
             case 'UPDATE':
             case 'DELETE':
                 $this->executeStandardStatement($query);

@@ -225,13 +225,12 @@ class SearchForm extends AbstractCaptchaForm
             case 'username':
                 break;
 
-            /** @noinspection PhpMissingBreakStatementInspection */
             case 'relevance':
                 if (!$this->submit || !empty($this->query)) {
                     break;
                 }
 
-            // no break
+                // no break
             default:
                 if (!$this->submit || !empty($this->query)) {
                     $this->sortField = 'relevance';
