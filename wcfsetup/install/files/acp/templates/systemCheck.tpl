@@ -155,6 +155,18 @@
 			<small>{lang}wcf.acp.systemCheck.mysql.version.description{/lang}</small>
 		</dd>
 	</dl>
+
+	<dl{if !$results[mysql][mysqlnd]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.mysql.mysqlnd{/lang}</dt>
+		<dd>
+			{if $results[mysql][mysqlnd]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.mysql.mysqlnd.description{/lang}</small>
+		</dd>
+	</dl>
 	
 	<dl{if !$results[mysql][innodb]} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.mysql.innodb{/lang}</dt>

@@ -127,6 +127,7 @@ class SystemCheckPage extends AbstractPage
             'result' => false,
             'version' => '0.0.0',
             'foreignKeys' => false,
+            'mysqlnd' => false,
             'bufferPool' => [
                 'result' => false,
                 'value' => '0',
@@ -241,6 +242,12 @@ class SystemCheckPage extends AbstractPage
             ) >= 0);
         }
 
+        // check for MySQL Native driver
+        $sql = "SELECT 1";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute();
+        $this->results['mysql']['mysqlnd'] = ($statement->fetchSingleColumn() === 1);
+
         // check innodb support
         $sql = "SHOW ENGINES";
         $statement = WCF::getDB()->prepareStatement($sql);
@@ -296,6 +303,7 @@ class SystemCheckPage extends AbstractPage
 
         if (
             $this->results['mysql']['result']
+            && $this->results['mysql']['mysqlnd']
             && $this->results['mysql']['innodb']
             && $this->results['mysql']['foreignKeys']
             && $this->results['mysql']['bufferPool']['result']
