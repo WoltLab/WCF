@@ -71,11 +71,11 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         <dt>${Language.get("wcf.style.colorPicker.color")}</dt>
         <dd class="colorPickerChannels">
           rgba(
-          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r">
-          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="g">
-          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="b">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="r" data-dialog-submit-on-enter="true">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="g" data-dialog-submit-on-enter="true">
+          <input type="number" min="0" max="255" size="3" class="colorPickerChannel" data-channel="b" data-dialog-submit-on-enter="true">
           /
-          <input type="number" min="0" max="1" step="0.01" size="3" class="colorPickerChannel" data-channel="a">
+          <input type="number" min="0" max="1" step="0.01" size="3" class="colorPickerChannel" data-channel="a" data-dialog-submit-on-enter="true">
           )
         </dd>
       </dl>
@@ -84,7 +84,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         <dd>
           <div class="inputAddon">
             <span class="inputPrefix">#</span>
-            <input type="text" class="medium">
+            <input type="text" class="medium" data-dialog-submit-on-enter="true">
           </div>
         </dd>
       </dl>
@@ -101,7 +101,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
     </div>
   </div>
   <div class="formSubmit">
-    <button class="button buttonPrimary">${Language.get("wcf.style.colorPicker.button.apply")}</button>
+    <button class="button buttonPrimary" data-type="submit">${Language.get("wcf.style.colorPicker.button.apply")}</button>
   </div>
 </div>`,
                 options: {
@@ -125,7 +125,6 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                         this.colorTextInput = content.querySelector("input[type=text]");
                         this.colorTextInput.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
                         this.colorTextInput.addEventListener("keypress", (ev) => this.updateColorFromHex(ev));
-                        content.querySelector(".formSubmit > .buttonPrimary").addEventListener("click", () => this.submitDialog());
                         if (ColorUtil.isValidColor(this.input.value)) {
                             this.setInitialColor(this.input.value);
                         }
@@ -143,6 +142,9 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                     title: Language.get("wcf.style.colorPicker"),
                 },
             };
+        }
+        _dialogSubmit() {
+            this.submitDialog();
         }
         /**
          * Sets the callback called after submitting the dialog.
