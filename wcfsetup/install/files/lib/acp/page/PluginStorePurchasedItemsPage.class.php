@@ -22,7 +22,7 @@ class PluginStorePurchasedItemsPage extends AbstractPage
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'wcf.acp.menu.link.package';
+    public $activeMenuItem = 'wcf.acp.menu.link.package.list';
 
     /**
      * @inheritDoc
