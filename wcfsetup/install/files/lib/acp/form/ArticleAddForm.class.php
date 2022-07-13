@@ -537,6 +537,7 @@ class ArticleAddForm extends AbstractForm
         $this->publicationStatus = Article::PUBLISHED;
         $this->enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
         $this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->teaserImages = $this->teaserImageID == $this->tags = [];
+        $this->metaTitle = $this->metaDescription = [];
 
         $this->setDefaultValues();
     }
