@@ -52,3 +52,16 @@ if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
 
     throw new \RuntimeException($message);
 }
+
+$sql = "SELECT 1";
+$statement = $db->prepareStatement($sql);
+$statement->execute();
+if ($statement->fetchSingleColumn() !== 1) {
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "F&uuml;r die Kommunikation mit dem MySQL-Server muss PHPs MySQL Native Driver verwendet werden.";
+    } else {
+        $message = "PHP's MySQL Native Driver must be used for communication with the MySQL server.";
+    }
+
+    throw new \RuntimeException($message);
+}
