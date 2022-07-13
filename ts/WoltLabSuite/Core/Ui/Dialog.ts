@@ -698,10 +698,12 @@ const UiDialog = {
       if (inputField.required) {
         if (inputField.value.trim() === "") {
           DomUtil.innerError(inputField, Language.get("wcf.global.form.error.empty"));
+          inputField.closest('dl')?.classList.add('formError');
 
           isValid = false;
         } else {
           DomUtil.innerError(inputField, false);
+          inputField.closest('dl')?.classList.remove('formError');
         }
       }
     });
