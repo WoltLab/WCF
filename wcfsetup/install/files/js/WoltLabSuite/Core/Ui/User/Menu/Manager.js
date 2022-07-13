@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Ui/User/Menu/Manager
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1) {
+define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util", "../../Screen"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerProvider = exports.getContainer = exports.getUserMenuProviders = void 0;
@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     Util_1 = tslib_1.__importDefault(Util_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
     let container = undefined;
     const providers = new Set();
     const views = new Map();
@@ -97,6 +98,35 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
                         open(provider);
                     }
                 });
+            });
+            // Update the position of the user menu if the browser is
+            // resized while the menu is visible.
+            window.addEventListener("resize", () => {
+                providers.forEach((provider) => {
+                    const button = provider.getPanelButton();
+                    if (button.classList.contains("open")) {
+                        const view = getView(provider);
+                        setAlignment(view.getElement(), button);
+                    }
+                });
+            }, { passive: true });
+            UiScreen.on("screen-md-down", {
+                match() {
+                    providers.forEach((provider) => {
+                        const button = provider.getPanelButton();
+                        if (button.classList.contains("open")) {
+                            close(provider);
+                        }
+                    });
+                },
+                setup() {
+                    providers.forEach((provider) => {
+                        const button = provider.getPanelButton();
+                        if (button.classList.contains("open")) {
+                            close(provider);
+                        }
+                    });
+                },
             });
         }
         initProvider(provider);

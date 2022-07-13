@@ -14,6 +14,7 @@ import * as Alignment from "../../Alignment";
 import CloseOverlay from "../../CloseOverlay";
 import * as EventHandler from "../../../Event/Handler";
 import DomUtil from "../../../Dom/Util";
+import * as UiScreen from "../../Screen";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -118,6 +119,41 @@ export function registerProvider(provider: UserMenuProvider): void {
           open(provider);
         }
       });
+    });
+
+    // Update the position of the user menu if the browser is
+    // resized while the menu is visible.
+    window.addEventListener(
+      "resize",
+      () => {
+        providers.forEach((provider) => {
+          const button = provider.getPanelButton();
+          if (button.classList.contains("open")) {
+            const view = getView(provider);
+            setAlignment(view.getElement(), button);
+          }
+        });
+      },
+      { passive: true },
+    );
+
+    UiScreen.on("screen-md-down", {
+      match() {
+        providers.forEach((provider) => {
+          const button = provider.getPanelButton();
+          if (button.classList.contains("open")) {
+            close(provider);
+          }
+        });
+      },
+      setup() {
+        providers.forEach((provider) => {
+          const button = provider.getPanelButton();
+          if (button.classList.contains("open")) {
+            close(provider);
+          }
+        });
+      },
     });
   }
 
