@@ -20,7 +20,7 @@ class PackagePage extends AbstractPage
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'wcf.acp.menu.link.package';
+    public $activeMenuItem = 'wcf.acp.menu.link.package.list';
 
     /**
      * @deprecated 5.5 This array is always empty.

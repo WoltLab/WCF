@@ -332,22 +332,22 @@ final class CronjobUtil
     }
 
     /**
-     * Calculates hour of next execution. Returns number of days which
-     * had been added in order to match expression for hour and minutes.
+     * Calculates hour of next execution. Returns true if hour-declaration
+     * has already elapsed, thus requiring at least one day to be added.
      *
      * @param array $values
      * @param int $timeBase
-     * @return  int
+     * @return  bool
      */
     protected static function calculateHour(array &$values, &$timeBase)
     {
         $addAnDay = false;
 
         // compare hour
-        $hour = \intval(\date('G', $timeBase));
-        $index = self::findKey($hour, $values['hour'], false);
+        $currentHour = \intval(\date('G', $timeBase));
+        $index = self::findKey($currentHour, $values['hour'], false);
         if ($index === false) {
-            $index = self::findKey($hour, $values['hour']);
+            $index = self::findKey($currentHour, $values['hour']);
             $addAnDay = true;
         }
         $hour = $values['hour'][$index];
@@ -355,7 +355,9 @@ final class CronjobUtil
         // calculate minutes
         $addAnHour = self::calculateMinute($values, $timeBase, $addAnDay);
 
-        if ($addAnHour) {
+        // only add an hour (potentially a day) if the current hour is the same
+        // for which the minute-declaration has already elapsed
+        if ($addAnHour && $hour == $currentHour) {
             $hour++;
             $index = self::findKey($hour, $values['hour'], false);
 
@@ -373,8 +375,8 @@ final class CronjobUtil
     }
 
     /**
-     * Calculates minutes of next execution. Returns false if minute-declaration
-     * is past the current hour, thus requires to add at least one hour.
+     * Calculates minutes of next execution. Returns true if minute-declaration
+     * has already elapsed, thus requiring at least one hour to be added.
      *
      * @param array $values
      * @param int $timeBase
@@ -383,7 +385,7 @@ final class CronjobUtil
      */
     protected static function calculateMinute(array &$values, &$timeBase, $addAnDay)
     {
-        $returnValue = false;
+        $addAnHour = false;
 
         if ($addAnDay) {
             $minute = 0;
@@ -397,12 +399,12 @@ final class CronjobUtil
         // notify calling method that we had to increase the hour
         if ($index === false) {
             $index = self::findKey($minute, $values['minute']);
-            $returnValue = true;
+            $addAnHour = true;
         }
 
         self::$result['minute'] = $values['minute'][$index];
 
-        return $returnValue;
+        return $addAnHour;
     }
 
     /**
