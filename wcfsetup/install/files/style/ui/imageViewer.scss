@@ -395,6 +395,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 					> img {
 						max-height: 80px;
 						max-width: 80px;
+						object-fit: contain;
 					}
 				}
 			}
