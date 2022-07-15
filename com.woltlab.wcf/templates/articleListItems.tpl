@@ -2,7 +2,7 @@
 
 <div class="contentItemList">
 	{foreach from=$objects item='article' name='articles'}
-		<article class="contentItem contentItemMultiColumn" role="article">
+		<article class="contentItem contentItemMultiColumn">
 			<div class="contentItemLink">
 				<div class="contentItemImage contentItemImageLarge">
 					<img
