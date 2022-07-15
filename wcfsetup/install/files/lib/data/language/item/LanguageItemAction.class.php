@@ -212,5 +212,8 @@ class LanguageItemAction extends AbstractDatabaseObjectAction
         $languageItemList->readObjects();
 
         (new self($languageItemList->getObjects(), 'delete'))->executeAction();
+
+        LanguageFactory::getInstance()->clearCache();
+        LanguageFactory::getInstance()->deleteLanguageCache();
     }
 }
