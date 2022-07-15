@@ -51,7 +51,7 @@
 				</ul>
 			</div>
 			
-			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}" required>
+			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}">
 			
 			<button class="pageHeaderSearchInputButton button" type="submit">
 				<span class="icon icon16 fa-search pointer" title="{lang}wcf.global.search{/lang}"></span>
