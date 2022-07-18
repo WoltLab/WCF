@@ -494,7 +494,12 @@
 	.pageHeaderSearchMobile {
 		grid-area: search;
 
+		.icon::before {
+			color: $wcfHeaderLink;
+		}
+
 		&[aria-expanded="true"] .icon::before {
+			color: $wcfHeaderLinkActive;
 			content: $fa-var-times;
 		}
 	}
