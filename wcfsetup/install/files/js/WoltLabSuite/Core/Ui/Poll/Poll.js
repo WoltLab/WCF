@@ -42,8 +42,9 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
                     this.views.set(element.dataset.key, element);
                 }
             });
-            if (this.canViewResults) {
-                this.resultsView = new Results_1.default(this);
+            const button = this.element.querySelector(".showResultsButton");
+            if (this.canViewResults && button !== null) {
+                this.resultsView = new Results_1.default(this, button);
             }
             if (this.canVote) {
                 this.voteView = new Vote_1.default(this);

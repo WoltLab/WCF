@@ -13,12 +13,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../Poll"], function (re
     exports.Results = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     class Results {
-        constructor(manager) {
+        constructor(manager, button) {
             this.pollManager = manager;
-            const button = this.pollManager.getElement().querySelector(".showResultsButton");
-            if (!button) {
-                throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollId}"`);
-            }
             this.button = button;
             this.button.addEventListener("click", async (event) => {
                 if (event) {

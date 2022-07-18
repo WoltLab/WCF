@@ -51,8 +51,9 @@ export class Poll {
         }
       });
 
-    if (this.canViewResults) {
-      this.resultsView = new Results(this);
+    const button = this.element.querySelector<HTMLButtonElement>(".showResultsButton");
+    if (this.canViewResults && button !== null) {
+      this.resultsView = new Results(this, button);
     }
 
     if (this.canVote) {

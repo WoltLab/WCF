@@ -19,15 +19,8 @@ export class Results {
   private readonly pollManager: Poll;
   private readonly button: HTMLButtonElement;
 
-  public constructor(manager: Poll) {
+  public constructor(manager: Poll, button: HTMLButtonElement) {
     this.pollManager = manager;
-
-    const button = this.pollManager.getElement().querySelector<HTMLButtonElement>(".showResultsButton");
-
-    if (!button) {
-      throw new Error(`Could not find button with selector ".showResultsButton" for poll "${this.pollManager.pollId}"`);
-    }
-
     this.button = button;
 
     this.button.addEventListener("click", async (event) => {
