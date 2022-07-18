@@ -319,18 +319,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         if ($depth === 0 && $isFullQuote && \count($quotes) > 0) {
             /** @var \DOMElement $body */
             $body = $this->getDocument()->getElementsByTagName('body')[0];
-
-            // TODO: This can be simplified in PHP 8.0+ by checking against `$body->childElementCount`.
-            $hasChildren = false;
-            /** @var \DOMNode $node */
-            foreach ($body->childNodes as $node) {
-                if ($node->nodeType === \XML_ELEMENT_NODE) {
-                    $hasChildren = true;
-                    break;
-                }
-            }
-
-            if (!$hasChildren) {
+            if ($body->childElementCount === 0) {
                 $p = $body->ownerDocument->createElement('p');
                 $p->textContent = "[\u{2026}]";
                 $body->appendChild($p);
