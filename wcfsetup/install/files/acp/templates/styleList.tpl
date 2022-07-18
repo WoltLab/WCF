@@ -4,6 +4,16 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.ACP.Style.List();
+
+		document.querySelectorAll('.styleList .jsObjectAction[data-object-action="toggle"]').forEach((icon) => {
+			icon.parentElement.addEventListener("click", (event) => {
+				if (event.target !== icon) {
+					event.preventDefault();
+
+					icon.click();
+				}
+			});
+		});
 	});
 </script>
 
