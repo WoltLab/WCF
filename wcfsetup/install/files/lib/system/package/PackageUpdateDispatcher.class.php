@@ -746,7 +746,7 @@ class PackageUpdateDispatcher extends SingletonFactory
         $sql = "SELECT      pu.packageUpdateID, pu.packageUpdateServerID, pu.package,
                             puv.packageUpdateVersionID, puv.packageDate, puv.filename, puv.packageVersion
                 FROM        wcf" . WCF_N . "_package_update pu
-                LEFT JOIN   wcf" . WCF_N . "_package_update_version puv
+                INNER JOIN  wcf" . WCF_N . "_package_update_version puv
                 ON          puv.packageUpdateID = pu.packageUpdateID
                         AND puv.isAccessible = 1
                 " . $conditions;
