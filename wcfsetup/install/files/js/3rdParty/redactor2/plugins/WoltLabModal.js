@@ -10,12 +10,12 @@ $.Redactor.prototype.WoltLabModal = function() {
 	// need to go there nor will it work
 	var _methods = {
 		close: function() {
-			this.selection.restore();
-			
 			// avoid calling `close()` without any dialogs opened before
 			if (_uiDialog.getDialog('redactorOverlay-' + this.uuid)) {
 				_uiDialog.close('redactorOverlay-' + this.uuid);
 			}
+
+			this.selection.restore();
 		},
 		
 		load: function(templateName, title) {
