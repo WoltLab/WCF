@@ -574,12 +574,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 if (inputField.required) {
                     if (inputField.value.trim() === "") {
                         Util_1.default.innerError(inputField, Language.get("wcf.global.form.error.empty"));
-                        (_a = inputField.closest('dl')) === null || _a === void 0 ? void 0 : _a.classList.add('formError');
+                        (_a = inputField.closest("dl")) === null || _a === void 0 ? void 0 : _a.classList.add("formError");
                         isValid = false;
                     }
                     else {
                         Util_1.default.innerError(inputField, false);
-                        (_b = inputField.closest('dl')) === null || _b === void 0 ? void 0 : _b.classList.remove('formError');
+                        (_b = inputField.closest("dl")) === null || _b === void 0 ? void 0 : _b.classList.remove("formError");
                     }
                 }
             });
