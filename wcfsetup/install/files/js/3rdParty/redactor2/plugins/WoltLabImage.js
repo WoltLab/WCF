@@ -124,6 +124,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 			button.textContent = WCF.Language.get('wcf.global.button.insert');
 			
 			this.WoltLabModal.rebuild();
+
+			if (this.detect.isDesktop()) {
+				document.getElementById("redactor-image-source").focus();
+			}
 		},
 		
 		insert: function(event) {

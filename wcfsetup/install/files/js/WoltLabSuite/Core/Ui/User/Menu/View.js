@@ -211,7 +211,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
                 link.href = "#";
                 link.addEventListener("click", (event) => {
                     event.preventDefault();
-                    this.markAllAsRead();
+                    void this.markAllAsRead();
                 });
             }
             else {
@@ -219,8 +219,8 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             }
             return link;
         }
-        markAllAsRead() {
-            void this.provider.markAllAsRead();
+        async markAllAsRead() {
+            await this.provider.markAllAsRead();
             this.getContent()
                 .querySelectorAll(".userMenuItem")
                 .forEach((element) => {

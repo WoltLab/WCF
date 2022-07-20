@@ -264,7 +264,7 @@ export class UserMenuView {
       link.addEventListener("click", (event) => {
         event.preventDefault();
 
-        this.markAllAsRead();
+        void this.markAllAsRead();
       });
     } else {
       link.href = button.link;
@@ -273,8 +273,8 @@ export class UserMenuView {
     return link;
   }
 
-  private markAllAsRead(): void {
-    void this.provider.markAllAsRead();
+  private async markAllAsRead(): Promise<void> {
+    await this.provider.markAllAsRead();
 
     this.getContent()
       .querySelectorAll(".userMenuItem")
