@@ -2,7 +2,7 @@
   "dependencies": {
     "deepmerge": "^4.2.2",
     "requirejs": "^2.3.6",
-    "terser": "^5.9.0",
+    "terser": "^5.14.2",
     "ts-node": "^10.3.0"
   },
   "devDependencies": {
