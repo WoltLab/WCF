@@ -53,6 +53,8 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
         if (empty($issues) || $this->isEnabled()) {
             $this->form->appendChildren([
+                TemplateFormNode::create('issues')
+                    ->templateName('packageEnableUpgradeOverrideSuccess'),
                 BooleanFormField::create('enable')
                     ->label('wcf.acp.package.enableUpgradeOverride.enable')
                     ->value(PackageUpdateServer::isUpgradeOverrideEnabled()),

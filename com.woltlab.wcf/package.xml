@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.5.3 dev 2</version>
-		<date>2022-07-19</date>
+		<version>5.5.3</version>
+		<date>2022-07-20</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -118,11 +118,15 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
+		<instruction type="language"/>
+		
 		<instruction type="script">acp/update_com.woltlab.wcf_5.5_deleteDsStore.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.5.3 dev 1">
+	<instructions type="update" fromversion="5.5.3 dev 2">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		
+		<instruction type="language"/>
 	</instructions>
 </package>
