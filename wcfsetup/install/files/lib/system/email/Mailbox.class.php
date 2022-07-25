@@ -4,7 +4,6 @@ namespace wcf\system\email;
 
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Utils;
-use TrueBV\Punycode;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
 
