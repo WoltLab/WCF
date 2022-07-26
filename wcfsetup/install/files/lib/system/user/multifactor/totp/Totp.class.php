@@ -72,7 +72,7 @@ final class Totp
     /**
      * Generates the TOTP code for the given timestamp.
      */
-    public function generateTotpCode(\DateTime $time): string
+    public function generateTotpCode(\DateTimeInterface $time): string
     {
         $counter = \intval($time->getTimestamp() / self::TIME_STEP);
 
@@ -85,7 +85,7 @@ final class Totp
      * If this method returns `true` the $minCounter value will be updated to the counter that
      * was used for verification. You MUST store the updated $minCounter to prevent code re-use.
      */
-    public function validateTotpCode(string $userCode, int &$minCounter, \DateTime $time): bool
+    public function validateTotpCode(string $userCode, int &$minCounter, \DateTimeInterface $time): bool
     {
         $counter = \intval($time->getTimestamp() / self::TIME_STEP);
 
