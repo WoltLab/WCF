@@ -84,7 +84,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                         $totp = $secret->getTotp();
 
                         $minCounter = 0;
-                        if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
+                        if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTimeImmutable())) {
                             $field->value('');
                             $field->addValidationError(new FormFieldValidationError(
                                 'invalidCode',
@@ -338,7 +338,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
 
                         $totp = new Totp($selectedDevice['secret']);
                         $minCounter = $selectedDevice['minCounter'];
-                        if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
+                        if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTimeImmutable())) {
                             $field->value('');
                             $field->addValidationError(new FormFieldValidationError(
                                 'invalidCode',
