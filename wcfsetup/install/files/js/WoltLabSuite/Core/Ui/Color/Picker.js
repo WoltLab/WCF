@@ -124,7 +124,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                         this.oldColor = content.querySelector(".colorPickerColorOld > span");
                         this.colorTextInput = content.querySelector("input[type=text]");
                         this.colorTextInput.addEventListener("blur", (ev) => this.updateColorFromHex(ev));
-                        this.colorTextInput.addEventListener("keypress", (ev) => this.updateColorFromHex(ev));
+                        this.colorTextInput.addEventListener("input", (ev) => this.updateColorFromHex(ev));
                         if (ColorUtil.isValidColor(this.input.value)) {
                             this.setInitialColor(this.input.value);
                         }
