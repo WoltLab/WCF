@@ -40,7 +40,7 @@ final class UserUtil
             }
         }
         // username must not be a valid e-mail
-        if (self::isValidEmail($name)) {
+        if (self::isValidEmail($name) && \strpos($name, '.') !== false) {
             return false;
         }
 
