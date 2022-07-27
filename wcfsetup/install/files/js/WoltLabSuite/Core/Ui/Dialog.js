@@ -422,7 +422,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             const focusTrap = (0, focus_trap_1.createFocusTrap)(dialog, {
                 allowOutsideClick: true,
                 escapeDeactivates() {
-                    UiDialog.close(id);
+                    const data = _dialogs.get(id);
+                    if (data.closable) {
+                        UiDialog.close(id);
+                    }
                     return false;
                 },
                 fallbackFocus: dialog,

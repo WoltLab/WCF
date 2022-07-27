@@ -506,7 +506,10 @@ const UiDialog = {
     const focusTrap = createFocusTrap(dialog, {
       allowOutsideClick: true,
       escapeDeactivates(): boolean {
-        UiDialog.close(id);
+        const data = _dialogs.get(id)!;
+        if (data.closable) {
+          UiDialog.close(id);
+        }
 
         return false;
       },
