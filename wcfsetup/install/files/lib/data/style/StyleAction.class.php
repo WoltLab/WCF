@@ -330,10 +330,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     }
 
                     // Create ICO file.
-                    (new \PHP_ICO($file->getLocation(), [
+                    $ico = @new \PHP_ICO($file->getLocation(), [
                         [16, 16],
                         [32, 32],
-                    ]))->save_ico($style->getAssetPath() . "favicon.ico");
+                    ]);
+                    $ico->save_ico($style->getAssetPath() . "favicon.ico");
 
                     (new StyleEditor($style))->update([
                         'hasFavicon' => 1,
