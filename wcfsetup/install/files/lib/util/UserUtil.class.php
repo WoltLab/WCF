@@ -41,7 +41,13 @@ final class UserUtil
         }
         // username must not be a valid e-mail
         if (self::isValidEmail($name)) {
-            return false;
+            // Accept usernames that are a valid email address, but do not
+            // contain any dots. As the domain part is expected to contain
+            // at least one dot, this allow the use of common leetspeak
+            // usernames, without accepting actually valid email addresses.
+            if (\str_contains($name, '.')) {
+                return false;
+            }
         }
 
         return true;
