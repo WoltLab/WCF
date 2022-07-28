@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2c4d9a2cde0d0294596518c7ed79938",
+    "content-hash": "2043ec419034245a9686f5b51a895c3c",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -645,16 +645,16 @@
         },
         {
             "name": "laminas/laminas-progressbar",
-            "version": "2.10.0",
+            "version": "2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-progressbar.git",
-                "reference": "3efb7e1b4b36dcfc0a6e5580640d109ef57e56c9"
+                "reference": "cb57c459f3c2cef516e6d36218b70f780289d383"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/3efb7e1b4b36dcfc0a6e5580640d109ef57e56c9",
-                "reference": "3efb7e1b4b36dcfc0a6e5580640d109ef57e56c9",
+                "url": "https://api.github.com/repos/laminas/laminas-progressbar/zipball/cb57c459f3c2cef516e6d36218b70f780289d383",
+                "reference": "cb57c459f3c2cef516e6d36218b70f780289d383",
                 "shasum": ""
             },
             "require": {
@@ -704,7 +704,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-02-05T15:45:26+00:00"
+            "time": "2022-07-28T09:25:14+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
