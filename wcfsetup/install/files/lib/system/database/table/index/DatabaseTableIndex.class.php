@@ -93,6 +93,12 @@ class DatabaseTableIndex
      */
     public function getColumns()
     {
+        if (!isset($this->columns)) {
+            throw new \BadMethodCallException(
+                "Before getting the columns, they must be set for index '{$this->getName()}'."
+            );
+        }
+
         return $this->columns;
     }
 
@@ -104,8 +110,8 @@ class DatabaseTableIndex
     public function getData()
     {
         return [
-            'columns' => \implode(',', $this->columns),
-            'type' => $this->type,
+            'columns' => \implode(',', $this->getColumns()),
+            'type' => $this->getType(),
         ];
     }
 
