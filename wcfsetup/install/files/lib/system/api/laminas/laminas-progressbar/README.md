@@ -1,7 +1,6 @@
 # laminas-progressbar
 
-[![Build Status](https://travis-ci.org/laminas/laminas-progressbar.svg?branch=master)](https://travis-ci.org/laminas/laminas-progressbar)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-progressbar/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-progressbar?branch=master)
+[![Build Status](https://github.com/laminas/laminas-progressbar/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-progressbar/actions?query=workflow%3A"Continuous+Integration")
 
 laminas-progressbar is a component to create and update progress bars in different
 environments. It consists of a single backend, which outputs the progress through
@@ -23,6 +22,6 @@ Browse the documentation online at https://docs.laminas.dev/laminas-progressbar/
 
 ## Support
 
-* [Issues](https://github.com/laminas/laminas-progressbar/issues/)
-* [Chat](https://laminas.dev/chat/)
-* [Forum](https://discourse.laminas.dev/)
+- [Issues](https://github.com/laminas/laminas-progressbar/issues/)
+- [Chat](https://laminas.dev/chat/)
+- [Forum](https://discourse.laminas.dev/)

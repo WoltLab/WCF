@@ -92,9 +92,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-progressbar' => array(
-            'pretty_version' => '2.7.0',
-            'version' => '2.7.0.0',
-            'reference' => '15f9e983276462f30d7d38660dc7488c6e3df34b',
+            'pretty_version' => 'dev-woltlab-2.7',
+            'version' => 'dev-woltlab-2.7',
+            'reference' => '3c61cf5698fe537a0cd1984d0d711bb98b2babde',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-progressbar',
             'aliases' => array(),
@@ -313,7 +313,7 @@
         'zendframework/zend-progressbar' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '2.7.0',
+                0 => '^2.7.0',
             ),
         ),
         'zendframework/zend-stdlib' => array(

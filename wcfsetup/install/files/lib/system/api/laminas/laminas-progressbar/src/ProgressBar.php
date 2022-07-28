@@ -48,7 +48,7 @@ class ProgressBar
      *
      * @var string
      */
-    protected $statusText = null;
+    protected $statusText = '';
 
     /**
      * Adapter for the output
