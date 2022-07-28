@@ -108,7 +108,7 @@ class DatabaseTableForeignKey
      */
     public function getColumns()
     {
-        if ($this->columns === null) {
+        if (!isset($this->columns)) {
             throw new \BadMethodCallException(
                 "Before getting the columns, they must be set for foreign key '{$this->getName()}'."
             );
