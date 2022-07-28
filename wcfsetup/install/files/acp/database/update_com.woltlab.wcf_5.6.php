@@ -9,8 +9,10 @@
  * @package WoltLabSuite\Core
  */
 
+use wcf\system\database\table\column\BigintDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
+use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -25,6 +27,12 @@ return [
     PartialDatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
+            VarbinaryDatabaseTableColumn::create('sha256')
+                ->length(32)
+                ->defaultValue(null),
+            BigintDatabaseTableColumn::create('lastUpdated')
+                ->length(20)
+                ->defaultValue(null),
         ]),
     PartialDatabaseTable::create('wcf1_package_installation_plugin')
         ->columns([

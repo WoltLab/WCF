@@ -956,6 +956,8 @@ CREATE TABLE wcf1_package_installation_file_log (
 	packageID INT(10) NOT NULL,
 	filename VARBINARY(765) NOT NULL, -- VARBINARY(765) roughly equals VARCHAR(255)
 	application VARCHAR(20) NOT NULL,
+	sha256 VARBINARY(32) DEFAULT NULL,
+	lastUpdated BIGINT(20) DEFAULT NULL,
 	UNIQUE KEY applicationFile (application, filename)
 );
 

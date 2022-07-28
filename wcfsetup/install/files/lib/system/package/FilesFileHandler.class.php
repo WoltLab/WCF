@@ -2,6 +2,7 @@
 
 namespace wcf\system\package;
 
+use wcf\data\application\Application;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -61,9 +62,13 @@ class FilesFileHandler extends PackageInstallationFileHandler
             return;
         }
 
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_package_installation_file_log
-                                    (packageID, filename, application)
-                VALUES              (?, ?, ?)";
+        $baseDirectory = Application::getDirectory($this->application);
+
+        $sql = "INSERT INTO             wcf1_package_installation_file_log
+                                        (packageID, filename, application, sha256, lastUpdated)
+                VALUES                  (?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE sha256 = VALUES(sha256),
+                                        lastUpdated = VALUES(lastUpdated)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -72,6 +77,8 @@ class FilesFileHandler extends PackageInstallationFileHandler
                 $this->packageInstallation->getPackageID(),
                 $file,
                 $this->application,
+                \hash_file('sha256', $baseDirectory . $file, true),
+                TIME_NOW,
             ]);
         }
         WCF::getDB()->commitTransaction();
