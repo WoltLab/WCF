@@ -97,7 +97,9 @@
             'reference' => '3c61cf5698fe537a0cd1984d0d711bb98b2babde',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-progressbar',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '2.7.0',
+            ),
             'dev_requirement' => false,
         ),
         'laminas/laminas-stdlib' => array(
@@ -227,9 +229,9 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.10.4',
-            'version' => '1.10.4.0',
-            'reference' => '8ed20753db2d3d82629e6f5d35535bbbd3893b0c',
+            'pretty_version' => 'v1.10.5',
+            'version' => '1.10.5.0',
+            'reference' => '6d44282ccf283e133ab70b6282f8e068ff2f9bf9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
