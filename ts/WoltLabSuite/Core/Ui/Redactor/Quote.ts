@@ -18,6 +18,7 @@ import { DialogCallbackSetup } from "../Dialog/Data";
 import { RedactorEditor } from "./Editor";
 import * as UiRedactorMetacode from "./Metacode";
 import * as UiRedactorPseudoHeader from "./PseudoHeader";
+import * as UiScroll from "../Scroll";
 
 interface QuoteData {
   author: string;
@@ -115,6 +116,10 @@ class UiRedactorQuote {
 
       this._editor.buffer.set();
     });
+
+    window.setTimeout(() => {
+      UiScroll.element(this._editor.core.box()[0]);
+    }, 0);
   }
 
   /**

@@ -7,7 +7,7 @@
  * @module      WoltLabSuite/Core/Ui/Redactor/Quote
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./Metacode", "./PseudoHeader"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorMetacode, UiRedactorPseudoHeader) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./Metacode", "./PseudoHeader", "../Scroll"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorMetacode, UiRedactorPseudoHeader, UiScroll) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiRedactorMetacode = tslib_1.__importStar(UiRedactorMetacode);
     UiRedactorPseudoHeader = tslib_1.__importStar(UiRedactorPseudoHeader);
+    UiScroll = tslib_1.__importStar(UiScroll);
     let _headerHeight = 0;
     class UiRedactorQuote {
         /**
@@ -85,6 +86,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
                 this._editor.WoltLabCaret.paragraphAfterBlock(quote);
                 this._editor.buffer.set();
             });
+            window.setTimeout(() => {
+                UiScroll.element(this._editor.core.box()[0]);
+            }, 0);
         }
         /**
          * Toggles the quote block on button click.
