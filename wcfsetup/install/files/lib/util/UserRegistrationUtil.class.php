@@ -132,6 +132,6 @@ final class UserRegistrationUtil
     {
         $hash = StringUtil::getRandomID();
 
-        return \substr($hash, 0, \mt_rand(8, 16));
+        return \substr($hash, 0, \random_int(8, 16));
     }
 }

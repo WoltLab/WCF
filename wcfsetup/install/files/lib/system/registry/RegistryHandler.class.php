@@ -224,7 +224,7 @@ class RegistryHandler extends SingletonFactory
                     break;
                 }
 
-                \usleep(\mt_rand(0, .1e6)); // 0 to .1 seconds
+                \usleep(\random_int(0, .1e6)); // 0 to .1 seconds
             }
         }
         $this->resetFields = $this->updateFields = [];
