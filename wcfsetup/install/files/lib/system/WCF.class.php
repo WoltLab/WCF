@@ -388,6 +388,12 @@ class WCF
 
             if (ENABLE_DEBUG_MODE) {
                 self::$dbObj->enableDebugMode();
+
+                // zend.assertions can't be enabled at runtime if the value is set to -1, because
+                // the necessary opcodes will not be compiled.
+                if (@\ini_get('zend.assertions') >= 0) {
+                    @\ini_set('zend.assertions', 1);
+                }
             }
         }
     }
