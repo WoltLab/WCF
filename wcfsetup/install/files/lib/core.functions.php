@@ -16,6 +16,7 @@ namespace {
 	if (PHP_VERSION_ID >= 80200) {
 		@ini_set('zend.exception_ignore_args', 0);
 	}
+	@ini_set('assert.exception', 1);
 
 	// set shutdown function
 	register_shutdown_function([WCF::class, 'destruct']);
