@@ -93,7 +93,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		// for backwards compatibility, the object is still created but only inserted
 		// if an editor is used
-		this._insertAllButton = $('<p class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').hide();
+		this._insertAllButton = $('<button class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</button>').hide();
 		
 		if (this._editorId) {
 			this._insertAllButton.appendTo(this._buttonSelector);
@@ -574,7 +574,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// init buttons
 				var $buttonList = $li.find('ul').addClass('buttonGroup');
-				var $deleteButton = $('<li><span class="button small jsObjectAction" data-object-action="delete" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
+				var $deleteButton = $('<li><button class="button small jsObjectAction" data-object-action="delete" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</button></li>');
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', attachmentData.attachmentID);
@@ -582,13 +582,13 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				if (this._editorId) {
 					if (attachmentData.tinyURL) {
 						if (attachmentData.thumbnailURL) {
-							$('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
+							$('<li><button class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</button></li>').appendTo($buttonList);
 						}
 						
-						$('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
+						$('<li><button class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</button></li>').appendTo($buttonList);
 					}
 					else {
-						$('<li><span class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</span></li>').appendTo($buttonList);
+						$('<li><button class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</button></li>').appendTo($buttonList);
 					}
 				}
 				
