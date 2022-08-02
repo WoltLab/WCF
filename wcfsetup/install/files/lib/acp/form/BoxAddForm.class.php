@@ -765,6 +765,18 @@ class BoxAddForm extends AbstractForm
             );
 
             $this->readBoxImages();
+
+            $conditions = $this->presetBox->getVisibilityConditions();
+            $conditionsByObjectTypeID = [];
+            foreach ($conditions as $condition) {
+                $conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
+            }
+
+            foreach ($this->toFlatList($this->groupedConditionObjectTypes) as $objectType) {
+                if (isset($conditionsByObjectTypeID[$objectType->objectTypeID])) {
+                    $conditionsByObjectTypeID[$objectType->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
+                }
+            }
         }
     }
 
