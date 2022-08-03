@@ -872,9 +872,6 @@ final class WCFSetup extends WCF
         }
         $sql = $sqlData[$offset];
 
-        // installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-        $sql = \str_replace('wcf1_', 'wcf' . WCF_N . '_', $sql);
-
         // execute sql queries
         $parser = new SQLParser($sql);
         $parser->execute();
@@ -883,7 +880,7 @@ final class WCFSetup extends WCF
         \preg_match_all("~CREATE\\s+TABLE\\s+(\\w+)~i", $sql, $matches);
 
         if (!empty($matches[1])) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+            $sql = "INSERT INTO wcf1_package_installation_sql_log
                                 (packageID, sqlTable)
                     VALUES      (?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
@@ -905,7 +902,7 @@ final class WCFSetup extends WCF
              * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
             * in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
             */
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_plugin
+            $sql = "INSERT INTO wcf1_package_installation_plugin
                                 (packageID, pluginName, priority, className)
                     VALUES      (?, ?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
@@ -942,7 +939,7 @@ final class WCFSetup extends WCF
 
         // save acp template log
         if (!empty($acpTemplateInserts)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_acp_template
+            $sql = "INSERT INTO wcf1_acp_template
                                 (packageID, templateName, application)
                     VALUES      (?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
@@ -956,7 +953,7 @@ final class WCFSetup extends WCF
 
         // save file log
         if (!empty($fileInserts)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_file_log
+            $sql = "INSERT INTO wcf1_package_installation_file_log
                                 (packageID, filename, application)
                     VALUES      (?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
@@ -1103,7 +1100,7 @@ final class WCFSetup extends WCF
                 // get language id
                 $languageID = 0;
                 $sql = "SELECT  languageID
-                        FROM    wcf" . WCF_N . "_language
+                        FROM    wcf1_language
                         WHERE   languageCode = ?";
                 $statement = self::getDB()->prepareStatement($sql);
                 $statement->execute([self::$selectedLanguageCode]);
