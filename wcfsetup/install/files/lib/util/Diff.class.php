@@ -2,6 +2,8 @@
 
 namespace wcf\util;
 
+use SebastianBergmann\Diff\Differ;
+
 /**
  * Diff calculates the longest common subsequence of two given
  * arrays and is able to generate the differences (added / removed items)
@@ -331,6 +333,26 @@ class Diff
         }
 
         return \implode("\n", $result);
+    }
+
+    /**
+     * Transforms the output of sebastian/diff's Differ::diffToArray() into
+     * the output of self::getRawDiff().
+     *
+     * @since 5.6
+     */
+    public static function rawDiffFromSebastianDiff(array $arrayDiff): array
+    {
+        return \array_map(static function ($entry) {
+            return [
+                match($entry[1]) {
+                    Differ::ADDED => self::ADDED,
+                    Differ::REMOVED => self::REMOVED,
+                    Differ::OLD => self::SAME,
+                },
+                $entry[0],
+            ];
+        }, $arrayDiff);
     }
 
     /**
