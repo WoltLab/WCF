@@ -24,6 +24,7 @@
         "psr/http-server-handler": "^1.0.1",
         "psr/http-server-middleware": "^1.0.1",
         "scssphp/scssphp": "^1.10.3",
+        "sebastian/diff": "^4.0",
         "symfony/polyfill-intl-idn": "^1.26.0",
         "symfony/polyfill-php82": "^1.26.0"
     },

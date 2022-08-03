@@ -217,6 +217,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'sebastian/diff' => array(
+            'pretty_version' => '4.0.4',
+            'version' => '4.0.4.0',
+            'reference' => '3461e3fccc7cfdfc2720be910d3bd73c69be590d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sebastian/diff',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'symfony/css-selector' => array(
             'pretty_version' => 'v6.1.3',
             'version' => '6.1.3.0',
