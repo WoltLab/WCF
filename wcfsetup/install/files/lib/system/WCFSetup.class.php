@@ -937,39 +937,33 @@ final class WCFSetup extends WCF
             }
         }
 
-        // save acp template log
-        if (!empty($acpTemplateInserts)) {
-            $sql = "INSERT INTO wcf1_acp_template
-                                (packageID, templateName, application)
-                    VALUES      (?, ?, ?)";
-            $statement = self::getDB()->prepareStatement($sql);
+        $sql = "INSERT INTO wcf1_acp_template
+                            (packageID, templateName, application)
+                VALUES      (?, ?, ?)";
+        $statement = self::getDB()->prepareStatement($sql);
 
-            self::getDB()->beginTransaction();
-            foreach ($acpTemplateInserts as $acpTemplate) {
-                $statement->execute([1, $acpTemplate, 'wcf']);
-            }
-            self::getDB()->commitTransaction();
+        self::getDB()->beginTransaction();
+        foreach ($acpTemplateInserts as $acpTemplate) {
+            $statement->execute([1, $acpTemplate, 'wcf']);
         }
+        self::getDB()->commitTransaction();
 
-        // save file log
-        if (!empty($fileInserts)) {
-            $sql = "INSERT INTO wcf1_package_installation_file_log
-                                (packageID, filename, application, sha256, lastUpdated)
-                    VALUES      (?, ?, ?, ?, ?)";
-            $statement = self::getDB()->prepareStatement($sql);
+        $sql = "INSERT INTO wcf1_package_installation_file_log
+                            (packageID, filename, application, sha256, lastUpdated)
+                VALUES      (?, ?, ?, ?, ?)";
+        $statement = self::getDB()->prepareStatement($sql);
 
-            self::getDB()->beginTransaction();
-            foreach ($fileInserts as $file) {
-                $statement->execute([
-                    1,
-                    $file,
-                    'wcf',
-                    \hash_file('sha256', \WCF_DIR . $file, true),
-                    \TIME_NOW,
-                ]);
-            }
-            self::getDB()->commitTransaction();
+        self::getDB()->beginTransaction();
+        foreach ($fileInserts as $file) {
+            $statement->execute([
+                1,
+                $file,
+                'wcf',
+                \hash_file('sha256', \WCF_DIR . $file, true),
+                \TIME_NOW,
+            ]);
         }
+        self::getDB()->commitTransaction();
 
         return $this->gotoNextStep('installLanguage');
     }
