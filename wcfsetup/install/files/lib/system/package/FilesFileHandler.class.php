@@ -33,9 +33,9 @@ class FilesFileHandler extends PackageInstallationFileHandler
                 $conditions->add('application = ?', [$this->application]);
 
                 $sql = "SELECT  filename, packageID
-                        FROM    wcf" . WCF_N . "_package_installation_file_log
-                        " . $conditions;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                        FROM    wcf1_package_installation_file_log
+                        {$conditions}";
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditions->getParameters());
                 $lockedFiles = $statement->fetchMap('filename', 'packageID');
 
@@ -69,7 +69,7 @@ class FilesFileHandler extends PackageInstallationFileHandler
                 VALUES                  (?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE sha256 = VALUES(sha256),
                                         lastUpdated = VALUES(lastUpdated)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($files as $file) {
