@@ -72,14 +72,14 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_menu
+        $sql = "DELETE FROM wcf1_menu
                 WHERE       identifier = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+        $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?";
-        $languageItemStatement = WCF::getDB()->prepareStatement($sql);
+        $languageItemStatement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($items as $item) {
@@ -247,9 +247,9 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         $conditions->add("packageID = ?", [$this->installation->getPackageID()]);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_box
-                " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_box
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         /** @var Box[] $boxes */
@@ -266,13 +266,13 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         }
 
         // handle visibility exceptions
-        $sql = "DELETE FROM wcf" . WCF_N . "_box_to_page
+        $sql = "DELETE FROM wcf1_box_to_page
                 WHERE       boxID = ?";
-        $deleteStatement = WCF::getDB()->prepareStatement($sql);
-        $sql = "INSERT IGNORE   wcf" . WCF_N . "_box_to_page
+        $deleteStatement = WCF::getDB()->prepare($sql);
+        $sql = "INSERT IGNORE   wcf1_box_to_page
                                 (boxID, pageID, visible)
                 VALUES          (?, ?, ?)";
-        $insertStatement = WCF::getDB()->prepareStatement($sql);
+        $insertStatement = WCF::getDB()->prepare($sql);
         foreach ($this->boxData as $identifier => $data) {
             // connect box with menu
             if (isset($menus[$identifier])) {
@@ -302,9 +302,9 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 $conditionBuilder = new PreparedStatementConditionBuilder();
                 $conditionBuilder->add('identifier IN (?)', [$this->visibilityExceptions[$identifier]]);
                 $sql = "SELECT  pageID
-                        FROM    wcf" . WCF_N . "_page
-                        " . $conditionBuilder;
-                $statement = WCF::getDB()->prepareStatement($sql);
+                        FROM    wcf1_page
+                        {$conditionBuilder}";
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute($conditionBuilder->getParameters());
                 $pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

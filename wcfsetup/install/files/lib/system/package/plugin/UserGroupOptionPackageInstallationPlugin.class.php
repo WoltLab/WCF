@@ -151,10 +151,10 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 
         // check if the option exist already and was installed by this package
         $sql = "SELECT  optionID
-                FROM    wcf" . WCF_N . "_user_group_option
+                FROM    wcf1_user_group_option
                 WHERE   optionName = ?
                     AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $optionName,
             $this->installation->getPackageID(),
@@ -240,8 +240,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
             ];
 
             $sql = "SELECT  groupID, groupType
-                    FROM    wcf" . WCF_N . "_user_group";
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_user_group";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute();
             while ($row = $statement->fetchArray()) {
                 $group = new UserGroup(null, $row);

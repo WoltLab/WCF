@@ -316,14 +316,14 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     {
         if (!isset($this->optionTypeIDs[$optionType])) {
             $sql = "SELECT  objectTypeID
-                    FROM    wcf" . WCF_N . "_object_type
+                    FROM    wcf1_object_type
                     WHERE   objectType = ?
                         AND definitionID IN (
                                 SELECT  definitionID
-                                FROM    wcf" . WCF_N . "_object_type_definition
+                                FROM    wcf1_object_type_definition
                                 WHERE   definitionName = 'com.woltlab.wcf.acl'
                             )";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
+            $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([$optionType]);
             $objectTypeID = $statement->fetchSingleColumn();
             if ($objectTypeID === false) {

@@ -68,10 +68,10 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
             Package::writeConfigFile($this->installation->getPackageID());
 
             // log files
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_file_log
+            $sql = "INSERT INTO wcf1_package_installation_file_log
                                 (packageID, filename, application, sha256, lastUpdated)
                     VALUES      (?, ?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ([
                 PackageInstallationDispatcher::CONFIG_FILE,
                 'config.inc.php',
@@ -102,9 +102,9 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
     {
         // fetch files from log
         $sql = "SELECT  filename, application
-                FROM    wcf" . WCF_N . "_package_installation_file_log
+                FROM    wcf1_package_installation_file_log
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->installation->getPackageID()]);
         $files = $statement->fetchMap('application', 'filename', false);
 

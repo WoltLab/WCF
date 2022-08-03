@@ -154,17 +154,17 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         $conditionBuilder->add('actionID IN (?)', [\array_keys($this->pages)]);
 
         // clear pages
-        $sql = "DELETE FROM wcf" . WCF_N . "_clipboard_page
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_clipboard_page
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         if (!empty($this->pages)) {
             // insert pages
-            $sql = "INSERT INTO wcf" . WCF_N . "_clipboard_page
+            $sql = "INSERT INTO wcf1_clipboard_page
                                 (pageClassName, packageID, actionID)
                     VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             foreach ($this->pages as $actionID => $pages) {
                 foreach ($pages as $pageClassName) {
                     $statement->execute([

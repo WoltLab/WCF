@@ -97,9 +97,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     {
         // get object type id
         $sql = "SELECT  definitionID
-                FROM    wcf" . WCF_N . "_object_type_definition
+                FROM    wcf1_object_type_definition
                 WHERE   definitionName = ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([$definitionName]);
         $row = $statement->fetchArray();
         if (empty($row['definitionID'])) {
@@ -551,9 +551,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                             }
 
                             $sql = "SELECT  optionType
-                                    FROM    wcf" . WCF_N . "_user_group_option
+                                    FROM    wcf1_user_group_option
                                     WHERE   optionName = ?";
-                            $statement = WCF::getDB()->prepareStatement($sql);
+                            $statement = WCF::getDB()->prepare($sql);
                             $statement->execute([\reset($value)]);
                             if ($statement->fetchSingleColumn() !== 'BBCodeSelect') {
                                 $formField->addValidationError(

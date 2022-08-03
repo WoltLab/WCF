@@ -98,10 +98,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_box
+        $sql = "DELETE FROM wcf1_box
                 WHERE       identifier = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($items as $item) {
@@ -213,12 +213,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 }
 
                 $sql = "SELECT      objectTypeID
-                        FROM        wcf" . WCF_N . "_object_type object_type
-                        LEFT JOIN   wcf" . WCF_N . "_object_type_definition object_type_definition
+                        FROM        wcf1_object_type object_type
+                        LEFT JOIN   wcf1_object_type_definition object_type_definition
                         ON          object_type_definition.definitionID = object_type.definitionID
                         WHERE       objectType = ?
                                 AND definitionName = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
+                $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([$data['elements']['objectType'], 'com.woltlab.wcf.boxController']);
                 $objectTypeID = $statement->fetchSingleColumn();
                 if (!$objectTypeID) {
@@ -326,9 +326,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     protected function getItemOrder($position)
     {
         $sql = "SELECT  MAX(showOrder) AS showOrder
-                FROM    wcf" . WCF_N . "_box
+                FROM    wcf1_box
                 WHERE   position = ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([$position]);
 
         $row = $statement->fetchSingleRow();
@@ -377,15 +377,15 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
     {
         if (!empty($this->content)) {
             $sql = "SELECT  COUNT(*) AS count
-                    FROM    wcf" . WCF_N . "_box_content
+                    FROM    wcf1_box_content
                     WHERE   boxID = ?
                         AND languageID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_box_content
+            $sql = "INSERT IGNORE INTO  wcf1_box_content
                                         (boxID, languageID, title, content)
                     VALUES              (?, ?, ?, ?)";
-            $insertStatement = WCF::getDB()->prepareStatement($sql);
+            $insertStatement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($this->content as $boxID => $contentData) {
@@ -449,22 +449,22 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         $conditions->add("packageID = ?", [$this->installation->getPackageID()]);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_box
-                " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_box
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
         /** @var Box[] $boxes */
         $boxes = $statement->fetchObjects(Box::class, 'identifier');
 
         // save visibility exceptions
-        $sql = "DELETE FROM wcf" . WCF_N . "_box_to_page
+        $sql = "DELETE FROM wcf1_box_to_page
                 WHERE       boxID = ?";
-        $deleteStatement = WCF::getDB()->prepareStatement($sql);
-        $sql = "INSERT IGNORE   wcf" . WCF_N . "_box_to_page
+        $deleteStatement = WCF::getDB()->prepare($sql);
+        $sql = "INSERT IGNORE   wcf1_box_to_page
                                 (boxID, pageID, visible)
                 VALUES          (?, ?, ?)";
-        $insertStatement = WCF::getDB()->prepareStatement($sql);
+        $insertStatement = WCF::getDB()->prepare($sql);
         foreach ($this->visibilityExceptions as $boxIdentifier => $pages) {
             // delete old visibility exceptions
             $deleteStatement->execute([$boxes[$boxIdentifier]->boxID]);
@@ -473,9 +473,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('identifier IN (?)', [$pages]);
             $sql = "SELECT  pageID
-                    FROM    wcf" . WCF_N . "_page
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_page
+                    {$conditionBuilder}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
             $pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

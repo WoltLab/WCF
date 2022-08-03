@@ -63,9 +63,9 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
     {
         // fetch ACP templates from log
         $sql = "SELECT  templateName, application
-                FROM    wcf" . WCF_N . "_acp_template
+                FROM    wcf1_acp_template
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->installation->getPackageID()]);
 
         $templates = [];

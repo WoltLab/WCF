@@ -48,10 +48,10 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         $this->updateDatabase($scriptPath);
 
         if (@\unlink($scriptPath)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_file_log
+            $sql = "DELETE FROM wcf1_package_installation_file_log
                     WHERE       packageID = ?
                             AND filename = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $this->installation->getPackageID(),
                 $this->instruction['value'],

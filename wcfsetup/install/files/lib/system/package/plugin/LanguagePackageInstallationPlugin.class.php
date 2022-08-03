@@ -109,9 +109,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
         // get installed languages
         $sql = "SELECT      *
-                FROM        wcf" . WCF_N . "_language
+                FROM        wcf1_language
                 ORDER BY    isDefault DESC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $installedLanguages = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -186,9 +186,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         // Get all items and their categories
         // which where installed from this package.
         $sql = "SELECT  languageItemID, languageCategoryID, languageID
-                FROM    wcf" . WCF_N . "_language_item
+                FROM    wcf1_language_item
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->installation->getPackageID()]);
         $itemIDs = [];
         $categoryIDs = [];
@@ -255,13 +255,13 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         $sql = "SELECT      COUNT(item.languageItemID) AS count,
                             language_category.languageCategoryID,
                             language_category.languageCategory
-                FROM        wcf" . WCF_N . "_language_category language_category
-                LEFT JOIN   wcf" . WCF_N . "_language_item item
+                FROM        wcf1_language_category language_category
+                LEFT JOIN   wcf1_language_item item
                 ON          item.languageCategoryID = language_category.languageCategoryID
-                " . $conditions . "
+                {$conditions}
                 GROUP BY    language_category.languageCategoryID ASC,
                             language_category.languageCategory ASC";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         $categoriesToDelete = [];
         while ($row = $statement->fetchArray()) {
@@ -272,9 +272,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
         // Delete categories from DB.
         if (!empty($categoriesToDelete)) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_language_category
+            $sql = "DELETE FROM wcf1_language_category
                     WHERE       languageCategory = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
             foreach ($categoriesToDelete as $category) {
                 $statement->execute([$category]);
@@ -706,10 +706,10 @@ XML;
         $existingRow = [];
         if ($oldElement !== null) {
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_language_item
+                    FROM    wcf1_language_item
                     WHERE   languageItem = ?
                         AND languageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $oldElement->getAttribute('name'),
                 // use new element as old element has no access to parent element anymore
@@ -881,10 +881,10 @@ XML;
      */
     protected function deleteObject(\DOMElement $element)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+        $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $element->getAttribute('name'),
             $this->installation->getPackageID(),

@@ -208,9 +208,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $condition->add('bbcodeID IN (?)', [\array_keys($this->attributes)]);
 
         // clear attributes
-        $sql = "DELETE FROM wcf" . WCF_N . "_bbcode_attribute
-                " . $condition;
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "DELETE FROM wcf1_bbcode_attribute
+                {$condition}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($condition->getParameters());
 
         if (!empty($this->attributes)) {

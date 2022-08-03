@@ -57,14 +57,14 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_menu_item
+        $sql = "DELETE FROM wcf1_menu_item
                 WHERE       identifier = ?
                         AND packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+        $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?";
-        $languageItemStatement = WCF::getDB()->prepareStatement($sql);
+        $languageItemStatement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($items as $item) {
@@ -126,9 +126,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             }
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_menu_item
+                    FROM    wcf1_menu_item
                     WHERE   identifier = ?";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
+            $statement = WCF::getDB()->prepare($sql, 1);
             $statement->execute([$data['elements']['parent']]);
 
             /** @var MenuItem|null $parent */
@@ -192,9 +192,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     protected function getMenuID($identifier)
     {
         $sql = "SELECT  menuID
-                FROM    wcf" . WCF_N . "_menu
+                FROM    wcf1_menu
                 WHERE   identifier = ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([$identifier]);
 
         return $statement->fetchSingleColumn();
@@ -210,9 +210,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     protected function getPageID($identifier)
     {
         $sql = "SELECT  pageID
-                FROM    wcf" . WCF_N . "_page
+                FROM    wcf1_page
                 WHERE   identifier = ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([$identifier]);
 
         return $statement->fetchSingleColumn();
@@ -263,9 +263,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
     protected function getItemOrder($menuID, $parentItemID = null)
     {
         $sql = "SELECT  MAX(showOrder) AS showOrder
-                FROM    wcf" . WCF_N . "_menu_item
+                FROM    wcf1_menu_item
                 WHERE   " . ($parentItemID === null ? 'menuID' : 'parentItemID') . " = ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([
             $parentItemID === null ? $menuID : $parentItemID,
         ]);

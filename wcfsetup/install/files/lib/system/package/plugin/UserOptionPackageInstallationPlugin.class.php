@@ -239,9 +239,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     {
         // get optionsIDs from package
         $sql = "SELECT  optionID
-                FROM    wcf" . WCF_N . "_user_option
+                FROM    wcf1_user_option
                 WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->installation->getPackageID()]);
         while ($row = $statement->fetchArray()) {
             WCF::getDB()->getEditor()->dropColumn(

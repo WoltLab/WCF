@@ -122,11 +122,11 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
             return;
         }
 
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_event_to_user
+        $sql = "INSERT IGNORE INTO  wcf1_user_notification_event_to_user
                                     (userID, eventID, mailNotificationType)
                 SELECT              userID, ?, ?
-                FROM                wcf" . WCF_N . "_user";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM                wcf1_user";
+        $statement = WCF::getDB()->prepare($sql);
         WCF::getDB()->beginTransaction();
         foreach ($this->presetEventIDs as $eventID => $mailNotificationType) {
             $statement->execute([$eventID, $mailNotificationType]);
@@ -165,14 +165,14 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     {
         // get object type id
         $sql = "SELECT  object_type.objectTypeID
-                FROM    wcf" . WCF_N . "_object_type object_type
+                FROM    wcf1_object_type object_type
                 WHERE   object_type.objectType = ?
                     AND object_type.definitionID IN (
                             SELECT  definitionID
-                            FROM    wcf" . WCF_N . "_object_type_definition
+                            FROM    wcf1_object_type_definition
                             WHERE   definitionName = 'com.woltlab.wcf.notification.objectType'
                         )";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([$objectType]);
         $row = $statement->fetchArray();
         if (empty($row['objectTypeID'])) {

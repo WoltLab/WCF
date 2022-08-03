@@ -358,15 +358,15 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     {
         if (!empty($this->content)) {
             $sql = "SELECT  COUNT(*) AS count
-                    FROM    wcf" . WCF_N . "_page_content
+                    FROM    wcf1_page_content
                     WHERE   pageID = ?
                         AND languageID IS NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
 
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_page_content
+            $sql = "INSERT IGNORE INTO  wcf1_page_content
                                         (pageID, languageID, title, content, metaDescription, customURL)
                     VALUES              (?, ?, ?, ?, ?, ?)";
-            $insertStatement = WCF::getDB()->prepareStatement($sql);
+            $insertStatement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($this->content as $pageID => $contentData) {
