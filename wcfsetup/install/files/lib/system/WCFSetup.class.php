@@ -954,13 +954,19 @@ final class WCFSetup extends WCF
         // save file log
         if (!empty($fileInserts)) {
             $sql = "INSERT INTO wcf1_package_installation_file_log
-                                (packageID, filename, application)
-                    VALUES      (?, ?, ?)";
+                                (packageID, filename, application, sha256, lastUpdated)
+                    VALUES      (?, ?, ?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
 
             self::getDB()->beginTransaction();
             foreach ($fileInserts as $file) {
-                $statement->execute([1, $file, 'wcf']);
+                $statement->execute([
+                    1,
+                    $file,
+                    'wcf',
+                    \hash_file('sha256', \WCF_DIR . $file, true),
+                    \TIME_NOW,
+                ]);
             }
             self::getDB()->commitTransaction();
         }
