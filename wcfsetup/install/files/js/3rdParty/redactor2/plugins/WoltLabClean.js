@@ -749,6 +749,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 
 						if (parentStyle === value) {
 							removeElements.push(element);
+						} else {
+							// Chrome is especially bad when it comes to handling the system
+							// font stack and injects arbitrary fonts that would normally not
+							// be present.
+							if (/\bsystem-ui\b/.test(parentStyle) && /\bsystem-ui\b/.test(value)) {
+								removeElements.push(element);
+							}
 						}
 					}
 				});
