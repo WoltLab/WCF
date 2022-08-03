@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use SebastianBergmann\Diff\Differ;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateList;
@@ -52,7 +53,7 @@ class TemplateDiffPage extends AbstractPage
 
     /**
      * differences between both templates
-     * @var Diff
+     * @var array
      */
     public $diff;
 
@@ -127,7 +128,8 @@ class TemplateDiffPage extends AbstractPage
         if ($this->parent->templateID) {
             $a = \explode("\n", StringUtil::unifyNewlines($this->parent->getSource()));
             $b = \explode("\n", StringUtil::unifyNewlines($this->template->getSource()));
-            $this->diff = new Diff($a, $b);
+            $differ = new Differ();
+            $this->diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
         }
     }
 

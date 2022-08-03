@@ -10,7 +10,7 @@
 		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
-					{if $diff}
+					{if $diff !== null}
 						{if $parent->templateGroupID}
 							<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 						{/if}
@@ -50,7 +50,7 @@
 	</div>
 </form>
 
-{if $diff}
+{if $diff !== null}
 	<div id="fullscreenContainer">
 		<div class="sideBySide">
 			<div class="section">
@@ -66,7 +66,7 @@
 				<pre id="left" class="monospace" style="overflow: auto; height: 700px;">{*
 					*}<span style="display: inline-block;">{* <-- wrapper span to prevent content from overflowing the <li>
 						*}<ol class="nativeList">{*
-							*}{foreach from=$diff->getRawDiff() item='line'}{*
+							*}{foreach from=$diff item='line'}{*
 								*}{if $line[0] == ' '}{*
 									*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
 									*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
@@ -94,7 +94,7 @@
 				<pre id="right" class="monospace" style="overflow: auto; height: 700px;">{*
 					*}<span style="display: inline-block;">{* <-- wrapper span to prevent content from overflowing the <li>
 						*}<ol class="nativeList">{*
-							*}{foreach from=$diff->getRawDiff() item='line'}{*
+							*}{foreach from=$diff item='line'}{*
 								*}{if $line[0] == ' '}{*
 									*}{if $removeOffset > 0}{*
 										*}{@'<li style="list-style-type: none;margin: 0">&nbsp;</li>'|str_repeat:$removeOffset}{*

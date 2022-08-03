@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use SebastianBergmann\Diff\Differ;
 use wcf\data\IVersionTrackerObject;
 use wcf\data\language\Language;
 use wcf\page\AbstractPage;
@@ -75,7 +76,7 @@ class VersionTrackerListPage extends AbstractPage
 
     /**
      * differences between both versions
-     * @var Diff[]
+     * @var array
      */
     public $diffs = [];
 
@@ -171,6 +172,8 @@ class VersionTrackerListPage extends AbstractPage
     {
         parent::readData();
 
+        $differ = new Differ();
+
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {
             $languageIDs = $this->new->getLanguageIDs();
@@ -199,8 +202,7 @@ class VersionTrackerListPage extends AbstractPage
                         continue;
                     }
 
-                    $diff = new Diff($a, $b);
-                    $rawDiff = $diff->getRawDiff();
+                    $rawDiff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
 
                     // create word diff for small changes (only one consecutive paragraph modified)
                     for ($i = 0, $max = \count($rawDiff); $i < $max;) {
@@ -213,10 +215,10 @@ class VersionTrackerListPage extends AbstractPage
                             $a = \preg_split('/(\\W)/u', $rawDiff[$i][1], -1, \PREG_SPLIT_DELIM_CAPTURE);
                             $b = \preg_split('/(\\W)/u', $rawDiff[$i + 1][1], -1, \PREG_SPLIT_DELIM_CAPTURE);
 
-                            $diff = new Diff($a, $b);
+                            $diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
                             $rawDiff[$i][1] = '';
                             $rawDiff[$i + 1][1] = '';
-                            foreach ($diff->getRawDiff() as $entry) {
+                            foreach ($diff as $entry) {
                                 $entry[1] = StringUtil::encodeHTML($entry[1]);
 
                                 if ($entry[0] === Diff::SAME) {
