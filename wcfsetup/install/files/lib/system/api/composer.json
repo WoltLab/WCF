@@ -3,6 +3,7 @@
         "vendor-dir": "./",
         "prepend-autoloader": false,
         "optimize-autoloader": true,
+        "sort-packages": true,
         "platform": {
             "php": "8.1.2",
             "ext-gd": "0"
