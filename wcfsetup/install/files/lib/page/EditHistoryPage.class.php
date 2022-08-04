@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use SebastianBergmann\Diff\Differ;
 use wcf\data\DatabaseObjectList;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
@@ -63,7 +64,7 @@ class EditHistoryPage extends AbstractPage
 
     /**
      * differences between both versions
-     * @var Diff
+     * @var array
      */
     public $diff;
 
@@ -176,12 +177,13 @@ class EditHistoryPage extends AbstractPage
         $this->objectList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
         $this->objectList->readObjects();
 
+        $differ = new Differ();
+
         // valid IDs were given, calculate diff
         if ($this->old && $this->new) {
             $a = \explode("\n", StringUtil::unifyNewlines(StringUtil::trim($this->old->getMessage())));
             $b = \explode("\n", StringUtil::unifyNewlines(StringUtil::trim($this->new->getMessage())));
-            $diff = new Diff($a, $b);
-            $this->diff = $diff->getRawDiff();
+            $this->diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
 
             // create word diff for small changes (only one consecutive paragraph modified)
             for ($i = 0, $max = \count($this->diff); $i < $max;) {
@@ -194,10 +196,10 @@ class EditHistoryPage extends AbstractPage
                     $a = \preg_split('/(\\W)/u', $this->diff[$i][1], -1, \PREG_SPLIT_DELIM_CAPTURE);
                     $b = \preg_split('/(\\W)/u', $this->diff[$i + 1][1], -1, \PREG_SPLIT_DELIM_CAPTURE);
 
-                    $diff = new Diff($a, $b);
+                    $diff = Diff::rawDiffFromSebastianDiff($differ->diffToArray($a, $b));
                     $this->diff[$i][1] = '';
                     $this->diff[$i + 1][1] = '';
-                    foreach ($diff->getRawDiff() as $entry) {
+                    foreach ($diff as $entry) {
                         $entry[1] = StringUtil::encodeHTML($entry[1]);
 
                         if ($entry[0] === Diff::SAME) {
