@@ -151,7 +151,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * field dependencies to only show the appropriate field.
      *
      * @param string $objectProperty object property this field represents
-     * @return  IFormField
+     * @return  static      this field
      *
      * @throws  \InvalidArgumentException   if the passed object property is no valid id
      */
