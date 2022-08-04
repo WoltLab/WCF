@@ -7,7 +7,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
@@ -25,6 +25,15 @@
             'reference' => 'ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../chrisjean/php-ico',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'dragonmantank/cron-expression' => array(
+            'pretty_version' => 'v3.3.1',
+            'version' => '3.3.1.0',
+            'reference' => 'be85b3f05b46c39bbc0d95f6c071ddff669510fa',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../dragonmantank/cron-expression',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -108,6 +117,12 @@
             'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'mtdowling/cron-expression' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '^1.0',
+            ),
         ),
         'paragonie/constant_time_encoding' => array(
             'pretty_version' => 'v2.6.3',
@@ -274,6 +289,15 @@
             'reference' => 'a88014fcea4120c9f77b4fefd48942ce38e412e7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php82',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'webmozart/assert' => array(
+            'pretty_version' => '1.11.0',
+            'version' => '1.11.0.0',
+            'reference' => '11cb2199493b2f8a3b53e7f19068fc6aac760991',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../webmozart/assert',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

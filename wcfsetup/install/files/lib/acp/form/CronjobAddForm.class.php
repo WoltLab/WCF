@@ -2,16 +2,16 @@
 
 namespace wcf\acp\form;
 
+use Cron\CronExpression;
+use Cron\FieldFactory;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\form\AbstractForm;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -149,22 +149,21 @@ class CronjobAddForm extends AbstractForm
             }
         }
 
-        try {
-            CronjobUtil::validate(
-                $this->startMinute,
-                $this->startHour,
-                $this->startDom,
-                $this->startMonth,
-                $this->startDow
-            );
-        } catch (SystemException $e) {
-            // extract field name
-            $fieldName = '';
-            if (\preg_match("/cronjob attribute '(.*)'/", $e->getMessage(), $match)) {
-                $fieldName = $match[1];
-            }
-
-            throw new UserInputException($fieldName, 'invalid');
+        $fieldFactory = new FieldFactory();
+        if (!$fieldFactory->getField(CronExpression::MINUTE)->validate($this->startMinute)) {
+            throw new UserInputException('startMinute', 'invalid');
+        }
+        if (!$fieldFactory->getField(CronExpression::HOUR)->validate($this->startHour)) {
+            throw new UserInputException('startHour', 'invalid');
+        }
+        if (!$fieldFactory->getField(CronExpression::DAY)->validate($this->startDom)) {
+            throw new UserInputException('startDom', 'invalid');
+        }
+        if (!$fieldFactory->getField(CronExpression::MONTH)->validate($this->startMonth)) {
+            throw new UserInputException('startMonth', 'invalid');
+        }
+        if (!$fieldFactory->getField(CronExpression::WEEKDAY)->validate($this->startDow)) {
+            throw new UserInputException('startDow', 'invalid');
         }
     }
 

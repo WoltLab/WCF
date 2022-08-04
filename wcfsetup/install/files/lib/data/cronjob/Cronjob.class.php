@@ -2,10 +2,10 @@
 
 namespace wcf\data\cronjob;
 
+use Cron\CronExpression;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\system\WCF;
-use wcf\util\CronjobUtil;
 
 /**
  * Represents a cronjob.
@@ -70,9 +70,8 @@ class Cronjob extends DatabaseObject
      * Returns timestamp of next execution.
      *
      * @param int $timeBase
-     * @return  int
      */
-    public function getNextExec($timeBase = null)
+    public function getNextExec($timeBase = null): int
     {
         if ($timeBase === null) {
             if ($this->lastExec) {
@@ -86,14 +85,20 @@ class Cronjob extends DatabaseObject
             }
         }
 
-        return CronjobUtil::calculateNextExec(
+        $dateTime = (new \DateTimeImmutable("@{$timeBase}"))
+            // The TZ parameter in the constructor is ignored for timestamps.
+            ->setTimezone(new \DateTimeZone(TIMEZONE));
+
+        $expression = new CronExpression(\sprintf(
+            '%s %s %s %s %s',
             $this->startMinute,
             $this->startHour,
             $this->startDom,
             $this->startMonth,
             $this->startDow,
-            $timeBase
-        );
+        ));
+
+        return $expression->getNextRunDate($dateTime)->getTimestamp();
     }
 
     /**
