@@ -2,6 +2,7 @@
 
 namespace wcf\system\request;
 
+use Psr\Http\Server\RequestHandlerInterface;
 use wcf\page\CmsPage;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -85,7 +86,12 @@ final class ControllerMap extends SingletonFactory
                 $application = $this->applicationOverrides['lookup'][$application][$controller];
             }
 
-            $classData = $this->getClassData($application, $controller, $isAcpRequest, 'page');
+            if ($classData === null) {
+                $classData = $this->getPsr15ClassData($application, $controller, $isAcpRequest);
+            }
+            if ($classData === null) {
+                $classData = $this->getClassData($application, $controller, $isAcpRequest, 'page');
+            }
             if ($classData === null) {
                 $classData = $this->getClassData($application, $controller, $isAcpRequest, 'form');
             }
@@ -350,6 +356,30 @@ final class ControllerMap extends SingletonFactory
         // and more.
         $reflectionClass = new \ReflectionClass($className);
         if (!$reflectionClass->isInstantiable()) {
+            return null;
+        }
+
+        return [
+            'className' => $className,
+            'controller' => $controller,
+        ];
+    }
+
+    private function getPsr15ClassData(string $application, string $controller, bool $isAcpRequest)
+    {
+        $className = $application . '\\http\\controller\\' . ($isAcpRequest ? 'acp\\' : '') . $controller;
+        if (!\class_exists($className)) {
+            return null;
+        }
+
+        // Verify that the class can be instantiated. This excludes
+        // abstract classes, interfaces, classes with a private constructor
+        // and more.
+        $reflectionClass = new \ReflectionClass($className);
+        if (!$reflectionClass->isInstantiable()) {
+            return null;
+        }
+        if (!$reflectionClass->implementsInterface(RequestHandlerInterface::class)) {
             return null;
         }
 
