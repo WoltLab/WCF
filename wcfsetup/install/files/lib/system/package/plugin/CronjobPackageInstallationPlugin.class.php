@@ -2,6 +2,8 @@
 
 namespace wcf\system\package\plugin;
 
+use Cron\CronExpression;
+use Cron\FieldFactory;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\CronjobList;
@@ -10,7 +12,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
-use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
@@ -21,7 +22,6 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -134,13 +134,14 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
      */
     protected function validateImport(array $data)
     {
-        CronjobUtil::validate(
-            $data['startMinute'],
+        // The constructor will throw if the expression is not valid.
+        new CronExpression(\sprintf(
+            '%s %s %s %s %s',
             $data['startHour'],
             $data['startDom'],
             $data['startMonth'],
             $data['startDow']
-        );
+        ));
     }
 
     /**
@@ -261,6 +262,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                 ->value(true),
         ]);
 
+        $fieldFactory = new FieldFactory();
         foreach (['startMinute', 'startHour', 'startDom', 'startMonth', 'startDow'] as $timeProperty) {
             $dataContainer->insertBefore(
                 TextFormField::create($timeProperty)
@@ -270,10 +272,16 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     ->required()
                     ->addValidator(new FormFieldValidator(
                         'format',
-                        static function (TextFormField $formField) use ($timeProperty) {
-                            try {
-                                CronjobUtil::validateAttribute($timeProperty, $formField->getSaveValue());
-                            } catch (SystemException $e) {
+                        static function (TextFormField $formField) use ($timeProperty, $fieldFactory) {
+                            $position = match ($timeProperty) {
+                                'startMinute' => CronExpression::MINUTE,
+                                'startHour' => CronExpression::HOUR,
+                                'startDom' => CronExpression::MONTH,
+                                'startMonth' => CronExpression::MONTH,
+                                'startDow' => CronExpression::WEEKDAY,
+                            };
+
+                            if (!$fieldFactory->getField($position)->validate($formField->getSaveValue())) {
                                 $formField->addValidationError(
                                     new FormFieldValidationError(
                                         'format',
