@@ -245,7 +245,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 " . $columnDefinition . "
                 " . (!empty($indexDefinition) ? ',' : '') . "
                 " . $indexDefinition . "
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+            ) ENGINE=InnoDB ROW_FORMAT=dynamic DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute();
     }
