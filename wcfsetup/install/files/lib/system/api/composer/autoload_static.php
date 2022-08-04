@@ -34,6 +34,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'Webmozart\\Assert\\' => 17,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php82\\' => 23,
@@ -64,9 +68,17 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'C' => 
+        array (
+            'Cron\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Webmozart\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
         'Symfony\\Polyfill\\Php82\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php82',
@@ -141,6 +153,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Cron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -163,6 +179,16 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
     public static $classMap = array (
         'AllowDynamicProperties' => __DIR__ . '/..' . '/symfony/polyfill-php82/Resources/stubs/AllowDynamicProperties.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
+        'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
+        'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/DayOfMonthField.php',
+        'Cron\\DayOfWeekField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/DayOfWeekField.php',
+        'Cron\\FieldFactory' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/FieldFactory.php',
+        'Cron\\FieldFactoryInterface' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/FieldFactoryInterface.php',
+        'Cron\\FieldInterface' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/FieldInterface.php',
+        'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
+        'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
+        'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
         'GuzzleHttp\\BodySummarizerInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
@@ -811,6 +837,9 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Symfony\\Polyfill\\Intl\\Idn\\Resources\\unidata\\Regex' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/Resources/unidata/Regex.php',
         'Symfony\\Polyfill\\Intl\\Normalizer\\Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Normalizer.php',
         'Symfony\\Polyfill\\Php82\\SensitiveParameterValue' => __DIR__ . '/..' . '/symfony/polyfill-php82/SensitiveParameterValue.php',
+        'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
+        'Webmozart\\Assert\\InvalidArgumentException' => __DIR__ . '/..' . '/webmozart/assert/src/InvalidArgumentException.php',
+        'Webmozart\\Assert\\Mixin' => __DIR__ . '/..' . '/webmozart/assert/src/Mixin.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
