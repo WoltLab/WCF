@@ -5,18 +5,7 @@ namespace wcf\util;
 use wcf\system\exception\SystemException;
 
 /**
- * Provides methods used for cron-like time calculations.
- * As against the official cron-documentation, this implementation
- * does not support using nicknames (prefixed by the '@' character).
- *
- * Notice: This class used `gmdate()`/`gmmktime()` in previous versions,
- * but now utilized the `date()`/`mktime()` counter-parts, but with the
- * timezone set to the value of the `TIMEZONE` option.
- *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Util
+ * @deprecated 5.6 dragonmantank/cron-expression is used for calculations.
  */
 final class CronjobUtil
 {
