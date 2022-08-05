@@ -168,7 +168,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
      *
      * @param mixed $objectType
      */
-    public static function getTableName(string $objectType): string
+    public static function getTableName(ObjectType|string $objectType): string
     {
         if (\is_string($objectType)) {
             $objectType = self::getInstance()->getObjectType($objectType);
