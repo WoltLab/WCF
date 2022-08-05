@@ -83,12 +83,6 @@ class CacheListPage extends AbstractPage
                 $this->readCacheFiles('data', WCF_DIR . 'cache');
                 break;
 
-            case 'wcf\system\cache\source\MemcachedCacheSource':
-                // set version
-                /** @noinspection PhpUndefinedMethodInspection */
-                $this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getMemcachedVersion();
-                break;
-
             case 'wcf\system\cache\source\RedisCacheSource':
                 // set version
                 /** @noinspection PhpUndefinedMethodInspection */

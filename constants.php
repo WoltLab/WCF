@@ -96,7 +96,6 @@
 \define('MAIL_SMTP_PASSWORD', '');
 \define('MAIL_USE_F_PARAM', 1);
 \define('CACHE_SOURCE_TYPE', 'disk');
-\define('CACHE_SOURCE_MEMCACHED_HOST', '');
 \define('CACHE_SOURCE_REDIS_HOST', '');
 \define('AVAILABLE_PAYMENT_METHODS', '');
 \define('PAYPAL_EMAIL_ADDRESS', '');

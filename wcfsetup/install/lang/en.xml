@@ -273,7 +273,6 @@
 		<item name="wcf.acp.cache.list.perm"><![CDATA[Permissions]]></item>
 		<item name="wcf.acp.cache.list.size"><![CDATA[Size]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Filesystem]]></item>
-		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached (Deprecated / Not Recommended)]]></item>
 		<item name="wcf.acp.cache.source.type.RedisCacheSource"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Languages]]></item>
@@ -1232,20 +1231,15 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
-		<item name="wcf.acp.option.cache_source_memcached_host.description"/>
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
 		<item name="wcf.acp.option.cache_source_redis_host.description"><![CDATA[The server’s address, for example “localhost” or “10.0.13.37:1337”.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from filesystem require special extensions or services running on your machine.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Use Filesystem (default)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Use Memcached (Deprecated / Not Recommended)]]></item>
 		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Use Redis]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (Deprecated / Not Recommended)]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[The support for Memcached is deprecated and will be removed in a future version of WoltLab Suite™. Memcached users are encouraged to switch to Redis.]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Redis on <a href="https://redis.io/" class="externalURL">redis.io</a>.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date and Time]]></item>
@@ -5569,5 +5563,10 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.index.system.php.sslSupport.notAvailable"/>
 	<item name="wcf.acp.option.http_send_x_frame_options"/>
 	<item name="wcf.acp.option.http_send_x_frame_options.description"/>
-</delete>
+	<item name="wcf.acp.cache.source.type.MemcachedCacheSource"/>
+	<item name="wcf.acp.option.cache_source_memcached_host"/>
+	<item name="wcf.acp.option.cache_source_memcached_host.description"/>
+	<item name="wcf.acp.option.category.general.cache.memcached"/>
+	<item name="wcf.acp.option.category.general.cache.memcached.description"/>
+	<item name="wcf.acp.option.cache_source_type.memcached"/></delete>
 </language>

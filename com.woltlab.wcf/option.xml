@@ -94,9 +94,6 @@
 			<category name="general.cache.general">
 				<parent>general.cache</parent>
 			</category>
-			<category name="general.cache.memcached">
-				<parent>general.cache</parent>
-			</category>
 			<category name="general.cache.redis">
 				<parent>general.cache</parent>
 			</category>
@@ -885,16 +882,10 @@ encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 				<categoryname>general.cache.general</categoryname>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>disk</defaultvalue>
-				<enableoptions>disk:!cache_source_memcached_host,!cache_source_redis_host
-memcached:cache_source_memcached_host,!cache_source_redis_host
-redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
+				<enableoptions>disk:!cache_source_redis_host
+redis:cache_source_redis_host</enableoptions>
 				<selectoptions>disk:wcf.acp.option.cache_source_type.disk
-memcached:wcf.acp.option.cache_source_type.memcached
 redis:wcf.acp.option.cache_source_type.redis</selectoptions>
-			</option>
-			<option name="cache_source_memcached_host">
-				<categoryname>general.cache.memcached</categoryname>
-				<optiontype>textarea</optiontype>
 			</option>
 			<option name="cache_source_redis_host">
 				<categoryname>general.cache.redis</categoryname>
@@ -1650,5 +1641,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	<delete>
 		<option name="desktop_notification_package_id"/>
 		<option name="http_send_x_frame_options"/>
+		<option name="cache_source_memcached_host"/>
 	</delete>
 </data>
