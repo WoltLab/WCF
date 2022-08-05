@@ -3,7 +3,6 @@
 namespace wcf\system\search;
 
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\NotImplementedException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -35,22 +34,6 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
     public function getConditionBuilderClassName()
     {
         return $this->conditionBuilderClassName;
-    }
-
-    /**
-     * @deprecated 5.4 - This method is dangerous. See https://github.com/WoltLab/WCF/issues/3815.
-     */
-    protected function parseSearchQuery($query)
-    {
-        throw new \BadMethodCallException('Using the generic `parseSearchQuery()` method is dangerous. See WoltLab/WCF#3815 (https://github.com/WoltLab/WCF/issues/3815).');
-    }
-
-    /**
-     * @deprecated 5.4 - This method was required for use in parseSearchQuery().
-     */
-    protected function getFulltextMinimumWordLength()
-    {
-        throw new NotImplementedException();
     }
 
     /**
