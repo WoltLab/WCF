@@ -6,7 +6,7 @@
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
 				<li>
 					<a href="#" class="acpPageMenuLink{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
-						<span class="icon icon48 {$_sectionMenuItem->icon}"></span>
+						<span class="icon icon32 {$_sectionMenuItem->icon}"></span>
 						<span class="acpPageMenuItemLabel">{@$_sectionMenuItem}</span>
 					</a>
 				</li>
