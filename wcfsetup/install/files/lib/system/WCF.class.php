@@ -789,7 +789,6 @@ class WCF
         self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang', 'csrfToken']);
         self::getTPL()->assign([
             '__wcf' => $wcf,
-            '__wcfVersion' => LAST_UPDATE_TIME, // @deprecated 2.1, use LAST_UPDATE_TIME directly
         ]);
 
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
