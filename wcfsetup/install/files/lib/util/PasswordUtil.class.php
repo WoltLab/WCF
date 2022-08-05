@@ -4,7 +4,6 @@ namespace wcf\util;
 
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
-use wcf\util\exception\CryptoException;
 
 /**
  * @deprecated 5.5 - All methods within this class are deprecated.
@@ -176,7 +175,7 @@ final class PasswordUtil
         $salt = '';
 
         for ($i = 0, $maxIndex = (\strlen(self::$blowfishCharacters) - 1); $i < 22; $i++) {
-            $salt .= self::$blowfishCharacters[self::secureRandomNumber(0, $maxIndex)];
+            $salt .= self::$blowfishCharacters[\random_int(0, $maxIndex)];
         }
 
         return self::getSalt($salt);
@@ -191,37 +190,10 @@ final class PasswordUtil
         $password = '';
 
         for ($i = 0, $maxIndex = (\strlen($charset) - 1); $i < $length; $i++) {
-            $password .= $charset[self::secureRandomNumber(0, $maxIndex)];
+            $password .= $charset[\random_int(0, $maxIndex)];
         }
 
         return $password;
-    }
-
-    /**
-     * @deprecated  Use \wcf\util\CryptoUtil::secureCompare()
-     */
-    public static function secureCompare($hash1, $hash2)
-    {
-        return \hash_equals($hash1, $hash2);
-    }
-
-    /**
-     * @deprecated  Use random_int()
-     */
-    public static function secureRandomNumber($min, $max)
-    {
-        $range = $max - $min;
-        if ($range == 0) {
-            // not random
-            throw new SystemException("Cannot generate a secure random number, min and max are the same");
-        }
-
-        try {
-            return CryptoUtil::randomInt($min, $max);
-        } catch (CryptoException $e) {
-            // Backwards compatibility: This function never did throw.
-            return \mt_rand($min, $max);
-        }
     }
 
     /**
