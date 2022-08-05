@@ -15,12 +15,16 @@ $fa-size-scale-base: 15;
   @extend .fas;
 }
 .icon {
+  --fa-display: inline-flex;
   --icon-size: 16px;
+  --font-size: 14px;
 
+  align-items: center;
   color: $wcfContentText;
-  font-size: var(--icon-size);
+  font-size: var(--font-size);
   height: var(--icon-size);
   line-height: var(--icon-size);
+  justify-content: center;
   text-align: center;
   width: 1.25em;
 
@@ -37,35 +41,42 @@ $fa-size-scale-base: 15;
 /* Default icon sizes */
 .icon {
   &.icon16 {
+    --font-size: 14px;
     --icon-size: 16px;
   }
 
   &.icon24 {
+    --font-size: 18px;
     --icon-size: 24px;
   }
 
   &.icon32 {
+    --font-size: 28px;
     --icon-size: 32px;
-    vertical-align: -5px;
   }
 
   &.icon48 {
+    --font-size: 42px;
     --icon-size: 48px;
   }
 
   &.icon64 {
+    --font-size: 56px;
     --icon-size: 64px;
   }
 
   &.icon96 {
+    --font-size: 84px;
     --icon-size: 96px;
   }
 
   &.icon128 {
+    --font-size: 112px;
     --icon-size: 128px;
   }
 
   &.icon144 {
+    --font-size: 130px;
     --icon-size: 144px;
   }
 }
