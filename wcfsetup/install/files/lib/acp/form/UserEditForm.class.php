@@ -3,7 +3,6 @@
 namespace wcf\acp\form;
 
 use wcf\data\style\Style;
-use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\cover\photo\UserCoverPhoto;
@@ -340,8 +339,6 @@ class UserEditForm extends UserAddForm
 
         if ($this->user->avatarID) {
             $this->avatarType = 'custom';
-        } elseif (MODULE_GRAVATAR && $this->user->enableGravatar) {
-            $this->avatarType = 'gravatar';
         }
     }
 
@@ -394,26 +391,10 @@ class UserEditForm extends UserAddForm
         }
 
         $avatarData = [];
-        switch ($this->avatarType) {
-            case 'none':
-                $avatarData = [
-                    'avatarID' => null,
-                    'enableGravatar' => 0,
-                ];
-                break;
-
-            case 'custom':
-                $avatarData = [
-                    'enableGravatar' => 0,
-                ];
-                break;
-
-            case 'gravatar':
-                $avatarData = [
-                    'avatarID' => null,
-                    'enableGravatar' => 1,
-                ];
-                break;
+        if ($this->avatarType === 'none') {
+            $avatarData = [
+                'avatarID' => null,
+            ];
         }
 
         $this->additionalFields = \array_merge($this->additionalFields, $avatarData);
@@ -597,7 +578,7 @@ class UserEditForm extends UserAddForm
      */
     protected function validateAvatar()
     {
-        if ($this->avatarType != 'custom' && $this->avatarType != 'gravatar') {
+        if ($this->avatarType != 'custom') {
             $this->avatarType = 'none';
         }
 
@@ -608,17 +589,6 @@ class UserEditForm extends UserAddForm
                         throw new UserInputException('customAvatar');
                     }
                     break;
-
-                case 'gravatar':
-                    if (!MODULE_GRAVATAR) {
-                        $this->avatarType = 'none';
-                        break;
-                    }
-
-                    // test gravatar
-                    if (!Gravatar::test($this->user->email)) {
-                        throw new UserInputException('gravatar', 'notFound');
-                    }
             }
         } catch (UserInputException $e) {
             $this->errorType[$e->getField()] = $e->getType();

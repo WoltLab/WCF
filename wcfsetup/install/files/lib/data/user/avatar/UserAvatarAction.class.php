@@ -214,7 +214,6 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
 
             $userEditor->update([
                 'avatarID' => $avatarID,
-                'enableGravatar' => 0,
             ]);
 
             // delete old avatar

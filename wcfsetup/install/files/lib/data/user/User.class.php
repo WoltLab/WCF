@@ -52,8 +52,6 @@ use wcf\util\UserUtil;
  * @property-read   int $disableAvatar          is `1` if the user's avatar has been disabled, otherwise `0`
  * @property-read   string $disableAvatarReason        reason why the user's avatar is disabled
  * @property-read   int $disableAvatarExpires       timestamp at which the user's avatar will automatically be enabled again
- * @property-read   int $enableGravatar         is `1` if the user uses a gravatar as avatar, otherwise `0`
- * @property-read   string $gravatarFileExtension      extension of the user's gravatar file
  * @property-read   string $signature          text of the user's signature
  * @property-read   int $signatureEnableHtml        is `1` if HTML will rendered in the user's signature, otherwise `0`
  * @property-read   int $disableSignature       is `1` if the user's signature has been disabled, otherwise `0`

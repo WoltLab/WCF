@@ -44,7 +44,7 @@ class UserProfileVisitorList extends DatabaseObjectList
     {
         parent::__construct();
 
-        $this->sqlSelects .= "user_table.username, user_table.email, user_table.disableAvatar, user_table.enableGravatar, user_table.gravatarFileExtension";
+        $this->sqlSelects .= "user_table.username, user_table.email, user_table.disableAvatar";
         $this->sqlSelects .= ", user_avatar.*";
 
         $this->sqlJoins .= "

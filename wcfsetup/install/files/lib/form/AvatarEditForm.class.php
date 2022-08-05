@@ -2,7 +2,6 @@
 
 namespace wcf\form;
 
-use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
@@ -61,7 +60,7 @@ class AvatarEditForm extends AbstractForm
             throw new PermissionDeniedException();
         }
 
-        if ($this->avatarType != 'custom' && $this->avatarType != 'gravatar') {
+        if ($this->avatarType != 'custom') {
             $this->avatarType = 'none';
         }
 
@@ -69,18 +68,6 @@ class AvatarEditForm extends AbstractForm
             case 'custom':
                 if (!WCF::getUser()->avatarID) {
                     throw new UserInputException('custom');
-                }
-                break;
-
-            case 'gravatar':
-                if (!MODULE_GRAVATAR) {
-                    $this->avatarType = 'none';
-                    break;
-                }
-
-                // test gravatar
-                if (!Gravatar::test(WCF::getUser()->email)) {
-                    throw new UserInputException('gravatar', 'notFound');
                 }
                 break;
         }
@@ -103,26 +90,10 @@ class AvatarEditForm extends AbstractForm
 
         // update user
         $data = [];
-        switch ($this->avatarType) {
-            case 'none':
-                $data = [
-                    'avatarID' => null,
-                    'enableGravatar' => 0,
-                ];
-                break;
-
-            case 'custom':
-                $data = [
-                    'enableGravatar' => 0,
-                ];
-                break;
-
-            case 'gravatar':
-                $data = [
-                    'avatarID' => null,
-                    'enableGravatar' => 1,
-                ];
-                break;
+        if ($this->avatarType === 'none') {
+            $data = [
+                'avatarID' => null,
+            ];
         }
         $this->objectAction = new UserAction([WCF::getUser()], 'update', [
             'data' => \array_merge($this->additionalFields, $data),
@@ -132,22 +103,6 @@ class AvatarEditForm extends AbstractForm
         // check if the user will be automatically added to new user groups
         // because of the changed avatar
         UserGroupAssignmentHandler::getInstance()->checkUsers([WCF::getUser()->userID]);
-
-        // reset gravatar cache
-        if ($this->avatarType == 'gravatar') {
-            $pattern = WCF_DIR . \sprintf(
-                Gravatar::GRAVATAR_CACHE_LOCATION,
-                \md5(\mb_strtolower(WCF::getUser()->email)),
-                '*',
-                '*'
-            );
-            $files = \glob($pattern);
-            if (!empty($files)) {
-                foreach ($files as $file) {
-                    @\unlink($file);
-                }
-            }
-        }
 
         UserProfileHandler::getInstance()->reloadUserProfile();
 
@@ -165,8 +120,6 @@ class AvatarEditForm extends AbstractForm
         if (empty($_POST)) {
             if (WCF::getUser()->avatarID) {
                 $this->avatarType = 'custom';
-            } elseif (MODULE_GRAVATAR && WCF::getUser()->enableGravatar) {
-                $this->avatarType = 'gravatar';
             }
         }
     }

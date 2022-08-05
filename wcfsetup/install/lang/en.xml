@@ -1422,8 +1422,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
-		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars (Deprecated / Not Recommended)]]></item>
-		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enabling Gravatar support is not recommended due to privacy concerns. Gravatar support will be removed in a future version.]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[Users online list]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
@@ -1577,13 +1575,6 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Failed login attempt logs will be removed after the following days. Raising the limit will provide a longer history, but at the expense of increased database storage usage.]]></item>
 		<item name="wcf.acp.option.signature_secret"><![CDATA[Secret Key]]></item>
 		<item name="wcf.acp.option.signature_secret.description"><![CDATA[A secret key that serves the purpose of validating data to prevent tampering. Keep this key secret! A random key was generated for you during installation, you don’t need to change it. Note: This key must be at least 15 characters long.]]></item>
-		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a class="externalURL" href="https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.identicon"><![CDATA[Identicon]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster id]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[Use MySQL FULLTEXT (default)]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Display recommended products]]></item>
@@ -5176,12 +5167,9 @@ You also received a list of emergency codes to use when your second factor becom
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
-		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
+		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 128×128 pixels.]]></item>
-		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
-		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="https://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
-		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
@@ -5195,7 +5183,6 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Custom Avatar]]></item>
-		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
 		<item name="wcf.user.condition.avatar.noAvatar"><![CDATA[No Avatar]]></item>
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[General Data]]></item>
@@ -5569,5 +5556,18 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.option.category.general.cache.memcached"/>
 	<item name="wcf.acp.option.category.general.cache.memcached.description"/>
 	<item name="wcf.acp.option.cache_source_type.memcached"/>
+	<item name="wcf.acp.option.module_gravatar"/>
+	<item name="wcf.acp.option.module_gravatar.description"/>
+	<item name="wcf.acp.option.gravatar_default_type"/>
+	<item name="wcf.acp.option.gravatar_default_type.description"/>
+	<item name="wcf.acp.option.gravatar_default_type.404"/>
+	<item name="wcf.acp.option.gravatar_default_type.identicon"/>
+	<item name="wcf.acp.option.gravatar_default_type.wavatar"/>
+	<item name="wcf.acp.option.gravatar_default_type.monsterid"/>
+	<item name="wcf.acp.option.gravatar_default_type.retro"/>
+	<item name="wcf.user.avatar.type.gravatar"/>
+	<item name="wcf.user.avatar.type.gravatar.description"/>
+	<item name="wcf.user.avatar.type.gravatar.error.notFound"/>
+	<item name="wcf.user.condition.avatar.gravatar"/>
 </delete>
 </language>

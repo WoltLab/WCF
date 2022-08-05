@@ -8,7 +8,6 @@ use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\avatar\DefaultAvatar;
-use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
@@ -363,12 +362,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                         } else {
                             $this->avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
                         }
-                    } elseif (MODULE_GRAVATAR && $this->enableGravatar) {
-                        $this->avatar = new Gravatar(
-                            $this->userID,
-                            $this->email,
-                            ($this->gravatarFileExtension ?: 'png')
-                        );
                     } else {
                         $parameters = ['avatar' => null];
                         EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
