@@ -137,6 +137,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         // The constructor will throw if the expression is not valid.
         new CronExpression(\sprintf(
             '%s %s %s %s %s',
+            $data['startMinute'],
             $data['startHour'],
             $data['startDom'],
             $data['startMonth'],
