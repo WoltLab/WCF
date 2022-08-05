@@ -22,7 +22,7 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder
     protected function rebuild(array $parameters)
     {
         $attributes = [];
-        $data = ['bbcodes' => [], 'highlighters' => []];
+        $data = ['bbcodes' => []];
 
         // get attributes
         $sql = "SELECT      attribute.*, bbcode.bbcodeTag
@@ -53,16 +53,6 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder
             }
 
             $data['bbcodes'][$bbcode->bbcodeTag] = $bbcode;
-        }
-
-        // get code highlighters
-        $highlighters = \glob(WCF_DIR . 'lib/system/bbcode/highlighter/*.class.php');
-        if (\is_array($highlighters)) {
-            foreach ($highlighters as $highlighter) {
-                if (\preg_match('~\/([a-zA-Z]+)Highlighter\.class\.php$~', $highlighter, $matches)) {
-                    $data['highlighters'][] = \strtolower($matches[1]);
-                }
-            }
         }
 
         return $data;

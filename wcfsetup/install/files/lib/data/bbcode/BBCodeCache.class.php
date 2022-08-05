@@ -23,13 +23,6 @@ class BBCodeCache extends SingletonFactory
     protected $cachedBBCodes = [];
 
     /**
-     * list of known highlighters
-     * @var string[]
-     * @deprecated  since 5.2, use Prism to highlight your code.
-     */
-    protected $highlighters = [];
-
-    /**
      * @inheritDoc
      */
     protected function init()
@@ -68,20 +61,5 @@ class BBCodeCache extends SingletonFactory
     public function getBBCodeAttributes($tag)
     {
         return $this->cachedBBCodes[$tag]->getAttributes();
-    }
-
-    /**
-     * Returns a list of known highlighters.
-     *
-     * @return  string[]
-     * @deprecated  since 5.2, use Prism to highlight your code.
-     */
-    public function getHighlighters()
-    {
-        if (empty($this->highlighters)) {
-            $this->highlighters = BBCodeCacheBuilder::getInstance()->getData([], 'highlighters');
-        }
-
-        return $this->highlighters;
     }
 }
