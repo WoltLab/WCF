@@ -90,39 +90,6 @@ final class CryptoUtil
     }
 
     /**
-     * @deprecated  Use \hash_equals() directly.
-     */
-    public static function secureCompare($hash1, $hash2)
-    {
-        $hash1 = (string)$hash1;
-        $hash2 = (string)$hash2;
-
-        return \hash_equals($hash1, $hash2);
-    }
-
-    /**
-     * @deprecated  Use \random_bytes() directly.
-     */
-    public static function randomBytes($n)
-    {
-        return \random_bytes($n);
-    }
-
-    /**
-     * @deprecated  Use \random_int() directly.
-     */
-    public static function randomInt($min, $max)
-    {
-        $range = $max - $min;
-        if ($range == 0) {
-            // not random
-            throw new CryptoException("Cannot generate a secure random number, min and max are the same");
-        }
-
-        return \random_int($min, $max);
-    }
-
-    /**
      * Forbid creation of CryptoUtil objects.
      */
     private function __construct()
