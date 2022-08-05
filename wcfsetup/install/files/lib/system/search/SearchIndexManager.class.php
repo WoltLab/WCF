@@ -52,11 +52,9 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * Returns the id of the object type with the given name.
      *
-     * @param string $objectType
-     * @return  int
      * @throws  SystemException
      */
-    public function getObjectTypeID($objectType)
+    public function getObjectTypeID(string $objectType): int
     {
         if (!isset($this->availableObjectTypes[$objectType])) {
             throw new SystemException("unknown object type '" . $objectType . "'");
@@ -68,11 +66,9 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * Returns the the object type with the given name.
      *
-     * @param string $objectType
-     * @return  ObjectType
      * @throws  SystemException
      */
-    public function getObjectType($objectType)
+    public function getObjectType(string $objectType): ObjectType
     {
         if (!isset($this->availableObjectTypes[$objectType])) {
             throw new SystemException("unknown object type '" . $objectType . "'");
@@ -83,10 +79,8 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 
     /**
      * Returns the search index manager object.
-     *
-     * @return  ISearchIndexManager
      */
-    protected function getSearchIndexManager()
+    protected function getSearchIndexManager(): ISearchIndexManager
     {
         if ($this->searchIndexManager === null) {
             $className = '';
@@ -121,7 +115,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
         $username,
         $languageID = null,
         $metaData = ''
-    ) {
+    ): void {
         // strip html; remove whitespace from beginning and end of the message
         $message = StringUtil::trim(StringUtil::stripHTML($message));
 
@@ -130,43 +124,9 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     }
 
     /**
-     * @deprecated  3.0 - please use `set() instead`
-     */
-    public function add(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
-    ) {
-        $this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
-    }
-
-    /**
-     * @deprecated  3.0 - please use `set() instead`
-     */
-    public function update(
-        $objectType,
-        $objectID,
-        $message,
-        $subject,
-        $time,
-        $userID,
-        $username,
-        $languageID = null,
-        $metaData = ''
-    ) {
-        $this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
-    }
-
-    /**
      * @inheritDoc
      */
-    public function delete($objectType, array $objectIDs)
+    public function delete($objectType, array $objectIDs): void
     {
         $this->getSearchIndexManager()->delete($objectType, $objectIDs);
     }
@@ -174,7 +134,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * @inheritDoc
      */
-    public function reset($objectType)
+    public function reset($objectType): void
     {
         $this->getSearchIndexManager()->reset($objectType);
     }
@@ -182,7 +142,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * @inheritDoc
      */
-    public function createSearchIndices()
+    public function createSearchIndices(): void
     {
         $this->getSearchIndexManager()->createSearchIndices();
     }
@@ -190,7 +150,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * @inheritDoc
      */
-    public function beginBulkOperation()
+    public function beginBulkOperation(): void
     {
         $this->getSearchIndexManager()->beginBulkOperation();
     }
@@ -198,7 +158,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * @inheritDoc
      */
-    public function commitBulkOperation()
+    public function commitBulkOperation(): void
     {
         $this->getSearchIndexManager()->commitBulkOperation();
     }
@@ -207,9 +167,8 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
      * Returns the database table name for the object type's search index.
      *
      * @param mixed $objectType
-     * @return  string
      */
-    public static function getTableName($objectType)
+    public static function getTableName(string $objectType): string
     {
         if (\is_string($objectType)) {
             $objectType = self::getInstance()->getObjectType($objectType);
