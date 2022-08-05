@@ -5568,5 +5568,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.option.cache_source_memcached_host.description"/>
 	<item name="wcf.acp.option.category.general.cache.memcached"/>
 	<item name="wcf.acp.option.category.general.cache.memcached.description"/>
-	<item name="wcf.acp.option.cache_source_type.memcached"/></delete>
+	<item name="wcf.acp.option.cache_source_type.memcached"/>
+</delete>
 </language>
