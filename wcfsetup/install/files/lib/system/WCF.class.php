@@ -18,10 +18,8 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\AJAXException;
 use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
-use wcf\system\exception\NamedUserException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -177,7 +175,6 @@ class WCF
         $this->initCronjobs();
         $this->initCoreObjects();
         $this->initApplications();
-        $this->initBlacklist();
 
         EventHandler::getInstance()->fireAction($this, 'initialized');
     }
@@ -559,28 +556,6 @@ class WCF
 
         $styleHandler = StyleHandler::getInstance();
         $styleHandler->changeStyle($styleID);
-    }
-
-    /**
-     * Executes the blacklist.
-     */
-    protected function initBlacklist()
-    {
-        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
-
-        // handle banned users
-        if (self::getUser()->userID && self::getUser()->banned && !self::getUser()->hasOwnerAccess()) {
-            if ($isAjax) {
-                throw new AJAXException(
-                    self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'),
-                    AJAXException::INSUFFICIENT_PERMISSIONS
-                );
-            } else {
-                self::getSession()->delete();
-
-                throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
-            }
-        }
     }
 
     /**
