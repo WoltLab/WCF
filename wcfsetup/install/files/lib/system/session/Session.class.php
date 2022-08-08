@@ -21,10 +21,7 @@ final class Session
      */
     private $data;
 
-    /**
-     * @var UserAgent
-     */
-    private $userAgent;
+    private UserAgent $userAgent;
 
     /**
      * Session constructor.
@@ -90,7 +87,7 @@ final class Session
      */
     public function getUserAgent(): UserAgent
     {
-        if ($this->userAgent === null) {
+        if (!isset($this->userAgent)) {
             $this->userAgent = new UserAgent($this->data['userAgent']);
         }
 
