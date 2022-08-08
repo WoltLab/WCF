@@ -81,13 +81,6 @@ class WCF
     public const AVAILABLE_UPGRADE_VERSION = null;
 
     /**
-     * list of supported legacy API versions
-     * @var int[]
-     * @deprecated 5.2
-     */
-    private static $supportedLegacyApiVersions = [2017, 2018];
-
-    /**
      * list of currently loaded applications
      * @var Application[]
      */
@@ -1141,29 +1134,6 @@ class WCF
         }
 
         return self::getActiveRequest()->isLandingPage();
-    }
-
-    /**
-     * Returns true if the given API version is currently supported.
-     *
-     * @param int $apiVersion
-     * @return      bool
-     * @deprecated 5.2
-     */
-    public static function isSupportedApiVersion($apiVersion)
-    {
-        return ($apiVersion == WSC_API_VERSION) || \in_array($apiVersion, self::$supportedLegacyApiVersions);
-    }
-
-    /**
-     * Returns the list of supported legacy API versions.
-     *
-     * @return      int[]
-     * @deprecated 5.2
-     */
-    public static function getSupportedLegacyApiVersions()
-    {
-        return self::$supportedLegacyApiVersions;
     }
 
     /**
