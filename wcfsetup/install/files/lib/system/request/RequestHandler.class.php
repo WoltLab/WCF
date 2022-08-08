@@ -259,7 +259,7 @@ final class RequestHandler extends SingletonFactory
     }
 
     /**
-     * @deprecated 5.6 - This method always returns false.
+     * @deprecated 6.0 - This method always returns false.
      */
     public function inRescueMode(): bool
     {

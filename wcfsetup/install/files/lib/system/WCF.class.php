@@ -492,10 +492,10 @@ class WCF
         // https://github.com/WoltLab/WCF/issues/4806
         \define('ENABLE_DESKTOP_NOTIFICATIONS', 1);
 
-        // Disabling X-Frame-Options is no longer possible since 5.6.
+        // Disabling X-Frame-Options is no longer possible since 6.0.
         \define('HTTP_SEND_X_FRAME_OPTIONS', 1);
 
-        // Multi-domain setups were removed in 5.6.
+        // Multi-domain setups were removed in 6.0.
         \define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
 
         // Gravatars were removed in 6.0.
@@ -995,7 +995,7 @@ class WCF
     }
 
     /**
-     * @deprecated 5.6 - This was a workaround for multi-domain setups.
+     * @deprecated 6.0 - This was a workaround for multi-domain setups.
      */
     public static function getActivePath()
     {
@@ -1133,7 +1133,7 @@ class WCF
     }
 
     /**
-     * @deprecated 5.6 Use ActiveStyle::getRelativeFavicon() directly.
+     * @deprecated 6.0 Use ActiveStyle::getRelativeFavicon() directly.
      */
     public function getFavicon()
     {
@@ -1143,7 +1143,7 @@ class WCF
     }
 
     /**
-     * @deprecated 5.6 This method always returns true.
+     * @deprecated 6.0 This method always returns true.
      */
     public function useDesktopNotifications()
     {

@@ -604,7 +604,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Renders the template into a fresh PSR-7 StreamInterface.
      *
-     * @since 5.6
+     * @since 6.0
      */
     public function fetchStream(
         string $templateName,

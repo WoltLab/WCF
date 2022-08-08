@@ -819,7 +819,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * @deprecated 5.6 Use User::getLanguageIDs() instead.
+     * @deprecated 6.0 Use User::getLanguageIDs() instead.
      */
     public function getLanguageIDs()
     {

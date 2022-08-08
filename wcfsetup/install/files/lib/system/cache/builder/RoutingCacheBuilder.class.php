@@ -292,7 +292,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
     }
 
     /**
-     * @since 5.6
+     * @since 6.0
      */
     private function classNameToControllerName(string $className): string
     {

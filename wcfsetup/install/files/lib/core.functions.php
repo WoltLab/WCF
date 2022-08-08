@@ -104,7 +104,7 @@ namespace wcf {
 	}
 
 	/**
-	 * @deprecated 5.6 Use #[\SensitiveParameter] instead.
+	 * @deprecated 6.0 Use #[\SensitiveParameter] instead.
 	 */
 	#[\Attribute(\Attribute::TARGET_PARAMETER)]
 	class SensitiveArgument

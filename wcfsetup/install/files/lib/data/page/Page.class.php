@@ -276,7 +276,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     }
 
     /**
-     * @deprecated 5.6 The landing page is a property of the 'wcf' app.
+     * @deprecated 6.0 The landing page is a property of the 'wcf' app.
      */
     public function setAsLandingPage()
     {

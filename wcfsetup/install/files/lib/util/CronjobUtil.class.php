@@ -5,7 +5,7 @@ namespace wcf\util;
 use wcf\system\exception\SystemException;
 
 /**
- * @deprecated 5.6 dragonmantank/cron-expression is used for calculations.
+ * @deprecated 6.0 dragonmantank/cron-expression is used for calculations.
  */
 final class CronjobUtil
 {

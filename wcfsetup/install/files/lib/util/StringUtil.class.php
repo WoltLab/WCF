@@ -503,7 +503,7 @@ final class StringUtil
     }
 
     /**
-     * @deprecated 5.6 Use `\mb_convert_encoding()` directly.
+     * @deprecated 6.0 Use `\mb_convert_encoding()` directly.
      */
     public static function convertEncoding($inCharset, $outCharset, $string): string
     {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Updates the database layout during the update from 5.5 to 5.6.
+ * Updates the database layout during the update from 5.5 to 6.0.
  *
  * @author Tim Duesterhus
  * @copyright 2001-2022 WoltLab GmbH
