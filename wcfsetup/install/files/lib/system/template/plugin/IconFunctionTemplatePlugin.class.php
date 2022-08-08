@@ -2,7 +2,6 @@
 
 namespace wcf\system\template\plugin;
 
-use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -22,6 +21,8 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
     private const SIZES = [16, 24, 32, 48, 64, 96, 128, 144];
 
+    private const TYPES = ['brand', 'regular', 'solid'];
+
     /**
      * @inheritDoc
      */
@@ -29,25 +30,37 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
     {
         $size = \intval($tagArgs['size'] ?? 0);
         $name = $tagArgs['name'] ?? '';
+        $type = $tagArgs['type'] ?? '';
 
         if (!\in_array($size, self::SIZES)) {
             throw new \InvalidArgumentException("An unsupported size `{$size}` was requested.");
         }
 
         if ($name === '') {
-            throw new \InvalidArgumentException("The `name` attribute must be present and non-empty");
+            throw new \InvalidArgumentException("The `name` attribute must be present and non-empty.");
         }
 
-        $svgFile = \WCF_DIR . "icon/font-awesome/v6/brands/{$name}.svg";
-        if (\file_exists($svgFile)) {
+        if ($type === '') {
+            throw new \InvalidArgumentException("The `type` attribute must be present and non-empty.");
+        } else if (!\in_array($type, self::TYPES)) {
+            throw new \InvalidArgumentException("An unsupported type `${type}` was specified.");
+        }
+
+        if ($type === 'brand') {
+            $svgFile = \WCF_DIR . "icon/font-awesome/v6/brands/{$name}.svg";
+            if (!\file_exists($svgFile)) {
+                throw new \InvalidArgumentException("Unable to locate the icon for brand `${name}`.");
+            }
+
             $content = \file_get_contents($svgFile);
+            $content = \preg_replace('~^<svg~', '<svg slot="svg"', $content);
             return <<<HTML
             <fa-icon size="{$size}" brand>{$content}</fa-icon>
             HTML;
         }
 
         return <<<HTML
-        <fa-icon size="{$size}" name="{$name}"></fa-icon>
+        <fa-icon size="{$size}" name="{$name}" {$type}></fa-icon>
         HTML;
     }
 }
