@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\Helper;
 use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\notice\NoticeHandler;
@@ -47,7 +48,7 @@ final class CheckForOfflineMode implements MiddlewareInterface
 
     private function getOfflineResponse(ServerRequestInterface $request): ResponseInterface
     {
-        if ($this->isAjaxRequest($request)) {
+        if (Helper::isAjaxRequest($request)) {
             throw new AJAXException(
                 WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
                 AJAXException::INSUFFICIENT_PERMISSIONS
@@ -78,10 +79,5 @@ final class CheckForOfflineMode implements MiddlewareInterface
     private function userCanBypassOfflineMode(): bool
     {
         return WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode');
-    }
-
-    private function isAjaxRequest(ServerRequestInterface $request): bool
-    {
-        return $request->getHeaderLine('x-requested-with') === 'XMLHttpRequest';
     }
 }
