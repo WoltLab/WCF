@@ -9,6 +9,6 @@ type IconMetadata = [Codepoint, IconStyles];
 
 declare global {
   interface Window {
-    getFontAwesome6Styles: (name: string) => IconMetadata | undefined;
+    getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
   }
 }
