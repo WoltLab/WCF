@@ -806,17 +806,6 @@ if (COMPILER_TARGET_DEFAULT) {
 	});
 	
 	/**
-	 * @deprecated 5.2 Use `WoltLabSuite/Core/Ui/Smiley/Insert` instead.
-	 */
-	WCF.Message.Smilies = Class.extend({
-		init: function (editorId) {
-			require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function(UiSmileyInsert) {
-				new UiSmileyInsert(editorId);
-			});
-		}
-	});
-	
-	/**
 	 * Provides an inline message editor.
 	 *
 	 * @deprecated        3.0 - please use `WoltLabSuite/Core/Ui/Message/InlineEditor` instead
@@ -1827,19 +1816,6 @@ WCF.Message.Share.Content = Class.extend({
 		if (navigator.userAgent.match(/iP(ad|hone|od)/)) {
 			$inputElements.keydown(function() { return false; }).removeAttr('readonly').click(function() { this.setSelectionRange(0, 9999); });
 		}
-	}
-});
-
-/**
- * Provides buttons to share a page through multiple social community sites.
- * 
- * @deprecated  3.0 - please use `WoltLabSuite/Core/Ui/Message/Share` instead
- */
-WCF.Message.Share.Page = Class.extend({
-	init: function() {
-		require(['WoltLabSuite/Core/Ui/Message/Share'], function(UiMessageShare) {
-			UiMessageShare.init();
-		});
 	}
 });
 
