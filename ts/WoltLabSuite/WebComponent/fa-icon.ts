@@ -20,10 +20,8 @@
         slot.name = "svg";
         root.append(slot);
       } else {
-        const [codepoint] = window.getFontAwesome6Styles(this.name)!;
+        const [codepoint] = window.getFontAwesome6IconMetadata(this.name)!;
         root.append(codepoint);
-
-        // TODO: Add style
       }
     }
 
@@ -43,7 +41,7 @@
           throw new TypeError("Must provide the name of the icon.");
         }
 
-        const styles = window.getFontAwesome6Styles(this.name);
+        const styles = window.getFontAwesome6IconMetadata(this.name);
         if (styles === undefined) {
           throw new TypeError(`The icon '${this.name}' is unknown or unsupported.`);
         }
@@ -75,7 +73,7 @@
         throw new Error("Cannot change the icon of a brand icon.");
       }
 
-      const metadata = window.getFontAwesome6Styles(name);
+      const metadata = window.getFontAwesome6IconMetadata(name);
       if (metadata === undefined) {
         throw new TypeError(`The icon '${name}' is unknown or unsupported.`);
       }
