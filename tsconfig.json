@@ -3,6 +3,14 @@
     "global.d.ts",
     "ts/**/*"
   ],
+  "exclude": [
+    "ts/WoltLabSuite/WebComponent/*.ts"
+  ],
+  "references": [
+    {
+      "path": "ts/WoltLabSuite/WebComponent"
+    }
+  ],
   "compilerOptions": {
     "allowJs": true,
     "target": "es2019",
