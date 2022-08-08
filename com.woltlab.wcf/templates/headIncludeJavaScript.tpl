@@ -26,7 +26,8 @@
 	{/if}
 </script>
 
-<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js?v={TIME_NOW}"></script>
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-metadata.js"></script>
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js"></script>
 
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}

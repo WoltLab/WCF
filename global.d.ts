@@ -7,6 +7,10 @@ import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 
+type Codepoint = string;
+type IconStyles = string[];
+type IconMetadata = [Codepoint, IconStyles];
+
 declare global {
   interface Window {
     Devtools?: typeof Devtools;
@@ -20,6 +24,8 @@ declare global {
     TIME_NOW: number;
     WCF_PATH: string;
     WSC_API_URL: string;
+
+    getFontAwesome6Styles: (name: string) => IconMetadata | undefined;
 
     jQuery: JQueryStatic;
     WCF: any;

@@ -108,7 +108,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						{icon size=32 name='bell' type='solid'}
+						{icon size=32 name='info' type='solid'}
 						{icon size=32 name='bell' type='regular'}
 						<span class="icon icon32 fa-bell-o"></span>
 						{icon size=32 name='500px' type='brand'}
