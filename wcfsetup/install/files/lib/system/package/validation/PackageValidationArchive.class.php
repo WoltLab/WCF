@@ -236,28 +236,6 @@ class PackageValidationArchive implements \RecursiveIterator
             ]);
         }
 
-        // check if this package exposes compatible api versions
-        $compatibleVersions = $this->archive->getCompatibleVersions();
-        if (!empty($compatibleVersions)) {
-            $isCompatible = $isOlderVersion = false;
-            foreach ($compatibleVersions as $version) {
-                if (WCF::isSupportedApiVersion($version)) {
-                    $isCompatible = true;
-                    break;
-                } elseif ($version < WSC_API_VERSION) {
-                    $isOlderVersion = true;
-                }
-            }
-
-            if (!$isCompatible) {
-                throw new PackageValidationException(
-                    PackageValidationException::INCOMPATIBLE_API_VERSION,
-                    ['isOlderVersion' => $isOlderVersion]
-                );
-            }
-        }
-        // Missing details on API compatibility are no longer an error.
-
         // package is not installed yet
         if ($package === null) {
             $instructions = $this->archive->getInstallInstructions();

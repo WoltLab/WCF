@@ -1915,7 +1915,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[Die {if $type == 'install'}Installations{else}Update{/if}-Anweisungen geben für das Package Installation Plugin „{$pip}“ die Datei „{$value}“ an, diese ist jedoch nicht im Archiv enthalten. Mögliche Ursachen:<ul class="nativeList"><li>Die Datei wurde dem Archiv nicht hinzugefügt</li><li>Die Datei existiert, jedoch sind der Dateiname und die Angabe in den Anweisungen abweichend (Tippfehler)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[Das Paket „{$packageName|phrase}“ ist bereits in Version „{$packageVersion}“ installiert.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[Die API-Version „{$version}“ ist ungültig.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine ältere Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.16"><![CDATA[Neben der &lt;void/&gt;-Anweisung werden weitere Package Installation Plugins angegeben.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.17"><![CDATA[Die &lt;void/&gt;-Anweisung ist in den Installations-Anweisungen unzulässig.]]></item>
