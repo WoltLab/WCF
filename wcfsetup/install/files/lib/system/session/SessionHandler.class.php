@@ -179,20 +179,6 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * @deprecated 5.4 - This method is a noop. The cookie suffix is determined automatically.
-     */
-    public function setCookieSuffix()
-    {
-    }
-
-    /**
-     * @deprecated 5.4 - This method is a noop. Cookie handling works automatically.
-     */
-    public function setHasValidCookie($hasValidCookie)
-    {
-    }
-
-    /**
      * Parses the session cookie value, returning an array with the stored fields.
      *
      * The return array is guaranteed to have a `sessionId` key.
