@@ -1,3 +1,4 @@
+wcfsetup/install/files/icon/font-awesome/**/*.svg linguist-generated
 wcfsetup/install/files/js/WoltLabSuite/**/*.js linguist-generated
 wcfsetup/install/files/lib/system/api/** linguist-vendored
 wcfsetup/install/files/lib/system/api/composer.json -linguist-vendored
