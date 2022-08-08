@@ -5,16 +5,10 @@ namespace wcf\system;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\AJAXException;
-use wcf\system\exception\NamedUserException;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
-use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
-use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
