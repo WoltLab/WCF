@@ -22,10 +22,7 @@ use wcf\system\event\IEvent;
  */
 final class UserLoggedIn implements IEvent
 {
-    /**
-     * @var int
-     */
-    private $userID;
+    private int $userID;
 
     public function __construct(User $user)
     {
