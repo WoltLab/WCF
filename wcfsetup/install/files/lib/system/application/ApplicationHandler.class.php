@@ -239,7 +239,7 @@ class ApplicationHandler extends SingletonFactory
     }
 
     /**
-     * @since 5.6
+     * @since 6.0
      */
     public function getDomainName(): string
     {

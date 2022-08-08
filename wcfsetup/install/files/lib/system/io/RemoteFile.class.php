@@ -158,7 +158,7 @@ class RemoteFile extends File
     }
 
     /**
-     * @deprecated 5.6 This method is effectively returning bogus data, because the majority of TLS communication uses Guzzle/cURL.
+     * @deprecated 6.0 This method is effectively returning bogus data, because the majority of TLS communication uses Guzzle/cURL.
      */
     public static function supportsSSL()
     {
@@ -178,7 +178,7 @@ class RemoteFile extends File
     }
 
     /**
-     * @deprecated 5.6 See RemoteFile::supportsSSL(). The implementation is a noop.
+     * @deprecated 6.0 See RemoteFile::supportsSSL(). The implementation is a noop.
      */
     public static function disableSSL()
     {

@@ -65,7 +65,7 @@ class Diff
     protected $d;
 
     /**
-     * @deprecated 5.6 Use sebastian/diff instead.
+     * @deprecated 6.0 Use sebastian/diff instead.
      */
     public function __construct(array $a, array $b)
     {
@@ -77,7 +77,7 @@ class Diff
     }
 
     /**
-     * @deprecated 5.6 Use sebastian/diff instead.
+     * @deprecated 6.0 Use sebastian/diff instead.
      */
     public function getLCS()
     {
@@ -230,7 +230,7 @@ class Diff
     }
 
     /**
-     * @deprecated 5.6 Use sebastian/diff instead.
+     * @deprecated 6.0 Use sebastian/diff instead.
      */
     public function getRawDiff()
     {
@@ -240,7 +240,7 @@ class Diff
     }
 
     /**
-     * @deprecated 5.6 Use sebastian/diff instead.
+     * @deprecated 6.0 Use sebastian/diff instead.
      */
     public function getUnixDiff($context = 2)
     {
@@ -328,7 +328,7 @@ class Diff
      * Transforms the output of sebastian/diff's Differ::diffToArray() into
      * the output of self::getRawDiff().
      *
-     * @since 5.6
+     * @since 6.0
      */
     public static function rawDiffFromSebastianDiff(array $arrayDiff): array
     {
@@ -345,7 +345,7 @@ class Diff
     }
 
     /**
-     * @deprecated 5.6 Use sebastian/diff instead.
+     * @deprecated 6.0 Use sebastian/diff instead.
      */
     public function __toString()
     {

@@ -15,7 +15,7 @@ use wcf\http\LegacyPlaceholderResponse;
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Http\Middleware
- * @since   5.6
+ * @since   6.0
  */
 final class EnforceFrameOptions implements MiddlewareInterface
 {
