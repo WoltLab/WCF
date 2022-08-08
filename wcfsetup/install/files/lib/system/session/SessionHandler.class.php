@@ -44,15 +44,13 @@ final class SessionHandler extends SingletonFactory
 {
     /**
      * prevents update on shutdown
-     * @var bool
      */
-    protected $doNotUpdate = false;
+    protected bool $doNotUpdate = false;
 
     /**
      * disables page tracking
-     * @var bool
      */
-    protected $disableTracking = false;
+    protected bool $disableTracking = false;
 
     /**
      * group data and permissions
@@ -62,9 +60,8 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * true if within ACP or WCFSetup
-     * @var bool
      */
-    protected $isACP = false;
+    protected bool $isACP = false;
 
     /**
      * language id for active user
@@ -75,18 +72,15 @@ final class SessionHandler extends SingletonFactory
     /**
      * @var string
      */
-    private $sessionID;
+    private string $sessionID;
 
-    /**
-     * @var LegacySession
-     */
-    protected $legacySession;
+    protected ?LegacySession $legacySession;
 
     /**
      * user object
      * @var User
      */
-    protected $user;
+    protected User $user;
 
     /**
      * session variables
@@ -96,15 +90,10 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * indicates if session variables changed and must be saved upon shutdown
-     * @var bool
      */
-    protected $variablesChanged = false;
+    protected bool $variablesChanged = false;
 
-    /**
-     * true if this is a new session
-     * @var bool
-     */
-    protected $firstVisit = false;
+    protected bool $firstVisit = false;
 
     /**
      * list of names of permissions only available for users
@@ -112,10 +101,7 @@ final class SessionHandler extends SingletonFactory
      */
     protected $usersOnlyPermissions = [];
 
-    /**
-     * @var string
-     */
-    private $xsrfToken;
+    private string $xsrfToken;
 
     private const GUEST_SESSION_LIFETIME = 2 * 3600;
 
@@ -328,7 +314,6 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns true if client provided a valid session cookie.
      *
-     * @return  bool
      * @since   3.0
      */
     public function hasValidCookie(): bool
@@ -421,7 +406,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Disables page tracking.
      */
-    public function disableTracking()
+    public function disableTracking(): void
     {
         $this->disableTracking = true;
     }
@@ -429,7 +414,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Initializes security token.
      */
-    protected function initSecurityToken()
+    protected function initSecurityToken(): void
     {
         $xsrfToken = '';
         if (!empty($_COOKIE['XSRF-TOKEN'])) {
@@ -477,7 +462,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function getSecurityToken(): string
     {
-        if ($this->xsrfToken === null) {
+        if (!isset($this->xsrfToken)) {
             $this->initSecurityToken();
         }
 
@@ -487,10 +472,8 @@ final class SessionHandler extends SingletonFactory
     /**
      * Validates the given security token, returns false if
      * given token is invalid.
-     *
-     * @param string $token
      */
-    public function checkSecurityToken($token): bool
+    public function checkSecurityToken(string $token): bool
     {
         // The output of CryptoUtil::createSignedString() is not url-safe. For compatibility
         // reasons the SECURITY_TOKEN in URLs might not be encoded, turning the '+' into a space.
@@ -502,11 +485,8 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Registers a session variable.
-     *
-     * @param string $key
-     * @param mixed $value
      */
-    public function register($key, $value)
+    public function register(string $key, mixed $value): void
     {
         $scope = $this->isACP ? 'acp' : 'frontend';
 
@@ -516,10 +496,8 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Unsets a session variable.
-     *
-     * @param string $key
      */
-    public function unregister($key)
+    public function unregister(string $key): void
     {
         $scope = $this->isACP ? 'acp' : 'frontend';
 
@@ -530,25 +508,18 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns the value of a session variable or `null` if the session
      * variable does not exist.
-     *
-     * @param string $key
-     * @return  mixed
      */
-    public function getVar($key)
+    public function getVar(string $key): mixed
     {
         $scope = $this->isACP ? 'acp' : 'frontend';
 
-        if (isset($this->variables[$scope][$key])) {
-            return $this->variables[$scope][$key];
-        }
+        return $this->variables[$scope][$key] ?? null;
     }
 
     /**
      * Returns the user object of this session.
-     *
-     * @return  User    $user
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -659,7 +630,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Creates a new session.
      */
-    protected function create()
+    protected function create(): void
     {
         $this->sessionID = Hex::encode(\random_bytes(20));
 
@@ -740,10 +711,9 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns the value of the permission with the given name.
      *
-     * @param string $permission
      * @return  mixed       permission value
      */
-    public function getPermission($permission)
+    public function getPermission(string $permission)
     {
         // check if a users only permission is checked for a guest and return
         // false if that is the case
@@ -764,10 +734,9 @@ final class SessionHandler extends SingletonFactory
      * Returns true if a permission was set to 'Never'. This is required to preserve
      * compatibility, while preventing ACLs from overruling a 'Never' setting.
      *
-     * @param string $permission
      * @return      bool
      */
-    public function getNeverPermission($permission)
+    public function getNeverPermission(string $permission)
     {
         $this->loadGroupData();
 
@@ -931,10 +900,9 @@ final class SessionHandler extends SingletonFactory
      * Stores a new user object in this session, e.g. a user was guest because not
      * logged in, after the login his old session is used to store his full data.
      *
-     * @param User $user
-     * @param bool $hideSession if true, database won't be updated
+     * @param $hideSession if true, database won't be updated
      */
-    public function changeUser(User $user, $hideSession = false)
+    public function changeUser(User $user, bool $hideSession = false)
     {
         $eventParameters = ['user' => $user, 'hideSession' => $hideSession];
 
@@ -970,7 +938,7 @@ final class SessionHandler extends SingletonFactory
      * @param User $user
      * @throws  DatabaseException
      */
-    protected function changeUserVirtual(User $user)
+    protected function changeUserVirtual(User $user): void
     {
         // We must delete the old session to not carry over any state across different users.
         $this->delete();
@@ -1159,7 +1127,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Updates user session on shutdown.
      */
-    public function update()
+    public function update(): void
     {
         if ($this->doNotUpdate) {
             return;
@@ -1221,7 +1189,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Deletes this session and its related data.
      */
-    public function delete()
+    public function delete(): void
     {
         // clear storage
         if ($this->user->userID) {
@@ -1238,7 +1206,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Prunes expired sessions.
      */
-    public function prune()
+    public function prune(): void
     {
         $sql = "DELETE FROM wcf1_user_session
                 WHERE       (lastActivityTime < ? AND userID IS NULL)
@@ -1270,7 +1238,7 @@ final class SessionHandler extends SingletonFactory
      *
      * @since 5.2
      */
-    public function deleteIfNew()
+    public function deleteIfNew(): void
     {
         if ($this->isFirstVisit() && !$this->getUser()->userID) {
             $this->delete();
@@ -1331,10 +1299,8 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Returns true if this is a new session.
-     *
-     * @return  bool
      */
-    public function isFirstVisit()
+    public function isFirstVisit(): bool
     {
         return $this->firstVisit;
     }
