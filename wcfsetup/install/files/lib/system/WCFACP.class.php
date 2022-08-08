@@ -5,16 +5,10 @@ namespace wcf\system;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\AJAXException;
-use wcf\system\exception\NamedUserException;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
-use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
-use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
@@ -138,85 +132,15 @@ class WCFACP extends WCF
 
                 exit;
             }
-        } elseif (
-            empty($pathInfo)
-            || !\preg_match('~^/?(login|(full-)?logout|multifactor-authentication|reauthentication)/~i', $pathInfo)
-        ) {
-            $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
-
-            if (WCF::getUser()->userID == 0) {
-                // work-around for AJAX-requests within ACP
-                if ($isAjax) {
-                    throw new AJAXException(
-                        WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'),
-                        AJAXException::SESSION_EXPIRED,
-                        ''
-                    );
-                }
-
-                // build redirect path
-                $application = ApplicationHandler::getInstance()->getActiveApplication();
-                if ($application === null) {
-                    throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
-                }
-
-                HeaderUtil::redirect(
-                    LinkHandler::getInstance()->getLink('Login', [
-                        'url' => RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI,
-                    ])
-                );
-
-                exit;
-            } else {
-                try {
-                    WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
-                } catch (PermissionDeniedException $e) {
-                    self::getTPL()->assign([
-                        '__isLogin' => true,
-                    ]);
-
-                    if ($isAjax) {
-                        throw new AJAXException(
-                            self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                            AJAXException::INSUFFICIENT_PERMISSIONS,
-                            $e->getTraceAsString()
-                        );
-                    } else {
-                        throw new NamedUserException(
-                            self::getLanguage()->getDynamicVariable('wcf.user.username.error.acpNotAuthorized')
-                        );
-                    }
-                }
-
-                if (WCF::getSession()->needsReauthentication()) {
-                    if ($isAjax) {
-                        throw new AJAXException(
-                            self::getLanguage()->getDynamicVariable('wcf.user.reauthentication.explanation'),
-                            AJAXException::SESSION_EXPIRED
-                        );
-                    }
-
-                    HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Reauthentication', [
-                        'url' => RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI,
-                    ]));
-
-                    exit;
-                }
-
-                // The autoloader is not available during the definition of `WCFACP`,
-                // thus we are unable to use the trait directly.
-                //
-                // Workaround this issue by using an anonymous class.
-                (new class {
-                    use TMultifactorRequirementEnforcer {
-                        enforceMultifactorAuthentication as public enforce;
-                    }
-                })->enforce();
-
-                // force debug mode if in ACP and authenticated
-                self::$overrideDebugMode = true;
-            }
         }
+    }
+
+    /**
+     * @since 6.0
+     */
+    public static function overrideDebugMode()
+    {
+        self::$overrideDebugMode = true;
     }
 
     /**
