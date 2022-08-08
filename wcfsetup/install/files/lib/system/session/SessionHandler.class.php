@@ -400,8 +400,6 @@ final class SessionHandler extends SingletonFactory
      */
     public function initSession()
     {
-        $this->defineConstants();
-
         // assign language
         $this->languageID = $this->getVar('languageID') ?: $this->user->languageID;
 
@@ -426,23 +424,6 @@ final class SessionHandler extends SingletonFactory
     public function disableTracking()
     {
         $this->disableTracking = true;
-    }
-
-    /**
-     * Defines global wcf constants related to session.
-     */
-    protected function defineConstants()
-    {
-        // security token
-        if (!\defined('SECURITY_TOKEN')) {
-            \define('SECURITY_TOKEN', $this->getSecurityToken());
-        }
-        if (!\defined('SECURITY_TOKEN_INPUT_TAG')) {
-            \define(
-                'SECURITY_TOKEN_INPUT_TAG',
-                '<input type="hidden" name="t" class="xsrfTokenInput" value="NOT_MODIFIED">'
-            );
-        }
     }
 
     /**
