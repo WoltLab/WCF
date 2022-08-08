@@ -392,39 +392,6 @@ final class FileUtil
     }
 
     /**
-     * Downloads a package archive from an http URL and returns the path to
-     * the downloaded file.
-     *
-     * @param string $httpUrl
-     * @param string $prefix
-     * @param array $options
-     * @param array $postParameters
-     * @param array $headers empty array or a not initialized variable
-     * @return  string
-     * @deprecated  This method currently only is a wrapper around \wcf\util\HTTPRequest. Please use
-     *      HTTPRequest from now on, as this method may be removed in the future.
-     */
-    public static function downloadFileFromHttp(
-        $httpUrl,
-        $prefix = 'package',
-        array $options = [],
-        array $postParameters = [],
-        &$headers = []
-    ) {
-        $request = new HTTPRequest($httpUrl, $options, $postParameters);
-        $request->execute();
-        $reply = $request->getReply();
-
-        $newFileName = self::getTemporaryFilename($prefix . '_');
-        \file_put_contents($newFileName, $reply['body']); // the file to write.
-
-        $tmp = $reply['headers']; // copy variable, to avoid problems with the reference
-        $headers = $tmp;
-
-        return $newFileName;
-    }
-
-    /**
      * Determines whether a file is text or binary by checking the first few bytes in the file.
      * The exact number of bytes is system dependent, but it is typically several thousand.
      * If every byte in that part of the file is non-null, considers the file to be text;
