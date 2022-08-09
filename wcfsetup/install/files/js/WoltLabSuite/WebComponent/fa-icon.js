@@ -1,5 +1,16 @@
 "use strict";
 (() => {
+    let isFA6Free;
+    function isFontAwesome6Free() {
+        if (isFA6Free === undefined) {
+            isFA6Free = true;
+            const iconFont = window.getComputedStyle(document.documentElement).getPropertyValue("--fa-font-family");
+            if (iconFont === "Font Awesome 6 Pro") {
+                isFA6Free = false;
+            }
+        }
+        return isFA6Free;
+    }
     const HeightMap = new Map([
         [16, 14],
         [24, 18],
@@ -13,9 +24,7 @@
     class FaIcon extends HTMLElement {
         connectedCallback() {
             this.validate();
-            const root = this.attachShadow({ mode: "open" });
-            const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
-            root.append(codepoint);
+            this.setIcon(this.name, this.solid);
         }
         validate() {
             if (this.size === 0) {
@@ -27,26 +36,54 @@
             if (this.name === "") {
                 throw new TypeError("Must provide the name of the icon.");
             }
-            const styles = window.getFontAwesome6IconMetadata(this.name);
-            if (styles === undefined) {
+            else if (!this.isValidIconName(this.name)) {
                 throw new TypeError(`The icon '${this.name}' is unknown or unsupported.`);
             }
         }
-        setIcon(name, type) {
-            var _a;
-            const metadata = window.getFontAwesome6IconMetadata(name);
-            if (metadata === undefined) {
+        setIcon(name, isSolid) {
+            if (!this.isValidIconName(name)) {
                 throw new TypeError(`The icon '${name}' is unknown or unsupported.`);
             }
-            const [codepoint, styles] = metadata;
-            if (!styles.includes(type)) {
-                throw new Error(`The icon '${name}' does not support the style '${type}'.`);
+            if (!this.isValidIconStyle(name, isSolid)) {
+                throw new Error(`The icon '${name}' only supports the 'solid' style.`);
             }
-            this.solid = type === "solid";
+            this.solid = isSolid;
             this.name = name;
-            const root = this.shadowRoot;
+            this.updateIcon();
+        }
+        isValidIconName(name) {
+            return name !== null && window.getFontAwesome6IconMetadata(name) !== undefined;
+        }
+        isValidIconStyle(name, isSolid) {
+            if (!isSolid && isFontAwesome6Free()) {
+                const [, styles] = window.getFontAwesome6IconMetadata(name);
+                if (!styles.includes("regular")) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        getShadowRoot() {
+            if (this.shadowRoot === null) {
+                return this.attachShadow({ mode: "open" });
+            }
+            return this.shadowRoot;
+        }
+        updateIcon() {
+            var _a;
+            const root = this.getShadowRoot();
             (_a = root.childNodes[0]) === null || _a === void 0 ? void 0 : _a.remove();
+            const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
             root.append(codepoint);
+        }
+        attributeChangedCallback(name, oldValue, newValue) {
+            switch (name) {
+                case "name":
+                    if (newValue !== null && this.isValidIconName(newValue)) {
+                        this.updateIcon();
+                    }
+                    break;
+            }
         }
         get solid() {
             return this.hasAttribute("solid");
@@ -71,6 +108,9 @@
                 return 0;
             }
             return parseInt(size);
+        }
+        static get observedAttributes() {
+            return ["name"];
         }
     }
     window.customElements.define("fa-icon", FaIcon);
