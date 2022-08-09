@@ -46,17 +46,17 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
                                 WHEN 'file' THEN 2
                                 ELSE 0
                             END AS pluginOrder
-                FROM        wcf" . WCF_N . "_package_installation_plugin
+                FROM        wcf1_package_installation_plugin
                 ORDER BY    pluginOrder, priority";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $pips = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         // insert pips
-        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_node
+        $sql = "INSERT INTO wcf1_package_installation_node
                             (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
                 VALUES      (?, ?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $sequenceNo = 0;
 
         foreach ($pips as $pip) {
@@ -85,10 +85,10 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
         $this->parentNode = $this->node;
         $this->node = $this->getToken();
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_node
+        $sql = "INSERT INTO wcf1_package_installation_node
                             (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
                 VALUES      (?, ?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->installation->queue->queueID,
             $this->installation->queue->processNo,
