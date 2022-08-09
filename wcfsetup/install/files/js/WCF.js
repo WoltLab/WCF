@@ -63,43 +63,11 @@
 		return $data;
 	};
 	
-	// provide a sane window.console implementation
-	if (!window.console) window.console = { };
-	var consoleProperties = [ "log",/* "debug",*/ "info", "warn", "exception", "assert", "dir", "dirxml", "trace", "group", "groupEnd", "groupCollapsed", "profile", "profileEnd", "count", "clear", "time", "timeEnd", "timeStamp", "table", "error" ];
-	for (var i = 0; i < consoleProperties.length; i++) {
-		if (typeof (console[consoleProperties[i]]) === 'undefined') {
-			console[consoleProperties[i]] = function () { };
-		}
-	}
-	
 	if (typeof(console.debug) === 'undefined') {
 		// forward console.debug to console.log (IE9)
 		console.debug = function(string) { console.log(string); };
 	}
 })();
-
-/**
- * Adds a Fisher-Yates shuffle algorithm for arrays.
- * 
- * @see	http://stackoverflow.com/a/2450976
- */
-window.shuffle = function(array) {
-	var currentIndex = array.length, temporaryValue, randomIndex;
-	
-	// While there remain elements to shuffle...
-	while (0 !== currentIndex) {
-		// Pick a remaining element...
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
-		
-		// And swap it with the current element.
-		temporaryValue = array[currentIndex];
-		array[currentIndex] = array[randomIndex];
-		array[randomIndex] = temporaryValue;
-	}
-	
-	return this;
-};
 
 /**
  * User-Agent based browser detection and touch detection.
@@ -134,10 +102,6 @@ window.shuffle = function(array) {
 	jQuery.browser = jQuery.browser || { };
 	jQuery.browser = $.extend(jQuery.browser, browser);
 	jQuery.browser.touch = (!!('ontouchstart' in window) || (!!('msMaxTouchPoints' in window.navigator) && window.navigator.msMaxTouchPoints > 0));
-	
-	// detect smartphones
-	// @deprecated 5.5 The previous check always yielded false, the property is kept for compatibility only.
-	jQuery.browser.smartphone = false;
 	
 	// properly detect IE11
 	if (jQuery.browser.mozilla && ua.match(/trident/)) {
@@ -2158,159 +2122,9 @@ else {
 }
 
 /**
- * Executes provided callback if scroll threshold is reached. Usable to determine
- * if user reached the bottom of an element to load new elements on the fly.
- * 
- * If you do not provide a value for 'reference' and 'target' it will assume you're
- * monitoring page scrolls, otherwise a valid jQuery selector must be provided for both.
- * 
- * @param	integer		threshold
- * @param	object		callback
- * @param	string		reference
- * @param	string		target
- */
-WCF.Action.Scroll = Class.extend({
-	/**
-	 * callback used once threshold is reached
-	 * @var	object
-	 */
-	_callback: null,
-	
-	/**
-	 * reference object
-	 * @var	jQuery
-	 */
-	_reference: null,
-	
-	/**
-	 * target object
-	 * @var	jQuery
-	 */
-	_target: null,
-	
-	/**
-	 * threshold value
-	 * @var	integer
-	 */
-	_threshold: 0,
-	
-	/**
-	 * Initializes a new WCF.Action.Scroll object.
-	 * 
-	 * @param	integer		threshold
-	 * @param	object		callback
-	 * @param	string		reference
-	 * @param	string		target
-	 */
-	init: function(threshold, callback, reference, target) {
-		this._threshold = parseInt(threshold);
-		if (this._threshold === 0) {
-			console.debug("[WCF.Action.Scroll] Given threshold is invalid, aborting.");
-			return;
-		}
-		
-		if ($.isFunction(callback)) this._callback = callback;
-		if (this._callback === null) {
-			console.debug("[WCF.Action.Scroll] Given callback is invalid, aborting.");
-			return;
-		}
-		
-		// bind element references
-		this._reference = $((reference) ? reference : window);
-		this._target = $((target) ? target : document);
-		
-		// watch for scroll event
-		this.start();
-		
-		// check if browser navigated back and jumped to offset before JavaScript was loaded
-		this._scroll();
-	},
-	
-	/**
-	 * Calculates if threshold is reached and notifies callback.
-	 */
-	_scroll: function() {
-		var $targetHeight = this._target.height();
-		var $topOffset = this._reference.scrollTop();
-		var $referenceHeight = this._reference.height();
-		
-		// calculate if defined threshold is visible
-		if (($targetHeight - ($referenceHeight + $topOffset)) < this._threshold) {
-			this._callback(this);
-		}
-	},
-	
-	/**
-	 * Enables scroll monitoring, may be used to resume.
-	 */
-	start: function() {
-		this._reference.on('scroll', $.proxy(this._scroll, this));
-	},
-	
-	/**
-	 * Disables scroll monitoring, e.g. no more elements loadable.
-	 */
-	stop: function() {
-		this._reference.off('scroll');
-	}
-});
-
-/**
  * Namespace for date-related functions.
  */
 WCF.Date = {};
-
-/**
- * Provides a date picker for date input fields.
- * 
- * @deprecated	3.0 - no longer required
- */
-WCF.Date.Picker = { init: function() {} };
-
-/**
- * Provides utility functions for date operations.
- * 
- * @deprecated	3.0 - use `DateUtil` instead
- */
-WCF.Date.Util = {
-	/**
-	 * Returns UTC timestamp, if date is not given, current time will be used.
-	 * 
-	 * @param	Date		date
-	 * @return	integer
-	 * 
-	 * @deprecated	3.0 - use `DateUtil::gmdate()` instead
-	 */
-	gmdate: function(date) {
-		var $date = (date) ? date : new Date();
-		
-		return Math.round(Date.UTC(
-			$date.getUTCFullYear(),
-			$date.getUTCMonth(),
-			$date.getUTCDay(),
-			$date.getUTCHours(),
-			$date.getUTCMinutes(),
-			$date.getUTCSeconds()
-		) / 1000);
-	},
-	
-	/**
-	 * Returns a Date object with precise offset (including timezone and local timezone).
-	 * Parameters timestamp and offset must be in milliseconds!
-	 * 
-	 * @param	integer		timestamp
-	 * @param	integer		offset
-	 * @return	Date
-	 * 
-	 * @deprecated	3.0 - use `DateUtil::getTimezoneDate()` instead
-	 */
-	getTimezoneDate: function(timestamp, offset) {
-		var $date = new Date(timestamp);
-		var $localOffset = $date.getTimezoneOffset() * 60000;
-		
-		return new Date((timestamp + $localOffset + offset));
-	}
-};
 
 /**
  * Hash-like dictionary. Based upon idead from Prototype's hash
@@ -2861,90 +2675,6 @@ WCF.Template = Class.extend({
  * @var	array<Function>
  */
 WCF.Template.callbacks = [ ];
-
-/**
- * Toggles options.
- * 
- * @param	string		element
- * @param	array		showItems
- * @param	array		hideItems
- * @param	function	callback
- */
-WCF.ToggleOptions = Class.extend({
-	/**
-	 * target item
-	 * 
-	 * @var	jQuery
-	 */
-	_element: null,
-	
-	/**
-	 * list of items to be shown
-	 * 
-	 * @var	array
-	 */
-	_showItems: [],
-	
-	/**
-	 * list of items to be hidden
-	 * 
-	 * @var	array
-	 */
-	_hideItems: [],
-		
-	/**
-	 * callback after options were toggled
-	 * 
-	 * @var	function
-	 */
-	 _callback: null,
-	
-	/**
-	 * Initializes option toggle.
-	 * 
-	 * @param	string		element
-	 * @param	array		showItems
-	 * @param	array		hideItems
-	 * @param	function	callback
-	 */
-	init: function(element, showItems, hideItems, callback) {
-		this._element = $('#' + element);
-		this._showItems = showItems;
-		this._hideItems = hideItems;
-		if (callback !== undefined) {
-			this._callback = callback;
-		}
-		
-		// bind event
-		this._element.click($.proxy(this._toggle, this));
-		
-		// execute toggle on init
-		this._toggle();
-	},
-	
-	/**
-	 * Toggles items.
-	 */
-	_toggle: function() {
-		if (!this._element.prop('checked')) return;
-		
-		for (var $i = 0, $length = this._showItems.length; $i < $length; $i++) {
-			var $item = this._showItems[$i];
-			
-			$('#' + $item).show();
-		}
-		
-		for (var $i = 0, $length = this._hideItems.length; $i < $length; $i++) {
-			var $item = this._hideItems[$i];
-			
-			$('#' + $item).hide();
-		}
-		
-		if (this._callback !== null) {
-			this._callback();
-		}
-	}
-});
 
 /**
  * Namespace for all kind of collapsible containers.
@@ -4791,54 +4521,6 @@ WCF.System.Dependency.Manager = {
 };
 
 /**
- * Provides flexible dropdowns for tab-based menus.
- * @deprecated 5.5 This module is unused and will be removed.
- */
-WCF.System.FlexibleMenu = {
-	/**
-	 * Initializes the WCF.System.FlexibleMenu class.
-	 */
-	init: function() { /* does nothing */ },
-	
-	/**
-	 * Registers a tab-based menu by id.
-	 * 
-	 * Required DOM:
-	 * <container>
-	 * 	<ul style="white-space: nowrap">
-	 * 		<li>tab 1</li>
-	 * 		<li>tab 2</li>
-	 * 		...
-	 * 		<li>tab n</li>
-	 * 	</ul>
-	 * </container>
-	 * 
-	 * @param	string		containerID
-	 */
-	registerMenu: function(containerID) {
-		require(['WoltLabSuite/Core/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
-			UiFlexibleMenu.register(containerID);
-		});
-	},
-	
-	/**
-	 * Rebuilds a container, will be automatically invoked on window resize and registering.
-	 * 
-	 * @param	string		containerID
-	 */
-	rebuild: function(containerID) {
-		require(['WoltLabSuite/Core/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
-			UiFlexibleMenu.rebuild(containerID);
-		});
-	}
-};
-
-/**
- * Namespace for mobile device-related classes.
- */
-WCF.System.Mobile = { };
-
-/**
  * Stores object references for global access.
  */
 WCF.System.ObjectStore = {
@@ -5117,115 +4799,6 @@ WCF.System.DisableZoom = {
 		if (this._depth === 0) {
 			$('meta[name=viewport]').attr('content', this._oldViewportSettings);
 		}
-	}
-};
-
-/**
- * Puts an element into HTML 5 fullscreen mode.
- */
-WCF.System.Fullscreen = {
-	/**
-	 * Puts the given element into full screen mode.
-	 * Note: This must be a raw HTMLElement, not a jQuery wrapped one.
-	 * Note: This must be called from a user triggered event listener for
-	 * 	security reasons.
-	 * 
-	 * @param	object		Element to show full screen.
-	 */
-	enterFullscreen: function (element) {
-		if (element.requestFullscreen) {
-			element.requestFullscreen();
-		}
-		else if (element.msRequestFullscreen) {
-			element.msRequestFullscreen();
-		}
-		else if (element.mozRequestFullScreen) {
-			element.mozRequestFullScreen();
-		}
-		else if (element.webkitRequestFullscreen) {
-			element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-		}
-	},
-	/**
-	 * Toggles full screen mode. Either calls `enterFullscreen` with the given
-	 * element, if full screen mode is not active. Calls `exitFullscreen`
-	 * otherwise.
-	 */
-	toggleFullscreen: function (element) {
-		if (this.getFullscreenElement() === null) {
-			this.enterFullscreen(element);
-		}
-		else {
-			this.exitFullscreen();
-		}
-	},
-	/**
-	 * Retrieves the element that is shown in full screen mode.
-	 * Returns null if either full screen mode is not supported or
-	 * if full screen mode is not active.
-	 * 
-	 * @return	object
-	 */
-	getFullscreenElement: function () {
-		if (document.fullscreenElement) {
-			return document.fullscreenElement;
-		}
-		else if (document.mozFullScreenElement) {
-			return document.mozFullScreenElement;
-		}
-		else if (document.webkitFullscreenElement) {
-			return document.webkitFullscreenElement;
-		}
-		else if (document.msFullscreenElement) {
-			return document.msFullscreenElement;
-		}
-		
-		return null;
-	},
-	/**
-	 * Exits full screen mode.
-	 */
-	exitFullscreen: function () {
-		if (document.exitFullscreen) {
-			document.exitFullscreen();
-		}
-		else if (document.msExitFullscreen) {
-			document.msExitFullscreen();
-		}
-		else if (document.mozCancelFullScreen) {
-			document.mozCancelFullScreen();
-		}
-		else if (document.webkitExitFullscreen) {
-			document.webkitExitFullscreen();
-		}
-	},
-	/**
-	 * Returns whether the full screen API is supported in this browser.
-	 * 
-	 * @return	boolean
-	 */
-	isSupported: function () {
-		if (document.documentElement.requestFullscreen || document.documentElement.msRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.webkitRequestFullscreen) {
-			return true;
-		}
-		
-		return false;
-	}
-};
-
-/**
- * Provides the 'jump to page' overlay.
- * 
- * @deprecated	3.0 - use `WoltLabSuite/Core/Ui/Page/JumpTo` instead
- */
-WCF.System.PageNavigation = {
-	init: function(selector, callback) {
-		require(['WoltLabSuite/Core/Ui/Page/JumpTo'], function(UiPageJumpTo) {
-			var elements = elBySelAll(selector);
-			for (var i = 0, length = elements.length; i < length; i++) {
-				UiPageJumpTo.init(elements[i], callback);
-			}
-		});
 	}
 };
 
