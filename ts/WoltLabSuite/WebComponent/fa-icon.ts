@@ -36,7 +36,7 @@
       }
     }
 
-    setIcon(name: string, type: "regular" | "solid"): void {
+    setIcon(name: string, type: "" | "solid"): void {
       const metadata = window.getFontAwesome6IconMetadata(name);
       if (metadata === undefined) {
         throw new TypeError(`The icon '${name}' is unknown or unsupported.`);
@@ -48,7 +48,6 @@
       }
 
       this.solid = type === "solid";
-      this.regular = type === "regular";
       this.name = name;
 
       const root = this.shadowRoot!;
@@ -66,18 +65,6 @@
         this.setAttribute("solid", "");
       } else {
         this.removeAttribute("solid");
-      }
-    }
-
-    get regular(): boolean {
-      return this.hasAttribute("regular");
-    }
-
-    set regular(regular: boolean) {
-      if (regular) {
-        this.setAttribute("regular", "");
-      } else {
-        this.removeAttribute("regular");
       }
     }
 
