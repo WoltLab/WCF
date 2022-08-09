@@ -12,16 +12,9 @@
     class FaIcon extends HTMLElement {
         connectedCallback() {
             this.validate();
-            const root = this.prepareRoot();
-            if (this.brand) {
-                const slot = document.createElement("slot");
-                slot.name = "svg";
-                root.append(slot);
-            }
-            else {
-                const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
-                root.append(codepoint);
-            }
+            const root = this.attachShadow({ mode: "open" });
+            const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
+            root.append(codepoint);
         }
         validate() {
             if (this.size === 0) {
@@ -30,42 +23,16 @@
             else if (!HeightMap.has(this.size)) {
                 throw new TypeError("Must provide a valid icon size.");
             }
-            if (this.brand) {
-                if (this.name !== "") {
-                    throw new TypeError("Cannot provide a name for brand icons.");
-                }
+            if (this.name === "") {
+                throw new TypeError("Must provide the name of the icon.");
             }
-            else {
-                if (this.name === "") {
-                    throw new TypeError("Must provide the name of the icon.");
-                }
-                const styles = window.getFontAwesome6IconMetadata(this.name);
-                if (styles === undefined) {
-                    throw new TypeError(`The icon '${this.name}' is unknown or unsupported.`);
-                }
+            const styles = window.getFontAwesome6IconMetadata(this.name);
+            if (styles === undefined) {
+                throw new TypeError(`The icon '${this.name}' is unknown or unsupported.`);
             }
-        }
-        prepareRoot() {
-            const root = this.attachShadow({ mode: "open" });
-            if (this.brand) {
-                const iconHeight = HeightMap.get(this.size);
-                const style = document.createElement("style");
-                style.textContent = `
-          ::slotted(svg) {
-            fill: currentColor;
-            height: ${iconHeight}px;
-            shape-rendering: geometricprecision;
-          }
-        `;
-                root.append(style);
-            }
-            return root;
         }
         setIcon(name, type) {
             var _a;
-            if (this.brand) {
-                throw new Error("Cannot change the icon of a brand icon.");
-            }
             const metadata = window.getFontAwesome6IconMetadata(name);
             if (metadata === undefined) {
                 throw new TypeError(`The icon '${name}' is unknown or unsupported.`);
@@ -102,9 +69,6 @@
             else {
                 this.removeAttribute("regular");
             }
-        }
-        get brand() {
-            return this.hasAttribute("brand");
         }
         get name() {
             return this.getAttribute("name") || "";

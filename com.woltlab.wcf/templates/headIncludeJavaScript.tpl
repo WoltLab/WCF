@@ -26,6 +26,7 @@
 	{/if}
 </script>
 
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-brand.js"></script>
 <script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-metadata.js"></script>
 <script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js"></script>
 

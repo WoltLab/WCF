@@ -38,6 +38,7 @@ $fa-size-scale-base: 15;
   }
 }
 
+fa-brand,
 fa-icon {
   align-items: center;
   display: flex;
@@ -51,26 +52,6 @@ fa-icon {
 
   &[hidden] {
     display: none;
-  }
-
-  &:not([brand]) {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-
-    font-family: "Font Awesome 6 Free";
-    font-size: var(--font-size);
-    font-style: normal;
-    font-variant: normal;
-    line-height: 1;
-    text-rendering: auto;
-  }
-
-  &[solid] {
-    font-weight: 900;
-  }
-
-  &[regular] {
-    font-weight: 400;
   }
 
   &[size="16"] {
@@ -111,6 +92,26 @@ fa-icon {
   &[size="144"] {
     --font-size: 130px;
     --icon-size: 144px;
+  }
+}
+
+fa-icon {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+
+  font-family: "Font Awesome 6 Free";
+  font-size: var(--font-size);
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-rendering: auto;
+
+  &[solid] {
+    font-weight: 900;
+  }
+
+  &[regular] {
+    font-weight: 400;
   }
 }
 
