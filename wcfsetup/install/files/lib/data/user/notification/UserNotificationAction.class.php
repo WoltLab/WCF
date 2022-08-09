@@ -183,35 +183,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Validates the 'getOutstandingNotifications' action.
-     *
-     * @deprecated 5.5
-     */
-    public function validateGetOutstandingNotifications()
-    {
-        // does nothing
-    }
-
-    /**
-     * Loads user notifications.
-     *
-     * @return  mixed[]
-     * @deprecated 5.5 This method provided the data for the legacy user panel implementation.
-     */
-    public function getOutstandingNotifications()
-    {
-        $notifications = UserNotificationHandler::getInstance()->getMixedNotifications();
-        WCF::getTPL()->assign([
-            'notifications' => $notifications,
-        ]);
-
-        return [
-            'template' => WCF::getTPL()->fetch('notificationListUserPanel'),
-            'totalCount' => $notifications['notificationCount'],
-        ];
-    }
-
-    /**
      * @since 5.5
      */
     public function validateGetNotificationData(): void

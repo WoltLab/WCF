@@ -395,13 +395,6 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        jQuery                jqXHR
 		 */
 		_success: function (data, textStatus, jqXHR) {
-			// update dropdown
-			var dropdown = WCF.Dropdown.Interactive.Handler.getDropdown('outstandingModeration');
-			if (dropdown) {
-				dropdown.getLinkList().find('.interactiveDropdownItemMarkAllAsRead').remove();
-				dropdown.getItemList().find('.interactiveDropdownItemMarkAsRead').remove();
-			}
-			
 			// remove badge in userpanel
 			$('#outstandingModeration .badgeUpdate').remove();
 			

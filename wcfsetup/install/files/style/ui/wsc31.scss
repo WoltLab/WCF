@@ -186,9 +186,6 @@
 	}
 
 	// adjust color values to account for a significant darker sidebar background
-	.interactiveDropdownHeader .icon {
-		color: inherit;
-	}
 	.sidebar,
 	.messageSidebar {
 		dl:not(.plain) > dt,

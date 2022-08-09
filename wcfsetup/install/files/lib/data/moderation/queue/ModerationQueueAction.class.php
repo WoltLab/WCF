@@ -99,36 +99,6 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Validates parameters to fetch a list of outstanding queues.
-     *
-     * @deprecated 5.5
-     */
-    public function validateGetOutstandingQueues()
-    {
-        WCF::getSession()->checkPermissions(['mod.general.canUseModeration']);
-    }
-
-    /**
-     * Returns a list of outstanding queues.
-     *
-     * @return  string[]
-     * @deprecated 5.5 This method provided the data for the legacy user panel implementation.
-     */
-    public function getOutstandingQueues()
-    {
-        ['queues' => $queues, 'totalCount' => $totalCount] = $this->getModerationQueues();
-
-        WCF::getTPL()->assign([
-            'queues' => $queues,
-        ]);
-
-        return [
-            'template' => WCF::getTPL()->fetch('moderationQueueList'),
-            'totalCount' => $totalCount,
-        ];
-    }
-
-    /**
      * @since 5.5
      */
     public function validateGetModerationQueueData(): void
