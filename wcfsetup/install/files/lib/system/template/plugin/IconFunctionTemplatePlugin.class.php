@@ -21,7 +21,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
     private const SIZES = [16, 24, 32, 48, 64, 96, 128, 144];
 
-    private const TYPES = ['brand', 'regular', 'solid'];
+    private const TYPES = ['brand', 'solid'];
 
     /**
      * @inheritDoc
@@ -40,9 +40,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("The `name` attribute must be present and non-empty.");
         }
 
-        if ($type === '') {
-            throw new \InvalidArgumentException("The `type` attribute must be present and non-empty.");
-        } else if (!\in_array($type, self::TYPES)) {
+        if ($type !== '' && !\in_array($type, self::TYPES)) {
             throw new \InvalidArgumentException("An unsupported type `${type}` was specified.");
         }
 
@@ -59,8 +57,13 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             HTML;
         }
 
+        $modifier = '';
+        if ($type === 'solid') {
+            $modifier = ' solid';
+        }
+
         return <<<HTML
-        <fa-icon size="{$size}" name="{$name}" {$type}></fa-icon>
+        <fa-icon size="{$size}" name="{$name}"{$modifier}></fa-icon>
         HTML;
     }
 }

@@ -43,7 +43,6 @@
                 throw new Error(`The icon '${name}' does not support the style '${type}'.`);
             }
             this.solid = type === "solid";
-            this.regular = type === "regular";
             this.name = name;
             const root = this.shadowRoot;
             (_a = root.childNodes[0]) === null || _a === void 0 ? void 0 : _a.remove();
@@ -58,17 +57,6 @@
             }
             else {
                 this.removeAttribute("solid");
-            }
-        }
-        get regular() {
-            return this.hasAttribute("regular");
-        }
-        set regular(regular) {
-            if (regular) {
-                this.setAttribute("regular", "");
-            }
-            else {
-                this.removeAttribute("regular");
             }
         }
         get name() {

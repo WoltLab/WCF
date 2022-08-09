@@ -99,19 +99,16 @@ fa-icon {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 
-  font-family: "Font Awesome 6 Free";
+  font-family: var(--fa-font-family, "Font Awesome 6 Free");
   font-size: var(--font-size);
   font-style: normal;
   font-variant: normal;
+  font-weight: var(--fa-font-weight, 400);
   line-height: 1;
   text-rendering: auto;
 
   &[solid] {
     font-weight: 900;
-  }
-
-  &[regular] {
-    font-weight: 400;
   }
 }
 
