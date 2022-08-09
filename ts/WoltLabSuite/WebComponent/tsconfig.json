@@ -2,12 +2,15 @@
     "extends": "../../../tsconfig.json",
     "include": [
         "global.d.ts",
-        "*.ts"
+        "*.ts",
+        "*.js"
     ],
     "exclude": [],
     "compilerOptions": {
+        "allowJs": true,
         "composite": false,
         "module": "ES2020",
-        "strict": true
+        "strict": true,
+        "newLine": "lf"
     }
 }
