@@ -31,7 +31,7 @@ const output = `(() => {
     ${JSON.stringify(values)}
   );
 
-  window.getFontAwesome6Styles = (name) => styles.get(name);
+  window.getFontAwesome6IconMetadata = (name) => styles.get(name);
 })();`;
 
 process.stdout.write(output);

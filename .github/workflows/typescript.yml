@@ -22,7 +22,7 @@ jobs:
         node-version: "16"
         cache: "npm"
     - run: npm install
-    - run: npx tsc --build --noEmit
+    - run: npx tsc --noEmit
     - name: Check that tslib is in sync.
       run: diff -wu wcfsetup/install/files/js/3rdParty/tslib.js node_modules/tslib/tslib.js
   eslint:
@@ -54,7 +54,7 @@ jobs:
         cache: "npm"
     - run: npm install
     - run: rm -r wcfsetup/install/files/js/WoltLabSuite/
-    - run: npx tsc --build
+    - run: npx tsc
     - run: echo "::add-matcher::.github/diff.json"
     - name: Show diff
       run: |
