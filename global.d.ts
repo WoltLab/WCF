@@ -56,6 +56,7 @@ declare global {
   interface FaBrand extends HTMLElement {
     name: string;
     size: IconSize;
+    setIcon: (name: string, isSolid: boolean) => void;
   }
 
   interface FaIcon extends HTMLElement {
