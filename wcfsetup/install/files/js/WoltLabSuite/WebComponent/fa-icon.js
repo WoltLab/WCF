@@ -1,3 +1,4 @@
+"use strict";
 (() => {
     const HeightMap = new Map([
         [16, 14],
