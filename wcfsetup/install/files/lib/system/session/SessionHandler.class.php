@@ -74,7 +74,7 @@ final class SessionHandler extends SingletonFactory
      */
     private string $sessionID;
 
-    protected ?LegacySession $legacySession;
+    protected ?LegacySession $legacySession = null;
 
     /**
      * user object
@@ -589,7 +589,7 @@ final class SessionHandler extends SingletonFactory
             $legacySessionStatement->execute($condition->getParameters());
             $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
 
-            if (!$this->legacySession) {
+            if ($this->legacySession === null) {
                 try {
                     $this->legacySession = $this->createLegacySession();
                 } catch (DatabaseQueryExecutionException $e) {
@@ -666,7 +666,7 @@ final class SessionHandler extends SingletonFactory
                 $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
             }
 
-            if (!$this->legacySession) {
+            if ($this->legacySession === null) {
                 $this->legacySession = $this->createLegacySession();
             }
         }
@@ -1159,7 +1159,7 @@ final class SessionHandler extends SingletonFactory
             }
         }
 
-        if ($this->legacySession) {
+        if ($this->legacySession !== null) {
             $sessionEditor = new SessionEditor($this->legacySession);
             $sessionEditor->update($data);
         }
