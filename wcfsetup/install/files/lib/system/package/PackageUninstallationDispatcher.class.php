@@ -11,9 +11,11 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -107,6 +109,19 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             UserStorageHandler::getInstance()->clear();
 
             EventHandler::getInstance()->fireAction($this, 'postUninstall');
+
+            // delete queues
+            $sql = "DELETE FROM wcf1_package_installation_queue
+                    WHERE       processNo = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$this->queue->processNo]);
+
+            // create search index tables
+            SearchIndexManager::getInstance()->createSearchIndices();
+
+            VersionTracker::getInstance()->createStorageTables();
+
+            CacheHandler::getInstance()->flushAll();
         }
 
         return $step;
