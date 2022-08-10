@@ -7,7 +7,6 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\language\category\LanguageCategory;
-use wcf\data\language\LanguageEditor;
 use wcf\data\language\LanguageList;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
@@ -17,7 +16,6 @@ use wcf\data\package\PackageEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -197,17 +195,11 @@ class PackageInstallationDispatcher
                 'last_update_time',
             ]);
 
-            // update options.inc.php
-            OptionEditor::resetCache();
-
             if ($this->action == 'install') {
                 // save localized package infos
                 $this->saveLocalizedPackageInfos();
 
-                // remove all cache files after WCFSetup
                 if (!PACKAGE_ID) {
-                    CacheHandler::getInstance()->flushAll();
-
                     $sql = "UPDATE  wcf1_option
                             SET     optionValue = ?
                             WHERE   optionName = ?";
@@ -243,9 +235,6 @@ class PackageInstallationDispatcher
                         $this->setupDeveloperMode();
                     }
 
-                    // update options.inc.php
-                    OptionEditor::resetCache();
-
                     RegistryHandler::getInstance()->set(
                         'com.woltlab.wcf',
                         Environment::SYSTEM_ID_REGISTRY_KEY,
@@ -259,11 +248,9 @@ class PackageInstallationDispatcher
                 ApplicationHandler::rebuild();
             }
 
-            // remove template listener cache
-            TemplateListenerCodeCacheBuilder::getInstance()->reset();
+            OptionEditor::resetCache();
 
             // reset language cache
-            LanguageFactory::getInstance()->clearCache();
             LanguageFactory::getInstance()->deleteLanguageCache();
 
             // reset stylesheets
@@ -305,9 +292,6 @@ class PackageInstallationDispatcher
                     WHERE       processNo = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
-
-            // clear language files once whole installation is completed
-            LanguageEditor::deleteLanguageFiles();
 
             // reset all caches
             CacheHandler::getInstance()->flushAll();
