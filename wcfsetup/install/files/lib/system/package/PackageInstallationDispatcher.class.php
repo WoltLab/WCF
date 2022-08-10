@@ -1213,34 +1213,4 @@ class PackageInstallationDispatcher
             $this->queue = new PackageInstallationQueue($this->queue->queueID);
         }
     }
-
-    /**
-     * Converts shorthand byte values into an integer representing bytes.
-     *
-     * @param string $value
-     * @return  int
-     * @see     http://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
-     */
-    protected static function convertShorthandByteValue($value)
-    {
-        // convert into bytes
-        $lastCharacter = \mb_substr($value, -1);
-        switch ($lastCharacter) {
-            case 'g': // gigabytes
-                return (int)$value * 1073741824;
-                break;
-
-            case 'm': // megabytes
-                return (int)$value * 1048576;
-                break;
-
-            case 'k': // kilobytes
-                return (int)$value * 1024;
-                break;
-
-            default:
-                return $value;
-                break;
-        }
-    }
 }
