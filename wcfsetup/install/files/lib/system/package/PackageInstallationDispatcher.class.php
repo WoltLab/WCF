@@ -1308,14 +1308,6 @@ class PackageInstallationDispatcher
     }
 
     /**
-     * @deprecated 5.5 - This used to check against 'suhosin.executor.func.blacklist' but now simply aliases function_exists(). Use function_exists() directly.
-     */
-    protected static function functionExists($function)
-    {
-        return \function_exists($function);
-    }
-
-    /**
      * Compares settings, converting values into compareable ones.
      *
      * @param string $setting
