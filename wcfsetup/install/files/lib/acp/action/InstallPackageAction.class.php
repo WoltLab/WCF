@@ -107,86 +107,6 @@ class InstallPackageAction extends AbstractSecureAction
     }
 
     /**
-     * Executes installation based upon nodes.
-     */
-    protected function stepInstall(): ResponseInterface
-    {
-        $step = $this->installation->install($this->node);
-        $queueID = $this->installation->nodeBuilder->getQueueByNode(
-            $this->installation->queue->processNo,
-            $step->getNode()
-        );
-
-        if ($step->hasDocument()) {
-            return new JsonResponse([
-                'currentAction' => $this->getCurrentAction($queueID),
-                'innerTemplate' => $step->getTemplate(),
-                'node' => $step->getNode(),
-                'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
-                'step' => 'install',
-                'queueID' => $queueID,
-            ]);
-        } else {
-            if ($step->getNode() == '') {
-                // perform final actions
-                $this->installation->completeSetup();
-                $this->finalize();
-
-                WCF::resetZendOpcache();
-
-                // show success
-                return new JsonResponse([
-                    'currentAction' => $this->getCurrentAction(null),
-                    'progress' => 100,
-                    'redirectLocation' => $this->getRedirectLink(),
-                    'step' => 'success',
-                ]);
-            }
-
-            WCF::resetZendOpcache();
-
-            // continue with next node
-            return new JsonResponse([
-                'currentAction' => $this->getCurrentAction($queueID),
-                'step' => 'install',
-                'node' => $step->getNode(),
-                'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
-                'queueID' => $queueID,
-            ]);
-        }
-    }
-
-    /**
-     * Returns the link to the page to which the user is redirected after
-     * the installation finished.
-     *
-     * @return  string
-     * @since   5.2
-     */
-    protected function getRedirectLink()
-    {
-        // get domain path
-        $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_application
-                WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([1]);
-
-        /** @var Application $application */
-        $application = $statement->fetchObject(Application::class);
-
-        $controller = 'package-list';
-        if (WCF::getSession()->getVar('__wcfSetup_completed')) {
-            $controller = 'first-time-setup';
-
-            WCF::getSession()->unregister('__wcfSetup_completed');
-        }
-
-        // Do not use the LinkHandler here as it is sort of unreliable during WCFSetup.
-        return $application->getPageURL() . "acp/index.php?{$controller}/";
-    }
-
-    /**
      * Prepares the installation process.
      */
     protected function stepPrepare(): ResponseInterface
@@ -219,6 +139,86 @@ class InstallPackageAction extends AbstractSecureAction
             'progress' => 0,
             'queueID' => $queueID,
         ]);
+    }
+
+    /**
+     * Executes installation based upon nodes.
+     */
+    protected function stepInstall(): ResponseInterface
+    {
+        $step = $this->installation->install($this->node);
+        $queueID = $this->installation->nodeBuilder->getQueueByNode(
+            $this->installation->queue->processNo,
+            $step->getNode()
+        );
+
+        if ($step->hasDocument()) {
+            return new JsonResponse([
+                'currentAction' => $this->getCurrentAction($queueID),
+                'innerTemplate' => $step->getTemplate(),
+                'node' => $step->getNode(),
+                'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+                'step' => 'install',
+                'queueID' => $queueID,
+            ]);
+        }
+
+        if ($step->getNode() == '') {
+            // perform final actions
+            $this->installation->completeSetup();
+            $this->finalize();
+
+            WCF::resetZendOpcache();
+
+            // show success
+            return new JsonResponse([
+                'currentAction' => $this->getCurrentAction(null),
+                'progress' => 100,
+                'redirectLocation' => $this->getRedirectLink(),
+                'step' => 'success',
+            ]);
+        }
+
+        WCF::resetZendOpcache();
+
+        // continue with next node
+        return new JsonResponse([
+            'currentAction' => $this->getCurrentAction($queueID),
+            'step' => 'install',
+            'node' => $step->getNode(),
+            'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+            'queueID' => $queueID,
+        ]);
+    }
+
+    /**
+     * Returns the link to the page to which the user is redirected after
+     * the installation finished.
+     *
+     * @return  string
+     * @since   5.2
+     */
+    protected function getRedirectLink()
+    {
+        // get domain path
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_application
+                WHERE   packageID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([1]);
+
+        /** @var Application $application */
+        $application = $statement->fetchObject(Application::class);
+
+        $controller = 'package-list';
+        if (WCF::getSession()->getVar('__wcfSetup_completed')) {
+            $controller = 'first-time-setup';
+
+            WCF::getSession()->unregister('__wcfSetup_completed');
+        }
+
+        // Do not use the LinkHandler here as it is sort of unreliable during WCFSetup.
+        return $application->getPageURL() . "acp/index.php?{$controller}/";
     }
 
     /**
