@@ -4,8 +4,8 @@ namespace wcf\acp\action;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
+use wcf\acp\page\PackageListPage;
 use wcf\action\AbstractSecureAction;
-use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -13,6 +13,7 @@ use wcf\data\package\Package;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageUninstallationDispatcher;
+use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
@@ -158,29 +159,15 @@ final class UninstallPackageAction extends AbstractSecureAction
         );
 
         if ($step->getNode() == '') {
-            // remove node data
             $this->installation->nodeBuilder->purgeNodes();
             $this->finalize();
 
-            // get domain path
-            $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_application
-                    WHERE   packageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([1]);
-
-            /** @var Application $application */
-            $application = $statement->fetchObject(Application::class);
-
-            // build redirect location
-            // do not use the LinkHandler here as it is sort of unreliable during WCFSetup
-            $location = $application->getPageURL() . 'acp/index.php?package-list/';
-
-            // show success
             return new JsonResponse([
                 'currentAction' => WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success'),
                 'progress' => 100,
-                'redirectLocation' => $location,
+                'redirectLocation' => LinkHandler::getInstance()->getControllerLink(
+                    PackageListPage::class
+                ),
                 'step' => 'success',
             ]);
         }
