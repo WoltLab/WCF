@@ -120,8 +120,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             SearchIndexManager::getInstance()->createSearchIndices();
 
             VersionTracker::getInstance()->createStorageTables();
-
-            CacheHandler::getInstance()->flushAll();
         }
 
         return $step;
