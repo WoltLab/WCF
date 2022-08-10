@@ -21,17 +21,29 @@ try {
 }
 
 const values: IconData[] = [];
+const aliases: IconAlias[] = [];
 Object.entries(json).forEach(([name, icon]) => {
   const codepoint = String.fromCharCode(parseInt(icon.unicode, 16));
   values.push([name, [codepoint, icon.styles.includes("regular")]]);
+
+  if (icon.aliases && Array.isArray(icon.aliases.names)) {
+    icon.aliases.names.forEach((alias) => {
+      aliases.push([alias, name]);
+    });
+  }
 });
 
 const output = `(() => {
-  const styles = new Map(
+  const aliases = new Map(
+    ${JSON.stringify(aliases)}
+  );
+  const metadata = new Map(
     ${JSON.stringify(values)}
   );
 
-  window.getFontAwesome6IconMetadata = (name) => styles.get(name);
+  window.getFontAwesome6IconMetadata = (name) => {
+    return metadata.get(aliases.get(name) || name);
+  };
 })();`;
 
 process.stdout.write(output);
@@ -40,13 +52,22 @@ type MetadataIcons = {
   [key: string]: MetadataIcon;
 };
 
+type MetadataIconAliases = {
+  names?: string[];
+};
+
 type MetadataIcon = {
+  aliases?: MetadataIconAliases;
   styles: string[];
   unicode: string;
 };
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
+
+type IconAlternateName = string;
+type IconName = string;
+type IconAlias = [IconAlternateName, IconName];
 
 type IconData = [string, IconMetadata];
 
