@@ -7,6 +7,12 @@ import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 
+type Codepoint = string;
+type IconStyles = string[];
+type IconMetadata = [Codepoint, IconStyles];
+
+type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
+
 declare global {
   interface Window {
     Devtools?: typeof Devtools;
@@ -20,6 +26,8 @@ declare global {
     TIME_NOW: number;
     WCF_PATH: string;
     WSC_API_URL: string;
+
+    getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
 
     jQuery: JQueryStatic;
     WCF: any;
@@ -44,4 +52,16 @@ declare global {
   }
 
   type ArbitraryObject = Record<string, unknown>;
+
+  interface FaBrand extends HTMLElement {
+    name: string;
+    size: IconSize;
+    setIcon: (name: string, isSolid: boolean) => void;
+  }
+
+  interface FaIcon extends HTMLElement {
+    name: string;
+    solid: boolean;
+    size: IconSize;
+  }
 }

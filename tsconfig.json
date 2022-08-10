@@ -3,6 +3,9 @@
     "global.d.ts",
     "ts/**/*"
   ],
+  "exclude": [
+    "ts/WoltLabSuite/WebComponent/**"
+  ],
   "compilerOptions": {
     "allowJs": true,
     "target": "es2019",

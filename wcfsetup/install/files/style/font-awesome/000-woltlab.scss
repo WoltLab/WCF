@@ -38,6 +38,82 @@ $fa-size-scale-base: 15;
   }
 }
 
+fa-brand,
+fa-icon {
+  align-items: center;
+  display: flex;
+  height: var(--icon-size);
+  justify-content: center;
+  width: calc(var(--icon-size) * 1.25);
+
+  &:not(:upgraded) {
+    visibility: hidden !important;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &[size="16"] {
+    --font-size: 14px;
+    --icon-size: 16px;
+  }
+
+  &[size="24"] {
+    --font-size: 18px;
+    --icon-size: 24px;
+  }
+
+  &[size="32"] {
+    --font-size: 28px;
+    --icon-size: 32px;
+  }
+
+  &[size="48"] {
+    --font-size: 42px;
+    --icon-size: 48px;
+  }
+
+  &[size="64"] {
+    --font-size: 56px;
+    --icon-size: 64px;
+  }
+
+  &[size="96"] {
+    --font-size: 84px;
+    --icon-size: 96px;
+  }
+
+  &[size="128"] {
+    --font-size: 112px;
+    --icon-size: 128px;
+  }
+
+  &[size="144"] {
+    --font-size: 130px;
+    --icon-size: 144px;
+  }
+}
+
+fa-icon {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+
+  font-family: var(--fa-font-family, "Font Awesome 6 Free");
+  font-size: var(--font-size);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: var(--fa-font-weight, 400);
+  line-height: 1;
+  text-rendering: auto;
+  user-select: none;
+
+  &[solid] {
+    font-weight: 900;
+  }
+}
+
 /* Default icon sizes */
 .icon {
   &.icon16 {
