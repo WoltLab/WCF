@@ -8,8 +8,8 @@ import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 
 type Codepoint = string;
-type IconStyles = string[];
-type IconMetadata = [Codepoint, IconStyles];
+type HasRegularVariant = boolean;
+type IconMetadata = [Codepoint, HasRegularVariant];
 
 type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
 

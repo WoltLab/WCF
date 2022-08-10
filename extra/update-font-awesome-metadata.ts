@@ -23,7 +23,7 @@ try {
 const values: IconData[] = [];
 Object.entries(json).forEach(([name, icon]) => {
   const codepoint = String.fromCharCode(parseInt(icon.unicode, 16));
-  values.push([name, [codepoint, icon.styles]]);
+  values.push([name, [codepoint, icon.styles.includes("regular")]]);
 });
 
 const output = `(() => {
@@ -36,19 +36,18 @@ const output = `(() => {
 
 process.stdout.write(output);
 
-type IconStyles = string[];
-
 type MetadataIcons = {
   [key: string]: MetadataIcon;
 };
 
 type MetadataIcon = {
-  styles: IconStyles;
+  styles: string[];
   unicode: string;
 };
 
 type Codepoint = string;
+type HasRegularVariant = boolean;
 
 type IconData = [string, IconMetadata];
 
-type IconMetadata = [Codepoint, IconStyles];
+type IconMetadata = [Codepoint, HasRegularVariant];
