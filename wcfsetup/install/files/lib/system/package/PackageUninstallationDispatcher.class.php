@@ -7,12 +7,10 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\command\ClearCache;
 use wcf\system\event\EventHandler;
-use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
-use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -90,16 +88,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             // update options.inc.php if uninstallation is completed
             OptionEditor::resetCache();
 
-            // clear cache
-            CacheHandler::getInstance()->flushAll();
-
-            // reset language cache
-            LanguageFactory::getInstance()->clearCache();
-            LanguageFactory::getInstance()->deleteLanguageCache();
-
-            // reset stylesheets
-            StyleHandler::resetStylesheets();
-
             // rebuild application paths
             ApplicationHandler::rebuild();
 
@@ -113,6 +101,9 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                     WHERE       processNo = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
+
+            $command = new ClearCache();
+            $command();
         }
 
         return $step;

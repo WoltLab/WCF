@@ -16,7 +16,7 @@ use wcf\data\package\PackageEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\command\ClearCache;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\DevtoolsSetup;
@@ -37,7 +37,6 @@ use wcf\system\request\RouteHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
-use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
@@ -209,12 +208,6 @@ class PackageInstallationDispatcher
 
             OptionEditor::resetCache();
 
-            // reset language cache
-            LanguageFactory::getInstance()->deleteLanguageCache();
-
-            // reset stylesheets
-            StyleHandler::resetStylesheets();
-
             // clear user storage
             UserStorageHandler::getInstance()->clear();
 
@@ -252,13 +245,13 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
 
-            // reset all caches
-            CacheHandler::getInstance()->flushAll();
-
             // create search index tables
             SearchIndexManager::getInstance()->createSearchIndices();
 
             VersionTracker::getInstance()->createStorageTables();
+
+            $command = new ClearCache();
+            $command();
 
             $this->logInstallationStep([], 'finished cleanup');
         }
