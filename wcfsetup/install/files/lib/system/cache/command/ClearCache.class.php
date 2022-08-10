@@ -2,12 +2,14 @@
 
 namespace wcf\system\cache\command;
 
+use wcf\data\option\OptionEditor;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cache\event\CacheCleared;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\storage\UserStorageHandler;
 
 /**
  * Performs a full cache clear.
@@ -29,16 +31,16 @@ final class ClearCache
 
     public function __invoke()
     {
-        // reset stylesheets
+        OptionEditor::resetCache();
+
+        UserStorageHandler::getInstance()->clear();
+
         StyleHandler::resetStylesheets();
 
-        // delete language cache and compiled templates as well
         LanguageFactory::getInstance()->deleteLanguageCache();
 
-        // get package dirs
         CacheHandler::getInstance()->flushAll();
 
-        // reset package update servers and the package cache
         PackageUpdateServer::resetAll();
 
         $this->eventHandler->fire(
