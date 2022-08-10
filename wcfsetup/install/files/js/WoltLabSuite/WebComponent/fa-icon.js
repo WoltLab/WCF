@@ -58,6 +58,10 @@
             if (!isSolid && isFontAwesome6Free()) {
                 const [, styles] = window.getFontAwesome6IconMetadata(name);
                 if (!styles.includes("regular")) {
+                    // Font Awesome 6 Free only includes solid icons with the
+                    // the exception to some special icons that use the weight
+                    // to differentiate two related icons. One such example is
+                    // the `bell` icon that comes in `solid` and `regular` flavor.
                     return false;
                 }
             }
@@ -76,15 +80,6 @@
             const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
             root.append(codepoint);
         }
-        attributeChangedCallback(name, oldValue, newValue) {
-            switch (name) {
-                case "name":
-                    if (newValue !== null && this.isValidIconName(newValue)) {
-                        this.updateIcon();
-                    }
-                    break;
-            }
-        }
         get solid() {
             return this.hasAttribute("solid");
         }
@@ -100,7 +95,11 @@
             return this.getAttribute("name") || "";
         }
         set name(name) {
+            if (!this.isValidIconName(name)) {
+                throw new Error(`Refused to set the unknown icon name '${name}'.`);
+            }
             this.setAttribute("name", name);
+            this.updateIcon();
         }
         get size() {
             const size = this.getAttribute("size");
@@ -114,9 +113,6 @@
                 throw new Error(`Refused to set the invalid icon size '${size}'.`);
             }
             this.setAttribute("size", size.toString());
-        }
-        static get observedAttributes() {
-            return ["name"];
         }
     }
     window.customElements.define("fa-icon", FaIcon);
