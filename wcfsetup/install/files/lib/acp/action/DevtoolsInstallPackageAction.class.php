@@ -23,15 +23,8 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
 {
     /**
      * project whose source is installed as a package
-     * @var DevtoolsProject
      */
-    public $project;
-
-    /**
-     * id of the project whose source is installed as a package
-     * @var int
-     */
-    public $projectID;
+    public DevtoolsProject $project;
 
     /**
      * @inheritDoc
@@ -66,10 +59,10 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
         }
 
         if (isset($_POST['projectID'])) {
-            $this->projectID = \intval($_POST['projectID']);
+            $this->project = new DevtoolsProject(\intval($_POST['projectID']));
         }
-        $this->project = new DevtoolsProject($this->projectID);
-        if (!$this->project->projectID) {
+
+        if (!isset($this->project) || !$this->project->projectID) {
             throw new IllegalLinkException();
         }
 
@@ -78,10 +71,11 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
         }
 
         if (isset($_POST['queueID'])) {
-            $this->queueID = \intval($_POST['queueID']);
+            $queueID = \intval($_POST['queueID']);
+            $this->queue = new PackageInstallationQueue($queueID);
         }
-        $this->queue = new PackageInstallationQueue($this->queueID);
-        if (!$this->queue->queueID) {
+
+        if (!isset($this->queue) || !$this->queue->queueID) {
             throw new IllegalLinkException();
         }
 

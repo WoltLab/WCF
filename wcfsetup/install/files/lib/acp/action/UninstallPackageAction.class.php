@@ -28,41 +28,15 @@ use wcf\util\StringUtil;
  */
 final class UninstallPackageAction extends AbstractSecureAction
 {
-    /**
-     * current step
-     * @var string
-     */
-    public $step = '';
+    public string $step = '';
 
-    /**
-     * current node
-     * @var string
-     */
-    public $node = '';
+    public string $node = '';
 
-    /**
-     * PackageInstallationDispatcher object
-     * @var PackageUninstallationDispatcher
-     */
-    public $installation;
+    public PackageUninstallationDispatcher $installation;
 
-    /**
-     * PackageInstallationQueue object
-     * @var PackageInstallationQueue
-     */
-    public $queue;
+    public PackageInstallationQueue $queue;
 
-    /**
-     * current queue id
-     * @var int
-     */
-    public $queueID = 0;
-
-    /**
-     * active package id
-     * @var int
-     */
-    protected $packageID = 0;
+    protected int $packageID = 0;
 
     /**
      * @inheritDoc
@@ -94,11 +68,10 @@ final class UninstallPackageAction extends AbstractSecureAction
             $this->packageID = \intval($_POST['packageID']);
         } else {
             if (isset($_POST['queueID'])) {
-                $this->queueID = \intval($_POST['queueID']);
+                $this->queue = new PackageInstallationQueue(\intval($_POST['queueID']));
             }
-            $this->queue = new PackageInstallationQueue($this->queueID);
-
-            if (!$this->queue->queueID) {
+    
+            if (!isset($this->queue) || !$this->queue->queueID) {
                 throw new IllegalLinkException();
             }
 

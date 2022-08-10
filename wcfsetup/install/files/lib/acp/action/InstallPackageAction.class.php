@@ -25,35 +25,13 @@ use wcf\util\StringUtil;
  */
 class InstallPackageAction extends AbstractSecureAction
 {
-    /**
-     * current step
-     * @var string
-     */
-    public $step = '';
+    public string $step = '';
 
-    /**
-     * current node
-     * @var string
-     */
-    public $node = '';
+    public string $node = '';
 
-    /**
-     * PackageInstallationDispatcher object
-     * @var PackageInstallationDispatcher
-     */
-    public $installation;
+    public PackageInstallationDispatcher $installation;
 
-    /**
-     * PackageInstallationQueue object
-     * @var PackageInstallationQueue
-     */
-    public $queue;
-
-    /**
-     * current queue id
-     * @var int
-     */
-    public $queueID = 0;
+    public PackageInstallationQueue $queue;
 
     /**
      * @inheritDoc
@@ -82,11 +60,10 @@ class InstallPackageAction extends AbstractSecureAction
             $this->node = StringUtil::trim($_POST['node']);
         }
         if (isset($_POST['queueID'])) {
-            $this->queueID = \intval($_POST['queueID']);
+            $this->queue = new PackageInstallationQueue(\intval($_POST['queueID']));
         }
-        $this->queue = new PackageInstallationQueue($this->queueID);
 
-        if (!$this->queue->queueID) {
+        if (!isset($this->queue) || !$this->queue->queueID) {
             throw new IllegalLinkException();
         }
 
