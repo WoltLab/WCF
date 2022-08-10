@@ -200,48 +200,7 @@ class PackageInstallationDispatcher
                 $this->saveLocalizedPackageInfos();
 
                 if (!PACKAGE_ID) {
-                    $sql = "UPDATE  wcf1_option
-                            SET     optionValue = ?
-                            WHERE   optionName = ?";
-                    $statement = WCF::getDB()->prepare($sql);
-
-                    if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
-                        $statement->execute([
-                            COOKIE_PREFIX,
-                            'cookie_prefix',
-                        ]);
-
-                        @\unlink(WCF_DIR . 'cookiePrefix.txt');
-                    }
-
-                    $statement->execute([
-                        $signatureSecret = Hex::encode(\random_bytes(20)),
-                        'signature_secret',
-                    ]);
-                    \define('SIGNATURE_SECRET', $signatureSecret);
-                    HeaderUtil::setCookie(
-                        'user_session',
-                        CryptoUtil::createSignedString(
-                            \pack(
-                                'CA20C',
-                                1,
-                                Hex::decode(WCF::getSession()->sessionID),
-                                0
-                            )
-                        )
-                    );
-
-                    if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
-                        $this->setupDeveloperMode();
-                    }
-
-                    RegistryHandler::getInstance()->set(
-                        'com.woltlab.wcf',
-                        Environment::SYSTEM_ID_REGISTRY_KEY,
-                        Environment::getSystemId()
-                    );
-
-                    WCF::getSession()->register('__wcfSetup_completed', true);
+                    $this->finalizeWcfSetup();
                 }
 
                 // rebuild application paths
@@ -305,6 +264,55 @@ class PackageInstallationDispatcher
         }
 
         return $step;
+    }
+
+    /**
+     * @since 6.0
+     */
+    protected function finalizeWcfSetup(): void
+    {
+        $sql = "UPDATE  wcf1_option
+                SET     optionValue = ?
+                WHERE   optionName = ?";
+        $statement = WCF::getDB()->prepare($sql);
+
+        if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
+            $statement->execute([
+                COOKIE_PREFIX,
+                'cookie_prefix',
+            ]);
+
+            @\unlink(WCF_DIR . 'cookiePrefix.txt');
+        }
+
+        $statement->execute([
+            $signatureSecret = Hex::encode(\random_bytes(20)),
+            'signature_secret',
+        ]);
+        \define('SIGNATURE_SECRET', $signatureSecret);
+        HeaderUtil::setCookie(
+            'user_session',
+            CryptoUtil::createSignedString(
+                \pack(
+                    'CA20C',
+                    1,
+                    Hex::decode(WCF::getSession()->sessionID),
+                    0
+                )
+            )
+        );
+
+        if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
+            $this->setupDeveloperMode();
+        }
+
+        RegistryHandler::getInstance()->set(
+            'com.woltlab.wcf',
+            Environment::SYSTEM_ID_REGISTRY_KEY,
+            Environment::getSystemId()
+        );
+
+        WCF::getSession()->register('__wcfSetup_completed', true);
     }
 
     /**
