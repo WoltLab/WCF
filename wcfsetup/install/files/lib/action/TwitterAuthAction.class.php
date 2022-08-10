@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  */
-class TwitterAuthAction extends AbstractAction
+final class TwitterAuthAction extends AbstractAction
 {
     /**
      * @inheritDoc
