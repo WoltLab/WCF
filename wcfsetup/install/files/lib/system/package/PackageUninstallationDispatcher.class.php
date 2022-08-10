@@ -11,11 +11,9 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
-use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -115,11 +113,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                     WHERE       processNo = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
-
-            // create search index tables
-            SearchIndexManager::getInstance()->createSearchIndices();
-
-            VersionTracker::getInstance()->createStorageTables();
         }
 
         return $step;
