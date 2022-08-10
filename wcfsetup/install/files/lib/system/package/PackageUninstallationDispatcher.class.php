@@ -50,11 +50,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
     /**
      * Uninstalls node components and returns next node.
-     *
-     * @param string $node
-     * @return  string
      */
-    public function uninstall($node)
+    public function uninstall(string $node): PackageInstallationStep
     {
         $nodes = $this->nodeBuilder->getNodeData($node);
 
@@ -64,7 +61,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
             switch ($data['nodeType']) {
                 case 'package':
-                    $this->uninstallPackage($nodeData);
+                    $step = $this->uninstallPackage($nodeData);
                     break;
 
                 case 'pip':
@@ -76,14 +73,17 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                         $this->didExecuteUninstallScript = true;
                     }
 
-                    $this->executePIP($nodeData);
+                    $step = $this->executePIP($nodeData);
                     break;
             }
         }
 
         // mark node as completed
         $this->nodeBuilder->completeNode($node);
+
+        // assign next node
         $node = $this->nodeBuilder->getNextNode($node);
+        $step->setNode($node);
 
         // perform post-uninstall actions
         if ($node == '') {
@@ -109,8 +109,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             EventHandler::getInstance()->fireAction($this, 'postUninstall');
         }
 
-        // return next node
-        return $node;
+        return $step;
     }
 
     /**
@@ -123,8 +122,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         $pip->uninstall();
 
-        // This return value is ignored by PackageUninstallationDispatcher, but it
-        // is necessary to be compatible with parent::executePIP().
         return new PackageInstallationStep();
     }
 
@@ -147,7 +144,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
      *
      * @param array $nodeData
      */
-    protected function uninstallPackage(array $nodeData)
+    protected function uninstallPackage(array $nodeData): PackageInstallationStep
     {
         PackageEditor::deleteAll([$this->queue->packageID]);
 
@@ -162,6 +159,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         // reset package cache
         PackageCacheBuilder::getInstance()->reset();
+
+        return new PackageInstallationStep();
     }
 
     /**

@@ -145,9 +145,13 @@ class UninstallPackageAction extends InstallPackageAction
      */
     public function stepUninstall()
     {
-        $node = $this->installation->uninstall($this->node);
+        $step = $this->installation->uninstall($this->node);
+        $queueID = $this->installation->nodeBuilder->getQueueByNode(
+            $this->installation->queue->processNo,
+            $step->getNode()
+        );
 
-        if ($node == '') {
+        if ($step->getNode() == '') {
             // remove node data
             $this->installation->nodeBuilder->purgeNodes();
             $this->finalize();
@@ -177,14 +181,9 @@ class UninstallPackageAction extends InstallPackageAction
             return;
         }
 
-        // continue with next node
-        $queueID = $this->installation->nodeBuilder->getQueueByNode(
-            $this->installation->queue->processNo,
-            $this->installation->nodeBuilder->getNextNode($this->node)
-        );
         $this->data = [
             'step' => 'uninstall',
-            'node' => $node,
+            'node' => $step->getNode(),
             'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
             'queueID' => $queueID,
         ];
