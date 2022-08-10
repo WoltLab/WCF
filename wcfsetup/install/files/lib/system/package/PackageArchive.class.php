@@ -503,10 +503,7 @@ class PackageArchive
         }
         $file->close();
 
-        // unzip tar
-        $this->archive = self::unzipPackageArchive($tmpFile);
-
-        return $this->archive;
+        return $tmpFile;
     }
 
     /**
@@ -902,28 +899,6 @@ class PackageArchive
         $this->tar->extract($fileIndex, $filename);
 
         return $filename;
-    }
-
-    /**
-     * Unzips compressed package archives and returns the temporary file name.
-     *
-     * @param string $archive filename
-     * @return  string
-     */
-    public static function unzipPackageArchive($archive)
-    {
-        if (!FileUtil::isURL($archive)) {
-            $tar = new Tar($archive);
-            $tar->close();
-            if ($tar->isZipped()) {
-                $tmpName = FileUtil::getTemporaryFilename('package_');
-                if (FileUtil::uncompressFile($archive, $tmpName)) {
-                    return $tmpName;
-                }
-            }
-        }
-
-        return $archive;
     }
 
     /**
