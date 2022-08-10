@@ -26,6 +26,8 @@ fclose($fp);
 $iconShim = json_decode($json, true);
 
 function replaceTemplates(string $directory): void {
+    global $iconShim;
+
     $knownSizes = [16, 24, 32, 48, 64, 96, 128, 144];
 
     chdir(__DIR__);
@@ -54,6 +56,10 @@ function replaceTemplates(string $directory): void {
                     // Not all icons are renamed.
                     $newIconName = $name;
                     $type = 'solid';
+                }
+
+                if ($type === 'regular') {
+                    return "{icon size={$size} name='{$newIconName}'}";
                 }
 
                 return "{icon size={$size} name='{$newIconName}' type='{$type}'}";
