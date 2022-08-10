@@ -32,10 +32,7 @@ abstract class AbstractOauth2Action extends AbstractAction
 
     private const PKCE = self::class . "\0pkce";
 
-    /**
-     * @var ClientInterface
-     */
-    private $httpClient;
+    private ClientInterface $httpClient;
 
     /**
      * @inheritDoc
@@ -55,7 +52,7 @@ abstract class AbstractOauth2Action extends AbstractAction
      */
     protected function getHttpClient(): ClientInterface
     {
-        if (!$this->httpClient) {
+        if (!isset($this->httpClient)) {
             $this->httpClient = HttpFactory::makeClientWithTimeout(5);
         }
 

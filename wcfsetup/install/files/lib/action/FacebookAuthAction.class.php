@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\user\User;
 use wcf\form\AccountManagementForm;
 use wcf\form\RegisterForm;
@@ -120,7 +121,7 @@ final class FacebookAuthAction extends AbstractOauth2Action
     /**
      * @inheritDoc
      */
-    protected function processUser(OauthUser $oauthUser)
+    protected function processUser(OauthUser $oauthUser): ResponseInterface
     {
         $user = User::getUserByAuthData('facebook:' . $oauthUser->getId());
 

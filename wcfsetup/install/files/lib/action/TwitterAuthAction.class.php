@@ -8,6 +8,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\user\User;
 use wcf\form\RegisterForm;
 use wcf\system\event\EventHandler;
@@ -30,17 +31,14 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  */
-class TwitterAuthAction extends AbstractAction
+final class TwitterAuthAction extends AbstractAction
 {
     /**
      * @inheritDoc
      */
     public $neededModules = ['TWITTER_PUBLIC_KEY', 'TWITTER_PRIVATE_KEY'];
 
-    /**
-     * @var ClientInterface
-     */
-    private $httpClient;
+    private ClientInterface $httpClient;
 
     /**
      * @inheritDoc
@@ -57,7 +55,7 @@ class TwitterAuthAction extends AbstractAction
     /**
      * @inheritDoc
      */
-    public function execute()
+    public function execute(): ResponseInterface
     {
         parent::execute();
 
@@ -106,7 +104,7 @@ class TwitterAuthAction extends AbstractAction
     /**
      * Processes the user (e.g. by registering session variables and redirecting somewhere).
      */
-    protected function processUser(OauthUser $oauthUser)
+    protected function processUser(OauthUser $oauthUser): ResponseInterface
     {
         $user = User::getUserByAuthData('twitter:' . $oauthUser->getId());
 
@@ -323,7 +321,7 @@ class TwitterAuthAction extends AbstractAction
     /**
      * Initiates the OAuth flow by redirecting to the '/authenticate' URL.
      */
-    private function initiate()
+    private function initiate(): ResponseInterface
     {
         $data = $this->getRequestToken();
 
@@ -343,9 +341,8 @@ class TwitterAuthAction extends AbstractAction
      * Builds the OAuth authorization header.
      *
      * @param array $parameters
-     * @return  string
      */
-    public function buildOAuthHeader(array $parameters)
+    public function buildOAuthHeader(array $parameters): string
     {
         $header = '';
         foreach ($parameters as $key => $val) {
@@ -364,20 +361,14 @@ class TwitterAuthAction extends AbstractAction
 
     /**
      * Creates an OAuth 1 signature.
-     *
-     * @param string $url
-     * @param array $parameters
-     * @param string $tokenSecret
-     * @param string $method
-     * @return  string
      */
     public function createSignature(
-        $url,
+        string $url,
         array $parameters,
         #[\SensitiveParameter]
-        $tokenSecret = '',
-        $method = 'POST'
-    ) {
+        string $tokenSecret = '',
+        string $method = 'POST'
+    ): string {
         $tmp = [];
         foreach ($parameters as $key => $val) {
             $tmp[\rawurlencode($key)] = \rawurlencode($val);
@@ -405,7 +396,7 @@ class TwitterAuthAction extends AbstractAction
      */
     final protected function getHttpClient(): ClientInterface
     {
-        if (!$this->httpClient) {
+        if (!isset($this->httpClient)) {
             $this->httpClient = HttpFactory::makeClientWithTimeout(5);
         }
 
