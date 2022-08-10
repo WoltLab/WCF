@@ -2,7 +2,7 @@
 
 namespace wcf\acp\action;
 
-use wcf\action\AbstractDialogAction;
+use wcf\action\AbstractSecureAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
@@ -47,7 +47,23 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
      */
     public function readParameters()
     {
-        AbstractDialogAction::readParameters();
+        AbstractSecureAction::readParameters();
+
+        if (isset($_REQUEST['step'])) {
+            $this->step = StringUtil::trim($_REQUEST['step']);
+
+            switch ($this->step) {
+                case 'install':
+                case 'prepare':
+                case 'rollback':
+                    // valid steps
+                    break;
+    
+                default:
+                    throw new IllegalLinkException();
+                    break;
+            }
+        }
 
         if (isset($_POST['projectID'])) {
             $this->projectID = \intval($_POST['projectID']);

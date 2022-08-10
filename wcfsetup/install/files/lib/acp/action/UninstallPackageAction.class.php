@@ -2,7 +2,9 @@
 
 namespace wcf\acp\action;
 
-use wcf\action\AbstractDialogAction;
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
+use wcf\action\AbstractSecureAction;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
@@ -19,13 +21,19 @@ use wcf\util\StringUtil;
 /**
  * Handles an AJAX-based package uninstallation.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Tim Duesterhus, Alexander Ebert
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Action
  */
-class UninstallPackageAction extends InstallPackageAction
+final class UninstallPackageAction extends AbstractSecureAction
 {
+    /**
+     * current step
+     * @var string
+     */
+    public $step = '';
+
     /**
      * current node
      * @var string
@@ -59,14 +67,24 @@ class UninstallPackageAction extends InstallPackageAction
     /**
      * @inheritDoc
      */
-    public $templateName = 'packageUninstallationStep';
-
-    /**
-     * @inheritDoc
-     */
     public function readParameters()
     {
-        AbstractDialogAction::readParameters();
+        parent::readParameters();
+
+        if (isset($_REQUEST['step'])) {
+            $this->step = StringUtil::trim($_REQUEST['step']);
+        }
+
+        switch ($this->step) {
+            case 'prepare':
+            case 'uninstall':
+                // valid steps
+                break;
+
+            default:
+                throw new IllegalLinkException();
+                break;
+        }
 
         if (isset($_POST['node'])) {
             $this->node = StringUtil::trim($_POST['node']);
@@ -88,10 +106,23 @@ class UninstallPackageAction extends InstallPackageAction
         }
     }
 
+    public function execute()
+    {
+        parent::execute();
+
+        $methodName = 'step' . StringUtil::firstCharToUpperCase($this->step);
+
+        $response = $this->{$methodName}();
+
+        $this->executed();
+
+        return $response;
+    }
+
     /**
      * Prepares the uninstallation process.
      */
-    protected function stepPrepare()
+    protected function stepPrepare(): ResponseInterface
     {
         $package = new Package($this->packageID);
         if (!$package->packageID || !$package->canUninstall()) {
@@ -130,20 +161,21 @@ class UninstallPackageAction extends InstallPackageAction
             $queue->processNo,
             $this->installation->nodeBuilder->getNextNode()
         );
-        $this->data = [
-            'template' => WCF::getTPL()->fetch($this->templateName),
+
+        return new JsonResponse([
+            'template' => WCF::getTPL()->fetch('packageUninstallationStepPrepare'),
             'step' => 'uninstall',
             'node' => $this->installation->nodeBuilder->getNextNode(),
             'currentAction' => $this->getCurrentAction($queueID),
             'progress' => 0,
             'queueID' => $queueID,
-        ];
+        ]);
     }
 
     /**
      * Uninstalls node components.
      */
-    public function stepUninstall()
+    public function stepUninstall(): ResponseInterface
     {
         $step = $this->installation->uninstall($this->node);
         $queueID = $this->installation->nodeBuilder->getQueueByNode(
@@ -171,39 +203,20 @@ class UninstallPackageAction extends InstallPackageAction
             $location = $application->getPageURL() . 'acp/index.php?package-list/';
 
             // show success
-            $this->data = [
+            return new JsonResponse([
                 'currentAction' => WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success'),
                 'progress' => 100,
                 'redirectLocation' => $location,
                 'step' => 'success',
-            ];
-
-            return;
+            ]);
         }
 
-        $this->data = [
+        return new JsonResponse([
             'step' => 'uninstall',
             'node' => $step->getNode(),
             'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
             'queueID' => $queueID,
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validateStep()
-    {
-        switch ($this->step) {
-            case 'prepare':
-            case 'uninstall':
-                // valid steps
-                break;
-
-            default:
-                throw new IllegalLinkException();
-                break;
-        }
+        ]);
     }
 
     /**

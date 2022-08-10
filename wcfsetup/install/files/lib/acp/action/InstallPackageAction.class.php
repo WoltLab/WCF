@@ -2,7 +2,9 @@
 
 namespace wcf\acp\action;
 
-use wcf\action\AbstractDialogAction;
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
+use wcf\action\AbstractSecureAction;
 use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\cache\CacheHandler;
@@ -16,13 +18,19 @@ use wcf\util\StringUtil;
 /**
  * Handles an AJAX-based package installation.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Tim Duesterhus, Alexander Ebert
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Action
  */
-class InstallPackageAction extends AbstractDialogAction
+class InstallPackageAction extends AbstractSecureAction
 {
+    /**
+     * current step
+     * @var string
+     */
+    public $step = '';
+
     /**
      * current node
      * @var string
@@ -50,14 +58,25 @@ class InstallPackageAction extends AbstractDialogAction
     /**
      * @inheritDoc
      */
-    public $templateName = 'packageInstallationStep';
-
-    /**
-     * @inheritDoc
-     */
     public function readParameters()
     {
         parent::readParameters();
+
+        if (isset($_REQUEST['step'])) {
+            $this->step = StringUtil::trim($_REQUEST['step']);
+        }
+
+        switch ($this->step) {
+            case 'install':
+            case 'prepare':
+            case 'rollback':
+                // valid steps
+                break;
+
+            default:
+                throw new IllegalLinkException();
+                break;
+        }
 
         if (isset($_POST['node'])) {
             $this->node = StringUtil::trim($_POST['node']);
@@ -74,10 +93,23 @@ class InstallPackageAction extends AbstractDialogAction
         $this->installation = new PackageInstallationDispatcher($this->queue);
     }
 
+    public function execute()
+    {
+        parent::execute();
+
+        $methodName = 'step' . StringUtil::firstCharToUpperCase($this->step);
+
+        $response = $this->{$methodName}();
+
+        $this->executed();
+
+        return $response;
+    }
+
     /**
      * Executes installation based upon nodes.
      */
-    protected function stepInstall()
+    protected function stepInstall(): ResponseInterface
     {
         $step = $this->installation->install($this->node);
         $queueID = $this->installation->nodeBuilder->getQueueByNode(
@@ -86,14 +118,14 @@ class InstallPackageAction extends AbstractDialogAction
         );
 
         if ($step->hasDocument()) {
-            $this->data = [
+            return new JsonResponse([
                 'currentAction' => $this->getCurrentAction($queueID),
                 'innerTemplate' => $step->getTemplate(),
                 'node' => $step->getNode(),
                 'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
                 'step' => 'install',
                 'queueID' => $queueID,
-            ];
+            ]);
         } else {
             if ($step->getNode() == '') {
                 // perform final actions
@@ -103,26 +135,24 @@ class InstallPackageAction extends AbstractDialogAction
                 WCF::resetZendOpcache();
 
                 // show success
-                $this->data = [
+                return new JsonResponse([
                     'currentAction' => $this->getCurrentAction(null),
                     'progress' => 100,
                     'redirectLocation' => $this->getRedirectLink(),
                     'step' => 'success',
-                ];
-
-                return;
+                ]);
             }
 
             WCF::resetZendOpcache();
 
             // continue with next node
-            $this->data = [
+            return new JsonResponse([
                 'currentAction' => $this->getCurrentAction($queueID),
                 'step' => 'install',
                 'node' => $step->getNode(),
                 'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
                 'queueID' => $queueID,
-            ];
+            ]);
         }
     }
 
@@ -159,7 +189,7 @@ class InstallPackageAction extends AbstractDialogAction
     /**
      * Prepares the installation process.
      */
-    protected function stepPrepare()
+    protected function stepPrepare(): ResponseInterface
     {
         // update package information
         $this->installation->updatePackage();
@@ -181,43 +211,25 @@ class InstallPackageAction extends AbstractDialogAction
             'packageName' => $this->installation->queue->packageName,
         ]);
 
-        $this->data = [
-            'template' => WCF::getTPL()->fetch($this->templateName),
+        return new JsonResponse([
+            'template' => WCF::getTPL()->fetch('packageInstallationStepPrepare'),
             'step' => 'install',
             'node' => $nextNode,
             'currentAction' => $this->getCurrentAction($queueID),
             'progress' => 0,
             'queueID' => $queueID,
-        ];
+        ]);
     }
 
     /**
      * Sets the parameters required to perform a rollback.
      */
-    protected function stepRollback()
+    protected function stepRollback(): ResponseInterface
     {
-        $this->data = [
+        return new JsonResponse([
             'packageID' => $this->queue->packageID,
             'step' => 'rollback',
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validateStep()
-    {
-        switch ($this->step) {
-            case 'install':
-            case 'prepare':
-            case 'rollback':
-                // valid steps
-                break;
-
-            default:
-                throw new IllegalLinkException();
-                break;
-        }
+        ]);
     }
 
     /**
