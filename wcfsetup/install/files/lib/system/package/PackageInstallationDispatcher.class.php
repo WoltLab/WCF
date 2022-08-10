@@ -1215,38 +1215,6 @@ class PackageInstallationDispatcher
     }
 
     /**
-     * Compares settings, converting values into compareable ones.
-     *
-     * @param string $setting
-     * @param string $value
-     * @param mixed $compareValue
-     * @return  bool
-     */
-    protected static function compareSetting($setting, $value, $compareValue)
-    {
-        if ($compareValue === false) {
-            return false;
-        }
-
-        $value = \mb_strtolower($value);
-        $trueValues = ['1', 'on', 'true'];
-        $falseValues = ['0', 'off', 'false'];
-
-        // handle values considered as 'true'
-        if (\in_array($value, $trueValues)) {
-            return $compareValue ? true : false;
-        } // handle values considered as 'false'
-        elseif (\in_array($value, $falseValues)) {
-            return (!$compareValue) ? true : false;
-        } elseif (!\is_numeric($value)) {
-            $compareValue = self::convertShorthandByteValue($compareValue);
-            $value = self::convertShorthandByteValue($value);
-        }
-
-        return ($compareValue >= $value) ? true : false;
-    }
-
-    /**
      * Converts shorthand byte values into an integer representing bytes.
      *
      * @param string $value
