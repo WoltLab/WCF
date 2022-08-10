@@ -22,6 +22,7 @@
             const slot = document.createElement("slot");
             slot.name = "svg";
             root.append(slot);
+            this.setAttribute("aria-hidden", "true");
         }
         validate() {
             if (this.size === 0) {
