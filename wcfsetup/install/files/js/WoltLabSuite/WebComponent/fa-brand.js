@@ -11,9 +11,14 @@
         [144, 130],
     ]);
     class FaBrand extends HTMLElement {
+        constructor() {
+            super(...arguments);
+            this.root = undefined;
+            this.svgStyle = document.createElement("style");
+        }
         connectedCallback() {
             this.validate();
-            const root = this.prepareRoot();
+            const root = this.getRoot();
             const slot = document.createElement("slot");
             slot.name = "svg";
             root.append(slot);
@@ -26,19 +31,23 @@
                 throw new TypeError("Must provide a valid icon size.");
             }
         }
-        prepareRoot() {
-            const root = this.attachShadow({ mode: "open" });
-            const iconHeight = HeightMap.get(this.size);
-            const style = document.createElement("style");
-            style.textContent = `
+        getRoot() {
+            if (this.root === undefined) {
+                this.root = this.attachShadow({ mode: "open" });
+                this.updateRenderSize();
+                this.root.append(this.svgStyle);
+            }
+            return this.root;
+        }
+        updateRenderSize() {
+            const renderSize = HeightMap.get(this.size);
+            this.svgStyle.textContent = `
         ::slotted(svg) {
           fill: currentColor;
-          height: ${iconHeight}px;
+          height: ${renderSize}px;
           shape-rendering: geometricprecision;
         }
       `;
-            root.append(style);
-            return root;
         }
         get size() {
             const size = this.getAttribute("size");
@@ -46,6 +55,13 @@
                 return 0;
             }
             return parseInt(size);
+        }
+        set size(size) {
+            if (!HeightMap.has(size)) {
+                throw new Error(`Refused to set the invalid icon size '${size}'.`);
+            }
+            this.setAttribute("size", size.toString());
+            this.updateRenderSize();
         }
     }
     window.customElements.define("fa-brand", FaBrand);
