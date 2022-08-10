@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\Psr7\Request;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\user\User;
 use wcf\form\AccountManagementForm;
 use wcf\form\RegisterForm;
@@ -41,7 +42,7 @@ final class GoogleAuthAction extends AbstractOauth2Action
      */
     private function getConfiguration()
     {
-        if (!$this->configuration) {
+        if (!isset($this->configuration)) {
             $request = new Request('GET', 'https://accounts.google.com/.well-known/openid-configuration');
             $response = $this->getHttpClient()->send($request);
 
@@ -132,7 +133,7 @@ final class GoogleAuthAction extends AbstractOauth2Action
     /**
      * @inheritDoc
      */
-    protected function processUser(OauthUser $oauthUser)
+    protected function processUser(OauthUser $oauthUser): ResponseInterface
     {
         $user = User::getUserByAuthData('google:' . $oauthUser->getId());
 
