@@ -2,6 +2,7 @@
 
 namespace wcf\system\package;
 
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\devtools\project\DevtoolsProjectAction;
@@ -222,21 +223,17 @@ class PackageInstallationDispatcher
                     }
 
                     $statement->execute([
-                        // We do not use the cache-timing safe class Hex, because we run the
-                        // function during the setup.
-                        $signatureSecret = \bin2hex(\random_bytes(20)),
+                        $signatureSecret = Hex::encode(\random_bytes(20)),
                         'signature_secret',
                     ]);
                     \define('SIGNATURE_SECRET', $signatureSecret);
                     HeaderUtil::setCookie(
                         'user_session',
-                        // We do not use the cache-timing safe class Hex, because we run the
-                        // function during the setup.
                         CryptoUtil::createSignedString(
                             \pack(
                                 'CA20C',
                                 1,
-                                \hex2bin(WCF::getSession()->sessionID),
+                                Hex::encode(WCF::getSession()->sessionID),
                                 0
                             )
                         )
