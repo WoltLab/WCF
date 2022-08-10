@@ -25,6 +25,7 @@
         connectedCallback() {
             this.validate();
             this.setIcon(this.name, this.solid);
+            this.setAttribute("aria-hidden", "true");
         }
         validate() {
             if (this.size === 0) {

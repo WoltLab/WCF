@@ -29,7 +29,10 @@
   class FaIcon extends HTMLElement {
     connectedCallback() {
       this.validate();
+
       this.setIcon(this.name, this.solid);
+
+      this.setAttribute("aria-hidden", "true");
     }
 
     private validate(): void {
