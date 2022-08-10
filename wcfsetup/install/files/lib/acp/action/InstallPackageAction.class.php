@@ -7,11 +7,8 @@ use Psr\Http\Message\ResponseInterface;
 use wcf\action\AbstractSecureAction;
 use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
-use wcf\system\search\SearchIndexManager;
-use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -144,7 +141,6 @@ class InstallPackageAction extends AbstractSecureAction
         if ($step->getNode() == '') {
             // perform final actions
             $this->installation->completeSetup();
-            $this->finalize();
 
             WCF::resetZendOpcache();
 
@@ -232,18 +228,5 @@ class InstallPackageAction extends AbstractSecureAction
         }
 
         return $currentAction;
-    }
-
-    /**
-     * Clears resources after successful installation.
-     */
-    protected function finalize()
-    {
-        // create search index tables
-        SearchIndexManager::getInstance()->createSearchIndices();
-
-        VersionTracker::getInstance()->createStorageTables();
-
-        CacheHandler::getInstance()->flushAll();
     }
 }

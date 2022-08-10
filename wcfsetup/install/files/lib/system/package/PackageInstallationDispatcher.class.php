@@ -36,10 +36,12 @@ use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
@@ -1188,6 +1190,11 @@ class PackageInstallationDispatcher
 
         // reset all caches
         CacheHandler::getInstance()->flushAll();
+
+        // create search index tables
+        SearchIndexManager::getInstance()->createSearchIndices();
+
+        VersionTracker::getInstance()->createStorageTables();
     }
 
     /**
