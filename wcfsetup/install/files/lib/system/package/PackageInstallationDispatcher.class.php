@@ -306,22 +306,6 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
 
-            // remove archives
-            $sql = "SELECT  archive
-                    FROM    wcf1_package_installation_queue
-                    WHERE   processNo = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->queue->processNo]);
-            while ($row = $statement->fetchArray()) {
-                @\unlink($row['archive']);
-            }
-
-            // delete queues
-            $sql = "DELETE FROM wcf1_package_installation_queue
-                    WHERE       processNo = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->queue->processNo]);
-
             // clear language files once whole installation is completed
             LanguageEditor::deleteLanguageFiles();
 
