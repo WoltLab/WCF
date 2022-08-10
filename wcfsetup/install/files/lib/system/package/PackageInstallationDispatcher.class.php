@@ -220,6 +220,10 @@ class PackageInstallationDispatcher
                 Package::writeConfigFile($row['packageID']);
             }
 
+            SearchIndexManager::getInstance()->createSearchIndices();
+
+            VersionTracker::getInstance()->createStorageTables();
+
             EventHandler::getInstance()->fireAction($this, 'postInstall');
 
             // remove archives
@@ -237,11 +241,6 @@ class PackageInstallationDispatcher
                     WHERE       processNo = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
-
-            // create search index tables
-            SearchIndexManager::getInstance()->createSearchIndices();
-
-            VersionTracker::getInstance()->createStorageTables();
 
             $command = new ClearCache();
             $command();
