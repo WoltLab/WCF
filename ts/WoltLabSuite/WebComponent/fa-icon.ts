@@ -13,7 +13,9 @@
     return isFA6Free;
   }
 
-  const HeightMap = new Map<number, number>([
+  type IconSize = number;
+  type RenderSize = number;
+  const HeightMap = new Map<IconSize, RenderSize>([
     [16, 14],
     [24, 18],
     [32, 28],
@@ -120,13 +122,21 @@
       this.setAttribute("name", name);
     }
 
-    get size(): number {
+    get size(): IconSize {
       const size = this.getAttribute("size");
       if (size === null) {
         return 0;
       }
 
       return parseInt(size);
+    }
+
+    set size(size: number) {
+      if (!HeightMap.has(size)) {
+        throw new Error(`Refused to set the invalid icon size '${size}'.`);
+      }
+
+      this.setAttribute("size", size.toString());
     }
 
     static get observedAttributes() {

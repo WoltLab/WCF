@@ -1,5 +1,7 @@
 (() => {
-  const HeightMap = new Map<number, number>([
+  type IconSize = number;
+  type RenderSize = number;
+  const HeightMap = new Map<IconSize, RenderSize>([
     [16, 14],
     [24, 18],
     [32, 28],
@@ -11,10 +13,13 @@
   ]);
 
   class FaBrand extends HTMLElement {
+    private root?: ShadowRoot = undefined;
+    private svgStyle: HTMLStyleElement = document.createElement("style");
+
     connectedCallback() {
       this.validate();
 
-      const root = this.prepareRoot();
+      const root = this.getRoot();
 
       const slot = document.createElement("slot");
       slot.name = "svg";
@@ -29,30 +34,44 @@
       }
     }
 
-    private prepareRoot(): ShadowRoot {
-      const root = this.attachShadow({ mode: "open" });
+    private getRoot(): ShadowRoot {
+      if (this.root === undefined) {
+        this.root = this.attachShadow({ mode: "open" });
 
-      const iconHeight = HeightMap.get(this.size)!;
-      const style = document.createElement("style");
-      style.textContent = `
+        this.updateRenderSize();
+        this.root.append(this.svgStyle);
+      }
+
+      return this.root;
+    }
+
+    private updateRenderSize(): void {
+      const renderSize = HeightMap.get(this.size)!;
+      this.svgStyle.textContent = `
         ::slotted(svg) {
           fill: currentColor;
-          height: ${iconHeight}px;
+          height: ${renderSize}px;
           shape-rendering: geometricprecision;
         }
       `;
-      root.append(style);
-
-      return root;
     }
 
-    get size(): number {
+    get size(): IconSize {
       const size = this.getAttribute("size");
       if (size === null) {
         return 0;
       }
 
       return parseInt(size);
+    }
+
+    set size(size: number) {
+      if (!HeightMap.has(size)) {
+        throw new Error(`Refused to set the invalid icon size '${size}'.`);
+      }
+
+      this.setAttribute("size", size.toString());
+      this.updateRenderSize();
     }
   }
 

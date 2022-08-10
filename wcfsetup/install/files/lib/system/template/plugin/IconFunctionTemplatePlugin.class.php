@@ -33,21 +33,21 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $type = $tagArgs['type'] ?? '';
 
         if (!\in_array($size, self::SIZES)) {
-            throw new \InvalidArgumentException("An unsupported size `{$size}` was requested.");
+            throw new \InvalidArgumentException("An unsupported size '{$size}' was requested.");
         }
 
         if ($name === '') {
-            throw new \InvalidArgumentException("The `name` attribute must be present and non-empty.");
+            throw new \InvalidArgumentException("The 'name' attribute must be present and non-empty.");
         }
 
         if ($type !== '' && !\in_array($type, self::TYPES)) {
-            throw new \InvalidArgumentException("An unsupported type `${type}` was specified.");
+            throw new \InvalidArgumentException("An unsupported type '{$type}' was specified.");
         }
 
         if ($type === 'brand') {
             $svgFile = \WCF_DIR . "icon/font-awesome/v6/brands/{$name}.svg";
             if (!\file_exists($svgFile)) {
-                throw new \InvalidArgumentException("Unable to locate the icon for brand `${name}`.");
+                throw new \InvalidArgumentException("Unable to locate the icon for brand '{$name}'.");
             }
 
             $content = \file_get_contents($svgFile);
