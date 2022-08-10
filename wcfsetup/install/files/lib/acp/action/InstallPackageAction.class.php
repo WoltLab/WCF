@@ -139,9 +139,6 @@ class InstallPackageAction extends AbstractSecureAction
         }
 
         if ($step->getNode() == '') {
-            // perform final actions
-            $this->installation->completeSetup();
-
             WCF::resetZendOpcache();
 
             // show success
