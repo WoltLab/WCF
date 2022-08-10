@@ -2,7 +2,6 @@
 
 namespace wcf\system\package;
 
-use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
@@ -11,7 +10,6 @@ use wcf\system\cache\command\ClearCache;
 use wcf\system\event\EventHandler;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -85,14 +83,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         // perform post-uninstall actions
         if ($node == '') {
-            // update options.inc.php if uninstallation is completed
-            OptionEditor::resetCache();
-
             // rebuild application paths
             ApplicationHandler::rebuild();
-
-            // clear user storage
-            UserStorageHandler::getInstance()->clear();
 
             EventHandler::getInstance()->fireAction($this, 'postUninstall');
 

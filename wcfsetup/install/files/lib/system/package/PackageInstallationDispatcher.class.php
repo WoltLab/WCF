@@ -8,7 +8,6 @@ use wcf\data\application\ApplicationEditor;
 use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageList;
-use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
@@ -37,7 +36,6 @@ use wcf\system\request\RouteHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
@@ -205,11 +203,6 @@ class PackageInstallationDispatcher
                 // rebuild application paths
                 ApplicationHandler::rebuild();
             }
-
-            OptionEditor::resetCache();
-
-            // clear user storage
-            UserStorageHandler::getInstance()->clear();
 
             // rebuild config files for affected applications
             $sql = "SELECT      package.packageID
