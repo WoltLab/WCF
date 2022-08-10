@@ -108,11 +108,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						{icon size=32 name='info' type='solid'}
-						{icon size=32 name='bell'}
-						<span class="icon icon32 fa-bell-o"></span>
-						{icon size=32 name='500px' type='brand'}
-						<span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
+						<span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
