@@ -70,8 +70,8 @@
 
     private isValidIconStyle(name: string, isSolid: boolean): boolean {
       if (!isSolid && isFontAwesome6Free()) {
-        const [, styles] = window.getFontAwesome6IconMetadata(name)!;
-        if (!styles.includes("regular")) {
+        const [, hasRegularVariant] = window.getFontAwesome6IconMetadata(name)!;
+        if (!hasRegularVariant) {
           // Font Awesome 6 Free only includes solid icons with the
           // the exception to some special icons that use the weight
           // to differentiate two related icons. One such example is
