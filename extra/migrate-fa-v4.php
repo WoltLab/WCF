@@ -30,8 +30,7 @@ $knownSizes = [16, 24, 32, 48, 64, 96, 128, 144];
 
 function replaceInFiles(string $path): void
 {
-    //$targetFilenames = ['js', 'tpl', 'ts'];
-    $targetFilenames = ['js', 'ts'];
+    $targetFilenames = ['js', 'tpl', 'ts'];
 
     $directory = new RecursiveDirectoryIterator($path);
     $filter = new RecursiveCallbackFilterIterator(
