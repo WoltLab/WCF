@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 // @codingStandardsIgnoreFile
 
@@ -10,10 +11,8 @@
  * @package WoltLabSuite\Core
  */
 
-// TODO
-//#!/usr/bin/env php
 if (\PHP_SAPI !== 'cli') {
-    //exit;
+    exit;
 }
 
 // JSON Structure:
@@ -28,7 +27,7 @@ JSON;
 $iconShim = json_decode($json, true);
 $knownSizes = [16, 24, 32, 48, 64, 96, 128, 144];
 
-function replaceInFiles(string $path): void
+function replaceInFiles(string $path): int
 {
     $targetFilenames = ['js', 'tpl', 'ts'];
 
@@ -49,14 +48,21 @@ function replaceInFiles(string $path): void
             return in_array($fileExtension, $targetFilenames);
         }
     );
+
+    $updatedFiles = 0;
+
     $iterator = new RecursiveIteratorIterator($filter);
     /** @var SplFileInfo $fileInfo */
     foreach ($iterator as $fileInfo) {
-        replaceIcons($fileInfo->getPathname());
+        if (replaceIcons($fileInfo->getPathname())) {
+            $updatedFiles++;
+        }
     }
+
+    return $updatedFiles;
 }
 
-function replaceIcons(string $filename): void
+function replaceIcons(string $filename): bool
 {
     global $iconShim, $knownSizes;
 
@@ -104,7 +110,10 @@ function replaceIcons(string $filename): void
 
     if ($count > 0) {
         file_put_contents($filename, $content);
+        return true;
     }
+
+    return false;
 }
 
 function getNewTemplateIcon(string $name, int $size, string $type): string
@@ -129,12 +138,16 @@ function getNewJavascriptIcon(string $name, int $size, string $type): string
     HTML;
 }
 
+if ($argc !== 2) {
+    echo "ERROR: Expected a single argument to the directory that should be used to recursively replace icons.\n";
+    exit(1);
+}
 
-echo "<pre>";
+$directory = realpath($argv[1]);
+if (!is_dir($directory)) {
+    echo "ERROR: The provided directory does not exist or is not accessible.\n";
+    exit(1);
+}
 
-// TODO
-replaceInFiles("../com.woltlab.wcf/");
-replaceInFiles("../wcfsetup/");
-replaceInFiles("../ts/");
-
-echo "Done";
+$replacedFiles = replaceInFiles($directory);
+echo "Replaced {$replacedFiles} files.\n";
