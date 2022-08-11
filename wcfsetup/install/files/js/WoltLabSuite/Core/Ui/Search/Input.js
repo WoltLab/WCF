@@ -30,7 +30,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             this.request = undefined;
             this.timerDelay = undefined;
             this.element = element;
-            if (!(this.element instanceof HTMLInputElement)) {
+            if (!(this.element instanceof HTMLElement)) {
                 throw new TypeError("Expected a valid DOM element.");
             }
             else if (this.element.nodeName !== "INPUT" || (this.element.type !== "search" && this.element.type !== "text")) {

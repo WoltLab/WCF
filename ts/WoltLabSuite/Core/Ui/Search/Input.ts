@@ -41,7 +41,7 @@ class UiSearchInput {
    */
   constructor(element: HTMLInputElement, options: SearchInputOptions) {
     this.element = element;
-    if (!(this.element instanceof HTMLInputElement)) {
+    if (!(this.element instanceof HTMLElement)) {
       throw new TypeError("Expected a valid DOM element.");
     } else if (this.element.nodeName !== "INPUT" || (this.element.type !== "search" && this.element.type !== "text")) {
       throw new Error('Expected an input[type="text"].');
