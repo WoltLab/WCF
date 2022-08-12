@@ -81,17 +81,16 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
         getCurrentEmailTypeInputElement().value = value;
         const button = document.querySelector(`.notificationSettingsEmailType[data-object-id="${_objectId}"]`);
         button.title = Language.get(`wcf.user.notification.mailNotificationType.${value}`);
-        const icon = button.querySelector(".jsIconNotificationSettingsEmailType");
-        icon.classList.remove("fa-clock-o", "fa-flash", "fa-times", "green", "red");
+        const icon = button.querySelector(".jsIconNotificationSettingsEmailType fa-icon");
         switch (value) {
             case "daily":
-                icon.classList.add("fa-clock-o", "green");
+                icon.setIcon("clock", false);
                 break;
             case "instant":
-                icon.classList.add("fa-flash", "green");
+                icon.setIcon("bolt", true);
                 break;
             case "none":
-                icon.classList.add("fa-times", "red");
+                icon.setIcon("xmark", true);
                 break;
         }
         _objectId = 0;

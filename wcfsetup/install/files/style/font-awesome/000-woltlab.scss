@@ -37,6 +37,7 @@ fa-icon {
   display: inline-flex;
   height: var(--icon-size);
   justify-content: center;
+  pointer-events: none;
   width: calc(var(--icon-size) * 1.25);
 
   &:not(:upgraded) {
