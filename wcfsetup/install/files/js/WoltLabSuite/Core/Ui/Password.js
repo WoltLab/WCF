@@ -38,8 +38,9 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         button.classList.add("button", "inputSuffix", "jsTooltip");
         button.setAttribute("aria-hidden", "true");
         inputAddon.appendChild(button);
-        const icon = document.createElement("span");
-        icon.classList.add("icon", "icon16", "fa-eye");
+        const icon = document.createElement("fa-icon");
+        icon.size = 16;
+        icon.setIcon("eye", false);
         button.appendChild(icon);
         button.addEventListener("click", () => {
             toggle(input, button, icon);
@@ -58,14 +59,12 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
     }
     function toggle(input, button, icon) {
         if (input.type === "password") {
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
+            icon.setIcon("eye-slash", false);
             button.dataset.tooltip = Language.get("wcf.global.form.password.button.hide");
             input.type = "text";
         }
         else {
-            icon.classList.add("fa-eye");
-            icon.classList.remove("fa-eye-slash");
+            icon.setIcon("eye-slash", true);
             button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
             input.type = "password";
         }

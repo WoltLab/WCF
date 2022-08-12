@@ -244,7 +244,8 @@ export class UiItemListLineBreakSeparatedText {
     itemElement.dataset.value = item;
 
     const deleteButton = document.createElement("span");
-    deleteButton.classList.add("icon", "icon16", "fa-times", "jsDeleteItem", "jsTooltip", "pointer");
+    deleteButton.innerHTML = '<fa-icon size="16" name="xmark" solid></fa-icon>';
+    deleteButton.classList.add("jsDeleteItem", "jsTooltip", "pointer");
     deleteButton.title = Language.get("wcf.global.button.delete");
     deleteButton.addEventListener("click", (ev) => this.deleteItem(ev));
     itemElement.append(deleteButton);
