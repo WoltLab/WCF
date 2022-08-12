@@ -19,7 +19,7 @@
 								*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
 						*}>
 							<a href="#" class="dropdownToggle button">
-								<span class="icon icon16 fa-pencil"></span>
+								{icon size=16 name='pencil' type='solid'}
 								<span>{lang}wcf.global.button.edit{/lang}</span>
 							</a>
 
@@ -161,7 +161,7 @@
 				{/if}
 			{/hascontent}
 
-			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>

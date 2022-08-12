@@ -77,7 +77,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BBCodeList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
+			<li><a href="{link controller='BBCodeList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -187,7 +187,7 @@
 				<dd>
 					<div class="inputAddon">
 						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium">
-						<a href="#" class="inputSuffix button jsButtonSearchWysiwygIcon"><span class="icon icon16 fa-search"></span></a>
+						<a href="#" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon size=16 name='search' type='solid'}</a>
 					</div>
 					{if $errorField == 'wysiwygIcon'}
 						<small class="innerError">

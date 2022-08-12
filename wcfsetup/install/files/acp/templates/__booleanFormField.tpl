@@ -12,7 +12,7 @@
 			*}{if $field->getValue()} checked{/if}{*
 			*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 		*}>
-		<label for="{@$field->getPrefixedId()}" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.global.form.boolean.yes{/lang}</label>
+		<label for="{@$field->getPrefixedId()}" class="green">{icon size=16 name='check' type='solid'} {lang}wcf.global.form.boolean.yes{/lang}</label>
 	</li>
 	<li>
 		<input type="radio" {*
@@ -24,6 +24,6 @@
 			*}{if !$field->getValue()} checked{/if}{*
 			*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 		*}>
-		<label for="{@$field->getPrefixedId()}_no" class="red"><span class="icon icon16 fa-times"></span> {lang}wcf.global.form.boolean.no{/lang}</label>
+		<label for="{@$field->getPrefixedId()}_no" class="red">{icon size=16 name='times' type='solid'} {lang}wcf.global.form.boolean.no{/lang}</label>
 	</li>
 </ol>

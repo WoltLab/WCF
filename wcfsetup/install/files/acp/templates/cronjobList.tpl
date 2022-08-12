@@ -14,7 +14,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -63,7 +63,7 @@
 								{/if}
 								
 								{if $cronjob->isEditable()}
-									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
 								{else}
 									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 								{/if}
@@ -114,7 +114,7 @@
 	
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

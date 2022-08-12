@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -42,10 +42,10 @@
 							{if $templateGroup->isImmutable()}
 								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 							{else}
-								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
 							{/if}
 							
-							<a href="{link controller='TemplateList' templateGroupID=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.acp.template.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
+							<a href="{link controller='TemplateList' templateGroupID=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.acp.template.list{/lang}" class="jsTooltip">{icon size=16 name='list' type='solid'}</a>
 							
 							{if $templateGroup->isImmutable()}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
@@ -86,7 +86,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

@@ -10,7 +10,7 @@
 
 <div class="box48">
 	{if $media->isImage}
-		<span class="icon icon48 fa-file-image-o"></span>
+		{icon size=48 name='file-image'}
 	{else}
 		{@$media->getElementTag(48)}
 	{/if}

@@ -1,7 +1,7 @@
 {if $category->categoryName === 'general'}
 	<div id="dialogRewriteTest" style="display: none">
 		<div id="dialogRewriteTestRunning" class="box24">
-			<span class="icon icon24 fa-spinner"></span>
+			{icon size=24 name='spinner' type='solid'}
 			<p>{lang}wcf.acp.option.url_omit_index_php.test.running{/lang}</p>
 		</div>
 		<div id="dialogRewriteTestSuccess" class="box24" style="display: none">

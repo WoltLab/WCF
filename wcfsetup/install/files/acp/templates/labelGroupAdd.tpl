@@ -24,9 +24,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
-				<li><a href="{link controller='LabelList' id=$groupID}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.label.list{/lang}</span></a></li>
+				<li><a href="{link controller='LabelList' id=$groupID}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.label.list{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='LabelGroupList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.label.group.list{/lang}</span></a></li>
+			<li><a href="{link controller='LabelGroupList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.label.group.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

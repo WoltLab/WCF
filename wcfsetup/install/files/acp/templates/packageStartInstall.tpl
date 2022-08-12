@@ -32,9 +32,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
-				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog">{icon size=16 name='upload' type='solid'} <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -80,12 +80,12 @@
 		</div>
 		
 		<div class="packageSearchStatus packageSearchStatusRefreshDatabase">
-			<span class="icon icon64 fa-spinner"></span>
+			{icon size=64 name='spinner' type='solid'}
 			<span class="packageSearchStatusLabel">{lang}wcf.acp.package.search.status.refreshDatabase{/lang}</span>
 		</div>
 		
 		<div class="packageSearchStatus packageSearchStatusLoading">
-			<span class="icon icon64 fa-spinner"></span>
+			{icon size=64 name='spinner' type='solid'}
 			<span class="packageSearchStatusLabel">{lang}wcf.acp.package.search.status.loading{/lang}</span>
 		</div>
 		

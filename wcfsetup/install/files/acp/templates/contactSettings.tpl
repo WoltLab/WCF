@@ -22,8 +22,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='ContactRecipientAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.contact.recipient.add{/lang}</span></a></li>
-			<li><a href="{link controller='ContactOptionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.contact.option.add{/lang}</span></a></li>
+			<li><a href="{link controller='ContactRecipientAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.contact.recipient.add{/lang}</span></a></li>
+			<li><a href="{link controller='ContactOptionAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.contact.option.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -51,7 +51,7 @@
 					<tr class="sortableNode jsOptionRow jsObjectActionObject" data-object-id="{@$option->optionID}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$option->isDisabled}
-							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
 							{if $option->canDelete()}
 								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}

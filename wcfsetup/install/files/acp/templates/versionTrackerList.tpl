@@ -9,8 +9,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{$object->getEditLink()}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
-			<li><a href="{$object->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>
+			<li><a href="{$object->getEditLink()}" class="button">{icon size=16 name='pencil' type='solid'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+			<li><a href="{$object->getLink()}" class="button">{icon size=16 name='arrow-right' type='solid'} <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

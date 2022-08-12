@@ -20,7 +20,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TagAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.tag.add{/lang}</span></a></li>
+			<li><a href="{link controller='TagAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.tag.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -76,7 +76,7 @@
 					<tr class="jsTagRow jsClipboardObject jsObjectActionObject" data-object-id="{@$tag->tagID}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}"></td>
 						<td class="columnIcon">
-							<a href="{link controller='TagEdit' object=$tag}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='TagEdit' object=$tag}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
 							{objectAction action="delete" objectTitle=$tag->getTitle()}
 							
 							{event name='rowButtons'}
@@ -103,7 +103,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TagAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.tag.add{/lang}</span></a></li>
+				<li><a href="{link controller='TagAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.tag.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsButtonPageAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+			<li><a href="#" class="button jsButtonPageAdd">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -124,14 +124,14 @@
 							{else}
 								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}"></span>
 							{/if}
-							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
 							{if $page->canDelete()}
 								{objectAction action="delete" objectTitle=$page->name}
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
 							{if !$page->requireObjectID}
-								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip"><span class="icon icon16 fa-search"></span></a>
+								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip">{icon size=16 name='search' type='solid'}</a>
 							{else}
 								<span class="icon icon16 fa-search disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}"></span>
 							{/if}
@@ -169,7 +169,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="#" class="button jsButtonPageAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonPageAdd">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

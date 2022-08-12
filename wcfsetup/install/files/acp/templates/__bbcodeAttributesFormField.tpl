@@ -34,7 +34,7 @@
 							*}data-no-input-id="{@$field->getPrefixedId()}_required_{ldelim}@$attributeNumber}_no"{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{ldelim}@$attributeNumber}" class="green">
-							<span class="icon icon16 fa-check"></span> {lang}wcf.global.form.boolean.yes{/lang}
+							{icon size=16 name='check' type='solid'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -46,7 +46,7 @@
 							*}checked{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{ldelim}@$attributeNumber}_no" class="red">
-							<span class="icon icon16 fa-times"></span> {lang}wcf.global.form.boolean.no{/lang}
+							{icon size=16 name='times' type='solid'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>
@@ -67,7 +67,7 @@
 							*}data-no-input-id="{@$field->getPrefixedId()}_useText_{ldelim}@$attributeNumber}_no"{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{ldelim}@$attributeNumber}" class="green">
-							<span class="icon icon16 fa-check"></span> {lang}wcf.global.form.boolean.yes{/lang}
+							{icon size=16 name='check' type='solid'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -79,7 +79,7 @@
 							*}checked{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{ldelim}@$attributeNumber}_no" class="red">
-							<span class="icon icon16 fa-times"></span> {lang}wcf.global.form.boolean.no{/lang}
+							{icon size=16 name='times' type='solid'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>
@@ -172,7 +172,7 @@
 							*}{if !$attributeData[required]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{@$attributeNumber}" class="green">
-							<span class="icon icon16 fa-check"></span> {lang}wcf.global.form.boolean.yes{/lang}
+							{icon size=16 name='check' type='solid'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -184,7 +184,7 @@
 							*}{if $attributeData[required]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{@$attributeNumber}_no" class="red">
-							<span class="icon icon16 fa-times"></span> {lang}wcf.global.form.boolean.no{/lang}
+							{icon size=16 name='times' type='solid'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>
@@ -206,7 +206,7 @@
 							*}{if !$attributeData[useText]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{@$attributeNumber}" class="green">
-							<span class="icon icon16 fa-check"></span> {lang}wcf.global.form.boolean.yes{/lang}
+							{icon size=16 name='check' type='solid'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -218,7 +218,7 @@
 							*}{if $attributeData[useText]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{@$attributeNumber}_no" class="red">
-							<span class="icon icon16 fa-times"></span> {lang}wcf.global.form.boolean.no{/lang}
+							{icon size=16 name='times' type='solid'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>

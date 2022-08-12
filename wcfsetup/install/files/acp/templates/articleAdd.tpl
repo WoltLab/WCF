@@ -14,16 +14,16 @@
 			<ul>
 				{if $action == 'edit'}
 					{if $article->canDelete()}
-						<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
-						<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
-						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='arrows-rotate' type='solid'} <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='times' type='solid'} <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon size=16 name='times' type='solid'} <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
 					{/if}
 					{if $languages|count > 1 || $article->isMultilingual}
-						<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonToggleI18n">{icon size=16 name='flag' type='solid'} <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
 					{/if}
-					<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
+					<li><a href="{$article->getLink()}" class="button">{icon size=16 name='search' type='solid'} <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
 				{/if}
-				<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
+				<li><a href="{link controller='ArticleList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
 				
 				{event name='contentHeaderNavigation'}
 			</ul>

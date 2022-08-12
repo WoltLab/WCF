@@ -77,7 +77,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
-						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
+						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 						
 					{event name='contentHeaderNavigation'}
@@ -112,7 +112,7 @@
 								
 								{if $objectType->getProcessor()->canEditCategory()}
 									{objectAction action="toggle" isDisabled=$category->isDisabled}
-									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
 								{/if}
 								
 								{if $objectType->getProcessor()->canDeleteCategory()}

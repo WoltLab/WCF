@@ -51,7 +51,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TrophyList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.trophy.list{/lang}</span></a></li>
+			<li><a href="{link controller='TrophyList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.trophy.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -254,7 +254,7 @@
 				<dt>{lang}wcf.acp.trophy.badge.iconName{/lang}</dt>
 				<dd>
 					<span class="jsTrophyIconName">{$iconName}</span>
-					<a href="#" class="button small"><span class="icon icon16 fa-search"></span></a>
+					<a href="#" class="button small">{icon size=16 name='search' type='solid'}</a>
 				</dd>
 			</dl>
 			
@@ -265,7 +265,7 @@
 						<span id="iconColorValue" class="colorBoxValue jsColorPicker" data-store="iconColorValue"></span>
 						<input type="hidden" id="iconColorValue">
 					</span>
-					<a href="#" class="button small jsButtonIconColorPicker"><span class="icon icon16 fa-paint-brush"></span></a>
+					<a href="#" class="button small jsButtonIconColorPicker">{icon size=16 name='paint-brush' type='solid'}</a>
 				</dd>
 			</dl>
 			
@@ -276,7 +276,7 @@
 						<span id="badgeColorValue" class="colorBoxValue jsColorPicker" data-store="badgeColorValue"></span>
 						<input type="hidden" id="badgeColorValue">
 					</span>
-					<a href="#" id="test" class="button small jsButtonBadgeColorPicker"><span class="icon icon16 fa-paint-brush"></span></a>
+					<a href="#" id="test" class="button small jsButtonBadgeColorPicker">{icon size=16 name='paint-brush' type='solid'}</a>
 				</dd>
 			</dl>
 		</div>

@@ -23,8 +23,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='MenuEdit' id=$menuID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.menu.edit{/lang}</span></a></li>
-			<li><a href="{link controller='MenuItemAdd'}menuID={@$menuID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
+			<li><a href="{link controller='MenuEdit' id=$menuID}{/link}" class="button">{icon size=16 name='pencil' type='solid'} <span>{lang}wcf.acp.menu.edit{/lang}</span></a></li>
+			<li><a href="{link controller='MenuItemAdd'}menuID={@$menuID}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -46,7 +46,7 @@
 								{else}
 									<span class="icon icon16 fa-{if !$menuItemNode->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}"></span>
 								{/if}
-								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
+								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">{icon size=16 name='pencil' type='solid'}</a>
 								{if $menuItemNode->canDelete()}
 									{objectAction action="delete" objectTitle=$menuItemNode->getTitle()}
 								{else}

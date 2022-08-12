@@ -21,7 +21,7 @@
 			<ul>
 				{content}
 					{if $objects|count}
-						<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+						<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete">{icon size=16 name='times' type='solid'} <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}
@@ -130,7 +130,7 @@
 				<ul>
 					{content}
 						{if $objects|count}
-							<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+							<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete">{icon size=16 name='times' type='solid'} <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentFooterNavigation'}

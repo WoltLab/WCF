@@ -10,18 +10,18 @@
 				</li>
 				
 				<li id="jumpToPage">
-					<a href="{link forceFrontend=true}{/link}" class="jsTooltip" title="{lang}wcf.global.jumpToPage{/lang}"><span class="icon icon32 fa-home"></span></a>
+					<a href="{link forceFrontend=true}{/link}" class="jsTooltip" title="{lang}wcf.global.jumpToPage{/lang}">{icon size=32 name='house' type='solid'}</a>
 				</li>
 				
 				{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
 					<li>
-						<a href="{link controller='PackageUpdate'}{/link}" class="jsTooltip" title="{lang}wcf.acp.package.updates{/lang}"><span class="icon icon32 fa-refresh"></span> <span class="badge badgeUpdate">{#$__wcf->getAvailableUpdates()}</span></a>
+						<a href="{link controller='PackageUpdate'}{/link}" class="jsTooltip" title="{lang}wcf.acp.package.updates{/lang}">{icon size=32 name='arrows-rotate' type='solid'} <span class="badge badgeUpdate">{#$__wcf->getAvailableUpdates()}</span></a>
 					</li>
 				{/if}
 			{/if}
 			
 			<li id="woltlab" class="dropdown">
-				<a href="#" class="dropdownToggle jsTooltip" title="WoltLab&reg;"><span class="icon icon32 fa-info"></span></a>
+				<a href="#" class="dropdownToggle jsTooltip" title="WoltLab&reg;">{icon size=32 name='info' type='solid'}</a>
 				
 				<ul class="dropdownMenu dropdownMenuUserPanel" data-dropdown-alignment-horizontal="right">
 					<li><a class="externalURL" href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>

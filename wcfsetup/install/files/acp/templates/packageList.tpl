@@ -36,11 +36,11 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonSearchForUpdates">{icon size=16 name='arrows-rotate' type='solid'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}
@@ -138,7 +138,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentFooterNavigation'}
