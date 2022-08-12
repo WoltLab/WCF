@@ -960,11 +960,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      */
     protected function loadGroupData()
     {
-        // get group data from cache
         $this->groupData = UserGroupPermissionCacheBuilder::getInstance()->getData($this->getGroupIDs());
-        if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $this->getGroupIDs()) {
-            $this->groupData = [];
-        }
     }
 
     /**
