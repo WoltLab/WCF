@@ -63,7 +63,7 @@ export class AcpUiDataImportManager implements AjaxCallbackObject {
 
     const formSubmit = document.createElement("div");
     formSubmit.className = "formSubmit";
-    formSubmit.innerHTML = `<button class="buttonPrimary">${Language.get("wcf.global.button.next")}</button>`;
+    formSubmit.innerHTML = `<button class="button buttonPrimary">${Language.get("wcf.global.button.next")}</button>`;
 
     content.appendChild(formSubmit);
     UiDialog.rebuild(this);

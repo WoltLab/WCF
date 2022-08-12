@@ -107,8 +107,8 @@ $.Redactor.prototype.WoltLabImage = function() {
 					+ '<input id="redactor-image-title" style="display: none">' /* dummy because redactor expects it to be present */
 					+ '<input id="redactor-image-caption" style="display: none">' /* dummy because redactor expects it to be present */
 					+ '<div class="formSubmit">'
-						+ '<button id="redactor-modal-button-action" class="buttonPrimary">Insert</button>'
-						+ '<button id="redactor-modal-button-delete" class="redactor-modal-button-offset">Delete</button>'
+						+ '<button id="redactor-modal-button-action" class="button buttonPrimary">Insert</button>'
+						+ '<button id="redactor-modal-button-delete" class="button redactor-modal-button-offset">Delete</button>'
 					+ '</div>'
 				+ '</div>';
 		},

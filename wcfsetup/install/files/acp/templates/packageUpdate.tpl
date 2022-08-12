@@ -35,7 +35,7 @@
 </div>
 
 <div class="formSubmit">
-	<button class="buttonPrimary" id="packageUpdateSubmitButton">{lang}wcf.global.button.submit{/lang}</button>
+	<button class="button buttonPrimary" id="packageUpdateSubmitButton">{lang}wcf.global.button.submit{/lang}</button>
 </div>
 
 <script data-relocate="true">

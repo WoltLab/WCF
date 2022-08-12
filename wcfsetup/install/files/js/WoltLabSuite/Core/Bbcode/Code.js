@@ -46,22 +46,14 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             if (!header) {
                 return;
             }
-            const button = document.createElement("span");
-            button.tabIndex = 0;
-            button.setAttribute("role", "button");
+            const button = document.createElement("button");
             button.className = "icon icon24 fa-files-o pointer jsTooltip";
             button.setAttribute("title", Language.get("wcf.message.bbcode.code.copy"));
             const clickCallback = async () => {
                 await Clipboard.copyElementTextToClipboard(this.codeContainer);
                 UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
             };
-            button.addEventListener("click", clickCallback);
-            button.addEventListener("keydown", (event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    void clickCallback();
-                }
-            });
+            button.addEventListener("click", () => clickCallback());
             header.appendChild(button);
         }
         async highlight() {

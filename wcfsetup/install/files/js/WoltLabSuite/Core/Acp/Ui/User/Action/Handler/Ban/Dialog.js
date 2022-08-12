@@ -119,7 +119,7 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../
    </dl>
  </div>
  <div class="formSubmit dialogFormSubmit">
-   <button class="buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
+   <button class="button buttonPrimary formSubmitButton" accesskey="s">${Language.get("wcf.global.button.submit")}</button>
  </div>`,
             };
         }

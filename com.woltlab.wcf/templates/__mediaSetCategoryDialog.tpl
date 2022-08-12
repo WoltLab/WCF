@@ -24,5 +24,5 @@
 </div>
 
 <div class="formSubmit">
-	<button data-type="submit" class="buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
+	<button data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 </div>

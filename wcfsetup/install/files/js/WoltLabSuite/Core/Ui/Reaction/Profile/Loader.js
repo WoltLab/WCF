@@ -36,7 +36,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             this._noMoreEntries.style.display = "none";
             loadButtonList.appendChild(this._noMoreEntries);
             this._loadButton = document.createElement("button");
-            this._loadButton.className = "small";
+            this._loadButton.classList.add("button", "small");
             this._loadButton.innerHTML = Language.get("wcf.like.reaction.more");
             this._loadButton.addEventListener("click", () => this._loadReactions());
             this._loadButton.style.display = "none";

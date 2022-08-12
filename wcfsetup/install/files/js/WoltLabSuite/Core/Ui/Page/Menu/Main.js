@@ -192,10 +192,8 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             if (menuItem.children.length) {
                 listItem.classList.add("pageMenuMainItemExpandable");
                 const menuId = Util_1.default.getUniqueId();
-                const button = document.createElement("a");
+                const button = document.createElement("button");
                 button.classList.add("pageMenuMainItemToggle");
-                button.tabIndex = 0;
-                button.setAttribute("role", "button");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", menuId);
                 button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
@@ -207,15 +205,8 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 const list = this.buildMenuItemList(menuItem.children);
                 list.id = menuId;
                 list.hidden = true;
-                button.addEventListener("click", (event) => {
-                    event.preventDefault();
+                button.addEventListener("click", () => {
                     this.toggleList(button, list);
-                });
-                button.addEventListener("keydown", (event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        button.click();
-                    }
                 });
                 list.addEventListener("keydown", (event) => {
                     if (event.key === "Escape") {

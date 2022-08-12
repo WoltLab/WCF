@@ -76,7 +76,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
   </dd>
 </dl>
 <div class="formSubmit">
-  <button class="buttonPrimary" data-type="submit">${Language.get("wcf.global.button.submit")}</button>
+  <button class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.submit")}</button>
 </div>`,
             };
         }

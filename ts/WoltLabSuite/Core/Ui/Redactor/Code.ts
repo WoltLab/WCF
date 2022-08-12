@@ -261,10 +261,10 @@ class UiRedactorCode implements DialogCallbackObject {
           </dl>
         </div>
         <div class="formSubmit">
-          <button id="${idButtonSave}" class="buttonPrimary" data-type="submit">${Language.get(
+          <button id="${idButtonSave}" class="button buttonPrimary" data-type="submit">${Language.get(
         "wcf.global.button.save",
       )}</button>
-          <button id="${idButtonDelete}">${Language.get("wcf.global.button.delete")}</button>
+          <button id="${idButtonDelete}" class="button">${Language.get("wcf.global.button.delete")}</button>
         </div>`,
     };
   }

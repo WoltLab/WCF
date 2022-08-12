@@ -165,9 +165,9 @@ export class UserMenuView {
       </div>
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
-        <a href="#" class="userMenuItemMarkAsRead" role="button">
+        <button class="userMenuItemMarkAsRead">
           <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}"></span>
-        </a>
+        </button>
       </div>
     `;
 
@@ -175,9 +175,7 @@ export class UserMenuView {
     element.querySelector(".userMenuItemMeta")!.append(time);
 
     const markAsRead = element.querySelector(".userMenuItemMarkAsRead")!;
-    markAsRead.addEventListener("click", async (event) => {
-      event.preventDefault();
-
+    markAsRead.addEventListener("click", async () => {
       await this.provider.markAsRead(itemData.objectId);
 
       this.markAsRead(element);

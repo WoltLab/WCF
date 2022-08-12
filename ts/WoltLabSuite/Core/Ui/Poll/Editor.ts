@@ -157,20 +157,16 @@ class UiPollEditor {
     pollOptionInput.appendChild(sortHandle);
 
     // buttons
-    const addButton = document.createElement("a");
-    listItem.setAttribute("role", "button");
-    listItem.setAttribute("href", "#");
+    const addButton = document.createElement("button");
     addButton.classList.add("icon", "icon16", "fa-plus", "jsTooltip", "jsAddOption", "pointer");
     addButton.setAttribute("title", Language.get("wcf.poll.button.addOption"));
     addButton.addEventListener("click", () => this.createOption());
     pollOptionInput.appendChild(addButton);
 
-    const deleteButton = document.createElement("a");
-    deleteButton.setAttribute("role", "button");
-    deleteButton.setAttribute("href", "#");
+    const deleteButton = document.createElement("button");
     deleteButton.classList.add("icon", "icon16", "fa-times", "jsTooltip", "jsDeleteOption", "pointer");
     deleteButton.setAttribute("title", Language.get("wcf.poll.button.removeOption"));
-    deleteButton.addEventListener("click", (ev) => this.removeOption(ev));
+    deleteButton.addEventListener("click", () => this.removeOption(deleteButton));
     pollOptionInput.appendChild(deleteButton);
 
     // input field
@@ -253,10 +249,7 @@ class UiPollEditor {
   /**
    * Removes a poll option after clicking on its deletion button.
    */
-  private removeOption(event: Event): void {
-    event.preventDefault();
-
-    const button = event.currentTarget as HTMLSpanElement;
+  private removeOption(button: HTMLButtonElement): void {
     button.closest("li")!.remove();
 
     this.optionCount--;

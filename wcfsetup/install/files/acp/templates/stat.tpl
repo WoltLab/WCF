@@ -72,7 +72,7 @@
 </section>
 
 <div class="formSubmit">
-	<button class="buttonPrimary" id="statRefreshButton">{lang}wcf.global.button.refresh{/lang}</button>
+	<button class="button buttonPrimary" id="statRefreshButton">{lang}wcf.global.button.refresh{/lang}</button>
 </div>
 
 <div id="chartTooltip" class="balloonTooltip active" style="display: none"></div>

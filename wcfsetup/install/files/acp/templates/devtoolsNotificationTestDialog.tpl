@@ -132,7 +132,7 @@
 {/if}
 
 <div class="formSubmit">
-	<button class="small buttonPrimary" id="notificationTestAllSectionButton">{lang}wcf.acp.devtools.notificationTest.button.showAll{/lang}</button>
+	<button class="small button buttonPrimary" id="notificationTestAllSectionButton">{lang}wcf.acp.devtools.notificationTest.button.showAll{/lang}</button>
 	<button class="small button" id="notificationTestTitleSectionButton">{lang}wcf.acp.devtools.notificationTest.titles{/lang}</button>
 	<button class="small button" id="notificationTestMessageSectionButton">{lang}wcf.acp.devtools.notificationTest.messages{/lang}</button>
 	<button class="small button" id="notificationTestLinkSectionButton">{lang}wcf.acp.devtools.notificationTest.links{/lang}</button>

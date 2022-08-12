@@ -388,14 +388,11 @@ const UiDialog = {
     header.appendChild(title);
 
     if (options.closable) {
-      const closeButton = document.createElement("a");
+      const closeButton = document.createElement("button");
       closeButton.className = "dialogCloseButton jsTooltip";
-      closeButton.href = "#";
-      closeButton.setAttribute("role", "button");
-      closeButton.tabIndex = 0;
       closeButton.title = options.closeButtonLabel;
       closeButton.setAttribute("aria-label", options.closeButtonLabel);
-      closeButton.addEventListener("click", (ev) => this._close(ev));
+      closeButton.addEventListener("click", () => this._close());
       header.appendChild(closeButton);
 
       const span = document.createElement("span");
@@ -729,9 +726,7 @@ const UiDialog = {
   /**
    * Handles clicks on the close button or the backdrop if enabled.
    */
-  _close(event: MouseEvent): boolean {
-    event.preventDefault();
-
+  _close(): boolean {
     const data = _dialogs.get(_activeDialog!);
     if (data === undefined) {
       // Closing the dialog while it is already being closed
@@ -765,7 +760,9 @@ const UiDialog = {
     }
 
     if (Core.stringToBool(_container.getAttribute("close-on-click"))) {
-      this._close(event);
+      event.preventDefault();
+
+      this._close();
     } else {
       event.preventDefault();
     }

@@ -43,11 +43,12 @@ class UiConfirmation implements DialogCallbackObject {
 
     this.confirmButton = document.createElement("button");
     this.confirmButton.dataset.type = "submit";
-    this.confirmButton.classList.add("buttonPrimary");
+    this.confirmButton.classList.add("button", "buttonPrimary");
     this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
     formSubmit.appendChild(this.confirmButton);
 
     const cancelButton = document.createElement("button");
+    cancelButton.classList.add("button");
     cancelButton.textContent = Language.get("wcf.global.confirmation.cancel");
     cancelButton.addEventListener("click", () => {
       UiDialog.close(this);

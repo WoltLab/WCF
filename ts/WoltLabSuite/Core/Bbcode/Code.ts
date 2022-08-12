@@ -60,9 +60,7 @@ class Code {
       return;
     }
 
-    const button = document.createElement("span");
-    button.tabIndex = 0;
-    button.setAttribute("role", "button");
+    const button = document.createElement("button");
     button.className = "icon icon24 fa-files-o pointer jsTooltip";
     button.setAttribute("title", Language.get("wcf.message.bbcode.code.copy"));
 
@@ -71,15 +69,8 @@ class Code {
 
       UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
     };
-    button.addEventListener("click", clickCallback);
-    button.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-
-        void clickCallback();
-      }
-    });
-
+    button.addEventListener("click", () => clickCallback());
+    
     header.appendChild(button);
   }
 

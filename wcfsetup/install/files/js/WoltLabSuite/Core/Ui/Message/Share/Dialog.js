@@ -122,7 +122,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         <dl>
           <dt></dt>
           <dd>
-              <button class="shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get("wcf.message.share.nativeShare")}</button>
+              <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get("wcf.message.share.nativeShare")}</button>
           </dd>
         </dl>
       `;

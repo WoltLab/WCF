@@ -16,5 +16,5 @@
 </div>
 
 <div class="formSubmit">
-	<button class="jsButtonSave buttonPrimary">{lang}wcf.global.button.save{/lang}</button>
+	<button class="button jsButtonSave buttonPrimary">{lang}wcf.global.button.save{/lang}</button>
 </div>

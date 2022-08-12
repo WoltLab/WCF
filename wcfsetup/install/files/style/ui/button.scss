@@ -1,4 +1,11 @@
-button,
+button {
+	all: unset;
+
+	&.focus-visible:focus {
+		outline: 5px auto -webkit-focus-ring-color;
+	}
+}
+
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
@@ -47,7 +54,6 @@ a.button {
 	}
 }
 
-button.buttonPrimary,
 input[type="button"].buttonPrimary,
 input[type="submit"],
 .button.buttonPrimary,
@@ -64,7 +70,6 @@ a.button.buttonPrimary {
 
 /* hover states are only applied to non-touch devices to avoid "leftover" hover states after taps */
 html:not(.touch) {
-	button,
 	input[type="button"],
 	input[type="reset"],
 	input[type="submit"],
@@ -77,7 +82,6 @@ html:not(.touch) {
 		}
 	}
 
-	button.buttonPrimary,
 	input[type="button"].buttonPrimary,
 	input[type="submit"],
 	.button.buttonPrimary,
@@ -91,7 +95,6 @@ html:not(.touch) {
 }
 
 /* disabled state */
-button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
@@ -108,7 +111,6 @@ a.button {
 
 /* force active state for buttons toggling a dropdown */
 .dropdownOpen {
-	> button,
 	> input[type="button"],
 	> input[type="reset"],
 	> input[type="submit"],
@@ -118,7 +120,6 @@ a.button {
 		color: $wcfButtonTextActive;
 	}
 
-	> button.buttonPrimary,
 	> input[type="button"].buttonPrimary,
 	> input[type="submit"],
 	> .button.buttonPrimary,
