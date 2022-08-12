@@ -4,12 +4,12 @@
 <div class="messageTabMenu" data-preselect="{if $preselectTabMenu|isset}{$preselectTabMenu}{else}true{/if}" data-wysiwyg-container-id="{if $wysiwygContainerID|isset}{$wysiwygContainerID}{else}text{/if}">
 	<nav class="messageTabMenuNavigation jsOnly">
 		<ul>
-			{if MODULE_SMILEY && !$smileyCategories|empty}<li data-name="smilies"><a><span class="icon icon16 fa-smile-o"></span> <span>{lang}wcf.message.smilies{/lang}</span></a></li>{/if}
+			{if MODULE_SMILEY && !$smileyCategories|empty}<li data-name="smilies"><a>{icon size=16 name='face-smile'} <span>{lang}wcf.message.smilies{/lang}</span></a></li>{/if}
 			{if !$attachmentHandler|empty && $attachmentHandler->canUpload()}
-				<li data-name="attachments"><a><span class="icon icon16 fa-paperclip"></span> <span>{lang}wcf.attachment.attachments{/lang}</span></a></li>
+				<li data-name="attachments"><a>{icon size=16 name='paperclip' type='solid'} <span>{lang}wcf.attachment.attachments{/lang}</span></a></li>
 			{/if}
-			{if $__messageFormSettings}<li data-name="settings"><a><span class="icon icon16 fa-cog"></span> <span>{lang}wcf.message.settings{/lang}</span></a></li>{/if}
-			{if $__showPoll|isset && $__showPoll}<li data-name="poll"><a><span class="icon icon16 fa-bar-chart"></span> <span>{lang}wcf.poll.management{/lang}</span></a></li>{/if}
+			{if $__messageFormSettings}<li data-name="settings"><a>{icon size=16 name='cog' type='solid'} <span>{lang}wcf.message.settings{/lang}</span></a></li>{/if}
+			{if $__showPoll|isset && $__showPoll}<li data-name="poll"><a>{icon size=16 name='chart-column' type='solid'} <span>{lang}wcf.poll.management{/lang}</span></a></li>{/if}
 			{event name='tabMenuTabs'}
 		</ul>
 	</nav>

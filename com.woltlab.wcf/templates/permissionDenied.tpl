@@ -2,7 +2,7 @@
 {capture assign='contentTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
 {if !$isFirstVisit}
 	{capture assign='contentHeaderNavigation'}
-		<li id="backToReferrer" style="display: none"><a href="#" class="button" rel="noopener"><span class="icon icon16 fa-arrow-left"></span> {lang}wcf.page.error.backward{/lang}</a></li>
+		<li id="backToReferrer" style="display: none"><a href="#" class="button" rel="noopener">{icon size=16 name='arrow-left' type='solid'} {lang}wcf.page.error.backward{/lang}</a></li>
 	{/capture}
 	
 	<script data-relocate="true">
@@ -35,7 +35,7 @@
 		<h2 class="sectionTitle">{lang}wcf.user.login{/lang}</h2>
 		
 		<p>{lang}wcf.page.error.loginAvailable{/lang}</p>
-		<p style="margin-top: 20px"><a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="button"><span class="icon icon16 fa-key"></span> {lang}wcf.user.loginOrRegister{/lang}</a></p>
+		<p style="margin-top: 20px"><a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="button">{icon size=16 name='key' type='solid'} {lang}wcf.user.loginOrRegister{/lang}</a></p>
 	</section>
 {/if}
 

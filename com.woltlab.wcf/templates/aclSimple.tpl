@@ -9,11 +9,11 @@
 			<ol role="group" aria-label="{lang}wcf.acl.allowAll{/lang}" class="flexibleButtonGroup">
 				<li>
 					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll" name="{@$__aclInputName}[allowAll]" value="1"{if $aclValues[allowAll]} checked{/if}>
-					<label for="{@$__aclSimplePrefix}aclAllowAll" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
+					<label for="{@$__aclSimplePrefix}aclAllowAll" class="green">{icon size=16 name='check' type='solid'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
 				</li>
 				<li>
 					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll_no" name="{@$__aclInputName}[allowAll]" value="0"{if !$aclValues[allowAll]} checked{/if}>
-					<label for="{@$__aclSimplePrefix}aclAllowAll_no" class="red"><span class="icon icon16 fa-times"></span> {lang}wcf.acp.option.type.boolean.no{/lang}</label>
+					<label for="{@$__aclSimplePrefix}aclAllowAll_no" class="red">{icon size=16 name='times' type='solid'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
 				</li>
 			</ol>
 		</dd>
@@ -27,11 +27,11 @@
 				<ol class="flexibleButtonGroup">
 					<li>
 						<input type="radio" id="{@$__aclSimplePrefix}invertPermissions" name="{@$__aclSimplePrefix}invertPermissions" value="1"{if $invertPermissions} checked{/if}>
-						<label for="{@$__aclSimplePrefix}invertPermissions" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
+						<label for="{@$__aclSimplePrefix}invertPermissions" class="green">{icon size=16 name='check' type='solid'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
 					</li>
 					<li>
 						<input type="radio" id="{@$__aclSimplePrefix}invertPermissions_no" name="{@$__aclSimplePrefix}invertPermissions" value="0"{if !$invertPermissions} checked{/if}>
-						<label for="{@$__aclSimplePrefix}invertPermissions_no" class="red"><span class="icon icon16 fa-times"></span> {lang}wcf.acp.option.type.boolean.no{/lang}</label>
+						<label for="{@$__aclSimplePrefix}invertPermissions_no" class="red">{icon size=16 name='times' type='solid'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
 					</li>
 				</ol>
 				<small>{lang}wcf.acl.access.invertPermissions.description{/lang}</small>
@@ -55,7 +55,7 @@
 			<ul id="{@$__aclSimplePrefix}aclAccessList" class="aclList containerList">
 				{foreach from=$aclValues[group] item=aclGroup}
 					<li>
-						<span class="icon icon16 fa-users"></span>
+						{icon size=16 name='users' type='solid'}
 						<span class="aclLabel">{$aclGroup}</span>
 						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
 						<input type="hidden" name="{@$__aclInputName}[group][]" value="{@$aclGroup->groupID}">
@@ -63,7 +63,7 @@
 				{/foreach}
 				{foreach from=$aclValues[user] item=aclUser}
 					<li>
-						<span class="icon icon16 fa-user"></span>
+						{icon size=16 name='user' type='solid'}
 						<span class="aclLabel">{$aclUser}</span>
 						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
 						<input type="hidden" name="{@$__aclInputName}[user][]" value="{@$aclUser->userID}">

@@ -21,9 +21,9 @@
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
 	{capture assign='contentHeaderNavigation'}
 		{if $availableLanguages|count > 1}
-			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
-			<li><a href="{link controller='ArticleAdd'}categoryID={@$category->categoryID}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="{link controller='ArticleAdd'}categoryID={@$category->categoryID}{/link}" class="button buttonPrimary">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
 	{/capture}
 {/if}
@@ -67,7 +67,7 @@
 		<a href="#" class="contentInteractionButton jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}"><span class="icon icon16 fa-bookmark{if !$category->isSubscribed()}-o{/if}"></span> <span>{lang}wcf.user.objectWatch.button.subscribe{/lang}</span></a>
 	{/if}
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check' type='solid'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
 	{/if}
 {/capture}
 

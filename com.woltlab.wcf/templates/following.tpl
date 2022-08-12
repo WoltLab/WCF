@@ -21,7 +21,7 @@
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
-									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unfollow{/lang}" data-object-id="{@$user->followID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
+									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unfollow{/lang}" data-object-id="{@$user->followID}">{icon size=16 name='times' type='solid'} <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
 									{event name='userButtons'}
 								</ul>
 							</nav>

@@ -52,7 +52,7 @@
 					<div class="userMenuContent">
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-pencil"></span>
+								{icon size=32 name='pencil' type='solid'}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
@@ -61,7 +61,7 @@
 						{if $__wcf->session->getPermission('admin.general.canUseAcp')}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-wrench"></span>
+								{icon size=32 name='wrench' type='solid'}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
@@ -108,7 +108,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						<span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
+						{icon size=32 name='bell'} <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
@@ -183,7 +183,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						<span class="icon icon32 fa-exclamation-triangle"></span>
+						{icon size=32 name='exclamation-triangle' type='solid'}
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
@@ -209,7 +209,7 @@
 		
 		<!-- page search -->
 		<li>
-			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='search' type='solid'} <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 	</ul>
 </nav>

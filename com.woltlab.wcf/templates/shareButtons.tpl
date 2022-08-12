@@ -5,7 +5,7 @@
 		{if 'Facebook'|in_array:$__share_buttons_providers}
 			<li>
 				<a href="#" role="button" class="button jsShareFacebook" title="{lang}wcf.message.share.facebook{/lang}" aria-label="{lang}wcf.message.share.facebook{/lang}">
-					<span class="icon icon24 fa-facebook-official"></span>
+					{icon size=24 name='facebook' type='brand'}
 					<span>{lang}wcf.message.share.facebook{/lang}</span>
 				</a>
 			</li>
@@ -13,7 +13,7 @@
 		{if 'Twitter'|in_array:$__share_buttons_providers}
 			<li>
 				<a href="#" role="button" class="button jsShareTwitter" title="{lang}wcf.message.share.twitter{/lang}" aria-label="{lang}wcf.message.share.twitter{/lang}">
-					<span class="icon icon24 fa-twitter"></span>
+					{icon size=24 name='twitter' type='brand'}
 					<span>{lang}wcf.message.share.twitter{/lang}</span>
 				</a>
 			</li>
@@ -21,7 +21,7 @@
 		{if 'Reddit'|in_array:$__share_buttons_providers}
 			<li>
 				<a href="#" role="button" class="button jsShareReddit" title="{lang}wcf.message.share.reddit{/lang}" aria-label="{lang}wcf.message.share.reddit{/lang}">
-					<span class="icon icon24 fa-reddit"></span>
+					{icon size=24 name='reddit' type='brand'}
 					<span>{lang}wcf.message.share.reddit{/lang}</span>
 				</a>
 			</li>

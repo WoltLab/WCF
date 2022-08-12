@@ -13,7 +13,7 @@
 
 {capture assign='contentInteractionButtons'}
 	{if $page->showShareButtons()}
-		<a href="{$content->getLink()}" class="contentInteractionButton button small wsShareButton jsOnly" data-link-title="{$content->getTitle()}"><span class="icon icon16 fa-share"></span> <span>{lang}wcf.message.share{/lang}</span></a>
+		<a href="{$content->getLink()}" class="contentInteractionButton button small wsShareButton jsOnly" data-link-title="{$content->getTitle()}">{icon size=16 name='share' type='solid'} <span>{lang}wcf.message.share{/lang}</span></a>
 	{/if}
 
 	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
@@ -35,7 +35,7 @@
 		</div>
 	{/if}
 
-	{if $__wcf->getSession()->getPermission('admin.content.cms.canManagePage')}<a href="{link controller='PageEdit' id=$page->pageID isACP=true}{/link}" class="contentInteractionButton button small"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.page.edit{/lang}</span></a>{/if}
+	{if $__wcf->getSession()->getPermission('admin.content.cms.canManagePage')}<a href="{link controller='PageEdit' id=$page->pageID isACP=true}{/link}" class="contentInteractionButton button small">{icon size=16 name='pencil' type='solid'} <span>{lang}wcf.acp.page.edit{/lang}</span></a>{/if}
 {/capture}
 
 {include file='header'}

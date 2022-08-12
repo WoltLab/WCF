@@ -42,12 +42,12 @@
 					<h3 class="articleListTitle">{$boxArticle->getTitle()}</h3>
 					<ul class="inlineList articleListMetaData">
 						<li>
-							<span class="icon icon16 fa-clock-o"></span>
+							{icon size=16 name='clock'}
 							{@$boxArticle->time|time}
 						</li>
 						
 						<li>
-							<span class="icon icon16 fa-comments"></span>
+							{icon size=16 name='comments' type='solid'}
 							{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 						</li>
 					</ul>

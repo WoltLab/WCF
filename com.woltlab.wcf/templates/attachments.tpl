@@ -43,15 +43,15 @@
 									
 									<ul class="attachmentMetaData inlineList">
 										<li>
-											<span class="icon icon16 fa-file-text-o"></span>
+											{icon size=16 name='file-lines'}
 											{@$attachment->filesize|filesize}
 										</li>
 										<li>
-											<span class="icon icon16 fa-expand"></span>
+											{icon size=16 name='up-right-and-down-left-from-center' type='solid'}
 											{#$attachment->width}×{#$attachment->height}
 										</li>
 										<li>
-											<span class="icon icon16 fa-eye"></span>
+											{icon size=16 name='eye'}
 											{#$attachment->downloads}
 										</li>
 									</ul>

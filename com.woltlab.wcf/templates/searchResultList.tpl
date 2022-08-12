@@ -8,7 +8,7 @@
 						{if $message->getUserProfile()}
 							{user object=$message->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 						{else}
-							<span class="icon icon48 fa-file-o"></span>
+							{icon size=48 name='file'}
 						{/if}
 					{elseif $_messageCustomIcon|strpos:'fa-' === 0}
 						<span class="icon icon48 {$_messageCustomIcon}"></span>

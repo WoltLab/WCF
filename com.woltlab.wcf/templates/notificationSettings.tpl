@@ -42,7 +42,7 @@
 									{else}
 										<span class="icon icon24 {if $settings[$event->eventID][mailNotificationType] === 'instant'}fa-flash{else}fa-clock-o{/if} green jsIconNotificationSettingsEmailType"></span>
 									{/if}
-									<span class="icon icon16 fa-caret-down"></span>
+									{icon size=16 name='caret-down' type='solid'}
 								</a>
 							{/if}
 						</div>
