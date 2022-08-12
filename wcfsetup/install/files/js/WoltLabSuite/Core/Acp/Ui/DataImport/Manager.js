@@ -42,9 +42,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         showCompletedDialog() {
             const content = Dialog_1.default.getDialog(this).content;
             content.querySelector("h1").textContent = Language.get("wcf.acp.dataImport.completed");
-            const spinner = content.querySelector(".fa-spinner");
-            spinner.classList.remove("fa-spinner");
-            spinner.classList.add("fa-check", "green");
+            const spinner = content.querySelector("fa-icon");
+            spinner.setIcon("check", true);
             const formSubmit = document.createElement("div");
             formSubmit.className = "formSubmit";
             formSubmit.innerHTML = `<button class="button buttonPrimary">${Language.get("wcf.global.button.next")}</button>`;

@@ -62,9 +62,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 Dialog_1.default.setCallback(this, "onClose", () => {
                     Dialog_1.default.setCallback(this, "onClose", () => this.onClose());
                 });
-                const spinner = content.querySelector(".fa-spinner");
-                spinner.classList.remove("fa-spinner");
-                spinner.classList.add("fa-check", "green");
+                const spinner = content.querySelector("fa-icon");
+                spinner.setIcon("check", true);
+                spinner.parentElement.dataset.status = "success";
                 const formSubmit = document.createElement("div");
                 formSubmit.className = "formSubmit";
                 formSubmit.innerHTML =
@@ -99,9 +99,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
         _ajaxFailure() {
             const dialog = Dialog_1.default.getDialog(this);
             if (dialog !== undefined) {
-                const spinner = dialog.content.querySelector(".fa-spinner");
-                spinner.classList.remove("fa-spinner");
-                spinner.classList.add("fa-times", "red");
+                const spinner = dialog.content.querySelector("fa-icon");
+                spinner.setIcon("xmark", true);
+                spinner.parentElement.dataset.status = "error";
             }
             return true;
         }

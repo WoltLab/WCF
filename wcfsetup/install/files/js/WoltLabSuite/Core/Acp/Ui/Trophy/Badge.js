@@ -99,6 +99,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
             const previewIcon = badgeContainer.querySelector(".jsTrophyIcon");
             // set icon
             previewIcon.className = previewIcon.className.replace(/\b(fa-[a-z0-9-]+)\b/, "");
+            // TODO: FA6
             previewIcon.classList.add("fa-" + icon);
             previewIcon.style.setProperty("color", iconColor, "");
             previewIcon.style.setProperty("background-color", badgeColor, "");

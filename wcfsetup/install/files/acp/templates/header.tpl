@@ -47,6 +47,10 @@
 		{* Unlike the frontend, this option must be defined in the ACP at all times. *}
 		var COMPILER_TARGET_DEFAULT = true;
 	</script>
+
+	<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-brand.js"></script>
+	<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-metadata.js"></script>
+	<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js"></script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
