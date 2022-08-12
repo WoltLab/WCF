@@ -2514,7 +2514,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.permissions.description"><![CDATA[Der aktive Benutzer muss mindestens eine der angebenen Benutzergruppenberechtigungen besitzen, um die Liste aller Objekte dieses Types mit einem bestimmten Tag aufrufen zu können. Benutzergruppenberechtigungen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.data.title"><![CDATA[Daten des Aktivitätspunktetyps]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points"><![CDATA[Punkte]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description"><![CDATA[Punktenzahl, die der Benutzer für ein Aktivität dieses Types erhält.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description"><![CDATA[Punktzahl, die der Benutzer für eine Aktivität dieses Types erhält.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Daten des Aktivitätentypes]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Unterstützt Reaktionen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Gibt an, ob die Aktivität das Reaktionssystem unterstützt. WoltLab Suite Core 5.2 (oder neuer) wird nur Aktivitäten zu Reaktionen erstellen, falls ausgewählt.]]></item>
