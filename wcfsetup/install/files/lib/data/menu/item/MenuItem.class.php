@@ -191,4 +191,11 @@ class MenuItem extends DatabaseObject implements ITitledObject
 
         return $this->handler;
     }
+
+    public function cachePageObject(): void
+    {
+        if ($this->pageObjectID && $this->getMenuPageHandler() !== null) {
+            $this->getMenuPageHandler()->cacheObject($this->pageObjectID);
+        }
+    }
 }
