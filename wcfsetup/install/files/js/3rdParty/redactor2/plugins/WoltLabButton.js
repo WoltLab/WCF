@@ -194,7 +194,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 			_toggleButton.className = 'redactorToolbarToggle';
 			_toggleButton.innerHTML = `<a href="#" role="button" aria-label="${
 					WCF.Language.get("wcf.global.button.more")
-				}"><span class="icon icon16 fa-caret-down"></span></a>`;
+				}"><fa-icon size="16" name="caret-down" solid></fa-icon></a>`;
 			elData(_toggleButton, 'show-on-mobile', true);
 			
 			var icon = _toggleButton.children[0].children[0];

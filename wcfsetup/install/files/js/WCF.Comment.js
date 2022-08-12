@@ -219,7 +219,7 @@ WCF.Comment.Handler = Class.extend({
 	_loadCommentSegment: function (commentId, responseID) {
 		this._permalinkComment = elCreate('li');
 		this._permalinkComment.className = 'commentPermalinkContainer loading';
-		this._permalinkComment.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
+		this._permalinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
 		this._container[0].insertBefore(this._permalinkComment, this._container[0].firstChild);
 		
 		this._proxy.setOption('data', {
@@ -240,7 +240,7 @@ WCF.Comment.Handler = Class.extend({
 	_loadResponseSegment: function (comment, commentId, responseID) {
 		this._permalinkResponse = elCreate('li');
 		this._permalinkResponse.className = 'commentResponsePermalinkContainer loading';
-		this._permalinkResponse.innerHTML = '<span class="icon icon32 fa-spinner"></span>';
+		this._permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
 		var responseList = elBySel('.commentResponseList', comment);
 		responseList.insertBefore(this._permalinkResponse, responseList.firstChild);
 		
@@ -745,7 +745,7 @@ WCF.Comment.Handler = Class.extend({
 		if (data.returnValues.response) {
 			this._permalinkResponse = elCreate('li');
 			this._permalinkResponse.className = 'commentResponsePermalinkContainer loading';
-			this._permalinkResponse.innerHTML = '<span class="icon icon32 fa-spinner"></span>';
+			this._permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
 			var responseList = elBySel('.commentResponseList', comment);
 			responseList.insertBefore(this._permalinkResponse, responseList.firstChild);
 			
