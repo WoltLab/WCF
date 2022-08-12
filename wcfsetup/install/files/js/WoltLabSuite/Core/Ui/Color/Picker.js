@@ -106,19 +106,19 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
 </div>`,
                 options: {
                     onSetup: (content) => {
-                        this.channels.set("r" /* R */, content.querySelector('input[data-channel="r"]'));
-                        this.channels.set("g" /* G */, content.querySelector('input[data-channel="g"]'));
-                        this.channels.set("b" /* B */, content.querySelector('input[data-channel="b"]'));
-                        this.channels.set("a" /* A */, content.querySelector('input[data-channel="a"]'));
+                        this.channels.set("r" /* Channel.R */, content.querySelector('input[data-channel="r"]'));
+                        this.channels.set("g" /* Channel.G */, content.querySelector('input[data-channel="g"]'));
+                        this.channels.set("b" /* Channel.B */, content.querySelector('input[data-channel="b"]'));
+                        this.channels.set("a" /* Channel.A */, content.querySelector('input[data-channel="a"]'));
                         this.channels.forEach((input) => {
-                            input.addEventListener("input", () => this.updateColor("rgba" /* RGBA */));
+                            input.addEventListener("input", () => this.updateColor("rgba" /* ColorSource.RGBA */));
                         });
                         this.hslContainer = content.querySelector(".colorPickerHsvContainer");
-                        this.hsl.set("hue" /* Hue */, content.querySelector('input[data-coordinate="hue"]'));
-                        this.hsl.set("saturation" /* Saturation */, content.querySelector('input[data-coordinate="saturation"]'));
-                        this.hsl.set("lightness" /* Lightness */, content.querySelector('input[data-coordinate="lightness"]'));
+                        this.hsl.set("hue" /* HSL.Hue */, content.querySelector('input[data-coordinate="hue"]'));
+                        this.hsl.set("saturation" /* HSL.Saturation */, content.querySelector('input[data-coordinate="saturation"]'));
+                        this.hsl.set("lightness" /* HSL.Lightness */, content.querySelector('input[data-coordinate="lightness"]'));
                         this.hsl.forEach((input) => {
-                            input.addEventListener("input", () => this.updateColor("hsl" /* HSL */));
+                            input.addEventListener("input", () => this.updateColor("hsl" /* ColorSource.HSL */));
                         });
                         this.newColor = content.querySelector(".colorPickerColorNew > span");
                         this.oldColor = content.querySelector(".colorPickerColorOld > span");
@@ -178,7 +178,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                     return;
                 }
             }
-            this.setColor(color, "hex" /* HEX */);
+            this.setColor(color, "hex" /* ColorSource.HEX */);
         }
         /**
          * Returns the current RGBA color set via the color and alpha input.
@@ -186,18 +186,18 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          * @since 5.5
          */
         getColor(source) {
-            const a = parseFloat(this.channels.get("a" /* A */).value);
-            if (source === "hsl" /* HSL */) {
-                const rgb = ColorUtil.hslToRgb(parseInt(this.hsl.get("hue" /* Hue */).value, 10), parseInt(this.hsl.get("saturation" /* Saturation */).value, 10), parseInt(this.hsl.get("lightness" /* Lightness */).value, 10));
+            const a = parseFloat(this.channels.get("a" /* Channel.A */).value);
+            if (source === "hsl" /* ColorSource.HSL */) {
+                const rgb = ColorUtil.hslToRgb(parseInt(this.hsl.get("hue" /* HSL.Hue */).value, 10), parseInt(this.hsl.get("saturation" /* HSL.Saturation */).value, 10), parseInt(this.hsl.get("lightness" /* HSL.Lightness */).value, 10));
                 return {
                     ...rgb,
                     a,
                 };
             }
             return {
-                r: parseInt(this.channels.get("r" /* R */).value, 10),
-                g: parseInt(this.channels.get("g" /* G */).value, 10),
-                b: parseInt(this.channels.get("b" /* B */).value, 10),
+                r: parseInt(this.channels.get("r" /* Channel.R */).value, 10),
+                g: parseInt(this.channels.get("g" /* Channel.G */).value, 10),
+                b: parseInt(this.channels.get("b" /* Channel.B */).value, 10),
                 a,
             };
         }
@@ -220,22 +220,22 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             }
             const { r, g, b, a } = color;
             const { h, s, l } = ColorUtil.rgbToHsl(r, g, b);
-            if (source !== "hsl" /* HSL */) {
-                this.hsl.get("hue" /* Hue */).value = h.toString();
-                this.hsl.get("saturation" /* Saturation */).value = s.toString();
-                this.hsl.get("lightness" /* Lightness */).value = l.toString();
+            if (source !== "hsl" /* ColorSource.HSL */) {
+                this.hsl.get("hue" /* HSL.Hue */).value = h.toString();
+                this.hsl.get("saturation" /* HSL.Saturation */).value = s.toString();
+                this.hsl.get("lightness" /* HSL.Lightness */).value = l.toString();
             }
-            this.hslContainer.style.setProperty(`--${"hue" /* Hue */}`, `${h}`);
-            this.hslContainer.style.setProperty(`--${"saturation" /* Saturation */}`, `${s}%`);
-            this.hslContainer.style.setProperty(`--${"lightness" /* Lightness */}`, `${l}%`);
-            if (source !== "rgba" /* RGBA */) {
-                this.channels.get("r" /* R */).value = r.toString();
-                this.channels.get("g" /* G */).value = g.toString();
-                this.channels.get("b" /* B */).value = b.toString();
-                this.channels.get("a" /* A */).value = a.toString();
+            this.hslContainer.style.setProperty(`--${"hue" /* HSL.Hue */}`, `${h}`);
+            this.hslContainer.style.setProperty(`--${"saturation" /* HSL.Saturation */}`, `${s}%`);
+            this.hslContainer.style.setProperty(`--${"lightness" /* HSL.Lightness */}`, `${l}%`);
+            if (source !== "rgba" /* ColorSource.RGBA */) {
+                this.channels.get("r" /* Channel.R */).value = r.toString();
+                this.channels.get("g" /* Channel.G */).value = g.toString();
+                this.channels.get("b" /* Channel.B */).value = b.toString();
+                this.channels.get("a" /* Channel.A */).value = a.toString();
             }
             this.newColor.style.backgroundColor = ColorUtil.rgbaToString(color);
-            if (source !== "hex" /* HEX */) {
+            if (source !== "hex" /* ColorSource.HEX */) {
                 this.colorTextInput.value = ColorUtil.rgbaToHex(color);
             }
         }
@@ -248,7 +248,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             if (typeof color === "string") {
                 color = ColorUtil.stringToRgba(color);
             }
-            this.setColor(color, "setup" /* Setup */);
+            this.setColor(color, "setup" /* ColorSource.Setup */);
             this.oldColor.style.backgroundColor = ColorUtil.rgbaToString(color);
         }
         /**
@@ -257,7 +257,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
          * @since 5.5
          */
         submitDialog() {
-            const color = this.getColor("rgba" /* RGBA */);
+            const color = this.getColor("rgba" /* ColorSource.RGBA */);
             const colorString = ColorUtil.rgbaToString(color);
             this.oldColor.style.backgroundColor = colorString;
             this.input.value = colorString;
