@@ -206,7 +206,7 @@ class UiCommentAdd {
     if (this._loadingOverlay === null) {
       this._loadingOverlay = document.createElement("div");
       this._loadingOverlay.className = "commentLoadingOverlay";
-      this._loadingOverlay.innerHTML = '<span class="icon icon96 fa-spinner"></span>';
+      this._loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
     }
 
     this._content.classList.add("loading");

@@ -51,7 +51,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         _dateMonthPrevious.className = "previous jsTooltip";
         _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
         _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
-        _dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
+        _dateMonthPrevious.innerHTML = '<fa-icon size="16" name="arrow-left" solid></fa-icon>';
         _dateMonthPrevious.addEventListener("click", () => DatePicker.previousMonth());
         header.appendChild(_dateMonthPrevious);
         const monthYearContainer = document.createElement("span");
@@ -78,7 +78,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         _dateMonthNext.className = "next jsTooltip";
         _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
         _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
-        _dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
+        _dateMonthNext.innerHTML = '<fa-icon size="16" name="arrow-right" solid></fa-icon>';
         _dateMonthNext.addEventListener("click", () => DatePicker.nextMonth());
         header.appendChild(_dateMonthNext);
         _dateGrid = document.createElement("ul");

@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             this.element = document.createElement("div");
             this.buildElement();
             this.markAllAsReadButton = this.buildButton({
-                icon: '<span class="icon icon24 fa-check"></span>',
+                icon: '<fa-icon size="24" name="check" solid></fa-icon>',
                 link: "#",
                 name: "markAllAsRead",
                 title: Language.get("wcf.global.button.markAllAsRead"),
@@ -167,7 +167,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         }
         reset() {
             const content = this.getContent();
-            content.innerHTML = `<span class="userMenuContentStatus"><span class="icon icon24 fa-spinner"></span></span>`;
+            content.innerHTML = `<span class="userMenuContentStatus"><fa-icon size="24" name="spinner" solid></fa-icon></span>`;
         }
         buildElement() {
             this.element.hidden = true;

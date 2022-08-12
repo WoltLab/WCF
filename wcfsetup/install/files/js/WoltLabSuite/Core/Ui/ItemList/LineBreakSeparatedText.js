@@ -103,14 +103,14 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
             this.addButton.href = "#";
             this.addButton.classList.add("button", "inputSuffix", "jsTooltip");
             this.addButton.title = Language.get("wcf.global.button.add");
-            this.addButton.innerHTML = '<span class="icon icon16 fa-plus"></span>';
+            this.addButton.innerHTML = '<fa-icon size="16" name="plus" solid></fa-icon>';
             this.addButton.addEventListener("click", (ev) => this.addItem(ev));
             inputAddon.appendChild(this.addButton);
             this.clearButton = document.createElement("a");
             this.clearButton.href = "#";
             this.clearButton.classList.add("button", "inputSuffix", "jsTooltip");
             this.clearButton.title = Language.get("wcf.global.button.delete");
-            this.clearButton.innerHTML = '<span class="icon icon16 fa-times"></span>';
+            this.clearButton.innerHTML = '<fa-icon size="16" name="times" solid></fa-icon>';
             this.clearButton.addEventListener("click", (ev) => this.clearList(ev));
             inputAddon.appendChild(this.clearButton);
             if (this.items.size === 0) {
