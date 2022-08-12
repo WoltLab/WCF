@@ -201,20 +201,22 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             }
         }
         buildButton(button) {
-            const link = document.createElement("a");
-            link.setAttribute("role", "button");
+            let link;
+            if (button.link === "#") {
+                link = document.createElement("button");
+            }
+            else {
+                link = document.createElement("a");
+                link.href = button.link;
+            }
             link.classList.add("userMenuButton", "jsTooltip");
             link.title = button.title;
             link.innerHTML = button.icon;
             if (button.name === "markAllAsRead") {
-                link.href = "#";
                 link.addEventListener("click", (event) => {
                     event.preventDefault();
                     void this.markAllAsRead();
                 });
-            }
-            else {
-                link.href = button.link;
             }
             return link;
         }

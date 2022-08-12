@@ -251,21 +251,24 @@ export class UserMenuView {
   }
 
   private buildButton(button: UserMenuButton): HTMLElement {
-    const link = document.createElement("a");
-    link.setAttribute("role", "button");
+    let link: HTMLAnchorElement | HTMLButtonElement;
+    if (button.link === "#") {
+      link = document.createElement("button");
+    } else {
+      link = document.createElement("a");
+      link.href = button.link;
+    }
+
     link.classList.add("userMenuButton", "jsTooltip");
     link.title = button.title;
     link.innerHTML = button.icon;
 
     if (button.name === "markAllAsRead") {
-      link.href = "#";
       link.addEventListener("click", (event) => {
         event.preventDefault();
 
         void this.markAllAsRead();
       });
-    } else {
-      link.href = button.link;
     }
 
     return link;
