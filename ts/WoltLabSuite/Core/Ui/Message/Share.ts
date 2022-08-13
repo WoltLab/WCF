@@ -57,35 +57,35 @@ export function init(): void {
 
     const providers: Providers = {
       facebook: {
-        link: container.querySelector(".jsShareFacebook"),
+        link: container.querySelector('.messageShareProvider[data-identifier="Facebook"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           share("facebook", "https://www.facebook.com/sharer.php?u={pageURL}&t={text}", true, pageUrl);
         },
       },
       reddit: {
-        link: container.querySelector(".jsShareReddit"),
+        link: container.querySelector('.messageShareProvider[data-identifier="Reddit"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           share("reddit", "https://ssl.reddit.com/submit?url={pageURL}", false, pageUrl);
         },
       },
       twitter: {
-        link: container.querySelector(".jsShareTwitter"),
+        link: container.querySelector('.messageShareProvider[data-identifier="Twitter"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           share("twitter", "https://twitter.com/share?url={pageURL}&text={text}", false, pageUrl);
         },
       },
       linkedIn: {
-        link: container.querySelector(".jsShareLinkedIn"),
+        link: container.querySelector('.messageShareProvider[data-identifier="LinkedIn"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           share("linkedIn", "https://www.linkedin.com/cws/share?url={pageURL}", false, pageUrl);
         },
       },
       pinterest: {
-        link: container.querySelector(".jsSharePinterest"),
+        link: container.querySelector('.messageShareProvider[data-identifier="Pinterest"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           share(
@@ -97,14 +97,14 @@ export function init(): void {
         },
       },
       xing: {
-        link: container.querySelector(".jsShareXing"),
+        link: container.querySelector('.messageShareProvider[data-identifier="XING"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           share("xing", "https://www.xing.com/social_plugins/share?url={pageURL}", false, pageUrl);
         },
       },
       whatsApp: {
-        link: container.querySelector(".jsShareWhatsApp"),
+        link: container.querySelector('.messageShareProvider[data-identifier="WhatsApp"]'),
         share(event: MouseEvent): void {
           event.preventDefault();
           window.location.href = "https://api.whatsapp.com/send?text=" + _pageDescription + "%20" + _pageUrl;

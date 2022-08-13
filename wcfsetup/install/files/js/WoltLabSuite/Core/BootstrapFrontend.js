@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/BootstrapFrontend
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, UiMessageShareProviders, UiFeedDialog, User_1, Frontend_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -18,7 +18,6 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     UiMessageUserConsent = tslib_1.__importStar(UiMessageUserConsent);
     Ajax = tslib_1.__importStar(Ajax);
     UiMessageShareDialog = tslib_1.__importStar(UiMessageShareDialog);
-    UiMessageShareProviders = tslib_1.__importStar(UiMessageShareProviders);
     UiFeedDialog = tslib_1.__importStar(UiFeedDialog);
     User_1 = tslib_1.__importDefault(User_1);
     Frontend_1 = tslib_1.__importDefault(Frontend_1);
@@ -77,7 +76,9 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
             UiUserIgnore.init();
         }
         UiMessageUserConsent.init();
-        UiMessageShareProviders.enableShareProviders(options.shareButtonProviders || []);
+        if (options.shareButtonProviders) {
+            (0, Providers_1.addShareProviders)(options.shareButtonProviders);
+        }
         UiMessageShareDialog.setup();
         if (User_1.default.userId) {
             UiFeedDialog.setup();
