@@ -365,13 +365,17 @@ final class FileUtil
     /**
      * Formats the given filesize.
      *
-     * @param int $byte
+     * @param ?int $byte
      * @param int $precision
      * @return  string
      */
     public static function formatFilesize($byte, $precision = 2)
     {
         $symbol = 'Byte';
+
+        if ($byte === null) {
+            $byte = 0;
+        }
         if ($byte >= 1000) {
             $byte /= 1000;
             $symbol = 'kB';
@@ -397,13 +401,17 @@ final class FileUtil
      *
      * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
      *
-     * @param int $byte
+     * @param ?int $byte
      * @param int $precision
      * @return  string
      */
     public static function formatFilesizeBinary($byte, $precision = 2)
     {
         $symbol = 'Byte';
+
+        if ($byte === null) {
+            $byte = 0;
+        }
         if ($byte >= 1024) {
             $byte /= 1024;
             $symbol = 'KiB';
