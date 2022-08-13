@@ -261,7 +261,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
             $this->colorData['red'],
             $this->colorData['green'],
             $this->colorData['blue'],
-            (1 - $opacity) * 127
+            (int) (1 - $opacity) * 127
         );
 
         // draw text
