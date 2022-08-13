@@ -98,7 +98,7 @@ class UiItemListFilter {
     this._clearButton.href = "#";
     this._clearButton.className = "button inputSuffix disabled jsTooltip";
     this._clearButton.title = Language.get("wcf.global.filter.button.clear");
-    this._clearButton.innerHTML = '<fa-icon size="16" name="times" solid></fa-icon>';
+    this._clearButton.innerHTML = '<fa-icon size="16" name="xmark" solid></fa-icon>';
     this._clearButton.addEventListener("click", (event) => {
       event.preventDefault();
 
@@ -366,13 +366,11 @@ class UiItemListFilter {
       button.classList.add("active");
     }
 
-    const icon = button.querySelector(".icon") as HTMLElement;
+    const icon = button.querySelector("fa-icon")!;
     if (type === "showAll") {
-      icon.classList.add("fa-eye");
-      icon.classList.remove("fa-eye-slash");
+      icon.setIcon("eye", false);
     } else {
-      icon.classList.remove("fa-eye");
-      icon.classList.add("fa-eye-slash");
+      icon.setIcon("eye-slash", false);
     }
   }
 }

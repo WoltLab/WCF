@@ -39,7 +39,6 @@ class UiAclSimple {
     });
 
     this.list = document.getElementById(this.prefix + "aclAccessList") as HTMLUListElement;
-    this.list.addEventListener("click", this.removeItem.bind(this));
 
     const excludedSearchValues: string[] = [];
     this.list.querySelectorAll(".aclLabel").forEach((label) => {
@@ -88,9 +87,11 @@ class UiAclSimple {
     const objectId = listItem.dataset.objectId!;
 
     const iconName = type === "group" ? "users" : "user";
-    const html = `<span class="icon icon16 fa-${iconName}"></span>
+    const html = `<fa-icon size="16" name="${iconName}" solid></fa-icon>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
-      <span class="icon icon16 fa-times pointer jsTooltip" title="${Language.get("wcf.global.button.delete")}"></span>
+      <button class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+        <fa-icon size="16" name="xmark" solid></fa-icon>
+      </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
 
     const item = document.createElement("li");
@@ -107,23 +108,24 @@ class UiAclSimple {
 
     this.searchInput.addExcludedSearchValues(label);
 
+    const deleteButton = item.querySelector(".aclItemDeleteButton") as HTMLButtonElement;
+    deleteButton.addEventListener("click", (event) => this.removeItem(event));
+
     DomChangeListener.trigger();
 
     return false;
   }
 
   private removeItem(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (target.classList.contains("fa-times")) {
-      const parent = target.parentElement!;
-      const label = parent.querySelector(".aclLabel")!;
-      this.searchInput.removeExcludedSearchValues(label.textContent!);
+    const target = event.currentTarget as HTMLButtonElement;
+    const parent = target.parentElement!;
+    const label = parent.querySelector(".aclLabel")!;
+    this.searchInput.removeExcludedSearchValues(label.textContent!);
 
-      parent.remove();
+    parent.remove();
 
-      if (this.list.childElementCount === 0) {
-        DomUtil.hide(this.aclListContainer);
-      }
+    if (this.list.childElementCount === 0) {
+      DomUtil.hide(this.aclListContainer);
     }
   }
 
