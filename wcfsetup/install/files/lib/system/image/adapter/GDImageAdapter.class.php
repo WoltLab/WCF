@@ -261,7 +261,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
             $this->colorData['red'],
             $this->colorData['green'],
             $this->colorData['blue'],
-            (1 - $opacity) * 127
+            \round((1 - $opacity) * 127)
         );
 
         // draw text
@@ -545,7 +545,7 @@ class GDImageAdapter implements IImageAdapter, IWebpImageAdapter
                     ($colorxy >> 16) & 0xFF,
                     ($colorxy >> 8) & 0xFF,
                     $colorxy & 0xFF,
-                    $alpha
+                    \round($alpha)
                 );
                 // set pixel with the new color + opacity
                 if (!\imagesetpixel($src_im, $x, $y, $alphacolorxy)) {
