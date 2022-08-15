@@ -18,8 +18,9 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             this._overlay = document.createElement("div");
             this._overlay.classList.add("spinner");
             this._overlay.setAttribute("role", "status");
-            const icon = document.createElement("span");
-            icon.className = "icon icon48 fa-spinner";
+            const icon = document.createElement("fa-icon");
+            icon.size = 48;
+            icon.setIcon("spinner", true);
             this._overlay.appendChild(icon);
             const title = document.createElement("span");
             title.textContent = Language.get("wcf.global.loading");
