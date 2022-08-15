@@ -63,9 +63,8 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	{if $__wcf->user->userID}
-		<a href="#" class="contentInteractionButton jsSubscribeButton jsOnly button small{if $category->isSubscribed()} active{/if}" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}"><span class="icon icon16 fa-bookmark{if !$category->isSubscribed()}-o{/if}"></span> <span>{lang}wcf.user.objectWatch.button.subscribe{/lang}</span></a>
-	{/if}
+	{include file='__userObjectWatchButton' isSubscribed=$category->isSubscribed() objectType="com.woltlab.wcf.article.category" objectID=$category->categoryID}
+	
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
 		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
 	{/if}
@@ -108,16 +107,6 @@
 		});
 	</script>
 {/if}
-
-<script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.user.objectWatch.manageSubscription': '{jslang}wcf.user.objectWatch.manageSubscription{/jslang}'
-		});
-		
-		new WCF.User.ObjectWatch.Subscribe();
-	});
-</script>
 
 {include file='articleAddDialog'}
 

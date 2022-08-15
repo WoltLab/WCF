@@ -101,3 +101,18 @@
 		display: inline-flex !important;
 	}
 }
+
+.userObjectWatchSelect {
+	.userObjectWatchSelectHeader {
+        font-weight: 600;
+		padding-bottom: 0;
+	}
+
+	.userObjectWatchSelectDescription {
+		@include wcfFontSmall;
+
+		color: $wcfContentDimmedText;
+		padding-top: 0;
+		white-space: normal;
+	}
+}

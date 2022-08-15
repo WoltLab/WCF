@@ -2072,6 +2072,8 @@ WCF.User.ObjectWatch = {};
 if (COMPILER_TARGET_DEFAULT) {
 	/**
 	 * Handles subscribe/unsubscribe links.
+	 * 
+	 * @deprecated	since 6.0, use `WoltLabSuite/Core/Ui/User/ObjectWatch` instead.
 	 */
 	WCF.User.ObjectWatch.Subscribe = Class.extend({
 		/**
