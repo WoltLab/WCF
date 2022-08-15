@@ -17,16 +17,20 @@ function toggleObject(data: ObjectActionData): void {
     return;
   }
 
-  if (actionElement.classList.contains("fa-square-o")) {
-    actionElement.classList.replace("fa-square-o", "fa-check-square-o");
+  const icon: FaIcon | null =
+    actionElement.nodeName === "FA-ICON" ? (actionElement as FaIcon) : actionElement.querySelector("fa-icon");
+  if (icon) {
+    if (icon.name === "square") {
+      icon.setIcon("square-check", false);
 
-    const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
-    actionElement.title = newTitle;
-  } else {
-    actionElement.classList.replace("fa-check-square-o", "fa-square-o");
+      const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
+      actionElement.title = newTitle;
+    } else {
+      icon.setIcon("square", false);
 
-    const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
-    actionElement.title = newTitle;
+      const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
+      actionElement.title = newTitle;
+    }
   }
 }
 
