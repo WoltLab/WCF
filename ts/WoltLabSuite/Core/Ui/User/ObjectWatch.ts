@@ -32,11 +32,13 @@ async function click(element: HTMLElement): Promise<void> {
 
   if (dropdowns.has(objectID)) {
     dropdowns.get(objectID)!.forEach((element) => {
-      element.querySelectorAll(".userObjectWatchSelect").forEach((li) => {
-        li.classList.remove("active");
+      element.querySelectorAll(".userObjectWatchSelect").forEach((li: HTMLElement) => {
+        if (parseInt(li.dataset.subscribe!, 10) === subscribe) {
+          li.classList.add("active");
+        } else {
+          li.classList.remove("active");
+        }
       });
-
-      element.querySelector(`.userObjectWatchSelect[data-subscribe="${subscribe}"]`)?.classList.add("active");
     });
   }
 

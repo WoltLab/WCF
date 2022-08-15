@@ -31,11 +31,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../Notification", "../../L
             .dispatch();
         if (dropdowns.has(objectID)) {
             dropdowns.get(objectID).forEach((element) => {
-                var _a;
                 element.querySelectorAll(".userObjectWatchSelect").forEach((li) => {
-                    li.classList.remove("active");
+                    if (parseInt(li.dataset.subscribe, 10) === subscribe) {
+                        li.classList.add("active");
+                    }
+                    else {
+                        li.classList.remove("active");
+                    }
                 });
-                (_a = element.querySelector(`.userObjectWatchSelect[data-subscribe="${subscribe}"]`)) === null || _a === void 0 ? void 0 : _a.classList.add("active");
             });
         }
         document
