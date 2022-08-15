@@ -74,6 +74,12 @@ final class SearchHandler
             return null;
         }
 
+        // Check if at least one object type is selected.
+        // It may happen that a user does not have permission to use any object type.
+        if ($this->objectTypeNames === []) {
+            return null;
+        }
+
         $this->buildSearchHash();
 
         if (($search = $this->getExistingSearch()) !== null) {
