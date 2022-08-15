@@ -96,7 +96,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         resetButton(success, errorMessage) {
             this.buttonRunTest.classList.remove("disabled");
             if (success) {
-                this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-check green"></span> ${Language.get("wcf.acp.email.smtp.test.run.success")}`;
+                this.buttonRunTest.innerHTML = `<fa-icon size="16" name="check" solid></fa-icon> ${Language.get("wcf.acp.email.smtp.test.run.success")}`;
             }
             else {
                 this.buttonRunTest.innerHTML = Language.get("wcf.acp.email.smtp.test.run");
