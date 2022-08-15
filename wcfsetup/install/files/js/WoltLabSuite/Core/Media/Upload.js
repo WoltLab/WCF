@@ -156,12 +156,14 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 DomUtil.replaceElement(fileIcon, img);
             }
             else {
-                fileIcon.classList.remove("fa-spinner");
                 let fileIconName = FileUtil.getIconNameByFilename(media.filename);
                 if (fileIconName) {
-                    fileIconName = "-" + fileIconName;
+                    fileIconName = `file-${fileIconName}`;
                 }
-                fileIcon.classList.add(`fa-file${fileIconName}-o`);
+                else {
+                    fileIconName = "file";
+                }
+                fileIcon.setIcon(fileIconName, false);
             }
         }
         _success(uploadId, data) {
@@ -179,7 +181,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         });
                         file.querySelector(".columnMediaID").textContent = media.mediaID.toString();
                         // update icon
-                        this._replaceFileIcon(file.querySelector(".fa-spinner"), media, 48);
+                        this._replaceFileIcon(file.querySelector("fa-icon"), media, 48);
                     }
                     else {
                         let error = data.returnValues.errors[internalFileId];
@@ -189,15 +191,17 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                                 filename: file.dataset.filename,
                             };
                         }
-                        const fileIcon = file.querySelector(".fa-spinner");
-                        fileIcon.classList.remove("fa-spinner");
-                        fileIcon.classList.add("fa-remove", "pointer", "jsTooltip");
-                        fileIcon.title = Language.get("wcf.global.button.delete");
-                        fileIcon.addEventListener("click", (event) => {
-                            const target = event.currentTarget;
-                            target.closest(".mediaFile").remove();
+                        const deleteButton = document.createElement("button");
+                        deleteButton.classList.add("jsTooltip");
+                        deleteButton.title = Language.get("wcf.global.button.delete");
+                        deleteButton.addEventListener("click", () => {
+                            deleteButton.closest(".mediaFile").remove();
                             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
                         });
+                        const fileIcon = file.querySelector("fa-icon");
+                        fileIcon.setIcon("xmark", true);
+                        fileIcon.insertAdjacentElement("beforebegin", deleteButton);
+                        deleteButton.append(fileIcon);
                         file.classList.add("uploadFailed");
                         const p = file.querySelectorAll(".columnFilename .box48 > div > p")[1];
                         DomUtil.innerError(p, Language.get(`wcf.media.upload.error.${error.errorType}`, {
@@ -209,7 +213,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 else {
                     DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaInformation"), "PROGRESS").remove();
                     if (media) {
-                        const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "SPAN");
+                        const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "FA-ICON");
                         this._replaceFileIcon(fileIcon, media, 144);
                         file.classList.add("jsClipboardObject", "mediaFile", "jsObjectActionObject");
                         file.dataset.objectId = media.mediaID.toString();
@@ -226,10 +230,9 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                                 filename: file.dataset.filename,
                             };
                         }
-                        const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "SPAN");
-                        fileIcon.classList.remove("fa-spinner");
-                        fileIcon.classList.add("fa-remove", "pointer");
-                        file.classList.add("uploadFailed", "jsTooltip");
+                        const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "FA-ICON");
+                        fileIcon.setIcon("xmark", true);
+                        file.classList.add("uploadFailed", "pointer", "jsTooltip");
                         file.title = Language.get("wcf.global.button.delete");
                         file.addEventListener("click", () => file.remove());
                         const title = DomTraverse.childByClass(DomTraverse.childByClass(file, "mediaInformation"), "mediaTitle");

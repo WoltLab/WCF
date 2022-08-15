@@ -322,7 +322,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     public function getIconName()
     {
         if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
-            return 'file-' . $iconName . '-o';
+            return 'file-' . $iconName;
         }
 
         return 'paperclip';

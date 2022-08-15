@@ -180,7 +180,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
     return Core.extend(super._getParameters() as object, parameters as object) as ArbitraryObject;
   }
 
-  protected _replaceFileIcon(fileIcon: HTMLElement, media: Media, size: number): void {
+  protected _replaceFileIcon(fileIcon: FaIcon, media: Media, size: number): void {
     if (media.elementTag) {
       fileIcon.outerHTML = media.elementTag;
     } else if (media.tinyThumbnailType) {
@@ -192,13 +192,14 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
 
       DomUtil.replaceElement(fileIcon, img);
     } else {
-      fileIcon.classList.remove("fa-spinner");
-
       let fileIconName = FileUtil.getIconNameByFilename(media.filename);
       if (fileIconName) {
-        fileIconName = "-" + fileIconName;
+        fileIconName = `file-${fileIconName}`;
+      } else {
+        fileIconName = "file";
       }
-      fileIcon.classList.add(`fa-file${fileIconName}-o`);
+
+      fileIcon.setIcon(fileIconName, false);
     }
   }
 
@@ -220,7 +221,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           file.querySelector(".columnMediaID")!.textContent = media.mediaID.toString();
 
           // update icon
-          this._replaceFileIcon(file.querySelector(".fa-spinner") as HTMLSpanElement, media, 48);
+          this._replaceFileIcon(file.querySelector("fa-icon")!, media, 48);
         } else {
           let error: MediaUploadError = data.returnValues.errors[internalFileId];
           if (!error) {
@@ -230,16 +231,19 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
             };
           }
 
-          const fileIcon = file.querySelector(".fa-spinner") as HTMLSpanElement;
-          fileIcon.classList.remove("fa-spinner");
-          fileIcon.classList.add("fa-remove", "pointer", "jsTooltip");
-          fileIcon.title = Language.get("wcf.global.button.delete");
-          fileIcon.addEventListener("click", (event) => {
-            const target = event.currentTarget as HTMLSpanElement;
-            target.closest(".mediaFile")!.remove();
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("jsTooltip");
+          deleteButton.title = Language.get("wcf.global.button.delete");
+          deleteButton.addEventListener("click", () => {
+            deleteButton.closest(".mediaFile")!.remove();
 
             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
           });
+
+          const fileIcon = file.querySelector("fa-icon")!;
+          fileIcon.setIcon("xmark", true);
+          fileIcon.insertAdjacentElement("beforebegin", deleteButton);
+          deleteButton.append(fileIcon);
 
           file.classList.add("uploadFailed");
 
@@ -258,7 +262,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
         DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaInformation")!, "PROGRESS")!.remove();
 
         if (media) {
-          const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "SPAN")!;
+          const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "FA-ICON")!;
           this._replaceFileIcon(fileIcon, media, 144);
 
           file.classList.add("jsClipboardObject", "mediaFile", "jsObjectActionObject");
@@ -277,11 +281,10 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
             };
           }
 
-          const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "SPAN")!;
-          fileIcon.classList.remove("fa-spinner");
-          fileIcon.classList.add("fa-remove", "pointer");
+          const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "FA-ICON")!;
+          fileIcon.setIcon("xmark", true);
 
-          file.classList.add("uploadFailed", "jsTooltip");
+          file.classList.add("uploadFailed", "pointer", "jsTooltip");
           file.title = Language.get("wcf.global.button.delete");
           file.addEventListener("click", () => file.remove());
 
