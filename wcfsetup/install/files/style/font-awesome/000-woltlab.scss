@@ -16,21 +16,6 @@
   src: url("../font/fa-solid-900.woff2?v=6.1.2") format("woff2");
 }
 
-.icon {
-  // TODO: Check if this applies to `<fa-icon>` and `<fa-brand>`. Maybe define the
-  //       icons as `pointer-events: none` and let the surrounding element deal with
-  //       it instead?
-
-  &.disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
-  }
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
 fa-brand,
 fa-icon {
   align-items: center;
@@ -108,7 +93,7 @@ fa-icon {
   }
 }
 
-/* Default icon sizes */
+/* @deprecated 6.0 Use the new icons instead, `.icon` is now just an easy-to-spot reminder. */
 .icon {
   align-items: center;
   background-color: #f0c !important;
@@ -165,9 +150,7 @@ fa-icon {
     --font-size: 130px;
     --icon-size: 144px;
   }
-}
 
-.icon {
   &.green {
     color: rgba(0, 153, 0, 1);
   }
@@ -202,25 +185,5 @@ fa-icon {
 
   &.pink {
     color: #f0c;
-  }
-}
-
-/* TODO: Figure out what to do with the spinner */
-
-.icon.fa-spinner {
-  animation: wcfSpinner 0.6s linear infinite;
-  border: 2px solid rgb(204, 204, 204);
-  border-top-color: rgb(79, 129, 189);
-  border-radius: 50%;
-  vertical-align: middle;
-
-  /* The new icons have a width of 1.25 times the height. */
-  margin: 0 calc(var(--icon-size) * 0.125);
-  width: var(--icon-size);
-}
-
-@keyframes wcfSpinner {
-  to {
-    transform: rotate(360deg);
   }
 }
