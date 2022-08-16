@@ -199,7 +199,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
                         });
                         const fileIcon = file.querySelector("fa-icon");
-                        fileIcon.setIcon("xmark", true);
+                        fileIcon.setIcon("xmark");
                         fileIcon.insertAdjacentElement("beforebegin", deleteButton);
                         deleteButton.append(fileIcon);
                         file.classList.add("uploadFailed");
@@ -231,7 +231,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                             };
                         }
                         const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "FA-ICON");
-                        fileIcon.setIcon("xmark", true);
+                        fileIcon.setIcon("xmark");
                         file.classList.add("uploadFailed", "pointer", "jsTooltip");
                         file.title = Language.get("wcf.global.button.delete");
                         file.addEventListener("click", () => file.remove());

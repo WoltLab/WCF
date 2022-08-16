@@ -43,7 +43,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
             const progress = element.querySelector("progress");
             const icon = document.createElement("fa-icon");
             icon.size = 64;
-            icon.setIcon("spinner", false);
+            icon.setIcon("spinner");
             const fileName = element.textContent;
             element.textContent = "";
             element.append(icon);
@@ -69,7 +69,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                 const small = fileElement.querySelector("small");
                 small.innerHTML = "";
                 const icon = fileElement.querySelector("fa-icon");
-                icon.setIcon("ban", true);
+                icon.setIcon("ban");
                 const innerError = document.createElement("span");
                 innerError.className = "innerError";
                 innerError.textContent = Language.get("wcf.upload.error.uploadFailed");
@@ -134,7 +134,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                     const small = fileElement.querySelector("small");
                     small.innerHTML = "";
                     const icon = fileElement.querySelector("fa-icon");
-                    icon.setIcon("ban", true);
+                    icon.setIcon("ban");
                     let innerError = fileElement.querySelector(".innerError");
                     if (innerError === null) {
                         innerError = document.createElement("span");

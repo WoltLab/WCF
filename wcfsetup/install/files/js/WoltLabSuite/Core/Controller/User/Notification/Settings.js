@@ -84,13 +84,13 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
         const icon = button.querySelector(".jsIconNotificationSettingsEmailType fa-icon");
         switch (value) {
             case "daily":
-                icon.setIcon("clock", false);
+                icon.setIcon("clock");
                 break;
             case "instant":
-                icon.setIcon("bolt", true);
+                icon.setIcon("bolt");
                 break;
             case "none":
-                icon.setIcon("xmark", true);
+                icon.setIcon("xmark");
                 break;
         }
         _objectId = 0;

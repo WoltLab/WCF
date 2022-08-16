@@ -21,7 +21,7 @@ class AjaxStatus {
 
     const icon = document.createElement("fa-icon");
     icon.size = 48;
-    icon.setIcon("spinner", true);
+    icon.setIcon("spinner");
     this._overlay.appendChild(icon);
 
     const title = document.createElement("span");

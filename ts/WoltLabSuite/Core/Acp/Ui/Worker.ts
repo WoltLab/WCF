@@ -108,7 +108,7 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
       });
 
       const spinner = content.querySelector("fa-icon")!;
-      spinner.setIcon("check", true);
+      spinner.setIcon("check");
       spinner.parentElement!.dataset.status = "success";
 
       const formSubmit = document.createElement("div");
@@ -151,7 +151,7 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
     const dialog = UiDialog.getDialog(this);
     if (dialog !== undefined) {
       const spinner = dialog.content.querySelector("fa-icon")!;
-      spinner.setIcon("xmark", true);
+      spinner.setIcon("xmark");
       spinner.parentElement!.dataset.status = "error";
     }
 

@@ -40,7 +40,7 @@ function toggleContainer(container: HTMLElement, toggleButtons: HTMLElement[], e
       const title = toggleButton.dataset.titleExpand!;
       const icon = toggleButton.querySelector("fa-icon");
       if (icon) {
-        icon.setIcon("up-right-and-down-left-from-center", true);
+        icon.setIcon("up-right-and-down-left-from-center");
         toggleButton.title = title;
       } else {
         toggleButton.textContent = title;
@@ -64,7 +64,7 @@ function toggleContainer(container: HTMLElement, toggleButtons: HTMLElement[], e
       const title = toggleButton.dataset.titleCollapse!;
       const icon = toggleButton.querySelector("fa-icon");
       if (icon) {
-        icon.setIcon("down-left-and-up-right-to-center", true);
+        icon.setIcon("down-left-and-up-right-to-center");
         toggleButton.title = title;
       } else {
         toggleButton.textContent = title;

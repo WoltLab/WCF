@@ -58,7 +58,7 @@ export class AcpUiDataImportManager implements AjaxCallbackObject {
     const content = UiDialog.getDialog(this)!.content;
     content.querySelector("h1")!.textContent = Language.get("wcf.acp.dataImport.completed");
     const spinner = content.querySelector("fa-icon")!;
-    spinner.setIcon("check", true);
+    spinner.setIcon("check");
 
     const formSubmit = document.createElement("div");
     formSubmit.className = "formSubmit";

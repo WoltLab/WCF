@@ -87,7 +87,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
 
     const icon = document.createElement("fa-icon");
     icon.size = 64;
-    icon.setIcon("spinner", false);
+    icon.setIcon("spinner");
 
     const fileName = element.textContent;
     element.textContent = "";
@@ -124,7 +124,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
       small.innerHTML = "";
 
       const icon = fileElement.querySelector("fa-icon")!;
-      icon.setIcon("ban", true);
+      icon.setIcon("ban");
 
       const innerError = document.createElement("span");
       innerError.className = "innerError";
@@ -200,7 +200,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
         small.innerHTML = "";
 
         const icon = fileElement.querySelector("fa-icon")!;
-        icon.setIcon("ban", true);
+        icon.setIcon("ban");
 
         let innerError = fileElement.querySelector(".innerError") as HTMLElement;
         if (innerError === null) {

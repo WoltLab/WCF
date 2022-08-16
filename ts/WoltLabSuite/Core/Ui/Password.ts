@@ -43,7 +43,7 @@ function initElement(input: HTMLInputElement): void {
 
   const icon = document.createElement("fa-icon");
   icon.size = 16;
-  icon.setIcon("eye", false);
+  icon.setIcon("eye");
   button.appendChild(icon);
 
   button.addEventListener("click", () => {
@@ -66,11 +66,11 @@ function initElement(input: HTMLInputElement): void {
 
 function toggle(input: HTMLInputElement, button: HTMLElement, icon: FaIcon): void {
   if (input.type === "password") {
-    icon.setIcon("eye-slash", false);
+    icon.setIcon("eye-slash");
     button.dataset.tooltip = Language.get("wcf.global.form.password.button.hide");
     input.type = "text";
   } else {
-    icon.setIcon("eye-slash", true);
+    icon.setIcon("eye-slash");
     button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
     input.type = "password";
   }

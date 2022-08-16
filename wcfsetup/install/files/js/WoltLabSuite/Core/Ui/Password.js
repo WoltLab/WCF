@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         inputAddon.appendChild(button);
         const icon = document.createElement("fa-icon");
         icon.size = 16;
-        icon.setIcon("eye", false);
+        icon.setIcon("eye");
         button.appendChild(icon);
         button.addEventListener("click", () => {
             toggle(input, button, icon);
@@ -59,12 +59,12 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
     }
     function toggle(input, button, icon) {
         if (input.type === "password") {
-            icon.setIcon("eye-slash", false);
+            icon.setIcon("eye-slash");
             button.dataset.tooltip = Language.get("wcf.global.form.password.button.hide");
             input.type = "text";
         }
         else {
-            icon.setIcon("eye-slash", true);
+            icon.setIcon("eye-slash");
             button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
             input.type = "password";
         }

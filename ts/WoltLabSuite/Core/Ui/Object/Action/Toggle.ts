@@ -21,12 +21,12 @@ function toggleObject(data: ObjectActionData): void {
     actionElement.nodeName === "FA-ICON" ? (actionElement as FaIcon) : actionElement.querySelector("fa-icon");
   if (icon) {
     if (icon.name === "square") {
-      icon.setIcon("square-check", false);
+      icon.setIcon("square-check");
 
       const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
       actionElement.title = newTitle;
     } else {
-      icon.setIcon("square", false);
+      icon.setIcon("square");
 
       const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
       actionElement.title = newTitle;

@@ -241,7 +241,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           });
 
           const fileIcon = file.querySelector("fa-icon")!;
-          fileIcon.setIcon("xmark", true);
+          fileIcon.setIcon("xmark");
           fileIcon.insertAdjacentElement("beforebegin", deleteButton);
           deleteButton.append(fileIcon);
 
@@ -282,7 +282,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           }
 
           const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "FA-ICON")!;
-          fileIcon.setIcon("xmark", true);
+          fileIcon.setIcon("xmark");
 
           file.classList.add("uploadFailed", "pointer", "jsTooltip");
           file.title = Language.get("wcf.global.button.delete");

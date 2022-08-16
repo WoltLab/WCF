@@ -63,7 +63,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                     Dialog_1.default.setCallback(this, "onClose", () => this.onClose());
                 });
                 const spinner = content.querySelector("fa-icon");
-                spinner.setIcon("check", true);
+                spinner.setIcon("check");
                 spinner.parentElement.dataset.status = "success";
                 const formSubmit = document.createElement("div");
                 formSubmit.className = "formSubmit";
@@ -100,7 +100,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
             const dialog = Dialog_1.default.getDialog(this);
             if (dialog !== undefined) {
                 const spinner = dialog.content.querySelector("fa-icon");
-                spinner.setIcon("xmark", true);
+                spinner.setIcon("xmark");
                 spinner.parentElement.dataset.status = "error";
             }
             return true;

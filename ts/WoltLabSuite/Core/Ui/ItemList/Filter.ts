@@ -368,9 +368,9 @@ class UiItemListFilter {
 
     const icon = button.querySelector("fa-icon")!;
     if (type === "showAll") {
-      icon.setIcon("eye", false);
+      icon.setIcon("eye");
     } else {
-      icon.setIcon("eye-slash", false);
+      icon.setIcon("eye-slash");
     }
   }
 }

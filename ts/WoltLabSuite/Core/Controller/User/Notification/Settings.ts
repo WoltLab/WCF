@@ -100,15 +100,15 @@ function setEmailType(event: Event): void {
   const icon = button.querySelector(".jsIconNotificationSettingsEmailType fa-icon") as FaIcon;
   switch (value) {
     case "daily":
-      icon.setIcon("clock", false);
+      icon.setIcon("clock");
       break;
 
     case "instant":
-      icon.setIcon("bolt", true);
+      icon.setIcon("bolt");
       break;
 
     case "none":
-      icon.setIcon("xmark", true);
+      icon.setIcon("xmark");
       break;
   }
 
