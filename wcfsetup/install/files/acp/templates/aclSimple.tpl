@@ -55,7 +55,7 @@
 			<ul id="{@$__aclSimplePrefix}aclAccessList" class="aclList containerList">
 				{foreach from=$aclValues[group] item=aclGroup}
 					<li>
-						{icon size=16 name='users' type='solid'}
+						{icon size=16 name='users'}
 						<span class="aclLabel">{$aclGroup}</span>
 						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
 						<input type="hidden" name="{@$__aclInputName}[group][]" value="{@$aclGroup->groupID}">

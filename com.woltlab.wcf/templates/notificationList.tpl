@@ -53,7 +53,7 @@
 							</div>
 						{else}
 							<div>
-								{icon size=32 name='users' type='solid'}
+								{icon size=32 name='users'}
 							</div>
 							
 							<div class="details">
