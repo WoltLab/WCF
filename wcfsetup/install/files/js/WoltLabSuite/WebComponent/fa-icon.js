@@ -41,22 +41,27 @@
                 throw new TypeError(`The icon '${this.name}' is unknown or unsupported.`);
             }
         }
-        setIcon(name, isSolid) {
+        setIcon(name, forceSolid = false) {
             if (!this.isValidIconName(name)) {
                 throw new TypeError(`The icon '${name}' is unknown or unsupported.`);
             }
-            if (!this.isValidIconStyle(name, isSolid)) {
-                throw new Error(`The icon '${name}' only supports the 'solid' style.`);
+            if (!forceSolid && !this.hasNonSolidStyle(name)) {
+                forceSolid = true;
             }
-            this.solid = isSolid;
-            this.name = name;
+            if (forceSolid) {
+                this.setAttribute("solid", "");
+            }
+            else {
+                this.removeAttribute("solid");
+            }
+            this.setAttribute("name", name);
             this.updateIcon();
         }
         isValidIconName(name) {
             return name !== null && window.getFontAwesome6IconMetadata(name) !== undefined;
         }
-        isValidIconStyle(name, isSolid) {
-            if (!isSolid && isFontAwesome6Free()) {
+        hasNonSolidStyle(name) {
+            if (isFontAwesome6Free()) {
                 const [, hasRegularVariant] = window.getFontAwesome6IconMetadata(name);
                 if (!hasRegularVariant) {
                     // Font Awesome 6 Free only includes solid icons with the
@@ -140,23 +145,8 @@
         get solid() {
             return this.hasAttribute("solid");
         }
-        set solid(solid) {
-            if (solid) {
-                this.setAttribute("solid", "");
-            }
-            else {
-                this.removeAttribute("solid");
-            }
-        }
         get name() {
             return this.getAttribute("name") || "";
-        }
-        set name(name) {
-            if (!this.isValidIconName(name)) {
-                throw new Error(`Refused to set the unknown icon name '${name}'.`);
-            }
-            this.setAttribute("name", name);
-            this.updateIcon();
         }
         get size() {
             const size = this.getAttribute("size");

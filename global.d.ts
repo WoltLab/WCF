@@ -54,16 +54,15 @@ declare global {
   type ArbitraryObject = Record<string, unknown>;
 
   interface FaBrand extends HTMLElement {
-    name: string;
     size: IconSize;
   }
 
   interface FaIcon extends HTMLElement {
-    name: string;
-    solid: boolean;
+    readonly name: string;
+    readonly solid: boolean;
     size: IconSize;
 
-    setIcon: (name: string, isSolid: boolean) => void;
+    setIcon: (name: string, forceSolid?: boolean) => void;
   }
 
   interface HTMLElementTagNameMap {
