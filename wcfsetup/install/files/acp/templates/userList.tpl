@@ -64,7 +64,7 @@
 				{content}
 					{if $__wcf->session->getPermission('admin.user.canSearchUser')}
 						<li class="dropdown">
-							<a class="button dropdownToggle">{icon size=16 name='search' type='solid'} <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
+							<a class="button dropdownToggle">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
 							<ul class="dropdownMenu">
 								<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
 								<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
@@ -77,7 +77,7 @@
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.user.canAddUser')}
-						<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 					{/if}
 
 					{event name='contentHeaderNavigation'}
@@ -121,7 +121,7 @@
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}"></td>
 						<td class="columnIcon">
 							<div class="dropdown" id="userListDropdown{@$user->userID}">
-								<a href="#" class="dropdownToggle button small">{icon size=16 name='pencil' type='solid'} <span>{lang}wcf.global.button.edit{/lang}</span></a>
+								<a href="#" class="dropdownToggle button small">{icon size=16 name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a>
 
 								<ul class="dropdownMenu">
 									{event name='dropdownItems'}
@@ -242,7 +242,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.user.canAddUser')}
-							<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+							<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 						{/if}
 
 						{event name='contentFooterNavigation'}

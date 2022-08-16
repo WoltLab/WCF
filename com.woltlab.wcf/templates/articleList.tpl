@@ -16,9 +16,9 @@
 {capture assign='contentHeaderNavigation'}
 	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 		{if $availableLanguages|count > 1}
-			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
-			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
 	{/if}
 {/capture}
@@ -72,7 +72,7 @@
 		</ul>
 	</div>
 	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check' type='solid'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
+		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
 	{/if}
 {/capture}
 

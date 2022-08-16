@@ -9,7 +9,7 @@
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
 				{if $article->hasLabels()}
 					<li>
-						{icon size=16 name='tags' type='solid'}
+						{icon size=16 name='tags'}
 						<ul class="labelList">
 							{foreach from=$article->getLabels() item=label}
 								<li>{@$label->render()}</li>
@@ -38,7 +38,7 @@
 				
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
 					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-						{icon size=16 name='comments' type='solid'}
+						{icon size=16 name='comments'}
 						{if $article->getDiscussionProvider()->getDiscussionLink()}<a href="{$article->getDiscussionProvider()->getDiscussionLink()}">{else}<span>{/if}
 						{$article->getDiscussionProvider()->getDiscussionCountPhrase()}
 						{if $article->getDiscussionProvider()->getDiscussionLink()}</a>{else}</span>{/if}
@@ -72,7 +72,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $article->canEdit()}<li><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" class="button buttonPrimary">{icon size=16 name='pencil' type='solid'} <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
+						{if $article->canEdit()}<li><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" class="button buttonPrimary">{icon size=16 name='pencil'} <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -186,11 +186,11 @@
 				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
 					<li>
 						<a href="{$articleContent->getLink()}" class="button wsShareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
-							{icon size=16 name='share-alt' type='solid'} <span>{lang}wcf.message.share{/lang}</span>
+							{icon size=16 name='share-nodes'} <span>{lang}wcf.message.share{/lang}</span>
 						</a>
 					</li>
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
-						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip">{icon size=16 name='exclamation-triangle' type='solid'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip">{icon size=16 name='triangle-exclamation'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 					{/if}
 					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
 						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}">{icon size=16 name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>

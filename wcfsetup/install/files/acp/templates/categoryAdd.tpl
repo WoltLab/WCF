@@ -26,7 +26,7 @@
 				{content}
 					{if $action == 'edit' && $availableCategories->hasChildren()}
 						<li class="dropdown">
-							<a class="button dropdownToggle">{icon size=16 name='sort' type='solid'} <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span></a>
+							<a class="button dropdownToggle">{icon size=16 name='sort'} <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span></a>
 							<div class="dropdownMenu">
 								<ul class="scrollableDropdownMenu">
 									{foreach from=$availableCategories item='availableCategory'}
@@ -38,7 +38,7 @@
 					{/if}
 					
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
-						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
+						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon size=16 name='list'} <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}

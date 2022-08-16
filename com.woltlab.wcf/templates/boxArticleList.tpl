@@ -47,7 +47,7 @@
 						</li>
 						
 						<li>
-							{icon size=16 name='comments' type='solid'}
+							{icon size=16 name='comments'}
 							{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 						</li>
 					</ul>

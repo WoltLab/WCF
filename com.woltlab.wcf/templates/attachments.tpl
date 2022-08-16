@@ -47,7 +47,7 @@
 											{@$attachment->filesize|filesize}
 										</li>
 										<li>
-											{icon size=16 name='up-right-and-down-left-from-center' type='solid'}
+											{icon size=16 name='up-right-and-down-left-from-center'}
 											{#$attachment->width}×{#$attachment->height}
 										</li>
 										<li>

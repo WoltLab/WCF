@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='LabelGroupAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.label.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='LabelGroupAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.label.group.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -78,7 +78,7 @@
 				{foreach from=$objects item=group}
 					<tr class="jsLabelGroupRow jsObjectActionObject" data-object-id="{@$group->getObjectID()}">
 						<td class="columnIcon">
-							<a href="{link controller='LabelGroupEdit' object=$group}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
+							<a href="{link controller='LabelGroupEdit' object=$group}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$group->getTitle()}
 							
 							{event name='rowButtons'}
@@ -105,7 +105,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='LabelGroupAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.label.group.add{/lang}</span></a></li>
+				<li><a href="{link controller='LabelGroupAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.label.group.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

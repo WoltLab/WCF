@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsButtonBoxAdd">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
+			<li><a href="#" class="button jsButtonBoxAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -118,7 +118,7 @@
 					<tr class="jsBoxRow jsObjectActionObject" data-object-id="{@$box->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$box->isDisabled}
-							<a href="{link controller='BoxEdit' id=$box->boxID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
+							<a href="{link controller='BoxEdit' id=$box->boxID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{if $box->canDelete()}
 								{objectAction action="delete" objectTitle=$box->name}
 							{else}
@@ -149,7 +149,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="#" class="button jsButtonBoxAdd">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonBoxAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.box.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

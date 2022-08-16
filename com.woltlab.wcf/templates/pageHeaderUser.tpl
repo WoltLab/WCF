@@ -52,7 +52,7 @@
 					<div class="userMenuContent">
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								{icon size=32 name='pencil' type='solid'}
+								{icon size=32 name='pencil'}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
@@ -61,7 +61,7 @@
 						{if $__wcf->session->getPermission('admin.general.canUseAcp')}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								{icon size=32 name='wrench' type='solid'}
+								{icon size=32 name='wrench'}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
@@ -183,7 +183,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						{icon size=32 name='exclamation-triangle' type='solid'}
+						{icon size=32 name='triangle-exclamation'}
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
@@ -209,7 +209,7 @@
 		
 		<!-- page search -->
 		<li>
-			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='search' type='solid'} <span>{lang}wcf.global.search{/lang}</span></a>
+			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 	</ul>
 </nav>

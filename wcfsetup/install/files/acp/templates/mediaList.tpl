@@ -166,7 +166,7 @@
 					<td class="columnID columnMediaID"></td>
 					<td class="columnTitle columnFilename">
 						<div class="box48">
-							{icon size=48 name='file' type='solid'}
+							{icon size=48 name='file'}
 							
 							<div>
 								<p></p>

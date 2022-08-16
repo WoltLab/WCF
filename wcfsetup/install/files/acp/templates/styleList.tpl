@@ -24,8 +24,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='StyleAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-			<li><a href="{link controller='StyleImport'}{/link}" class="button">{icon size=16 name='upload' type='solid'} <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleImport'}{/link}" class="button">{icon size=16 name='upload'} <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -65,13 +65,13 @@
 						</dl>
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList" data-style-id="{@$style->styleID}">
-								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'} <span class="invisible">{lang}wcf.global.button.edit{/lang}</span></a></li>
-								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip">{icon size=16 name='download' type='solid'} <span class="invisible">{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'} <span class="invisible">{lang}wcf.global.button.edit{/lang}</span></a></li>
+								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip">{icon size=16 name='download'} <span class="invisible">{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
 								
 								{if !$style->isDefault}
 									<li><a href="#" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" class="jsTooltip"><span class="icon icon16 fa-{if !$style->isDisabled}check-{/if}square-o jsObjectAction" data-object-action="toggle"></span> <span class="invisible">{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}</span></a></li>
-									<li><a href="#" title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip">{icon size=16 name='check-circle' type='solid'} <span class="invisible">{lang}wcf.acp.style.button.setAsDefault{/lang}</span></a></li>
-									<li><a href="#" title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.style.delete.confirmMessage{/lang}">{icon size=16 name='times' type='solid'} <span class="invisible">{lang}wcf.global.button.delete{/lang}</span></a></li>
+									<li><a href="#" title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip">{icon size=16 name='circle-check'} <span class="invisible">{lang}wcf.acp.style.button.setAsDefault{/lang}</span></a></li>
+									<li><a href="#" title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.style.delete.confirmMessage{/lang}">{icon size=16 name='xmark'} <span class="invisible">{lang}wcf.global.button.delete{/lang}</span></a></li>
 								{/if}
 								
 								{event name='itemButtons'}
@@ -93,8 +93,8 @@
 	
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='StyleAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-			<li><a href="{link controller='StyleImport'}{/link}" class="button">{icon size=16 name='upload' type='solid'} <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleImport'}{/link}" class="button">{icon size=16 name='upload'} <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

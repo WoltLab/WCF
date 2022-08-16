@@ -19,7 +19,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='SmileyAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
+			<li><a href="{link controller='SmileyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

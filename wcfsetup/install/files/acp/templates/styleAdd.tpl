@@ -45,11 +45,11 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
-				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon size=16 name='download' type='solid'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				<li><a class="jsCopyStyle button">{icon size=16 name='copy' type='solid'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon size=16 name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button">{icon size=16 name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}
 			
-			<li><a href="{link controller='StyleList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			<li><a href="{link controller='StyleList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -698,14 +698,14 @@
 										<div id="spEditorToolbar" data-region="wcfEditorButton">
 											<ul class="redactor-toolbar">
 												<li><a class="redactor-button-disabled">{icon size=16 name='file-code'}</a></li>
-												<li><a>{icon size=16 name='undo' type='solid'}</a></li>
-												<li><a>{icon size=16 name='arrow-rotate-right' type='solid'}</a></li>
-												<li><a>{icon size=16 name='up-right-and-down-left-from-center' type='solid'}</a></li>
-												<li class="redactor-toolbar-separator"><a>{icon size=16 name='heading' type='solid'}</a></li>
-												<li class="redactor-toolbar-separator"><a>{icon size=16 name='bold' type='solid'}</a></li>
-												<li><a class="dropact">{icon size=16 name='italic' type='solid'}</a></li>
-												<li><a>{icon size=16 name='underline' type='solid'}</a></li>
-												<li><a>{icon size=16 name='strikethrough' type='solid'}</a></li>
+												<li><a>{icon size=16 name='rotate-left'}</a></li>
+												<li><a>{icon size=16 name='arrow-rotate-right'}</a></li>
+												<li><a>{icon size=16 name='up-right-and-down-left-from-center'}</a></li>
+												<li class="redactor-toolbar-separator"><a>{icon size=16 name='heading'}</a></li>
+												<li class="redactor-toolbar-separator"><a>{icon size=16 name='bold'}</a></li>
+												<li><a class="dropact">{icon size=16 name='italic'}</a></li>
+												<li><a>{icon size=16 name='underline'}</a></li>
+												<li><a>{icon size=16 name='strikethrough'}</a></li>
 											</ul>
 										</div>
 										<div id="spEditorContent">
@@ -742,7 +742,7 @@
 										<div class="userMenuHeader">
 											<div class="userMenuTitle">Lorem Ipsum</div>
 											<div class="userMenuButtons">
-												<a class="userMenuButton">{icon size=24 name='cog' type='solid'}</a>
+												<a class="userMenuButton">{icon size=24 name='gear'}</a>
 											</div>
 										</div>
 										<div class="userMenuContent">
@@ -760,7 +760,7 @@
 												</div>
 												<div class="userMenuItemUnread">
 													<a class="userMenuItemMarkAsRead">
-														{icon size=24 name='check' type='solid'}
+														{icon size=24 name='check'}
 													</a>
 												</div>
 											</div>

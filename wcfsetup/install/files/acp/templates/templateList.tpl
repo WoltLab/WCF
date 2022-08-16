@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -98,8 +98,8 @@
 								<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip">{icon size=16 name='copy'}</a>
 								
 								{if $template->templateGroupID}
-									<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip">{icon size=16 name='right-left' type='solid'}</a>
-									<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil' type='solid'}</a>
+									<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip">{icon size=16 name='right-left'}</a>
+									<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 									{objectAction action="delete" objectTitle=$template->templateName}
 								{else}
 									<span class="icon icon16 fa-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
@@ -130,7 +130,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

@@ -75,9 +75,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action === 'edit'}
-				<li><a href="#" class="button jsButtonCopyBox">{icon size=16 name='copy' type='solid'} {lang}wcf.acp.box.button.copyBox{/lang}</a></li>
+				<li><a href="#" class="button jsButtonCopyBox">{icon size=16 name='copy'} {lang}wcf.acp.box.button.copyBox{/lang}</a></li>
 			{/if}
-			<li><a href="{link controller='BoxList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
+			<li><a href="{link controller='BoxList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -247,7 +247,7 @@
 						<dd>
 							<div class="inputAddon">
 								<input type="text" id="linkPageObjectID" name="linkPageObjectID" value="{$linkPageObjectID}" class="short">
-								<a href="#" id="searchLinkPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}">{icon size=16 name='search' type='solid'}</a>
+								<a href="#" id="searchLinkPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}">{icon size=16 name='magnifying-glass'}</a>
 							</div>
 							{if $errorField == 'linkPageObjectID'}
 								<small class="innerError">

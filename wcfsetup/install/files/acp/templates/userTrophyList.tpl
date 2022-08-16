@@ -13,7 +13,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -122,7 +122,7 @@
 
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon size=16 name='plus' type='solid'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
 
 				{event name='contentHeaderNavigation'}
 			</ul>

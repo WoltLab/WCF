@@ -48,10 +48,10 @@
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList">
 								{if $comment->isDisabled && $commentCanModerate}
-									<li class="jsOnly"><a href="#" class="jsEnableComment">{icon size=16 name='check' type='solid'} <span class="invisible">{lang}wcf.comment.approve{/lang}</span></a></li>
+									<li class="jsOnly"><a href="#" class="jsEnableComment">{icon size=16 name='check'} <span class="invisible">{lang}wcf.comment.approve{/lang}</span></a></li>
 								{/if}
 								{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-									<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip">{icon size=16 name='exclamation-triangle' type='solid'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+									<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip">{icon size=16 name='triangle-exclamation'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 								{/if}
 								
 								{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $comment->userID != $__wcf->user->userID}

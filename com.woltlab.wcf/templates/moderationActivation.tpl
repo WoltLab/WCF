@@ -35,7 +35,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary">{icon size=16 name='arrow-right' type='solid'} <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
+						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary">{icon size=16 name='arrow-right'} <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -47,8 +47,8 @@
 {capture assign='contentInteractionButtons'}
 	<a id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{icon size=16 name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></a>
 	{if !$queue->isDone()}
-		<a id="enableContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='check' type='solid'} <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></a>
-		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<a id="removeContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='times' type='solid'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></a>{/if}
+		<a id="enableContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></a>
+		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<a id="removeContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></a>{/if}
 	{/if}
 {/capture}
 

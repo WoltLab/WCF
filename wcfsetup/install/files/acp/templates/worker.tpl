@@ -1,7 +1,7 @@
 <div id="workerContainer">
 	<header class="box48 contentHeader">
 		<span class="workerStatusIcon">
-			{icon size=48 name='spinner' type='solid'}
+			{icon size=48 name='spinner'}
 		</span>
 		
 		<div>

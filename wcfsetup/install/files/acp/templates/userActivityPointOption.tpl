@@ -21,7 +21,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a id="updateEvents" class="button">{icon size=16 name='arrow-rotate-right' type='solid'} <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
+			<li><a id="updateEvents" class="button">{icon size=16 name='arrow-rotate-right'} <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

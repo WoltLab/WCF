@@ -10,8 +10,8 @@
 			<ul>
 				{content}
 					{if $items}
-						<li><a href="#" id="clearExisingMissingLanguageItemLog" class="button">{icon size=16 name='times' type='solid'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearExistingLog{/lang}</span></a></li>
-						<li><a href="#" id="clearMissingLanguageItemLog" class="button">{icon size=16 name='times' type='solid'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearLog{/lang}</span></a></li>
+						<li><a href="#" id="clearExisingMissingLanguageItemLog" class="button">{icon size=16 name='xmark'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearExistingLog{/lang}</span></a></li>
+						<li><a href="#" id="clearMissingLanguageItemLog" class="button">{icon size=16 name='xmark'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearLog{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}

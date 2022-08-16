@@ -1,16 +1,16 @@
 <ol class="flexibleButtonGroup optionTypeBoolean">
 	<li>
 		<input type="radio" id="{$option->optionName}"{if $value == 1} checked{/if} name="values[{$option->optionName}]" value="1"{if $disableOptions || $enableOptions} class="jsEnablesOptions" data-is-boolean="true" data-disable-options="[ {@$disableOptions}]" data-enable-options="[ {@$enableOptions}]"{/if}>
-		<label for="{$option->optionName}" class="green">{icon size=16 name='check' type='solid'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
+		<label for="{$option->optionName}" class="green">{icon size=16 name='check'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
 	</li>
 	<li>
 		<input type="radio" id="{$option->optionName}_no"{if $value == 0} checked{/if} name="values[{$option->optionName}]" value="0"{if $disableOptions || $enableOptions} class="jsEnablesOptions" data-is-boolean="true" data-disable-options="[ {@$disableOptions}]" data-enable-options="[ {@$enableOptions}]"{/if}>
-		<label for="{$option->optionName}_no" class="red">{icon size=16 name='times' type='solid'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
+		<label for="{$option->optionName}_no" class="red">{icon size=16 name='xmark'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
 	</li>
 	{if $option->optionName|mb_strpos:'admin.' !== 0 && ($group === null || (!$group->isEveryone() && !$group->isUsers()))}
 		<li>
 			<input type="radio" id="{$option->optionName}_never"{if $value == -1} checked{/if} name="values[{$option->optionName}]" value="-1"{if $disableOptions || $enableOptions} class="jsEnablesOptions" data-is-boolean="true" data-disable-options="[ {@$disableOptions}]" data-enable-options="[ {@$enableOptions}]"{/if}>
-			<label for="{$option->optionName}_never" class="yellow">{icon size=16 name='ban' type='solid'} {lang}wcf.acp.option.type.boolean.never{/lang}</label>
+			<label for="{$option->optionName}_never" class="yellow">{icon size=16 name='ban'} {lang}wcf.acp.option.type.boolean.never{/lang}</label>
 		</li>
 	{/if}
 </ol>

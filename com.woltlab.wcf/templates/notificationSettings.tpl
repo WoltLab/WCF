@@ -39,9 +39,9 @@
 								<button class="notificationSettingsEmailType jsTooltip{if $settings[$event->eventID][enabled]|empty} disabled{/if}" title="{lang}wcf.user.notification.mailNotificationType.{@$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{@$event->eventID}">
 									<span class="jsIconNotificationSettingsEmailType">
 										{if $settings[$event->eventID][mailNotificationType] === 'none'}
-											{icon size=24 name='xmark' type='solid'}
+											{icon size=24 name='xmark'}
 										{else if $settings[$event->eventID][mailNotificationType] === 'instant'}
-											{icon size=24 name='bolt' type='solid'}
+											{icon size=24 name='bolt'}
 										{else}
 											{icon size=24 name='clock'}
 										{/if}

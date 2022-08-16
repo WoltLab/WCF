@@ -149,7 +149,7 @@
 		<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
 			{if ($user->userID == $__wcf->user->userID || $user->canEdit()) && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
 				<div class="userProfileManageCoverPhoto dropdown jsOnly">
-					<a href="#" class="button small dropdownToggle">{icon size=16 name='pencil' type='solid'} {lang}wcf.user.coverPhoto.edit{/lang}</a>
+					<a href="#" class="button small dropdownToggle">{icon size=16 name='pencil'} {lang}wcf.user.coverPhoto.edit{/lang}</a>
 					<ul class="dropdownMenu">
 						{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 							<li><a href="#" class="jsButtonUploadCoverPhoto jsStaticDialog" data-dialog-id="userProfileCoverPhotoUpload">{lang}wcf.user.coverPhoto.upload{/lang}</a></li>
@@ -238,7 +238,7 @@
 				<ul class="userProfileButtonContainer">
 					{content}
 						{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
-							<li><a href="#" class="jsButtonEditProfile button buttonPrimary">{icon size=16 name='pencil' type='solid'} <span>{lang}wcf.user.editProfile{/lang}</span></a></li>
+							<li><a href="#" class="jsButtonEditProfile button buttonPrimary">{icon size=16 name='pencil'} <span>{lang}wcf.user.editProfile{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentHeaderNavigation'}
@@ -274,7 +274,7 @@
 {capture assign='contentInteractionButtons'}
 	{if $__menuSearch}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a href="#" class="button small dropdownToggle">{icon size=16 name='search' type='solid'} <span>{lang}wcf.user.searchUserContent{/lang}</span></a>
+			<a href="#" class="button small dropdownToggle">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.user.searchUserContent{/lang}</span></a>
 			<ul class="dropdownMenu userProfileButtonMenu" data-menu="search">
 				{@$__menuSearch}
 			</ul>
@@ -282,7 +282,7 @@
 	{/if}
 	{if $__menuManagement}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a href="#" class="button small dropdownToggle">{icon size=16 name='cog' type='solid'} <span>{lang}wcf.user.profile.management{/lang}</span></a>
+			<a href="#" class="button small dropdownToggle">{icon size=16 name='gear'} <span>{lang}wcf.user.profile.management{/lang}</span></a>
 			<ul class="dropdownMenu userProfileButtonMenu" data-menu="management">
 				{@$__menuManagement}
 			</ul>

@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserGroupAssignmentList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.group.assignment.button.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserGroupAssignmentList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.group.assignment.button.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

@@ -9,11 +9,11 @@
 			<ol role="group" aria-label="{lang}wcf.acl.allowAll{/lang}" class="flexibleButtonGroup">
 				<li>
 					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll" name="{@$__aclInputName}[allowAll]" value="1"{if $aclValues[allowAll]} checked{/if}>
-					<label for="{@$__aclSimplePrefix}aclAllowAll" class="green">{icon size=16 name='check' type='solid'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
+					<label for="{@$__aclSimplePrefix}aclAllowAll" class="green">{icon size=16 name='check'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
 				</li>
 				<li>
 					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll_no" name="{@$__aclInputName}[allowAll]" value="0"{if !$aclValues[allowAll]} checked{/if}>
-					<label for="{@$__aclSimplePrefix}aclAllowAll_no" class="red">{icon size=16 name='times' type='solid'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
+					<label for="{@$__aclSimplePrefix}aclAllowAll_no" class="red">{icon size=16 name='xmark'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
 				</li>
 			</ol>
 		</dd>
@@ -27,11 +27,11 @@
 				<ol class="flexibleButtonGroup">
 					<li>
 						<input type="radio" id="{@$__aclSimplePrefix}invertPermissions" name="{@$__aclSimplePrefix}invertPermissions" value="1"{if $invertPermissions} checked{/if}>
-						<label for="{@$__aclSimplePrefix}invertPermissions" class="green">{icon size=16 name='check' type='solid'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
+						<label for="{@$__aclSimplePrefix}invertPermissions" class="green">{icon size=16 name='check'} {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
 					</li>
 					<li>
 						<input type="radio" id="{@$__aclSimplePrefix}invertPermissions_no" name="{@$__aclSimplePrefix}invertPermissions" value="0"{if !$invertPermissions} checked{/if}>
-						<label for="{@$__aclSimplePrefix}invertPermissions_no" class="red">{icon size=16 name='times' type='solid'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
+						<label for="{@$__aclSimplePrefix}invertPermissions_no" class="red">{icon size=16 name='xmark'} {lang}wcf.acp.option.type.boolean.no{/lang}</label>
 					</li>
 				</ol>
 				<small>{lang}wcf.acl.access.invertPermissions.description{/lang}</small>

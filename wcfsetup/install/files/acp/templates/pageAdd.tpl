@@ -51,16 +51,16 @@
 		<ul>
 			{if $action == 'edit'}
 				{if $page->pageType !== 'system'}
-					<li><a href="#" class="button jsButtonCopyPage">{icon size=16 name='copy' type='solid'} {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+					<li><a href="#" class="button jsButtonCopyPage">{icon size=16 name='copy'} {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
 				{/if}
 
 				{if !$page->requireObjectID}
-					<li><a href="{$page->getLink()}" class="button">{icon size=16 name='search' type='solid'} <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+					<li><a href="{$page->getLink()}" class="button">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
 				{/if}
 
-				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button">{icon size=16 name='arrow-down-short-wide' type='solid'} <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
+				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button">{icon size=16 name='arrow-down-short-wide'} <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='PageList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
+			<li><a href="{link controller='PageList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
