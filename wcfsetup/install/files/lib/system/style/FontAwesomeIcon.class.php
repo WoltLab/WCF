@@ -85,7 +85,7 @@ final class FontAwesomeIcon implements \Stringable
         }
 
         [$name, $solid] = \explode("\0", $iconData);
-        if ($solid !== 'true' && $solid === 'false') {
+        if ($solid !== 'true' && $solid !== 'false') {
             throw new InvalidIconFormat();
         }
 
@@ -110,7 +110,7 @@ final class FontAwesomeIcon implements \Stringable
         }
 
         [$name, $solid] = \explode("\0", $iconData);
-        if ($solid !== 'true' && $solid === 'false') {
+        if ($solid !== 'true' && $solid !== 'false') {
             return false;
         }
 
