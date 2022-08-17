@@ -1,5 +1,5 @@
 <script>
-	require(['Language', 'WoltLabSuite/Core/Ui/Style/FontAwesome'], function (Language, UiStyleFontAwesome) {
+	require(['Language', 'WoltLabSuite/Core/Ui/Style/FontAwesome'], (Language, UiStyleFontAwesome) => {
 		Language.addObject({
 			'wcf.global.filter.button.clear': '{jslang}wcf.global.filter.button.clear{/jslang}',
 			'wcf.global.filter.error.noMatches': '{jslang}wcf.global.filter.error.noMatches{/jslang}',
@@ -7,6 +7,6 @@
 			'wcf.global.fontAwesome.selectIcon': '{jslang}wcf.global.fontAwesome.selectIcon{/jslang}'
 		});
 		
-		UiStyleFontAwesome.setup({@$__wcf->getStyleHandler()->getIcons(true)});
+		UiStyleFontAwesome.setup();
 	});
 </script>

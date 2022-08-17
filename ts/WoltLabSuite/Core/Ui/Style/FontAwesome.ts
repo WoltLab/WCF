@@ -13,17 +13,12 @@ import * as Language from "../../Language";
 import UiDialog from "../Dialog";
 import UiItemListFilter from "../ItemList/Filter";
 
-type CallbackSelect = (icon: string) => void;
+type CallbackSelect = (icon: string, forceSolid: boolean) => void;
 
 class UiStyleFontAwesome implements DialogCallbackObject {
   private callback?: CallbackSelect = undefined;
   private iconList?: HTMLElement = undefined;
   private itemListFilter?: UiItemListFilter = undefined;
-  private readonly icons: string[];
-
-  constructor(icons: string[]) {
-    this.icons = icons;
-  }
 
   open(callback: CallbackSelect): void {
     this.callback = callback;
@@ -39,11 +34,11 @@ class UiStyleFontAwesome implements DialogCallbackObject {
 
     const target = event.target as HTMLElement;
     const item = target.closest("li") as HTMLLIElement;
-    const icon = item.querySelector("small")!.textContent!.trim();
+    const icon = item.querySelector("fa-icon")!;
 
     UiDialog.close(this);
 
-    this.callback!(icon);
+    this.callback!(icon.name, icon.solid);
   }
 
   _dialogSetup(): ReturnType<DialogCallbackSetup> {
@@ -53,10 +48,17 @@ class UiStyleFontAwesome implements DialogCallbackObject {
         onSetup: () => {
           this.iconList = document.getElementById("fontAwesomeIcons") as HTMLElement;
 
+          const icons: string[] = [];
+          window.getFontAwesome6Metadata().forEach(([, hasRegular], name) => {
+            if (hasRegular) {
+              icons.push(`<li><fa-icon size="48" name="${name}" solid></fa-icon><small>${name}</small></li>`);
+            }
+
+            icons.push(`<li><fa-icon size="48" name="${name}"></fa-icon><small>${name}</small></li>`);
+          });
+
           // build icons
-          this.iconList.innerHTML = this.icons
-            .map((icon) => `<li><span class="icon icon48 fa-${icon}"></span><small>${icon}</small></li>`)
-            .join("");
+          this.iconList.innerHTML = icons.join("");
 
           this.iconList.addEventListener("click", (ev) => this.click(ev));
 
@@ -91,9 +93,9 @@ let uiStyleFontAwesome: UiStyleFontAwesome;
  * Sets the list of available icons, must be invoked prior to any call
  * to the `open()` method.
  */
-export function setup(icons: string[]): void {
+export function setup(): void {
   if (!uiStyleFontAwesome) {
-    uiStyleFontAwesome = new UiStyleFontAwesome(icons);
+    uiStyleFontAwesome = new UiStyleFontAwesome();
   }
 }
 

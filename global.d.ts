@@ -27,6 +27,7 @@ declare global {
     WCF_PATH: string;
     WSC_API_URL: string;
 
+    getFontAwesome6Metadata: () => Map<string, IconMetadata>;
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
 
     jQuery: JQueryStatic;
