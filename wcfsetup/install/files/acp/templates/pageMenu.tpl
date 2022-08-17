@@ -6,7 +6,7 @@
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
 				<li>
 					<a href="#" class="acpPageMenuLink{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" data-menu-item="{$_sectionMenuItem->menuItem}">
-						<span class="icon icon32 {$_sectionMenuItem->icon}"></span>
+						{@$_sectionMenuItem->getIcon()->toHtml(32)}
 						<span class="acpPageMenuItemLabel">{@$_sectionMenuItem}</span>
 					</a>
 				</li>
@@ -38,7 +38,9 @@
 											<a href="{$_menuItem->getLink()}" class="acpPageSubMenuLink{if $_menuItem->menuItem|in_array:$_activeMenuItems && $_activeMenuItems[0] === $_menuItem->menuItem} active{/if}">{@$_menuItem}</a>
 											
 											{foreach from=$_subMenuItems item=_subMenuItem}
-												<a href="{$_subMenuItem->getLink()}" class="acpPageSubMenuIcon jsTooltip{if $_subMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" title="{@$_subMenuItem}"><span class="icon icon16 {$_subMenuItem->icon}"></span></a>
+												<a href="{$_subMenuItem->getLink()}" class="acpPageSubMenuIcon jsTooltip{if $_subMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" title="{@$_subMenuItem}">
+													{@$_subMenuItem->getIcon()->toHtml(16)}
+												</a>
 											{/foreach}
 										</li>
 									{/if}

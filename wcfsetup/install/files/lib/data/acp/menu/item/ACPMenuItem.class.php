@@ -6,6 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
 /**
@@ -121,5 +122,23 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem
     public function __toString()
     {
         return WCF::getLanguage()->get($this->menuItem);
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getIcon(): ?FontAwesomeIcon
+    {
+        if ($this->icon) {
+            if (FontAwesomeIcon::isValidString($this->icon)) {
+                return FontAwesomeIcon::fromString($this->icon);
+            } else if (\str_starts_with($this->icon, 'fa-')) {
+                // Safeguard to prevent legacy icons from breaking
+                // the admin panel during the upgrade to 6.0.
+                return FontAwesomeIcon::fromString("question\0true");
+            }
+        }
+
+        return null;
     }
 }
