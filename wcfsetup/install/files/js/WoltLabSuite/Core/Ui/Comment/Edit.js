@@ -182,8 +182,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         _hideEditor() {
             const editorContainer = this._editorContainer.querySelector(".editorContainer");
             Util_1.default.hide(editorContainer);
-            const icon = document.createElement("span");
-            icon.className = "icon icon48 fa-spinner";
+            const icon = document.createElement("fa-icon");
+            icon.size = 48;
+            icon.setIcon("spinner");
             this._editorContainer.appendChild(icon);
         }
         /**

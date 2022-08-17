@@ -7,12 +7,11 @@
  * @module  WoltLabSuite/Core/Media/Upload
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "../Dom/Traverse", "../Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, DomTraverse, Language, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
+define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "../Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, Language, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
     "use strict";
     Upload_1 = tslib_1.__importDefault(Upload_1);
     Core = tslib_1.__importStar(Core);
     DomUtil = tslib_1.__importStar(DomUtil);
-    DomTraverse = tslib_1.__importStar(DomTraverse);
     Language = tslib_1.__importStar(Language);
     User_1 = tslib_1.__importDefault(User_1);
     DateUtil = tslib_1.__importStar(DateUtil);
@@ -76,7 +75,8 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                             image = cell.querySelector(".icon48");
                         }
                         const spinner = document.createElement("span");
-                        spinner.className = "icon icon48 fa-spinner mediaThumbnail";
+                        spinner.innerHTML = '<fa-icon size="48" name="spinner"></fa-icon>';
+                        spinner.classList.add("mediaThumbnail");
                         DomUtil.replaceElement(image, spinner);
                         // replace title and uploading user
                         const ps = cell.querySelectorAll(".box48 > div > p");
@@ -111,10 +111,11 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 fileElement = document.createElement("p");
             }
             const thumbnail = document.createElement("div");
-            thumbnail.className = "mediaThumbnail";
+            thumbnail.classList.add("mediaThumbnail");
             fileElement.appendChild(thumbnail);
-            const fileIcon = document.createElement("span");
-            fileIcon.className = "icon icon144 fa-spinner";
+            const fileIcon = document.createElement("fa-icon");
+            fileIcon.size = 144;
+            fileIcon.setIcon("spinner");
             thumbnail.appendChild(fileIcon);
             const mediaInformation = document.createElement("div");
             mediaInformation.className = "mediaInformation";
@@ -211,9 +212,9 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                     }
                 }
                 else {
-                    DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaInformation"), "PROGRESS").remove();
+                    file.querySelector(".mediaInformation progress").remove();
                     if (media) {
-                        const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "FA-ICON");
+                        const fileIcon = file.querySelector(".mediaThumbnail fa-icon");
                         this._replaceFileIcon(fileIcon, media, 144);
                         file.classList.add("jsClipboardObject", "mediaFile", "jsObjectActionObject");
                         file.dataset.objectId = media.mediaID.toString();
@@ -230,13 +231,13 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                                 filename: file.dataset.filename,
                             };
                         }
-                        const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "FA-ICON");
+                        const fileIcon = file.querySelector(".mediaThumbnail fa-icon");
                         fileIcon.setIcon("xmark");
                         file.classList.add("uploadFailed", "pointer", "jsTooltip");
                         file.title = Language.get("wcf.global.button.delete");
                         file.addEventListener("click", () => file.remove());
-                        const title = DomTraverse.childByClass(DomTraverse.childByClass(file, "mediaInformation"), "mediaTitle");
-                        title.innerText = Language.get(`wcf.media.upload.error.${error.errorType}`, {
+                        const title = file.querySelector(".mediaInformation .mediaTitle");
+                        title.textContent = Language.get(`wcf.media.upload.error.${error.errorType}`, {
                             filename: error.filename,
                         });
                     }

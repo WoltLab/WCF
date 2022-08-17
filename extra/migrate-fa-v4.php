@@ -126,7 +126,7 @@ function replaceIcons(string $filename): bool
             // If the icon only ships in `solid` style then we can safely
             // use any other variant too. The `solid` style is therefore
             // only enforced when there is a non-solid variant too.
-            if ($type === 'solid' && !$hasNonSolidStyle[$newIconName]) {
+            if ($type === 'solid' && $newIconName !== 'caret-down' && !$hasNonSolidStyle[$newIconName]) {
                 $type = 'regular';
             }
 

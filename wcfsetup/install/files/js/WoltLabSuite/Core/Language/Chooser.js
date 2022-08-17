@@ -106,8 +106,9 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             dropdownToggle.innerHTML = "";
             const div = document.createElement("div");
             dropdownToggle.appendChild(div);
-            const icon = document.createElement("span");
-            icon.className = "icon icon24 fa-question pointer";
+            const icon = document.createElement("fa-icon");
+            icon.size = 24;
+            icon.setIcon("question");
             div.appendChild(icon);
             const span = document.createElement("span");
             span.textContent = Language.get("wcf.global.language.noSelection");

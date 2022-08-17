@@ -767,8 +767,9 @@ const DatePicker = {
         });
         container.appendChild(openButton);
 
-        let icon = document.createElement("span");
-        icon.className = "icon icon16 fa-calendar";
+        let icon = document.createElement("fa-icon");
+        icon.size = 16;
+        icon.setIcon("calendar");
         openButton.appendChild(icon);
 
         element.parentNode!.insertBefore(container, element);
@@ -790,8 +791,9 @@ const DatePicker = {
 
           container.appendChild(clearButton);
 
-          icon = document.createElement("span");
-          icon.className = "icon icon16 fa-times";
+          icon = document.createElement("fa-icon");
+          icon.size = 16;
+          icon.setIcon("xmark");
           clearButton.appendChild(icon);
         }
 

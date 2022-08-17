@@ -61,8 +61,9 @@ class Code {
     }
 
     const button = document.createElement("button");
-    button.className = "icon icon24 fa-files-o pointer jsTooltip";
-    button.setAttribute("title", Language.get("wcf.message.bbcode.code.copy"));
+    button.innerHTML = '<fa-icon size="24" name="files"></fa-icon>';
+    button.classList.add("jsTooltip");
+    button.title = Language.get("wcf.message.bbcode.code.copy");
 
     const clickCallback = async () => {
       await Clipboard.copyElementTextToClipboard(this.codeContainer);
@@ -70,7 +71,7 @@ class Code {
       UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
     };
     button.addEventListener("click", () => clickCallback());
-    
+
     header.appendChild(button);
   }
 

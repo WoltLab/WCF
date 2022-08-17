@@ -196,7 +196,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 button.classList.add("pageMenuMainItemToggle");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", menuId);
-                button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
+                button.innerHTML = '<fa-icon size="24" name="angle-down"></fa-icon>';
                 let ariaLabel = menuItem.title;
                 if (menuItem.link) {
                     ariaLabel = Language.get("wcf.menu.page.button.toggle", { title: menuItem.title });

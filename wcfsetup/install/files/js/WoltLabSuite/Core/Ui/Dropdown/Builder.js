@@ -66,8 +66,9 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
             if (typeof data.icon.size === "number" && _validIconSizes.indexOf(~~data.icon.size) !== -1) {
                 size = ~~data.icon.size;
             }
-            const icon = document.createElement("span");
-            icon.className = `icon icon${size} fa-${data.icon.name}`;
+            const icon = document.createElement("fa-icon");
+            icon.size = size;
+            icon.setIcon(data.icon.name, data.icon.forceSolid ? true : false);
             link.appendChild(icon);
         }
         const label = typeof data.label === "string" ? data.label.trim() : "";

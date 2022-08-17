@@ -68,11 +68,9 @@ function initButtonGroupNavigation(): void {
 
     navigation.parentElement!.classList.add("hasMobileNavigation");
 
-    const button = document.createElement("a");
-    button.className = "dropdownLabel";
-    const span = document.createElement("span");
-    span.className = "icon icon24 fa-ellipsis-v";
-    button.appendChild(span);
+    const button = document.createElement("button");
+    button.innerHTML = '<fa-icon size="24" name="ellipsis-vertical"></fa-icon>';
+    button.classList.add("dropdownLabel");
     button.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();

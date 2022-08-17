@@ -34,8 +34,9 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                         const removeButton = document.createElement("p");
                         removeButton.className = "button";
                         button.insertAdjacentElement("afterend", removeButton);
-                        const icon = document.createElement("span");
-                        icon.className = "icon icon16 fa-times";
+                        const icon = document.createElement("fa-icon");
+                        icon.size = 16;
+                        icon.setIcon("xmark");
                         removeButton.appendChild(icon);
                         if (!storeElement.value) {
                             Util_1.default.hide(removeButton);
@@ -83,11 +84,14 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                     else {
                         let fileIcon = FileUtil.getIconNameByFilename(media.filename);
                         if (fileIcon) {
-                            fileIcon = "-" + fileIcon;
+                            fileIcon = "file-" + fileIcon;
+                        }
+                        else {
+                            fileIcon = "file";
                         }
                         displayElement.innerHTML = `
             <div class="box48" style="margin-bottom: 10px;">
-              <span class="icon icon48 fa-file${fileIcon}-o"></span>
+              <fa-icon size="48" name="${fileIcon}"></fa-icon>
               <div class="containerHeadline">
                 <h3>${media.filename}</h3>
                 <p>${media.formattedFilesize}</p>
@@ -129,11 +133,12 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
             listItem.innerHTML =
-                '<a><span class="icon icon16 fa-check jsTooltip" title="' +
-                    Language.get("wcf.media.button.select") +
-                    '"></span> <span class="invisible">' +
-                    Language.get("wcf.media.button.select") +
-                    "</span></a>";
+                `
+        <a class="jsTooltip" title="${Language.get("wcf.media.button.select")}">
+          <fa-icon size="16" name="check"></fa-icon>
+          <span class="invisible">${Language.get("wcf.media.button.select")}</span>
+        </a>
+      `;
         }
         /**
          * Handles clicking on the remove button.

@@ -47,8 +47,13 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
             }
             data.returnValues.forEach((item) => {
                 let image = item.image;
-                if (/^fa-/.test(image)) {
-                    image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get("wcf.global.select")}"></span>`;
+                if (Array.isArray(image)) {
+                    const [iconName, forceSolid] = image;
+                    image = `
+          <button class="jsTooltip" title="${Language.get("wcf.global.select")}">
+            <fa-icon size="48" name="${iconName}"${forceSolid ? " solid" : ""}></fa-icon>
+          </button>
+        `;
                 }
                 const listItem = document.createElement("li");
                 listItem.dataset.objectId = item.objectID.toString();
@@ -58,7 +63,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
         <div>
           <div class="containerHeadline">
             <h3>
-                <a href="#">${StringUtil.escapeHTML(item.title)}</a>
+                <button>${StringUtil.escapeHTML(item.title)}</button>
             </h3>
             ${description}
           </div>

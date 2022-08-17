@@ -21,8 +21,9 @@ class MediaListUpload extends MediaUpload<MediaListUploadOptions> {
     const space = document.createTextNode(" ");
     span.insertBefore(space, span.childNodes[0]);
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon16 fa-upload";
+    const icon = document.createElement("fa-icon");
+    icon.size = 16;
+    icon.setIcon("upload");
     span.insertBefore(icon, span.childNodes[0]);
   }
 

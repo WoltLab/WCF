@@ -389,15 +389,12 @@ const UiDialog = {
 
     if (options.closable) {
       const closeButton = document.createElement("button");
-      closeButton.className = "dialogCloseButton jsTooltip";
+      closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
+      closeButton.classList.add("dialogCloseButton", "jsTooltip");
       closeButton.title = options.closeButtonLabel;
       closeButton.setAttribute("aria-label", options.closeButtonLabel);
       closeButton.addEventListener("click", () => this._close());
       header.appendChild(closeButton);
-
-      const span = document.createElement("span");
-      span.className = "icon icon24 fa-times";
-      closeButton.appendChild(span);
     }
 
     // Dialogs are positioned using `left: 50%` as a hack to

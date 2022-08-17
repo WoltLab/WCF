@@ -157,7 +157,8 @@ class AcpUiUserEditor {
         let iconBanned = userRow.querySelector(".jsUserStatusBanned") as HTMLElement;
         if (banned && iconBanned === null) {
           iconBanned = document.createElement("span");
-          iconBanned.className = "icon icon16 fa-lock jsUserStatusBanned jsTooltip";
+          iconBanned.innerHTML = '<fa-icon size="16" name="lock"></fa-icon>';
+          iconBanned.classList.add("jsUserStatusBanned", "jsTooltip");
           iconBanned.title = Language.get("wcf.user.status.banned");
 
           userStatusIcons.appendChild(iconBanned);
@@ -169,7 +170,8 @@ class AcpUiUserEditor {
         let iconIsDisabled = userRow.querySelector(".jsUserStatusIsDisabled") as HTMLElement;
         if (isDisabled && iconIsDisabled === null) {
           iconIsDisabled = document.createElement("span");
-          iconIsDisabled.className = "icon icon16 fa-power-off jsUserStatusIsDisabled jsTooltip";
+          iconIsDisabled.innerHTML = '<fa-icon size="16" name="power-off"></fa-icon>';
+          iconIsDisabled.classList.add("jsUserStatusIsDisabled", "jsTooltip");
           iconIsDisabled.title = Language.get("wcf.user.status.isDisabled");
           userStatusIcons.appendChild(iconIsDisabled);
         } else if (!isDisabled && iconIsDisabled !== null) {

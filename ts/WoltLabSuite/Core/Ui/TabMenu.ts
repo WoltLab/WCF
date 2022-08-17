@@ -207,8 +207,9 @@ function rebuildMenuOverflow(menu: HTMLElement): void {
   let overlayLeft = menu.querySelector(".tabMenuOverlayLeft");
   if (overflowLeft) {
     if (overlayLeft === null) {
-      overlayLeft = document.createElement("span");
-      overlayLeft.className = "tabMenuOverlayLeft icon icon24 fa-angle-left";
+      overlayLeft = document.createElement("button");
+      overlayLeft.innerHTML = '<fa-icon size="24" name="angle-left"></fa-icon>';
+      overlayLeft.className = "tabMenuOverlayLeft";
       overlayLeft.addEventListener("click", () => {
         const listWidth = list.clientWidth;
         scrollMenu(list, list.scrollLeft - ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, false);
@@ -225,8 +226,9 @@ function rebuildMenuOverflow(menu: HTMLElement): void {
   let overlayRight = menu.querySelector(".tabMenuOverlayRight");
   if (overflowRight) {
     if (overlayRight === null) {
-      overlayRight = document.createElement("span");
-      overlayRight.className = "tabMenuOverlayRight icon icon24 fa-angle-right";
+      overlayRight = document.createElement("button");
+      overlayRight.innerHTML = '<fa-icon size="24" name="angle-right"></fa-icon>';
+      overlayRight.className = "tabMenuOverlayRight";
       overlayRight.addEventListener("click", () => {
         const listWidth = list.clientWidth;
         scrollMenu(list, list.scrollLeft + ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, false);

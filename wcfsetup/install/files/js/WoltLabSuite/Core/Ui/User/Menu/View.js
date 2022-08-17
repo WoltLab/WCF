@@ -132,8 +132,8 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
       </div>
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
-        <button class="userMenuItemMarkAsRead">
-          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}"></span>
+        <button class="userMenuItemMarkAsRead jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}">
+          <fa-icon size="24" name="check"></fa-icon>
         </button>
       </div>
     `;

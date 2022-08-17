@@ -235,8 +235,9 @@ class UiCommentEdit {
     const editorContainer = this._editorContainer!.querySelector(".editorContainer") as HTMLElement;
     DomUtil.hide(editorContainer);
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon48 fa-spinner";
+    const icon = document.createElement("fa-icon");
+    icon.size = 48;
+    icon.setIcon("spinner");
     this._editorContainer!.appendChild(icon);
   }
 

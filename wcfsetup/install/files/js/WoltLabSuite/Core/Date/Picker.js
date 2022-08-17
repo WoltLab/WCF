@@ -636,8 +636,9 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                     }
                 });
                 container.appendChild(openButton);
-                let icon = document.createElement("span");
-                icon.className = "icon icon16 fa-calendar";
+                let icon = document.createElement("fa-icon");
+                icon.size = 16;
+                icon.setIcon("calendar");
                 openButton.appendChild(icon);
                 element.parentNode.insertBefore(container, element);
                 container.insertBefore(element, openButton);
@@ -654,8 +655,9 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                         clearButton.style.setProperty("visibility", "hidden", "");
                     }
                     container.appendChild(clearButton);
-                    icon = document.createElement("span");
-                    icon.className = "icon icon16 fa-times";
+                    icon = document.createElement("fa-icon");
+                    icon.size = 16;
+                    icon.setIcon("xmark");
                     clearButton.appendChild(icon);
                 }
                 // check if the date input has one of the following classes set otherwise default to 'short'
