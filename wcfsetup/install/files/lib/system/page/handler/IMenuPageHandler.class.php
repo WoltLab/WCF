@@ -30,4 +30,11 @@ interface IMenuPageHandler
      * @return  bool        false if the page should be hidden from menus
      */
     public function isVisible($objectID = null);
+
+    /**
+     * Caches the given object id to save SQL queries if multiple objects of the same type are queried in the menu.
+     * 
+     * @since 6.0
+     */
+    public function cacheObject(int $objectID): void;
 }
