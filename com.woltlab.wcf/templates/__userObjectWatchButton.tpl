@@ -1,7 +1,11 @@
 {if $__wcf->user->userID}
 	<div class="dropdown contentInteractionButton">
 		<a class="jsTooltip button small dropdownToggle jsSubscribeButton userObjectWatchDropdownToggle{if $isSubscribed} active{/if}" data-object-type="{$objectType}" data-object-id="{$objectID}" data-is-subscribed="{if $isSubscribed}1{else}0{/if}">
-			<span class="icon icon16 fa-bookmark{if !$isSubscribed}-o{/if}"></span>
+			{if $isSubscribed}
+				{icon size=16 name='bookmark' type='solid'}
+			{else}
+				{icon size=16 name='bookmark'}
+			{/if}
 			<span>{if $isSubscribed}{lang}wcf.user.objectWatch.button.subscribed{/lang}{else}{lang}wcf.user.objectWatch.button.subscribe{/lang}{/if}</span>
 		</a>
 		<ul class="dropdownMenu userObjectWatchDropdown" data-object-type="{$objectType}" data-object-id="{$objectID}">

@@ -3,7 +3,7 @@
 		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}</span>
 	{else}
 		<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
-			<span class="icon icon32 fa-sign-in" aria-hidden="true"></span>
+			{icon size=32 name='arrow-right-to-bracket'}
 		</a>
 	{/if}
 	

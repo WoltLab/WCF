@@ -49,15 +49,15 @@
 							<ul class="inlineList">
 								{content}
 									{if $definitionID}
-										<li>
-											<span class="icon icon16 fa-tag jsTooltip" title="{lang}wcf.moderation.filterByType{/lang}"></span>
+										<li class="jsTooltip" title="{lang}wcf.moderation.filterByType{/lang}">
+											{icon size=16 name='tag'}
 											{lang}wcf.moderation.type.{$availableDefinitions[$definitionID]}{/lang}
 										</li>
 									{/if}
 									
 									{if !$assignedUserID || $assignedUserID == $__wcf->getUser()->userID}
-										<li>
-											<span class="icon icon16 fa-user jsTooltip" title="{lang}wcf.moderation.filterByUser{/lang}"></span>
+										<li class="jsTooltip" title="{lang}wcf.moderation.filterByUser{/lang}">
+											{icon size=16 name='user'}
 											{if !$assignedUserID}
 												{lang}wcf.moderation.filterByUser.nobody{/lang}
 											{else}
@@ -67,12 +67,12 @@
 									{/if}
 									
 									{if $status == -1 || $status == 2}
-										<li>
+										<li class="jsTooltip" title="{lang}wcf.moderation.status{/lang}">
 											{if $status == -1}
-												<span class="icon icon16 fa-circle-o jsTooltip" title="{lang}wcf.moderation.status{/lang}"></span>
+												{icon size=16 name='circle'}
 												{lang}wcf.moderation.status.outstanding{/lang}
 											{else}
-												<span class="icon icon16 fa-check-circle-o jsTooltip" title="{lang}wcf.moderation.status{/lang}"></span>
+												{icon size=16 name='circle-check'}
 												{lang}wcf.moderation.status.done{/lang}
 											{/if}
 										</li>
@@ -141,7 +141,7 @@
 								<dd>{@$entry->comments|shortUnit}</dd>
 							</dl>
 							
-							<div class="messageGroupListStatsSimple">{if $entry->comments}<span class="icon icon16 fa-comment-o" aria-label="{lang}wcf.global.comments{/lang}"></span> {@$entry->comments|shortUnit}{/if}</div>
+							<div class="messageGroupListStatsSimple">{if $entry->comments}{icon size=16 name='comment'} {@$entry->comments|shortUnit}{/if}</div>
 						</li>
 						<li class="columnLastPost columnDate">
 							{if $entry->lastChangeTime}{@$entry->lastChangeTime|time}{/if}

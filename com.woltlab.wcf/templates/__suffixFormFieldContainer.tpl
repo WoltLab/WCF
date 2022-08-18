@@ -15,7 +15,7 @@
 					{/if}
 				{else}
 					<span class="inputSuffix dropdown" id="{@$element->getSuffixField()->getPrefixedId()}_dropdown">
-						<span class="dropdownToggle">{@$element->getSelectedSuffixOption()[label]} <span class="icon icon16 fa-caret-down pointer"></span></span>
+						<span class="dropdownToggle">{@$element->getSelectedSuffixOption()[label]} {icon size=16 name='caret-down' type='solid'}</span>
 						
 						<ul class="dropdownMenu">
 							{foreach from=$element->getSuffixField()->getNestedOptions() item=__fieldNestedOption}

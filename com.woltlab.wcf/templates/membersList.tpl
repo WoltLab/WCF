@@ -65,7 +65,7 @@
 				<div class="containerListActiveFilters">
 					<ul class="inlineList">
 						{content}
-							{if $letter}<li><span class="icon icon16 fa-bold jsTooltip" title="{lang}wcf.user.members.sort.letters{/lang}"></span> {$letter}</li>{/if}
+							{if $letter}<li class="jsTooltip" title="{lang}wcf.user.members.sort.letters{/lang}">{icon size=16 name='bold'} {$letter}</li>{/if}
 						{/content}
 					</ul>
 				</div>

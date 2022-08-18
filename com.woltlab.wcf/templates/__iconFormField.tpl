@@ -19,7 +19,6 @@
 			const input = document.getElementById('{@$field->getPrefixedId()}');
 			
 			const callback = (iconName, forceSolid) => {
-				icon.className = 'icon icon64 fa-' + iconName;
 				input.value = iconName;
 
 				let icon = iconContainer.querySelector("fa-icon");

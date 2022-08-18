@@ -20,7 +20,7 @@
 {event name='settings'}
 
 <a href="#" id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" role="button" tabindex="0" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
-	<span class="icon icon32 fa-search" aria-hidden="true"></span>
+	{icon size=32 name='magnifying-glass'}
 </a>
 
 <div id="pageHeaderSearch" class="pageHeaderSearch">
@@ -53,8 +53,8 @@
 			
 			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}">
 			
-			<button class="pageHeaderSearchInputButton button" type="submit">
-				<span class="icon icon16 fa-search pointer" title="{lang}wcf.global.search{/lang}"></span>
+			<button class="pageHeaderSearchInputButton button" type="submit" title="{lang}wcf.global.search{/lang}">
+				{icon size=16 name='magnifying-glass'}
 			</button>
 			
 			<div id="pageHeaderSearchParameters"></div>

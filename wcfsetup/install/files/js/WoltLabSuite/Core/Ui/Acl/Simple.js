@@ -64,10 +64,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
             const label = listItem.dataset.label;
             const objectId = listItem.dataset.objectId;
             const iconName = type === "group" ? "users" : "user";
-            const html = `<fa-icon size="16" name="${iconName}" solid></fa-icon>
+            const html = `<fa-icon size="16" name="${iconName}"></fa-icon>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
       <button class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
-        <fa-icon size="16" name="xmark" solid></fa-icon>
+        <fa-icon size="16" name="xmark"></fa-icon>
       </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
             const item = document.createElement("li");

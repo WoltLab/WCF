@@ -57,15 +57,19 @@
 					<li>
 						{icon size=16 name='users'}
 						<span class="aclLabel">{$aclGroup}</span>
-						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
+						<button class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+							<fa-icon size="16" name="xmark"></fa-icon>
+						</button>
 						<input type="hidden" name="{@$__aclInputName}[group][]" value="{@$aclGroup->groupID}">
 					</li>
 				{/foreach}
 				{foreach from=$aclValues[user] item=aclUser}
 					<li>
-						{icon size=16 name='user' type='solid'}
+						{icon size=16 name='user'}
 						<span class="aclLabel">{$aclUser}</span>
-						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
+						<button class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+							<fa-icon size="16" name="xmark"></fa-icon>
+						</button>
 						<input type="hidden" name="{@$__aclInputName}[user][]" value="{@$aclUser->userID}">
 					</li>
 				{/foreach}
