@@ -13,9 +13,6 @@ use wcf\system\WCF;
  * the the field is not nullable, the minimum value will be automatically set when the field's value
  * is requested the first time.
  *
- * By default, the active rating state is represented by orange stars and the default state by white
- * stars with a black border.
- *
  * This field uses the `wcf.form.field.rating` language item as the default form field label and has
  * a minimum rating of `1` and a maximum rating of `5`.
  *
@@ -42,18 +39,6 @@ class RatingFormField extends AbstractFormField implements
     use TNullableFormField;
 
     /**
-     * CSS classes for the active state of the rating elements
-     * @var string[]
-     */
-    protected $activeCssClasses = ['fa-star', 'orange'];
-
-    /**
-     * CSS classes for the default state of the rating elements
-     * @var string[]
-     */
-    protected $defaultCssClasses = ['fa-star-o'];
-
-    /**
      * @inheritDoc
      */
     protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
@@ -71,70 +56,6 @@ class RatingFormField extends AbstractFormField implements
         $this->label('wcf.form.field.rating');
         $this->minimum(1);
         $this->maximum(5);
-    }
-
-    /**
-     * Sets the CSS classes for the active state of the rating elements.
-     *
-     * @param string[] $cssClasses active state CSS classes
-     * @return  static              this form field
-     * @throws  \InvalidArgumentException   if no or invalid CSS classes are given
-     */
-    public function activeCssClasses(array $cssClasses)
-    {
-        if (empty($cssClasses)) {
-            throw new \InvalidArgumentException("No css classes for active state given for field '{$this->getId()}'.");
-        }
-
-        foreach ($cssClasses as $cssClass) {
-            static::validateClass($cssClass);
-        }
-
-        $this->activeCssClasses = $cssClasses;
-
-        return $this;
-    }
-
-    /**
-     * Sets the CSS classes for the default state of the rating elements.
-     *
-     * @param string[] $cssClasses default state CSS classes
-     * @return  static              this form field
-     * @throws  \InvalidArgumentException   if no or invalid CSS classes are given
-     */
-    public function defaultCssClasses(array $cssClasses)
-    {
-        if (empty($cssClasses)) {
-            throw new \InvalidArgumentException("No css classes for default state given for field '{$this->getId()}'.");
-        }
-
-        foreach ($cssClasses as $cssClass) {
-            static::validateClass($cssClass);
-        }
-
-        $this->defaultCssClasses = $cssClasses;
-
-        return $this;
-    }
-
-    /**
-     * Returns the CSS classes for the active state of the rating elements.
-     *
-     * @return  string[]
-     */
-    public function getActiveCssClasses()
-    {
-        return $this->activeCssClasses;
-    }
-
-    /**
-     * Returns the CSS classes for the default state of the rating elements.
-     *
-     * @return  string[]
-     */
-    public function getDefaultCssClasses()
-    {
-        return $this->defaultCssClasses;
     }
 
     /**
