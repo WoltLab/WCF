@@ -6,6 +6,10 @@ $.Redactor.prototype.WoltLabLink = function() {
 	return {
 		init: function() {
 			this.link.isUrl = (function(url) {
+				if (/^https?:\/\//.test(url)) {
+					return url;
+				}
+
 				//var pattern = '((xn--)?[\\W\\w\\D\\d]+(-[\\W\\w\\D\\d]+)*\\.)+[\\W\\w]{2,}';
 				// WoltLab modification: prevent catastrophic backtracing
 				var pattern = '((xn--)?[\\W\\w\\D\\d]+(-(?!-[\\W\\w\\D\\d])+)*\\.)+[\\W\\w]{2,}';
@@ -140,7 +144,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 			// WoltLab END
 			
 			// if link cut & paste inside editor browser added self host to a link
-			link.url = this.link.removeSelfHostFromUrl(link.url);
+			//link.url = this.link.removeSelfHostFromUrl(link.url);
 			
 			// set modal values
 			this.link.setModalValues(link);
