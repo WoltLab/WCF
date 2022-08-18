@@ -209,6 +209,10 @@
 			width: 1px;
 			white-space: nowrap;
 			word-wrap: normal;
+
+			fa-icon {
+				color: $wcfContentText;
+			}
 		}
 
 		&.columnTitle {
