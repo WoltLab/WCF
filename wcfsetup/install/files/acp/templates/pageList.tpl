@@ -128,7 +128,9 @@
 							{if $page->canDelete()}
 								{objectAction action="delete" objectTitle=$page->name}
 							{else}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							{if !$page->requireObjectID}
 								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip">{icon size=16 name='magnifying-glass'}</a>

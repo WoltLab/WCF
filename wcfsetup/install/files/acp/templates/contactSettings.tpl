@@ -55,7 +55,9 @@
 							{if $option->canDelete()}
 								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}
-								<span class="icon icon16 fa-times disabled"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -92,7 +94,9 @@
 							{objectAction action="toggle" isDisabled=$recipient->isDisabled}
 							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
 							{if $recipient->originIsSystem}
-								<span class="icon icon16 fa-times disabled"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{else}
 								{objectAction action="delete" objectTitle=$recipient->getName()}
 							{/if}

@@ -46,12 +46,16 @@
 						{if $group->isEditable()}
 							<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 						{else}
-							<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+							<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+								{icon size=16 name='pencil'}
+							</span>
 						{/if}
 						{if $group->isDeletable()}
 							{objectAction action="delete" objectTitle=$group->getTitle()}
 						{else}
-							<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+								{icon size=16 name='xmark'}
+							</span>
 						{/if}
 						
 						{event name='rowButtons'}

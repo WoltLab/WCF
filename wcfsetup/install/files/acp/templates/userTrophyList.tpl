@@ -92,8 +92,12 @@
 					<tr class="userTrophyRow jsObjectActionObject" data-object-id="{@$userTrophy->getObjectID()}">
 						<td class="columnIcon">
 							{if $userTrophy->getTrophy()->awardAutomatically}
-								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+									{icon size=16 name='pencil'}
+								</span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{else}
 								<a href="{link controller='UserTrophyEdit' id=$userTrophy->userTrophyID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil{if $userTrophy->getTrophy()->awardAutomatically} disabled{/if}"></span></a>
 								{objectAction action="delete" confirmMessage='wcf.acp.trophy.userTrophy.delete.confirmMessage'}

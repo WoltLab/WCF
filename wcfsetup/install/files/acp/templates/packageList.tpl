@@ -99,7 +99,9 @@
 							{if $package->canUninstall()}
 								<span class="icon icon16 fa-times pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
 							{else}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							
 							{event name='rowButtons'}

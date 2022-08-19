@@ -102,9 +102,15 @@
 									<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 									{objectAction action="delete" objectTitle=$template->templateName}
 								{else}
-									<span class="icon icon16 fa-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
-									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
-									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+									<span class="disabled" title="{lang}wcf.acp.template.diff{/lang}">
+										{icon size=16 name='arrow-right-arrow-left'}
+									</span>
+									<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+										{icon size=16 name='pencil'}
+									</span>
+									<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+										{icon size=16 name='xmark'}
+									</span>
 								{/if}
 								
 								{event name='rowButtons'}

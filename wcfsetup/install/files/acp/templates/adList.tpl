@@ -39,7 +39,9 @@
 						<a href="{link controller='AdEdit' object=$ad}{/link}">{$ad->adName}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+							<span class="sortableNodeHandle">
+								{icon size=16 name='arrows-up-down-left-right'}
+							</span>
 							{objectAction action="toggle" isDisabled=$ad->isDisabled}
 							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$ad->getTitle()}

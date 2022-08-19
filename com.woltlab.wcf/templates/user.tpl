@@ -171,7 +171,11 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">
 				<span class="userProfileUsername">{$user->username}</span>
-				{if $user->banned}<span class="icon icon24 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}
+				{if $user->banned}
+					<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
+						{icon size=24 name='lock'}
+					</span>
+				{/if}
 				{if MODULE_USER_RANK}
 					{if $user->getUserTitle()}
 						<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>

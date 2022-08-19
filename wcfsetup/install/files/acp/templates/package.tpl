@@ -20,7 +20,7 @@
 			<ul>
 				{content}
 					{if $package->canUninstall()}
-						<li><button class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">{icon size=16 name='xmark'} <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></button></li>
+						<li><button class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">{icon size=16 name='times' type='solid'} <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></button></li>
 					{/if}
 
 					{event name='contentHeaderNavigation'}
@@ -132,7 +132,9 @@
 											{if $requiredPackage->canUninstall()}
 												<span class="icon icon16 fa-times pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang __encode=true package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}"></span>
 											{else}
-												<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+												<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
+													{icon size=16 name='xmark'}
+												</span>
 											{/if}
 										</td>
 										<td class="columnID">{@$requiredPackage->packageID}</td>
@@ -173,7 +175,9 @@
 											{if $dependentPackage->canUninstall()}
 												<span class="icon icon16 fa-times pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang __encode=true package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}"></span>
 											{else}
-												<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+												<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
+													{icon size=16 name='xmark'}
+												</span>
 											{/if}
 										</td>
 										<td class="columnID">{@$dependentPackage->packageID}</td>
@@ -201,7 +205,7 @@
 <footer class="contentFooter">
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

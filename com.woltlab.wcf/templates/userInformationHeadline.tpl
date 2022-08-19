@@ -1,5 +1,11 @@
 <div class="containerHeadline">
-	<h3>{user object=$user class='username'}{if $user->banned} <span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}
+	<h3>
+		{user object=$user class='username'}
+		{if $user->banned}
+			<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
+				{icon size=16 name='lock'}
+			</span>
+		{/if}
 		{if MODULE_USER_RANK}
 			{if $user->getUserTitle()}
 				<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>

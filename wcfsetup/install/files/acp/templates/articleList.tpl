@@ -148,7 +148,9 @@
 								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='xmark'}</a>
 								<a href="#" class="jsButtonTrash jsTooltip" title="{lang}wcf.global.button.trash{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon size=16 name='xmark'}</a>
 							{else}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							
 							<a href="{$article->getLink()}" title="{lang}wcf.acp.article.button.viewArticle{/lang}" class="jsTooltip">{icon size=16 name='magnifying-glass'}</a>

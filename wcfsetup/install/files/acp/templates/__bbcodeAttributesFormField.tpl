@@ -1,6 +1,11 @@
 {capture assign='attributeTemplate'}
 	<section class="section">
-		<h2 class="sectionTitle"><span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang __literal=true}wcf.acp.bbcode.numberedAttribute{/lang}</span></h2>
+		<h2 class="sectionTitle">
+			<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+				{icon size=16 name='xmark'}
+			</button>
+			<span>{lang __literal=true}wcf.acp.bbcode.numberedAttribute{/lang}</span>
+		</h2>
 		
 		<dl>
 			<dt>
@@ -95,7 +100,12 @@
 		var parentContainer = elById('{@$field->getParent()->getPrefixedId()}Container');
 		
 		var parentTitle = DomTraverse.childBySel(parentContainer, 'h2.sectionTitle');
-		parentTitle.innerHTML = '<span class="icon icon16 fa-plus pointer jsTooltip" id="{@$field->getPrefixedId()}AddAttribute" title="{lang}wcf.global.button.add{/lang}"></span> ' + parentTitle.innerHTML;
+		parentTitle.innerHTML = `
+			<button class="jsTooltip" id="{@$field->getPrefixedId()}AddAttribute" title="{lang}wcf.global.button.add{/lang}">
+				{icon size=16 name='plus'}
+			</button>
+			${parentTitle.innerHTML}
+		`;
 		
 		DomChangeListener.trigger();
 		
@@ -128,7 +138,12 @@
 
 {foreach from=$field->getValue() key=attributeNumber item=attributeData name=bbcodeAttributes}
 	<section class="section">
-		<h2 class="sectionTitle"><span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.numberedAttribute{/lang}</span></h2>
+		<h2 class="sectionTitle">
+			<button class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+				{icon size=16 name='xmark'}
+			</button>
+			<span>{lang}wcf.acp.bbcode.numberedAttribute{/lang}</span>
+		</h2>
 		
 		<dl>
 			<dt>

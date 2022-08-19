@@ -40,7 +40,9 @@
 					<tr class="jsTemplateGroupRow jsObjectActionObject" data-object-id="{@$templateGroup->getObjectID()}">
 						<td class="columnIcon">
 							{if $templateGroup->isImmutable()}
-								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+									{icon size=16 name='pencil'}
+								</span>
 							{else}
 								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{/if}
@@ -48,7 +50,9 @@
 							<a href="{link controller='TemplateList' templateGroupID=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.acp.template.list{/lang}" class="jsTooltip">{icon size=16 name='list'}</a>
 							
 							{if $templateGroup->isImmutable()}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{else}
 								{objectAction action="delete" objectTitle=$templateGroup->getName()}
 							{/if}

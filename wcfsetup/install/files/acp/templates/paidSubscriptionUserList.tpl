@@ -87,7 +87,9 @@
 							{if $subscriptionUser->endDate}
 								<a href="{link controller='PaidSubscriptionUserEdit' id=$subscriptionUser->subscriptionUserID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{else}
-								<span class="icon icon16 fa-pencil disabled"></span>
+								<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+									{icon size=16 name='pencil'}
+								</span>
 							{/if}
 							{objectAction action="delete" confirmMessage='wcf.acp.paidSubscription.user.delete.confirmMessage'}
 							

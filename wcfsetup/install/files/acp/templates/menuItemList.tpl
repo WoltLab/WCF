@@ -50,7 +50,9 @@
 								{if $menuItemNode->canDelete()}
 									{objectAction action="delete" objectTitle=$menuItemNode->getTitle()}
 								{else}
-									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+									<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+										{icon size=16 name='xmark'}
+									</span>
 								{/if}
 								
 								{event name='itemButtons'}
