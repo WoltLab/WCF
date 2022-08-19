@@ -44,7 +44,9 @@
 							{if $updateServer->canDisable()}
 								{objectAction action="toggle" isDisabled=$updateServer->isDisabled}
 							{else}
-								<span class="icon icon16 fa-check-square-o disabled"></span>
+								<span class="disabled" title="{lang}wcf.global.button.disable{/lang}">
+									{icon size=16 name='square-check'}
+								</span>
 							{/if}
 							<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{if $updateServer->canDelete()}

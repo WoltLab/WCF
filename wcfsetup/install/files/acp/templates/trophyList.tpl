@@ -41,7 +41,9 @@
 						<a href="{link controller='TrophyEdit' object=$trophy}{/link}">{$trophy->getTitle()}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+							<span class="sortableNodeHandle">
+								{icon size=16 name='arrows-up-down-left-right'}
+							</span>
 							{objectAction action="toggle" isDisabled=$trophy->isDisabled}
 							<a href="{link controller='TrophyEdit' object=$trophy}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$trophy->getTitle()}

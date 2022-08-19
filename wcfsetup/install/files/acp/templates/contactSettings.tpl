@@ -90,9 +90,13 @@
 						<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}">{$recipient}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+							<span class="sortableNodeHandle">
+								{icon size=16 name='arrows-up-down-left-right'}
+							</span>
 							{objectAction action="toggle" isDisabled=$recipient->isDisabled}
-							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
+							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
+								{icon size=16 name='pencil'}
+							</a>
 							{if $recipient->originIsSystem}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
 									{icon size=16 name='xmark'}

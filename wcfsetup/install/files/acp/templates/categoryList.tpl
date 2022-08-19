@@ -108,7 +108,9 @@
 							</span>
 							
 							<span class="statusDisplay buttons">
-								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+								<span class="sortableNodeHandle">
+									{icon size=16 name='arrows-up-down-left-right'}
+								</span>
 								
 								{if $objectType->getProcessor()->canEditCategory()}
 									{objectAction action="toggle" isDisabled=$category->isDisabled}

@@ -97,7 +97,9 @@
 					<tr class="jsPackageRow" data-package="{$package->package}">
 						<td class="columnIcon">
 							{if $package->canUninstall()}
-								<span class="icon icon16 fa-times pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
+								<button class="jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">
+									{icon size=16 name='xmark'}
+								</button>
 							{else}
 								<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
 									{icon size=16 name='xmark'}
@@ -110,10 +112,9 @@
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->getDescription()}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 							{if $taintedApplications[$package->packageID]|isset}
-								<span
-									class="icon icon16 fa-warning jsTooltip"
-									title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}"
-								></span>
+								<span class="jsTooltip" title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}">
+									{icon size=16 name='warning'}
+								</span>
 							{/if}
 						</td>
 						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$package->author}</a>{else}{$package->author}{/if}</td>

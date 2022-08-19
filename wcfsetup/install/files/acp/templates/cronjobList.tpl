@@ -50,15 +50,21 @@
 					{foreach from=$objects item=cronjob}
 						<tr class="jsCronjobRow jsObjectActionObject" data-object-id="{@$cronjob->getObjectID()}">
 							<td class="columnIcon">
-								<span class="icon icon16 fa-play jsExecuteButton jsTooltip pointer" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}"></span>
+								<button class="jsExecuteButton jsTooltip" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}">
+									{icon size=16 name='play'}
+								</button>
 								
 								{if $cronjob->canBeDisabled()}
 									{objectAction action="toggle" isDisabled=$cronjob->isDisabled}
 								{else}
 									{if !$cronjob->isDisabled}
-										<span class="icon icon16 fa-check-square-o disabled" title="{lang}wcf.global.button.disable{/lang}"></span>
+										<span class="disabled" title="{lang}wcf.global.button.disable{/lang}">
+											{icon size=16 name='square-check'}
+										</span>
 									{else}
-										<span class="icon icon16 fa-square-o disabled" title="{lang}wcf.global.button.enable{/lang}"></span>
+										<span class="disabled" title="{lang}wcf.global.button.enable{/lang}">
+											{icon size=16 name='square'}
+										</span>
 									{/if}
 								{/if}
 								

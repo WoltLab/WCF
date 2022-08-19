@@ -480,7 +480,15 @@
 						<ul class="scrollableCheckboxList" id="boxVisibilitySettings">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
-									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}{if $availableBox->isDisabled} <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="{lang}wcf.acp.box.isDisabled{/lang}"></span>{/if}</label>
+									<label>
+										<input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}>
+										{$availableBox->name}
+										{if $availableBox->isDisabled}
+											<span class="jsTooltip" title="{lang}wcf.acp.box.isDisabled{/lang}">
+												{icon size=16 name='triangle-exclamation'}
+											</span>
+										{/if}
+									</label>
 								</li>
 							{/foreach}
 						</ul>

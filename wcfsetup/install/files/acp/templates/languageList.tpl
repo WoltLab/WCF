@@ -44,10 +44,20 @@
 							
 							{if !$language->isDefault}
 								{objectAction action="toggle" isDisabled=$language->isDisabled}
-								<span class="icon icon16 fa-check-circle jsObjectAction jsTooltip pointer" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
+								<button class="jsObjectAction jsTooltip" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}">
+									{icon size=16 name='circle-check'}
+								</button>
 							{else}
-								<span class="icon icon16 fa-{if !$language->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}"></span>
-								<span class="icon icon16 fa-check-circle disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}">
+									{if $language->isDisabled}
+										{icon size=16 name='square'}
+									{else}
+										{icon size=16 name='square-check'}
+									{/if}
+								</span>
+								<span class="disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}">
+									{icon size=16 name='circle-check'}
+								</span>
 							{/if}
 							
 							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>

@@ -130,7 +130,9 @@
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $requiredPackage->canUninstall()}
-												<span class="icon icon16 fa-times pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang __encode=true package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}"></span>
+												<button class="jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang __encode=true package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}">
+													{icon size=16 name='xmark'}
+												</button>
 											{else}
 												<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
 													{icon size=16 name='xmark'}
@@ -173,7 +175,9 @@
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $dependentPackage->canUninstall()}
-												<span class="icon icon16 fa-times pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang __encode=true package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}"></span>
+												<button class="jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang __encode=true package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}">
+													{icon size=16 name='xmark'}
+												</button>
 											{else}
 												<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
 													{icon size=16 name='xmark'}

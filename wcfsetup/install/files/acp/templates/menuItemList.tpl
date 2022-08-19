@@ -40,7 +40,9 @@
 						<span class="sortableNodeLabel">
 							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{$menuItemNode->getTitle()}</a>
 							<span class="statusDisplay sortableButtonContainer">
-								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+								<span class="sortableNodeHandle">
+									{icon size=16 name='arrows-up-down-left-right'}
+								</span>
 								{if $menuItemNode->canDisable()}
 									{objectAction action="toggle" isDisabled=$menuItemNode->isDisabled}
 								{else}

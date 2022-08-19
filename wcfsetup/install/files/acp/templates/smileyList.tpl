@@ -51,7 +51,9 @@
 									<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}">{@$smiley->getHtml()} {$smiley->getTitle()}</a> <span class="badge">{$smiley->smileyCode}</span>{foreach from=$smiley->getAliases() item='alias'} <span class="badge" style="margin-left: 5px">{$alias}</span>{/foreach}
 									
 									<span class="statusDisplay sortableButtonContainer">
-										<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+										<span class="sortableNodeHandle">
+											{icon size=16 name='arrows-up-down-left-right'}
+										</span>
 										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
 										{objectAction action="delete" objectTitle=$smiley->smileyCode}
 										

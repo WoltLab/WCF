@@ -135,7 +135,9 @@
 							{if !$page->requireObjectID}
 								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip">{icon size=16 name='magnifying-glass'}</a>
 							{else}
-								<span class="icon icon16 fa-search disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}">
+									{icon size=16 name='magnifying-glass'}
+								</span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -144,11 +146,14 @@
 						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnURL">
 							{if $page->applicationPackageID === null}
-								<span class="icon icon16 fa-exclamation-triangle red"></span> <span>{lang}wcf.acp.page.application.error.missing{/lang}</span>
+								{icon size=16 name='triangle-exclamation'}
+								<span>{lang}wcf.acp.page.application.error.missing{/lang}</span>
 							{else}
 								{$page->getDisplayLink()}
 								{if $page->controllerCustomURL || $page->pageType !== 'system'}
-									<span class="icon icon16 fa-exclamation-circle blue jsTooltip" title="{lang}wcf.acp.page.customURL{/lang}"></span>
+									<span class="jsTooltip" title="{lang}wcf.acp.page.customURL{/lang}">
+										{icon size=16 name='circle-exclamation'}
+									</span>
 								{/if}
 							{/if}
 						</td>

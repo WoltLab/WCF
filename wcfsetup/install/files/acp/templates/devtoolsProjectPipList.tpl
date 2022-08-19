@@ -55,8 +55,12 @@
 									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip">{icon size=16 name='plus'}</a>
 									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip">{icon size=16 name='list'}</a>
 								{else}
-									<span class="icon icon16 fa-plus disabled" title="{lang}wcf.global.button.add{/lang}"></span>
-									<span class="icon icon16 fa-list disabled" title="{lang}wcf.global.button.list{/lang}"></span>
+									<span class="disabled" title="{lang}wcf.global.button.add{/lang}">
+										{icon size=16 name='plus'}
+									</span>
+									<span class="disabled" title="{lang}wcf.global.button.list{/lang}">
+										{icon size=16 name='list'}
+									</span>
 								{/if}
 							</td>
 							<td class="columnText">
