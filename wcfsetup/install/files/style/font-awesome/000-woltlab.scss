@@ -93,6 +93,10 @@ fa-icon {
   }
 }
 
+.disabled fa-icon {
+  opacity: .45;
+}
+
 /* @deprecated 6.0 Use the new icons instead, `.icon` is now just an easy-to-spot reminder. */
 .icon {
   align-items: center;
