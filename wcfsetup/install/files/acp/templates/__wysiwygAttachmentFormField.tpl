@@ -13,7 +13,7 @@
 			{if $attachment->tinyThumbnailType}
 				<img src="{$attachment->getThumbnailLink('tiny')}" alt="" class="attachmentTinyThumbnail">
 			{else}
-				<span class="icon icon64 fa-{@$attachment->getIconName()}"></span>
+				{icon size=64 name=$attachment->getIconName()}
 			{/if}
 			
 			<div>
@@ -23,14 +23,14 @@
 				</div>
 				
 				<ul class="buttonGroup">
-					<li><span class="button small jsObjectAction" data-object-action="delete" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}">{lang}wcf.global.button.delete{/lang}</span></li>
+					<li><button type="button" class="button small jsObjectAction" data-object-action="delete" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}">{lang}wcf.global.button.delete{/lang}</button></li>
 					{if $attachment->isImage}
 						{if $attachment->thumbnailType}
-							<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getThumbnailLink('thumbnail')}">{lang}wcf.attachment.insertThumbnail{/lang}</span></li>
+							<li><button type="button" class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getThumbnailLink('thumbnail')}">{lang}wcf.attachment.insertThumbnail{/lang}</button></li>
 						{/if}
-						<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getLink()}">{lang}wcf.attachment.insertFull{/lang}</span></li>
+						<li><button type="button" class="button small jsButtonAttachmentInsertFull" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getLink()}">{lang}wcf.attachment.insertFull{/lang}</button></li>
 					{else}
-						<li><span class="button small jsButtonInsertAttachment" data-object-id="{@$attachment->attachmentID}">{lang}wcf.attachment.insert{/lang}</span></li>
+						<li><button type="button" class="button small jsButtonInsertAttachment" data-object-id="{@$attachment->attachmentID}">{lang}wcf.attachment.insert{/lang}</button></li>
 					{/if}
 				</ul>
 			</div>

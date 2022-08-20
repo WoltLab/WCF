@@ -74,8 +74,12 @@
 						{if $attachment->showAsFile() && !$attachment->isEmbedded()}
 							<a href="{$attachment->getLink()}" class="messageAttachment jsTooltip" title="{lang}wcf.attachment.file.title{/lang}">
 								<span class="messageAttachmentIcon">
-									<span class="messageAttachmentIconDefault icon icon32 fa-{@$attachment->getIconName()}"></span>
-									<span class="messageAttachmentIconDownload icon icon32 fa-download"></span>
+									<span class="messageAttachmentIconDefault">
+										{icon size=32 name=$attachment->getIconName()}
+									</span>
+									<span class="messageAttachmentIconDownload">
+										{icon size=32 name='download'}
+									</span>
 								</span>
 								<span class="messageAttachmentFilename">{$attachment->filename}</span>
 								<span class="messageAttachmentMeta">{lang}wcf.attachment.file.info{/lang}</span>
