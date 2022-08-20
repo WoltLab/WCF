@@ -99,7 +99,9 @@
 									{icon size=16 name='xmark'}
 								</span>
 							{else}
-								<a href="{link controller='UserTrophyEdit' id=$userTrophy->userTrophyID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil{if $userTrophy->getTrophy()->awardAutomatically} disabled{/if}"></span></a>
+								<a href="{link controller='UserTrophyEdit' id=$userTrophy->userTrophyID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip{if $userTrophy->getTrophy()->awardAutomatically} disabled{/if}">
+									{icon size=16 name='pencil'}
+								</a>
 								{objectAction action="delete" confirmMessage='wcf.acp.trophy.userTrophy.delete.confirmMessage'}
 							{/if}
 						</td>

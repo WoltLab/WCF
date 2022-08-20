@@ -72,8 +72,30 @@
 			<span>{lang}wcf.article.button.sort{/lang}</span>
 		</a>
 		<ul class="dropdownMenu">
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			<li>
+				<a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
+					{lang}wcf.global.title{/lang}
+					{if $sortField == 'title'}
+						{if $sortOrder === 'ASC'}
+							{icon size=16 name='caret-up' solid}
+						{else}
+							{icon size=16 name='caret-down' solid}
+						{/if}
+					{/if}
+				</a>
+			</li>
+			<li>
+				<a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
+					{lang}wcf.global.date{/lang}
+					{if $sortField == 'time'}
+						{if $sortOrder === 'ASC'}
+							{icon size=16 name='caret-up' solid}
+						{else}
+							{icon size=16 name='caret-down' solid}
+						{/if}
+					{/if}
+				</a>
+			</li>
 			
 			{event name='sortOptions'}
 		</ul>

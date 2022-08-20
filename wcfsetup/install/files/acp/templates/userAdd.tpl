@@ -344,7 +344,7 @@
 						<dl>
 							<dt>{lang}wcf.acp.user.security.multifactor{/lang}</dt>
 							<dd>
-								<span class="icon icon16 fa-check green"></span> {lang}wcf.acp.user.security.multifactor.active{/lang}
+								{icon size=16 name='check'} {lang}wcf.acp.user.security.multifactor.active{/lang}
 								<small>{lang}wcf.acp.user.security.multifactor.active.description{/lang}</small>
 							</dd>
 						</dl>
@@ -843,21 +843,22 @@
 
 {if $action === 'edit' && $ownerGroupID}
 	<script data-relocate="true">
-		(function() {
-			var input = elBySel('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
+		(() => {
+			const input = document.querySelector('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
 			if (input) {
-				var icon = elCreate('span');
-				icon.className = 'icon icon16 fa-shield jsTooltip';
+				const icon = document.createElement("span");
+				icon.innerHTML = '<fa-icon size="16" name="shield"></fa-icon>';
+				icon.classList.add("jsTooltip");
 				icon.title = '{jslang}wcf.acp.group.type.owner{/jslang}';
-				input.parentNode.appendChild(icon);
+				input.parentElement.append(icon);
 
 				{if $user->userID == $__wcf->user->userID}
-					var shadow = elCreate('input');
+					const shadow = document.createElement("input");
 					shadow.name = input.name;
-					shadow.type = 'hidden';
+					shadow.type = "hidden";
 					shadow.value = input.value;
 
-					input.parentNode.appendChild(shadow);
+					input.parentElement.append(shadow);
 					input.disabled = true;
 				{/if}
 			}

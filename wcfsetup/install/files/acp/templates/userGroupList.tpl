@@ -68,7 +68,9 @@
 							{$group->getTitle()}
 						{/if}
 						{if $group->isOwner()}
-							<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.type.owner{/lang}"></span>
+							<span class="jsTooltip" title="{lang}wcf.acp.group.type.owner{/lang}">
+								{icon size=16 name='shield'}
+							</span>
 						{/if}
 					</td>
 					<td class="columnDigits columnMembers">

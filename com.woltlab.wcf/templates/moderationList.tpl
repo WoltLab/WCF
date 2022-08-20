@@ -27,8 +27,16 @@
 					<li class="columnSort">
 						<ul class="inlineList">
 							<li>
-								<a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
-									<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.search.sortBy{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
+								<a
+									class="jsTooltip"
+									href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}"
+									title="{lang}wcf.search.sortBy{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"
+								>
+									{if $sortOrder === 'ASC'}
+										{icon size=16 name='arrow-down-wide-short'}
+									{else}
+										{icon size=16 name='arrow-down-short-wide'}
+									{/if}
 								</a>
 							</li>
 							<li>

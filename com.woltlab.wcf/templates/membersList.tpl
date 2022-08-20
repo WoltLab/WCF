@@ -47,8 +47,17 @@
 	<div class="section sectionContainerList">
 		<div class="containerListDisplayOptions">
 			<div class="containerListSortOptions">
-				<a rel="nofollow" href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}">
-					<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
+				<a
+					rel="nofollow"
+					class="jsTooltip"
+					href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}"
+					title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"
+				>
+					{if $sortOrder === 'ASC'}
+						{icon size=16 name='arrow-down-wide-short'}
+					{else}
+						{icon size=16 name='arrow-down-short-wide'}
+					{/if}
 				</a>
 				<span class="dropdown">
 					<span class="dropdownToggle">{lang}wcf.user.sortField.{$sortField}{/lang}</span>

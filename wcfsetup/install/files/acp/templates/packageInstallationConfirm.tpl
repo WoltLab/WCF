@@ -84,7 +84,13 @@
 					<tr>
 						<td class="columnTitle columnPackageName"><span{if $packageValidationArchive->getDepth()} style="padding-left: {@$packageValidationArchive->getDepth() * 14}px"{/if}>{$packageValidationArchive->getArchive()->getLocalizedPackageInfo('packageName')}</span></td>
 						<td class="columnText columnPackage">{$packageValidationArchive->getArchive()->getPackageInfo('name')}</td>
-						<td class="columnIcon columnStatus"><span class="icon icon16 {if $exceptionMessage}fa-times-circle red{else}fa-check-circle green{/if}"></span></td>
+						<td class="columnIcon columnStatus">
+							{if $exceptionMessage}
+								{icon size=16 name='circle-xmark'}
+							{else}
+								{icon size=16 name='circle-check'}
+							{/if}
+						</td>
 					</tr>
 					
 					{if $exceptionMessage}

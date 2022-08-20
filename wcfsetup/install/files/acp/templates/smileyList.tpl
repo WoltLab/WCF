@@ -54,7 +54,9 @@
 										<span class="sortableNodeHandle">
 											{icon size=16 name='arrows-up-down-left-right'}
 										</span>
-										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
+										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
+											{icon size=16 name='pencil'}
+										</a>
 										{objectAction action="delete" objectTitle=$smiley->smileyCode}
 										
 										{event name='itemButtons'}

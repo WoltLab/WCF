@@ -122,7 +122,13 @@
 							{if $page->canDisable()}
 								{objectAction action="toggle" isDisabled=$page->isDisabled}
 							{else}
-								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}">
+									{if $page->isDisabled}
+										{icon size=16 name='square'}
+									{else}
+										{icon size=16 name='square-checl'}
+									{/if}
+								</span>
 							{/if}
 							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{if $page->canDelete()}

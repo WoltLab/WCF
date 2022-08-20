@@ -46,7 +46,13 @@
 								{if $menuItemNode->canDisable()}
 									{objectAction action="toggle" isDisabled=$menuItemNode->isDisabled}
 								{else}
-									<span class="icon icon16 fa-{if !$menuItemNode->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}"></span>
+									<span class="disabled" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}">
+										{if $menuItemNode->isDisabled}
+											{icon size=16 name='square'}
+										{else}
+											{icon size=16 name='square-check'}
+										{/if}
+									</span>
 								{/if}
 								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">{icon size=16 name='pencil'}</a>
 								{if $menuItemNode->canDelete()}

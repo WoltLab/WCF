@@ -186,11 +186,19 @@
 							</span>
 
 							<span class="userStatusIcons">
-								{if $user->banned}<span class="icon icon16 fa-lock jsTooltip jsUserStatusBanned" title="{lang}wcf.user.status.banned{/lang}"></span>{/if}
+								{if $user->banned}
+									<span class="jsTooltip jsUserStatusBanned" title="{lang}wcf.user.status.banned{/lang}">
+										{icon size=16 name='lock'}
+									</span>
+								{/if}
 								{if $user->activationCode != 0}
-									<span class="icon icon16 fa-power-off jsTooltip jsUserStatusIsDisabled" title="{lang}wcf.user.status.isDisabled{/lang}"></span>
+									<span class="jsTooltip jsUserStatusIsDisabled" title="{lang}wcf.user.status.isDisabled{/lang}">
+										{icon size=16 name='power-off'}
+									</span>
 									{if !$user->getBlacklistMatches()|empty}
-										<span class="icon icon16 fa-warning jsTooltip jsUserStatusBlacklistMatches" title="{lang}wcf.user.status.blacklistMatches{/lang}"></span>
+										<span class="jsTooltip jsUserStatusBlacklistMatches" title="{lang}wcf.user.status.blacklistMatches{/lang}">
+											{icon size=16 name='warning'}
+										</span>
 									{/if}
 								{/if}
 							</span>

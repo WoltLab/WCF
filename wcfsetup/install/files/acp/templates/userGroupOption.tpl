@@ -122,8 +122,16 @@
 		{foreach from=$groups item=group}
 			<dl data-group-id="{@$group->groupID}">
 				<dt>
-					{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}
-					{if $ownerGroupID == $group->groupID && $userGroupOption->optionName|in_array:$ownerGroupPermissions}<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}"></span> {/if}
+					{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}
+						<span class="jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}">
+							{icon size=16 name='bolt'}
+						</span>
+					{/if}
+					{if $ownerGroupID == $group->groupID && $userGroupOption->optionName|in_array:$ownerGroupPermissions}
+						<span class="jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}">
+							{icon size=16 name='shield'}
+						</span>
+					{/if}
 					<label for="userGroupOption{@$group->groupID}">{$group->getTitle()}</label>
 				</dt>
 				<dd>
