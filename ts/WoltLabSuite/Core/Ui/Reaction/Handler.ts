@@ -483,7 +483,7 @@ class UiReactionHandler {
     const component = document.querySelector(
       `reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`,
     ) as ReactionSummary;
-    component?.setData(reactions);
+    component?.setData(reactions, data.returnValues.reactionTypeID);
 
     this._updateReactButton(objectId, data.returnValues.reactionTypeID);
   }

@@ -87,7 +87,7 @@ declare global {
   }
 
   interface ReactionSummary extends HTMLElement {
-    setData: (data: Map<number, number>) => void;
+    setData: (data: Map<number, number>, selectedReaction?: number) => void;
   }
 
   interface HTMLElementTagNameMap {

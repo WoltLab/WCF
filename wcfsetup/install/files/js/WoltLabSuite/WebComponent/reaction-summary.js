@@ -7,12 +7,12 @@
         }
         connectedCallback() {
             this.setupShadow();
-            this.setData(this.getData());
+            this.setData(this.getData(), this.getSelectedReaction());
         }
-        setData(data) {
-            this.render(data);
+        setData(data, selectedReaction) {
+            this.render(data, selectedReaction);
         }
-        render(data) {
+        render(data, selectedReaction) {
             this.summaryContainer.innerHTML = "";
             if (!data.size)
                 return;
@@ -25,6 +25,9 @@
             data.forEach((value, key) => {
                 const countButton = document.createElement("span");
                 countButton.classList.add("reactionCountButton");
+                if (key === selectedReaction) {
+                    countButton.classList.add("selected");
+                }
                 const icon = document.createElement("span");
                 icon.innerHTML = window.REACTION_TYPES[key].renderedIcon;
                 countButton.append(icon);
@@ -39,6 +42,9 @@
             const data = JSON.parse(this.getAttribute("data"));
             this.removeAttribute("data");
             return new Map(data);
+        }
+        getSelectedReaction() {
+            return parseInt(this.getAttribute("selected-reaction"));
         }
         setupShadow() {
             const root = this.attachShadow({ mode: "open" });
@@ -86,5 +92,9 @@
     .reactionCount::before {
   		content: "\u202f×\u202f";
   	}
+
+    .selected .reactionCount {
+      font-weight: 600;
+    }
   `;
 })();

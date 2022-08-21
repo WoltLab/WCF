@@ -368,7 +368,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 reactions.set(parseInt(key), value);
             });
             const component = document.querySelector(`reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`);
-            component === null || component === void 0 ? void 0 : component.setData(reactions);
+            component === null || component === void 0 ? void 0 : component.setData(reactions, data.returnValues.reactionTypeID);
             this._updateReactButton(objectId, data.returnValues.reactionTypeID);
         }
         _ajaxSetup() {
