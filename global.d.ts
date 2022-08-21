@@ -86,11 +86,16 @@ declare global {
     set date(date: Date);
   }
 
+  interface ReactionSummary extends HTMLElement {
+    setData: (data: Map<number, number>) => void;
+  }
+
   interface HTMLElementTagNameMap {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
+    "reaction-summary": ReactionSummary;
   }
 }

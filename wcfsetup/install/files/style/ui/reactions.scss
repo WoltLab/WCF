@@ -37,23 +37,6 @@
 	height: 20px;
 }
 
-.reactionSummaryList {
-	display: inline-flex;
-	flex-wrap: wrap;
-	margin: -5px -5px 0 0;
-
-	&.reactionSummaryListTiny .reactionType {
-		width: 16px;
-		height: 16px;
-	}
-
-	&:hover {
-		.reactCountButton {
-			color: $wcfContentText;
-		}
-	}
-}
-
 .reactionCount {
 	@include wcfFontSmall;
 
@@ -62,13 +45,6 @@
 	&::before {
 		content: "\202f×\202f";
 	}
-}
-
-.reactCountButton {
-	color: $wcfContentDimmedText;
-	flex: 0 0 auto;
-	margin: 5px 5px 0 0;
-	white-space: nowrap;
 }
 
 .reactionPopoverContent {

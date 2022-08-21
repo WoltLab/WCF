@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "./CountButtons", "focus-trap"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, CountButtons_1, focus_trap_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "focus-trap"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, focus_trap_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
@@ -16,7 +16,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     UiAlignment = tslib_1.__importStar(UiAlignment);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     UiScreen = tslib_1.__importStar(UiScreen);
-    CountButtons_1 = tslib_1.__importDefault(CountButtons_1);
     const availableReactions = Object.values(window.REACTION_TYPES);
     class UiReactionHandler {
         activeButton = undefined;
@@ -52,7 +51,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 },
             }, opts);
             this.initReactButtons();
-            this.countButtons = new CountButtons_1.default(this._objectType, this._options);
             Listener_1.default.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
         }
@@ -365,7 +363,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         }
         _ajaxSuccess(data) {
             const objectId = ~~data.returnValues.objectID;
-            this.countButtons.updateCountButtons(objectId, data.returnValues.reactions);
+            const reactions = new Map();
+            Object.entries(data.returnValues.reactions).forEach(([key, value]) => {
+                reactions.set(parseInt(key), value);
+            });
+            const component = document.querySelector(`reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`);
+            component === null || component === void 0 ? void 0 : component.setData(reactions);
             this._updateReactButton(objectId, data.returnValues.reactionTypeID);
         }
         _ajaxSetup() {

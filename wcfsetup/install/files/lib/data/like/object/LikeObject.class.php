@@ -169,6 +169,18 @@ class LikeObject extends DatabaseObject
         return $this->reactions;
     }
 
+    public function getReactionsJson(): string
+    {
+        $data = [];
+        foreach ($this->reactions as $reactionTypeID => $value) {
+            $data[] = [
+                $reactionTypeID, $value['reactionCount']
+            ];
+        }
+
+        return JSON::encode($data);
+    }
+
     /**
      * Sets the liked object.
      *
