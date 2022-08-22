@@ -129,7 +129,7 @@
 					{/if}
 					{if $ownerGroupID == $group->groupID && $userGroupOption->optionName|in_array:$ownerGroupPermissions}
 						<span class="jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}">
-							{icon size=16 name='shield'}
+							{icon size=16 name='shield-halved'}
 						</span>
 					{/if}
 					<label for="userGroupOption{@$group->groupID}">{$group->getTitle()}</label>

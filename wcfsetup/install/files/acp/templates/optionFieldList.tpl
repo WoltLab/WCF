@@ -18,7 +18,7 @@
 					{/if}
 					{if $groupIsOwner && $option->optionName|in_array:$ownerGroupPermissions}
 						<span class="jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}">
-							{icon size=16 name='shield'}
+							{icon size=16 name='shield-halved'}
 						</span>
 					{/if}
 					

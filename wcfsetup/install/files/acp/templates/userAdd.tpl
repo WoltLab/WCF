@@ -847,7 +847,7 @@
 			const input = document.querySelector('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
 			if (input) {
 				const icon = document.createElement("span");
-				icon.innerHTML = '<fa-icon size="16" name="shield"></fa-icon>';
+				icon.innerHTML = '<fa-icon size="16" name="shield-halved"></fa-icon>';
 				icon.classList.add("jsTooltip");
 				icon.title = '{jslang}wcf.acp.group.type.owner{/jslang}';
 				input.parentElement.append(icon);

@@ -69,7 +69,7 @@
 						{/if}
 						{if $group->isOwner()}
 							<span class="jsTooltip" title="{lang}wcf.acp.group.type.owner{/lang}">
-								{icon size=16 name='shield'}
+								{icon size=16 name='shield-halved'}
 							</span>
 						{/if}
 					</td>

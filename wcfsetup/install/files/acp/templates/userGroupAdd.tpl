@@ -70,7 +70,7 @@
 {/if}
 
 {if $action == 'edit' && $group->isOwner()}
-	<p class="info">{icon size=16 name='shield' type='solid'} {lang}wcf.acp.group.type.owner.description{/lang}</p>
+	<p class="info">{icon size=16 name='shield-halved' type='solid'} {lang}wcf.acp.group.type.owner.description{/lang}</p>
 {/if}
 
 {if $warningSelfEdit|isset}
