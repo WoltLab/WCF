@@ -94,9 +94,11 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
             return '<li class="skip"><a href="' . self::insertPageNumber(
                 $link,
                 $pageNo - 1
-            ) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous') . '" class="icon icon24 fa-chevron-left jsTooltip" rel="prev"></a></li>' . "\n";
+            ) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous') . '" class="jsTooltip" rel="prev">
+                <fa-icon size="24" name="chevron-left"></fa-icon>
+            </a></li>' . "\n";
         } else {
-            return '<li class="skip disabled"><span class="icon icon24 fa-chevron-left"></span></li>' . "\n";
+            return '<li class="skip disabled"><fa-icon size="24" name="chevron-left"></fa-icon></li>' . "\n";
         }
     }
 
@@ -114,9 +116,11 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
             return '<li class="skip"><a href="' . self::insertPageNumber(
                 $link,
                 $pageNo + 1
-            ) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.next') . '" class="icon icon24 fa-chevron-right jsTooltip" rel="next"></a></li>' . "\n";
+            ) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.next') . '" class="jsTooltip" rel="next">
+                <fa-icon size="24" name="chevron-right"></fa-icon>
+            </a></li>' . "\n";
         } else {
-            return '<li class="skip disabled"><span class="icon icon24 fa-chevron-right"></span></li>' . "\n";
+            return '<li class="skip disabled"><fa-icon size="24" name="chevron-right"></fa-icon></li>' . "\n";
         }
     }
 

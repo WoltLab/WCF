@@ -162,6 +162,6 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
             return FontAwesomeIcon::fromString($this->iconClassName);
         }
 
-        return FontAwesomeIcon::fromValues('bars', false);
+        return FontAwesomeIcon::fromValues('bars');
     }
 }

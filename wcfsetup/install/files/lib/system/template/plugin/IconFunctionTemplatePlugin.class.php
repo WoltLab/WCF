@@ -2,6 +2,7 @@
 
 namespace wcf\system\template\plugin;
 
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\template\TemplateEngine;
 use wcf\util\JSON;
 
@@ -69,13 +70,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             HTML;
         }
 
-        $modifier = '';
-        if ($type === 'solid') {
-            $modifier = ' solid';
-        }
-
-        return <<<HTML
-        <fa-icon size="{$size}" name="{$name}"{$modifier}></fa-icon>
-        HTML;
+        $forceSolid = $type === 'solid';
+        return FontAwesomeIcon::fromValues($name, $forceSolid)->toHtml($size);
     }
 }

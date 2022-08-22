@@ -96,7 +96,7 @@ final class FontAwesomeIcon implements \Stringable
         return new FontAwesomeIcon($name, $forceSolid);
     }
 
-    public static function fromValues(string $name, bool $forceSolid): self
+    public static function fromValues(string $name, bool $forceSolid = false): self
     {
         self::validateName($name);
 

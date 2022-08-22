@@ -8,6 +8,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -206,7 +207,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             if ($notificationData['authors'] === 1) {
                 $image = $event->getAuthor()->getAvatar()->getImageTag(48);
             } else {
-                $image = '<span class="icon icon48 fa-users"></span>';
+                $image = FontAwesomeIcon::fromValues('users')->toHtml(48);
             }
 
             if ($event->isConfirmed()) {

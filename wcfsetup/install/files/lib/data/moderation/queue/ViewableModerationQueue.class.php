@@ -12,6 +12,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
@@ -231,20 +232,20 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     }
 
     /**
-     * @since 5.5
+     * @since 6.0
      */
-    public function getIconName(): string
+    public function getIcon(): FontAwesomeIcon
     {
         $definition = ObjectTypeCache::getInstance()->getDefinition(ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->definitionID);
 
         if ($definition->definitionName === 'com.woltlab.wcf.moderation.activation') {
             if ($this->getAffectedObject()->enableTime) {
-                return 'fa-clock-o';
+                return FontAwesomeIcon::fromValues('clock');
             } else {
-                return 'fa-check-square-o';
+                return FontAwesomeIcon::fromValues('square-check');
             }
         }
 
-        return 'fa-exclamation-triangle';
+        return FontAwesomeIcon::fromValues('triangle-exclamation');
     }
 }

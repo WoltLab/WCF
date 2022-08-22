@@ -116,7 +116,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $items = \array_map(static function (ViewableModerationQueue $queue) {
             return [
                 'content' => $queue->getAffectedObject()->getTitle(),
-                'image' => '<span class="icon icon48 ' . $queue->getIconName() . '"></span>',
+                'image' => $queue->getIcon()->toHtml(48),
                 'isUnread' => $queue->isNew(),
                 'link' => $queue->getLink(),
                 'objectId' => $queue->queueID,
