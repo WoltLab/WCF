@@ -15,6 +15,6 @@ final class InvalidIconFormat extends \Exception
 {
     public function __construct()
     {
-        parent::__construct('Expected a string containing an icon name and a boolean string separated by a null byte.');
+        parent::__construct('Expected a string containing an icon name and a boolean string separated by a semicolon.');
     }
 }

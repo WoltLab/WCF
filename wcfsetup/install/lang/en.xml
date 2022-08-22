@@ -4520,6 +4520,8 @@ Attachments:
 		<item name="wcf.style.colorPicker.hue"><![CDATA[Hue]]></item>
 		<item name="wcf.style.colorPicker.saturation"><![CDATA[Saturation]]></item>
 		<item name="wcf.style.colorPicker.lightness"><![CDATA[Lightness]]></item>
+		<item name="wcf.style.colorPicker.changeColor"><![CDATA[Change Color]]></item>
+		<item name="wcf.style.colorPicker.changeBackgroundColor"><![CDATA[Change Background Color]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}“{$tag->name}”{/implode}]]></item>

@@ -11,6 +11,8 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\exception\InvalidIconFormat;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -181,5 +183,17 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     public function getConditions()
     {
         return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.trophy', $this->trophyID);
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getIcon(): ?FontAwesomeIcon
+    {
+        if ($this->type === self::TYPE_BADGE) {
+            return FontAwesomeIcon::fromString($this->iconName);
+        }
+
+        return null;
     }
 }

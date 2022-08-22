@@ -17,30 +17,13 @@
 }
 
 .trophyIcon {
+	align-self: flex-start;
 	display: inline-block;
 	border-radius: 50%;
 
-	&.icon {
-		/* Factor: 0.5625 */
-		&.icon16 {
-			font-size: 9px;
-		}
-
-		&.icon32 {
-			font-size: 18px;
-		}
-
-		&.icon48 {
-			font-size: 27px;
-		}
-
-		&.icon64 {
-			font-size: 36px;
-		}
-
-		&.icon144 {
-			font-size: 81px;
-		}
+	fa-icon {
+		transform: scale(0.5625);
+		width: var(--icon-size);
 	}
 }
 

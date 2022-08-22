@@ -34,12 +34,12 @@ final class FontAwesomeIcon implements \Stringable
 
     /**
      * Serializes the icon name and the use of the solid style into a
-     * null byte separated string that is understood by `fromString`.
+     * semicolon separated string that is understood by `fromString`.
      */
     public function __toString(): string
     {
         return \sprintf(
-            "%s\0%s",
+            "%s;%s",
             $this->name,
             $this->forceSolid ? 'true' : 'false'
         );
@@ -72,7 +72,7 @@ final class FontAwesomeIcon implements \Stringable
     }
 
     /**
-     * Uses a string containing the two values separated by a null byte.
+     * Uses a string containing the two values separated by a semicolon.
      * The first value is the name of the icon and the second value is
      * the string `true` or `false` to force the solid variant.
      *
@@ -80,11 +80,11 @@ final class FontAwesomeIcon implements \Stringable
      */
     public static function fromString(string $iconData): self
     {
-        if (!\str_contains($iconData, "\0")) {
+        if (!\str_contains($iconData, ';')) {
             throw new InvalidIconFormat();
         }
 
-        [$name, $solid] = \explode("\0", $iconData);
+        [$name, $solid] = \explode(';', $iconData);
         if ($solid !== 'true' && $solid !== 'false') {
             throw new InvalidIconFormat();
         }
@@ -105,11 +105,11 @@ final class FontAwesomeIcon implements \Stringable
 
     public static function isValidString(string $iconData): bool
     {
-        if (!\str_contains($iconData, "\0")) {
+        if (!\str_contains($iconData, ';')) {
             return false;
         }
 
-        [$name, $solid] = \explode("\0", $iconData);
+        [$name, $solid] = \explode(';', $iconData);
         if ($solid !== 'true' && $solid !== 'false') {
             return false;
         }

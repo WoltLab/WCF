@@ -135,7 +135,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem
             } else if (\str_starts_with($this->icon, 'fa-')) {
                 // Safeguard to prevent legacy icons from breaking
                 // the admin panel during the upgrade to 6.0.
-                return FontAwesomeIcon::fromString("question\0true");
+                return FontAwesomeIcon::fromString("question;true");
             }
         }
 

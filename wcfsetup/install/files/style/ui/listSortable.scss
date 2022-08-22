@@ -62,10 +62,14 @@
 		justify-content: flex-end;
 
 		> a,
+		> button,
 		> span {
-			cursor: pointer;
 			flex: 0 0 auto;
 			margin-left: 5px;
+		}
+
+		fa-icon {
+			color: $wcfContentText;
 		}
 	}
 }

@@ -50,7 +50,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
         if ($element->tagName === 'icon') {
             $solid = $element->getAttribute('solid');
             $elements[$element->tagName] = \sprintf(
-                "%s\0%s",
+                "%s;%s",
                 $element->nodeValue,
                 $solid === 'true' ? 'true' : 'false'
             );

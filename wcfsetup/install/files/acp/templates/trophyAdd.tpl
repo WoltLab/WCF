@@ -4,7 +4,7 @@
 {include file='fontAwesomeJavaScript'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Trophy/Badge'], function (Language, BadgeHandler) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Trophy/Editor'], (Language, { setup }) => {
 		Language.addObject({
 			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}',
 			'wcf.acp.trophy.badge.edit': '{jslang}wcf.acp.trophy.badge.edit{/jslang}',
@@ -13,34 +13,7 @@
 			'wcf.acp.trophy.imageUpload.error.noImage': '{jslang}wcf.acp.trophy.imageUpload.error.noImage{/jslang}'
 		});
 		
-		elBySel('select[name=type]').addEventListener('change', function () {
-			if (elBySel('select[name=type]').value == 1) {
-				elHide(elById('badgeContainer'));
-				elShow(elById('imageContainer'));
-			} 
-			else if (elBySel('select[name=type]').value == 2) {
-				elShow(elById('badgeContainer'));
-				elHide(elById('imageContainer'));
-			}
-		});
-		
-		elBySel('input[name=awardAutomatically]').addEventListener('change', function () {
-			var awardAutomatically = elBySel('input[name=awardAutomatically]').checked;
-			elBySelAll('.conditionSection', null, window[(awardAutomatically ? 'elShow' : 'elHide')]);
-			
-			var revokeCheckbox = elBySel('#revokeAutomaticallyDL input');
-			if (awardAutomatically) {
-				elById('revokeAutomaticallyDL').classList.remove('disabled');
-				revokeCheckbox.disabled = false;
-			}
-			else {
-				elById('revokeAutomaticallyDL').classList.add('disabled');
-				revokeCheckbox.disabled = true;
-				revokeCheckbox.checked = false;
-			}
-		});
-		
-		BadgeHandler.init(); 
+		setup();
 	});
 </script>
 
@@ -167,7 +140,7 @@
 			{event name='dataFields'}
 		</section>
 		
-		<section id="imageContainer" class="section"{if $type == 2} style="display: none;"{/if}>
+		<section id="imageContainer" class="section"{if $type == 2} hidden{/if}>
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.trophy.type.imageUpload{/lang}</h2>
 			</header>
@@ -202,7 +175,7 @@
 			</dl>
 		</section>
 		
-		<section id="badgeContainer" class="section"{if $type == 1} style="display: none;"{/if}>
+		<section id="badgeContainer" class="section"{if $type == 1} hidden{/if}>
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.trophy.type.badge{/lang}</h2>
 			</header>
@@ -210,8 +183,13 @@
 			<dl>
 				<dt>{lang}wcf.acp.trophy.type.badge{/lang}</dt>
 				<dd>
-					<span class="icon icon64 fa-{$iconName} jsTrophyIcon trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}"></span>
-					<span class="button small">{lang}wcf.global.button.edit{/lang}</span>
+					<span class="trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}">
+						{@$icon->toHtml(64)}
+					</span>
+					<button type="button" class="button small trophyIconEditButton" data-value="icon">{lang}wcf.global.fontAwesome.selectIcon{/lang}</button>
+					<button type="button" class="button small trophyIconEditButton" data-value="color">{lang}wcf.style.colorPicker.changeColor{/lang}</button>
+					<button type="button" class="button small trophyIconEditButton" data-value="background-color">{lang}wcf.style.colorPicker.changeBackgroundColor{/lang}</button>
+
 					
 					<input type="hidden" name="iconName" value="{$iconName}">
 					<input type="hidden" name="iconColor" value="{$iconColor}">
@@ -222,7 +200,7 @@
 		
 		{event name='sections'}
 		
-		<section class="section conditionSection"{if !$awardAutomatically} style="display: none;"{/if}>
+		<section class="section conditionSection"{if !$awardAutomatically} hidden{/if}>
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.trophy.conditions{/lang}</h2>
 				<p class="sectionDescription">{lang}wcf.acp.trophy.conditions.description{/lang}</p>
@@ -248,13 +226,15 @@
 
 <div id="trophyIconEditor" style="display: none;">
 	<div class="box128">
-		<span class="icon icon144 fa-{$iconName} jsTrophyIcon trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}"></span>
+		<span class="jsTrophyIcon trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}">
+			{icon size=128 name=$iconName}
+		</span>
 		<div>
 			<dl>
 				<dt>{lang}wcf.acp.trophy.badge.iconName{/lang}</dt>
 				<dd>
 					<span class="jsTrophyIconName">{$iconName}</span>
-					<a href="#" class="button small">{icon size=16 name='magnifying-glass'}</a>
+					<button type="button" class="button small">{icon size=16 name='magnifying-glass'}</a>
 				</dd>
 			</dl>
 			
@@ -265,7 +245,7 @@
 						<span id="iconColorValue" class="colorBoxValue jsColorPicker" data-store="iconColorValue"></span>
 						<input type="hidden" id="iconColorValue">
 					</span>
-					<a href="#" class="button small jsButtonIconColorPicker">{icon size=16 name='paintbrush'}</a>
+					<button type="button" class="button small jsButtonIconColorPicker">{icon size=16 name='paintbrush'}</a>
 				</dd>
 			</dl>
 			
@@ -276,7 +256,7 @@
 						<span id="badgeColorValue" class="colorBoxValue jsColorPicker" data-store="badgeColorValue"></span>
 						<input type="hidden" id="badgeColorValue">
 					</span>
-					<a href="#" id="test" class="button small jsButtonBadgeColorPicker">{icon size=16 name='paintbrush'}</a>
+					<button type="button" id="test" class="button small jsButtonBadgeColorPicker">{icon size=16 name='paintbrush'}</a>
 				</dd>
 			</dl>
 		</div>
