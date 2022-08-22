@@ -83,7 +83,7 @@
 		<bbcode name="quote">
 			<isBlockElement>1</isBlockElement>
 			<buttonlabel>wcf.editor.button.quote</buttonlabel>
-			<wysiwygicon>fa-quote-left</wysiwygicon>
+			<wysiwygicon solid="true">quote-left</wysiwygicon>
 			<attributes>
 				<attribute name="0"/>
 				<attribute name="1"/>
@@ -93,7 +93,7 @@
 			<isBlockElement>1</isBlockElement>
 			<sourcecode>1</sourcecode>
 			<buttonlabel>wcf.editor.button.code</buttonlabel>
-			<wysiwygicon>fa-code</wysiwygicon>
+			<wysiwygicon>code</wysiwygicon>
 			<attributes>
 				<attribute name="0"/>
 				<attribute name="1"/>
@@ -150,7 +150,7 @@
 		<bbcode name="spoiler">
 			<isBlockElement>1</isBlockElement>
 			<buttonlabel>wcf.editor.button.spoiler</buttonlabel>
-			<wysiwygicon>fa-eye-slash</wysiwygicon>
+			<wysiwygicon>eye-slash</wysiwygicon>
 			<attributes>
 				<attribute name="0"/>
 			</attributes>
@@ -160,7 +160,7 @@
 			<htmlclose><![CDATA[kbd]]></htmlclose>
 			<sourcecode>1</sourcecode>
 			<buttonlabel>wcf.editor.button.inlineCode</buttonlabel>
-			<wysiwygicon>fa-terminal</wysiwygicon>
+			<wysiwygicon>terminal</wysiwygicon>
 		</bbcode>
 		<bbcode name="attach">
 			<classname>wcf\system\bbcode\AttachmentBBCode</classname>
@@ -219,7 +219,7 @@
 			<isBlockElement>1</isBlockElement>
 			<sourcecode>1</sourcecode>
 			<buttonlabel>wcf.editor.button.woltlabHtml</buttonlabel>
-			<wysiwygicon>fa-html5</wysiwygicon>
+			<wysiwygicon>html5</wysiwygicon>
 		</bbcode>
 		<bbcode name="wsa">
 			<classname>wcf\system\bbcode\WoltLabSuiteArticleBBCode</classname>

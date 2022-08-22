@@ -160,12 +160,14 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
             container.appendChild(title);
             const buttonKeep = document.createElement("button");
             buttonKeep.innerHTML = '<fa-icon size="16" name="check"></fa-icon>';
+            buttonKeep.type = "button";
             buttonKeep.classList.add("jsTooltip");
             buttonKeep.title = Language.get("wcf.editor.autosave.keep");
             buttonKeep.addEventListener("click", () => this.hideOverlay());
             container.appendChild(buttonKeep);
             const buttonDiscard = document.createElement("button");
             buttonDiscard.innerHTML = '<fa-icon size="16" name="xmark"></fa-icon>';
+            buttonDiscard.type = "button";
             buttonDiscard.classList.add("jsTooltip");
             buttonDiscard.title = Language.get("wcf.editor.autosave.discard");
             buttonDiscard.addEventListener("click", () => {

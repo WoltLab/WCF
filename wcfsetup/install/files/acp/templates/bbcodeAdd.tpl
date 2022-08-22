@@ -191,8 +191,8 @@
 				<dt><label for="wysiwygIcon">{lang}wcf.acp.bbcode.wysiwygIcon{/lang}</label></dt>
 				<dd>
 					<div class="inputAddon">
-						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium">
-						<a href="#" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon size=16 name='magnifying-glass'}</a>
+						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium" readonly>
+						<button type="button" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon size=16 name='magnifying-glass'}</button>
 					</div>
 					{if $errorField == 'wysiwygIcon'}
 						<small class="innerError">
@@ -277,14 +277,18 @@
 
 {include file='fontAwesomeJavaScript'}
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], function (UiStyleFontAwesome) {
-		elBySel('.jsButtonSearchWysiwygIcon').addEventListener('click', function(event) {
-			event.preventDefault();
-			
-			UiStyleFontAwesome.open(function(iconName) {
-				elById('wysiwygIcon').value = 'fa-' + iconName;
+	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
+		const button = document.querySelector('.jsButtonSearchWysiwygIcon');
+		const input = document.getElementById('wysiwygIcon');
+
+		function openFontAwesomePicker() {
+			UiStyleFontAwesome.open((iconName, forceSolid) => {
+				input.value = `${ iconName };${ String(forceSolid) }`;
 			});
-		});
+		}
+
+		button.addEventListener("click", () => openFontAwesomePicker());
+		input.addEventListener("click", () => openFontAwesomePicker());
 	});
 </script>
 
