@@ -4,11 +4,15 @@ namespace wcf\data\user\menu\item;
 
 use wcf\data\ITitledObject;
 use wcf\data\ProcessibleDatabaseObject;
+use wcf\system\exception\SystemException;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\user\DefaultUserMenuItemProvider;
 use wcf\system\menu\user\IUserMenuItemProvider;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\exception\InvalidIconFormat;
+use wcf\system\style\exception\UnknownIcon;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
 /**
@@ -150,12 +154,14 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
     }
 
     /**
-     * Returns FontAwesome icon class name.
-     *
-     * @return  string
+     * @since 6.0
      */
-    public function getIconClassName()
+    public function getIcon(): ?FontAwesomeIcon
     {
-        return $this->iconClassName ?: 'fa-bars';
+        if ($this->iconClassName && !\str_starts_with($this->iconClassName, 'fa-')) {
+            return FontAwesomeIcon::fromString($this->iconClassName);
+        }
+
+        return FontAwesomeIcon::fromValues('bars', false);
     }
 }

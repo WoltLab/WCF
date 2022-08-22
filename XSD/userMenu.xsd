@@ -33,6 +33,10 @@
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 	
+	<xs:complexType name="usermenuitem_icon">
+		<xs:attribute name="solid" type="xs:boolean" />
+	</xs:complexType>
+
 	<!-- imported/updated page menu item element -->
 	<xs:complexType name="usermenuitem_import">
 		<xs:complexContent>
@@ -42,7 +46,7 @@
 					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 					<xs:element name="controller" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="iconclassname" type="woltlab_varchar_nullable" minOccurs="0" />
-					<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="classname" type="usermenuitem_icon" minOccurs="0" />
 					<xs:element name="parent" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
 				</xs:all>

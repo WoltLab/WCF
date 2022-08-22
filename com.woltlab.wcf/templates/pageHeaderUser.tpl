@@ -74,7 +74,7 @@
 						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine" data-category="{$menuItem[category]->menuItem}">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 {$menuItem[category]->getIconClassName()}"></span>
+								{@$menuItem[category]->getIcon()->toHtml(32)}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{$menuItem[link]}" class="userMenuItemLink">
