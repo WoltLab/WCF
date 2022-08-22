@@ -40,7 +40,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 void this.search(0 /* SearchAction.Modify */);
             });
             this.typeInput.addEventListener("change", () => this.changeType());
-            window.addEventListener("popstate", () => {
+            window.addEventListener("popstate", (event) => {
+                if (event.state.searchAction && event.state.searchAction === 2 /* SearchAction.Init */) {
+                    // Safari fires the `popstate` for the initial request on
+                    // navigation, causing the search to be dispatched twice.
+                    return;
+                }
                 this.initQueryString();
             });
         }
@@ -109,10 +114,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             }
             url.search += new URLSearchParams(parameters);
             if (searchAction === 2 /* SearchAction.Init */) {
-                window.history.replaceState({}, document.title, url.toString());
+                window.history.replaceState({ searchAction }, document.title, url.toString());
             }
             else {
-                window.history.pushState({}, document.title, url.toString());
+                window.history.pushState({ searchAction }, document.title, url.toString());
             }
         }
         getFormData() {
