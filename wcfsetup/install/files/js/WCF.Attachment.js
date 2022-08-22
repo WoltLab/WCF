@@ -488,7 +488,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see        WCF.Upload._initFile()
 	 */
 	_initFile: function (file) {
-		var $li = $('<li class="box64 formAttachmentListItem"><span class="icon icon64 fa-spinner" /><div><div><p>' + WCF.String.escapeHTML(file.name) + '</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
+		var $li = $('<li class="box64 formAttachmentListItem"><fa-icon size="64" name="spinner"></fa-icon><div><div><p>' + WCF.String.escapeHTML(file.name) + '</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
 		
@@ -498,7 +498,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			$li.find('progress').remove();
 			
 			// upload icon
-			$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
+			const icon = $li[0].querySelector("fa-icon");
+			icon.setIcon("ban");
 			
 			// error message
 			$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.tooLarge') + '</small>'));

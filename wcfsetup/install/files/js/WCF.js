@@ -2547,7 +2547,9 @@ WCF.Collapsible.Remote = Class.extend({
 			$button = $($button);
 		}
 		else {
-			$button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 fa-chevron-down" title="' + WCF.Language.get('wcf.global.button.collapsible') + '">').prependTo(buttonContainer);
+			$button = $(`<button class="collapsibleButton jsToolti" title="${WCF.Language.get('wcf.global.button.collapsible')}">
+				<fa-icon size="16" name="chevron-down"></fa-icon>
+			</button>`).prependTo(buttonContainer);
 		}
 		
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
@@ -4049,7 +4051,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 			$icon = $(item.icon);
 		}
 		else if (this._includeUserGroups && item.type === 'group') {
-			$icon = $('<span class="icon icon16 fa-users" />');
+			$icon = $('<fa-icon size="16" name="users"></fa-icon>');
 		}
 		
 		if ($icon) {
@@ -6548,7 +6550,7 @@ $.widget('ui.wcfSlideshow', {
 		// create toggle buttons
 		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
 		for (var $i = 0; $i < this._count; $i++) {
-			var $link = $('<li><a><span class="icon icon16 fa-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+			var $link = $('<li><a><fa-icon size="16" name="circle"></fa-icon></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
 			if ($i == 0) {
 				$link.find('.icon').addClass('active');
 			}

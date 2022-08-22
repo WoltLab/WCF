@@ -210,16 +210,6 @@
 				color: $wcfHeaderMenuLinkActive;
 			}
 
-			.icon {
-				color: inherit;
-				cursor: inherit !important;
-
-				&.redactorButtonImage {
-					background: no-repeat center center;
-					background-size: contain;
-				}
-			}
-
 			@include screen-lg {
 				// hover-styles on mobile are misleading as they stay much longer
 				// due to the click-like behavior

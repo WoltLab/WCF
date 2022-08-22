@@ -803,7 +803,12 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		if (!bindOnExistingButtons === true) {
-			$('<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>').prependTo($('.contentHeaderNavigation > ul'));
+			$(`<li>
+				<button class="button jsButtonSearchForUpdates">
+					<fa-icon size="16" name="arrows-rotate"></fa-icon>
+					<span>${WCF.Language.get('wcf.acp.package.searchForUpdates')}</span>
+				</button>
+			</li>`).prependTo($('.contentHeaderNavigation > ul'));
 		}
 		
 		this._button = elBySel('.jsButtonSearchForUpdates');
@@ -904,7 +909,12 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search') + '</span></a></li>');
+		var $button = $(`<li>
+			<button class="button">
+				<fa-icon size="16" name="cart-shopping"></fa-icon>
+				<span>${WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search')}</span>
+			</button>
+		</li>`);
 		$button.prependTo($('.contentHeaderNavigation > ul')).click($.proxy(this._click, this));
 	},
 	

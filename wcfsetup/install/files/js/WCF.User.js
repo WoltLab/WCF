@@ -1012,7 +1012,9 @@ if (COMPILER_TARGET_DEFAULT) {
 				if (!$item.data('isRead')) {
 					$item.find('a:not(.userLink)').prop('href', $item.data('link'));
 					
-					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.global.button.markAsRead') + '" />').appendTo($item);
+					var $markAsConfirmed = $(`<button class="notificationItemMarkAsConfirmed jsTooltip" title="${WCF.Language.get('wcf.global.button.markAsRead')}">
+						<fa-icon size="24" name="check"></fa-icon>
+					</button>`).appendTo($item);
 					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
 				}
 			}).bind(this));

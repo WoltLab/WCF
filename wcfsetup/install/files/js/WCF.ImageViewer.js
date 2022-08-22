@@ -895,11 +895,11 @@ $.widget('ui.wcfImageViewer', {
 		var $imageContainer = $('<div><img /><img /></div>').appendTo(this._container);
 		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious icon fa-angle-double-left" /><div><ul /></div><span class="wcfImageViewerButtonNext icon fa-angle-double-right" /></footer>').appendTo(this._container);
 		var $slideshowContainer = $('<ul />').appendTo($imageContainer);
-		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><span class="icon icon48 fa-angle-left" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><span class="icon icon48 fa-play" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><span class="icon icon48 fa-angle-right" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><span class="icon icon48 fa-expand" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><span class="icon icon48 fa-external-link" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><fa-icon size="48" name="angle-left"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><fa-icon size="48" name="play"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><fa-icon size="48" name="angle-right"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><fa-icon size="48" name="expand"></fa-icon></li>').appendTo($slideshowContainer);
+		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><fa-icon size="48" name="arrow-up-right-from-square"></fa-icon></li>').appendTo($slideshowContainer);
 		
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
@@ -943,7 +943,9 @@ $.widget('ui.wcfImageViewer', {
 		$slideshowButtonFull.click(function(event) { window.location = $(event.currentTarget).data('link'); });
 		
 		// close button
-		$('<span class="wcfImageViewerButtonClose icon icon48 fa-times pointer jsTooltip" title="' + WCF.Language.get('wcf.global.button.close') + '" />').appendTo(this._ui.header).click($.proxy(this.close, this));
+		$(`<button class="wcfImageViewerButtonClose jsTooltip" title="${WCF.Language.get('wcf.global.button.close')}">
+			<fa-icon size="48" name="xmark"></fa-icon>
+		</button>`).appendTo(this._ui.header).click($.proxy(this.close, this));
 		
 		if (!$.browser.mobile) {
 			// clicking on the inner container should close the dialog, but it should not be available on mobile due to
