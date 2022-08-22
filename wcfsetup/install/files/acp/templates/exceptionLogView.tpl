@@ -18,14 +18,13 @@
 		
 		elBySelAll('.exceptionContainer', undefined, function (container) {
 			var button = elBySel('.collapsibleButton', container);
+			const icon = button.querySelector("fa-icon");
 			button.addEventListener('click', function (event) {
 				if (container.classList.toggle('collapsed')) {
-					button.classList.add('fa-chevron-right');
-					button.classList.remove('fa-chevron-down');
+					icon.setIcon("chevron-right");
 				}
 				else {
-					button.classList.remove('fa-chevron-right');
-					button.classList.add('fa-chevron-down');
+					icon.setIcon("chevron-down");
 				}
 			});
 		})

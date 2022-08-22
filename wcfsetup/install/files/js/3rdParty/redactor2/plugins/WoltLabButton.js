@@ -210,7 +210,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 				}"><fa-icon size="16" name="caret-down" solid></fa-icon></a>`;
 			elData(_toggleButton, 'show-on-mobile', true);
 			
-			var icon = _toggleButton.children[0].children[0];
+			var icon = _toggleButton.querySelector("fa-icon");
 			var toggle = (function (event) {
 				if (event instanceof Event) {
 					event.preventDefault();
@@ -223,8 +223,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 					}
 				}
 				
-				icon.classList.toggle('fa-caret-down');
-				icon.classList.toggle('fa-caret-up');
+				if (icon.name === "caret-down") {
+					icon.setIcon("caret-up", true);
+				} else {
+					icon.setIcon("caret-down", true);
+				}
 			}).bind(this);
 			
 			_toggleButton.children[0].addEventListener('mousedown', toggle);

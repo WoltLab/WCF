@@ -191,8 +191,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Restores the previously hidden editor.
          */
         _restoreEditor() {
-            const icon = this._editorContainer.querySelector(".fa-spinner");
-            icon.remove();
+            this._editorContainer.querySelector("fa-icon").remove();
             const editorContainer = this._editorContainer.querySelector(".editorContainer");
             if (editorContainer !== null) {
                 Util_1.default.show(editorContainer);

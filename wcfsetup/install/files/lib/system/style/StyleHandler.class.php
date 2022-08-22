@@ -29,12 +29,6 @@ class StyleHandler extends SingletonFactory
     protected $cache = [];
 
     /**
-     * list of FontAwesome icons excluding the `fa-`-prefix
-     * @var string[]
-     */
-    protected $icons = [];
-
-    /**
      * active style object
      * @var ActiveStyle
      */

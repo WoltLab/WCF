@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
             const item = document.createElement("li");
             item.innerHTML = html;
-            const firstUser = this.list.querySelector(".fa-user");
+            const firstUser = this.list.querySelector('fa-icon[name="user"]');
             if (firstUser === null) {
                 this.list.appendChild(item);
             }

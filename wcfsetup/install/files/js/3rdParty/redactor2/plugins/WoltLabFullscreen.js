@@ -32,8 +32,12 @@ $.Redactor.prototype.WoltLabFullscreen = function() {
 		},
 		
 		_toggle: function () {
-			_button.children[0].classList.toggle('fa-compress');
-			_button.children[0].classList.toggle('fa-expand');
+			const icon = _button.querySelector("fa-icon");
+			if (icon.name === "expand") {
+				icon.setIcon("compress");
+			} else {
+				icon.setIcon("expand");
+			}
 			
 			var anchorFixedHeader = elClosest(this.core.box()[0], '.anchorFixedHeader');
 			if (anchorFixedHeader) anchorFixedHeader.classList.toggle('disableAnchorFixedHeader');

@@ -97,7 +97,7 @@ class UiAclSimple {
     const item = document.createElement("li");
     item.innerHTML = html;
 
-    const firstUser = this.list.querySelector(".fa-user");
+    const firstUser = this.list.querySelector('fa-icon[name="user"]');
     if (firstUser === null) {
       this.list.appendChild(item);
     } else {

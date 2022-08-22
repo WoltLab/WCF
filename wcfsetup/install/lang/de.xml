@@ -174,7 +174,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="https://fontawesome.com/v4.7.0/icons/">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="https://fontawesome.com/icons">FontAwesome</a>-Icon genutzt werden.]]></item>
 		<item name="wcf.acp.bbcode.numberedAttribute"><![CDATA[Attribut {#$attributeNumber}]]></item>
 	</category>
 	<category name="wcf.acp.box">

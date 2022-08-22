@@ -480,7 +480,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._slideshowEnabled = true;
 		
-		this._ui.slideshow.toggle.children('span').removeClass('fa-play').addClass('fa-pause');
+		this._ui.slideshow.toggle[0].querySelector("fa-icon").setIcon("pause");
 		
 		return true;
 	},
@@ -498,7 +498,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._timer.stop();
 		if (disableSlideshow) {
-			this._ui.slideshow.toggle.children('span').removeClass('fa-pause').addClass('fa-play');
+			this._ui.slideshow.toggle[0].querySelector("fa-icon").setIcon("play");
 		}
 		
 		this._slideshowEnabled = false;
@@ -893,7 +893,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._container = $('<div class="wcfImageViewer' + (this.options.staticViewer ? ' wcfImageViewerStatic' : '') + '" />').appendTo(document.body);
 		var $imageContainer = $('<div><img /><img /></div>').appendTo(this._container);
-		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious icon fa-angle-double-left" /><div><ul /></div><span class="wcfImageViewerButtonNext icon fa-angle-double-right" /></footer>').appendTo(this._container);
+		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious"><fa-icon size="24" name="angles-left"></fa-icon></span><div><ul /></div><span class="wcfImageViewerButtonNext"><fa-icon size="24" name="angles-right"></fa-icon></span></footer>').appendTo(this._container);
 		var $slideshowContainer = $('<ul />').appendTo($imageContainer);
 		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><fa-icon size="48" name="angle-left"></fa-icon></li>').appendTo($slideshowContainer);
 		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><fa-icon size="48" name="play"></fa-icon></li>').appendTo($slideshowContainer);
@@ -1017,7 +1017,8 @@ $.widget('ui.wcfImageViewer', {
 	_toggleView: function() {
 		this._ui.images[this._activeImage].addClass('animateTransformation');
 		this._container.toggleClass('maximized');
-		this._ui.slideshow.enlarge.toggleClass('active').children('span').toggleClass('fa-expand').toggleClass('fa-compress');
+		this._ui.slideshow.enlarge.toggleClass('active');
+		this._ui.slideshow.enlarge[0].querySelector("fa-icon").setIcon("compress");
 		
 		this._renderImage(null, undefined, null);
 	},

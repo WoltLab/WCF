@@ -549,7 +549,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// show thumbnail
 				if (attachmentData.tinyURL) {
-					$li.children('.fa-spinner').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
+					$li.find('fa-icon').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
 					
 					$li.data('height', attachmentData.height);
 					$li.data('width', attachmentData.width);
@@ -557,7 +557,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 				// show file icon
 				else {
-					$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-' + attachmentData.iconName);
+					$li[0].querySelector("fa-icon").setIcon(attachmentData.iconName);
 				}
 				
 				// update attachment link
@@ -616,7 +616,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}
 			else {
 				// upload icon
-				$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
+				$li[0].querySelector("fa-icon").setIcon("ban");
 				var $errorMessage = '';
 				
 				// error handling
@@ -711,9 +711,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		// mark uploads as failed
 		this._fileListSelector.find('li').each(function (index, listItem) {
 			var $listItem = $(listItem);
-			if ($listItem.children('.fa-spinner').length) {
+			const icon = listItem.querySelector('fa-icon[name="spinner"]');
+			if (icon) {
 				// upload icon
-				$listItem.addClass('uploadFailed').children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
+				$listItem.addClass('uploadFailed');
+				icon.setIcon("ban");
 				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
 			}
 		});

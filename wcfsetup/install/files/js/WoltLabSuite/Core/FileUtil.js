@@ -139,7 +139,7 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
     /**
      * Returns the icon name for given filename.
      *
-     * Note: For any file icon name like `fa-file-word`, only `word`
+     * Note: For any file icon name like `file-word`, only `word`
      * will be returned by this method.
      */
     function getIconNameByFilename(filename) {

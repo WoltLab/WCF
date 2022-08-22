@@ -483,8 +483,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         _restoreEditor() {
             const elementData = this._elements.get(this._activeElement);
             const messageBodyEditor = elementData.messageBodyEditor;
-            const icon = messageBodyEditor.querySelector(".fa-spinner");
-            icon.remove();
+            messageBodyEditor.querySelector("fa-icon").remove();
             const editorContainer = messageBodyEditor.querySelector(".editorContainer");
             if (editorContainer !== null) {
                 Util_1.default.show(editorContainer);

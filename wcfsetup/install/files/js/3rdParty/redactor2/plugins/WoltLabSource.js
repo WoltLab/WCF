@@ -35,7 +35,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 			};
 			
 			function stripIcons(div) {
-				elBySelAll('.icon, .fa', div, function (element) {
+				elBySelAll('.icon, .fa, fa-brand, fa-icon', div, function (element) {
 					var classNames = element.className.split(' ');
 					classNames = classNames.filter(function (value) {
 						if (value === 'fa' || value === 'icon') {

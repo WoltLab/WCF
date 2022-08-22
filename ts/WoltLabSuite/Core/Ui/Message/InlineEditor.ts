@@ -619,8 +619,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const elementData = this._elements.get(this._activeElement!)!;
     const messageBodyEditor = elementData.messageBodyEditor!;
 
-    const icon = messageBodyEditor.querySelector(".fa-spinner") as HTMLElement;
-    icon.remove();
+    messageBodyEditor.querySelector("fa-icon")!.remove();
 
     const editorContainer = messageBodyEditor.querySelector(".editorContainer") as HTMLElement;
     if (editorContainer !== null) {

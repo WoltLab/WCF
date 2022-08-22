@@ -268,7 +268,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	_failure: function() {
 		if (this._dialog !== null) {
 			$('#packageInstallationProgress').removeAttr('value');
-			this._setIcon('times');
+			this._setIcon('xmark');
 		}
 		
 		if (!this._allowRollback) {
@@ -538,7 +538,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		iconName
 	 */
 	_setIcon: function(iconName) {
-		this._dialog.find('.jsPackageInstallationStatus').removeClass('fa-check fa-question fa-times fa-spinner').addClass('fa-' + iconName);
+		const icon = this._dialog.find('.jsPackageInstallationStatus fa-icon')[0];
+		icon.setIcon(iconName);
 	}
 });
 
@@ -1403,10 +1404,12 @@ WCF.ACP.User.BanHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'unban') {
-					$button.data('banned', false).attr('data-tooltip', $button.data('banMessage')).removeClass('fa-lock').addClass('fa-unlock');
+					$button.data('banned', false).attr('data-tooltip', $button.data('banMessage'));
+					$button[0].querySelector("fa-icon").setIcon("unlock");
 				}
 				else {
-					$button.data('banned', true).attr('data-tooltip', $button.data('unbanMessage')).removeClass('fa-unlock').addClass('fa-lock');
+					$button.data('banned', true).attr('data-tooltip', $button.data('unbanMessage'));
+					$button[0].querySelector("fa-icon").setIcon("lock");
 				}
 			}
 		});
@@ -1573,10 +1576,12 @@ WCF.ACP.User.EnableHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'disable') {
-					$button.data('enabled', false).attr('data-tooltip', $button.data('enableMessage')).removeClass('fa-check-square-o').addClass('fa-square-o');
+					$button.data('enabled', false).attr('data-tooltip', $button.data('enableMessage'));
+					$button[0].querySelector("fa-icon").setIcon("square");
 				}
 				else {
-					$button.data('enabled', true).attr('data-tooltip', $button.data('disableMessage')).removeClass('fa-square-o').addClass('fa-check-square-o');
+					$button.data('enabled', true).attr('data-tooltip', $button.data('disableMessage'));
+					$button[0].querySelector("fa-icon").setIcon("square-check");
 				}
 			}
 		});

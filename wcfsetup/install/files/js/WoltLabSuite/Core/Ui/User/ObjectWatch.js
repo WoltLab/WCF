@@ -44,18 +44,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../Notification", "../../L
         document
             .querySelectorAll(`.userObjectWatchDropdownToggle[data-object-type="${objectType}"][data-object-id="${objectID}"]`)
             .forEach((element) => {
-            const icon = element.querySelector(".icon");
+            const icon = element.querySelector("fa-icon");
             const label = element.querySelector("span:not(.icon)");
             if (subscribe) {
                 element.classList.add("active");
-                icon.classList.remove("fa-bookmark-o");
-                icon.classList.add("fa-bookmark");
+                icon.setIcon("bookmark", true);
                 label.textContent = Language.get(`wcf.user.objectWatch.button.subscribed`);
             }
             else {
                 element.classList.remove("active");
-                icon.classList.remove("fa-bookmark");
-                icon.classList.add("fa-bookmark-o");
+                icon.setIcon("bookmark");
                 label.textContent = Language.get("wcf.user.objectWatch.button.subscribe");
             }
             element.dataset.isSubscribed = subscribe.toString();

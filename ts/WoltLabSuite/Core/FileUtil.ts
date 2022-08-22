@@ -163,7 +163,7 @@ export function formatFilesize(byte: number, precision = 2): string {
 /**
  * Returns the icon name for given filename.
  *
- * Note: For any file icon name like `fa-file-word`, only `word`
+ * Note: For any file icon name like `file-word`, only `word`
  * will be returned by this method.
  */
 export function getIconNameByFilename(filename: string): string {

@@ -245,8 +245,7 @@ class UiCommentEdit {
    * Restores the previously hidden editor.
    */
   protected _restoreEditor(): void {
-    const icon = this._editorContainer!.querySelector(".fa-spinner")!;
-    icon.remove();
+    this._editorContainer!.querySelector("fa-icon")!.remove();
 
     const editorContainer = this._editorContainer!.querySelector(".editorContainer") as HTMLElement;
     if (editorContainer !== null) {
