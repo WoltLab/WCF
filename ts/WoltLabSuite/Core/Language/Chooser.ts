@@ -65,7 +65,7 @@ function initElement(
   DomUtil.hide(element);
 
   const dropdownToggle = document.createElement("a");
-  dropdownToggle.className = "dropdownToggle dropdownIndicator boxFlag box24 inputPrefix";
+  dropdownToggle.className = "dropdownToggle boxFlag box24 inputPrefix";
   if (parent.nodeName === "DD") {
     dropdownToggle.classList.add("button");
   }
@@ -90,6 +90,10 @@ function initElement(
 
     select(chooserId, languageId, target);
   }
+
+  const icon = document.createElement("fa-icon");
+  icon.size = 16;
+  icon.setIcon("caret-down", true);
 
   // add language dropdown items
   Object.entries(languages).forEach(([langId, language]) => {
@@ -123,6 +127,7 @@ function initElement(
 
     if (+langId === languageId) {
       dropdownToggle.innerHTML = link.innerHTML;
+      dropdownToggle.append(icon);
     }
   });
 
@@ -143,6 +148,7 @@ function initElement(
 
     if (languageId === 0) {
       dropdownToggle.innerHTML = link.innerHTML;
+      dropdownToggle.append(icon);
     }
 
     listItem.addEventListener("click", callbackClick);
@@ -159,6 +165,7 @@ function initElement(
 
     const span = document.createElement("span");
     span.textContent = Language.get("wcf.global.language.noSelection");
+    span.append(icon);
     div.appendChild(span);
   }
 
@@ -206,6 +213,11 @@ function select(chooserId: string, languageId: number, listItem?: HTMLElement): 
   Core.triggerEvent(chooser.element, "change");
 
   chooser.dropdownToggle.innerHTML = listItem.children[0].innerHTML;
+
+  const icon = document.createElement("fa-icon");
+  icon.size = 16;
+  icon.setIcon("caret-down", true);
+  chooser.dropdownToggle.append(icon);
 
   _choosers.set(chooserId, chooser);
 

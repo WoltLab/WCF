@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
         }
         Util_1.default.hide(element);
         const dropdownToggle = document.createElement("a");
-        dropdownToggle.className = "dropdownToggle dropdownIndicator boxFlag box24 inputPrefix";
+        dropdownToggle.className = "dropdownToggle boxFlag box24 inputPrefix";
         if (parent.nodeName === "DD") {
             dropdownToggle.classList.add("button");
         }
@@ -55,6 +55,9 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             }
             select(chooserId, languageId, target);
         }
+        const icon = document.createElement("fa-icon");
+        icon.size = 16;
+        icon.setIcon("caret-down", true);
         // add language dropdown items
         Object.entries(languages).forEach(([langId, language]) => {
             const listItem = document.createElement("li");
@@ -83,6 +86,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             link.appendChild(span);
             if (+langId === languageId) {
                 dropdownToggle.innerHTML = link.innerHTML;
+                dropdownToggle.append(icon);
             }
         });
         // add dropdown item for "no selection"
@@ -99,6 +103,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             listItem.appendChild(link);
             if (languageId === 0) {
                 dropdownToggle.innerHTML = link.innerHTML;
+                dropdownToggle.append(icon);
             }
             listItem.addEventListener("click", callbackClick);
         }
@@ -112,6 +117,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             div.appendChild(icon);
             const span = document.createElement("span");
             span.textContent = Language.get("wcf.global.language.noSelection");
+            span.append(icon);
             div.appendChild(span);
         }
         Simple_1.default.init(dropdownToggle);
@@ -149,6 +155,10 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
         chooser.element.value = languageId.toString();
         Core.triggerEvent(chooser.element, "change");
         chooser.dropdownToggle.innerHTML = listItem.children[0].innerHTML;
+        const icon = document.createElement("fa-icon");
+        icon.size = 16;
+        icon.setIcon("caret-down", true);
+        chooser.dropdownToggle.append(icon);
         _choosers.set(chooserId, chooser);
         // execute callback
         if (typeof chooser.callback === "function") {
