@@ -19,15 +19,18 @@
 
 {event name='settings'}
 
-<a href="#" id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" role="button" tabindex="0" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
+<button id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
 	{icon size=32 name='magnifying-glass'}
-</a>
+</button>
 
 <div id="pageHeaderSearch" class="pageHeaderSearch">
 	<form method="post" action="{link controller='Search'}{/link}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
-				<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect"><span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span></a>
+				<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect">
+					<span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span>
+					{icon size=16 name='caret-down' type='solid'}
+				</a>
 				<ul class="dropdownMenu">
 					<li><a href="#" data-extended-link="{link controller='Search'}extended=1{/link}" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 					<li class="dropdownDivider"></li>

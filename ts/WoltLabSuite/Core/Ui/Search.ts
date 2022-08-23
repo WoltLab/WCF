@@ -89,6 +89,7 @@ function initMobileSearch(): void {
       closeSearch();
 
       searchButton.setAttribute("aria-expanded", "false");
+      searchButton.querySelector("fa-icon")!.setIcon("magnifying-glass");
     } else {
       // iOS Safari behaves unpredictable when the keyboard focus
       // is moved into a HTML element that is inside a parent with
@@ -109,6 +110,7 @@ function initMobileSearch(): void {
       }
 
       searchButton.setAttribute("aria-expanded", "true");
+      searchButton.querySelector("fa-icon")!.setIcon("xmark");
     }
   });
 
@@ -121,6 +123,7 @@ function initMobileSearch(): void {
       closeSearch();
 
       searchButton.setAttribute("aria-expanded", "false");
+      searchButton.querySelector("fa-icon")!.setIcon("magnifying-glass");
     }
   });
 }
