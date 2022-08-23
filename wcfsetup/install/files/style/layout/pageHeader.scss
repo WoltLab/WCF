@@ -265,10 +265,6 @@
 			}
 		}
 	}
-
-	.userPanelAvatar {
-		display: none;
-	}
 }
 
 /* LOGO */
@@ -313,7 +309,9 @@
 
 @include screen-lg {
 	.pageHeaderSearchMobile,
-	.userPanelLoginLink {
+	.pageHeaderMenuMobile,
+	.userPanelLoginLink,
+	.pageHeaderUserMobile {
 		display: none;
 	}
 }
@@ -450,7 +448,7 @@
 
 	.pageHeaderSearchMobile,
 	.userPanel,
-	.mainMenu {
+	.pageHeaderMenuMobile {
 		align-items: center;
 		display: flex;
 		height: 40px;
@@ -473,32 +471,40 @@
 		grid-area: search;
 	}
 
-	.userPanel {
+	.pageHeaderUserMobile {
+		display: flex;
 		grid-area: user;
+		justify-content: center;
+		width: 40px;
 
-		.userPanelItems {
+		&[aria-expanded="false"] .pageHeaderUserMobileActive {
 			display: none;
 		}
 
-		.userPanelAvatar {
-			display: block;
+		&[aria-expanded="true"] .pageHeaderUserMobileInactive {
+			display: none;
 		}
 	}
 
+	.userPanel,
 	.mainMenu {
+		display: none;
+	}
+
+	.pageHeaderMenuMobile {
 		grid-area: menu;
 
-		&::before {
-			content: $fa-var-bars;
+		&[aria-expanded="false"] .pageHeaderMenuMobileActive {
+			display: none;
 		}
 
-		.boxContent {
+		&[aria-expanded="true"] .pageHeaderMenuMobileInactive {
 			display: none;
 		}
 	}
 
-	.mainMenu[aria-expanded="false"],
-	.userPanel[aria-expanded="false"] {
+	.pageHeaderMenuMobile[aria-expanded="false"],
+	.pageHeaderUserMobile[aria-expanded="false"] {
 		position: relative;
 
 		&.pageMenuMobileButtonHasContent::after {

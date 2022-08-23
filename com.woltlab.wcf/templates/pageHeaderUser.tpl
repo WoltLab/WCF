@@ -1,12 +1,4 @@
 <nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
-	{if $__wcf->user->userID}
-		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}</span>
-	{else}
-		<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
-			{icon size=32 name='arrow-right-to-bracket'}
-		</a>
-	{/if}
-	
 	<ul class="userPanelItems">
 		{if $__wcf->user->userID}
 			<!-- user menu -->
@@ -213,3 +205,17 @@
 		</li>
 	</ul>
 </nav>
+{if $__wcf->user->userID}
+	<button class="pageHeaderUserMobile" aria-expanded="false" aria-label="{lang}wcf.menu.user{/lang}">
+		<span class="pageHeaderUserMobileInactive">
+			{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}
+		</span>
+		<span class="pageHeaderUserMobileActive">
+			{icon size=32 name='xmark'}
+		</span>
+	</button>
+{else}
+	<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
+		{icon size=32 name='arrow-right-to-bracket'}
+	</a>
+{/if}
