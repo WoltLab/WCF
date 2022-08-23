@@ -6,6 +6,7 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -121,11 +122,22 @@ class AttachmentBBCode extends AbstractBBCode
                     }
 
                     if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
-                        $result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . '</a>';
+                        $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
+                        $result = <<<HTML
+                        <a href="{$source}" title="{$title}" class="embeddedAttachmentLink jsImageViewer {$class}'">
+                            {$result}
+                            <span class="embeddedAttachmentLinkEnlarge">
+                                {$icon}
+                            </span>
+                        </a>
+                        HTML;
                     } else {
                         $result = '<span title="' . $title . '"' . ($class ? (' class="' . $class . '"') : '') . '>' . $result . '</span>';
                     }
                 } else {
+                    $icon = FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(24);
+                    $enlarge = '<span class="embeddedAttachmentLinkEnlarge">' . $icon . '</span>';
+
                     $linkParameters = [
                         'object' => $attachment,
                     ];
@@ -162,8 +174,12 @@ class AttachmentBBCode extends AbstractBBCode
                         $result = '<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
                             'Attachment',
                             ['object' => $attachment]
-                        )) . '" title="' . StringUtil::encodeHTML($attachment->filename) . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . '</a>';
+                        )) . '" title="' . StringUtil::encodeHTML($attachment->filename) . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . $enlarge . '</a>';
                     } else {
+                        if (\str_contains($imageClasses, 'embeddedAttachmentLink')) {
+                            $result = $result . $enlarge;
+                        }
+
                         $result = '<span' . ($class ? (' class="' . $class . '"') : '') . '>' . $result . '</span>';
                     }
                 }
