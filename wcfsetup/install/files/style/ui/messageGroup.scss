@@ -361,39 +361,3 @@
 	}
 }
 
-.contentHeader.messageGroupContentHeader {
-	> .contentHeaderIcon {
-		@include screen-md-up {
-			position: relative;
-		}
-	}
-
-	&.messageDeleted > .contentHeaderIcon,
-	&.messageDisabled > .contentHeaderIcon {
-		&::before {
-			display: block;
-			font-family: FontAwesome;
-			font-size: 56px;
-			position: absolute;
-		}
-
-		> img,
-		> .icon:first-child {
-			visibility: hidden;
-		}
-	}
-
-	&.messageDisabled > .contentHeaderIcon::before {
-		color: rgb(0, 140, 0);
-		content: $fa-var-eye-slash;
-		left: 4px;
-		top: -12px;
-	}
-
-	&.messageDeleted > .contentHeaderIcon::before {
-		color: rgb(180, 0, 0);
-		content: $fa-var-trash-o;
-		left: 11px;
-		top: -12px;
-	}
-}
