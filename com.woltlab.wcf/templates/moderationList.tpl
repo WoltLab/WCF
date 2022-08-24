@@ -11,7 +11,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 	<a href="{link controller='DeletedContentList'}{/link}" class="contentInteractionButton button small"><span class="icon icon16 fa-trash"></span> <span>{lang}wcf.moderation.showDeletedContent{/lang}</span></a>
 {/capture}
 
