@@ -45,15 +45,15 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a id="moderationAssignUser" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-user-plus"></span> <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></a>
+	<button id="moderationAssignUser" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-user-plus"></span> <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
 	{if !$queue->isDone()}
 		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}
-			<a id="removeContent" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></a>
+			<button id="removeContent" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>
 		{/if}
-		<a id="removeReport" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check-square-o"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a>
+		<button id="removeReport" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check-square-o"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></button>
 	{/if}
 	{if $queue->canChangeJustifiedStatus()}
-		<a id="changeJustifiedStatus" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</span></a>
+		<button id="changeJustifiedStatus" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</span></button>
 	{/if}
 {/capture}
 
