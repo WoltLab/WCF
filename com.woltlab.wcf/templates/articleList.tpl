@@ -77,9 +77,9 @@
 					{lang}wcf.global.title{/lang}
 					{if $sortField == 'title'}
 						{if $sortOrder === 'ASC'}
-							{icon size=16 name='caret-up' solid}
+							{icon size=16 name='caret-up' type='solid'}
 						{else}
-							{icon size=16 name='caret-down' solid}
+							{icon size=16 name='caret-down' type='solid'}
 						{/if}
 					{/if}
 				</a>
@@ -89,9 +89,9 @@
 					{lang}wcf.global.date{/lang}
 					{if $sortField == 'time'}
 						{if $sortOrder === 'ASC'}
-							{icon size=16 name='caret-up' solid}
+							{icon size=16 name='caret-up' type='solid'}
 						{else}
-							{icon size=16 name='caret-down' solid}
+							{icon size=16 name='caret-down' type='solid'}
 						{/if}
 					{/if}
 				</a>
