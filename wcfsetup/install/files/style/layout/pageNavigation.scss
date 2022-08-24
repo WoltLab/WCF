@@ -30,23 +30,6 @@
 	}
 }
 
-@include screen-lg {
-	.pageNavigationIcons {
-		display: flex;
-		flex: 0 0 auto;
-		flex-direction: row-reverse;
-		margin-left: 10px;
-
-		> li {
-			flex: 0 0 auto;
-
-			&:not(:last-child) {
-				margin-left: 10px;
-			}
-		}
-	}
-}
-
 @include screen-sm-down {
 	.breadcrumbs {
 		margin-bottom: -5px;
@@ -80,11 +63,5 @@
 				white-space: nowrap;
 			}
 		}
-	}
-}
-
-@include screen-md-down {
-	.pageNavigationIcons {
-		display: none;
 	}
 }
