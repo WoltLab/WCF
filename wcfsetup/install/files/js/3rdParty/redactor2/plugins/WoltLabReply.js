@@ -1,9 +1,10 @@
 $.Redactor.prototype.WoltLabReply = function() {
 	"use strict";
 	
-	var _callbackClick = null;
+	var _message;
 	var _messageContent = null;
 	var _messageQuickReply = null;
+	var _button;
 	
 	return {
 		init: function () {
@@ -14,13 +15,24 @@ $.Redactor.prototype.WoltLabReply = function() {
 				return;
 			}
 			
-			_callbackClick = this.WoltLabReply._click.bind(this);
 			_messageContent = messageContent;
 			_messageQuickReply = messageQuickReply;
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'showEditor', this.WoltLabReply.showEditor.bind(this));
 			
-			_messageContent.addEventListener('click', _callbackClick);
+			const button = document.createElement("button");
+			button.classList.add("messageQuickReplyContentButton");
+			button.innerHTML = '<fa-icon size="32" name="reply"></fa-icon>';
+			button.append(messageContent.dataset.placeholder);
+			button.addEventListener("click", () => {
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'showEditor');
+			});
+
+			messageQuickReply.append(button);
+			_button = button;
+
+			_message = messageQuickReply.querySelector(".message");
+			_message.inert = true;
 		},
 		
 		showEditor: function (skipFocus = false) {
@@ -37,17 +49,12 @@ $.Redactor.prototype.WoltLabReply = function() {
 			}
 			
 			_messageQuickReply.classList.remove('messageQuickReplyCollapsed');
-			_messageContent.removeEventListener('click', _callbackClick);
+			_button.remove();
+			_message.inert = false;
 			
 			if (!skipFocus) {
 				this.WoltLabCaret.endOfEditor();
 			}
 		},
-		
-		_click: function (event) {
-			event.preventDefault();
-			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'showEditor');
-		}
 	};
 };
