@@ -515,7 +515,7 @@ class ArticleAddForm extends AbstractForm
         }
 
         // mark published article as read
-        if (ARTICLE_ENABLE_VISIT_TRACKING && $article->publicationStatus == Article::PUBLISHED) {
+        if ($article->publicationStatus == Article::PUBLISHED) {
             (new ArticleAction([$article], 'markAsRead'))->executeAction();
         }
 

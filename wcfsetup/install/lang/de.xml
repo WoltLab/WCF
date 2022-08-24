@@ -1658,7 +1658,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Standard Avatar-Typ]]></item>
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initialen]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
-		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Gelesen-Markierung für Artikel aktivieren]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Werbung abwechselnd anzeigen]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sollte einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Seitenbeschleunigung für Gäste aktivieren]]></item>
@@ -5572,5 +5571,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.avatar.type.gravatar.description"/>
 	<item name="wcf.user.avatar.type.gravatar.error.notFound"/>
 	<item name="wcf.user.condition.avatar.gravatar"/>
+	<item name="wcf.acp.option.article_enable_visit_tracking" />
 </delete>
 </language>

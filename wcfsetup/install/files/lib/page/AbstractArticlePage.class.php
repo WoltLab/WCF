@@ -120,7 +120,7 @@ abstract class AbstractArticlePage extends AbstractPage
         }
 
         // update article visit
-        if (ARTICLE_ENABLE_VISIT_TRACKING && $this->article->isNew()) {
+        if ($this->article->isNew()) {
             $articleAction = new ArticleAction([$this->article->getDecoratedObject()], 'markAsRead', [
                 'viewableArticle' => $this->article,
             ]);

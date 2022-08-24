@@ -28,6 +28,6 @@ class UnreadArticleListPageHandler extends AbstractMenuPageHandler
      */
     public function isVisible($objectID = null)
     {
-        return ARTICLE_ENABLE_VISIT_TRACKING && !empty(ViewableArticle::getUnreadArticles());
+        return !empty(ViewableArticle::getUnreadArticles());
     }
 }

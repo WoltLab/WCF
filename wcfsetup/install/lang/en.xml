@@ -1644,7 +1644,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Default Avatar Type]]></item>
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initials]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
-		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Enable “mark as read” for articles]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Enable ad rotation]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[If there is more than one ad per placeholder, a random ad will be displayed every time. Disabling this option will display all ads simultaneously.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Enable accelerated guest view]]></item>
@@ -5574,5 +5573,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.user.avatar.type.gravatar.description"/>
 	<item name="wcf.user.avatar.type.gravatar.error.notFound"/>
 	<item name="wcf.user.condition.avatar.gravatar"/>
+	<item name="wcf.acp.option.article_enable_visit_tracking"/>
 </delete>
 </language>

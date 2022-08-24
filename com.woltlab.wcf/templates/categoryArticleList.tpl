@@ -65,9 +65,7 @@
 {capture assign='contentInteractionButtons'}
 	{include file='__userObjectWatchButton' isSubscribed=$category->isSubscribed() objectType='com.woltlab.wcf.article.category' objectID=$category->categoryID}
 	
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<button class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
-	{/if}
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
@@ -100,13 +98,11 @@
 	{/hascontent}
 </footer>
 
-{if ARTICLE_ENABLE_VISIT_TRACKING}
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
-			UiArticleMarkAllAsRead.init();
-		});
-	</script>
-{/if}
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
+		UiArticleMarkAllAsRead.init();
+	});
+</script>
 
 {include file='articleAddDialog'}
 

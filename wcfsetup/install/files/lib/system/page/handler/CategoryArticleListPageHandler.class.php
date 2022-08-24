@@ -32,6 +32,6 @@ class CategoryArticleListPageHandler extends AbstractLookupPageHandler implement
      */
     public function getOutstandingItemCount($objectID = null)
     {
-        return ARTICLE_ENABLE_VISIT_TRACKING ? ViewableArticle::getUnreadArticlesForCategory($objectID) : 0;
+        return ViewableArticle::getUnreadArticlesForCategory($objectID);
     }
 }
