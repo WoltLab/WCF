@@ -247,50 +247,44 @@
 {event name='afterFooter'}
 
 {if $previousArticle || $nextArticle}
-	<div class="section articleNavigation">
+	<div class="section">
 		<nav>
-			<ul>
+			<ul class="articleNavigation">
 				{if $previousArticle}
-					<li class="previousArticleButton">
-						<a href="{$previousArticle->getLink()}" rel="prev">
-							{if $previousArticle->getTeaserImage()}
-								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$previousArticle->getTeaserImage()->getElementTag(96)}</span>
-									
-									<div>
-										<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
-										<span class="articleNavigationArticleTitle">{$previousArticle->getTitle()}</span>
-									</div>
-								</div>
-							{else}
-								<div>
-									<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
-									<span class="articleNavigationArticleTitle">{$previousArticle->getTitle()}</span>
-								</div>
-							{/if}
-						</a>
+					<li class="previousArticleButton articleNavigationArticle{if $previousArticle->getTeaserImage()} articleNavigationArticleWithImage{/if}">
+						<span class="articleNavigationArticleIcon">
+							{icon size=48 name='chevron-left'}
+						</span>
+						{if $previousArticle->getTeaserImage()}
+							<span class="articleNavigationArticleImage">{@$previousArticle->getTeaserImage()->getElementTag(96)}</span>
+						{/if}
+						<span class="articleNavigationArticleContent">
+							<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
+							<span class="articleNavigationArticleTitle">
+								<a href="{$previousArticle->getLink()}" rel="prev" class="articleNavigationArticleLink">
+									{$previousArticle->getTitle()}
+								</a>
+							</span>
+						</span>
 					</li>
 				{/if}
 				
 				{if $nextArticle}
-					<li class="nextArticleButton">
-						<a href="{$nextArticle->getLink()}" rel="next">
-							{if $nextArticle->getTeaserImage()}
-								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$nextArticle->getTeaserImage()->getElementTag(96)}</span>
-									
-									<div>
-										<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
-										<span class="articleNavigationArticleTitle">{$nextArticle->getTitle()}</span>
-									</div>
-								</div>
-							{else}
-								<div>
-									<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
-									<span class="articleNavigationArticleTitle">{$nextArticle->getTitle()}</span>
-								</div>
-							{/if}
-						</a>
+					<li class="nextArticleButton articleNavigationArticle{if $nextArticle->getTeaserImage()} articleNavigationArticleWithImage{/if}">
+						<span class="articleNavigationArticleIcon">
+							{icon size=48 name='chevron-right'}
+						</span>
+						{if $nextArticle->getTeaserImage()}
+							<span class="articleNavigationArticleImage">{@$nextArticle->getTeaserImage()->getElementTag(96)}</span>
+						{/if}
+						<span class="articleNavigationArticleContent">
+							<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
+							<span class="articleNavigationArticleTitle">
+								<a href="{$nextArticle->getLink()}" rel="next" class="articleNavigationArticleLink">
+									{$nextArticle->getTitle()}
+								</a>
+							</span>
+						</span>
 					</li>
 				{/if}
 			</ul>
