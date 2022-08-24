@@ -63,29 +63,9 @@
 	}
 }
 
-.messageCheckboxLabel {
-	cursor: pointer;
-	display: block;
-	position: relative;
-
-	&::before {
-		content: $fa-var-square-o;
-		display: block;
-		font-family: FontAwesome;
-		position: absolute;
-	}
-
-	&::after {
-		color: rgb(0, 150, 0);
-		content: $fa-var-check;
-		display: none;
-		font-family: FontAwesome;
-		position: absolute;
-	}
-
-	> input[type="checkbox"] {
-		display: none;
-	}
+.messageCheckboxLabel input[type="checkbox"] {
+	height: 18px;
+	width: 18px;
 }
 
 .message {
