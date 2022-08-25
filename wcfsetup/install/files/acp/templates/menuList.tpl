@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='MenuAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.add{/lang}</span></a></li>
+			<li><a href="{link controller='MenuAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -39,14 +39,16 @@
 				{foreach from=$objects item=menu}
 					<tr class="jsMenuRow jsObjectActionObject" data-object-id="{@$menu->getObjectID()}">
 						<td class="columnIcon">
-							<a href="{link controller='MenuEdit' id=$menu->menuID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='MenuEdit' id=$menu->menuID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{if $menu->canDelete()}
 								{objectAction action="delete" objectTitle=$menu->getTitle()}
 							{else}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
-							<a href="{link controller='MenuItemList' id=$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
-							<a href="{link controller='MenuItemAdd'}menuID={@$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
+							<a href="{link controller='MenuItemList' id=$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.list{/lang}" class="jsTooltip">{icon size=16 name='list'}</a>
+							<a href="{link controller='MenuItemAdd'}menuID={@$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.add{/lang}" class="jsTooltip">{icon size=16 name='plus'}</a>
 							
 							{event name='rowButtons'}
 						</td>
@@ -72,7 +74,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='MenuAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.add{/lang}</span></a></li>
+				<li><a href="{link controller='MenuAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

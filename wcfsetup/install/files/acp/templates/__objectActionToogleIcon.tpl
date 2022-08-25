@@ -1,4 +1,10 @@
-<span class="icon icon16 fa-{if !$object->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" {*
+<button type="button" class="jsObjectAction jsTooltip" {*
     *}title="{lang}wcf.global.button.{if !$object->isDisabled}disable{else}enable{/if}{/lang}" {*
     *}data-object-action="toggle"{*
-*}></span>
+*}>
+    {if $object->isDisabled}
+        {icon size=16 name='square-check'}
+    {else}
+        {icon size=16 name='square'}
+    {/if}
+</button>

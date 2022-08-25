@@ -1,6 +1,6 @@
-<a href="#" id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" role="button" tabindex="0" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
-	<span class="icon icon32 fa-search" aria-hidden="true"></span>
-</a>
+<button id="pageHeaderSearchMobile" class="pageHeaderSearchMobile" aria-expanded="false" aria-label="{lang}wcf.global.search{/lang}">
+	{icon size=32 name='magnifying-glass'}
+</button>
 
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<div class="pageHeaderSearchInputContainer">
@@ -18,8 +18,8 @@
 		
 		<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" required value="" data-toggle="search">
 		
-		<button class="button pageHeaderSearchInputButton" type="submit">
-			<span class="icon icon16 pointer fa-search" title="{lang}wcf.global.search{/lang}"></span>
+		<button class="button pageHeaderSearchInputButton" type="submit" title="{lang}wcf.global.search{/lang}">
+			{icon size=16 name='magnifying-glass'}
 		</button>
 	</div>
 </div>

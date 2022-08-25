@@ -133,7 +133,8 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         let banIcon = contentTitle.querySelector(".jsUserBanned") as HTMLElement;
         if (data.actionName === "ban") {
           banIcon = document.createElement("span");
-          banIcon.className = "icon icon24 fa-lock jsUserBanned jsTooltip";
+          banIcon.innerHTML = '<fa-icon size="24" name="lock"></fa-icon>';
+          banIcon.classList.add("jsUserBanned", "jsTooltip");
           banIcon.title = data.returnValues;
           contentTitle.appendChild(banIcon);
         } else if (banIcon) {

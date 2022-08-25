@@ -23,7 +23,7 @@
 								<ul class="buttonList iconList jsOnly">
 									<li>
 										<a class="pointer jsTooltip jsEditIgnoreButton" title="{lang}wcf.global.button.edit{/lang}">
-											<span class="icon icon16 fa-pencil"></span>
+											{icon size=16 name='pencil'}
 											<span class="invisible">{lang}wcf.global.button.edit{/lang}</span>
 										</a>
 									</li>

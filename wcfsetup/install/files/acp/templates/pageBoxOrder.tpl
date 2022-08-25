@@ -139,8 +139,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $hasCustomShowOrder}<li><a href="#" class="button jsButtonCustomShowOrder"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.page.boxOrder.discard{/lang}</span></a></li>{/if}
-			<li><a href="{link controller='PageEdit' id=$page->pageID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.page.edit{/lang}</span></a></li>
+			{if $hasCustomShowOrder}<li><a href="#" class="button jsButtonCustomShowOrder">{icon size=16 name='xmark'} <span>{lang}wcf.acp.page.boxOrder.discard{/lang}</span></a></li>{/if}
+			<li><a href="{link controller='PageEdit' id=$page->pageID}{/link}" class="button">{icon size=16 name='pencil'} <span>{lang}wcf.acp.page.edit{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

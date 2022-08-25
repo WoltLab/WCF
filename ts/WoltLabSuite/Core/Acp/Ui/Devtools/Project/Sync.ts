@@ -141,7 +141,7 @@ class AcpUiDevtoolsProjectSync {
     }
 
     const syncAll = document.createElement("li");
-    syncAll.innerHTML = `<a href="#" class="button"><span class="icon icon16 fa-refresh"></span> ${Language.get(
+    syncAll.innerHTML = `<a href="#" class="button"><fa-icon size="16" name="arrows-rotate" solid></fa-icon> ${Language.get(
       "wcf.acp.devtools.sync.syncAll",
     )}</a>`;
     this.buttonSyncAll = syncAll.children[0] as HTMLAnchorElement;
@@ -154,7 +154,7 @@ class AcpUiDevtoolsProjectSync {
   private sync(pluginName: string, target: string): void {
     const identifier = this.getButtonIdentifier(pluginName, target);
     this.buttons.get(identifier)!.disabled = true;
-    this.buttonStatus.get(identifier)!.innerHTML = '<span class="icon icon16 fa-spinner"></span>';
+    this.buttonStatus.get(identifier)!.innerHTML = '<fa-icon size="16" name="spinner" solid></fa-icon>';
 
     Ajax.api(this, {
       parameters: {

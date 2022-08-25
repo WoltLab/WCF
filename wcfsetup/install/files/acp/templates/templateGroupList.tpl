@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -40,15 +40,19 @@
 					<tr class="jsTemplateGroupRow jsObjectActionObject" data-object-id="{@$templateGroup->getObjectID()}">
 						<td class="columnIcon">
 							{if $templateGroup->isImmutable()}
-								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+									{icon size=16 name='pencil'}
+								</span>
 							{else}
-								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{/if}
 							
-							<a href="{link controller='TemplateList' templateGroupID=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.acp.template.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
+							<a href="{link controller='TemplateList' templateGroupID=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.acp.template.list{/lang}" class="jsTooltip">{icon size=16 name='list'}</a>
 							
 							{if $templateGroup->isImmutable()}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{else}
 								{objectAction action="delete" objectTitle=$templateGroup->getName()}
 							{/if}
@@ -86,7 +90,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

@@ -3,7 +3,7 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\style\StyleHandler;
+use wcf\system\style\FontAwesomeIcon;
 
 /**
  * Implementation of a form field for to select a FontAwesome icon.
@@ -17,6 +17,8 @@ use wcf\system\style\StyleHandler;
 class IconFormField extends AbstractFormField implements IImmutableFormField
 {
     use TImmutableFormField;
+
+    private FontAwesomeIcon $icon;
 
     /**
      * @inheritDoc
@@ -56,7 +58,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
     public function getSaveValue()
     {
         if ($this->getValue()) {
-            return 'fa-' . $this->getValue();
+            return (string)$this->getIcon();
         }
 
         return '';
@@ -85,7 +87,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
             if ($this->isRequired()) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
-        } elseif (!\in_array($this->getValue(), StyleHandler::getInstance()->getIcons())) {
+        } elseif (!FontAwesomeIcon::isValidString($this->getValue())) {
             $this->addValidationError(new FormFieldValidationError(
                 'invalidValue',
                 'wcf.global.form.error.noValidSelection'
@@ -98,8 +100,25 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
      */
     public function value($value)
     {
-        $value = \preg_replace('~^fa-~', '', $value);
+        if (\str_starts_with($value, 'fa-')) {
+            $value = '';
+        }
 
         return parent::value($value);
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getIcon(): ?FontAwesomeIcon
+    {
+        if (!isset($this->icon)) {
+            $this->icon = null;
+            if (FontAwesomeIcon::isValidString($this->value)) {
+                $this->icon = FontAwesomeIcon::fromString($this->value);
+            }
+        }
+
+        return $this->icon;
     }
 }

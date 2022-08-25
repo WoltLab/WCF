@@ -357,8 +357,9 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     messageBodyEditor.className = "messageBody editor";
     data.messageBodyEditor = messageBodyEditor;
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon48 fa-spinner";
+    const icon = document.createElement("fa-icon");
+    icon.size = 48;
+    icon.setIcon("spinner");
     messageBodyEditor.appendChild(icon);
 
     data.messageBody.insertAdjacentElement("afterend", messageBodyEditor);
@@ -605,8 +606,9 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const editorContainer = elementData.messageBodyEditor!.querySelector(".editorContainer") as HTMLElement;
     DomUtil.hide(editorContainer);
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon48 fa-spinner";
+    const icon = document.createElement("fa-icon");
+    icon.size = 48;
+    icon.setIcon("spinner");
     elementData.messageBodyEditor!.appendChild(icon);
   }
 
@@ -617,8 +619,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const elementData = this._elements.get(this._activeElement!)!;
     const messageBodyEditor = elementData.messageBodyEditor!;
 
-    const icon = messageBodyEditor.querySelector(".fa-spinner") as HTMLElement;
-    icon.remove();
+    messageBodyEditor.querySelector("fa-icon")!.remove();
 
     const editorContainer = messageBodyEditor.querySelector(".editorContainer") as HTMLElement;
     if (editorContainer !== null) {

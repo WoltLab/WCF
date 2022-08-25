@@ -174,7 +174,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Display button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="https://fontawesome.com/v4.7.0/icons/">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="https://fontawesome.com/icons">FontAwesome</a> icon.]]></item>
 	</category>
 	<category name="wcf.acp.box">
 		<item name="wcf.acp.box.add"><![CDATA[Add Box]]></item>
@@ -465,7 +465,7 @@
 		<dd><kbd>{$minVersion}</kbd></dd>
 	{/if}
 	<dt>Package file included in package</dt>
-	<dd><span class="icon icon16 fa-{if $file}check{else}times{/if}"></span></dd>
+	<dd>{if $file}{icon size=16 name='check'}{else}{icon size=16 name='xmark'}{/if}</dd>
 </dl>]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[The package identifier must not be longer than 191 characters.]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[The package identifier must be longer than three characters.]]></item>
@@ -530,7 +530,7 @@
 		{/if}
 		{if $runStandalone}
 			<dt>Run in separate step</dt>
-			<dd><span class="icon icon16 fa-check"></span></dd>
+			<dd>{icon size=16 name='check'}</dd>
 		{/if}
 	</dl>
 {/if}]]></item>
@@ -868,7 +868,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Accelerated guest view is enabled]]></item>
-		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied, despite them being granted below. Affected options have been marked with a bolt (<span class="icon icon16 fa-bolt red"></span>).]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied, despite them being granted below. Affected options have been marked with a bolt ({icon size=16 name='bolt'}).]]></item>
 		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Can manage contact form]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Can manage trophies]]></item>
@@ -4520,6 +4520,8 @@ Attachments:
 		<item name="wcf.style.colorPicker.hue"><![CDATA[Hue]]></item>
 		<item name="wcf.style.colorPicker.saturation"><![CDATA[Saturation]]></item>
 		<item name="wcf.style.colorPicker.lightness"><![CDATA[Lightness]]></item>
+		<item name="wcf.style.colorPicker.changeColor"><![CDATA[Change Color]]></item>
+		<item name="wcf.style.colorPicker.changeBackgroundColor"><![CDATA[Change Background Color]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}“{$tag->name}”{/implode}]]></item>
@@ -5132,7 +5134,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Unable to find the authentication request. Maybe your session expired.]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Login with GitHub]]></item>
-		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-github"></span>&nbsp;GitHub. The username and your email address have therefore already been entered.]]></item>
+		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through {icon size='16' name='github' type='brand'}&nbsp;GitHub. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__3rdPartyProvider') === 'github'} “<a href="https://github.com/{$__wcf->session->getVar('__oauthUser')->getUsername()}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__oauthUser')->getUsername()}</a>”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Your user account has been connected with GitHub.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Your GitHub account is already connected to a different user.]]></item>
@@ -5140,7 +5142,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Your account is no longer connected with GitHub.]]></item>
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Login with Twitter]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter. The username has therefore already been entered. Now enter your email address and you can start right away!]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You are creating an account through {icon size='16' name='twitter' type='brand'}&nbsp;Twitter. The username has therefore already been entered. Now enter your email address and you can start right away!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your Twitter account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Your user account has been connected with Twitter.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Your Twitter account is already connected to a different user.]]></item>
@@ -5148,7 +5150,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Your account is no longer connected with Twitter.]]></item>
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Login with Facebook]]></item>
-		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook. The username and your email address have therefore already been entered.]]></item>
+		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You are creating an account through {icon size='16' name='facebook' type='brand'}&nbsp;Facebook. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Connect with your Facebook account{if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'} “{$__wcf->session->getVar('__oauthUser')->getUsername()}”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[Your user account has been connected with Facebook.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[Your Facebook account is already connected to a different user.]]></item>
@@ -5156,7 +5158,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.3rdparty.facebook.disconnect.success"><![CDATA[Your account is no longer connected with Facebook.]]></item>
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Login with Google]]></item>
-		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-google"></span>&nbsp;Google. The username and your email address have therefore already been entered.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through {icon size='16' name='google' type='brand'}&nbsp;Google. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Connect with your Google account{if $__wcf->session->getVar('__3rdPartyProvider') === 'google'} “{$__wcf->session->getVar('__oauthUser')->getUsername()}”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[Your user account has been connected with Google.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
@@ -5469,6 +5471,11 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Watch this category]]></item>
 		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Notify me of new articles.]]></item>
 		<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"><![CDATA[Unwatch this category]]></item>
+		<item name="wcf.user.objectWatch.button.subscribed"><![CDATA[Subscribed]]></item>
+		<item name="wcf.user.objectWatch.notSubscribed"><![CDATA[Not subscribed]]></item>
+		<item name="wcf.user.objectWatch.notSubscribed.description"><![CDATA[Receive notifications for mentions, quotes and reactions.]]></item>
+		<item name="wcf.user.objectWatch.subscribed"><![CDATA[Subscribed]]></item>
+		<item name="wcf.user.objectWatch.subscribed.description"><![CDATA[Receive notifications for new content, mentions, quotes and reactions.]]></item>
 	</category>
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.aboutMe"><![CDATA[About Me]]></item>

@@ -268,7 +268,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	_failure: function() {
 		if (this._dialog !== null) {
 			$('#packageInstallationProgress').removeAttr('value');
-			this._setIcon('times');
+			this._setIcon('xmark');
 		}
 		
 		if (!this._allowRollback) {
@@ -538,7 +538,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		iconName
 	 */
 	_setIcon: function(iconName) {
-		this._dialog.find('.jsPackageInstallationStatus').removeClass('fa-check fa-question fa-times fa-spinner').addClass('fa-' + iconName);
+		const icon = this._dialog.find('.jsPackageInstallationStatus fa-icon')[0];
+		icon.setIcon(iconName);
 	}
 });
 
@@ -803,7 +804,12 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		if (!bindOnExistingButtons === true) {
-			$('<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>').prependTo($('.contentHeaderNavigation > ul'));
+			$(`<li>
+				<button class="button jsButtonSearchForUpdates">
+					<fa-icon size="16" name="arrows-rotate"></fa-icon>
+					<span>${WCF.Language.get('wcf.acp.package.searchForUpdates')}</span>
+				</button>
+			</li>`).prependTo($('.contentHeaderNavigation > ul'));
 		}
 		
 		this._button = elBySel('.jsButtonSearchForUpdates');
@@ -904,7 +910,12 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search') + '</span></a></li>');
+		var $button = $(`<li>
+			<button class="button">
+				<fa-icon size="16" name="cart-shopping"></fa-icon>
+				<span>${WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search')}</span>
+			</button>
+		</li>`);
 		$button.prependTo($('.contentHeaderNavigation > ul')).click($.proxy(this._click, this));
 	},
 	
@@ -1393,10 +1404,12 @@ WCF.ACP.User.BanHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'unban') {
-					$button.data('banned', false).attr('data-tooltip', $button.data('banMessage')).removeClass('fa-lock').addClass('fa-unlock');
+					$button.data('banned', false).attr('data-tooltip', $button.data('banMessage'));
+					$button[0].querySelector("fa-icon").setIcon("unlock");
 				}
 				else {
-					$button.data('banned', true).attr('data-tooltip', $button.data('unbanMessage')).removeClass('fa-unlock').addClass('fa-lock');
+					$button.data('banned', true).attr('data-tooltip', $button.data('unbanMessage'));
+					$button[0].querySelector("fa-icon").setIcon("lock");
 				}
 			}
 		});
@@ -1563,10 +1576,12 @@ WCF.ACP.User.EnableHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'disable') {
-					$button.data('enabled', false).attr('data-tooltip', $button.data('enableMessage')).removeClass('fa-check-square-o').addClass('fa-square-o');
+					$button.data('enabled', false).attr('data-tooltip', $button.data('enableMessage'));
+					$button[0].querySelector("fa-icon").setIcon("square");
 				}
 				else {
-					$button.data('enabled', true).attr('data-tooltip', $button.data('disableMessage')).removeClass('fa-square-o').addClass('fa-check-square-o');
+					$button.data('enabled', true).attr('data-tooltip', $button.data('disableMessage'));
+					$button[0].querySelector("fa-icon").setIcon("square-check");
 				}
 			}
 		});

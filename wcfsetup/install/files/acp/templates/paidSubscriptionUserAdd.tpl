@@ -21,9 +21,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'add'}
-				<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
+				<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
 			{else}
-				<li><a href="{link controller='PaidSubscriptionUserList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.user.list{/lang}</span></a></li>
+				<li><a href="{link controller='PaidSubscriptionUserList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.user.list{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentHeaderNavigation'}

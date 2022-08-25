@@ -2,7 +2,9 @@
 
 namespace wcf\system\template\plugin;
 
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\template\TemplateEngine;
+use wcf\util\JSON;
 
 /**
  * Template compiler plugin that embeds icons into the page. The
@@ -31,6 +33,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
         $size = \intval($tagArgs['size'] ?? 0);
         $name = $tagArgs['name'] ?? '';
         $type = $tagArgs['type'] ?? '';
+        $encodeJson = $tagArgs['encodeJson'] ?? '';
 
         if (!\in_array($size, self::SIZES)) {
             throw new \InvalidArgumentException("An unsupported size '{$size}' was requested.");
@@ -44,6 +47,16 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("An unsupported type '{$type}' was specified.");
         }
 
+        $icon = $this->getIcon($type, $name, $size);
+        if ($encodeJson) {
+            return JSON::encode($icon);
+        }
+
+        return $icon;
+    }
+
+    private function getIcon(string $type, string $name, int $size): string
+    {
         if ($type === 'brand') {
             $svgFile = \WCF_DIR . "icon/font-awesome/v6/brands/{$name}.svg";
             if (!\file_exists($svgFile)) {
@@ -57,13 +70,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
             HTML;
         }
 
-        $modifier = '';
-        if ($type === 'solid') {
-            $modifier = ' solid';
-        }
-
-        return <<<HTML
-        <fa-icon size="{$size}" name="{$name}"{$modifier}></fa-icon>
-        HTML;
+        $forceSolid = $type === 'solid';
+        return FontAwesomeIcon::fromValues($name, $forceSolid)->toHtml($size);
     }
 }

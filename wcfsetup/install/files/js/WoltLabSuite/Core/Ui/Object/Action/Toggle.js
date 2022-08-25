@@ -17,15 +17,18 @@ define(["require", "exports", "tslib", "../../../Language", "./Handler"], functi
         if (!actionElement || actionElement.dataset.objectActionHandler) {
             return;
         }
-        if (actionElement.classList.contains("fa-square-o")) {
-            actionElement.classList.replace("fa-square-o", "fa-check-square-o");
-            const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
-            actionElement.title = newTitle;
-        }
-        else {
-            actionElement.classList.replace("fa-check-square-o", "fa-square-o");
-            const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
-            actionElement.title = newTitle;
+        const icon = actionElement.nodeName === "FA-ICON" ? actionElement : actionElement.querySelector("fa-icon");
+        if (icon) {
+            if (icon.name === "square") {
+                icon.setIcon("square-check");
+                const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
+                actionElement.title = newTitle;
+            }
+            else {
+                icon.setIcon("square");
+                const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
+                actionElement.title = newTitle;
+            }
         }
     }
     function setup() {

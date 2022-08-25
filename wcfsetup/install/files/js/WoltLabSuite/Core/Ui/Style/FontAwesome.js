@@ -15,11 +15,10 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Filter_1 = tslib_1.__importDefault(Filter_1);
     class UiStyleFontAwesome {
-        constructor(icons) {
+        constructor() {
             this.callback = undefined;
             this.iconList = undefined;
             this.itemListFilter = undefined;
-            this.icons = icons;
         }
         open(callback) {
             this.callback = callback;
@@ -32,9 +31,9 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
             event.preventDefault();
             const target = event.target;
             const item = target.closest("li");
-            const icon = item.querySelector("small").textContent.trim();
+            const icon = item.querySelector("fa-icon");
             Dialog_1.default.close(this);
-            this.callback(icon);
+            this.callback(icon.name, icon.solid);
         }
         _dialogSetup() {
             return {
@@ -42,10 +41,15 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
                 options: {
                     onSetup: () => {
                         this.iconList = document.getElementById("fontAwesomeIcons");
+                        const icons = [];
+                        window.getFontAwesome6Metadata().forEach(([, hasRegular], name) => {
+                            if (hasRegular) {
+                                icons.push(`<li><fa-icon size="48" name="${name}" solid></fa-icon><small>${name}</small></li>`);
+                            }
+                            icons.push(`<li><fa-icon size="48" name="${name}"></fa-icon><small>${name}</small></li>`);
+                        });
                         // build icons
-                        this.iconList.innerHTML = this.icons
-                            .map((icon) => `<li><span class="icon icon48 fa-${icon}"></span><small>${icon}</small></li>`)
-                            .join("");
+                        this.iconList.innerHTML = icons.join("");
                         this.iconList.addEventListener("click", (ev) => this.click(ev));
                         this.itemListFilter = new Filter_1.default("fontAwesomeIcons", {
                             callbackPrepareItem: (item) => {
@@ -75,9 +79,9 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
      * Sets the list of available icons, must be invoked prior to any call
      * to the `open()` method.
      */
-    function setup(icons) {
+    function setup() {
         if (!uiStyleFontAwesome) {
-            uiStyleFontAwesome = new UiStyleFontAwesome(icons);
+            uiStyleFontAwesome = new UiStyleFontAwesome();
         }
     }
     exports.setup = setup;

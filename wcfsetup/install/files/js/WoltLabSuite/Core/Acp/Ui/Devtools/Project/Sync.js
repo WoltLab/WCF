@@ -92,7 +92,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                 }
             }
             const syncAll = document.createElement("li");
-            syncAll.innerHTML = `<a href="#" class="button"><span class="icon icon16 fa-refresh"></span> ${Language.get("wcf.acp.devtools.sync.syncAll")}</a>`;
+            syncAll.innerHTML = `<a href="#" class="button"><fa-icon size="16" name="arrows-rotate" solid></fa-icon> ${Language.get("wcf.acp.devtools.sync.syncAll")}</a>`;
             this.buttonSyncAll = syncAll.children[0];
             this.buttonSyncAll.addEventListener("click", this.syncAll.bind(this));
             const list = document.querySelector(".contentHeaderNavigation > ul");
@@ -101,7 +101,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         sync(pluginName, target) {
             const identifier = this.getButtonIdentifier(pluginName, target);
             this.buttons.get(identifier).disabled = true;
-            this.buttonStatus.get(identifier).innerHTML = '<span class="icon icon16 fa-spinner"></span>';
+            this.buttonStatus.get(identifier).innerHTML = '<fa-icon size="16" name="spinner" solid></fa-icon>';
             Ajax.api(this, {
                 parameters: {
                     pluginName,

@@ -13,12 +13,10 @@ import * as Language from "../../../Language";
 import DomUtil from "../../../Dom/Util";
 import { MenuItem, PageMenuMainProvider } from "./Main/Provider";
 
-type CallbackOpen = (event: MouseEvent) => void;
-
 export class PageMenuMain implements PageMenuProvider {
-  private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly mainMenu: HTMLElement;
+  private readonly mainMenuButton: HTMLButtonElement;
   private readonly menuItemBadges = new Map<string, HTMLElement>();
   private readonly menuItemProvider: PageMenuMainProvider;
   private readonly observer: MutationObserver;
@@ -27,14 +25,14 @@ export class PageMenuMain implements PageMenuProvider {
     this.mainMenu = document.querySelector(".mainMenu")!;
     this.menuItemProvider = menuItemProvider;
 
-    this.container = new PageMenuContainer(this);
-
-    this.callbackOpen = (event) => {
-      event.preventDefault();
+    this.mainMenuButton = document.querySelector(".pageHeaderMenuMobile") as HTMLButtonElement;
+    this.mainMenuButton.addEventListener("click", (event) => {
       event.stopPropagation();
 
       this.container.toggle();
-    };
+    });
+
+    this.container = new PageMenuContainer(this);
 
     this.observer = new MutationObserver((mutations) => {
       let refreshUnreadIndicator = false;
@@ -54,11 +52,8 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   enable(): void {
-    this.mainMenu.setAttribute("aria-expanded", "false");
-    this.mainMenu.setAttribute("aria-label", Language.get("wcf.menu.page"));
-    this.mainMenu.setAttribute("role", "button");
-    this.mainMenu.tabIndex = 0;
-    this.mainMenu.addEventListener("click", this.callbackOpen);
+    this.mainMenuButton.setAttribute("aria-expanded", "false");
+    this.mainMenuButton.querySelector("fa-icon")!.setIcon("bars");
 
     this.refreshUnreadIndicator();
   }
@@ -66,11 +61,8 @@ export class PageMenuMain implements PageMenuProvider {
   disable(): void {
     this.container.close();
 
-    this.mainMenu.removeAttribute("aria-expanded");
-    this.mainMenu.removeAttribute("aria-label");
-    this.mainMenu.removeAttribute("role");
-    this.mainMenu.removeAttribute("tabindex");
-    this.mainMenu.removeEventListener("click", this.callbackOpen);
+    this.mainMenuButton.setAttribute("aria-expanded", "false");
+    this.mainMenuButton.querySelector("fa-icon")!.setIcon("bars");
   }
 
   getContent(): DocumentFragment {
@@ -98,7 +90,7 @@ export class PageMenuMain implements PageMenuProvider {
   }
 
   getMenuButton(): HTMLElement {
-    return this.mainMenu;
+    return this.mainMenuButton;
   }
 
   sleep(): void {
@@ -256,7 +248,7 @@ export class PageMenuMain implements PageMenuProvider {
       button.classList.add("pageMenuMainItemToggle");
       button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-controls", menuId);
-      button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
+      button.innerHTML = '<fa-icon size="24" name="angle-down"></fa-icon>';
 
       let ariaLabel = menuItem.title;
       if (menuItem.link) {

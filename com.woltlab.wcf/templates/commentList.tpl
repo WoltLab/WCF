@@ -48,14 +48,14 @@
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList">
 								{if $comment->isDisabled && $commentCanModerate}
-									<li class="jsOnly"><a href="#" class="jsEnableComment"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.comment.approve{/lang}</span></a></li>
+									<li class="jsOnly"><a href="#" class="jsEnableComment">{icon size=16 name='check'} <span class="invisible">{lang}wcf.comment.approve{/lang}</span></a></li>
 								{/if}
 								{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-									<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+									<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip">{icon size=16 name='triangle-exclamation'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 								{/if}
 								
 								{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $comment->userID != $__wcf->user->userID}
-									<li class="jsOnly"><a href="#" class="reactButton jsTooltip {if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{$likeData[comment][$comment->commentID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>
+									<li class="jsOnly"><a href="#" class="reactButton jsTooltip {if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{$likeData[comment][$comment->commentID]->reactionTypeID}{else}0{/if}">{icon size=16 name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>
 								{/if}
 								
 								{event name='commentOptions'}

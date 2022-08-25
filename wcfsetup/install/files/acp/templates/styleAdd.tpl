@@ -45,11 +45,11 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
-				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 fa-download"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				<li><a class="jsCopyStyle button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon size=16 name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button">{icon size=16 name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}
 			
-			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			<li><a href="{link controller='StyleList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -697,15 +697,15 @@
 									<div id="spEditor">
 										<div id="spEditorToolbar" data-region="wcfEditorButton">
 											<ul class="redactor-toolbar">
-												<li><a class="redactor-button-disabled"><span class="icon icon16 fa-file-code-o"></span></a></li>
-												<li><a><span class="icon icon16 fa-undo"></span></a></li>
-												<li><a><span class="icon icon16 fa-repeat"></span></a></li>
-												<li><a><span class="icon icon16 fa-expand"></span></a></li>
-												<li class="redactor-toolbar-separator"><a><span class="icon icon16 fa-header"></span></a></li>
-												<li class="redactor-toolbar-separator"><a><span class="icon icon16 fa-bold"></span></a></li>
-												<li><a class="dropact"><span class="icon icon16 fa-italic"></span></a></li>
-												<li><a><span class="icon icon16 fa-underline"></span></a></li>
-												<li><a><span class="icon icon16 fa-strikethrough"></span></a></li>
+												<li><a class="redactor-button-disabled">{icon size=16 name='file-code'}</a></li>
+												<li><a>{icon size=16 name='rotate-left'}</a></li>
+												<li><a>{icon size=16 name='arrow-rotate-right'}</a></li>
+												<li><a>{icon size=16 name='up-right-and-down-left-from-center'}</a></li>
+												<li class="redactor-toolbar-separator"><a>{icon size=16 name='heading'}</a></li>
+												<li class="redactor-toolbar-separator"><a>{icon size=16 name='bold'}</a></li>
+												<li><a class="dropact">{icon size=16 name='italic'}</a></li>
+												<li><a>{icon size=16 name='underline'}</a></li>
+												<li><a>{icon size=16 name='strikethrough'}</a></li>
 											</ul>
 										</div>
 										<div id="spEditorContent">
@@ -742,13 +742,13 @@
 										<div class="userMenuHeader">
 											<div class="userMenuTitle">Lorem Ipsum</div>
 											<div class="userMenuButtons">
-												<a class="userMenuButton"><span class="icon icon24 fa-cog"></span></a>
+												<a class="userMenuButton">{icon size=24 name='gear'}</a>
 											</div>
 										</div>
 										<div class="userMenuContent">
 											<div class="userMenuItem" data-is-unread="true">
 												<div class="userMenuItemImage">
-													<span class="icon icon48 fa-user"></span>
+													{icon size=48 name='user' type='solid'}
 												</div>
 												<div class="userMenuItemContent">
 													<a class="userMenuItemLink">
@@ -760,7 +760,7 @@
 												</div>
 												<div class="userMenuItemUnread">
 													<a class="userMenuItemMarkAsRead">
-														<span class="icon icon24 fa-check"></span>
+														{icon size=24 name='check'}
 													</a>
 												</div>
 											</div>

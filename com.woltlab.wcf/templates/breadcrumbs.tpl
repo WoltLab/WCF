@@ -4,11 +4,18 @@
 	<nav class="breadcrumbs" aria-label="{lang}wcf.page.breadcrumb{/lang}">
 		<ol{if $__microdata} itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"{/if}>
 			{content}
-				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
+				{foreach name='breadcrumbs' from=$__wcf->getBreadcrumbs() item=$breadcrumb}
 					{* skip breadcrumbs that do not expose a visible label *}
 					{if $breadcrumb->getLabel()}
 						<li title="{$breadcrumb->getLabel()}"{if $__microdata} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"{/if}>
-							<a href="{$breadcrumb->getURL()}"{if $__microdata} itemprop="item"{/if}><span{if $__microdata} itemprop="name"{/if}>{$breadcrumb->getLabel()}</span></a>
+							<a href="{$breadcrumb->getURL()}"{if $__microdata} itemprop="item"{/if}>
+								{if $tpl.foreach.breadcrumbs.last}
+									<span class="breadcrumbsParentIndicator">
+										{icon size=16 name='arrow-left-long'}
+									</span>
+								{/if}
+								<span{if $__microdata} itemprop="name"{/if}>{$breadcrumb->getLabel()}</span>
+							</a>
 							{if $__microdata}
 								<meta itemprop="position" content="{@$__breadcrumbPos}">
 								{assign var='__breadcrumbPos' value=$__breadcrumbPos+1}

@@ -15,7 +15,7 @@
 				<ul>
 					{content}
 						{if $action == 'edit'}
-							<li><a href="{$article->getLink()}" class="button buttonPrimary"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
+							<li><a href="{$article->getLink()}" class="button buttonPrimary">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
 						{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
@@ -28,12 +28,12 @@
 {capture assign='contentInteractionButtons'}
 	{if $action == 'edit'}
 		{if $article->canDelete()}
-			<a href="#" class="contentInteractionButton button small jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-undo"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a>
-			<a href="#" class="contentInteractionButton button small jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a>
-			<a href="#" class="contentInteractionButton button small jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a>
+			<a href="#" class="contentInteractionButton button small jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='rotate-left'} <span>{lang}wcf.global.button.restore{/lang}</span></a>
+			<a href="#" class="contentInteractionButton button small jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='xmark'} <span>{lang}wcf.global.button.delete{/lang}</span></a>
+			<a href="#" class="contentInteractionButton button small jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon size=16 name='xmark'} <span>{lang}wcf.global.button.trash{/lang}</span></a>
 		{/if}
 		{if $languages|count > 1 || $article->isMultilingual}
-			<a href="#" class="contentInteractionButton button small jsButtonToggleI18n"><span class="icon icon16 fa-language"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a>
+			<a href="#" class="contentInteractionButton button small jsButtonToggleI18n">{icon size=16 name='language'} <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a>
 		{/if}
 	{/if}
 {/capture}

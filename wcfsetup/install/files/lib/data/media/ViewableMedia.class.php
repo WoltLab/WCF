@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\html\output\AmpHtmlOutputProcessor;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -192,8 +193,13 @@ class ViewableMedia extends DatabaseObjectDecorator
         }
 
         $icon = FileUtil::getIconNameByFilename($this->filename);
+        if ($icon) {
+            $icon = "file-{$icon}";
+        } else {
+            $icon = 'file';
+        }
 
-        return '<span class="icon icon' . $size . ' fa-file' . ($icon ? '-' . $icon : '') . '-o"></span>';
+        return FontAwesomeIcon::fromValues($icon, false)->toHtml($size);
     }
 
     /**

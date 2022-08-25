@@ -37,9 +37,9 @@ define(["require", "exports"], function (require, exports) {
         if (container.classList.toggle("collapsed")) {
             toggleButtons.forEach((toggleButton) => {
                 const title = toggleButton.dataset.titleExpand;
-                if (toggleButton.classList.contains("icon")) {
-                    toggleButton.classList.remove("fa-compress");
-                    toggleButton.classList.add("fa-expand");
+                const icon = toggleButton.querySelector("fa-icon");
+                if (icon) {
+                    icon.setIcon("up-right-and-down-left-from-center");
                     toggleButton.title = title;
                 }
                 else {
@@ -61,9 +61,9 @@ define(["require", "exports"], function (require, exports) {
         else {
             toggleButtons.forEach((toggleButton) => {
                 const title = toggleButton.dataset.titleCollapse;
-                if (toggleButton.classList.contains("icon")) {
-                    toggleButton.classList.add("fa-compress");
-                    toggleButton.classList.remove("fa-expand");
+                const icon = toggleButton.querySelector("fa-icon");
+                if (icon) {
+                    icon.setIcon("down-left-and-up-right-to-center");
                     toggleButton.title = title;
                 }
                 else {

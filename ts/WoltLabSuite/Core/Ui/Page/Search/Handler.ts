@@ -21,7 +21,7 @@ type CallbackSelect = (objectId: number) => void;
 
 interface ItemData {
   description?: string;
-  image: string;
+  image: string | string[];
   link: string;
   objectID: number;
   title: string;
@@ -66,10 +66,14 @@ class UiPageSearchHandler implements DialogCallbackObject {
 
     data.returnValues.forEach((item) => {
       let image = item.image;
-      if (/^fa-/.test(image)) {
-        image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get(
-          "wcf.global.select",
-        )}"></span>`;
+      if (Array.isArray(image)) {
+        const [iconName, forceSolid] = image;
+
+        image = `
+          <button class="jsTooltip" title="${Language.get("wcf.global.select")}">
+            <fa-icon size="48" name="${iconName}"${forceSolid ? " solid" : ""}></fa-icon>
+          </button>
+        `;
       }
 
       const listItem = document.createElement("li");
@@ -81,7 +85,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
         <div>
           <div class="containerHeadline">
             <h3>
-                <a href="#">${StringUtil.escapeHTML(item.title)}</a>
+                <button>${StringUtil.escapeHTML(item.title)}</button>
             </h3>
             ${description}
           </div>

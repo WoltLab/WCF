@@ -15,7 +15,7 @@ import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
 import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
 import * as Ajax from "./Ajax";
 import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
-import * as UiMessageShareProviders from "./Ui/Message/Share/Providers";
+import { ShareProvider, addShareProviders } from "./Ui/Message/Share/Providers";
 import * as UiFeedDialog from "./Ui/Feed/Dialog";
 import User from "./User";
 import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
@@ -27,7 +27,7 @@ interface BootstrapOptions {
   };
   enableUserPopover: boolean;
   executeCronjobs: boolean;
-  shareButtonProviders?: string[];
+  shareButtonProviders?: ShareProvider[];
   styleChanger: boolean;
 }
 
@@ -98,7 +98,9 @@ export function setup(options: BootstrapOptions): void {
 
   UiMessageUserConsent.init();
 
-  UiMessageShareProviders.enableShareProviders(options.shareButtonProviders || []);
+  if (options.shareButtonProviders) {
+    addShareProviders(options.shareButtonProviders);
+  }
   UiMessageShareDialog.setup();
 
   if (User.userId) {

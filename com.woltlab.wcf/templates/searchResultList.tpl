@@ -3,17 +3,10 @@
 		{foreach from=$objects item=message}
 			<li class="gridListItem gridListItemMessage">
 				<div class="gridListItemImage">
-					{assign var=_messageCustomIcon value=$customIcons[$message]}
-					{if $_messageCustomIcon === ''}
-						{if $message->getUserProfile()}
-							{user object=$message->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
-						{else}
-							<span class="icon icon48 fa-file-o"></span>
-						{/if}
-					{elseif $_messageCustomIcon|strpos:'fa-' === 0}
-						<span class="icon icon48 {$_messageCustomIcon}"></span>
+					{if $message->getUserProfile()}
+						{user object=$message->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 					{else}
-						<img src="{$_messageCustomIcon}" height="48" width="48" alt="">
+						{icon size=48 name='file'}
 					{/if}
 				</div>
 				

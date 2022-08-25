@@ -151,7 +151,7 @@ export function rebuild(containerId: string): void {
       dropdown.className = "dropdown jsFlexibleMenuDropdown";
 
       const icon = document.createElement("a");
-      icon.className = "icon icon16 fa-list";
+      icon.innerHTML = '<fa-icon size="16" name="list"></fa-icon>';
       dropdown.appendChild(icon);
 
       dropdownMenu = document.createElement("ul");

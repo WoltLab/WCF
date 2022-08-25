@@ -29,12 +29,6 @@ class StyleHandler extends SingletonFactory
     protected $cache = [];
 
     /**
-     * list of FontAwesome icons excluding the `fa-`-prefix
-     * @var string[]
-     */
-    protected $icons = [];
-
-    /**
      * active style object
      * @var ActiveStyle
      */
@@ -258,23 +252,15 @@ class StyleHandler extends SingletonFactory
     }
 
     /**
-     * Returns the list of FontAwesome icons excluding the `fa-`-prefix,
-     * optionally encoding the list as JSON.
-     *
-     * @param bool $toJSON encode array as a JSON string
-     * @return      string|\string[]        JSON string or PHP array of strings
+     * @deprecated 6.0 Unsupported, this exists temporarily for development purposes.
      */
     public function getIcons($toJSON = false)
     {
-        if (empty($this->icons)) {
-            $this->parseVariables();
-        }
-
         if ($toJSON) {
-            return JSON::encode($this->icons);
+            return JSON::encode([]);
         }
 
-        return $this->icons;
+        return [];
     }
 
     /**
@@ -296,16 +282,5 @@ class StyleHandler extends SingletonFactory
         }
 
         return null;
-    }
-
-    /**
-     * Reads the available icon names from the variable definition file.
-     */
-    protected function parseVariables()
-    {
-        $content = \file_get_contents(WCF_DIR . 'style/font-awesome/_variables.scss');
-        \preg_match_all('~\$fa-var-([a-z0-9\-]{2,})~', $content, $matches);
-
-        $this->icons = $matches[1];
     }
 }

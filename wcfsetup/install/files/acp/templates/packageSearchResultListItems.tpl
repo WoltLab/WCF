@@ -1,7 +1,7 @@
 {foreach from=$packages item=$package}
 	<tr class="jsPackageRow packageSearchResultRow">
 		<td class="columnIcon">
-			<a href="#" class="jsInstallPackage jsTooltip" data-confirm-message="{lang __encode=true}wcf.acp.package.install.confirmMessage{/lang}" data-package="{$package->package}" data-package-version="{$package->getAccessibleVersion()->packageVersion}" title="{lang}wcf.acp.package.button.installPackage{/lang}"><span class="icon icon24 fa-plus"></span></a>
+			<a href="#" class="jsInstallPackage jsTooltip" data-confirm-message="{lang __encode=true}wcf.acp.package.install.confirmMessage{/lang}" data-package="{$package->package}" data-package-version="{$package->getAccessibleVersion()->packageVersion}" title="{lang}wcf.acp.package.button.installPackage{/lang}">{icon size=24 name='plus'}</a>
 		</td>
 		<td class="columnText">
 			<div class="packageSearchName">{$package->packageName} <span class="packageSearchVersion">{$package->getAccessibleVersion()->packageVersion}</span></div>

@@ -7,7 +7,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><button class="button" id="sitemapRebuildButton"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}</span></button></li>
+			<li><button class="button" id="sitemapRebuildButton">{icon size=16 name='arrows-rotate'} <span>{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}</span></button></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -41,7 +41,7 @@
 								{assign var='sitemapIsDisabled' value=true}
 							{/if}
 							{objectAction action="toggle" isDisabled=$sitemapIsDisabled}
-							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 						</td>
 						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
 						<td class="columnInteger columnPriority">{$object->priority}</td>

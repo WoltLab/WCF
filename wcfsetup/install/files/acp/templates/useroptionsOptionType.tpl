@@ -28,7 +28,13 @@
 			{foreach from=$availableOptions item=availableOption}
 				<li class="sortableNode">
 					<span class="sortableNodeLabel">
-						<span class="icon icon16 fa-arrows sortableNodeHandle"></span> <label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}> {lang}wcf.user.option.{$availableOption}{/lang}</label>
+						<span class="sortableNodeHandle">
+							{icon size=16 name='arrows-up-down-left-right'}
+						</span>
+						<label>
+							<input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}>
+							{lang}wcf.user.option.{$availableOption}{/lang}
+						</label>
 					</span>
 				</li>
 			{/foreach}

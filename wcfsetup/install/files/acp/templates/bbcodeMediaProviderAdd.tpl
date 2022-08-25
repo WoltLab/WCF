@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BBCodeMediaProviderList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.bbcode.mediaProvider.list{/lang}</span></a></li>
+			<li><a href="{link controller='BBCodeMediaProviderList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.bbcode.mediaProvider.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

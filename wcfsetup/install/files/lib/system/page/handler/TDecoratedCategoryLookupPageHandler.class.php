@@ -132,7 +132,7 @@ trait TDecoratedCategoryLookupPageHandler
 
             $results[] = [
                 'description' => $description,
-                'image' => 'fa-folder-open-o',
+                'image' => ['folder', false],
                 'link' => $category->getLink(),
                 'objectID' => $categoryID,
                 'title' => $category->getTitle(),

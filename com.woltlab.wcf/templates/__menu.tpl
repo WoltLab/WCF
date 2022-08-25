@@ -9,6 +9,9 @@
 					{if $menuItemNode->getOutstandingItems() > 0}
 						<span class="boxMenuLinkOutstandingItems badge badgeUpdate" aria-label="{lang}wcf.page.menu.outstandingItems{/lang}">{#$menuItemNode->getOutstandingItems()}</span>
 					{/if}
+					{if $menuItemNode->hasChildren()}
+						{icon size=16 name='caret-down' type='solid'}
+					{/if}
 				</a>
 				
 				{if $menuItemNode->hasChildren()}<ol class="boxMenuDepth{@$menuItemNode->getDepth()}">{else}</li>{/if}

@@ -288,8 +288,8 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
             listItem.innerHTML = `
-      <a>
-        <span class="icon icon16 fa-plus jsTooltip" title="${Language.get("wcf.global.button.insert")}"></span>
+      <a class="jsTooltip" title="${Language.get("wcf.global.button.insert")}">
+        <fa-icon size="16" name="plus"></fa-icon>
         <span class="invisible">${Language.get("wcf.global.button.insert")}</span>
       </a>`;
         }

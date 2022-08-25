@@ -203,31 +203,24 @@
 	padding: 2px;
 	position: relative;
 
-	&::after {
-		background-color: rgba(0, 0, 0, 0.8);
-		border-radius: 2px;
-		box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
-		bottom: 5px;
-		color: white;
-		content: $fa-var-search;
-		display: block;
-		font-family: FontAwesome;
-		font-size: 21px;
-		font-style: normal;
-		font-weight: normal;
-		opacity: 0.5;
-		padding: 2px 8px;
-		position: absolute;
-		right: 5px;
-		text-decoration: none;
-		transition: 0.2s ease opacity;
+	&:hover .embeddedAttachmentLinkEnlarge {
+		opacity: 0.8;
 	}
+}
 
-	&:hover {
-		&::after {
-			opacity: 0.8;
-		}
-	}
+.embeddedAttachmentLinkEnlarge {
+	background-color: rgba(0, 0, 0, 0.8);
+	border-radius: 2px;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+	bottom: 5px;
+	color: white;
+	display: block;
+	opacity: 0.5;
+	padding: 2px;
+	position: absolute;
+	right: 5px;
+	text-decoration: none;
+	transition: 0.2s ease opacity;
 }
 
 .popoverContent .embeddedAttachmentLink,

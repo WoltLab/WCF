@@ -85,8 +85,9 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
 
     const progress = element.querySelector("progress") as HTMLProgressElement;
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon64 fa-spinner";
+    const icon = document.createElement("fa-icon");
+    icon.size = 64;
+    icon.setIcon("spinner");
 
     const fileName = element.textContent;
     element.textContent = "";
@@ -122,9 +123,8 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
       const small = fileElement.querySelector("small") as HTMLElement;
       small.innerHTML = "";
 
-      const icon = fileElement.querySelector(".icon") as HTMLElement;
-      icon.classList.remove("fa-spinner");
-      icon.classList.add("fa-ban");
+      const icon = fileElement.querySelector("fa-icon")!;
+      icon.setIcon("ban");
 
       const innerError = document.createElement("span");
       innerError.className = "innerError";
@@ -174,7 +174,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
         } else {
           fileElement.dataset.uniqueFileId = fileData.uniqueFileId;
           fileElement.querySelector("small")!.textContent = fileData.filesize.toString();
-          const icon = fileElement.querySelector(".icon") as HTMLElement;
+          const icon = fileElement.querySelector("fa-icon")!;
 
           if (fileData.image !== null) {
             const a = document.createElement("a");
@@ -188,8 +188,7 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
             a.appendChild(image);
             icon.replaceWith(a);
           } else {
-            icon.classList.remove("fa-spinner");
-            icon.classList.add(`fa-${fileData.icon}`);
+            icon.setIcon(fileData.icon, fileData.icon === "paperclip");
           }
         }
       } else if (data.error[index] !== undefined) {
@@ -200,9 +199,8 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
         const small = fileElement.querySelector("small") as HTMLElement;
         small.innerHTML = "";
 
-        const icon = fileElement.querySelector(".icon") as HTMLElement;
-        icon.classList.remove("fa-spinner");
-        icon.classList.add("fa-ban");
+        const icon = fileElement.querySelector("fa-icon")!;
+        icon.setIcon("ban");
 
         let innerError = fileElement.querySelector(".innerError") as HTMLElement;
         if (innerError === null) {

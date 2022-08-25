@@ -1,6 +1,10 @@
 <li class="box48 jsCommentAdd jsOnly">
 	{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}
-	<div class="commentListAddComment collapsed jsOuterEditorContainer" data-placeholder="{lang}wcf.comment.add{/lang}">
+	<div class="commentListAddComment collapsed jsOuterEditorContainer">
+		<button type="button" class="commentListAddCommentPlaceholder">
+			{icon size=32 name='reply'}
+			{lang}wcf.comment.add{/lang}
+		</button>
 		<div class="commentListAddCommentEditorContainer">
 			{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
 				<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>

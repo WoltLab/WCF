@@ -2,7 +2,12 @@
 
 {capture assign='attributeTemplate'}
 	<section class="section">
-		<h2 class="sectionTitle"><span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.attribute{/lang} {ldelim}#$attributeNo}</span></h2>
+		<h2 class="sectionTitle">
+			<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+				{icon size=16 name='xmark'}
+			</button>
+			<span>{lang}wcf.acp.bbcode.attribute{/lang} {ldelim}#$attributeNo}</span>
+		</h2>
 		
 		<dl>
 			<dt><label for="attributes[{ldelim}@$attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
@@ -77,7 +82,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BBCodeList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
+			<li><a href="{link controller='BBCodeList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -186,8 +191,8 @@
 				<dt><label for="wysiwygIcon">{lang}wcf.acp.bbcode.wysiwygIcon{/lang}</label></dt>
 				<dd>
 					<div class="inputAddon">
-						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium">
-						<a href="#" class="inputSuffix button jsButtonSearchWysiwygIcon"><span class="icon icon16 fa-search"></span></a>
+						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium" readonly>
+						<button type="button" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon size=16 name='magnifying-glass'}</button>
 					</div>
 					{if $errorField == 'wysiwygIcon'}
 						<small class="innerError">
@@ -207,11 +212,21 @@
 	</div>
 		
 	<section class="section" id="attributeFieldset">
-		<h2 class="sectionTitle"><span class="icon icon16 fa-plus pointer jsAddButton jsTooltip" title="{lang}wcf.global.button.add{/lang}"></span> {lang}wcf.acp.bbcode.attributes{/lang}</h2>
+		<h2 class="sectionTitle">
+			<button type="button" class="jsAddButton jsTooltip" title="{lang}wcf.global.button.add{/lang}">
+				{icon size=16 name='plus'}
+			</button>
+			{lang}wcf.acp.bbcode.attributes{/lang}
+		</h2>
 		
 		{foreach from=$attributes item='attribute'}
 			<section class="section">
-				<h2 class="sectionTitle"><span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span>{lang}wcf.acp.bbcode.attribute{/lang} {#$attribute->attributeNo}</span></h2>
+				<h2 class="sectionTitle">
+					<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+						{icon size=16 name='xmark'}
+					</button>
+					<span>{lang}wcf.acp.bbcode.attribute{/lang} {#$attribute->attributeNo}</span>
+				</h2>
 				
 				<dl{if $errorField == 'attributeHtml'|concat:$attribute->attributeNo} class="formError"{/if}>
 					<dt><label for="attributes[{@$attribute->attributeNo}][attributeHtml]">{lang}wcf.acp.bbcode.attribute.attributeHtml{/lang}</label></dt>
@@ -262,14 +277,18 @@
 
 {include file='fontAwesomeJavaScript'}
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], function (UiStyleFontAwesome) {
-		elBySel('.jsButtonSearchWysiwygIcon').addEventListener('click', function(event) {
-			event.preventDefault();
-			
-			UiStyleFontAwesome.open(function(iconName) {
-				elById('wysiwygIcon').value = 'fa-' + iconName;
+	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
+		const button = document.querySelector('.jsButtonSearchWysiwygIcon');
+		const input = document.getElementById('wysiwygIcon');
+
+		function openFontAwesomePicker() {
+			UiStyleFontAwesome.open((iconName, forceSolid) => {
+				input.value = `${ iconName };${ String(forceSolid) }`;
 			});
-		});
+		}
+
+		button.addEventListener("click", () => openFontAwesomePicker());
+		input.addEventListener("click", () => openFontAwesomePicker());
 	});
 </script>
 

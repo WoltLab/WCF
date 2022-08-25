@@ -63,7 +63,6 @@ class UserAvatarCondition extends AbstractSelectCondition implements
         switch ($conditionData['userAvatar']) {
             case self::NO_AVATAR:
                 $objectList->getConditionBuilder()->add('user_table.avatarID IS NULL');
-                $objectList->getConditionBuilder()->add('user_table.enableGravatar = ?', [0]);
                 break;
 
             case self::AVATAR:

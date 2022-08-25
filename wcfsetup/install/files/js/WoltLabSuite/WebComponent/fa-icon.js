@@ -41,22 +41,27 @@
                 throw new TypeError(`The icon '${this.name}' is unknown or unsupported.`);
             }
         }
-        setIcon(name, isSolid) {
+        setIcon(name, forceSolid = false) {
             if (!this.isValidIconName(name)) {
                 throw new TypeError(`The icon '${name}' is unknown or unsupported.`);
             }
-            if (!this.isValidIconStyle(name, isSolid)) {
-                throw new Error(`The icon '${name}' only supports the 'solid' style.`);
+            if (!forceSolid && !this.hasNonSolidStyle(name)) {
+                forceSolid = true;
             }
-            this.solid = isSolid;
-            this.name = name;
+            if (forceSolid) {
+                this.setAttribute("solid", "");
+            }
+            else {
+                this.removeAttribute("solid");
+            }
+            this.setAttribute("name", name);
             this.updateIcon();
         }
         isValidIconName(name) {
             return name !== null && window.getFontAwesome6IconMetadata(name) !== undefined;
         }
-        isValidIconStyle(name, isSolid) {
-            if (!isSolid && isFontAwesome6Free()) {
+        hasNonSolidStyle(name) {
+            if (isFontAwesome6Free()) {
                 const [, hasRegularVariant] = window.getFontAwesome6IconMetadata(name);
                 if (!hasRegularVariant) {
                     // Font Awesome 6 Free only includes solid icons with the
@@ -78,29 +83,70 @@
             var _a;
             const root = this.getShadowRoot();
             (_a = root.childNodes[0]) === null || _a === void 0 ? void 0 : _a.remove();
-            const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
-            root.append(codepoint);
+            if (this.name === "spinner") {
+                root.append(this.createSpinner());
+            }
+            else {
+                const [codepoint] = window.getFontAwesome6IconMetadata(this.name);
+                root.append(codepoint);
+            }
+        }
+        createSpinner() {
+            // Based upon the work of Fabio Ottaviani
+            // https://codepen.io/supah/pen/BjYLdW
+            const container = document.createElement("div");
+            container.innerHTML = `
+        <svg class="spinner" viewBox="0 0 50 50">
+          <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+      `;
+            const style = document.createElement("style");
+            style.textContent = `
+        div,
+        svg {
+          height: var(--font-size);
+          width: var(--font-size);
+        }
+
+        .spinner {
+          animation: rotate 2s linear infinite;
+        }
+          
+        .path {
+          animation: dash 1.5s ease-in-out infinite;
+          stroke: currentColor;
+          stroke-linecap: round;
+        }
+
+        @keyframes rotate {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes dash {
+          0% {
+            stroke-dasharray: 1, 150;
+            stroke-dashoffset: 0;
+          }
+          50% {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -35;
+          }
+          100% {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -124;
+          }
+        }
+      `;
+            container.append(style);
+            return container;
         }
         get solid() {
             return this.hasAttribute("solid");
         }
-        set solid(solid) {
-            if (solid) {
-                this.setAttribute("solid", "");
-            }
-            else {
-                this.removeAttribute("solid");
-            }
-        }
         get name() {
             return this.getAttribute("name") || "";
-        }
-        set name(name) {
-            if (!this.isValidIconName(name)) {
-                throw new Error(`Refused to set the unknown icon name '${name}'.`);
-            }
-            this.setAttribute("name", name);
-            this.updateIcon();
         }
         get size() {
             const size = this.getAttribute("size");

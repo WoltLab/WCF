@@ -93,7 +93,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		// for backwards compatibility, the object is still created but only inserted
 		// if an editor is used
-		this._insertAllButton = $('<button class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</button>').hide();
+		this._insertAllButton = $('<button type="button" class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</button>').hide();
 		
 		if (this._editorId) {
 			this._insertAllButton.appendTo(this._buttonSelector);
@@ -488,7 +488,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see        WCF.Upload._initFile()
 	 */
 	_initFile: function (file) {
-		var $li = $('<li class="box64 formAttachmentListItem"><span class="icon icon64 fa-spinner" /><div><div><p>' + WCF.String.escapeHTML(file.name) + '</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
+		var $li = $('<li class="box64 formAttachmentListItem"><fa-icon size="64" name="spinner"></fa-icon><div><div><p>' + WCF.String.escapeHTML(file.name) + '</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
 		
@@ -498,7 +498,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			$li.find('progress').remove();
 			
 			// upload icon
-			$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
+			const icon = $li[0].querySelector("fa-icon");
+			icon.setIcon("ban");
 			
 			// error message
 			$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.tooLarge') + '</small>'));
@@ -548,7 +549,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// show thumbnail
 				if (attachmentData.tinyURL) {
-					$li.children('.fa-spinner').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
+					$li.find('fa-icon').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
 					
 					$li.data('height', attachmentData.height);
 					$li.data('width', attachmentData.width);
@@ -556,7 +557,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 				// show file icon
 				else {
-					$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-' + attachmentData.iconName);
+					$li[0].querySelector("fa-icon").setIcon(attachmentData.iconName);
 				}
 				
 				// update attachment link
@@ -574,7 +575,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// init buttons
 				var $buttonList = $li.find('ul').addClass('buttonGroup');
-				var $deleteButton = $('<li><button class="button small jsObjectAction" data-object-action="delete" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</button></li>');
+				var $deleteButton = $('<li><button type="button" class="button small jsObjectAction" data-object-action="delete" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</button></li>');
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', attachmentData.attachmentID);
@@ -582,13 +583,13 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				if (this._editorId) {
 					if (attachmentData.tinyURL) {
 						if (attachmentData.thumbnailURL) {
-							$('<li><button class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</button></li>').appendTo($buttonList);
+							$('<li><button type="button" class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</button></li>').appendTo($buttonList);
 						}
 						
-						$('<li><button class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</button></li>').appendTo($buttonList);
+						$('<li><button type="button" class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</button></li>').appendTo($buttonList);
 					}
 					else {
-						$('<li><button class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</button></li>').appendTo($buttonList);
+						$('<li><button type="button" class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</button></li>').appendTo($buttonList);
 					}
 				}
 				
@@ -615,7 +616,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}
 			else {
 				// upload icon
-				$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
+				$li[0].querySelector("fa-icon").setIcon("ban");
 				var $errorMessage = '';
 				
 				// error handling
@@ -710,9 +711,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		// mark uploads as failed
 		this._fileListSelector.find('li').each(function (index, listItem) {
 			var $listItem = $(listItem);
-			if ($listItem.children('.fa-spinner').length) {
+			const icon = listItem.querySelector('fa-icon[name="spinner"]');
+			if (icon) {
 				// upload icon
-				$listItem.addClass('uploadFailed').children('.fa-spinner').removeClass('fa-spinner').addClass('fa-ban');
+				$listItem.addClass('uploadFailed');
+				icon.setIcon("ban");
 				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
 			}
 		});

@@ -31,4 +31,11 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
     {
         return true;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function cacheObject(int $objectID): void
+    {
+    }
 }

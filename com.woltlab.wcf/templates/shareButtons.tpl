@@ -4,58 +4,58 @@
 	<ul class="inlineList">
 		{if 'Facebook'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsShareFacebook" title="{lang}wcf.message.share.facebook{/lang}" aria-label="{lang}wcf.message.share.facebook{/lang}">
-					<span class="icon icon24 fa-facebook-official"></span>
+				<button class="button messageShareProvider" title="{lang}wcf.message.share.facebook{/lang}" aria-label="{lang}wcf.message.share.facebook{/lang}" data-identifier="Facebook">
+					{icon size=24 name='facebook' type='brand'}
 					<span>{lang}wcf.message.share.facebook{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{if 'Twitter'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsShareTwitter" title="{lang}wcf.message.share.twitter{/lang}" aria-label="{lang}wcf.message.share.twitter{/lang}">
-					<span class="icon icon24 fa-twitter"></span>
+				<button class="button messageShareProvider" title="{lang}wcf.message.share.twitter{/lang}" aria-label="{lang}wcf.message.share.twitter{/lang}" data-identifier="Twitter">
+					{icon size=24 name='twitter' type='brand'}
 					<span>{lang}wcf.message.share.twitter{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{if 'Reddit'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsShareReddit" title="{lang}wcf.message.share.reddit{/lang}" aria-label="{lang}wcf.message.share.reddit{/lang}">
-					<span class="icon icon24 fa-reddit"></span>
+				<button class="button messageShareProvider" title="{lang}wcf.message.share.reddit{/lang}" aria-label="{lang}wcf.message.share.reddit{/lang}" data-identifier="Reddit">
+					{icon size=24 name='reddit' type='brand'}
 					<span>{lang}wcf.message.share.reddit{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{if 'WhatsApp'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsShareWhatsApp" title="{lang}wcf.message.share.whatsApp{/lang}" aria-label="{lang}wcf.message.share.whatsApp{/lang}">
-					<span class="icon icon24 fa-whatsapp jsTooltip"></span>
+				<button class="button messageShareProvider" title="{lang}wcf.message.share.whatsApp{/lang}" aria-label="{lang}wcf.message.share.whatsApp{/lang}" data-identifier="WhatsApp">
+					{icon size=24 name='whatsapp' type='brand'}
 					<span>{lang}wcf.message.share.whatsApp{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{if 'LinkedIn'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsShareLinkedIn" title="{lang}wcf.message.share.linkedIn{/lang}" aria-label="{lang}wcf.message.share.linkedIn{/lang}">
-					<span class="icon icon24 fa-linkedin jsTooltip"></span>
+				<button href="#" role="button" class="button messageShareProvider" title="{lang}wcf.message.share.linkedIn{/lang}" aria-label="{lang}wcf.message.share.linkedIn{/lang}" data-identifier="LinkedIn">
+					{icon size=24 name='linkedin-in' type='brand'}
 					<span>{lang}wcf.message.share.linkedIn{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{if 'Pinterest'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsSharePinterest" title="{lang}wcf.message.share.pinterest{/lang}" aria-label="{lang}wcf.message.share.pinterest{/lang}">
-					<span class="icon icon24 fa-pinterest-p jsTooltip"></span>
+				<button class="button messageShareProvider" title="{lang}wcf.message.share.pinterest{/lang}" aria-label="{lang}wcf.message.share.pinterest{/lang}" data-identifier="Pinterest">
+					{icon size=24 name='pinterest' type='brand'}
 					<span>{lang}wcf.message.share.pinterest{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{if 'XING'|in_array:$__share_buttons_providers}
 			<li>
-				<a href="#" role="button" class="button jsShareXing" title="{lang}wcf.message.share.xing{/lang}" aria-label="{lang}wcf.message.share.xing{/lang}">
-					<span class="icon icon24 fa-xing jsTooltip"></span>
+				<button class="button messageShareProvider" title="{lang}wcf.message.share.xing{/lang}" aria-label="{lang}wcf.message.share.xing{/lang}" data-identifier="XING">
+					{icon size=24 name='xing' type='brand'}
 					<span>{lang}wcf.message.share.xing{/lang}</span>
-				</a>
+				</button>
 			</li>
 		{/if}
 		{event name='buttons'}

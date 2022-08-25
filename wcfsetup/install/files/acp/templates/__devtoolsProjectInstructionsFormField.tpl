@@ -39,8 +39,12 @@
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">
 					{literal}{if $type === 'update'}{/literal}
-						<span class="icon icon16 fa-pencil pointer jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}"></span>
-						<span class="icon icon16 fa-times pointer jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}"></span>
+						<button class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}">
+							{icon size=16 name='pencil'}
+						</button>
+						<button class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}">
+							{icon size=16 name='xmark'}
+						</button>
 					{literal}{/if}{/literal}
 					{literal}<span class="jsInstructionsTitle">{$sectionTitle}</span>{/literal}
 				</h2>

@@ -271,8 +271,9 @@ class UiLikeHandler {
     button.href = "#";
     button.title = title;
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon16 fa-smile-o";
+    const icon = document.createElement("fa-icon");
+    icon.size = 16;
+    icon.setIcon("smile");
 
     if (reactionTypeID === undefined || reactionTypeID == 0) {
       icon.dataset.reactionTypeId = "0";

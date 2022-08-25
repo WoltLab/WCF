@@ -119,4 +119,12 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
             ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function cacheObject(int $objectID): void
+    {
+        ViewableArticleRuntimeCache::getInstance()->cacheObjectID($objectID);
+    }
 }

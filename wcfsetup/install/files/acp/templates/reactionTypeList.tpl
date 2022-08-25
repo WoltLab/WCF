@@ -19,7 +19,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='ReactionTypeAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.reactionType.add{/lang}</span></a></li>
+			<li><a href="{link controller='ReactionTypeAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.reactionType.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -41,13 +41,17 @@
 						<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}">{@$reactionType->renderIcon()} {$reactionType->getTitle()}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+							<span class="sortableNodeHandle">
+								{icon size=16 name='arrows-up-down-left-right'}
+							</span>
 							{assign var='reactionTypeIsDisabled' value=true}
 							{if $reactionType->isAssignable}
 								{assign var='reactionTypeIsDisabled' value=false}
 							{/if}
 							{objectAction action="toggle" isDisabled=$reactionTypeIsDisabled disableTitle='wcf.acp.reactionType.isAssignable' enableTitle='wcf.acp.reactionType.isNotAssignable'}
-							<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
+								{icon size=16 name='pencil'}
+							</a>
 							{objectAction action="delete" objectTitle=$reactionType->getTitle()}
 							
 							{event name='itemButtons'}

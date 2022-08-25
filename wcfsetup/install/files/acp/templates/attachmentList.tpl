@@ -110,7 +110,7 @@
 									{if $attachment->tinyThumbnailType}
 										<img src="{$attachment->getThumbnailLink('tiny')}" class="attachmentTinyThumbnail" alt="">
 									{else}
-										<span class="icon icon64 fa-{@$attachment->getIconName()}"></span>
+										{icon size=64 name=$attachment->getIconName()}
 									{/if}
 								</a>
 								

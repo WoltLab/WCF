@@ -43,15 +43,15 @@
 									
 									<ul class="attachmentMetaData inlineList">
 										<li>
-											<span class="icon icon16 fa-file-text-o"></span>
+											{icon size=16 name='file-lines'}
 											{@$attachment->filesize|filesize}
 										</li>
 										<li>
-											<span class="icon icon16 fa-expand"></span>
+											{icon size=16 name='up-right-and-down-left-from-center'}
 											{#$attachment->width}×{#$attachment->height}
 										</li>
 										<li>
-											<span class="icon icon16 fa-eye"></span>
+											{icon size=16 name='eye'}
 											{#$attachment->downloads}
 										</li>
 									</ul>
@@ -74,8 +74,12 @@
 						{if $attachment->showAsFile() && !$attachment->isEmbedded()}
 							<a href="{$attachment->getLink()}" class="messageAttachment jsTooltip" title="{lang}wcf.attachment.file.title{/lang}">
 								<span class="messageAttachmentIcon">
-									<span class="messageAttachmentIconDefault icon icon32 fa-{@$attachment->getIconName()}"></span>
-									<span class="messageAttachmentIconDownload icon icon32 fa-download"></span>
+									<span class="messageAttachmentIconDefault">
+										{icon size=32 name=$attachment->getIconName()}
+									</span>
+									<span class="messageAttachmentIconDownload">
+										{icon size=32 name='download'}
+									</span>
 								</span>
 								<span class="messageAttachmentFilename">{$attachment->filename}</span>
 								<span class="messageAttachmentMeta">{lang}wcf.attachment.file.info{/lang}</span>

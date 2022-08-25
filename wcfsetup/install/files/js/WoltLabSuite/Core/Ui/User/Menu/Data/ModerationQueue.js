@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         getMenuButtons() {
             return [
                 {
-                    icon: '<span class="icon icon24 fa-trash-o"></span>',
+                    icon: '<fa-icon size="24" name="trash-can"></fa-icon>',
                     link: this.options.deletedContentLink,
                     name: "deletedContent",
                     title: this.options.deletedContent,

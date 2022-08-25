@@ -337,8 +337,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
      */
     public function getSearchResultList()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
-        return $this->pageEditor->getHandler()->lookup($this->parameters['data']['searchString']);
+        $pageHandler = $this->pageEditor->getHandler();
+
+        \assert($pageHandler instanceof ILookupPageHandler);
+
+        return $pageHandler->lookup($this->parameters['data']['searchString']);
     }
 
     /**

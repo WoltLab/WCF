@@ -12,10 +12,10 @@ import * as StringUtil from "./StringUtil";
 const _fileExtensionIconMapping = new Map<string, string>(
   Object.entries({
     // archive
-    zip: "archive",
-    rar: "archive",
-    tar: "archive",
-    gz: "archive",
+    zip: "zipper",
+    rar: "zipper",
+    tar: "zipper",
+    gz: "zipper",
 
     // audio
     mp3: "audio",
@@ -59,7 +59,7 @@ const _fileExtensionIconMapping = new Map<string, string>(
     pptx: "powerpoint",
 
     // text
-    txt: "text",
+    txt: "lines",
 
     // word
     doc: "word",
@@ -163,7 +163,7 @@ export function formatFilesize(byte: number, precision = 2): string {
 /**
  * Returns the icon name for given filename.
  *
- * Note: For any file icon name like `fa-file-word`, only `word`
+ * Note: For any file icon name like `file-word`, only `word`
  * will be returned by this method.
  */
 export function getIconNameByFilename(filename: string): string {

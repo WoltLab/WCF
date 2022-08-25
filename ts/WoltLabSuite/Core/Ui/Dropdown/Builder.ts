@@ -75,8 +75,9 @@ function buildItemFromData(data: DropdownBuilderItemData): HTMLLIElement {
       size = ~~data.icon.size;
     }
 
-    const icon = document.createElement("span");
-    icon.className = `icon icon${size} fa-${data.icon.name}`;
+    const icon = document.createElement("fa-icon");
+    icon.size = size as any;
+    icon.setIcon(data.icon.name, data.icon.forceSolid ? true : false);
 
     link.appendChild(icon);
   }
@@ -200,6 +201,7 @@ interface BaseItemData {
   callback?: (link: HTMLAnchorElement) => void;
   href?: string;
   icon?: {
+    forceSolid?: boolean;
     name: string;
     size?: 16 | 24 | 32 | 48 | 64 | 96 | 144;
   };

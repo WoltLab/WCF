@@ -93,7 +93,7 @@ class UiCommentEdit {
   protected _prepare(): void {
     this._editorContainer = document.createElement("div");
     this._editorContainer.className = "commentEditorContainer";
-    this._editorContainer.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
+    this._editorContainer.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
 
     const content = this._activeElement!.querySelector(".commentContentContainer")!;
     content.insertBefore(this._editorContainer, content.firstChild);
@@ -235,8 +235,9 @@ class UiCommentEdit {
     const editorContainer = this._editorContainer!.querySelector(".editorContainer") as HTMLElement;
     DomUtil.hide(editorContainer);
 
-    const icon = document.createElement("span");
-    icon.className = "icon icon48 fa-spinner";
+    const icon = document.createElement("fa-icon");
+    icon.size = 48;
+    icon.setIcon("spinner");
     this._editorContainer!.appendChild(icon);
   }
 
@@ -244,8 +245,7 @@ class UiCommentEdit {
    * Restores the previously hidden editor.
    */
   protected _restoreEditor(): void {
-    const icon = this._editorContainer!.querySelector(".fa-spinner")!;
-    icon.remove();
+    this._editorContainer!.querySelector("fa-icon")!.remove();
 
     const editorContainer = this._editorContainer!.querySelector(".editorContainer") as HTMLElement;
     if (editorContainer !== null) {

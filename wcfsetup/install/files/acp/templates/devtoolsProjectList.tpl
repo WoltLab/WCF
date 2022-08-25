@@ -15,8 +15,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsDevtoolsProjectQuickSetupButton"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.devtools.project.quickSetup{/lang}</span></a></li>
-			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
+			<li><a href="#" class="button jsDevtoolsProjectQuickSetupButton">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.devtools.project.quickSetup{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -47,7 +47,7 @@
 								<a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.pips{/lang}</a>
 							</td>
 							<td class="columnIcon">
-								<a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 								{objectAction action="delete" objectTitle=$object->name}
 							</td>
 							<td class="columnID">{@$object->getObjectID()}</td>
@@ -66,7 +66,7 @@
 <footer class="contentFooter">
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

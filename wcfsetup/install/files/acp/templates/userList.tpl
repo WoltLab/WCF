@@ -64,7 +64,7 @@
 				{content}
 					{if $__wcf->session->getPermission('admin.user.canSearchUser')}
 						<li class="dropdown">
-							<a class="button dropdownToggle"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
+							<a class="button dropdownToggle">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
 							<ul class="dropdownMenu">
 								<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
 								<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
@@ -77,7 +77,7 @@
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.user.canAddUser')}
-						<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 					{/if}
 
 					{event name='contentHeaderNavigation'}
@@ -121,7 +121,7 @@
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}"></td>
 						<td class="columnIcon">
 							<div class="dropdown" id="userListDropdown{@$user->userID}">
-								<a href="#" class="dropdownToggle button small"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a>
+								<a href="#" class="dropdownToggle button small">{icon size=16 name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a>
 
 								<ul class="dropdownMenu">
 									{event name='dropdownItems'}
@@ -186,11 +186,19 @@
 							</span>
 
 							<span class="userStatusIcons">
-								{if $user->banned}<span class="icon icon16 fa-lock jsTooltip jsUserStatusBanned" title="{lang}wcf.user.status.banned{/lang}"></span>{/if}
+								{if $user->banned}
+									<span class="jsTooltip jsUserStatusBanned" title="{lang}wcf.user.status.banned{/lang}">
+										{icon size=16 name='lock'}
+									</span>
+								{/if}
 								{if $user->activationCode != 0}
-									<span class="icon icon16 fa-power-off jsTooltip jsUserStatusIsDisabled" title="{lang}wcf.user.status.isDisabled{/lang}"></span>
+									<span class="jsTooltip jsUserStatusIsDisabled" title="{lang}wcf.user.status.isDisabled{/lang}">
+										{icon size=16 name='power-off'}
+									</span>
 									{if !$user->getBlacklistMatches()|empty}
-										<span class="icon icon16 fa-warning jsTooltip jsUserStatusBlacklistMatches" title="{lang}wcf.user.status.blacklistMatches{/lang}"></span>
+										<span class="jsTooltip jsUserStatusBlacklistMatches" title="{lang}wcf.user.status.blacklistMatches{/lang}">
+											{icon size=16 name='warning'}
+										</span>
 									{/if}
 								{/if}
 							</span>
@@ -242,7 +250,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.user.canAddUser')}
-							<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+							<li><a href="{link controller='UserAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 						{/if}
 
 						{event name='contentFooterNavigation'}

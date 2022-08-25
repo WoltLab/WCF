@@ -2,7 +2,7 @@
 
 {capture assign='contentTitle'}{lang}wcf.edit.versions{/lang}: {$object->getTitle()}{/capture}
 
-{capture assign='contentHeaderNavigation'}<li><a href="{$object->getLink()}" class="button buttonPrimary"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>{/capture}
+{capture assign='contentHeaderNavigation'}<li><a href="{$object->getLink()}" class="button buttonPrimary">{icon size=16 name='arrow-right'} <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>{/capture}
 
 {include file='header'}
 
@@ -77,7 +77,9 @@
 			<tbody>
 				<tr>
 					<td class="columnIcon">
-						<span class="icon icon16 fa-undo disabled"></span>
+						<span class="disabled">
+							{icon size=16 name='rotate-left'}
+						</span>
 						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked{/if}> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked{/if}>
 						{event name='rowButtons'}
 					</td>
@@ -91,7 +93,9 @@
 				{foreach from=$objects item=edit name=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}"></span>
+							<button class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}">
+								{icon size=16 name='rotate-left'}
+							</button>
 							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked{/if}> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked{/if}>
 							{event name='rowButtons'}
 						</td>

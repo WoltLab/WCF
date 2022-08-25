@@ -16,13 +16,6 @@
 	&.inputAddon {
 		> .dropdownToggle {
 			padding: 4px 7px;
-
-			> span.active:after {
-				content: $fa-var-caret-down;
-				font-family: FontAwesome;
-				font-size: 14px;
-				margin-left: 7px;
-			}
 		}
 	}
 
@@ -76,12 +69,6 @@
 	}
 }
 
-.dropdownIndicator::after {
-	content: $fa-var-caret-down;
-	font-family: FontAwesome;
-	margin-left: 5px;
-}
-
 .boxFlag > .box24,
 .boxFlag.box24 {
 	align-items: center;
@@ -99,5 +86,20 @@
 
 	&.dropdownToggle {
 		display: inline-flex !important;
+	}
+}
+
+.userObjectWatchSelect {
+	.userObjectWatchSelectHeader {
+        font-weight: 600;
+		padding-bottom: 0;
+	}
+
+	.userObjectWatchSelectDescription {
+		@include wcfFontSmall;
+
+		color: $wcfContentDimmedText;
+		padding-top: 0;
+		white-space: normal;
 	}
 }

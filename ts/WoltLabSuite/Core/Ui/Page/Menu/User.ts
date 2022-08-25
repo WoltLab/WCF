@@ -18,9 +18,7 @@ import { getElement as getControlPanelElement } from "../../User/Menu/ControlPan
 import * as EventHandler from "../../../Event/Handler";
 import { on as onMediaQueryChange } from "../../Screen";
 
-type CallbackOpen = (event: MouseEvent) => void;
-
-type Tab = HTMLAnchorElement;
+type Tab = HTMLButtonElement;
 type TabPanel = HTMLElement;
 type TabComponents = [Tab, TabPanel];
 
@@ -42,7 +40,6 @@ type LegacyUserPanelApi = {
 
 export class PageMenuUser implements PageMenuProvider {
   private activeTab?: Tab = undefined;
-  private readonly callbackOpen: CallbackOpen;
   private readonly container: PageMenuContainer;
   private readonly legacyUserPanels = new Map<Tab, LegacyUserPanelApi>();
   private readonly observer: MutationObserver;
@@ -51,9 +48,19 @@ export class PageMenuUser implements PageMenuProvider {
   private readonly tabPanels = new Map<Tab, HTMLElement>();
   private readonly tabs: Tab[] = [];
   private readonly userMenu: HTMLElement;
+  private readonly userMenuButton: HTMLButtonElement;
 
   constructor() {
     this.userMenu = document.querySelector(".userPanel")!;
+
+    this.userMenuButton = document.querySelector(".pageHeaderUserMobile") as HTMLButtonElement;
+    this.userMenuButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      // Clicking too early while the page is still loading
+      // causes an incomplete tab menu.
+      void isReady.then(() => this.container.toggle());
+    });
 
     this.container = new PageMenuContainer(this);
 
@@ -69,15 +76,6 @@ export class PageMenuUser implements PageMenuProvider {
       }
     });
 
-    this.callbackOpen = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      // Clicking too early while the page is still loading
-      // causes an incomplete tab menu.
-      void isReady.then(() => this.container.toggle());
-    };
-
     onMediaQueryChange("screen-lg", {
       match: () => this.detachViewsFromPanel(),
       unmatch: () => this.detachViewsFromPanel(),
@@ -89,11 +87,7 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   enable(): void {
-    this.userMenu.setAttribute("aria-expanded", "false");
-    this.userMenu.setAttribute("aria-label", Language.get("wcf.menu.user"));
-    this.userMenu.setAttribute("role", "button");
-    this.userMenu.tabIndex = 0;
-    this.userMenu.addEventListener("click", this.callbackOpen);
+    this.userMenuButton.setAttribute("aria-expanded", "false");
 
     this.refreshUnreadIndicator();
   }
@@ -101,11 +95,7 @@ export class PageMenuUser implements PageMenuProvider {
   disable(): void {
     this.container.close();
 
-    this.userMenu.removeAttribute("aria-expanded");
-    this.userMenu.removeAttribute("aria-label");
-    this.userMenu.removeAttribute("role");
-    this.userMenu.removeAttribute("tabindex");
-    this.userMenu.removeEventListener("click", this.callbackOpen);
+    this.userMenuButton.setAttribute("aria-expanded", "false");
   }
 
   getContent(): DocumentFragment {
@@ -116,7 +106,7 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   getMenuButton(): HTMLElement {
-    return this.userMenu;
+    return this.userMenuButton;
   }
 
   sleep(): void {
@@ -346,8 +336,14 @@ export class PageMenuUser implements PageMenuProvider {
     const panelButton = provider.getPanelButton();
     const button = panelButton.querySelector("a")!;
 
+    let icon = button.querySelector("fa-icon")?.outerHTML;
+    if (icon === undefined) {
+      // Fallback for the upgrade to 6.0.
+      icon = '<fa-icon size="32" name="question"></fa-icon>';
+    }
+
     const data: TabData = {
-      icon: button.querySelector(".icon")!.outerHTML,
+      icon,
       label: button.dataset.title || button.title,
       origin: panelButton.id,
     };
@@ -356,12 +352,11 @@ export class PageMenuUser implements PageMenuProvider {
   }
 
   private buildControlPanelTab(tabList: HTMLElement, tabContainer: HTMLElement): void {
-    const panel = document.getElementById("topMenu")!;
     const userMenu = document.getElementById("userMenu")!;
     const userMenuButton = userMenu.querySelector("a")!;
 
     const data: TabData = {
-      icon: panel.querySelector(".userPanelAvatar .userAvatarImage")!.outerHTML,
+      icon: this.userMenuButton.querySelector(".userAvatarImage")!.outerHTML,
       label: userMenuButton.dataset.title || userMenuButton.title,
       origin: userMenu.id,
     };
@@ -420,7 +415,7 @@ export class PageMenuUser implements PageMenuProvider {
     const tabId = DomUtil.getUniqueId();
     const panelId = DomUtil.getUniqueId();
 
-    const tab = document.createElement("a");
+    const tab = document.createElement("button");
     tab.classList.add("pageMenuUserTab");
     tab.dataset.hasUnreadContent = "false";
     tab.dataset.origin = data.origin;

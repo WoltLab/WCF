@@ -41,8 +41,9 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
             const element = super._createFileElement(file);
             element.classList.add("box64", "uploadedFile");
             const progress = element.querySelector("progress");
-            const icon = document.createElement("span");
-            icon.className = "icon icon64 fa-spinner";
+            const icon = document.createElement("fa-icon");
+            icon.size = 64;
+            icon.setIcon("spinner");
             const fileName = element.textContent;
             element.textContent = "";
             element.append(icon);
@@ -67,9 +68,8 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                 fileElement.classList.add("uploadFailed");
                 const small = fileElement.querySelector("small");
                 small.innerHTML = "";
-                const icon = fileElement.querySelector(".icon");
-                icon.classList.remove("fa-spinner");
-                icon.classList.add("fa-ban");
+                const icon = fileElement.querySelector("fa-icon");
+                icon.setIcon("ban");
                 const innerError = document.createElement("span");
                 innerError.className = "innerError";
                 innerError.textContent = Language.get("wcf.upload.error.uploadFailed");
@@ -110,7 +110,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                     else {
                         fileElement.dataset.uniqueFileId = fileData.uniqueFileId;
                         fileElement.querySelector("small").textContent = fileData.filesize.toString();
-                        const icon = fileElement.querySelector(".icon");
+                        const icon = fileElement.querySelector("fa-icon");
                         if (fileData.image !== null) {
                             const a = document.createElement("a");
                             a.classList.add("jsImageViewer");
@@ -124,8 +124,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                             icon.replaceWith(a);
                         }
                         else {
-                            icon.classList.remove("fa-spinner");
-                            icon.classList.add(`fa-${fileData.icon}`);
+                            icon.setIcon(fileData.icon, fileData.icon === "paperclip");
                         }
                     }
                 }
@@ -134,9 +133,8 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                     fileElement.classList.add("uploadFailed");
                     const small = fileElement.querySelector("small");
                     small.innerHTML = "";
-                    const icon = fileElement.querySelector(".icon");
-                    icon.classList.remove("fa-spinner");
-                    icon.classList.add("fa-ban");
+                    const icon = fileElement.querySelector("fa-icon");
+                    icon.setIcon("ban");
                     let innerError = fileElement.querySelector(".innerError");
                     if (innerError === null) {
                         innerError = document.createElement("span");

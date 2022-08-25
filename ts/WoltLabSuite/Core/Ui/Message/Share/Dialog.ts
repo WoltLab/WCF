@@ -16,7 +16,7 @@ import * as UiNotification from "../../Notification";
 import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import * as UiMessageShare from "../Share";
-import * as UiMessageShareProviders from "./Providers";
+import { getShareProviders } from "./Providers";
 
 const shareButtons = new WeakSet<HTMLElement>();
 
@@ -74,9 +74,11 @@ function getDialogElement(label: string, value: string): string {
       <dd>
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
-          <a href="#" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get(
+          <button class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get(
             "wcf.message.share.copy",
-          )}"><span class="icon icon16 fa-files-o pointer"></span></a>
+          )}">
+            <fa-icon size="16" name="copy"></fa-icon>
+          </a>
         </div>
       </dd>
     </dl>
@@ -84,16 +86,16 @@ function getDialogElement(label: string, value: string): string {
 }
 
 function getProviderButtons(): string {
-  const providerButtons = Array.from(UiMessageShareProviders.getEnabledProviders())
+  const providerButtons = Array.from(getShareProviders())
     .map((provider) => {
-      const label = Language.get(provider.label);
+      const [identifier, label, icon] = provider;
 
       return `
       <li>
-        <a href="#" role="button" class="button small ${provider.cssClass}" title="${label}" aria-label="${label}">
-          <span class="icon icon24 ${provider.iconClassName}"></span>
+        <button class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
+          ${icon}
           <span>${label}</span>
-        </a>
+        </button>
       </li>
     `;
     })
@@ -152,9 +154,9 @@ function openDialog(event: MouseEvent): void {
           <dd>
               <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
                 target.href,
-              )}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get(
-        "wcf.message.share.nativeShare",
-      )}</button>
+              )}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
+                ${Language.get("wcf.message.share.nativeShare")}
+              </button>
           </dd>
         </dl>
       `;

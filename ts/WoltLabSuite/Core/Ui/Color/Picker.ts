@@ -342,11 +342,13 @@ class UiColorPicker implements DialogCallbackObject {
     this.oldColor!.style.backgroundColor = colorString;
     this.input.value = colorString;
 
-    const span = this.element.querySelector("span");
-    if (span) {
-      span.style.backgroundColor = colorString;
-    } else {
-      this.element.style.backgroundColor = colorString;
+    if (!(this.element instanceof HTMLButtonElement)) {
+      const span = this.element.querySelector("span");
+      if (span) {
+        span.style.backgroundColor = colorString;
+      } else {
+        this.element.style.backgroundColor = colorString;
+      }
     }
 
     UiDialog.close(this);

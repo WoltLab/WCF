@@ -30,7 +30,7 @@ function buildToTopButton(): HTMLAnchorElement {
   button.href = "";
   button.title = Language.get("wcf.global.scrollUp");
   button.setAttribute("aria-hidden", "true");
-  button.innerHTML = '<span class="icon icon32 fa-angle-up"></span>';
+  button.innerHTML = '<fa-icon size="32" name="angle-up" solid></fa-icon>';
 
   button.addEventListener("click", scrollToTop);
 

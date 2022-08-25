@@ -85,17 +85,20 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             pollOptionInput.classList.add("pollOptionInput");
             listItem.appendChild(pollOptionInput);
             const sortHandle = document.createElement("span");
-            sortHandle.classList.add("icon", "icon16", "fa-arrows", "sortableNodeHandle");
+            sortHandle.innerHTML = '<fa-icon size="16" name="up-down-left-right" solid></fa-icon>';
+            sortHandle.classList.add("sortableNodeHandle");
             pollOptionInput.appendChild(sortHandle);
             // buttons
             const addButton = document.createElement("button");
-            addButton.classList.add("icon", "icon16", "fa-plus", "jsTooltip", "jsAddOption", "pointer");
-            addButton.setAttribute("title", Language.get("wcf.poll.button.addOption"));
+            addButton.innerHTML = '<fa-icon size="16" name="plus" solid></fa-icon>';
+            addButton.classList.add("jsTooltip", "jsAddOption");
+            addButton.title = Language.get("wcf.poll.button.addOption");
             addButton.addEventListener("click", () => this.createOption());
             pollOptionInput.appendChild(addButton);
             const deleteButton = document.createElement("button");
-            deleteButton.classList.add("icon", "icon16", "fa-times", "jsTooltip", "jsDeleteOption", "pointer");
-            deleteButton.setAttribute("title", Language.get("wcf.poll.button.removeOption"));
+            deleteButton.innerHTML = '<fa-icon size="16" name="xmark" solid></fa-icon>';
+            deleteButton.classList.add("jsTooltip", "jsDeleteOption");
+            deleteButton.title = Language.get("wcf.poll.button.removeOption");
             deleteButton.addEventListener("click", () => this.removeOption(deleteButton));
             pollOptionInput.appendChild(deleteButton);
             // input field

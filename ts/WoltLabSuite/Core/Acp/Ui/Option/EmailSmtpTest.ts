@@ -75,7 +75,7 @@ class EmailSmtpTest implements AjaxCallbackObject {
     event.preventDefault();
 
     this.buttonRunTest.classList.add("disabled");
-    this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-spinner"></span> ${Language.get("wcf.global.loading")}`;
+    this.buttonRunTest.innerHTML = `<fa-icon size="16" name="spinner" solid></fa-icon> ${Language.get("wcf.global.loading")}`;
 
     DomUtil.innerError(this.buttonRunTest, false);
 
@@ -123,7 +123,7 @@ class EmailSmtpTest implements AjaxCallbackObject {
     this.buttonRunTest.classList.remove("disabled");
 
     if (success) {
-      this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-check green"></span> ${Language.get(
+      this.buttonRunTest.innerHTML = `<fa-icon size="16" name="check" solid></fa-icon> ${Language.get(
         "wcf.acp.email.smtp.test.run.success",
       )}`;
     } else {

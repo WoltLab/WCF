@@ -110,8 +110,10 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 $title = $language->getDynamicVariable('wcf.global.button.delete');
 
                 return <<<HTML
-<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{$title}" data-object-action="delete" data-confirm-message="{$confirmMessage}"{$additionalAttributes}></span>
-HTML;
+                <button type="button" class="jsObjectAction jsTooltip" title="{$title}" data-object-action="delete" data-confirm-message="{$confirmMessage}"{$additionalAttributes}>
+                    <fa-icon size="16" name="xmark"></fa-icon>
+                </button>
+                HTML;
 
                 break;
 
@@ -120,10 +122,10 @@ HTML;
                     throw new \InvalidArgumentException("Missing 'isDisabled' argument for 'toggle' action.");
                 }
 
-                $icon = 'fa-check-square-o';
+                $icon = 'square-check';
                 $title = $language->getDynamicVariable('wcf.global.button.disable');
                 if ($tagArgs['isDisabled']) {
-                    $icon = 'fa-square-o';
+                    $icon = 'square';
                     $title = $language->getDynamicVariable('wcf.global.button.enable');
                 }
                 $title = StringUtil::encodeHTML($title);
@@ -144,8 +146,10 @@ HTML;
                 }
 
                 return <<<HTML
-<span class="icon icon16 {$icon} jsObjectAction jsTooltip pointer" title="{$title}" data-object-action="toggle"{$additionalAttributes}></span>
-HTML;
+                <button type="button" class="jsObjectAction jsTooltip" title="{$title}" data-object-action="toggle"{$additionalAttributes}>
+                    <fa-icon size="16" name="{$icon}"></fa-icon>
+                </button>
+                HTML;
 
             default:
                 throw new \LogicException("Unreachable.");

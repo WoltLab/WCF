@@ -24,6 +24,13 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.tabPanels = new Map();
             this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
+            this.userMenuButton = document.querySelector(".pageHeaderUserMobile");
+            this.userMenuButton.addEventListener("click", (event) => {
+                event.stopPropagation();
+                // Clicking too early while the page is still loading
+                // causes an incomplete tab menu.
+                void isReady.then(() => this.container.toggle());
+            });
             this.container = new Container_1.default(this);
             const isReady = new Promise((resolve) => {
                 if (document.readyState === "complete") {
@@ -37,13 +44,6 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     });
                 }
             });
-            this.callbackOpen = (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                // Clicking too early while the page is still loading
-                // causes an incomplete tab menu.
-                void isReady.then(() => this.container.toggle());
-            };
             (0, Screen_1.on)("screen-lg", {
                 match: () => this.detachViewsFromPanel(),
                 unmatch: () => this.detachViewsFromPanel(),
@@ -53,20 +53,12 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             });
         }
         enable() {
-            this.userMenu.setAttribute("aria-expanded", "false");
-            this.userMenu.setAttribute("aria-label", Language.get("wcf.menu.user"));
-            this.userMenu.setAttribute("role", "button");
-            this.userMenu.tabIndex = 0;
-            this.userMenu.addEventListener("click", this.callbackOpen);
+            this.userMenuButton.setAttribute("aria-expanded", "false");
             this.refreshUnreadIndicator();
         }
         disable() {
             this.container.close();
-            this.userMenu.removeAttribute("aria-expanded");
-            this.userMenu.removeAttribute("aria-label");
-            this.userMenu.removeAttribute("role");
-            this.userMenu.removeAttribute("tabindex");
-            this.userMenu.removeEventListener("click", this.callbackOpen);
+            this.userMenuButton.setAttribute("aria-expanded", "false");
         }
         getContent() {
             const fragment = document.createDocumentFragment();
@@ -74,7 +66,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return fragment;
         }
         getMenuButton() {
-            return this.userMenu;
+            return this.userMenuButton;
         }
         sleep() {
             if (this.activeTab) {
@@ -262,21 +254,26 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return tabContainer;
         }
         buildTab(provider) {
+            var _a;
             const panelButton = provider.getPanelButton();
             const button = panelButton.querySelector("a");
+            let icon = (_a = button.querySelector("fa-icon")) === null || _a === void 0 ? void 0 : _a.outerHTML;
+            if (icon === undefined) {
+                // Fallback for the upgrade to 6.0.
+                icon = '<fa-icon size="32" name="question"></fa-icon>';
+            }
             const data = {
-                icon: button.querySelector(".icon").outerHTML,
+                icon,
                 label: button.dataset.title || button.title,
                 origin: panelButton.id,
             };
             return this.buildTabComponents(data);
         }
         buildControlPanelTab(tabList, tabContainer) {
-            const panel = document.getElementById("topMenu");
             const userMenu = document.getElementById("userMenu");
             const userMenuButton = userMenu.querySelector("a");
             const data = {
-                icon: panel.querySelector(".userPanelAvatar .userAvatarImage").outerHTML,
+                icon: this.userMenuButton.querySelector(".userAvatarImage").outerHTML,
                 label: userMenuButton.dataset.title || userMenuButton.title,
                 origin: userMenu.id,
             };
@@ -318,7 +315,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
         buildTabComponents(data) {
             const tabId = Util_1.default.getUniqueId();
             const panelId = Util_1.default.getUniqueId();
-            const tab = document.createElement("a");
+            const tab = document.createElement("button");
             tab.classList.add("pageMenuUserTab");
             tab.dataset.hasUnreadContent = "false";
             tab.dataset.origin = data.origin;

@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BBCodeAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.bbcode.add{/lang}</span></a></li>
+			<li><a href="{link controller='BBCodeAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.bbcode.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -37,11 +37,13 @@
 				{foreach from=$objects item=bbcode}
 					<tr class="jsBBCodeRow jsObjectActionObject" data-object-id="{@$bbcode->getObjectID()}">
 						<td class="columnIcon">
-							<a href="{link controller='BBCodeEdit' object=$bbcode}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='BBCodeEdit' object=$bbcode}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{if $bbcode->canDelete()}
 								{objectAction action="delete" objectTitle=$bbcode->getTitle()}
 							{else}
-								<span class="icon icon16 fa-times disabled"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -66,7 +68,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='BBCodeAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.bbcode.add{/lang}</span></a></li>
+				<li><a href="{link controller='BBCodeAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.bbcode.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

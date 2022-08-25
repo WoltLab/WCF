@@ -23,6 +23,12 @@ try {
 const values: IconData[] = [];
 const aliases: IconAlias[] = [];
 Object.entries(json).forEach(([name, icon]) => {
+  // Skip brand icons, because those are only supported as SVG
+  // through the `{icon}` template helper.
+  if (icon.styles.includes("brands")) {
+    return;
+  }
+
   const codepoint = String.fromCharCode(parseInt(icon.unicode, 16));
   values.push([name, [codepoint, icon.styles.includes("regular")]]);
 
@@ -40,6 +46,10 @@ const output = `(() => {
   const metadata = new Map(
     ${JSON.stringify(values)}
   );
+
+  window.getFontAwesome6Metadata = () => {
+    return new Map(metadata);
+  };
 
   window.getFontAwesome6IconMetadata = (name) => {
     return metadata.get(aliases.get(name) || name);

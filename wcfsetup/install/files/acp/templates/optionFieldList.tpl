@@ -11,8 +11,16 @@
 		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}>
 			{if $isSearchMode|empty || !$optionData[hideLabelInSearch]}
 				<label for="{$option->optionName}">
-					{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}
-					{if $groupIsOwner && $option->optionName|in_array:$ownerGroupPermissions}<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}"></span> {/if}
+					{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}
+						<span class="jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}">
+							{icon size=16 name='bolt'}
+						</span>
+					{/if}
+					{if $groupIsOwner && $option->optionName|in_array:$ownerGroupPermissions}
+						<span class="jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}">
+							{icon size=16 name='shield-halved'}
+						</span>
+					{/if}
 					
 					{$langPrefix|concat:$option->optionName|phrase}
 				</label>
