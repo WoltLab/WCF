@@ -297,6 +297,8 @@ WCF.Moderation.Queue = { };
 if (COMPILER_TARGET_DEFAULT) {
 	/**
 	 * Marks one moderation queue entry as read.
+	 * 
+	 * @deprecated  6.0, use `WoltLabSuite/Core/Ui/Moderation/MarkAsRead` instead
 	 */
 	WCF.Moderation.Queue.MarkAsRead = Class.extend({
 		/**
@@ -353,6 +355,8 @@ if (COMPILER_TARGET_DEFAULT) {
 	
 	/**
 	 * Marks all moderation queue entries as read.
+	 * 
+	 * @deprecated  6.0, use `WoltLabSuite/Core/Ui/Moderation/MarkAllAsRead` instead
 	 */
 	WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
 		/**
