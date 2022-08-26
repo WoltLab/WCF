@@ -42,7 +42,7 @@
 			{if $action == 'edit'}
 				{if $availableUserGroups|count > 1}
 					<li class="dropdown">
-						<a class="button dropdownToggle"><span class="icon icon16 fa-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
+						<a class="button dropdownToggle">{icon size=16 name='sort'} <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
 						<div class="dropdownMenu">
 							<ul class="scrollableDropdownMenu">
 								{foreach from=$availableUserGroups item='availableUserGroup'}
@@ -54,11 +54,11 @@
 				{/if}
 				
 				{if $group->canCopy()}
-					<li><a class="jsButtonUserGroupCopy button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
+					<li><a class="jsButtonUserGroupCopy button">{icon size=16 name='copy'} <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
 				{/if}
 			{/if}
 			
-			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserGroupList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -70,7 +70,7 @@
 {/if}
 
 {if $action == 'edit' && $group->isOwner()}
-	<p class="info"><span class="icon icon16 fa-shield"></span> {lang}wcf.acp.group.type.owner.description{/lang}</p>
+	<p class="info">{icon size=16 name='shield-halved' type='solid'} {lang}wcf.acp.group.type.owner.description{/lang}</p>
 {/if}
 
 {if $warningSelfEdit|isset}

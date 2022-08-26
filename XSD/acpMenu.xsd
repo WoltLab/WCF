@@ -32,6 +32,10 @@
 	<xs:complexType name="acpmenuitem_delete">
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
+
+	<xs:complexType name="acpmenuitem_icon">
+		<xs:attribute name="solid" type="xs:boolean" />
+	</xs:complexType>
 	
 	<!-- imported/updated acp menu item element type -->
 	<xs:complexType name="acpmenuitem_import">
@@ -44,7 +48,7 @@
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
 					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 					<xs:element name="options" type="xs:string" minOccurs="0" />
-					<xs:element name="icon" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="icon" type="acpmenuitem_icon" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>

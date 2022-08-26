@@ -19,7 +19,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='SmileyAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
+			<li><a href="{link controller='SmileyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -51,8 +51,12 @@
 									<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}">{@$smiley->getHtml()} {$smiley->getTitle()}</a> <span class="badge">{$smiley->smileyCode}</span>{foreach from=$smiley->getAliases() item='alias'} <span class="badge" style="margin-left: 5px">{$alias}</span>{/foreach}
 									
 									<span class="statusDisplay sortableButtonContainer">
-										<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
+										<span class="sortableNodeHandle">
+											{icon size=16 name='arrows-up-down-left-right'}
+										</span>
+										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
+											{icon size=16 name='pencil'}
+										</a>
 										{objectAction action="delete" objectTitle=$smiley->smileyCode}
 										
 										{event name='itemButtons'}

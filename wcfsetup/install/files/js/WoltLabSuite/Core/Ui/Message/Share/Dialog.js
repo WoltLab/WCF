@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Message/Share/Dialog
  */
-define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../../../Dom/Traverse", "../../../Language", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers"], function (require, exports, tslib_1, Dialog_1, Util_1, DomTraverse, Language, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, UiMessageShareProviders) {
+define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../../../Dom/Traverse", "../../../Language", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers"], function (require, exports, tslib_1, Dialog_1, Util_1, DomTraverse, Language, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -19,7 +19,6 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
     StringUtil = tslib_1.__importStar(StringUtil);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     UiMessageShare = tslib_1.__importStar(UiMessageShare);
-    UiMessageShareProviders = tslib_1.__importStar(UiMessageShareProviders);
     const shareButtons = new WeakSet();
     const offerNativeSharing = window.navigator.share !== undefined;
     /**
@@ -59,22 +58,24 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
       <dd>
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
-          <a href="#" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get("wcf.message.share.copy")}"><span class="icon icon16 fa-files-o pointer"></span></a>
+          <button class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get("wcf.message.share.copy")}">
+            <fa-icon size="16" name="copy"></fa-icon>
+          </a>
         </div>
       </dd>
     </dl>
   `;
     }
     function getProviderButtons() {
-        const providerButtons = Array.from(UiMessageShareProviders.getEnabledProviders())
+        const providerButtons = Array.from((0, Providers_1.getShareProviders)())
             .map((provider) => {
-            const label = Language.get(provider.label);
+            const [identifier, label, icon] = provider;
             return `
       <li>
-        <a href="#" role="button" class="button small ${provider.cssClass}" title="${label}" aria-label="${label}">
-          <span class="icon icon24 ${provider.iconClassName}"></span>
+        <button class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
+          ${icon}
           <span>${label}</span>
-        </a>
+        </button>
       </li>
     `;
         })
@@ -122,7 +123,9 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         <dl>
           <dt></dt>
           <dd>
-              <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">${Language.get("wcf.message.share.nativeShare")}</button>
+              <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
+                ${Language.get("wcf.message.share.nativeShare")}
+              </button>
           </dd>
         </dl>
       `;

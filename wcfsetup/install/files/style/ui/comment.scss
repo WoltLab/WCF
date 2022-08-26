@@ -104,36 +104,28 @@
 
 .commentListAddComment {
 	&.collapsed {
-		background-color: $wcfSidebarBackground;
-		cursor: pointer;
 		overflow: hidden;
-		padding: 10px 20px;
 		position: relative;
 
-		&::before {
+		.commentListAddCommentPlaceholder {
+			align-items: center;
+			background-color: $wcfSidebarBackground;
+			column-gap: 10px;
 			color: $wcfSidebarText;
-			content: $fa-var-reply;
-			font-family: FontAwesome;
-			font-size: 28px;
-			height: 32px;
-			line-height: 32px;
-			margin-right: 10px;
-			width: 32px;
-			vertical-align: -5px;
+			display: flex;
+			padding: 10px 20px;
+			width: 100%;
 		}
 
-		&::after {
-			color: $wcfSidebarText;
-			content: attr(data-placeholder);
-			position: relative;
-			top: 2px;
-		}
-
-		> .commentListAddCommentEditorContainer {
+		.commentListAddCommentEditorContainer {
 			left: 200%;
 			position: absolute;
 			top: -100%;
 		}
+	}
+
+	&:not(.collapsed) .commentListAddCommentPlaceholder {
+		display: none;
 	}
 
 	&.loading {

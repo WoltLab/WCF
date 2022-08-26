@@ -17,7 +17,7 @@
 							<img src="{$file->getImage()}" width="{$file->getWidth()}" height="{$file->getHeight()}" loading="lazy" alt="" class="formUploadHandlerContentListImage">
 						</a>
 					{else}
-						<span class="icon icon64 fa-{$file->getIconName()}"></span>
+						{icon size=64 name=$file->getIconName()}
 					{/if}
 					
 					<div>

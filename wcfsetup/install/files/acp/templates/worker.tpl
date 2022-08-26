@@ -1,6 +1,8 @@
 <div id="workerContainer">
 	<header class="box48 contentHeader">
-		<span class="icon icon48 fa-spinner"></span>
+		<span class="workerStatusIcon">
+			{icon size=48 name='spinner'}
+		</span>
 		
 		<div>
 			<h1 class="contentTitle">{lang}wcf.global.worker.executing{/lang}</h1>

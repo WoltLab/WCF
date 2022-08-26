@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsButtonPageAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+			<li><a href="#" class="button jsButtonPageAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -122,18 +122,28 @@
 							{if $page->canDisable()}
 								{objectAction action="toggle" isDisabled=$page->isDisabled}
 							{else}
-								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}">
+									{if $page->isDisabled}
+										{icon size=16 name='square'}
+									{else}
+										{icon size=16 name='square-checl'}
+									{/if}
+								</span>
 							{/if}
-							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{if $page->canDelete()}
 								{objectAction action="delete" objectTitle=$page->name}
 							{else}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							{if !$page->requireObjectID}
-								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip"><span class="icon icon16 fa-search"></span></a>
+								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip">{icon size=16 name='magnifying-glass'}</a>
 							{else}
-								<span class="icon icon16 fa-search disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}">
+									{icon size=16 name='magnifying-glass'}
+								</span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -142,11 +152,14 @@
 						<td class="columnTitle columnName"><a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnURL">
 							{if $page->applicationPackageID === null}
-								<span class="icon icon16 fa-exclamation-triangle red"></span> <span>{lang}wcf.acp.page.application.error.missing{/lang}</span>
+								{icon size=16 name='triangle-exclamation'}
+								<span>{lang}wcf.acp.page.application.error.missing{/lang}</span>
 							{else}
 								{$page->getDisplayLink()}
 								{if $page->controllerCustomURL || $page->pageType !== 'system'}
-									<span class="icon icon16 fa-exclamation-circle blue jsTooltip" title="{lang}wcf.acp.page.customURL{/lang}"></span>
+									<span class="jsTooltip" title="{lang}wcf.acp.page.customURL{/lang}">
+										{icon size=16 name='circle-exclamation'}
+									</span>
 								{/if}
 							{/if}
 						</td>
@@ -169,7 +182,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="#" class="button jsButtonPageAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonPageAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

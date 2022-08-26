@@ -11,7 +11,6 @@
 import Upload from "../Upload";
 import * as Core from "../Core";
 import * as DomUtil from "../Dom/Util";
-import * as DomTraverse from "../Dom/Traverse";
 import * as Language from "../Language";
 import User from "../User";
 import * as DateUtil from "../Date/Util";
@@ -100,7 +99,8 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           }
 
           const spinner = document.createElement("span");
-          spinner.className = "icon icon48 fa-spinner mediaThumbnail";
+          spinner.innerHTML = '<fa-icon size="48" name="spinner"></fa-icon>';
+          spinner.classList.add("mediaThumbnail");
 
           DomUtil.replaceElement(image!, spinner);
 
@@ -137,11 +137,12 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
     }
 
     const thumbnail = document.createElement("div");
-    thumbnail.className = "mediaThumbnail";
+    thumbnail.classList.add("mediaThumbnail");
     fileElement.appendChild(thumbnail);
 
-    const fileIcon = document.createElement("span");
-    fileIcon.className = "icon icon144 fa-spinner";
+    const fileIcon = document.createElement("fa-icon");
+    fileIcon.size = 144;
+    fileIcon.setIcon("spinner");
     thumbnail.appendChild(fileIcon);
 
     const mediaInformation = document.createElement("div");
@@ -180,7 +181,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
     return Core.extend(super._getParameters() as object, parameters as object) as ArbitraryObject;
   }
 
-  protected _replaceFileIcon(fileIcon: HTMLElement, media: Media, size: number): void {
+  protected _replaceFileIcon(fileIcon: FaIcon, media: Media, size: number): void {
     if (media.elementTag) {
       fileIcon.outerHTML = media.elementTag;
     } else if (media.tinyThumbnailType) {
@@ -192,13 +193,14 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
 
       DomUtil.replaceElement(fileIcon, img);
     } else {
-      fileIcon.classList.remove("fa-spinner");
-
       let fileIconName = FileUtil.getIconNameByFilename(media.filename);
       if (fileIconName) {
-        fileIconName = "-" + fileIconName;
+        fileIconName = `file-${fileIconName}`;
+      } else {
+        fileIconName = "file";
       }
-      fileIcon.classList.add(`fa-file${fileIconName}-o`);
+
+      fileIcon.setIcon(fileIconName, false);
     }
   }
 
@@ -220,7 +222,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           file.querySelector(".columnMediaID")!.textContent = media.mediaID.toString();
 
           // update icon
-          this._replaceFileIcon(file.querySelector(".fa-spinner") as HTMLSpanElement, media, 48);
+          this._replaceFileIcon(file.querySelector("fa-icon")!, media, 48);
         } else {
           let error: MediaUploadError = data.returnValues.errors[internalFileId];
           if (!error) {
@@ -230,16 +232,19 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
             };
           }
 
-          const fileIcon = file.querySelector(".fa-spinner") as HTMLSpanElement;
-          fileIcon.classList.remove("fa-spinner");
-          fileIcon.classList.add("fa-remove", "pointer", "jsTooltip");
-          fileIcon.title = Language.get("wcf.global.button.delete");
-          fileIcon.addEventListener("click", (event) => {
-            const target = event.currentTarget as HTMLSpanElement;
-            target.closest(".mediaFile")!.remove();
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("jsTooltip");
+          deleteButton.title = Language.get("wcf.global.button.delete");
+          deleteButton.addEventListener("click", () => {
+            deleteButton.closest(".mediaFile")!.remove();
 
             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
           });
+
+          const fileIcon = file.querySelector("fa-icon")!;
+          fileIcon.setIcon("xmark");
+          fileIcon.insertAdjacentElement("beforebegin", deleteButton);
+          deleteButton.append(fileIcon);
 
           file.classList.add("uploadFailed");
 
@@ -255,10 +260,10 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           p.remove();
         }
       } else {
-        DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaInformation")!, "PROGRESS")!.remove();
+        file.querySelector(".mediaInformation progress")!.remove();
 
         if (media) {
-          const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "SPAN")!;
+          const fileIcon = file.querySelector(".mediaThumbnail fa-icon") as FaIcon;
           this._replaceFileIcon(fileIcon, media, 144);
 
           file.classList.add("jsClipboardObject", "mediaFile", "jsObjectActionObject");
@@ -277,19 +282,15 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
             };
           }
 
-          const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "SPAN")!;
-          fileIcon.classList.remove("fa-spinner");
-          fileIcon.classList.add("fa-remove", "pointer");
+          const fileIcon = file.querySelector(".mediaThumbnail fa-icon") as FaIcon;
+          fileIcon.setIcon("xmark");
 
-          file.classList.add("uploadFailed", "jsTooltip");
+          file.classList.add("uploadFailed", "pointer", "jsTooltip");
           file.title = Language.get("wcf.global.button.delete");
           file.addEventListener("click", () => file.remove());
 
-          const title = DomTraverse.childByClass(
-            DomTraverse.childByClass(file, "mediaInformation")!,
-            "mediaTitle",
-          ) as HTMLElement;
-          title.innerText = Language.get(`wcf.media.upload.error.${error.errorType}`, {
+          const title = file.querySelector(".mediaInformation .mediaTitle") as HTMLElement;
+          title.textContent = Language.get(`wcf.media.upload.error.${error.errorType}`, {
             filename: error.filename,
           });
         }

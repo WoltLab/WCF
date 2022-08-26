@@ -130,7 +130,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
           <dd>
             <div class="inputAddon">
               <input type="text" id="wcfUiPageSearchInput" class="long">
-              <a href="#" class="inputSuffix"><span class="icon icon16 fa-search"></span></a>
+              <a href="#" class="inputSuffix"><fa-icon size="16" name="search" solid></fa-icon></a>
             </div>
           </dd>
         </dl>

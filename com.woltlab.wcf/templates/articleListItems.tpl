@@ -65,7 +65,7 @@
 					{/if}
 					{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}
 						<div class="contentItemMetaIcon">
-							<span class="icon icon16 fa-comments"></span>
+							{icon size=16 name='comments'}
 							<span aria-label="{$article->getDiscussionProvider()->getDiscussionCountPhrase()}">
 								{$article->getDiscussionProvider()->getDiscussionCount()}
 							</span>

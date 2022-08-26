@@ -36,3 +36,9 @@
 		}
 	}
 }
+
+@include screen-lg {
+	.breadcrumbsParentIndicator {
+		display: none;
+	}
+}

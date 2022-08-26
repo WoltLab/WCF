@@ -158,23 +158,19 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
             const title = document.createElement("span");
             title.textContent = Language.get("wcf.editor.autosave.restored");
             container.appendChild(title);
-            const buttonKeep = document.createElement("a");
-            buttonKeep.className = "jsTooltip";
-            buttonKeep.href = "#";
+            const buttonKeep = document.createElement("button");
+            buttonKeep.innerHTML = '<fa-icon size="16" name="check"></fa-icon>';
+            buttonKeep.type = "button";
+            buttonKeep.classList.add("jsTooltip");
             buttonKeep.title = Language.get("wcf.editor.autosave.keep");
-            buttonKeep.innerHTML = '<span class="icon icon16 fa-check green"></span>';
-            buttonKeep.addEventListener("click", (event) => {
-                event.preventDefault();
-                this.hideOverlay();
-            });
+            buttonKeep.addEventListener("click", () => this.hideOverlay());
             container.appendChild(buttonKeep);
-            const buttonDiscard = document.createElement("a");
-            buttonDiscard.className = "jsTooltip";
-            buttonDiscard.href = "#";
+            const buttonDiscard = document.createElement("button");
+            buttonDiscard.innerHTML = '<fa-icon size="16" name="xmark"></fa-icon>';
+            buttonDiscard.type = "button";
+            buttonDiscard.classList.add("jsTooltip");
             buttonDiscard.title = Language.get("wcf.editor.autosave.discard");
-            buttonDiscard.innerHTML = '<span class="icon icon16 fa-times red"></span>';
-            buttonDiscard.addEventListener("click", (event) => {
-                event.preventDefault();
+            buttonDiscard.addEventListener("click", () => {
                 // remove from storage
                 this.clear();
                 // set code

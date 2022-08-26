@@ -45,18 +45,22 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             let listItem = document.createElement("li");
             listItem.className = "skip";
             list.appendChild(listItem);
-            let iconClassNames = "icon icon24 fa-chevron-left";
+            let icon = document.createElement("fa-icon");
+            icon.size = 24;
+            icon.setIcon("chevron-left");
             if (this.activePage > 1) {
                 const link = document.createElement("a");
-                link.className = iconClassNames + " jsTooltip";
+                link.className = "jsTooltip";
                 link.href = "#";
                 link.title = Language.get("wcf.global.page.previous");
                 link.rel = "prev";
+                link.setAttribute("role", "button");
+                link.append(icon);
                 listItem.appendChild(link);
                 link.addEventListener("click", (ev) => this.switchPage(this.activePage - 1, ev));
             }
             else {
-                listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
+                listItem.append(icon);
                 listItem.classList.add("disabled");
             }
             // add first page
@@ -145,18 +149,22 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             listItem = document.createElement("li");
             listItem.className = "skip";
             list.appendChild(listItem);
-            iconClassNames = "icon icon24 fa-chevron-right";
+            icon = document.createElement("fa-icon");
+            icon.size = 24;
+            icon.setIcon("chevron-right");
             if (this.activePage < this.maxPage) {
                 const link = document.createElement("a");
-                link.className = iconClassNames + " jsTooltip";
+                link.classList.add("jsTooltip");
                 link.href = "#";
                 link.title = Language.get("wcf.global.page.next");
                 link.rel = "next";
+                link.setAttribute("role", "button");
+                link.append(icon);
                 listItem.appendChild(link);
                 link.addEventListener("click", (ev) => this.switchPage(this.activePage + 1, ev));
             }
             else {
-                listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
+                listItem.append(icon);
                 listItem.classList.add("disabled");
             }
             if (hasHiddenPages) {

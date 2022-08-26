@@ -12,7 +12,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
     Core = tslib_1.__importStar(Core);
     Environment = tslib_1.__importStar(Environment);
     class Rating {
-        constructor(fieldId, value, activeCssClasses, defaultCssClasses) {
+        constructor(fieldId, value) {
             this._field = document.getElementById(fieldId + "Container");
             if (this._field === null) {
                 throw new Error("Unknown field with id '" + fieldId + "'");
@@ -23,8 +23,6 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
             this._input.type = "hidden";
             this._input.value = value;
             this._field.appendChild(this._input);
-            this._activeCssClasses = activeCssClasses;
-            this._defaultCssClasses = defaultCssClasses;
             this._ratingElements = new Map();
             const ratingList = this._field.querySelector(".ratingList");
             ratingList.addEventListener("mouseleave", () => this._restoreRating());
@@ -58,7 +56,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
             const target = event.currentTarget;
             const currentRating = target.dataset.rating;
             this._ratingElements.forEach((ratingElement, rating) => {
-                const icon = ratingElement.getElementsByClassName("icon")[0];
+                const icon = ratingElement.querySelector("fa-icon");
                 this._toggleIcon(icon, ~~rating <= ~~currentRating);
             });
         }
@@ -68,7 +66,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
          */
         _listItemMouseLeave() {
             this._ratingElements.forEach((ratingElement) => {
-                const icon = ratingElement.getElementsByClassName("icon")[0];
+                const icon = ratingElement.querySelector("fa-icon");
                 this._toggleIcon(icon, false);
             });
         }
@@ -87,7 +85,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
          */
         _restoreRating() {
             this._ratingElements.forEach((ratingElement, rating) => {
-                const icon = ratingElement.getElementsByClassName("icon")[0];
+                const icon = ratingElement.querySelector("fa-icon");
                 this._toggleIcon(icon, ~~rating <= ~~this._input.value);
             });
         }
@@ -96,12 +94,10 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
          */
         _toggleIcon(icon, active = false) {
             if (active) {
-                icon.classList.remove(...this._defaultCssClasses);
-                icon.classList.add(...this._activeCssClasses);
+                icon.setIcon("star", true);
             }
             else {
-                icon.classList.remove(...this._activeCssClasses);
-                icon.classList.add(...this._defaultCssClasses);
+                icon.setIcon("star");
             }
         }
     }

@@ -1,12 +1,4 @@
 <nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
-	{if $__wcf->user->userID}
-		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}</span>
-	{else}
-		<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
-			<span class="icon icon32 fa-sign-in" aria-hidden="true"></span>
-		</a>
-	{/if}
-	
 	<ul class="userPanelItems">
 		{if $__wcf->user->userID}
 			<!-- user menu -->
@@ -52,7 +44,7 @@
 					<div class="userMenuContent">
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-pencil"></span>
+								{icon size=32 name='pencil'}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
@@ -61,7 +53,7 @@
 						{if $__wcf->session->getPermission('admin.general.canUseAcp')}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-wrench"></span>
+								{icon size=32 name='wrench'}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
@@ -74,7 +66,7 @@
 						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
 						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine" data-category="{$menuItem[category]->menuItem}">
 							<div class="userMenuItemImage">
-								<span class="icon icon32 {$menuItem[category]->getIconClassName()}"></span>
+								{@$menuItem[category]->getIcon()->toHtml(32)}
 							</div>
 							<div class="userMenuItemContent">
 								<a href="{$menuItem[link]}" class="userMenuItemLink">
@@ -108,7 +100,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						<span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
+						{icon size=32 name='bell'} <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
@@ -183,7 +175,7 @@
 						aria-haspopup="true"
 						aria-expanded="false"
 					>
-						<span class="icon icon32 fa-exclamation-triangle"></span>
+						{icon size=32 name='triangle-exclamation'}
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
@@ -209,7 +201,21 @@
 		
 		<!-- page search -->
 		<li>
-			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 	</ul>
 </nav>
+{if $__wcf->user->userID}
+	<button class="pageHeaderUserMobile" aria-expanded="false" aria-label="{lang}wcf.menu.user{/lang}">
+		<span class="pageHeaderUserMobileInactive">
+			{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}
+		</span>
+		<span class="pageHeaderUserMobileActive">
+			{icon size=32 name='xmark'}
+		</span>
+	</button>
+{else}
+	<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
+		{icon size=32 name='arrow-right-to-bracket'}
+	</a>
+{/if}

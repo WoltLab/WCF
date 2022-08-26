@@ -52,15 +52,28 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
             $result['className'] = $data['elements']['classname'];
         }
 
-        // FontAwesome icon name
-        if (
-            !empty($data['elements']['iconclassname'])
-            && \preg_match('~^fa\-[a-z\-]+$~', $data['elements']['iconclassname'])
-        ) {
-            $result['iconClassName'] = $data['elements']['iconclassname'];
+        if (isset($data['elements']['iconClassName'])) {
+            $result['iconClassName'] = $data['elements']['iconClassName'];
         }
 
         return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
+    {
+        if ($element->tagName === 'iconclassname') {
+            $solid = $element->getAttribute('solid');
+            $elements['iconClassName'] = \sprintf(
+                "%s;%s",
+                $element->nodeValue,
+                $solid === 'true' ? 'true' : 'false'
+            );
+        } else {
+            $elements[$element->tagName] = $element->nodeValue;
+        }
     }
 
     /**

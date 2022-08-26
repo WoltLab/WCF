@@ -20,7 +20,7 @@
 		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
-					<li><a href="{link}{/link}" class="button"><span class="icon icon16 fa-home"></span> <span>{lang}wcf.global.acp{/lang}</span></a></li>
+					<li><a href="{link}{/link}" class="button">{icon size=16 name='house'} <span>{lang}wcf.global.acp{/lang}</span></a></li>
 					
 					{event name='contentHeaderNavigation'}
 				{/content}

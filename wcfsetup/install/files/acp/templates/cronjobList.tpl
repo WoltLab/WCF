@@ -14,7 +14,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -50,27 +50,37 @@
 					{foreach from=$objects item=cronjob}
 						<tr class="jsCronjobRow jsObjectActionObject" data-object-id="{@$cronjob->getObjectID()}">
 							<td class="columnIcon">
-								<span class="icon icon16 fa-play jsExecuteButton jsTooltip pointer" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}"></span>
+								<button class="jsExecuteButton jsTooltip" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}">
+									{icon size=16 name='play'}
+								</button>
 								
 								{if $cronjob->canBeDisabled()}
 									{objectAction action="toggle" isDisabled=$cronjob->isDisabled}
 								{else}
 									{if !$cronjob->isDisabled}
-										<span class="icon icon16 fa-check-square-o disabled" title="{lang}wcf.global.button.disable{/lang}"></span>
+										<span class="disabled" title="{lang}wcf.global.button.disable{/lang}">
+											{icon size=16 name='square-check'}
+										</span>
 									{else}
-										<span class="icon icon16 fa-square-o disabled" title="{lang}wcf.global.button.enable{/lang}"></span>
+										<span class="disabled" title="{lang}wcf.global.button.enable{/lang}">
+											{icon size=16 name='square'}
+										</span>
 									{/if}
 								{/if}
 								
 								{if $cronjob->isEditable()}
-									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 								{else}
-									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+									<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
+										{icon size=16 name='pencil'}
+									</span>
 								{/if}
 								{if $cronjob->isDeletable()}
 									{objectAction action="delete" objectTitle=$cronjob->getDescription()}
 								{else}
-									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+									<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
+										{icon size=16 name='xmark'}
+									</span>
 								{/if}
 								
 								{event name='rowButtons'}
@@ -114,7 +124,7 @@
 	
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

@@ -16,9 +16,9 @@
 {capture assign='contentHeaderNavigation'}
 	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 		{if $availableLanguages|count > 1}
-			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
-			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
 	{/if}
 {/capture}
@@ -63,15 +63,44 @@
 
 {capture assign='contentInteractionButtons'}
 	<div class="contentInteractionButton dropdown jsOnly">
-		<button class="button small dropdownToggle"><span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower}"></span> <span>{lang}wcf.article.button.sort{/lang}</span></button>
+		<button class="button small dropdownToggle">
+			{if $sortOrder|strtolower === 'asc'}
+				{icon size=16 name='arrow-down-short-wide'}
+			{else}
+				{icon size=16 name='arrow-down-wide-short'}
+			{/if}
+			<span>{lang}wcf.article.button.sort{/lang}</span>
+		</button>
 		<ul class="dropdownMenu">
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
-			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			<li>
+				<a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
+					{lang}wcf.global.title{/lang}
+					{if $sortField == 'title'}
+						{if $sortOrder === 'ASC'}
+							{icon size=16 name='caret-up' type='solid'}
+						{else}
+							{icon size=16 name='caret-down' type='solid'}
+						{/if}
+					{/if}
+				</a>
+			</li>
+			<li>
+				<a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
+					{lang}wcf.global.date{/lang}
+					{if $sortField == 'time'}
+						{if $sortOrder === 'ASC'}
+							{icon size=16 name='caret-up' type='solid'}
+						{else}
+							{icon size=16 name='caret-down' type='solid'}
+						{/if}
+					{/if}
+				</a>
+			</li>
 			
 			{event name='sortOptions'}
 		</ul>
 	</div>
-	<button class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}

@@ -78,6 +78,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             if (searchButton.getAttribute("aria-expanded") === "true") {
                 closeSearch();
                 searchButton.setAttribute("aria-expanded", "false");
+                searchButton.querySelector("fa-icon").setIcon("magnifying-glass");
             }
             else {
                 // iOS Safari behaves unpredictable when the keyboard focus
@@ -95,6 +96,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                     document.body.scrollTop = 0;
                 }
                 searchButton.setAttribute("aria-expanded", "true");
+                searchButton.querySelector("fa-icon").setIcon("xmark");
             }
         });
         _pageHeaderSearch.addEventListener("click", (event) => {
@@ -103,6 +105,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                 event.preventDefault();
                 closeSearch();
                 searchButton.setAttribute("aria-expanded", "false");
+                searchButton.querySelector("fa-icon").setIcon("magnifying-glass");
             }
         });
     }

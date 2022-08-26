@@ -28,7 +28,11 @@
 					<span{if $enableMicrodata} itemprop="name"{/if}>{@$userProfile->getFormattedUsername()}</span>
 				</a>
 				{if !$isReply}
-					{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
+					{if $userProfile->banned}
+						<span class="jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}">
+							{icon size=16 name='lock'}
+						</span>
+					{/if}
 					
 					{event name='messageAuthorContainer'}
 				{/if}

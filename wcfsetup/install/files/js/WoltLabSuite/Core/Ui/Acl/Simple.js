@@ -30,7 +30,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
                 }
             });
             this.list = document.getElementById(this.prefix + "aclAccessList");
-            this.list.addEventListener("click", this.removeItem.bind(this));
             const excludedSearchValues = [];
             this.list.querySelectorAll(".aclLabel").forEach((label) => {
                 excludedSearchValues.push(label.textContent);
@@ -65,13 +64,15 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
             const label = listItem.dataset.label;
             const objectId = listItem.dataset.objectId;
             const iconName = type === "group" ? "users" : "user";
-            const html = `<span class="icon icon16 fa-${iconName}"></span>
+            const html = `<fa-icon size="16" name="${iconName}"></fa-icon>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
-      <span class="icon icon16 fa-times pointer jsTooltip" title="${Language.get("wcf.global.button.delete")}"></span>
+      <button class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+        <fa-icon size="16" name="xmark"></fa-icon>
+      </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
             const item = document.createElement("li");
             item.innerHTML = html;
-            const firstUser = this.list.querySelector(".fa-user");
+            const firstUser = this.list.querySelector('fa-icon[name="user"]');
             if (firstUser === null) {
                 this.list.appendChild(item);
             }
@@ -80,19 +81,19 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
             }
             Util_1.default.show(this.aclListContainer);
             this.searchInput.addExcludedSearchValues(label);
+            const deleteButton = item.querySelector(".aclItemDeleteButton");
+            deleteButton.addEventListener("click", (event) => this.removeItem(event));
             Listener_1.default.trigger();
             return false;
         }
         removeItem(event) {
-            const target = event.target;
-            if (target.classList.contains("fa-times")) {
-                const parent = target.parentElement;
-                const label = parent.querySelector(".aclLabel");
-                this.searchInput.removeExcludedSearchValues(label.textContent);
-                parent.remove();
-                if (this.list.childElementCount === 0) {
-                    Util_1.default.hide(this.aclListContainer);
-                }
+            const target = event.currentTarget;
+            const parent = target.parentElement;
+            const label = parent.querySelector(".aclLabel");
+            this.searchInput.removeExcludedSearchValues(label.textContent);
+            parent.remove();
+            if (this.list.childElementCount === 0) {
+                Util_1.default.hide(this.aclListContainer);
             }
         }
         invertPermissions(invert) {

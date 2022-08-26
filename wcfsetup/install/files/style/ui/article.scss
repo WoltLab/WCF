@@ -92,149 +92,106 @@
 }
 
 .articleNavigation {
-	@include screen-md-up {
-		> nav > ul {
-			display: flex;
-		}
+	column-gap: 20px;
+	display: grid;
+	grid-template-areas: "previous next";
+	grid-template-columns: 1fr 1fr;
+
+	@include screen-sm-down {
+		column-gap: 0;
+		grid-template-areas:
+			"previous"
+			"next";
+		grid-template-columns: 1fr;
+		row-gap: 20px;
+	}
+}
+
+.articleNavigationArticle {
+	color: $wcfContentText;
+	display: grid;
+	grid-template-rows: repeat(2, minmax(0, max-content));
+	position: relative;
+
+	&.previousArticleButton {
+		grid-area: previous;
+		grid-template-areas:
+			"icon entity"
+			"icon title";
+		grid-template-columns: 60px auto;
 	}
 
-	.previousArticleButton,
-	.nextArticleButton {
-		display: flex;
-
-		@include screen-md-up {
-			flex: 0 0 50%;
-		}
-
-		> a {
-			color: $wcfContentText;
-			display: flex;
-
-			&::before {
-				align-self: center;
-				display: block;
-				flex: 0 0 auto;
-				font-family: FontAwesome;
-				font-size: 36px;
-			}
-
-			> div {
-				flex: 1 1 auto;
-			}
-
-			.articleNavigationEntityName,
-			.articleNavigationArticleTitle {
-				display: block;
-			}
-
-			.articleNavigationEntityName {
-				color: $wcfContentDimmedText;
-			}
-
-			.articleNavigationArticleTitle {
-				margin-top: 3px;
-
-				@include wcfFontHeadline;
-			}
-
-			.articleNavigationArticleImage {
-				> img {
-					border-radius: 2px;
-					opacity: 0.85;
-					transition: 0.2s ease opacity;
-				}
-			}
-
-			&:hover {
-				&::before {
-					color: $wcfContentLinkActive;
-				}
-
-				.articleNavigationArticleTitle {
-					color: $wcfContentLinkActive;
-				}
-
-				.articleNavigationArticleImage {
-					> img {
-						opacity: 1;
-					}
-				}
-			}
-		}
-	}
-
-	.previousArticleButton {
-		@include screen-md-up {
-			padding-right: 10px;
-		}
-
-		> a {
-			&::before {
-				content: $fa-var-chevron-left;
-			}
-
-			> div {
-				margin-left: 10px;
-			}
-		}
-	}
-
-	.nextArticleButton {
-		justify-content: flex-end;
+	&.nextArticleButton {
+		grid-area: next;
+		grid-template-areas:
+			"entity icon"
+			"title icon";
 		text-align: right;
-
-		@include screen-md-up {
-			margin-left: 50%;
-			padding-left: 10px;
-		}
-
-		.articleNavigationArticleImage {
-			order: 1;
-			margin-left: 15px;
-			margin-right: 0;
-		}
-
-		> a {
-			&::before {
-				content: $fa-var-chevron-right;
-				order: 1;
-			}
-
-			> div {
-				margin-right: 10px;
-			}
-		}
 	}
 
-	.previousArticleButton + .nextArticleButton {
-		@include screen-sm-down {
-			margin-top: 20px;
+	&.articleNavigationArticleWithImage {
+		&.previousArticleButton {
+			grid-template-areas: "icon image content";
+			grid-template-columns: 60px 96px auto;
 		}
 
-		@include screen-md-up {
-			margin-left: 0;
+		&.nextArticleButton {
+			grid-template-areas: "content image icon";
+			grid-template-columns: auto 96px 60px;
+			text-align: right;
 		}
 	}
 }
 
-/* fix icons in rtl design */
-html[dir="rtl"] {
-	.articleNavigation {
-		.previousArticleButton {
-			> a {
-				&::before {
-					content: $fa-var-chevron-right;
-				}
-			}
-		}
+.articleNavigationArticleIcon {
+	align-self: center;
+	grid-area: icon;
+}
 
-		.nextArticleButton {
-			> a {
-				&::before {
-					content: $fa-var-chevron-left;
-				}
-			}
-		}
+body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
+	color: $wcfContentLinkActive;
+}
+
+.articleNavigationArticleImage {
+	border-radius: 3px;
+	grid-area: image;
+	overflow: hidden;
+}
+
+.previousArticleButton.articleNavigationArticleWithImage .articleNavigationArticleContent {
+	margin-left: 20px;
+}
+
+.nextArticleButton.articleNavigationArticleWithImage .articleNavigationArticleContent {
+	margin-right: 20px;
+}
+
+.articleNavigationArticleContent {
+	grid-area: content;
+}
+
+.articleNavigationEntityName {
+	color: $wcfContentDimmedText;
+	display: block;
+}
+
+.articleNavigationArticleTitle {
+	display: block;
+	margin-top: 5px;
+
+	@include wcfFontHeadline;
+}
+
+.articleNavigationArticleLink {
+	color: $wcfContentText;
+
+	&::before {
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 }
 

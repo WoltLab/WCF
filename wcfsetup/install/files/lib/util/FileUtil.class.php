@@ -616,10 +616,10 @@ final class FileUtil
     {
         static $mapping = [
             // archive
-            'zip' => 'archive',
-            'rar' => 'archive',
-            'tar' => 'archive',
-            'gz' => 'archive',
+            'zip' => 'zipper',
+            'rar' => 'zipper',
+            'tar' => 'zipper',
+            'gz' => 'zipper',
             // audio
             'mp3' => 'audio',
             'ogg' => 'audio',
@@ -655,7 +655,7 @@ final class FileUtil
             'ppt' => 'powerpoint',
             'pptx' => 'powerpoint',
             // text
-            'txt' => 'text',
+            'txt' => 'lines',
             // word
             'doc' => 'word',
             'docx' => 'word',

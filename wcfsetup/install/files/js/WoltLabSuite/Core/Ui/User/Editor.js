@@ -112,7 +112,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                     let banIcon = contentTitle.querySelector(".jsUserBanned");
                     if (data.actionName === "ban") {
                         banIcon = document.createElement("span");
-                        banIcon.className = "icon icon24 fa-lock jsUserBanned jsTooltip";
+                        banIcon.innerHTML = '<fa-icon size="24" name="lock"></fa-icon>';
+                        banIcon.classList.add("jsUserBanned", "jsTooltip");
                         banIcon.title = data.returnValues;
                         contentTitle.appendChild(banIcon);
                     }

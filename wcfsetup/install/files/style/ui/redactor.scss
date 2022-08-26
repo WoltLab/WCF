@@ -210,16 +210,6 @@
 				color: $wcfHeaderMenuLinkActive;
 			}
 
-			.icon {
-				color: inherit;
-				cursor: inherit !important;
-
-				&.redactorButtonImage {
-					background: no-repeat center center;
-					background-size: contain;
-				}
-			}
-
 			@include screen-lg {
 				// hover-styles on mobile are misleading as they stay much longer
 				// due to the click-like behavior
@@ -490,57 +480,33 @@
 
 .messageQuickReplyCollapsed {
 	border-bottom-width: 0 !important;
+	display: flex;
+	overflow: hidden;
 
 	@include screen-sm-down {
 		margin-left: -10px;
 		margin-right: -10px;
 	}
 
-	.messageSidebar {
-		display: none;
+	.message {
+		left: -200%;
+		pointer-events: none;
+		position: absolute;
+		top: -100%;
 	}
+}
 
-	.messageQuickReplyContent {
-		background-color: $wcfSidebarBackground;
-		cursor: pointer;
-		display: inline-block !important;
-		margin: 0 !important;
-		max-width: 100% !important;
-		overflow: hidden;
-		padding: 10px 20px;
-		position: relative;
-		width: 100% !important;
+.messageQuickReplyContentButton {
+	align-items: center;
+	background-color: $wcfSidebarBackground;
+	column-gap: 5px;
+	color: $wcfSidebarText;
+	display: flex;
+	padding: 10px 20px;
+	width: 100%;
 
-		@include screen-md-up {
-			border-radius: 2px;
-		}
-
-		&::before {
-			color: $wcfSidebarText;
-			content: $fa-var-reply;
-			font-family: FontAwesome;
-			font-size: 28px;
-			height: 32px;
-			line-height: 32px;
-			margin-right: 10px;
-			width: 32px;
-			vertical-align: -5px;
-		}
-
-		&::after {
-			color: $wcfSidebarText;
-			content: attr(data-placeholder);
-		}
-
-		> .messageBody {
-			left: 200%;
-			position: absolute;
-			top: -100%;
-		}
-
-		> .messageFooter {
-			display: none;
-		}
+	@include screen-md-up {
+		border-radius: 2px;
 	}
 }
 

@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         _prepare() {
             this._editorContainer = document.createElement("div");
             this._editorContainer.className = "commentEditorContainer";
-            this._editorContainer.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
+            this._editorContainer.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
             const content = this._activeElement.querySelector(".commentContentContainer");
             content.insertBefore(this._editorContainer, content.firstChild);
         }
@@ -182,16 +182,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         _hideEditor() {
             const editorContainer = this._editorContainer.querySelector(".editorContainer");
             Util_1.default.hide(editorContainer);
-            const icon = document.createElement("span");
-            icon.className = "icon icon48 fa-spinner";
+            const icon = document.createElement("fa-icon");
+            icon.size = 48;
+            icon.setIcon("spinner");
             this._editorContainer.appendChild(icon);
         }
         /**
          * Restores the previously hidden editor.
          */
         _restoreEditor() {
-            const icon = this._editorContainer.querySelector(".fa-spinner");
-            icon.remove();
+            this._editorContainer.querySelector("fa-icon").remove();
             const editorContainer = this._editorContainer.querySelector(".editorContainer");
             if (editorContainer !== null) {
                 Util_1.default.show(editorContainer);

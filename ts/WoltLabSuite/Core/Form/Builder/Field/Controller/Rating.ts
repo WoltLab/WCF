@@ -12,13 +12,11 @@ import * as Core from "../../../../Core";
 import * as Environment from "../../../../Environment";
 
 class Rating {
-  protected readonly _activeCssClasses: string[];
-  protected readonly _defaultCssClasses: string[];
   protected readonly _field: HTMLElement;
   protected readonly _input: HTMLInputElement;
   protected readonly _ratingElements: Map<string, HTMLElement>;
 
-  constructor(fieldId: string, value: string, activeCssClasses: string[], defaultCssClasses: string[]) {
+  constructor(fieldId: string, value: string) {
     this._field = document.getElementById(fieldId + "Container")!;
     if (this._field === null) {
       throw new Error("Unknown field with id '" + fieldId + "'");
@@ -30,9 +28,6 @@ class Rating {
     this._input.type = "hidden";
     this._input.value = value;
     this._field.appendChild(this._input);
-
-    this._activeCssClasses = activeCssClasses;
-    this._defaultCssClasses = defaultCssClasses;
 
     this._ratingElements = new Map();
 
@@ -73,7 +68,7 @@ class Rating {
     const currentRating = target.dataset.rating!;
 
     this._ratingElements.forEach((ratingElement, rating) => {
-      const icon = ratingElement.getElementsByClassName("icon")[0]! as HTMLElement;
+      const icon = ratingElement.querySelector("fa-icon")!;
 
       this._toggleIcon(icon, ~~rating <= ~~currentRating);
     });
@@ -85,7 +80,7 @@ class Rating {
    */
   protected _listItemMouseLeave(): void {
     this._ratingElements.forEach((ratingElement) => {
-      const icon = ratingElement.getElementsByClassName("icon")[0]! as HTMLElement;
+      const icon = ratingElement.querySelector("fa-icon")!;
 
       this._toggleIcon(icon, false);
     });
@@ -108,7 +103,7 @@ class Rating {
    */
   protected _restoreRating(): void {
     this._ratingElements.forEach((ratingElement, rating) => {
-      const icon = ratingElement.getElementsByClassName("icon")[0]! as HTMLElement;
+      const icon = ratingElement.querySelector("fa-icon")!;
 
       this._toggleIcon(icon, ~~rating <= ~~this._input.value);
     });
@@ -117,13 +112,11 @@ class Rating {
   /**
    * Toggles the state of the given icon based on the given state parameter.
    */
-  protected _toggleIcon(icon: HTMLElement, active = false): void {
+  protected _toggleIcon(icon: FaIcon, active = false): void {
     if (active) {
-      icon.classList.remove(...this._defaultCssClasses);
-      icon.classList.add(...this._activeCssClasses);
+      icon.setIcon("star", true);
     } else {
-      icon.classList.remove(...this._activeCssClasses);
-      icon.classList.add(...this._defaultCssClasses);
+      icon.setIcon("star");
     }
   }
 }

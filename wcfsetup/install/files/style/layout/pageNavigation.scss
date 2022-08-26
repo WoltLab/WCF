@@ -47,18 +47,12 @@
 
 			@include wcfFontDefault;
 
-			&::before {
-				content: $fa-var-long-arrow-left;
-				flex: 0 auto;
-				font-family: FontAwesome;
-			}
-
 			> a {
 				color: $wcfContentDimmedLink;
 				display: block;
 				flex: 1;
 				overflow: hidden;
-				padding: 5px 0 5px 10px;
+				padding: 5px 0;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}

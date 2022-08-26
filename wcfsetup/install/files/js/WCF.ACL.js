@@ -210,9 +210,9 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @return        jQuery
 		 */
 		_createListItem: function (objectID, label, type) {
-			var $listItem = $('<li><span class="icon icon16 fa-user' + (type === 'group' ? 's' : '') + '" /> <span class="aclLabel">' + label + '</span></li>').appendTo(this._containerElements.aclList);
+			var $listItem = $('<li><fa-icon size="16" name="' + (type === 'group' ? 'users' : 'user') + '" solid></fa-icon> <span class="aclLabel">' + label + '</span></li>').appendTo(this._containerElements.aclList);
 			$listItem.data('objectID', objectID).data('type', type).data('label', label).click($.proxy(this._click, this));
-			$('<span class="icon icon16 fa-times jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+			$('<button title="' + WCF.Language.get('wcf.global.button.delete') + '"><fa-icon size="16" name="xmark" solid></fa-icon></button>').click($.proxy(this._removeItem, this)).appendTo($listItem);
 			
 			return $listItem;
 		},

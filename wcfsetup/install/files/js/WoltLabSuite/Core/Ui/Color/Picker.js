@@ -267,12 +267,14 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             const colorString = ColorUtil.rgbaToString(color);
             this.oldColor.style.backgroundColor = colorString;
             this.input.value = colorString;
-            const span = this.element.querySelector("span");
-            if (span) {
-                span.style.backgroundColor = colorString;
-            }
-            else {
-                this.element.style.backgroundColor = colorString;
+            if (!(this.element instanceof HTMLButtonElement)) {
+                const span = this.element.querySelector("span");
+                if (span) {
+                    span.style.backgroundColor = colorString;
+                }
+                else {
+                    this.element.style.backgroundColor = colorString;
+                }
             }
             Dialog_1.default.close(this);
             if (typeof this.options.callbackSubmit === "function") {

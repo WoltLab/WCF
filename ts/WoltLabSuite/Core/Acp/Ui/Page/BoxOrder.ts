@@ -43,9 +43,9 @@ class AcpUiPageBoxOrder {
 
         let icon = "";
         if (box.isDisabled) {
-          icon = ` <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="${Language.get(
-            "wcf.acp.box.isDisabled",
-          )}"></span>`;
+          icon = ` <span class="jsTooltip" title="${Language.get("wcf.acp.box.isDisabled")}">
+            <fa-icon size="16" name="triangle-exclamation" solid></fa-icon>
+          </span>`;
         }
 
         item.innerHTML = box.name + icon;

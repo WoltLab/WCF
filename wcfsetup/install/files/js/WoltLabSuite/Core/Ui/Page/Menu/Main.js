@@ -18,12 +18,12 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.menuItemBadges = new Map();
             this.mainMenu = document.querySelector(".mainMenu");
             this.menuItemProvider = menuItemProvider;
-            this.container = new Container_1.default(this);
-            this.callbackOpen = (event) => {
-                event.preventDefault();
+            this.mainMenuButton = document.querySelector(".pageHeaderMenuMobile");
+            this.mainMenuButton.addEventListener("click", (event) => {
                 event.stopPropagation();
                 this.container.toggle();
-            };
+            });
+            this.container = new Container_1.default(this);
             this.observer = new MutationObserver((mutations) => {
                 let refreshUnreadIndicator = false;
                 mutations.forEach((mutation) => {
@@ -38,20 +38,14 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             this.watchForChanges();
         }
         enable() {
-            this.mainMenu.setAttribute("aria-expanded", "false");
-            this.mainMenu.setAttribute("aria-label", Language.get("wcf.menu.page"));
-            this.mainMenu.setAttribute("role", "button");
-            this.mainMenu.tabIndex = 0;
-            this.mainMenu.addEventListener("click", this.callbackOpen);
+            this.mainMenuButton.setAttribute("aria-expanded", "false");
+            this.mainMenuButton.querySelector("fa-icon").setIcon("bars");
             this.refreshUnreadIndicator();
         }
         disable() {
             this.container.close();
-            this.mainMenu.removeAttribute("aria-expanded");
-            this.mainMenu.removeAttribute("aria-label");
-            this.mainMenu.removeAttribute("role");
-            this.mainMenu.removeAttribute("tabindex");
-            this.mainMenu.removeEventListener("click", this.callbackOpen);
+            this.mainMenuButton.setAttribute("aria-expanded", "false");
+            this.mainMenuButton.querySelector("fa-icon").setIcon("bars");
         }
         getContent() {
             const container = document.createElement("div");
@@ -72,7 +66,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return fragment;
         }
         getMenuButton() {
-            return this.mainMenu;
+            return this.mainMenuButton;
         }
         sleep() {
             this.watchForChanges();
@@ -196,7 +190,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 button.classList.add("pageMenuMainItemToggle");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", menuId);
-                button.innerHTML = '<span class="icon icon24 fa-angle-down" aria-hidden="true"></span>';
+                button.innerHTML = '<fa-icon size="24" name="angle-down"></fa-icon>';
                 let ariaLabel = menuItem.title;
                 if (menuItem.link) {
                     ariaLabel = Language.get("wcf.menu.page.button.toggle", { title: menuItem.title });

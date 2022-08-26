@@ -101,19 +101,6 @@
 			> a[aria-expanded="true"] ~ .boxMenuDepth1 {
 				visibility: visible;
 			}
-
-			> a {
-				&::after {
-					content: $fa-var-angle-down;
-					display: block;
-					font-family: "FontAwesome";
-					font-size: 14px;
-					height: 24px;
-					line-height: 24px;
-					margin-left: 5px;
-					width: 10px;
-				}
-			}
 		}
 
 		.boxMenuDepth1 {
@@ -278,10 +265,6 @@
 			}
 		}
 	}
-
-	.userPanelAvatar {
-		display: none;
-	}
 }
 
 /* LOGO */
@@ -326,7 +309,9 @@
 
 @include screen-lg {
 	.pageHeaderSearchMobile,
-	.userPanelLoginLink {
+	.pageHeaderMenuMobile,
+	.userPanelLoginLink,
+	.pageHeaderUserMobile {
 		display: none;
 	}
 }
@@ -351,19 +336,10 @@
 			color: $wcfHeaderMenuLink;
 			display: flex;
 			max-width: 200px;
-			min-width: 140px;
+			min-width: 130px;
 			padding: 4px 8px;
 			position: relative;
 			text-align: left;
-
-			&::after {
-				color: inherit;
-				content: $fa-var-caret-down;
-				flex: 1;
-				font-family: FontAwesome;
-				margin-left: 10px;
-				text-align: right;
-			}
 
 			> .pageHeaderSearchTypeLabel {
 				flex: 0 auto;
@@ -472,7 +448,7 @@
 
 	.pageHeaderSearchMobile,
 	.userPanel,
-	.mainMenu {
+	.pageHeaderMenuMobile {
 		align-items: center;
 		display: flex;
 		height: 40px;
@@ -493,43 +469,42 @@
 
 	.pageHeaderSearchMobile {
 		grid-area: search;
-
-		.icon::before {
-			color: $wcfHeaderLink;
-		}
-
-		&[aria-expanded="true"] .icon::before {
-			color: $wcfHeaderLinkActive;
-			content: $fa-var-times;
-		}
 	}
 
-	.userPanel {
+	.pageHeaderUserMobile {
+		display: flex;
 		grid-area: user;
+		justify-content: center;
+		width: 40px;
 
-		.userPanelItems {
+		&[aria-expanded="false"] .pageHeaderUserMobileActive {
 			display: none;
 		}
 
-		.userPanelAvatar {
-			display: block;
+		&[aria-expanded="true"] .pageHeaderUserMobileInactive {
+			display: none;
 		}
 	}
 
+	.userPanel,
 	.mainMenu {
+		display: none;
+	}
+
+	.pageHeaderMenuMobile {
 		grid-area: menu;
 
-		&::before {
-			content: $fa-var-bars;
+		&[aria-expanded="false"] .pageHeaderMenuMobileActive {
+			display: none;
 		}
 
-		.boxContent {
+		&[aria-expanded="true"] .pageHeaderMenuMobileInactive {
 			display: none;
 		}
 	}
 
-	.mainMenu[aria-expanded="false"],
-	.userPanel[aria-expanded="false"] {
+	.pageHeaderMenuMobile[aria-expanded="false"],
+	.pageHeaderUserMobile[aria-expanded="false"] {
 		position: relative;
 
 		&.pageMenuMobileButtonHasContent::after {

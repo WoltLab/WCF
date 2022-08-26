@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             this.element = document.createElement("div");
             this.buildElement();
             this.markAllAsReadButton = this.buildButton({
-                icon: '<span class="icon icon24 fa-check"></span>',
+                icon: '<fa-icon size="24" name="check" solid></fa-icon>',
                 link: "#",
                 name: "markAllAsRead",
                 title: Language.get("wcf.global.button.markAllAsRead"),
@@ -132,8 +132,8 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
       </div>
       <div class="userMenuItemMeta"></div>
       <div class="userMenuItemUnread">
-        <button class="userMenuItemMarkAsRead">
-          <span class="icon icon24 fa-check jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}"></span>
+        <button class="userMenuItemMarkAsRead jsTooltip" title="${Language.get("wcf.global.button.markAsRead")}">
+          <fa-icon size="24" name="check"></fa-icon>
         </button>
       </div>
     `;
@@ -167,7 +167,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         }
         reset() {
             const content = this.getContent();
-            content.innerHTML = `<span class="userMenuContentStatus"><span class="icon icon24 fa-spinner"></span></span>`;
+            content.innerHTML = `<span class="userMenuContentStatus"><fa-icon size="24" name="spinner" solid></fa-icon></span>`;
         }
         buildElement() {
             this.element.hidden = true;
@@ -201,20 +201,22 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             }
         }
         buildButton(button) {
-            const link = document.createElement("a");
-            link.setAttribute("role", "button");
+            let link;
+            if (button.link === "#") {
+                link = document.createElement("button");
+            }
+            else {
+                link = document.createElement("a");
+                link.href = button.link;
+            }
             link.classList.add("userMenuButton", "jsTooltip");
             link.title = button.title;
             link.innerHTML = button.icon;
             if (button.name === "markAllAsRead") {
-                link.href = "#";
                 link.addEventListener("click", (event) => {
                     event.preventDefault();
                     void this.markAllAsRead();
                 });
-            }
-            else {
-                link.href = button.link;
             }
             return link;
         }

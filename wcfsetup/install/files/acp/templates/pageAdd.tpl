@@ -51,16 +51,16 @@
 		<ul>
 			{if $action == 'edit'}
 				{if $page->pageType !== 'system'}
-					<li><a href="#" class="button jsButtonCopyPage"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+					<li><a href="#" class="button jsButtonCopyPage">{icon size=16 name='copy'} {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
 				{/if}
 
 				{if !$page->requireObjectID}
-					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+					<li><a href="{$page->getLink()}" class="button">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
 				{/if}
 
-				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
+				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button">{icon size=16 name='arrow-down-short-wide'} <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='PageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
+			<li><a href="{link controller='PageList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -480,7 +480,15 @@
 						<ul class="scrollableCheckboxList" id="boxVisibilitySettings">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
-									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}{if $availableBox->isDisabled} <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="{lang}wcf.acp.box.isDisabled{/lang}"></span>{/if}</label>
+									<label>
+										<input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}>
+										{$availableBox->name}
+										{if $availableBox->isDisabled}
+											<span class="jsTooltip" title="{lang}wcf.acp.box.isDisabled{/lang}">
+												{icon size=16 name='triangle-exclamation'}
+											</span>
+										{/if}
+									</label>
 								</li>
 							{/foreach}
 						</ul>

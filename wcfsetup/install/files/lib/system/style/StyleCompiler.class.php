@@ -22,8 +22,8 @@ use wcf\util\Url;
 /**
  * Provides access to the SCSS PHP compiler.
  *
- * @author  Tim Duesterhus, Alexander Ebert
- * @copyright   2001-2021 WoltLab GmbH
+ * @author Tim Duesterhus, Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Style
  */
@@ -33,7 +33,7 @@ final class StyleCompiler extends SingletonFactory
      * Contains all files, which are compiled for a style.
      * @var string[]
      */
-    protected $files;
+    private $files;
 
     /**
      * names of option types which are supported as additional variables
@@ -66,7 +66,7 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Returns a fresh instance of the scssphp compiler.
      */
-    protected function makeCompiler(): Compiler
+    private function makeCompiler(): Compiler
     {
         $compiler = new Compiler();
         $compiler->setImportPaths([WCF_DIR]);
@@ -83,10 +83,10 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Returns the default style variables as array.
      *
-     * @return      string[]
-     * @since       5.3
+     * @return string[]
+     * @since 5.3
      */
-    public static function getDefaultVariables()
+    public static function getDefaultVariables(): array
     {
         $sql = "SELECT      variable.variableName, variable.defaultValue
                 FROM        wcf" . WCF_N . "_style_variable variable
@@ -107,23 +107,17 @@ final class StyleCompiler extends SingletonFactory
      * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
      * error, null is returned. Otherwise the exception is returned (!).
      *
-     * @param string $testFileDir
-     * @param string $styleName
-     * @param string $apiVersion
-     * @param string $imagePath
-     * @param string[] $variables
-     * @param string|null $customCustomSCSSFile
-     * @return      null|\Exception
-     * @since       5.3
+     * @param mixed[] $variables
+     * @since 5.3
      */
     public function testStyle(
-        $testFileDir,
-        $styleName,
-        $apiVersion,
-        $imagePath,
+        string $testFileDir,
+        string $styleName,
+        string $apiVersion,
+        string $imagePath,
         array $variables,
-        $customCustomSCSSFile = null
-    ) {
+        ?string $customCustomSCSSFile = null
+    ): ?\Exception {
         $individualScss = '';
         if (isset($variables['individualScss'])) {
             $individualScss = $variables['individualScss'];
@@ -152,6 +146,8 @@ final class StyleCompiler extends SingletonFactory
 
         // api version
         $variables['apiVersion'] = $apiVersion;
+
+        $variables = $this->prepareVariables($variables);
 
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
@@ -201,10 +197,10 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Returns a array with all files, which should be compiled for a style.
      *
-     * @return      string[]
-     * @since       5.3
+     * @return string[]
+     * @since 5.3
      */
-    protected function getFiles()
+    private function getFiles(): array
     {
         if (!$this->files) {
             $files = $this->getCoreFiles();
@@ -242,10 +238,8 @@ final class StyleCompiler extends SingletonFactory
 
     /**
      * Compiles SCSS stylesheets.
-     *
-     * @param Style $style
      */
-    public function compile(Style $style)
+    public function compile(Style $style): void
     {
         // get style variables
         $variables = $style->getVariables();
@@ -276,6 +270,8 @@ final class StyleCompiler extends SingletonFactory
 
         // api version
         $variables['apiVersion'] = $style->apiVersion;
+
+        $variables = $this->prepareVariables($variables);
 
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
@@ -384,7 +380,7 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Compiles SCSS stylesheets for ACP usage.
      */
-    public function compileACP()
+    public function compileACP(): void
     {
         $files = $this->getCoreFiles();
 
@@ -411,6 +407,8 @@ final class StyleCompiler extends SingletonFactory
 
         $variables['style_image_path'] = "'../images/'";
 
+        $variables = $this->prepareVariables($variables);
+
         $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
@@ -433,9 +431,9 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Returns a list of common stylesheets provided by the core.
      *
-     * @return      string[]        list of common stylesheets
+     * @return string[] list of common stylesheets
      */
-    protected function getCoreFiles()
+    private function getCoreFiles(): array
     {
         $files = [];
         if ($handle = \opendir(WCF_DIR . 'style/')) {
@@ -474,10 +472,9 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Returns the list of SCSS stylesheets of an application.
      *
-     * @param Application $application
      * @return      string[]
      */
-    protected function getAcpStylesheets(Application $application)
+    private function getAcpStylesheets(Application $application): array
     {
         if ($application->packageID == 1) {
             return [];
@@ -499,11 +496,15 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Reads in the SCSS files that form the foundation of the stylesheet. This includes
      * the CSS reset and mixins.
+     *
+     * @param mixed[] $variables
      */
-    protected function bootstrap(array $variables): string
+    private function bootstrap(array $variables): string
     {
+        $content = $this->exportStyleVariables($variables);
+
         // add reset like a boss
-        $content = $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
+        $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
 
         // add mixins
         $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/mixin.scss');
@@ -544,30 +545,13 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Prepares a SCSS stylesheet for importing.
+     * Performs transformations on intermediate values and injects global values.
      *
-     * @param string $filename
-     * @return  string
-     * @throws  SystemException
+     * @param mixed[] $variables
+     * @return mixed[]
+     * @since 6.0
      */
-    protected function prepareFile($filename)
-    {
-        if (!\file_exists($filename) || !\is_readable($filename)) {
-            throw new SystemException("Unable to access '" . $filename . "', does not exist or is not readable");
-        }
-
-        // use a relative path
-        $filename = FileUtil::getRelativePath(WCF_DIR, \dirname($filename)) . \basename($filename);
-
-        return '@import "' . $filename . '";' . "\n";
-    }
-
-    /**
-     * Compiles the given SCSS into one CSS stylesheet and returns it.
-     *
-     * @param string[] $variables
-     */
-    protected function compileStylesheet(string $scss, array $variables): string
+    private function prepareVariables(array $variables): array
     {
         foreach ($variables as &$value) {
             if (\str_starts_with($value, '../')) {
@@ -618,6 +602,33 @@ final class StyleCompiler extends SingletonFactory
         // convert into numeric value for comparison, e.g. `3.1` -> `31`
         $variables['apiVersion'] = \str_replace('.', '', $variables['apiVersion']);
 
+        return $variables;
+    }
+
+    /**
+     * Prepares a SCSS stylesheet for importing.
+     *
+     * @throws  SystemException
+     */
+    private function prepareFile(string $filename): string
+    {
+        if (!\file_exists($filename) || !\is_readable($filename)) {
+            throw new SystemException("Unable to access '" . $filename . "', does not exist or is not readable");
+        }
+
+        // use a relative path
+        $filename = FileUtil::getRelativePath(WCF_DIR, \dirname($filename)) . \basename($filename);
+
+        return '@import "' . $filename . '";' . "\n";
+    }
+
+    /**
+     * Compiles the given SCSS into one CSS stylesheet and returns it.
+     *
+     * @param mixed[] $variables
+     */
+    private function compileStylesheet(string $scss, array $variables): string
+    {
         $compiler = $this->makeCompiler();
         $compiler->replaceVariables(\array_map(static function ($value) {
             if ($value === "" || \is_int($value)) {
@@ -693,13 +704,36 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
+     * Exports the style variables as CSS variables on the `html` element.
+     *
+     * @param mixed[] $variables 
+     * @since 6.0 
+     */
+    private function exportStyleVariables(array $variables): string
+    {
+        $skipVariables = [
+            'wcfFontFamilyFallback',
+            'wcfFontFamilyGoogle',
+        ];
+
+        $css = "html {\n";
+        foreach ($variables as $key => $value) {
+            if (!\preg_match('~^wcf[A-Z]~', $key)) {
+                continue;
+            }
+
+            $css .= "\t--${key}: {$value};\n";
+        }
+
+        return $css . '}';
+    }
+
+    /**
      * Returns the name of the CSS file for a specific style.
      *
-     * @param Style $style
-     * @return      string
-     * @since       5.3
+     * @since 5.3
      */
-    public static function getFilenameForStyle(Style $style)
+    public static function getFilenameForStyle(Style $style): string
     {
         return WCF_DIR . 'style/style-' . $style->styleID;
     }

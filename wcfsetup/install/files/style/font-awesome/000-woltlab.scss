@@ -1,0 +1,193 @@
+/* Font Awesome 6 Free: Regular */
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block !important;
+  src: url("../font/fa-regular-400.woff2?v=6.1.2") format("woff2");
+}
+
+/* Font Awesome 6 Free: Solid */
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block !important;
+  src: url("../font/fa-solid-900.woff2?v=6.1.2") format("woff2");
+}
+
+fa-brand,
+fa-icon {
+  align-items: center;
+  display: inline-flex;
+  height: var(--icon-size);
+  justify-content: center;
+  pointer-events: none;
+  width: calc(var(--icon-size) * 1.25);
+
+  &:not(:upgraded) {
+    visibility: hidden !important;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &[size="16"] {
+    --font-size: 14px;
+    --icon-size: 16px;
+  }
+
+  &[size="24"] {
+    --font-size: 18px;
+    --icon-size: 24px;
+  }
+
+  &[size="32"] {
+    --font-size: 28px;
+    --icon-size: 32px;
+  }
+
+  &[size="48"] {
+    --font-size: 42px;
+    --icon-size: 48px;
+  }
+
+  &[size="64"] {
+    --font-size: 56px;
+    --icon-size: 64px;
+  }
+
+  &[size="96"] {
+    --font-size: 84px;
+    --icon-size: 96px;
+  }
+
+  &[size="128"] {
+    --font-size: 112px;
+    --icon-size: 128px;
+  }
+
+  &[size="144"] {
+    --font-size: 130px;
+    --icon-size: 144px;
+  }
+}
+
+fa-icon {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+
+  font-family: var(--fa-font-family, "Font Awesome 6 Free");
+  font-size: var(--font-size);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: var(--fa-font-weight, 400);
+  line-height: 1;
+  text-rendering: auto;
+  user-select: none;
+
+  &[solid] {
+    font-weight: 900;
+  }
+}
+
+.disabled fa-icon {
+  opacity: .45;
+}
+
+/* @deprecated 6.0 Use the new icons instead, `.icon` is now just an easy-to-spot reminder. */
+.icon {
+  align-items: center;
+  background-color: #f0c !important;
+  border-radius: 3px;
+  display: inline-flex;
+  font-family: inherit !important;
+  height: var(--icon-size);
+  justify-content: center;
+  width: var(--icon-size);
+
+  &::before {
+    color: #fff !important;
+    content: "?" !important;
+    font-family: inherit !important;
+    font-size: var(--font-size) !important;
+  }
+
+  &.icon16 {
+    --font-size: 14px;
+    --icon-size: 16px;
+  }
+
+  &.icon24 {
+    --font-size: 18px;
+    --icon-size: 24px;
+  }
+
+  &.icon32 {
+    --font-size: 28px;
+    --icon-size: 32px;
+  }
+
+  &.icon48 {
+    --font-size: 42px;
+    --icon-size: 48px;
+  }
+
+  &.icon64 {
+    --font-size: 56px;
+    --icon-size: 64px;
+  }
+
+  &.icon96 {
+    --font-size: 84px;
+    --icon-size: 96px;
+  }
+
+  &.icon128 {
+    --font-size: 112px;
+    --icon-size: 128px;
+  }
+
+  &.icon144 {
+    --font-size: 130px;
+    --icon-size: 144px;
+  }
+
+  &.green {
+    color: rgba(0, 153, 0, 1);
+  }
+
+  &.red {
+    color: rgba(204, 0, 0, 1);
+  }
+
+  &.black {
+    color: #333;
+  }
+
+  &.brown {
+    color: #c63;
+  }
+
+  &.orange {
+    color: #f90;
+  }
+
+  &.yellow {
+    color: #ff0;
+  }
+
+  &.blue {
+    color: #369;
+  }
+
+  &.purple {
+    color: #c0f;
+  }
+
+  &.pink {
+    color: #f0c;
+  }
+}

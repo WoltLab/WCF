@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
+			<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -40,9 +40,9 @@
 					<tr class="jsPaidSubscriptionRow jsObjectActionObject" data-object-id="{@$subscription->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$subscription->isDisabled}
-							<a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$subscription->getTitle()}
-							<a href="{link controller='PaidSubscriptionUserAdd' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.user.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
+							<a href="{link controller='PaidSubscriptionUserAdd' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.user.add{/lang}" class="jsTooltip">{icon size=16 name='plus'}</a>
 							
 							{event name='itemButtons'}
 						</td>
@@ -68,7 +68,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
+				<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

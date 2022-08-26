@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserGroupAssignmentAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.group.assignment.button.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserGroupAssignmentAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.group.assignment.button.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -38,7 +38,7 @@
 					<tr class="jsUserGroupAssignmentRow jsObjectActionObject" data-object-id="{@$assignment->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$assignment->isDisabled}
-							<a href="{link controller='UserGroupAssignmentEdit' object=$assignment}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='UserGroupAssignmentEdit' object=$assignment}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$assignment->getTitle()}
 							
 							{event name='rowButtons'}
@@ -67,7 +67,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserGroupAssignmentAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.group.assignment.button.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserGroupAssignmentAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.group.assignment.button.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

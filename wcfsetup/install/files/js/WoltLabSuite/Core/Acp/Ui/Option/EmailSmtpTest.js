@@ -57,7 +57,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         onClick(event) {
             event.preventDefault();
             this.buttonRunTest.classList.add("disabled");
-            this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-spinner"></span> ${Language.get("wcf.global.loading")}`;
+            this.buttonRunTest.innerHTML = `<fa-icon size="16" name="spinner" solid></fa-icon> ${Language.get("wcf.global.loading")}`;
             Util_1.default.innerError(this.buttonRunTest, false);
             window.setTimeout(() => {
                 const startTls = document.querySelector('input[name="values[mail_smtp_starttls]"]:checked');
@@ -96,7 +96,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
         resetButton(success, errorMessage) {
             this.buttonRunTest.classList.remove("disabled");
             if (success) {
-                this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-check green"></span> ${Language.get("wcf.acp.email.smtp.test.run.success")}`;
+                this.buttonRunTest.innerHTML = `<fa-icon size="16" name="check" solid></fa-icon> ${Language.get("wcf.acp.email.smtp.test.run.success")}`;
             }
             else {
                 this.buttonRunTest.innerHTML = Language.get("wcf.acp.email.smtp.test.run");

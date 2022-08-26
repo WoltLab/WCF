@@ -56,15 +56,6 @@
 		&.missingValue > span {
 			padding-right: 40px;
 			position: relative;
-
-			&:after {
-				color: $wcfStatusErrorText;
-				content: $fa-var-exclamation-triangle;
-				font-family: FontAwesome;
-				position: absolute;
-				right: 20px;
-				top: 5px;
-			}
 		}
 
 		&.disabled {

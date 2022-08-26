@@ -195,13 +195,10 @@ ol.nativeList {
 }
 
 a.externalURL::after {
-	content: "\00a0#{$fa-var-external-link}";
-	font-family: FontAwesome !important;
-	font-size: 14px !important;
+	// 2197 = NORTH EAST ARROW
+	content: "\00a0\2197";
 	font-weight: normal !important;
 	font-style: normal !important;
-	line-height: 0;
-	vertical-align: -1px;
 }
 
 .visuallyHidden {

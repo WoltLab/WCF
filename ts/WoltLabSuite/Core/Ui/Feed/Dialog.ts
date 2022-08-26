@@ -47,9 +47,11 @@ function openDialog(event: Event): void {
   <dd>
     <div class="inputAddon">
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithoutAccessToken)}">
-      <a href="#" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
+      <button class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
         "wcf.global.rss.copy",
-      )}"><span class="icon icon16 fa-files-o pointer"></span></a>
+      )}">
+        <fa-icon size="16" name="files"></fa-icon>
+      </button>
     </div>
   </dd>
 </dl>
@@ -58,9 +60,11 @@ function openDialog(event: Event): void {
   <dd>
     <div class="inputAddon">
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithAccessToken)}">
-      <a href="#" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
+      <button class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
         "wcf.global.rss.copy",
-      )}"><span class="icon icon16 fa-files-o pointer"></span></a>
+      )}">
+        <fa-icon size="16" name="files"></fa-icon>
+      </a>
     </div>
   </dd>
 </dl>

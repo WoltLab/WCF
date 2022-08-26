@@ -63,29 +63,9 @@
 	}
 }
 
-.messageCheckboxLabel {
-	cursor: pointer;
-	display: block;
-	position: relative;
-
-	&::before {
-		content: $fa-var-square-o;
-		display: block;
-		font-family: FontAwesome;
-		position: absolute;
-	}
-
-	&::after {
-		color: rgb(0, 150, 0);
-		content: $fa-var-check;
-		display: none;
-		font-family: FontAwesome;
-		position: absolute;
-	}
-
-	> input[type="checkbox"] {
-		display: none;
-	}
+.messageCheckboxLabel input[type="checkbox"] {
+	height: 18px;
+	width: 18px;
 }
 
 .message {
@@ -98,12 +78,6 @@
 		width: 24px;
 
 		@extend .messageCheckboxLabel;
-
-		&::before {
-			font-size: 25px;
-			left: 2px;
-			top: -6px;
-		}
 	}
 
 	&.jsMarked .messageClipboardCheckbox::after {
@@ -410,38 +384,33 @@
 }
 
 .messageQuickOptions {
+	column-gap: 5px;
+	display: flex;
+
 	@include screen-md-up {
-		@include inlineList;
+		.messageQuickOptionsMobile {
+			display: none;
+		}
 	}
 
 	@include screen-sm-down {
-		flex: 0 0 24px !important;
-		height: 1.5em;
-		opacity: 0;
-		position: relative;
-		transition: opacity 0.12s linear, visibility 0s linear 0.12s;
-		visibility: hidden;
-
-		&::before {
-			content: $fa-var-ellipsis-v;
-			font-family: FontAwesome;
-			font-size: 18px;
-			height: 24px;
-			position: absolute;
-			right: 0;
-			text-align: center;
-			top: -2px;
-			width: 24px;
+		// Prevent a layout shift caused by the mobile button
+		// being added on-the-fly.
+		&:not(.active) {
+			padding-right: 29px;
 		}
 
-		&.active {
-			opacity: 1;
-			transition-delay: 0s;
-			visibility: visible;
-		}
-
-		> li {
+		li:not(.jsMessageClipboardCheckbox):not(.messageQuickOptionsMobile) {
 			display: none;
+		}
+
+		.jsMessageClipboardCheckbox,
+		.messageQuickOptionsMobile {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			height: 24px;
+			width: 24px;
 		}
 	}
 }

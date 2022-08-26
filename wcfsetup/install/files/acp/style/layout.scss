@@ -185,15 +185,6 @@ $wcfAcpSubMenuWidth: 300px;
 			&.active {
 				background-color: rgb(36, 66, 95);
 				color: rgba(255, 255, 255, 1);
-
-				> .icon {
-					transform: scale(1);
-				}
-			}
-
-			> .icon {
-				transform: scale(0.8);
-				transition: transform 0.12s linear;
 			}
 		}
 

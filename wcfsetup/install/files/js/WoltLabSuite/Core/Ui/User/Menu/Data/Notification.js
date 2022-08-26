@@ -121,7 +121,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         getMenuButtons() {
             return [
                 {
-                    icon: '<span class="icon icon24 fa-cog"></span>',
+                    icon: '<fa-icon size="24" name="cog" solid></fa-icon>',
                     link: this.options.settingsLink,
                     name: "settings",
                     title: this.options.settingsTitle,

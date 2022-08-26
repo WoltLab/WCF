@@ -1,5 +1,7 @@
-<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" {*
+<button type="button" class="jsObjectAction jsTooltip" {*
     *}title="{lang}wcf.global.button.delete{/lang}"  {*
     *}data-object-action="delete" {*
     *}{if $objectActionConfirmMessage}data-confirm-message="{lang __encode=true}{$objectActionConfirmMessage}{/lang}" {/if}{*
-*}></span>
+*}>
+    {icon size=16 name='xmark'}
+</button>

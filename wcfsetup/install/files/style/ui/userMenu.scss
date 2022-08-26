@@ -77,10 +77,15 @@
 
 .userMenuButton {
 	align-items: center;
+	color: inherit;
 	display: flex;
 	height: 44px;
 	justify-content: center;
 	width: 44px;
+
+	&:hover {
+		color: inherit;
+	}
 }
 
 html:not(.touch) .userMenuButton {

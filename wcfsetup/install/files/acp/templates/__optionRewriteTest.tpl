@@ -1,17 +1,17 @@
 {if $category->categoryName === 'general'}
 	<div id="dialogRewriteTest" style="display: none">
 		<div id="dialogRewriteTestRunning" class="box24">
-			<span class="icon icon24 fa-spinner"></span>
+			{icon size=24 name='spinner'}
 			<p>{lang}wcf.acp.option.url_omit_index_php.test.running{/lang}</p>
 		</div>
 		<div id="dialogRewriteTestSuccess" class="box24" style="display: none">
-			<span class="icon icon24 fa-check green"></span>
+			{icon size=24 name='check'}
 			<p>{lang}wcf.acp.option.url_omit_index_php.test.success{/lang}</p>
 		</div>
 		
 		<div id="dialogRewriteTestFailure" style="display: none">
 			<div class="box24">
-				<span class="icon icon24 fa-times red"></span>
+				{icon size=24 name='triangle-exclamation'}
 				<p>{lang}wcf.acp.option.url_omit_index_php.test.failure{/lang}</p>
 			</div>
 			<p>{lang}wcf.acp.option.url_omit_index_php.test.failure.description{/lang}</p>

@@ -12,8 +12,12 @@
 		{foreach from=$multifactorMethods item=method}
 			{if $method->objectType !== 'com.woltlab.wcf.multifactor.backup' || $enabledMultifactorMethods[$method->objectTypeID]|isset}
 				<li class="box64">
-					<div>
-						<span class="icon icon64 fa-{if $method->icon}{$method->icon}{else}lock{/if} accountSecurityInformationIcon"></span>
+					<div class="accountSecurityInformationIcon">
+						{if $method->icon}
+							{icon size=64 name=$method->icon}
+						{else}
+							{icon size=64 name='lock'}
+						{/if}
 					</div>
 					
 					<div class="accountSecurityContainer">
@@ -71,7 +75,7 @@
 		{foreach from=$activeSessions item=session}
 			<li class="box64 sessionItem">
 				<div>
-					<span class="icon icon64 fa-{$session->getUserAgent()->getDeviceIcon()}"></span>
+					{icon size=64 name=$session->getUserAgent()->getDeviceIcon()}
 				</div>
 				
 				<div class="accountSecurityContainer">

@@ -174,7 +174,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="https://fontawesome.com/v4.7.0/icons/">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="https://fontawesome.com/icons">FontAwesome</a>-Icon genutzt werden.]]></item>
 		<item name="wcf.acp.bbcode.numberedAttribute"><![CDATA[Attribut {#$attributeNumber}]]></item>
 	</category>
 	<category name="wcf.acp.box">
@@ -487,7 +487,7 @@
 		<dd><kbd>{$minVersion}</kbd></dd>
 	{/if}
 	<dt>Paketdatei im Paket enthalten</dt>
-	<dd><span class="icon icon16 fa-{if $file}check{else}times{/if}"></span></dd>
+	<dd>{if $file}{icon size=16 name='check'}{else}{icon size=16 name='xmark'}{/if}/dd>
 </dl>]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[Der Paketbezeichner darf nicht länger als 191 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[Der Paketbezeichner muss länger als drei Zeichen sein.]]></item>
@@ -552,7 +552,7 @@
 		{/if}
 		{if $runStandalone}
 			<dt>In eigenem Schritt</dt>
-			<dd><span class="icon icon16 fa-check"></span></dd>
+			<dd>{icon size=16 name='check'}</dd>
 		{/if}
 	</dl>
 {/if}]]></item>
@@ -890,7 +890,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Seitenbeschleunigung für Gäste ist aktiv]]></item>
-		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol (<span class="icon icon16 fa-bolt red"></span>) markiert.]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol ({icon size=16 name='bolt'}) markiert.]]></item>
 		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontaktformular verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Kann Trophäen verwalten]]></item>
@@ -4517,6 +4517,8 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker.hue"><![CDATA[Farbton]]></item>
 		<item name="wcf.style.colorPicker.saturation"><![CDATA[Sättigung]]></item>
 		<item name="wcf.style.colorPicker.lightness"><![CDATA[Helligkeit]]></item>
+		<item name="wcf.style.colorPicker.changeColor"><![CDATA[Farbe ändern]]></item>
+		<item name="wcf.style.colorPicker.changeBackgroundColor"><![CDATA[Hintergrundfarbe ändern]]></item>
 	</category>
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}„{$tag->name}“{/implode}]]></item>
@@ -5133,7 +5135,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Die Anfrage konnte nicht zugeordnet werden. Möglicherweise ist {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Sitzung abgelaufen.]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Mit GitHub anmelden]]></item>
-		<item name="wcf.user.3rdparty.github.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-github"></span>&nbsp;GitHub. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
+		<item name="wcf.user.3rdparty.github.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='github' type='brand'}&nbsp;GitHub. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'github'}(„<a href="https://github.com/{$__wcf->session->getVar('__oauthUser')->getUsername()}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__oauthUser')->getUsername()}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} GitHub-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} GitHub-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -5141,7 +5143,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} GitHub-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Mit Twitter anmelden]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='twitter' type='brand'}&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Twitter-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -5149,7 +5151,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Mit Facebook anmelden]]></item>
-		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
+		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='facebook' type='brand'}&nbsp;Facebook. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'}(„{$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Facebook-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Facebook-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -5157,7 +5159,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.3rdparty.facebook.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Facebook-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Mit Google anmelden]]></item>
-		<item name="wcf.user.3rdparty.google.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-google"></span>&nbsp;Google. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über {icon size='16' name='google' type='brand'}&nbsp;Google. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Mit Google-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'google'}(„{$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Google-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Google-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>

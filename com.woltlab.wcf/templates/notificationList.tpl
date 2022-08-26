@@ -10,7 +10,7 @@
 
 {capture assign='contentInteractionButtons'}
 	{if $__wcf->getUserNotificationHandler()->getNotificationCount()}
-		<button class="jsMarkAllAsConfirmed contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+		<button class="jsMarkAllAsConfirmed contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 	{/if}
 {/capture}
 
@@ -53,7 +53,7 @@
 							</div>
 						{else}
 							<div>
-								<span class="icon icon32 fa-users"></span>
+								{icon size=32 name='users'}
 							</div>
 							
 							<div class="details">

@@ -24,6 +24,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\session\SessionHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -575,7 +576,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                     $pos = \mb_strripos($groupName, $searchString);
                     if ($pos !== false && $pos == 0) {
                         $list[] = [
-                            'icon' => '<span class="icon icon16 fa-users"></span>',
+                            'icon' => FontAwesomeIcon::fromValues('users')->toHtml(16),
                             'label' => $groupName,
                             'objectID' => $group->groupID,
                             'type' => 'group',

@@ -206,7 +206,17 @@ function select(elementId: string, languageId: number, isInit: boolean): void {
 
     // update label
     data.buttonLabel.textContent = label;
-    data.buttonLabel.classList[languageId ? "add" : "remove"]("active");
+    data.buttonLabel.querySelector("fa-icon")?.remove();
+    if (languageId) {
+      data.buttonLabel.classList.add("active");
+
+      const icon = document.createElement("fa-icon");
+      icon.size = 16;
+      icon.setIcon("caret-down", true);
+      data.buttonLabel.append(icon);
+    } else {
+      data.buttonLabel.classList.remove("active");
+    }
 
     data.languageId = languageId;
   }
@@ -248,8 +258,15 @@ function dropdownToggle(containerId: string, action: NotificationAction): void {
         }
       }
 
+      const span = item.querySelector("span")!;
+      span.querySelector("fa-icon")?.remove();
       if (hasMissingValue) {
         item.classList.add("missingValue");
+
+        const icon = document.createElement("fa-icon");
+        icon.size = 16;
+        icon.setIcon("triangle-exclamation");
+        span.append(icon);
       } else {
         item.classList.remove("missingValue");
       }

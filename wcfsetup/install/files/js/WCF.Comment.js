@@ -219,7 +219,7 @@ WCF.Comment.Handler = Class.extend({
 	_loadCommentSegment: function (commentId, responseID) {
 		this._permalinkComment = elCreate('li');
 		this._permalinkComment.className = 'commentPermalinkContainer loading';
-		this._permalinkComment.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
+		this._permalinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
 		this._container[0].insertBefore(this._permalinkComment, this._container[0].firstChild);
 		
 		this._proxy.setOption('data', {
@@ -240,7 +240,7 @@ WCF.Comment.Handler = Class.extend({
 	_loadResponseSegment: function (comment, commentId, responseID) {
 		this._permalinkResponse = elCreate('li');
 		this._permalinkResponse.className = 'commentResponsePermalinkContainer loading';
-		this._permalinkResponse.innerHTML = '<span class="icon icon32 fa-spinner"></span>';
+		this._permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
 		var responseList = elBySel('.commentResponseList', comment);
 		responseList.insertBefore(this._permalinkResponse, responseList.firstChild);
 		
@@ -419,12 +419,22 @@ WCF.Comment.Handler = Class.extend({
 		}
 		
 		if (comment.data('canEdit')) {
-			var $editButton = $('<li><a href="#" class="jsCommentEditButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 fa-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
+			var $editButton = $(`<li>
+				<button class="jsCommentEditButton jsTooltip" title="${WCF.Language.get('wcf.global.button.edit')}">
+					<fa-icon size="16" name="pencil"></fa-icon>
+					<span class="invisible">${WCF.Language.get('wcf.global.button.edit')}</span>
+				</button>
+			</li>`);
 			$editButton.appendTo(comment.find('ul.buttonList:eq(0)'));
 		}
 		
 		if (comment.data('canDelete')) {
-			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 fa-times" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
+			var $deleteButton = $(`<li>
+				<button class="jsTooltip" title="${WCF.Language.get('wcf.global.button.delete')}">
+					<fa-icon size="16" name="xmark"></fa-icon>
+					<span class="invisible">${WCF.Language.get('wcf.global.button.delete')}</span>
+				</button>
+			</li>`);
 			$deleteButton.data('commentID', commentID).appendTo(comment.find('ul.buttonList:eq(0)')).click($.proxy(this._delete, this));
 		}
 		
@@ -532,12 +542,22 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_initResponse: function(responseID, response) {
 		if (response.data('canEdit')) {
-			var $editButton = $('<li><a href="#" class="jsCommentResponseEditButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 fa-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
+			var $editButton = $(`<li>
+				<button class="jsCommentResponseEditButton jsTooltip" title="${WCF.Language.get('wcf.global.button.edit')}">
+					<fa-icon size="16" name="pencil"></fa-icon>
+					<span class="invisible">${WCF.Language.get('wcf.global.button.edit')}</span>
+				</button>
+			</li>`);
 			$editButton.data('responseID', responseID).appendTo(response.find('ul.buttonList:eq(0)'));
 		}
 		
 		if (response.data('canDelete')) {
-			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 fa-times" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
+			var $deleteButton = $(`<li>
+				<button class="jsTooltip" title="${WCF.Language.get('wcf.global.button.delete')}">
+					<fa-icon size="16" name="xmark"></fa-icon>
+					<span class="invisible">${WCF.Language.get('wcf.global.button.delete')}</span>
+				</button>
+			</li>`);
 			
 			var self = this;
 			$deleteButton.data('responseID', responseID).appendTo(response.find('ul.buttonList:eq(0)')).click(function(event) { self._delete(event, true); });
@@ -745,7 +765,7 @@ WCF.Comment.Handler = Class.extend({
 		if (data.returnValues.response) {
 			this._permalinkResponse = elCreate('li');
 			this._permalinkResponse.className = 'commentResponsePermalinkContainer loading';
-			this._permalinkResponse.innerHTML = '<span class="icon icon32 fa-spinner"></span>';
+			this._permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
 			var responseList = elBySel('.commentResponseList', comment);
 			responseList.insertBefore(this._permalinkResponse, responseList.firstChild);
 			

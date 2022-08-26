@@ -10,7 +10,7 @@
 
 <div class="section">
 	<div class="box64 userException">
-		<span class="icon icon64 fa-exclamation-circle userExceptionIcon"></span>
+		{icon size=64 name='circle-exclamation'}
 		<p id="errorMessage" class="fullPageErrorMessage userExceptionMessage" data-exception-class-name="{$exceptionClassName}">
 			{@$message}
 		</p>

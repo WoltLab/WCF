@@ -58,7 +58,7 @@ class SuffixFormField {
 
     this._suffixField.value = target.dataset.value!;
     this._suffixDropdownToggle.innerHTML =
-      target.dataset.label! + ' <span class="icon icon16 fa-caret-down pointer"></span>';
+      target.dataset.label! + ' <fa-icon size="16" name="caret-down" solid></fa-icon>';
   }
 
   /**

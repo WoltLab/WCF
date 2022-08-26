@@ -2,7 +2,6 @@
 
 namespace wcf\system\search;
 
-use wcf\data\search\ICustomIconSearchResultObject;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
 use wcf\page\SearchResultPage;
@@ -35,11 +34,6 @@ final class SearchResultHandler
     private $messages = [];
 
     /**
-     * @var \SplObjectStorage
-     */
-    private $customIcons;
-
-    /**
      * @var int
      */
     private $startIndex = 0;
@@ -60,7 +54,6 @@ final class SearchResultHandler
         $this->startIndex = $startIndex;
         $this->limit = $limit;
         $this->searchData = \unserialize($this->search->searchData);
-        $this->customIcons = new \SplObjectStorage();
     }
 
     public function countSearchResults(): int
@@ -85,11 +78,6 @@ final class SearchResultHandler
     public function getSearchResults(): array
     {
         return $this->messages;
-    }
-
-    public function getCustomIcons(): \SplObjectStorage
-    {
-        return $this->customIcons;
     }
 
     private function cacheMessageData(): void
@@ -124,13 +112,7 @@ final class SearchResultHandler
                     throw new ImplementationException(\get_class($message), ISearchResultObject::class);
                 }
 
-                $customIcon = '';
-                if ($message instanceof ICustomIconSearchResultObject) {
-                    $customIcon = $message->getCustomSearchResultIcon();
-                }
-
                 $this->messages[] = $message;
-                $this->customIcons[$message] = $customIcon;
             }
         }
     }

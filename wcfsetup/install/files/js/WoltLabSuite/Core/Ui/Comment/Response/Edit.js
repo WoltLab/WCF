@@ -74,7 +74,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         _prepare() {
             this._editorContainer = document.createElement("div");
             this._editorContainer.className = "commentEditorContainer";
-            this._editorContainer.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
+            this._editorContainer.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
             const content = this._activeElement.querySelector(".commentResponseContent");
             content.insertBefore(this._editorContainer, content.firstChild);
         }

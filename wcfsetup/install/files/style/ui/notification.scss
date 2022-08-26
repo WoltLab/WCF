@@ -34,8 +34,7 @@
 
 .notificationSettingsEvent:hover + .notificationSettingsState,
 .notificationSettingsState > label:hover {
-	.fa-bell,
-	.fa-bell-slash {
+	fa-icon {
 		transform: scale(1.2);
 	}
 }
@@ -54,6 +53,10 @@
 		margin: 0 10px;
 	}
 
+	label {
+		cursor: pointer;
+	}
+
 	input[type="checkbox"] {
 		opacity: 0;
 		position: absolute;
@@ -63,13 +66,21 @@
 			transform: scale(1.2);
 		}
 
-		&:not(:checked) + .fa-bell {
+		&:not(:checked) + fa-icon[name="bell"] {
 			display: none;
 		}
 
-		&:checked ~ .fa-bell-slash {
+		&:checked ~ fa-icon[name="bell-slash"] {
 			display: none;
 		}
+	}
+
+	fa-icon[name="bell"] {
+		color: rgba(0, 153, 0, 1);
+	}
+
+	fa-icon[name="bell-slash"] {
+		color: rgba(204, 0, 0, 1);
 	}
 }
 
@@ -86,5 +97,14 @@
 	&.disabled {
 		filter: grayscale(1);
 		opacity: 0.75;
+	}
+
+	fa-icon[name="xmark"] {
+		color: rgba(204, 0, 0, 1);
+	}
+
+	fa-icon[name="bolt"],
+	fa-icon[name="clock"] {
+		color: rgba(0, 153, 0, 1);
 	}
 }

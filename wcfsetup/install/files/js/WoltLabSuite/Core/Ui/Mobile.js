@@ -36,7 +36,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
         _enabled = true;
         initButtonGroupNavigation();
         initMessages();
-        initMessagesA11y();
         initMobileMenu();
         CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Mobile", closeAllMenus);
         Listener_1.default.add("WoltLabSuite/Core/Ui/Mobile", () => {
@@ -59,11 +58,9 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
                 return;
             }
             navigation.parentElement.classList.add("hasMobileNavigation");
-            const button = document.createElement("a");
-            button.className = "dropdownLabel";
-            const span = document.createElement("span");
-            span.className = "icon icon24 fa-ellipsis-v";
-            button.appendChild(span);
+            const button = document.createElement("button");
+            button.innerHTML = '<fa-icon size="24" name="ellipsis-vertical"></fa-icon>';
+            button.classList.add("dropdownLabel");
             button.addEventListener("click", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -77,7 +74,6 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
         });
     }
     function initMessages() {
-        const isScreenSmDown = UiScreen.is("screen-sm-down");
         document.querySelectorAll(".message").forEach((message) => {
             if (_knownMessages.has(message)) {
                 return;
@@ -94,65 +90,25 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
                 const quickOptions = message.querySelector(".messageQuickOptions");
                 if (quickOptions && navigation.childElementCount) {
                     quickOptions.classList.add("active");
-                    quickOptions.addEventListener("click", (event) => {
-                        const target = event.target;
-                        if (_enabled && UiScreen.is("screen-sm-down") && target.nodeName !== "LABEL" && target.nodeName !== "INPUT") {
-                            event.preventDefault();
-                            event.stopPropagation();
-                            toggleMobileNavigation(message, quickOptions, navigation);
-                        }
-                    });
-                    quickOptions.addEventListener("keydown", (event) => {
-                        if (event.key === "Enter") {
-                            event.preventDefault();
-                            quickOptions.click();
-                        }
-                    });
-                    if (isScreenSmDown) {
-                        enableMessageA11y(quickOptions);
+                    let buttonWrapper = quickOptions.querySelector(".messageQuickOptionsMobile");
+                    if (buttonWrapper === null) {
+                        buttonWrapper = document.createElement("li");
+                        buttonWrapper.innerHTML = `
+            <button aria-label="${Language.get("wcf.global.button.more")}">
+              <fa-icon size="16" name="ellipsis-vertical"></fa-icon>
+            </button>
+          `;
+                        buttonWrapper.classList.add("messageQuickOptionsMobile");
+                        quickOptions.append(buttonWrapper);
                     }
+                    const button = buttonWrapper.querySelector("button");
+                    button.addEventListener("click", (event) => {
+                        event.stopPropagation();
+                        toggleMobileNavigation(message, quickOptions, navigation);
+                    });
                 }
             }
             _knownMessages.add(message);
-        });
-    }
-    function enableMessageA11y(quickOptions) {
-        quickOptions.tabIndex = 0;
-        quickOptions.setAttribute("role", "button");
-        quickOptions.setAttribute("aria-label", Language.get("wcf.global.button.more"));
-    }
-    function disableMessageA11y(quickOptions) {
-        quickOptions.removeAttribute("tabindex");
-        quickOptions.removeAttribute("role");
-        quickOptions.removeAttribute("aria-label");
-    }
-    function initMessagesA11y() {
-        UiScreen.on("screen-sm-down", {
-            match() {
-                document.querySelectorAll(".message").forEach((message) => {
-                    const navigation = message.querySelector(".jsMobileNavigation");
-                    if (navigation) {
-                        const quickOptions = message.querySelector(".messageQuickOptions");
-                        if (quickOptions && navigation.childElementCount) {
-                            enableMessageA11y(quickOptions);
-                        }
-                    }
-                });
-            },
-            unmatch() {
-                document.querySelectorAll(".message").forEach((message) => {
-                    if (!_knownMessages.has(message)) {
-                        return;
-                    }
-                    const navigation = message.querySelector(".jsMobileNavigation");
-                    if (navigation) {
-                        const quickOptions = message.querySelector(".messageQuickOptions");
-                        if (quickOptions && navigation.childElementCount) {
-                            disableMessageA11y(quickOptions);
-                        }
-                    }
-                });
-            },
         });
     }
     function initMobileMenu() {

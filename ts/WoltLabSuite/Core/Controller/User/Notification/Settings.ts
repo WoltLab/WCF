@@ -97,20 +97,18 @@ function setEmailType(event: Event): void {
   ) as HTMLLIElement;
   button.title = Language.get(`wcf.user.notification.mailNotificationType.${value}`);
 
-  const icon = button.querySelector(".jsIconNotificationSettingsEmailType") as HTMLSpanElement;
-  icon.classList.remove("fa-clock-o", "fa-flash", "fa-times", "green", "red");
-
+  const icon = button.querySelector(".jsIconNotificationSettingsEmailType fa-icon") as FaIcon;
   switch (value) {
     case "daily":
-      icon.classList.add("fa-clock-o", "green");
+      icon.setIcon("clock");
       break;
 
     case "instant":
-      icon.classList.add("fa-flash", "green");
+      icon.setIcon("bolt");
       break;
 
     case "none":
-      icon.classList.add("fa-times", "red");
+      icon.setIcon("xmark");
       break;
   }
 

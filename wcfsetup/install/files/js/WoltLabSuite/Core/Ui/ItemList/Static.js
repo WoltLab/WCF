@@ -166,8 +166,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
         content.textContent = value.value;
         listItem.appendChild(content);
         if (forceRemoveIcon || !data.element.disabled) {
-            const button = document.createElement("a");
-            button.className = "icon icon16 fa-times";
+            const button = document.createElement("button");
+            button.innerHTML = '<fa-icon size="16" name="xmark"></fa-icon>';
             button.addEventListener("click", (ev) => removeItem(ev));
             listItem.appendChild(button);
         }

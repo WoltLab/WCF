@@ -1012,7 +1012,9 @@ if (COMPILER_TARGET_DEFAULT) {
 				if (!$item.data('isRead')) {
 					$item.find('a:not(.userLink)').prop('href', $item.data('link'));
 					
-					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.global.button.markAsRead') + '" />').appendTo($item);
+					var $markAsConfirmed = $(`<button class="notificationItemMarkAsConfirmed jsTooltip" title="${WCF.Language.get('wcf.global.button.markAsRead')}">
+						<fa-icon size="24" name="check"></fa-icon>
+					</button>`).appendTo($item);
 					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
 				}
 			}).bind(this));
@@ -1589,11 +1591,13 @@ if (COMPILER_TARGET_DEFAULT) {
 					
 					// toogle icon title
 					if (data.returnValues.following) {
-						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow'));
+						button[0].querySelector("fa-icon").setIcon("minus");
 						button.children('.invisible').text(WCF.Language.get('wcf.user.button.unfollow'));
 					}
 					else {
-						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow'));
+						button[0].querySelector("fa-icon").setIcon("plus");
 						button.children('.invisible').text(WCF.Language.get('wcf.user.button.follow'));
 					}
 					
@@ -1700,11 +1704,13 @@ if (COMPILER_TARGET_DEFAULT) {
 					
 					// toogle icon title
 					if (data.returnValues.isIgnoredUser) {
-						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unignore'));
+						button[0].querySelector("fa-icon").setIcon("circle");
 						button.children('.invisible').text(WCF.Language.get('wcf.user.button.unignore'));
 					}
 					else {
-						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.ignore'));
+						button[0].querySelector("fa-icon").setIcon("ban");
 						button.children('.invisible').text(WCF.Language.get('wcf.user.button.ignore'));
 					}
 					
@@ -2249,7 +2255,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $button = $(this._buttonSelector + '[data-object-id=' + data.objectID + ']');
 			var $icon = $button.children('.icon');
 			if (data.isSubscribed) {
-				$icon.removeClass('fa-bookmark-o').addClass('fa-bookmark');
+				$icon[0].querySelector("fa-icon").setIcon("bookmark", true);
 				$button.data('isSubscribed', true);
 				$button.addClass('active');
 			}
@@ -2258,7 +2264,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					$button.parent().remove();
 				}
 				else {
-					$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
+					$icon[0].querySelector("fa-icon").setIcon("bookmark");
 					$button.data('isSubscribed', false);
 					$button.removeClass('active');
 				}

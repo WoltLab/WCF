@@ -3,7 +3,9 @@
 		<div class="codeBoxHeadline">{$title}{if $filename}: {$filename}{/if}</div>
 		
 		{if !$isAmp && $lines > 10}
-			<span class="toggleButton icon icon24 fa-expand jsTooltip pointer" title="{lang}wcf.bbcode.button.showAll{/lang}" data-title-collapse="{lang}wcf.bbcode.button.collapse{/lang}" data-title-expand="{lang}wcf.bbcode.button.showAll{/lang}" role="button" tabindex="0"></span>
+			<span class="toggleButton jsTooltip pointer" title="{lang}wcf.bbcode.button.showAll{/lang}" data-title-collapse="{lang}wcf.bbcode.button.collapse{/lang}" data-title-expand="{lang}wcf.bbcode.button.showAll{/lang}" role="button" tabindex="0">
+				{icon size=24 name='up-right-and-down-left-from-center'}
+			</span>
 		{/if}
 	</div>
 	

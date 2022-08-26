@@ -9,7 +9,7 @@
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
 				{if $article->hasLabels()}
 					<li>
-						<span class="icon icon16 fa-tags"></span>
+						{icon size=16 name='tags'}
 						<ul class="labelList">
 							{foreach from=$article->getLabels() item=label}
 								<li>{@$label->render()}</li>
@@ -19,7 +19,7 @@
 				{/if}
 				
 				<li itemprop="author" itemscope itemtype="http://schema.org/Person">
-					<span class="icon icon16 fa-user"></span>
+					{icon size=16 name='user' type='solid'}
 					{if $article->userID}
 						<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$article->userID}" itemprop="url">
 							<span itemprop="name">{@$article->getUserProfile()->getFormattedUsername()}</span>
@@ -30,7 +30,7 @@
 				</li>
 				
 				<li>
-					<span class="icon icon16 fa-clock-o"></span>
+					{icon size=16 name='clock'}
 					<a href="{$article->getLink()}">{@$article->time|time}</a>
 					<meta itemprop="datePublished" content="{@$article->time|date:'c'}">
 					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
@@ -38,7 +38,7 @@
 				
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
 					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-						<span class="icon icon16 fa-comments"></span>
+						{icon size=16 name='comments'}
 						{if $article->getDiscussionProvider()->getDiscussionLink()}<a href="{$article->getDiscussionProvider()->getDiscussionLink()}">{else}<span>{/if}
 						{$article->getDiscussionProvider()->getDiscussionCountPhrase()}
 						{if $article->getDiscussionProvider()->getDiscussionLink()}</a>{else}</span>{/if}
@@ -48,7 +48,7 @@
 				{/if}
 				
 				<li>
-					<span class="icon icon16 fa-eye"></span>
+					{icon size=16 name='eye'}
 					{lang}wcf.article.articleViews{/lang}
 				</li>
 				
@@ -72,7 +72,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $article->canEdit()}<li><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" class="button buttonPrimary"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
+						{if $article->canEdit()}<li><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" class="button buttonPrimary">{icon size=16 name='pencil'} <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -186,14 +186,14 @@
 				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
 					<li>
 						<a href="{$articleContent->getLink()}" class="button wsShareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
-							<span class="icon icon16 fa-share-alt"></span> <span>{lang}wcf.message.share{/lang}</span>
+							{icon size=16 name='share-nodes'} <span>{lang}wcf.message.share{/lang}</span>
 						</a>
 					</li>
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
-						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip">{icon size=16 name='triangle-exclamation'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 					{/if}
 					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
-						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
+						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}">{icon size=16 name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
 					{/if}
 				</ul>
 			</div>
@@ -247,50 +247,44 @@
 {event name='afterFooter'}
 
 {if $previousArticle || $nextArticle}
-	<div class="section articleNavigation">
+	<div class="section">
 		<nav>
-			<ul>
+			<ul class="articleNavigation">
 				{if $previousArticle}
-					<li class="previousArticleButton">
-						<a href="{$previousArticle->getLink()}" rel="prev">
-							{if $previousArticle->getTeaserImage()}
-								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$previousArticle->getTeaserImage()->getElementTag(96)}</span>
-									
-									<div>
-										<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
-										<span class="articleNavigationArticleTitle">{$previousArticle->getTitle()}</span>
-									</div>
-								</div>
-							{else}
-								<div>
-									<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
-									<span class="articleNavigationArticleTitle">{$previousArticle->getTitle()}</span>
-								</div>
-							{/if}
-						</a>
+					<li class="previousArticleButton articleNavigationArticle{if $previousArticle->getTeaserImage()} articleNavigationArticleWithImage{/if}">
+						<span class="articleNavigationArticleIcon">
+							{icon size=48 name='chevron-left'}
+						</span>
+						{if $previousArticle->getTeaserImage()}
+							<span class="articleNavigationArticleImage">{@$previousArticle->getTeaserImage()->getElementTag(96)}</span>
+						{/if}
+						<span class="articleNavigationArticleContent">
+							<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
+							<span class="articleNavigationArticleTitle">
+								<a href="{$previousArticle->getLink()}" rel="prev" class="articleNavigationArticleLink">
+									{$previousArticle->getTitle()}
+								</a>
+							</span>
+						</span>
 					</li>
 				{/if}
 				
 				{if $nextArticle}
-					<li class="nextArticleButton">
-						<a href="{$nextArticle->getLink()}" rel="next">
-							{if $nextArticle->getTeaserImage()}
-								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$nextArticle->getTeaserImage()->getElementTag(96)}</span>
-									
-									<div>
-										<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
-										<span class="articleNavigationArticleTitle">{$nextArticle->getTitle()}</span>
-									</div>
-								</div>
-							{else}
-								<div>
-									<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
-									<span class="articleNavigationArticleTitle">{$nextArticle->getTitle()}</span>
-								</div>
-							{/if}
-						</a>
+					<li class="nextArticleButton articleNavigationArticle{if $nextArticle->getTeaserImage()} articleNavigationArticleWithImage{/if}">
+						<span class="articleNavigationArticleIcon">
+							{icon size=48 name='chevron-right'}
+						</span>
+						{if $nextArticle->getTeaserImage()}
+							<span class="articleNavigationArticleImage">{@$nextArticle->getTeaserImage()->getElementTag(96)}</span>
+						{/if}
+						<span class="articleNavigationArticleContent">
+							<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
+							<span class="articleNavigationArticleTitle">
+								<a href="{$nextArticle->getLink()}" rel="next" class="articleNavigationArticleLink">
+									{$nextArticle->getTitle()}
+								</a>
+							</span>
+						</span>
 					</li>
 				{/if}
 			</ul>

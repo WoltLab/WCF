@@ -44,6 +44,23 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 
     /**
      * @inheritDoc
+     */
+    protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
+    {
+        if ($element->tagName === 'icon') {
+            $solid = $element->getAttribute('solid');
+            $elements[$element->tagName] = \sprintf(
+                "%s;%s",
+                $element->nodeValue,
+                $solid === 'true' ? 'true' : 'false'
+            );
+        } else {
+            $elements[$element->tagName] = $element->nodeValue;
+        }
+    }
+
+    /**
+     * @inheritDoc
      * @since   3.0
      */
     public static function getDefaultFilename()

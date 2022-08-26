@@ -61,11 +61,24 @@ $.Redactor.prototype.WoltLabButton = function() {
 				}
 				
 				icon = buttonData.icon;
-				iconIsImage = (!icon.match(/^fa-/) && icon.match(/\.(gif|jpe?g|png|svg)$/));
+				iconIsImage = icon.match(/\.(gif|jpe?g|png|svg)$/);
 				
 				// set icon
-				//noinspection CssUnknownTarget
-				this.button.setIcon(button, '<span class="icon icon16 ' + (iconIsImage ? 'redactorButtonImage' : icon) + '"' + (iconIsImage ? ' style="background-image: url(\'' + WCF_PATH + 'icon/' + icon + '\')"' : '') + '></span>');
+				if (iconIsImage) {
+					this.button.setIcon(button, `<img class="redactorButtonImage" src="${WCF_PATH}icon/${icon}" height="16" width="16" alt="">`);
+				} else{
+					if (icon.includes(";")) {
+						const [iconName, forceSolid] = icon.split(";", 2);
+						if (forceSolid === "true") {
+							this.button.setIcon(button, `<fa-icon size="16" name="${iconName}" solid></fa-icon>`);
+						} else{
+							this.button.setIcon(button, `<fa-icon size="16" name="${iconName}"></fa-icon>`);
+						}
+					} else {
+						this.button.setIcon(button, '<span style="background-color: #f0c; border-radius: 3px; color: #fff;"><fa-icon size="16" name="question"></fa-icon></span>');
+					}
+				}
+
 				if (!button[0]) {
 					throw new Error("Missing button element for '" + buttonName + "'.");
 				}
@@ -194,10 +207,10 @@ $.Redactor.prototype.WoltLabButton = function() {
 			_toggleButton.className = 'redactorToolbarToggle';
 			_toggleButton.innerHTML = `<a href="#" role="button" aria-label="${
 					WCF.Language.get("wcf.global.button.more")
-				}"><span class="icon icon16 fa-caret-down"></span></a>`;
+				}"><fa-icon size="16" name="caret-down" solid></fa-icon></a>`;
 			elData(_toggleButton, 'show-on-mobile', true);
 			
-			var icon = _toggleButton.children[0].children[0];
+			var icon = _toggleButton.querySelector("fa-icon");
 			var toggle = (function (event) {
 				if (event instanceof Event) {
 					event.preventDefault();
@@ -210,8 +223,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 					}
 				}
 				
-				icon.classList.toggle('fa-caret-down');
-				icon.classList.toggle('fa-caret-up');
+				if (icon.name === "caret-down") {
+					icon.setIcon("caret-up", true);
+				} else {
+					icon.setIcon("caret-down", true);
+				}
 			}).bind(this);
 			
 			_toggleButton.children[0].addEventListener('mousedown', toggle);

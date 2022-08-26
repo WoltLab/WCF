@@ -60,21 +60,25 @@
 						<div class="notificationSettingsState">
 							<label>
 								<input type="checkbox" id="settings_{@$event->eventID}" name="settings[{@$event->eventID}][enabled]" class="jsCheckboxNotificationSettingsState" value="1" data-object-id="{@$event->eventID}"{if !$settings[$event->eventID][enabled]|empty} checked{/if}>
-								<span class="icon icon24 fa-bell green pointer"></span>
-								<span class="icon icon24 fa-bell-slash red pointer"></span>
+								{icon size=24 name='bell'}
+								{icon size=24 name='bell-slash'}
 							</label>
 						</div>
 						<div class="notificationSettingsEmail">
 							{if $event->supportsEmailNotification()}
 								<input type="hidden" id="settings_{$event->eventID}_mailNotificationType" name="settings[{@$event->eventID}][mailNotificationType]" value="{$settings[$event->eventID][mailNotificationType]}">
-								<a href="#" class="notificationSettingsEmailType jsTooltip{if $settings[$event->eventID][enabled]|empty} disabled{/if}" role="button" title="{lang}wcf.user.notification.mailNotificationType.{@$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{@$event->eventID}">
-									{if $settings[$event->eventID][mailNotificationType] === 'none'}
-										<span class="icon icon24 fa-times red jsIconNotificationSettingsEmailType"></span>
-									{else}
-										<span class="icon icon24 {if $settings[$event->eventID][mailNotificationType] === 'instant'}fa-flash{else}fa-clock-o{/if} green jsIconNotificationSettingsEmailType"></span>
-									{/if}
-									<span class="icon icon16 fa-caret-down"></span>
-								</a>
+								<button class="notificationSettingsEmailType jsTooltip{if $settings[$event->eventID][enabled]|empty} disabled{/if}" title="{lang}wcf.user.notification.mailNotificationType.{@$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{@$event->eventID}">
+									<span class="jsIconNotificationSettingsEmailType">
+										{if $settings[$event->eventID][mailNotificationType] === 'none'}
+											{icon size=24 name='xmark'}
+										{else if $settings[$event->eventID][mailNotificationType] === 'instant'}
+											{icon size=24 name='bolt'}
+										{else}
+											{icon size=24 name='clock'}
+										{/if}
+									</span>
+									{icon size=16 name='caret-down' type='solid'}
+								</button>
 							{/if}
 						</div>
 					</div>

@@ -26,6 +26,10 @@
 	{/if}
 </script>
 
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-brand.js"></script>
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-metadata.js"></script>
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js"></script>
+
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
@@ -140,13 +144,6 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.global.form.password.button.hide': '{jslang}wcf.global.form.password.button.hide{/jslang}',
 			'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}',
 			'wcf.message.share': '{jslang}wcf.message.share{/jslang}',
-			'wcf.message.share.facebook': '{jslang}wcf.message.share.facebook{/jslang}',
-			'wcf.message.share.twitter': '{jslang}wcf.message.share.twitter{/jslang}',
-			'wcf.message.share.reddit': '{jslang}wcf.message.share.reddit{/jslang}',
-			'wcf.message.share.whatsApp': '{jslang}wcf.message.share.whatsApp{/jslang}',
-			'wcf.message.share.linkedIn': '{jslang}wcf.message.share.linkedIn{/jslang}',
-			'wcf.message.share.pinterest': '{jslang}wcf.message.share.pinterest{/jslang}',
-			'wcf.message.share.xing': '{jslang}wcf.message.share.xing{/jslang}',
 			'wcf.message.share.permalink': '{jslang}wcf.message.share.permalink{/jslang}',
 			'wcf.message.share.permalink.bbcode': '{jslang}wcf.message.share.permalink.bbcode{/jslang}',
 			'wcf.message.share.permalink.html': '{jslang}wcf.message.share.permalink.html{/jslang}',
@@ -186,7 +183,16 @@ window.addEventListener('pageshow', function(event) {
 			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
 			executeCronjobs: {if $executeCronjobs}true{else}false{/if},
 			{if ENABLE_SHARE_BUTTONS}
-			    shareButtonProviders: [{implode from="\n"|explode:SHARE_BUTTONS_PROVIDERS item=shareButtonProvider}'{$shareButtonProvider}'{/implode}],
+				{assign var='__shareProviders' value="\n"|explode:SHARE_BUTTONS_PROVIDERS}
+			    shareButtonProviders: [
+					{if 'Facebook'|in_array:$__shareProviders}["Facebook", "{jslang}wcf.message.share.facebook{/jslang}", {icon size=24 name='facebook' type='brand' encodeJson=true}],{/if} 
+					{if 'Twitter'|in_array:$__shareProviders}["Twitter", "{jslang}wcf.message.share.twitter{/jslang}", {icon size=24 name='twitter' type='brand' encodeJson=true}],{/if} 
+					{if 'Reddit'|in_array:$__shareProviders}["Reddit", "{jslang}wcf.message.share.reddit{/jslang}", {icon size=24 name='reddit' type='brand' encodeJson=true}],{/if} 
+					{if 'WhatsApp'|in_array:$__shareProviders}["WhatsApp", "{jslang}wcf.message.share.whatsApp{/jslang}", {icon size=24 name='whatsapp' type='brand' encodeJson=true}],{/if} 
+					{if 'LinkedIn'|in_array:$__shareProviders}["LinkedIn", "{jslang}wcf.message.share.linkedIn{/jslang}", {icon size=24 name='linkedin-in' type='brand' encodeJson=true}],{/if} 
+					{if 'Pinterest'|in_array:$__shareProviders}["Pinterest", "{jslang}wcf.message.share.pinterest{/jslang}", {icon size=24 name='pinterest' type='brand' encodeJson=true}],{/if} 
+					{if 'XING'|in_array:$__shareProviders}["XING", "{jslang}wcf.message.share.xing{/jslang}", {icon size=24 name='xing' type='brand' encodeJson=true}],{/if} 
+				],
 			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});

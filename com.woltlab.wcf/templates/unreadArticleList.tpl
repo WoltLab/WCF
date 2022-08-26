@@ -44,7 +44,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {include file='header'}

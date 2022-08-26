@@ -13,10 +13,10 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
     StringUtil = tslib_1.__importStar(StringUtil);
     const _fileExtensionIconMapping = new Map(Object.entries({
         // archive
-        zip: "archive",
-        rar: "archive",
-        tar: "archive",
-        gz: "archive",
+        zip: "zipper",
+        rar: "zipper",
+        tar: "zipper",
+        gz: "zipper",
         // audio
         mp3: "audio",
         ogg: "audio",
@@ -52,7 +52,7 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         ppt: "powerpoint",
         pptx: "powerpoint",
         // text
-        txt: "text",
+        txt: "lines",
         // word
         doc: "word",
         docx: "word",
@@ -139,7 +139,7 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
     /**
      * Returns the icon name for given filename.
      *
-     * Note: For any file icon name like `fa-file-word`, only `word`
+     * Note: For any file icon name like `file-word`, only `word`
      * will be returned by this method.
      */
     function getIconNameByFilename(filename) {

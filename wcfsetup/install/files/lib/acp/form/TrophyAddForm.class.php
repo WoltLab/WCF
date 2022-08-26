@@ -12,6 +12,7 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nValue;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\trophy\condition\TrophyConditionHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -97,7 +98,7 @@ class TrophyAddForm extends AbstractAcpForm
      * the icon name for CSS icons (FA-Icon)
      * @var string
      */
-    public $iconName = 'trophy';
+    public $iconName = "trophy;false";
 
     /**
      * The icon color (rgba format with rgba prefix)
@@ -299,6 +300,10 @@ class TrophyAddForm extends AbstractAcpForm
                     throw new UserInputException('iconName');
                 }
 
+                if (!FontAwesomeIcon::isValidString($this->iconName)) {
+                    throw new UserInputException('iconName');
+                }
+
                 if (empty($this->iconColor)) {
                     throw new UserInputException('iconColor');
                 }
@@ -378,7 +383,7 @@ class TrophyAddForm extends AbstractAcpForm
         $this->iconName = $this->uploadedImageURL = '';
         $this->iconColor = 'rgba(255, 255, 255, 1)';
         $this->badgeColor = 'rgba(50, 92, 132, 1)';
-        $this->iconName = 'trophy';
+        $this->iconName = 'trophy;false';
         $this->tmpHash = StringUtil::getRandomID();
 
         foreach ($this->conditions as $conditions) {
@@ -402,6 +407,7 @@ class TrophyAddForm extends AbstractAcpForm
             'iconName' => $this->iconName,
             'iconColor' => $this->iconColor,
             'badgeColor' => $this->badgeColor,
+            'icon' => FontAwesomeIcon::fromString($this->iconName),
             'trophyCategories' => TrophyCategoryCache::getInstance()->getCategories(),
             'groupedObjectTypes' => $this->conditions,
             'awardAutomatically' => $this->awardAutomatically,

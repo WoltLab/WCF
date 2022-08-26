@@ -36,11 +36,11 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonSearchForUpdates">{icon size=16 name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}
@@ -97,9 +97,13 @@
 					<tr class="jsPackageRow" data-package="{$package->package}">
 						<td class="columnIcon">
 							{if $package->canUninstall()}
-								<span class="icon icon16 fa-times pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
+								<button class="jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">
+									{icon size=16 name='xmark'}
+								</button>
 							{else}
-								<span class="icon icon16 fa-times disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
+								<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
+									{icon size=16 name='xmark'}
+								</span>
 							{/if}
 							
 							{event name='rowButtons'}
@@ -108,10 +112,9 @@
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->getDescription()}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 							{if $taintedApplications[$package->packageID]|isset}
-								<span
-									class="icon icon16 fa-warning jsTooltip"
-									title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}"
-								></span>
+								<span class="jsTooltip" title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}">
+									{icon size=16 name='warning'}
+								</span>
 							{/if}
 						</td>
 						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank" rel="noopener"{/if}>{$package->author}</a>{else}{$package->author}{/if}</td>
@@ -138,7 +141,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentFooterNavigation'}

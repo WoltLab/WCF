@@ -1139,18 +1139,19 @@ WCF.LoadingOverlayHandler = {
 	},
 	
 	/**
-	 * Updates a icon to/from spinner
+	 * Updates an icon to/from spinner
 	 * 
 	 * @param	jQuery	target
 	 * @pram	boolean	loading
+	 * @deprecated 6.0
 	 */
 	updateIcon: function(target, loading) {
-		var $method = (loading === undefined || loading ? 'addClass' : 'removeClass');
-		
-		target.find('.icon')[$method]('fa-spinner');
-		if (target.hasClass('icon')) {
-			target[$method]('fa-spinner');
-		}
+		// The behavior of this function was highly dubious and dependent
+		// on the declaration order for icon class names in the CSS file.
+		// It‘s functionality cannot be reliably replicated with the proper
+		// icon implementation. Additionally updating the icon here is unsafe
+		// because the callee might not be aware of this change.
+		return;
 	}
 };
 
@@ -1732,15 +1733,15 @@ if (COMPILER_TARGET_DEFAULT) {
 		_toggleButton: function ($container, $toggleButton) {
 			var $newTitle = '';
 			
-			// toggle icon source
-			WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
-			if ($toggleButton.hasClass('fa-square-o')) {
-				$toggleButton.removeClass('fa-square-o').addClass('fa-check-square-o');
+			const icon = $toggleButton[0].querySelector("fa-icon");
+			
+			if (icon.name === "square") {
+				icon.setIcon("square-check");
 				$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
 				$toggleButton.attr('title', $newTitle);
 			}
 			else {
-				$toggleButton.removeClass('fa-check-square-o').addClass('fa-square-o');
+				icon.setIcon("square");
 				$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
 				$toggleButton.attr('title', $newTitle);
 			}
@@ -2411,12 +2412,12 @@ WCF.Collapsible.Simple = {
 	 * @param	jQuery		button
 	 */
 	_toggleImage: function(button) {
-		var $icon = button.find('span.icon');
+		const $icon = button[0].querySelector("fa-icon");
 		if (button.data('isOpen')) {
-			$icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
+			$icon.setIcon('chevron-down');
 		}
 		else {
-			$icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
+			$icon.setIcon('chevron-right');
 		}
 	}
 };
@@ -2547,7 +2548,9 @@ WCF.Collapsible.Remote = Class.extend({
 			$button = $($button);
 		}
 		else {
-			$button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 fa-chevron-down" title="' + WCF.Language.get('wcf.global.button.collapsible') + '">').prependTo(buttonContainer);
+			$button = $(`<button class="collapsibleButton jsToolti" title="${WCF.Language.get('wcf.global.button.collapsible')}">
+				<fa-icon size="16" name="chevron-down"></fa-icon>
+			</button>`).prependTo(buttonContainer);
 		}
 		
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
@@ -2596,7 +2599,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_exchangeIcon: function(button, newIcon) {
 		newIcon = newIcon || 'spinner';
-		button.removeClass('fa-chevron-down fa-chevron-right fa-spinner').addClass('fa-' + newIcon);
+		button[0].querySelector("fa-icon").setIcon(newIcon);
 	},
 	
 	/**
@@ -4049,7 +4052,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 			$icon = $(item.icon);
 		}
 		else if (this._includeUserGroups && item.type === 'group') {
-			$icon = $('<span class="icon icon16 fa-users" />');
+			$icon = $('<fa-icon size="16" name="users"></fa-icon>');
 		}
 		
 		if ($icon) {
@@ -4693,7 +4696,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 			else {
 				// exchange icon
-				this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check green');
+				this._dialog[0].querySelector("fa-icon").setIcon("check");
 				this._dialog.find('.contentHeader h1').text(WCF.Language.get(
 					'wcf.global.worker.completed'));
 				
@@ -6548,7 +6551,7 @@ $.widget('ui.wcfSlideshow', {
 		// create toggle buttons
 		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
 		for (var $i = 0; $i < this._count; $i++) {
-			var $link = $('<li><a><span class="icon icon16 fa-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+			var $link = $('<li><a><fa-icon size="16" name="circle"></fa-icon></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
 			if ($i == 0) {
 				$link.find('.icon').addClass('active');
 			}

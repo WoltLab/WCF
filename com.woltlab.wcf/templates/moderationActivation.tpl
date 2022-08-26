@@ -35,7 +35,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
+						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary">{icon size=16 name='arrow-right'} <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -45,10 +45,10 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button id="moderationAssignUser" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-user-plus"></span> <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
+	<button id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{icon size=16 name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
 	{if !$queue->isDone()}
-		<button id="enableContent" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></button>
-		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<button id="removeContent" class="contentInteractionButton button small jsOnly"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>{/if}
+		<button id="enableContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></button>
+		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<button id="removeContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>{/if}
 	{/if}
 {/capture}
 

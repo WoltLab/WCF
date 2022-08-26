@@ -225,16 +225,6 @@
 		}
 	}
 
-	// message clipboard checkbox
-	@include screen-sm-down {
-		.messageQuickOptions > .jsMessageClipboardCheckbox {
-			display: initial;
-			position: relative;
-			right: 30px;
-			top: -1px;
-		}
-	}
-
 	// tab menu overflow
 	.tabMenuOverlayLeft {
 		background: linear-gradient(

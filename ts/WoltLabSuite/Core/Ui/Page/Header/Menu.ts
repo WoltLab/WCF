@@ -150,7 +150,7 @@ function initOverflowNavigation(): void {
   _buttonShowNext = document.createElement("a");
   _buttonShowNext.className = "mainMenuShowNext";
   _buttonShowNext.href = "#";
-  _buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
+  _buttonShowNext.innerHTML = '<fa-icon size="32" name="angle-right" solid></fa-icon>';
   _buttonShowNext.setAttribute("aria-hidden", "true");
   _buttonShowNext.addEventListener("click", (event) => {
     event.preventDefault();
@@ -163,7 +163,7 @@ function initOverflowNavigation(): void {
   _buttonShowPrevious = document.createElement("a");
   _buttonShowPrevious.className = "mainMenuShowPrevious";
   _buttonShowPrevious.href = "#";
-  _buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
+  _buttonShowPrevious.innerHTML = '<fa-icon size="32" name="angle-left" solid></fa-icon>';
   _buttonShowPrevious.setAttribute("aria-hidden", "true");
   _buttonShowPrevious.addEventListener("click", (event) => {
     event.preventDefault();

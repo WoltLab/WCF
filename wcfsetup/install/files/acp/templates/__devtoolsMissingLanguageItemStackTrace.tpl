@@ -1,4 +1,6 @@
-<span class="icon icon16 fa-align-justify jsTooltip pointer jsOutputFormatToggle" title="{lang}wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat{/lang}" style="margin-bottom: 10px"></span>
+<button type="button" class="jsTooltip jsOutputFormatToggle" title="{lang}wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat{/lang}" style="margin-bottom: 10px">
+	{icon size=16 name='align-justify'}
+</button>
 
 <pre>{*
 	*}{foreach from=$stackTrace item=stackEntry name=stackEntries}{*

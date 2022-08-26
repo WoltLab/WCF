@@ -52,7 +52,7 @@ define(["require", "exports", "tslib", "../Worker", "../../../Language"], functi
                         span.remove();
                     }
                     span = document.createElement("span");
-                    span.innerHTML = `<span class="icon icon16 fa-check green"></span> ${Language.get("wcf.acp.worker.success")}`;
+                    span.innerHTML = `<fa-icon size="16" name="check" solid></fa-icon> ${Language.get("wcf.acp.worker.success")}`;
                     button.parentNode.insertBefore(span, button.nextElementSibling);
                     resolve();
                 },

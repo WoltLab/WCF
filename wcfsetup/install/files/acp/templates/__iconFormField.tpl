@@ -1,6 +1,10 @@
-<span{if $field->getValue()} class="icon icon64 fa-{$field->getValue()}"{/if} id="{@$field->getPrefixedId()}_icon"></span>
+<span id="{@$field->getPrefixedId()}_icon">
+	{if $field->getIcon()}
+		{@$field->getIcon()->toHtml(64)}
+	{/if}
+</span>
 {if !$field->isImmutable()}
-	<a href="#" class="button small" id="{@$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</a>
+	<button class="button small" id="{@$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</button>
 {/if}
 <input type="hidden" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="{$field->getValue()}">
 
@@ -10,21 +14,26 @@
 	{/if}
 	
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], function(UiStyleFontAwesome) {
-			var button = elById('{@$field->getPrefixedId()}_openIconDialog');
-			var icon = elById('{@$field->getPrefixedId()}_icon');
-			var input = elById('{@$field->getPrefixedId()}');
+		require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
+			const iconContainer = document.getElementById('{@$field->getPrefixedId()}_icon');
+			const input = document.getElementById('{@$field->getPrefixedId()}');
 			
-			var callback = function(iconName) {
-				icon.className = 'icon icon64 fa-' + iconName;
+			const callback = (iconName, forceSolid) => {
 				input.value = iconName;
+
+				let icon = iconContainer.querySelector("fa-icon");
+				if (icon) {
+					icon.setIcon(iconName, forceSolid);
+				} else {
+					icon = document.createElement("fa-icon");
+					icon.size = 64;
+					icon.setIcon(iconName, forceSolid);
+					iconContainer.append(icon);
+				}
 			};
 			
-			button.addEventListener('click', function(event) {
-				event.preventDefault();
-				
-				UiStyleFontAwesome.open(callback);
-			});
+			const button = document.getElementById('{@$field->getPrefixedId()}_openIconDialog');
+			button.addEventListener('click', () => UiStyleFontAwesome.open(callback));
 		});
 	</script>
 {/if}
