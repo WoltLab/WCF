@@ -249,9 +249,15 @@
 		});
 		
 		UiModerationClipboardAssignUser.setup();
-		
-		new WCF.Moderation.Queue.MarkAsRead();
-		new WCF.Moderation.Queue.MarkAllAsRead();
+	});
+</script>
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Moderation/MarkAsRead'], (MarkAsRead) => {
+		MarkAsRead.setup();
+	});
+	require(['WoltLabSuite/Core/Ui/Moderation/MarkAllAsRead'], (MarkAllAsRead) => {
+		MarkAllAsRead.setup();
 	});
 </script>
 
