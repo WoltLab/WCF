@@ -63,14 +63,14 @@
 
 {capture assign='contentInteractionButtons'}
 	<div class="contentInteractionButton dropdown jsOnly">
-		<a href="#" class="button small dropdownToggle">
+		<button class="button small dropdownToggle">
 			{if $sortOrder|strtolower === 'asc'}
 				{icon size=16 name='arrow-down-short-wide'}
 			{else}
 				{icon size=16 name='arrow-down-wide-short'}
 			{/if}
 			<span>{lang}wcf.article.button.sort{/lang}</span>
-		</a>
+		</button>
 		<ul class="dropdownMenu">
 			<li>
 				<a href="{link controller='ArticleList'}pageNo={@$pageNo}{if $user}&userID={@$user->userID}{/if}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
@@ -100,9 +100,7 @@
 			{event name='sortOptions'}
 		</ul>
 	</div>
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
-	{/if}
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}
@@ -135,13 +133,11 @@
 	{/hascontent}
 </footer>
 
-{if ARTICLE_ENABLE_VISIT_TRACKING}
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
-			UiArticleMarkAllAsRead.init();
-		});
-	</script>
-{/if}
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
+		UiArticleMarkAllAsRead.init();
+	});
+</script>
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 	{include file='articleAddDialog'}

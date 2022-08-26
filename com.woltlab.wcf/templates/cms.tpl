@@ -18,10 +18,10 @@
 
 	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a class="button small dropdownToggle boxFlag box24">
+			<button class="button small dropdownToggle boxFlag box24">
 				<span><img src="{$activePageLanguage->getIconPath()}" alt="" class="iconFlag"></span>
 				<span>{$activePageLanguage->languageName}</span>
-			</a>
+			</button>
 			<ul class="dropdownMenu">
 				{foreach from=$page->getPageLanguages() item='pageLanguage'}
 					<li class="boxFlag">

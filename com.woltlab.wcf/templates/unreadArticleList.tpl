@@ -44,9 +44,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
-	{/if}
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {include file='header'}
@@ -75,12 +73,10 @@
 	{/hascontent}
 </footer>
 
-{if ARTICLE_ENABLE_VISIT_TRACKING}
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
-			UiArticleMarkAllAsRead.init();
-		});
-	</script>
-{/if}
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
+		UiArticleMarkAllAsRead.init();
+	});
+</script>
 
 {include file='footer'}

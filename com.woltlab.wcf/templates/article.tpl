@@ -52,7 +52,7 @@
 					{lang}wcf.article.articleViews{/lang}
 				</li>
 				
-				{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
+				{if $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
 				
 				{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
 				
@@ -97,10 +97,10 @@
 {capture assign='contentInteractionButtons'}
 	{if $article->isMultilingual && $__wcf->user->userID}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<a class="dropdownToggle boxFlag box24 button small">
+			<button class="dropdownToggle boxFlag box24 button small">
 				<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
 				<span>{$articleContent->getLanguage()->languageName}</span>
-			</a>
+			</button>
 			<ul class="dropdownMenu">
 				{foreach from=$article->getLanguageLinks() item='langArticleContent'}
 					{if $langArticleContent->getLanguage()}

@@ -21,7 +21,7 @@ class ArticleListPageHandler extends AbstractMenuPageHandler
      */
     public function getOutstandingItemCount($objectID = null)
     {
-        return ARTICLE_ENABLE_VISIT_TRACKING ? ViewableArticle::getUnreadArticles() : 0;
+        return ViewableArticle::getUnreadArticles();
     }
 
     /**

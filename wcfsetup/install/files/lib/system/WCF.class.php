@@ -498,6 +498,10 @@ class WCF
         // Gravatars were removed in 6.0.
         \define('MODULE_GRAVATAR', 0);
         \define('GRAVATAR_DEFAULT_TYPE', '404');
+
+        // The option for article visit tracking was removed in 6.0.
+        // https://github.com/WoltLab/WCF/issues/4965
+        \define('ARTICLE_ENABLE_VISIT_TRACKING', 1);
     }
 
     /**

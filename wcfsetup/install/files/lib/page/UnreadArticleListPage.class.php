@@ -25,7 +25,7 @@ class UnreadArticleListPage extends ArticleListPage
     /**
      * @inheritDoc
      */
-    public $neededModules = ['ARTICLE_ENABLE_VISIT_TRACKING', 'MODULE_ARTICLE'];
+    public $neededModules = ['MODULE_ARTICLE'];
 
     /**
      * @inheritDoc

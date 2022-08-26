@@ -11,7 +11,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 	<a href="{link controller='DeletedContentList'}{/link}" class="contentInteractionButton button small">{icon size=16 name='trash-can'} <span>{lang}wcf.moderation.showDeletedContent{/lang}</span></a>
 {/capture}
 
@@ -257,9 +257,15 @@
 		});
 		
 		UiModerationClipboardAssignUser.setup();
-		
-		new WCF.Moderation.Queue.MarkAsRead();
-		new WCF.Moderation.Queue.MarkAllAsRead();
+	});
+</script>
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Moderation/MarkAsRead'], (MarkAsRead) => {
+		MarkAsRead.setup();
+	});
+	require(['WoltLabSuite/Core/Ui/Moderation/MarkAllAsRead'], (MarkAllAsRead) => {
+		MarkAllAsRead.setup();
 	});
 </script>
 
