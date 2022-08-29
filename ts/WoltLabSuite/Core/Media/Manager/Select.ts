@@ -103,7 +103,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
           if (fileIcon) {
             fileIcon = "file-" + fileIcon;
           } else {
-            fileIcon="file"
+            fileIcon = "file";
           }
 
           displayElement.innerHTML = `
@@ -159,8 +159,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
     listItem.dataset.objectId = media.mediaID.toString();
     buttons.appendChild(listItem);
 
-    listItem.innerHTML =
-      `
+    listItem.innerHTML = `
         <a class="jsTooltip" title="${Language.get("wcf.media.button.select")}">
           <fa-icon size="16" name="check"></fa-icon>
           <span class="invisible">${Language.get("wcf.media.button.select")}</span>
