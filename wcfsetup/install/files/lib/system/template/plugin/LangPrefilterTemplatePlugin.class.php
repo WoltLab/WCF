@@ -29,14 +29,13 @@ class LangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
-        $sourceContent = \preg_replace_callback(
+
+        return \preg_replace_callback(
             "~{$ldq}lang{$rdq}([\\w\\.]+){$ldq}/lang{$rdq}~",
             static function ($match) {
                 return WCF::getLanguage()->get($match[1]);
             },
             $sourceContent
         );
-
-        return $sourceContent;
     }
 }

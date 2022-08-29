@@ -80,11 +80,9 @@ final class FacebookAuthAction extends AbstractOauth2Action
 
         // Work around Facebook performing an illegal substitution of the Slash
         // by '%2F' when entering redirect URI (RFC 3986 sect. 2.2, sect. 3.4)
-        $callbackURL = \preg_replace_callback('/(?<=\?).*/', static function ($matches) {
+        return \preg_replace_callback('/(?<=\?).*/', static function ($matches) {
             return \rawurlencode($matches[0]);
         }, $callbackURL);
-
-        return $callbackURL;
     }
 
     /**

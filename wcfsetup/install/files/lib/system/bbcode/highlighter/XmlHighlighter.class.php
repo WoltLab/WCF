@@ -65,7 +65,8 @@ class XmlHighlighter extends Highlighter
             '&lt;(?:/|\!|\?)?[a-z0-9]+(?:\s+' . self::XML_ATTRIBUTE_NAME . '(?:=[^\s/\?&]+)?)*(?:\s+/|\?)?&gt;',
             Regex::CASE_INSENSITIVE
         );
-        $string = $regex->replace($string, static function ($matches) {
+
+        return $regex->replace($string, static function ($matches) {
             // highlight attributes
             $tag = Regex::compile(
                 self::XML_ATTRIBUTE_NAME . '(?:=[^\s/\?&]+)?(?=\s|&)',
@@ -75,8 +76,6 @@ class XmlHighlighter extends Highlighter
             // highlight tag
             return '<span class="hlKeywords1">' . $tag . '</span>';
         });
-
-        return $string;
     }
 
     /**
@@ -87,7 +86,7 @@ class XmlHighlighter extends Highlighter
         $string = parent::cacheQuotes($string);
 
         // highlight CDATA-Tags as quotes
-        $string = Regex::compile('<!\[CDATA\[.*?\]\]>', Regex::DOT_ALL)->replace(
+        return Regex::compile('<!\[CDATA\[.*?\]\]>', Regex::DOT_ALL)->replace(
             $string,
             static function (array $matches) {
                 return StringStack::pushToStringStack(
@@ -96,8 +95,6 @@ class XmlHighlighter extends Highlighter
                 );
             }
         );
-
-        return $string;
     }
 
     /**

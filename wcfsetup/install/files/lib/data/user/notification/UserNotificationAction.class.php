@@ -173,13 +173,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         $notificationList->readObjects();
         $updatedNotifications = $notificationList->getObjects();
 
-        $notifications = \array_map(static function ($notificationData) use ($updatedNotifications) {
+        return \array_map(static function ($notificationData) use ($updatedNotifications) {
             $notificationData['object'] = $updatedNotifications[$notificationData['object']->notificationID];
 
             return $notificationData;
         }, $notifications);
-
-        return $notifications;
     }
 
     /**
