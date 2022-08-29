@@ -132,8 +132,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             listItem.className = "jsMediaSelectButton";
             listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
-            listItem.innerHTML =
-                `
+            listItem.innerHTML = `
         <a class="jsTooltip" title="${Language.get("wcf.media.button.select")}">
           <fa-icon size="16" name="check"></fa-icon>
           <span class="invisible">${Language.get("wcf.media.button.select")}</span>
