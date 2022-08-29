@@ -94,7 +94,7 @@ class MenuItemNodeTree
         // build menu structure
         foreach ($menuItemList as $menuItem) {
             $menuItem->cachePageObject();
-            
+
             $this->menuItems[$menuItem->itemID] = $menuItem;
 
             if (!isset($this->menuItemStructure[$menuItem->parentItemID])) {

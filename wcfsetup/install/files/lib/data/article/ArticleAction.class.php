@@ -152,7 +152,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         UserStorageHandler::getInstance()->resetAll('unreadArticles');
         UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
         UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
-        
+
         if ($article->publicationStatus == Article::PUBLISHED) {
             ArticleEditor::updateArticleCounter([$article->userID => 1]);
 
@@ -289,7 +289,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         UserStorageHandler::getInstance()->resetAll('unreadArticles');
         UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
         UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
-        
+
         $publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
         if ($publicationStatus !== null) {
             $usersToArticles = $resetArticleIDs = [];
@@ -493,7 +493,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         UserStorageHandler::getInstance()->resetAll('unreadArticles');
         UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
         UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
-        
+
         return ['objectIDs' => $this->objectIDs];
     }
 
@@ -522,7 +522,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         UserStorageHandler::getInstance()->resetAll('unreadArticles');
         UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
         UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
-        
+
         return ['objectIDs' => $this->objectIDs];
     }
 
@@ -768,7 +768,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         UserStorageHandler::getInstance()->resetAll('unreadArticles');
         UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
         UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
-        
+
         $this->unmarkItems();
     }
 
