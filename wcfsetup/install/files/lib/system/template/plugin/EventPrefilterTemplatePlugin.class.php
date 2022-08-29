@@ -25,14 +25,13 @@ class EventPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
-        $sourceContent = \preg_replace_callback(
+
+        return \preg_replace_callback(
             "~{$ldq}event\\ name\\=\\'([\\w]+)\\'{$rdq}~",
             static function ($match) use ($templateName) {
                 return WCF::getTPL()->getTemplateListenerCode($templateName, $match[1]);
             },
             $sourceContent
         );
-
-        return $sourceContent;
     }
 }

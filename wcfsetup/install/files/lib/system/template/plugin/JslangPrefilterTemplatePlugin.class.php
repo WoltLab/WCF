@@ -27,7 +27,8 @@ class JslangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
-        $sourceContent = \preg_replace_callback(
+
+        return \preg_replace_callback(
             "~{$ldq}jslang{$rdq}([\\w\\.]+){$ldq}/jslang{$rdq}~",
             static function ($match) {
                 $value = WCF::getLanguage()->get($match[1]);
@@ -42,7 +43,5 @@ class JslangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
             },
             $sourceContent
         );
-
-        return $sourceContent;
     }
 }

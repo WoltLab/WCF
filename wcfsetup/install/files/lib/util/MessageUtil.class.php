@@ -39,9 +39,7 @@ class MessageUtil
         $text = StringUtil::unifyNewlines($text);
 
         // remove control characters
-        $text = \preg_replace('~[\x00-\x08\x0B-\x1F\x7F]~', '', $text);
-
-        return $text;
+        return \preg_replace('~[\x00-\x08\x0B-\x1F\x7F]~', '', $text);
     }
 
     /**
