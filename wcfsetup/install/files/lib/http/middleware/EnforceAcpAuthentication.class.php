@@ -129,7 +129,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
             LinkHandler::getInstance()->getControllerLink(
                 ReauthenticationForm::class,
                 [
-                    'url' => (string)$request->getUri()
+                    'url' => (string)$request->getUri(),
                 ]
             )
         );

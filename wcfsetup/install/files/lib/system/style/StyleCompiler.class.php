@@ -706,8 +706,8 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Exports the style variables as CSS variables on the `html` element.
      *
-     * @param mixed[] $variables 
-     * @since 6.0 
+     * @param mixed[] $variables
+     * @since 6.0
      */
     private function exportStyleVariables(array $variables): string
     {
@@ -722,7 +722,7 @@ final class StyleCompiler extends SingletonFactory
                 continue;
             }
 
-            $css .= "\t--${key}: {$value};\n";
+            $css .= "\t--{$key}: {$value};\n";
         }
 
         return $css . '}';

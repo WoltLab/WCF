@@ -97,13 +97,11 @@ class UserAvatarCondition extends AbstractSelectCondition implements
      */
     protected function getOptions()
     {
-        $options = [
+        return [
             self::NO_SELECTION_VALUE => 'wcf.global.noSelection',
             self::NO_AVATAR => 'wcf.user.condition.avatar.noAvatar',
             self::AVATAR => 'wcf.user.condition.avatar.avatar',
         ];
-
-        return $options;
     }
 
     /**

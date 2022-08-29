@@ -33,7 +33,7 @@ interface IMenuPageHandler
 
     /**
      * Caches the given object id to save SQL queries if multiple objects of the same type are queried in the menu.
-     * 
+     *
      * @since 6.0
      */
     public function cacheObject(int $objectID): void;

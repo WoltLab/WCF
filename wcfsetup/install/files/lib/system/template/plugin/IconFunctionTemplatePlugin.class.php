@@ -65,12 +65,14 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
             $content = \file_get_contents($svgFile);
             $content = \preg_replace('~^<svg~', '<svg slot="svg"', $content);
+
             return <<<HTML
             <fa-brand size="{$size}">{$content}</fa-brand>
             HTML;
         }
 
         $forceSolid = $type === 'solid';
+
         return FontAwesomeIcon::fromValues($name, $forceSolid)->toHtml($size);
     }
 }

@@ -48,7 +48,7 @@ final class FontAwesomeIcon implements \Stringable
     /**
      * Renders the HTML representation of an icon.
      *
-     * @throws InvalidIconSize 
+     * @throws InvalidIconSize
      */
     public function toHtml(int $size): string
     {
@@ -93,14 +93,14 @@ final class FontAwesomeIcon implements \Stringable
 
         $forceSolid = $solid === 'true';
 
-        return new FontAwesomeIcon($name, $forceSolid);
+        return new self($name, $forceSolid);
     }
 
     public static function fromValues(string $name, bool $forceSolid = false): self
     {
         self::validateName($name);
 
-        return new FontAwesomeIcon($name, $forceSolid);
+        return new self($name, $forceSolid);
     }
 
     public static function isValidString(string $iconData): bool

@@ -334,7 +334,7 @@ class Diff
     {
         return \array_map(static function ($entry) {
             return [
-                match($entry[1]) {
+                match ($entry[1]) {
                     Differ::ADDED => self::ADDED,
                     Differ::REMOVED => self::REMOVED,
                     Differ::OLD => self::SAME,

@@ -11,7 +11,6 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
-use wcf\system\style\exception\InvalidIconFormat;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\StringUtil;

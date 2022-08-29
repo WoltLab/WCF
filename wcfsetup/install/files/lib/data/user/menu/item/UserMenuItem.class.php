@@ -4,14 +4,11 @@ namespace wcf\data\user\menu\item;
 
 use wcf\data\ITitledObject;
 use wcf\data\ProcessibleDatabaseObject;
-use wcf\system\exception\SystemException;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\user\DefaultUserMenuItemProvider;
 use wcf\system\menu\user\IUserMenuItemProvider;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
-use wcf\system\style\exception\InvalidIconFormat;
-use wcf\system\style\exception\UnknownIcon;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
