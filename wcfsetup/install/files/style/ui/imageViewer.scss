@@ -208,8 +208,11 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		z-index: 401;
 
 		&.loading:before {
+			/*
+			TODO: Migrate this or replace the image viewer.
 			@extend .icon48;
 			@extend .fa-spinner;
+			*/
 
 			content: "" !important;
 			display: block;
@@ -383,8 +386,11 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 
 					&.loading {
 						&:before {
+							/*
+							TODO: Migrate this or replace the image viewer.
 							@extend .icon48;
 							@extend .fa-spinner;
+							*/
 						}
 
 						> img {
