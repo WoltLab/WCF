@@ -48,6 +48,10 @@
             if (!forceSolid && !this.hasNonSolidStyle(name)) {
                 forceSolid = true;
             }
+            // Avoid rendering the icon again if this is a no-op.
+            if (name === this.name && forceSolid === this.solid) {
+                return;
+            }
             if (forceSolid) {
                 this.setAttribute("solid", "");
             }
