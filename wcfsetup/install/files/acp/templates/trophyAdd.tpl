@@ -227,7 +227,7 @@
 <div id="trophyIconEditor" style="display: none;">
 	<div class="box128">
 		<span class="jsTrophyIcon trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}">
-			{icon size=128 name=$iconName}
+			{@$icon->toHtml(128)}
 		</span>
 		<div>
 			<dl>
