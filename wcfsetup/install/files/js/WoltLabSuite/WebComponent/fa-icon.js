@@ -50,7 +50,12 @@
             }
             // Avoid rendering the icon again if this is a no-op.
             if (name === this.name && forceSolid === this.solid) {
-                return;
+                // This method is called from `connectedCallback` too, check for
+                // the existence of the shadow root and only return early for
+                // requests on runtime.
+                if (this.shadowRoot !== null) {
+                    return;
+                }
             }
             if (forceSolid) {
                 this.setAttribute("solid", "");
