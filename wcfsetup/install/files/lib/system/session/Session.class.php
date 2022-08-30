@@ -53,6 +53,10 @@ final class Session
      */
     public function getLastActivityTime(): int
     {
+        if ($this->isCurrentSession()) {
+            return \TIME_NOW;
+        }
+
         return $this->data['lastActivityTime'];
     }
 
