@@ -102,6 +102,7 @@ class TemplateScriptingCompiler
         'preg_match',
         'preg_replace',
         'print_r',
+        'random_int',
         'rawurlencode',
         'reset',
         'round',
