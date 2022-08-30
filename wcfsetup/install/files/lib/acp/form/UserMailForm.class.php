@@ -6,13 +6,13 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
-use wcf\system\email\EmailGrammar;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * Shows the user mail form.
@@ -157,7 +157,7 @@ class UserMailForm extends AbstractForm
 
         if (empty($this->from)) {
             throw new UserInputException('from');
-        } elseif (!\preg_match('(^' . EmailGrammar::getGrammar('addr-spec') . '$)', $this->from)) {
+        } elseif (!UserUtil::isValidEmail($this->from)) {
             throw new UserInputException('from', 'invalid');
         }
     }
