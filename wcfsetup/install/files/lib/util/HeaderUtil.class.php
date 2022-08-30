@@ -145,7 +145,17 @@ final class HeaderUtil
 
         if (RequestHandler::getInstance()->isACPRequest()) {
             // force javascript relocation
-            self::$output = \preg_replace('~<script([^>]*)>~', '<script data-relocate="true"\\1>', self::$output);
+            $eagerFlag = ' data-eager="true"';
+            self::$output = \preg_replace_callback('~<script(?<attributes>[^>]*)>~', function (array $matches) use ($eagerFlag) {
+                ['attributes' => $attributes] = $matches;
+
+                if (\str_starts_with($attributes, $eagerFlag)) {
+                    $attributes = \substr($attributes, \strlen($eagerFlag));
+                    return '<script' . $attributes . '>';
+                }
+
+                return '<script data-relocate="true"' . $attributes . '>';
+            }, self::$output);
         }
 
         // move script tags to the bottom of the page

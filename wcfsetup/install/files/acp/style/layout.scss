@@ -164,20 +164,19 @@ $wcfAcpSubMenuWidth: 300px;
 		background-color: rgb(50, 92, 132);
 		bottom: 0;
 		left: 0;
-		text-align: center;
 		overflow: hidden;
 		position: fixed;
 		top: 50px;
 		width: $wcfAcpMenuWidth;
 
 		.acpPageMenuLink {
-			//background-color: rgb(43, 79, 113);
+			align-items: center;
 			color: rgba(255, 255, 255, 0.7);
-			display: block;
+			display: flex;
+			flex-direction: column;
 			padding: 20px 10px;
 
 			&:hover {
-				//background-color: rgb(36, 66, 95);
 				background-color: rgb(43, 79, 113);
 				color: rgba(255, 255, 255, 1);
 			}
