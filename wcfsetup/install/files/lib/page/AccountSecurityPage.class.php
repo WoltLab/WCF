@@ -50,7 +50,7 @@ class AccountSecurityPage extends AbstractPage
 
         $this->activeSessions = SessionHandler::getInstance()->getUserSessions(WCF::getUser());
 
-        \usort($this->activeSessions, static function ($a, $b) {
+        \usort($this->activeSessions, static function (Session $a, Session $b) {
             return $b->getLastActivityTime() <=> $a->getLastActivityTime();
         });
 
