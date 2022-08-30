@@ -538,8 +538,10 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		iconName
 	 */
 	_setIcon: function(iconName) {
-		const icon = this._dialog.find('.jsPackageInstallationStatus fa-icon')[0];
-		icon.setIcon(iconName);
+		const icon = this._dialog.find('.jsPackageInstallationStatus fa-icon');
+		if (icon.length === 1) {
+			icon[0].setIcon(iconName);
+		}
 	}
 });
 
