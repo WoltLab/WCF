@@ -4,11 +4,11 @@ namespace wcf\system\bulk\processing\user;
 
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\UserList;
-use wcf\system\email\EmailGrammar;
 use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * Bulk processing action implementation for sending mails to users.
@@ -144,7 +144,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
 
         if (empty($this->from)) {
             throw new UserInputException('from');
-        } elseif (!\preg_match('(^' . EmailGrammar::getGrammar('addr-spec') . '$)', $this->from)) {
+        } elseif (!UserUtil::isValidEmail($this->from)) {
             throw new UserInputException('from', 'invalid');
         }
     }
