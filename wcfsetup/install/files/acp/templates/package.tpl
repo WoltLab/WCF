@@ -20,7 +20,7 @@
 			<ul>
 				{content}
 					{if $package->canUninstall()}
-						<li><button class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">{icon size=16 name='times' type='solid'} <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></button></li>
+						<li><button class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">{icon size=16 name='xmark'} <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></button></li>
 					{/if}
 
 					{event name='contentHeaderNavigation'}
@@ -209,7 +209,7 @@
 <footer class="contentFooter">
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list' type='solid'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>
