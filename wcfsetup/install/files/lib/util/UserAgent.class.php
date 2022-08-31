@@ -491,7 +491,7 @@ final class UserAgent
     public function getDeviceIcon(): string
     {
         if ($this->isTablet()) {
-            return 'tablet';
+            return 'tablet-screen-button';
         }
 
         if ($this->isMobileBrowser()) {
