@@ -498,6 +498,6 @@ final class UserAgent
             return 'mobile-screen-button';
         }
 
-        return 'laptop';
+        return 'display';
     }
 }
