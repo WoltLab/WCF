@@ -5,15 +5,15 @@ namespace wcf\util;
 /**
  * Represents the user agent.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2020 WoltLab GmbH
+ * @author  Tim Duesterhus, Joshua Ruesweg
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Util
  * @since       5.4
  */
 final class UserAgent
 {
-    private string $userAgent;
+    private readonly string $userAgent;
 
     private readonly ?string $browser;
 
