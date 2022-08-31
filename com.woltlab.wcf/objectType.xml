@@ -1772,7 +1772,7 @@
 		<type>
 			<name>com.woltlab.wcf.multifactor.totp</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
-			<icon>mobile</icon>
+			<icon>mobile-screen</icon>
 			<priority>10</priority>
 			<classname>wcf\system\user\multifactor\TotpMultifactorMethod</classname>
 		</type>

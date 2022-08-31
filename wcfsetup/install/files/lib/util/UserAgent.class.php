@@ -495,7 +495,7 @@ final class UserAgent
         }
 
         if ($this->isMobileBrowser()) {
-            return 'mobile';
+            return 'mobile-screen';
         }
 
         return 'laptop';
