@@ -233,7 +233,7 @@ class PackageInstallationDispatcher
                             \pack(
                                 'CA20C',
                                 1,
-                                Hex::encode(WCF::getSession()->sessionID),
+                                Hex::decode(WCF::getSession()->sessionID),
                                 0
                             )
                         )
