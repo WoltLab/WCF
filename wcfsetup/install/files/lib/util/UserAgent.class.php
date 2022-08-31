@@ -13,392 +13,363 @@ namespace wcf\util;
  */
 final class UserAgent
 {
-    /**
-     * @var string
-     */
-    private $userAgent;
+    private string $userAgent;
 
-    /**
-     * @var ?string
-     */
-    private $browser;
+    private readonly ?string $browser;
 
-    /**
-     * @var ?string
-     */
-    private $browserVersion;
+    private readonly ?string $browserVersion;
 
-    /**
-     * @var ?string
-     */
-    private $os;
+    private readonly ?string $os;
 
     public function __construct(string $userAgent)
     {
         $this->userAgent = $userAgent;
 
-        $this->detectOs();
-        $this->detectBrowser();
+        $this->os = $this->detectOs($this->userAgent);
+        [$this->browser, $this->browserVersion] = $this->detectBrowser($this->userAgent);
     }
 
     /**
      * Detects the browser on the basis of the user agent.
      */
-    private function detectBrowser(): void
+    private function detectBrowser(string $userAgent): array
     {
         // lunascape
-        if (\preg_match('~lunascape[ /]([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Lunascape';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~lunascape[ /]([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Lunascape',
+                $match[1],
+            ];
         }
 
         // sleipnir
-        if (\preg_match('~sleipnir/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Sleipnir';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~sleipnir/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Sleipnir',
+                $match[1],
+            ];
         }
 
         // uc browser
-        if (\preg_match('~(?:ucbrowser|uc browser|ucweb)[ /]?([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'UC Browser';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~(?:ucbrowser|uc browser|ucweb)[ /]?([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'UC Browser',
+                $match[1],
+            ];
         }
 
         // baidu browser
-        if (\preg_match('~(?:baidubrowser|flyflow)[ /]?([\d\.x]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Baidubrowser';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~(?:baidubrowser|flyflow)[ /]?([\d\.x]+)~i', $userAgent, $match)) {
+            return [
+                'Baidubrowser',
+                $match[1],
+            ];
         }
 
         // blackberry
-        if (\preg_match('~blackberry.*version/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Blackberry';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~blackberry.*version/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Blackberry',
+                $match[1],
+            ];
         }
 
         // opera mobile
-        if (\preg_match('~opera/([\d\.]+).*(mobi|mini)~i', $this->userAgent, $match)) {
-            $this->browser = 'Opera Mobile';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~opera/([\d\.]+).*(mobi|mini)~i', $userAgent, $match)) {
+            return [
+                'Opera Mobile',
+                $match[1],
+            ];
         }
 
         // opera
-        if (\preg_match('~opera.*version/([\d\.]+)|opr/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Opera';
-            $this->browserVersion = ($match[2] ?? $match[1]);
-
-            return;
+        if (\preg_match('~opera.*version/([\d\.]+)|opr/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Opera',
+                ($match[2] ?? $match[1]),
+            ];
         }
 
         // thunderbird
-        if (\preg_match('~thunderbird/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Thunderbird';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~thunderbird/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Thunderbird',
+                $match[1],
+            ];
         }
 
         // icedragon
-        if (\preg_match('~icedragon/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'IceDragon';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~icedragon/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'IceDragon',
+                $match[1],
+            ];
         }
 
         // palemoon
-        if (\preg_match('~palemoon/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'PaleMoon';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~palemoon/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'PaleMoon',
+                $match[1],
+            ];
         }
 
         // flock
-        if (\preg_match('~flock/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Flock';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~flock/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Flock',
+                $match[1],
+            ];
         }
 
         // iceweasel
-        if (\preg_match('~iceweasel/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Iceweasel';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~iceweasel/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Iceweasel',
+                $match[1],
+            ];
         }
 
         // firefox mobile
-        if (\preg_match('~(?:mobile.*firefox|fxios)/([\d\.]+)|fennec/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Firefox Mobile';
-            $this->browserVersion = ($match[2] ?? $match[1]);
-
-            return;
+        if (\preg_match('~(?:mobile.*firefox|fxios)/([\d\.]+)|fennec/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Firefox Mobile',
+                ($match[2] ?? $match[1]),
+            ];
         }
 
         // tapatalk 4
-        if (\preg_match('~tapatalk/([\d\.]+)?~i', $this->userAgent, $match)) {
-            $this->browser = 'Tapatalk';
-            $this->browserVersion = ($match[1] ?? 4);
-
-            return;
+        if (\preg_match('~tapatalk/([\d\.]+)?~i', $userAgent, $match)) {
+            return [
+                'Tapatalk',
+                ($match[1] ?? 4),
+            ];
         }
 
         // firefox
-        if (\preg_match('~firefox/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Firefox';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~firefox/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Firefox',
+                $match[1],
+            ];
         }
 
         // maxthon
-        if (\preg_match('~maxthon[ /]([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Maxthon';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~maxthon[ /]([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Maxthon',
+                $match[1],
+            ];
         }
 
         // iemobile
-        if (\preg_match('~iemobile[ /]([\d\.]+)|MSIE ([\d\.]+).*XBLWP7~i', $this->userAgent, $match)) {
-            $this->browser = 'Internet Explorer Mobile';
-            $this->browserVersion = ($match[2] ?? $match[1]);
-
-            return;
+        if (\preg_match('~iemobile[ /]([\d\.]+)|MSIE ([\d\.]+).*XBLWP7~i', $userAgent, $match)) {
+            return [
+                'Internet Explorer Mobile',
+                ($match[2] ?? $match[1]),
+            ];
         }
 
         // ie
-        if (\preg_match('~msie ([\d\.]+)|Trident\/\d{1,2}.\d{1,2}; .*rv:([0-9]*)~i', $this->userAgent, $match)) {
-            $this->browser = 'Internet Explorer';
-            $this->browserVersion = ($match[2] ?? $match[1]);
-
-            return;
+        if (\preg_match('~msie ([\d\.]+)|Trident\/\d{1,2}.\d{1,2}; .*rv:([0-9]*)~i', $userAgent, $match)) {
+            return [
+                'Internet Explorer',
+                ($match[2] ?? $match[1]),
+            ];
         }
 
         // edge
-        if (\preg_match('~edge?/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Microsoft Edge';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~edge?/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Microsoft Edge',
+                $match[1],
+            ];
         }
 
         // edge mobile
-        if (\preg_match('~edga/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Microsoft Edge Mobile';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~edga/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Microsoft Edge Mobile',
+                $match[1],
+            ];
         }
 
         // vivaldi
-        if (\preg_match('~vivaldi/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Vivaldi';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~vivaldi/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Vivaldi',
+                $match[1],
+            ];
         }
 
         // iron
-        if (\preg_match('~iron/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Iron';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~iron/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Iron',
+                $match[1],
+            ];
         }
 
         // coowon
-        if (\preg_match('~coowon/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Coowon';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~coowon/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Coowon',
+                $match[1],
+            ];
         }
 
         // coolnovo
-        if (\preg_match('~(?:coolnovo|chromeplus)/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'CoolNovo';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~(?:coolnovo|chromeplus)/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'CoolNovo',
+                $match[1],
+            ];
         }
 
         // yandex
-        if (\preg_match('~yabrowser/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Yandex';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~yabrowser/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Yandex',
+                $match[1],
+            ];
         }
 
         // midori
-        if (\preg_match('~midori/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Midori';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~midori/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Midori',
+                $match[1],
+            ];
         }
 
         // chrome mobile
-        if (\preg_match('~(?:crios|crmo)/([\d\.]+)|chrome/([\d\.]+).*mobile~i', $this->userAgent, $match)) {
-            $this->browser = 'Chrome Mobile';
-            $this->browserVersion = ($match[2] ?? $match[1]);
-
-            return;
+        if (\preg_match('~(?:crios|crmo)/([\d\.]+)|chrome/([\d\.]+).*mobile~i', $userAgent, $match)) {
+            return [
+                'Chrome Mobile',
+                ($match[2] ?? $match[1]),
+            ];
         }
 
         // kindle
-        if (\preg_match('~kindle/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Kindle';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~kindle/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Kindle',
+                $match[1],
+            ];
         }
 
         // silk
-        if (\preg_match('~silk/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Silk';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~silk/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Silk',
+                $match[1],
+            ];
         }
 
         // android browser
-        if (\preg_match('~Android ([\d\.]+).*AppleWebKit~i', $this->userAgent, $match)) {
-            $this->browser = 'Android Browser';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~Android ([\d\.]+).*AppleWebKit~i', $userAgent, $match)) {
+            return [
+                'Android Browser',
+                $match[1],
+            ];
         }
 
         // safari mobile
-        if (\preg_match('~([\d\.]+) Mobile/\w+ safari~i', $this->userAgent, $match)) {
-            $this->browser = 'Safari Mobile';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~([\d\.]+) Mobile/\w+ safari~i', $userAgent, $match)) {
+            return [
+                'Safari Mobile',
+                $match[1],
+            ];
         }
 
         // chrome
-        if (\preg_match('~(?:chromium|chrome)/([\d\.]+)~i', $this->userAgent, $match)) {
-            $this->browser = 'Chrome';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~(?:chromium|chrome)/([\d\.]+)~i', $userAgent, $match)) {
+            return [
+                'Chrome',
+                $match[1],
+            ];
         }
 
         // safari
-        if (\preg_match('~([\d\.]+) safari~i', $this->userAgent, $match)) {
-            $this->browser = 'Safari';
-            $this->browserVersion = $match[1];
-
-            return;
+        if (\preg_match('~([\d\.]+) safari~i', $userAgent, $match)) {
+            return [
+                'Safari',
+                $match[1],
+            ];
         }
+
+        return [
+            null,
+            null,
+        ];
     }
 
     /**
      * Detects the OS on the basis of the user agent.
      */
-    private function detectOs(): void
+    private function detectOs(string $userAgent): ?string
     {
         // iOS
-        if (\preg_match('/iphone/i', $this->userAgent)) {
-            $this->os = "iOS";
-
-            return;
+        if (\preg_match('/iphone/i', $userAgent)) {
+            return "iOS";
         }
 
         // iOS
-        if (\preg_match('/cfnetwork/i', $this->userAgent)) {
-            $this->os = "iOS";
-
-            return;
+        if (\preg_match('/cfnetwork/i', $userAgent)) {
+            return "iOS";
         }
 
         // Windows
-        if (\preg_match('/windows/i', $this->userAgent)) {
-            $this->os = "Windows";
-
-            return;
+        if (\preg_match('/windows/i', $userAgent)) {
+            return "Windows";
         }
 
         // FreeBSD
-        if (\preg_match('/freebsd/i', $this->userAgent)) {
-            $this->os = "FreeBSD";
-
-            return;
+        if (\preg_match('/freebsd/i', $userAgent)) {
+            return "FreeBSD";
         }
 
         // netBSD
-        if (\preg_match('/netbsd/i', $this->userAgent)) {
-            $this->os = "NetBSD";
-
-            return;
+        if (\preg_match('/netbsd/i', $userAgent)) {
+            return "NetBSD";
         }
 
         // openBSD
-        if (\preg_match('/openbsd/i', $this->userAgent)) {
-            $this->os = "OpenBSD";
-
-            return;
+        if (\preg_match('/openbsd/i', $userAgent)) {
+            return "OpenBSD";
         }
 
         // Android
-        if (\preg_match('/android/i', $this->userAgent)) {
-            $this->os = "Android";
-
-            return;
+        if (\preg_match('/android/i', $userAgent)) {
+            return "Android";
         }
 
         // Linux
-        if (\preg_match('/linux/i', $this->userAgent)) {
-            $this->os = "Linux";
-
-            return;
+        if (\preg_match('/linux/i', $userAgent)) {
+            return "Linux";
         }
 
         // iPad
-        if (\preg_match('/ipad/i', $this->userAgent)) {
-            $this->os = "iPad";
-
-            return;
+        if (\preg_match('/ipad/i', $userAgent)) {
+            return "iPad";
         }
 
         // webOS
-        if (\preg_match('/web[0o]s/i', $this->userAgent)) {
-            $this->os = "webOS";
-
-            return;
+        if (\preg_match('/web[0o]s/i', $userAgent)) {
+            return "webOS";
         }
 
         // CrOS
-        if (\preg_match('/cros/i', $this->userAgent)) {
-            $this->os = "Chrome OS";
-
-            return;
+        if (\preg_match('/cros/i', $userAgent)) {
+            return "Chrome OS";
         }
 
         // macOS
-        if (\preg_match('/mac/i', $this->userAgent)) {
-            $this->os = "macOS";
-
-            return;
+        if (\preg_match('/mac/i', $userAgent)) {
+            return "macOS";
         }
+
+        return null;
     }
 
     /**
