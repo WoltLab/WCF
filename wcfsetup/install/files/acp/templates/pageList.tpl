@@ -126,7 +126,7 @@
 									{if $page->isDisabled}
 										{icon size=16 name='square'}
 									{else}
-										{icon size=16 name='square-checl'}
+										{icon size=16 name='square-check'}
 									{/if}
 								</span>
 							{/if}
