@@ -11,10 +11,10 @@ namespace wcf\system\style\exception;
  * @package WoltLabSuite\Core\System\Style\Exception
  * @since 6.0
  */
-final class UnknownIcon extends \Exception
+final class UnknownIcon extends \Exception implements IconValidationFailed
 {
-    public function __construct(string $name)
+    public function __construct(string $name, ?\Throwable $previous = null)
     {
-        parent::__construct("The icon '{$name}' is unknown.");
+        parent::__construct("The icon '{$name}' is unknown.", 0, $previous);
     }
 }

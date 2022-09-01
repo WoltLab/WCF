@@ -11,10 +11,14 @@ namespace wcf\system\style\exception;
  * @package WoltLabSuite\Core\System\Style\Exception
  * @since 6.0
  */
-final class InvalidIconFormat extends \Exception
+final class InvalidIconFormat extends \Exception implements IconValidationFailed
 {
-    public function __construct()
+    public function __construct(?\Throwable $previous = null)
     {
-        parent::__construct('Expected a string containing an icon name and a boolean string separated by a semicolon.');
+        parent::__construct(
+            'Expected a string containing an icon name and a boolean string separated by a semicolon.',
+            0,
+            $previous
+        );
     }
 }
