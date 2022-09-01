@@ -16,11 +16,8 @@ final class StyleUtil
 {
     /**
      * Converts css code from LTR to RTL.
-     *
-     * @param string $contents
-     * @return  string
      */
-    public static function convertCSSToRTL($contents)
+    public static function convertCSSToRTL(string $contents): string
     {
         // parse style attributes
         // background
@@ -135,13 +132,11 @@ final class StyleUtil
 
     /**
      * Compresses css code.
-     *
-     * @param string $string
-     * @return  string
      */
-    public static function compressCSS($string)
+    public static function compressCSS(string $string): string
     {
         $string = StringUtil::unifyNewlines($string);
+
         // remove comments
         $string = \preg_replace('!/\*.*?\*/\r?\n?!s', '', $string);
         // remove tabs
