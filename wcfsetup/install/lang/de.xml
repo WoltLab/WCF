@@ -4725,7 +4725,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.activationCode"><![CDATA[Aktivierungscode]]></item>
 		<item name="wcf.user.newActivationCode"><![CDATA[Neuen Aktivierungscode anfordern]]></item>
 		<item name="wcf.user.registerActivation"><![CDATA[Registrierung abschließen]]></item>
-		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[Dieser Benutzer ist bereits freigeschaltet.]]></item>
+		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[Die E-Mail-Adresse ist bereits aktiviert.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich freigeschaltet.]]></item>
 		<item name="wcf.user.registerActivation.success.awaitAdminActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse wurde erfolgreich bestätigt. {if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto muss nun noch von einem Administrator freigeschaltet werden.]]></item>
 		<item name="wcf.user.activationCode.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Aktivierungscode eingegeben. {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke auf den unten stehenden Link, falls du einen neuen Aktivierungscode anfordern möchtest.{else}Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.{/if}]]></item>
