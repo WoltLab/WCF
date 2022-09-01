@@ -90,10 +90,10 @@ final class Setup implements IIDObject
         }
 
         $sql = "SELECT  setupId
-                FROM    wcf" . WCF_N . "_user_multifactor
+                FROM    wcf1_user_multifactor
                 WHERE   setupId = ?
                 FOR UPDATE";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->getId(),
         ]);
@@ -109,9 +109,9 @@ final class Setup implements IIDObject
      */
     public function delete(): void
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_multifactor
+        $sql = "DELETE FROM wcf1_user_multifactor
                 WHERE       setupId = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->getId(),
         ]);
@@ -124,10 +124,10 @@ final class Setup implements IIDObject
     public static function find(ObjectType $objectType, User $user): ?self
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_multifactor
+                FROM    wcf1_user_multifactor
                 WHERE   userID = ?
                     AND objectTypeID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $user->userID,
             $objectType->objectTypeID,
@@ -149,9 +149,9 @@ final class Setup implements IIDObject
     public static function getAllForUser(User $user): array
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_user_multifactor
+                FROM    wcf1_user_multifactor
                 WHERE   userID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$user->userID]);
 
         $setups = [];
@@ -167,10 +167,10 @@ final class Setup implements IIDObject
      */
     public static function allocateSetUpId(ObjectType $objectType, User $user): self
     {
-        $sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor
+        $sql = "INSERT INTO wcf1_user_multifactor
                             (userID, objectTypeID)
                 VALUES      (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $user->userID,
             $objectType->objectTypeID,
