@@ -13,6 +13,7 @@ use wcf\system\database\table\column\BigintDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
