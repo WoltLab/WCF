@@ -47,15 +47,6 @@
 		</xs:simpleContent>
 	</xs:complexType>
 	
-	<!-- api compatibility version element -->
-	<xs:complexType name="apiVersion">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="version" type="xs:integer" use="required" />
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	
 	<!-- instructions elements -->
 	<xs:complexType name="instructions">
 		<xs:choice maxOccurs="1">
@@ -140,13 +131,6 @@
 	<xs:complexType name="excludedPackages">
 		<xs:sequence>
 			<xs:element name="excludedpackage" type="excludedPackage" minOccurs="0" maxOccurs="unbounded" />
-		</xs:sequence>
-	</xs:complexType>
-	
-	<!-- api compatibility element -->
-	<xs:complexType name="compatibility">
-		<xs:sequence>
-			<xs:element name="api" type="apiVersion" minOccurs="1" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 

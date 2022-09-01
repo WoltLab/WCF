@@ -15,7 +15,6 @@
 	var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
-	var WSC_API_VERSION = {@WSC_API_VERSION};
 	var PAGE_TITLE = '{PAGE_TITLE|phrase|encodeJS}';
 	
 	var REACTION_TYPES = {@$__wcf->getReactionHandler()->getReactionsJSVariable()};

@@ -942,8 +942,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
 		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
-		<item name="wcf.acp.index.system.software.apiVersion"><![CDATA[WoltLab Suite&trade; API-Version]]></item>
-		<item name="wcf.acp.index.system.software.legacyApiVersions"><![CDATA[Ältere, noch unterstützte API-Versionen]]></item>
 		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Datenbank-Installationsnummer]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Betriebssystem]]></item>
@@ -1772,8 +1770,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Option deaktivieren]]></item>
 	</category>
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstützte WoltLab Suite&trade; API-Versionen]]></item>
-		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[Dieses Paket stellt keine Informationen zur Kompatibilität bereit.]]></item>
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Entwickler]]></item>
@@ -1915,13 +1911,15 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[Die {if $type == 'install'}Installations{else}Update{/if}-Anweisungen geben für das Package Installation Plugin „{$pip}“ die Datei „{$value}“ an, diese ist jedoch nicht im Archiv enthalten. Mögliche Ursachen:<ul class="nativeList"><li>Die Datei wurde dem Archiv nicht hinzugefügt</li><li>Die Datei existiert, jedoch sind der Dateiname und die Angabe in den Anweisungen abweichend (Tippfehler)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[Das Paket „{$packageName|phrase}“ ist bereits in Version „{$packageVersion}“ installiert.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[Die API-Version „{$version}“ ist ungültig.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine ältere Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.16"><![CDATA[Neben der &lt;void/&gt;-Anweisung werden weitere Package Installation Plugins angegeben.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.17"><![CDATA[Die &lt;void/&gt;-Anweisung ist in den Installations-Anweisungen unzulässig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.18"><![CDATA[Die bereits installierte App „{$application->getPackage()->package}“ verwendet die gleiche App-Abkürzung.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.19"><![CDATA[Die Versionsnummer „{$version}“ des inkompatiblen Paketes „{$packageName}“ ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.20"><![CDATA[Das Paket „{$packageName}“ definiert sich selbst als inkompatibel.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.21"><![CDATA[Es ist keine Abhängigkeit auf „com.woltlab.wcf“ definiert.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.22"><![CDATA[Das Paket „com.woltlab.wcf“ muss mindestens in Version 5.4.22 vorausgesetzt werden.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. Bitte aktualisiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} auf die aktuellste Version um diese Software weiterhin legal betreiben zu können.{if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/purchase/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) ablaufen. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
@@ -5574,5 +5572,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.avatar.type.gravatar.error.notFound"/>
 	<item name="wcf.user.condition.avatar.gravatar"/>
 	<item name="wcf.acp.option.article_enable_visit_tracking" />
+	<item name="wcf.acp.index.system.software.apiVersion"/>
+	<item name="wcf.acp.index.system.software.legacyApiVersions"/>
+	<item name="wcf.acp.package.apiVersions"/>
+	<item name="wcf.acp.package.apiVersions.missing"/>
 </delete>
 </language>

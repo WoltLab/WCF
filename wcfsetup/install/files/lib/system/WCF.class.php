@@ -50,10 +50,6 @@ if (!@\ini_get('date.timezone')) {
 // define current woltlab suite version
 \define('WCF_VERSION', '6.0.0 dev 1');
 
-// define current API version
-// @deprecated 5.2
-\define('WSC_API_VERSION', 2019);
-
 // define current unix timestamp
 \define('TIME_NOW', \time());
 
@@ -79,13 +75,6 @@ class WCF
      * @since 5.3
      */
     public const AVAILABLE_UPGRADE_VERSION = null;
-
-    /**
-     * list of supported legacy API versions
-     * @var int[]
-     * @deprecated 5.2
-     */
-    private static $supportedLegacyApiVersions = [2017, 2018];
 
     /**
      * list of currently loaded applications
@@ -1141,29 +1130,6 @@ class WCF
         }
 
         return self::getActiveRequest()->isLandingPage();
-    }
-
-    /**
-     * Returns true if the given API version is currently supported.
-     *
-     * @param int $apiVersion
-     * @return      bool
-     * @deprecated 5.2
-     */
-    public static function isSupportedApiVersion($apiVersion)
-    {
-        return ($apiVersion == WSC_API_VERSION) || \in_array($apiVersion, self::$supportedLegacyApiVersions);
-    }
-
-    /**
-     * Returns the list of supported legacy API versions.
-     *
-     * @return      int[]
-     * @deprecated 5.2
-     */
-    public static function getSupportedLegacyApiVersions()
-    {
-        return self::$supportedLegacyApiVersions;
     }
 
     /**

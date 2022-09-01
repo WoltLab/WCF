@@ -73,13 +73,6 @@ class PackageArchive
     protected $excludedPackages = [];
 
     /**
-     * list of compatible API versions
-     * @var int[]
-     * @deprecated 5.2
-     */
-    protected $compatibility = [];
-
-    /**
      * list of instructions
      * @var mixed[][]
      */
@@ -292,6 +285,27 @@ class PackageArchive
             $this->requirements[$element->nodeValue] = $data;
         }
 
+        if (!isset($this->requirements['com.woltlab.wcf'])) {
+            // Reject missing explicit com.woltlab.wcf requirement
+            if ($this->packageInfo['name'] != 'com.woltlab.wcf') {
+                throw new PackageValidationException(PackageValidationException::MISSING_COM_WOLTLAB_WCF_REQUIREMENT);
+            }
+        } else {
+            // Reject com.woltlab.wcf requirements that are not reasonably recent.
+            // While it might be possible for packages to be compatible with versions both before and after
+            // the 5.5/6.0 jump, it is exceedingly unlikely for packages that were written for anything before 5.4
+            // to still be fully compatible.
+            //
+            // This stops old packages that are missing both exclude and compatibility tags from being installable,
+            // it also nicely excludes all versions were compatibility tags were non-deprecated (i.e. 5.2).
+            if (
+                !isset($this->requirements['com.woltlab.wcf']['version'])
+                || Package::compareVersion($this->requirements['com.woltlab.wcf']['version'], '5.4.22', '<')
+            ) {
+                throw new PackageValidationException(PackageValidationException::ANCIENT_COM_WOLTLAB_WCF_REQUIREMENT);
+            }
+        }
+
         // get optional packages
         $elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
         foreach ($elements as $element) {
@@ -352,48 +366,10 @@ class PackageArchive
             $this->excludedPackages[] = $data;
         }
 
-        // get api compatibility
+        // Reject packages with API compatibility information.
         $elements = $xpath->query('child::ns:compatibility/ns:api', $package);
         foreach ($elements as $element) {
-            if (!$element->hasAttribute('version')) {
-                continue;
-            }
-
-            $version = $element->getAttribute('version');
-            if (!\preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $version)) {
-                throw new PackageValidationException(
-                    PackageValidationException::INVALID_API_VERSION,
-                    ['version' => $version]
-                );
-            }
-
-            $this->compatibility[] = $version;
-        }
-
-        // API compatibility implies an exclude of `com.woltlab.wcf` in version `6.0.0 Alpha 1`, unless a lower version is explicitly excluded.
-        if (!empty($this->compatibility)) {
-            $excludeCore60 = '6.0.0 Alpha 1';
-
-            $coreExclude = '';
-            foreach ($this->excludedPackages as $excludedPackage) {
-                if ($excludedPackage['name'] === 'com.woltlab.wcf') {
-                    $coreExclude = $excludedPackage['version'];
-                    break;
-                }
-            }
-
-            if (!$coreExclude || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
-                if ($coreExclude) {
-                    $this->excludedPackages = \array_filter($this->excludedPackages, static function ($exclude) {
-                        return $exclude['name'] !== 'com.woltlab.wcf';
-                    });
-                }
-
-                $this->excludedPackages[] = [
-                    'name' => 'com.woltlab.wcf',
-                    'version' => $excludeCore60,
-                ];
-            }
+            throw new PackageValidationException(PackageValidationException::INCOMPATIBLE_API_VERSION);
         }
 
         // get instructions
@@ -441,11 +417,6 @@ class PackageArchive
             } else {
                 $this->instructions['update'][$fromVersion] = $instructionData;
             }
-        }
-
-        // add com.woltlab.wcf to package requirements
-        if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {
-            $this->requirements['com.woltlab.wcf'] = ['name' => 'com.woltlab.wcf'];
         }
 
         // during installations, `Package::$packageVersion` can be `null` which causes issues
@@ -676,17 +647,6 @@ class PackageArchive
     public function getExcludedPackages()
     {
         return $this->excludedPackages;
-    }
-
-    /**
-     * Returns the list of compatible API versions.
-     *
-     * @return      int[]
-     * @deprecated 5.2
-     */
-    public function getCompatibleVersions()
-    {
-        return $this->compatibility;
     }
 
     /**
