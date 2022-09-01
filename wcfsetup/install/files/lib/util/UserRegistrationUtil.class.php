@@ -78,16 +78,6 @@ final class UserRegistrationUtil
     }
 
     /**
-     * Always returns true.
-     *
-     * @deprecated  5.3 - Take a look at the zxcvbn verdict from WoltLabSuite/Core/Ui/User/PasswordStrength.
-     */
-    public static function isSecurePassword($password)
-    {
-        return true;
-    }
-
-    /**
      * Returns the `passwordrules` attribute value.
      *
      * @see         https://developer.apple.com/password-rules/
