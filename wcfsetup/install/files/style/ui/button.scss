@@ -1,9 +1,12 @@
 button {
 	all: unset;
-	cursor: pointer;
 
 	&.focus-visible:focus {
 		outline: 5px auto -webkit-focus-ring-color;
+	}
+
+	&:not([disabled]) {
+		cursor: pointer;
 	}
 }
 
