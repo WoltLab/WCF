@@ -22,11 +22,8 @@ final class UserRegistrationUtil
 
     /**
      * Returns true if the given name is a valid username.
-     *
-     * @param string $name username
-     * @return  bool
      */
-    public static function isValidUsername($name)
+    public static function isValidUsername(string $name): bool
     {
         if (!UserUtil::isValidUsername($name)) {
             return false;
@@ -52,33 +49,24 @@ final class UserRegistrationUtil
 
     /**
      * Returns true if the given e-mail is a valid address.
-     *
-     * @param string $email
-     * @return  bool
      */
-    public static function isValidEmail($email)
+    public static function isValidEmail(string $email): bool
     {
         return UserUtil::isValidEmail($email) && self::checkForbiddenEmails($email);
     }
 
     /**
      * Returns false if the given name is a forbidden username.
-     *
-     * @param string $name
-     * @return  bool
      */
-    public static function checkForbiddenUsernames($name)
+    public static function checkForbiddenUsernames(string $name): bool
     {
         return StringUtil::executeWordFilter($name, REGISTER_FORBIDDEN_USERNAMES);
     }
 
     /**
      * Returns false if the given email is a forbidden email.
-     *
-     * @param string $email
-     * @return  bool
      */
-    public static function checkForbiddenEmails($email)
+    public static function checkForbiddenEmails(string $email): bool
     {
         return StringUtil::executeWordFilter(
             $email,
@@ -103,9 +91,8 @@ final class UserRegistrationUtil
      * Returns the `passwordrules` attribute value.
      *
      * @see         https://developer.apple.com/password-rules/
-     * @return  string
      */
-    public static function getPasswordRulesAttributeValue()
+    public static function getPasswordRulesAttributeValue(): string
     {
         return "minlength:8;";
     }
@@ -113,11 +100,8 @@ final class UserRegistrationUtil
     /**
      * Generates a random activation code with the given length.
      * Warning: A length greater than 9 is out of integer range.
-     *
-     * @param int $length
-     * @return  int
      */
-    public static function getActivationCode($length = 9)
+    public static function getActivationCode(int $length = 9): int
     {
         return \random_int(10 ** ($length - 1), 10 ** $length - 1);
     }
@@ -125,10 +109,9 @@ final class UserRegistrationUtil
     /**
      * Generates a random field name.
      *
-     * @param string $fieldName
-     * @return  string
+     * @param string $unused
      */
-    public static function getRandomFieldName($fieldName)
+    public static function getRandomFieldName($unused): string
     {
         $hash = StringUtil::getRandomID();
 
