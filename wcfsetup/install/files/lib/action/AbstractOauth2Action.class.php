@@ -229,7 +229,8 @@ abstract class AbstractOauth2Action extends AbstractAction
         $encodedParameters = \http_build_query($parameters, '', '&');
 
         $url = new Uri($this->getAuthorizeUrl());
-        if (($query = $url->getQuery())) {
+        $query = $url->getQuery();
+        if ($query !== '') {
             $url = $url->withQuery("{$query}&{$encodedParameters}");
         } else {
             $url = $url->withQuery($encodedParameters);
