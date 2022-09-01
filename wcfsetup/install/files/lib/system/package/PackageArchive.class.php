@@ -285,9 +285,25 @@ class PackageArchive
             $this->requirements[$element->nodeValue] = $data;
         }
 
-        // Reject missing explicit com.woltlab.wcf requirement
-        if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {
-            throw new PackageValidationException(PackageValidationException::MISSING_COM_WOLTLAB_WCF_REQUIREMENT);
+        if (!isset($this->requirements['com.woltlab.wcf'])) {
+            // Reject missing explicit com.woltlab.wcf requirement
+            if ($this->packageInfo['name'] != 'com.woltlab.wcf') {
+                throw new PackageValidationException(PackageValidationException::MISSING_COM_WOLTLAB_WCF_REQUIREMENT);
+            }
+        } else {
+            // Reject com.woltlab.wcf requirements that are not reasonably recent.
+            // While it might be possible for packages to be compatible with versions both before and after
+            // the 5.5/6.0 jump, it is exceedingly unlikely for packages that were written for anything before 5.4
+            // to still be fully compatible.
+            //
+            // This stops old packages that are missing both exclude and compatibility tags from being installable,
+            // it also nicely excludes all versions were compatibility tags were non-deprecated (i.e. 5.2).
+            if (
+                !isset($this->requirements['com.woltlab.wcf']['version'])
+                || Package::compareVersion($this->requirements['com.woltlab.wcf']['version'], '5.4.22', '<')
+            ) {
+                throw new PackageValidationException(PackageValidationException::ANCIENT_COM_WOLTLAB_WCF_REQUIREMENT);
+            }
         }
 
         // get optional packages

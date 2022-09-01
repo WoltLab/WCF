@@ -161,6 +161,13 @@ class PackageValidationException extends SystemException
     const MISSING_COM_WOLTLAB_WCF_REQUIREMENT = 21;
 
     /**
+     * the package requires com.woltlab.wcf in an ancient version
+     * @var int
+     * @since   6.0
+     */
+    const ANCIENT_COM_WOLTLAB_WCF_REQUIREMENT = 22;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code
