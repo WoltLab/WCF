@@ -19,15 +19,13 @@ final class FileUtil
 {
     /**
      * finfo instance
-     * @var \finfo
      */
-    protected static $finfo;
+    protected static \finfo $finfo;
 
     /**
      * memory limit in bytes
-     * @var int
      */
-    protected static $memoryLimit;
+    protected static int $memoryLimit;
 
     /**
      * chmod mode
@@ -81,14 +79,12 @@ final class FileUtil
 
     /**
      * Generates a new temporary filename in TMP_DIR.
-     *
-     * @param string $prefix
-     * @param string $extension
-     * @param string $dir
-     * @return  string
      */
-    public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = TMP_DIR)
-    {
+    public static function getTemporaryFilename(
+        string $prefix = 'tmpFile_',
+        string $extension = '',
+        string $dir = TMP_DIR
+    ): string {
         $dir = self::addTrailingSlash($dir);
         do {
             $tmpFile = $dir . $prefix . Hex::encode(\random_bytes(20)) . $extension;
@@ -99,44 +95,32 @@ final class FileUtil
 
     /**
      * Removes a leading slash from the given path.
-     *
-     * @param string $path
-     * @return  string
      */
-    public static function removeLeadingSlash($path)
+    public static function removeLeadingSlash(string $path): string
     {
         return \ltrim($path, '/');
     }
 
     /**
      * Removes a trailing slash from the given path.
-     *
-     * @param string $path
-     * @return  string
      */
-    public static function removeTrailingSlash($path)
+    public static function removeTrailingSlash(string $path): string
     {
         return \rtrim($path, '/');
     }
 
     /**
      * Adds a trailing slash to the given path.
-     *
-     * @param string $path
-     * @return  string
      */
-    public static function addTrailingSlash($path)
+    public static function addTrailingSlash(string $path): string
     {
         return \rtrim($path, '/') . '/';
     }
 
     /**
      * Adds a leading slash to the given path.
-     *
-     * @param string $path
-     * @return  string
      */
-    public static function addLeadingSlash($path)
+    public static function addLeadingSlash(string $path): string
     {
         return '/' . \ltrim($path, '/');
     }
@@ -187,11 +171,8 @@ final class FileUtil
      * Creates a path on the local filesystem and returns true on success.
      * Parent directories do not need to exists as they will be created if
      * necessary.
-     *
-     * @param string $path
-     * @return  bool
      */
-    public static function makePath($path)
+    public static function makePath(string $path): bool
     {
         // directory already exists, abort
         if (\file_exists($path)) {
@@ -227,11 +208,8 @@ final class FileUtil
 
     /**
      * Unifies windows and unix directory separators.
-     *
-     * @param string $path
-     * @return  string
      */
-    public static function unifyDirSeparator($path)
+    public static function unifyDirSeparator(string $path): string
     {
         $path = \str_replace('\\\\', '/', $path);
 
@@ -281,22 +259,16 @@ final class FileUtil
 
     /**
      * Returns true if the given filename is an url (http or ftp).
-     *
-     * @param string $filename
-     * @return  bool
      */
-    public static function isURL($filename)
+    public static function isURL(string $filename): bool
     {
-        return \preg_match('!^(https?|ftp)://!', $filename);
+        return !!\preg_match('!^(https?|ftp)://!', $filename);
     }
 
     /**
      * Returns canonicalized absolute pathname.
-     *
-     * @param string $path
-     * @return  string      path
      */
-    public static function getRealPath($path)
+    public static function getRealPath(string $path): string
     {
         $path = self::unifyDirSeparator($path);
 
@@ -331,12 +303,8 @@ final class FileUtil
 
     /**
      * Formats the given filesize.
-     *
-     * @param int $byte
-     * @param int $precision
-     * @return  string
      */
-    public static function formatFilesize($byte, $precision = 2)
+    public static function formatFilesize(int $byte, int $precision = 2): string
     {
         $symbol = 'Byte';
         if ($byte >= 1000) {
@@ -363,12 +331,8 @@ final class FileUtil
      * Formats a filesize with binary prefix.
      *
      * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
-     *
-     * @param int $byte
-     * @param int $precision
-     * @return  string
      */
-    public static function formatFilesizeBinary($byte, $precision = 2)
+    public static function formatFilesizeBinary(int $byte, int $precision = 2): string
     {
         $symbol = 'Byte';
         if ($byte >= 1024) {
@@ -396,11 +360,8 @@ final class FileUtil
      * The exact number of bytes is system dependent, but it is typically several thousand.
      * If every byte in that part of the file is non-null, considers the file to be text;
      * otherwise it considers the file to be binary.
-     *
-     * @param string $file
-     * @return  bool
      */
-    public static function isBinary($file)
+    public static function isBinary(string $file): bool
     {
         // open file
         $file = new File($file, 'rb');
@@ -426,12 +387,8 @@ final class FileUtil
 
     /**
      * Uncompresses a gzipped file and returns true if successful.
-     *
-     * @param string $gzipped
-     * @param string $destination
-     * @return  bool
      */
-    public static function uncompressFile($gzipped, $destination)
+    public static function uncompressFile(string $gzipped, string $destination): bool
     {
         if (!@\is_file($gzipped)) {
             return false;
@@ -452,26 +409,22 @@ final class FileUtil
 
     /**
      * Returns true if php is running as apache module.
-     *
-     * @return  bool
      */
-    public static function isApacheModule()
+    public static function isApacheModule(): bool
     {
         return \function_exists('apache_get_version');
     }
 
     /**
      * Returns the mime type of a file.
-     *
-     * @param string $filename
-     * @return  string
      */
-    public static function getMimeType($filename)
+    public static function getMimeType(string $filename): string
     {
-        if (self::$finfo === null) {
-            if (!\class_exists('\finfo', false)) {
+        if (!isset(self::$finfo)) {
+            if (!\class_exists(\finfo::class, false)) {
                 return 'application/octet-stream';
             }
+
             self::$finfo = new \finfo(\FILEINFO_MIME_TYPE);
         }
 
@@ -486,10 +439,9 @@ final class FileUtil
      * Tries to make a file or directory writable. It starts of with the least
      * permissions and goes up until 0666 for files and 0777 for directories.
      *
-     * @param string $filename
      * @throws  SystemException
      */
-    public static function makeWritable($filename)
+    public static function makeWritable(string $filename): void
     {
         if (!\file_exists($filename)) {
             return;
@@ -554,12 +506,10 @@ final class FileUtil
 
     /**
      * Returns memory limit in bytes.
-     *
-     * @return  int
      */
-    public static function getMemoryLimit()
+    public static function getMemoryLimit(): int
     {
-        if (self::$memoryLimit === null) {
+        if (!isset(self::$memoryLimit)) {
             self::$memoryLimit = 0;
 
             $memoryLimit = \ini_get('memory_limit');
@@ -597,22 +547,16 @@ final class FileUtil
 
     /**
      * Returns true if the given amount of memory is available.
-     *
-     * @param int $neededMemory
-     * @return  bool
      */
-    public static function checkMemoryLimit($neededMemory)
+    public static function checkMemoryLimit(int $neededMemory): bool
     {
         return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (\memory_get_usage() + $neededMemory);
     }
 
     /**
      * Returns icon name for given filename.
-     *
-     * @param string $filename
-     * @return      string
      */
-    public static function getIconNameByFilename($filename)
+    public static function getIconNameByFilename(string $filename): string
     {
         static $mapping = [
             // archive
