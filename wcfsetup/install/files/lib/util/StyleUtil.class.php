@@ -151,14 +151,6 @@ final class StyleUtil
     }
 
     /**
-     * @deprecated 5.4 Call StyleCompiler::compileACP() directly.
-     */
-    public static function updateStyleFile()
-    {
-        StyleCompiler::getInstance()->compileACP();
-    }
-
-    /**
      * Forbid creation of StyleUtil objects.
      */
     private function __construct()
