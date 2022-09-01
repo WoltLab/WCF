@@ -154,6 +154,13 @@ class PackageValidationException extends SystemException
     const SELF_EXCLUDE = 20;
 
     /**
+     * the package does not explicitly require com.woltlab.wcf
+     * @var int
+     * @since   6.0
+     */
+    const MISSING_COM_WOLTLAB_WCF_REQUIREMENT = 21;
+
+    /**
      * Creates a new PackageArchiveValidationException.
      *
      * @param int $code

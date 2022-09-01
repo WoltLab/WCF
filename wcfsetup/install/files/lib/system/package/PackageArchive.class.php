@@ -285,6 +285,11 @@ class PackageArchive
             $this->requirements[$element->nodeValue] = $data;
         }
 
+        // Reject missing explicit com.woltlab.wcf requirement
+        if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {
+            throw new PackageValidationException(PackageValidationException::MISSING_COM_WOLTLAB_WCF_REQUIREMENT);
+        }
+
         // get optional packages
         $elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
         foreach ($elements as $element) {
@@ -396,11 +401,6 @@ class PackageArchive
             } else {
                 $this->instructions['update'][$fromVersion] = $instructionData;
             }
-        }
-
-        // add com.woltlab.wcf to package requirements
-        if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {
-            $this->requirements['com.woltlab.wcf'] = ['name' => 'com.woltlab.wcf'];
         }
 
         // during installations, `Package::$packageVersion` can be `null` which causes issues
