@@ -98,7 +98,8 @@ fa-icon {
 }
 
 /* @deprecated 6.0 Use the new icons instead, `.icon` is now just an easy-to-spot reminder. */
-.icon {
+.icon,
+.fa-spinner {
   align-items: center;
   background-color: #f0c !important;
   border-radius: 3px;
