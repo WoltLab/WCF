@@ -11,10 +11,10 @@ namespace wcf\system\style\exception;
  * @package WoltLabSuite\Core\System\Style\Exception
  * @since 6.0
  */
-final class InvalidIconSize extends \OutOfBoundsException
+final class InvalidIconSize extends \OutOfBoundsException implements IconValidationFailed
 {
-    public function __construct(int $size)
+    public function __construct(int $size, ?\Throwable $previous = null)
     {
-        parent::__construct("An invalid icon size of '{$size}' was provided.");
+        parent::__construct("An invalid icon size of '{$size}' was provided.", 0, $previous);
     }
 }
