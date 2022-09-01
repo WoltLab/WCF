@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Uri;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -225,7 +226,14 @@ abstract class AbstractOauth2Action extends AbstractAction
             $parameters['code_challenge_method'] = 'S256';
         }
 
-        $url = $this->getAuthorizeUrl() . '?' . \http_build_query($parameters, '', '&');
+        $encodedParameters = \http_build_query($parameters, '', '&');
+
+        $url = new Uri($this->getAuthorizeUrl());
+        if (($query = $url->getQuery())) {
+            $url = $url->withQuery("{$query}&{$encodedParameters}");
+        } else {
+            $url = $url->withQuery($encodedParameters);
+        }
 
         HeaderUtil::redirect($url);
 
