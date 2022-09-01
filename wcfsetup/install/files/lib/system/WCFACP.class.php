@@ -189,12 +189,4 @@ class WCFACP extends WCF
             'availableAcpSearchProviders' => $availableAcpSearchProviders,
         ]);
     }
-
-    /**
-     * @deprecated 5.4 The master password is deprecated in favor of proper MFA (https://github.com/WoltLab/WCF/issues/3698).
-     */
-    public static function checkMasterPassword()
-    {
-        // Does nothing. The master password has been removed since version 5.5.
-    }
 }
