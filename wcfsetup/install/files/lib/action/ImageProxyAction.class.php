@@ -83,7 +83,7 @@ class ImageProxyAction extends AbstractAction
     {
         parent::execute();
 
-        if (isset($_SERVER['HTTP_VIA']) && \strpos($_SERVER['HTTP_VIA'], 'wsc') !== false) {
+        if (isset($_SERVER['HTTP_VIA']) && \str_contains($_SERVER['HTTP_VIA'], 'wsc')) {
             throw new IllegalLinkException();
         }
 
