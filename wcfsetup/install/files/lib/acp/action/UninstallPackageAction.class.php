@@ -145,7 +145,6 @@ class UninstallPackageAction extends InstallPackageAction
      */
     public function stepUninstall()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $node = $this->installation->uninstall($this->node);
 
         if ($node == '') {
