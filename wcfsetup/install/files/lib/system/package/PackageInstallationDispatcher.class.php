@@ -124,11 +124,9 @@ class PackageInstallationDispatcher
     /**
      * Installs node components and returns next node.
      *
-     * @param string $node
-     * @return  PackageInstallationStep
      * @throws      SystemException
      */
-    public function install($node)
+    public function install(string $node): PackageInstallationStep
     {
         $nodes = $this->nodeBuilder->getNodeData($node);
         if (empty($nodes)) {
@@ -469,10 +467,9 @@ class PackageInstallationDispatcher
      * Installs current package.
      *
      * @param mixed[] $nodeData
-     * @return  PackageInstallationStep
      * @throws  SystemException
      */
-    protected function installPackage(array $nodeData)
+    protected function installPackage(array $nodeData): PackageInstallationStep
     {
         $installationStep = new PackageInstallationStep();
 
@@ -733,10 +730,9 @@ class PackageInstallationDispatcher
      * Executes a package installation plugin.
      *
      * @param mixed[] $nodeData
-     * @return  PackageInstallationStep
      * @throws  SystemException
      */
-    protected function executePIP(array $nodeData)
+    protected function executePIP(array $nodeData): PackageInstallationStep
     {
         $step = new PackageInstallationStep();
 
@@ -799,9 +795,8 @@ class PackageInstallationDispatcher
      *
      * @param string $currentNode
      * @param array $nodeData
-     * @return  PackageInstallationStep
      */
-    protected function selectOptionalPackages($currentNode, array $nodeData)
+    protected function selectOptionalPackages(string $currentNode, array $nodeData): PackageInstallationStep
     {
         $installationStep = new PackageInstallationStep();
 
