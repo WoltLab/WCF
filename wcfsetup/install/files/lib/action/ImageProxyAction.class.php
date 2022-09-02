@@ -83,7 +83,7 @@ class ImageProxyAction extends AbstractAction
     {
         parent::execute();
 
-        if (isset($_SERVER['HTTP_VIA']) && \strpos($_SERVER['HTTP_VIA'], 'wsc') !== false) {
+        if (isset($_SERVER['HTTP_VIA']) && \str_contains($_SERVER['HTTP_VIA'], 'wsc')) {
             throw new IllegalLinkException();
         }
 
@@ -103,7 +103,7 @@ class ImageProxyAction extends AbstractAction
 
             // check whether we already downloaded the image
             $fileLocation = null;
-            foreach (['png', 'jpg', 'gif'] as $extension) {
+            foreach (['png', 'jpg', 'jpeg', 'gif', 'webp'] as $extension) {
                 if (\is_file($dir . '/' . $fileName . '.' . $extension)) {
                     $fileLocation = $dir . '/' . $fileName . '.' . $extension;
                     break;
@@ -172,21 +172,18 @@ class ImageProxyAction extends AbstractAction
                     // check file type
                     $imageData = @\getimagesize($tmp);
                     if (!$imageData) {
-                        throw new \DomainException();
+                        throw new \DomainException("Response body is not an image.");
                     }
 
                     switch ($imageData[2]) {
                         case \IMAGETYPE_PNG:
-                            $extension = 'png';
-                            break;
                         case \IMAGETYPE_GIF:
-                            $extension = 'gif';
-                            break;
                         case \IMAGETYPE_JPEG:
-                            $extension = 'jpg';
+                        case \IMAGETYPE_WEBP:
+                            $extension = \image_type_to_extension($imageData[2], false);
                             break;
                         default:
-                            throw new \DomainException();
+                            throw new \DomainException(\sprintf("Unhandled image type '%d'.", $imageData[2]));
                     }
                 } catch (\DomainException $e) {
                     // save a dummy image in case the server sent us junk, otherwise we might try to download the file over and over and over again.
