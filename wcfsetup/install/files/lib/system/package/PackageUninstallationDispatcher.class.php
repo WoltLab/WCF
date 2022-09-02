@@ -116,12 +116,16 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * @inheritDoc
      */
-    protected function executePIP(array $nodeData)
+    protected function executePIP(array $nodeData): PackageInstallationStep
     {
         /** @var IPackageInstallationPlugin $pip */
         $pip = new $nodeData['className']($this);
 
         $pip->uninstall();
+
+        // This return value is ignored by PackageUninstallationDispatcher, but it
+        // is necessary to be compatible with parent::executePIP().
+        return new PackageInstallationStep();
     }
 
     /**
