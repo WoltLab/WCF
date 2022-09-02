@@ -89,15 +89,17 @@
 			
 			<dl>
 				<dt>{lang}wcf.acp.index.system.software.version{/lang}</dt>
-				<dd>{@WCF_VERSION}</dd>
+				<dd>{WCF_VERSION}</dd>
 			</dl>
 			
 			{event name='softwareFields'}
 			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.software.databaseNumber{/lang}</dt>
-				<dd>{@WCF_N}</dd>
-			</dl>
+			{if WCF_N != 1}
+				<dl>
+					<dt>{lang}wcf.acp.index.system.software.databaseNumber{/lang}</dt>
+					<dd>{WCF_N}</dd>
+				</dl>
+			{/if}
 		</section>
 		
 		{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
