@@ -8,52 +8,41 @@ use wcf\system\form\FormDocument;
  * Represents step information within an installation node.
  *
  * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package
  */
-class PackageInstallationStep
+final class PackageInstallationStep
 {
-    /**
-     * form document object
-     * @var FormDocument
-     */
-    protected $document;
+    private FormDocument $document;
 
     /**
      * exception causing node splitting
-     * @var null|SplitNodeException
      */
-    protected $exception;
+    private ?SplitNodeException $exception = null;
 
     /**
      * next installation node
-     * @var string
      */
-    protected $node = '';
+    private string $node = '';
 
     /**
      * indicates if current current node should be splitted
-     * @var bool
      */
-    protected $splitNode = false;
+    private bool $splitNode = false;
 
     /**
      * Sets next installation node.
-     *
-     * @param string $node
      */
-    public function setNode($node)
+    public function setNode(string $node): void
     {
         $this->node = $node;
     }
 
     /**
      * Returns next installation node.
-     *
-     * @return  string
      */
-    public function getNode()
+    public function getNode(): string
     {
         return $this->node;
     }
@@ -63,7 +52,7 @@ class PackageInstallationStep
      *
      * @param FormDocument $document
      */
-    public function setDocument(FormDocument $document)
+    public function setDocument(FormDocument $document): void
     {
         $this->document = $document;
     }
@@ -71,40 +60,32 @@ class PackageInstallationStep
     /**
      * Returns the exception causing node splitting or `null` if the node has not been split
      * or if it was not split by an exception.
-     *
-     * @return  null|SplitNodeException
      */
-    public function getException()
+    public function getException(): ?SplitNodeException
     {
         return $this->exception;
     }
 
     /**
      * Returns HTML-representation of form document object.
-     *
-     * @return  string
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->document->getHTML();
     }
 
     /**
      * Returns true if current step holds a form document object.
-     *
-     * @return  bool
      */
-    public function hasDocument()
+    public function hasDocument(): bool
     {
-        return $this->document !== null;
+        return isset($this->document);
     }
 
     /**
      * Enforces node splitting.
-     *
-     * @param null|SplitNodeException $splitNodeException
      */
-    public function setSplitNode(?SplitNodeException $splitNodeException = null)
+    public function setSplitNode(?SplitNodeException $splitNodeException = null): void
     {
         $this->splitNode = true;
         $this->exception = $splitNodeException;
@@ -112,10 +93,8 @@ class PackageInstallationStep
 
     /**
      * Returns true if node should be splitted.
-     *
-     * @return  bool
      */
-    public function splitNode()
+    public function splitNode(): bool
     {
         return $this->splitNode;
     }
