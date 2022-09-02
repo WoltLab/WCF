@@ -139,8 +139,6 @@ class InstallPackageAction extends AbstractSecureAction
         }
 
         if ($step->getNode() == '') {
-            WCF::resetZendOpcache();
-
             // show success
             return new JsonResponse([
                 'currentAction' => $this->getCurrentAction(null),
@@ -149,8 +147,6 @@ class InstallPackageAction extends AbstractSecureAction
                 'step' => 'success',
             ]);
         }
-
-        WCF::resetZendOpcache();
 
         // continue with next node
         return new JsonResponse([

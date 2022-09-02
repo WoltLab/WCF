@@ -248,6 +248,8 @@ class PackageInstallationDispatcher
             $this->logInstallationStep([], 'finished cleanup');
         }
 
+        WCF::resetZendOpcache();
+
         return $step;
     }
 

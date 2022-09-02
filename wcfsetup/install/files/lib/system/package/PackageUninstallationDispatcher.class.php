@@ -98,6 +98,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             $command();
         }
 
+        WCF::resetZendOpcache();
+
         return $step;
     }
 
