@@ -96,7 +96,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             $this->node,
             $this->parentNode,
             'package',
-            'a:0:{}',
+            \serialize([]),
         ]);
     }
 }
