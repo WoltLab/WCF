@@ -172,7 +172,7 @@ class ImageProxyAction extends AbstractAction
                     // check file type
                     $imageData = @\getimagesize($tmp);
                     if (!$imageData) {
-                        throw new \DomainException();
+                        throw new \DomainException("Response body is not an image.");
                     }
 
                     switch ($imageData[2]) {
@@ -189,7 +189,7 @@ class ImageProxyAction extends AbstractAction
                             $extension = 'webp';
                             break;
                         default:
-                            throw new \DomainException();
+                            throw new \DomainException(\sprintf("Unhandled image type '%d'.", $imageData[2]));
                     }
                 } catch (\DomainException $e) {
                     // save a dummy image in case the server sent us junk, otherwise we might try to download the file over and over and over again.
