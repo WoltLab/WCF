@@ -103,7 +103,7 @@ class ImageProxyAction extends AbstractAction
 
             // check whether we already downloaded the image
             $fileLocation = null;
-            foreach (['png', 'jpg', 'gif', 'webp'] as $extension) {
+            foreach (['png', 'jpg', 'jpeg', 'gif', 'webp'] as $extension) {
                 if (\is_file($dir . '/' . $fileName . '.' . $extension)) {
                     $fileLocation = $dir . '/' . $fileName . '.' . $extension;
                     break;
@@ -177,16 +177,10 @@ class ImageProxyAction extends AbstractAction
 
                     switch ($imageData[2]) {
                         case \IMAGETYPE_PNG:
-                            $extension = 'png';
-                            break;
                         case \IMAGETYPE_GIF:
-                            $extension = 'gif';
-                            break;
                         case \IMAGETYPE_JPEG:
-                            $extension = 'jpg';
-                            break;
                         case \IMAGETYPE_WEBP:
-                            $extension = 'webp';
+                            $extension = \image_type_to_extension($imageData[2], false);
                             break;
                         default:
                             throw new \DomainException(\sprintf("Unhandled image type '%d'.", $imageData[2]));
