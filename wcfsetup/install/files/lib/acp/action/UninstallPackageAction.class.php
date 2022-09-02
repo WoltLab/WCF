@@ -8,8 +8,11 @@ use wcf\data\application\ApplicationAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageUninstallationDispatcher;
+use wcf\system\search\SearchIndexManager;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -23,6 +26,30 @@ use wcf\util\StringUtil;
  */
 class UninstallPackageAction extends InstallPackageAction
 {
+    /**
+     * current node
+     * @var string
+     */
+    public $node = '';
+
+    /**
+     * PackageInstallationDispatcher object
+     * @var PackageUninstallationDispatcher
+     */
+    public $installation;
+
+    /**
+     * PackageInstallationQueue object
+     * @var PackageInstallationQueue
+     */
+    public $queue;
+
+    /**
+     * current queue id
+     * @var int
+     */
+    public $queueID = 0;
+
     /**
      * active package id
      * @var int
@@ -200,5 +227,18 @@ class UninstallPackageAction extends InstallPackageAction
         }
 
         return $currentAction;
+    }
+
+    /**
+     * Clears resources after successful uninstallation.
+     */
+    protected function finalize()
+    {
+        // create search index tables
+        SearchIndexManager::getInstance()->createSearchIndices();
+
+        VersionTracker::getInstance()->createStorageTables();
+
+        CacheHandler::getInstance()->flushAll();
     }
 }
