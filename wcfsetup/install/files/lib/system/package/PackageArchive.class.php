@@ -299,8 +299,8 @@ class PackageArchive
             // This stops old packages that are missing both exclude and compatibility tags from being installable,
             // it also nicely excludes all versions were compatibility tags were non-deprecated (i.e. 5.2).
             if (
-                !isset($this->requirements['com.woltlab.wcf']['version'])
-                || Package::compareVersion($this->requirements['com.woltlab.wcf']['version'], '5.4.22', '<')
+                !isset($this->requirements['com.woltlab.wcf']['minversion'])
+                || Package::compareVersion($this->requirements['com.woltlab.wcf']['minversion'], '5.4.22', '<')
             ) {
                 throw new PackageValidationException(PackageValidationException::ANCIENT_COM_WOLTLAB_WCF_REQUIREMENT);
             }
