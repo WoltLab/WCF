@@ -141,23 +141,11 @@ class PackageInstallationDispatcher
             $nodeData = \unserialize($data['nodeData']);
             $this->logInstallationStep($data);
 
-            switch ($data['nodeType']) {
-                case 'package':
-                    $step = $this->installPackage($nodeData);
-                    break;
-
-                case 'pip':
-                    $step = $this->executePIP($nodeData);
-                    break;
-
-                case 'optionalPackages':
-                    $step = $this->selectOptionalPackages($node, $nodeData);
-                    break;
-
-                default:
-                    exit("Unknown node type: '" . $data['nodeType'] . "'");
-                    break;
-            }
+            $step = match ($data['nodeType']) {
+                'package' => $this->installPackage($nodeData),
+                'pip' => $this->executePIP($nodeData),
+                'optionalPackages' => $this->selectOptionalPackages($node, $nodeData),
+            };
 
             if ($step->splitNode()) {
                 $log = 'split node';
