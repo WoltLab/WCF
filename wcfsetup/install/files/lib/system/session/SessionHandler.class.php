@@ -625,9 +625,14 @@ final class SessionHandler extends SingletonFactory
             return false;
         }
 
-        $variables = @\unserialize($row['sessionVariables']);
-        // Check whether the session variables became corrupted.
-        if (!\is_array($variables)) {
+        try {
+            $variables = \unserialize($row['sessionVariables']);
+
+            // Check whether the session variables became corrupted.
+            if (!\is_array($variables)) {
+                return false;
+            }
+        } catch (\Throwable $e) {
             return false;
         }
 
