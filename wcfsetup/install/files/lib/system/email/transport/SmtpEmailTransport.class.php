@@ -422,15 +422,38 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                 // lock delivery on permanent failure to avoid spamming the SMTP server
                 $this->locked = $e;
                 $this->disconnect();
+
                 throw $e;
             } catch (\Exception $e) {
                 $this->disconnect();
+
                 throw $e;
             }
         }
 
-        $this->write('RSET');
-        $this->read([250]);
+        try {
+            $this->write('RSET');
+            $this->read([250]);
+        } catch (\Exception $e) {
+            // If the RSET command failed, then this most likely means that the state
+            // of the SMTP connection desynced between client and server.
+            //
+            // This can happen if an LF is inserted into the MAIL FROM or RCPT TO
+            // address. This will push the trailing `>` into a new line, which itself
+            // will be terminated by CRLF, thus resulting in it interpreted by a separate
+            // command which itself will then be interpreted as the response to whatever
+            // the SMTP transport sends next (most likely the RSET).
+            //
+            // If such a desync is detected, we must tear down the SMTP connection to
+            // revert back to a known safe state within a fresh connection.
+            $this->disconnect();
+
+            // We must wrap any existing exception, because it most likely is a bogus PermanentFailure with
+            // cause '5.5.2 Error: command not recognized'. If we would emit the PermanentFailure, then we
+            // would drop the email, even though the email itself is not at fault.
+            throw new TransientFailure('Failed to RSET the SMTP connection.', 0, $e);
+        }
+
         $this->write('MAIL FROM:<' . $envelopeFrom->getAddress() . '>');
         $this->read([250]);
         $this->write('RCPT TO:<' . $envelopeTo->getAddress() . '>');
