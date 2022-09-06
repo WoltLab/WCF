@@ -28,6 +28,10 @@
 
   class FaIcon extends HTMLElement {
     connectedCallback() {
+      if (!this.hasAttribute("size")) {
+        this.setAttribute("size", "16");
+      }
+
       this.validate();
 
       this.setIcon(this.name, this.solid);
@@ -36,9 +40,7 @@
     }
 
     private validate(): void {
-      if (this.size === 0) {
-        throw new TypeError("Must provide an icon size.");
-      } else if (!HeightMap.has(this.size)) {
+      if (!HeightMap.has(this.size)) {
         throw new TypeError("Must provide a valid icon size.");
       }
 
