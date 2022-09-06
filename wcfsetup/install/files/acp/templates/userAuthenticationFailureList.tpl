@@ -113,9 +113,9 @@
 						<td class="columnTitle columnUsername">
 							<span class="jsTooltip" title="{lang}wcf.acp.user.authentication.failure.{if $authenticationFailure->userID}password{else}username{/if}{/lang}">
 								{if $authenticationFailure->userID}
-									{icon size=16 name='key'}
+									{icon name='key'}
 								{else}
-									{icon size=16 name='user'}
+									{icon name='user'}
 								{/if}
 							</span>
 							{if $authenticationFailure->userID}<a href="{link controller='UserEdit' id=$authenticationFailure->userID}{/link}">{$authenticationFailure->username}</a>{else}{$authenticationFailure->username}{/if}

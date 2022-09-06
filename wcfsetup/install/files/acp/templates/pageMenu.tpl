@@ -39,7 +39,7 @@
 											
 											{foreach from=$_subMenuItems item=_subMenuItem}
 												<a href="{$_subMenuItem->getLink()}" class="acpPageSubMenuIcon jsTooltip{if $_subMenuItem->menuItem|in_array:$_activeMenuItems} active{/if}" title="{@$_subMenuItem}">
-													{@$_subMenuItem->getIcon()->toHtml(16)}
+													{@$_subMenuItem->getIcon()->toHtml()}
 												</a>
 											{/foreach}
 										</li>

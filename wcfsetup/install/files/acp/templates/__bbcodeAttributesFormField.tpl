@@ -2,7 +2,7 @@
 	<section class="section">
 		<h2 class="sectionTitle">
 			<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-				{icon size=16 name='xmark'}
+				{icon name='xmark'}
 			</button>
 			<span>{lang __literal=true}wcf.acp.bbcode.numberedAttribute{/lang}</span>
 		</h2>
@@ -39,7 +39,7 @@
 							*}data-no-input-id="{@$field->getPrefixedId()}_required_{ldelim}@$attributeNumber}_no"{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{ldelim}@$attributeNumber}" class="green">
-							{icon size=16 name='check'} {lang}wcf.global.form.boolean.yes{/lang}
+							{icon name='check'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -51,7 +51,7 @@
 							*}checked{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{ldelim}@$attributeNumber}_no" class="red">
-							{icon size=16 name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
+							{icon name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>
@@ -72,7 +72,7 @@
 							*}data-no-input-id="{@$field->getPrefixedId()}_useText_{ldelim}@$attributeNumber}_no"{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{ldelim}@$attributeNumber}" class="green">
-							{icon size=16 name='check'} {lang}wcf.global.form.boolean.yes{/lang}
+							{icon name='check'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -84,7 +84,7 @@
 							*}checked{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{ldelim}@$attributeNumber}_no" class="red">
-							{icon size=16 name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
+							{icon name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>
@@ -102,7 +102,7 @@
 		var parentTitle = DomTraverse.childBySel(parentContainer, 'h2.sectionTitle');
 		parentTitle.innerHTML = `
 			<button class="jsTooltip" id="{@$field->getPrefixedId()}AddAttribute" title="{lang}wcf.global.button.add{/lang}">
-				{icon size=16 name='plus'}
+				{icon name='plus'}
 			</button>
 			${parentTitle.innerHTML}
 		`;
@@ -140,7 +140,7 @@
 	<section class="section">
 		<h2 class="sectionTitle">
 			<button class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-				{icon size=16 name='xmark'}
+				{icon name='xmark'}
 			</button>
 			<span>{lang}wcf.acp.bbcode.numberedAttribute{/lang}</span>
 		</h2>
@@ -187,7 +187,7 @@
 							*}{if !$attributeData[required]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{@$attributeNumber}" class="green">
-							{icon size=16 name='check'} {lang}wcf.global.form.boolean.yes{/lang}
+							{icon name='check'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -199,7 +199,7 @@
 							*}{if $attributeData[required]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_required_{@$attributeNumber}_no" class="red">
-							{icon size=16 name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
+							{icon name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>
@@ -221,7 +221,7 @@
 							*}{if !$attributeData[useText]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{@$attributeNumber}" class="green">
-							{icon size=16 name='check'} {lang}wcf.global.form.boolean.yes{/lang}
+							{icon name='check'} {lang}wcf.global.form.boolean.yes{/lang}
 						</label>
 					</li>
 					<li>
@@ -233,7 +233,7 @@
 							*}{if $attributeData[useText]|empty} checked{/if}{*
 						*}>
 						<label for="{@$field->getPrefixedId()}_useText_{@$attributeNumber}_no" class="red">
-							{icon size=16 name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
+							{icon name='xmark'} {lang}wcf.global.form.boolean.no{/lang}
 						</label>
 					</li>
 				</ol>

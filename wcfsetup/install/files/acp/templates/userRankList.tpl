@@ -24,8 +24,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a id="updateEvents" class="button">{icon size=16 name='arrow-rotate-right'} <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
-			<li><a href="{link controller='UserRankAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.rank.add{/lang}</span></a></li>
+			<li><a id="updateEvents" class="button">{icon name='arrow-rotate-right'} <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
+			<li><a href="{link controller='UserRankAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.rank.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -58,7 +58,7 @@
 				{foreach from=$objects item=userRank}
 					<tr class="jsUserRankRow jsObjectActionObject" data-object-id="{@$userRank->getObjectID()}">
 						<td class="columnIcon">
-							<a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$userRank->getTitle()}
 							
 							{event name='rowButtons'}
@@ -96,7 +96,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserRankAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.rank.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserRankAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.rank.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

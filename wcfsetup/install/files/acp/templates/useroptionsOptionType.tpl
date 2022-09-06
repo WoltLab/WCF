@@ -29,7 +29,7 @@
 				<li class="sortableNode">
 					<span class="sortableNodeLabel">
 						<span class="sortableNodeHandle">
-							{icon size=16 name='arrows-up-down-left-right'}
+							{icon name='arrows-up-down-left-right'}
 						</span>
 						<label>
 							<input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}>

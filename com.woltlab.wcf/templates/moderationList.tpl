@@ -11,8 +11,8 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
-	<a href="{link controller='DeletedContentList'}{/link}" class="contentInteractionButton button small">{icon size=16 name='trash-can'} <span>{lang}wcf.moderation.showDeletedContent{/lang}</span></a>
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	<a href="{link controller='DeletedContentList'}{/link}" class="contentInteractionButton button small">{icon name='trash-can'} <span>{lang}wcf.moderation.showDeletedContent{/lang}</span></a>
 {/capture}
 
 {include file='header'}
@@ -33,9 +33,9 @@
 									title="{lang}wcf.search.sortBy{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"
 								>
 									{if $sortOrder === 'ASC'}
-										{icon size=16 name='arrow-down-wide-short'}
+										{icon name='arrow-down-wide-short'}
 									{else}
-										{icon size=16 name='arrow-down-short-wide'}
+										{icon name='arrow-down-short-wide'}
 									{/if}
 								</a>
 							</li>
@@ -58,14 +58,14 @@
 								{content}
 									{if $definitionID}
 										<li class="jsTooltip" title="{lang}wcf.moderation.filterByType{/lang}">
-											{icon size=16 name='tag'}
+											{icon name='tag'}
 											{lang}wcf.moderation.type.{$availableDefinitions[$definitionID]}{/lang}
 										</li>
 									{/if}
 									
 									{if !$assignedUserID || $assignedUserID == $__wcf->getUser()->userID}
 										<li class="jsTooltip" title="{lang}wcf.moderation.filterByUser{/lang}">
-											{icon size=16 name='user'}
+											{icon name='user'}
 											{if !$assignedUserID}
 												{lang}wcf.moderation.filterByUser.nobody{/lang}
 											{else}
@@ -77,10 +77,10 @@
 									{if $status == -1 || $status == 2}
 										<li class="jsTooltip" title="{lang}wcf.moderation.status{/lang}">
 											{if $status == -1}
-												{icon size=16 name='circle'}
+												{icon name='circle'}
 												{lang}wcf.moderation.status.outstanding{/lang}
 											{else}
-												{icon size=16 name='circle-check'}
+												{icon name='circle-check'}
 												{lang}wcf.moderation.status.done{/lang}
 											{/if}
 										</li>
@@ -90,7 +90,7 @@
 						</li>
 					{/hascontent}
 					<li class="columnApplyFilter jsOnly">
-						<button class="button small jsStaticDialog" data-dialog-id="moderationListSortFilter">{icon size=16 name='filter'} {lang}wcf.global.filter{/lang}</button>
+						<button class="button small jsStaticDialog" data-dialog-id="moderationListSortFilter">{icon name='filter'} {lang}wcf.global.filter{/lang}</button>
 					</li>
 				</ol>
 			</li>
@@ -149,7 +149,7 @@
 								<dd>{@$entry->comments|shortUnit}</dd>
 							</dl>
 							
-							<div class="messageGroupListStatsSimple">{if $entry->comments}{icon size=16 name='comment'} {@$entry->comments|shortUnit}{/if}</div>
+							<div class="messageGroupListStatsSimple">{if $entry->comments}{icon name='comment'} {@$entry->comments|shortUnit}{/if}</div>
 						</li>
 						<li class="columnLastPost columnDate">
 							{if $entry->lastChangeTime}{@$entry->lastChangeTime|time}{/if}

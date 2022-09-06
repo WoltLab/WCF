@@ -8,7 +8,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

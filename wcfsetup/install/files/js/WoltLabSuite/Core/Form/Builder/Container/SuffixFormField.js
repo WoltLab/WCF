@@ -41,7 +41,7 @@ define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../
             });
             this._suffixField.value = target.dataset.value;
             this._suffixDropdownToggle.innerHTML =
-                target.dataset.label + ' <fa-icon size="16" name="caret-down" solid></fa-icon>';
+                target.dataset.label + ' <fa-icon name="caret-down" solid></fa-icon>';
         }
         /**
          * Destroys the suffix dropdown if the parent form is unregistered.

@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -39,10 +39,10 @@
 				{foreach from=$objects item=category}
 					<tr class="jsCategoryRow jsObjectActionObject" data-object-id="{@$category->getObjectID()}">
 						<td class="columnIcon">
-							<a href="{link controller='UserOptionCategoryEdit' id=$category->categoryID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='UserOptionCategoryEdit' id=$category->categoryID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{if $category->userOptions > 0}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{else}
 								{objectAction action="delete" objectTitle=$category->getTitle()}
@@ -71,7 +71,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

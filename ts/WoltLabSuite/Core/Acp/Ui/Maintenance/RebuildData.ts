@@ -60,7 +60,7 @@ async function runWorker(
         }
 
         span = document.createElement("span");
-        span.innerHTML = `<fa-icon size="16" name="check" solid></fa-icon> ${Language.get("wcf.acp.worker.success")}`;
+        span.innerHTML = `<fa-icon name="check" solid></fa-icon> ${Language.get("wcf.acp.worker.success")}`;
         button.parentNode!.insertBefore(span, button.nextElementSibling);
         resolve();
       },

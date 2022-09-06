@@ -38,7 +38,7 @@
 									<input type="checkbox" value="1" id="quote_{@$quoteID}" class="jsCheckbox">
 									{if $supportPaste}
 										<button class="jsTooltip jsInsertQuote" title="{lang}wcf.message.quote.insertQuote{/lang}">
-											{icon size=16 name='plus'}
+											{icon name='plus'}
 										</button>
 									{/if}
 								</span>

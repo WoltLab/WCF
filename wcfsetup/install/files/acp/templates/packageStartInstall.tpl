@@ -32,9 +32,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
-				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog">{icon size=16 name='upload'} <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog">{icon name='upload'} <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

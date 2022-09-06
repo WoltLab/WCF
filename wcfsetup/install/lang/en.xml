@@ -465,7 +465,7 @@
 		<dd><kbd>{$minVersion}</kbd></dd>
 	{/if}
 	<dt>Package file included in package</dt>
-	<dd>{if $file}{icon size=16 name='check'}{else}{icon size=16 name='xmark'}{/if}</dd>
+	<dd>{if $file}{icon name='check'}{else}{icon name='xmark'}{/if}</dd>
 </dl>]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[The package identifier must not be longer than 191 characters.]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[The package identifier must be longer than three characters.]]></item>
@@ -530,7 +530,7 @@
 		{/if}
 		{if $runStandalone}
 			<dt>Run in separate step</dt>
-			<dd>{icon size=16 name='check'}</dd>
+			<dd>{icon name='check'}</dd>
 		{/if}
 	</dl>
 {/if}]]></item>
@@ -868,7 +868,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Accelerated guest view is enabled]]></item>
-		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied, despite them being granted below. Affected options have been marked with a bolt ({icon size=16 name='bolt'}).]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied, despite them being granted below. Affected options have been marked with a bolt ({icon name='bolt'}).]]></item>
 		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Can manage contact form]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Can manage trophies]]></item>

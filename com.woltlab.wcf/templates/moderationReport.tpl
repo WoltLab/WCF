@@ -35,7 +35,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary">{icon size=16 name='arrow-right'} <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
+						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button buttonPrimary">{icon name='arrow-right'} <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
 				</ul>
@@ -45,15 +45,15 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{icon size=16 name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
+	<button id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{icon name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
 	{if !$queue->isDone()}
 		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}
-			<button id="removeContent" class="contentInteractionButton button small jsOnly">{icon size=16 name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>
+			<button id="removeContent" class="contentInteractionButton button small jsOnly">{icon name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>
 		{/if}
-		<button id="removeReport" class="contentInteractionButton button small jsOnly">{icon size=16 name='square-check'} <span>{lang}wcf.moderation.report.removeReport{/lang}</span></button>
+		<button id="removeReport" class="contentInteractionButton button small jsOnly">{icon name='square-check'} <span>{lang}wcf.moderation.report.removeReport{/lang}</span></button>
 	{/if}
 	{if $queue->canChangeJustifiedStatus()}
-		<button id="changeJustifiedStatus" class="contentInteractionButton button small jsOnly">{icon size=16 name='arrows-rotate'} <span>{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</span></button>
+		<button id="changeJustifiedStatus" class="contentInteractionButton button small jsOnly">{icon name='arrows-rotate'} <span>{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</span></button>
 	{/if}
 {/capture}
 

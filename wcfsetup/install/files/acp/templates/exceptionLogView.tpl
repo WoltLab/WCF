@@ -91,9 +91,9 @@
 				<h2 class="sectionTitle">
 					<button class="collapsibleButton jsTooltip" title="{lang}wcf.global.button.collapsible{/lang}">
 						{if $exception[collapsed]|isset && $exception[collapsed]}
-							{icon size=16 name='chevron-right'}
+							{icon name='chevron-right'}
 						{else}
-							{icon size=16 name='chevron-down'}
+							{icon name='chevron-down'}
 						{/if}
 					</button>
 					{$exception[message]}

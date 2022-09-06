@@ -8,7 +8,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>
+			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -59,7 +59,7 @@
 <footer class="contentFooter">
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>
+			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>
 			
 			{event name='contentFooterNavigation'}
 		</ul>

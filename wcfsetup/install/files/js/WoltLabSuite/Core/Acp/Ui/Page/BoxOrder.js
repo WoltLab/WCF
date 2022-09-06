@@ -30,7 +30,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
                     let icon = "";
                     if (box.isDisabled) {
                         icon = ` <span class="jsTooltip" title="${Language.get("wcf.acp.box.isDisabled")}">
-            <fa-icon size="16" name="triangle-exclamation" solid></fa-icon>
+            <fa-icon name="triangle-exclamation" solid></fa-icon>
           </span>`;
                     }
                     item.innerHTML = box.name + icon;

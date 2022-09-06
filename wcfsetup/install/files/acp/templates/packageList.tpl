@@ -36,11 +36,11 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<li><a href="#" class="button jsButtonSearchForUpdates">{icon size=16 name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonSearchForUpdates">{icon name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}
@@ -98,11 +98,11 @@
 						<td class="columnIcon">
 							{if $package->canUninstall()}
 								<button class="jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</button>
 							{else}
 								<span class="disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{/if}
 							
@@ -113,7 +113,7 @@
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 							{if $taintedApplications[$package->packageID]|isset}
 								<span class="jsTooltip" title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}">
-									{icon size=16 name='warning'}
+									{icon name='warning'}
 								</span>
 							{/if}
 						</td>
@@ -141,7 +141,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentFooterNavigation'}

@@ -123,7 +123,7 @@ class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbac
   private test(event: MouseEvent): void {
     const button = event.currentTarget as HTMLButtonElement;
 
-    button.innerHTML = '<fa-icon size="16" name="spinner" solid></fa-icon>';
+    button.innerHTML = '<fa-icon name="spinner" solid></fa-icon>';
 
     this.buttons.forEach((button) => (button.disabled = true));
 

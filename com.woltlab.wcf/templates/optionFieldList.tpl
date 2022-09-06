@@ -12,7 +12,7 @@
 				<label for="{$option->optionName}">
 					{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}
 						<span class="jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}">
-							{icon size=16 name='bolt'}
+							{icon name='bolt'}
 						</span>
 					{/if}
 					{$langPrefix|concat:$option->optionName|phrase}

@@ -24,8 +24,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $action === 'edit'}<li><a href="#" class="jsButtonCopy button">{icon size=16 name='copy'} <span>{lang}wcf.acp.template.group.copy{/lang}</span></a></li>{/if}
-			<li><a href="{link controller='TemplateGroupList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.template.group.list{/lang}</span></a></li>
+			{if $action === 'edit'}<li><a href="#" class="jsButtonCopy button">{icon name='copy'} <span>{lang}wcf.acp.template.group.copy{/lang}</span></a></li>{/if}
+			<li><a href="{link controller='TemplateGroupList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.template.group.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

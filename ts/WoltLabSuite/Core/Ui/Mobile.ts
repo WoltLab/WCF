@@ -112,7 +112,7 @@ function initMessages(): void {
           buttonWrapper = document.createElement("li");
           buttonWrapper.innerHTML = `
             <button aria-label="${Language.get("wcf.global.button.more")}">
-              <fa-icon size="16" name="ellipsis-vertical"></fa-icon>
+              <fa-icon name="ellipsis-vertical"></fa-icon>
             </button>
           `;
           buttonWrapper.classList.add("messageQuickOptionsMobile");

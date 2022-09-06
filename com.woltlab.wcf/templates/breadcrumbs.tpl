@@ -11,7 +11,7 @@
 							<a href="{$breadcrumb->getURL()}"{if $__microdata} itemprop="item"{/if}>
 								{if $tpl.foreach.breadcrumbs.last}
 									<span class="breadcrumbsParentIndicator">
-										{icon size=16 name='arrow-left-long'}
+										{icon name='arrow-left-long'}
 									</span>
 								{/if}
 								<span{if $__microdata} itemprop="name"{/if}>{$breadcrumb->getLabel()}</span>

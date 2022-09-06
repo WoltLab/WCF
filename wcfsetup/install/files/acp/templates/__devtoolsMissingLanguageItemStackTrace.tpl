@@ -1,5 +1,5 @@
 <button type="button" class="jsTooltip jsOutputFormatToggle" title="{lang}wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat{/lang}" style="margin-bottom: 10px">
-	{icon size=16 name='align-justify'}
+	{icon name='align-justify'}
 </button>
 
 <pre>{*

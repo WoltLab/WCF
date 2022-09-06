@@ -33,7 +33,7 @@
 					
 					<span class="statusDisplay sortableButtonContainer">
 						<span class="sortableNodeHandle">
-							{icon size=16 name='arrows-up-down-left-right'}
+							{icon name='arrows-up-down-left-right'}
 						</span>
 					</span>
 				</span>

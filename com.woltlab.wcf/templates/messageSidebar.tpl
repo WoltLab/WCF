@@ -30,7 +30,7 @@
 				{if !$isReply}
 					{if $userProfile->banned}
 						<span class="jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}">
-							{icon size=16 name='lock'}
+							{icon name='lock'}
 						</span>
 					{/if}
 					

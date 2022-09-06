@@ -3,7 +3,7 @@
 		<nav class="messageTabMenuNavigation jsOnly">
 			<ul>
 				{content}
-					{if MODULE_SMILEY && !$smileyCategories|empty}<li data-name="smilies"><a>{icon size=16 name='face-smile'} <span>{lang}wcf.message.smilies{/lang}</span></a></li>{/if}
+					{if MODULE_SMILEY && !$smileyCategories|empty}<li data-name="smilies"><a>{icon name='face-smile'} <span>{lang}wcf.message.smilies{/lang}</span></a></li>{/if}
 					{event name='tabMenuTabs'}
 				{/content}
 			</ul>

@@ -487,7 +487,7 @@
 		<dd><kbd>{$minVersion}</kbd></dd>
 	{/if}
 	<dt>Paketdatei im Paket enthalten</dt>
-	<dd>{if $file}{icon size=16 name='check'}{else}{icon size=16 name='xmark'}{/if}/dd>
+	<dd>{if $file}{icon name='check'}{else}{icon name='xmark'}{/if}/dd>
 </dl>]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[Der Paketbezeichner darf nicht länger als 191 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[Der Paketbezeichner muss länger als drei Zeichen sein.]]></item>
@@ -552,7 +552,7 @@
 		{/if}
 		{if $runStandalone}
 			<dt>In eigenem Schritt</dt>
-			<dd>{icon size=16 name='check'}</dd>
+			<dd>{icon name='check'}</dd>
 		{/if}
 	</dl>
 {/if}]]></item>
@@ -890,7 +890,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Seitenbeschleunigung für Gäste ist aktiv]]></item>
-		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol ({icon size=16 name='bolt'}) markiert.]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol ({icon name='bolt'}) markiert.]]></item>
 		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontaktformular verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Kann Trophäen verwalten]]></item>

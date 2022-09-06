@@ -23,8 +23,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='MenuEdit' id=$menuID}{/link}" class="button">{icon size=16 name='pencil'} <span>{lang}wcf.acp.menu.edit{/lang}</span></a></li>
-			<li><a href="{link controller='MenuItemAdd'}menuID={@$menuID}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
+			<li><a href="{link controller='MenuEdit' id=$menuID}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.acp.menu.edit{/lang}</span></a></li>
+			<li><a href="{link controller='MenuItemAdd'}menuID={@$menuID}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.item.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -41,25 +41,25 @@
 							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{$menuItemNode->getTitle()}</a>
 							<span class="statusDisplay sortableButtonContainer">
 								<span class="sortableNodeHandle">
-									{icon size=16 name='arrows-up-down-left-right'}
+									{icon name='arrows-up-down-left-right'}
 								</span>
 								{if $menuItemNode->canDisable()}
 									{objectAction action="toggle" isDisabled=$menuItemNode->isDisabled}
 								{else}
 									<span class="disabled" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}">
 										{if $menuItemNode->isDisabled}
-											{icon size=16 name='square'}
+											{icon name='square'}
 										{else}
-											{icon size=16 name='square-check'}
+											{icon name='square-check'}
 										{/if}
 									</span>
 								{/if}
-								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">{icon size=16 name='pencil'}</a>
+								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">{icon name='pencil'}</a>
 								{if $menuItemNode->canDelete()}
 									{objectAction action="delete" objectTitle=$menuItemNode->getTitle()}
 								{else}
 									<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-										{icon size=16 name='xmark'}
+										{icon name='xmark'}
 									</span>
 								{/if}
 								

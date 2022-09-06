@@ -29,7 +29,7 @@
 	<input type="text" class="mediaManagerSearchField" placeholder="{lang}wcf.media.search.placeholder{/lang}">
 	<span class="inputSuffix">
 		<button class="mediaManagerSearchCancelButton jsTooltip" title="{lang}wcf.media.search.cancel{/lang}">
-			{icon size=16 name='xmark'}
+			{icon name='xmark'}
 		</button>
 	</span>
 </div>

@@ -11,7 +11,7 @@
 							{$style->styleName}
 							{if $style->styleID == $__wcf->getStyleHandler()->getStyle()->styleID}
 								<span class="jsTooltip" title="{lang}wcf.style.currentStyle{/lang}">
-									{icon size=16 name='check-circle'}
+									{icon name='check-circle'}
 								</span>
 							{/if}
 						</h3>

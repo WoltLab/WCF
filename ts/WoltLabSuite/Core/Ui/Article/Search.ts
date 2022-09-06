@@ -133,7 +133,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
             <dd>
               <div class="inputAddon">
                 <input type="text" id="wcfUiArticleSearchInput" class="long">
-                <a href="#" class="inputSuffix"><fa-icon size="16" name="search" solid></fa-icon></a>
+                <a href="#" class="inputSuffix"><fa-icon name="search" solid></fa-icon></a>
               </div>
             </dd>
           </dl>

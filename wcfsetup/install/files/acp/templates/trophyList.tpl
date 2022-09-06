@@ -17,7 +17,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TrophyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.trophy.add{/lang}</span></a></li>
+			<li><a href="{link controller='TrophyAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.trophy.add{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -42,10 +42,10 @@
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="sortableNodeHandle">
-								{icon size=16 name='arrows-up-down-left-right'}
+								{icon name='arrows-up-down-left-right'}
 							</span>
 							{objectAction action="toggle" isDisabled=$trophy->isDisabled}
-							<a href="{link controller='TrophyEdit' object=$trophy}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='TrophyEdit' object=$trophy}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$trophy->getTitle()}
 							
 							{event name='itemButtons'}
@@ -69,7 +69,7 @@
 
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TrophyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.trophy.add{/lang}</span></a></li>
+				<li><a href="{link controller='TrophyAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.trophy.add{/lang}</span></a></li>
 
 				{event name='contentHeaderNavigation'}
 			</ul>

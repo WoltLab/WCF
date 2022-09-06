@@ -125,7 +125,7 @@ export class UiItemListLineBreakSeparatedText {
     this.addButton.href = "#";
     this.addButton.classList.add("button", "inputSuffix", "jsTooltip");
     this.addButton.title = Language.get("wcf.global.button.add");
-    this.addButton.innerHTML = '<fa-icon size="16" name="plus" solid></fa-icon>';
+    this.addButton.innerHTML = '<fa-icon name="plus" solid></fa-icon>';
     this.addButton.addEventListener("click", (ev) => this.addItem(ev));
     inputAddon.appendChild(this.addButton);
 
@@ -133,7 +133,7 @@ export class UiItemListLineBreakSeparatedText {
     this.clearButton.href = "#";
     this.clearButton.classList.add("button", "inputSuffix", "jsTooltip");
     this.clearButton.title = Language.get("wcf.global.button.delete");
-    this.clearButton.innerHTML = '<fa-icon size="16" name="times" solid></fa-icon>';
+    this.clearButton.innerHTML = '<fa-icon name="times" solid></fa-icon>';
     this.clearButton.addEventListener("click", (ev) => this.clearList(ev));
     inputAddon.appendChild(this.clearButton);
     if (this.items.size === 0) {
@@ -244,7 +244,7 @@ export class UiItemListLineBreakSeparatedText {
     itemElement.dataset.value = item;
 
     const deleteButton = document.createElement("span");
-    deleteButton.innerHTML = '<fa-icon size="16" name="xmark" solid></fa-icon>';
+    deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
     deleteButton.classList.add("jsDeleteItem", "jsTooltip", "pointer");
     deleteButton.title = Language.get("wcf.global.button.delete");
     deleteButton.addEventListener("click", (ev) => this.deleteItem(ev));

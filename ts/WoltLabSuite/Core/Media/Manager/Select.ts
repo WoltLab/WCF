@@ -44,7 +44,6 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
           button.insertAdjacentElement("afterend", removeButton);
 
           const icon = document.createElement("fa-icon");
-          icon.size = 16;
           icon.setIcon("xmark");
           removeButton.appendChild(icon);
 
@@ -161,7 +160,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
 
     listItem.innerHTML = `
         <a class="jsTooltip" title="${Language.get("wcf.media.button.select")}">
-          <fa-icon size="16" name="check"></fa-icon>
+          <fa-icon name="check"></fa-icon>
           <span class="invisible">${Language.get("wcf.media.button.select")}</span>
         </a>
       `;

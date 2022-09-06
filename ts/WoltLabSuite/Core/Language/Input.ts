@@ -211,7 +211,6 @@ function select(elementId: string, languageId: number, isInit: boolean): void {
       data.buttonLabel.classList.add("active");
 
       const icon = document.createElement("fa-icon");
-      icon.size = 16;
       icon.setIcon("caret-down", true);
       data.buttonLabel.append(icon);
     } else {
@@ -264,7 +263,6 @@ function dropdownToggle(containerId: string, action: NotificationAction): void {
         item.classList.add("missingValue");
 
         const icon = document.createElement("fa-icon");
-        icon.size = 16;
         icon.setIcon("triangle-exclamation");
         span.append(icon);
       } else {

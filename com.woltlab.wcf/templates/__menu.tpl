@@ -10,7 +10,7 @@
 						<span class="boxMenuLinkOutstandingItems badge badgeUpdate" aria-label="{lang}wcf.page.menu.outstandingItems{/lang}">{#$menuItemNode->getOutstandingItems()}</span>
 					{/if}
 					{if $menuItemNode->hasChildren()}
-						{icon size=16 name='caret-down' type='solid'}
+						{icon name='caret-down' type='solid'}
 					{/if}
 				</a>
 				

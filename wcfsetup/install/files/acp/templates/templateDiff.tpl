@@ -12,7 +12,7 @@
 				{content}
 					{if $diff !== null}
 						{if $parent->templateGroupID}
-							<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button">{icon size=16 name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+							<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 						{/if}
 					{/if}
 					
@@ -115,7 +115,7 @@
 				<footer class="contentFooter">
 					<nav class="contentFooterNavigation">
 						<ul>
-							<li><a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" class="button">{icon size=16 name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+							<li><a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 							
 							{event name='contentFooterNavigation'}
 						</ul>

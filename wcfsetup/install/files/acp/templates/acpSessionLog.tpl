@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+			<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -62,7 +62,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+				<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

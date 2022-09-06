@@ -11,7 +11,8 @@ use wcf\util\JSON;
  * supported sizes are 16, 24, 32, 48, 64, 96, 128 and 144.
  *
  * Usage:
- *  {icon size=16 name='bell'}
+ *  {icon name='bell'}
+ *  {icon size=32 name='caret-down' type='solid}
  *
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
@@ -30,7 +31,7 @@ final class IconFunctionTemplatePlugin implements IFunctionTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        $size = \intval($tagArgs['size'] ?? 0);
+        $size = \intval($tagArgs['size'] ?? 16);
         $name = $tagArgs['name'] ?? '';
         $type = $tagArgs['type'] ?? '';
         $encodeJson = $tagArgs['encodeJson'] ?? '';

@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
+			<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -45,15 +45,15 @@
 								{objectAction action="toggle" isDisabled=$updateServer->isDisabled}
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.disable{/lang}">
-									{icon size=16 name='square-check'}
+									{icon name='square-check'}
 								</span>
 							{/if}
-							<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{if $updateServer->canDelete()}
 								{objectAction action="delete" objectTitle=$updateServer->serverURL}
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{/if}
 							
@@ -84,7 +84,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
+				<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

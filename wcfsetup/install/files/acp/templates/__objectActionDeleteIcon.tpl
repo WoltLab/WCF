@@ -3,5 +3,5 @@
     *}data-object-action="delete" {*
     *}{if $objectActionConfirmMessage}data-confirm-message="{lang __encode=true}{$objectActionConfirmMessage}{/lang}" {/if}{*
 *}>
-    {icon size=16 name='xmark'}
+    {icon name='xmark'}
 </button>

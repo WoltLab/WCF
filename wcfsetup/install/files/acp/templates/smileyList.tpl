@@ -19,7 +19,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='SmileyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
+			<li><a href="{link controller='SmileyAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.smiley.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -52,10 +52,10 @@
 									
 									<span class="statusDisplay sortableButtonContainer">
 										<span class="sortableNodeHandle">
-											{icon size=16 name='arrows-up-down-left-right'}
+											{icon name='arrows-up-down-left-right'}
 										</span>
 										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
-											{icon size=16 name='pencil'}
+											{icon name='pencil'}
 										</a>
 										{objectAction action="delete" objectTitle=$smiley->smileyCode}
 										

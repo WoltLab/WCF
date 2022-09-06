@@ -30,7 +30,7 @@
 				<div class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}" role="status">
 					{if $notice->isDismissible}
 						<button class="jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}">
-							{icon size=16 name='xmark'}
+							{icon name='xmark'}
 						</button>
 					{/if}
 					

@@ -207,12 +207,12 @@ class Instructions {
           <button class="jsTooltip" id="${
             this.formFieldId
           }_instruction${instructionId}_editButton" title="${Language.get("wcf.global.button.edit")}">
-            <fa-icon size="16" name="pencil" solid></fa-icon>
+            <fa-icon name="pencil" solid></fa-icon>
           </button>
           <button class="jsTooltip" id="${
             this.formFieldId
           }_instruction${instructionId}_deleteButton" title="${Language.get("wcf.global.button.delete")}">
-            <fa-icon size="16" name="xmark" solid></fa-icon>
+            <fa-icon name="xmark" solid></fa-icon>
           </span>
         </span>
       </div>

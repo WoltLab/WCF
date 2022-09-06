@@ -43,7 +43,7 @@
 				thus we let this slip.
 				*}
 				<li class="dropdown">
-					<a class="button dropdownToggle">{icon size=16 name='sort'} <span>{lang}wcf.acp.menu.item.button.choose{/lang}</span></a>
+					<a class="button dropdownToggle">{icon name='sort'} <span>{lang}wcf.acp.menu.item.button.choose{/lang}</span></a>
 					<div class="dropdownMenu">
 						<ul class="scrollableDropdownMenu">
 							{foreach from=$menuItemNodeList item='menuItemNode'}
@@ -53,7 +53,7 @@
 					</div>
 				</li>
 			{/if}
-			<li><a href="{link controller='MenuItemList' id=$menuID}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.item.list{/lang}</span></a></li>
+			<li><a href="{link controller='MenuItemList' id=$menuID}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.item.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -169,7 +169,7 @@
 			<dd>
 				<div class="inputAddon">
 					<input type="text" id="pageObjectID" name="pageObjectID" value="{$pageObjectID}" class="short">
-					<a href="#" id="searchPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}">{icon size=16 name='magnifying-glass'}</a>
+					<a href="#" id="searchPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}">{icon name='magnifying-glass'}</a>
 				</div>
 				{if $errorField == 'pageObjectID'}
 					<small class="innerError">

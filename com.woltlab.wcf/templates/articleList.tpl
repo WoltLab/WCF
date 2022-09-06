@@ -16,9 +16,9 @@
 {capture assign='contentHeaderNavigation'}
 	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 		{if $availableLanguages|count > 1}
-			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{else}
-			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 		{/if}
 	{/if}
 {/capture}
@@ -65,9 +65,9 @@
 	<div class="contentInteractionButton dropdown jsOnly">
 		<button class="button small dropdownToggle">
 			{if $sortOrder|strtolower === 'asc'}
-				{icon size=16 name='arrow-down-short-wide'}
+				{icon name='arrow-down-short-wide'}
 			{else}
-				{icon size=16 name='arrow-down-wide-short'}
+				{icon name='arrow-down-wide-short'}
 			{/if}
 			<span>{lang}wcf.article.button.sort{/lang}</span>
 		</button>
@@ -77,9 +77,9 @@
 					{lang}wcf.global.title{/lang}
 					{if $sortField == 'title'}
 						{if $sortOrder === 'ASC'}
-							{icon size=16 name='caret-up' type='solid'}
+							{icon name='caret-up' type='solid'}
 						{else}
-							{icon size=16 name='caret-down' type='solid'}
+							{icon name='caret-down' type='solid'}
 						{/if}
 					{/if}
 				</a>
@@ -89,9 +89,9 @@
 					{lang}wcf.global.date{/lang}
 					{if $sortField == 'time'}
 						{if $sortOrder === 'ASC'}
-							{icon size=16 name='caret-up' type='solid'}
+							{icon name='caret-up' type='solid'}
 						{else}
-							{icon size=16 name='caret-down' type='solid'}
+							{icon name='caret-down' type='solid'}
 						{/if}
 					{/if}
 				</a>
@@ -100,7 +100,7 @@
 			{event name='sortOptions'}
 		</ul>
 	</div>
-	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon size=16 name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}

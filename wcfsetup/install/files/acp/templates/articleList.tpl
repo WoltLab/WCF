@@ -27,9 +27,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $availableLanguages|count > 1}
-				<li><a href="#" class="button jsButtonArticleAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				<li><a href="#" class="button jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 			{else}
-				<li><a href="{link controller='ArticleAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				<li><a href="{link controller='ArticleAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentHeaderNavigation'}
@@ -142,18 +142,18 @@
 					<tr class="jsArticleRow jsClipboardObject" data-object-id="{@$article->articleID}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$article->articleID}"></td>
 						<td class="columnIcon">
-							<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{if $article->canDelete()}
-								<a href="#" class="jsButtonRestore jsTooltip" title="{lang}wcf.global.button.restore{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='arrows-rotate'}</a>
-								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon size=16 name='xmark'}</a>
-								<a href="#" class="jsButtonTrash jsTooltip" title="{lang}wcf.global.button.trash{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon size=16 name='xmark'}</a>
+								<a href="#" class="jsButtonRestore jsTooltip" title="{lang}wcf.global.button.restore{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='arrows-rotate'}</a>
+								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='xmark'}</a>
+								<a href="#" class="jsButtonTrash jsTooltip" title="{lang}wcf.global.button.trash{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'}</a>
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{/if}
 							
-							<a href="{$article->getLink()}" title="{lang}wcf.acp.article.button.viewArticle{/lang}" class="jsTooltip">{icon size=16 name='magnifying-glass'}</a>
+							<a href="{$article->getLink()}" title="{lang}wcf.acp.article.button.viewArticle{/lang}" class="jsTooltip">{icon name='magnifying-glass'}</a>
 							
 							{event name='rowButtons'}
 						</td>
@@ -222,9 +222,9 @@
 		<nav class="contentFooterNavigation">
 			<ul>
 				{if $availableLanguages|count > 1}
-					<li><a href="#" class="button jsButtonArticleAdd">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+					<li><a href="#" class="button jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 				{else}
-					<li><a href="{link controller='ArticleAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+					<li><a href="{link controller='ArticleAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 				{/if}
 				
 				{event name='contentFooterNavigation'}

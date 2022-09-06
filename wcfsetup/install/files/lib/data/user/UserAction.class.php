@@ -576,7 +576,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                     $pos = \mb_strripos($groupName, $searchString);
                     if ($pos !== false && $pos == 0) {
                         $list[] = [
-                            'icon' => FontAwesomeIcon::fromValues('users')->toHtml(16),
+                            'icon' => FontAwesomeIcon::fromValues('users')->toHtml(),
                             'label' => $groupName,
                             'objectID' => $group->groupID,
                             'type' => 'group',

@@ -256,7 +256,7 @@ function addItem(elementId: string, value: ItemData): void {
 
   if (!data.element.disabled) {
     const button = document.createElement("button");
-    button.innerHTML = '<fa-icon size="16" name="xmark"></fa-icon>';
+    button.innerHTML = '<fa-icon name="xmark"></fa-icon>';
     button.addEventListener("click", removeItem);
     listItem.appendChild(button);
   }

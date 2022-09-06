@@ -46,7 +46,7 @@
 											{icon size=24 name='clock'}
 										{/if}
 									</span>
-									{icon size=16 name='caret-down' type='solid'}
+									{icon name='caret-down' type='solid'}
 								</button>
 							{/if}
 						</div>

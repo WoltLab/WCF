@@ -59,7 +59,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
           <button class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get("wcf.message.share.copy")}">
-            <fa-icon size="16" name="copy"></fa-icon>
+            <fa-icon name="copy"></fa-icon>
           </a>
         </div>
       </dd>

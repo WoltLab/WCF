@@ -45,11 +45,11 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
-				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon size=16 name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				<li><a class="jsCopyStyle button">{icon size=16 name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button">{icon name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}
 			
-			<li><a href="{link controller='StyleList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			<li><a href="{link controller='StyleList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -697,15 +697,15 @@
 									<div id="spEditor">
 										<div id="spEditorToolbar" data-region="wcfEditorButton">
 											<ul class="redactor-toolbar">
-												<li><a class="redactor-button-disabled">{icon size=16 name='file-code'}</a></li>
-												<li><a>{icon size=16 name='rotate-left'}</a></li>
-												<li><a>{icon size=16 name='arrow-rotate-right'}</a></li>
-												<li><a>{icon size=16 name='up-right-and-down-left-from-center'}</a></li>
-												<li class="redactor-toolbar-separator"><a>{icon size=16 name='heading'}</a></li>
-												<li class="redactor-toolbar-separator"><a>{icon size=16 name='bold'}</a></li>
-												<li><a class="dropact">{icon size=16 name='italic'}</a></li>
-												<li><a>{icon size=16 name='underline'}</a></li>
-												<li><a>{icon size=16 name='strikethrough'}</a></li>
+												<li><a class="redactor-button-disabled">{icon name='file-code'}</a></li>
+												<li><a>{icon name='rotate-left'}</a></li>
+												<li><a>{icon name='arrow-rotate-right'}</a></li>
+												<li><a>{icon name='up-right-and-down-left-from-center'}</a></li>
+												<li class="redactor-toolbar-separator"><a>{icon name='heading'}</a></li>
+												<li class="redactor-toolbar-separator"><a>{icon name='bold'}</a></li>
+												<li><a class="dropact">{icon name='italic'}</a></li>
+												<li><a>{icon name='underline'}</a></li>
+												<li><a>{icon name='strikethrough'}</a></li>
 											</ul>
 										</div>
 										<div id="spEditorContent">

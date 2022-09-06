@@ -9,7 +9,7 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			<li class="dropdown">
-				<a class="button dropdownToggle">{icon size=16 name='list'} <span>{lang}wcf.acp.devtools.project.pip.list{/lang}</span></a>
+				<a class="button dropdownToggle">{icon name='list'} <span>{lang}wcf.acp.devtools.project.pip.list{/lang}</span></a>
 				<div class="dropdownMenu">
 					<ul class="scrollableDropdownMenu">
 						{foreach from=$project->getPips() item=otherPip}
@@ -24,8 +24,8 @@
 					</ul>
 				</div>
 			</li>
-			<li><a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip entryType=$entryType}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.devtools.project.pip.entry.button.add{/lang}</span></a></li>
-			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip entryType=$entryType}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.devtools.project.pip.entry.button.add{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -77,9 +77,9 @@
 				{foreach from=$entryList->getEntries($startIndex-1, $itemsPerPage) key=identifier item=entry}
 					<tr class="jsPipEntryRow" data-identifier="{@$identifier}">
 						<td class="columnIcon">
-							<a href="{link controller='DevtoolsProjectPipEntryEdit' id=$project->projectID pip=$pip identifier=$identifier entryType=$entryType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='DevtoolsProjectPipEntryEdit' id=$project->projectID pip=$pip identifier=$identifier entryType=$entryType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							<button class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-								{icon size=16 name='xmark'}
+								{icon name='xmark'}
 							</button>
 						</td>
 						{foreach from=$entryList->getKeys() key=key item=languageItem}
@@ -101,7 +101,7 @@
 		<nav class="contentFooterNavigation">
 			<ul>
 				<li class="dropdown">
-					<a class="button dropdownToggle">{icon size=16 name='list'} <span>{lang}wcf.acp.devtools.project.pip.list{/lang}</span></a>
+					<a class="button dropdownToggle">{icon name='list'} <span>{lang}wcf.acp.devtools.project.pip.list{/lang}</span></a>
 					<div class="dropdownMenu">
 						<ul class="scrollableDropdownMenu">
 							{foreach from=$project->getPips() item=otherPip}
@@ -116,8 +116,8 @@
 						</ul>
 					</div>
 				</li>
-				<li><a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip entryType=$entryType}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.devtools.project.pip.entry.button.add{/lang}</span></a></li>
-				<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
+				<li><a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip entryType=$entryType}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.devtools.project.pip.entry.button.add{/lang}</span></a></li>
+				<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

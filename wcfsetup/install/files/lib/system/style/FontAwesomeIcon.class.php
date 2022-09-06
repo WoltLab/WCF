@@ -50,7 +50,7 @@ final class FontAwesomeIcon implements \Stringable
      *
      * @throws InvalidIconSize
      */
-    public function toHtml(int $size): string
+    public function toHtml(int $size = 16): string
     {
         if (!\in_array($size, self::SIZES)) {
             throw new InvalidIconSize($size);

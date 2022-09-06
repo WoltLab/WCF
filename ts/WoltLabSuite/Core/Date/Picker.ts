@@ -58,7 +58,7 @@ function createPicker() {
   _dateMonthPrevious.className = "previous jsTooltip";
   _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
   _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
-  _dateMonthPrevious.innerHTML = '<fa-icon size="16" name="arrow-left" solid></fa-icon>';
+  _dateMonthPrevious.innerHTML = '<fa-icon name="arrow-left" solid></fa-icon>';
   _dateMonthPrevious.addEventListener("click", () => DatePicker.previousMonth());
   header.appendChild(_dateMonthPrevious);
 
@@ -90,7 +90,7 @@ function createPicker() {
   _dateMonthNext.className = "next jsTooltip";
   _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
   _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
-  _dateMonthNext.innerHTML = '<fa-icon size="16" name="arrow-right" solid></fa-icon>';
+  _dateMonthNext.innerHTML = '<fa-icon name="arrow-right" solid></fa-icon>';
   _dateMonthNext.addEventListener("click", () => DatePicker.nextMonth());
   header.appendChild(_dateMonthNext);
 
@@ -768,7 +768,6 @@ const DatePicker = {
         container.appendChild(openButton);
 
         let icon = document.createElement("fa-icon");
-        icon.size = 16;
         icon.setIcon("calendar");
         openButton.appendChild(icon);
 
@@ -792,7 +791,6 @@ const DatePicker = {
           container.appendChild(clearButton);
 
           icon = document.createElement("fa-icon");
-          icon.size = 16;
           icon.setIcon("xmark");
           clearButton.appendChild(icon);
         }

@@ -95,7 +95,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
          */
         test(event) {
             const button = event.currentTarget;
-            button.innerHTML = '<fa-icon size="16" name="spinner" solid></fa-icon>';
+            button.innerHTML = '<fa-icon name="spinner" solid></fa-icon>';
             this.buttons.forEach((button) => (button.disabled = true));
             Ajax.api(this, {
                 parameters: {
