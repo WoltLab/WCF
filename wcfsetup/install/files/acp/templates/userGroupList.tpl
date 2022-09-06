@@ -10,7 +10,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 						
 					{event name='contentHeaderNavigation'}
@@ -44,17 +44,17 @@
 				<tr id="groupContainer{@$group->groupID}" class="jsUserGroupRow jsObjectActionObject" data-object-id="{@$group->getObjectID()}">
 					<td class="columnIcon">
 						{if $group->isEditable()}
-							<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 						{else}
 							<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
-								{icon size=16 name='pencil'}
+								{icon name='pencil'}
 							</span>
 						{/if}
 						{if $group->isDeletable()}
 							{objectAction action="delete" objectTitle=$group->getTitle()}
 						{else}
 							<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-								{icon size=16 name='xmark'}
+								{icon name='xmark'}
 							</span>
 						{/if}
 						
@@ -69,7 +69,7 @@
 						{/if}
 						{if $group->isOwner()}
 							<span class="jsTooltip" title="{lang}wcf.acp.group.type.owner{/lang}">
-								{icon size=16 name='shield-halved'}
+								{icon name='shield-halved'}
 							</span>
 						{/if}
 					</td>
@@ -102,7 +102,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentFooterNavigation'}

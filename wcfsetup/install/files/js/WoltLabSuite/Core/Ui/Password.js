@@ -39,7 +39,6 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
         button.setAttribute("aria-hidden", "true");
         inputAddon.appendChild(button);
         const icon = document.createElement("fa-icon");
-        icon.size = 16;
         icon.setIcon("eye");
         button.appendChild(icon);
         button.addEventListener("click", () => {

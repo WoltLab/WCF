@@ -9,10 +9,10 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $project->validate() === ''}
-				<li><a href="{link controller='DevtoolsProjectSync' id=$project->getObjectID()}{/link}" class="button">{icon size=16 name='arrows-rotate'} <span>{lang}wcf.acp.devtools.project.sync{/lang}</span></a></li>
+				<li><a href="{link controller='DevtoolsProjectSync' id=$project->getObjectID()}{/link}" class="button">{icon name='arrows-rotate'} <span>{lang}wcf.acp.devtools.project.sync{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='DevtoolsProjectEdit' id=$project->getObjectID()}{/link}" class="button">{icon size=16 name='pencil'} <span>{lang}wcf.acp.devtools.project.edit{/lang}</span></a></li>
-			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectEdit' id=$project->getObjectID()}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.acp.devtools.project.edit{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -52,14 +52,14 @@
 						<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $pip->supportsGui()}true{else}false{/if}" data-is-used="{if !$pip->getTargets($project)|empty}true{else}false{/if}">
 							<td class="columnIcon">
 								{if $pip->supportsGui()}
-									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip">{icon size=16 name='plus'}</a>
-									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip">{icon size=16 name='list'}</a>
+									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip">{icon name='plus'}</a>
+									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip">{icon name='list'}</a>
 								{else}
 									<span class="disabled" title="{lang}wcf.global.button.add{/lang}">
-										{icon size=16 name='plus'}
+										{icon name='plus'}
 									</span>
 									<span class="disabled" title="{lang}wcf.global.button.list{/lang}">
-										{icon size=16 name='list'}
+										{icon name='list'}
 									</span>
 								{/if}
 							</td>
@@ -86,8 +86,8 @@
 						{foreach from=$pip->getPip()->getEntryTypes() item=entryType}
 							<tr data-plugin-name="{$pip->pluginName}" data-is-supported="true" data-is-used="{if !$pip->getTargets($project)|empty}true{else}false{/if}">
 								<td class="columnIcon">
-									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip">{icon size=16 name='plus'}</a>
-									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip">{icon size=16 name='list'}</a>
+									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip">{icon name='plus'}</a>
+									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip">{icon name='list'}</a>
 								</td>
 								<td class="columnText">
 									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}">{$pip->pluginName} ({$entryType})</a>

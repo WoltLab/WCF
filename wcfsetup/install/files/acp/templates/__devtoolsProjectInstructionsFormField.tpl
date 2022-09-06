@@ -40,10 +40,10 @@
 				<h2 class="sectionTitle">
 					{literal}{if $type === 'update'}{/literal}
 						<button class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}">
-							{icon size=16 name='pencil'}
+							{icon name='pencil'}
 						</button>
 						<button class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}">
-							{icon size=16 name='xmark'}
+							{icon name='xmark'}
 						</button>
 					{literal}{/if}{/literal}
 					{literal}<span class="jsInstructionsTitle">{$sectionTitle}</span>{/literal}

@@ -50,7 +50,7 @@ function openDialog(event: Event): void {
       <button class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
         "wcf.global.rss.copy",
       )}">
-        <fa-icon size="16" name="files"></fa-icon>
+        <fa-icon name="files"></fa-icon>
       </button>
     </div>
   </dd>
@@ -63,7 +63,7 @@ function openDialog(event: Event): void {
       <button class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get(
         "wcf.global.rss.copy",
       )}">
-        <fa-icon size="16" name="files"></fa-icon>
+        <fa-icon name="files"></fa-icon>
       </a>
     </div>
   </dd>

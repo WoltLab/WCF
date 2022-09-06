@@ -20,25 +20,25 @@
 				{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
 					<li class="jsMediaEditButton" data-object-id="{@$media->mediaID}">
 						<button class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
-							{icon size=16 name='pencil'}
+							{icon name='pencil'}
 						</button>
 					</li>
 					<li class="jsObjectAction" data-object-action="delete" data-confirm-message="{lang title=$__mediaTitle __encode=true}wcf.media.delete.confirmMessage{/lang}">
 						<button class="jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-							{icon size=16 name='xmark'}
+							{icon name='xmark'}
 						</button>
 					</li>
 				{/if}
 				{if $mode == 'editor'}
 					<li class="jsMediaInsertButton" data-object-id="{@$media->mediaID}">
 						<button class="jsTooltip" title="{lang}wcf.media.button.insert{/lang}">
-							{icon size=16 name='plus'}
+							{icon name='plus'}
 						</button>
 					</li>
 				{elseif $mode == 'select'}
 					<li class="jsMediaSelectButton" data-object-id="{@$media->mediaID}">
 						<button class="jsTooltip" title="{lang}wcf.media.button.select{/lang}">
-							{icon size=16 name='check'}
+							{icon name='check'}
 						</button>
 					</li>
 				{/if}

@@ -18,7 +18,6 @@ define(["require", "exports", "tslib", "../Upload", "../../Core"], function (req
             const space = document.createTextNode(" ");
             span.insertBefore(space, span.childNodes[0]);
             const icon = document.createElement("fa-icon");
-            icon.size = 16;
             icon.setIcon("upload");
             span.insertBefore(icon, span.childNodes[0]);
         }

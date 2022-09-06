@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='ReactionTypeList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.reactionType.list{/lang}</span></a></li>
+			<li><a href="{link controller='ReactionTypeList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.reactionType.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

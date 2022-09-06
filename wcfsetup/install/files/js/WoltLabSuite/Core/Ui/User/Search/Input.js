@@ -31,7 +31,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
             listItem.dataset.type = item.type;
             const box = document.createElement("div");
             box.className = "box16";
-            box.innerHTML = item.type === "group" ? `<fa-icon size="16" name="users" solid></fa-icon>` : item.icon;
+            box.innerHTML = item.type === "group" ? `<fa-icon name="users" solid></fa-icon>` : item.icon;
             box.appendChild(listItem.children[0]);
             listItem.appendChild(box);
             return listItem;

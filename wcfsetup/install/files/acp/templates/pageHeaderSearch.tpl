@@ -19,7 +19,7 @@
 		<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" required value="" data-toggle="search">
 		
 		<button class="button pageHeaderSearchInputButton" type="submit" title="{lang}wcf.global.search{/lang}">
-			{icon size=16 name='magnifying-glass'}
+			{icon name='magnifying-glass'}
 		</button>
 	</div>
 </div>

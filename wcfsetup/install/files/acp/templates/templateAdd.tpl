@@ -8,8 +8,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" class="button">{icon size=16 name='right-left'} <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
-			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
+			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" class="button">{icon name='right-left'} <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
+			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

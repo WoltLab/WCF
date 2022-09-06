@@ -7,8 +7,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='LanguageAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
-			<li><a href="{link controller='LanguageImport'}{/link}" class="button">{icon size=16 name='upload'} <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageImport'}{/link}" class="button">{icon name='upload'} <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -40,33 +40,33 @@
 				{foreach from=$objects item=language}
 					<tr class="jsLanguageRow jsObjectActionObject" data-object-id="{@$language->getObjectID()}">
 						<td class="columnIcon">
-							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}" title="{lang}wcf.acp.language.export{/lang}" class="jsTooltip">{icon size=16 name='download'}</a>
+							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}" title="{lang}wcf.acp.language.export{/lang}" class="jsTooltip">{icon name='download'}</a>
 							
 							{if !$language->isDefault}
 								{objectAction action="toggle" isDisabled=$language->isDisabled}
 								<button class="jsObjectAction jsTooltip" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}">
-									{icon size=16 name='circle-check'}
+									{icon name='circle-check'}
 								</button>
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}">
 									{if $language->isDisabled}
-										{icon size=16 name='square'}
+										{icon name='square'}
 									{else}
-										{icon size=16 name='square-check'}
+										{icon name='square-check'}
 									{/if}
 								</span>
 								<span class="disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}">
-									{icon size=16 name='circle-check'}
+									{icon name='circle-check'}
 								</span>
 							{/if}
 							
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							
 							{if $language->isDeletable()}
 								{objectAction action="delete" objectTitle=$language->languageName}
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{/if}
 							
@@ -94,8 +94,8 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='LanguageAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
-				<li><a href="{link controller='LanguageImport'}{/link}" class="button">{icon size=16 name='upload'} <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageImport'}{/link}" class="button">{icon name='upload'} <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

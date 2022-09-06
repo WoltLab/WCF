@@ -13,12 +13,12 @@
 				<label for="{$option->optionName}">
 					{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}
 						<span class="jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}">
-							{icon size=16 name='bolt'}
+							{icon name='bolt'}
 						</span>
 					{/if}
 					{if $groupIsOwner && $option->optionName|in_array:$ownerGroupPermissions}
 						<span class="jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}">
-							{icon size=16 name='shield-halved'}
+							{icon name='shield-halved'}
 						</span>
 					{/if}
 					

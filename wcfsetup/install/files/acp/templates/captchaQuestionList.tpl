@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+			<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -37,7 +37,7 @@
 					<tr class="jsQuestionRow jsObjectActionObject" data-object-id="{@$question->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$question->isDisabled}
-							<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{objectAction action="delete" objectTitle=$question->getQuestion()}
 							
 							{event name='rowButtons'}
@@ -61,7 +61,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
+				<li><a href="{link controller='CaptchaQuestionAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.captcha.question.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

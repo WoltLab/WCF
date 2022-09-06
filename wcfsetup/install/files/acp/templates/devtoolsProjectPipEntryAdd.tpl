@@ -8,8 +8,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip entryType=$entryType}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.devtools.project.pip.entry.list{/lang}</span></a></li>
-			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip entryType=$entryType}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.devtools.project.pip.entry.list{/lang}</span></a></li>
+			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

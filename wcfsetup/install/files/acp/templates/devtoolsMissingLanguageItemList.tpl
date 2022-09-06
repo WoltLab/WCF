@@ -10,8 +10,8 @@
 			<ul>
 				{content}
 					{if $items}
-						<li><a href="#" id="clearExisingMissingLanguageItemLog" class="button">{icon size=16 name='xmark'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearExistingLog{/lang}</span></a></li>
-						<li><a href="#" id="clearMissingLanguageItemLog" class="button">{icon size=16 name='xmark'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearLog{/lang}</span></a></li>
+						<li><a href="#" id="clearExisingMissingLanguageItemLog" class="button">{icon name='xmark'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearExistingLog{/lang}</span></a></li>
+						<li><a href="#" id="clearMissingLanguageItemLog" class="button">{icon name='xmark'} <span>{lang}wcf.acp.devtools.missingLanguageItem.clearLog{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}
@@ -49,7 +49,7 @@
 						<td class="columnIcon">
 							{objectAction action="delete" confirmMessage='wcf.acp.devtools.missingLanguageItem.delete.confirmMessage'}
 							<button class="jsStackTraceButton jsTooltip" title="{lang}wcf.acp.devtools.missingLanguageItem.showStackTrace{/lang}" data-stack-trace="{$logEntry->getStackTrace()}">
-								{icon size=16 name='align-justify'}
+								{icon name='align-justify'}
 							</button>
 						</td>
 						<td class="columnID">{@$logEntry->getObjectID()}</td>

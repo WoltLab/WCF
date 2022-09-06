@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -95,21 +95,21 @@
 					{if $template->canCopy()}
 						<tr class="jsTemplateRow jsObjectActionObject" data-object-id="{@$template->getObjectID()}">
 							<td class="columnIcon">
-								<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip">{icon size=16 name='copy'}</a>
+								<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip">{icon name='copy'}</a>
 								
 								{if $template->templateGroupID}
-									<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip">{icon size=16 name='right-left'}</a>
-									<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+									<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip">{icon name='right-left'}</a>
+									<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 									{objectAction action="delete" objectTitle=$template->templateName}
 								{else}
 									<span class="disabled" title="{lang}wcf.acp.template.diff{/lang}">
-										{icon size=16 name='arrow-right-arrow-left'}
+										{icon name='arrow-right-arrow-left'}
 									</span>
 									<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
-										{icon size=16 name='pencil'}
+										{icon name='pencil'}
 									</span>
 									<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-										{icon size=16 name='xmark'}
+										{icon name='xmark'}
 									</span>
 								{/if}
 								
@@ -136,7 +136,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
+				<li><a href="{link controller='TemplateAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

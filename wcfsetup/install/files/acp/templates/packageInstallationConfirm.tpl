@@ -86,9 +86,9 @@
 						<td class="columnText columnPackage">{$packageValidationArchive->getArchive()->getPackageInfo('name')}</td>
 						<td class="columnIcon columnStatus">
 							{if $exceptionMessage}
-								{icon size=16 name='circle-xmark'}
+								{icon name='circle-xmark'}
 							{else}
-								{icon size=16 name='circle-check'}
+								{icon name='circle-check'}
 							{/if}
 						</td>
 					</tr>

@@ -189,7 +189,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener"
             button.href = "#";
             button.title = title;
             const icon = document.createElement("fa-icon");
-            icon.size = 16;
             icon.setIcon("smile");
             if (reactionTypeID === undefined || reactionTypeID == 0) {
                 icon.dataset.reactionTypeId = "0";

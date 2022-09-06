@@ -56,7 +56,6 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
             select(chooserId, languageId, target);
         }
         const icon = document.createElement("fa-icon");
-        icon.size = 16;
         icon.setIcon("caret-down", true);
         // add language dropdown items
         Object.entries(languages).forEach(([langId, language]) => {
@@ -156,7 +155,6 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", 
         Core.triggerEvent(chooser.element, "change");
         chooser.dropdownToggle.innerHTML = listItem.children[0].innerHTML;
         const icon = document.createElement("fa-icon");
-        icon.size = 16;
         icon.setIcon("caret-down", true);
         chooser.dropdownToggle.append(icon);
         _choosers.set(chooserId, chooser);

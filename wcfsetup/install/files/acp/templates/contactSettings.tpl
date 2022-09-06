@@ -22,8 +22,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='ContactRecipientAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.contact.recipient.add{/lang}</span></a></li>
-			<li><a href="{link controller='ContactOptionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.contact.option.add{/lang}</span></a></li>
+			<li><a href="{link controller='ContactRecipientAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.contact.recipient.add{/lang}</span></a></li>
+			<li><a href="{link controller='ContactOptionAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.contact.option.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -51,12 +51,12 @@
 					<tr class="sortableNode jsOptionRow jsObjectActionObject" data-object-id="{@$option->optionID}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$option->isDisabled}
-							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{if $option->canDelete()}
 								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{/if}
 							
@@ -91,15 +91,15 @@
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="sortableNodeHandle">
-								{icon size=16 name='arrows-up-down-left-right'}
+								{icon name='arrows-up-down-left-right'}
 							</span>
 							{objectAction action="toggle" isDisabled=$recipient->isDisabled}
 							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}">
-								{icon size=16 name='pencil'}
+								{icon name='pencil'}
 							</a>
 							{if $recipient->originIsSystem}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{else}
 								{objectAction action="delete" objectTitle=$recipient->getName()}

@@ -3,7 +3,7 @@
 		{user object=$user class='username'}
 		{if $user->banned}
 			<span class="jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}">
-				{icon size=16 name='lock'}
+				{icon name='lock'}
 			</span>
 		{/if}
 		{if MODULE_USER_RANK}

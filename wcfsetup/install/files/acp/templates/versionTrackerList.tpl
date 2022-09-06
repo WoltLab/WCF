@@ -9,8 +9,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{$object->getEditLink()}" class="button">{icon size=16 name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
-			<li><a href="{$object->getLink()}" class="button">{icon size=16 name='arrow-right'} <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>
+			<li><a href="{$object->getEditLink()}" class="button">{icon name='pencil'} <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
+			<li><a href="{$object->getLink()}" class="button">{icon name='arrow-right'} <span>{lang}wcf.edit.button.goToContent{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -109,7 +109,7 @@
 				<tr>
 					<td class="columnIcon">
 						<span class="disabled">
-							{icon size=16 name='arrow-rotate-left'}
+							{icon name='arrow-rotate-left'}
 						</span>
 						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked{/if}> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked{/if}>
 						{event name='rowButtons'}
@@ -124,7 +124,7 @@
 					<tr class="jsEditRow">
 						<td class="columnIcon">
 							<button class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->versionID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}">
-								{icon size=16 name='arrow-rotate-left'}
+								{icon name='arrow-rotate-left'}
 							</button>
 							<input type="radio" name="oldID" value="{@$edit->versionID}"{if $oldID == $edit->versionID} checked{/if}> <input type="radio" name="newID" value="{@$edit->versionID}"{if $newID == $edit->versionID} checked{/if}>
 							{event name='rowButtons'}

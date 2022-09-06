@@ -67,7 +67,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
             this._clearButton.href = "#";
             this._clearButton.className = "button inputSuffix disabled jsTooltip";
             this._clearButton.title = Language.get("wcf.global.filter.button.clear");
-            this._clearButton.innerHTML = '<fa-icon size="16" name="xmark" solid></fa-icon>';
+            this._clearButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
             this._clearButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 this.reset();
@@ -79,7 +79,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
                 visibilityButton.href = "#";
                 visibilityButton.className = "button inputSuffix jsTooltip";
                 visibilityButton.title = Language.get("wcf.global.filter.button.visibility");
-                visibilityButton.innerHTML = '<fa-icon size="16" name="eye"></fa-icon>';
+                visibilityButton.innerHTML = '<fa-icon name="eye"></fa-icon>';
                 visibilityButton.addEventListener("click", (ev) => this._toggleVisibility(ev));
                 inputAddon.appendChild(visibilityButton);
             }

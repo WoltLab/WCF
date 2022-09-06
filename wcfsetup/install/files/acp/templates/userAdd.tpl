@@ -19,7 +19,7 @@
 								*}data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}" {*
 						*}>
 							<a href="#" class="dropdownToggle button">
-								{icon size=16 name='pencil'}
+								{icon name='pencil'}
 								<span>{lang}wcf.global.button.edit{/lang}</span>
 							</a>
 
@@ -161,7 +161,7 @@
 				{/if}
 			{/hascontent}
 
-			<li><a href="{link controller='UserList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -344,7 +344,7 @@
 						<dl>
 							<dt>{lang}wcf.acp.user.security.multifactor{/lang}</dt>
 							<dd>
-								{icon size=16 name='check'} {lang}wcf.acp.user.security.multifactor.active{/lang}
+								{icon name='check'} {lang}wcf.acp.user.security.multifactor.active{/lang}
 								<small>{lang}wcf.acp.user.security.multifactor.active.description{/lang}</small>
 							</dd>
 						</dl>
@@ -847,7 +847,7 @@
 			const input = document.querySelector('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
 			if (input) {
 				const icon = document.createElement("span");
-				icon.innerHTML = '<fa-icon size="16" name="shield-halved"></fa-icon>';
+				icon.innerHTML = '<fa-icon name="shield-halved"></fa-icon>';
 				icon.classList.add("jsTooltip");
 				icon.title = '{jslang}wcf.acp.group.type.owner{/jslang}';
 				input.parentElement.append(icon);

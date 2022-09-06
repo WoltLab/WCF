@@ -92,7 +92,6 @@ function initElement(
   }
 
   const icon = document.createElement("fa-icon");
-  icon.size = 16;
   icon.setIcon("caret-down", true);
 
   // add language dropdown items
@@ -215,7 +214,6 @@ function select(chooserId: string, languageId: number, listItem?: HTMLElement): 
   chooser.dropdownToggle.innerHTML = listItem.children[0].innerHTML;
 
   const icon = document.createElement("fa-icon");
-  icon.size = 16;
   icon.setIcon("caret-down", true);
   chooser.dropdownToggle.append(icon);
 

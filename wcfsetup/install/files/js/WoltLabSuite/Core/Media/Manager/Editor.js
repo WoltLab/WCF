@@ -289,7 +289,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             buttons.appendChild(listItem);
             listItem.innerHTML = `
       <a class="jsTooltip" title="${Language.get("wcf.global.button.insert")}">
-        <fa-icon size="16" name="plus"></fa-icon>
+        <fa-icon name="plus"></fa-icon>
         <span class="invisible">${Language.get("wcf.global.button.insert")}</span>
       </a>`;
         }

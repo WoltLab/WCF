@@ -29,7 +29,7 @@
 			<div class="pageHeaderSearchType dropdown">
 				<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect">
 					<span class="pageHeaderSearchTypeLabel">{@$__searchTypeLabel}</span>
-					{icon size=16 name='caret-down' type='solid'}
+					{icon name='caret-down' type='solid'}
 				</a>
 				<ul class="dropdownMenu">
 					<li><a href="#" data-extended-link="{link controller='Search'}extended=1{/link}" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
@@ -57,7 +57,7 @@
 			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}">
 			
 			<button class="pageHeaderSearchInputButton button" type="submit" title="{lang}wcf.global.search{/lang}">
-				{icon size=16 name='magnifying-glass'}
+				{icon name='magnifying-glass'}
 			</button>
 			
 			<div id="pageHeaderSearchParameters"></div>

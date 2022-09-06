@@ -423,7 +423,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 buttons.appendChild(editButton);
                 editButton.innerHTML = `
         <a class="jsTooltip" title="${Language.get("wcf.global.button.edit")}">
-          <fa-icon size="16" name="pencil"></fa-icon>
+          <fa-icon name="pencil"></fa-icon>
           <span class="invisible">${Language.get("wcf.global.button.edit")}</span>
         </a>`;
                 const deleteButton = document.createElement("li");
@@ -437,7 +437,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 buttons.appendChild(deleteButton);
                 deleteButton.innerHTML = `
         <a class="jsTooltip" title="${Language.get("wcf.global.button.delete")}">
-          <fa-icon size="16" name="xmark"></fa-icon>
+          <fa-icon name="xmark"></fa-icon>
           <span class="invisible">${Language.get("wcf.global.button.delete")}</span>
         </a>`;
             }

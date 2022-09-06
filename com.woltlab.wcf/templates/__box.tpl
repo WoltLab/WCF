@@ -1,6 +1,6 @@
 <{if $box->showHeader}section{else}div{/if} class="box{if $box->getImage()} boxWithImage{/if}{if $box->showEditButton()} boxWithEditButton{/if}{if $box->cssClassName} {$box->cssClassName}{/if}" data-box-identifier="{@$box->identifier}">
 	{if $box->showEditButton()}
-		<a href="{link controller='BoxEdit' id=$box->boxID isACP=true}{/link}" class="boxEditButton jsTooltip" title="{lang}wcf.page.box.edit{/lang}">{icon size=16 name='pen-to-square'}</a>
+		<a href="{link controller='BoxEdit' id=$box->boxID isACP=true}{/link}" class="boxEditButton jsTooltip" title="{lang}wcf.page.box.edit{/lang}">{icon name='pen-to-square'}</a>
 	{/if}
 	{if $box->getImage()}
 		<div class="boxImage">

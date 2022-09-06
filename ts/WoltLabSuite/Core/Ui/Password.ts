@@ -42,7 +42,6 @@ function initElement(input: HTMLInputElement): void {
   inputAddon.appendChild(button);
 
   const icon = document.createElement("fa-icon");
-  icon.size = 16;
   icon.setIcon("eye");
   button.appendChild(icon);
 

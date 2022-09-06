@@ -54,9 +54,9 @@
 					title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"
 				>
 					{if $sortOrder === 'ASC'}
-						{icon size=16 name='arrow-down-wide-short'}
+						{icon name='arrow-down-wide-short'}
 					{else}
-						{icon size=16 name='arrow-down-short-wide'}
+						{icon name='arrow-down-short-wide'}
 					{/if}
 				</a>
 				<span class="dropdown">
@@ -74,14 +74,14 @@
 				<div class="containerListActiveFilters">
 					<ul class="inlineList">
 						{content}
-							{if $letter}<li class="jsTooltip" title="{lang}wcf.user.members.sort.letters{/lang}">{icon size=16 name='bold'} {$letter}</li>{/if}
+							{if $letter}<li class="jsTooltip" title="{lang}wcf.user.members.sort.letters{/lang}">{icon name='bold'} {$letter}</li>{/if}
 						{/content}
 					</ul>
 				</div>
 			{/hascontent}
 			
 			<div class="containerListFilterOptions jsOnly">
-				<button class="button small jsStaticDialog" data-dialog-id="membersListSortFilter">{icon size=16 name='filter'} {lang}wcf.global.filter{/lang}</button>
+				<button class="button small jsStaticDialog" data-dialog-id="membersListSortFilter">{icon name='filter'} {lang}wcf.global.filter{/lang}</button>
 			</div>
 		</div>
 		<ol class="containerList userList">

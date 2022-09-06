@@ -32,8 +32,8 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			<li><a href="{link controller='UserSearch'}{/link}" class="button">{icon size=16 name='magnifying-glass'} <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserSearch'}{/link}" class="button">{icon name='magnifying-glass'} <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

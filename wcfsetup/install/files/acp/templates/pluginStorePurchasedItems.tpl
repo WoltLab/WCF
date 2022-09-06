@@ -41,23 +41,23 @@
 					<td class="columnIcon">
 						{if $product[status] == 'install'}
 							<button class="jsButtonPackageInstall jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}" data-confirm-message="{lang __encode=true}wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage{/lang}" data-package="{$product[package]}" data-package-version="{$product[version][available]}">
-								{icon size=16 name='plus'}
+								{icon name='plus'}
 							</button>
 						{elseif $product[status] == 'update'}
 							<button class="jsButtonPackageUpdate jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.update{/lang}">
-								{icon size=16 name='arrows-rotate'}
+								{icon name='arrows-rotate'}
 							</button>
 						{elseif $product[status] == 'upToDate'}
 							<span class="jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.upToDate{/lang}">
-								{icon size=16 name='check'}
+								{icon name='check'}
 							</span>
 						{elseif $product[status] == 'requireUpdate'}
 							<span class="jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.requireUpdate{/lang}">
-								{icon size=16 name='ban'}
+								{icon name='ban'}
 							</span>
 						{else}
 							<span class="jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.unavailable{/lang}">
-								{icon size=16 name='ban'}
+								{icon name='ban'}
 							</span>
 						{/if}
 					</td>

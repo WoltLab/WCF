@@ -5,7 +5,7 @@
     {foreach from=$values item=value}
         <li data-value="{$value}">
             <button type="button" class="jsDeleteItem jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-                {icon size=16 name='xmark'}
+                {icon name='xmark'}
             </button>
             <span>{$value}</span>
         </li>

@@ -146,7 +146,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
             if (languageId) {
                 data.buttonLabel.classList.add("active");
                 const icon = document.createElement("fa-icon");
-                icon.size = 16;
                 icon.setIcon("caret-down", true);
                 data.buttonLabel.append(icon);
             }
@@ -193,7 +192,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
                 if (hasMissingValue) {
                     item.classList.add("missingValue");
                     const icon = document.createElement("fa-icon");
-                    icon.size = 16;
                     icon.setIcon("triangle-exclamation");
                     span.append(icon);
                 }

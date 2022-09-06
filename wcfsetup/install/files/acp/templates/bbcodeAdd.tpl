@@ -4,7 +4,7 @@
 	<section class="section">
 		<h2 class="sectionTitle">
 			<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-				{icon size=16 name='xmark'}
+				{icon name='xmark'}
 			</button>
 			<span>{lang}wcf.acp.bbcode.attribute{/lang} {ldelim}#$attributeNo}</span>
 		</h2>
@@ -82,7 +82,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='BBCodeList'}{/link}" class="button">{icon size=16 name='list'} <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
+			<li><a href="{link controller='BBCodeList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -192,7 +192,7 @@
 				<dd>
 					<div class="inputAddon">
 						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium" readonly>
-						<button type="button" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon size=16 name='magnifying-glass'}</button>
+						<button type="button" class="inputSuffix button jsButtonSearchWysiwygIcon">{icon name='magnifying-glass'}</button>
 					</div>
 					{if $errorField == 'wysiwygIcon'}
 						<small class="innerError">
@@ -214,7 +214,7 @@
 	<section class="section" id="attributeFieldset">
 		<h2 class="sectionTitle">
 			<button type="button" class="jsAddButton jsTooltip" title="{lang}wcf.global.button.add{/lang}">
-				{icon size=16 name='plus'}
+				{icon name='plus'}
 			</button>
 			{lang}wcf.acp.bbcode.attributes{/lang}
 		</h2>
@@ -223,7 +223,7 @@
 			<section class="section">
 				<h2 class="sectionTitle">
 					<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
-						{icon size=16 name='xmark'}
+						{icon name='xmark'}
 					</button>
 					<span>{lang}wcf.acp.bbcode.attribute{/lang} {#$attribute->attributeNo}</span>
 				</h2>

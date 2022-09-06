@@ -1,7 +1,7 @@
 {if $boxType == 'html' || $boxType == 'tpl'}
 	<ul class="codemirrorToolbar">
-		<li><a href="#" id="codemirror-content{@$languageID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon size=16 name='file'}</a></li>
-		<li><a href="#" id="codemirror-content{@$languageID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon size=16 name='file-lines'}</a></li>
+		<li><a href="#" id="codemirror-content{@$languageID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}">{icon name='file'}</a></li>
+		<li><a href="#" id="codemirror-content{@$languageID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</a></li>
 	</ul>
 	<script data-relocate="true">
 		require([

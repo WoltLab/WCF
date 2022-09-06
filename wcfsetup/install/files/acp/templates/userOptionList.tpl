@@ -7,7 +7,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserOptionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.option.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserOptionAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.option.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -40,12 +40,12 @@
 					<tr class="jsOptionRow jsObjectActionObject" data-object-id="{@$option->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="toggle" isDisabled=$option->isDisabled}
-							<a href="{link controller='UserOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon size=16 name='pencil'}</a>
+							<a href="{link controller='UserOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
 							{if $option->canDelete()}
 								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{/if}
 							
@@ -73,7 +73,7 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserOptionAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.user.option.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserOptionAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.user.option.add{/lang}</span></a></li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

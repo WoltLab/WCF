@@ -13,7 +13,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -93,14 +93,14 @@
 						<td class="columnIcon">
 							{if $userTrophy->getTrophy()->awardAutomatically}
 								<span class="disabled" title="{lang}wcf.global.button.edit{/lang}">
-									{icon size=16 name='pencil'}
+									{icon name='pencil'}
 								</span>
 								<span class="disabled" title="{lang}wcf.global.button.delete{/lang}">
-									{icon size=16 name='xmark'}
+									{icon name='xmark'}
 								</span>
 							{else}
 								<a href="{link controller='UserTrophyEdit' id=$userTrophy->userTrophyID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip{if $userTrophy->getTrophy()->awardAutomatically} disabled{/if}">
-									{icon size=16 name='pencil'}
+									{icon name='pencil'}
 								</a>
 								{objectAction action="delete" confirmMessage='wcf.acp.trophy.userTrophy.delete.confirmMessage'}
 							{/if}
@@ -128,7 +128,7 @@
 
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon size=16 name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserTrophyAdd'}{/link}" class="button">{icon name='plus'} <span>{lang}wcf.acp.menu.link.userTrophy.add{/lang}</span></a></li>
 
 				{event name='contentHeaderNavigation'}
 			</ul>

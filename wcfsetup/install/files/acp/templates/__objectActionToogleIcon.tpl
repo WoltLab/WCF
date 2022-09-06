@@ -3,8 +3,8 @@
     *}data-object-action="toggle"{*
 *}>
     {if $object->isDisabled}
-        {icon size=16 name='square-check'}
+        {icon name='square-check'}
     {else}
-        {icon size=16 name='square'}
+        {icon name='square'}
     {/if}
 </button>

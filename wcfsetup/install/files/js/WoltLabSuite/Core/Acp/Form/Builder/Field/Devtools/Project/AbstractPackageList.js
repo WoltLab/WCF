@@ -64,7 +64,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             this.populateListItem(listItem, packageData);
             // add delete button
             const deleteButton = document.createElement("button");
-            deleteButton.innerHTML = '<fa-icon size="16" name="xmark" solid></fa-icon>';
+            deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
             deleteButton.title = Language.get("wcf.global.button.delete");
             deleteButton.addEventListener("click", (ev) => this.removePackage(ev));
             listItem.insertAdjacentElement("afterbegin", deleteButton);
