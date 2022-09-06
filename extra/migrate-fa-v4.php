@@ -113,6 +113,11 @@ function replaceIcons(string $filename): bool
                     'name' => $newIconName,
                     'type' => $type,
                 ] = $iconShim[$name];
+
+                // The regular user icon is used for consistency.
+                if ($name === 'user') {
+                    $type = 'regular';
+                }
             } else {
                 // Not all icons are renamed.
                 $newIconName = $name;
@@ -156,23 +161,25 @@ function replaceIcons(string $filename): bool
 
 function getNewTemplateIcon(string $name, int $size, string $type): string
 {
+    $sizeAttribute = ($size === 16) ? '' : "size={$size} ";
     if ($type === 'regular') {
-        return "{icon size={$size} name='{$name}'}";
+        return "{icon {$sizeAttribute}name='{$name}'}";
     }
 
-    return "{icon size={$size} name='{$name}' type='{$type}'}";
+    return "{icon {$sizeAttribute}name='{$name}' type='{$type}'}";
 }
 
 function getNewJavascriptIcon(string $name, int $size, string $type): string
 {
+    $sizeAttribute = ($size === 16) ? '' : sprintf('size="%d" ', $size);
     if ($type === 'regular') {
         return <<<HTML
-        <fa-icon size="{$size}" name="{$name}"></fa-icon>
+        <fa-icon {$sizeAttribute}name="{$name}"></fa-icon>
         HTML;
     }
 
     return <<<HTML
-    <fa-icon size="{$size}" name="{$name}" solid></fa-icon>
+    <fa-icon {$sizeAttribute}name="{$name}" solid></fa-icon>
     HTML;
 }
 
