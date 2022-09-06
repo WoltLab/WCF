@@ -94,6 +94,11 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
 
         // Drop email if the notification is deleted.
         if (!$notification || !$notification->notificationID) {
+            $this->job->updateStatus(
+                EmailLogEntry::STATUS_DISCARDED,
+                'notification does not exist'
+            );
+
             return;
         }
 
