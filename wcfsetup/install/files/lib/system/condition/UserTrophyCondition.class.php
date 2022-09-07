@@ -102,8 +102,10 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
      */
     public function checkUser(Condition $condition, User $user)
     {
-        $trophies = UserTrophyList::getUserTrophies([$user->getObjectID()], false)[$user->getObjectID()];
-        $trophyIDs = \array_keys($trophies);
+        $userTrophies = UserTrophyList::getUserTrophies([$user->getObjectID()], false)[$user->getObjectID()];
+        $trophyIDs = \array_map(static function ($userTrophy) {
+            return $userTrophy->trophyID;
+        }, $userTrophies);
 
         if (
             !empty($condition->conditionData['userTrophyIDs'])
