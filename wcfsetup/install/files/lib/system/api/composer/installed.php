@@ -7,7 +7,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -83,9 +83,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
-            'pretty_version' => '2.16.0',
-            'version' => '2.16.0.0',
-            'reference' => '49f3f7a3b30ff5a0e62e9b5d16584451f59de65c',
+            'pretty_version' => '2.17.0',
+            'version' => '2.17.0.0',
+            'reference' => '5b32597aa46b83c8b85bb1cf9a6ed4fe7dd980c5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
             'aliases' => array(),
@@ -233,9 +233,9 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => 'v1.10.5',
-            'version' => '1.10.5.0',
-            'reference' => '6d44282ccf283e133ab70b6282f8e068ff2f9bf9',
+            'pretty_version' => 'v1.11.0',
+            'version' => '1.11.0.0',
+            'reference' => '33749d12c2569bb24071f94e9af828662dabb068',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
