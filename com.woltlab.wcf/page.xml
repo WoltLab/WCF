@@ -667,8 +667,7 @@
 <h2>What do we use cookies for</h2>
 <p>We’re using cookies for the following purposes:</p>
 <ul>
-<li>Login: Once you login to our website, a cookie is set containing your encrypted credentials, required to recognize you between page visits. You can disable this cookie by unchecking “Remember me” in the login form.</li>
-<li>Session: Upon first visit of our website, the system will create a new unique session for you which will be saved using a cookie on your computer. Sessions are required to recognize users between page accesses. It is a temporary cookie which will be deleted once you close your internet browser.</li>
+<li>Session: Upon first visit of our website, the system will create a new unique session for you which will be saved using a cookie on your computer. Sessions are required to recognize users between page accesses.</li>
 <li>Third-Party Services: Displayed ads or sharing content through social networks or comparable actions might cause a cookie created by them.</li>
 </ul>
 
@@ -693,8 +692,7 @@
 <h2>Wie wir Cookies nutzen</h2>
 <p>Wir setzen Cookies für folgende Zwecke ein:</p>
 <ul>
-<li>Anmeldung: Bei der Anmeldung werden Ihre Zugangsdaten in verschlüsselter Form als Cookies gespeichert, um Sie bei einem späteren Seitenaufruf automatisiert anzumelden. Im Anmeldefenster können Sie mit der Option „Dauerhaft angemeldet bleiben“ festlegen, ob diese Cookies angelegt werden sollen.</li>
-<li>Sitzung: Beim ersten Aufruf unserer Seite wird eine neue Sitzung gestartet, diese wird durch ein eindeutiges Cookie Ihrem Computer zugeordnet. Sitzungen erlauben es, Sie zwischen zwei Seitenaufrufen wieder zu erkennen und Ihnen alle Funktionalitäten bereitstellen zu können. Es handelt sich um ein temporäres Cookie, das beim Beenden des Internet-Browsers automatisch gelöscht wird.</li>
+<li>Sitzung: Beim ersten Aufruf unserer Seite wird eine neue Sitzung gestartet, diese wird durch ein eindeutiges Cookie Ihrem Computer zugeordnet. Sitzungen erlauben es, Sie zwischen zwei Seitenaufrufen wieder zu erkennen und Ihnen alle Funktionalitäten bereitstellen zu können.</li>
 <li>Drittanbieter-Dienste: Die Einblendung von Werbeanzeigen oder das Teilen von Inhalten auf sozialen Netzwerken oder vergleichbaren Internetseiten kann die Erzeugung eines Cookies zur Folge haben. Diese Cookies werden nicht direkt von unserer Seite erzeugt, sondern durch den Drittanbieter selbst.</li>
 </ul>
 
