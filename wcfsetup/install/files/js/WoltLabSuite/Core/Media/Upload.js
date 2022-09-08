@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         // replace copied image with spinner
                         let image = cell.querySelector("img");
                         if (!image) {
-                            image = cell.querySelector(".icon48");
+                            image = cell.querySelector("fa-icon");
                         }
                         const spinner = document.createElement("span");
                         spinner.innerHTML = '<fa-icon size="48" name="spinner"></fa-icon>';

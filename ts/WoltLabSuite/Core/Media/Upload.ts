@@ -93,9 +93,9 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
             });
         } else if (cell.classList.contains("columnFilename")) {
           // replace copied image with spinner
-          let image = cell.querySelector("img");
+          let image = cell.querySelector<HTMLElement>("img");
           if (!image) {
-            image = cell.querySelector(".icon48");
+            image = cell.querySelector("fa-icon");
           }
 
           const spinner = document.createElement("span");
