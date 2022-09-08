@@ -51,16 +51,6 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode
     {
         HtmlBBCodeParser::getInstance()->setOutputType($this->outputType);
 
-        if ($this->removeLinks) {
-            HtmlBBCodeParser::getInstance()->setRemoveLinks($this->removeLinks);
-        }
-
-        $output = HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes'], $data['element']);
-
-        if ($this->removeLinks) {
-            HtmlBBCodeParser::getInstance()->setRemoveLinks(false);
-        }
-
-        return $output;
+        return HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes'], $data['element']);
     }
 }

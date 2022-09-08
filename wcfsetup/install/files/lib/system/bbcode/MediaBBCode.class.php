@@ -33,7 +33,7 @@ class MediaBBCode extends AbstractBBCode
                     }
                 }
             }
-        } elseif ($parser->getOutputType() == 'text/simplified-html' && !$parser->getRemoveLinks()) {
+        } elseif ($parser->getOutputType() == 'text/simplified-html') {
             foreach (BBCodeMediaProvider::getCache() as $provider) {
                 if ($provider->matches($content)) {
                     return StringUtil::getAnchorTag($content, '', true, true);
