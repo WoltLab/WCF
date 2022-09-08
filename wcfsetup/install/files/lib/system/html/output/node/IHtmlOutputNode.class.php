@@ -21,12 +21,4 @@ interface IHtmlOutputNode extends IHtmlNode
      * @param string $outputType desired output type
      */
     public function setOutputType($outputType);
-
-    /**
-     * Requests the HTML output to omit any HTML anchor.
-     *
-     * @param bool $removeLinks
-     * @since 5.2
-     */
-    public function setRemoveLinks($removeLinks);
 }

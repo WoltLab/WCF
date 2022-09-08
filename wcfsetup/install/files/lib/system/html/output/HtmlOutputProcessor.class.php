@@ -26,13 +26,6 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
     public $enableToc;
 
     /**
-     * Removes any link contained inside the message text.
-     * @var bool
-     * @since 5.2
-     */
-    public $removeLinks = false;
-
-    /**
      * output node processor instance
      * @var HtmlOutputNodeProcessor
      */

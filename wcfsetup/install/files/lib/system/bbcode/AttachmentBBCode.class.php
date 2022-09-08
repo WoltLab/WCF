@@ -46,10 +46,7 @@ class AttachmentBBCode extends AbstractBBCode
         }
 
         $hasParentLink = false;
-        /** @var HtmlBBCodeParser $parser */
-        if ($parser->getRemoveLinks()) {
-            $hasParentLink = true;
-        } elseif (!empty($closingTag['__parents'])) {
+        if (!empty($closingTag['__parents'])) {
             /** @var \DOMElement $parent */
             foreach ($closingTag['__parents'] as $parent) {
                 if ($parent->nodeName === 'a') {

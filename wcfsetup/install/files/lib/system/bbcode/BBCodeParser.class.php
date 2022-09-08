@@ -593,14 +593,4 @@ class BBCodeParser extends SingletonFactory
 
         return $message;
     }
-
-    /**
-     * @return bool
-     * @since 5.2
-     * @deprecated 5.2 See https://github.com/WoltLab/WCF/issues/3189
-     */
-    public function getRemoveLinks()
-    {
-        return false;
-    }
 }
