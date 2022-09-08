@@ -275,6 +275,22 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     }
 
     /**
+     * @since 6.0
+     */
+    public function isVideo(): bool
+    {
+        return \substr($this->fileType, 0, 6) === 'video/';
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function isAudio(): bool
+    {
+        return \substr($this->fileType, 0, 6) === 'audio/';
+    }
+
+    /**
      * Returns the storage path of the media files.
      *
      * @return  string

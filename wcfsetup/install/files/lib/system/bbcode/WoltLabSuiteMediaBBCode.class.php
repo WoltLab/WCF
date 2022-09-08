@@ -45,7 +45,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
             // to be something else, but we use it here for backward compatibility.
             $removeLinks = true;
         }
-        
+
         /** @var ViewableMedia $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
         if ($media !== null && $media->isAccessible()) {
@@ -62,12 +62,6 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     $thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
                     $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
 
-                    WCF::getTPL()->assign([
-                        'float' => $float,
-                        'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
-                        'thumbnailSize' => $thumbnailSize,
-                    ]);
-
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
@@ -75,6 +69,15 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
                             $media,
                             $thumbnailSize
                         ) : '',
+                        'float' => $float,
+                        'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
+                        'thumbnailSize' => $thumbnailSize,
+                    ]);
+                } else if ($media->isVideo() || $media->isAudio()) {
+                    return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
+                        'mediaLink' => $this->getLink($media),
+                        'removeLinks' => $removeLinks,
+                        'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
                     ]);
                 }
 
