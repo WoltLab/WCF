@@ -735,7 +735,7 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>captchaSelect</optiontype>
 				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!profile_mail_use_captcha,!search_use_captcha</enableoptions>
+				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!search_use_captcha</enableoptions>
 				<allowemptyvalue>1</allowemptyvalue>
 			</option>
 			<option name="register_use_captcha">
@@ -744,11 +744,6 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="lost_password_use_captcha">
-				<categoryname>security.antispam.captcha</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="profile_mail_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -1712,6 +1707,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
+        <option name="profile_mail_use_captcha"/>
 		<option name="http_enable_gzip"/>
 		<option name="meta_keywords"/>
 		<option name="register_admin_notification"/>
