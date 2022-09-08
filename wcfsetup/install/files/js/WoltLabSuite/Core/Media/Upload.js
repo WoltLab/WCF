@@ -182,7 +182,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         });
                         file.querySelector(".columnMediaID").textContent = media.mediaID.toString();
                         // update icon
-                        this._replaceFileIcon(file.querySelector("fa-icon"), media, 48);
+                        this._replaceFileIcon(file.querySelector(".columnFilename fa-icon"), media, 48);
                     }
                     else {
                         let error = data.returnValues.errors[internalFileId];

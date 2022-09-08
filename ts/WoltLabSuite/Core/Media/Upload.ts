@@ -222,7 +222,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           file.querySelector(".columnMediaID")!.textContent = media.mediaID.toString();
 
           // update icon
-          this._replaceFileIcon(file.querySelector("fa-icon")!, media, 48);
+          this._replaceFileIcon(file.querySelector(".columnFilename fa-icon")!, media, 48);
         } else {
           let error: MediaUploadError = data.returnValues.errors[internalFileId];
           if (!error) {
