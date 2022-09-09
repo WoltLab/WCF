@@ -269,6 +269,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
         } else {
             $this->connection = new RemoteFile($this->host, $this->port, $overrideTimeout);
         }
+        $this->lastWrite = '*connect*';
 
         $this->read([220]);
 
