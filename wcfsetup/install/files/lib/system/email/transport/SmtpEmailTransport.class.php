@@ -217,6 +217,9 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                 if ($this->connection->eof()) {
                     throw new TransientFailure("Unexpected EOF / connection close from SMTP server.");
                 }
+                if ($data === false) {
+                    throw new TransientFailure("Failed to read from SMTP server.");
+                }
 
                 throw new TransientFailure("Unexpected reply '" . $data . "' from SMTP server.");
             }
