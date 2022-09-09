@@ -288,6 +288,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
             }
 
             $this->write('HELO ' . Email::getHost());
+            $this->read([250]);
             $this->features = [];
         }
 
