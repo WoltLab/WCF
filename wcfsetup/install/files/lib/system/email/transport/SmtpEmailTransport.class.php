@@ -263,10 +263,12 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                 'strtolower',
                 \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
             );
-        } catch (SystemException $e) {
+        } catch (\Exception $e) {
             if ($this->starttls == 'encrypt') {
                 throw new PermanentFailure(
-                    "Remote SMTP server does not support EHLO, but \$starttls is set to 'encrypt'."
+                    "Remote SMTP server does not support EHLO, but \$starttls is set to 'encrypt'.",
+                    0,
+                    $e
                 );
             }
 
