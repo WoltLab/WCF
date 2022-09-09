@@ -183,7 +183,11 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
         $code = null;
         $reply = '';
         do {
+            $start = \microtime(true);
             $data = $this->connection->gets();
+            $end = \microtime(true);
+            $time = $end - $start;
+
             if (\preg_match('/^(\d{3})([- ])(.*)$/', $data, $matches)) {
                 if ($code === null) {
                     $code = \intval($matches[1]);
@@ -191,15 +195,33 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                     if (!\in_array($code, $expectedCodes)) {
                         // 4xx is a transient failure
                         if (400 <= $code && $code < 500) {
-                            throw new TransientFailure("Remote SMTP server reported transient error code: " . $code . " (" . $truncateReply($matches[3]) . ") in reply to '" . $this->lastWrite . "'");
+                            throw new TransientFailure(\sprintf(
+                                "Remote SMTP server reported transient error code %d (%s) in reply to '%s' (%.3fs).",
+                                $code,
+                                $truncateReply($matches[3]),
+                                $this->lastWrite,
+                                $time
+                            ));
                         }
 
                         // 5xx is a permanent failure
                         if (500 <= $code && $code < 600) {
-                            throw new PermanentFailure("Remote SMTP server reported permanent error code: " . $code . " (" . $truncateReply($matches[3]) . ") in reply to '" . $this->lastWrite . "'");
+                            throw new PermanentFailure(\sprintf(
+                                "Remote SMTP server reported permanent error code %d (%s) in reply to '%s' (%.3fs).",
+                                $code,
+                                $truncateReply($matches[3]),
+                                $this->lastWrite,
+                                $time
+                            ));
                         }
 
-                        throw new TransientFailure("Remote SMTP server reported not expected code: " . $code . " (" . $truncateReply($matches[3]) . ") in reply to '" . $this->lastWrite . "'");
+                        throw new TransientFailure(\sprintf(
+                            "Remote SMTP server reported not expected code %d (%s) in reply to '%s' (%.3fs).",
+                            $code,
+                            $truncateReply($matches[3]),
+                            $this->lastWrite,
+                            $time
+                        ));
                     }
                 }
 
@@ -211,11 +233,19 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                         break;
                     }
                 } else {
-                    throw new TransientFailure("Unexpected reply '" . $data . "' from SMTP server. Code does not match previous codes from multiline answer.");
+                    throw new TransientFailure(\sprintf(
+                        "Unexpected reply '%s' from SMTP server. Code does not match previous codes %d from multiline answer (%.3fs).",
+                        $data,
+                        $code,
+                        $time
+                    ));
                 }
             } else {
                 if ($this->connection->eof()) {
-                    throw new TransientFailure("Unexpected EOF / connection close from SMTP server.");
+                    throw new TransientFailure(\sprintf(
+                        "Unexpected EOF / connection close from SMTP server (%.3fs).",
+                        $time
+                    ));
                 }
                 if ($data === false) {
                     // fgets returning false without feof returning true indicates that
@@ -234,10 +264,17 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                     // -> SMTP server responds to the RSET
                     $this->disconnect();
 
-                    throw new TransientFailure("Failed to read from SMTP server.");
+                    throw new TransientFailure(\sprintf(
+                        "Failed to read from SMTP server (%.3fs).",
+                        $time
+                    ));
                 }
 
-                throw new TransientFailure("Unexpected reply '" . $data . "' from SMTP server.");
+                throw new TransientFailure(\sprintf(
+                    "Unexpected reply '%s' from SMTP server (%.3fs).",
+                    $data,
+                    $time
+                ));
             }
         } while (true);
 
