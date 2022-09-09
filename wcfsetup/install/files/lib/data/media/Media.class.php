@@ -279,7 +279,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
      */
     public function isVideo(): bool
     {
-        return \substr($this->fileType, 0, 6) === 'video/';
+        return \str_starts_with($this->fileType, 'video/');
     }
 
     /**
@@ -287,7 +287,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
      */
     public function isAudio(): bool
     {
-        return \substr($this->fileType, 0, 6) === 'audio/';
+        return \str_starts_with($this->fileType, 'audio/');
     }
 
     /**
