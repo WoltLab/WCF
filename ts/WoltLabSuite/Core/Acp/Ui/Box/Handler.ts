@@ -173,8 +173,20 @@ class AcpUiBoxHandler {
     const supportedPositions: string[] = JSON.parse(selectedOption.dataset.supportedPositions!);
 
     Array.from(this.position).forEach((option: HTMLOptionElement) => {
-      option.disabled = !supportedPositions.includes(option.value);
+      option.hidden = !supportedPositions.includes(option.value);
     });
+
+    // Changing the controller can cause the currently selected
+    // option to become unavailable. Default to the first possible
+    // option in that case.
+    if (this.position.options[this.position.selectedIndex].hidden) {
+      for (let i = 0; i < this.position.length; i++) {
+        if (!this.position.options[i].hidden) {
+          this.position.selectedIndex = i;
+          break;
+        }
+      }
+    }
   }
 }
 
