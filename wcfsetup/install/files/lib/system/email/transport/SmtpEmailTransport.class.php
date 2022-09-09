@@ -218,6 +218,22 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
                     throw new TransientFailure("Unexpected EOF / connection close from SMTP server.");
                 }
                 if ($data === false) {
+                    // fgets returning false without feof returning true indicates that
+                    // the read timeout struck. The connection will still be usable, though.
+                    //
+                    // We must tear down the connection to avoid a desync when the SMTP server
+                    // sends the response to whatever command is currently waiting for the
+                    // response when we already attempt to deliver a new mail:
+                    //
+                    // RCPT TO:<foo@example.com>
+                    // -> timeout strikes
+                    // RSET
+                    // -> SMTP server belatedly responds to the RCPT TO, the response will
+                    //    be interpreted as the response to the RSET.
+                    // MAIL FROM:<bar@example.com>
+                    // -> SMTP server responds to the RSET
+                    $this->disconnect();
+
                     throw new TransientFailure("Failed to read from SMTP server.");
                 }
 
