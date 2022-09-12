@@ -289,7 +289,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             const activeElement = this._activeElement;
             const elementData = this._elements.get(activeElement);
             activeElement.classList.add("jsInvalidQuoteTarget");
-            const icon = elementData.messageBodyEditor.querySelector(".icon");
+            const icon = elementData.messageBodyEditor.querySelector("fa-icon");
             icon.remove();
             const messageBody = elementData.messageBodyEditor;
             const editor = document.createElement("div");

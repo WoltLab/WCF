@@ -376,7 +376,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const elementData = this._elements.get(activeElement)!;
 
     activeElement.classList.add("jsInvalidQuoteTarget");
-    const icon = elementData.messageBodyEditor!.querySelector(".icon") as HTMLElement;
+    const icon = elementData.messageBodyEditor!.querySelector("fa-icon")!;
     icon.remove();
 
     const messageBody = elementData.messageBodyEditor!;
