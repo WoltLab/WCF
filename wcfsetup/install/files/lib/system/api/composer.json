@@ -11,12 +11,12 @@
     },
     "require": {
         "chrisjean/php-ico": "^1.0.4",
-        "dragonmantank/cron-expression": "^3.3.1",
+        "dragonmantank/cron-expression": "^3.3.2",
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "4.14.*",
         "guzzlehttp/guzzle": "^7.5",
         "guzzlehttp/psr7": "^2.4.1",
-        "laminas/laminas-diactoros": "^2.16",
+        "laminas/laminas-diactoros": "^2.17",
         "laminas/laminas-httphandlerrunner": "^2.1.0",
         "laminas/laminas-progressbar": "^2.10.1",
         "paragonie/constant_time_encoding": "^2.6.3",
@@ -25,7 +25,7 @@
         "psr/http-server-handler": "^1.0.1",
         "psr/http-server-middleware": "^1.0.1",
         "psr/log": "^3.0",
-        "scssphp/scssphp": "^1.10.5",
+        "scssphp/scssphp": "^1.11",
         "sebastian/diff": "^4.0.4",
         "symfony/polyfill-intl-idn": "^1.26.0",
         "symfony/polyfill-php82": "^1.26.0"
