@@ -218,4 +218,12 @@ class SearchResultTextParser extends SingletonFactory
         // do highlighting
         return KeywordHighlighter::getInstance()->doHighlight($text);
     }
+
+    /**
+     * @since 5.5
+     */
+    public function setSearchQuery(string $searchQuery): void
+    {
+        $this->searchQuery = $searchQuery;
+    }
 }
