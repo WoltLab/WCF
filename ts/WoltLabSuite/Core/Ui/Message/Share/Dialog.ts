@@ -7,8 +7,6 @@
  * @module  WoltLabSuite/Core/Ui/Message/Share/Dialog
  */
 
-import UiDialog from "../../Dialog";
-import DomUtil from "../../../Dom/Util";
 import * as DomTraverse from "../../../Dom/Traverse";
 import * as Language from "../../../Language";
 import * as Clipboard from "../../../Clipboard";
@@ -17,10 +15,13 @@ import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import * as UiMessageShare from "../Share";
 import { getShareProviders } from "./Providers";
+import { dialogFromHtml, ModalDialog } from "../../../Dialog";
 
 const shareButtons = new WeakSet<HTMLElement>();
 
 const offerNativeSharing = window.navigator.share !== undefined;
+
+let dialog: ModalDialog | undefined = undefined;
 
 /**
  * Copies the contents of one of the share dialog's input elements to the clipboard.
@@ -133,8 +134,7 @@ function openDialog(event: MouseEvent): void {
   event.preventDefault();
 
   const target = event.currentTarget as HTMLAnchorElement;
-  const dialogId = `shareContentDialog_${DomUtil.identify(target)}`;
-  if (!UiDialog.getDialog(dialogId)) {
+  if (dialog === undefined) {
     const providerButtons = getProviderButtons();
     let providerElement = "";
     if (providerButtons) {
@@ -170,28 +170,26 @@ function openDialog(event: MouseEvent): void {
       </div>
     `;
 
-    const dialogData = UiDialog.openStatic(dialogId, dialogContent, {
-      title: Language.get("wcf.message.share"),
-    });
+    dialog = dialogFromHtml(dialogContent);
+    dialog.title = Language.get("wcf.message.share");
 
-    dialogData.content.style.maxWidth = "600px";
-    dialogData.content
+    dialog.content
       .querySelectorAll(".shareDialogCopyButton")
       .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
     if (offerNativeSharing) {
-      dialogData.content.querySelector(".shareDialogNativeButton")!.addEventListener("click", (ev) => nativeShare(ev));
+      dialog.content.querySelector(".shareDialogNativeButton")!.addEventListener("click", (ev) => nativeShare(ev));
     }
 
     if (providerButtons) {
       UiMessageShare.init();
     }
-  } else {
-    UiDialog.openStatic(dialogId, null);
   }
+
+  dialog.show();
 }
 
 function registerButtons(): void {
-  document.querySelectorAll("a.shareButton,a.wsShareButton").forEach((shareButton: HTMLElement) => {
+  document.querySelectorAll("a.shareButton, a.wsShareButton").forEach((shareButton: HTMLElement) => {
     if (!shareButtons.has(shareButton)) {
       shareButton.addEventListener("click", (ev) => openDialog(ev));
 

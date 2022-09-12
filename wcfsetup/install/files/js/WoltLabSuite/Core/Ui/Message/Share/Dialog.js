@@ -6,12 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Message/Share/Dialog
  */
-define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../../../Dom/Traverse", "../../../Language", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers"], function (require, exports, tslib_1, Dialog_1, Util_1, DomTraverse, Language, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1) {
+define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Language", "../../../Clipboard", "../../Notification", "../../../StringUtil", "../../../Dom/Change/Listener", "../Share", "./Providers", "../../../Dialog"], function (require, exports, tslib_1, DomTraverse, Language, Clipboard, UiNotification, StringUtil, Listener_1, UiMessageShare, Providers_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Language = tslib_1.__importStar(Language);
     Clipboard = tslib_1.__importStar(Clipboard);
@@ -21,6 +19,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
     UiMessageShare = tslib_1.__importStar(UiMessageShare);
     const shareButtons = new WeakSet();
     const offerNativeSharing = window.navigator.share !== undefined;
+    let dialog = undefined;
     /**
      * Copies the contents of one of the share dialog's input elements to the clipboard.
      */
@@ -105,8 +104,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
     function openDialog(event) {
         event.preventDefault();
         const target = event.currentTarget;
-        const dialogId = `shareContentDialog_${Util_1.default.identify(target)}`;
-        if (!Dialog_1.default.getDialog(dialogId)) {
+        if (dialog === undefined) {
             const providerButtons = getProviderButtons();
             let providerElement = "";
             if (providerButtons) {
@@ -137,26 +135,22 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         ${nativeSharingElement}
       </div>
     `;
-            const dialogData = Dialog_1.default.openStatic(dialogId, dialogContent, {
-                title: Language.get("wcf.message.share"),
-            });
-            dialogData.content.style.maxWidth = "600px";
-            dialogData.content
+            dialog = (0, Dialog_1.dialogFromHtml)(dialogContent);
+            dialog.title = Language.get("wcf.message.share");
+            dialog.content
                 .querySelectorAll(".shareDialogCopyButton")
                 .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
             if (offerNativeSharing) {
-                dialogData.content.querySelector(".shareDialogNativeButton").addEventListener("click", (ev) => nativeShare(ev));
+                dialog.content.querySelector(".shareDialogNativeButton").addEventListener("click", (ev) => nativeShare(ev));
             }
             if (providerButtons) {
                 UiMessageShare.init();
             }
         }
-        else {
-            Dialog_1.default.openStatic(dialogId, null);
-        }
+        dialog.show();
     }
     function registerButtons() {
-        document.querySelectorAll("a.shareButton,a.wsShareButton").forEach((shareButton) => {
+        document.querySelectorAll("a.shareButton, a.wsShareButton").forEach((shareButton) => {
             if (!shareButtons.has(shareButton)) {
                 shareButton.addEventListener("click", (ev) => openDialog(ev));
                 shareButtons.add(shareButton);

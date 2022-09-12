@@ -2,8 +2,9 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     "use strict";
     var _ModalDialog_instances, _ModalDialog_content, _ModalDialog_dialog, _ModalDialog_returnFocus, _ModalDialog_title, _ModalDialog_attachDialog;
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = exports.ModalDialog = void 0;
+    exports.ModalDialog = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
+    const dialogContainer = document.createElement("div");
     class ModalDialog extends HTMLElement {
         constructor() {
             super();
@@ -13,7 +14,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             _ModalDialog_returnFocus.set(this, undefined);
             _ModalDialog_title.set(this, void 0);
             tslib_1.__classPrivateFieldSet(this, _ModalDialog_dialog, document.createElement("dialog"), "f");
-            tslib_1.__classPrivateFieldSet(this, _ModalDialog_title, document.createElement("title"), "f");
+            tslib_1.__classPrivateFieldSet(this, _ModalDialog_title, document.createElement("div"), "f");
         }
         connectedCallback() {
             tslib_1.__classPrivateFieldGet(this, _ModalDialog_instances, "m", _ModalDialog_attachDialog).call(this);
@@ -21,6 +22,12 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         show() {
             if (tslib_1.__classPrivateFieldGet(this, _ModalDialog_title, "f").textContent.trim().length === 0) {
                 throw new Error("Cannot open the modal dialog without a title.");
+            }
+            if (tslib_1.__classPrivateFieldGet(this, _ModalDialog_dialog, "f").parentElement === null) {
+                if (dialogContainer.parentElement === null) {
+                    document.getElementById("content").append(dialogContainer);
+                }
+                dialogContainer.append(this);
             }
             tslib_1.__classPrivateFieldGet(this, _ModalDialog_dialog, "f").showModal();
         }
@@ -96,12 +103,13 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
                 return;
             }
         });
-        document.body.append(tslib_1.__classPrivateFieldGet(this, _ModalDialog_dialog, "f"));
+        // Close the dialog by clicking on the backdrop.
+        tslib_1.__classPrivateFieldGet(this, _ModalDialog_dialog, "f").addEventListener("click", (event) => {
+            if (event.target === tslib_1.__classPrivateFieldGet(this, _ModalDialog_dialog, "f")) {
+                this.close();
+            }
+        });
+        this.append(tslib_1.__classPrivateFieldGet(this, _ModalDialog_dialog, "f"));
     };
-    function setup() {
-        if (window.customElements.get("modal-dialog") === undefined) {
-            window.customElements.define("modal-dialog", ModalDialog);
-        }
-    }
-    exports.setup = setup;
+    window.customElements.define("modal-dialog", ModalDialog);
 });

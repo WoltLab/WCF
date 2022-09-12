@@ -1,8 +1,8 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "tslib", "./Dialog/modal-dialog"], function (require, exports, tslib_1, modal_dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.fromHtml = exports.fromId = exports.fromElement = void 0;
-    function fromElement(element) {
+    exports.dialogFromHtml = exports.dialogFromId = exports.dialogFromElement = void 0;
+    function dialogFromElement(element) {
         if (!(element instanceof HTMLElement) || element.nodeName !== "DIV") {
             throw new TypeError("Only '<div>' elements are allowed as the content element.");
         }
@@ -10,22 +10,23 @@ define(["require", "exports"], function (require, exports) {
         dialog.content = element;
         return dialog;
     }
-    exports.fromElement = fromElement;
-    function fromId(id) {
+    exports.dialogFromElement = dialogFromElement;
+    function dialogFromId(id) {
         const element = document.getElementById(id);
         if (element === null) {
             throw new Error(`Unable to find the element identified by '${id}'.`);
         }
-        return fromElement(element);
+        return dialogFromElement(element);
     }
-    exports.fromId = fromId;
-    function fromHtml(html) {
+    exports.dialogFromId = dialogFromId;
+    function dialogFromHtml(html) {
         const element = document.createElement("div");
         element.innerHTML = html;
         if (element.childElementCount === 0) {
             throw new TypeError("The provided HTML string did not contain any elements.");
         }
-        return fromElement(element);
+        return dialogFromElement(element);
     }
-    exports.fromHtml = fromHtml;
+    exports.dialogFromHtml = dialogFromHtml;
+    tslib_1.__exportStar(modal_dialog_1, exports);
 });

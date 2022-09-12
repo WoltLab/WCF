@@ -2,6 +2,8 @@ import DomUtil from "../Dom/Util";
 
 type CallbackReturnFocus = () => HTMLElement | null;
 
+const dialogContainer = document.createElement("div");
+
 export class ModalDialog extends HTMLElement {
   #content?: HTMLElement = undefined;
   readonly #dialog: HTMLDialogElement;
@@ -12,7 +14,7 @@ export class ModalDialog extends HTMLElement {
     super();
 
     this.#dialog = document.createElement("dialog");
-    this.#title = document.createElement("title");
+    this.#title = document.createElement("div");
   }
 
   connectedCallback(): void {
@@ -22,6 +24,14 @@ export class ModalDialog extends HTMLElement {
   show(): void {
     if (this.#title.textContent!.trim().length === 0) {
       throw new Error("Cannot open the modal dialog without a title.");
+    }
+
+    if (this.#dialog.parentElement === null) {
+      if (dialogContainer.parentElement === null) {
+        document.getElementById("content")!.append(dialogContainer);
+      }
+
+      dialogContainer.append(this);
     }
 
     this.#dialog.showModal();
@@ -116,12 +126,15 @@ export class ModalDialog extends HTMLElement {
       }
     });
 
-    document.body.append(this.#dialog);
+    // Close the dialog by clicking on the backdrop.
+    this.#dialog.addEventListener("click", (event) => {
+      if (event.target === this.#dialog) {
+        this.close();
+      }
+    });
+
+    this.append(this.#dialog);
   }
 }
 
-export function setup(): void {
-  if (window.customElements.get("modal-dialog") === undefined) {
-    window.customElements.define("modal-dialog", ModalDialog);
-  }
-}
+window.customElements.define("modal-dialog", ModalDialog);
