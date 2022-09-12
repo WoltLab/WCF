@@ -6,6 +6,7 @@ import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
+import type { ModalDialog } from "./ts/WoltLabSuite/Core/Dialog/modal-dialog";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -69,5 +70,6 @@ declare global {
   interface HTMLElementTagNameMap {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
+    "modal-dialog": ModalDialog;
   }
 }
