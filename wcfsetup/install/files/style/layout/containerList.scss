@@ -138,11 +138,12 @@
 							border-right: 1px solid rgba(0, 0, 0, 0.15);
 						}
 
-						> a {
+						> a,
+						> button {
 							display: inline-block;
 							padding: 3px 5px;
 
-							> .icon,
+							> fa-icon,
 							> .invisible {
 								opacity: 0.5;
 							}
@@ -150,10 +151,12 @@
 
 						&.active,
 						&:hover {
-							> a {
-								> .icon,
+							> a,
+							> button {
+								> fa-icon,
 								> .invisible {
 									color: $wcfContentText;
+									opacity: 1;
 								}
 							}
 						}
