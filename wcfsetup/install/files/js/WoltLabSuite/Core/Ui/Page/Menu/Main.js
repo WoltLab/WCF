@@ -147,7 +147,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     children,
                     counter: 0,
                     depth: 0,
-                    identifier: null,
+                    identifier: "language",
                     title: Language.get("wcf.user.language"),
                 },
             ];
@@ -213,6 +213,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 if (menuItem.active) {
                     link.setAttribute("aria-current", "page");
                 }
+                if (menuItem.identifier) {
+                    link.dataset.identifier = menuItem.identifier;
+                }
                 if (menuItem.counter > 0) {
                     const counter = document.createElement("span");
                     counter.classList.add("pageMenuMainItemCounter", "badge", "badgeUpdate");
@@ -230,7 +233,10 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 label.classList.add("pageMenuMainItemLabel");
                 label.href = "#";
                 label.textContent = menuItem.title;
-                if (!isLanguageSelection || !menuItem.identifier) {
+                if (menuItem.identifier) {
+                    label.dataset.identifier = menuItem.identifier;
+                }
+                if (!isLanguageSelection || menuItem.identifier === "language") {
                     label.addEventListener("click", (event) => {
                         event.preventDefault();
                         const button = label.nextElementSibling;
@@ -238,9 +244,6 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     });
                     // The button to expand the link group is used instead.
                     label.setAttribute("aria-hidden", "true");
-                }
-                if (isLanguageSelection && menuItem.identifier) {
-                    label.dataset.identifier = menuItem.identifier;
                 }
                 listItem.append(label);
             }

@@ -191,7 +191,7 @@ export class PageMenuMain implements PageMenuProvider {
         children,
         counter: 0,
         depth: 0,
-        identifier: null,
+        identifier: "language",
         title: Language.get("wcf.user.language"),
       },
     ];
@@ -274,6 +274,9 @@ export class PageMenuMain implements PageMenuProvider {
       if (menuItem.active) {
         link.setAttribute("aria-current", "page");
       }
+      if (menuItem.identifier) {
+        link.dataset.identifier = menuItem.identifier;
+      }
 
       if (menuItem.counter > 0) {
         const counter = document.createElement("span");
@@ -294,8 +297,11 @@ export class PageMenuMain implements PageMenuProvider {
       label.classList.add("pageMenuMainItemLabel");
       label.href = "#";
       label.textContent = menuItem.title;
+      if (menuItem.identifier) {
+        label.dataset.identifier = menuItem.identifier;
+      }
 
-      if (!isLanguageSelection || !menuItem.identifier) {
+      if (!isLanguageSelection || menuItem.identifier === "language") {
         label.addEventListener("click", (event) => {
           event.preventDefault();
 
@@ -305,10 +311,6 @@ export class PageMenuMain implements PageMenuProvider {
 
         // The button to expand the link group is used instead.
         label.setAttribute("aria-hidden", "true");
-      }
-
-      if (isLanguageSelection && menuItem.identifier) {
-        label.dataset.identifier = menuItem.identifier;
       }
 
       listItem.append(label);
