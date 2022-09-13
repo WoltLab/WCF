@@ -78,7 +78,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
      */
     public function getComments()
     {
-        return $this->comments;
+        return $this->getArticleContent()->comments;
     }
 
     /**
