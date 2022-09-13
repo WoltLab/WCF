@@ -8,6 +8,7 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiRedactorTable {
+        callbackSubmit;
         open(options) {
             Dialog_1.default.open(this);
             this.callbackSubmit = options.submitCallback;

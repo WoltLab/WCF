@@ -9,6 +9,7 @@ define(["require", "exports", "tslib", "../../../../../Core", "../../../../../La
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiUserProfileMenuItemIgnore extends Abstract_1.default {
+        dialog;
         constructor(userId, isActive) {
             super(userId, isActive);
             this.dialog = new Dialog_1.default("ignoreDialog", "wcf\\data\\user\\ignore\\UserIgnoreAction", "getDialog", {

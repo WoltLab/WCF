@@ -12,12 +12,17 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
     Core = tslib_1.__importStar(Core);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class UiSuggestion {
+        ajaxPayload;
+        callbackSelect;
+        dropdownMenu = null;
+        excludedSearchValues;
+        element;
+        threshold;
+        value = "";
         /**
          * Initializes a new suggestion input.
          */
         constructor(elementId, options) {
-            this.dropdownMenu = null;
-            this.value = "";
             const element = document.getElementById(elementId);
             if (element === null) {
                 throw new Error("Expected a valid element id.");

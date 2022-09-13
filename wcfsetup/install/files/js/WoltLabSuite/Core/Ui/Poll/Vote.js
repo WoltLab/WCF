@@ -13,6 +13,9 @@ define(["require", "exports", "tslib", "./Poll", "../../Ajax"], function (requir
     exports.Vote = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     class Vote {
+        pollManager;
+        button;
+        inputs;
         constructor(manager) {
             this.pollManager = manager;
             const button = this.pollManager.getElement().querySelector(".votePollButton");

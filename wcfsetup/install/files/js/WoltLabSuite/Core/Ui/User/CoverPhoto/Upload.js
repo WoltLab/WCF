@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
      * @constructor
      */
     class UiUserCoverPhotoUpload extends Upload_1.default {
+        userId;
         constructor(userId) {
             super("coverPhotoUploadButtonContainer", "coverPhotoUploadPreview", {
                 action: "uploadCoverPhoto",

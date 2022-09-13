@@ -22,6 +22,10 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
      * @constructor
      */
     class AjaxRequest {
+        _options;
+        _data;
+        _previousXhr;
+        _xhr;
         constructor(options) {
             this._options = Core.extend({
                 data: {},

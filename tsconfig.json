@@ -8,14 +8,14 @@
   ],
   "compilerOptions": {
     "allowJs": true,
-    "target": "es2019",
+    "target": "ES2022",
     "module": "amd",
     "rootDir": "ts/",
     "outDir": "wcfsetup/install/files/js/",
     "lib": [
-      "dom",
+      "DOM",
       "DOM.Iterable",
-      "es2019"
+      "ES2022"
     ],
     "strictNullChecks": true,
     "moduleResolution": "node",

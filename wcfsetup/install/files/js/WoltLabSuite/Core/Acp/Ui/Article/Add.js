@@ -13,6 +13,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ArticleAdd {
+        link;
         constructor(link) {
             this.link = link;
             document.querySelectorAll(".jsButtonArticleAdd").forEach((button) => {

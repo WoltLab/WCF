@@ -12,9 +12,7 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
     Core = tslib_1.__importStar(Core);
     /** @deprecated 5.4 Use a `Set` instead. */
     class List {
-        constructor() {
-            this._set = new Set();
-        }
+        _set = new Set();
         /**
          * Appends an element to the list, silently rejects adding an already existing value.
          */

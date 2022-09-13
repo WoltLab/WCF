@@ -18,6 +18,12 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
     Clipboard = tslib_1.__importStar(Clipboard);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerEditor extends Base_1.default {
+        _activeButton;
+        _buttons;
+        _mediaToInsert;
+        _mediaToInsertByClipboard;
+        _uploadData;
+        _uploadId;
         constructor(options) {
             options = Core.extend({
                 callbackInsert: null,

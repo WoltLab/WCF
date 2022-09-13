@@ -16,8 +16,12 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
     perfectScrollbar = tslib_1.__importStar(perfectScrollbar);
     UiScreen = tslib_1.__importStar(UiScreen);
     class UserMenuView {
+        element;
+        usePerfectScrollbar = false;
+        focusTrap;
+        markAllAsReadButton;
+        provider;
         constructor(provider) {
-            this.usePerfectScrollbar = false;
             this.provider = provider;
             this.element = document.createElement("div");
             this.buildElement();

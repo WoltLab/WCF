@@ -16,11 +16,8 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager"], function (req
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     DependencyManager = tslib_1.__importStar(DependencyManager);
     class ValueInterval extends Abstract_1.default {
-        constructor() {
-            super(...arguments);
-            this._maximum = null;
-            this._minimum = null;
-        }
+        _maximum = null;
+        _minimum = null;
         checkDependency() {
             if (this._field) {
                 if (DependencyManager.isHiddenByDependencies(this._field)) {

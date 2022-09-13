@@ -14,6 +14,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "..
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class RewriteGenerator {
+        buttonGenerate;
+        container;
         /**
          * Initializes the generator for rewrite rules
          */

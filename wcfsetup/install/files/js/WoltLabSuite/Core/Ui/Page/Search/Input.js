@@ -12,6 +12,8 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
     Core = tslib_1.__importStar(Core);
     Input_1 = tslib_1.__importDefault(Input_1);
     class UiPageSearchInput extends Input_1.default {
+        callbackSuccess;
+        pageId;
         constructor(element, options) {
             if (typeof options.callbackSuccess !== "function") {
                 throw new Error("Expected a valid callback function for 'callbackSuccess'.");

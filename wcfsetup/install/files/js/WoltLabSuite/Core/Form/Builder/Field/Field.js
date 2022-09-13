@@ -11,6 +11,8 @@ define(["require", "exports", "tslib", "../../../Core"], function (require, expo
     "use strict";
     Core = tslib_1.__importStar(Core);
     class Field {
+        _fieldId;
+        _field;
         constructor(fieldId) {
             this.init(fieldId);
         }

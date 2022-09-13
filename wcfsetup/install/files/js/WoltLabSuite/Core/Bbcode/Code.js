@@ -24,12 +24,16 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
         });
     }
     class Code {
+        static chunkSize = 50;
+        container;
+        codeContainer;
+        language;
         constructor(container) {
-            var _a;
             this.container = container;
             this.codeContainer = this.container.querySelector(".codeBoxCode > code");
-            this.language = (_a = Array.from(this.codeContainer.classList)
-                .find((klass) => /^language-([a-z0-9_-]+)$/.test(klass))) === null || _a === void 0 ? void 0 : _a.replace(/^language-/, "");
+            this.language = Array.from(this.codeContainer.classList)
+                .find((klass) => /^language-([a-z0-9_-]+)$/.test(klass))
+                ?.replace(/^language-/, "");
         }
         static processAll() {
             document.querySelectorAll(".codeBox:not([data-processed])").forEach((codeBox) => {
@@ -95,6 +99,5 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             this.container.classList.add("highlighted");
         }
     }
-    Code.chunkSize = 50;
     return Code;
 });

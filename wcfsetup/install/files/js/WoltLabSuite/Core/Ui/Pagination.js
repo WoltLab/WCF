@@ -14,14 +14,21 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
     UiPageJumpTo = tslib_1.__importStar(UiPageJumpTo);
     class UiPagination {
         /**
+         * maximum number of displayed page links, should match the PHP implementation
+         */
+        static showLinks = 11;
+        activePage;
+        maxPage;
+        element;
+        callbackSwitch = null;
+        callbackShouldSwitch = null;
+        /**
          * Initializes the pagination.
          *
          * @param  {Element}  element    container element
          * @param  {object}  options    list of initialization options
          */
         constructor(element, options) {
-            this.callbackSwitch = null;
-            this.callbackShouldSwitch = null;
             this.element = element;
             this.activePage = options.activePage;
             this.maxPage = options.maxPage;
@@ -248,10 +255,6 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             }
         }
     }
-    /**
-     * maximum number of displayed page links, should match the PHP implementation
-     */
-    UiPagination.showLinks = 11;
     Core.enableLegacyInheritance(UiPagination);
     return UiPagination;
 });

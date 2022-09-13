@@ -17,15 +17,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
      * @constructor
      */
     class UiUserList {
+        cache = new Map();
+        options;
+        pageCount = 0;
+        pageNo = 1;
         /**
          * Initializes the user list.
          *
          * @param  {object}  options    list of initialization options
          */
         constructor(options) {
-            this.cache = new Map();
-            this.pageCount = 0;
-            this.pageNo = 1;
             this.options = Core.extend({
                 className: "",
                 dialogTitle: "",

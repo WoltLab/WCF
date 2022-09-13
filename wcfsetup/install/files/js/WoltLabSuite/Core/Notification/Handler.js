@@ -17,13 +17,15 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
     EventHandler = tslib_1.__importStar(EventHandler);
     StringUtil = tslib_1.__importStar(StringUtil);
     class NotificationHandler {
+        allowNotification;
+        icon;
+        inactiveSince = 0;
+        lastRequestTimestamp = window.TIME_NOW;
+        requestTimer = undefined;
         /**
          * Initializes the desktop notification system.
          */
         constructor(options) {
-            this.inactiveSince = 0;
-            this.lastRequestTimestamp = window.TIME_NOW;
-            this.requestTimer = undefined;
             options = Core.extend({
                 icon: "",
             }, options);
@@ -206,7 +208,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
     }
     exports.enableNotifications = enableNotifications;
     function poll() {
-        notificationHandler === null || notificationHandler === void 0 ? void 0 : notificationHandler.dispatchRequest();
+        notificationHandler?.dispatchRequest();
     }
     exports.poll = poll;
 });

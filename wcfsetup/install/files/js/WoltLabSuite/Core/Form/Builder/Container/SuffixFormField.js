@@ -13,6 +13,10 @@ define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../
     EventHandler = tslib_1.__importStar(EventHandler);
     Core = tslib_1.__importStar(Core);
     class SuffixFormField {
+        _formId;
+        _suffixField;
+        _suffixDropdownMenu;
+        _suffixDropdownToggle;
         constructor(formId, suffixFieldId) {
             this._formId = formId;
             this._suffixField = document.getElementById(suffixFieldId);

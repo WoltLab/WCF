@@ -12,12 +12,18 @@ define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax",
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     class AcpUiPackageSearch {
+        input;
+        installation;
+        isBusy = false;
+        isFirstRequest = true;
+        lastValue = "";
+        options;
+        request = undefined;
+        resultList;
+        resultListContainer;
+        resultCounter;
+        timerDelay = undefined;
         constructor() {
-            this.isBusy = false;
-            this.isFirstRequest = true;
-            this.lastValue = "";
-            this.request = undefined;
-            this.timerDelay = undefined;
             this.input = document.getElementById("packageSearchInput");
             this.installation = new PrepareInstallation_1.default();
             this.options = {

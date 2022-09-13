@@ -19,8 +19,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UserEditor {
+        actionName = "";
+        header;
         constructor() {
-            this.actionName = "";
             this.header = document.querySelector(".userProfileUser");
             ["ban", "disableAvatar", "disableCoverPhoto", "disableSignature", "enable"].forEach((action) => {
                 const button = document.querySelector(".userProfileButtonMenu .jsButtonUser" + StringUtil.ucfirst(action));

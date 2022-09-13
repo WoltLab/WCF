@@ -16,13 +16,17 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     class PageMenuUser {
+        activeTab = undefined;
+        container;
+        legacyUserPanels = new Map();
+        observer;
+        userMenuProviders = new Map();
+        tabOrigins = new Map();
+        tabPanels = new Map();
+        tabs = [];
+        userMenu;
+        userMenuButton;
         constructor() {
-            this.activeTab = undefined;
-            this.legacyUserPanels = new Map();
-            this.userMenuProviders = new Map();
-            this.tabOrigins = new Map();
-            this.tabPanels = new Map();
-            this.tabs = [];
             this.userMenu = document.querySelector(".userPanel");
             this.userMenuButton = document.querySelector(".pageHeaderUserMobile");
             this.userMenuButton.addEventListener("click", (event) => {
@@ -254,10 +258,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             return tabContainer;
         }
         buildTab(provider) {
-            var _a;
             const panelButton = provider.getPanelButton();
             const button = panelButton.querySelector("a");
-            let icon = (_a = button.querySelector("fa-icon")) === null || _a === void 0 ? void 0 : _a.outerHTML;
+            let icon = button.querySelector("fa-icon")?.outerHTML;
             if (icon === undefined) {
                 // Fallback for the upgrade to 6.0.
                 icon = '<fa-icon size="32" name="question"></fa-icon>';

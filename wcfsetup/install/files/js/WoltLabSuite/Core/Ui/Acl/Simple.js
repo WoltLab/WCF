@@ -10,6 +10,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
     Util_1 = tslib_1.__importDefault(Util_1);
     Input_1 = tslib_1.__importDefault(Input_1);
     class UiAclSimple {
+        aclListContainer;
+        list;
+        prefix;
+        inputName;
+        searchInput;
         constructor(prefix, inputName) {
             this.prefix = prefix || "";
             this.inputName = inputName || "aclValues";

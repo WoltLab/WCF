@@ -41,7 +41,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
             event.stopPropagation();
             Simple_1.default.close(dropdownMenuId);
         });
-        _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.addEventListener("click", (event) => {
+        _userPanelSearchButton?.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
             if (_pageHeader.classList.contains("searchBarOpen")) {
@@ -66,7 +66,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
                 }
             }
             closeSearch();
-            _pageHeaderSearchMobile === null || _pageHeaderSearchMobile === void 0 ? void 0 : _pageHeaderSearchMobile.setAttribute("aria-expanded", "false");
+            _pageHeaderSearchMobile?.setAttribute("aria-expanded", "false");
         });
     }
     function initMobileSearch() {
@@ -112,7 +112,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
     function openSearch() {
         CloseOverlay_1.default.execute(CloseOverlay_1.Origin.Search);
         _pageHeader.classList.add("searchBarOpen");
-        _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.add("open");
+        _userPanelSearchButton?.parentElement.classList.add("open");
         if (!_isMobile) {
             // Calculate the value for `right` on desktop.
             UiAlignment.set(_pageHeaderSearch, _topMenu, {
@@ -135,7 +135,7 @@ define(["require", "exports", "tslib", "../Event/Handler", "./Alignment", "./Clo
         }
         _pageHeader.classList.remove("searchBarOpen");
         _pageHeaderSearch.classList.remove("open");
-        _userPanelSearchButton === null || _userPanelSearchButton === void 0 ? void 0 : _userPanelSearchButton.parentElement.classList.remove("open");
+        _userPanelSearchButton?.parentElement.classList.remove("open");
         const positions = ["bottom", "left", "right", "top"];
         positions.forEach((propertyName) => {
             _pageHeaderSearch.style.removeProperty(propertyName);

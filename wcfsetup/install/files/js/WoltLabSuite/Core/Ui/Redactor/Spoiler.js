@@ -17,12 +17,14 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
     UiRedactorPseudoHeader = tslib_1.__importStar(UiRedactorPseudoHeader);
     let _headerHeight = 0;
     class UiRedactorSpoiler {
+        _editor;
+        _elementId;
+        _spoiler = null;
+        knownElements = new WeakSet();
         /**
          * Initializes the spoiler management.
          */
         constructor(editor) {
-            this._spoiler = null;
-            this.knownElements = new WeakSet();
             this._editor = editor;
             this._elementId = this._editor.$element[0].id;
             EventHandler.add("com.woltlab.wcf.redactor2", `bbcode_spoiler_${this._elementId}`, (data) => this._bbcodeSpoiler(data));

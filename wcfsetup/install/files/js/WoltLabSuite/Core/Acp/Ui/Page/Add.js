@@ -13,6 +13,8 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiPageAdd {
+        isI18n;
+        link;
         constructor(link, isI18n) {
             this.link = link;
             this.isI18n = isI18n;

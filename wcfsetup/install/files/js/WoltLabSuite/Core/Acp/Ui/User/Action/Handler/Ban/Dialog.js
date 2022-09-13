@@ -16,6 +16,14 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Dialog", "../../../
     Ajax = tslib_1.__importStar(Ajax);
     Picker_1 = tslib_1.__importDefault(Picker_1);
     class BanDialog {
+        static instance;
+        banCallback;
+        userIDs;
+        submitElement;
+        neverExpiresCheckbox;
+        reasonInput;
+        userBanExpiresSettingsElement;
+        dialogContent;
         static open(userIDs, callback) {
             if (!BanDialog.instance) {
                 BanDialog.instance = new BanDialog();

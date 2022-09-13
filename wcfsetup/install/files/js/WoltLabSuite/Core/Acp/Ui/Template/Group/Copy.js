@@ -16,9 +16,10 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     UiNotification = tslib_1.__importStar(UiNotification);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiTemplateGroupCopy {
+        folderName = undefined;
+        name = undefined;
+        templateGroupId;
         constructor(templateGroupId) {
-            this.folderName = undefined;
-            this.name = undefined;
             this.templateGroupId = templateGroupId;
             const button = document.querySelector(".jsButtonCopy");
             button.addEventListener("click", (ev) => this.click(ev));

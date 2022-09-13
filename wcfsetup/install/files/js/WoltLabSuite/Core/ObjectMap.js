@@ -14,9 +14,7 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
     Core = tslib_1.__importStar(Core);
     /** @deprecated 5.4 Use a `WeakMap` instead. */
     class ObjectMap {
-        constructor() {
-            this._map = new WeakMap();
-        }
+        _map = new WeakMap();
         /**
          * Sets a new key with given value, will overwrite an existing key.
          */

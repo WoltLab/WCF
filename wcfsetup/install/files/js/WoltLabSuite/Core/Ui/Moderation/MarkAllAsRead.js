@@ -13,12 +13,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../Notification"], functio
     exports.setup = void 0;
     UiNotification = tslib_1.__importStar(UiNotification);
     async function markAllAsRead() {
-        var _a;
         await (0, Ajax_1.dboAction)("markAllAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").dispatch();
         document.querySelectorAll(".moderationQueueEntryList .new").forEach((el) => {
             el.classList.remove("new");
         });
-        (_a = document.querySelector("#outstandingModeration .badgeUpdate")) === null || _a === void 0 ? void 0 : _a.remove();
+        document.querySelector("#outstandingModeration .badgeUpdate")?.remove();
         UiNotification.show();
     }
     function setup() {

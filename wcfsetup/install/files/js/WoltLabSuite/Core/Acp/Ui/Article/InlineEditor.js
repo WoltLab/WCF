@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
     UiNotification = tslib_1.__importStar(UiNotification);
     const articles = new Map();
     class AcpUiArticleInlineEditor {
+        options;
         /**
          * Initializes the ACP inline editor for articles.
          */

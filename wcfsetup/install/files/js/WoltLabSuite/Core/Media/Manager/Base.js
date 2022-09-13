@@ -27,16 +27,19 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
     MediaClipboard = tslib_1.__importStar(MediaClipboard);
     let mediaManagerCounter = 0;
     class MediaManager {
+        _forceClipboard = false;
+        _hadInitiallyMarkedItems = false;
+        _id;
+        _listItems = new Map();
+        _media = new Map();
+        _mediaCategorySelect;
+        _mediaEditor = null;
+        _mediaManagerMediaList = null;
+        _pagination = null;
+        _search = null;
+        _upload = null;
+        _options;
         constructor(options) {
-            this._forceClipboard = false;
-            this._hadInitiallyMarkedItems = false;
-            this._listItems = new Map();
-            this._media = new Map();
-            this._mediaEditor = null;
-            this._mediaManagerMediaList = null;
-            this._pagination = null;
-            this._search = null;
-            this._upload = null;
             this._options = Core.extend({
                 dialogTitle: Language.get("wcf.media.manager"),
                 imagesOnly: false,

@@ -156,9 +156,8 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                 const item = document.createElement("li");
                 item.innerHTML = hiddenItem.innerHTML;
                 item.addEventListener("click", (event) => {
-                    var _a;
                     event.preventDefault();
-                    (_a = hiddenItem.querySelector("a")) === null || _a === void 0 ? void 0 : _a.click();
+                    hiddenItem.querySelector("a")?.click();
                     // force a rebuild to guarantee the active item being visible
                     setTimeout(() => {
                         rebuild(containerId);

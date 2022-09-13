@@ -14,12 +14,18 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Lang
     Language = tslib_1.__importStar(Language);
     UiPageSearchHandler = tslib_1.__importStar(UiPageSearchHandler);
     class AcpUiMenuItemHandler {
+        activePageId = 0;
+        cache = new Map();
+        containerExternalLink;
+        containerInternalLink;
+        containerPageObjectId;
+        handlers;
+        pageId;
+        pageObjectId;
         /**
          * Initializes the interface logic.
          */
         constructor(handlers) {
-            this.activePageId = 0;
-            this.cache = new Map();
             this.handlers = handlers;
             this.containerInternalLink = document.getElementById("pageIDContainer");
             this.containerExternalLink = document.getElementById("externalURLContainer");

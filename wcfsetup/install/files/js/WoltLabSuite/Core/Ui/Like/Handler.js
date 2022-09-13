@@ -17,11 +17,13 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener"
     User_1 = tslib_1.__importDefault(User_1);
     const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
     class UiLikeHandler {
+        _containers = new WeakMap();
+        _objectType;
+        _options;
         /**
          * Initializes the like handler.
          */
         constructor(objectType, opts) {
-            this._containers = new WeakMap();
             if (!opts.containerSelector) {
                 throw new Error("[WoltLabSuite/Core/Ui/Like/Handler] Expected a non-empty string for option 'containerSelector'.");
             }

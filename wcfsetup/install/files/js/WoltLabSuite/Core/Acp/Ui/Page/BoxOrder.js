@@ -16,6 +16,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     UiNotification = tslib_1.__importStar(UiNotification);
     class AcpUiPageBoxOrder {
+        pageId;
+        pbo;
         /**
          * Initializes the sorting capabilities.
          */

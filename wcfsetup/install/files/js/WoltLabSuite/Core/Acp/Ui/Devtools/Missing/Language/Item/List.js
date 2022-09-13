@@ -14,6 +14,8 @@ define(["require", "exports", "tslib", "../../../../../../Ui/Confirmation", "../
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class List {
+        clearExistingLogButton;
+        clearLogButton;
         constructor() {
             this.clearLogButton = document.getElementById("clearMissingLanguageItemLog");
             this.clearLogButton.addEventListener("click", () => this.clearLog());

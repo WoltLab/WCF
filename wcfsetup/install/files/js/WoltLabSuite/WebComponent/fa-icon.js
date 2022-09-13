@@ -89,9 +89,8 @@
             return this.shadowRoot;
         }
         updateIcon() {
-            var _a;
             const root = this.getShadowRoot();
-            (_a = root.childNodes[0]) === null || _a === void 0 ? void 0 : _a.remove();
+            root.childNodes[0]?.remove();
             if (this.name === "spinner") {
                 root.append(this.createSpinner());
             }

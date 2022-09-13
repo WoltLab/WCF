@@ -15,12 +15,17 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     class UiReactionProfileLoader {
+        _container;
+        _loadButton;
+        _noMoreEntries;
+        _options;
+        _reactionTypeID = null;
+        _targetType = "received";
+        _userID;
         /**
          * Initializes a new ReactionListLoader object.
          */
         constructor(userID) {
-            this._reactionTypeID = null;
-            this._targetType = "received";
             this._container = document.getElementById("likeList");
             this._userID = userID;
             this._options = {

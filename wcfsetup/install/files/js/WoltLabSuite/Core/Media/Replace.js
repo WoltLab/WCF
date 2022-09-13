@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "..
     UiNotification = tslib_1.__importStar(UiNotification);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     class MediaReplace extends Upload_1.default {
+        _mediaID;
         constructor(mediaID, buttonContainerId, targetId, options) {
             super(buttonContainerId, targetId, Core.extend(options, {
                 action: "replaceFile",

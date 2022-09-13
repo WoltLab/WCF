@@ -16,11 +16,13 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
     Core = tslib_1.__importStar(Core);
     let ignoreConnectionErrors = undefined;
     class DboAction {
+        actionName;
+        className;
+        _objectIDs = [];
+        _payload = {};
+        _showLoadingIndicator = true;
+        _signal = undefined;
         constructor(actionName, className) {
-            this._objectIDs = [];
-            this._payload = {};
-            this._showLoadingIndicator = true;
-            this._signal = undefined;
             this.actionName = actionName;
             this.className = className;
         }

@@ -15,8 +15,8 @@ define(["require", "exports", "tslib", "../../../Form/Builder/Dialog", "../../..
     Language = tslib_1.__importStar(Language);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UiUserIgnoreList {
+        dialogs = new Map();
         constructor() {
-            this.dialogs = new Map();
             document
                 .querySelectorAll(".jsEditIgnoreButton")
                 .forEach((el) => el.addEventListener("click", (ev) => this.openDialog(ev)));

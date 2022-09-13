@@ -14,6 +14,10 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util
     Language = tslib_1.__importStar(Language);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class Label {
+        _formFieldContainer;
+        _input;
+        _labelChooser;
+        _options;
         constructor(fieldId, labelId, options) {
             this._formFieldContainer = document.getElementById(fieldId + "Container");
             this._labelChooser = this._formFieldContainer.getElementsByClassName("labelChooser")[0];

@@ -15,6 +15,16 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
     StringUtil = tslib_1.__importStar(StringUtil);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class UiItemListFilter {
+        _container;
+        _dropdownId = "";
+        _dropdown = undefined;
+        _element;
+        _fragment = undefined;
+        _input;
+        _items = new Set();
+        _options;
+        _value = "";
+        _clearButton;
         /**
          * Creates a new filter input.
          *
@@ -22,11 +32,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
          * @param       {Object=}       options         options
          */
         constructor(elementId, options) {
-            this._dropdownId = "";
-            this._dropdown = undefined;
-            this._fragment = undefined;
-            this._items = new Set();
-            this._value = "";
             this._options = Core.extend({
                 callbackPrepareItem: undefined,
                 enableVisibilityFilter: true,

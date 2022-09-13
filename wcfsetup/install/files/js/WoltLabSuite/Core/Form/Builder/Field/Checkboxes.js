@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
     Field_1 = tslib_1.__importDefault(Field_1);
     Core = tslib_1.__importStar(Core);
     class Checkboxes extends Field_1.default {
+        _fields;
         _getData() {
             const values = this._fields
                 .map((input) => {

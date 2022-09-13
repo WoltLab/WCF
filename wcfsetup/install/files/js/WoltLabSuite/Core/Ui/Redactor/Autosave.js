@@ -18,21 +18,23 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
     // time between save requests in seconds
     const _frequency = 15;
     class UiRedactorAutosave {
+        _container = null;
+        _editor = null;
+        _element;
+        _isActive = true;
+        _isPending = false;
+        _key;
+        _lastMessage = "";
+        _metaData = {};
+        _originalMessage = "";
+        _restored = false;
+        _timer = null;
         /**
          * Initializes the autosave handler and removes outdated messages from storage.
          *
          * @param       {Element}       element         textarea element
          */
         constructor(element) {
-            this._container = null;
-            this._editor = null;
-            this._isActive = true;
-            this._isPending = false;
-            this._lastMessage = "";
-            this._metaData = {};
-            this._originalMessage = "";
-            this._restored = false;
-            this._timer = null;
             this._element = element;
             this._key = Core.getStoragePrefix() + this._element.dataset.autosave;
             this._cleanup();

@@ -14,6 +14,8 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
     Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     class RequiredPackages extends AbstractPackageList_1.default {
+        file;
+        minVersion;
         constructor(formFieldId, existingPackages) {
             super(formFieldId, existingPackages);
             this.minVersion = document.getElementById(`${this.formFieldId}_minVersion`);

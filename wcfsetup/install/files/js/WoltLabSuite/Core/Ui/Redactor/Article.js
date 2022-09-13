@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "../../Core", "../Article/Search"], funct
     Core = tslib_1.__importStar(Core);
     UiArticleSearch = tslib_1.__importStar(UiArticleSearch);
     class UiRedactorArticle {
+        _editor;
         constructor(editor, button) {
             this._editor = editor;
             button.addEventListener("click", (ev) => this._click(ev));

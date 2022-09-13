@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class ExcludedPackages extends AbstractPackageList_1.default {
+        version;
         constructor(formFieldId, existingPackages) {
             super(formFieldId, existingPackages);
             this.version = document.getElementById(`${this.formFieldId}_version`);

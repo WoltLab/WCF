@@ -25,6 +25,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util"], function
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiToggleInput {
+        element;
+        hide;
+        show;
         /**
          * Initializes a new input toggle.
          */

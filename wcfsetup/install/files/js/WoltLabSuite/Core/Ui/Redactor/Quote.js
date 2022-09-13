@@ -20,12 +20,14 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
     UiScroll = tslib_1.__importStar(UiScroll);
     let _headerHeight = 0;
     class UiRedactorQuote {
+        _editor;
+        _elementId;
+        _knownElements = new WeakSet();
+        _quote = null;
         /**
          * Initializes the quote management.
          */
         constructor(editor, button) {
-            this._knownElements = new WeakSet();
-            this._quote = null;
             this._editor = editor;
             this._elementId = this._editor.$element[0].id;
             EventHandler.add("com.woltlab.wcf.redactor2", `observe_load_${this._elementId}`, () => this._observeLoad());

@@ -18,14 +18,12 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Input_1 = tslib_1.__importDefault(Input_1);
     class UiPageSearchHandler {
-        constructor() {
-            this.callbackSuccess = undefined;
-            this.resultList = undefined;
-            this.resultListContainer = undefined;
-            this.searchInput = undefined;
-            this.searchInputHandler = undefined;
-            this.searchInputLabel = undefined;
-        }
+        callbackSuccess = undefined;
+        resultList = undefined;
+        resultListContainer = undefined;
+        searchInput = undefined;
+        searchInputHandler = undefined;
+        searchInputLabel = undefined;
         /**
          * Opens the lookup overlay for provided page id.
          */

@@ -231,8 +231,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             // to the input field
             if (Environment.platform() === "ios") {
                 window.setTimeout(() => {
-                    var _a;
-                    (_a = data.content.querySelector("input, textarea")) === null || _a === void 0 ? void 0 : _a.focus();
+                    data.content.querySelector("input, textarea")?.focus();
                 }, 200);
             }
             return data;
@@ -568,16 +567,15 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             const data = _dialogs.get(id);
             let isValid = true;
             data.inputFields.forEach((inputField) => {
-                var _a, _b;
                 if (inputField.required) {
                     if (inputField.value.trim() === "") {
                         Util_1.default.innerError(inputField, Language.get("wcf.global.form.error.empty"));
-                        (_a = inputField.closest("dl")) === null || _a === void 0 ? void 0 : _a.classList.add("formError");
+                        inputField.closest("dl")?.classList.add("formError");
                         isValid = false;
                     }
                     else {
                         Util_1.default.innerError(inputField, false);
-                        (_b = inputField.closest("dl")) === null || _b === void 0 ? void 0 : _b.classList.remove("formError");
+                        inputField.closest("dl")?.classList.remove("formError");
                     }
                 }
             });

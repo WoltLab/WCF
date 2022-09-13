@@ -23,16 +23,14 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
     UiScreen = tslib_1.__importStar(UiScreen);
     const _specialCheckboxSelector = '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
     class ControllerClipboard {
-        constructor() {
-            this.containers = new Map();
-            this.editors = new Map();
-            this.editorDropdowns = new Map();
-            this.itemData = new WeakMap();
-            this.knownCheckboxes = new WeakSet();
-            this.pageClassNames = [];
-            this.pageObjectId = 0;
-            this.reloadPageOnSuccess = new Map();
-        }
+        containers = new Map();
+        editors = new Map();
+        editorDropdowns = new Map();
+        itemData = new WeakMap();
+        knownCheckboxes = new WeakSet();
+        pageClassNames = [];
+        pageObjectId = 0;
+        reloadPageOnSuccess = new Map();
         /**
          * Initializes the clipboard API handler.
          */
@@ -453,7 +451,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
          * Rebuilds the mark state for each item.
          */
         rebuildMarkings(data, objectIds) {
-            var _a;
             let markAll = true;
             Array.from(data.checkboxes).forEach((checkbox) => {
                 const clipboardObject = checkbox.closest(".jsClipboardObject");
@@ -473,7 +470,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
             if (data.markAll !== null) {
                 data.markAll.checked = markAll;
                 this.setParentAsMarked(data.markAll, markAll);
-                const parent = (_a = data.markAll.closest(".columnMark")) === null || _a === void 0 ? void 0 : _a.parentNode;
+                const parent = data.markAll.closest(".columnMark")?.parentNode;
                 if (parent) {
                     if (markAll) {
                         parent.classList.add("jsMarked");

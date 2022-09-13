@@ -29,8 +29,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Notification"], functio
             document.querySelectorAll(".mainMenu .active .badge").forEach((badge) => badge.remove());
             // mobile page menu badge
             document.querySelectorAll(".pageMainMenuMobile .active").forEach((container) => {
-                var _a, _b;
-                (_b = (_a = container.closest(".menuOverlayItem")) === null || _a === void 0 ? void 0 : _a.querySelector(".badge")) === null || _b === void 0 ? void 0 : _b.remove();
+                container.closest(".menuOverlayItem")?.querySelector(".badge")?.remove();
             });
             // article list
             document.querySelectorAll(".contentItemList .contentItemBadgeNew").forEach((el) => el.remove());

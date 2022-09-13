@@ -18,6 +18,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UiUserCoverPhotoDelete {
+        button;
+        userId;
         /**
          * Initializes the delete handler and enables the delete button on upload.
          */

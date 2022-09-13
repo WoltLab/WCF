@@ -13,11 +13,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiWorker {
+        aborted = false;
+        options;
+        request;
         /**
          * Creates a new worker instance.
          */
         constructor(options) {
-            this.aborted = false;
             this.options = Core.extend({
                 // dialog
                 dialogId: "",

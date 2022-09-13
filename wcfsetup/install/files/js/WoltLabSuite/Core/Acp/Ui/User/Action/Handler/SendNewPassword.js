@@ -15,6 +15,8 @@ define(["require", "exports", "tslib", "../../../../../Language", "../../../../.
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Worker_1 = tslib_1.__importDefault(Worker_1);
     class SendNewPassword {
+        userIDs;
+        successCallback;
         constructor(userIDs, successCallback) {
             this.userIDs = userIDs;
             this.successCallback = successCallback;

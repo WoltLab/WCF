@@ -10,6 +10,9 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
     "use strict";
     Core = tslib_1.__importStar(Core);
     class RepeatingTimer {
+        _callback;
+        _delta;
+        _timer;
         /**
          * Creates a new timer that executes the given `callback` every `delta` milliseconds.
          * It will be created in started mode. Call `stop()` if necessary.

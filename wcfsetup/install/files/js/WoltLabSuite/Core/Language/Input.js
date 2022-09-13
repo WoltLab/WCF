@@ -123,7 +123,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
      * Selects a language or non-i18n from the dropdown list.
      */
     function select(elementId, languageId, isInit) {
-        var _a;
         const data = _elements.get(elementId);
         const dropdownMenu = Simple_1.default.getDropdownMenu(data.element.closest(".inputAddon").id);
         const item = dropdownMenu.querySelector(`[data-language-id="${languageId}"]`);
@@ -142,7 +141,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
             }
             // update label
             data.buttonLabel.textContent = label;
-            (_a = data.buttonLabel.querySelector("fa-icon")) === null || _a === void 0 ? void 0 : _a.remove();
+            data.buttonLabel.querySelector("fa-icon")?.remove();
             if (languageId) {
                 data.buttonLabel.classList.add("active");
                 const icon = document.createElement("fa-icon");
@@ -175,7 +174,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
         const data = _elements.get(elementId);
         const values = _values.get(elementId);
         Array.from(dropdownMenu.children).forEach((item) => {
-            var _a;
             const languageId = ~~(item.dataset.languageId || "");
             if (languageId) {
                 let hasMissingValue = false;
@@ -188,7 +186,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Language", "../Ui/Drop
                     }
                 }
                 const span = item.querySelector("span");
-                (_a = span.querySelector("fa-icon")) === null || _a === void 0 ? void 0 : _a.remove();
+                span.querySelector("fa-icon")?.remove();
                 if (hasMissingValue) {
                     item.classList.add("missingValue");
                     const icon = document.createElement("fa-icon");

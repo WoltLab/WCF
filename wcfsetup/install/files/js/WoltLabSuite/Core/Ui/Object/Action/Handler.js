@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../../Contr
     EventHandler = tslib_1.__importStar(EventHandler);
     ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
     class UiObjectActionHandler {
+        objectAction;
         constructor(actionName, clipboardActionNames, objectAction) {
             this.objectAction = objectAction;
             EventHandler.add("WoltLabSuite/Core/Ui/Object/Action", actionName, (data) => this.handleObjectAction(data));

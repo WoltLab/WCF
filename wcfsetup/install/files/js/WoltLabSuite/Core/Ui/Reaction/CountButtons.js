@@ -18,13 +18,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
     class CountButtons {
+        _containers = new Map();
+        _currentObjectId = 0;
+        _objects = new Map();
+        _objectType;
+        _options;
         /**
          * Initializes the like handler.
          */
         constructor(objectType, opts) {
-            this._containers = new Map();
-            this._currentObjectId = 0;
-            this._objects = new Map();
             if (!opts.containerSelector) {
                 throw new Error("[WoltLabSuite/Core/Ui/Reaction/CountButtons] Expected a non-empty string for option 'containerSelector'.");
             }

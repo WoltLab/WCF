@@ -15,10 +15,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiPackagePrepareInstallation {
-        constructor() {
-            this.identifier = "";
-            this.version = "";
-        }
+        identifier = "";
+        version = "";
         start(identifier, version) {
             this.identifier = identifier;
             this.version = version;

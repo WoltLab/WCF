@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../../../../Core", "./Abstract", "./Hand
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
     class BanAction extends Abstract_1.default {
+        banHandler;
         constructor(button, userId, userDataElement) {
             super(button, userId, userDataElement);
             this.banHandler = new Ban_1.default([this.userId]);

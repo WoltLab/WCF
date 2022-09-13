@@ -10,11 +10,10 @@
  */
 define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, Language, Util_1) {
     "use strict";
-    var _a;
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     const STATIC_DICTIONARY = [];
-    const siteName = (_a = document.querySelector('meta[property="og:site_name"]')) === null || _a === void 0 ? void 0 : _a.getAttribute("content");
+    const siteName = document.querySelector('meta[property="og:site_name"]')?.getAttribute("content");
     if (siteName) {
         STATIC_DICTIONARY.push(siteName);
     }
@@ -39,12 +38,16 @@ define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], func
         return new Feedback(localizedPhrases);
     }
     class PasswordStrength {
+        input;
+        zxcvbn;
+        relatedInputs = [];
+        staticDictionary = [];
+        feedbacker;
+        wrapper;
+        score = document.createElement("span");
+        verdictResult = document.createElement("input");
         constructor(input, options) {
             this.input = input;
-            this.relatedInputs = [];
-            this.staticDictionary = [];
-            this.score = document.createElement("span");
-            this.verdictResult = document.createElement("input");
             void new Promise((resolve_1, reject_1) => { require(["zxcvbn"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ default: zxcvbn }) => {
                 this.zxcvbn = zxcvbn;
                 if (options.relatedInputs) {

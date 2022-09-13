@@ -11,11 +11,8 @@
         [144, 130],
     ]);
     class FaBrand extends HTMLElement {
-        constructor() {
-            super(...arguments);
-            this.root = undefined;
-            this.svgStyle = document.createElement("style");
-        }
+        root = undefined;
+        svgStyle = document.createElement("style");
         connectedCallback() {
             this.validate();
             const root = this.getRoot();

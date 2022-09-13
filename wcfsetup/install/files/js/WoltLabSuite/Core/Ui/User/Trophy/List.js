@@ -15,10 +15,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Pagination_1 = tslib_1.__importDefault(Pagination_1);
     class CacheData {
+        pageCount;
+        title;
+        cache = new Map();
         constructor(pageCount, title) {
             this.pageCount = pageCount;
             this.title = title;
-            this.cache = new Map();
         }
         has(pageNo) {
             return this.cache.has(pageNo);
@@ -31,14 +33,14 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         }
     }
     class UiUserTrophyList {
+        cache = new Map();
+        currentPageNo = 0;
+        currentUser = 0;
+        knownElements = new WeakSet();
         /**
          * Initializes the user trophy list.
          */
         constructor() {
-            this.cache = new Map();
-            this.currentPageNo = 0;
-            this.currentUser = 0;
-            this.knownElements = new WeakSet();
             Listener_1.default.add("WoltLabSuite/Core/Ui/User/Trophy/List", () => this.rebuild());
             this.rebuild();
         }

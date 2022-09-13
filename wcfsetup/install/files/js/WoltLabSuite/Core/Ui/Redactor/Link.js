@@ -9,9 +9,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiRedactorLink {
-        constructor() {
-            this.boundListener = false;
-        }
+        boundListener = false;
+        submitCallback;
         open(options) {
             Dialog_1.default.open(this);
             Dialog_1.default.setTitle(this, Language.get("wcf.editor.link." + (options.insert ? "add" : "edit")));

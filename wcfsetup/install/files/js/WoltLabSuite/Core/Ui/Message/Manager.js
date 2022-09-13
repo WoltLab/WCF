@@ -14,11 +14,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     class UiMessageManager {
+        _elements = new Map();
+        _options;
         /**
          * Initializes a new manager instance.
          */
         constructor(options) {
-            this._elements = new Map();
             this._options = Core.extend({
                 className: "",
                 selector: "",

@@ -16,6 +16,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Change/Lis
     Add_1 = tslib_1.__importDefault(Add_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UiCommentResponseAdd extends Add_1.default {
+        _options;
         constructor(container, options) {
             super(container);
             this._options = Core.extend({

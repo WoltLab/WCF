@@ -16,9 +16,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     Util_1 = tslib_1.__importDefault(Util_1);
     User_1 = tslib_1.__importDefault(User_1);
     class UserConsent {
+        enableAll = false;
+        knownButtons = new WeakSet();
         constructor() {
-            this.enableAll = false;
-            this.knownButtons = new WeakSet();
             if (window.sessionStorage.getItem(`${Core.getStoragePrefix()}user-consent`) === "all") {
                 this.enableAll = true;
             }

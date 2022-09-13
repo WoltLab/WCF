@@ -12,12 +12,14 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Co
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     class UiUserProfileMenuItemAbstract {
+        _button = document.createElement("a");
+        _isActive;
+        _listItem = document.createElement("li");
+        _userId;
         /**
          * Creates a new user profile menu item.
          */
         constructor(userId, isActive) {
-            this._button = document.createElement("a");
-            this._listItem = document.createElement("li");
             this._userId = userId;
             this._isActive = isActive;
             this._initButton();

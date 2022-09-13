@@ -14,6 +14,8 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
     UiNotification = tslib_1.__importStar(UiNotification);
     Upload_1 = tslib_1.__importDefault(Upload_1);
     class TrophyUpload extends Upload_1.default {
+        trophyId;
+        tmpHash;
         constructor(trophyId, tmpHash, options) {
             super("uploadIconFileButton", "uploadIconFileContent", Core.extend({
                 className: "wcf\\data\\trophy\\TrophyAction",

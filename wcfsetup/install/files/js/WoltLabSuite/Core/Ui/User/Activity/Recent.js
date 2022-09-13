@@ -8,6 +8,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiUserActivityRecent {
+        containerId;
+        list;
+        showMoreItem;
         constructor(containerId) {
             this.containerId = containerId;
             const container = document.getElementById(this.containerId);

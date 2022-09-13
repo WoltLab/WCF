@@ -15,8 +15,12 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSearch {
+        _cancelButton;
+        _input;
+        _mediaManager;
+        _searchContainer;
+        _searchMode = false;
         constructor(mediaManager) {
-            this._searchMode = false;
             this._mediaManager = mediaManager;
             const dialog = mediaManager.getDialog();
             this._searchContainer = dialog.querySelector(".mediaManagerSearch");

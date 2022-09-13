@@ -40,19 +40,19 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
      * Fires an event and notifies all listeners.
      */
     function fire(identifier, action, data) {
-        var _a, _b;
         Devtools_1.default._internal_.eventLog(identifier, action);
         data = data || {};
-        (_b = (_a = _listeners
-            .get(identifier)) === null || _a === void 0 ? void 0 : _a.get(action)) === null || _b === void 0 ? void 0 : _b.forEach((callback) => callback(data));
+        _listeners
+            .get(identifier)
+            ?.get(action)
+            ?.forEach((callback) => callback(data));
     }
     exports.fire = fire;
     /**
      * Removes an event listener, requires the uuid returned by add().
      */
     function remove(identifier, action, uuid) {
-        var _a, _b;
-        (_b = (_a = _listeners.get(identifier)) === null || _a === void 0 ? void 0 : _a.get(action)) === null || _b === void 0 ? void 0 : _b.delete(uuid);
+        _listeners.get(identifier)?.get(action)?.delete(uuid);
     }
     exports.remove = remove;
     /**

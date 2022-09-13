@@ -17,13 +17,17 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
     Input_1 = tslib_1.__importDefault(Input_1);
     UiScroll = tslib_1.__importStar(UiScroll);
     class UiSearchExtended {
+        form;
+        queryInput;
+        typeInput;
+        delimiter;
+        searchID = undefined;
+        pages = 0;
+        activePage = 1;
+        lastSearchRequest = undefined;
+        lastSearchResultRequest = undefined;
+        searchParameters = [];
         constructor() {
-            this.searchID = undefined;
-            this.pages = 0;
-            this.activePage = 1;
-            this.lastSearchRequest = undefined;
-            this.lastSearchResultRequest = undefined;
-            this.searchParameters = [];
             this.form = document.getElementById("extendedSearchForm");
             this.queryInput = document.getElementById("searchQuery");
             this.typeInput = document.getElementById("searchType");
@@ -79,12 +83,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             }
         }
         async search(searchAction) {
-            var _a;
             if (!this.queryInput.value.trim() && !this.form["usernames"].value) {
                 return;
             }
             this.updateQueryString(searchAction);
-            (_a = this.lastSearchRequest) === null || _a === void 0 ? void 0 : _a.abort();
+            this.lastSearchRequest?.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
             const { count, searchID, title, pages, pageNo, template } = (await request.dispatch());
@@ -160,7 +163,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                     else if (element instanceof HTMLInputElement) {
                         if (element.classList.contains("itemListInputShadow")) {
                             const itemList = element.nextElementSibling;
-                            if (itemList === null || itemList === void 0 ? void 0 : itemList.classList.contains("inputItemList")) {
+                            if (itemList?.classList.contains("inputItemList")) {
                                 (0, ItemList_1.setValues)(itemList.dataset.elementId, value.split(",").map((value) => {
                                     return {
                                         objectId: 0,
@@ -204,8 +207,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             });
         }
         async changePage(pageNo) {
-            var _a;
-            (_a = this.lastSearchResultRequest) === null || _a === void 0 ? void 0 : _a.abort();
+            this.lastSearchResultRequest?.abort();
             const request = (0, Ajax_1.dboAction)("getSearchResults", "wcf\\data\\search\\SearchAction").payload({
                 searchID: this.searchID,
                 pageNo,

@@ -19,12 +19,15 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
     prism_meta_1 = tslib_1.__importDefault(prism_meta_1);
     let _headerHeight = 0;
     class UiRedactorCode {
+        _callbackEdit;
+        _editor;
+        _elementId;
+        _pre = null;
+        knownElements = new WeakSet();
         /**
          * Initializes the source code management.
          */
         constructor(editor) {
-            this._pre = null;
-            this.knownElements = new WeakSet();
             this._editor = editor;
             this._elementId = this._editor.$element[0].id;
             EventHandler.add("com.woltlab.wcf.redactor2", `bbcode_code_${this._elementId}`, (data) => this._bbcodeCode(data));

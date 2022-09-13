@@ -25,6 +25,13 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
         }
     }
     class FormBuilderDialog {
+        _actionName;
+        _className;
+        _dialogContent;
+        _dialogId;
+        _formId;
+        _options;
+        _additionalSubmitButtons;
         constructor(dialogId, className, actionName, options) {
             this.init(dialogId, className, actionName, options);
         }

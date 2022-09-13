@@ -8,9 +8,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     Util_1 = tslib_1.__importDefault(Util_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiDataImportManager {
+        queue;
+        redirectUrl;
+        currentAction = "";
+        index = -1;
         constructor(queue, redirectUrl) {
-            this.currentAction = "";
-            this.index = -1;
             this.queue = queue;
             this.redirectUrl = redirectUrl;
             this.invoke();

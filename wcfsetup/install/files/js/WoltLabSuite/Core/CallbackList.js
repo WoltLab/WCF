@@ -11,9 +11,7 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
     "use strict";
     Core = tslib_1.__importStar(Core);
     class CallbackList {
-        constructor() {
-            this._callbacks = new Map();
-        }
+        _callbacks = new Map();
         /**
          * Adds a callback for given identifier.
          */
@@ -36,14 +34,13 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
          * Invokes callback function on each registered callback.
          */
         forEach(identifier, callback) {
-            var _a;
             if (identifier === null) {
                 this._callbacks.forEach((callbacks, _identifier) => {
                     callbacks.forEach(callback);
                 });
             }
             else {
-                (_a = this._callbacks.get(identifier)) === null || _a === void 0 ? void 0 : _a.forEach(callback);
+                this._callbacks.get(identifier)?.forEach(callback);
             }
         }
     }

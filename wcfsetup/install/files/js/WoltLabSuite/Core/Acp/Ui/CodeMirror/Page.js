@@ -3,6 +3,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Ui/Page/Search
     Core = tslib_1.__importStar(Core);
     UiPageSearch = tslib_1.__importStar(UiPageSearch);
     class AcpUiCodeMirrorPage {
+        element;
         constructor(elementId) {
             this.element = document.getElementById(elementId);
             const insertButton = document.getElementById(`codemirror-${elementId}-page`);

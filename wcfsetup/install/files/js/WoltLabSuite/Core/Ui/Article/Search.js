@@ -11,12 +11,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
     StringUtil = tslib_1.__importStar(StringUtil);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiArticleSearch {
-        constructor() {
-            this.callbackSelect = undefined;
-            this.resultContainer = undefined;
-            this.resultList = undefined;
-            this.searchInput = undefined;
-        }
+        callbackSelect = undefined;
+        resultContainer = undefined;
+        resultList = undefined;
+        searchInput = undefined;
         open(callbackSelect) {
             this.callbackSelect = callbackSelect;
             Dialog_1.default.open(this);

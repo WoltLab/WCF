@@ -16,6 +16,7 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
     Language = tslib_1.__importStar(Language);
     Upload_1 = tslib_1.__importDefault(Upload_1);
     class FileUpload extends Upload_1.default {
+        _deleteHandler;
         constructor(buttonContainerId, targetId, options) {
             options = options || {};
             if (options.internalId === undefined) {

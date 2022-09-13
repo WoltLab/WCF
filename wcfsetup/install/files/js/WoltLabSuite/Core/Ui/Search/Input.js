@@ -13,6 +13,22 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
     Util_1 = tslib_1.__importDefault(Util_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class UiSearchInput {
+        activeItem = undefined;
+        ajaxPayload;
+        autoFocus;
+        callbackDropdownInit = undefined;
+        callbackSelect = undefined;
+        delay;
+        dropdownContainerId = "";
+        element;
+        excludedSearchValues = new Set();
+        list = undefined;
+        lastValue = "";
+        minLength;
+        noResultPlaceholder;
+        preventSubmit;
+        request = undefined;
+        timerDelay = undefined;
         /**
          * Initializes the search input field.
          *
@@ -20,15 +36,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          * @param       {Object}        options         search options and settings
          */
         constructor(element, options) {
-            this.activeItem = undefined;
-            this.callbackDropdownInit = undefined;
-            this.callbackSelect = undefined;
-            this.dropdownContainerId = "";
-            this.excludedSearchValues = new Set();
-            this.list = undefined;
-            this.lastValue = "";
-            this.request = undefined;
-            this.timerDelay = undefined;
             this.element = element;
             if (!(this.element instanceof HTMLElement)) {
                 throw new TypeError("Expected a valid DOM element.");

@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
     Field_1 = tslib_1.__importDefault(Field_1);
     Core = tslib_1.__importStar(Core);
     class Acl extends Field_1.default {
+        _aclList;
         _getData() {
             return {
                 [this._fieldId]: this._aclList.getData(),

@@ -13,11 +13,10 @@ define(["require", "exports", "../../Ajax"], function (require, exports, Ajax_1)
     exports.setup = void 0;
     const unreadEntries = new WeakSet();
     async function markAsRead(entry) {
-        var _a;
         const queueId = parseInt(entry.dataset.queueId, 10);
         await (0, Ajax_1.dboAction)("markAsRead", "wcf\\data\\moderation\\queue\\ModerationQueueAction").objectIds([queueId]).dispatch();
         entry.classList.remove("new");
-        (_a = entry.querySelector(".columnAvatar p")) === null || _a === void 0 ? void 0 : _a.removeAttribute("title");
+        entry.querySelector(".columnAvatar p")?.removeAttribute("title");
     }
     function setup() {
         document.querySelectorAll(".moderationQueueEntryList .new .columnAvatar").forEach((el) => {

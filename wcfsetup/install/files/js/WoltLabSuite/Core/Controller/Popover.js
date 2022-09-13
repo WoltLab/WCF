@@ -16,18 +16,20 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
     Environment = tslib_1.__importStar(Environment);
     UiAlignment = tslib_1.__importStar(UiAlignment);
     class ControllerPopover {
+        activeId = "";
+        cache = new Map();
+        elements = new Map();
+        handlers = new Map();
+        hoverId = "";
+        popover;
+        popoverContent;
+        suspended = false;
+        timerEnter = undefined;
+        timerLeave = undefined;
         /**
          * Builds popover DOM elements and binds event listeners.
          */
         constructor() {
-            this.activeId = "";
-            this.cache = new Map();
-            this.elements = new Map();
-            this.handlers = new Map();
-            this.hoverId = "";
-            this.suspended = false;
-            this.timerEnter = undefined;
-            this.timerLeave = undefined;
             this.popover = document.createElement("div");
             this.popover.className = "popover forceHide";
             this.popoverContent = document.createElement("div");

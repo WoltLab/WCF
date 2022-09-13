@@ -15,15 +15,17 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", 
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class ControllerMapRoutePlanner {
+        button;
+        destination;
+        didInitDialog = false;
+        directionsRenderer = undefined;
+        directionsService = undefined;
+        googleLink = undefined;
+        lastOrigin = undefined;
+        map = undefined;
+        originInput = undefined;
+        travelMode = undefined;
         constructor(buttonId, destination) {
-            this.didInitDialog = false;
-            this.directionsRenderer = undefined;
-            this.directionsService = undefined;
-            this.googleLink = undefined;
-            this.lastOrigin = undefined;
-            this.map = undefined;
-            this.originInput = undefined;
-            this.travelMode = undefined;
             const button = document.getElementById(buttonId);
             if (button === null) {
                 throw new Error(`Unknown button with id '${buttonId}'`);

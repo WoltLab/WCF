@@ -14,10 +14,11 @@ define(["require", "exports", "tslib", "focus-trap", "../../Screen", "../../Clos
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class PageMenuContainer {
+        container = document.createElement("div");
+        content = document.createElement("div");
+        focusTrap = undefined;
+        provider;
         constructor(provider) {
-            this.container = document.createElement("div");
-            this.content = document.createElement("div");
-            this.focusTrap = undefined;
             this.provider = provider;
             // Set the container to be initially hidden, otherwise the detection in
             // `toggle()` incorrectly assumes the container to be visible on first click.

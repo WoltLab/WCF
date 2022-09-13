@@ -25,12 +25,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Controller/Captcha",
     User_1 = tslib_1.__importDefault(User_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UiCommentAdd {
+        _container;
+        _content;
+        _textarea;
+        _editor = null;
+        _loadingOverlay = null;
         /**
          * Initializes a new quick reply field.
          */
         constructor(container) {
-            this._editor = null;
-            this._loadingOverlay = null;
             this._container = container;
             this._content = this._container.querySelector(".jsOuterEditorContainer");
             this._textarea = this._container.querySelector(".wysiwygTextarea");

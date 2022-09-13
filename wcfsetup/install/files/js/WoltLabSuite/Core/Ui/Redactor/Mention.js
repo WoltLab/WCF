@@ -10,14 +10,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../String
     let _dropdownContainer = null;
     const DropDownPixelOffset = 7;
     class UiRedactorMention {
+        _active = false;
+        _dropdownActive = false;
+        _dropdownMenu = null;
+        _itemIndex = 0;
+        _lineHeight = null;
+        _mentionStart = "";
+        _redactor;
+        _timer = null;
         constructor(redactor) {
-            this._active = false;
-            this._dropdownActive = false;
-            this._dropdownMenu = null;
-            this._itemIndex = 0;
-            this._lineHeight = null;
-            this._mentionStart = "";
-            this._timer = null;
             this._redactor = redactor;
             redactor.WoltLabEvent.register("keydown", (data) => this._keyDown(data));
             redactor.WoltLabEvent.register("keyup", (data) => this._keyUp(data));

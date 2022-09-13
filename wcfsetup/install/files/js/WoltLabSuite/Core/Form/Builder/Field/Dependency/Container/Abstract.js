@@ -13,6 +13,7 @@ define(["require", "exports", "tslib", "../Manager", "../../../../../Core"], fun
     DependencyManager = tslib_1.__importStar(DependencyManager);
     Core = tslib_1.__importStar(Core);
     class Abstract {
+        _container;
         constructor(containerId) {
             this.init(containerId);
         }

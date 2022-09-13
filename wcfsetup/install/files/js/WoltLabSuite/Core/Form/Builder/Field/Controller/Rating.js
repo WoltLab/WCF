@@ -12,6 +12,9 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
     Core = tslib_1.__importStar(Core);
     Environment = tslib_1.__importStar(Environment);
     class Rating {
+        _field;
+        _input;
+        _ratingElements;
         constructor(fieldId, value) {
             this._field = document.getElementById(fieldId + "Container");
             if (this._field === null) {

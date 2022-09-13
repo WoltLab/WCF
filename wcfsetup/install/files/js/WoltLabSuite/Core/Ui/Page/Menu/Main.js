@@ -14,8 +14,13 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class PageMenuMain {
+        container;
+        mainMenu;
+        mainMenuButton;
+        menuItemBadges = new Map();
+        menuItemProvider;
+        observer;
         constructor(menuItemProvider) {
-            this.menuItemBadges = new Map();
             this.mainMenu = document.querySelector(".mainMenu");
             this.menuItemProvider = menuItemProvider;
             this.mainMenuButton = document.querySelector(".pageHeaderMenuMobile");
@@ -98,7 +103,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     if (element) {
                         element.hidden = false;
                         const button = element.previousElementSibling;
-                        button === null || button === void 0 ? void 0 : button.setAttribute("aria-expanded", "true");
+                        button?.setAttribute("aria-expanded", "true");
                     }
                 }
                 // Expand the current item, if it contains menu items itself.

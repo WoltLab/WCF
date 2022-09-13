@@ -14,6 +14,9 @@ define(["require", "exports", "tslib", "../../../../../Ui/Confirmation", "../../
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Ajax = tslib_1.__importStar(Ajax);
     class Delete {
+        userIDs;
+        successCallback;
+        deleteMessage;
         constructor(userIDs, successCallback, deleteMessage) {
             this.userIDs = userIDs;
             this.successCallback = successCallback;

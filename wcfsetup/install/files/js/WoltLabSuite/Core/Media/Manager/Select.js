@@ -17,10 +17,11 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
     UiDialog = tslib_1.__importStar(UiDialog);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSelect extends Base_1.default {
+        _activeButton = null;
+        _buttons;
+        _storeElements = new WeakMap();
         constructor(options) {
             super(options);
-            this._activeButton = null;
-            this._storeElements = new WeakMap();
             this._buttons = document.getElementsByClassName(this._options.buttonClass || "jsMediaSelectButton");
             Array.from(this._buttons).forEach((button) => {
                 // only consider buttons with a proper store specified

@@ -13,9 +13,11 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiPageJumpTo {
-        constructor() {
-            this.elements = new Map();
-        }
+        activeElement;
+        description;
+        elements = new Map();
+        input;
+        submitButton;
         /**
          * Initializes a 'Jump To' element.
          */

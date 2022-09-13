@@ -81,13 +81,11 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
         return `<div class="ajaxDebugMessage"><p>${message}</p>${details}</div>`;
     }
     class ApiError extends Error {
-        constructor() {
-            super(...arguments);
-            this.name = "ApiError";
-        }
+        name = "ApiError";
     }
     exports.ApiError = ApiError;
     class ConnectionError extends ApiError {
+        originalError;
         constructor(originalError) {
             let message = "Unknown error";
             if (originalError instanceof Error) {
@@ -100,6 +98,7 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
     }
     exports.ConnectionError = ConnectionError;
     class StatusNotOk extends ApiError {
+        response;
         constructor(response) {
             super("The API request returned a status code outside of the 200-299 range.");
             this.name = "StatusNotOk";
@@ -108,6 +107,7 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
     }
     exports.StatusNotOk = StatusNotOk;
     class ExpectedJson extends ApiError {
+        response;
         constructor(response) {
             super("The API did not return a JSON response.");
             this.name = "ExpectedJson";
@@ -116,6 +116,7 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
     }
     exports.ExpectedJson = ExpectedJson;
     class InvalidJson extends ApiError {
+        response;
         constructor(response) {
             super("Failed to decode the JSON response from the API.");
             this.name = "InvalidJson";

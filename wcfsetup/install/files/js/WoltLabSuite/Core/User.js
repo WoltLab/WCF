@@ -10,6 +10,9 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     class User {
+        userId;
+        username;
+        link;
         constructor(userId, username, link) {
             this.userId = userId;
             this.username = username;

@@ -14,6 +14,7 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "./Ban/Dialog"], f
     Ajax = tslib_1.__importStar(Ajax);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class BanHandler {
+        userIDs;
         constructor(userIDs) {
             this.userIDs = userIDs;
         }

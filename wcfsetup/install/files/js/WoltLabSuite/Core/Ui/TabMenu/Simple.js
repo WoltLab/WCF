@@ -14,11 +14,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
     Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     class TabMenuSimple {
+        container;
+        containers = new Map();
+        isLegacy = false;
+        store = null;
+        tabs = new Map();
         constructor(container) {
-            this.containers = new Map();
-            this.isLegacy = false;
-            this.store = null;
-            this.tabs = new Map();
             this.container = container;
         }
         /**
@@ -141,7 +142,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
                     // check for parent tab menu
                     if (selectTab) {
                         const parent = this.container.parentElement;
-                        if (parent === null || parent === void 0 ? void 0 : parent.classList.contains("tabMenuContainer")) {
+                        if (parent?.classList.contains("tabMenuContainer")) {
                             returnValue = this.container;
                         }
                     }

@@ -12,6 +12,10 @@ define(["require", "exports", "tslib", "./Manager", "../../../../Core"], functio
     DependencyManager = tslib_1.__importStar(DependencyManager);
     Core = tslib_1.__importStar(Core);
     class FormBuilderFormFieldDependency {
+        _dependentElement;
+        _field;
+        _fields;
+        _noField;
         constructor(dependentElementId, fieldId) {
             this.init(dependentElementId, fieldId);
         }

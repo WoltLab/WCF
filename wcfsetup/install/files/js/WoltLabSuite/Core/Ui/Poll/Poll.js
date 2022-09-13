@@ -23,12 +23,14 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
         PollViews["results"] = "results";
     })(PollViews = exports.PollViews || (exports.PollViews = {}));
     class Poll {
+        pollId;
+        element;
+        voteView = undefined;
+        resultsView = undefined;
+        participants = undefined;
+        voteHandler = undefined;
+        views = new Map();
         constructor(pollID) {
-            this.voteView = undefined;
-            this.resultsView = undefined;
-            this.participants = undefined;
-            this.voteHandler = undefined;
-            this.views = new Map();
             const poll = document.getElementById(`poll${pollID}`);
             if (poll === null) {
                 throw new Error(`Could not find poll with id "${pollID}".`);
@@ -67,7 +69,6 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             return this.views.get(key);
         }
         displayView(key) {
-            var _a, _b, _c;
             if (!this.hasView(key)) {
                 throw new Error(`The view "${key}" is unknown for poll "${this.pollId}".`);
             }
@@ -75,9 +76,9 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
                 view.hidden = true;
             });
             this.views.get(key).hidden = false;
-            (_a = this.voteView) === null || _a === void 0 ? void 0 : _a.checkVisibility(key);
-            (_b = this.resultsView) === null || _b === void 0 ? void 0 : _b.checkVisibility(key);
-            (_c = this.voteHandler) === null || _c === void 0 ? void 0 : _c.checkVisibility(key);
+            this.voteView?.checkVisibility(key);
+            this.resultsView?.checkVisibility(key);
+            this.voteHandler?.checkVisibility(key);
             if (!this.participants && this.canViewParticipants()) {
                 this.participants = new Participants_1.default(this);
                 this.participants.showButton();

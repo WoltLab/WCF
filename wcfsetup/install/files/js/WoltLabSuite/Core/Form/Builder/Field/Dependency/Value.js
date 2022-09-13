@@ -14,10 +14,8 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../C
     DependencyManager = tslib_1.__importStar(DependencyManager);
     Core = tslib_1.__importStar(Core);
     class Value extends Abstract_1.default {
-        constructor() {
-            super(...arguments);
-            this._isNegated = false;
-        }
+        _isNegated = false;
+        _values;
         checkDependency() {
             if (!this._values) {
                 throw new Error("Values have not been set.");

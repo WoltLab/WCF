@@ -13,10 +13,8 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiBoxAdd {
-        constructor() {
-            this.supportsI18n = false;
-            this.link = "";
-        }
+        supportsI18n = false;
+        link = "";
         /**
          * Initializes the box add handler.
          */

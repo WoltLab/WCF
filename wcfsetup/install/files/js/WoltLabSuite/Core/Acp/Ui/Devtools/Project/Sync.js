@@ -7,13 +7,14 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class AcpUiDevtoolsProjectSync {
+        buttons = new Map();
+        buttonStatus = new Map();
+        buttonSyncAll = undefined;
+        container = document.getElementById("syncPipMatches");
+        pips = [];
+        projectId;
+        queue = [];
         constructor(projectId) {
-            this.buttons = new Map();
-            this.buttonStatus = new Map();
-            this.buttonSyncAll = undefined;
-            this.container = document.getElementById("syncPipMatches");
-            this.pips = [];
-            this.queue = [];
             this.projectId = projectId;
             const restrictedSync = document.getElementById("syncShowOnlyMatches");
             restrictedSync.addEventListener("change", () => {

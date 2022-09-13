@@ -15,13 +15,16 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Langua
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class RewriteTest {
+        apps;
+        buttonStartTest = document.getElementById("rewriteTestStart");
+        callbackChange;
+        passed = false;
+        urlOmitIndexPhp;
         /**
          * Initializes the rewrite test, but aborts early if URL rewriting was
          * enabled at page init.
          */
         constructor(apps) {
-            this.buttonStartTest = document.getElementById("rewriteTestStart");
-            this.passed = false;
             const urlOmitIndexPhp = document.getElementById("url_omit_index_php");
             // This configuration part is unavailable when running in enterprise mode.
             if (urlOmitIndexPhp === null) {

@@ -15,6 +15,22 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
     EventHandler = tslib_1.__importStar(EventHandler);
     DatePicker = tslib_1.__importStar(DatePicker);
     class UiPollEditor {
+        container;
+        endTimeField;
+        isChangeableNoField;
+        isChangeableYesField;
+        isPublicNoField;
+        isPublicYesField;
+        maxVotesField;
+        optionCount;
+        options;
+        optionList;
+        questionField;
+        resultsRequireVoteNoField;
+        resultsRequireVoteYesField;
+        sortByVotesNoField;
+        sortByVotesYesField;
+        wysiwygId;
         constructor(containerId, pollOptions, wysiwygId, options) {
             const container = document.getElementById(containerId);
             if (container === null) {

@@ -15,11 +15,12 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiDevtoolsNotificationTest {
+        buttons;
+        titles = new Map();
         /**
          * Initializes the user notification test handler.
          */
         constructor() {
-            this.titles = new Map();
             this.buttons = Array.from(document.querySelectorAll(".jsTestEventButton"));
             this.buttons.forEach((button) => {
                 button.addEventListener("click", (ev) => this.test(ev));

@@ -13,6 +13,11 @@ define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../..
     Language = tslib_1.__importStar(Language);
     UiNotification = tslib_1.__importStar(UiNotification);
     class DevtoolsProjectPipEntryList {
+        entryType;
+        pip;
+        projectId;
+        supportsDeleteInstruction;
+        table;
         /**
          * Initializes the devtools project pip entry list handler.
          */

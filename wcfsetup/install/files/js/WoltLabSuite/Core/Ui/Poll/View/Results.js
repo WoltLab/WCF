@@ -13,6 +13,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../Poll"], function (re
     exports.Results = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     class Results {
+        pollManager;
+        button;
         constructor(manager, button) {
             this.pollManager = manager;
             this.button = button;

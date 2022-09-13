@@ -15,8 +15,15 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiConfirmation {
+        _active = false;
+        parameters;
+        confirmButton;
+        _content;
+        dialog;
+        text;
+        callbackCancel;
+        callbackConfirm;
         constructor() {
-            this._active = false;
             this.dialog = document.createElement("div");
             this.dialog.id = "wcfSystemConfirmation";
             this.dialog.classList.add("systemConfirmation");

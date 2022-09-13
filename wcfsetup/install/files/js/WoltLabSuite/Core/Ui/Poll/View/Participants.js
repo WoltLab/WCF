@@ -13,8 +13,10 @@ define(["require", "exports", "tslib", "../../User/List"], function (require, ex
     exports.Participants = void 0;
     List_1 = tslib_1.__importDefault(List_1);
     class Participants {
+        pollManager;
+        button;
+        userList = undefined;
         constructor(manager) {
-            this.userList = undefined;
             this.pollManager = manager;
             const button = this.pollManager.getElement().querySelector(".showPollParticipantsButton");
             if (!button) {

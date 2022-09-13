@@ -12,19 +12,22 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiMessageQuote {
+        activeMessageId = "";
+        className;
+        containers = new Map();
+        containerSelector = "";
+        copyQuote = document.createElement("div");
+        message = "";
+        messageBodySelector;
+        objectId = 0;
+        objectType = "";
+        timerSelectionChange = undefined;
+        isMouseDown = false;
+        quoteManager;
         /**
          * Initializes the quote handler for given object type.
          */
         constructor(quoteManager, className, objectType, containerSelector, messageBodySelector, messageContentSelector, supportDirectInsert) {
-            this.activeMessageId = "";
-            this.containers = new Map();
-            this.containerSelector = "";
-            this.copyQuote = document.createElement("div");
-            this.message = "";
-            this.objectId = 0;
-            this.objectType = "";
-            this.timerSelectionChange = undefined;
-            this.isMouseDown = false;
             this.className = className;
             this.objectType = objectType;
             this.containerSelector = containerSelector;
@@ -52,7 +55,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          */
         initContainers() {
             document.querySelectorAll(this.containerSelector).forEach((container) => {
-                var _a;
                 const id = Util_1.default.identify(container);
                 if (this.containers.has(id)) {
                     return;
@@ -63,8 +65,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                 }
                 container.addEventListener("mousedown", (event) => this.onMouseDown(event));
                 container.classList.add("jsQuoteMessageContainer");
-                (_a = container
-                    .querySelector(".jsQuoteMessage")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (event) => this.saveFullQuote(event));
+                container
+                    .querySelector(".jsQuoteMessage")
+                    ?.addEventListener("click", (event) => this.saveFullQuote(event));
             });
         }
         onSelectionchange() {
@@ -366,7 +369,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             }
         }
         saveQuote(event, renderQuote = false) {
-            event === null || event === void 0 ? void 0 : event.preventDefault();
+            event?.preventDefault();
             Ajax.api(this, {
                 actionName: "saveQuote",
                 objectIDs: [this.objectId],

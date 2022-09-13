@@ -14,12 +14,21 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
     Language = tslib_1.__importStar(Language);
     UiPageSearchHandler = tslib_1.__importStar(UiPageSearchHandler);
     class AcpUiBoxHandler {
+        activePageId = 0;
+        boxController;
+        boxType;
+        cache = new Map();
+        containerExternalLink;
+        containerPageId;
+        containerPageObjectId;
+        handlers;
+        pageId;
+        pageObjectId;
+        position;
         /**
          * Initializes the interface logic.
          */
         constructor(handlers, boxType) {
-            this.activePageId = 0;
-            this.cache = new Map();
             this.boxType = boxType;
             this.handlers = handlers;
             this.boxController = document.getElementById("boxControllerID");

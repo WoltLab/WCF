@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "../Field", "../../../../Core"], function
     Field_1 = tslib_1.__importDefault(Field_1);
     Core = tslib_1.__importStar(Core);
     class Poll extends Field_1.default {
+        _pollEditor;
         _getData() {
             return this._pollEditor.getData();
         }

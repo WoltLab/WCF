@@ -15,6 +15,15 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AbstractPackageList {
+        addButton;
+        form;
+        formFieldId;
+        packageList;
+        packageIdentifier;
+        // see `wcf\data\package\Package::isValidPackageName()`
+        static packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+        // see `wcf\data\package\Package::isValidVersion()`
+        static versionRegExp = new RegExp(/^([0-9]+).([0-9]+)\.([0-9]+)( (a|alpha|b|beta|d|dev|rc|pl) ([0-9]+))?$/i);
         constructor(formFieldId, existingPackages) {
             this.formFieldId = formFieldId;
             this.packageList = document.getElementById(`${this.formFieldId}_packageList`);
@@ -184,10 +193,6 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             return true;
         }
     }
-    // see `wcf\data\package\Package::isValidPackageName()`
-    AbstractPackageList.packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
-    // see `wcf\data\package\Package::isValidVersion()`
-    AbstractPackageList.versionRegExp = new RegExp(/^([0-9]+).([0-9]+)\.([0-9]+)( (a|alpha|b|beta|d|dev|rc|pl) ([0-9]+))?$/i);
     Core.enableLegacyInheritance(AbstractPackageList);
     return AbstractPackageList;
 });

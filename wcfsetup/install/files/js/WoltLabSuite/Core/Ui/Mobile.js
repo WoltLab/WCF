@@ -150,7 +150,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
         _mobileSidebarEnabled = true;
     }
     function closeDropdown() {
-        _dropdownMenu === null || _dropdownMenu === void 0 ? void 0 : _dropdownMenu.classList.remove("dropdownOpen");
+        _dropdownMenu?.classList.remove("dropdownOpen");
     }
     function toggleMobileNavigation(message, quickOptions, navigation) {
         if (_dropdownMenu === null) {
@@ -309,7 +309,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
         _enabled = true;
         if (_enableMobileMenu) {
             _pageMenuMain.enable();
-            _pageMenuUser === null || _pageMenuUser === void 0 ? void 0 : _pageMenuUser.enable();
+            _pageMenuUser?.enable();
         }
     }
     exports.enable = enable;
@@ -330,7 +330,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
         _enabled = false;
         if (_enableMobileMenu) {
             _pageMenuMain.disable();
-            _pageMenuUser === null || _pageMenuUser === void 0 ? void 0 : _pageMenuUser.disable();
+            _pageMenuUser?.disable();
         }
     }
     exports.disable = disable;

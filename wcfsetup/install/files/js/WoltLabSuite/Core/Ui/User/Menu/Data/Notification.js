@@ -96,9 +96,11 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
         ctx.closePath();
     }
     class UserMenuDataNotification {
+        button;
+        options;
+        stale = true;
+        view = undefined;
         constructor(button, options) {
-            this.stale = true;
-            this.view = undefined;
             this.button = button;
             this.options = options;
             if (this.counter > 0) {

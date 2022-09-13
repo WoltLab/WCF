@@ -21,12 +21,13 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
     Ajax = tslib_1.__importStar(Ajax);
     Replace_1 = tslib_1.__importDefault(Replace_1);
     class MediaEditor {
+        _availableLanguageCount = 1;
+        _categoryIds = [];
+        _dialogs = new Map();
+        _callbackObject;
+        _media = null;
+        _oldCategoryId = 0;
         constructor(callbackObject) {
-            this._availableLanguageCount = 1;
-            this._categoryIds = [];
-            this._dialogs = new Map();
-            this._media = null;
-            this._oldCategoryId = 0;
             this._callbackObject = callbackObject || {};
             if (this._callbackObject._editorClose && typeof this._callbackObject._editorClose !== "function") {
                 throw new TypeError("Callback object has no function '_editorClose'.");

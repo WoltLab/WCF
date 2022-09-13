@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "../../Core", "../Page/Search"], function
     Core = tslib_1.__importStar(Core);
     UiPageSearch = tslib_1.__importStar(UiPageSearch);
     class UiRedactorPage {
+        _editor;
         constructor(editor, button) {
             this._editor = editor;
             button.addEventListener("click", (ev) => this._click(ev));

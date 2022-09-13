@@ -19,13 +19,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     UiScroll = tslib_1.__importStar(UiScroll);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UiCommentEdit {
+        _activeElement = null;
+        _comments = new WeakSet();
+        _container;
+        _editorContainer = null;
         /**
          * Initializes the comment edit manager.
          */
         constructor(container) {
-            this._activeElement = null;
-            this._comments = new WeakSet();
-            this._editorContainer = null;
             this._container = container;
             this.rebuild();
             Listener_1.default.add("Ui/Comment/Edit_" + Util_1.default.identify(this._container), this.rebuild.bind(this));

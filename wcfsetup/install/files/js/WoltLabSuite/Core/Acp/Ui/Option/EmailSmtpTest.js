@@ -14,6 +14,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     class EmailSmtpTest {
+        buttonRunTest;
+        container;
         constructor() {
             let smtpCheckbox = null;
             const methods = document.querySelectorAll('input[name="values[mail_send_method]"]');

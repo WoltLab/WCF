@@ -17,11 +17,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../Notification", ".
     Language = tslib_1.__importStar(Language);
     Core = tslib_1.__importStar(Core);
     class UiUserSessionDelete {
+        knownElements = new Map();
         /**
          * Initializes the session delete buttons.
          */
         constructor() {
-            this.knownElements = new Map();
             document.querySelectorAll(".sessionDeleteButton").forEach((element) => {
                 if (!element.dataset.sessionId) {
                     throw new Error(`No sessionId for session delete button given.`);

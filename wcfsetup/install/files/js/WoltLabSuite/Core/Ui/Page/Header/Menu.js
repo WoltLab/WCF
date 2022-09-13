@@ -105,8 +105,8 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
                 }
             });
         }
-        _buttonShowPrevious === null || _buttonShowPrevious === void 0 ? void 0 : _buttonShowPrevious.classList[_invisibleLeft.length ? "add" : "remove"]("active");
-        _buttonShowNext === null || _buttonShowNext === void 0 ? void 0 : _buttonShowNext.classList[_invisibleRight.length ? "add" : "remove"]("active");
+        _buttonShowPrevious?.classList[_invisibleLeft.length ? "add" : "remove"]("active");
+        _buttonShowNext?.classList[_invisibleRight.length ? "add" : "remove"]("active");
     }
     /**
      * Builds the UI and binds the event listeners.

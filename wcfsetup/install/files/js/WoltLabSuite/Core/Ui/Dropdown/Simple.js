@@ -511,13 +511,12 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
          * Destroys a dropdown identified by given id.
          */
         destroy(containerId) {
-            var _a;
             if (!_dropdowns.has(containerId)) {
                 return false;
             }
             try {
                 UiDropdownSimple.close(containerId);
-                (_a = _menus.get(containerId)) === null || _a === void 0 ? void 0 : _a.remove();
+                _menus.get(containerId)?.remove();
             }
             catch (e) {
                 // the elements might not exist anymore thus ignore all errors while cleaning up

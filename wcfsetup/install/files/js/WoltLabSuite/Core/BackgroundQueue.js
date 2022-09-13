@@ -12,9 +12,10 @@ define(["require", "exports", "tslib", "./Ajax"], function (require, exports, ts
     exports.invoke = exports.setUrl = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     class BackgroundQueue {
+        _invocations = 0;
+        _isBusy = false;
+        _url;
         constructor(url) {
-            this._invocations = 0;
-            this._isBusy = false;
             this._url = url;
         }
         invoke() {

@@ -22,6 +22,7 @@ define(["require", "exports", "tslib", "./Core", "./I18n/Plural", "./Language/St
     parser.Parser = Parser;
     parser = new Parser();*/
     class Template {
+        compiled;
         constructor(template) {
             try {
                 this.compiled = (0, Compiler_1.compile)(template);

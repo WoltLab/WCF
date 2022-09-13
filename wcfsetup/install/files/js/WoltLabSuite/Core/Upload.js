@@ -15,12 +15,15 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Language = tslib_1.__importStar(Language);
     class Upload {
+        _button = document.createElement("p");
+        _buttonContainer;
+        _fileElements = [];
+        _fileUpload = document.createElement("input");
+        _internalFileId = 0;
+        _multiFileUploadIds = [];
+        _options;
+        _target;
         constructor(buttonContainerId, targetId, options) {
-            this._button = document.createElement("p");
-            this._fileElements = [];
-            this._fileUpload = document.createElement("input");
-            this._internalFileId = 0;
-            this._multiFileUploadIds = [];
             options = options || {};
             if (!options.className) {
                 throw new Error("Missing class name.");

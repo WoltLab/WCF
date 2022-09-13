@@ -9,7 +9,7 @@
     "compilerOptions": {
         "allowJs": true,
         "composite": false,
-        "module": "ES2020",
+        "module": "ES2022",
         "strict": true,
         "newLine": "lf"
     }

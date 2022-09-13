@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
     Field_1 = tslib_1.__importDefault(Field_1);
     Core = tslib_1.__importStar(Core);
     class RadioButton extends Field_1.default {
+        _fields;
         _getData() {
             const data = {};
             this._fields.some((input) => {

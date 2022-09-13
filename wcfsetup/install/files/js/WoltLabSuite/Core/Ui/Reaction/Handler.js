@@ -19,16 +19,21 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     CountButtons_1 = tslib_1.__importDefault(CountButtons_1);
     const availableReactions = Object.values(window.REACTION_TYPES);
     class UiReactionHandler {
+        activeButton = undefined;
+        countButtons;
+        _cache = new Map();
+        focusTrap = undefined;
+        _containers = new Map();
+        _options;
+        _objects = new Map();
+        _objectType;
+        _popoverCurrentObjectId = 0;
+        _popover;
+        _popoverContent;
         /**
          * Initializes the reaction handler.
          */
         constructor(objectType, opts) {
-            this.activeButton = undefined;
-            this._cache = new Map();
-            this.focusTrap = undefined;
-            this._containers = new Map();
-            this._objects = new Map();
-            this._popoverCurrentObjectId = 0;
             if (!opts.containerSelector) {
                 throw new Error("[WoltLabSuite/Core/Ui/Reaction/Handler] Expected a non-empty string for option 'containerSelector'.");
             }

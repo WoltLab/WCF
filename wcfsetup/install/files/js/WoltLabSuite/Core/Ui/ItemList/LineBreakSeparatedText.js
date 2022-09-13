@@ -17,13 +17,16 @@ define(["require", "exports", "tslib", "../Confirmation", "../../Language", "../
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiItemListLineBreakSeparatedText {
+        addButton = undefined;
+        clearButton = undefined;
+        itemInput = undefined;
+        itemList;
+        items = new Set();
+        mutationObserver;
+        options;
+        submitField = undefined;
+        uiDisabled = false;
         constructor(itemList, options = {}) {
-            this.addButton = undefined;
-            this.clearButton = undefined;
-            this.itemInput = undefined;
-            this.items = new Set();
-            this.submitField = undefined;
-            this.uiDisabled = false;
             this.itemList = itemList;
             this.options = options;
             if (!this.options.submitFieldName) {

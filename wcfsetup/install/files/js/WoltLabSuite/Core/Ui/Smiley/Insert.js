@@ -12,6 +12,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler"], fun
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     class UiSmileyInsert {
+        container;
+        editorId;
         constructor(editorId) {
             this.editorId = editorId;
             let container = document.getElementById("smilies-" + this.editorId);

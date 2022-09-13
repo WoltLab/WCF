@@ -20,6 +20,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     UiScreen = tslib_1.__importStar(UiScreen);
     UiScroll = tslib_1.__importStar(UiScroll);
     class UiMessageInlineEditor {
+        _activeDropdownElement;
+        _activeElement;
+        _dropdownMenu;
+        _elements;
+        _options;
         /**
          * Initializes the message inline editor.
          */

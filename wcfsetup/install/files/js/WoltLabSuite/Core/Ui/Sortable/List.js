@@ -12,6 +12,7 @@ define(["require", "exports", "tslib", "../../Core", "../Screen"], function (req
     Core = tslib_1.__importStar(Core);
     UiScreen = tslib_1.__importStar(UiScreen);
     class UiSortableList {
+        _options;
         /**
          * Initializes the sortable list controller.
          */

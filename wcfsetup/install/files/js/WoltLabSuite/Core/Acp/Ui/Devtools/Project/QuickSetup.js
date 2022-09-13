@@ -16,6 +16,8 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class AcpUiDevtoolsProjectQuickSetup {
+        pathInput;
+        submitButton;
         /**
          * Initializes the project quick setup handler.
          */

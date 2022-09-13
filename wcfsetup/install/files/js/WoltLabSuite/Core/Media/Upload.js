@@ -19,13 +19,15 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     EventHandler = tslib_1.__importStar(EventHandler);
     class MediaUpload extends Upload_1.default {
+        _categoryId = null;
+        _elementTagSize;
+        _mediaManager;
         constructor(buttonContainerId, targetId, options) {
             super(buttonContainerId, targetId, Core.extend({
                 className: "wcf\\data\\media\\MediaAction",
                 multiple: options.mediaManager ? true : false,
                 singleFileRequests: true,
             }, options || {}));
-            this._categoryId = null;
             options = options || {};
             this._elementTagSize = 144;
             if (this._options.elementTagSize) {

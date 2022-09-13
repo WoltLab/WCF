@@ -673,11 +673,11 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 const observer = new MutationObserver(() => {
                     if (element.disabled) {
                         openButton.classList.add("disabled");
-                        clearButton === null || clearButton === void 0 ? void 0 : clearButton.classList.add("disabled");
+                        clearButton?.classList.add("disabled");
                     }
                     else {
                         openButton.classList.remove("disabled");
-                        clearButton === null || clearButton === void 0 ? void 0 : clearButton.classList.remove("disabled");
+                        clearButton?.classList.remove("disabled");
                     }
                 });
                 observer.observe(element, {
@@ -685,7 +685,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 });
                 if (element.disabled) {
                     openButton.classList.add("disabled");
-                    clearButton === null || clearButton === void 0 ? void 0 : clearButton.classList.add("disabled");
+                    clearButton?.classList.add("disabled");
                 }
                 _data.set(element, {
                     clearButton,

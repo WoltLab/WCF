@@ -23,15 +23,12 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notifica
     Util_1 = tslib_1.__importDefault(Util_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiModerationClipboardAssignUser {
-        constructor() {
-            /**
-             * ids of the moderation queue entries currently being handled
-             */
-            this.queueIds = [];
-        }
+        /**
+         * ids of the moderation queue entries currently being handled
+         */
+        queueIds = [];
         _ajaxFailure(data) {
-            var _a;
-            if (((_a = data.returnValues) === null || _a === void 0 ? void 0 : _a.fieldName) === "assignedUsername") {
+            if (data.returnValues?.fieldName === "assignedUsername") {
                 let errorMessage = "";
                 const dialog = Dialog_1.default.getDialog(this).content;
                 const assignedUsername = dialog.querySelector("input[name=assignedUsername]");

@@ -15,11 +15,9 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog", "../ItemLi
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Filter_1 = tslib_1.__importDefault(Filter_1);
     class UiStyleFontAwesome {
-        constructor() {
-            this.callback = undefined;
-            this.iconList = undefined;
-            this.itemListFilter = undefined;
-        }
+        callback = undefined;
+        iconList = undefined;
+        itemListFilter = undefined;
         open(callback) {
             this.callback = callback;
             Dialog_1.default.open(this);

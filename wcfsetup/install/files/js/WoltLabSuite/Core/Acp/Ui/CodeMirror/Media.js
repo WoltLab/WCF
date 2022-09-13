@@ -3,6 +3,7 @@ define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../.
     Editor_1 = tslib_1.__importDefault(Editor_1);
     Core = tslib_1.__importStar(Core);
     class AcpUiCodeMirrorMedia {
+        element;
         constructor(elementId) {
             this.element = document.getElementById(elementId);
             const button = document.getElementById(`codemirror-${elementId}-media`);

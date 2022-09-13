@@ -12,6 +12,9 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AbstractUserAction = void 0;
     class AbstractUserAction {
+        button;
+        userDataElement;
+        userId;
         constructor(button, userId, userDataElement) {
             this.button = button;
             this.userId = userId;

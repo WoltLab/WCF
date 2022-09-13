@@ -17,11 +17,12 @@ define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax",
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     class AcpUserContentRemoveClipboard {
+        userIds;
+        dialogId = "userContentRemoveClipboardPrepareDialog";
         /**
          * Initializes the content remove handler.
          */
         constructor() {
-            this.dialogId = "userContentRemoveClipboardPrepareDialog";
             EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.user", (data) => {
                 if (data.data.actionName === "com.woltlab.wcf.user.deleteUserContent") {
                     this.userIds = data.data.parameters.objectIDs;

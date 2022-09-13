@@ -15,8 +15,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
     UiDialog = tslib_1.__importStar(UiDialog);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiPackageUpdateManager {
+        packages = new Map();
+        submitButton;
         constructor() {
-            this.packages = new Map();
             this.submitButton = document.getElementById("packageUpdateSubmitButton");
             this.submitButton.addEventListener("click", (event) => {
                 event.preventDefault();
@@ -27,7 +28,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
         initPackages() {
             document.querySelectorAll(".packageUpdate").forEach((element) => {
                 const checkbox = element.querySelector('input[type="checkbox"]');
-                checkbox === null || checkbox === void 0 ? void 0 : checkbox.addEventListener("change", () => this.updateSubmitButtonState());
+                checkbox?.addEventListener("change", () => this.updateSubmitButtonState());
                 this.packages.set(element, checkbox);
             });
         }

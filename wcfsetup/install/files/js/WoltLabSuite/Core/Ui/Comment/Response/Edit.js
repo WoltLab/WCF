@@ -16,6 +16,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     Edit_1 = tslib_1.__importDefault(Edit_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class UiCommentResponseEdit extends Edit_1.default {
+        _responses = new WeakSet();
         /**
          * Initializes the comment edit manager.
          *
@@ -23,7 +24,6 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
          */
         constructor(container) {
             super(container);
-            this._responses = new WeakSet();
             this.rebuildResponses();
             Listener_1.default.add("Ui/Comment/Response/Edit_" + Util_1.default.identify(this._container), () => this.rebuildResponses());
         }

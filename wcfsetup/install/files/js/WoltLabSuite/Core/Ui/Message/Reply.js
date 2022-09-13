@@ -21,13 +21,17 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
     Captcha_1 = tslib_1.__importDefault(Captcha_1);
     UiScroll = tslib_1.__importStar(UiScroll);
     class UiMessageReply {
+        _container;
+        _content;
+        _editor = null;
+        _guestDialogId = "";
+        _loadingOverlay = null;
+        _options;
+        _textarea;
         /**
          * Initializes a new quick reply field.
          */
         constructor(opts) {
-            this._editor = null;
-            this._guestDialogId = "";
-            this._loadingOverlay = null;
             this._options = Core.extend({
                 ajax: {
                     className: "",
@@ -209,8 +213,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             // Opera on Android does not properly blur the editor after submitting the message,
             // causing the keyboard to vanish, but the focus remains inside the editor.
             window.setTimeout(() => {
-                var _a;
-                const editor = (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.closest(".redactor-layer");
+                const editor = document.activeElement?.closest(".redactor-layer");
                 if (editor && editor instanceof HTMLElement) {
                     editor.blur();
                 }

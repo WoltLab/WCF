@@ -15,9 +15,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Language = tslib_1.__importStar(Language);
     class UiFileDelete {
+        buttonContainer;
+        containers = new Map();
+        deleteButton = undefined;
+        internalId;
+        isSingleImagePreview;
+        target;
+        uploadHandler;
         constructor(buttonContainerId, targetId, isSingleImagePreview, uploadHandler) {
-            this.containers = new Map();
-            this.deleteButton = undefined;
             this.isSingleImagePreview = isSingleImagePreview;
             this.uploadHandler = uploadHandler;
             const buttonContainer = document.getElementById(buttonContainerId);

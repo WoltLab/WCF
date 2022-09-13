@@ -16,17 +16,20 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
     Language = tslib_1.__importStar(Language);
     ColorUtil = tslib_1.__importStar(ColorUtil);
     class UiColorPicker {
+        channels = new Map();
+        colorInput = null;
+        colorTextInput = null;
+        element;
+        hsl = new Map();
+        hslContainer = undefined;
+        input;
+        newColor = undefined;
+        oldColor = undefined;
+        options;
         /**
          * Initializes a new color picker instance.
          */
         constructor(element, options) {
-            this.channels = new Map();
-            this.colorInput = null;
-            this.colorTextInput = null;
-            this.hsl = new Map();
-            this.hslContainer = undefined;
-            this.newColor = undefined;
-            this.oldColor = undefined;
             if (!(element instanceof Element)) {
                 throw new TypeError("Expected a valid DOM element, use `UiColorPicker.fromSelector()` if you want to use a CSS selector.");
             }

@@ -12,9 +12,10 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     exports.hide = exports.show = void 0;
     Language = tslib_1.__importStar(Language);
     class AjaxStatus {
+        _activeRequests = 0;
+        _overlay;
+        _timer = null;
         constructor() {
-            this._activeRequests = 0;
-            this._timer = null;
             this._overlay = document.createElement("div");
             this._overlay.classList.add("spinner");
             this._overlay.setAttribute("role", "status");

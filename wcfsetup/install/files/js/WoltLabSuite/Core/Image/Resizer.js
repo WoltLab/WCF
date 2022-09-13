@@ -19,12 +19,10 @@ define(["require", "exports", "tslib", "../Core", "../FileUtil", "./ExifUtil", "
     const DEFAULT_QUALITY = 0.8;
     const DEFAULT_FILETYPE = "image/jpeg";
     class ImageResizer {
-        constructor() {
-            this.maxWidth = DEFAULT_WIDTH;
-            this.maxHeight = DEFAULT_HEIGHT;
-            this.quality = DEFAULT_QUALITY;
-            this.fileType = DEFAULT_FILETYPE;
-        }
+        maxWidth = DEFAULT_WIDTH;
+        maxHeight = DEFAULT_HEIGHT;
+        quality = DEFAULT_QUALITY;
+        fileType = DEFAULT_FILETYPE;
         /**
          * Sets the default maximum width for this instance
          */

@@ -13,11 +13,13 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "../
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
     class UiRedactorHtml {
+        _editor;
+        _elementId;
+        _pre = null;
         /**
          * Initializes the source code management.
          */
         constructor(editor) {
-            this._pre = null;
             this._editor = editor;
             this._elementId = this._editor.$element[0].id;
             EventHandler.add("com.woltlab.wcf.redactor2", `bbcode_woltlabHtml_${this._elementId}`, (data) => this._bbcodeCode(data));

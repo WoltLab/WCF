@@ -18,9 +18,24 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     class Instructions {
+        addButton;
+        form;
+        formFieldId;
+        fromVersion;
+        instructionCounter = 0;
+        instructionsCounter = 0;
+        instructionsEditDialogTemplate;
+        instructionsList;
+        instructionsType;
+        instructionsTemplate;
+        instructionEditDialogTemplate;
+        pipDefaultFilenames;
+        static applicationPips = ["acpTemplate", "file", "script", "template"];
+        // see `wcf\data\package\Package::isValidPackageName()`
+        static packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+        // see `wcf\data\package\Package::isValidVersion()`
+        static versionRegExp = new RegExp(/^([0-9]+).([0-9]+)\.([0-9]+)( (a|alpha|b|beta|d|dev|rc|pl) ([0-9]+))?$/i);
         constructor(formFieldId, instructionsTemplate, instructionsEditDialogTemplate, instructionEditDialogTemplate, pipDefaultFilenames, existingInstructions) {
-            this.instructionCounter = 0;
-            this.instructionsCounter = 0;
             this.formFieldId = formFieldId;
             this.instructionsTemplate = instructionsTemplate;
             this.instructionsEditDialogTemplate = instructionsEditDialogTemplate;
@@ -526,11 +541,6 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             return true;
         }
     }
-    Instructions.applicationPips = ["acpTemplate", "file", "script", "template"];
-    // see `wcf\data\package\Package::isValidPackageName()`
-    Instructions.packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
-    // see `wcf\data\package\Package::isValidVersion()`
-    Instructions.versionRegExp = new RegExp(/^([0-9]+).([0-9]+)\.([0-9]+)( (a|alpha|b|beta|d|dev|rc|pl) ([0-9]+))?$/i);
     Core.enableLegacyInheritance(Instructions);
     return Instructions;
 });

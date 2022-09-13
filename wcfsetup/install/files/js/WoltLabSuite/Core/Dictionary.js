@@ -17,9 +17,7 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
     Core = tslib_1.__importStar(Core);
     /** @deprecated 5.4 Use a `Map` instead. */
     class Dictionary {
-        constructor() {
-            this._dictionary = new Map();
-        }
+        _dictionary = new Map();
         /**
          * Sets a new key with given value, will overwrite an existing key.
          */
