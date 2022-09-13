@@ -33,7 +33,6 @@ use wcf\system\WCF;
  * @property-read   int $publicationStatus  publication status of the article (see `Article::UNPUBLISHED`, `Article::PUBLISHED` and `Article::DELAYED_PUBLICATION`)
  * @property-read   int $publicationDate    timestamp at which the article will be automatically published or `0` if it has already been published
  * @property-read   int $enableComments     is `1` if comments are enabled for the article, otherwise `0`
- * @property-read   int $comments       number of comments on the article
  * @property-read   int $views          number of times the article has been viewed
  * @property-read   int $cumulativeLikes    cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
  * @property-read   int $isDeleted      is 1 if the article is in trash bin, otherwise 0

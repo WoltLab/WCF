@@ -35,6 +35,7 @@ use wcf\util\StringUtil;
  * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the article content, otherwise `0`
  * @property-read       string $metaTitle              title of the article used in the title tag
  * @property-read       string $metaDescription        meta description of the article
+ * @property-read   int $comments       number of comments
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController
 {
