@@ -29,7 +29,7 @@
 						<div class="notificationSettingsState">
 							<label>
 								<input type="checkbox" id="settings_{@$event->eventID}" name="settings[{@$event->eventID}][enabled]" class="jsCheckboxNotificationSettingsState" value="1" data-object-id="{@$event->eventID}"{if !$settings[$event->eventID][enabled]|empty} checked{/if}>
-								{icon size=24 name='bell'}
+								{icon size=24 name='bell' type='solid'}
 								{icon size=24 name='bell-slash'}
 							</label>
 						</div>
