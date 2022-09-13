@@ -10,6 +10,7 @@ use wcf\system\flood\FloodControl;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchHandler;
 use wcf\system\search\SearchResultHandler;
+use wcf\system\search\SearchResultTextParser;
 use wcf\system\WCF;
 
 /**
@@ -120,6 +121,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $resultHandler = new SearchResultHandler($search, $startIndex);
         $resultHandler->loadSearchResults();
         $templateName = $resultHandler->getTemplateName();
+        SearchResultTextParser::getInstance()->setSearchQuery($resultHandler->getQuery());
 
         WCF::getTPL()->assign([
             'objects' => $resultHandler->getSearchResults(),
@@ -165,6 +167,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $resultHandler = new SearchResultHandler($search, SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1));
         $resultHandler->loadSearchResults();
         $templateName = $resultHandler->getTemplateName();
+        SearchResultTextParser::getInstance()->setSearchQuery($resultHandler->getQuery());
 
         WCF::getTPL()->assign([
             'objects' => $resultHandler->getSearchResults(),
