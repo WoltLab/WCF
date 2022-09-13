@@ -6,13 +6,14 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module WoltLabSuite/Core/Ui/Page/Menu/Main
  */
-define(["require", "exports", "tslib", "./Container", "../../../Language", "../../../Dom/Util"], function (require, exports, tslib_1, Container_1, Language, Util_1) {
+define(["require", "exports", "tslib", "./Container", "../../../Language", "../../../Dom/Util", "../../Dropdown/Simple"], function (require, exports, tslib_1, Container_1, Language, Util_1, DropDownSimple) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.PageMenuMain = void 0;
     Container_1 = tslib_1.__importDefault(Container_1);
     Language = tslib_1.__importStar(Language);
     Util_1 = tslib_1.__importDefault(Util_1);
+    DropDownSimple = tslib_1.__importStar(DropDownSimple);
     class PageMenuMain {
         container;
         mainMenu;
@@ -57,6 +58,10 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             container.classList.add("pageMenuMainContainer");
             container.addEventListener("scroll", () => this.updateOverflowIndicator(container), { passive: true });
             container.append(this.buildMainMenu());
+            const languageMenu = this.buildLanguageMenu();
+            if (languageMenu) {
+                container.append(languageMenu);
+            }
             const footerMenu = this.buildFooterMenu();
             if (footerMenu) {
                 container.append(footerMenu);
@@ -115,6 +120,51 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 }
             }
         }
+        buildLanguageMenu() {
+            const dropDownMenu = DropDownSimple.getDropdownMenu("pageLanguageContainer");
+            if (dropDownMenu === undefined) {
+                return null;
+            }
+            const children = [];
+            const languageMapping = new Map();
+            Array.from(dropDownMenu.children).forEach((listItem) => {
+                const identifier = listItem.dataset.languageCode;
+                const title = listItem.querySelector("span").textContent.trim();
+                languageMapping.set(identifier, listItem.querySelector("a"));
+                children.push({
+                    active: false,
+                    children: [],
+                    counter: 0,
+                    depth: 1,
+                    identifier,
+                    title,
+                });
+            });
+            const menuItems = [
+                {
+                    active: false,
+                    children,
+                    counter: 0,
+                    depth: 0,
+                    identifier: "language",
+                    title: Language.get("wcf.user.language"),
+                },
+            ];
+            const nav = document.createElement("nav");
+            nav.classList.add("pageMenuMainNavigation", "pageMenuMainNavigationLanguage");
+            nav.append(this.buildMenuItemList(menuItems, true));
+            // Forward clicks on the language to the actual language picker element.
+            nav
+                .querySelectorAll(".pageMenuMainItemList .pageMenuMainItemLabel[data-identifier]")
+                .forEach((element) => {
+                element.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const identifier = element.dataset.identifier;
+                    languageMapping.get(identifier).click();
+                });
+            });
+            return nav;
+        }
         buildFooterMenu() {
             const box = document.querySelector('.box[data-box-identifier="com.woltlab.wcf.FooterMenu"]');
             if (box === null) {
@@ -131,26 +181,26 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const menuItems = this.menuItemProvider.getMenuItems(boxMenu);
             const nav = document.createElement("nav");
             nav.classList.add("pageMenuMainNavigation");
-            nav.append(this.buildMenuItemList(menuItems));
+            nav.append(this.buildMenuItemList(menuItems, false));
             return nav;
         }
-        buildMenuItemList(menuItems) {
+        buildMenuItemList(menuItems, isLanguageSelection) {
             const list = document.createElement("ul");
             list.classList.add("pageMenuMainItemList");
             menuItems
                 .filter((menuItem) => {
                 // Remove links that have no target (`#`) and do not contain any children.
-                if (!menuItem.link && menuItem.children.length === 0) {
+                if (!isLanguageSelection && !menuItem.link && menuItem.children.length === 0) {
                     return false;
                 }
                 return true;
             })
                 .forEach((menuItem) => {
-                list.append(this.buildMenuItem(menuItem));
+                list.append(this.buildMenuItem(menuItem, isLanguageSelection));
             });
             return list;
         }
-        buildMenuItem(menuItem) {
+        buildMenuItem(menuItem, isLanguageSelection) {
             const listItem = document.createElement("li");
             listItem.dataset.depth = menuItem.depth.toString();
             listItem.classList.add("pageMenuMainItem");
@@ -161,6 +211,9 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 link.textContent = menuItem.title;
                 if (menuItem.active) {
                     link.setAttribute("aria-current", "page");
+                }
+                if (menuItem.identifier) {
+                    link.dataset.identifier = menuItem.identifier;
                 }
                 if (menuItem.counter > 0) {
                     const counter = document.createElement("span");
@@ -179,13 +232,18 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 label.classList.add("pageMenuMainItemLabel");
                 label.href = "#";
                 label.textContent = menuItem.title;
-                label.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    const button = label.nextElementSibling;
-                    button.click();
-                });
-                // The button to expand the link group is used instead.
-                label.setAttribute("aria-hidden", "true");
+                if (menuItem.identifier) {
+                    label.dataset.identifier = menuItem.identifier;
+                }
+                if (!isLanguageSelection || menuItem.identifier === "language") {
+                    label.addEventListener("click", (event) => {
+                        event.preventDefault();
+                        const button = label.nextElementSibling;
+                        button.click();
+                    });
+                    // The button to expand the link group is used instead.
+                    label.setAttribute("aria-hidden", "true");
+                }
                 listItem.append(label);
             }
             if (menuItem.children.length) {
@@ -201,7 +259,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                     ariaLabel = Language.get("wcf.menu.page.button.toggle", { title: menuItem.title });
                 }
                 button.setAttribute("aria-label", ariaLabel);
-                const list = this.buildMenuItemList(menuItem.children);
+                const list = this.buildMenuItemList(menuItem.children, isLanguageSelection);
                 list.id = menuId;
                 list.hidden = true;
                 button.addEventListener("click", () => {
