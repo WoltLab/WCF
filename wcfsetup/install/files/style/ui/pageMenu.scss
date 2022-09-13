@@ -55,6 +55,7 @@
 	}
 }
 
+.pageMenuMainNavigationLanguage,
 .pageMenuMainNavigationFooter {
 	/* The footer is placed at the very bottom of the main menu which
 	   is accomplished by setting `margin-top: auto`. However, this
@@ -67,6 +68,11 @@
 	   gap between these sections. */
 	padding-top: 30px;
 	margin-top: auto;
+}
+
+.pageMenuMainNavigationLanguage + .pageMenuMainNavigationFooter {
+	padding-top: 0;
+	margin-top: 0;
 }
 
 .pageMenuMainItem {

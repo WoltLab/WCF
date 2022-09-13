@@ -144,7 +144,8 @@
 				'wcf.date.datePicker.hour': '{jslang}wcf.date.datePicker.hour{/jslang}',
 				'wcf.date.datePicker.minute': '{jslang}wcf.date.datePicker.minute{/jslang}',
 				'wcf.global.form.password.button.hide': '{jslang}wcf.global.form.password.button.hide{/jslang}',
-				'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}'
+				'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}',
+				'wcf.user.language': '{jslang}wcf.user.language{/jslang}'
 				{event name='javascriptLanguageImport'}
 			});
 			

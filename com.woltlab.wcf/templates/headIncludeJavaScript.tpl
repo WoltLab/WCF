@@ -158,7 +158,8 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.global.rss.copy.success': '{jslang}wcf.global.rss.copy.success{/jslang}',
 			'wcf.global.rss.accessToken.info': '{jslang}wcf.global.rss.accessToken.info{/jslang}',
 			'wcf.global.rss.withoutAccessToken': '{jslang}wcf.global.rss.withoutAccessToken{/jslang}',
-			'wcf.global.rss.withAccessToken': '{jslang}wcf.global.rss.withAccessToken{/jslang}'
+			'wcf.global.rss.withAccessToken': '{jslang}wcf.global.rss.withAccessToken{/jslang}',
+			'wcf.user.language': '{jslang}wcf.user.language{/jslang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{jslang}wcf.like.button.like{/jslang}',
 				'wcf.like.button.dislike': '{jslang}wcf.like.button.dislike{/jslang}',
