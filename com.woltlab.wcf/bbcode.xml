@@ -219,7 +219,7 @@
 			<isBlockElement>1</isBlockElement>
 			<sourcecode>1</sourcecode>
 			<buttonlabel>wcf.editor.button.woltlabHtml</buttonlabel>
-			<wysiwygicon>html5</wysiwygicon>
+			<wysiwygicon>file-code</wysiwygicon>
 		</bbcode>
 		<bbcode name="wsa">
 			<classname>wcf\system\bbcode\WoltLabSuiteArticleBBCode</classname>
