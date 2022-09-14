@@ -1119,30 +1119,6 @@ class PackageInstallationDispatcher
     }
 
     /**
-     * Checks the package installation queue for outstanding entries.
-     *
-     * @return  int
-     */
-    public static function checkPackageInstallationQueue()
-    {
-        $sql = "SELECT      queueID
-                FROM        wcf1_package_installation_queue
-                WHERE       userID = ?
-                        AND parentQueueID = 0
-                        AND done = 0
-                ORDER BY    queueID ASC";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([WCF::getUser()->userID]);
-        $row = $statement->fetchArray();
-
-        if (!$row) {
-            return 0;
-        }
-
-        return $row['queueID'];
-    }
-
-    /**
      * Updates queue information.
      */
     public function updatePackage()
