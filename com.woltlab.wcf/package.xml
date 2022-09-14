@@ -49,4 +49,39 @@
 
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
+
+	<instructions type="update" fromversion="5.5.*">
+		<!--
+tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
+	acp/database/update_com.woltlab.wcf_6.0_pre.php
+		-->
+		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
+
+		<!-- Required for wcf1_package_installation_file_log. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_pre.php</instruction>
+
+		<!-- Deploy new application code. -->
+		<instruction type="file" />
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+
+		<!-- Make all the new options available as early as possible. -->
+		<instruction type="option" run="standalone" />
+
+		<!-- Migrate the database as early as possible. -->
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0.php</instruction>
+
+		<!-- Deploy the new application code again to build the hashes in wcf1_package_installation_file_log. -->
+		<instruction type="file" />
+
+		<!-- Misc. PIPs. -->
+		<instruction type="acpMenu" />
+		<instruction type="bbcode" />
+		<instruction type="objectType" />
+		<instruction type="userMenu" />
+		<instruction type="userOption" />
+
+		<!-- Clean Up. -->
+		<instruction type="fileDelete" />
+	</instructions>
 </package>
