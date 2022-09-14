@@ -69,7 +69,7 @@ function toggle(input: HTMLInputElement, button: HTMLElement, icon: FaIcon): voi
     button.dataset.tooltip = Language.get("wcf.global.form.password.button.hide");
     input.type = "text";
   } else {
-    icon.setIcon("eye-slash");
+    icon.setIcon("eye");
     button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
     input.type = "password";
   }

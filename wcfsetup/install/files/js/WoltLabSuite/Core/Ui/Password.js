@@ -62,7 +62,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
             input.type = "text";
         }
         else {
-            icon.setIcon("eye-slash");
+            icon.setIcon("eye");
             button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
             input.type = "password";
         }
