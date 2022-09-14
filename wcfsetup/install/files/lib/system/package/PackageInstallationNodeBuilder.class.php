@@ -315,7 +315,7 @@ class PackageInstallationNodeBuilder
         $statement->execute([
             $this->installation->queue->queueID,
             $this->installation->queue->processNo,
-            0,
+            $sequenceNo,
             $newNode,
             $node,
             $row['nodeType'],
@@ -326,8 +326,7 @@ class PackageInstallationNodeBuilder
         // move other child-nodes greater than $sequenceNo into new node
         $sql = "UPDATE  wcf1_package_installation_node
                 SET     parentNode = ?,
-                        node = ?,
-                        sequenceNo = (sequenceNo - ?)
+                        node = ?
                 WHERE   node = ?
                     AND processNo = ?
                     AND sequenceNo > ?";
@@ -335,7 +334,6 @@ class PackageInstallationNodeBuilder
         $statement->execute([
             $node,
             $newNode,
-            $sequenceNo,
             $node,
             $this->installation->queue->processNo,
             $sequenceNo,
