@@ -59,4 +59,6 @@ return [
             VarcharDatabaseTableColumn::create('gravatarFileExtension')
                 ->drop(),
         ]),
+    PartialDatabaseTable::create('wcf1_package_compatibility')
+        ->drop(),
 ];

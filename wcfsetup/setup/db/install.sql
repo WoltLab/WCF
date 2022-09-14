@@ -935,14 +935,6 @@ CREATE TABLE wcf1_package (
 	UNIQUE KEY package (package)
 );
 
--- @deprecated
-DROP TABLE IF EXISTS wcf1_package_compatibility;
-CREATE TABLE wcf1_package_compatibility (
-	packageID INT(10) NOT NULL,
-	version SMALLINT(4) NOT NULL,
-	UNIQUE KEY compatibleVersion (packageID, version)
-);
-
 DROP TABLE IF EXISTS wcf1_package_exclusion;
 CREATE TABLE wcf1_package_exclusion (
 	packageID INT(10) NOT NULL,
@@ -2081,8 +2073,6 @@ ALTER TABLE wcf1_object_type_definition ADD FOREIGN KEY (packageID) REFERENCES w
 ALTER TABLE wcf1_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_package_compatibility ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_exclusion ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
