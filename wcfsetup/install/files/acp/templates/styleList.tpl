@@ -70,7 +70,7 @@
 								
 								{if !$style->isDefault}
 									<li>
-										<button class="jsTooltip jsObjectAction" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-action="toggle">
+										<button type="button" class="jsTooltip jsObjectAction" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-action="toggle">
 											{if $style->isDisabled}
 												{icon name='square'}
 											{else}
@@ -80,13 +80,13 @@
 										</button>
 									</li>
 									<li>
-										<button class="jsSetAsDefault jsTooltip" title="{lang}wcf.acp.style.button.setAsDefault{/lang}">
+										<button type="button" class="jsSetAsDefault jsTooltip" title="{lang}wcf.acp.style.button.setAsDefault{/lang}">
 											{icon name='circle-check'}
 											<span class="invisible">{lang}wcf.acp.style.button.setAsDefault{/lang}</span>
 										</button>
 									</li>
 									<li>
-										<button class="jsDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.style.delete.confirmMessage{/lang}">
+										<button type="button" class="jsDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.style.delete.confirmMessage{/lang}">
 											{icon name='xmark'}
 											<span class="invisible">{lang}wcf.global.button.delete{/lang}</span>
 										</button>

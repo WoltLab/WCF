@@ -97,7 +97,7 @@
 {capture assign='contentInteractionButtons'}
 	{if $article->isMultilingual && $__wcf->user->userID}
 		<div class="contentInteractionButton dropdown jsOnly">
-			<button class="dropdownToggle boxFlag box24 button small">
+			<button type="button" class="dropdownToggle boxFlag box24 button small">
 				<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
 				<span>{$articleContent->getLanguage()->languageName}</span>
 			</button>

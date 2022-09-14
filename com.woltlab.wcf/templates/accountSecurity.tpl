@@ -93,7 +93,7 @@
 					
 					{if !$session->isCurrentSession()}
 						<div class="accountSecurityButtons">
-							<button class="button small sessionDeleteButton" data-session-id="{$session->getSessionID()}">{lang}wcf.user.security.deleteSession{/lang}</button>
+							<button type="button" class="button small sessionDeleteButton" data-session-id="{$session->getSessionID()}">{lang}wcf.user.security.deleteSession{/lang}</button>
 						</div>
 					{/if}
 				</div>

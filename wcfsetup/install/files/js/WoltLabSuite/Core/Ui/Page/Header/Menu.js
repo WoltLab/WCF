@@ -158,6 +158,7 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
             link.setAttribute("aria-haspopup", "true");
             link.setAttribute("aria-expanded", "false");
             const showMenuButton = document.createElement("button");
+            showMenuButton.type = "button";
             showMenuButton.className = "visuallyHidden";
             showMenuButton.setAttribute("aria-label", Language.get("wcf.global.button.showMenu"));
             element.insertBefore(showMenuButton, link.nextSibling);

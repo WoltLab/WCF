@@ -65,7 +65,7 @@
 						</td>
 						{if $_isSupported}
 							{if $_targetCount}
-								<td class="columnIcon"><button class="button small jsInvokePip" data-target="{$_targets[0]}">{$_targets[0]}</button></td>
+								<td class="columnIcon"><button type="button" class="button small jsInvokePip" data-target="{$_targets[0]}">{$_targets[0]}</button></td>
 								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[0]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
 							{else}
 								<td class="columnText" colspan="2">
@@ -85,7 +85,7 @@
 									class="jsHasPipTargets jsSkipTargetDetection"
 								{/if}
 							>
-								<td class="columnIcon"><button class="button small jsInvokePip" data-target="{$_targets[$i]}">{$_targets[$i]}</button></td>
+								<td class="columnIcon"><button type="button" class="button small jsInvokePip" data-target="{$_targets[$i]}">{$_targets[$i]}</button></td>
 								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[$i]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
 							</tr>
 						{/section}

@@ -416,6 +416,7 @@ export class PageMenuUser implements PageMenuProvider {
     const panelId = DomUtil.getUniqueId();
 
     const tab = document.createElement("button");
+    tab.type = "button";
     tab.classList.add("pageMenuUserTab");
     tab.dataset.hasUnreadContent = "false";
     tab.dataset.origin = data.origin;

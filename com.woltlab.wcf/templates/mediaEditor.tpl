@@ -134,5 +134,5 @@
 {include file='aclSimple'}
 
 <div class="formSubmit">
-	<button data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
+	<button type="button" data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 </div>

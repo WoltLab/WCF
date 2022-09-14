@@ -101,7 +101,7 @@
 		
 		var parentTitle = DomTraverse.childBySel(parentContainer, 'h2.sectionTitle');
 		parentTitle.innerHTML = `
-			<button class="jsTooltip" id="{@$field->getPrefixedId()}AddAttribute" title="{lang}wcf.global.button.add{/lang}">
+			<button type="button" class="jsTooltip" id="{@$field->getPrefixedId()}AddAttribute" title="{lang}wcf.global.button.add{/lang}">
 				{icon name='plus'}
 			</button>
 			${parentTitle.innerHTML}
@@ -139,7 +139,7 @@
 {foreach from=$field->getValue() key=attributeNumber item=attributeData name=bbcodeAttributes}
 	<section class="section">
 		<h2 class="sectionTitle">
-			<button class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+			<button type="button" class="jsDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
 				{icon name='xmark'}
 			</button>
 			<span>{lang}wcf.acp.bbcode.numberedAttribute{/lang}</span>

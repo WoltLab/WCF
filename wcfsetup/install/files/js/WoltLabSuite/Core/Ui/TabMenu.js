@@ -179,6 +179,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         if (overflowLeft) {
             if (overlayLeft === null) {
                 overlayLeft = document.createElement("button");
+                overlayLeft.type = "button";
                 overlayLeft.innerHTML = '<fa-icon size="24" name="angle-left"></fa-icon>';
                 overlayLeft.className = "tabMenuOverlayLeft";
                 overlayLeft.addEventListener("click", () => {
@@ -197,6 +198,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         if (overflowRight) {
             if (overlayRight === null) {
                 overlayRight = document.createElement("button");
+                overlayRight.type = "button";
                 overlayRight.innerHTML = '<fa-icon size="24" name="angle-right"></fa-icon>';
                 overlayRight.className = "tabMenuOverlayRight";
                 overlayRight.addEventListener("click", () => {

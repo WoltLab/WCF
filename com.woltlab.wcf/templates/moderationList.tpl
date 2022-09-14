@@ -11,7 +11,7 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	<button type="button" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 	<a href="{link controller='DeletedContentList'}{/link}" class="contentInteractionButton button small">{icon name='trash-can'} <span>{lang}wcf.moderation.showDeletedContent{/lang}</span></a>
 {/capture}
 
@@ -90,7 +90,7 @@
 						</li>
 					{/hascontent}
 					<li class="columnApplyFilter jsOnly">
-						<button class="button small jsStaticDialog" data-dialog-id="moderationListSortFilter">{icon name='filter'} {lang}wcf.global.filter{/lang}</button>
+						<button type="button" class="button small jsStaticDialog" data-dialog-id="moderationListSortFilter">{icon name='filter'} {lang}wcf.global.filter{/lang}</button>
 					</li>
 				</ol>
 			</li>

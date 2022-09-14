@@ -21,6 +21,7 @@ $.Redactor.prototype.WoltLabReply = function() {
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'showEditor', this.WoltLabReply.showEditor.bind(this));
 			
 			const button = document.createElement("button");
+			button.type = "button";
 			button.classList.add("messageQuickReplyContentButton");
 			button.innerHTML = '<fa-icon size="32" name="reply"></fa-icon>';
 			button.append(messageContent.dataset.placeholder);

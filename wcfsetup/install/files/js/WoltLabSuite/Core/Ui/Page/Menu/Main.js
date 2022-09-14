@@ -250,6 +250,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
                 listItem.classList.add("pageMenuMainItemExpandable");
                 const menuId = Util_1.default.getUniqueId();
                 const button = document.createElement("button");
+                button.type = "button";
                 button.classList.add("pageMenuMainItemToggle");
                 button.setAttribute("aria-expanded", "false");
                 button.setAttribute("aria-controls", menuId);

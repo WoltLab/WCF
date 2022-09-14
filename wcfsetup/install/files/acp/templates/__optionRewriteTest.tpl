@@ -20,7 +20,7 @@
 		</div>
 		
 		<div class="formSubmit">
-			<button id="rewriteTestStart" class="button buttonPrimary">{lang}wcf.acp.option.url_omit_index_php.button.runTestAgain{/lang}</button>
+			<button type="button" id="rewriteTestStart" class="button buttonPrimary">{lang}wcf.acp.option.url_omit_index_php.button.runTestAgain{/lang}</button>
 		</div>
 	</div>
 	<script data-relocate="true">

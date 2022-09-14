@@ -41,7 +41,7 @@
 						<ul class="buttonList iconList">
 							{if $response->isDisabled && $commentCanModerate}
 								<li class="jsOnly">
-									<button class="jsEnableResponse">
+									<button type="button" class="jsEnableResponse">
 										{icon name='check'}
 										<span class="invisible">{lang}wcf.comment.approve{/lang}</span>
 									</button>
@@ -49,7 +49,7 @@
 							{/if}
 							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
 								<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}">
-									<button title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip">
+									<button type="button" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip">
 										{icon name='triangle-exclamation'}
 										<span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span>
 									</button>
@@ -59,6 +59,7 @@
 							{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $response->userID != $__wcf->user->userID}
 								<li class="jsOnly">
 									<button
+										type="button"
 										class="reactButtonCommentResponse jsTooltip {if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}"
 										title="{lang}wcf.reactions.react{/lang}"
 										data-reaction-type-id="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{$likeData[response][$response->responseID]->reactionTypeID}{else}0{/if}"

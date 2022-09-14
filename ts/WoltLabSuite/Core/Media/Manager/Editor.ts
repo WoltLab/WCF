@@ -120,7 +120,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
         </dl>
       </div>
       <div class="formSubmit">
-        <button class="button buttonPrimary">${Language.get("wcf.global.button.insert")}</button>
+        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.insert")}</button>
       </div>`;
 
     UiDialog.open({

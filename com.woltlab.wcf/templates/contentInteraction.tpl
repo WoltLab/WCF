@@ -39,7 +39,7 @@
 
                 {if $__contentInteractionDropdownItems}
                     <div class="contentInteractionDropdown dropdown jsOnly">
-                        <button class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+                        <button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
                         <ul class="contentInteractionDropdownItems dropdownMenu">
                             {@$__contentInteractionDropdownItems}

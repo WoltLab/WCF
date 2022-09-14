@@ -28,12 +28,12 @@
 {capture assign='contentInteractionButtons'}
 	{if $action == 'edit'}
 		{if $article->canDelete()}
-			<button class="contentInteractionButton button small jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='rotate-left'} <span>{lang}wcf.global.button.restore{/lang}</span></button>
-			<button class="contentInteractionButton button small jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.delete{/lang}</span></button>
-			<button class="contentInteractionButton button small jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.trash{/lang}</span></button>
+			<button type="button" class="contentInteractionButton button small jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='rotate-left'} <span>{lang}wcf.global.button.restore{/lang}</span></button>
+			<button type="button" class="contentInteractionButton button small jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.delete{/lang}</span></button>
+			<button type="button" class="contentInteractionButton button small jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.trash{/lang}</span></button>
 		{/if}
 		{if $languages|count > 1 || $article->isMultilingual}
-			<button class="contentInteractionButton button small jsButtonToggleI18n">{icon name='language'} <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></button>
+			<button type="button" class="contentInteractionButton button small jsButtonToggleI18n">{icon name='language'} <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></button>
 		{/if}
 	{/if}
 {/capture}
@@ -560,7 +560,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<button id="buttonMessagePreview" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
+		<button type="button" id="buttonMessagePreview" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
 		<input type="hidden" name="timeNowReference" value="{@TIME_NOW}">
 		{csrfToken}

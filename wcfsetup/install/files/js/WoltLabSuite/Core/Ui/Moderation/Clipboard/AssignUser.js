@@ -115,7 +115,7 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Notifica
   </dl>
 </div>
 <div class="formSubmit">
-  <button class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.save")}</button>
+  <button type="button" class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.save")}</button>
 </div>`,
             };
         }

@@ -4,7 +4,7 @@
 	<ul class="inlineList">
 		{if 'Facebook'|in_array:$__share_buttons_providers}
 			<li>
-				<button class="button messageShareProvider" title="{lang}wcf.message.share.facebook{/lang}" aria-label="{lang}wcf.message.share.facebook{/lang}" data-identifier="Facebook">
+				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.facebook{/lang}" aria-label="{lang}wcf.message.share.facebook{/lang}" data-identifier="Facebook">
 					{icon size=24 name='facebook' type='brand'}
 					<span>{lang}wcf.message.share.facebook{/lang}</span>
 				</button>
@@ -12,7 +12,7 @@
 		{/if}
 		{if 'Twitter'|in_array:$__share_buttons_providers}
 			<li>
-				<button class="button messageShareProvider" title="{lang}wcf.message.share.twitter{/lang}" aria-label="{lang}wcf.message.share.twitter{/lang}" data-identifier="Twitter">
+				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.twitter{/lang}" aria-label="{lang}wcf.message.share.twitter{/lang}" data-identifier="Twitter">
 					{icon size=24 name='twitter' type='brand'}
 					<span>{lang}wcf.message.share.twitter{/lang}</span>
 				</button>
@@ -20,7 +20,7 @@
 		{/if}
 		{if 'Reddit'|in_array:$__share_buttons_providers}
 			<li>
-				<button class="button messageShareProvider" title="{lang}wcf.message.share.reddit{/lang}" aria-label="{lang}wcf.message.share.reddit{/lang}" data-identifier="Reddit">
+				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.reddit{/lang}" aria-label="{lang}wcf.message.share.reddit{/lang}" data-identifier="Reddit">
 					{icon size=24 name='reddit' type='brand'}
 					<span>{lang}wcf.message.share.reddit{/lang}</span>
 				</button>
@@ -28,7 +28,7 @@
 		{/if}
 		{if 'WhatsApp'|in_array:$__share_buttons_providers}
 			<li>
-				<button class="button messageShareProvider" title="{lang}wcf.message.share.whatsApp{/lang}" aria-label="{lang}wcf.message.share.whatsApp{/lang}" data-identifier="WhatsApp">
+				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.whatsApp{/lang}" aria-label="{lang}wcf.message.share.whatsApp{/lang}" data-identifier="WhatsApp">
 					{icon size=24 name='whatsapp' type='brand'}
 					<span>{lang}wcf.message.share.whatsApp{/lang}</span>
 				</button>
@@ -36,7 +36,7 @@
 		{/if}
 		{if 'LinkedIn'|in_array:$__share_buttons_providers}
 			<li>
-				<button href="#" role="button" class="button messageShareProvider" title="{lang}wcf.message.share.linkedIn{/lang}" aria-label="{lang}wcf.message.share.linkedIn{/lang}" data-identifier="LinkedIn">
+				<button type="button" href="#" role="button" class="button messageShareProvider" title="{lang}wcf.message.share.linkedIn{/lang}" aria-label="{lang}wcf.message.share.linkedIn{/lang}" data-identifier="LinkedIn">
 					{icon size=24 name='linkedin-in' type='brand'}
 					<span>{lang}wcf.message.share.linkedIn{/lang}</span>
 				</button>
@@ -44,7 +44,7 @@
 		{/if}
 		{if 'Pinterest'|in_array:$__share_buttons_providers}
 			<li>
-				<button class="button messageShareProvider" title="{lang}wcf.message.share.pinterest{/lang}" aria-label="{lang}wcf.message.share.pinterest{/lang}" data-identifier="Pinterest">
+				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.pinterest{/lang}" aria-label="{lang}wcf.message.share.pinterest{/lang}" data-identifier="Pinterest">
 					{icon size=24 name='pinterest' type='brand'}
 					<span>{lang}wcf.message.share.pinterest{/lang}</span>
 				</button>
@@ -52,7 +52,7 @@
 		{/if}
 		{if 'XING'|in_array:$__share_buttons_providers}
 			<li>
-				<button class="button messageShareProvider" title="{lang}wcf.message.share.xing{/lang}" aria-label="{lang}wcf.message.share.xing{/lang}" data-identifier="XING">
+				<button type="button" class="button messageShareProvider" title="{lang}wcf.message.share.xing{/lang}" aria-label="{lang}wcf.message.share.xing{/lang}" data-identifier="XING">
 					{icon size=24 name='xing' type='brand'}
 					<span>{lang}wcf.message.share.xing{/lang}</span>
 				</button>

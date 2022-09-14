@@ -22,7 +22,7 @@
 			{foreach from=$eventList item=event}
 				<dt>{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</dt>
 				<dd>
-					<button class="button small jsTestEventButton" data-event-id="{$event->eventID}" data-title="{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}">{lang}wcf.acp.devtools.notificationTest.button.test{/lang}</button>
+					<button type="button" class="button small jsTestEventButton" data-event-id="{$event->eventID}" data-title="{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}">{lang}wcf.acp.devtools.notificationTest.button.test{/lang}</button>
 				</dd>
 			{/foreach}
 		</dl>

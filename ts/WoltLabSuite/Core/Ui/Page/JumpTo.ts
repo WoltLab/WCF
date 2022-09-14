@@ -97,7 +97,7 @@ class UiPageJumpTo implements DialogCallbackObject {
         </dd>
       </dl>
       <div class="formSubmit">
-        <button class="button buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
+        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
       </div>`;
 
     return {

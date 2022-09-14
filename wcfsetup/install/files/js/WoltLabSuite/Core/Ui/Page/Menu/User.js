@@ -319,6 +319,7 @@ define(["require", "exports", "tslib", "./Container", "../../../Language", "../.
             const tabId = Util_1.default.getUniqueId();
             const panelId = Util_1.default.getUniqueId();
             const tab = document.createElement("button");
+            tab.type = "button";
             tab.classList.add("pageMenuUserTab");
             tab.dataset.hasUnreadContent = "false";
             tab.dataset.origin = data.origin;

@@ -48,6 +48,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         const header = document.createElement("header");
         _datePicker.appendChild(header);
         _dateMonthPrevious = document.createElement("button");
+        _dateMonthPrevious.type = "button";
         _dateMonthPrevious.className = "previous jsTooltip";
         _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
         _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
@@ -75,6 +76,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
         _dateYear.addEventListener("change", changeYear);
         monthYearContainer.appendChild(_dateYear);
         _dateMonthNext = document.createElement("button");
+        _dateMonthNext.type = "button";
         _dateMonthNext.className = "next jsTooltip";
         _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
         _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
@@ -625,6 +627,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 const container = document.createElement("div");
                 container.className = "inputAddon";
                 const openButton = document.createElement("button");
+                openButton.type = "button";
                 openButton.className = "inputSuffix button jsTooltip";
                 openButton.title = Language.get("wcf.date.datePicker");
                 openButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));

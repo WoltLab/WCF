@@ -17,6 +17,6 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<button class="button jsSubmitReport buttonPrimary" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
+		<button type="button" class="button jsSubmitReport buttonPrimary" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
 	</div>
 {/if}

@@ -36,7 +36,7 @@ function initElement(input: HTMLInputElement): void {
   inputAddon.appendChild(input);
 
   const button = document.createElement("button");
-  button.type = 'button';
+  button.type = "button";
   button.title = Language.get("wcf.global.form.password.button.show");
   button.classList.add("button", "inputSuffix", "jsTooltip");
   button.setAttribute("aria-hidden", "true");

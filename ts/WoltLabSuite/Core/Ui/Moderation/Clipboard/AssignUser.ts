@@ -142,7 +142,7 @@ class UiModerationClipboardAssignUser implements AjaxCallbackObject, DialogCallb
   </dl>
 </div>
 <div class="formSubmit">
-  <button class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.save")}</button>
+  <button type="button" class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.save")}</button>
 </div>`,
     };
   }

@@ -389,6 +389,7 @@ const UiDialog = {
 
     if (options.closable) {
       const closeButton = document.createElement("button");
+      closeButton.type = "button";
       closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
       closeButton.classList.add("dialogCloseButton", "jsTooltip");
       closeButton.title = options.closeButtonLabel;

@@ -1,7 +1,7 @@
 <div id="mainMenu" class="mainMenu">
 	<!-- Placeholder for the mobile UI. -->
 </div>
-<button class="pageHeaderMenuMobile" aria-expanded="false" aria-label="{lang}wcf.menu.page{/lang}">
+<button type="button" class="pageHeaderMenuMobile" aria-expanded="false" aria-label="{lang}wcf.menu.page{/lang}">
 	<span class="pageHeaderMenuMobileInactive">
 		{icon size=32 name='bars'}
 	</span>

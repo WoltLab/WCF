@@ -78,7 +78,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
+		<button type="button" class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 {hascontentelse}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>

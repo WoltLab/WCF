@@ -50,7 +50,7 @@
 					{foreach from=$objects item=cronjob}
 						<tr class="jsCronjobRow jsObjectActionObject" data-object-id="{@$cronjob->getObjectID()}">
 							<td class="columnIcon">
-								<button class="jsExecuteButton jsTooltip" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}">
+								<button type="button" class="jsExecuteButton jsTooltip" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}">
 									{icon name='play'}
 								</button>
 								

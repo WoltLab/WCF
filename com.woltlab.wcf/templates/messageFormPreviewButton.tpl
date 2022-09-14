@@ -3,7 +3,7 @@
 {if !$previewMessageObjectType|isset}{assign var=previewMessageObjectType value=''}{/if}
 {if !$previewMessageObjectID|isset}{assign var=previewMessageObjectID value=0}{/if}
 
-<button id="{$previewButtonID}" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
+<button type="button" id="{$previewButtonID}" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
 
 <script data-relocate="true">
 	$(function() {

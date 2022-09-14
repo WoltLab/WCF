@@ -4,7 +4,7 @@
 	{/if}
 </span>
 {if !$field->isImmutable()}
-	<button class="button small" id="{@$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</button>
+	<button type="button" class="button small" id="{@$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</button>
 {/if}
 <input type="hidden" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="{$field->getValue()}">
 

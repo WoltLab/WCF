@@ -195,6 +195,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                             };
                         }
                         const deleteButton = document.createElement("button");
+                        deleteButton.type = "button";
                         deleteButton.classList.add("jsTooltip");
                         deleteButton.title = Language.get("wcf.global.button.delete");
                         deleteButton.addEventListener("click", () => {

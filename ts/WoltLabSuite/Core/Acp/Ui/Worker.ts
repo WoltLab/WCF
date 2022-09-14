@@ -114,7 +114,7 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
       const formSubmit = document.createElement("div");
       formSubmit.className = "formSubmit";
       formSubmit.innerHTML =
-        '<button class="button buttonPrimary">' + Language.get("wcf.global.button.next") + "</button>";
+        '<button type="button" class="button buttonPrimary">' + Language.get("wcf.global.button.next") + "</button>";
 
       content.appendChild(formSubmit);
       UiDialog.rebuild(this);

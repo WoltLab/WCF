@@ -1,7 +1,7 @@
 		</main>
 		
 		<amp-sidebar id="sidebar" layout="nodisplay">
-			<button on="tap:sidebar.close">{lang}wcf.global.button.close{/lang}</button>
+			<button type="button" on="tap:sidebar.close">{lang}wcf.global.button.close{/lang}</button>
 			
 			<h3>{lang}wcf.menu.page.navigation{/lang}</h3>
 			<ol>
@@ -54,7 +54,7 @@
 		{if MODULE_COOKIE_POLICY_PAGE && !$__wcf->user->userID}
 			<amp-user-notification layout="nodisplay" id="cookie-policy-notice">
 				{lang}wcf.page.cookiePolicy.info{/lang}
-				<button on="tap:cookie-policy-notice.dismiss">{lang}wcf.global.button.close{/lang}</button>
+				<button type="button" on="tap:cookie-policy-notice.dismiss">{lang}wcf.global.button.close{/lang}</button>
 			</amp-user-notification>
 		{/if}
 		

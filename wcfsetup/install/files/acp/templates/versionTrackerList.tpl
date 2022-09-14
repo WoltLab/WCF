@@ -123,7 +123,7 @@
 				{foreach from=$versions item=edit name=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
-							<button class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->versionID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}">
+							<button type="button" class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->versionID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}">
 								{icon name='arrow-rotate-left'}
 							</button>
 							<input type="radio" name="oldID" value="{@$edit->versionID}"{if $oldID == $edit->versionID} checked{/if}> <input type="radio" name="newID" value="{@$edit->versionID}"{if $newID == $edit->versionID} checked{/if}>
@@ -155,7 +155,7 @@
 	<div class="formSubmit">
 		<input type="hidden" name="objectID" value="{$objectID}">
 		<input type="hidden" name="objectType" value="{$objectType}">
-		<button class="button buttonPrimary" data-type="submit">{lang}wcf.edit.button.compare{/lang}</button>
+		<button type="button" class="button buttonPrimary" data-type="submit">{lang}wcf.edit.button.compare{/lang}</button>
 	</div>
 </form>
 

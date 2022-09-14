@@ -159,6 +159,7 @@ class UiPollEditor {
 
     // buttons
     const addButton = document.createElement("button");
+    addButton.type = "button";
     addButton.innerHTML = '<fa-icon name="plus" solid></fa-icon>';
     addButton.classList.add("jsTooltip", "jsAddOption");
     addButton.title = Language.get("wcf.poll.button.addOption");
@@ -166,6 +167,7 @@ class UiPollEditor {
     pollOptionInput.appendChild(addButton);
 
     const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
     deleteButton.innerHTML = '<fa-icon name="xmark" solid></fa-icon>';
     deleteButton.classList.add("jsTooltip", "jsDeleteOption");
     deleteButton.title = Language.get("wcf.poll.button.removeOption");

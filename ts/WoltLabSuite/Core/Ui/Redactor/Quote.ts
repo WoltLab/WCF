@@ -294,10 +294,10 @@ class UiRedactorQuote {
           </dl>
         </div>
         <div class="formSubmit">
-          <button id="${idButtonSave}" class="button buttonPrimary" data-type="submit">${Language.get(
+          <button type="button" id="${idButtonSave}" class="button buttonPrimary" data-type="submit">${Language.get(
         "wcf.global.button.save",
       )}</button>
-          <button id="${idButtonDelete}" class="button">${Language.get("wcf.global.button.delete")}</button>
+          <button type="button" id="${idButtonDelete}" class="button">${Language.get("wcf.global.button.delete")}</button>
         </div>`,
     };
   }

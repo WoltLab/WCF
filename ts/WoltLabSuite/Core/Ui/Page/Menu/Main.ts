@@ -314,6 +314,7 @@ export class PageMenuMain implements PageMenuProvider {
       const menuId = DomUtil.getUniqueId();
 
       const button = document.createElement("button");
+      button.type = "button";
       button.classList.add("pageMenuMainItemToggle");
       button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-controls", menuId);

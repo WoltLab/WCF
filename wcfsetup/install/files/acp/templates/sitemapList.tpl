@@ -7,7 +7,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><button class="button" id="sitemapRebuildButton">{icon name='arrows-rotate'} <span>{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}</span></button></li>
+			<li><button type="button" class="button" id="sitemapRebuildButton">{icon name='arrows-rotate'} <span>{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}</span></button></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>

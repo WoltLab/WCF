@@ -51,5 +51,5 @@
 </section>
 
 <div class="formSubmit">
-	<button class="button buttonPrimary" data-type="submit" data-package-update-server-id="{@$updateServer->packageUpdateServerID}">{lang}wcf.global.button.submit{/lang}</button>
+	<button type="button" class="button buttonPrimary" data-type="submit" data-package-update-server-id="{@$updateServer->packageUpdateServerID}">{lang}wcf.global.button.submit{/lang}</button>
 </div>

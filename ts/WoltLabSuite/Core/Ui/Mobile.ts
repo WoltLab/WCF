@@ -68,6 +68,7 @@ function initButtonGroupNavigation(): void {
     navigation.parentElement!.classList.add("hasMobileNavigation");
 
     const button = document.createElement("button");
+    button.type = "button";
     button.innerHTML = '<fa-icon size="24" name="ellipsis-vertical"></fa-icon>';
     button.classList.add("dropdownLabel");
     button.addEventListener("click", (event) => {
@@ -111,7 +112,7 @@ function initMessages(): void {
         if (buttonWrapper === null) {
           buttonWrapper = document.createElement("li");
           buttonWrapper.innerHTML = `
-            <button aria-label="${Language.get("wcf.global.button.more")}">
+            <button type="button" aria-label="${Language.get("wcf.global.button.more")}">
               <fa-icon name="ellipsis-vertical"></fa-icon>
             </button>
           `;

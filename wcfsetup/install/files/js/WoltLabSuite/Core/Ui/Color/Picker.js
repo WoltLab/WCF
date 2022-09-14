@@ -104,7 +104,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
     </div>
   </div>
   <div class="formSubmit">
-    <button class="button buttonPrimary" data-type="submit">${Language.get("wcf.style.colorPicker.button.apply")}</button>
+    <button type="button" class="button buttonPrimary" data-type="submit">${Language.get("wcf.style.colorPicker.button.apply")}</button>
   </div>
 </div>`,
                 options: {

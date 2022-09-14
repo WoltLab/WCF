@@ -203,16 +203,16 @@ class UiRedactorAutosave {
     container.appendChild(title);
 
     const buttonKeep = document.createElement("button");
-    buttonKeep.innerHTML = '<fa-icon name="check"></fa-icon>';
     buttonKeep.type = "button";
+    buttonKeep.innerHTML = '<fa-icon name="check"></fa-icon>';
     buttonKeep.classList.add("jsTooltip");
     buttonKeep.title = Language.get("wcf.editor.autosave.keep");
     buttonKeep.addEventListener("click", () => this.hideOverlay());
     container.appendChild(buttonKeep);
 
     const buttonDiscard = document.createElement("button");
-    buttonDiscard.innerHTML = '<fa-icon name="xmark"></fa-icon>';
     buttonDiscard.type = "button";
+    buttonDiscard.innerHTML = '<fa-icon name="xmark"></fa-icon>';
     buttonDiscard.classList.add("jsTooltip");
     buttonDiscard.title = Language.get("wcf.editor.autosave.discard");
     buttonDiscard.addEventListener("click", () => {
