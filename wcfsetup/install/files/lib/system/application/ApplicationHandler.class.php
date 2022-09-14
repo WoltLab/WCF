@@ -290,6 +290,13 @@ class ApplicationHandler extends SingletonFactory
      */
     public static function insertRealDatabaseTableNames($string, $skipCache = false)
     {
+        // This method is a no-op if WCF_N is 1 which is also the most common case.
+        // Bypass the complete logic, as it can be expensive, especially for the $skipCache = true
+        // case used during package installation.
+        if (\WCF_N === 1) {
+            return $string;
+        }
+
         if ($skipCache) {
             $packageList = new PackageList();
             $packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
