@@ -14,6 +14,7 @@
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
 		<file>acp/database/update_com.woltlab.wcf_5.5.php</file>
+		<file>acp/database/update_com.woltlab.wcf_5.6.php</file>
 		<file>acp/dereferrer.php</file>
 		<file>acp/images/acpLogo.png</file>
 		<file>acp/images/blueTemptation/blueTemptationHeader.png</file>
@@ -211,11 +212,16 @@
 		<file>acp/update_com.woltlab.wcf_5.5_cleanupPackageExclusion.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_clearPackageCompatibility.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_clearPackageDeprecations.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5_deleteDsStore.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_ensureInnoDbSearch.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_normalizeFileLog.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_randomize_cronjobs.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_starttls.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_styleVariables.php</file>
+		<file>acp/update_com.woltlab.wcf_5.6_checkCache.php</file>
+		<file>acp/update_com.woltlab.wcf_5.6_checkForMultiDomainSetup.php</file>
+		<file>acp/update_com.woltlab.wcf_5.6_checkSystemRequirements.php</file>
+		<file>acp/update_com.woltlab.wcf_5.6_checkUpdateServers.php</file>
 		<file>acp/update_com.woltlab.wcf_beta1_to_beta2.php</file>
 		<file>acp/update_com.woltlab.wcf_embeddedObjectOrphans.php</file>
 		<file>acp/update_com.woltlab.wcf_preventMailAbuse.php</file>
@@ -224,7 +230,18 @@
 		<file>acp/update_rc3.php</file>
 		<file>bootstrap.php</file>
 		<file>cache/templateListener/.htaccess</file>
+		<file>font/FontAwesome.otf</file>
+		<file>font/fa-brands-400.ttf</file>
+		<file>font/fa-brands-400.woff2</file>
+		<file>font/fa-regular-400.ttf</file>
+		<file>font/fa-solid-900.ttf</file>
+		<file>font/fa-v4compatibility.ttf</file>
+		<file>font/fa-v4compatibility.woff2</file>
+		<file>font/fontawesome-webfont.eot</file>
 		<file>font/fontawesome-webfont.svg</file>
+		<file>font/fontawesome-webfont.ttf</file>
+		<file>font/fontawesome-webfont.woff</file>
+		<file>font/fontawesome-webfont.woff2</file>
 		<file>font/getFont.php</file>
 		<file>icon/add.svg</file>
 		<file>icon/add1.svg</file>
@@ -1205,6 +1222,8 @@
 		<file>js/3rdParty/redactor2/plugins/WoltLabParagraphize.js</file>
 		<file>js/3rdParty/redactor2/plugins/combined.min.js</file>
 		<file>js/3rdParty/redactor2/redactor.min.js</file>
+		<file>js/3rdParty/slimbox2.js</file>
+		<file>js/3rdParty/slimbox2.min.js</file>
 		<file>js/WCF.ACL.min.js</file>
 		<file>js/WCF.Attachment.min.js</file>
 		<file>js/WCF.ColorPicker.min.js</file>
@@ -1219,6 +1238,7 @@
 		<file>js/WCF.Message.min.js</file>
 		<file>js/WCF.Moderation.min.js</file>
 		<file>js/WCF.Poll.min.js</file>
+		<file>js/WCF.Search.Message.js</file>
 		<file>js/WCF.Search.Message.min.js</file>
 		<file>js/WCF.Tagging.js</file>
 		<file>js/WCF.Tagging.min.js</file>
@@ -1458,6 +1478,7 @@
 		<file>lib/action/ClipboardAction.class.php</file>
 		<file>lib/action/ClipboardLoadMarkedItemsAction.class.php</file>
 		<file>lib/action/ClipboardProxyAction.class.php</file>
+		<file>lib/action/GravatarDownloadAction.class.php</file>
 		<file>lib/action/PollAction.class.php</file>
 		<file>lib/data/DatabaseObjectAction.class.php</file>
 		<file>lib/data/EditableCachedObject.class.php</file>
@@ -1517,6 +1538,7 @@
 		<file>lib/data/page/menu/item/PageMenuItemList.class.php</file>
 		<file>lib/data/page/menu/item/ViewablePageMenuItem.class.php</file>
 		<file>lib/data/reaction/object/IReactionableObject.class.php</file>
+		<file>lib/data/search/ICustomIconSearchResultObject.class.php</file>
 		<file>lib/data/session/data/SessionData.class.php</file>
 		<file>lib/data/session/data/SessionDataAction.class.php</file>
 		<file>lib/data/session/data/SessionDataEditor.class.php</file>
@@ -1535,6 +1557,7 @@
 		<file>lib/data/user/activity/point/event/UserActivityPointEventAction.class.php</file>
 		<file>lib/data/user/activity/point/event/UserActivityPointEventEditor.class.php</file>
 		<file>lib/data/user/activity/point/event/UserActivityPointEventList.class.php</file>
+		<file>lib/data/user/avatar/Gravatar.class.php</file>
 		<file>lib/data/user/option/IUserOptionOutput.class.php</file>
 		<file>lib/data/user/option/UserOptionOutput.class.php</file>
 		<file>lib/form/AbstractSecureForm.class.php</file>
@@ -1674,8 +1697,8 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
-		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
+		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
 		<file>lib/system/api/ezyang/htmlpurifier/README</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
@@ -1746,6 +1769,7 @@
 		<file>lib/system/api/guzzlehttp/guzzle/vendor-bin/phpstan/composer.json</file>
 		<file>lib/system/api/guzzlehttp/guzzle/vendor-bin/psalm/composer.json</file>
 		<file>lib/system/api/guzzlehttp/promises/.php_cs.dist</file>
+		<file>lib/system/api/guzzlehttp/promises/Makefile</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan-baseline.neon</file>
 		<file>lib/system/api/guzzlehttp/promises/phpstan.neon.dist</file>
 		<file>lib/system/api/guzzlehttp/promises/psalm.xml</file>
@@ -1758,10 +1782,14 @@
 		<file>lib/system/api/guzzlehttp/psr7/src/functions_include.php</file>
 		<file>lib/system/api/laminas/laminas-diactoros/.laminas-ci.json</file>
 		<file>lib/system/api/laminas/laminas-diactoros/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-diactoros/renovate.json</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/CHANGELOG.md</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm-baseline.xml</file>
 		<file>lib/system/api/laminas/laminas-progressbar/CHANGELOG.md</file>
 		<file>lib/system/api/laminas/laminas-stdlib/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-stdlib/phpcs.xml.dist</file>
+		<file>lib/system/api/laminas/laminas-stdlib/psalm-baseline.xml</file>
+		<file>lib/system/api/laminas/laminas-stdlib/psalm.xml.dist</file>
 		<file>lib/system/api/laminas/laminas-zendframework-bridge/.github/FUNDING.yml</file>
 		<file>lib/system/api/laminas/laminas-zendframework-bridge/.github/workflows/continuous-integration.yml</file>
 		<file>lib/system/api/laminas/laminas-zendframework-bridge/.github/workflows/release-on-milestone-closed.yml</file>
@@ -1831,8 +1859,8 @@
 		<file>lib/system/api/paragonie/random_compat/LICENSE</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
-		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
+		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
 		<file>lib/system/api/paragonie/random_compat/lib/random.php</file>
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
@@ -2090,6 +2118,7 @@
 		<file>lib/system/api/sabberworm/php-css-parser/tests/files/whitespace.css</file>
 		<file>lib/system/api/sabberworm/php-css-parser/tests/phpunit.xml</file>
 		<file>lib/system/api/sabberworm/php-css-parser/tests/quickdump.php</file>
+		<file>lib/system/api/scssphp/scssphp/phpcs.xml.dist</file>
 		<file>lib/system/api/symfony/css-selector/.gitignore</file>
 		<file>lib/system/api/symfony/css-selector/Tests/CssSelectorConverterTest.php</file>
 		<file>lib/system/api/symfony/css-selector/Tests/Node/AbstractNodeTest.php</file>
@@ -2208,7 +2237,23 @@
 		<file>lib/system/bbcode/TableBBCode.class.php</file>
 		<file>lib/system/bbcode/URLBBCode.class.php</file>
 		<file>lib/system/bbcode/WoltLabSuiteMediaGalleryBBCode.class.php</file>
+		<file>lib/system/bbcode/highlighter/BashHighlighter.class.php</file>
 		<file>lib/system/bbcode/highlighter/BrainfuckHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/CHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/CssHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/DiffHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/Highlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/HtmlHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/JavaHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/JsHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/PerlHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/PhpHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/PlainHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/PythonHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/SqlHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/TexHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/TplHighlighter.class.php</file>
+		<file>lib/system/bbcode/highlighter/XmlHighlighter.class.php</file>
 		<file>lib/system/box/MostActiveMembersBoxController.class.php</file>
 		<file>lib/system/box/MostLikedMembersBoxController.class.php</file>
 		<file>lib/system/box/NewestMembersBoxController.class.php</file>
@@ -2276,6 +2321,7 @@
 		<file>lib/system/cache/source/MemcacheAdapter.class.php</file>
 		<file>lib/system/cache/source/MemcacheCacheSource.class.php</file>
 		<file>lib/system/cache/source/MemcachedAdapter.class.php</file>
+		<file>lib/system/cache/source/MemcachedCacheSource.class.php</file>
 		<file>lib/system/cache/source/NoCacheSource.class.php</file>
 		<file>lib/system/cleanup/CleanupAdapter.class.php</file>
 		<file>lib/system/cleanup/CleanupHandler.class.php</file>
@@ -2287,6 +2333,7 @@
 		<file>lib/system/cli/command/CronjobCommand.class.php</file>
 		<file>lib/system/cli/command/ExitCommand.class.php</file>
 		<file>lib/system/cli/command/ICommand.class.php</file>
+		<file>lib/system/cli/command/PackageCLICommand.class.php</file>
 		<file>lib/system/cli/command/PackageCommand.class.php</file>
 		<file>lib/system/cli/command/WorkerCommand.class.php</file>
 		<file>lib/system/clipboard/action/UserExtendedClipboardAction.class.php</file>
@@ -2374,6 +2421,7 @@
 		<file>lib/system/language/LanguageServerProcessor.class.php</file>
 		<file>lib/system/log/modification/ModificationLogHandler.class.php</file>
 		<file>lib/system/mail/DebugMailSender.class.php</file>
+		<file>lib/system/mail/Mail.class.php</file>
 		<file>lib/system/mail/MailSender.class.php</file>
 		<file>lib/system/mail/PHPMailSender.class.php</file>
 		<file>lib/system/mail/SMTPMailSender.class.php</file>
@@ -2476,6 +2524,7 @@
 		<file>lib/system/style/lessc.inc.php</file>
 		<file>lib/system/style/scssphp/LICENSE.md</file>
 		<file>lib/system/style/scssphp/classmap.php</file>
+		<file>lib/system/style/scssphp/scss.inc.php</file>
 		<file>lib/system/style/scssphp/src/Base/Range.php</file>
 		<file>lib/system/style/scssphp/src/Block.php</file>
 		<file>lib/system/style/scssphp/src/Colors.php</file>
@@ -2561,6 +2610,7 @@
 		<file>lib/system/user/authentication/UserMultifactorSucceeded.class.php</file>
 		<file>lib/system/user/authentication/password/algorithm/Invalid.php</file>
 		<file>lib/system/user/collapsible/content/ICollapsibleContentAction.class.php</file>
+		<file>lib/system/user/collapsible/content/UserCollapsibleSidebarHandler.class.php</file>
 		<file>lib/system/user/notification/event/PaidSubscriptionUserUserNotificationEvent.class.php</file>
 		<file>lib/system/user/notification/object/CommentLikeUserNotificationObject.class.php</file>
 		<file>lib/system/user/notification/object/CommentResponseLikeUserNotificationObject.class.php</file>
@@ -2621,6 +2671,25 @@
 		<file>style/extra/ie8-fix.css</file>
 		<file>style/extra/print-rtl.css</file>
 		<file>style/extra/print.css</file>
+		<file>style/font-awesome/_animated.scss</file>
+		<file>style/font-awesome/_bordered-pulled.scss</file>
+		<file>style/font-awesome/_core.scss</file>
+		<file>style/font-awesome/_fixed-width.scss</file>
+		<file>style/font-awesome/_functions.scss</file>
+		<file>style/font-awesome/_icons.scss</file>
+		<file>style/font-awesome/_list.scss</file>
+		<file>style/font-awesome/_mixins.scss</file>
+		<file>style/font-awesome/_rotated-flipped.scss</file>
+		<file>style/font-awesome/_screen-reader.scss</file>
+		<file>style/font-awesome/_shims.scss</file>
+		<file>style/font-awesome/_sizing.scss</file>
+		<file>style/font-awesome/_stacked.scss</file>
+		<file>style/font-awesome/_variables.scss</file>
+		<file>style/font-awesome/brands.scss</file>
+		<file>style/font-awesome/fontawesome.scss</file>
+		<file>style/font-awesome/regular.scss</file>
+		<file>style/font-awesome/solid.scss</file>
+		<file>style/font-awesome/v4-shims.scss</file>
 		<file>style/footer.css</file>
 		<file>style/footer.less</file>
 		<file>style/form.less</file>
@@ -2631,7 +2700,10 @@
 		<file>style/googleMaps.less</file>
 		<file>style/header.css</file>
 		<file>style/icon.less</file>
+		<file>style/icon/_icons.scss</file>
+		<file>style/icon/_variables.scss</file>
 		<file>style/icon/icon.less</file>
+		<file>style/icon/icon.scss</file>
 		<file>style/imageViewer.css</file>
 		<file>style/imageViewer.less</file>
 		<file>style/imageviewer.less</file>
@@ -2690,6 +2762,7 @@
 		<file>style/ui/dialog.less</file>
 		<file>style/ui/dropdown.less</file>
 		<file>style/ui/dropdownInteractive.less</file>
+		<file>style/ui/dropdownInteractive.scss</file>
 		<file>style/ui/menuMobile.scss</file>
 		<file>style/ui/message.less</file>
 		<file>style/ui/poll.less</file>
