@@ -288,6 +288,6 @@
 			<a href="{link}{/link}"><amp-img width="{@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoWidth')}" height="{@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')}" src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}"></amp-img></a>
 		</div>
 		
-		<button on='tap:sidebar.toggle'>{lang}wcf.global.page.pagination{/lang}</button>
+		<button type="button" on='tap:sidebar.toggle'>{lang}wcf.global.page.pagination{/lang}</button>
 	</header>
 	<main class="main">

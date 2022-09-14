@@ -29,7 +29,7 @@
 			{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
 				<div class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}" role="status">
 					{if $notice->isDismissible}
-						<button class="jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}">
+						<button type="button" class="jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}">
 							{icon name='xmark'}
 						</button>
 					{/if}

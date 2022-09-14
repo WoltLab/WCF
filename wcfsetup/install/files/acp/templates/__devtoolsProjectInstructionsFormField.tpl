@@ -39,10 +39,10 @@
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">
 					{literal}{if $type === 'update'}{/literal}
-						<button class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}">
+						<button type="button" class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}">
 							{icon name='pencil'}
 						</button>
-						<button class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}">
+						<button type="button" class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}">
 							{icon name='xmark'}
 						</button>
 					{literal}{/if}{/literal}
@@ -117,7 +117,7 @@
 			</div>
 			
 			<div class="formSubmit">
-				<button data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
+				<button type="button" data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 			</div>
 		{/capture}
 		
@@ -165,7 +165,7 @@
 			</div>
 			
 			<div class="formSubmit">
-				<button data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
+				<button type="button" data-type="submit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 			</div>
 		{/capture}
 		

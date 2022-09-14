@@ -130,7 +130,7 @@
 				<tr class="jsMediaRow jsClipboardObject jsObjectActionObject" data-object-id="{@$media->getObjectID()}">
 					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></td>
 					<td class="columnIcon">
-						<button class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}">
+						<button type="button" class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}">
 							{icon name='pencil'}
 						</span>
 						{objectAction action="delete" objectTitle=$media->filename}
@@ -160,7 +160,7 @@
 				<tr class="jsMediaRow jsClipboardObject jsObjectActionObject" data-object-id="0">
 					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="0"></td>
 					<td class="columnIcon">
-						<button class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="0">
+						<button type="button" class="mediaEditButton jsMediaEditButton jsTooltip" title="{lang}wcf.global.button.edit{/lang}" data-object-id="0">
 							{icon name='pencil'}
 						</button>
 						{objectAction action="delete" confirmMessage=""}

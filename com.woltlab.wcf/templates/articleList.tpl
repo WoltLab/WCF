@@ -63,7 +63,7 @@
 
 {capture assign='contentInteractionButtons'}
 	<div class="contentInteractionButton dropdown jsOnly">
-		<button class="button small dropdownToggle">
+		<button type="button" class="button small dropdownToggle">
 			{if $sortOrder|strtolower === 'asc'}
 				{icon name='arrow-down-short-wide'}
 			{else}
@@ -100,7 +100,7 @@
 			{event name='sortOptions'}
 		</ul>
 	</div>
-	<button class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
+	<button type="button" class="markAllAsReadButton contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></button>
 {/capture}
 
 {capture assign='contentInteractionDropdownItems'}

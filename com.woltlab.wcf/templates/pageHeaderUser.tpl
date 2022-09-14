@@ -206,7 +206,7 @@
 	</ul>
 </nav>
 {if $__wcf->user->userID}
-	<button class="pageHeaderUserMobile" aria-expanded="false" aria-label="{lang}wcf.menu.user{/lang}">
+	<button type="button" class="pageHeaderUserMobile" aria-expanded="false" aria-label="{lang}wcf.menu.user{/lang}">
 		<span class="pageHeaderUserMobileInactive">
 			{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}
 		</span>

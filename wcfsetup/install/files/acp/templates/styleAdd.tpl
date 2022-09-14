@@ -1175,7 +1175,7 @@
 	</dl>
 	
 	<div class="formSubmit">
-		<button id="styleDisableProtectionSubmit" class="button buttonPrimary" disabled>{lang}wcf.global.button.submit{/lang}</button>
+		<button type="button" id="styleDisableProtectionSubmit" class="button buttonPrimary" disabled>{lang}wcf.global.button.submit{/lang}</button>
 	</div>
 </div>
 

@@ -89,7 +89,7 @@
 		{foreach from=$exceptions item='exception' key='exceptionKey'}
 			<section id="{$exceptionKey}" class="section exceptionContainer{if $exception[collapsed]|isset && $exception[collapsed]} collapsed{/if}">
 				<h2 class="sectionTitle">
-					<button class="collapsibleButton jsTooltip" title="{lang}wcf.global.button.collapsible{/lang}">
+					<button type="button" class="collapsibleButton jsTooltip" title="{lang}wcf.global.button.collapsible{/lang}">
 						{if $exception[collapsed]|isset && $exception[collapsed]}
 							{icon name='chevron-right'}
 						{else}

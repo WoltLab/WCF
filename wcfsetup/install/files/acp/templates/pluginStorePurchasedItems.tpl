@@ -40,11 +40,11 @@
 				<tr>
 					<td class="columnIcon">
 						{if $product[status] == 'install'}
-							<button class="jsButtonPackageInstall jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}" data-confirm-message="{lang __encode=true}wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage{/lang}" data-package="{$product[package]}" data-package-version="{$product[version][available]}">
+							<button type="button" class="jsButtonPackageInstall jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}" data-confirm-message="{lang __encode=true}wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage{/lang}" data-package="{$product[package]}" data-package-version="{$product[version][available]}">
 								{icon name='plus'}
 							</button>
 						{elseif $product[status] == 'update'}
-							<button class="jsButtonPackageUpdate jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.update{/lang}">
+							<button type="button" class="jsButtonPackageUpdate jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.update{/lang}">
 								{icon name='arrows-rotate'}
 							</button>
 						{elseif $product[status] == 'upToDate'}

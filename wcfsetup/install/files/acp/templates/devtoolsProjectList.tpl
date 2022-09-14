@@ -83,7 +83,7 @@
 	</dl>
 	
 	<div class="formSubmit">
-		<button id="projectQuickSetupSubmit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
+		<button type="button" id="projectQuickSetupSubmit" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 	</div>
 </div>
 

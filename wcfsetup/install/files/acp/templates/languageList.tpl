@@ -44,7 +44,7 @@
 							
 							{if !$language->isDefault}
 								{objectAction action="toggle" isDisabled=$language->isDisabled}
-								<button class="jsObjectAction jsTooltip" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}">
+								<button type="button" class="jsObjectAction jsTooltip" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}">
 									{icon name='circle-check'}
 								</button>
 							{else}

@@ -48,7 +48,7 @@
 					<tr class="jsObjectRow jsObjectActionObject" data-object-id="{@$logEntry->getObjectID()}">
 						<td class="columnIcon">
 							{objectAction action="delete" confirmMessage='wcf.acp.devtools.missingLanguageItem.delete.confirmMessage'}
-							<button class="jsStackTraceButton jsTooltip" title="{lang}wcf.acp.devtools.missingLanguageItem.showStackTrace{/lang}" data-stack-trace="{$logEntry->getStackTrace()}">
+							<button type="button" class="jsStackTraceButton jsTooltip" title="{lang}wcf.acp.devtools.missingLanguageItem.showStackTrace{/lang}" data-stack-trace="{$logEntry->getStackTrace()}">
 								{icon name='align-justify'}
 							</button>
 						</td>

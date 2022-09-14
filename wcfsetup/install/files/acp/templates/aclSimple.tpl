@@ -57,7 +57,7 @@
 					<li>
 						{icon name='users'}
 						<span class="aclLabel">{$aclGroup}</span>
-						<button class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+						<button type="button" class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
 							<fa-icon name="xmark"></fa-icon>
 						</button>
 						<input type="hidden" name="{@$__aclInputName}[group][]" value="{@$aclGroup->groupID}">
@@ -67,7 +67,7 @@
 					<li>
 						{icon name='user'}
 						<span class="aclLabel">{$aclUser}</span>
-						<button class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
+						<button type="button" class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
 							<fa-icon name="xmark"></fa-icon>
 						</button>
 						<input type="hidden" name="{@$__aclInputName}[user][]" value="{@$aclUser->userID}">
