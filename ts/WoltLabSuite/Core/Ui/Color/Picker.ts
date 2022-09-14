@@ -141,7 +141,7 @@ class UiColorPicker implements DialogCallbackObject {
     </div>
   </div>
   <div class="formSubmit">
-    <button class="button buttonPrimary" data-type="submit">${Language.get(
+    <button type="button" class="button buttonPrimary" data-type="submit">${Language.get(
       "wcf.style.colorPicker.button.apply",
     )}</button>
   </div>

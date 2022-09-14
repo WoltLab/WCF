@@ -278,7 +278,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		if (this._dialog !== null) {
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="button buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
+				$('<button type="button" class="button buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
 				
 				$('#packageInstallationInnerContentContainer').show();
 				
@@ -390,7 +390,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				var $button = $('<button class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
+				var $button = $('<button type="button" class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
 					$(this).disable();
 					window.location = data.redirectLocation;
 				});
@@ -424,7 +424,7 @@ WCF.ACP.Package.Installation = Class.extend({
 				this._setIcon('question');
 				
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
+				$('<button type="button" class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
 					$(event.currentTarget).disable();
 					
 					this._submit(data);
@@ -807,7 +807,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		
 		if (!bindOnExistingButtons === true) {
 			$(`<li>
-				<button class="button jsButtonSearchForUpdates">
+				<button type="button" class="button jsButtonSearchForUpdates">
 					<fa-icon size="16" name="arrows-rotate"></fa-icon>
 					<span>${WCF.Language.get('wcf.acp.package.searchForUpdates')}</span>
 				</button>
@@ -913,7 +913,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		});
 		
 		var $button = $(`<li>
-			<button class="button">
+			<button type="button" class="button">
 				<fa-icon size="16" name="cart-shopping"></fa-icon>
 				<span>${WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search')}</span>
 			</button>
@@ -1338,7 +1338,7 @@ WCF.ACP.User.BanHandler = {
 			// create dialog
 			this._dialog = $('<div />').hide().appendTo(document.body);
 			this._dialog.append($('<div class="section"><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl><dl><dt></dt><dd><label for="userBanNeverExpires"><input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked> ' + WCF.Language.get('wcf.acp.user.ban.neverExpires') + '</label></dd></dl><dl id="userBanExpiresSettings" style="display: none;"><dt><label for="userBanExpires">' + WCF.Language.get('wcf.acp.user.ban.expires') + '</label></dt><dd><input type="date" name="userBanExpires" id="userBanExpires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.acp.user.ban.expires.description') + '</small></dd></dl></div>'));
-			this._dialog.append($('<div class="formSubmit"><button class="button buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
+			this._dialog.append($('<div class="formSubmit"><button type="button" class="button buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
 			
 			this._dialog.find('#userBanNeverExpires').change(function() {
 				$('#userBanExpiresSettings').toggle();

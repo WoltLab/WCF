@@ -90,7 +90,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
         </dl>
       </div>
       <div class="formSubmit">
-        <button class="button buttonPrimary">${Language.get("wcf.global.button.insert")}</button>
+        <button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.insert")}</button>
       </div>`;
             UiDialog.open({
                 _dialogSetup: () => {

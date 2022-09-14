@@ -74,7 +74,7 @@ function getDialogElement(label: string, value: string): string {
       <dd>
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
-          <button class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get(
+          <button type="button" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get(
             "wcf.message.share.copy",
           )}">
             <fa-icon name="copy"></fa-icon>
@@ -92,7 +92,7 @@ function getProviderButtons(): string {
 
       return `
       <li>
-        <button class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
+        <button type="button" class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
           ${icon}
           <span>${label}</span>
         </button>
@@ -152,7 +152,7 @@ function openDialog(event: MouseEvent): void {
         <dl>
           <dt></dt>
           <dd>
-              <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
+              <button type="button" class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(
                 target.href,
               )}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
                 ${Language.get("wcf.message.share.nativeShare")}

@@ -78,7 +78,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
           </dd>
         </dl>
         <div class="formSubmit">
-          <button id="redactor-modal-button-action" class="button buttonPrimary"></button>
+          <button type="button" id="redactor-modal-button-action" class="button buttonPrimary"></button>
         </div>`,
             };
         }

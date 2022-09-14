@@ -58,7 +58,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
       <dd>
         <div class="inputAddon">
           <input type="text" class="long" readonly value="${StringUtil.escapeHTML(value)}">
-          <button class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get("wcf.message.share.copy")}">
+          <button type="button" class="inputSuffix button jsTooltip shareDialogCopyButton" title="${Language.get("wcf.message.share.copy")}">
             <fa-icon name="copy"></fa-icon>
           </a>
         </div>
@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
             const [identifier, label, icon] = provider;
             return `
       <li>
-        <button class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
+        <button type="button" class="button small messageShareProvider" title="${label}" aria-label="${label}" data-identifier="${identifier}">
           ${icon}
           <span>${label}</span>
         </button>
@@ -123,7 +123,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         <dl>
           <dt></dt>
           <dd>
-              <button class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
+              <button type="button" class="button shareDialogNativeButton" data-url="${StringUtil.escapeHTML(target.href)}" data-title="${StringUtil.escapeHTML(target.dataset.linkTitle || "")}">
                 ${Language.get("wcf.message.share.nativeShare")}
               </button>
           </dd>

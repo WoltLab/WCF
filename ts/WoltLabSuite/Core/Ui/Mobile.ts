@@ -111,7 +111,7 @@ function initMessages(): void {
         if (buttonWrapper === null) {
           buttonWrapper = document.createElement("li");
           buttonWrapper.innerHTML = `
-            <button aria-label="${Language.get("wcf.global.button.more")}">
+            <button type="button" aria-label="${Language.get("wcf.global.button.more")}">
               <fa-icon name="ellipsis-vertical"></fa-icon>
             </button>
           `;

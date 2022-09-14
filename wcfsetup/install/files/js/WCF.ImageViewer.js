@@ -943,7 +943,7 @@ $.widget('ui.wcfImageViewer', {
 		$slideshowButtonFull.click(function(event) { window.location = $(event.currentTarget).data('link'); });
 		
 		// close button
-		$(`<button class="wcfImageViewerButtonClose jsTooltip" title="${WCF.Language.get('wcf.global.button.close')}">
+		$(`<button type="button" class="wcfImageViewerButtonClose jsTooltip" title="${WCF.Language.get('wcf.global.button.close')}">
 			<fa-icon size="48" name="xmark"></fa-icon>
 		</button>`).appendTo(this._ui.header).click($.proxy(this.close, this));
 		

@@ -48,7 +48,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             spinner.setIcon("check");
             const formSubmit = document.createElement("div");
             formSubmit.className = "formSubmit";
-            formSubmit.innerHTML = `<button class="button buttonPrimary">${Language.get("wcf.global.button.next")}</button>`;
+            formSubmit.innerHTML = `<button type="button" class="button buttonPrimary">${Language.get("wcf.global.button.next")}</button>`;
             content.appendChild(formSubmit);
             Dialog_1.default.rebuild(this);
             const button = formSubmit.children[0];

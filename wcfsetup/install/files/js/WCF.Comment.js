@@ -265,7 +265,7 @@ WCF.Comment.Handler = Class.extend({
 	_handleLoadNextComments: function() {
 		if (this._displayedComments < this._container.data('comments')) {
 			if (this._loadNextComments === null) {
-				this._loadNextComments = $('<li class="commentLoadNext showMore"><button class="button small">' + WCF.Language.get('wcf.comment.more') + '</button></li>').appendTo(this._container);
+				this._loadNextComments = $('<li class="commentLoadNext showMore"><button type="button" class="button small">' + WCF.Language.get('wcf.comment.more') + '</button></li>').appendTo(this._container);
 				this._loadNextComments.children('button').click($.proxy(this._loadComments, this));
 			}
 			
@@ -420,7 +420,7 @@ WCF.Comment.Handler = Class.extend({
 		
 		if (comment.data('canEdit')) {
 			var $editButton = $(`<li>
-				<button class="jsCommentEditButton jsTooltip" title="${WCF.Language.get('wcf.global.button.edit')}">
+				<button type="button" class="jsCommentEditButton jsTooltip" title="${WCF.Language.get('wcf.global.button.edit')}">
 					<fa-icon size="16" name="pencil"></fa-icon>
 					<span class="invisible">${WCF.Language.get('wcf.global.button.edit')}</span>
 				</button>
@@ -430,7 +430,7 @@ WCF.Comment.Handler = Class.extend({
 		
 		if (comment.data('canDelete')) {
 			var $deleteButton = $(`<li>
-				<button class="jsTooltip" title="${WCF.Language.get('wcf.global.button.delete')}">
+				<button type="button" class="jsTooltip" title="${WCF.Language.get('wcf.global.button.delete')}">
 					<fa-icon size="16" name="xmark"></fa-icon>
 					<span class="invisible">${WCF.Language.get('wcf.global.button.delete')}</span>
 				</button>
@@ -543,7 +543,7 @@ WCF.Comment.Handler = Class.extend({
 	_initResponse: function(responseID, response) {
 		if (response.data('canEdit')) {
 			var $editButton = $(`<li>
-				<button class="jsCommentResponseEditButton jsTooltip" title="${WCF.Language.get('wcf.global.button.edit')}">
+				<button type="button" class="jsCommentResponseEditButton jsTooltip" title="${WCF.Language.get('wcf.global.button.edit')}">
 					<fa-icon size="16" name="pencil"></fa-icon>
 					<span class="invisible">${WCF.Language.get('wcf.global.button.edit')}</span>
 				</button>
@@ -553,7 +553,7 @@ WCF.Comment.Handler = Class.extend({
 		
 		if (response.data('canDelete')) {
 			var $deleteButton = $(`<li>
-				<button class="jsTooltip" title="${WCF.Language.get('wcf.global.button.delete')}">
+				<button type="button" class="jsTooltip" title="${WCF.Language.get('wcf.global.button.delete')}">
 					<fa-icon size="16" name="xmark"></fa-icon>
 					<span class="invisible">${WCF.Language.get('wcf.global.button.delete')}</span>
 				</button>

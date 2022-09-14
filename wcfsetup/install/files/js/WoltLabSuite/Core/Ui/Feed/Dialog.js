@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
   <dd>
     <div class="inputAddon">
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithoutAccessToken)}">
-      <button class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get("wcf.global.rss.copy")}">
+      <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get("wcf.global.rss.copy")}">
         <fa-icon name="files"></fa-icon>
       </button>
     </div>
@@ -51,7 +51,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
   <dd>
     <div class="inputAddon">
       <input type="text" class="long" readonly value="${StringUtil.escapeHTML(linkWithAccessToken)}">
-      <button class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get("wcf.global.rss.copy")}">
+      <button type="button" class="inputSuffix button jsTooltip feedLinkDialogCopyButton" title="${Language.get("wcf.global.rss.copy")}">
         <fa-icon name="files"></fa-icon>
       </a>
     </div>

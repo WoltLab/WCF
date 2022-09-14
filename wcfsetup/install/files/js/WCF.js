@@ -2548,7 +2548,7 @@ WCF.Collapsible.Remote = Class.extend({
 			$button = $($button);
 		}
 		else {
-			$button = $(`<button class="collapsibleButton jsToolti" title="${WCF.Language.get('wcf.global.button.collapsible')}">
+			$button = $(`<button type="button" class="collapsibleButton jsToolti" title="${WCF.Language.get('wcf.global.button.collapsible')}">
 				<fa-icon size="16" name="chevron-down"></fa-icon>
 			</button>`).prependTo(buttonContainer);
 		}
@@ -4702,7 +4702,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				
 				// display continue button
 				var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-				$('<button class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo(
+				$('<button type="button" class="button buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo(
 					$formSubmit).focus().click(function () {
 					if (data.returnValues.redirectURL) {
 						window.location = data.returnValues.redirectURL;

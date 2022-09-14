@@ -89,7 +89,7 @@ class UiAclSimple {
     const iconName = type === "group" ? "users" : "user";
     const html = `<fa-icon name="${iconName}"></fa-icon>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
-      <button class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
+      <button type="button" class="aclItemDeleteButton jsTooltip" title="${Language.get("wcf.global.button.delete")}">
         <fa-icon name="xmark"></fa-icon>
       </button>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;

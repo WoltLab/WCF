@@ -70,7 +70,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
         const [iconName, forceSolid] = image;
 
         image = `
-          <button class="jsTooltip" title="${Language.get("wcf.global.select")}">
+          <button type="button" class="jsTooltip" title="${Language.get("wcf.global.select")}">
             <fa-icon size="48" name="${iconName}"${forceSolid ? " solid" : ""}></fa-icon>
           </button>
         `;
@@ -85,7 +85,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
         <div>
           <div class="containerHeadline">
             <h3>
-                <button>${StringUtil.escapeHTML(item.title)}</button>
+                <button type="button">${StringUtil.escapeHTML(item.title)}</button>
             </h3>
             ${description}
           </div>

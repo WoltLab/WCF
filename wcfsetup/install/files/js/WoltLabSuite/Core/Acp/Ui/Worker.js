@@ -70,7 +70,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 const formSubmit = document.createElement("div");
                 formSubmit.className = "formSubmit";
                 formSubmit.innerHTML =
-                    '<button class="button buttonPrimary">' + Language.get("wcf.global.button.next") + "</button>";
+                    '<button type="button" class="button buttonPrimary">' + Language.get("wcf.global.button.next") + "</button>";
                 content.appendChild(formSubmit);
                 Dialog_1.default.rebuild(this);
                 const button = formSubmit.children[0];
