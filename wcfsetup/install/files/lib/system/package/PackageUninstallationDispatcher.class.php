@@ -2,18 +2,14 @@
 
 namespace wcf\system\package;
 
-use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\command\ClearCache;
 use wcf\system\event\EventHandler;
-use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
-use wcf\system\style\StyleHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -50,11 +46,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
     /**
      * Uninstalls node components and returns next node.
-     *
-     * @param string $node
-     * @return  string
      */
-    public function uninstall($node)
+    public function uninstall(string $node): PackageInstallationStep
     {
         $nodes = $this->nodeBuilder->getNodeData($node);
 
@@ -64,7 +57,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
             switch ($data['nodeType']) {
                 case 'package':
-                    $this->uninstallPackage($nodeData);
+                    $step = $this->uninstallPackage($nodeData);
                     break;
 
                 case 'pip':
@@ -76,41 +69,38 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                         $this->didExecuteUninstallScript = true;
                     }
 
-                    $this->executePIP($nodeData);
+                    $step = $this->executePIP($nodeData);
                     break;
             }
         }
 
         // mark node as completed
         $this->nodeBuilder->completeNode($node);
+
+        // assign next node
         $node = $this->nodeBuilder->getNextNode($node);
+        $step->setNode($node);
 
         // perform post-uninstall actions
         if ($node == '') {
-            // update options.inc.php if uninstallation is completed
-            OptionEditor::resetCache();
-
-            // clear cache
-            CacheHandler::getInstance()->flushAll();
-
-            // reset language cache
-            LanguageFactory::getInstance()->clearCache();
-            LanguageFactory::getInstance()->deleteLanguageCache();
-
-            // reset stylesheets
-            StyleHandler::resetStylesheets();
-
             // rebuild application paths
             ApplicationHandler::rebuild();
 
-            // clear user storage
-            UserStorageHandler::getInstance()->clear();
-
             EventHandler::getInstance()->fireAction($this, 'postUninstall');
+
+            // delete queues
+            $sql = "DELETE FROM wcf1_package_installation_queue
+                    WHERE       processNo = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$this->queue->processNo]);
+
+            $command = new ClearCache();
+            $command();
         }
 
-        // return next node
-        return $node;
+        WCF::resetZendOpcache();
+
+        return $step;
     }
 
     /**
@@ -123,8 +113,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         $pip->uninstall();
 
-        // This return value is ignored by PackageUninstallationDispatcher, but it
-        // is necessary to be compatible with parent::executePIP().
         return new PackageInstallationStep();
     }
 
@@ -147,7 +135,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
      *
      * @param array $nodeData
      */
-    protected function uninstallPackage(array $nodeData)
+    protected function uninstallPackage(array $nodeData): PackageInstallationStep
     {
         PackageEditor::deleteAll([$this->queue->packageID]);
 
@@ -162,6 +150,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         // reset package cache
         PackageCacheBuilder::getInstance()->reset();
+
+        return new PackageInstallationStep();
     }
 
     /**

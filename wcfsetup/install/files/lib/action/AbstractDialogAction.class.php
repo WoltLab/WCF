@@ -8,13 +8,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\util\StringUtil;
 
 /**
- * Abstract implementation of an action that displays a dialog and that is executed
- * in multiple steps.
- *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
+ * @deprecated 6.0 This class does not provide a useful implementation. The logic should be inlined.
  */
 abstract class AbstractDialogAction extends AbstractSecureAction
 {

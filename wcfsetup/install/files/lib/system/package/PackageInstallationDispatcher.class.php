@@ -7,9 +7,7 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\language\category\LanguageCategory;
-use wcf\data\language\LanguageEditor;
 use wcf\data\language\LanguageList;
-use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
@@ -17,10 +15,8 @@ use wcf\data\package\PackageEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\command\ClearCache;
 use wcf\system\database\statement\PreparedStatement;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;
 use wcf\system\event\EventHandler;
@@ -34,12 +30,11 @@ use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\registry\RegistryHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
-use wcf\system\style\StyleHandler;
-use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
@@ -144,23 +139,11 @@ class PackageInstallationDispatcher
             $nodeData = \unserialize($data['nodeData']);
             $this->logInstallationStep($data);
 
-            switch ($data['nodeType']) {
-                case 'package':
-                    $step = $this->installPackage($nodeData);
-                    break;
-
-                case 'pip':
-                    $step = $this->executePIP($nodeData);
-                    break;
-
-                case 'optionalPackages':
-                    $step = $this->selectOptionalPackages($node, $nodeData);
-                    break;
-
-                default:
-                    exit("Unknown node type: '" . $data['nodeType'] . "'");
-                    break;
-            }
+            $step = match ($data['nodeType']) {
+                'package' => $this->installPackage($nodeData),
+                'pip' => $this->executePIP($nodeData),
+                'optionalPackages' => $this->selectOptionalPackages($node, $nodeData),
+            };
 
             if ($step->splitNode()) {
                 $log = 'split node';
@@ -195,80 +178,17 @@ class PackageInstallationDispatcher
                 'last_update_time',
             ]);
 
-            // update options.inc.php
-            OptionEditor::resetCache();
-
             if ($this->action == 'install') {
                 // save localized package infos
                 $this->saveLocalizedPackageInfos();
 
-                // remove all cache files after WCFSetup
                 if (!PACKAGE_ID) {
-                    CacheHandler::getInstance()->flushAll();
-
-                    $sql = "UPDATE  wcf1_option
-                            SET     optionValue = ?
-                            WHERE   optionName = ?";
-                    $statement = WCF::getDB()->prepare($sql);
-
-                    if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
-                        $statement->execute([
-                            COOKIE_PREFIX,
-                            'cookie_prefix',
-                        ]);
-
-                        @\unlink(WCF_DIR . 'cookiePrefix.txt');
-                    }
-
-                    $statement->execute([
-                        $signatureSecret = Hex::encode(\random_bytes(20)),
-                        'signature_secret',
-                    ]);
-                    \define('SIGNATURE_SECRET', $signatureSecret);
-                    HeaderUtil::setCookie(
-                        'user_session',
-                        CryptoUtil::createSignedString(
-                            \pack(
-                                'CA20C',
-                                1,
-                                Hex::decode(WCF::getSession()->sessionID),
-                                0
-                            )
-                        )
-                    );
-
-                    if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
-                        $this->setupDeveloperMode();
-                    }
-
-                    // update options.inc.php
-                    OptionEditor::resetCache();
-
-                    RegistryHandler::getInstance()->set(
-                        'com.woltlab.wcf',
-                        Environment::SYSTEM_ID_REGISTRY_KEY,
-                        Environment::getSystemId()
-                    );
-
-                    WCF::getSession()->register('__wcfSetup_completed', true);
+                    $this->finalizeWcfSetup();
                 }
 
                 // rebuild application paths
                 ApplicationHandler::rebuild();
             }
-
-            // remove template listener cache
-            TemplateListenerCodeCacheBuilder::getInstance()->reset();
-
-            // reset language cache
-            LanguageFactory::getInstance()->clearCache();
-            LanguageFactory::getInstance()->deleteLanguageCache();
-
-            // reset stylesheets
-            StyleHandler::resetStylesheets();
-
-            // clear user storage
-            UserStorageHandler::getInstance()->clear();
 
             // rebuild config files for affected applications
             $sql = "SELECT      package.packageID
@@ -285,6 +205,10 @@ class PackageInstallationDispatcher
             while ($row = $statement->fetchArray()) {
                 Package::writeConfigFile($row['packageID']);
             }
+
+            SearchIndexManager::getInstance()->createSearchIndices();
+
+            VersionTracker::getInstance()->createStorageTables();
 
             EventHandler::getInstance()->fireAction($this, 'postInstall');
 
@@ -304,10 +228,64 @@ class PackageInstallationDispatcher
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->queue->processNo]);
 
+            $command = new ClearCache();
+            $command();
+
             $this->logInstallationStep([], 'finished cleanup');
         }
 
+        WCF::resetZendOpcache();
+
         return $step;
+    }
+
+    /**
+     * @since 6.0
+     */
+    protected function finalizeWcfSetup(): void
+    {
+        $sql = "UPDATE  wcf1_option
+                SET     optionValue = ?
+                WHERE   optionName = ?";
+        $statement = WCF::getDB()->prepare($sql);
+
+        if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
+            $statement->execute([
+                COOKIE_PREFIX,
+                'cookie_prefix',
+            ]);
+
+            @\unlink(WCF_DIR . 'cookiePrefix.txt');
+        }
+
+        $statement->execute([
+            $signatureSecret = Hex::encode(\random_bytes(20)),
+            'signature_secret',
+        ]);
+        \define('SIGNATURE_SECRET', $signatureSecret);
+        HeaderUtil::setCookie(
+            'user_session',
+            CryptoUtil::createSignedString(
+                \pack(
+                    'CA20C',
+                    1,
+                    Hex::decode(WCF::getSession()->sessionID),
+                    0
+                )
+            )
+        );
+
+        if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
+            $this->setupDeveloperMode();
+        }
+
+        RegistryHandler::getInstance()->set(
+            'com.woltlab.wcf',
+            Environment::SYSTEM_ID_REGISTRY_KEY,
+            Environment::getSystemId()
+        );
+
+        WCF::getSession()->register('__wcfSetup_completed', true);
     }
 
     /**
@@ -1094,100 +1072,6 @@ class PackageInstallationDispatcher
     public function getAction()
     {
         return $this->action;
-    }
-
-    /**
-     * Opens the package installation queue and
-     * starts the installation, update or uninstallation of the first entry.
-     *
-     * @param int $parentQueueID
-     * @param int $processNo
-     */
-    public static function openQueue($parentQueueID = 0, $processNo = 0)
-    {
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("userID = ?", [WCF::getUser()->userID]);
-        $conditions->add("parentQueueID = ?", [$parentQueueID]);
-        if ($processNo != 0) {
-            $conditions->add("processNo = ?", [$processNo]);
-        }
-        $conditions->add("done = ?", [0]);
-
-        $sql = "SELECT      *
-                FROM        wcf1_package_installation_queue
-                {$conditions}
-                ORDER BY    queueID ASC";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $packageInstallation = $statement->fetchArray();
-
-        if (!isset($packageInstallation['queueID'])) {
-            $url = LinkHandler::getInstance()->getLink('PackageList');
-            HeaderUtil::redirect($url);
-
-            exit;
-        } else {
-            $url = LinkHandler::getInstance()->getLink(
-                'PackageInstallationConfirm',
-                [],
-                'queueID=' . $packageInstallation['queueID']
-            );
-            HeaderUtil::redirect($url);
-
-            exit;
-        }
-    }
-
-    /**
-     * Checks the package installation queue for outstanding entries.
-     *
-     * @return  int
-     */
-    public static function checkPackageInstallationQueue()
-    {
-        $sql = "SELECT      queueID
-                FROM        wcf1_package_installation_queue
-                WHERE       userID = ?
-                        AND parentQueueID = 0
-                        AND done = 0
-                ORDER BY    queueID ASC";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([WCF::getUser()->userID]);
-        $row = $statement->fetchArray();
-
-        if (!$row) {
-            return 0;
-        }
-
-        return $row['queueID'];
-    }
-
-    /**
-     * Executes post-setup actions.
-     */
-    public function completeSetup()
-    {
-        // remove archives
-        $sql = "SELECT  archive
-                FROM    wcf1_package_installation_queue
-                WHERE   processNo = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->queue->processNo]);
-        while ($row = $statement->fetchArray()) {
-            @\unlink($row['archive']);
-        }
-
-        // delete queues
-        $sql = "DELETE FROM wcf1_package_installation_queue
-                WHERE       processNo = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->queue->processNo]);
-
-        // clear language files once whole installation is completed
-        LanguageEditor::deleteLanguageFiles();
-
-        // reset all caches
-        CacheHandler::getInstance()->flushAll();
     }
 
     /**

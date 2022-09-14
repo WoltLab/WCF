@@ -195,13 +195,23 @@ class IndexPage extends AbstractPage
     {
         // check package installation queue
         if (!\PACKAGE_ID && $this->action == 'WCFSetup') {
-            $queueID = PackageInstallationDispatcher::checkPackageInstallationQueue();
+            $sql = "SELECT      queueID
+                    FROM        wcf1_package_installation_queue
+                    WHERE       userID = ?
+                            AND parentQueueID = 0
+                            AND done = 0
+                    ORDER BY    queueID ASC";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([WCF::getUser()->userID]);
+            $queueID = $statement->fetchSingleColumn();
 
             if ($queueID) {
                 WCF::getTPL()->assign(['queueID' => $queueID]);
                 WCF::getTPL()->display('packageInstallationSetup');
 
                 exit;
+            } else {
+                throw new \LogicException('Unreachable');
             }
         }
 

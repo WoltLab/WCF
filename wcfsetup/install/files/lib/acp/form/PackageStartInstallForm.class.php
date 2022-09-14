@@ -6,6 +6,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\form\AbstractForm;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -13,8 +14,10 @@ use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\package\validation\PackageValidationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows the package install and update form.
@@ -225,8 +228,37 @@ class PackageStartInstallForm extends AbstractForm
 
         $this->saved();
 
-        // open queue
-        PackageInstallationDispatcher::openQueue(0, $processNo);
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("userID = ?", [WCF::getUser()->userID]);
+        $conditions->add("parentQueueID = ?", [0]);
+        if ($processNo != 0) {
+            $conditions->add("processNo = ?", [$processNo]);
+        }
+        $conditions->add("done = ?", [0]);
+
+        $sql = "SELECT      *
+                FROM        wcf1_package_installation_queue
+                {$conditions}
+                ORDER BY    queueID ASC";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        $packageInstallation = $statement->fetchArray();
+
+        if (!isset($packageInstallation['queueID'])) {
+            $url = LinkHandler::getInstance()->getLink('PackageList');
+            HeaderUtil::redirect($url);
+
+            exit;
+        } else {
+            $url = LinkHandler::getInstance()->getLink(
+                'PackageInstallationConfirm',
+                [],
+                'queueID=' . $packageInstallation['queueID']
+            );
+            HeaderUtil::redirect($url);
+
+            exit;
+        }
     }
 
     /**

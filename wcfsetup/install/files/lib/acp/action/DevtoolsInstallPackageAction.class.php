@@ -2,7 +2,7 @@
 
 namespace wcf\acp\action;
 
-use wcf\action\AbstractDialogAction;
+use wcf\action\AbstractSecureAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
@@ -23,15 +23,8 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
 {
     /**
      * project whose source is installed as a package
-     * @var DevtoolsProject
      */
-    public $project;
-
-    /**
-     * id of the project whose source is installed as a package
-     * @var int
-     */
-    public $projectID;
+    public DevtoolsProject $project;
 
     /**
      * @inheritDoc
@@ -47,13 +40,29 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
      */
     public function readParameters()
     {
-        AbstractDialogAction::readParameters();
+        AbstractSecureAction::readParameters();
+
+        if (isset($_REQUEST['step'])) {
+            $this->step = StringUtil::trim($_REQUEST['step']);
+
+            switch ($this->step) {
+                case 'install':
+                case 'prepare':
+                case 'rollback':
+                    // valid steps
+                    break;
+    
+                default:
+                    throw new IllegalLinkException();
+                    break;
+            }
+        }
 
         if (isset($_POST['projectID'])) {
-            $this->projectID = \intval($_POST['projectID']);
+            $this->project = new DevtoolsProject(\intval($_POST['projectID']));
         }
-        $this->project = new DevtoolsProject($this->projectID);
-        if (!$this->project->projectID) {
+
+        if (!isset($this->project) || !$this->project->projectID) {
             throw new IllegalLinkException();
         }
 
@@ -62,10 +71,11 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
         }
 
         if (isset($_POST['queueID'])) {
-            $this->queueID = \intval($_POST['queueID']);
+            $queueID = \intval($_POST['queueID']);
+            $this->queue = new PackageInstallationQueue($queueID);
         }
-        $this->queue = new PackageInstallationQueue($this->queueID);
-        if (!$this->queue->queueID) {
+
+        if (!isset($this->queue) || !$this->queue->queueID) {
             throw new IllegalLinkException();
         }
 
