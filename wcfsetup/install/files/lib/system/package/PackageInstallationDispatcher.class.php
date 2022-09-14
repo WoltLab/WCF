@@ -17,7 +17,6 @@ use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\command\ClearCache;
 use wcf\system\database\statement\PreparedStatement;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;
 use wcf\system\event\EventHandler;
@@ -31,7 +30,6 @@ use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\registry\RegistryHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\setup\IFileHandler;
@@ -1074,48 +1072,6 @@ class PackageInstallationDispatcher
     public function getAction()
     {
         return $this->action;
-    }
-
-    /**
-     * Opens the package installation queue and
-     * starts the installation, update or uninstallation of the first entry.
-     *
-     * @param int $parentQueueID
-     * @param int $processNo
-     */
-    public static function openQueue($parentQueueID = 0, $processNo = 0)
-    {
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("userID = ?", [WCF::getUser()->userID]);
-        $conditions->add("parentQueueID = ?", [$parentQueueID]);
-        if ($processNo != 0) {
-            $conditions->add("processNo = ?", [$processNo]);
-        }
-        $conditions->add("done = ?", [0]);
-
-        $sql = "SELECT      *
-                FROM        wcf1_package_installation_queue
-                {$conditions}
-                ORDER BY    queueID ASC";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $packageInstallation = $statement->fetchArray();
-
-        if (!isset($packageInstallation['queueID'])) {
-            $url = LinkHandler::getInstance()->getLink('PackageList');
-            HeaderUtil::redirect($url);
-
-            exit;
-        } else {
-            $url = LinkHandler::getInstance()->getLink(
-                'PackageInstallationConfirm',
-                [],
-                'queueID=' . $packageInstallation['queueID']
-            );
-            HeaderUtil::redirect($url);
-
-            exit;
-        }
     }
 
     /**
