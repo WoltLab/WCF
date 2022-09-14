@@ -352,34 +352,6 @@ class PackageInstallationNodeBuilder
     }
 
     /**
-     * Inserts a node before given target node. Will shift all target
-     * nodes to provide to be descendants of the new node. If you intend
-     * to insert more than a single node, you should prefer shiftNodes().
-     *
-     * @param string $beforeNode
-     * @param callable $callback
-     */
-    public function insertNode($beforeNode, callable $callback)
-    {
-        $newNode = $this->getToken();
-
-        // update descendants
-        $sql = "UPDATE  wcf1_package_installation_node
-                SET     parentNode = ?
-                WHERE   parentNode = ?
-                    AND processNo = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $newNode,
-            $beforeNode,
-            $this->installation->queue->processNo,
-        ]);
-
-        // execute callback
-        $callback($beforeNode, $newNode);
-    }
-
-    /**
      * Shifts nodes to allow dynamic inserts at runtime.
      *
      * @param string $oldParentNode
