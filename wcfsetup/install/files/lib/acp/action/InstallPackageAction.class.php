@@ -114,17 +114,18 @@ class InstallPackageAction extends AbstractSecureAction
         // update package information
         $this->installation->updatePackage();
 
-        // clean-up previously created nodes
-        $this->installation->nodeBuilder->purgeNodes();
-
         if ($this->installation->getAction() === 'update' && $this->queue->package === 'com.woltlab.wcf') {
             WCF::checkWritability();
         }
 
-        // create node tree
+        $this->installation->nodeBuilder->purgeNodes();
         $this->installation->nodeBuilder->buildNodes();
+
         $nextNode = $this->installation->nodeBuilder->getNextNode();
-        $queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $nextNode);
+        $queueID = $this->installation->nodeBuilder->getQueueByNode(
+            $this->installation->queue->processNo,
+            $nextNode
+        );
 
         WCF::getTPL()->assign([
             'installationType' => $this->queue->action,

@@ -144,28 +144,29 @@ final class UninstallPackageAction extends AbstractSecureAction
         // initialize uninstallation
         $this->installation = new PackageUninstallationDispatcher($queue);
 
-        $this->installation->nodeBuilder->purgeNodes();
-        $this->installation->nodeBuilder->buildNodes();
-
-        WCF::getTPL()->assign([
-            'queue' => $queue,
-        ]);
-
         // mark package as tainted if it is an app
         if ($package->isApplication) {
             $applicationAction = new ApplicationAction([$package->packageID], 'markAsTainted');
             $applicationAction->executeAction();
         }
 
+        $this->installation->nodeBuilder->purgeNodes();
+        $this->installation->nodeBuilder->buildNodes();
+
+        $nextNode = $this->installation->nodeBuilder->getNextNode();
         $queueID = $this->installation->nodeBuilder->getQueueByNode(
             $queue->processNo,
-            $this->installation->nodeBuilder->getNextNode()
+            $nextNode
         );
+
+        WCF::getTPL()->assign([
+            'queue' => $queue,
+        ]);
 
         return new JsonResponse([
             'template' => WCF::getTPL()->fetch('packageUninstallationStepPrepare'),
             'step' => 'uninstall',
-            'node' => $this->installation->nodeBuilder->getNextNode(),
+            'node' => $nextNode,
             'currentAction' => $this->getCurrentAction($queueID),
             'progress' => 0,
             'queueID' => $queueID,
