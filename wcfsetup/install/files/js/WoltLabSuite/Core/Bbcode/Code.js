@@ -51,6 +51,7 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
                 return;
             }
             const button = document.createElement("button");
+            button.type = "button";
             button.innerHTML = '<fa-icon size="24" name="copy"></fa-icon>';
             button.classList.add("jsTooltip");
             button.title = Language.get("wcf.message.bbcode.code.copy");

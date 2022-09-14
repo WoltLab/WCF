@@ -59,6 +59,7 @@ define(["require", "exports", "tslib", "focus-trap", "../Core", "../Dom/Change/L
             }
             navigation.parentElement.classList.add("hasMobileNavigation");
             const button = document.createElement("button");
+            button.type = "button";
             button.innerHTML = '<fa-icon size="24" name="ellipsis-vertical"></fa-icon>';
             button.classList.add("dropdownLabel");
             button.addEventListener("click", (event) => {

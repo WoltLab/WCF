@@ -191,6 +191,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../View", "../Manage
             buttonContainer.classList.add("userMenuNotificationsButtons");
             element.append(buttonContainer);
             const button = document.createElement("button");
+            button.type = "button";
             button.classList.add("button", "small", "userMenuNotificationsButton");
             button.textContent = Language.get("wcf.user.notification.enableDesktopNotifications.button");
             button.addEventListener("click", async (event) => {

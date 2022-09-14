@@ -208,6 +208,7 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
             let link;
             if (button.link === "#") {
                 link = document.createElement("button");
+                link.type = "button";
             }
             else {
                 link = document.createElement("a");
