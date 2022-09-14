@@ -292,16 +292,7 @@ class PackageInstallationNodeBuilder
         $newNode = $this->getToken();
 
         // update descendants
-        $sql = "UPDATE  wcf1_package_installation_node
-                SET     parentNode = ?
-                WHERE   parentNode = ?
-                    AND processNo = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $newNode,
-            $node,
-            $this->installation->queue->processNo,
-        ]);
+        $this->shiftNodes($node, $newNode);
 
         // create a copy of current node (prevents empty nodes)
         $sql = "SELECT  nodeType, nodeData, done
