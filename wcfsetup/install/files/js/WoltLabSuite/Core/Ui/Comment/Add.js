@@ -49,9 +49,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Controller/Captcha",
          * Scrolls the editor into view and sets the caret to the end of the editor.
          */
         _focusEditor() {
-            UiScroll.element(this._container, () => {
-                window.jQuery(this._textarea).redactor("WoltLabCaret.endOfEditor");
-            });
+            window.setTimeout(() => {
+                UiScroll.element(this._container, () => {
+                    const element = window.jQuery(this._textarea);
+                    const editor = element.redactor("core.editor")[0];
+                    if (editor !== document.activeElement) {
+                        element.redactor("WoltLabCaret.endOfEditor");
+                    }
+                });
+            }, 0);
         }
         /**
          * Submits the guest dialog.

@@ -67,9 +67,15 @@ class UiCommentAdd {
    * Scrolls the editor into view and sets the caret to the end of the editor.
    */
   protected _focusEditor(): void {
-    UiScroll.element(this._container, () => {
-      window.jQuery(this._textarea).redactor("WoltLabCaret.endOfEditor");
-    });
+    window.setTimeout(() => {
+      UiScroll.element(this._container, () => {
+        const element = window.jQuery(this._textarea);
+        const editor = (element.redactor("core.editor") as any)[0];
+        if (editor !== document.activeElement) {
+          element.redactor("WoltLabCaret.endOfEditor");
+        }
+      });
+    }, 0);
   }
 
   /**
