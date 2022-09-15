@@ -645,24 +645,23 @@ class PackageInstallationNodeBuilder
             }
         }
 
-        // insert nodes
-        if (!empty($pluginNodes)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_node
-                                (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
-                    VALUES      (?, ?, ?, ?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+        \assert($pluginNodes !== []);
 
-            foreach ($pluginNodes as $nodeData) {
-                $statement->execute([
-                    $this->installation->queue->queueID,
-                    $this->installation->queue->processNo,
-                    $nodeData['sequenceNo'],
-                    $nodeData['node'],
-                    $nodeData['parentNode'],
-                    'pip',
-                    \serialize($nodeData['data']),
-                ]);
-            }
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_node
+                            (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
+        $statement = WCF::getDB()->prepareStatement($sql);
+
+        foreach ($pluginNodes as $nodeData) {
+            $statement->execute([
+                $this->installation->queue->queueID,
+                $this->installation->queue->processNo,
+                $nodeData['sequenceNo'],
+                $nodeData['node'],
+                $nodeData['parentNode'],
+                'pip',
+                \serialize($nodeData['data']),
+            ]);
         }
     }
 
