@@ -218,7 +218,9 @@ class NotificationHandler {
 
       try {
         notification = new window.Notification(pollData.notification.title, {
-          body: StringUtil.unescapeHTML(pollData.notification.message).replace(/&#x202F;/g, "\u202F"),
+          body: StringUtil.unescapeHTML(pollData.notification.message)
+            .replace(/&#x202F;/g, "\u202F")
+            .replace(/&#39;/g, "'"),
           icon: this.icon,
         });
       } catch (e) {
