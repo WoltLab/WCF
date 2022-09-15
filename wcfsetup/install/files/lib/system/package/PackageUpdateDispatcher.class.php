@@ -852,17 +852,6 @@ class PackageUpdateDispatcher extends SingletonFactory
     }
 
     /**
-     * Creates a new package installation scheduler.
-     *
-     * @param array $selectedPackages
-     * @return  PackageInstallationScheduler
-     */
-    public function prepareInstallation(array $selectedPackages)
-    {
-        return new PackageInstallationScheduler($selectedPackages);
-    }
-
-    /**
      * Returns package update versions of the specified package.
      *
      * @param string $package package identifier
