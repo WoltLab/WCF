@@ -774,10 +774,10 @@ class PackageInstallationNodeBuilder
             $installation = new PackageInstallationDispatcher($queue);
 
             // work-around for iterative package updates
-            if ($this->installation->queue->action == 'update' && $queue->package == $this->installation->queue->package) {
+            if (isset(self::$pendingPackages[$queue->package])) {
                 $installation->setPreviousPackage([
-                    'package' => $this->installation->getArchive()->getPackageInfo('name'),
-                    'packageVersion' => $this->installation->getArchive()->getPackageInfo('version'),
+                    'package' => $queue->package,
+                    'packageVersion' => self::$pendingPackages[$queue->package],
                 ]);
             }
 
