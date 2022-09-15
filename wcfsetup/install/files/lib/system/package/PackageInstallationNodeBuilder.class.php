@@ -598,6 +598,13 @@ class PackageInstallationNodeBuilder
         $this->emptyNode = true;
         $instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
         $count = \count($instructions);
+
+        if ($count === 0) {
+            // Abort if an empty list of instructions is received. This most likely indicates that
+            // the update instructions have been erroneously discarded.
+            throw new \Exception('Received an empty list of instructions.');
+        }
+
         $i = 0;
         foreach ($instructions as $pip) {
             $i++;
