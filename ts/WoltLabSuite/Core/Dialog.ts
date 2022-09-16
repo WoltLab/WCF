@@ -1,12 +1,12 @@
 import { ModalDialog } from "./Dialog/modal-dialog";
 
-export function dialogFromElement(element: HTMLElement): ModalDialog {
-  if (!(element instanceof HTMLElement) || element.nodeName !== "DIV") {
-    throw new TypeError("Only '<div>' elements are allowed as the content element.");
+export function dialogFromElement(element: HTMLElement | DocumentFragment): ModalDialog {
+  if (!(element instanceof HTMLElement) && !(element instanceof DocumentFragment)) {
+    throw new TypeError("Expected an HTML element or a document fragment.");
   }
 
   const dialog = document.createElement("modal-dialog");
-  dialog.content = element;
+  dialog.content.append(element);
 
   return dialog;
 }
@@ -27,7 +27,10 @@ export function dialogFromHtml(html: string): ModalDialog {
     throw new TypeError("The provided HTML string did not contain any elements.");
   }
 
-  return dialogFromElement(element);
+  const fragment = document.createDocumentFragment();
+  fragment.append(...element.childNodes);
+
+  return dialogFromElement(fragment);
 }
 
 export * from "./Dialog/modal-dialog";

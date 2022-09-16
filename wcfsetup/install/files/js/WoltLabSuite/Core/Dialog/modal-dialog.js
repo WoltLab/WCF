@@ -5,12 +5,13 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     Util_1 = tslib_1.__importDefault(Util_1);
     const dialogContainer = document.createElement("div");
     class ModalDialog extends HTMLElement {
-        #content = undefined;
+        #content;
         #dialog;
         #returnFocus = undefined;
         #title;
         constructor() {
             super();
+            this.#content = document.createElement("div");
             this.#dialog = document.createElement("dialog");
             this.#title = document.createElement("div");
         }
@@ -42,21 +43,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             return this.#dialog;
         }
         get content() {
-            if (this.#content === undefined) {
-                this.#content = document.createElement("div");
-                this.#content.classList.add("dialog__content");
-            }
             return this.#content;
-        }
-        set content(element) {
-            if (this.#content !== undefined) {
-                throw new Error("There is already a content element for this dialog.");
-            }
-            if (!(element instanceof HTMLElement) || element.nodeName !== "DIV") {
-                throw new TypeError("Only '<div>' elements are allowed as the content element.");
-            }
-            this.#content = element;
-            this.#content.classList.add("dialog__content");
         }
         set title(title) {
             this.#title.textContent = title;
@@ -87,7 +74,8 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             const doc = document.createElement("div");
             doc.classList.add("dialog__document");
             doc.setAttribute("role", "document");
-            doc.append(header, this.content);
+            this.#content.classList.add("dialog__content");
+            doc.append(header, this.#content);
             this.#dialog.append(doc);
             this.#dialog.classList.add("dialog");
             this.#dialog.setAttribute("aria-labelledby", Util_1.default.identify(this.#title));

@@ -3,11 +3,11 @@ define(["require", "exports", "tslib", "./Dialog/modal-dialog"], function (requi
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.dialogFromHtml = exports.dialogFromId = exports.dialogFromElement = void 0;
     function dialogFromElement(element) {
-        if (!(element instanceof HTMLElement) || element.nodeName !== "DIV") {
-            throw new TypeError("Only '<div>' elements are allowed as the content element.");
+        if (!(element instanceof HTMLElement) && !(element instanceof DocumentFragment)) {
+            throw new TypeError("Expected an HTML element or a document fragment.");
         }
         const dialog = document.createElement("modal-dialog");
-        dialog.content = element;
+        dialog.content.append(element);
         return dialog;
     }
     exports.dialogFromElement = dialogFromElement;
@@ -25,7 +25,9 @@ define(["require", "exports", "tslib", "./Dialog/modal-dialog"], function (requi
         if (element.childElementCount === 0) {
             throw new TypeError("The provided HTML string did not contain any elements.");
         }
-        return dialogFromElement(element);
+        const fragment = document.createDocumentFragment();
+        fragment.append(...element.childNodes);
+        return dialogFromElement(fragment);
     }
     exports.dialogFromHtml = dialogFromHtml;
     tslib_1.__exportStar(modal_dialog_1, exports);
