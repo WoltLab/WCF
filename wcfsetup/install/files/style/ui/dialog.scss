@@ -280,3 +280,74 @@
 .confirmationObject {
 	font-weight: 600;
 }
+
+/* New dialog API */
+@keyframes dialog {
+	0% {
+		transform: translateY(-20px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.dialog {
+	animation: 0.24s dialog;
+	background-color: transparent;
+	border-width: 0;
+	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	padding: 0;
+}
+
+@keyframes dialogBackdrop {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.dialog::backdrop {
+	animation: 0.24s dialogBackdrop;
+	background-color: rgba(0, 0, 0, 0.34);
+}
+
+.dialog__document {
+	--dialog-border-radius: 10px;
+	--dialog-padding: 20px;
+
+	background-color: var(--wcfContentBackground);
+	border-radius: var(--dialog-border-radius);
+	color: var(--wcfContentText);
+	padding: var(--dialog-padding);
+}
+
+.dialog__header {
+	column-gap: 10px;
+	display: grid;
+	grid-template-columns: auto max-content;
+	grid-template-areas: "title closeButton";
+	margin-bottom: var(--dialog-padding);
+}
+
+.dialog__title {
+	grid-area: title;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	@include wcfFontHeadline;
+
+	font-weight: 600;
+}
+
+.dialog__closeButton {
+	grid-area: closeButton;
+}
+
+.dialog__content {
+	margin: 0 calc(var(--dialog-padding) * -1);
+	overflow: auto;
+	padding: 0 var(--dialog-padding);
+}

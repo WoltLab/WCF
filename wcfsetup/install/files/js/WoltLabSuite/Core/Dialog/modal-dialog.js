@@ -42,6 +42,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         get content() {
             if (this.#content === undefined) {
                 this.#content = document.createElement("div");
+                this.#content.classList.add("dialog__content");
             }
             return this.#content;
         }
@@ -53,6 +54,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
                 throw new TypeError("Only '<div>' elements are allowed as the content element.");
             }
             this.#content = element;
+            this.#content.classList.add("dialog__content");
         }
         set title(title) {
             this.#title.textContent = title;
@@ -82,16 +84,21 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
                 return;
             }
             const closeButton = document.createElement("button");
-            closeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
+            closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
+            closeButton.classList.add("dialog__closeButton");
             closeButton.addEventListener("click", () => {
                 this.close();
             });
             const header = document.createElement("div");
+            header.classList.add("dialog__header");
+            this.#title.classList.add("dialog__title");
             header.append(this.#title, closeButton);
             const doc = document.createElement("div");
+            doc.classList.add("dialog__document");
             doc.setAttribute("role", "document");
             doc.append(header, this.content);
             this.#dialog.append(doc);
+            this.#dialog.classList.add("dialog");
             this.#dialog.setAttribute("aria-labelledby", Util_1.default.identify(this.#title));
             this.#dialog.addEventListener("cancel", (event) => {
                 if (!this.closable) {
