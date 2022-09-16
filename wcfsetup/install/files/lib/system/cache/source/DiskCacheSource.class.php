@@ -17,7 +17,7 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Cache\Source
  */
-class DiskCacheSource implements ICacheSource
+final class DiskCacheSource implements ICacheSource
 {
     /**
      * up-to-date directory util object for the cache folder
