@@ -23,7 +23,7 @@ final class DiskCacheSource implements ICacheSource
      * up-to-date directory util object for the cache folder
      * @var DirectoryUtil
      */
-    protected $directoryUtil;
+    private $directoryUtil;
 
     /**
      * @inheritDoc
@@ -120,7 +120,7 @@ final class DiskCacheSource implements ICacheSource
      * @param int $maxLifetime
      * @return  bool
      */
-    protected function needRebuild($filename, $maxLifetime)
+    private function needRebuild($filename, $maxLifetime)
     {
         // cache does not exist
         if (!\file_exists($filename)) {
@@ -154,7 +154,7 @@ final class DiskCacheSource implements ICacheSource
      * @return  mixed
      * @throws  SystemException
      */
-    protected function readCache($cacheName, $filename)
+    private function readCache($cacheName, $filename)
     {
         // get file contents
         $contents = \file_get_contents($filename);
@@ -182,7 +182,7 @@ final class DiskCacheSource implements ICacheSource
      *
      * @return  DirectoryUtil
      */
-    protected function getDirectoryUtil()
+    private function getDirectoryUtil()
     {
         if ($this->directoryUtil === null) {
             $this->directoryUtil = new DirectoryUtil(WCF_DIR . 'cache/');
