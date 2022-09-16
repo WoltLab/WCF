@@ -17,7 +17,7 @@
 					<ul class="buttonGroup">
 						<li><button type="button" class="button small jsObjectAction" data-object-action="delete" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}">{lang}wcf.global.button.delete{/lang}</button></li>
 						{if $attachment->isImage}
-							{if $attachment->thumbnailType}<li><button class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getThumbnailLink('thumbnail')}">{lang}wcf.attachment.insertThumbnail{/lang}</button></li>{/if}
+							{if $attachment->thumbnailType}<li><button type="button" class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getThumbnailLink('thumbnail')}">{lang}wcf.attachment.insertThumbnail{/lang}</button></li>{/if}
 							<li><button type="button" class="button small jsButtonAttachmentInsertFull" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getLink()}">{lang}wcf.attachment.insertFull{/lang}</button></li>
 						{else}
 							<li><button type="button" class="button small jsButtonInsertAttachment" data-object-id="{@$attachment->attachmentID}">{lang}wcf.attachment.insert{/lang}</button></li>
