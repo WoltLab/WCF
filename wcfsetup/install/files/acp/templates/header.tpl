@@ -29,7 +29,6 @@
 	{/if}
 	
 	<script>
-		var SID_ARG_2ND = '';
 		var WCF_PATH = '{@$__wcf->getPath()}';
 		var WSC_API_URL = '{@$__wcf->getPath()}acp/';
 		{* The SECURITY_TOKEN is defined in wcf.globalHelper.js *}
