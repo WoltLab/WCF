@@ -85,11 +85,8 @@ final class DiskCacheSource implements ICacheSource
 
     /**
      * Returns cache filename.
-     *
-     * @param string $cacheName
-     * @return  string
      */
-    protected function getFilename($cacheName)
+    private function getFilename(string $cacheName): string
     {
         return WCF_DIR . 'cache/cache.' . $cacheName . '.v1.php';
     }
@@ -99,7 +96,7 @@ final class DiskCacheSource implements ICacheSource
      *
      * @param string $pattern
      */
-    protected function removeFiles($pattern)
+    private function removeFiles(string $pattern): void
     {
         $directory = FileUtil::unifyDirSeparator(WCF_DIR . 'cache/');
         $pattern = \str_replace('*', '.*', \str_replace('.', '\.', $pattern));
@@ -115,12 +112,8 @@ final class DiskCacheSource implements ICacheSource
 
     /**
      * Determines whether the cache needs to be rebuild or not.
-     *
-     * @param string $filename
-     * @param int $maxLifetime
-     * @return  bool
      */
-    private function needRebuild($filename, $maxLifetime)
+    private function needRebuild(string $filename, int $maxLifetime): bool
     {
         // cache does not exist
         if (!\file_exists($filename)) {
@@ -149,12 +142,9 @@ final class DiskCacheSource implements ICacheSource
     /**
      * Loads the file of a cached resource.
      *
-     * @param string $cacheName
-     * @param string $filename
-     * @return  mixed
      * @throws  SystemException
      */
-    private function readCache($cacheName, $filename)
+    private function readCache(string $cacheName, string $filename): mixed
     {
         // get file contents
         $contents = \file_get_contents($filename);
@@ -179,10 +169,8 @@ final class DiskCacheSource implements ICacheSource
 
     /**
      * Returns an up-to-date directory util object for the cache folder.
-     *
-     * @return  DirectoryUtil
      */
-    private function getDirectoryUtil()
+    private function getDirectoryUtil(): DirectoryUtil
     {
         if ($this->directoryUtil === null) {
             $this->directoryUtil = new DirectoryUtil(WCF_DIR . 'cache/');
