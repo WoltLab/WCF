@@ -873,8 +873,13 @@ class TemplateEngine extends SingletonFactory
         $contents = \substr($contents, $position + 1);
 
         // read serializes data
-        $data = @\unserialize($contents);
-        if ($data === false || !\is_array($data)) {
+        try {
+            $data = \unserialize($contents);
+
+            if (!\is_array($data)) {
+                return null;
+            }
+        } catch (\Throwable $e) {
             return null;
         }
 
