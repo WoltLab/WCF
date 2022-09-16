@@ -292,8 +292,12 @@
 }
 
 .dialog {
+	--dialog-border-radius: 10px;
+	--dialog-padding: 20px;
+
 	animation: 0.24s dialog;
 	background-color: transparent;
+	border-radius: var(--dialog-border-radius);
 	border-width: 0;
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	padding: 0;
@@ -314,9 +318,6 @@
 }
 
 .dialog__document {
-	--dialog-border-radius: 10px;
-	--dialog-padding: 20px;
-
 	background-color: var(--wcfContentBackground);
 	border-radius: var(--dialog-border-radius);
 	color: var(--wcfContentText);

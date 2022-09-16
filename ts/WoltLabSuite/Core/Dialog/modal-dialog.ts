@@ -44,6 +44,9 @@ export class ModalDialog extends HTMLElement {
       const element = this.#returnFocus();
       element?.focus();
     }
+
+    const event = new CustomEvent("closed");
+    this.dispatchEvent(event);
   }
 
   get dialog(): HTMLDialogElement {
@@ -88,18 +91,6 @@ export class ModalDialog extends HTMLElement {
     return this.#dialog.open;
   }
 
-  get closable(): boolean {
-    return this.hasAttribute("closable");
-  }
-
-  set closable(closable: boolean) {
-    if (closable) {
-      this.setAttribute("closable", "");
-    } else {
-      this.removeAttribute("closable");
-    }
-  }
-
   #attachDialog(): void {
     if (this.#dialog.parentElement !== null) {
       return;
@@ -127,20 +118,33 @@ export class ModalDialog extends HTMLElement {
     this.#dialog.setAttribute("aria-labelledby", DomUtil.identify(this.#title));
 
     this.#dialog.addEventListener("cancel", (event) => {
-      if (!this.closable) {
+      if (!this.#shouldClose()) {
         event.preventDefault();
         return;
       }
     });
 
     // Close the dialog by clicking on the backdrop.
-    this.#dialog.addEventListener("click", (event) => {
+    //
+    // Using the `close` event is not an option because it will
+    // also trigger when holding the mouse button inside the
+    // dialog and then releasing it on the backdrop.
+    this.#dialog.addEventListener("mousedown", (event) => {
       if (event.target === this.#dialog) {
-        this.close();
+        if (this.#shouldClose()) {
+          this.close();
+        }
       }
     });
 
     this.append(this.#dialog);
+  }
+
+  #shouldClose(): boolean {
+    const event = new CustomEvent("close");
+    this.dispatchEvent(event);
+
+    return event.defaultPrevented === false;
   }
 }
 

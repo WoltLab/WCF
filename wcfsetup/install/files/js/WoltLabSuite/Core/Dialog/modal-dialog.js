@@ -35,6 +35,8 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
                 const element = this.#returnFocus();
                 element?.focus();
             }
+            const event = new CustomEvent("closed");
+            this.dispatchEvent(event);
         }
         get dialog() {
             return this.#dialog;
@@ -68,17 +70,6 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         get open() {
             return this.#dialog.open;
         }
-        get closable() {
-            return this.hasAttribute("closable");
-        }
-        set closable(closable) {
-            if (closable) {
-                this.setAttribute("closable", "");
-            }
-            else {
-                this.removeAttribute("closable");
-            }
-        }
         #attachDialog() {
             if (this.#dialog.parentElement !== null) {
                 return;
@@ -101,18 +92,29 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             this.#dialog.classList.add("dialog");
             this.#dialog.setAttribute("aria-labelledby", Util_1.default.identify(this.#title));
             this.#dialog.addEventListener("cancel", (event) => {
-                if (!this.closable) {
+                if (!this.#shouldClose()) {
                     event.preventDefault();
                     return;
                 }
             });
             // Close the dialog by clicking on the backdrop.
-            this.#dialog.addEventListener("click", (event) => {
+            //
+            // Using the `close` event is not an option because it will
+            // also trigger when holding the mouse button inside the
+            // dialog and then releasing it on the backdrop.
+            this.#dialog.addEventListener("mousedown", (event) => {
                 if (event.target === this.#dialog) {
-                    this.close();
+                    if (this.#shouldClose()) {
+                        this.close();
+                    }
                 }
             });
             this.append(this.#dialog);
+        }
+        #shouldClose() {
+            const event = new CustomEvent("close");
+            this.dispatchEvent(event);
+            return event.defaultPrevented === false;
         }
     }
     exports.ModalDialog = ModalDialog;
