@@ -2,6 +2,7 @@
 
 namespace wcf\system\file\upload;
 
+use Laminas\Diactoros\Uri;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -141,10 +142,21 @@ class UploadFile
         if ($this->processed) {
             if ($this->imageLink === null) {
                 // try to guess path
-                return \str_replace(WCF_DIR, WCF::getPath(), $this->location);
+                $link = \str_replace(WCF_DIR, WCF::getPath(), $this->location);
             } else {
-                return $this->imageLink;
+                $link = $this->imageLink;
             }
+
+            $url = new Uri($link);
+            $query = $url->getQuery();
+            $cacheBuster = 't=' . \TIME_NOW;
+            if ($query) {
+                $url = $url->withQuery("{$query}&{$cacheBuster}");
+            } else {
+                $url = $url->withQuery($cacheBuster);
+            }
+
+            return (string)$url;
         } else {
             if ($this->imageData !== false) {
                 return 'data:' . $this->imageData['mime'] . ';base64,' . \base64_encode(\file_get_contents($this->location));

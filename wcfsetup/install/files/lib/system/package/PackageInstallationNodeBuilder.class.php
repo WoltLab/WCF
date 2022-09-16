@@ -598,6 +598,13 @@ class PackageInstallationNodeBuilder
         $this->emptyNode = true;
         $instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
         $count = \count($instructions);
+
+        if ($count === 0) {
+            // Abort if an empty list of instructions is received. This most likely indicates that
+            // the update instructions have been erroneously discarded.
+            throw new \Exception('Received an empty list of instructions.');
+        }
+
         $i = 0;
         foreach ($instructions as $pip) {
             $i++;
@@ -638,24 +645,23 @@ class PackageInstallationNodeBuilder
             }
         }
 
-        // insert nodes
-        if (!empty($pluginNodes)) {
-            $sql = "INSERT INTO wcf1_package_installation_node
-                                (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
-                    VALUES      (?, ?, ?, ?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
+        \assert($pluginNodes !== []);
 
-            foreach ($pluginNodes as $nodeData) {
-                $statement->execute([
-                    $this->installation->queue->queueID,
-                    $this->installation->queue->processNo,
-                    $nodeData['sequenceNo'],
-                    $nodeData['node'],
-                    $nodeData['parentNode'],
-                    'pip',
-                    \serialize($nodeData['data']),
-                ]);
-            }
+        $sql = "INSERT INTO wcf1_package_installation_node
+                            (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+
+        foreach ($pluginNodes as $nodeData) {
+            $statement->execute([
+                $this->installation->queue->queueID,
+                $this->installation->queue->processNo,
+                $nodeData['sequenceNo'],
+                $nodeData['node'],
+                $nodeData['parentNode'],
+                'pip',
+                \serialize($nodeData['data']),
+            ]);
         }
     }
 
@@ -767,10 +773,10 @@ class PackageInstallationNodeBuilder
             $installation = new PackageInstallationDispatcher($queue);
 
             // work-around for iterative package updates
-            if ($this->installation->queue->action == 'update' && $queue->package == $this->installation->queue->package) {
+            if (isset(self::$pendingPackages[$queue->package])) {
                 $installation->setPreviousPackage([
-                    'package' => $this->installation->getArchive()->getPackageInfo('name'),
-                    'packageVersion' => $this->installation->getArchive()->getPackageInfo('version'),
+                    'package' => $queue->package,
+                    'packageVersion' => self::$pendingPackages[$queue->package],
                 ]);
             }
 

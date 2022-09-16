@@ -105,7 +105,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
      * list of index to object relation
      * @var int[]
      */
-    protected $indexToObject;
+    protected $indexToObject = [];
 
     /**
      * Creates a new DatabaseObjectList object.
