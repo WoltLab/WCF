@@ -59,7 +59,7 @@ final class DiskCacheSource implements ICacheSource
 
         // load cache
         try {
-            return $this->readCache($cacheName, $filename);
+            return $this->readCache($filename);
         } catch (\Exception $e) {
             return;
         }
@@ -141,10 +141,8 @@ final class DiskCacheSource implements ICacheSource
 
     /**
      * Loads the file of a cached resource.
-     *
-     * @throws  SystemException
      */
-    private function readCache(string $cacheName, string $filename): mixed
+    private function readCache(string $filename): mixed
     {
         // get file contents
         $contents = \file_get_contents($filename);
@@ -152,19 +150,17 @@ final class DiskCacheSource implements ICacheSource
         // find first newline
         $position = \strpos($contents, "\n");
         if ($position === false) {
-            throw new SystemException("Unable to load cache resource '" . $cacheName . "'");
+            throw new \Exception("Unable to find newline within the cache file.");
         }
 
         // cut contents
         $contents = \substr($contents, $position + 1);
 
-        // unserialize
-        $value = @\unserialize($contents);
-        if ($value === false) {
-            throw new SystemException("Unable to load cache resource '" . $cacheName . "'");
+        try {
+            return \unserialize($contents);
+        } catch (\Throwable $e) {
+            throw new \Exception("Failed to unserialize the cache contents.", 0, $e);
         }
-
-        return $value;
     }
 
     /**
