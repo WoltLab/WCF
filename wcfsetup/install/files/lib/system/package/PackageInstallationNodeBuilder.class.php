@@ -292,16 +292,7 @@ class PackageInstallationNodeBuilder
         $newNode = $this->getToken();
 
         // update descendants
-        $sql = "UPDATE  wcf1_package_installation_node
-                SET     parentNode = ?
-                WHERE   parentNode = ?
-                    AND processNo = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $newNode,
-            $node,
-            $this->installation->queue->processNo,
-        ]);
+        $this->shiftNodes($node, $newNode);
 
         // create a copy of current node (prevents empty nodes)
         $sql = "SELECT  nodeType, nodeData, done
@@ -324,7 +315,7 @@ class PackageInstallationNodeBuilder
         $statement->execute([
             $this->installation->queue->queueID,
             $this->installation->queue->processNo,
-            0,
+            $sequenceNo,
             $newNode,
             $node,
             $row['nodeType'],
@@ -335,8 +326,7 @@ class PackageInstallationNodeBuilder
         // move other child-nodes greater than $sequenceNo into new node
         $sql = "UPDATE  wcf1_package_installation_node
                 SET     parentNode = ?,
-                        node = ?,
-                        sequenceNo = (sequenceNo - ?)
+                        node = ?
                 WHERE   node = ?
                     AND processNo = ?
                     AND sequenceNo > ?";
@@ -344,39 +334,10 @@ class PackageInstallationNodeBuilder
         $statement->execute([
             $node,
             $newNode,
-            $sequenceNo,
             $node,
             $this->installation->queue->processNo,
             $sequenceNo,
         ]);
-    }
-
-    /**
-     * Inserts a node before given target node. Will shift all target
-     * nodes to provide to be descendants of the new node. If you intend
-     * to insert more than a single node, you should prefer shiftNodes().
-     *
-     * @param string $beforeNode
-     * @param callable $callback
-     */
-    public function insertNode($beforeNode, callable $callback)
-    {
-        $newNode = $this->getToken();
-
-        // update descendants
-        $sql = "UPDATE  wcf1_package_installation_node
-                SET     parentNode = ?
-                WHERE   parentNode = ?
-                    AND processNo = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $newNode,
-            $beforeNode,
-            $this->installation->queue->processNo,
-        ]);
-
-        // execute callback
-        $callback($beforeNode, $newNode);
     }
 
     /**

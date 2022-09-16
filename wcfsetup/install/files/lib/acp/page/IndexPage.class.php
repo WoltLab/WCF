@@ -3,13 +3,13 @@
 namespace wcf\acp\page;
 
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\user\User;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Environment;
-use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -195,24 +195,16 @@ class IndexPage extends AbstractPage
     {
         // check package installation queue
         if (!\PACKAGE_ID && $this->action == 'WCFSetup') {
-            $sql = "SELECT      queueID
-                    FROM        wcf1_package_installation_queue
-                    WHERE       userID = ?
-                            AND parentQueueID = 0
-                            AND done = 0
-                    ORDER BY    queueID ASC";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([WCF::getUser()->userID]);
-            $queueID = $statement->fetchSingleColumn();
+            $queue = new PackageInstallationQueue(1);
 
-            if ($queueID) {
-                WCF::getTPL()->assign(['queueID' => $queueID]);
-                WCF::getTPL()->display('packageInstallationSetup');
+            \assert($queue->queueID === 1);
+            \assert($queue->parentQueueID === 0);
+            \assert($queue->package === 'com.woltlab.wcf');
 
-                exit;
-            } else {
-                throw new \LogicException('Unreachable');
-            }
+            WCF::getTPL()->assign(['queueID' => $queue->queueID]);
+            WCF::getTPL()->display('packageInstallationSetup');
+
+            exit;
         }
 
         // show page

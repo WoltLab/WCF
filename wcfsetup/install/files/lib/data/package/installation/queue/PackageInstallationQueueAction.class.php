@@ -43,51 +43,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['cancelInstallation', 'prepareQueue'];
-
-    /**
-     * Validates the 'prepareQueue' action:
-     */
-    public function validatePrepareQueue()
-    {
-        $this->readInteger('packageID');
-
-        $this->package = new Package($this->parameters['packageID']);
-        if (!$this->package->packageID) {
-            throw new UserInputException('packageID');
-        }
-
-        if (
-            !isset($this->parameters['action'])
-            || !\in_array($this->parameters['action'], ['install', 'update', 'uninstall', 'rollback'])
-        ) {
-            throw new UserInputException('action');
-        }
-    }
-
-    /**
-     * Prepares a new package installation queue.
-     *
-     * @return  int[]
-     */
-    public function prepareQueue()
-    {
-        $processNo = PackageInstallationQueue::getNewProcessNo();
-
-        $queue = PackageInstallationQueueEditor::create([
-            'processNo' => $processNo,
-            'userID' => WCF::getUser()->userID,
-            'package' => $this->package->package,
-            'packageName' => $this->package->packageName,
-            'packageID' => $this->package->packageID,
-            'action' => $this->parameters['action'],
-            'installationType' => 'other',
-        ]);
-
-        return [
-            'queueID' => $queue->queueID,
-        ];
-    }
+    protected $requireACP = ['cancelInstallation'];
 
     /**
      * Validates the 'cancelInstallation' action.

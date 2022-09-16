@@ -1215,6 +1215,7 @@ final class WCFSetup extends WCF
 
         // register essential wcf package
         $queue = PackageInstallationQueueEditor::create([
+            'queueID' => 1,
             'processNo' => $processNo,
             'userID' => $admin->userID,
             'package' => 'com.woltlab.wcf',
@@ -1222,6 +1223,9 @@ final class WCFSetup extends WCF
             'archive' => $to,
             'isApplication' => 1,
         ]);
+        if ($queue->queueID !== 1) {
+            throw new \LogicException("Failed to register queue for 'com.woltlab.wcf'.");
+        }
 
         // register all other delivered packages
         \asort($otherPackages);
