@@ -135,7 +135,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
         ${nativeSharingElement}
       </div>
     `;
-            dialog = (0, Dialog_1.dialogFromHtml)(dialogContent);
+            dialog = (0, Dialog_1.createDialog)().fromHtml(dialogContent).withoutControls();
             dialog.title = Language.get("wcf.message.share");
             dialog.content
                 .querySelectorAll(".shareDialogCopyButton")
