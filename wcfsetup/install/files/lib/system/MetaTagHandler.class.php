@@ -16,9 +16,8 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
 {
     /**
      * current iterator index
-     * @var int
      */
-    protected $index = 0;
+    protected int $index = 0;
 
     /**
      * list of index to object relation
@@ -35,7 +34,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     /**
      * @inheritDoc
      */
-    protected function init()
+    protected function init(): void
     {
         // set default tags
         if ($value = WCF::getLanguage()->get(META_DESCRIPTION)) {
@@ -59,13 +58,8 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
 
     /**
      * Adds or replaces a meta tag.
-     *
-     * @param string $identifier
-     * @param string $name
-     * @param string $value
-     * @param bool $isProperty
      */
-    public function addTag($identifier, $name, $value, $isProperty = false)
+    public function addTag(string $identifier, string $name, string $value, bool $isProperty = false): void
     {
         if (!isset($this->objects[$identifier])) {
             $this->indexToObject[] = $identifier;
@@ -85,10 +79,8 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
 
     /**
      * Removes a meta tag.
-     *
-     * @param string $identifier
      */
-    public function removeTag($identifier)
+    public function removeTag(string $identifier): void
     {
         if (isset($this->objects[$identifier])) {
             unset($this->objects[$identifier]);
@@ -108,7 +100,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): string
     {
         $tag = $this->objects[$this->indexToObject[$this->index]];
 
@@ -121,7 +113,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
      *
      * @see \Iterator::key()
      */
-    public function key()
+    public function key(): string
     {
         return $this->indexToObject[$this->index];
     }
@@ -129,7 +121,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -137,7 +129,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -145,7 +137,7 @@ final class MetaTagHandler extends SingletonFactory implements \Countable, \Iter
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
