@@ -848,7 +848,11 @@ class WCF
 
                 // PHP will implicitly check if the file exists when including it, which means that we can save a
                 // redundant syscall/fs access by not checking for existence ourselves. Do not use require_once()!
-                @include_once($classPath);
+
+                // TODO: Changed for #4684. Revert for release.
+                if (file_exists($classPath)) {
+                    include_once($classPath);
+                }
             }
         }
     }
