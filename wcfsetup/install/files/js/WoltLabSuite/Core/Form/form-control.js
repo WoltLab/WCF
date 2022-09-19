@@ -23,6 +23,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             if (this.#primaryButton === undefined) {
                 this.#primaryButton = document.createElement("button");
                 this.#primaryButton.type = "button";
+                this.#primaryButton.autofocus = true;
                 this.#primaryButton.classList.add("button", "buttonPrimary", "formControl__button", "formControl__button--primary");
                 this.#primaryButton.textContent = this.primary;
                 this.append(this.#primaryButton);

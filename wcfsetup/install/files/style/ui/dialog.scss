@@ -300,6 +300,12 @@
 	border-radius: var(--dialog-border-radius);
 	border-width: 0;
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	display: flex;
+	flex-direction: column;
+	max-height: 80%;
+	max-width: 80%;
+	min-height: 0;
+	min-width: 500px;
 	padding: 0;
 }
 
@@ -321,6 +327,9 @@
 	background-color: var(--wcfContentBackground);
 	border-radius: var(--dialog-border-radius);
 	color: var(--wcfContentText);
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 	padding: var(--dialog-padding);
 }
 
@@ -351,6 +360,12 @@
 	margin: 0 calc(var(--dialog-padding) * -1);
 	overflow: auto;
 	padding: 0 var(--dialog-padding);
+}
+
+.dialog__form {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 }
 
 .formControl {

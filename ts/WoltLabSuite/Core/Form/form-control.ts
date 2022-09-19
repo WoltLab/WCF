@@ -26,6 +26,7 @@ export class FormControl extends HTMLElement {
     if (this.#primaryButton === undefined) {
       this.#primaryButton = document.createElement("button");
       this.#primaryButton.type = "button";
+      this.#primaryButton.autofocus = true;
       this.#primaryButton.classList.add(
         "button",
         "buttonPrimary",
@@ -33,6 +34,7 @@ export class FormControl extends HTMLElement {
         "formControl__button--primary",
       );
       this.#primaryButton.textContent = this.primary;
+
       this.append(this.#primaryButton);
     }
   }

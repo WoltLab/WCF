@@ -9,12 +9,11 @@
  * @module  AjaxRequest (alias)
  * @module  WoltLabSuite/Core/Ajax/Request
  */
-define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Language"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Util_1, Language) {
+define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Language"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Language) {
     "use strict";
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     let _didInit = false;
     let _ignoreAllErrors = false;
@@ -250,10 +249,10 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
                 if (html) {
-                    void new Promise((resolve_2, reject_2) => { require(["../Ui/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((UiDialog) => {
-                        UiDialog.openStatic(Util_1.default.getUniqueId(), html, {
-                            title: Language.get("wcf.global.error.title"),
-                        });
+                    void new Promise((resolve_2, reject_2) => { require(["../Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ dialogFactory }) => {
+                        const dialog = dialogFactory().fromHtml(html).asAlert();
+                        dialog.title = Language.get("wcf.global.error.title");
+                        dialog.show();
                     });
                 }
             }

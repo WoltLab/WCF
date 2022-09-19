@@ -89,9 +89,12 @@ export class ModalDialog extends HTMLElement {
 
     this.#form = document.createElement("form");
     this.#form.method = "dialog";
+    this.#form.classList.add("dialog__form");
     this.#content.insertAdjacentElement("beforebegin", this.#form);
 
     this.#form.append(this.#content, formControl);
+
+    this.#dialog.setAttribute("role", "alert");
   }
 
   #attachDialog(): void {

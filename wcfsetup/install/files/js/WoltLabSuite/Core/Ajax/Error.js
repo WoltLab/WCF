@@ -17,14 +17,10 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
         const html = await getErrorHtml(error);
         if (html !== "") {
             // Load these modules on runtime to avoid circular dependencies.
-            const [UiDialog, DomUtil, Language] = await Promise.all([
-                new Promise((resolve_1, reject_1) => { require(["../Ui/Dialog"], resolve_1, reject_1); }).then(tslib_1.__importStar),
-                new Promise((resolve_2, reject_2) => { require(["../Dom/Util"], resolve_2, reject_2); }).then(tslib_1.__importStar),
-                new Promise((resolve_3, reject_3) => { require(["../Language"], resolve_3, reject_3); }).then(tslib_1.__importStar),
-            ]);
-            UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-                title: Language.get("wcf.global.error.title"),
-            });
+            const [{ dialogFactory }, Language] = await Promise.all([new Promise((resolve_1, reject_1) => { require(["../Dialog"], resolve_1, reject_1); }).then(tslib_1.__importStar), new Promise((resolve_2, reject_2) => { require(["../Language"], resolve_2, reject_2); }).then(tslib_1.__importStar)]);
+            const dialog = dialogFactory().fromHtml(html).asAlert();
+            dialog.title = Language.get("wcf.global.error.title");
+            dialog.show();
         }
     }
     async function getErrorHtml(error) {
