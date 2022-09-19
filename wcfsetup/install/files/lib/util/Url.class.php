@@ -43,11 +43,8 @@ final class Url implements \ArrayAccess
      * Tests if provided $url appears to be an URL.
      *
      * This method is a wrapper around filter_var with FILTER_VALIDATE_URL.
-     *
-     * @param string $url
-     * @return      bool
      */
-    public static function is($url)
+    public static function is(string $url): bool
     {
         return \filter_var($url, \FILTER_VALIDATE_URL) !== false;
     }
@@ -56,11 +53,8 @@ final class Url implements \ArrayAccess
      * Parses the provided url and returns an array containing all possible url
      * components, even those not originally present, but in that case set to am
      * 'empty' value.
-     *
-     * @param string $url
-     * @return      Url
      */
-    public static function parse($url)
+    public static function parse(string $url): self
     {
         $url = \parse_url($url);
         if ($url === false) {
@@ -83,11 +77,9 @@ final class Url implements \ArrayAccess
      * Returns true if the provided url contains all listed components and
      * that they're non-empty.
      *
-     * @param string $url
      * @param int[] $components
-     * @return      bool
      */
-    public static function contains($url, array $components)
+    public static function contains(string $url, array $components): bool
     {
         $result = self::parse($url);
         foreach ($components as $component) {
@@ -112,7 +104,7 @@ final class Url implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         // We're throwing an exception here, if `$offset` is an unknown property
         // key, which is a bit weird when working with `isset()` or `empty()`,
@@ -128,7 +120,7 @@ final class Url implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->components[$this->getIndex($offset)];
     }
@@ -136,7 +128,7 @@ final class Url implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         throw new \RuntimeException("Url components are immutable");
     }
@@ -144,7 +136,7 @@ final class Url implements \ArrayAccess
     /**
      * @inheritDoc
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new \RuntimeException("Url components are immutable");
     }
