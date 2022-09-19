@@ -26,15 +26,13 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 
     /**
      * node depth
-     * @var int
      */
-    protected $depth = 0;
+    protected int $depth = 0;
 
     /**
      * true if item or one of its children is active
-     * @var bool
      */
-    protected $isActive = false;
+    protected bool $isActive = false;
 
     /**
      * parent node
@@ -46,7 +44,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
      * iterator position
      * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * @inheritDoc
@@ -76,17 +74,15 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
      *
      * @param MenuItemNode[] $children
      */
-    public function setChildren(array $children)
+    public function setChildren(array $children): void
     {
         $this->children = $children;
     }
 
     /**
      * Returns the parent node
-     *
-     * @return  MenuItemNode
      */
-    public function getParentNode()
+    public function getParentNode(): MenuItemNode
     {
         return $this->parentNode;
     }
@@ -101,10 +97,8 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 
     /**
      * Returns true if this element is the last sibling.
-     *
-     * @return  bool
      */
-    public function isLastSibling()
+    public function isLastSibling(): bool
     {
         foreach ($this->parentNode as $key => $child) {
             if ($child === $this) {
@@ -119,10 +113,8 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 
     /**
      * Returns the number of open parent nodes.
-     *
-     * @return  int
      */
-    public function getOpenParentNodes()
+    public function getOpenParentNodes(): int
     {
         $element = $this;
         $i = 0;
@@ -138,7 +130,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * Marks this item and all its direct ancestors as active.
      */
-    public function setIsActive()
+    public function setIsActive(): void
     {
         $this->isActive = true;
 
@@ -150,10 +142,8 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 
     /**
      * Returns true if this item (or one of its children) is marked as active.
-     *
-     * @return  bool
      */
-    public function isActiveNode()
+    public function isActiveNode(): bool
     {
         return $this->isActive;
     }
@@ -161,7 +151,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -169,7 +159,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->children[$this->position]);
     }
@@ -177,7 +167,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -185,7 +175,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): MenuItemNode
     {
         return $this->children[$this->position];
     }
@@ -193,7 +183,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
@@ -201,7 +191,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function getChildren()
+    public function getChildren(): MenuItemNode
     {
         return $this->children[$this->position];
     }
@@ -209,17 +199,15 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return \count($this->children) > 0;
     }
 
     /**
      * Returns node depth.
-     *
-     * @return  int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
