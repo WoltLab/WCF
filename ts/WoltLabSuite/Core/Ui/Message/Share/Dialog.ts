@@ -15,7 +15,7 @@ import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import * as UiMessageShare from "../Share";
 import { getShareProviders } from "./Providers";
-import { createDialog, ModalDialog } from "../../../Dialog";
+import { dialogFactory, ModalDialog } from "../../../Dialog";
 
 const shareButtons = new WeakSet<HTMLElement>();
 
@@ -170,7 +170,7 @@ function openDialog(event: MouseEvent): void {
       </div>
     `;
 
-    dialog = createDialog().fromHtml(dialogContent).withoutControls();
+    dialog = dialogFactory().fromHtml(dialogContent).withoutControls();
     dialog.title = Language.get("wcf.message.share");
 
     dialog.content

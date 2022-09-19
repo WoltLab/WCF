@@ -1,6 +1,6 @@
 import { DialogSetup } from "./Dialog/Setup";
 
-export function createDialog(): DialogSetup {
+export function dialogFactory(): DialogSetup {
   return new DialogSetup();
 }
 
