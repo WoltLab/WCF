@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\HttpHandlerRunner;
 
+use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -22,15 +23,12 @@ use Throwable;
  */
 final class RequestHandlerRunner implements RequestHandlerRunnerInterface
 {
-    /** @var Emitter\EmitterInterface */
-    private $emitter;
+    private EmitterInterface $emitter;
 
     /**
      * A request handler to run as the application.
-     *
-     * @var RequestHandlerInterface
      */
-    private $handler;
+    private RequestHandlerInterface $handler;
 
     /**
      * A factory capable of generating an error response in the scenario that
@@ -58,7 +56,7 @@ final class RequestHandlerRunner implements RequestHandlerRunnerInterface
      */
     public function __construct(
         RequestHandlerInterface $handler,
-        Emitter\EmitterInterface $emitter,
+        EmitterInterface $emitter,
         callable $serverRequestFactory,
         callable $serverRequestErrorResponseGenerator
     ) {
