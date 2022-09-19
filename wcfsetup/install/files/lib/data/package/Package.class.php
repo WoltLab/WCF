@@ -476,14 +476,5 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         }
 
         \file_put_contents($packageDir . PackageInstallationDispatcher::CONFIG_FILE, $content);
-
-        // add legacy config.inc.php file for backwards compatibility
-        if ($packageID != 1) {
-            // force overwriting the `config.inc.php` unless it is the core itself
-            \file_put_contents(
-                $packageDir . 'config.inc.php',
-                "<?php" . "\n" . "require_once(__DIR__ . '/" . PackageInstallationDispatcher::CONFIG_FILE . "');\n"
-            );
-        }
     }
 }
