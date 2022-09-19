@@ -52,30 +52,24 @@ trait TObjectTreeNode
 
     /**
      * Returns the number of child nodes.
-     *
-     * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->children);
     }
 
     /**
      * Return the currently iterated child node.
-     *
-     * @return  static
      */
-    public function current()
+    public function current(): static
     {
         return $this->children[$this->index];
     }
 
     /**
      * Returns an iterator for the currently iterated child node by returning the node itself.
-     *
-     * @return  static
      */
-    public function getChildren()
+    public function getChildren(): static
     {
         return $this->children[$this->index];
     }
@@ -84,10 +78,8 @@ trait TObjectTreeNode
      * Returns the depth of the node within the tree.
      *
      * The minimum depth is `1`.
-     *
-     * @return  int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         $element = $this;
         $depth = 1;
@@ -102,10 +94,8 @@ trait TObjectTreeNode
 
     /**
      * Returns the number of open parent nodes.
-     *
-     * @return  int
      */
-    public function getOpenParentNodes()
+    public function getOpenParentNodes(): int
     {
         $element = $this;
         $i = 0;
@@ -120,40 +110,32 @@ trait TObjectTreeNode
 
     /**
      * Retruns the parent node of this node.
-     *
-     * @return  static      parent node
      */
-    public function getParentNode()
+    public function getParentNode(): ?self
     {
         return $this->parentNode;
     }
 
     /**
      * Returns `true` if the node as any children and return `false` otherwise.
-     *
-     * @return  bool
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return !empty($this->children);
     }
 
     /**
      * Return the key of the currently iterated child node.
-     *
-     * @return  int
      */
-    public function key()
+    public function key(): int
     {
         return $this->index;
     }
 
     /**
      * Returns `true` if this node is the last sibling and `false` otherwise.
-     *
-     * @return  bool
      */
-    public function isLastSibling()
+    public function isLastSibling(): bool
     {
         foreach ($this->parentNode as $key => $child) {
             if ($child === $this) {
@@ -167,7 +149,7 @@ trait TObjectTreeNode
     /**
      * Moves the iteration forward to next child node.
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -175,7 +157,7 @@ trait TObjectTreeNode
     /**
      * Rewind the iteration to the first child node.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -183,7 +165,6 @@ trait TObjectTreeNode
     /**
      * Sets the parent node of this node.
      *
-     * @param IObjectTreeNode $parentNode parent node
      * @throws  \InvalidArgumentException       if given object is no (deocrated) instance of this class
      */
     public function setParentNode(IObjectTreeNode $parentNode)
@@ -197,10 +178,8 @@ trait TObjectTreeNode
 
     /**
      * Returns `true` if current iteration position is valid and `false` otherwise.
-     *
-     * @return  bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->children[$this->index]);
     }
