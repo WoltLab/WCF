@@ -47,9 +47,9 @@
             'dev_requirement' => false,
         ),
         'ezyang/htmlpurifier' => array(
-            'pretty_version' => 'v4.14.0',
-            'version' => '4.14.0.0',
-            'reference' => '12ab42bd6e742c70c0a52f7b82477fcd44e64b75',
+            'pretty_version' => 'v4.16.0',
+            'version' => '4.16.0.0',
+            'reference' => '523407fb06eb9e5f3d59889b3978d5bfe94299c8',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ezyang/htmlpurifier',
             'aliases' => array(),

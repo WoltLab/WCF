@@ -133,6 +133,7 @@ return array(
     'HTMLPurifier_AttrDef_HTML_Bool' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/Bool.php',
     'HTMLPurifier_AttrDef_HTML_Class' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/Class.php',
     'HTMLPurifier_AttrDef_HTML_Color' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/Color.php',
+    'HTMLPurifier_AttrDef_HTML_ContentEditable' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/ContentEditable.php',
     'HTMLPurifier_AttrDef_HTML_FrameTarget' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/FrameTarget.php',
     'HTMLPurifier_AttrDef_HTML_ID' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/ID.php',
     'HTMLPurifier_AttrDef_HTML_Length' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier/AttrDef/HTML/Length.php',

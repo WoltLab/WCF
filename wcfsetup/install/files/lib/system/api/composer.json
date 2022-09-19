@@ -13,7 +13,7 @@
         "chrisjean/php-ico": "^1.0.4",
         "dragonmantank/cron-expression": "^3.3.2",
         "erusev/parsedown": "^1.7.4",
-        "ezyang/htmlpurifier": "4.14.*",
+        "ezyang/htmlpurifier": "4.16.*",
         "guzzlehttp/guzzle": "^7.5",
         "guzzlehttp/psr7": "^2.4.1",
         "laminas/laminas-diactoros": "^2.17",
