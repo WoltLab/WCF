@@ -277,6 +277,7 @@ class PackageInstallationDispatcher
 
         if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
             $this->setupDeveloperMode();
+            WCF::getSession()->unregister('__wcfSetup_developerMode');
         }
 
         RegistryHandler::getInstance()->set(
