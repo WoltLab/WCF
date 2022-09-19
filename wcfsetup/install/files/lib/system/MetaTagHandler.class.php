@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Message
  */
-class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator
+final class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator
 {
     /**
      * current iterator index
