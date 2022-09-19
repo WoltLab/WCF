@@ -309,6 +309,10 @@
 	padding: 0;
 }
 
+.dialog:not([open]) {
+	display: none;
+}
+
 @keyframes dialogBackdrop {
 	0% {
 		opacity: 0;

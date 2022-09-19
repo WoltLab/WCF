@@ -8,10 +8,33 @@ define(["require", "exports"], function (require, exports) {
             this.#dialog = dialog;
         }
         asAlert(options) {
-            options = Object.assign({
-                primary: "",
-            }, options);
-            this.#dialog.attachFormControls(options);
+            const formControlOptions = {
+                cancel: undefined,
+                extra: undefined,
+                isAlert: true,
+                primary: options?.primary || "",
+            };
+            this.#dialog.attachFormControls(formControlOptions);
+            return this.#dialog;
+        }
+        asConfirmation(options) {
+            const formControlOptions = {
+                cancel: options?.cancel || "",
+                extra: options?.extra,
+                isAlert: true,
+                primary: options?.primary || "",
+            };
+            this.#dialog.attachFormControls(formControlOptions);
+            return this.#dialog;
+        }
+        asPrompt(options) {
+            const formControlOptions = {
+                cancel: options?.cancel || "",
+                extra: options?.extra,
+                isAlert: false,
+                primary: options?.primary || "",
+            };
+            this.#dialog.attachFormControls(formControlOptions);
             return this.#dialog;
         }
         withoutControls() {

@@ -4,6 +4,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     exports.setup = exports.FormControl = void 0;
     Language = tslib_1.__importStar(Language);
     class FormControl extends HTMLElement {
+        #cancelButton;
         #primaryButton;
         set primary(primary) {
             this.setAttribute("primary", primary);
@@ -12,6 +13,24 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             let label = this.getAttribute("default");
             if (!label) {
                 label = Language.get("wcf.global.confirmation.confirm");
+            }
+            return label;
+        }
+        set cancel(cancel) {
+            if (cancel === undefined) {
+                this.removeAttribute("cancel");
+            }
+            else {
+                this.setAttribute("cancel", cancel);
+            }
+        }
+        get cancel() {
+            let label = this.getAttribute("cancel");
+            if (label === null) {
+                return undefined;
+            }
+            if (label === "") {
+                label = Language.get("wcf.global.confirmation.cancel");
             }
             return label;
         }
@@ -27,6 +46,13 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 this.#primaryButton.classList.add("button", "buttonPrimary", "formControl__button", "formControl__button--primary");
                 this.#primaryButton.textContent = this.primary;
                 this.append(this.#primaryButton);
+            }
+            if (this.#cancelButton === undefined && this.cancel !== undefined) {
+                this.#cancelButton = document.createElement("button");
+                this.#cancelButton.type = "button";
+                this.#cancelButton.classList.add("button", "formControl__button", "formControl__button--cancel");
+                this.#cancelButton.textContent = this.cancel;
+                this.append(this.#cancelButton);
             }
         }
     }

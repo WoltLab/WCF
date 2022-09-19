@@ -62,14 +62,27 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             if (this.#form !== undefined) {
                 throw new Error("There is already a form control attached to this dialog.");
             }
+            if (options.extra !== undefined && options.cancel === undefined) {
+                options.cancel = "";
+            }
             const formControl = document.createElement("form-control");
             formControl.primary = options.primary;
+            if (options.cancel !== undefined) {
+                formControl.cancel = options.cancel;
+            }
             this.#form = document.createElement("form");
             this.#form.method = "dialog";
             this.#form.classList.add("dialog__form");
             this.#content.insertAdjacentElement("beforebegin", this.#form);
             this.#form.append(this.#content, formControl);
-            this.#dialog.setAttribute("role", "alert");
+            if (options.isAlert) {
+                if (options.cancel === undefined) {
+                    this.#dialog.setAttribute("role", "alert");
+                }
+                else {
+                    this.#dialog.setAttribute("role", "alertdialog");
+                }
+            }
         }
         #attachDialog() {
             if (this.#dialog.parentElement !== null) {

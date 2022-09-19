@@ -1,6 +1,7 @@
 import * as Language from "../Language";
 
 export class FormControl extends HTMLElement {
+  #cancelButton?: HTMLButtonElement;
   #primaryButton?: HTMLButtonElement;
 
   set primary(primary: string) {
@@ -11,6 +12,27 @@ export class FormControl extends HTMLElement {
     let label = this.getAttribute("default")!;
     if (!label) {
       label = Language.get("wcf.global.confirmation.confirm");
+    }
+
+    return label;
+  }
+
+  set cancel(cancel: string | undefined) {
+    if (cancel === undefined) {
+      this.removeAttribute("cancel");
+    } else {
+      this.setAttribute("cancel", cancel);
+    }
+  }
+
+  get cancel(): string | undefined {
+    let label = this.getAttribute("cancel");
+    if (label === null) {
+      return undefined;
+    }
+
+    if (label === "") {
+      label = Language.get("wcf.global.confirmation.cancel");
     }
 
     return label;
@@ -36,6 +58,15 @@ export class FormControl extends HTMLElement {
       this.#primaryButton.textContent = this.primary;
 
       this.append(this.#primaryButton);
+    }
+
+    if (this.#cancelButton === undefined && this.cancel !== undefined) {
+      this.#cancelButton = document.createElement("button");
+      this.#cancelButton.type = "button";
+      this.#cancelButton.classList.add("button", "formControl__button", "formControl__button--cancel");
+      this.#cancelButton.textContent = this.cancel;
+
+      this.append(this.#cancelButton);
     }
   }
 }

@@ -5,6 +5,9 @@ type CallbackReturnFocus = () => HTMLElement | null;
 const dialogContainer = document.createElement("div");
 
 export type ModalDialogFormControl = {
+  cancel: string | undefined;
+  extra: string | undefined;
+  isAlert: boolean;
   primary: string;
 };
 
@@ -84,8 +87,16 @@ export class ModalDialog extends HTMLElement {
       throw new Error("There is already a form control attached to this dialog.");
     }
 
+    if (options.extra !== undefined && options.cancel === undefined) {
+      options.cancel = "";
+    }
+
     const formControl = document.createElement("form-control");
     formControl.primary = options.primary;
+
+    if (options.cancel !== undefined) {
+      formControl.cancel = options.cancel;
+    }
 
     this.#form = document.createElement("form");
     this.#form.method = "dialog";
@@ -94,7 +105,13 @@ export class ModalDialog extends HTMLElement {
 
     this.#form.append(this.#content, formControl);
 
-    this.#dialog.setAttribute("role", "alert");
+    if (options.isAlert) {
+      if (options.cancel === undefined) {
+        this.#dialog.setAttribute("role", "alert");
+      } else {
+        this.#dialog.setAttribute("role", "alertdialog");
+      }
+    }
   }
 
   #attachDialog(): void {
