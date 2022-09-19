@@ -11,7 +11,7 @@
     "require": {
         "chrisjean/php-ico": "^1.0.4",
         "erusev/parsedown": "^1.7.4",
-        "ezyang/htmlpurifier": "4.14.*",
+        "ezyang/htmlpurifier": "4.16.*",
         "guzzlehttp/guzzle": "^7.4.2",
         "guzzlehttp/psr7": "^2.2.1",
         "laminas/laminas-diactoros": "^2.4.1",
