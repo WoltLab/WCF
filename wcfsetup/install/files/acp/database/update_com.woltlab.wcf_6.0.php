@@ -61,4 +61,6 @@ return [
         ]),
     PartialDatabaseTable::create('wcf1_package_compatibility')
         ->drop(),
+    PartialDatabaseTable::create('wcf1_package_update_compatibility')
+        ->drop(),
 ];
