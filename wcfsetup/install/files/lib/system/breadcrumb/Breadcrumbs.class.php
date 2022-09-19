@@ -26,14 +26,14 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * Current iterator-index
      */
-    protected $index = 0;
+    protected int $index = 0;
 
     /**
      * Returns the list of breadcrumbs.
      *
      * @return  Breadcrumb[]
      */
-    public function get()
+    public function get(): array
     {
         if ($this->items === null) {
             $this->loadBreadcrumbs();
@@ -45,7 +45,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * Loads the list of breadcrumbs.
      */
-    protected function loadBreadcrumbs()
+    protected function loadBreadcrumbs(): void
     {
         $this->items = [];
         $locations = PageLocationManager::getInstance()->getLocations();
@@ -94,7 +94,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): Breadcrumb
     {
         return $this->items[$this->index];
     }
@@ -102,7 +102,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->index;
     }
@@ -110,7 +110,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->items[$this->index]);
     }
@@ -118,7 +118,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -126,7 +126,7 @@ final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterato
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
