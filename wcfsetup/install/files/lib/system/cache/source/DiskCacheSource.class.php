@@ -2,12 +2,8 @@
 
 namespace wcf\system\cache\source;
 
-use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
-use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\DirectoryUtil;
-use wcf\util\FileUtil;
 
 /**
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
@@ -20,20 +16,42 @@ use wcf\util\FileUtil;
 final class DiskCacheSource implements ICacheSource
 {
     /**
-     * up-to-date directory util object for the cache folder
-     * @var DirectoryUtil
-     */
-    private $directoryUtil;
-
-    /**
      * @inheritDoc
      */
     public function flush($cacheName, $useWildcard)
     {
         if ($useWildcard) {
-            $this->removeFiles('cache.' . $cacheName . '(-[a-f0-9]+)?.v1.php');
+            $quoted = \preg_quote($cacheName, '/');
+            $regex = "/^cache\.{$quoted}(-[a-f0-9]+)?\.v1\.php$/";
+
+            $iterator = new \DirectoryIterator(WCF_DIR . 'cache/');
+            foreach ($iterator as $file) {
+                if (!$file->isFile()) {
+                    continue;
+                }
+                if ($file->getExtension() !== 'php') {
+                    continue;
+                }
+                if (!\preg_match($regex, $file->getBasename())) {
+                    continue;
+                }
+
+                WCF::resetZendOpcache($file->getPathname());
+
+                if (!@\touch($file->getPathname(), 1)) {
+                    \unlink($file->getPathname());
+                }
+            }
         } else {
-            $this->removeFiles('cache.' . $cacheName . '.v1.php');
+            $filename = $this->getFilename($cacheName);
+
+            if (\file_exists($filename)) {
+                WCF::resetZendOpcache($filename);
+
+                if (!@\touch($filename, 1)) {
+                    \unlink($filename);
+                }
+            }
         }
     }
 
@@ -42,7 +60,17 @@ final class DiskCacheSource implements ICacheSource
      */
     public function flushAll()
     {
-        $this->getDirectoryUtil()->removePattern(new Regex('.*\.php$'));
+        $iterator = new \DirectoryIterator(WCF_DIR . 'cache/');
+        foreach ($iterator as $file) {
+            if (!$file->isFile()) {
+                continue;
+            }
+            if ($file->getExtension() !== 'php') {
+                continue;
+            }
+
+            \unlink($file->getPathname());
+        }
 
         WCF::resetZendOpcache();
     }
@@ -76,10 +104,6 @@ final class DiskCacheSource implements ICacheSource
         $writer->flush();
         $writer->close();
 
-        // unset current DirectoryUtil object to make sure new cache file
-        // can be deleted in the same request
-        $this->directoryUtil = null;
-
         WCF::resetZendOpcache($this->getFilename($cacheName));
     }
 
@@ -89,25 +113,6 @@ final class DiskCacheSource implements ICacheSource
     private function getFilename(string $cacheName): string
     {
         return WCF_DIR . 'cache/cache.' . $cacheName . '.v1.php';
-    }
-
-    /**
-     * Removes files matching given pattern.
-     *
-     * @param string $pattern
-     */
-    private function removeFiles(string $pattern): void
-    {
-        $directory = FileUtil::unifyDirSeparator(WCF_DIR . 'cache/');
-        $pattern = \str_replace('*', '.*', \str_replace('.', '\.', $pattern));
-
-        $this->getDirectoryUtil()->executeCallback(static function ($filename) {
-            if (!@\touch($filename, 1)) {
-                @\unlink($filename);
-
-                WCF::resetZendOpcache($filename);
-            }
-        }, new Regex('^' . $directory . $pattern . '$', Regex::CASE_INSENSITIVE));
     }
 
     /**
@@ -161,17 +166,5 @@ final class DiskCacheSource implements ICacheSource
         } catch (\Throwable $e) {
             throw new \Exception("Failed to unserialize the cache contents.", 0, $e);
         }
-    }
-
-    /**
-     * Returns an up-to-date directory util object for the cache folder.
-     */
-    private function getDirectoryUtil(): DirectoryUtil
-    {
-        if ($this->directoryUtil === null) {
-            $this->directoryUtil = new DirectoryUtil(WCF_DIR . 'cache/');
-        }
-
-        return $this->directoryUtil;
     }
 }
