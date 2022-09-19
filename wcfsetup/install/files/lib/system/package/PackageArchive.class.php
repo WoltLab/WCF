@@ -456,28 +456,6 @@ class PackageArchive
     }
 
     /**
-     * Downloads the package archive.
-     *
-     * @return  string      path to the dowloaded file
-     */
-    public function downloadArchive()
-    {
-        $tmpFile = FileUtil::getTemporaryFilename('package_');
-
-        $client = HttpFactory::getDefaultClient();
-        $request = new Request('GET', $this->archive);
-        $response = $client->send($request);
-
-        $file = new File($tmpFile);
-        while (!$response->getBody()->eof()) {
-            $file->write($response->getBody()->read(4096));
-        }
-        $file->close();
-
-        return $tmpFile;
-    }
-
-    /**
      * Closes and deletes the tar archive of this package.
      */
     public function deleteArchive()

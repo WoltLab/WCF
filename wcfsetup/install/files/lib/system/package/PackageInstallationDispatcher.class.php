@@ -427,15 +427,6 @@ class PackageInstallationDispatcher
             }
 
             $this->archive = new PackageArchive($this->queue->archive, $this->getPackage());
-
-            if (FileUtil::isURL($this->archive->getArchive())) {
-                // get return value and update entry in
-                // package_installation_queue with this value
-                $archive = $this->archive->downloadArchive();
-                $queueEditor = new PackageInstallationQueueEditor($this->queue);
-                $queueEditor->update(['archive' => $archive]);
-            }
-
             $this->archive->openArchive();
         }
 
