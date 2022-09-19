@@ -18,22 +18,21 @@ interface IFormNode
     /**
      * Adds the given CSS class to this node and returns this node.
      *
-     * @param string $class added CSS class name
-     * @return  static              this node
+     * @return  $this
      *
      * @throws  \InvalidArgumentException   if the given class is invalid
      */
-    public function addClass($class);
+    public function addClass(string $class): static;
 
     /**
      * Adds the given CSS classes to this node and returns this node.
      *
-     * @param string[] $classes names added CSS classes
-     * @return  static              this node
+     * @param string[] $classes
+     * @return  $this
      *
      * @throws  \InvalidArgumentException   if any of the given classes is invalid
      */
-    public function addClasses(array $classes);
+    public function addClasses(array $classes): static;
 
     /**
      * Adds a dependency on the value of a `IFormField` so that this node is
@@ -43,23 +42,20 @@ interface IFormNode
      * This method is expected to set the dependent node of the given dependency
      * to this element.
      *
-     * @param IFormFieldDependency $dependency added node dependency
-     * @return  static                  this node
+     * @return  $this
      */
-    public function addDependency(IFormFieldDependency $dependency);
+    public function addDependency(IFormFieldDependency $dependency): static;
 
     /**
      * Adds an additional attribute to this node and returns this node.
      *
      * The value of an existing attribute is overwritten by the new value.
      *
-     * @param string $name attribute name
-     * @param null|string $value attribute value
-     * @return  static              this node
+     * @return  $this
      *
      * @throws  \InvalidArgumentException   if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
      */
-    public function attribute($name, $value = null);
+    public function attribute(string $name, ?string $value = null): static;
 
     /**
      * Sets if this node is available and returns this node.
@@ -78,10 +74,9 @@ interface IFormNode
      * form field values while this method manages static availability that is independent
      * of form field values and only depends on external factors.
      *
-     * @param bool $available determines if node is available
-     * @return  static              this node
+     * @return  $this
      */
-    public function available($available = true);
+    public function available(bool $available = true): static;
 
     /**
      * Cleans up after the form data has been saved and the form is not used anymore.
@@ -89,40 +84,35 @@ interface IFormNode
      *
      * This method is not meant to empty the value of input fields.
      *
-     * @return  static      this node
+     * @return  $this
      */
-    public function cleanup();
+    public function cleanup(): static;
 
     /**
      * Returns `true` if all of the node's dependencies are met and returns `false` otherwise.
-     *
-     * @return  bool
      */
-    public function checkDependencies();
+    public function checkDependencies(): bool;
 
     /**
      * Returns the value of the additional attribute of this node with the given name.
      *
-     * @param string $name attribute name
-     * @return  mixed               attribute value
-     *
      * @throws  \InvalidArgumentException   if the given name is invalid or no such attribute exists
      */
-    public function getAttribute($name);
+    public function getAttribute(string $name): mixed;
 
     /**
      * Returns additional attributes of this node.
      *
      * @return  array       additional node attributes
      */
-    public function getAttributes();
+    public function getAttributes(): array;
 
     /**
      * Returns all CSS classes of this node.
      *
      * @return  string[]    CSS classes of node
      */
-    public function getClasses();
+    public function getClasses(): array;
 
     /**
      * Returns all of the node's dependencies.

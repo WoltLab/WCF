@@ -35,8 +35,10 @@ class DevicesContainer extends FormContainer
 
     /**
      * Accepts only DeviceNodes as children.
+     *
+     * @return $this
      */
-    public function appendChild(IFormChildNode $child): self
+    public function appendChild(IFormChildNode $child): static
     {
         if (!($child instanceof DeviceNode)) {
             throw new InvalidObjectArgument($child, DeviceNode::class, 'Child');

@@ -33,12 +33,11 @@ trait TFormParentNode
     /**
      * Appends the given node to this node and returns this node.
      *
-     * @param IFormChildNode $child appended child
-     * @return  static                  this node
+     * @return  $this
      *
      * @throws  \BadMethodCallException     if method is called with more than one parameter (might be mistakenly used instead of `appendChildren()`)
      */
-    public function appendChild(IFormChildNode $child)
+    public function appendChild(IFormChildNode $child): static
     {
         if (\func_num_args() > 1) {
             throw new \BadMethodCallException("'" . IFormParentNode::class . "::appendChild()' only supports one argument. Use '" . IFormParentNode::class . "::appendChildren()' to append multiple children at once.");
@@ -55,9 +54,9 @@ trait TFormParentNode
      * Appends the given children to this node and returns this node.
      *
      * @param IFormChildNode[] $children appended children
-     * @return  static                  this node
+     * @return  $this
      */
-    public function appendChildren(array $children)
+    public function appendChildren(array $children): static
     {
         foreach ($children as $child) {
             $this->appendChild($child);
@@ -69,11 +68,8 @@ trait TFormParentNode
     /**
      * Returns `true` if this node (or any of the child nodes) contains the node
      * with the given id and returns `false` otherwise.
-     *
-     * @param string $nodeId id of searched node
-     * @return  bool
      */
-    public function contains($nodeId)
+    public function contains(string $nodeId): bool
     {
         static::validateId($nodeId);
 
@@ -93,9 +89,9 @@ trait TFormParentNode
     /**
      * Returns all child nodes of this node.
      *
-     * @return  IFormChildNode[]    children of this node
+     * @return  IFormChildNode[]
      */
-    public function children()
+    public function children(): array
     {
         return $this->children;
     }
@@ -106,9 +102,9 @@ trait TFormParentNode
      *
      * This method is not meant to empty the value of input fields.
      *
-     * @return  static      this node
+     * @return  $this
      */
-    public function cleanup()
+    public function cleanup(): static
     {
         foreach ($this->children as $index => $child) {
             $child->cleanup();
@@ -121,30 +117,24 @@ trait TFormParentNode
 
     /**
      * Returns the number of direct children of this node.
-     *
-     * @return  int number of children
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->children);
     }
 
     /**
      * Returns the current child node during the iteration.
-     *
-     * @return  IFormChildNode      current child node
      */
-    public function current()
+    public function current(): IFormChildNode
     {
         return $this->children[$this->index];
     }
 
     /**
      * Returns an iterator for the current child node.
-     *
-     * @return  null|IFormParentNode        iterator for the current child node
      */
-    public function getChildren()
+    public function getChildren(): ?IFormParentNode
     {
         $node = $this->children[$this->index];
         if ($node instanceof IFormParentNode) {
@@ -177,12 +167,9 @@ trait TFormParentNode
      * All descendants, not only the direct child nodes, are checked to find the
      * requested node.
      *
-     * @param string $nodeId id of the requested node
-     * @return  null|IFormNode          requested node
-     *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */
-    public function getNodeById($nodeId)
+    public function getNodeById(string $nodeId): ?IFormNode
     {
         static::validateId($nodeId);
 
@@ -204,10 +191,8 @@ trait TFormParentNode
 
     /**
      * Returns `true` if the node as any children and return `false` otherwise.
-     *
-     * @return  bool
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return !empty($this->children);
     }
@@ -215,10 +200,8 @@ trait TFormParentNode
     /**
      * Returns `true` if this node or any of its children has a validation error and
      * return `false` otherwise.
-     *
-     * @return  bool
      */
-    public function hasValidationErrors()
+    public function hasValidationErrors(): bool
     {
         foreach ($this->children() as $child) {
             if ($child instanceof IFormField) {
@@ -238,13 +221,12 @@ trait TFormParentNode
     /**
      * Inserts the given node after the node with the given id and returns this node.
      *
-     * @param IFormChildNode $child inserted child node
-     * @param string $referenceNodeId id of the node after which the given node is inserted
-     * @return  static                      this node
+     * @param $referenceNodeId id of the node after which the given node is inserted
+     * @return  $this
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
      */
-    public function insertAfter(IFormChildNode $child, $referenceNodeId)
+    public function insertAfter(IFormChildNode $child, string $referenceNodeId): static
     {
         $didInsertNode = false;
         foreach ($this->children() as $index => $existingChild) {
@@ -270,13 +252,12 @@ trait TFormParentNode
     /**
      * Inserts the given node before the node with the given id and returns this node.
      *
-     * @param IFormChildNode $child inserted child node
-     * @param string $referenceNodeId id of the node before which the given node is inserted
-     * @return  static                      this node
+     * @param $referenceNodeId id of the node before which the given node is inserted
+     * @return  $this
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
      */
-    public function insertBefore(IFormChildNode $child, $referenceNodeId)
+    public function insertBefore(IFormChildNode $child, string $referenceNodeId): static
     {
         $didInsertNode = false;
         foreach ($this->children() as $index => $existingChild) {
@@ -301,10 +282,8 @@ trait TFormParentNode
 
     /**
      * Return the key of the current element during the iteration.
-     *
-     * @return  int element key during the iteration
      */
-    public function key()
+    public function key(): int
     {
         return $this->index;
     }
@@ -312,7 +291,7 @@ trait TFormParentNode
     /**
      * Moves the iterator internally forward to next element.
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -321,9 +300,9 @@ trait TFormParentNode
      * Reads the value of this node and its children from request data and
      * return this field.
      *
-     * @return  IFormParentNode     this node
+     * @return  $this
      */
-    public function readValues()
+    public function readValues(): static
     {
         if ($this->isAvailable()) {
             foreach ($this->children() as $child) {
@@ -345,7 +324,7 @@ trait TFormParentNode
     /**
      * Rewind the iterator to the first element.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -353,10 +332,8 @@ trait TFormParentNode
     /**
      * Returns `true` if the current position during the iteration is valid and returns
      * `false` otherwise.
-     *
-     * @return  bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->children[$this->index]);
     }
@@ -395,11 +372,9 @@ trait TFormParentNode
     /**
      * Checks if the given node can be added as a child to this node.
      *
-     * @param IFormChildNode $child validated child node
-     *
      * @throws  \InvalidArgumentException       if given node cannot be added as a child
      */
-    public function validateChild(IFormChildNode $child)
+    public function validateChild(IFormChildNode $child): void
     {
         // does nothing
     }

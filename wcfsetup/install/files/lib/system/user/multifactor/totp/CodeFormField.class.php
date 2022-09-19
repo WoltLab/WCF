@@ -45,8 +45,10 @@ class CodeFormField extends TextFormField
 
     /**
      * Used to carry the minCounter value along.
+     *
+     * @return $this
      */
-    public function minCounter(int $minCounter): self
+    public function minCounter(int $minCounter): static
     {
         $this->minCounter = $minCounter;
 

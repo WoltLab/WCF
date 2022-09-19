@@ -20,15 +20,9 @@ class CodeFormField extends TextFormField
 {
     use TDefaultIdFormField;
 
-    /**
-     * @var int
-     */
-    protected $chunks;
+    protected int $chunks;
 
-    /**
-     * @var int
-     */
-    protected $chunkLength;
+    protected int $chunkLength;
 
     public function __construct()
     {
@@ -55,8 +49,10 @@ class CodeFormField extends TextFormField
 
     /**
      * Sets the number of chunks.
+     *
+     * @return $this
      */
-    public function chunks(int $chunks): self
+    public function chunks(int $chunks): static
     {
         $this->chunks = $chunks;
 
@@ -65,8 +61,10 @@ class CodeFormField extends TextFormField
 
     /**
      * Sets the length of a single chunk.
+     *
+     * @return $this
      */
-    public function chunkLength(int $chunkLength): self
+    public function chunkLength(int $chunkLength): static
     {
         $this->chunkLength = $chunkLength;
 
@@ -76,7 +74,7 @@ class CodeFormField extends TextFormField
     /**
      * Returns the number of chunks.
      */
-    public function getChunks()
+    public function getChunks(): int
     {
         return $this->chunks;
     }
@@ -84,7 +82,7 @@ class CodeFormField extends TextFormField
     /**
      * Returns the length of a single chunk.
      */
-    public function getChunkLength()
+    public function getChunkLength(): int
     {
         return $this->chunkLength;
     }

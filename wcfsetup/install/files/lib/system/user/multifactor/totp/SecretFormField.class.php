@@ -33,7 +33,7 @@ class SecretFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    public function readValue(): self
+    public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = CryptoUtil::getValueFromSignedString($this->getDocument()->getRequestData($this->getPrefixedId()));

@@ -16,36 +16,32 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
     /**
      * Appends the given node to this node and returns this node.
      *
-     * @param IFormChildNode $child appended child
-     * @return  static                  this node
+     * @return  $this
      *
      * @throws  \BadMethodCallException     if method is called with multiple `IFormChildNode` as parameter (if mistakenly used instead of `appendChildren()`)
      */
-    public function appendChild(IFormChildNode $child);
+    public function appendChild(IFormChildNode $child): static;
 
     /**
      * Appends the given children to this node and returns this node.
      *
-     * @param IFormChildNode[] $children appended children
-     * @return  static                  this node
+     * @param IFormChildNode[] $children
+     * @return  $this
      */
-    public function appendChildren(array $children);
+    public function appendChildren(array $children): static;
 
     /**
      * Returns all child nodes of this node.
      *
-     * @return  IFormChildNode[]    children of this node
+     * @return  IFormChildNode[]
      */
-    public function children();
+    public function children(): array;
 
     /**
      * Returns `true` if this node (or any of the child nodes) contains the node
      * with the given id and returns `false` otherwise.
-     *
-     * @param string $nodeId id of searched node
-     * @return  bool
      */
-    public function contains($nodeId);
+    public function contains(string $nodeId): bool;
 
     /**
      * Returns a recursive iterator for this node.
@@ -62,57 +58,52 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
      * All descendants, not only the direct child nodes, are checked to find the
      * requested node.
      *
-     * @param string $nodeId id of the requested node
-     * @return  null|IFormNode          requested node
-     *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */
-    public function getNodeById($nodeId);
+    public function getNodeById(string $nodeId): ?IFormNode;
 
     /**
      * Returns `true` if this node or any of its children has a validation error and
      * return `false` otherwise.
-     *
-     * @return  bool
      */
-    public function hasValidationErrors();
+    public function hasValidationErrors(): bool;
 
     /**
      * Inserts the given node after the node with the given id and returns this node.
      *
-     * @param IFormChildNode $child inserted child node
-     * @param string $referenceNodeId id of the node after which the given node is inserted
-     * @return  static                      this node
+     * @param $child inserted child node
+     * @param $referenceNodeId id of the node after which the given node is inserted
+     * @return  $this
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
      */
-    public function insertAfter(IFormChildNode $child, $referenceNodeId);
+    public function insertAfter(IFormChildNode $child, string $referenceNodeId): static;
 
     /**
      * Inserts the given node before the node with the given id and returns this node.
      *
-     * @param IFormChildNode $child inserted child node
-     * @param string $referenceNodeId id of the node before which the given node is inserted
-     * @return  static                      this node
+     * @param $child inserted child node
+     * @param $referenceNodeId id of the node before which the given node is inserted
+     * @return  $this
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
      */
-    public function insertBefore(IFormChildNode $child, $referenceNodeId);
+    public function insertBefore(IFormChildNode $child, string $referenceNodeId): static;
 
     /**
      * Reads the value of this node and its children from request data and
      * return this field.
      *
-     * @return  static      this node
+     * @return  $this
      */
-    public function readValues();
+    public function readValues(): static;
 
     /**
      * Checks if the given node is a valid child for this node.
      *
-     * @param IFormChildNode $child validated child node
+     * @param $child validated child node
      *
      * @throws  \InvalidArgumentException       if given node cannot is an invalid child
      */
-    public function validateChild(IFormChildNode $child);
+    public function validateChild(IFormChildNode $child): void;
 }

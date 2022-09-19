@@ -54,8 +54,10 @@ class DeviceNode implements IFormChildNode, IFormParentNode
 
     /**
      * Sets the device data.
+     *
+     * @return $this
      */
-    public function setData(array $device): self
+    public function setData(array $device): static
     {
         $this->data = $device;
 

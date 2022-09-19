@@ -87,7 +87,7 @@ class FormContainer implements IFormContainer
     /**
      * @inheritDoc
      */
-    public function validateChild(IFormChildNode $child)
+    public function validateChild(IFormChildNode $child): void
     {
         $this->defaultValidateChild($child);
 

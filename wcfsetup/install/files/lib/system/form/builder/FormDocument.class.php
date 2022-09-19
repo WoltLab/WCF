@@ -526,7 +526,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function hasValidationErrors()
+    public function hasValidationErrors(): bool
     {
         return $this->isInvalid() || $this->traitHasValidationErrors();
     }
@@ -683,7 +683,7 @@ class FormDocument implements IFormDocument
     /**
      * @inheritDoc
      */
-    public function readValues()
+    public function readValues(): static
     {
         if ($this->requestData === null) {
             $this->requestData = $_POST;
