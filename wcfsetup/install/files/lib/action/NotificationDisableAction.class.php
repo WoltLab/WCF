@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Action
  * @deprecated  5.3 Replaced by NotificationUnsubscribeForm
  */
-class NotificationDisableAction extends AbstractAction
+final class NotificationDisableAction extends AbstractAction
 {
     /**
      * event id

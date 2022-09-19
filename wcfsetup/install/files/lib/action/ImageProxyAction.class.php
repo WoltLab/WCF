@@ -28,7 +28,7 @@ use wcf\util\Url;
  * @package WoltLabSuite\Core\Action
  * @since   3.0
  */
-class ImageProxyAction extends AbstractAction
+final class ImageProxyAction extends AbstractAction
 {
     /**
      * @inheritDoc

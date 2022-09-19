@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  */
-class DeleteSessionAction extends AbstractSecureAction
+final class DeleteSessionAction extends AbstractSecureAction
 {
     use TAJAXException;
 

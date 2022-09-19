@@ -18,7 +18,7 @@ use wcf\system\payment\type\IPaymentType;
  * @package WoltLabSuite\Core\Action
  * @see https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNImplementation/
  */
-class PaypalCallbackAction extends AbstractAction
+final class PaypalCallbackAction extends AbstractAction
 {
     /**
      * @inheritDoc

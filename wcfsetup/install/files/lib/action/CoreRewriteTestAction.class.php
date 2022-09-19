@@ -14,7 +14,7 @@ use wcf\system\exception\IllegalLinkException;
  * @package WoltLabSuite\Core\Action
  * @since       3.1
  */
-class CoreRewriteTestAction extends AbstractAction
+final class CoreRewriteTestAction extends AbstractAction
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
 

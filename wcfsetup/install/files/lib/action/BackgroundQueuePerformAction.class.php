@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Action
  * @since   3.0
  */
-class BackgroundQueuePerformAction extends AbstractAction
+final class BackgroundQueuePerformAction extends AbstractAction
 {
     /**
      * number of jobs that will be processed per invocation

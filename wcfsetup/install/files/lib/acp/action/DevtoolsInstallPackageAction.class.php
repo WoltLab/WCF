@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Acp\Action
  * @since   5.2
  */
-class DevtoolsInstallPackageAction extends InstallPackageAction
+final class DevtoolsInstallPackageAction extends InstallPackageAction
 {
     /**
      * project whose source is installed as a package
