@@ -172,21 +172,20 @@ final class DateUtil
     /**
      * Returns a formatted date.
      *
-     * @param \DateTime $time
      * @param string $format
      * @param Language $language
      * @param User $user
      * @return  string
      */
     public static function format(
-        ?\DateTime $time = null,
+        null|\DateTime|\DateTimeImmutable $time = null,
         $format = null,
         ?Language $language = null,
         ?User $user = null
     ) {
         // get default values
         if ($time === null) {
-            $time = new \DateTime();
+            $time = new \DateTimeImmutable();
         }
         if ($user === null) {
             $user = WCF::getUser();
@@ -199,7 +198,7 @@ final class DateUtil
         }
 
         // set time zone
-        $time->setTimezone($user->getTimeZone());
+        $time = $time->setTimezone($user->getTimeZone());
 
         // format date
         $output = $time->format($language->get($format));
