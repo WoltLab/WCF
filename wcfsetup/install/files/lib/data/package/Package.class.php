@@ -459,7 +459,6 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         $content .= "// {$package->package} (packageID {$packageID})\n";
         $content .= "if (!defined('{$prefix}_DIR')) define('{$prefix}_DIR', __DIR__.'/');\n";
         $content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
-        $content .= "if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '{$package->packageVersion}');\n";
 
         if ($packageID != 1) {
             $content .= "\n";
