@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Breadcrumb
  */
-class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
+final class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
 {
     /**
      * list of breadcrumbs
