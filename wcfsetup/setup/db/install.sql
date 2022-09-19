@@ -1036,13 +1036,6 @@ CREATE TABLE wcf1_package_update_fromversion (
 	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, fromversion)
 );
 
--- @deprecated
-DROP TABLE IF EXISTS wcf1_package_update_optional;
-CREATE TABLE wcf1_package_update_optional (
-	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
-	package VARCHAR(255) NOT NULL DEFAULT ''
-);
-
 DROP TABLE IF EXISTS wcf1_package_update_requirement;
 CREATE TABLE wcf1_package_update_requirement (
 	packageUpdateVersionID INT(10) NOT NULL,
