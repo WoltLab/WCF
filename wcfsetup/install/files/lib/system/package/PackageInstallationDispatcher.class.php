@@ -427,15 +427,6 @@ class PackageInstallationDispatcher
             }
 
             $this->archive = new PackageArchive($this->queue->archive, $this->getPackage());
-
-            if (FileUtil::isURL($this->archive->getArchive())) {
-                // get return value and update entry in
-                // package_installation_queue with this value
-                $archive = $this->archive->downloadArchive();
-                $queueEditor = new PackageInstallationQueueEditor($this->queue);
-                $queueEditor->update(['archive' => $archive]);
-            }
-
             $this->archive->openArchive();
         }
 
@@ -729,7 +720,7 @@ class PackageInstallationDispatcher
         $row = $statement->fetchArray();
 
         // PIP is unknown
-        if (!$row || (\strcmp($nodeData['pip'], $row['pluginName']) !== 0)) {
+        if (!$row || $nodeData['pip'] !== $row['pluginName']) {
             throw new SystemException("unable to find package installation plugin '" . $nodeData['pip'] . "'");
         }
 

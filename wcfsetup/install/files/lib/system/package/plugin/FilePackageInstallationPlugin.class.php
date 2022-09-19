@@ -72,18 +72,13 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
                                 (packageID, filename, application, sha256, lastUpdated)
                     VALUES      (?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepare($sql);
-            foreach ([
+            $statement->execute([
+                $this->installation->getPackageID(),
                 PackageInstallationDispatcher::CONFIG_FILE,
-                'config.inc.php',
-            ] as $filename) {
-                $statement->execute([
-                    $this->installation->getPackageID(),
-                    $filename,
-                    Package::getAbbreviation($this->installation->getPackage()->package),
-                    \hash_file('sha256', $packageDir . $filename, true),
-                    \TIME_NOW,
-                ]);
-            }
+                Package::getAbbreviation($this->installation->getPackage()->package),
+                \hash_file('sha256', $packageDir . PackageInstallationDispatcher::CONFIG_FILE, true),
+                \TIME_NOW,
+            ]);
 
             // load application
             WCF::loadRuntimeApplication($this->installation->getPackageID());
