@@ -83,7 +83,7 @@ class SystemCheckPage extends AbstractPage
         'minimum' => '8.1.2',
         'deprecated' => [],
         'sufficient' => [],
-        'recommended' => ['8.1'],
+        'recommended' => ['8.1', '8.2'],
     ];
 
     public $foreignKeys = [
