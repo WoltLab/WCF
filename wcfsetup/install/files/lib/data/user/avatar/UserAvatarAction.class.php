@@ -6,13 +6,11 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\upload\AvatarUploadFileSaveStrategy;
 use wcf\system\upload\AvatarUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
-use wcf\util\ImageUtil;
 
 /**
  * Executes avatar-related actions.
@@ -89,20 +87,5 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
                 'url' => $saveStrategy->getAvatar()->getURL(96),
             ];
         }
-    }
-
-    /**
-     * @deprecated 5.5 This is a helper method only used by UserAvatarAction::fetchRemoteAvatar().
-     */
-    protected function enforceDimensions($filename)
-    {
-        try {
-            $filename = ImageUtil::enforceDimensions($filename, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
-        } /** @noinspection PhpRedundantCatchClauseInspection */
-        catch (SystemException $e) {
-            throw new UserInputException('avatar', 'tooLarge');
-        }
-
-        return $filename;
     }
 }
