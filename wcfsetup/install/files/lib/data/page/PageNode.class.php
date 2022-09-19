@@ -32,15 +32,13 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
 
     /**
      * node depth
-     * @var int
      */
-    protected $depth = 0;
+    protected int $depth = 0;
 
     /**
      * iterator position
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * @inheritDoc
@@ -51,10 +49,8 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
      * Creates a new PageNode object.
      *
      * @param PageNode $parentNode
-     * @param Page $page
-     * @param int $depth
      */
-    public function __construct($parentNode = null, ?Page $page = null, $depth = 0)
+    public function __construct($parentNode = null, ?Page $page = null, int $depth = 0)
     {
         if ($page === null) {
             $page = new Page(null, []);
@@ -70,17 +66,15 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
      *
      * @param PageNode[] $children
      */
-    public function setChildren(array $children)
+    public function setChildren(array $children): void
     {
         $this->children = $children;
     }
 
     /**
      * Returns the parent node
-     *
-     * @return  PageNode
      */
-    public function getParentNode()
+    public function getParentNode(): PageNode
     {
         return $this->parentNode;
     }
@@ -96,7 +90,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -104,7 +98,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->children[$this->position]);
     }
@@ -112,7 +106,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -120,7 +114,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): PageNode
     {
         return $this->children[$this->position];
     }
@@ -128,7 +122,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
@@ -136,7 +130,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function getChildren()
+    public function getChildren(): PageNode
     {
         return $this->children[$this->position];
     }
@@ -144,17 +138,15 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return \count($this->children) > 0;
     }
 
     /**
      * Returns node depth.
-     *
-     * @return  int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
