@@ -27,9 +27,8 @@ class PackageValidationArchive implements \RecursiveIterator
 
     /**
      * package archive object
-     * @var PackageArchive
      */
-    protected $archive;
+    protected PackageArchive $archive;
 
     /**
      * list of direct requirements delivered by this package
@@ -39,15 +38,13 @@ class PackageValidationArchive implements \RecursiveIterator
 
     /**
      * nesting depth
-     * @var int
      */
-    protected $depth = 0;
+    protected int $depth = 0;
 
     /**
      * exception occurred during validation
-     * @var \Exception
      */
-    protected $exception;
+    protected \Throwable $exception;
 
     /**
      * associated package object
@@ -63,18 +60,13 @@ class PackageValidationArchive implements \RecursiveIterator
 
     /**
      * children pointer
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * Creates a new package validation archive instance.
-     *
-     * @param string $archive
-     * @param PackageValidationArchive $parent
-     * @param int $depth
      */
-    public function __construct($archive, ?self $parent = null, $depth = 0)
+    public function __construct(string $archive, ?self $parent = null, int $depth = 0)
     {
         $this->archive = new PackageArchive($archive);
         $this->parent = $parent;
@@ -86,10 +78,8 @@ class PackageValidationArchive implements \RecursiveIterator
      * mode will toggle between different checks.
      *
      * @param int $validationMode
-     * @param string $requiredVersion
-     * @return  bool
      */
-    public function validate($validationMode, $requiredVersion = '')
+    public function validate($validationMode, string $requiredVersion = ''): bool
     {
         if ($validationMode !== PackageValidationManager::VALIDATION_EXCLUSION) {
             try {
@@ -219,11 +209,10 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * Validates if the package has suitable install or update instructions
      *
-     * @param string $requiredVersion
      * @param int $validationMode
      * @throws  PackageValidationException
      */
-    protected function validateInstructions($requiredVersion, $validationMode)
+    protected function validateInstructions(string $requiredVersion, $validationMode)
     {
         $package = $this->getPackage();
 
@@ -308,10 +297,9 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * Validates if an installed package excludes the current package and vice versa.
      *
-     * @param string $package
      * @throws  PackageValidationException
      */
-    protected function validateExclusion($package)
+    protected function validateExclusion(string $package)
     {
         $packageVersion = $this->archive->getPackageInfo('version');
 
@@ -411,22 +399,18 @@ class PackageValidationArchive implements \RecursiveIterator
 
     /**
      * Returns the occurred exception.
-     *
-     * @return  \Exception
      */
-    public function getException()
+    public function getException(): \Throwable
     {
         return $this->exception;
     }
 
     /**
      * Returns the exception message.
-     *
-     * @return  string
      */
-    public function getExceptionMessage()
+    public function getExceptionMessage(): string
     {
-        if ($this->exception === null) {
+        if (!isset($this->exception)) {
             return '';
         }
 
@@ -439,10 +423,8 @@ class PackageValidationArchive implements \RecursiveIterator
 
     /**
      * Returns the package archive object.
-     *
-     * @return  PackageArchive
      */
-    public function getArchive()
+    public function getArchive(): PackageArchive
     {
         return $this->archive;
     }
@@ -450,13 +432,12 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * Returns the package object based on the package archive's package identifier or null
      * if the package isn't already installed.
-     *
-     * @return  Package
      */
-    public function getPackage()
+    public function getPackage(): ?Package
     {
         if ($this->package === null) {
             static $packages;
+
             if ($packages === null) {
                 $packages = [];
 
@@ -480,10 +461,8 @@ class PackageValidationArchive implements \RecursiveIterator
 
     /**
      * Returns nesting depth.
-     *
-     * @return  int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
@@ -493,7 +472,7 @@ class PackageValidationArchive implements \RecursiveIterator
      *
      * @param PackageValidationArchive[] $children
      */
-    public function setChildren(array $children)
+    public function setChildren(array $children): void
     {
         $this->children = $children;
     }
@@ -501,7 +480,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -509,7 +488,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->children[$this->position]);
     }
@@ -517,7 +496,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -525,7 +504,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): PackageValidationArchive
     {
         return $this->children[$this->position];
     }
@@ -533,7 +512,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
@@ -541,7 +520,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function getChildren()
+    public function getChildren(): PackageValidationArchive
     {
         return $this->children[$this->position];
     }
@@ -549,7 +528,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return \count($this->children) > 0;
     }
