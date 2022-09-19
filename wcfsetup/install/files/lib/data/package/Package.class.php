@@ -354,14 +354,13 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * Returns true if package version is valid.
      *
      * Examples of valid package versions:
-     *  1.0.0 pl 3
+     *  1.0.0
      *  4.0.0 Alpha 1
-     *  3.1.7 rC 4
-     *
+     *  3.1.7 RC 4
      */
     public static function isValidVersion(string $version): bool
     {
-        return !!\preg_match('~^([0-9]+)\.([0-9]+)\.([0-9]+)(\ (a|alpha|b|beta|d|dev|rc|pl)\ ([0-9]+))?$~is', $version);
+        return !!\preg_match('/^([0-9]+)\\.([0-9]+)\\.([0-9]+)( (dev|Alpha|Beta|RC) ([0-9]+))?$/', $version);
     }
 
     /**
