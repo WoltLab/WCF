@@ -7,6 +7,13 @@ define(["require", "exports"], function (require, exports) {
         constructor(dialog) {
             this.#dialog = dialog;
         }
+        asAlert(options) {
+            options = Object.assign({
+                primary: "",
+            }, options);
+            this.#dialog.attachFormControls(options);
+            return this.#dialog;
+        }
         withoutControls() {
             return this.#dialog;
         }

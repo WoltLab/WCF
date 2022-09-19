@@ -1,5 +1,7 @@
 button {
 	all: unset;
+	-webkit-user-select: none;
+	user-select: none;
 
 	&.focus-visible:focus {
 		outline: 5px auto -webkit-focus-ring-color;
@@ -17,7 +19,7 @@ input[type="submit"],
 a.button {
 	// a.button is required to override link formatting, such as drop-down buttons
 	background-color: $wcfButtonBackground;
-	border-radius: 2px;
+	border-radius: 4px;
 	border-width: 0;
 	color: $wcfButtonText;
 	cursor: pointer;

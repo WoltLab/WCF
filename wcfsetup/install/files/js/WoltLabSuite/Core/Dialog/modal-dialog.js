@@ -7,7 +7,8 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     class ModalDialog extends HTMLElement {
         #content;
         #dialog;
-        #returnFocus = undefined;
+        #form;
+        #returnFocus;
         #title;
         constructor() {
             super();
@@ -57,6 +58,17 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         get open() {
             return this.#dialog.open;
         }
+        attachFormControls(options) {
+            if (this.#form !== undefined) {
+                throw new Error("There is already a form control attached to this dialog.");
+            }
+            const formControl = document.createElement("form-control");
+            formControl.primary = options.primary;
+            this.#form = document.createElement("form");
+            this.#form.method = "dialog";
+            this.#content.insertAdjacentElement("beforebegin", this.#form);
+            this.#form.append(this.#content, formControl);
+        }
         #attachDialog() {
             if (this.#dialog.parentElement !== null) {
                 return;
@@ -74,8 +86,14 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             const doc = document.createElement("div");
             doc.classList.add("dialog__document");
             doc.setAttribute("role", "document");
+            doc.append(header);
             this.#content.classList.add("dialog__content");
-            doc.append(header, this.#content);
+            if (this.#form) {
+                doc.append(this.#form);
+            }
+            else {
+                doc.append(this.#content);
+            }
             this.#dialog.append(doc);
             this.#dialog.classList.add("dialog");
             this.#dialog.setAttribute("aria-labelledby", Util_1.default.identify(this.#title));

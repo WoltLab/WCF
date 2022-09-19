@@ -4,10 +4,15 @@ type CallbackReturnFocus = () => HTMLElement | null;
 
 const dialogContainer = document.createElement("div");
 
+export type ModalDialogFormControl = {
+  primary: string;
+};
+
 export class ModalDialog extends HTMLElement {
   readonly #content: HTMLElement;
   readonly #dialog: HTMLDialogElement;
-  #returnFocus?: CallbackReturnFocus = undefined;
+  #form?: HTMLFormElement;
+  #returnFocus?: CallbackReturnFocus;
   readonly #title: HTMLElement;
 
   constructor() {
@@ -74,6 +79,21 @@ export class ModalDialog extends HTMLElement {
     return this.#dialog.open;
   }
 
+  attachFormControls(options: ModalDialogFormControl): void {
+    if (this.#form !== undefined) {
+      throw new Error("There is already a form control attached to this dialog.");
+    }
+
+    const formControl = document.createElement("form-control");
+    formControl.primary = options.primary;
+
+    this.#form = document.createElement("form");
+    this.#form.method = "dialog";
+    this.#content.insertAdjacentElement("beforebegin", this.#form);
+
+    this.#form.append(this.#content, formControl);
+  }
+
   #attachDialog(): void {
     if (this.#dialog.parentElement !== null) {
       return;
@@ -94,9 +114,14 @@ export class ModalDialog extends HTMLElement {
     const doc = document.createElement("div");
     doc.classList.add("dialog__document");
     doc.setAttribute("role", "document");
+    doc.append(header);
 
     this.#content.classList.add("dialog__content");
-    doc.append(header, this.#content);
+    if (this.#form) {
+      doc.append(this.#form);
+    } else {
+      doc.append(this.#content);
+    }
 
     this.#dialog.append(doc);
     this.#dialog.classList.add("dialog");

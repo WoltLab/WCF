@@ -352,3 +352,23 @@
 	overflow: auto;
 	padding: 0 var(--dialog-padding);
 }
+
+.formControl {
+	column-gap: 10px;
+	display: grid;
+	grid-template-areas: "extra cancel primary";
+	grid-template-columns: auto max-content max-content;
+	margin-top: 30px;
+}
+
+.formControl__button--primary {
+	grid-area: primary;
+}
+
+.formControl__button--cancel {
+	grid-area: cancel;
+}
+
+.formControl__button--extra {
+	grid-area: extra;
+}
