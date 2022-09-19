@@ -25,9 +25,9 @@ class ArticleCategoryNodeTree extends CategoryNodeTree
     /**
      * @inheritDoc
      */
-    public function isIncluded(CategoryNode $categoryNode)
+    public function isIncluded(CategoryNode $categoryNode): bool
     {
-        /** @var ArticleCategoryNode $categoryNode */
+        \assert($categoryNode instanceof ArticleCategoryNode);
 
         return parent::isIncluded($categoryNode) && $categoryNode->isAccessible();
     }

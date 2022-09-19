@@ -60,16 +60,13 @@ class CategoryNodeTree implements \IteratorAggregate
     /**
      * Creates a new instance of CategoryNodeTree.
      *
-     * @param string $objectType
-     * @param int $parentCategoryID
-     * @param bool $includeDisabledCategories
      * @param int[] $excludedCategoryIDs
      * @throws  SystemException
      */
     public function __construct(
-        $objectType,
-        $parentCategoryID = 0,
-        $includeDisabledCategories = false,
+        string $objectType,
+        int $parentCategoryID = 0,
+        bool $includeDisabledCategories = false,
         array $excludedCategoryIDs = []
     ) {
         $this->objectType = $objectType;
@@ -86,10 +83,8 @@ class CategoryNodeTree implements \IteratorAggregate
     /**
      * Sets the maximum depth considered when building the node tree, defaults
      * to -1 which equals infinite.
-     *
-     * @param int $maxDepth
      */
-    public function setMaxDepth($maxDepth)
+    public function setMaxDepth(int $maxDepth)
     {
         $this->maxDepth = $maxDepth;
     }
@@ -105,11 +100,8 @@ class CategoryNodeTree implements \IteratorAggregate
 
     /**
      * Builds a certain level of the tree.
-     *
-     * @param CategoryNode $parentNode
-     * @param int $depth
      */
-    protected function buildTreeLevel(CategoryNode $parentNode, $depth = 0)
+    protected function buildTreeLevel(CategoryNode $parentNode, int $depth = 0)
     {
         if ($this->maxDepth != -1 && $depth < 0) {
             return;
@@ -130,10 +122,9 @@ class CategoryNodeTree implements \IteratorAggregate
     /**
      * Returns the category with the given id.
      *
-     * @param int $categoryID
      * @return  Category
      */
-    protected function getCategory($categoryID)
+    protected function getCategory(int $categoryID)
     {
         return CategoryHandler::getInstance()->getCategory($categoryID);
     }
@@ -141,7 +132,6 @@ class CategoryNodeTree implements \IteratorAggregate
     /**
      * Returns the child categories of the given category node.
      *
-     * @param CategoryNode $parentNode
      * @return  Category[]
      */
     protected function getChildCategories(CategoryNode $parentNode)
@@ -150,9 +140,9 @@ class CategoryNodeTree implements \IteratorAggregate
     }
 
     /**
-     * @return \RecursiveIteratorIterator
+     * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         if ($this->parentNode === null) {
             $this->buildTree();
@@ -164,10 +154,9 @@ class CategoryNodeTree implements \IteratorAggregate
     /**
      * Returns the category node for the category with the given id.
      *
-     * @param int $categoryID
      * @return  CategoryNode
      */
-    protected function getNode($categoryID)
+    protected function getNode(int $categoryID)
     {
         if (!$categoryID) {
             $category = new Category(null, [
@@ -190,11 +179,8 @@ class CategoryNodeTree implements \IteratorAggregate
     /**
      * Returns true if the given category node fulfils all relevant conditions
      * to be included in this tree.
-     *
-     * @param CategoryNode $categoryNode
-     * @return  bool
      */
-    protected function isIncluded(CategoryNode $categoryNode)
+    protected function isIncluded(CategoryNode $categoryNode): bool
     {
         return (!$categoryNode->isDisabled || $this->includeDisabledCategories) && !\in_array(
             $categoryNode->categoryID,
