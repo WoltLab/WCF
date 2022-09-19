@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Action
  */
-class FullLogoutAction extends LogoutAction
+final class FullLogoutAction extends LogoutAction
 {
     /**
      * @inheritDoc

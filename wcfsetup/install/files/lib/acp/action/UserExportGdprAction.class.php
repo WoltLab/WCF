@@ -31,7 +31,7 @@ use wcf\util\UserUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Acp\Action
  */
-class UserExportGdprAction extends AbstractAction
+final class UserExportGdprAction extends AbstractAction
 {
     /**
      * export data

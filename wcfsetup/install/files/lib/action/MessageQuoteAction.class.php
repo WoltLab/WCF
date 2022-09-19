@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  */
-class MessageQuoteAction extends AJAXProxyAction
+final class MessageQuoteAction extends AJAXProxyAction
 {
     /**
      * indicates if the WCF.Message.Quote.Manager object requesting data has any

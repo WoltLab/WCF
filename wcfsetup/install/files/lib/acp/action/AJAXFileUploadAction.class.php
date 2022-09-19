@@ -11,6 +11,6 @@ namespace wcf\acp\action;
  * @package WoltLabSuite\Core\Acp\Action
  * @since   5.2
  */
-class AJAXFileUploadAction extends \wcf\action\AJAXFileUploadAction
+final class AJAXFileUploadAction extends \wcf\action\AJAXFileUploadAction
 {
 }

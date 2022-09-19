@@ -17,7 +17,7 @@ use wcf\system\request\LinkHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Action
  */
-class CacheClearAction extends AbstractAction
+final class CacheClearAction extends AbstractAction
 {
     /**
      * @inheritDoc

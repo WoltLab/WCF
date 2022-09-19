@@ -24,7 +24,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  */
-class NotificationConfirmAction extends AbstractAction
+final class NotificationConfirmAction extends AbstractAction
 {
     /**
      * @inheritDoc
