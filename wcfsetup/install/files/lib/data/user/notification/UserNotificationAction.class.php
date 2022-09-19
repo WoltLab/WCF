@@ -34,27 +34,6 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
     public $notificationEditor;
 
     /**
-     * @inheritDoc
-     * @return  UserNotification
-     */
-    public function create()
-    {
-        /** @var UserNotification $notification */
-        $notification = parent::create();
-
-        $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_to_user
-                            (notificationID, userID)
-                VALUES      (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([
-            $notification->notificationID,
-            $notification->userID,
-        ]);
-
-        return $notification;
-    }
-
-    /**
      * Creates a simple notification without stacking support, applies to legacy notifications too.
      *
      * @return  mixed[][]
@@ -303,23 +282,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('notificationID IN (?)', [$notificationIDs]);
 
-            $sql = "UPDATE	wcf" . WCF_N . "_user_notification
-                SET	confirmTime = ?
-                {$condition}";
+            $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+                    SET     confirmTime = ?
+                    {$condition}";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute(\array_merge([TIME_NOW], $condition->getParameters()));
-
-            // Step 3) Delete notification_to_user assignments (mimic legacy notification system)
-
-            // This conditions technically is not required, because notificationIDs are unique.
-            // As this is not enforced at the database layer we play safe until this legacy table
-            // finally is removed.
-            $condition->add('userID = ?', [WCF::getUser()->userID]);
-
-            $sql = "DELETE FROM	wcf" . WCF_N . "_user_notification_to_user
-                {$condition}";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute($condition->getParameters());
         }
 
         // Step 4) Clear cached values.
