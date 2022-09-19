@@ -720,7 +720,7 @@ class PackageInstallationDispatcher
         $row = $statement->fetchArray();
 
         // PIP is unknown
-        if (!$row || (\strcmp($nodeData['pip'], $row['pluginName']) !== 0)) {
+        if (!$row || $nodeData['pip'] !== $row['pluginName']) {
             throw new SystemException("unable to find package installation plugin '" . $nodeData['pip'] . "'");
         }
 
