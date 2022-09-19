@@ -65,4 +65,6 @@ return [
         ->drop(),
     PartialDatabaseTable::create('wcf1_package_update_optional')
         ->drop(),
+    PartialDatabaseTable::create('wcf1_user_notification_to_user')
+        ->drop(),
 ];
