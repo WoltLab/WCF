@@ -60,7 +60,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
      *
      * @param StructuredCommentResponse $response
      */
-    public function addResponse(StructuredCommentResponse $response)
+    public function addResponse(StructuredCommentResponse $response): void
     {
         $this->responses[] = $response;
     }
@@ -70,7 +70,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
      *
      * @return  StructuredCommentResponse[]
      */
-    public function getResponses()
+    public function getResponses(): array
     {
         return $this->responses;
     }
@@ -80,7 +80,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
      *
      * @return  int
      */
-    public function getLastResponseTime()
+    public function getLastResponseTime(): int
     {
         $lastResponseTime = 0;
         foreach ($this->responses as $response) {
@@ -97,7 +97,6 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * Sets the user's profile.
      *
-     * @param UserProfile $userProfile
      * @deprecated  3.0
      */
     public function setUserProfile(UserProfile $userProfile)
@@ -125,40 +124,32 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 
     /**
      * Sets deletable state.
-     *
-     * @param bool $deletable
      */
-    public function setIsDeletable($deletable)
+    public function setIsDeletable(bool $deletable): void
     {
         $this->deletable = $deletable;
     }
 
     /**
      * Sets editable state.
-     *
-     * @param bool $editable
      */
-    public function setIsEditable($editable)
+    public function setIsEditable(bool $editable): void
     {
         $this->editable = $editable;
     }
 
     /**
      * Returns true if the comment is deletable by current user.
-     *
-     * @return  bool
      */
-    public function isDeletable()
+    public function isDeletable(): bool
     {
         return $this->deletable;
     }
 
     /**
      * Returns true if the comment is editable by current user.
-     *
-     * @return  bool
      */
-    public function isEditable()
+    public function isEditable(): bool
     {
         return $this->editable;
     }
@@ -174,7 +165,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): StructuredCommentResponse
     {
         return $this->responses[$this->position];
     }
@@ -182,7 +173,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
@@ -190,7 +181,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -198,7 +189,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -206,7 +197,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->responses[$this->position]);
     }
