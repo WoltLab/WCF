@@ -176,6 +176,7 @@ class AttachmentPage extends AbstractPage
         // MIME-Types. One possibility might be a package extending $inlineMimeTypes
         // in an unsafe fashion.
         $this->fileReader->addHeader('content-security-policy', "default-src 'none';");
+        $this->fileReader->addHeader('x-content-type-options', 'nosniff');
 
         if ($this->eTag !== null) {
             $this->fileReader->addHeader('ETag', '"' . $this->eTag . '"');
