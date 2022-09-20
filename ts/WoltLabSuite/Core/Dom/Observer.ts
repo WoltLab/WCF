@@ -1,3 +1,12 @@
+/**
+ * Provides functions to watch for elements being added to the document.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Dom/Observer
+ */
+
 let observer: MutationObserver;
 
 type CallbackMatch = (element: HTMLElement) => void;
@@ -23,6 +32,11 @@ function notifyCallbacks(element: HTMLElement, callbacks: CallbackMatch[]): void
   }
 }
 
+/**
+ * Invokes a callback whenever a selector matches an element added
+ * to the DOM. Elements being removed and then added again will be
+ * reported again.
+ */
 export function wheneverSeen(selector: string, callback: CallbackMatch): void {
   if (!selectors.has(selector)) {
     selectors.set(selector, []);
@@ -45,6 +59,12 @@ export function wheneverSeen(selector: string, callback: CallbackMatch): void {
   }
 }
 
+/**
+ * Works identical to `wheneverSeen` wite the difference that all
+ * previously matched elements are tracked and will not be reported
+ * again. Useful for applying event listeners or transformations
+ * that should be applied just once.
+ */
 export function findUniqueElements(selector: string, callback: CallbackMatch) {
   const knownElements = new WeakSet();
 

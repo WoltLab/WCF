@@ -1,3 +1,11 @@
+/**
+ * Provides functions to watch for elements being added to the document.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Dom/Observer
+ */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -20,6 +28,11 @@ define(["require", "exports"], function (require, exports) {
             callback(element);
         }
     }
+    /**
+     * Invokes a callback whenever a selector matches an element added
+     * to the DOM. Elements being removed and then added again will be
+     * reported again.
+     */
     function wheneverSeen(selector, callback) {
         if (!selectors.has(selector)) {
             selectors.set(selector, []);
@@ -40,6 +53,12 @@ define(["require", "exports"], function (require, exports) {
         }
     }
     exports.wheneverSeen = wheneverSeen;
+    /**
+     * Works identical to `wheneverSeen` wite the difference that all
+     * previously matched elements are tracked and will not be reported
+     * again. Useful for applying event listeners or transformations
+     * that should be applied just once.
+     */
     function findUniqueElements(selector, callback) {
         const knownElements = new WeakSet();
         wheneverSeen(selector, (element) => {
