@@ -91,6 +91,14 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         // perform post-uninstall actions
         if ($node == '') {
+            (new AuditLogger())->log(
+                <<<EOT
+                Finalizing process
+                ==================
+                Process#: {$this->queue->processNo}
+                EOT
+            );
+
             // rebuild application paths
             ApplicationHandler::rebuild();
 
@@ -104,6 +112,14 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
             $command = new ClearCache();
             $command();
+
+            (new AuditLogger())->log(
+                <<<EOT
+                Finalized process
+                =================
+                Process#: {$this->queue->processNo}
+                EOT
+            );
         }
 
         WCF::resetZendOpcache();

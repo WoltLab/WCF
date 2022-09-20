@@ -168,6 +168,14 @@ class PackageInstallationDispatcher
 
         // perform post-install/update actions
         if ($node == '') {
+            (new AuditLogger())->log(
+                <<<EOT
+                Finalizing process
+                ==================
+                Process#: {$this->queue->processNo}
+                EOT
+            );
+            
             $this->logInstallationStep([], 'start cleanup');
 
             // update "last update time" option
@@ -234,6 +242,14 @@ class PackageInstallationDispatcher
             $command();
 
             $this->logInstallationStep([], 'finished cleanup');
+
+            (new AuditLogger())->log(
+                <<<EOT
+                Finalized process
+                =================
+                Process#: {$this->queue->processNo}
+                EOT
+            );
         }
 
         WCF::resetZendOpcache();
@@ -405,11 +421,27 @@ class PackageInstallationDispatcher
 
     protected function handleStartMarker()
     {
+        (new AuditLogger())->log(
+            <<<EOT
+            Starting queue
+            ==============
+            Queue#: {$this->queue->queueID}
+            EOT
+        );
+
         return new PackageInstallationStep();
     }
 
     protected function handleEndMarker()
     {
+        (new AuditLogger())->log(
+            <<<EOT
+            Ending queue
+            ============
+            Queue#: {$this->queue->queueID}
+            EOT
+        );
+
         return new PackageInstallationStep();
     }
 
