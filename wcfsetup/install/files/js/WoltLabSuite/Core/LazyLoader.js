@@ -40,9 +40,9 @@ define(["require", "exports"], function (require, exports) {
                         void documentReady.then(() => callback());
                     }
                     selectors.delete(selector);
-                    timers.delete(element);
                 }
             }
+            timers.delete(element);
         }));
     }
     function whenFirstSeen(selector, callback) {

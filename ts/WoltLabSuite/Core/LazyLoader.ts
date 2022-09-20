@@ -44,9 +44,10 @@ function testElement(element: HTMLElement): void {
           }
 
           selectors.delete(selector);
-          timers.delete(element);
         }
       }
+
+      timers.delete(element);
     }),
   );
 }
