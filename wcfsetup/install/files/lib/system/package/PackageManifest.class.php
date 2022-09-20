@@ -9,7 +9,7 @@ namespace wcf\system\package;
  * of the archive wherein changes could be relevant to security.
  *
  * @author  Tim Duesterhus
- * @copyright   2001-2020 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package
  * @since   6.0
@@ -35,11 +35,15 @@ final class PackageManifest
     public function getHash(int $version = self::CURRENT_VERSION): string
     {
         if ($version === 1) {
-            return $version . '-' . \hash('sha256', $this->getManifest($version));
+            return \sprintf(
+                "%d-%s",
+                $version,
+                \hash('sha256', $this->getManifest($version))
+            );
         } elseif (\in_array($version, self::SUPPORTED_VERSIONS)) {
-            throw new \LogicException("Unhandled, but supported, manifest version '" . $version . "'");
+            throw new \LogicException("Unhandled, but supported, manifest version '{$version}'.");
         } else {
-            throw new \InvalidArgumentException("Unknown manifest version '" . $version . "'");
+            throw new \InvalidArgumentException("Unknown manifest version '{$version}'.");
         }
     }
 
@@ -53,26 +57,39 @@ final class PackageManifest
         if ($version === 1) {
             return $this->getManifestV1();
         } elseif (\in_array($version, self::SUPPORTED_VERSIONS)) {
-            throw new \LogicException("Unhandled, but supported, manifest version '" . $version . "'");
+            throw new \LogicException("Unhandled, but supported, manifest version '{$version}'.");
         } else {
-            throw new \InvalidArgumentException("Unknown manifest version '" . $version . "'");
+            throw new \InvalidArgumentException("Unknown manifest version '{$version}'.");
         }
     }
 
     private function getManifestV1(): string
     {
-        $requirements = \array_map(static function ($requirement) {
-            return $requirement['file'];
-        }, \array_filter($this->archive->getRequirements(), static function ($requirement) {
-            return isset($requirement['file']);
-        }));
+        $requirements = \array_map(static function (array $requirement): string {
+            $file = (string)$requirement['file'];
 
-        $optionals = \array_map(static function ($optional) {
-            if (empty($optional['file'])) {
+            if ($file === '') {
+                throw new \UnexpectedValueException('Expected to see a non-empty file="" attribute for an requirement.');
+            }
+
+            return $file;
+        }, \array_filter(
+            $this->archive->getRequirements(),
+            static fn ($requirement) => isset($requirement['file'])
+        ));
+
+        $optionals = \array_map(static function (array $optional): string {
+            if (!isset($optional['file'])) {
                 throw new \UnexpectedValueException('Expected to see a file="" attribute for an optional.');
             }
 
-            return $optional['file'];
+            $file = (string)$optional['file'];
+
+            if ($file === '') {
+                throw new \UnexpectedValueException('Expected to see a non-empty file="" attribute for an optional.');
+            }
+
+            return $file;
         }, $this->archive->getOptionals());
 
         $includedPackages = \array_merge($requirements, $optionals);
@@ -104,11 +121,9 @@ final class PackageManifest
     {
         $requirements = $this->archive->getRequirements();
 
-        \usort($requirements, static function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
+        \usort($requirements, $this->compareByName(...));
 
-        return \array_map(static function ($requirementData) {
+        return \array_map(static function (array $requirementData): array {
             unset($requirementData['file']);
             \ksort($requirementData);
 
@@ -120,18 +135,16 @@ final class PackageManifest
     {
         $exclusions = $this->archive->getExcludedPackages();
 
-        \usort($exclusions, static function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
+        \usort($exclusions, $this->compareByName(...));
 
-        return \array_map(static function ($exclusionData) {
-            \ksort($exclusionData);
+        return \array_map(static function (array $exclusion): array {
+            \ksort($exclusion);
 
-            return $exclusionData;
+            return $exclusion;
         }, $exclusions);
     }
 
-    private function getFiles($ignore = []): array
+    private function getFiles(array $ignore = []): array
     {
         $tar = $this->archive->getTar();
         $files = [];
@@ -160,7 +173,12 @@ final class PackageManifest
         $updateInstructions = $this->archive->getUpdateInstructions();
         \ksort($updateInstructions);
 
-        return \array_map([$this, 'cleanInstructions'], $updateInstructions);
+        return \array_map($this->cleanInstructions(...), $updateInstructions);
+    }
+
+    private function compareByName(array $a, array $b): int
+    {
+        return $a['name'] <=> $b['name'];
     }
 
     private function cleanInstructions(array $instructions): array
@@ -188,18 +206,17 @@ final class PackageManifest
      * Attention: This method must not be modified. If a format change is required a
      * replacement method must be written.
      *
-     * @param mixed $data
-     * @param int $depth
-     * @return string
      * @throws UnexpectedValueException On non-representable data.
      */
-    private function stringifyV1($data, int $depth = 0): string
+    private function stringifyV1(array|string|int $data, int $depth = 0): string
     {
+        $indentation = \str_repeat('  ', $depth);
+
         if (!\is_array($data)) {
-            return \str_repeat('  ', $depth) . "'" . $this->escape($data) . "'\n";
+            return \sprintf("{$indentation}'%s'\n", $this->escape($data));
         }
-        if (empty($data)) {
-            return \str_repeat('  ', $depth) . "[]\n";
+        if ($data === []) {
+            return \sprintf("{$indentation}%s\n", '[]');
         }
 
         $result = "";
@@ -216,17 +233,17 @@ final class PackageManifest
 
                 $numeric = true;
                 $lastNumeric = \intval($key);
-                $result .= \str_repeat('  ', $depth) . "- ";
+                $result .= "{$indentation}-";
             } else {
                 if ($numeric !== null && $numeric) {
                     throw new \UnexpectedValueException('Arrays with mixed numeric / string keys are not supported.');
                 }
 
                 $numeric = false;
-                $result .= \str_repeat('  ', $depth) . "'" . $this->escape($key) . "':";
+                $result .= "{$indentation}'" . $this->escape($key) . "':";
             }
 
-            if (\is_array($value) && !empty($value)) {
+            if (\is_array($value) && $value !== []) {
                 $result .= "\n" . $this->stringifyV1($value, $depth + 1);
             } else {
                 $result .= " " . $this->stringifyV1($value);
@@ -236,10 +253,10 @@ final class PackageManifest
         return $result;
     }
 
-    private function escape($v)
+    private function escape(string $v): string
     {
-        return \preg_replace_callback('/[^a-zA-Z0-9 \/\._\*\-]/', static function ($matches) {
-            return '\x' . \bin2hex($matches[0]);
+        return \preg_replace_callback('/[^a-zA-Z0-9 \\/\\._\\*\\-]/', static function ($matches) {
+            return \sprintf("\x%s", \bin2hex($matches[0]));
         }, $v);
     }
 }
