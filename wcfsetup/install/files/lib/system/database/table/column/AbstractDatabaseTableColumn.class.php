@@ -13,10 +13,9 @@ use wcf\system\database\table\TDroppableDatabaseComponent;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn, IDefaultValueDatabaseTableColumn
+abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
 {
     use TDroppableDatabaseComponent;
-    use TDefaultValueDatabaseTableColumn;
 
     /**
      * name of the database table column
