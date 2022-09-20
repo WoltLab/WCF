@@ -712,24 +712,10 @@ class PackageInstallationScheduler
 
     /**
      * Compares the length of two updates threads.
-     *
-     * @param array $updateThreadListA
-     * @param array $updateThreadListB
-     * @return  int
      */
-    protected function compareUpdateThreadLists($updateThreadListA, $updateThreadListB)
+    protected function compareUpdateThreadLists(array $updateThreadListA, array $updateThreadListB): int
     {
-        $countA = \count($updateThreadListA);
-        $countB = \count($updateThreadListB);
-
-        if ($countA < $countB) {
-            return -1;
-        }
-        if ($countA > $countB) {
-            return 1;
-        }
-
-        return 0;
+        return \count($updateThreadListA) <=> \count($updateThreadListB);
     }
 
     /**
