@@ -51,7 +51,7 @@ function testElement(element: HTMLElement): void {
   );
 }
 
-export function whenSeen(selector: string, callback: CallbackWhenSeen): void {
+export function whenFirstSeen(selector: string, callback: CallbackWhenSeen): void {
   if (!selectors.has(selector)) {
     selectors.set(selector, []);
   }
@@ -74,4 +74,5 @@ export function whenSeen(selector: string, callback: CallbackWhenSeen): void {
       }
     });
   }
+  observer.observe(document, { subtree: true, childList: true });
 }

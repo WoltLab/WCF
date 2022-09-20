@@ -17,7 +17,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.whenSeen = void 0;
+    exports.whenFirstSeen = void 0;
     let observer;
     const selectors = new Map();
     const timers = new Map();
@@ -45,7 +45,7 @@ define(["require", "exports"], function (require, exports) {
             }
         }));
     }
-    function whenSeen(selector, callback) {
+    function whenFirstSeen(selector, callback) {
         if (!selectors.has(selector)) {
             selectors.set(selector, []);
         }
@@ -65,6 +65,7 @@ define(["require", "exports"], function (require, exports) {
                 }
             });
         }
+        observer.observe(document, { subtree: true, childList: true });
     }
-    exports.whenSeen = whenSeen;
+    exports.whenFirstSeen = whenFirstSeen;
 });
