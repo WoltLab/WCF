@@ -392,7 +392,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter
 
         $channels = $mimeType == 'image/png' ? 4 : 3;
 
-        return FileUtil::checkMemoryLimit($width * $height * $channels * 2.1);
+        return FileUtil::checkMemoryLimit((int)($width * $height * $channels * 2.1));
     }
 
     /**
