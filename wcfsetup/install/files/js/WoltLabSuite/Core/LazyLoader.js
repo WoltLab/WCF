@@ -30,13 +30,18 @@ define(["require", "exports"], function (require, exports) {
         }
     });
     function testElement(element) {
+        // Debounce the checks against the same target.
         if (timers.get(element) !== undefined) {
             window.cancelAnimationFrame(timers.get(element));
         }
         timers.set(element, window.requestAnimationFrame(() => {
             for (const selector of selectors.keys()) {
+                // Check if the element itself or any of its descendants
+                // matches the provided selector.
                 if (element.matches(selector) || element.querySelector(selector) !== null) {
                     for (const callback of selectors.get(selector)) {
+                        // Wait for the document to fully load before notifying
+                        // the callbacks to avoid layout shifts during page load.
                         void documentReady.then(() => callback());
                     }
                     selectors.delete(selector);
@@ -50,14 +55,18 @@ define(["require", "exports"], function (require, exports) {
             selectors.set(selector, []);
         }
         selectors.get(selector).push(callback);
+        // Immediately schedule a check to find matching elements
+        // that already exist in the document at call time.
         testElement(document.body);
         if (observer === undefined) {
+            // Check for elements added to the document on runtime.
             observer = new MutationObserver((mutations) => {
                 if (selectors.size === 0) {
                     return;
                 }
                 for (const mutation of mutations) {
                     for (const node of mutation.addedNodes) {
+                        // Skip changes to SVG elements or text nodes.
                         if (node instanceof HTMLElement) {
                             testElement(node);
                         }
