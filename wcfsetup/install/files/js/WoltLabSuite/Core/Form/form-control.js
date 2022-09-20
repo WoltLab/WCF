@@ -41,7 +41,8 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             }
             if (this.#primaryButton === undefined) {
                 this.#primaryButton = document.createElement("button");
-                this.#primaryButton.type = "button";
+                this.#primaryButton.type = "submit";
+                this.#primaryButton.value = "primary";
                 this.#primaryButton.autofocus = true;
                 this.#primaryButton.classList.add("button", "buttonPrimary", "formControl__button", "formControl__button--primary");
                 this.#primaryButton.textContent = this.primary;
@@ -50,10 +51,18 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             if (this.#cancelButton === undefined && this.cancel !== undefined) {
                 this.#cancelButton = document.createElement("button");
                 this.#cancelButton.type = "button";
+                this.#cancelButton.value = "cancel";
                 this.#cancelButton.classList.add("button", "formControl__button", "formControl__button--cancel");
                 this.#cancelButton.textContent = this.cancel;
+                this.#cancelButton.addEventListener("click", () => {
+                    const event = new CustomEvent("cancel");
+                    this.dispatchEvent(event);
+                });
                 this.append(this.#cancelButton);
             }
+        }
+        addEventListener(type, listener, options) {
+            super.addEventListener(type, listener, options);
         }
     }
     exports.FormControl = FormControl;

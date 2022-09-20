@@ -2,6 +2,14 @@ import DomUtil from "../Dom/Util";
 
 type CallbackReturnFocus = () => HTMLElement | null;
 
+interface ModalDialogEventMap {
+  afterClose: CustomEvent;
+  cancel: CustomEvent;
+  close: CustomEvent;
+  primary: CustomEvent;
+  validate: CustomEvent;
+}
+
 const dialogContainer = document.createElement("div");
 
 export type ModalDialogFormControl = {
@@ -54,7 +62,7 @@ export class ModalDialog extends HTMLElement {
       element?.focus();
     }
 
-    const event = new CustomEvent("closed");
+    const event = new CustomEvent("afterClose");
     this.dispatchEvent(event);
   }
 
@@ -112,6 +120,34 @@ export class ModalDialog extends HTMLElement {
         this.#dialog.setAttribute("role", "alertdialog");
       }
     }
+
+    this.#form.addEventListener("submit", (event) => {
+      const evt = new CustomEvent("validate", { cancelable: true });
+      this.dispatchEvent(evt);
+
+      if (evt.defaultPrevented) {
+        event.preventDefault();
+      }
+    });
+
+    this.#dialog.addEventListener("close", () => {
+      if (this.#dialog.returnValue === "") {
+        // Dialog was not closed by submitting it.
+        return;
+      }
+
+      const evt = new CustomEvent("primary");
+      this.dispatchEvent(evt);
+    });
+
+    formControl.addEventListener("cancel", () => {
+      const event = new CustomEvent("cancel", { cancelable: true });
+      this.dispatchEvent(event);
+
+      if (!event.defaultPrevented) {
+        this.close();
+      }
+    });
   }
 
   #attachDialog(): void {
@@ -175,6 +211,19 @@ export class ModalDialog extends HTMLElement {
     this.dispatchEvent(event);
 
     return event.defaultPrevented === false;
+  }
+
+  public addEventListener<T extends keyof ModalDialogEventMap>(
+    type: T,
+    listener: (this: ModalDialog, ev: ModalDialogEventMap[T]) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
+  public addEventListener(
+    type: string,
+    listener: (this: ModalDialog, ev: Event) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void {
+    super.addEventListener(type, listener, options);
   }
 }
 

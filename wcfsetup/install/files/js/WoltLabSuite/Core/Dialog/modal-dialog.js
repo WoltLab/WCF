@@ -37,7 +37,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
                 const element = this.#returnFocus();
                 element?.focus();
             }
-            const event = new CustomEvent("closed");
+            const event = new CustomEvent("afterClose");
             this.dispatchEvent(event);
         }
         get dialog() {
@@ -83,6 +83,28 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
                     this.#dialog.setAttribute("role", "alertdialog");
                 }
             }
+            this.#form.addEventListener("submit", (event) => {
+                const evt = new CustomEvent("validate", { cancelable: true });
+                this.dispatchEvent(evt);
+                if (evt.defaultPrevented) {
+                    event.preventDefault();
+                }
+            });
+            this.#dialog.addEventListener("close", () => {
+                if (this.#dialog.returnValue === "") {
+                    // Dialog was not closed by submitting it.
+                    return;
+                }
+                const evt = new CustomEvent("primary");
+                this.dispatchEvent(evt);
+            });
+            formControl.addEventListener("cancel", () => {
+                const event = new CustomEvent("cancel", { cancelable: true });
+                this.dispatchEvent(event);
+                if (!event.defaultPrevented) {
+                    this.close();
+                }
+            });
         }
         #attachDialog() {
             if (this.#dialog.parentElement !== null) {
@@ -136,6 +158,9 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             const event = new CustomEvent("close");
             this.dispatchEvent(event);
             return event.defaultPrevented === false;
+        }
+        addEventListener(type, listener, options) {
+            super.addEventListener(type, listener, options);
         }
     }
     exports.ModalDialog = ModalDialog;

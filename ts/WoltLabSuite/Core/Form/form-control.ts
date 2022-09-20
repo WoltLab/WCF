@@ -1,5 +1,9 @@
 import * as Language from "../Language";
 
+interface FormControlEventMap {
+  cancel: CustomEvent;
+}
+
 export class FormControl extends HTMLElement {
   #cancelButton?: HTMLButtonElement;
   #primaryButton?: HTMLButtonElement;
@@ -47,7 +51,8 @@ export class FormControl extends HTMLElement {
 
     if (this.#primaryButton === undefined) {
       this.#primaryButton = document.createElement("button");
-      this.#primaryButton.type = "button";
+      this.#primaryButton.type = "submit";
+      this.#primaryButton.value = "primary";
       this.#primaryButton.autofocus = true;
       this.#primaryButton.classList.add(
         "button",
@@ -63,11 +68,29 @@ export class FormControl extends HTMLElement {
     if (this.#cancelButton === undefined && this.cancel !== undefined) {
       this.#cancelButton = document.createElement("button");
       this.#cancelButton.type = "button";
+      this.#cancelButton.value = "cancel";
       this.#cancelButton.classList.add("button", "formControl__button", "formControl__button--cancel");
       this.#cancelButton.textContent = this.cancel;
+      this.#cancelButton.addEventListener("click", () => {
+        const event = new CustomEvent("cancel");
+        this.dispatchEvent(event);
+      });
 
       this.append(this.#cancelButton);
     }
+  }
+
+  public addEventListener<T extends keyof FormControlEventMap>(
+    type: T,
+    listener: (this: FormControl, ev: FormControlEventMap[T]) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
+  public addEventListener(
+    type: string,
+    listener: (this: FormControl, ev: Event) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void {
+    super.addEventListener(type, listener, options);
   }
 }
 
