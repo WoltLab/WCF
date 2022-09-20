@@ -171,6 +171,12 @@ class AttachmentPage extends AbstractPage
             'maxAge' => $cacheDuration,
         ]);
 
+        // Prevent <script> execution in the context of the community's domain if
+        // an attacker somehow bypasses 'content-disposition: attachment' for non-inline
+        // MIME-Types. One possibility might be a package extending $inlineMimeTypes
+        // in an unsafe fashion.
+        $this->fileReader->addHeader('content-security-policy', "default-src 'none';");
+
         if ($this->eTag !== null) {
             $this->fileReader->addHeader('ETag', '"' . $this->eTag . '"');
         }
