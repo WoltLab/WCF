@@ -25,6 +25,10 @@ return [
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
         ]),
+    PartialDatabaseTable::create('wcf1_package_installation_node')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('nodeType'),
+        ]),
     PartialDatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
