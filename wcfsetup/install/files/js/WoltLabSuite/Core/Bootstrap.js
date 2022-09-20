@@ -8,7 +8,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Bootstrap
  */
-define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Form/XsrfToken", "./Language", "./StringUtil", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password", "./Ui/Empty", "./Ui/Object/Action", "./Ui/Object/Action/Delete", "./Ui/Object/Action/Toggle", "./Ui/Search", "perfect-scrollbar"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, XsrfToken, Language, StringUtil, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword, UiEmpty, UiObjectAction, UiObjectActionDelete, UiObjectActionToggle, Search_1) {
+define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Form/XsrfToken", "./Language", "./StringUtil", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password", "./Ui/Empty", "./Ui/Object/Action", "./Ui/Object/Action/Delete", "./Ui/Object/Action/Toggle", "./Ui/Search", "./LazyLoader", "perfect-scrollbar"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, XsrfToken, Language, StringUtil, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword, UiEmpty, UiObjectAction, UiObjectActionDelete, UiObjectActionToggle, Search_1, LazyLoader_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -118,6 +118,9 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
         document.querySelectorAll(".pagination").forEach((el) => UiPageJumpTo.init(el));
         initA11y();
         Listener_1.default.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
+        (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
+            void new Promise((resolve_1, reject_1) => { require(["./Ui/Moderation/Report"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
     }
     exports.setup = setup;
 });

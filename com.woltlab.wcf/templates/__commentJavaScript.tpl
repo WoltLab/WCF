@@ -33,11 +33,6 @@
 				});
 			});
 		{/if}
-		
-		{if $commentList->getCommentManager()->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '#{@$commentContainerID} .jsReportCommentComment');
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '#{@$commentContainerID} .jsReportCommentResponse');
-		{/if}
 	});
 </script>
 

@@ -48,8 +48,14 @@
 								</li>
 							{/if}
 							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-								<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}">
-									<button type="button" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip">
+								<li>
+									<button
+										type="button"
+										title="{lang}wcf.moderation.report.reportContent{/lang}"
+										class="jsTooltip"
+										data-report-content="com.woltlab.wcf.comment.response"
+										data-object-id="{$response->responseID}"
+									>
 										{icon name='triangle-exclamation'}
 										<span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span>
 									</button>
