@@ -594,6 +594,20 @@
 	.boxMenuDepth2 li.active > .boxMenuLink {
 		padding-left: 50px;
 	}
+
+	li.active {
+		&.boxMenuItemDepth2 .boxMenuLink {
+			padding-left: 30px;
+		}
+
+		&.boxMenuItemDepth3 .boxMenuLink {
+			padding-left: 50px;
+		}
+
+		&.boxMenuItemDepth4 .boxMenuLink {
+			padding-left: 70px;
+		}
+	}
 }
 
 .boxesSidebarRight .box .boxMenu li.active > .boxMenuLink {
