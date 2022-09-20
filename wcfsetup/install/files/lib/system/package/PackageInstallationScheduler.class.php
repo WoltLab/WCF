@@ -25,7 +25,7 @@ use wcf\util\HTTPRequest;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package
  */
-class PackageInstallationScheduler
+final class PackageInstallationScheduler
 {
     /**
      * stack of package installations / updates
