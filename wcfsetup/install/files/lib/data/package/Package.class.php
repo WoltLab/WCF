@@ -340,33 +340,27 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * Reminder: The package name being examined here contains the 'name' attribute
      * of the 'package' tag noted in the 'package.xml' file delivered inside
      * the respective package.
-     *
-     * @param string $packageName
-     * @return  bool        isValid
      */
-    public static function isValidPackageName($packageName)
+    public static function isValidPackageName(string $packageName): bool
     {
         if (\mb_strlen($packageName) < 3 || \mb_strlen($packageName) > 191) {
             return false;
         }
 
-        return \preg_match('%^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$%', $packageName);
+        return !!\preg_match('/^[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$/', $packageName);
     }
 
     /**
      * Returns true if package version is valid.
      *
      * Examples of valid package versions:
-     *  1.0.0 pl 3
+     *  1.0.0
      *  4.0.0 Alpha 1
-     *  3.1.7 rC 4
-     *
-     * @param string $version
-     * @return  bool
+     *  3.1.7 RC 4
      */
-    public static function isValidVersion($version)
+    public static function isValidVersion(string $version): bool
     {
-        return \preg_match('~^([0-9]+)\.([0-9]+)\.([0-9]+)(\ (a|alpha|b|beta|d|dev|rc|pl)\ ([0-9]+))?$~is', $version);
+        return !!\preg_match('/^([0-9]+)\\.([0-9]+)\\.([0-9]+)( (dev|Alpha|Beta|RC) ([0-9]+))?$/', $version);
     }
 
     /**
