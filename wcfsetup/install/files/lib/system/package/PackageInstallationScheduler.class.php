@@ -222,7 +222,7 @@ final class PackageInstallationScheduler
                 if (isset($installedPackages[$row['package']])) {
                     // package already installed -> check version
                     // sort multiple instances by version number
-                    \uasort($installedPackages[$row['package']], [Package::class, 'compareVersion']);
+                    \uasort($installedPackages[$row['package']], Package::compareVersion(...));
 
                     $packageID = 0;
                     foreach ($installedPackages[$row['package']] as $packageID => $packageVersion) {
@@ -561,7 +561,7 @@ final class PackageInstallationScheduler
             $count = \count($packageVersions);
             if ($count > 1) {
                 // sort by version number
-                \usort($packageVersions, [Package::class, 'compareVersion']);
+                \usort($packageVersions, Package::compareVersion(...));
 
                 // get highest version
                 $version = \array_pop($packageVersions);
@@ -599,7 +599,7 @@ final class PackageInstallationScheduler
         }
 
         // sort by version number
-        \uksort($fromversions, [Package::class, 'compareVersion']);
+        \uksort($fromversions, Package::compareVersion(...));
 
         // find shortest update thread
         try {
@@ -692,7 +692,7 @@ final class PackageInstallationScheduler
 
             if (!empty($innerUpdateThreadList)) {
                 // sort by length
-                \usort($innerUpdateThreadList, [$this, 'compareUpdateThreadLists']);
+                \usort($innerUpdateThreadList, $this->compareUpdateThreadLists(...));
 
                 // add to thread list
                 $updateThreadList[] = \array_shift($innerUpdateThreadList);
@@ -704,7 +704,7 @@ final class PackageInstallationScheduler
         }
 
         // sort by length
-        \usort($updateThreadList, [$this, 'compareUpdateThreadLists']);
+        \usort($updateThreadList, $this->compareUpdateThreadLists(...));
 
         // take shortest
         return \array_shift($updateThreadList);
