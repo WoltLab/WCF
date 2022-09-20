@@ -25,7 +25,7 @@ use wcf\util\HTTPRequest;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package
  */
-class PackageInstallationScheduler
+final class PackageInstallationScheduler
 {
     /**
      * stack of package installations / updates
@@ -188,9 +188,9 @@ class PackageInstallationScheduler
         $requiredPackages = [];
         $requirementsCache = [];
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_package_update_requirement
+                FROM    wcf1_package_update_requirement
                 WHERE   packageUpdateVersionID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$packageUpdateVersionID]);
         while ($row = $statement->fetchArray()) {
             $requiredPackages[] = $row['package'];
@@ -203,10 +203,12 @@ class PackageInstallationScheduler
             $conditions->add("package IN (?)", [$requiredPackages]);
 
             $installedPackages = [];
-            $sql = "SELECT  packageID, package, packageVersion
-                    FROM    wcf" . WCF_N . "_package
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $sql = "SELECT  packageID,
+                            package,
+                            packageVersion
+                    FROM    wcf1_package
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 if (!isset($installedPackages[$row['package']])) {
@@ -220,7 +222,7 @@ class PackageInstallationScheduler
                 if (isset($installedPackages[$row['package']])) {
                     // package already installed -> check version
                     // sort multiple instances by version number
-                    \uasort($installedPackages[$row['package']], [Package::class, 'compareVersion']);
+                    \uasort($installedPackages[$row['package']], Package::compareVersion(...));
 
                     $packageID = 0;
                     foreach ($installedPackages[$row['package']] as $packageID => $packageVersion) {
@@ -364,10 +366,11 @@ class PackageInstallationScheduler
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [$packageIdentifier]);
 
-            $sql = "SELECT  packageUpdateID, package
-                    FROM    wcf" . WCF_N . "_package_update
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $sql = "SELECT  packageUpdateID,
+                            package
+                    FROM    wcf1_package_update
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 foreach ($packageInstallations as $key => $packageInstallation) {
@@ -390,23 +393,24 @@ class PackageInstallationScheduler
                 $statementParameters[] = $packageInstallation['newVersion'];
             }
 
-            $sql = "SELECT      package.*, package_update_exclusion.*,
+            $sql = "SELECT      package.*,
+                                package_update_exclusion.*,
                                 package_update.packageUpdateID,
                                 package_update.package
-                    FROM        wcf" . WCF_N . "_package_update_exclusion package_update_exclusion
-                    LEFT JOIN   wcf" . WCF_N . "_package_update_version package_update_version
+                    FROM        wcf1_package_update_exclusion package_update_exclusion
+                    LEFT JOIN   wcf1_package_update_version package_update_version
                     ON          package_update_version.packageUpdateVersionID = package_update_exclusion.packageUpdateVersionID
-                    LEFT JOIN   wcf" . WCF_N . "_package_update package_update
+                    LEFT JOIN   wcf1_package_update package_update
                     ON          package_update.packageUpdateID = package_update_version.packageUpdateID
-                    LEFT JOIN   wcf" . WCF_N . "_package package
+                    LEFT JOIN   wcf1_package package
                     ON          package.package = package_update_exclusion.excludedPackage
                     WHERE       package_update_exclusion.packageUpdateVersionID IN (
                                     SELECT  packageUpdateVersionID
-                                    FROM    wcf" . WCF_N . "_package_update_version
-                                    WHERE   " . $conditions . "
+                                    FROM    wcf1_package_update_version
+                                    WHERE   {$conditions}
                                 )
                             AND package.package IS NOT NULL";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($statementParameters);
             while ($row = $statement->fetchArray()) {
                 foreach ($packageInstallations as $key => $packageInstallation) {
@@ -445,12 +449,13 @@ class PackageInstallationScheduler
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("excludedPackage IN (?)", [$packageIdentifier]);
 
-            $sql = "SELECT      package.*, package_exclusion.*
-                    FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
-                    LEFT JOIN   wcf" . WCF_N . "_package package
+            $sql = "SELECT      package.*,
+                                package_exclusion.*
+                    FROM        wcf1_package_exclusion package_exclusion
+                    LEFT JOIN   wcf1_package package
                     ON          package.packageID = package_exclusion.packageID
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 foreach ($packageInstallations as $packageInstallation) {
@@ -539,14 +544,14 @@ class PackageInstallationScheduler
         // get highest version of the required major release
         if (\preg_match('/(\d+\.\d+\.)/', $version, $match)) {
             $sql = "SELECT  DISTINCT packageVersion
-                    FROM    wcf" . WCF_N . "_package_update_version
+                    FROM    wcf1_package_update_version
                     WHERE   packageUpdateID IN (
                                 SELECT  packageUpdateID
-                                FROM    wcf" . WCF_N . "_package_update
+                                FROM    wcf1_package_update
                                 WHERE   package = ?
                             )
                         AND packageVersion LIKE ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $package->package,
                 $match[1] . '%',
@@ -556,7 +561,7 @@ class PackageInstallationScheduler
             $count = \count($packageVersions);
             if ($count > 1) {
                 // sort by version number
-                \usort($packageVersions, [Package::class, 'compareVersion']);
+                \usort($packageVersions, Package::compareVersion(...));
 
                 // get highest version
                 $version = \array_pop($packageVersions);
@@ -570,20 +575,21 @@ class PackageInstallationScheduler
 
         // get all fromversion
         $fromversions = [];
-        $sql = "SELECT      puv.packageVersion, puf.fromversion
-                FROM        wcf" . WCF_N . "_package_update_fromversion puf
-                LEFT JOIN   wcf" . WCF_N . "_package_update_version puv
+        $sql = "SELECT      puv.packageVersion,
+                            puf.fromversion
+                FROM        wcf1_package_update_fromversion puf
+                LEFT JOIN   wcf1_package_update_version puv
                 ON          puv.packageUpdateVersionID = puf.packageUpdateVersionID
                 WHERE       puf.packageUpdateVersionID IN (
                                 SELECT  packageUpdateVersionID
-                                FROM    wcf" . WCF_N . "_package_update_version
+                                FROM    wcf1_package_update_version
                                 WHERE   packageUpdateID IN (
                                             SELECT  packageUpdateID
-                                            FROM    wcf" . WCF_N . "_package_update
+                                            FROM    wcf1_package_update
                                             WHERE   package = ?
                                         )
                             )";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$package->package]);
         while ($row = $statement->fetchArray()) {
             if (!isset($fromversions[$row['packageVersion']])) {
@@ -593,7 +599,7 @@ class PackageInstallationScheduler
         }
 
         // sort by version number
-        \uksort($fromversions, [Package::class, 'compareVersion']);
+        \uksort($fromversions, Package::compareVersion(...));
 
         // find shortest update thread
         try {
@@ -686,7 +692,7 @@ class PackageInstallationScheduler
 
             if (!empty($innerUpdateThreadList)) {
                 // sort by length
-                \usort($innerUpdateThreadList, [$this, 'compareUpdateThreadLists']);
+                \usort($innerUpdateThreadList, $this->compareUpdateThreadLists(...));
 
                 // add to thread list
                 $updateThreadList[] = \array_shift($innerUpdateThreadList);
@@ -698,7 +704,7 @@ class PackageInstallationScheduler
         }
 
         // sort by length
-        \usort($updateThreadList, [$this, 'compareUpdateThreadLists']);
+        \usort($updateThreadList, $this->compareUpdateThreadLists(...));
 
         // take shortest
         return \array_shift($updateThreadList);
@@ -706,24 +712,10 @@ class PackageInstallationScheduler
 
     /**
      * Compares the length of two updates threads.
-     *
-     * @param array $updateThreadListA
-     * @param array $updateThreadListB
-     * @return  int
      */
-    protected function compareUpdateThreadLists($updateThreadListA, $updateThreadListB)
+    protected function compareUpdateThreadLists(array $updateThreadListA, array $updateThreadListB): int
     {
-        $countA = \count($updateThreadListA);
-        $countB = \count($updateThreadListB);
-
-        if ($countA < $countB) {
-            return -1;
-        }
-        if ($countA > $countB) {
-            return 1;
-        }
-
-        return 0;
+        return \count($updateThreadListA) <=> \count($updateThreadListB);
     }
 
     /**

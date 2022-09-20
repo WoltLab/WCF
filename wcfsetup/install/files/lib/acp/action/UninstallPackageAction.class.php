@@ -81,9 +81,10 @@ final class UninstallPackageAction extends AbstractSecureAction
     {
         parent::execute();
 
-        $methodName = 'step' . StringUtil::firstCharToUpperCase($this->step);
-
-        $response = $this->{$methodName}();
+        $response = match ($this->step) {
+            'prepare' => $this->stepPrepare(),
+            'uninstall' => $this->stepUninstall(),
+        };
 
         $this->executed();
 
