@@ -71,9 +71,11 @@ class InstallPackageAction extends AbstractSecureAction
     {
         parent::execute();
 
-        $methodName = 'step' . StringUtil::firstCharToUpperCase($this->step);
-
-        $response = $this->{$methodName}();
+        $response = match ($this->step) {
+            'prepare' => $this->stepPrepare(),
+            'install' => $this->stepInstall(),
+            'rollback' => $this->stepRollback(),
+        };
 
         $this->executed();
 
