@@ -1,10 +1,10 @@
 import * as Language from "../Language";
 
-interface FormControlEventMap {
+interface WoltlabCoreDialogControlEventMap {
   cancel: CustomEvent;
 }
 
-export class FormControl extends HTMLElement {
+export class WoltlabCoreDialogControl extends HTMLElement {
   #cancelButton?: HTMLButtonElement;
   #primaryButton?: HTMLButtonElement;
 
@@ -80,14 +80,14 @@ export class FormControl extends HTMLElement {
     }
   }
 
-  public addEventListener<T extends keyof FormControlEventMap>(
+  public addEventListener<T extends keyof WoltlabCoreDialogControlEventMap>(
     type: T,
-    listener: (this: FormControl, ev: FormControlEventMap[T]) => any,
+    listener: (this: WoltlabCoreDialogControl, ev: WoltlabCoreDialogControlEventMap[T]) => any,
     options?: boolean | AddEventListenerOptions,
   ): void;
   public addEventListener(
     type: string,
-    listener: (this: FormControl, ev: Event) => any,
+    listener: (this: WoltlabCoreDialogControl, ev: Event) => any,
     options?: boolean | AddEventListenerOptions,
   ): void {
     super.addEventListener(type, listener, options);
@@ -95,10 +95,10 @@ export class FormControl extends HTMLElement {
 }
 
 export function setup(): void {
-  const name = "form-control";
+  const name = "woltlab-core-dialog-control";
   if (window.customElements.get(name) === undefined) {
-    window.customElements.define(name, FormControl);
+    window.customElements.define(name, WoltlabCoreDialogControl);
   }
 }
 
-export default FormControl;
+export default WoltlabCoreDialogControl;

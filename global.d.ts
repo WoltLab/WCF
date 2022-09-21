@@ -6,8 +6,8 @@ import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
-import type { WoltlabCoreDialogElement } from "./ts/WoltLabSuite/Core/Dialog/modal-dialog";
-import FormControl from "./ts/WoltLabSuite/Core/Dialog/form-control";
+import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Dialog/modal-dialog";
+import type WoltlabCoreDialogControl from "./ts/WoltLabSuite/Core/Dialog/form-control";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -71,7 +71,7 @@ declare global {
   interface HTMLElementTagNameMap {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
-    "form-control": FormControl;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
+    "woltlab-core-dialog-control": WoltlabCoreDialogControl;
   }
 }

@@ -99,7 +99,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       options.cancel = "";
     }
 
-    const formControl = document.createElement("form-control");
+    const formControl = document.createElement("woltlab-core-dialog-control");
     formControl.primary = options.primary;
 
     if (options.cancel !== undefined) {
@@ -226,5 +226,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     super.addEventListener(type, listener, options);
   }
 }
+
+export default WoltlabCoreDialogElement;
 
 window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);
