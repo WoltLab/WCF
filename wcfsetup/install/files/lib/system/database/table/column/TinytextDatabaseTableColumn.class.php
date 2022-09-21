@@ -13,8 +13,6 @@ namespace wcf\system\database\table\column;
  */
 class TinytextDatabaseTableColumn extends AbstractDatabaseTableColumn
 {
-    use TUnsupportedDefaultValue;
-
     /**
      * @inheritDoc
      */
