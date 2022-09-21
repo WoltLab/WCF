@@ -1,5 +1,5 @@
 import { DialogSetup } from "./Dialog/Setup";
-import { setup as setupFormControl } from "./Dialog/form-control";
+import { setup as setupFormControl } from "./Dialog/woltlab-core-dialog-control";
 
 export function dialogFactory(): DialogSetup {
   setupFormControl();
@@ -7,4 +7,4 @@ export function dialogFactory(): DialogSetup {
   return new DialogSetup();
 }
 
-export * from "./Dialog/modal-dialog";
+export * from "./Dialog/woltlab-core-dialog";

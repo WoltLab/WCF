@@ -1,10 +1,10 @@
 define(["require", "exports", "tslib", "../Dom/Util"], function (require, exports, tslib_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ModalDialog = void 0;
+    exports.WoltlabCoreDialogElement = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     const dialogContainer = document.createElement("div");
-    class ModalDialog extends HTMLElement {
+    class WoltlabCoreDialogElement extends HTMLElement {
         #content;
         #dialog;
         #form;
@@ -65,7 +65,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             if (options.extra !== undefined && options.cancel === undefined) {
                 options.cancel = "";
             }
-            const formControl = document.createElement("form-control");
+            const formControl = document.createElement("woltlab-core-dialog-control");
             formControl.primary = options.primary;
             if (options.cancel !== undefined) {
                 formControl.cancel = options.cancel;
@@ -163,6 +163,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             super.addEventListener(type, listener, options);
         }
     }
-    exports.ModalDialog = ModalDialog;
-    window.customElements.define("modal-dialog", ModalDialog);
+    exports.WoltlabCoreDialogElement = WoltlabCoreDialogElement;
+    exports.default = WoltlabCoreDialogElement;
+    window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);
 });

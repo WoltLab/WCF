@@ -1,9 +1,9 @@
 define(["require", "exports", "tslib", "../Language"], function (require, exports, tslib_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = exports.FormControl = void 0;
+    exports.setup = exports.WoltlabCoreDialogControlElement = void 0;
     Language = tslib_1.__importStar(Language);
-    class FormControl extends HTMLElement {
+    class WoltlabCoreDialogControlElement extends HTMLElement {
         #cancelButton;
         #primaryButton;
         set primary(primary) {
@@ -65,13 +65,13 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             super.addEventListener(type, listener, options);
         }
     }
-    exports.FormControl = FormControl;
+    exports.WoltlabCoreDialogControlElement = WoltlabCoreDialogControlElement;
     function setup() {
-        const name = "form-control";
+        const name = "woltlab-core-dialog-control";
         if (window.customElements.get(name) === undefined) {
-            window.customElements.define(name, FormControl);
+            window.customElements.define(name, WoltlabCoreDialogControlElement);
         }
     }
     exports.setup = setup;
-    exports.default = FormControl;
+    exports.default = WoltlabCoreDialogControlElement;
 });

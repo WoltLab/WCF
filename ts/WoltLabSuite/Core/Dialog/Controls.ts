@@ -1,4 +1,4 @@
-import { WoltlabCoreDialogElement, WoltlabCoreDialogFormControl } from "./modal-dialog";
+import { WoltlabCoreDialogElement, WoltlabCoreDialogFormControl } from "./woltlab-core-dialog";
 
 type AlertOptions = {
   primary: string;
