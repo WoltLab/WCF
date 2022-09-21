@@ -1,5 +1,5 @@
 import { DialogSetup } from "./Dialog/Setup";
-import { setup as setupFormControl } from "./Form/form-control";
+import { setup as setupFormControl } from "./Dialog/form-control";
 
 export function dialogFactory(): DialogSetup {
   setupFormControl();

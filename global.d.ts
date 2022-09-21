@@ -7,7 +7,7 @@ import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 import type { WoltlabCoreDialogElement } from "./ts/WoltLabSuite/Core/Dialog/modal-dialog";
-import FormControl from "./ts/WoltLabSuite/Core/Form/form-control";
+import FormControl from "./ts/WoltLabSuite/Core/Dialog/form-control";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
