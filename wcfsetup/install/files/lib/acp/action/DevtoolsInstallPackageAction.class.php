@@ -51,7 +51,7 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
                 case 'rollback':
                     // valid steps
                     break;
-    
+
                 default:
                     throw new IllegalLinkException();
                     break;
