@@ -1,4 +1,4 @@
-import { ModalDialog, ModalDialogFormControl } from "./modal-dialog";
+import { WoltlabCoreDialogElement, WoltlabCoreDialogFormControl } from "./modal-dialog";
 
 type AlertOptions = {
   primary: string;
@@ -17,14 +17,14 @@ type PromptOptions = {
 };
 
 export class DialogControls {
-  readonly #dialog: ModalDialog;
+  readonly #dialog: WoltlabCoreDialogElement;
 
-  constructor(dialog: ModalDialog) {
+  constructor(dialog: WoltlabCoreDialogElement) {
     this.#dialog = dialog;
   }
 
-  asAlert(options?: Partial<AlertOptions>): ModalDialog {
-    const formControlOptions: ModalDialogFormControl = {
+  asAlert(options?: Partial<AlertOptions>): WoltlabCoreDialogElement {
+    const formControlOptions: WoltlabCoreDialogFormControl = {
       cancel: undefined,
       extra: undefined,
       isAlert: true,
@@ -36,8 +36,8 @@ export class DialogControls {
     return this.#dialog;
   }
 
-  asConfirmation(options?: Partial<ConfirmationOptions>): ModalDialog {
-    const formControlOptions: ModalDialogFormControl = {
+  asConfirmation(options?: Partial<ConfirmationOptions>): WoltlabCoreDialogElement {
+    const formControlOptions: WoltlabCoreDialogFormControl = {
       cancel: options?.cancel || "",
       extra: options?.extra,
       isAlert: true,
@@ -49,8 +49,8 @@ export class DialogControls {
     return this.#dialog;
   }
 
-  asPrompt(options?: Partial<PromptOptions>): ModalDialog {
-    const formControlOptions: ModalDialogFormControl = {
+  asPrompt(options?: Partial<PromptOptions>): WoltlabCoreDialogElement {
+    const formControlOptions: WoltlabCoreDialogFormControl = {
       cancel: options?.cancel || "",
       extra: options?.extra,
       isAlert: false,
@@ -62,7 +62,7 @@ export class DialogControls {
     return this.#dialog;
   }
 
-  withoutControls(): ModalDialog {
+  withoutControls(): WoltlabCoreDialogElement {
     return this.#dialog;
   }
 }

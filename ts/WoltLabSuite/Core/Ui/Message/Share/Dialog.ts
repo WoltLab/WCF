@@ -15,13 +15,13 @@ import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import * as UiMessageShare from "../Share";
 import { getShareProviders } from "./Providers";
-import { dialogFactory, ModalDialog } from "../../../Dialog";
+import { dialogFactory, WoltlabCoreDialogElement } from "../../../Dialog";
 
 const shareButtons = new WeakSet<HTMLElement>();
 
 const offerNativeSharing = window.navigator.share !== undefined;
 
-let dialog: ModalDialog | undefined = undefined;
+let dialog: WoltlabCoreDialogElement | undefined = undefined;
 
 /**
  * Copies the contents of one of the share dialog's input elements to the clipboard.

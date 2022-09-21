@@ -6,7 +6,7 @@ export class DialogSetup {
       throw new TypeError("Expected an HTML element or a document fragment.");
     }
 
-    const dialog = document.createElement("modal-dialog");
+    const dialog = document.createElement("woltlab-core-dialog");
     dialog.content.append(element);
 
     return new DialogControls(dialog);

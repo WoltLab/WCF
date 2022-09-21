@@ -2,7 +2,7 @@ import DomUtil from "../Dom/Util";
 
 type CallbackReturnFocus = () => HTMLElement | null;
 
-interface ModalDialogEventMap {
+interface WoltlabCoreDialogEventMap {
   afterClose: CustomEvent;
   cancel: CustomEvent;
   close: CustomEvent;
@@ -12,14 +12,14 @@ interface ModalDialogEventMap {
 
 const dialogContainer = document.createElement("div");
 
-export type ModalDialogFormControl = {
+export type WoltlabCoreDialogFormControl = {
   cancel: string | undefined;
   extra: string | undefined;
   isAlert: boolean;
   primary: string;
 };
 
-export class ModalDialog extends HTMLElement {
+export class WoltlabCoreDialogElement extends HTMLElement {
   readonly #content: HTMLElement;
   readonly #dialog: HTMLDialogElement;
   #form?: HTMLFormElement;
@@ -90,7 +90,7 @@ export class ModalDialog extends HTMLElement {
     return this.#dialog.open;
   }
 
-  attachFormControls(options: ModalDialogFormControl): void {
+  attachFormControls(options: WoltlabCoreDialogFormControl): void {
     if (this.#form !== undefined) {
       throw new Error("There is already a form control attached to this dialog.");
     }
@@ -213,18 +213,18 @@ export class ModalDialog extends HTMLElement {
     return event.defaultPrevented === false;
   }
 
-  public addEventListener<T extends keyof ModalDialogEventMap>(
+  public addEventListener<T extends keyof WoltlabCoreDialogEventMap>(
     type: T,
-    listener: (this: ModalDialog, ev: ModalDialogEventMap[T]) => any,
+    listener: (this: WoltlabCoreDialogElement, ev: WoltlabCoreDialogEventMap[T]) => any,
     options?: boolean | AddEventListenerOptions,
   ): void;
   public addEventListener(
     type: string,
-    listener: (this: ModalDialog, ev: Event) => any,
+    listener: (this: WoltlabCoreDialogElement, ev: Event) => any,
     options?: boolean | AddEventListenerOptions,
   ): void {
     super.addEventListener(type, listener, options);
   }
 }
 
-window.customElements.define("modal-dialog", ModalDialog);
+window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);

@@ -1,5 +1,5 @@
 import { dboAction } from "../../Ajax";
-import { dialogFactory, ModalDialog } from "../../Dialog";
+import { dialogFactory, WoltlabCoreDialogElement } from "../../Dialog";
 import { findUniqueElements } from "../../Dom/Observer";
 import { innerError } from "../../Dom/Util";
 import * as Language from "../../Language";
@@ -21,7 +21,7 @@ async function openReportDialog(element: HTMLElement): Promise<void> {
     })
     .dispatch()) as ResponsePrepareReport;
 
-  let dialog: ModalDialog;
+  let dialog: WoltlabCoreDialogElement;
   if (response.alreadyReported) {
     dialog = dialogFactory().fromHtml(response.template).asAlert();
   } else {
@@ -40,7 +40,7 @@ async function openReportDialog(element: HTMLElement): Promise<void> {
   dialog.show();
 }
 
-function validateReport(dialog: ModalDialog): boolean {
+function validateReport(dialog: WoltlabCoreDialogElement): boolean {
   const message = dialog.content.querySelector(".jsReportMessage") as HTMLTextAreaElement;
   const dl = message.closest("dl")!;
   if (message.value.trim() === "") {
@@ -56,7 +56,7 @@ function validateReport(dialog: ModalDialog): boolean {
   return true;
 }
 
-async function submitReport(dialog: ModalDialog, objectType: string, objectId: number): Promise<void> {
+async function submitReport(dialog: WoltlabCoreDialogElement, objectType: string, objectId: number): Promise<void> {
   const message = dialog.content.querySelector(".jsReportMessage") as HTMLTextAreaElement;
   const value = message.value.trim();
 

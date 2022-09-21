@@ -6,7 +6,7 @@ import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
-import type { ModalDialog } from "./ts/WoltLabSuite/Core/Dialog/modal-dialog";
+import type { WoltlabCoreDialogElement } from "./ts/WoltLabSuite/Core/Dialog/modal-dialog";
 import FormControl from "./ts/WoltLabSuite/Core/Form/form-control";
 
 type Codepoint = string;
@@ -72,6 +72,6 @@ declare global {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
     "form-control": FormControl;
-    "modal-dialog": ModalDialog;
+    "woltlab-core-dialog": WoltlabCoreDialogElement;
   }
 }
