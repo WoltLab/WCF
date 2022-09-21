@@ -4,7 +4,7 @@ interface WoltlabCoreDialogControlEventMap {
   cancel: CustomEvent;
 }
 
-export class WoltlabCoreDialogControl extends HTMLElement {
+export class WoltlabCoreDialogControlElement extends HTMLElement {
   #cancelButton?: HTMLButtonElement;
   #primaryButton?: HTMLButtonElement;
 
@@ -82,12 +82,12 @@ export class WoltlabCoreDialogControl extends HTMLElement {
 
   public addEventListener<T extends keyof WoltlabCoreDialogControlEventMap>(
     type: T,
-    listener: (this: WoltlabCoreDialogControl, ev: WoltlabCoreDialogControlEventMap[T]) => any,
+    listener: (this: WoltlabCoreDialogControlElement, ev: WoltlabCoreDialogControlEventMap[T]) => any,
     options?: boolean | AddEventListenerOptions,
   ): void;
   public addEventListener(
     type: string,
-    listener: (this: WoltlabCoreDialogControl, ev: Event) => any,
+    listener: (this: WoltlabCoreDialogControlElement, ev: Event) => any,
     options?: boolean | AddEventListenerOptions,
   ): void {
     super.addEventListener(type, listener, options);
@@ -97,8 +97,8 @@ export class WoltlabCoreDialogControl extends HTMLElement {
 export function setup(): void {
   const name = "woltlab-core-dialog-control";
   if (window.customElements.get(name) === undefined) {
-    window.customElements.define(name, WoltlabCoreDialogControl);
+    window.customElements.define(name, WoltlabCoreDialogControlElement);
   }
 }
 
-export default WoltlabCoreDialogControl;
+export default WoltlabCoreDialogControlElement;
