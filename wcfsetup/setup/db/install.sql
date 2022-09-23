@@ -968,7 +968,7 @@ CREATE TABLE wcf1_package_installation_node (
 	sequenceNo SMALLINT(4) NOT NULL DEFAULT 0,
 	node CHAR(8) NOT NULL DEFAULT '',
 	parentNode CHAR(8) NOT NULL DEFAULT '',
-	nodeType ENUM('optionalPackages','package', 'pip') NOT NULL DEFAULT 'package',
+	nodeType VARCHAR(255) NOT NULL,
 	nodeData TEXT NOT NULL,
 	done TINYINT(1) NOT NULL DEFAULT 0
 );

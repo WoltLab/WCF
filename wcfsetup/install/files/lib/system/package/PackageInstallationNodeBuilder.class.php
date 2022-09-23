@@ -90,6 +90,8 @@ class PackageInstallationNodeBuilder
         // required packages
         $this->buildRequirementNodes();
 
+        $this->buildStartMarkerNode();
+
         // register package version
         self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 
@@ -109,6 +111,8 @@ class PackageInstallationNodeBuilder
         if ($this->installation->queue->action == 'update') {
             $this->buildPackageNode();
         }
+
+        $this->buildEndMarkerNode();
 
         // child queues
         $this->buildChildQueues();
@@ -357,6 +361,52 @@ class PackageInstallationNodeBuilder
             $newParentNode,
             $oldParentNode,
             $this->installation->queue->processNo,
+        ]);
+    }
+
+    protected function buildStartMarkerNode()
+    {
+        if (!empty($this->node)) {
+            $this->parentNode = $this->node;
+            $this->sequenceNo = 0;
+        }
+        $this->node = $this->getToken();
+
+        $sql = "INSERT INTO wcf1_package_installation_node
+                            (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $this->installation->queue->queueID,
+            $this->installation->queue->processNo,
+            $this->sequenceNo,
+            $this->node,
+            $this->parentNode,
+            'start',
+            \serialize([]),
+        ]);
+    }
+
+    protected function buildEndMarkerNode()
+    {
+        if (!empty($this->node)) {
+            $this->parentNode = $this->node;
+            $this->sequenceNo = 0;
+        }
+        $this->node = $this->getToken();
+
+        $sql = "INSERT INTO wcf1_package_installation_node
+                            (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $this->installation->queue->queueID,
+            $this->installation->queue->processNo,
+            $this->sequenceNo,
+            $this->node,
+            $this->parentNode,
+            'end',
+            \serialize([]),
         ]);
     }
 

@@ -140,9 +140,11 @@ class PackageInstallationDispatcher
             $this->logInstallationStep($data);
 
             $step = match ($data['nodeType']) {
+                'start' => $this->handleStartMarker($nodeData),
                 'package' => $this->installPackage($nodeData),
                 'pip' => $this->executePIP($nodeData),
                 'optionalPackages' => $this->selectOptionalPackages($node, $nodeData),
+                'end' => $this->handleEndMarker($nodeData),
             };
 
             if ($step->splitNode()) {
@@ -399,6 +401,16 @@ class PackageInstallationDispatcher
             $logEntry,
             \FILE_APPEND
         );
+    }
+
+    protected function handleStartMarker()
+    {
+        return new PackageInstallationStep();
+    }
+
+    protected function handleEndMarker()
+    {
+        return new PackageInstallationStep();
     }
 
     /**

@@ -56,6 +56,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
             $nodeData = \unserialize($data['nodeData']);
 
             switch ($data['nodeType']) {
+                case 'start':
+                    $step = $this->handleStartMarker($nodeData);
+                    break;
+
                 case 'package':
                     $step = $this->uninstallPackage($nodeData);
                     break;
@@ -70,6 +74,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
                     }
 
                     $step = $this->executePIP($nodeData);
+                    break;
+
+                case 'end':
+                    $step = $this->handleEndMarker($nodeData);
                     break;
             }
         }

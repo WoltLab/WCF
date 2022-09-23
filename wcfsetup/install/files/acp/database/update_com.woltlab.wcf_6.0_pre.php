@@ -14,6 +14,10 @@ use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
+    PartialDatabaseTable::create('wcf1_package_installation_node')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('nodeType'),
+        ]),
     PartialDatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([
             VarbinaryDatabaseTableColumn::create('sha256')

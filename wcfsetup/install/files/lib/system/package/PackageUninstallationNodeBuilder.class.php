@@ -23,11 +23,13 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             $this->node = $this->getToken();
         }
 
-        // build pip nodes
+        $this->buildStartMarkerNode();
+
         $this->buildPluginNodes();
 
-        // remove package
         $this->buildPackageNode();
+
+        $this->buildEndMarkerNode();
     }
 
     /**
