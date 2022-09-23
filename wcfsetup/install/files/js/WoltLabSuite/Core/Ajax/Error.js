@@ -19,8 +19,7 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
             // Load these modules on runtime to avoid circular dependencies.
             const [{ dialogFactory }, Language] = await Promise.all([new Promise((resolve_1, reject_1) => { require(["../Dialog"], resolve_1, reject_1); }).then(tslib_1.__importStar), new Promise((resolve_2, reject_2) => { require(["../Language"], resolve_2, reject_2); }).then(tslib_1.__importStar)]);
             const dialog = dialogFactory().fromHtml(html).asAlert();
-            dialog.title = Language.get("wcf.global.error.title");
-            dialog.show();
+            dialog.show(Language.get("wcf.global.error.title"));
         }
     }
     async function getErrorHtml(error) {

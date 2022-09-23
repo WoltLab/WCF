@@ -36,8 +36,7 @@ async function openReportDialog(element: HTMLElement): Promise<void> {
     });
   }
 
-  dialog.title = Language.get("wcf.moderation.report.reportContent");
-  dialog.show();
+  dialog.show(Language.get("wcf.moderation.report.reportContent"));
 }
 
 function validateReport(dialog: WoltlabCoreDialogElement): boolean {

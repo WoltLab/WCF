@@ -28,8 +28,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dialog", "../../Dom/
                 void submitReport(dialog, objectType, objectId);
             });
         }
-        dialog.title = Language.get("wcf.moderation.report.reportContent");
-        dialog.show();
+        dialog.show(Language.get("wcf.moderation.report.reportContent"));
     }
     function validateReport(dialog) {
         const message = dialog.content.querySelector(".jsReportMessage");

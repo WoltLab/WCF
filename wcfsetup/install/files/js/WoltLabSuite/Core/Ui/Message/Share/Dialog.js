@@ -136,7 +136,6 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
       </div>
     `;
             dialog = (0, Dialog_1.dialogFactory)().fromHtml(dialogContent).withoutControls();
-            dialog.title = Language.get("wcf.message.share");
             dialog.content
                 .querySelectorAll(".shareDialogCopyButton")
                 .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
@@ -147,7 +146,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Langua
                 UiMessageShare.init();
             }
         }
-        dialog.show();
+        dialog.show(Language.get("wcf.message.share"));
     }
     function registerButtons() {
         document.querySelectorAll("a.shareButton, a.wsShareButton").forEach((shareButton) => {

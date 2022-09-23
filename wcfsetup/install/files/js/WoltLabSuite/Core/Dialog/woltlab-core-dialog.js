@@ -19,10 +19,11 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         connectedCallback() {
             this.#attachDialog();
         }
-        show() {
-            if (this.#title.textContent.trim().length === 0) {
+        show(title) {
+            if (title.trim().length === 0) {
                 throw new Error("Cannot open the modal dialog without a title.");
             }
+            this.#title.textContent = title;
             if (this.#dialog.parentElement === null) {
                 if (dialogContainer.parentElement === null) {
                     document.getElementById("content").append(dialogContainer);
@@ -45,9 +46,6 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         }
         get content() {
             return this.#content;
-        }
-        set title(title) {
-            this.#title.textContent = title;
         }
         set returnFocus(returnFocus) {
             if (typeof returnFocus !== "function") {

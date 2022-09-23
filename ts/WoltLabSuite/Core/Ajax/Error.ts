@@ -36,8 +36,7 @@ async function genericError(error: ApiError): Promise<void> {
     const [{ dialogFactory }, Language] = await Promise.all([import("../Dialog"), import("../Language")]);
 
     const dialog = dialogFactory().fromHtml(html).asAlert();
-    dialog.title = Language.get("wcf.global.error.title");
-    dialog.show();
+    dialog.show(Language.get("wcf.global.error.title"));
   }
 }
 

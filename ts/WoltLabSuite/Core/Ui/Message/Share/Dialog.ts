@@ -171,7 +171,6 @@ function openDialog(event: MouseEvent): void {
     `;
 
     dialog = dialogFactory().fromHtml(dialogContent).withoutControls();
-    dialog.title = Language.get("wcf.message.share");
 
     dialog.content
       .querySelectorAll(".shareDialogCopyButton")
@@ -185,7 +184,7 @@ function openDialog(event: MouseEvent): void {
     }
   }
 
-  dialog.show();
+  dialog.show(Language.get("wcf.message.share"));
 }
 
 function registerButtons(): void {

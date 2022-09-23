@@ -251,8 +251,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 if (html) {
                     void new Promise((resolve_2, reject_2) => { require(["../Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ dialogFactory }) => {
                         const dialog = dialogFactory().fromHtml(html).asAlert();
-                        dialog.title = Language.get("wcf.global.error.title");
-                        dialog.show();
+                        dialog.show(Language.get("wcf.global.error.title"));
                     });
                 }
             }

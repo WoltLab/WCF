@@ -293,8 +293,7 @@ class AjaxRequest {
       if (html) {
         void import("../Dialog").then(({ dialogFactory }) => {
           const dialog = dialogFactory().fromHtml(html).asAlert();
-          dialog.title = Language.get("wcf.global.error.title");
-          dialog.show();
+          dialog.show(Language.get("wcf.global.error.title"));
         });
       }
     }

@@ -38,10 +38,12 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#attachDialog();
   }
 
-  show(): void {
-    if (this.#title.textContent!.trim().length === 0) {
+  show(title: string): void {
+    if (title.trim().length === 0) {
       throw new Error("Cannot open the modal dialog without a title.");
     }
+
+    this.#title.textContent = title;
 
     if (this.#dialog.parentElement === null) {
       if (dialogContainer.parentElement === null) {
@@ -72,10 +74,6 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
   get content(): HTMLElement {
     return this.#content;
-  }
-
-  set title(title: string) {
-    this.#title.textContent = title;
   }
 
   set returnFocus(returnFocus: CallbackReturnFocus) {
