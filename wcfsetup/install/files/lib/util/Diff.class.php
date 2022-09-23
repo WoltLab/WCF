@@ -253,7 +253,7 @@ class Diff
         $leftStart = 1;
         $rightStart = 1;
         for ($i = 0, $max = \count($d); $i < $max; $i++) {
-            [$type,] = $d[$i];
+            [$type] = $d[$i];
 
             if ($type == self::REMOVED || $type == self::ADDED) {
                 // calculate start of context
@@ -270,7 +270,7 @@ class Diff
                 // search the end of the current window
                 $plus = $minus = 0;
                 for ($j = $start; $j < $max; $j++) {
-                    [$type,] = $d[$j];
+                    [$type] = $d[$j];
 
                     switch ($type) {
                         case self::REMOVED:

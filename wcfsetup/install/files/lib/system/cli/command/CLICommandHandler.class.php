@@ -68,7 +68,7 @@ class CLICommandHandler
      */
     public static function getCommand($line)
     {
-        [$command,] = \explode(' ', $line . ' ', 2);
+        [$command] = \explode(' ', $line . ' ', 2);
 
         if (!isset(self::$commands[\strtolower($command)])) {
             throw new IllegalLinkException();
@@ -86,7 +86,7 @@ class CLICommandHandler
      */
     public static function getCommandName($line)
     {
-        [$command,] = \explode(' ', $line . ' ', 2);
+        [$command] = \explode(' ', $line . ' ', 2);
 
         if (!isset(self::$commands[\strtolower($command)])) {
             throw new IllegalLinkException();

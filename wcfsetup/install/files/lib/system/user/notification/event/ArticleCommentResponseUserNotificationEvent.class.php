@@ -23,7 +23,6 @@ class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNoti
 {
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableArticleCommentUserNotificationEvent;
-    use TTestableCategorizedUserNotificationEvent;
 
     /**
      * @inheritDoc

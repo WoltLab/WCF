@@ -1349,7 +1349,7 @@ class TemplateScriptingCompiler
      */
     public function popTag($tag)
     {
-        [$openTag,] = \array_pop($this->tagStack);
+        [$openTag] = \array_pop($this->tagStack);
         if ($tag == $openTag) {
             return $openTag;
         }
