@@ -7,6 +7,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\table\column\AbstractIntDatabaseTableColumn;
 use wcf\system\database\table\column\IDatabaseTableColumn;
+use wcf\system\database\table\column\IDefaultValueDatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\YearDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
@@ -831,6 +832,19 @@ class DatabaseTableChangeProcessor
 
         if ($newColumn->getNewName()) {
             return true;
+        }
+
+        if (
+            !($oldColumn instanceof IDefaultValueDatabaseTableColumn)
+            || !($newColumn instanceof IDefaultValueDatabaseTableColumn)
+        ) {
+            \assert(
+                ($oldColumn instanceof IDefaultValueDatabaseTableColumn)
+                === ($newColumn instanceof IDefaultValueDatabaseTableColumn),
+                "Default support must be identical, because different types have been rejected above."
+            );
+
+            return false;
         }
 
         // default type has to be checked explicitly for `null` to properly detect changing
