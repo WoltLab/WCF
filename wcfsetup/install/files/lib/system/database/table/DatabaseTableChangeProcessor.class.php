@@ -157,9 +157,7 @@ final class DatabaseTableChangeProcessor
     /**
      * Creates a new instance of `DatabaseTableChangeProcessor`.
      *
-     * @param Package $package
      * @param DatabaseTable[] $tables
-     * @param DatabaseEditor $dbEditor
      */
     public function __construct(Package $package, array $tables, DatabaseEditor $dbEditor)
     {
@@ -204,22 +202,16 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Adds the given index to the table.
-     *
-     * @param string $tableName
-     * @param DatabaseTableForeignKey $foreignKey
      */
-    protected function addForeignKey($tableName, DatabaseTableForeignKey $foreignKey)
+    protected function addForeignKey(string $tableName, DatabaseTableForeignKey $foreignKey): void
     {
         $this->dbEditor->addForeignKey($tableName, $foreignKey->getName(), $foreignKey->getData());
     }
 
     /**
      * Adds the given index to the table.
-     *
-     * @param string $tableName
-     * @param DatabaseTableIndex $index
      */
-    protected function addIndex($tableName, DatabaseTableIndex $index)
+    protected function addIndex(string $tableName, DatabaseTableIndex $index): void
     {
         $this->dbEditor->addIndex($tableName, $index->getName(), $index->getData());
     }
@@ -229,7 +221,7 @@ final class DatabaseTableChangeProcessor
      *
      * @throws  SplitNodeException  if any change has been applied
      */
-    protected function applyChanges()
+    protected function applyChanges(): void
     {
         $appliedAnyChange = false;
 
@@ -345,13 +337,16 @@ final class DatabaseTableChangeProcessor
      *
      * Before a column is dropped, all of its foreign keys are dropped.
      *
-     * @param string $tableName
      * @param IDatabaseTableColumn[] $addedColumns
      * @param IDatabaseTableColumn[] $alteredColumns
      * @param IDatabaseTableColumn[] $droppedColumns
      */
-    protected function applyColumnChanges($tableName, array $addedColumns, array $alteredColumns, array $droppedColumns)
-    {
+    protected function applyColumnChanges(
+        string $tableName,
+        array $addedColumns,
+        array $alteredColumns,
+        array $droppedColumns
+    ): void {
         $dropForeignKeys = [];
 
         $columnData = [];
@@ -393,7 +388,7 @@ final class DatabaseTableChangeProcessor
     /**
      * Calculates all of the necessary changes to be executed.
      */
-    protected function calculateChanges()
+    protected function calculateChanges(): void
     {
         foreach ($this->tables as $table) {
             $tableName = $table->getName();
@@ -597,7 +592,7 @@ final class DatabaseTableChangeProcessor
      * deletes them so that after this method finishes, there are no more undone log entries
      * for the package.
      */
-    protected function checkPendingLogEntries()
+    protected function checkPendingLogEntries(): void
     {
         $sql = "SELECT  *
                 FROM    wcf" . WCF_N . "_package_installation_sql_log
@@ -655,11 +650,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Creates a done log entry for the given foreign key.
-     *
-     * @param string $tableName
-     * @param DatabaseTableForeignKey $foreignKey
      */
-    protected function createForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
+    protected function createForeignKeyLog(string $tableName, DatabaseTableForeignKey $foreignKey): void
     {
         $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
                             (packageID, sqlTable, sqlIndex, isDone)
@@ -676,10 +668,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Creates the given table.
-     *
-     * @param DatabaseTable $table
      */
-    protected function createTable(DatabaseTable $table)
+    protected function createTable(DatabaseTable $table): void
     {
         $hasPrimaryKey = false;
         $columnData = \array_map(static function (IDatabaseTableColumn $column) use (&$hasPrimaryKey) {
@@ -727,33 +717,24 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Deletes the log entry for the given column.
-     *
-     * @param string $tableName
-     * @param IDatabaseTableColumn $column
      */
-    protected function deleteColumnLog($tableName, IDatabaseTableColumn $column)
+    protected function deleteColumnLog(string $tableName, IDatabaseTableColumn $column): void
     {
         $this->deleteLog(['sqlTable' => $tableName, 'sqlColumn' => $column->getName()]);
     }
 
     /**
      * Deletes the log entry for the given foreign key.
-     *
-     * @param string $tableName
-     * @param DatabaseTableForeignKey $foreignKey
      */
-    protected function deleteForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
+    protected function deleteForeignKeyLog(string $tableName, DatabaseTableForeignKey $foreignKey): void
     {
         $this->deleteLog(['sqlTable' => $tableName, 'sqlIndex' => $foreignKey->getName()]);
     }
 
     /**
      * Deletes the log entry for the given index.
-     *
-     * @param string $tableName
-     * @param DatabaseTableIndex $index
      */
-    protected function deleteIndexLog($tableName, DatabaseTableIndex $index)
+    protected function deleteIndexLog(string $tableName, DatabaseTableIndex $index): void
     {
         $this->deleteLog(['sqlTable' => $tableName, 'sqlIndex' => $index->getName()]);
     }
@@ -761,9 +742,9 @@ final class DatabaseTableChangeProcessor
     /**
      * Deletes a log entry.
      *
-     * @param array $data
+     * @param array{sqlTable: string, ?sqlColumn: string, ?sqlIndex: string} $data
      */
-    protected function deleteLog(array $data)
+    protected function deleteLog(array $data): void
     {
         $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
                 WHERE       packageID = ?
@@ -782,10 +763,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Deletes all log entry related to the given table.
-     *
-     * @param DatabaseTable $table
      */
-    protected function deleteTableLog(DatabaseTable $table)
+    protected function deleteTableLog(DatabaseTable $table): void
     {
         $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
                 WHERE       packageID = ?
@@ -800,12 +779,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Returns `true` if the two columns differ.
-     *
-     * @param IDatabaseTableColumn $oldColumn
-     * @param IDatabaseTableColumn $newColumn
-     * @return  bool
      */
-    protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn)
+    protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn): bool
     {
         $diff = \array_diff_assoc($oldColumn->getData(), $newColumn->getData());
         if (!empty($diff)) {
@@ -861,12 +836,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Returns `true` if the two indices differ.
-     *
-     * @param DatabaseTableIndex $oldIndex
-     * @param DatabaseTableIndex $newIndex
-     * @return  bool
      */
-    protected function diffIndices(DatabaseTableIndex $oldIndex, DatabaseTableIndex $newIndex)
+    protected function diffIndices(DatabaseTableIndex $oldIndex, DatabaseTableIndex $newIndex): bool
     {
         if ($newIndex->hasGeneratedName()) {
             return !empty(\array_diff_assoc($oldIndex->getData(), $newIndex->getData()));
@@ -877,11 +848,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Drops the given foreign key.
-     *
-     * @param string $tableName
-     * @param DatabaseTableForeignKey $foreignKey
      */
-    protected function dropForeignKey($tableName, DatabaseTableForeignKey $foreignKey)
+    protected function dropForeignKey(string $tableName, DatabaseTableForeignKey $foreignKey): void
     {
         $this->dbEditor->dropForeignKey($tableName, $foreignKey->getName());
         $this->dbEditor->dropIndex($tableName, $foreignKey->getName());
@@ -889,33 +857,24 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Drops the given index.
-     *
-     * @param string $tableName
-     * @param DatabaseTableIndex $index
      */
-    protected function dropIndex($tableName, DatabaseTableIndex $index)
+    protected function dropIndex(string $tableName, DatabaseTableIndex $index): void
     {
         $this->dbEditor->dropIndex($tableName, $index->getName());
     }
 
     /**
      * Drops the given table.
-     *
-     * @param DatabaseTable $table
      */
-    protected function dropTable(DatabaseTable $table)
+    protected function dropTable(DatabaseTable $table): void
     {
         $this->dbEditor->dropTable($table->getName());
     }
 
     /**
      * Finalizes the log entry for the creation of the given column.
-     *
-     * @param string $tableName
-     * @param IDatabaseTableColumn $column
-     * @param bool $useNewName
      */
-    protected function finalizeColumnLog($tableName, IDatabaseTableColumn $column, bool $useNewName = false)
+    protected function finalizeColumnLog(string $tableName, IDatabaseTableColumn $column, bool $useNewName = false): void
     {
         $this->finalizeLog([
             'sqlTable' => $tableName,
@@ -925,22 +884,16 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Finalizes the log entry for adding the given index.
-     *
-     * @param string $tableName
-     * @param DatabaseTableForeignKey $foreignKey
      */
-    protected function finalizeForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
+    protected function finalizeForeignKeyLog(string $tableName, DatabaseTableForeignKey $foreignKey): void
     {
         $this->finalizeLog(['sqlTable' => $tableName, 'sqlIndex' => $foreignKey->getName()]);
     }
 
     /**
      * Finalizes the log entry for adding the given index.
-     *
-     * @param string $tableName
-     * @param DatabaseTableIndex $index
      */
-    protected function finalizeIndexLog($tableName, DatabaseTableIndex $index)
+    protected function finalizeIndexLog(string $tableName, DatabaseTableIndex $index): void
     {
         $this->finalizeLog(['sqlTable' => $tableName, 'sqlIndex' => $index->getName()]);
     }
@@ -948,9 +901,9 @@ final class DatabaseTableChangeProcessor
     /**
      * Finalizes a log entry after the relevant change has been executed.
      *
-     * @param array $data
+     * @param array{sqlTable: string, ?sqlColumn: string, ?sqlIndex: string} $data
      */
-    protected function finalizeLog(array $data)
+    protected function finalizeLog(array $data): void
     {
         $sql = "UPDATE  wcf" . WCF_N . "_package_installation_sql_log
                 SET     isDone = ?
@@ -971,10 +924,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Finalizes the log entry for the creation of the given table.
-     *
-     * @param DatabaseTable $table
      */
-    protected function finalizeTableLog(DatabaseTable $table)
+    protected function finalizeTableLog(DatabaseTable $table): void
     {
         $this->finalizeLog(['sqlTable' => $table->getName()]);
     }
@@ -983,9 +934,6 @@ final class DatabaseTableChangeProcessor
      * Returns the log entry for the given column or `null` if there is no explicit entry for
      * this column.
      *
-     * @param string $tableName
-     * @param IDatabaseTableColumn $column
-     * @return      array|null
      * @since       5.4
      */
     protected function getColumnLog(string $tableName, IDatabaseTableColumn $column): ?array
@@ -1015,12 +963,8 @@ final class DatabaseTableChangeProcessor
      * Returns the id of the package to with the given column belongs to. If there is no specific
      * log entry for the given column, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
-     *
-     * @param DatabaseTable $table
-     * @param IDatabaseTableColumn $column
-     * @return  null|int
      */
-    protected function getColumnPackageID(DatabaseTable $table, IDatabaseTableColumn $column)
+    protected function getColumnPackageID(DatabaseTable $table, IDatabaseTableColumn $column): ?int
     {
         if (isset($this->columnPackageIDs[$table->getName()][$column->getName()])) {
             return $this->columnPackageIDs[$table->getName()][$column->getName()];
@@ -1033,11 +977,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Returns the `DatabaseTable` object for the table with the given name.
-     *
-     * @param string $tableName
-     * @return  DatabaseTable
      */
-    protected function getExistingTable($tableName)
+    protected function getExistingTable(string $tableName): DatabaseTable
     {
         if (!isset($this->existingTables[$tableName])) {
             $this->existingTables[$tableName] = DatabaseTable::createFromExistingTable($this->dbEditor, $tableName);
@@ -1050,12 +991,8 @@ final class DatabaseTableChangeProcessor
      * Returns the id of the package to with the given foreign key belongs to. If there is no specific
      * log entry for the given foreign key, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
-     *
-     * @param DatabaseTable $table
-     * @param DatabaseTableForeignKey $foreignKey
-     * @return  null|int
      */
-    protected function getForeignKeyPackageID(DatabaseTable $table, DatabaseTableForeignKey $foreignKey)
+    protected function getForeignKeyPackageID(DatabaseTable $table, DatabaseTableForeignKey $foreignKey): ?int
     {
         if (isset($this->foreignKeyPackageIDs[$table->getName()][$foreignKey->getName()])) {
             return $this->foreignKeyPackageIDs[$table->getName()][$foreignKey->getName()];
@@ -1070,12 +1007,8 @@ final class DatabaseTableChangeProcessor
      * Returns the id of the package to with the given index belongs to. If there is no specific
      * log entry for the given index, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
-     *
-     * @param DatabaseTable $table
-     * @param DatabaseTableIndex $index
-     * @return  null|int
      */
-    protected function getIndexPackageID(DatabaseTable $table, DatabaseTableIndex $index)
+    protected function getIndexPackageID(DatabaseTable $table, DatabaseTableIndex $index): ?int
     {
         if (isset($this->indexPackageIDs[$table->getName()][$index->getName()])) {
             return $this->indexPackageIDs[$table->getName()][$index->getName()];
@@ -1088,12 +1021,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Prepares the log entry for the creation of the given column.
-     *
-     * @param string $tableName
-     * @param IDatabaseTableColumn $column
-     * @param bool $useNewName
      */
-    protected function prepareColumnLog($tableName, IDatabaseTableColumn $column, bool $useNewName = false)
+    protected function prepareColumnLog(string $tableName, IDatabaseTableColumn $column, bool $useNewName = false): void
     {
         $this->prepareLog([
             'sqlTable' => $tableName,
@@ -1103,22 +1032,16 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Prepares the log entry for adding the given foreign key.
-     *
-     * @param string $tableName
-     * @param DatabaseTableForeignKey $foreignKey
      */
-    protected function prepareForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
+    protected function prepareForeignKeyLog(string $tableName, DatabaseTableForeignKey $foreignKey)
     {
         $this->prepareLog(['sqlTable' => $tableName, 'sqlIndex' => $foreignKey->getName()]);
     }
 
     /**
      * Prepares the log entry for adding the given index.
-     *
-     * @param string $tableName
-     * @param DatabaseTableIndex $index
      */
-    protected function prepareIndexLog($tableName, DatabaseTableIndex $index)
+    protected function prepareIndexLog(string $tableName, DatabaseTableIndex $index): void
     {
         $this->prepareLog(['sqlTable' => $tableName, 'sqlIndex' => $index->getName()]);
     }
@@ -1126,9 +1049,9 @@ final class DatabaseTableChangeProcessor
     /**
      * Prepares a log entry before the relevant change has been executed.
      *
-     * @param array $data
+     * @param array{sqlTable: string, ?sqlColumn: string, ?sqlIndex: string} $data
      */
-    protected function prepareLog(array $data)
+    protected function prepareLog(array $data): void
     {
         $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
                             (packageID, sqlTable, sqlColumn, sqlIndex, isDone)
@@ -1146,10 +1069,8 @@ final class DatabaseTableChangeProcessor
 
     /**
      * Prepares the log entry for the creation of the given table.
-     *
-     * @param DatabaseTable $table
      */
-    protected function prepareTableLog(DatabaseTable $table)
+    protected function prepareTableLog(DatabaseTable $table): void
     {
         $this->prepareLog(['sqlTable' => $table->getName()]);
     }
@@ -1159,7 +1080,7 @@ final class DatabaseTableChangeProcessor
      *
      * @throws  \RuntimeException   if validation of the required layout changes fails
      */
-    public function process()
+    public function process(): void
     {
         $this->checkPendingLogEntries();
 
@@ -1184,7 +1105,7 @@ final class DatabaseTableChangeProcessor
      *
      * @return  array
      */
-    public function validate()
+    public function validate(): array
     {
         $errors = [];
         foreach ($this->tables as $table) {
@@ -1379,14 +1300,13 @@ final class DatabaseTableChangeProcessor
     /**
      * Returns the column with the given name from the given table.
      *
-     * @param string $columnName
-     * @param DatabaseTable $updateTable
-     * @param DatabaseTable|null $existingTable
-     * @return      IDatabaseTableColumn|null
      * @since       5.2.10
      */
-    protected function getColumnByName($columnName, DatabaseTable $updateTable, ?DatabaseTable $existingTable = null)
-    {
+    protected function getColumnByName(
+        string $columnName,
+        DatabaseTable $updateTable,
+        ?DatabaseTable $existingTable = null
+    ): ?IDatabaseTableColumn {
         foreach ($updateTable->getColumns() as $column) {
             if (
                 ($column->getNewName() === $columnName)
