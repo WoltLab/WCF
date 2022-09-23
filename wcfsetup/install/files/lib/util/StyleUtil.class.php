@@ -2,8 +2,6 @@
 
 namespace wcf\util;
 
-use wcf\system\style\StyleCompiler;
-
 /**
  * Contains Style-related functions.
  *

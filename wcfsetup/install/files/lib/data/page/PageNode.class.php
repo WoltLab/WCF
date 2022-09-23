@@ -74,7 +74,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * Returns the parent node
      */
-    public function getParentNode(): PageNode
+    public function getParentNode(): self
     {
         return $this->parentNode;
     }
@@ -114,7 +114,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function current(): PageNode
+    public function current(): self
     {
         return $this->children[$this->position];
     }
@@ -130,7 +130,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * @inheritDoc
      */
-    public function getChildren(): PageNode
+    public function getChildren(): self
     {
         return $this->children[$this->position];
     }

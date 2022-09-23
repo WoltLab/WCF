@@ -850,7 +850,7 @@ class WCF
                 // redundant syscall/fs access by not checking for existence ourselves. Do not use require_once()!
 
                 // TODO: Changed for #4684. Revert for release.
-                if (file_exists($classPath)) {
+                if (\file_exists($classPath)) {
                     include_once($classPath);
                 }
             }

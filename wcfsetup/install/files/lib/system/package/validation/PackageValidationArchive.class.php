@@ -504,7 +504,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function current(): PackageValidationArchive
+    public function current(): self
     {
         return $this->children[$this->position];
     }
@@ -520,7 +520,7 @@ class PackageValidationArchive implements \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function getChildren(): PackageValidationArchive
+    public function getChildren(): self
     {
         return $this->children[$this->position];
     }

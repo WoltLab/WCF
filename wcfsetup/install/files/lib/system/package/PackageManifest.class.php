@@ -256,7 +256,7 @@ final class PackageManifest
     private function escape(string $v): string
     {
         return \preg_replace_callback('/[^a-zA-Z0-9 \\/\\._\\*\\-]/', static function ($matches) {
-            return \sprintf("\x%s", \bin2hex($matches[0]));
+            return \sprintf("\\x%s", \bin2hex($matches[0]));
         }, $v);
     }
 }

@@ -82,7 +82,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * Returns the parent node
      */
-    public function getParentNode(): MenuItemNode
+    public function getParentNode(): self
     {
         return $this->parentNode;
     }
@@ -175,7 +175,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function current(): MenuItemNode
+    public function current(): self
     {
         return $this->children[$this->position];
     }
@@ -191,7 +191,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * @inheritDoc
      */
-    public function getChildren(): MenuItemNode
+    public function getChildren(): self
     {
         return $this->children[$this->position];
     }

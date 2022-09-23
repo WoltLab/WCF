@@ -146,11 +146,12 @@ final class HeaderUtil
         if (RequestHandler::getInstance()->isACPRequest()) {
             // force javascript relocation
             $eagerFlag = ' data-eager="true"';
-            self::$output = \preg_replace_callback('~<script(?<attributes>[^>]*)>~', function (array $matches) use ($eagerFlag) {
+            self::$output = \preg_replace_callback('~<script(?<attributes>[^>]*)>~', static function (array $matches) use ($eagerFlag) {
                 ['attributes' => $attributes] = $matches;
 
                 if (\str_starts_with($attributes, $eagerFlag)) {
                     $attributes = \substr($attributes, \strlen($eagerFlag));
+
                     return '<script' . $attributes . '>';
                 }
 

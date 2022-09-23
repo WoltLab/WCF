@@ -73,7 +73,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
                         'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
                         'thumbnailSize' => $thumbnailSize,
                     ]);
-                } else if ($media->isVideo() || $media->isAudio()) {
+                } elseif ($media->isVideo() || $media->isAudio()) {
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
