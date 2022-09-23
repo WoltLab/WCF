@@ -2078,8 +2078,6 @@ ALTER TABLE wcf1_package_update_fromversion ADD FOREIGN KEY (packageUpdateVersio
 
 ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_package_update_optional ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
-
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_paid_subscription_user ADD FOREIGN KEY (subscriptionID) REFERENCES wcf1_paid_subscription (subscriptionID) ON DELETE CASCADE;
