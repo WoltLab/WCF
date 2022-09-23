@@ -182,9 +182,9 @@ final class DatabaseTableChangeProcessor
         $conditionBuilder->add('isDone = ?', [1]);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_package_installation_sql_log
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         while ($row = $statement->fetchArray()) {
@@ -595,10 +595,10 @@ final class DatabaseTableChangeProcessor
     protected function checkPendingLogEntries(): void
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                FROM    wcf1_package_installation_sql_log
                 WHERE   packageID = ?
                     AND isDone = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->package->packageID, 0]);
 
         $doneEntries = $undoneEntries = [];
@@ -653,10 +653,10 @@ final class DatabaseTableChangeProcessor
      */
     protected function createForeignKeyLog(string $tableName, DatabaseTableForeignKey $foreignKey): void
     {
-        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+        $sql = "INSERT INTO wcf1_package_installation_sql_log
                             (packageID, sqlTable, sqlIndex, isDone)
                 VALUES      (?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $statement->execute([
             $this->package->packageID,
@@ -746,12 +746,12 @@ final class DatabaseTableChangeProcessor
      */
     protected function deleteLog(array $data): void
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
+        $sql = "DELETE FROM wcf1_package_installation_sql_log
                 WHERE       packageID = ?
                         AND sqlTable = ?
                         AND sqlColumn = ?
                         AND sqlIndex = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $statement->execute([
             $this->package->packageID,
@@ -766,10 +766,10 @@ final class DatabaseTableChangeProcessor
      */
     protected function deleteTableLog(DatabaseTable $table): void
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_sql_log
+        $sql = "DELETE FROM wcf1_package_installation_sql_log
                 WHERE       packageID = ?
                         AND sqlTable = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $statement->execute([
             $this->package->packageID,
@@ -905,13 +905,13 @@ final class DatabaseTableChangeProcessor
      */
     protected function finalizeLog(array $data): void
     {
-        $sql = "UPDATE  wcf" . WCF_N . "_package_installation_sql_log
+        $sql = "UPDATE  wcf1_package_installation_sql_log
                 SET     isDone = ?
                 WHERE   packageID = ?
                     AND sqlTable = ?
                     AND sqlColumn = ?
                     AND sqlIndex = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $statement->execute([
             1,
@@ -939,11 +939,11 @@ final class DatabaseTableChangeProcessor
     protected function getColumnLog(string $tableName, IDatabaseTableColumn $column): ?array
     {
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                FROM    wcf1_package_installation_sql_log
                 WHERE   packageID = ?
-                        AND sqlTable = ?
-                        AND sqlColumn = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+                    AND sqlTable = ?
+                    AND sqlColumn = ?";
+        $statement = WCF::getDB()->prepare($sql);
 
         $statement->execute([
             $this->package->packageID,
@@ -1053,10 +1053,10 @@ final class DatabaseTableChangeProcessor
      */
     protected function prepareLog(array $data): void
     {
-        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+        $sql = "INSERT INTO wcf1_package_installation_sql_log
                             (packageID, sqlTable, sqlColumn, sqlIndex, isDone)
                 VALUES      (?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         $statement->execute([
             $this->package->packageID,
