@@ -46,6 +46,8 @@
 }
 
 .dialogContainer {
+	background-color: var(--wcfContentBackground);
+	color: var(--wcfContentText);
 	z-index: 200;
 
 	@include screen-xs {
@@ -59,7 +61,8 @@
 		align-self: flex-start;
 		animation: wcfDialogOut 0.3s;
 		animation-fill-mode: forwards;
-		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.3);
+		border-radius: 8px;
+		box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 		grid-area: dialog;
 		justify-self: center;
 		max-height: 80%;
@@ -92,8 +95,6 @@
 	}
 
 	> header {
-		background-color: $wcfHeaderBackground;
-		color: $wcfHeaderText;
 		display: flex;
 
 		@include screen-sm-down {
@@ -101,13 +102,15 @@
 		}
 
 		@include screen-md-up {
-			padding: 10px 20px;
+			padding: 20px;
 		}
 
 		> span {
 			flex: 1 auto;
 
 			@include wcfFontHeadline;
+
+			font-weight: 600;
 		}
 
 		> .dialogCloseButton {
@@ -136,7 +139,7 @@
 			}
 
 			@include screen-md-up {
-				padding: 30px 20px 10px 20px;
+				padding: 0 20px;
 			}
 
 			&::after {
@@ -172,14 +175,23 @@
 		}
 
 		.dialogFormSubmit {
-			background-color: $wcfSidebarBackground;
-			border-top: 1px solid $wcfContentBorderInner;
+			background-color: var(--wcfContentBackground);
 			bottom: 0;
+			border-radius: 0 0 8px 8px;
+			color: var(--wcfContentText);
+			column-gap: 10px;
+			display: flex;
+			flex-direction: row-reverse;
 			left: 0;
 			margin-bottom: 0;
-			padding: 10px 10px 0 10px;
+			padding: 20px;
 			position: absolute;
 			right: 0;
+
+			.button,
+			input {
+				margin: 0 !important;
+			}
 		}
 
 		.section {
@@ -292,7 +304,7 @@
 }
 
 .dialog {
-	--dialog-border-radius: 10px;
+	--dialog-border-radius: 8px;
 	--dialog-padding: 20px;
 
 	animation: 0.24s dialog;
