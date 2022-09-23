@@ -25,7 +25,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Database\Table
  * @since   5.2
  */
-class DatabaseTableChangeProcessor
+final class DatabaseTableChangeProcessor
 {
     /**
      * maps the registered database table column names to the ids of the packages they belong to
