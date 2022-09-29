@@ -33,7 +33,7 @@ async function genericError(error: ApiError): Promise<void> {
 
   if (html !== "") {
     // Load these modules on runtime to avoid circular dependencies.
-    const [{ dialogFactory }, Language] = await Promise.all([import("../Dialog"), import("../Language")]);
+    const [{ dialogFactory }, Language] = await Promise.all([import("../Component/Dialog"), import("../Language")]);
 
     const dialog = dialogFactory().fromHtml(html).asAlert();
     dialog.show(Language.get("wcf.global.error.title"));

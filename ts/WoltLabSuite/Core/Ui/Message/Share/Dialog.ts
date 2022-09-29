@@ -15,7 +15,7 @@ import * as StringUtil from "../../../StringUtil";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import * as UiMessageShare from "../Share";
 import { getShareProviders } from "./Providers";
-import { dialogFactory, WoltlabCoreDialogElement } from "../../../Dialog";
+import { dialogFactory, WoltlabCoreDialogElement } from "../../../Component/Dialog";
 
 const shareButtons = new WeakSet<HTMLElement>();
 

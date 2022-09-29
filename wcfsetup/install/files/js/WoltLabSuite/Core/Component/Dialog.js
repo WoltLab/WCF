@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "./Dialog/Setup", "./Dialog/woltlab-core-dialog-control", "./Dialog/woltlab-core-dialog"], function (require, exports, tslib_1, Setup_1, woltlab_core_dialog_control_1, woltlab_core_dialog_1) {
+define(["require", "exports", "tslib", "./Dialog/Setup", "../Element/woltlab-core-dialog-control", "../Element/woltlab-core-dialog"], function (require, exports, tslib_1, Setup_1, woltlab_core_dialog_control_1, woltlab_core_dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.dialogFactory = void 0;

@@ -249,7 +249,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
                 if (html) {
-                    void new Promise((resolve_2, reject_2) => { require(["../Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ dialogFactory }) => {
+                    void new Promise((resolve_2, reject_2) => { require(["../Component/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ dialogFactory }) => {
                         const dialog = dialogFactory().fromHtml(html).asAlert();
                         dialog.show(Language.get("wcf.global.error.title"));
                     });

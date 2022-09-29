@@ -291,7 +291,7 @@ class AjaxRequest {
       const html = this.getErrorHtml(data as AjaxResponseException, xhr);
 
       if (html) {
-        void import("../Dialog").then(({ dialogFactory }) => {
+        void import("../Component/Dialog").then(({ dialogFactory }) => {
           const dialog = dialogFactory().fromHtml(html).asAlert();
           dialog.show(Language.get("wcf.global.error.title"));
         });

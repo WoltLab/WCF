@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Dialog", "../../Dom/Observer", "../../Dom/Util", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Observer_1, Util_1, Language, UiNotification) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "../../Dom/Observer", "../../Dom/Util", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Observer_1, Util_1, Language, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;

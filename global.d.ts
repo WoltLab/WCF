@@ -6,8 +6,8 @@ import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
-import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Dialog/woltlab-core-dialog";
-import type WoltlabCoreDialogControl from "./ts/WoltLabSuite/Core/Dialog/woltlab-core-dialog-control";
+import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog";
+import type WoltlabCoreDialogControl from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
