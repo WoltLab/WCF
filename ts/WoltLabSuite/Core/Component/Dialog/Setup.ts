@@ -24,14 +24,20 @@ export class DialogSetup {
   fromHtml(html: string): DialogControls {
     const element = document.createElement("div");
     element.innerHTML = html;
-    if (element.childElementCount === 0) {
-      throw new TypeError("The provided HTML string did not contain any elements.");
+    if (element.childElementCount === 0 && element.textContent!.trim() === "") {
+      throw new TypeError("The provided HTML string was empty.");
     }
 
     const fragment = document.createDocumentFragment();
     fragment.append(...element.childNodes);
 
     return this.fromElement(fragment);
+  }
+
+  withoutContent(): DialogControls {
+    const dialog = document.createElement("woltlab-core-dialog");
+
+    return new DialogControls(dialog);
   }
 }
 

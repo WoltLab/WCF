@@ -15,7 +15,16 @@
 				{if $action == 'edit'}
 					{if $article->canDelete()}
 						<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='arrows-rotate'} <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
-						<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
+						<li>
+							<button
+								type="button"
+								class="contentInteractionButton button small jsButtonDelete"
+								{if !$article->isDeleted} style="display: none"{/if}
+							>
+								{icon name='xmark'}
+								<span>{lang}wcf.global.button.delete{/lang}</span>
+							</button>
+						</li>
 						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
 					{/if}
 					{if $languages|count > 1 || $article->isMultilingual}
@@ -62,6 +71,7 @@
 			'wcf.acp.article.i18n.toI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.toI18n.confirmMessage{/jslang}',
 			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.fromI18n.confirmMessage{/jslang}',
 			'wcf.message.status.deleted': '{jslang}wcf.message.status.deleted{/jslang}',
+			'wcf.article.action.delete': '{jslang}wcf.article.action.delete{/jslang}',
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));

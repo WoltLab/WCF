@@ -19,8 +19,8 @@ define(["require", "exports"], function (require, exports) {
         }
         asConfirmation(options) {
             const formControlOptions = {
-                cancel: options?.cancel || "",
-                extra: options?.extra,
+                cancel: "",
+                extra: undefined,
                 isAlert: true,
                 primary: options?.primary || "",
             };

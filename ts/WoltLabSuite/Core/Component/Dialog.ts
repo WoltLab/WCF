@@ -1,10 +1,10 @@
 import { DialogSetup } from "./Dialog/Setup";
-import { setup as setupFormControl } from "../Element/woltlab-core-dialog-control";
+import { setup as setupDialog } from "../Element/woltlab-core-dialog";
+import { setup as setupDialogControl } from "../Element/woltlab-core-dialog-control";
 
 export function dialogFactory(): DialogSetup {
-  setupFormControl();
+  setupDialog();
+  setupDialogControl();
 
   return new DialogSetup();
 }
-
-export * from "../Element/woltlab-core-dialog";

@@ -1,7 +1,7 @@
 define(["require", "exports", "tslib", "../Dom/Util"], function (require, exports, tslib_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.WoltlabCoreDialogElement = void 0;
+    exports.setup = exports.WoltlabCoreDialogElement = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     const dialogContainer = document.createElement("div");
     class WoltlabCoreDialogElement extends HTMLElement {
@@ -108,16 +108,22 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             if (this.#dialog.parentElement !== null) {
                 return;
             }
-            const closeButton = document.createElement("button");
-            closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
-            closeButton.classList.add("dialog__closeButton");
-            closeButton.addEventListener("click", () => {
-                this.close();
-            });
+            let closeButton;
+            if (this.#dialog.getAttribute("role") !== "alertdialog") {
+                closeButton = document.createElement("button");
+                closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
+                closeButton.classList.add("dialog__closeButton");
+                closeButton.addEventListener("click", () => {
+                    this.close();
+                });
+            }
             const header = document.createElement("div");
             header.classList.add("dialog__header");
             this.#title.classList.add("dialog__title");
-            header.append(this.#title, closeButton);
+            header.append(this.#title);
+            if (closeButton) {
+                header.append(closeButton);
+            }
             const doc = document.createElement("div");
             doc.classList.add("dialog__document");
             doc.setAttribute("role", "document");
@@ -163,5 +169,11 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     }
     exports.WoltlabCoreDialogElement = WoltlabCoreDialogElement;
     exports.default = WoltlabCoreDialogElement;
-    window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);
+    function setup() {
+        const name = "woltlab-core-dialog";
+        if (window.customElements.get(name) === undefined) {
+            window.customElements.define(name, WoltlabCoreDialogElement);
+        }
+    }
+    exports.setup = setup;
 });

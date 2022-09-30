@@ -1,7 +1,8 @@
 import { dboAction } from "../../Ajax";
-import { dialogFactory, WoltlabCoreDialogElement } from "../../Component/Dialog";
+import { dialogFactory } from "../../Component/Dialog";
 import { findUniqueElements } from "../../Dom/Observer";
 import { innerError } from "../../Dom/Util";
+import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
 import * as Language from "../../Language";
 import * as UiNotification from "../Notification";
 

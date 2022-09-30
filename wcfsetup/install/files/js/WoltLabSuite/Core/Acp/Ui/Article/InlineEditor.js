@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Util_1, EventHandler, Language, UiConfirmation, Dialog_1, UiNotification) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Confirmation", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Confirmation_1, ControllerClipboard, Core, Util_1, EventHandler, Language, UiConfirmation, Dialog_1, UiNotification) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
@@ -106,7 +106,15 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
             }
             const scope = article || document;
             const buttonDelete = scope.querySelector(".jsButtonDelete");
-            buttonDelete.addEventListener("click", (ev) => this.prompt(ev, objectId, "delete"));
+            buttonDelete.addEventListener("click", async () => {
+                const title = "";
+                const result = await (0, Confirmation_1.confirmationFactory)()
+                    .delete(Language.get("wcf.article.action.delete"))
+                    .defaultMessage(title);
+                if (result) {
+                    this.invoke(objectId, "delete");
+                }
+            });
             const buttonRestore = scope.querySelector(".jsButtonRestore");
             buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));
             const buttonTrash = scope.querySelector(".jsButtonTrash");

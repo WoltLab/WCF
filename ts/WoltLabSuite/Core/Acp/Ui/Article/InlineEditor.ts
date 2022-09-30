@@ -9,6 +9,7 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import { confirmationFactory } from "../../../Component/Confirmation";
 import * as ControllerClipboard from "../../../Controller/Clipboard";
 import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
@@ -31,7 +32,7 @@ interface InlineEditorOptions {
 
 interface ArticleData {
   buttons: {
-    delete: HTMLAnchorElement;
+    delete: HTMLButtonElement;
     restore: HTMLAnchorElement;
     trash: HTMLAnchorElement;
   };
@@ -156,8 +157,18 @@ class AcpUiArticleInlineEditor {
 
     const scope = article || document;
 
-    const buttonDelete = scope.querySelector(".jsButtonDelete") as HTMLAnchorElement;
-    buttonDelete.addEventListener("click", (ev) => this.prompt(ev, objectId, "delete"));
+    const buttonDelete = scope.querySelector(".jsButtonDelete") as HTMLButtonElement;
+    buttonDelete.addEventListener("click", async () => {
+      const title = "";
+
+      const result = await confirmationFactory()
+        .delete(Language.get("wcf.article.action.delete"))
+        .defaultMessage(title);
+
+      if (result) {
+        this.invoke(objectId, "delete");
+      }
+    });
 
     const buttonRestore = scope.querySelector(".jsButtonRestore") as HTMLAnchorElement;
     buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));

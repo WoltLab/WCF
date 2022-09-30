@@ -13,9 +13,9 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   }
 
   get primary(): string {
-    let label = this.getAttribute("default")!;
+    let label = this.getAttribute("primary")!;
     if (!label) {
-      label = Language.get("wcf.global.confirmation.confirm");
+      label = Language.get("wcf.dialog.button.primary");
     }
 
     return label;
@@ -45,8 +45,8 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   connectedCallback() {
     this.classList.add("formControl");
 
-    if (!this.hasAttribute("default")) {
-      this.setAttribute("default", "");
+    if (!this.hasAttribute("primary")) {
+      this.setAttribute("primary", "");
     }
 
     if (this.#primaryButton === undefined) {

@@ -1,12 +1,10 @@
-import { WoltlabCoreDialogElement, WoltlabCoreDialogFormControl } from "../../Element/woltlab-core-dialog";
+import WoltlabCoreDialogElement, { WoltlabCoreDialogFormControl } from "../../Element/woltlab-core-dialog";
 
 type AlertOptions = {
   primary: string;
 };
 
 type ConfirmationOptions = {
-  cancel: string;
-  extra: string;
   primary: string;
 };
 
@@ -38,8 +36,8 @@ export class DialogControls {
 
   asConfirmation(options?: Partial<ConfirmationOptions>): WoltlabCoreDialogElement {
     const formControlOptions: WoltlabCoreDialogFormControl = {
-      cancel: options?.cancel || "",
-      extra: options?.extra,
+      cancel: "",
+      extra: undefined,
       isAlert: true,
       primary: options?.primary || "",
     };
