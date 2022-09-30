@@ -10,6 +10,11 @@ export class ConfirmationDelete {
 
   async defaultMessage(title = ""): Promise<boolean> {
     const message = Language.get("wcf.dialog.confirmation.delete", { title });
+
+    return this.message(message);
+  }
+
+  async message(message: string): Promise<boolean> {
     const dialog = dialogFactory()
       .fromHtml(`<p>${message}</p>`)
       .asConfirmation({ primary: Language.get("wcf.dialog.button.primary.delete") });

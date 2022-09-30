@@ -10,6 +10,9 @@ define(["require", "exports", "tslib", "../Dialog", "../../Language"], function 
         }
         async defaultMessage(title = "") {
             const message = Language.get("wcf.dialog.confirmation.delete", { title });
+            return this.message(message);
+        }
+        async message(message) {
             const dialog = (0, Dialog_1.dialogFactory)()
                 .fromHtml(`<p>${message}</p>`)
                 .asConfirmation({ primary: Language.get("wcf.dialog.button.primary.delete") });
