@@ -25,7 +25,16 @@
 								<span>{lang}wcf.global.button.delete{/lang}</span>
 							</button>
 						</li>
-						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}>{icon name='xmark'} <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+						<li>
+							<button
+								type="button"
+								class="contentInteractionButton button small jsButtonTrash"
+								{if $article->isDeleted} style="display: none"{/if}
+							>
+								{icon name='xmark'}
+								<span>{lang}wcf.global.button.trash{/lang}</span>
+							</button>
+						</li>
 					{/if}
 					{if $languages|count > 1 || $article->isMultilingual}
 						<li><a href="#" class="button jsButtonToggleI18n">{icon name='flag'} <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
@@ -72,6 +81,7 @@
 			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.fromI18n.confirmMessage{/jslang}',
 			'wcf.message.status.deleted': '{jslang}wcf.message.status.deleted{/jslang}',
 			'wcf.article.action.delete': '{jslang}wcf.article.action.delete{/jslang}',
+			'wcf.article.action.trash': '{jslang}wcf.article.action.trash{/jslang}',
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));

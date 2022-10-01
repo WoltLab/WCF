@@ -3312,6 +3312,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.bbcode.type"><![CDATA[Artikel]]></item>
 		<item name="wcf.article.action.delete"><![CDATA[Artikel löschen?]]></item>
+		<item name="wcf.article.action.trash"><![CDATA[Artikel in den Papierkorb verschieben?]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
@@ -3753,9 +3754,11 @@ Dateianhänge:
 	</category>
 	<category name="wcf.dialog">
 		<item name="wcf.dialog.button.cancel"><![CDATA[Abbrechen]]></item>
-		<item name="wcf.dialog.button.primary"><![CDATA[Bestätigen]]></item>
+		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
+		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Bestätigen]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Löschen]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[Die Löschung{if $title} von „{$title}”{/if} ist endgültig. Dieser Vorgang kann nicht rückgängig gemacht werden.]]></item>
+		<item name="wcf.dialog.confirmation.softDelete.reason"><![CDATA[Begründung]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>

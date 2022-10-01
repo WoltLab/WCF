@@ -3240,6 +3240,7 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.bbcode.type"><![CDATA[Article]]></item>
 		<item name="wcf.article.action.delete"><![CDATA[Delete article?]]></item>
+		<item name="wcf.article.action.trash"><![CDATA[Move article to the trash bin?]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
@@ -3702,7 +3703,8 @@ Attachments:
 	</category>
 	<category name="wcf.dialog">
 		<item name="wcf.dialog.button.cancel"><![CDATA[Cancel]]></item>
-		<item name="wcf.dialog.button.primary"><![CDATA[Confirm]]></item>
+		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
+		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Confirm]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[The deletion{if $title} of “{$title}”{/if} is final. This process cannot be undone.]]></item>
 	</category>

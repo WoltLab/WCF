@@ -157,8 +157,10 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.global.rss.withAccessToken': '{jslang}wcf.global.rss.withAccessToken{/jslang}',
 			'wcf.dialog.button.cancel': '{jslang}wcf.dialog.button.cancel{/jslang}',
 			'wcf.dialog.button.primary': '{jslang}wcf.dialog.button.primary{/jslang}',
+			'wcf.dialog.button.primary.confirm': '{jslang}wcf.dialog.button.primary.confirm{/jslang}',
 			'wcf.dialog.button.primary.delete': '{jslang}wcf.dialog.button.primary.delete{/jslang}',
 			'wcf.dialog.confirmation.delete': '{jslang __literal=true}wcf.dialog.confirmation.delete{/jslang}',
+			'wcf.dialog.confirmation.softDelete.reason': '{jslang}wcf.dialog.confirmation.softDelete.reason{/jslang}',
 			'wcf.user.language': '{jslang}wcf.user.language{/jslang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{jslang}wcf.like.button.like{/jslang}',

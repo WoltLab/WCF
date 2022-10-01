@@ -118,7 +118,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
             const buttonRestore = scope.querySelector(".jsButtonRestore");
             buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));
             const buttonTrash = scope.querySelector(".jsButtonTrash");
-            buttonTrash.addEventListener("click", (ev) => this.prompt(ev, objectId, "trash"));
+            buttonTrash.addEventListener("click", async () => {
+                const result = await (0, Confirmation_1.confirmationFactory)().softDelete(Language.get("wcf.article.action.trash")).withoutMessage();
+                if (result) {
+                    this.invoke(objectId, "trash");
+                }
+            });
             if (isArticleEdit) {
                 const buttonToggleI18n = scope.querySelector(".jsButtonToggleI18n");
                 if (buttonToggleI18n !== null) {

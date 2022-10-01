@@ -34,7 +34,7 @@ interface ArticleData {
   buttons: {
     delete: HTMLButtonElement;
     restore: HTMLAnchorElement;
-    trash: HTMLAnchorElement;
+    trash: HTMLButtonElement;
   };
   element: HTMLElement | undefined;
   isArticleEdit: boolean;
@@ -173,8 +173,14 @@ class AcpUiArticleInlineEditor {
     const buttonRestore = scope.querySelector(".jsButtonRestore") as HTMLAnchorElement;
     buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));
 
-    const buttonTrash = scope.querySelector(".jsButtonTrash") as HTMLAnchorElement;
-    buttonTrash.addEventListener("click", (ev) => this.prompt(ev, objectId, "trash"));
+    const buttonTrash = scope.querySelector(".jsButtonTrash") as HTMLButtonElement;
+    buttonTrash.addEventListener("click", async () => {
+      const result = await confirmationFactory().softDelete(Language.get("wcf.article.action.trash")).withoutMessage();
+
+      if (result) {
+        this.invoke(objectId, "trash");
+      }
+    });
 
     if (isArticleEdit) {
       const buttonToggleI18n = scope.querySelector(".jsButtonToggleI18n") as HTMLAnchorElement;
