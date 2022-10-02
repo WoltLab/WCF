@@ -3240,6 +3240,7 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.bbcode.type"><![CDATA[Article]]></item>
 		<item name="wcf.article.action.delete"><![CDATA[Delete article?]]></item>
+		<item name="wcf.article.action.restore"><![CDATA[Restore article?]]></item>
 		<item name="wcf.article.action.trash"><![CDATA[Move article to the trash bin?]]></item>
 	</category>
 	<category name="wcf.attachment">

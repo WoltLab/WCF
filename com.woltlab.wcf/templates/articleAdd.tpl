@@ -28,7 +28,14 @@
 {capture assign='contentInteractionButtons'}
 	{if $action == 'edit'}
 		{if $article->canDelete()}
-			<button type="button" class="contentInteractionButton button small jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}>{icon name='rotate-left'} <span>{lang}wcf.global.button.restore{/lang}</span></button>
+			<button
+				type="button"
+				class="contentInteractionButton button small jsButtonRestore"
+				{if !$article->isDeleted} style="display: none"{/if}
+			>
+				{icon name='rotate-left'}
+				<span>{lang}wcf.global.button.restore{/lang}</span>
+			</button>
 			<button
 				type="button"
 				class="contentInteractionButton button small jsButtonDelete"
@@ -42,12 +49,15 @@
 				class="contentInteractionButton button small jsButtonTrash"
 				{if $article->isDeleted} style="display: none"{/if}
 			>
-				{icon name='xmark'}
+				{icon name='trash-can'}
 				<span>{lang}wcf.global.button.trash{/lang}</span>
 			</button>
 		{/if}
 		{if $languages|count > 1 || $article->isMultilingual}
-			<button type="button" class="contentInteractionButton button small jsButtonToggleI18n">{icon name='language'} <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></button>
+			<button type="button" class="contentInteractionButton button small jsButtonToggleI18n">
+				{icon name='language'}
+				<span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span>
+			</button>
 		{/if}
 	{/if}
 {/capture}

@@ -3312,6 +3312,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.bbcode.type"><![CDATA[Artikel]]></item>
 		<item name="wcf.article.action.delete"><![CDATA[Artikel löschen?]]></item>
+		<item name="wcf.article.action.restore"><![CDATA[Artikel wiederherstellen?]]></item>
 		<item name="wcf.article.action.trash"><![CDATA[Artikel in den Papierkorb verschieben?]]></item>
 	</category>
 	<category name="wcf.attachment">

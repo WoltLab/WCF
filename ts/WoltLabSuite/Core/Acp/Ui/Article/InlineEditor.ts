@@ -15,7 +15,6 @@ import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
 import * as EventHandler from "../../../Event/Handler";
 import * as Language from "../../../Language";
-import * as UiConfirmation from "../../../Ui/Confirmation";
 import UiDialog from "../../../Ui/Dialog";
 import * as UiNotification from "../../../Ui/Notification";
 
@@ -33,7 +32,7 @@ interface InlineEditorOptions {
 interface ArticleData {
   buttons: {
     delete: HTMLButtonElement;
-    restore: HTMLAnchorElement;
+    restore: HTMLButtonElement;
     trash: HTMLButtonElement;
   };
   element: HTMLElement | undefined;
@@ -170,8 +169,14 @@ class AcpUiArticleInlineEditor {
       }
     });
 
-    const buttonRestore = scope.querySelector(".jsButtonRestore") as HTMLAnchorElement;
-    buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));
+    const buttonRestore = scope.querySelector(".jsButtonRestore") as HTMLButtonElement;
+    buttonRestore.addEventListener("click", async () => {
+      const result = await confirmationFactory().restore(Language.get("wcf.article.action.restore")).withoutMessage();
+
+      if (result) {
+        this.invoke(objectId, "restore");
+      }
+    });
 
     const buttonTrash = scope.querySelector(".jsButtonTrash") as HTMLButtonElement;
     buttonTrash.addEventListener("click", async () => {
@@ -183,9 +188,9 @@ class AcpUiArticleInlineEditor {
     });
 
     if (isArticleEdit) {
-      const buttonToggleI18n = scope.querySelector(".jsButtonToggleI18n") as HTMLAnchorElement;
+      const buttonToggleI18n = scope.querySelector(".jsButtonToggleI18n") as HTMLButtonElement;
       if (buttonToggleI18n !== null) {
-        buttonToggleI18n.addEventListener("click", (ev) => this.toggleI18n(ev, objectId));
+        buttonToggleI18n.addEventListener("click", () => void this.toggleI18n(objectId));
       }
     }
 
@@ -201,67 +206,54 @@ class AcpUiArticleInlineEditor {
   }
 
   /**
-   * Prompts a user to confirm the clicked action before executing it.
-   */
-  private prompt(event: MouseEvent, objectId: number, actionName: string): void {
-    event.preventDefault();
-
-    const article = articles.get(objectId)!;
-
-    UiConfirmation.show({
-      confirm: () => {
-        this.invoke(objectId, actionName);
-      },
-      message: article.buttons[actionName].dataset.confirmMessageHtml,
-      messageIsHtml: true,
-    });
-  }
-
-  /**
    * Toggles an article between i18n and monolingual.
    */
-  private toggleI18n(event: MouseEvent, objectId: number): void {
-    event.preventDefault();
-
+  private async toggleI18n(objectId: number): Promise<void> {
     const phrase = Language.get(
       "wcf.acp.article.i18n." + (this.options.i18n.isI18n ? "fromI18n" : "toI18n") + ".confirmMessage",
     );
-    let html = `<p>${phrase}</p>`;
 
-    // build language selection
+    let dl: HTMLDListElement | undefined;
     if (this.options.i18n.isI18n) {
-      html += `<dl><dt>${Language.get("wcf.acp.article.i18n.source")}</dt><dd>`;
-
       const defaultLanguageId = this.options.i18n.defaultLanguageId.toString();
-      html += Object.entries(this.options.i18n.languages)
+      const html = Object.entries(this.options.i18n.languages)
         .map(([languageId, languageName]) => {
           return `<label><input type="radio" name="i18nLanguage" value="${languageId}" ${
             defaultLanguageId === languageId ? "checked" : ""
           }> ${languageName}</label>`;
         })
         .join("");
-      html += "</dd></dl>";
+
+      dl = document.createElement("dl");
+      dl.innerHTML = `
+        <dt>${Language.get("wcf.acp.article.i18n.source")}</dt>
+        <dd>${html}</dd>
+      `;
     }
 
-    UiConfirmation.show({
-      confirm: (parameters, content) => {
-        let languageId = 0;
-        if (this.options.i18n.isI18n) {
-          const input = content.parentElement!.querySelector("input[name='i18nLanguage']:checked") as HTMLInputElement;
-          languageId = ~~input.value;
+    const { result } = await confirmationFactory()
+      .custom(phrase)
+      .withFormElements((dialog) => {
+        if (dl !== undefined) {
+          dialog.content.append(dl);
         }
+      });
 
-        Ajax.api(this, {
-          actionName: "toggleI18n",
-          objectIDs: [objectId],
-          parameters: {
-            languageID: languageId,
-          },
-        });
-      },
-      message: html,
-      messageIsHtml: true,
-    });
+    if (result) {
+      let languageId = 0;
+      if (dl !== undefined) {
+        const input = dl.querySelector("input[name='i18nLanguage']:checked") as HTMLInputElement;
+        languageId = ~~input.value;
+      }
+
+      Ajax.api(this, {
+        actionName: "toggleI18n",
+        objectIDs: [objectId],
+        parameters: {
+          languageID: languageId,
+        },
+      });
+    }
   }
 
   /**

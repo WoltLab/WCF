@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Ui/Confirmation (alias)
  * @module  WoltLabSuite/Core/Ui/Confirmation
+ * @deprecated 6.0 Use `confirmationFactory()` instead.
  */
 define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], function (require, exports, tslib_1, Core, Language, Dialog_1) {
     "use strict";
@@ -131,6 +132,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
     }
     /**
      * Shows the confirmation dialog.
+     * @deprecated 6.0 Use `confirmationFactory()` instead.
      */
     function show(options) {
         if (getConfirmation().active) {
