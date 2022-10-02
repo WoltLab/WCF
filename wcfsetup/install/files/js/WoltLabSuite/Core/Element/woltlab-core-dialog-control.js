@@ -59,6 +59,13 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     this.dispatchEvent(event);
                 });
                 this.append(this.#cancelButton);
+                const dialog = this.closest("woltlab-core-dialog");
+                if (dialog) {
+                    dialog.addEventListener("backdrop", (event) => {
+                        event.preventDefault();
+                        this.#cancelButton.click();
+                    });
+                }
             }
         }
         addEventListener(type, listener, options) {

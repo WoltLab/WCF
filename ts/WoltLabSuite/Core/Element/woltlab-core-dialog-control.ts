@@ -77,6 +77,15 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       });
 
       this.append(this.#cancelButton);
+
+      const dialog = this.closest("woltlab-core-dialog");
+      if (dialog) {
+        dialog.addEventListener("backdrop", (event) => {
+          event.preventDefault();
+
+          this.#cancelButton!.click();
+        });
+      }
     }
   }
 

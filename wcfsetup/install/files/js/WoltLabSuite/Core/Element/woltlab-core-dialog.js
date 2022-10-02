@@ -151,6 +151,11 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             // dialog and then releasing it on the backdrop.
             this.#dialog.addEventListener("mousedown", (event) => {
                 if (event.target === this.#dialog) {
+                    const event = new CustomEvent("backdrop", { cancelable: true });
+                    this.dispatchEvent(event);
+                    if (event.defaultPrevented) {
+                        return;
+                    }
                     if (this.#shouldClose()) {
                         this.close();
                     }
