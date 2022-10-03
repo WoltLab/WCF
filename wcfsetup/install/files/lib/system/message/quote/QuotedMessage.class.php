@@ -168,7 +168,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): mixed
     {
         $objectID = $this->indexToObject[$this->index];
 
@@ -181,7 +181,7 @@ class QuotedMessage implements \Countable, \Iterator
      *
      * @see \Iterator::key()
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->indexToObject[$this->index];
     }
@@ -189,7 +189,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -197,7 +197,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -205,7 +205,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->indexToObject[$this->index]);
     }
