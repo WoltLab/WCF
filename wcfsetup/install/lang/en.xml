@@ -3707,7 +3707,7 @@ Attachments:
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[This process cannot be undone.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[Are you sure you want to delete “{$title}”?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[Do you want to move “{$title}” to the trash bin?]]></item>
-		<item name="wcf.dialog.confirmation.softDelete.reason"><![CDATA[Reason]]></item>
+		<item name="wcf.dialog.confirmation.softDelete.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[Do you want to restore “{$title}”?]]></item>
 	</category>
 	<category name="wcf.edit">

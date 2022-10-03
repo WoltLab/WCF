@@ -112,21 +112,21 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
             }
             const buttonDelete = scope.querySelector(".jsButtonDelete");
             buttonDelete.addEventListener("click", async () => {
-                const result = await (0, Confirmation_1.confirmationFactory)().prefab(title).delete();
+                const result = await (0, Confirmation_1.confirmationFactory)().delete(title);
                 if (result) {
                     this.invoke(objectId, "delete");
                 }
             });
             const buttonRestore = scope.querySelector(".jsButtonRestore");
             buttonRestore.addEventListener("click", async () => {
-                const result = await (0, Confirmation_1.confirmationFactory)().prefab(title).restore();
+                const result = await (0, Confirmation_1.confirmationFactory)().restore(title);
                 if (result) {
                     this.invoke(objectId, "restore");
                 }
             });
             const buttonTrash = scope.querySelector(".jsButtonTrash");
             buttonTrash.addEventListener("click", async () => {
-                const result = await (0, Confirmation_1.confirmationFactory)().prefab(title).softDelete();
+                const result = await (0, Confirmation_1.confirmationFactory)().softDelete(title, false);
                 if (result) {
                     this.invoke(objectId, "trash");
                 }

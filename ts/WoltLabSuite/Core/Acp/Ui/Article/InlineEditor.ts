@@ -165,7 +165,7 @@ class AcpUiArticleInlineEditor {
 
     const buttonDelete = scope.querySelector(".jsButtonDelete") as HTMLButtonElement;
     buttonDelete.addEventListener("click", async () => {
-      const result = await confirmationFactory().prefab(title).delete();
+      const result = await confirmationFactory().delete(title);
       if (result) {
         this.invoke(objectId, "delete");
       }
@@ -173,7 +173,7 @@ class AcpUiArticleInlineEditor {
 
     const buttonRestore = scope.querySelector(".jsButtonRestore") as HTMLButtonElement;
     buttonRestore.addEventListener("click", async () => {
-      const result = await confirmationFactory().prefab(title).restore();
+      const result = await confirmationFactory().restore(title);
       if (result) {
         this.invoke(objectId, "restore");
       }
@@ -181,7 +181,7 @@ class AcpUiArticleInlineEditor {
 
     const buttonTrash = scope.querySelector(".jsButtonTrash") as HTMLButtonElement;
     buttonTrash.addEventListener("click", async () => {
-      const result = await confirmationFactory().prefab(title).softDelete();
+      const result = await confirmationFactory().softDelete(title, false);
 
       if (result) {
         this.invoke(objectId, "trash");
