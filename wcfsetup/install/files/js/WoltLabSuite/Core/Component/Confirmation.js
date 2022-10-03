@@ -1,4 +1,4 @@
-define(["require", "exports", "./Confirmation/Custom", "./Confirmation/Delete", "./Confirmation/SoftDelete"], function (require, exports, Custom_1, Delete_1, SoftDelete_1) {
+define(["require", "exports", "./Confirmation/Custom", "./Confirmation/Delete", "./Confirmation/Prefab", "./Confirmation/SoftDelete"], function (require, exports, Custom_1, Delete_1, Prefab_1, SoftDelete_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.confirmationFactory = void 0;
@@ -8,6 +8,9 @@ define(["require", "exports", "./Confirmation/Custom", "./Confirmation/Delete", 
         }
         delete(question) {
             return new Delete_1.ConfirmationDelete(question);
+        }
+        prefab(title) {
+            return new Prefab_1.ConfirmationPrefab(title);
         }
         restore(question) {
             return this.custom(question);

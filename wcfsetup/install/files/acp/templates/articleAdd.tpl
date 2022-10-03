@@ -94,11 +94,9 @@
 			'wcf.acp.article.i18n.toI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.toI18n.confirmMessage{/jslang}',
 			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.fromI18n.confirmMessage{/jslang}',
 			'wcf.message.status.deleted': '{jslang}wcf.message.status.deleted{/jslang}',
-			'wcf.article.action.delete': '{jslang}wcf.article.action.delete{/jslang}',
-			'wcf.article.action.trash': '{jslang}wcf.article.action.trash{/jslang}',
 		});
 		
-		new UiUserSearchInput(elBySel('input[name="username"]'));
+		new UiUserSearchInput(document.querySelector('input[name="username"]'));
 		{if $action == 'edit'}
 			new AcpUiArticleInlineEditor({@$article->articleID}, {
 				i18n: {

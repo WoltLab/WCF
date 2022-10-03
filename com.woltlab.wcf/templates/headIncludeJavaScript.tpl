@@ -159,7 +159,10 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.dialog.button.primary': '{jslang}wcf.dialog.button.primary{/jslang}',
 			'wcf.dialog.button.primary.confirm': '{jslang}wcf.dialog.button.primary.confirm{/jslang}',
 			'wcf.dialog.button.primary.delete': '{jslang}wcf.dialog.button.primary.delete{/jslang}',
+			'wcf.dialog.confirmation.cannotBeUndone': '{jslang __literal=true}wcf.dialog.confirmation.cannotBeUndone{/jslang}',
 			'wcf.dialog.confirmation.delete': '{jslang __literal=true}wcf.dialog.confirmation.delete{/jslang}',
+			'wcf.dialog.confirmation.restore': '{jslang __literal=true}wcf.dialog.confirmation.restore{/jslang}',
+			'wcf.dialog.confirmation.softDelete': '{jslang __literal=true}wcf.dialog.confirmation.softDelete{/jslang}',
 			'wcf.dialog.confirmation.softDelete.reason': '{jslang}wcf.dialog.confirmation.softDelete.reason{/jslang}',
 			'wcf.user.language': '{jslang}wcf.user.language{/jslang}'
 			{if MODULE_LIKE}

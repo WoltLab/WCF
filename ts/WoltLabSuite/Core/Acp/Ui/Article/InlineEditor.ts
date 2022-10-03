@@ -156,14 +156,16 @@ class AcpUiArticleInlineEditor {
 
     const scope = article || document;
 
+    let title: string;
+    if (isArticleEdit) {
+      const languageId = this.options.i18n.isI18n ? this.options.i18n.defaultLanguageId : 0;
+      const inputField = document.getElementById(`title${languageId}`) as HTMLInputElement;
+      title = inputField.value;
+    }
+
     const buttonDelete = scope.querySelector(".jsButtonDelete") as HTMLButtonElement;
     buttonDelete.addEventListener("click", async () => {
-      const title = "";
-
-      const result = await confirmationFactory()
-        .delete(Language.get("wcf.article.action.delete"))
-        .defaultMessage(title);
-
+      const result = await confirmationFactory().prefab(title).delete();
       if (result) {
         this.invoke(objectId, "delete");
       }
@@ -171,8 +173,7 @@ class AcpUiArticleInlineEditor {
 
     const buttonRestore = scope.querySelector(".jsButtonRestore") as HTMLButtonElement;
     buttonRestore.addEventListener("click", async () => {
-      const result = await confirmationFactory().restore(Language.get("wcf.article.action.restore")).withoutMessage();
-
+      const result = await confirmationFactory().prefab(title).restore();
       if (result) {
         this.invoke(objectId, "restore");
       }
@@ -180,7 +181,7 @@ class AcpUiArticleInlineEditor {
 
     const buttonTrash = scope.querySelector(".jsButtonTrash") as HTMLButtonElement;
     buttonTrash.addEventListener("click", async () => {
-      const result = await confirmationFactory().softDelete(Language.get("wcf.article.action.trash")).withoutMessage();
+      const result = await confirmationFactory().prefab(title).softDelete();
 
       if (result) {
         this.invoke(objectId, "trash");

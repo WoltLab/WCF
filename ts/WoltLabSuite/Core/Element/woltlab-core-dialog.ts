@@ -1,5 +1,4 @@
 import DomUtil from "../Dom/Util";
-import WoltlabCoreDialogControlElement from "./woltlab-core-dialog-control";
 
 type CallbackReturnFocus = () => HTMLElement | null;
 

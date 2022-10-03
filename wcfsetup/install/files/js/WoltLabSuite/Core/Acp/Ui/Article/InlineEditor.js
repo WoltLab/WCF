@@ -104,26 +104,29 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
                 objectId = ~~article.dataset.objectId;
             }
             const scope = article || document;
+            let title;
+            if (isArticleEdit) {
+                const languageId = this.options.i18n.isI18n ? this.options.i18n.defaultLanguageId : 0;
+                const inputField = document.getElementById(`title${languageId}`);
+                title = inputField.value;
+            }
             const buttonDelete = scope.querySelector(".jsButtonDelete");
             buttonDelete.addEventListener("click", async () => {
-                const title = "";
-                const result = await (0, Confirmation_1.confirmationFactory)()
-                    .delete(Language.get("wcf.article.action.delete"))
-                    .defaultMessage(title);
+                const result = await (0, Confirmation_1.confirmationFactory)().prefab(title).delete();
                 if (result) {
                     this.invoke(objectId, "delete");
                 }
             });
             const buttonRestore = scope.querySelector(".jsButtonRestore");
             buttonRestore.addEventListener("click", async () => {
-                const result = await (0, Confirmation_1.confirmationFactory)().restore(Language.get("wcf.article.action.restore")).withoutMessage();
+                const result = await (0, Confirmation_1.confirmationFactory)().prefab(title).restore();
                 if (result) {
                     this.invoke(objectId, "restore");
                 }
             });
             const buttonTrash = scope.querySelector(".jsButtonTrash");
             buttonTrash.addEventListener("click", async () => {
-                const result = await (0, Confirmation_1.confirmationFactory)().softDelete(Language.get("wcf.article.action.trash")).withoutMessage();
+                const result = await (0, Confirmation_1.confirmationFactory)().prefab(title).softDelete();
                 if (result) {
                     this.invoke(objectId, "trash");
                 }
