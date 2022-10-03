@@ -3754,6 +3754,7 @@ Dateianhänge:
 		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
 		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Bestätigen]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Löschen]]></item>
+		<item name="wcf.dialog.button.primary.submit"><![CDATA[Absenden]]></item>
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[Dieser Vorgang kann nicht rückgängig gemacht werden.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} „{$title}“ wirklich löschen?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ in den Papierkorb verschieben?]]></item>

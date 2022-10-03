@@ -38,11 +38,7 @@ export class ConfirmationPrefab {
   }
 
   #withoutFormElements(question: string): Promise<boolean> {
-    const dialog = dialogFactory()
-      .withoutContent()
-      .asConfirmation({
-        primary: Language.get("wcf.dialog.button.primary.confirm"),
-      });
+    const dialog = dialogFactory().withoutContent().asConfirmation();
 
     dialog.show(question);
 

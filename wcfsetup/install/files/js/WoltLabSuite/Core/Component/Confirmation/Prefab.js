@@ -31,11 +31,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../Language"], function 
             return this.#withoutFormElements(question);
         }
         #withoutFormElements(question) {
-            const dialog = (0, Dialog_1.dialogFactory)()
-                .withoutContent()
-                .asConfirmation({
-                primary: Language.get("wcf.dialog.button.primary.confirm"),
-            });
+            const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
             dialog.show(question);
             return new Promise((resolve) => {
                 dialog.addEventListener("primary", () => resolve(true));

@@ -3703,6 +3703,7 @@ Attachments:
 		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
 		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Confirm]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Delete]]></item>
+		<item name="wcf.dialog.button.primary.submit"><![CDATA[Submit]]></item>
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[This process cannot be undone.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[Are you sure you want to delete “{$title}”?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[Do you want to move “{$title}” to the trash bin?]]></item>
