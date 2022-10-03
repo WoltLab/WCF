@@ -1096,6 +1096,9 @@
 		<name>SentiBot</name>
 		<url>http://www.sentibot.eu</url>
 	</spider>
+	<spider ident="SEO Scanner">
+		<name>SEO Scanner</name>
+	</spider>
 	<spider ident="SEOkicks">
 		<name>SEOkicks</name>
 		<url>https://www.seokicks.de/robot.html</url>
