@@ -210,9 +210,8 @@ class AcpUiArticleInlineEditor {
    * Toggles an article between i18n and monolingual.
    */
   private async toggleI18n(objectId: number): Promise<void> {
-    const phrase = Language.get(
-      "wcf.acp.article.i18n." + (this.options.i18n.isI18n ? "fromI18n" : "toI18n") + ".confirmMessage",
-    );
+    const phraseType = this.options.i18n.isI18n ? "convertFromI18n" : "convertToI18n";
+    const phrase = Language.get(`wcf.article.${phraseType}.question`);
 
     let dl: HTMLDListElement | undefined;
     if (this.options.i18n.isI18n) {
@@ -235,6 +234,10 @@ class AcpUiArticleInlineEditor {
     const { result } = await confirmationFactory()
       .custom(phrase)
       .withFormElements((dialog) => {
+        const p = document.createElement("p");
+        p.innerHTML = Language.get(`wcf.article.${phraseType}.description`);
+        dialog.content.append(p);
+
         if (dl !== undefined) {
           dialog.content.append(dl);
         }

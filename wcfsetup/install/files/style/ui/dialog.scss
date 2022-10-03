@@ -376,6 +376,10 @@
 	min-height: 0;
 }
 
+.dialog[role="alertdialog"] {
+	max-width: 500px;
+}
+
 .dialog[role="alertdialog"] .dialog__header {
 	column-gap: 0;
 	grid-template-columns: auto;
