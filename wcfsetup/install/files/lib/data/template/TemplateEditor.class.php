@@ -47,10 +47,8 @@ class TemplateEditor extends DatabaseObjectEditor
 
     /**
      * Saves the source of this template.
-     *
-     * @param string $source
      */
-    public function setSource($source)
+    public function setSource(string $source)
     {
         $path = $this->getPath();
         // create dir
@@ -60,9 +58,7 @@ class TemplateEditor extends DatabaseObjectEditor
         }
 
         // set source
-        $file = new File($path);
-        $file->write($source);
-        $file->close();
+        \file_put_contents($path, $source);
         FileUtil::makeWritable($path);
     }
 

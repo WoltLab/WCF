@@ -788,15 +788,25 @@ final class WCFSetup extends WCF
                 if (empty($conflictedTables)) {
                     // connection successfully established
                     // write configuration to config.inc.php
-                    $file = new File(WCF_DIR . 'config.inc.php');
-                    $file->write("<?php\n");
-                    $file->write("\$dbHost = '" . \str_replace("'", "\\'", $dbHostWithoutPort) . "';\n");
-                    $file->write("\$dbPort = " . $dbPort . ";\n");
-                    $file->write("\$dbUser = '" . \str_replace("'", "\\'", $dbUser) . "';\n");
-                    $file->write("\$dbPassword = '" . \str_replace("'", "\\'", $dbPassword) . "';\n");
-                    $file->write("\$dbName = '" . \str_replace("'", "\\'", $dbName) . "';\n");
-                    $file->write("if (!defined('WCF_N')) define('WCF_N', 1);\n");
-                    $file->close();
+                    \file_put_contents(
+                        WCF_DIR . 'config.inc.php',
+                        \sprintf(
+                            <<<'CONFIG'
+                            <?php
+                            $dbHost = %s;
+                            $dbPort = %s;
+                            $dbUser = %s;
+                            $dbPassword = %s;
+                            $dbName = %s';
+                            if (!defined('WCF_N')) define('WCF_N', 1);
+                            CONFIG,
+                            \var_export($dbHostWithoutPort, true),
+                            \var_export($dbPort, true),
+                            \var_export($dbUser, true),
+                            \var_export($dbPassword, true),
+                            \var_export($dbName, true)
+                        )
+                    );
 
                     return $this->gotoNextStep('createDB');
                 } else {

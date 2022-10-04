@@ -131,14 +131,12 @@ class Zip extends File implements IArchive
             return;
         }
 
-        $targetFile = new File($destination);
-        $targetFile->write($file['content'], \strlen($file['content']));
-        $targetFile->close();
+        \file_put_contents($destination, $file['content']);
 
         FileUtil::makeWritable($destination);
 
         if ($file['header']['mtime']) {
-            @$targetFile->touch($file['header']['mtime']);
+            \touch($destination, $file['header']['mtime']);
         }
 
         // check filesize

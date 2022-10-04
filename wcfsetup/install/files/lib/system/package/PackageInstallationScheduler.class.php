@@ -311,9 +311,7 @@ final class PackageInstallationScheduler
 
             // write content to tmp file
             $filename = FileUtil::getTemporaryFilename('package_');
-            $file = new File($filename);
-            $file->write($response['body']);
-            $file->close();
+            \file_put_contents($filename, $response['body']);
             unset($response['body']);
 
             // test package
