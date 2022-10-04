@@ -19,18 +19,14 @@ use wcf\util\FileUtil;
  */
 final class DebugFolderEmailTransport implements IEmailTransport
 {
-    /**
-     * folder
-     * @var string
-     */
-    protected $folder;
+    protected string $folder;
 
     /**
      * Creates a new DebugFolderTransport using the given folder as target.
      *
-     * @param string $folder folder or null for default folder
+     * @param $folder folder or null for default folder
      */
-    public function __construct($folder = null)
+    public function __construct(?string $folder = null)
     {
         if ($folder === null) {
             $folder = WCF_DIR . 'log/Maildir';
@@ -47,10 +43,6 @@ final class DebugFolderEmailTransport implements IEmailTransport
 
     /**
      * Writes the given $email into the folder.
-     *
-     * @param Email $email
-     * @param Mailbox $envelopeFrom
-     * @param Mailbox $envelopeTo
      */
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
     {
