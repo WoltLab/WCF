@@ -19,7 +19,7 @@
 {/foreach}
 
 {if $systemIdMismatch}
-	{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
+	{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && (!ENABLE_ENTERPRISE_MODE || $__wcf->user->hasOwnerAccess())}
 		<p class="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</p>
 	{/if}
 {/if}
