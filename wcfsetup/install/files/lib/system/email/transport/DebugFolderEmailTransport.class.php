@@ -17,7 +17,7 @@ use wcf\util\FileUtil;
  * @package WoltLabSuite\Core\System\Email\Transport
  * @since   5.2
  */
-class DebugFolderEmailTransport implements IEmailTransport
+final class DebugFolderEmailTransport implements IEmailTransport
 {
     /**
      * folder

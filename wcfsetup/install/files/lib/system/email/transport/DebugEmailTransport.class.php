@@ -17,7 +17,7 @@ use wcf\util\DateUtil;
  * @package WoltLabSuite\Core\System\Email\Transport
  * @since   3.0
  */
-class DebugEmailTransport implements IEmailTransport
+final class DebugEmailTransport implements IEmailTransport
 {
     /**
      * mbox file
