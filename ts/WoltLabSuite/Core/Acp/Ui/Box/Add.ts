@@ -7,13 +7,14 @@
  * @module WoltLabSuite/Core/Acp/Ui/Box/Add
  */
 
-import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import * as Language from "../../../Language";
-import UiDialog from "../../../Ui/Dialog";
+import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
+import { dialogFactory } from "../../../Component/Dialog";
 
-export class AcpUiBoxAdd implements DialogCallbackObject {
+export class AcpUiBoxAdd {
   readonly #supportsI18n: boolean;
   readonly #link: string;
+  #dialog?: WoltlabCoreDialogElement;
 
   /**
    * Initializes the box add handler.
@@ -31,43 +32,40 @@ export class AcpUiBoxAdd implements DialogCallbackObject {
    * Opens the 'Add Box' dialog.
    */
   show(): void {
-    UiDialog.open(this);
+    if (!this.#dialog) {
+      this.#dialog = this.#createDialog();
+    }
+
+    this.#dialog.show(Language.get("wcf.acp.box.add"));
   }
 
-  _dialogSetup(): ReturnType<DialogCallbackSetup> {
-    return {
-      id: "boxAddDialog",
-      options: {
-        onSetup: (content) => {
-          content.querySelector("button")!.addEventListener("click", (event) => {
-            event.preventDefault();
+  #createDialog(): WoltlabCoreDialogElement {
+    const dialog = dialogFactory().fromId("boxAddDialog").asPrompt();
+    const content = dialog.content;
 
-            const boxTypeSelection = content.querySelector('input[name="boxType"]:checked') as HTMLInputElement;
-            const boxType = boxTypeSelection.value;
-            let isMultilingual = "0";
-            if (boxType !== "system" && this.#supportsI18n) {
-              const i18nSelection = content.querySelector('input[name="isMultilingual"]:checked') as HTMLInputElement;
-              isMultilingual = i18nSelection.value;
-            }
-
-            window.location.href = this.#link
-              .replace("{$boxType}", boxType)
-              .replace("{$isMultilingual}", isMultilingual);
+    content.querySelectorAll('input[type="radio"][name="boxType"]').forEach((boxType: HTMLInputElement) => {
+      boxType.addEventListener("change", () => {
+        content
+          .querySelectorAll('input[type="radio"][name="isMultilingual"]')
+          .forEach((i18nSelection: HTMLInputElement) => {
+            i18nSelection.disabled = boxType.value === "system";
           });
+      });
+    });
 
-          content.querySelectorAll('input[type="radio"][name="boxType"]').forEach((boxType: HTMLInputElement) => {
-            boxType.addEventListener("change", () => {
-              content
-                .querySelectorAll('input[type="radio"][name="isMultilingual"]')
-                .forEach((i18nSelection: HTMLInputElement) => {
-                  i18nSelection.disabled = boxType.value === "system";
-                });
-            });
-          });
-        },
-        title: Language.get("wcf.acp.box.add"),
-      },
-    };
+    dialog.addEventListener("primary", () => {
+      const boxTypeSelection = content.querySelector('input[name="boxType"]:checked') as HTMLInputElement;
+      const boxType = boxTypeSelection.value;
+      let isMultilingual = "0";
+      if (boxType !== "system" && this.#supportsI18n) {
+        const i18nSelection = content.querySelector('input[name="isMultilingual"]:checked') as HTMLInputElement;
+        isMultilingual = i18nSelection.value;
+      }
+
+      window.location.href = this.#link.replace("{$boxType}", boxType).replace("{$isMultilingual}", isMultilingual);
+    });
+
+    return dialog;
   }
 }
 

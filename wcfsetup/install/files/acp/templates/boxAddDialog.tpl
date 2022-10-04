@@ -1,4 +1,4 @@
-<div id="boxAddDialog" style="display: none">
+<template id="boxAddDialog">
 	<dl>
 		<dt>{lang}wcf.acp.box.type{/lang}</dt>
 		<dd>
@@ -24,11 +24,7 @@
 			</dd>
 		</dl>
 	{/if}
-
-	<div class="formSubmit">
-		<button type="button" class="button buttonPrimary">{lang}wcf.global.button.next{/lang}</button>
-	</div>
-</div>
+</template>
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Add'], (Language, { AcpUiBoxAdd }) => {
 		Language.addObject({
