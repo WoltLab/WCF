@@ -24,9 +24,13 @@
 			</dd>
 		</dl>
 	{/if}
+
+	<div class="formSubmit">
+		<button type="button" class="button buttonPrimary">{lang}wcf.global.button.next{/lang}</button>
+	</div>
 </div>
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Add'], (Language, AcpUiBoxAdd) => {
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Add'], (Language, { AcpUiBoxAdd }) => {
 		Language.addObject({
 			'wcf.acp.box.add': '{jslang}wcf.acp.box.add{/jslang}'
 		});
