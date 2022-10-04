@@ -1,40 +1,36 @@
 /**
  * Provides the dialog overlay to add a new box.
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Acp/Ui/Box/Add
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Acp/Ui/Box/Add
  */
 
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
 
-class AcpUiBoxAdd implements DialogCallbackObject {
-  private supportsI18n = false;
-  private link = "";
+export class AcpUiBoxAdd implements DialogCallbackObject {
+  readonly #supportsI18n: boolean;
+  readonly #link: string;
 
   /**
    * Initializes the box add handler.
    */
-  init(link: string, supportsI18n: boolean): void {
-    this.link = link;
-    this.supportsI18n = supportsI18n;
+  constructor(link: string, supportsI18n: boolean) {
+    this.#link = link;
+    this.#supportsI18n = supportsI18n;
 
     document.querySelectorAll(".jsButtonBoxAdd").forEach((button: HTMLElement) => {
-      button.addEventListener("click", (ev) => this.openDialog(ev));
+      button.addEventListener("click", () => this.show());
     });
   }
 
   /**
    * Opens the 'Add Box' dialog.
    */
-  openDialog(event?: MouseEvent): void {
-    if (event instanceof Event) {
-      event.preventDefault();
-    }
-
+  show(): void {
     UiDialog.open(this);
   }
 
@@ -49,12 +45,12 @@ class AcpUiBoxAdd implements DialogCallbackObject {
             const boxTypeSelection = content.querySelector('input[name="boxType"]:checked') as HTMLInputElement;
             const boxType = boxTypeSelection.value;
             let isMultilingual = "0";
-            if (boxType !== "system" && this.supportsI18n) {
+            if (boxType !== "system" && this.#supportsI18n) {
               const i18nSelection = content.querySelector('input[name="isMultilingual"]:checked') as HTMLInputElement;
               isMultilingual = i18nSelection.value;
             }
 
-            window.location.href = this.link
+            window.location.href = this.#link
               .replace("{$boxType}", boxType)
               .replace("{$isMultilingual}", isMultilingual);
           });
@@ -75,26 +71,4 @@ class AcpUiBoxAdd implements DialogCallbackObject {
   }
 }
 
-let acpUiDialogAdd: AcpUiBoxAdd;
-
-function getAcpUiDialogAdd(): AcpUiBoxAdd {
-  if (!acpUiDialogAdd) {
-    acpUiDialogAdd = new AcpUiBoxAdd();
-  }
-
-  return acpUiDialogAdd;
-}
-
-/**
- * Initializes the box add handler.
- */
-export function init(link: string, availableLanguages: number): void {
-  getAcpUiDialogAdd().init(link, availableLanguages > 1);
-}
-
-/**
- * Opens the 'Add Box' dialog.
- */
-export function openDialog(event?: MouseEvent): void {
-  getAcpUiDialogAdd().openDialog(event);
-}
+export default AcpUiBoxAdd;
