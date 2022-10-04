@@ -8,6 +8,9 @@ define(["require", "exports", "tslib", "./Controls"], function (require, exports
             if (!(element instanceof HTMLElement) && !(element instanceof DocumentFragment)) {
                 throw new TypeError("Expected an HTML element or a document fragment.");
             }
+            if (element instanceof HTMLTemplateElement) {
+                element = element.content.cloneNode(true);
+            }
             const dialog = document.createElement("woltlab-core-dialog");
             dialog.content.append(element);
             return new Controls_1.default(dialog);
