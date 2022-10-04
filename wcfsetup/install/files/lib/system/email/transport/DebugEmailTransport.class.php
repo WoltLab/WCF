@@ -2,9 +2,10 @@
 
 namespace wcf\system\email\transport;
 
+use Laminas\Diactoros\Stream;
+use Psr\Http\Message\StreamInterface;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
-use wcf\system\io\File;
 use wcf\util\DateUtil;
 
 /**
@@ -19,32 +20,24 @@ use wcf\util\DateUtil;
  */
 final class DebugEmailTransport implements IEmailTransport
 {
-    /**
-     * mbox file
-     * @var File
-     */
-    protected $mbox;
+    protected StreamInterface $mbox;
 
     /**
      * Creates a new DebugTransport using the given mbox as target.
      *
-     * @param string $mbox mbox location or null for default location
+     * @param $mbox mbox location or null for default location
      */
-    public function __construct($mbox = null)
+    public function __construct(?string $mbox = null)
     {
         if ($mbox === null) {
             $mbox = WCF_DIR . 'log/debug.mbox';
         }
 
-        $this->mbox = new File($mbox, 'ab');
+        $this->mbox = new Stream($mbox, 'ab');
     }
 
     /**
      * Writes the given $email into the mbox.
-     *
-     * @param Email $email
-     * @param Mailbox $envelopeFrom
-     * @param Mailbox $envelopeTo
      */
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
     {
