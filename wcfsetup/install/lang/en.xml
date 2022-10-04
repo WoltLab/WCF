@@ -4999,7 +4999,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
 		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
 		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Enable confirmation via email]]></item>
-		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email to your account’s email address <strong>{$__wcf->user->email}</strong> whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[Emails Enabled]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Multi-factor authentication via email is enabled for your account. You will receive a one time code via email whenever you login.</p>
 <p>Use the <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
