@@ -22,9 +22,6 @@ final class PhpEmailTransport implements IEmailTransport
     /**
      * Delivers the given email via mail().
      *
-     * @param Email $email
-     * @param Mailbox $envelopeFrom
-     * @param Mailbox $envelopeTo
      * @throws  TransientFailure
      */
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
