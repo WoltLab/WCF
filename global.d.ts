@@ -7,7 +7,7 @@ import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog";
-import type WoltlabCoreDialogControl from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog-control";
+import type WoltlabCoreDialogControlElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog-control";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -72,6 +72,6 @@ declare global {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
-    "woltlab-core-dialog-control": WoltlabCoreDialogControl;
+    "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
   }
 }
