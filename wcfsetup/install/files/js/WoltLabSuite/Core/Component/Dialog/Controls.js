@@ -13,7 +13,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 cancel: undefined,
                 extra: undefined,
                 isAlert: true,
-                primary: options?.primary || "",
+                primary: options?.primary || Language.get("wcf.dialog.button.primary"),
             };
             this.#dialog.attachFormControls(formControlOptions);
             return this.#dialog;

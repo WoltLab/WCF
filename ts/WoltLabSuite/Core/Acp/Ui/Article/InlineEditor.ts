@@ -75,7 +75,7 @@ class AcpUiArticleInlineEditor {
     ) as InlineEditorOptions;
 
     if (objectId) {
-      this.initArticle(undefined, ~~objectId);
+      this.initArticle(undefined, objectId);
     } else {
       document.querySelectorAll(".jsArticleRow").forEach((article: HTMLElement) => this.initArticle(article, 0));
 
@@ -122,7 +122,7 @@ class AcpUiArticleInlineEditor {
     const innerError = content.querySelector(".innerError");
     const select = content.querySelector("select[name=categoryID]") as HTMLSelectElement;
 
-    const categoryId = ~~select.value;
+    const categoryId = parseInt(select.value);
     if (categoryId) {
       Ajax.api(this, {
         actionName: "setCategory",
@@ -147,11 +147,11 @@ class AcpUiArticleInlineEditor {
    */
   private initArticle(article: HTMLElement | undefined, objectId: number): void {
     let isArticleEdit = false;
-    if (!article && ~~objectId > 0) {
+    if (!article && objectId > 0) {
       isArticleEdit = true;
       article = undefined;
     } else {
-      objectId = ~~article!.dataset.objectId!;
+      objectId = parseInt(article!.dataset.objectId!);
     }
 
     const scope = article || document;
@@ -247,7 +247,7 @@ class AcpUiArticleInlineEditor {
       let languageId = 0;
       if (dl !== undefined) {
         const input = dl.querySelector("input[name='i18nLanguage']:checked") as HTMLInputElement;
-        languageId = ~~input.value;
+        languageId = parseInt(input.value);
       }
 
       Ajax.api(this, {

@@ -2,10 +2,6 @@ import DialogControls from "./Controls";
 
 export class DialogSetup {
   fromElement(element: HTMLElement | DocumentFragment): DialogControls {
-    if (!(element instanceof HTMLElement) && !(element instanceof DocumentFragment)) {
-      throw new TypeError("Expected an HTML element or a document fragment.");
-    }
-
     if (element instanceof HTMLTemplateElement) {
       element = element.content.cloneNode(true) as DocumentFragment;
     }

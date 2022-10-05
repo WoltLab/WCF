@@ -18,7 +18,7 @@ export class ConfirmationCustom {
   async message(message: string): Promise<boolean> {
     if (message.trim() === "") {
       throw new Error(
-        "An empty message for the delete confirmation was provided. Please use `defaultMessage()` if you do not want to provide a  custom message.",
+        "An empty message for the delete confirmation was provided. Please use `defaultMessage()` if you do not want to provide a custom message.",
       );
     }
 

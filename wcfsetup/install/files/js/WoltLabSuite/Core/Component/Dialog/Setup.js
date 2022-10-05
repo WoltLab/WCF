@@ -5,9 +5,6 @@ define(["require", "exports", "tslib", "./Controls"], function (require, exports
     Controls_1 = tslib_1.__importDefault(Controls_1);
     class DialogSetup {
         fromElement(element) {
-            if (!(element instanceof HTMLElement) && !(element instanceof DocumentFragment)) {
-                throw new TypeError("Expected an HTML element or a document fragment.");
-            }
             if (element instanceof HTMLTemplateElement) {
                 element = element.content.cloneNode(true);
             }
