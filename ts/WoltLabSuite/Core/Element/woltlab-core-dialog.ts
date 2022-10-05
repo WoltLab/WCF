@@ -167,7 +167,8 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     }
 
     let closeButton: HTMLButtonElement | undefined;
-    if (this.#dialog.getAttribute("role") !== "alertdialog") {
+    const dialogRole = this.#dialog.getAttribute("role");
+    if (dialogRole !== "alert" && dialogRole !== "alertdialog") {
       closeButton = document.createElement("button");
       closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
       closeButton.classList.add("dialog__closeButton");
