@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Popover
  */
-define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "../Ui/Alignment"], function (require, exports, tslib_1, Ajax, Listener_1, Util_1, Environment, UiAlignment) {
+define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../Dom/Util", "../Environment", "../Ui/Alignment", "../Helper/PageOverlay"], function (require, exports, tslib_1, Ajax, Listener_1, Util_1, Environment, UiAlignment, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ajaxApi = exports.setContent = exports.init = void 0;
@@ -39,7 +39,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             pointer.className = "elementPointer";
             pointer.appendChild(document.createElement("span"));
             this.popover.appendChild(pointer);
-            document.body.appendChild(this.popover);
+            (0, PageOverlay_1.getPageOverlayContainer)().append(this.popover);
             // event listener
             this.popover.addEventListener("mouseenter", () => this.popoverMouseEnter());
             this.popover.addEventListener("mouseleave", () => this.mouseLeave());

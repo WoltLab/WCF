@@ -37,6 +37,7 @@ import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
 import { whenFirstSeen } from "./LazyLoader";
+import { adoptPageOverlayContainer } from "./Helper/PageOverlay";
 
 // non strict equals by intent
 if (window.WCF == null) {
@@ -92,6 +93,8 @@ export function setup(options: BoostrapOptions): void {
   if (window.ENABLE_DEVELOPER_TOOLS) {
     Devtools._internal_.enable();
   }
+
+  adoptPageOverlayContainer(document.body);
 
   Environment.setup();
   DateTimeRelative.setup();

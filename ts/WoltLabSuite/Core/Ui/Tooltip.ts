@@ -9,6 +9,7 @@
 
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Environment from "../Environment";
+import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import * as UiAlignment from "./Alignment";
 
 let _pointer: HTMLElement;
@@ -89,7 +90,7 @@ export function setup(): void {
   _pointer.appendChild(document.createElement("span"));
   _tooltip.appendChild(_pointer);
 
-  document.body.appendChild(_tooltip);
+  getPageOverlayContainer().append(_tooltip);
 
   init();
 

@@ -1,4 +1,5 @@
 import DomUtil from "../Dom/Util";
+import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
 import * as Language from "../Language";
 
 type CallbackReturnFocus = () => HTMLElement | null;
@@ -57,6 +58,8 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     }
 
     this.#dialog.showModal();
+
+    adoptPageOverlayContainer(this.#dialog);
   }
 
   close(): void {
@@ -69,6 +72,8 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     const event = new CustomEvent("afterClose");
     this.dispatchEvent(event);
+
+    releasePageOverlayContainer(this.#dialog);
   }
 
   get dialog(): HTMLDialogElement {

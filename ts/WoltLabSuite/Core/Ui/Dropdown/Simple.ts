@@ -17,6 +17,7 @@ import * as UiAlignment from "../Alignment";
 import UiCloseOverlay, { Origin } from "../CloseOverlay";
 import { AllowFlip } from "../Alignment";
 import { NotificationAction, NotificationCallback } from "./Data";
+import { getPageOverlayContainer } from "../../Helper/PageOverlay";
 
 let _availableDropdowns: HTMLCollectionOf<HTMLElement>;
 const _callbacks = new CallbackList();
@@ -369,7 +370,7 @@ const UiDropdownSimple = {
 
     _menuContainer = document.createElement("div");
     _menuContainer.className = "dropdownMenuContainer";
-    document.body.appendChild(_menuContainer);
+    getPageOverlayContainer().append(_menuContainer);
 
     _availableDropdowns = document.getElementsByClassName("dropdownToggle") as HTMLCollectionOf<HTMLElement>;
 
