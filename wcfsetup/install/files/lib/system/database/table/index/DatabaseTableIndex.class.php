@@ -21,25 +21,22 @@ final class DatabaseTableIndex
      * indexed columns
      * @var string[]
      */
-    protected $columns;
+    protected array $columns;
 
     /**
      * is `true` if index name has been automatically generated
-     * @var bool
      */
-    protected $generatedName = false;
+    protected bool $generatedName = false;
 
     /**
      * name of index
-     * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * type of index (see `*_TYPE` constants)
-     * @var null|string
      */
-    protected $type;
+    protected ?string $type = null;
 
     const DEFAULT_TYPE = null;
 
@@ -51,10 +48,8 @@ final class DatabaseTableIndex
 
     /**
      * Creates a new `DatabaseTableIndex` object.
-     *
-     * @param string $name column name
      */
-    protected function __construct($name)
+    protected function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -63,9 +58,9 @@ final class DatabaseTableIndex
      * Sets the indexed columns and returns the index.
      *
      * @param string[] $columns indexed columns
-     * @return  $this               this index
+     * @return  $this
      */
-    public function columns($columns)
+    public function columns(array $columns): self
     {
         $this->columns = \array_values($columns);
 
@@ -75,10 +70,9 @@ final class DatabaseTableIndex
     /**
      * Sets the automatically generated name of the index.
      *
-     * @param string $name index name
-     * @return  $this               this index
+     * @return  $this
      */
-    public function generatedName($name)
+    public function generatedName(string $name): self
     {
         $this->name($name);
         $this->generatedName = true;
@@ -91,7 +85,7 @@ final class DatabaseTableIndex
      *
      * @return  string[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         if (!isset($this->columns)) {
             throw new \BadMethodCallException(
@@ -105,9 +99,9 @@ final class DatabaseTableIndex
     /**
      * Returns the data used by `DatabaseEditor` to add the index to a table.
      *
-     * @return  array
+     * @return  array{columns: string, type: string}
      */
-    public function getData()
+    public function getData(): array
     {
         return [
             'columns' => \implode(',', $this->getColumns()),
@@ -117,30 +111,24 @@ final class DatabaseTableIndex
 
     /**
      * Returns the name of the index.
-     *
-     * @return  string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Returns the type of the index (see `*_TYPE` constants).
-     *
-     * @return  null|string
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
      * Returns `true` if the name of the index has been automatically generated.
-     *
-     * @return  bool
      */
-    public function hasGeneratedName()
+    public function hasGeneratedName(): bool
     {
         return $this->generatedName;
     }
@@ -148,10 +136,9 @@ final class DatabaseTableIndex
     /**
      * Sets the name of the index.
      *
-     * @param string $name index name
-     * @return  $this               this index
+     * @return  $this
      */
-    public function name($name)
+    public function name(string $name): self
     {
         $this->name = $name;
 
@@ -161,11 +148,9 @@ final class DatabaseTableIndex
     /**
      * Sets the type of the index and returns the index
      *
-     * @param null|string $type index type
-     * @return  $this               this index
      * @throws  \InvalidArgumentException   if given type is invalid
      */
-    public function type($type)
+    public function type(?string $type): self
     {
         if (
             $type !== static::DEFAULT_TYPE
@@ -183,25 +168,20 @@ final class DatabaseTableIndex
 
     /**
      * Returns a `DatabaseTableIndex` object with the given name.
-     *
-     * @param string $name
-     * @return  static
      */
-    public static function create($name = '')
+    public static function create(string $name = ''): self
     {
-        return new static($name);
+        return new self($name);
     }
 
     /**
      * Returns a `DatabaseTableIndex` object with the given name and data.
      *
-     * @param string $name
      * @param array $data data returned by `DatabaseEditor::getIndexInformation()`
-     * @return  static
      */
-    public static function createFromData($name, array $data)
+    public static function createFromData(string $name, array $data): self
     {
-        return static::create($name)
+        return self::create($name)
             ->type($data['type'])
             ->columns($data['columns']);
     }
