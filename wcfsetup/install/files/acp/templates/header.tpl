@@ -148,6 +148,7 @@
 				'wcf.global.form.password.button.hide': '{jslang}wcf.global.form.password.button.hide{/jslang}',
 				'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}',
 				'wcf.dialog.button.cancel': '{jslang}wcf.dialog.button.cancel{/jslang}',
+				'wcf.dialog.button.close': '{jslang}wcf.dialog.button.close{/jslang}',
 				'wcf.dialog.button.primary': '{jslang}wcf.dialog.button.primary{/jslang}',
 				'wcf.dialog.button.primary.confirm': '{jslang}wcf.dialog.button.primary.confirm{/jslang}',
 				'wcf.dialog.button.primary.delete': '{jslang}wcf.dialog.button.primary.delete{/jslang}',

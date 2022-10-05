@@ -3700,6 +3700,7 @@ Attachments:
 	</category>
 	<category name="wcf.dialog">
 		<item name="wcf.dialog.button.cancel"><![CDATA[Cancel]]></item>
+		<item name="wcf.dialog.button.close"><![CDATA[Close Dialog]]></item>
 		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
 		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Confirm]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Delete]]></item>

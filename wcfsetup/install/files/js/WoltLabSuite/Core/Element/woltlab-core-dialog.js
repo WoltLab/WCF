@@ -1,8 +1,9 @@
-define(["require", "exports", "tslib", "../Dom/Util"], function (require, exports, tslib_1, Util_1) {
+define(["require", "exports", "tslib", "../Dom/Util", "../Language"], function (require, exports, tslib_1, Util_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = exports.WoltlabCoreDialogElement = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
     const dialogContainer = document.createElement("div");
     class WoltlabCoreDialogElement extends HTMLElement {
         #content;
@@ -122,7 +123,8 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             if (dialogRole !== "alert" && dialogRole !== "alertdialog") {
                 closeButton = document.createElement("button");
                 closeButton.innerHTML = '<fa-icon size="24" name="xmark"></fa-icon>';
-                closeButton.classList.add("dialog__closeButton");
+                closeButton.classList.add("dialog__closeButton", "jsTooltip");
+                closeButton.title = Language.get("wcf.dialog.button.close");
                 closeButton.addEventListener("click", () => {
                     this.close();
                 });
