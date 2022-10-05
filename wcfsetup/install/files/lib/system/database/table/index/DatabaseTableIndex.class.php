@@ -169,7 +169,7 @@ final class DatabaseTableIndex
     /**
      * Returns a `DatabaseTableIndex` object with the given name.
      */
-    public static function create(string $name = ''): self
+    public static function create(string $name): self
     {
         return new self($name);
     }
