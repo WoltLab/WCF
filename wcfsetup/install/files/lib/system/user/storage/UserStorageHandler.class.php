@@ -104,10 +104,9 @@ class UserStorageHandler extends SingletonFactory
      * Returns stored data for given users.
      *
      * @param int[] $userIDs
-     * @param string $field
      * @return  mixed[]
      */
-    public function getStorage(array $userIDs, $field)
+    public function getStorage(array $userIDs, string $field)
     {
         $this->validateUserIDs($userIDs);
 
@@ -143,11 +142,9 @@ class UserStorageHandler extends SingletonFactory
      * In contrast to getStorage(), this method calls loadStorage() if no stored
      * data for the user has been loaded yet!
      *
-     * @param string $field
-     * @param int $userID
      * @return  mixed
      */
-    public function getField($field, $userID = null)
+    public function getField(string $field, ?int $userID = null)
     {
         if ($userID === null) {
             $userID = WCF::getUser()->userID;
@@ -178,12 +175,8 @@ class UserStorageHandler extends SingletonFactory
 
     /**
      * Inserts new data records into database.
-     *
-     * @param int $userID
-     * @param string $field
-     * @param string $fieldValue
      */
-    public function update($userID, $field, $fieldValue)
+    public function update(int $userID, string $field, string $fieldValue)
     {
         $this->validateUserIDs([$userID]);
 
@@ -209,9 +202,8 @@ class UserStorageHandler extends SingletonFactory
      * Removes a data record from database.
      *
      * @param int[] $userIDs
-     * @param string $field
      */
-    public function reset(array $userIDs, $field)
+    public function reset(array $userIDs, string $field)
     {
         $this->validateUserIDs($userIDs);
 
@@ -235,10 +227,8 @@ class UserStorageHandler extends SingletonFactory
 
     /**
      * Removes a specific data record for all users.
-     *
-     * @param string $field
      */
-    public function resetAll($field)
+    public function resetAll(string $field)
     {
         if ($this->redis) {
             $this->redis->del($this->getRedisFieldName($field));
@@ -364,10 +354,9 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Returns the field name for use in Redis.
      *
-     * @param string $fieldName
      * @return  string
      */
-    protected function getRedisFieldName($fieldName)
+    protected function getRedisFieldName(string $fieldName)
     {
         $flush = $this->redis->get('ush:_flush');
 
