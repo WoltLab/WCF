@@ -30,7 +30,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
         }
         asPrompt(options) {
             const formControlOptions = {
-                cancel: options?.cancel || "",
+                cancel: "",
                 extra: options?.extra,
                 isAlert: false,
                 primary: options?.primary || Language.get("wcf.dialog.button.primary.submit"),

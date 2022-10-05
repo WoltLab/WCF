@@ -5,6 +5,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     Language = tslib_1.__importStar(Language);
     class WoltlabCoreDialogControlElement extends HTMLElement {
         #cancelButton;
+        #extraButton;
         #primaryButton;
         set primary(primary) {
             this.setAttribute("primary", primary);
@@ -31,6 +32,21 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             }
             if (label === "") {
                 label = Language.get("wcf.global.confirmation.cancel");
+            }
+            return label;
+        }
+        set extra(extra) {
+            if (extra === undefined) {
+                this.removeAttribute("extra");
+            }
+            else {
+                this.setAttribute("extra", extra);
+            }
+        }
+        get extra() {
+            const label = this.getAttribute("extra");
+            if (label === null) {
+                return undefined;
             }
             return label;
         }
@@ -66,6 +82,18 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                         this.#cancelButton.click();
                     });
                 }
+            }
+            if (this.#extraButton === undefined && this.extra !== undefined) {
+                this.#extraButton = document.createElement("button");
+                this.#extraButton.type = "button";
+                this.#extraButton.value = "extra";
+                this.#extraButton.classList.add("button", "formControl__button", "formControl__button--extra");
+                this.#extraButton.textContent = this.extra;
+                this.#extraButton.addEventListener("click", () => {
+                    const event = new CustomEvent("extra");
+                    this.dispatchEvent(event);
+                });
+                this.append(this.#extraButton);
             }
         }
         addEventListener(type, listener, options) {

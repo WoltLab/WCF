@@ -10,7 +10,6 @@ type ConfirmationOptions = {
 };
 
 type PromptOptions = {
-  cancel: string;
   extra: string;
   primary: string;
 };
@@ -50,7 +49,7 @@ export class DialogControls {
 
   asPrompt(options?: Partial<PromptOptions>): WoltlabCoreDialogElement {
     const formControlOptions: WoltlabCoreDialogFormControl = {
-      cancel: options?.cancel || "",
+      cancel: "",
       extra: options?.extra,
       isAlert: false,
       primary: options?.primary || Language.get("wcf.dialog.button.primary.submit"),

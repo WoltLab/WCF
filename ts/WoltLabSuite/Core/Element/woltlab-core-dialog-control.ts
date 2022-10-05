@@ -2,10 +2,12 @@ import * as Language from "../Language";
 
 interface WoltlabCoreDialogControlEventMap {
   cancel: CustomEvent;
+  extra: CustomEvent;
 }
 
 export class WoltlabCoreDialogControlElement extends HTMLElement {
   #cancelButton?: HTMLButtonElement;
+  #extraButton?: HTMLButtonElement;
   #primaryButton?: HTMLButtonElement;
 
   set primary(primary: string) {
@@ -37,6 +39,23 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
 
     if (label === "") {
       label = Language.get("wcf.global.confirmation.cancel");
+    }
+
+    return label;
+  }
+
+  set extra(extra: string | undefined) {
+    if (extra === undefined) {
+      this.removeAttribute("extra");
+    } else {
+      this.setAttribute("extra", extra);
+    }
+  }
+
+  get extra(): string | undefined {
+    const label = this.getAttribute("extra");
+    if (label === null) {
+      return undefined;
     }
 
     return label;
@@ -86,6 +105,20 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
           this.#cancelButton!.click();
         });
       }
+    }
+
+    if (this.#extraButton === undefined && this.extra !== undefined) {
+      this.#extraButton = document.createElement("button");
+      this.#extraButton.type = "button";
+      this.#extraButton.value = "extra";
+      this.#extraButton.classList.add("button", "formControl__button", "formControl__button--extra");
+      this.#extraButton.textContent = this.extra;
+      this.#extraButton.addEventListener("click", () => {
+        const event = new CustomEvent("extra");
+        this.dispatchEvent(event);
+      });
+
+      this.append(this.#extraButton);
     }
   }
 

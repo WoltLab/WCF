@@ -7,6 +7,7 @@ interface WoltlabCoreDialogEventMap {
   backdrop: CustomEvent;
   cancel: CustomEvent;
   close: CustomEvent;
+  extra: CustomEvent;
   primary: CustomEvent;
   validate: CustomEvent;
 }
@@ -105,6 +106,10 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       formControl.cancel = options.cancel;
     }
 
+    if (options.extra !== undefined) {
+      formControl.extra = options.extra;
+    }
+
     this.#form = document.createElement("form");
     this.#form.method = "dialog";
     this.#form.classList.add("dialog__form");
@@ -147,6 +152,13 @@ export class WoltlabCoreDialogElement extends HTMLElement {
         this.close();
       }
     });
+
+    if (options.extra !== undefined) {
+      formControl.addEventListener("extra", () => {
+        const event = new CustomEvent("extra");
+        this.dispatchEvent(event);
+      });
+    }
   }
 
   #attachDialog(): void {
