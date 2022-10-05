@@ -23,6 +23,17 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             $this->node = $this->getToken();
         }
 
+        (new AuditLogger())->log(
+            <<<EOT
+            Building uninstallation nodes
+            ===========================
+            Process#: {$this->installation->queue->processNo}
+            Queue#: {$this->installation->queue->queueID}
+            Parent Queue#: {$this->installation->queue->parentQueueID}
+            Parent Node: {$this->parentNode}
+            EOT
+        );
+
         $this->buildStartMarkerNode();
 
         $this->buildPluginNodes();
@@ -30,6 +41,16 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
         $this->buildPackageNode();
 
         $this->buildEndMarkerNode();
+
+        (new AuditLogger())->log(
+            <<<EOT
+            Finished building nodes
+            =======================
+            Process#: {$this->installation->queue->processNo}
+            Queue#: {$this->installation->queue->queueID}
+            Final Node: {$this->node}
+            EOT
+        );
     }
 
     /**

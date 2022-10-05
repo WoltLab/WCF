@@ -10,10 +10,14 @@
  */
 
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
+use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
+use wcf\system\database\table\DatabaseTable;
+use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -28,6 +32,21 @@ return [
     PartialDatabaseTable::create('wcf1_package_installation_node')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('nodeType'),
+        ]),
+    DatabaseTable::create('wcf1_package_audit_log')
+        ->columns([
+            BigintDatabaseTableColumn::create('logID')
+                ->length(20)
+                ->notNull()
+                ->autoIncrement(),
+            MediumtextDatabaseTableColumn::create('payload')
+                ->notNull(),
+            NotNullVarchar255DatabaseTableColumn::create('time'),
+            NotNullVarchar255DatabaseTableColumn::create('wcfVersion'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['logID'])
         ]),
     PartialDatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([
