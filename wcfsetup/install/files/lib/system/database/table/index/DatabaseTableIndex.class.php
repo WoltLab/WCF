@@ -13,7 +13,7 @@ use wcf\system\database\table\TDroppableDatabaseComponent;
  * @package WoltLabSuite\Core\System\Database\Table\Index
  * @since   5.2
  */
-class DatabaseTableIndex
+final class DatabaseTableIndex
 {
     use TDroppableDatabaseComponent;
 
