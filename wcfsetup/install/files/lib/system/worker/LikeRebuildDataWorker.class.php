@@ -27,7 +27,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
     /**
      * @inheritDoc
      */
-    protected $limit = 1000;
+    protected $limit = 10000;
 
     /**
      * @inheritDoc
