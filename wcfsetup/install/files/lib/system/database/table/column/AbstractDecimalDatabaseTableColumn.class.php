@@ -12,16 +12,20 @@ namespace wcf\system\database\table\column;
  * @since   5.2
  */
 abstract class AbstractDecimalDatabaseTableColumn extends AbstractDatabaseTableColumn implements
-    IDecimalsDatabaseTableColumn
+    IDecimalsDatabaseTableColumn,
+    IDefaultValueDatabaseTableColumn
 {
     use TDecimalsDatabaseTableColumn;
+    use TDefaultValueDatabaseTableColumn {
+        getDefaultValue as private traitGetDefaultValue;
+    }
 
     /**
      * @inheritDoc
      */
     public function getDefaultValue()
     {
-        $defaultValue = parent::getDefaultValue();
+        $defaultValue = $this->traitGetDefaultValue();
         if ($defaultValue === null) {
             return $defaultValue;
         }
