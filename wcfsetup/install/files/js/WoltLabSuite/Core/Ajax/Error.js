@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Ajax/Error
  * @since 5.5
  */
-define(["require", "exports", "tslib", "../Core", "../Language"], function (require, exports, tslib_1, Core, Language) {
+define(["require", "exports", "tslib", "../Component/Dialog", "../Core", "../Language"], function (require, exports, tslib_1, Dialog_1, Core, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerGlobalRejectionHandler = exports.InvalidJson = exports.ExpectedJson = exports.StatusNotOk = exports.ConnectionError = exports.ApiError = void 0;
@@ -16,9 +16,7 @@ define(["require", "exports", "tslib", "../Core", "../Language"], function (requ
     async function genericError(error) {
         const html = await getErrorHtml(error);
         if (html !== "") {
-            // Load these modules on runtime to avoid circular dependencies.
-            const [{ dialogFactory }, Language] = await Promise.all([new Promise((resolve_1, reject_1) => { require(["../Component/Dialog"], resolve_1, reject_1); }).then(tslib_1.__importStar), new Promise((resolve_2, reject_2) => { require(["../Language"], resolve_2, reject_2); }).then(tslib_1.__importStar)]);
-            const dialog = dialogFactory().fromHtml(html).asAlert();
+            const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
             dialog.show(Language.get("wcf.global.error.title"));
         }
     }
