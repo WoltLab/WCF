@@ -7,6 +7,7 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\TemplateFormNode;
@@ -44,6 +45,18 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
      * @var bool
      */
     private $isEnabled;
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        if (WCF::AVAILABLE_UPGRADE_VERSION === null) {
+            throw new IllegalLinkException();
+        }
+    }
 
     /**
      * @inheritDoc
