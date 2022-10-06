@@ -7,6 +7,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Dom/ChangeListener (alias)
  * @module  WoltLabSuite/Core/Dom/Change/Listener
+ * @deprecated 6.0 Use the helper functions in `WoltLabSuite/Core/Helper/Selector` instead.
  */
 
 import CallbackList from "../../CallbackList";
@@ -17,6 +18,7 @@ let _hot = false;
 const DomChangeListener = {
   /**
    * @see CallbackList.add
+   * @deprecated 6.0 Use the helper functions in `WoltLabSuite/Core/Helper/Selector` instead.
    */
   add: _callbackList.add.bind(_callbackList),
 
