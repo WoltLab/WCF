@@ -113,7 +113,7 @@
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 							{if $taintedApplications[$package->packageID]|isset}
 								<span class="jsTooltip" title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}">
-									{icon name='warning'}
+									{icon name='triangle-exclamation'}
 								</span>
 							{/if}
 						</td>
