@@ -39,6 +39,11 @@ use wcf\util\StringUtil;
 
 // phpcs:disable PSR1.Files.SideEffects
 
+// This is the earliest point that is reliably executed.
+if (($error = \error_get_last()) !== null) {
+    \define('WCF_STARTUP_ERROR', $error);
+}
+
 // try to set a time-limit to infinite
 @\set_time_limit(0);
 
