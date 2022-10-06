@@ -23,20 +23,24 @@ export function adoptPageOverlayContainer(element: HTMLElement): void {
 export function releasePageOverlayContainer(element: HTMLElement): void {
   const currentParent = adoptiveParents.pop();
   if (element !== currentParent) {
+    // TODO: `cause` is cast to `any` as a work-around for TS2322
+    //       https://github.com/microsoft/TypeScript/pull/49639
     throw new Error("Invalid call, cannot release the page overlay while it is still adopted by another element.", {
       cause: {
         currentParent,
         element,
-      },
+      } as any,
     });
   }
 
   const previousParent = adoptiveParents[adoptiveParents.length - 1];
   if (previousParent === undefined) {
+    // TODO: `cause` is cast to `any` as a work-around for TS2322
+    //       https://github.com/microsoft/TypeScript/pull/49639
     throw new Error("Cannot release the page overlay, there is no previous owner.", {
       cause: {
         element,
-      },
+      } as any,
     });
   }
 
