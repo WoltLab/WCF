@@ -6,7 +6,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Represents a template.
@@ -51,16 +50,7 @@ class Template extends DatabaseObject
             $statement->execute([$id]);
             $row = $statement->fetchArray();
 
-            if ($row !== false) {
-                // get relative directory of the template the application
-                // belongs to
-                if ($row['application'] != 'wcf') {
-                    $application = ApplicationHandler::getInstance()->getApplication($row['application']);
-                } else {
-                    $application = ApplicationHandler::getInstance()->getWCF();
-                }
-                $row['packageDir'] = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
-            } else {
+            if ($row === false) {
                 $row = [];
             }
         } elseif ($object !== null) {
@@ -77,8 +67,21 @@ class Template extends DatabaseObject
      */
     public function getPath()
     {
-        /** @noinspection PhpUndefinedFieldInspection */
-        return FileUtil::getRealPath(WCF_DIR . $this->packageDir) . 'templates/' . $this->templateGroupFolderName . $this->templateName . '.tpl';
+        return $this->getPackageDir() . '/templates/' . $this->templateGroupFolderName . $this->templateName . '.tpl';
+    }
+
+    /**
+     * @since 6.0
+     */
+    private function getPackageDir(): string
+    {
+        if ($this->application != 'wcf') {
+            $application = ApplicationHandler::getInstance()->getApplication($this->application);
+        } else {
+            $application = ApplicationHandler::getInstance()->getWCF();
+        }
+
+        return \realpath(WCF_DIR . PackageCache::getInstance()->getPackage($application->packageID)->packageDir);
     }
 
     /**

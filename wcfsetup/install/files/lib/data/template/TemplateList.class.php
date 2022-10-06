@@ -3,8 +3,6 @@
 namespace wcf\data\template;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\package\PackageCache;
-use wcf\system\application\ApplicationHandler;
 
 /**
  * Represents a list of templates.
@@ -40,26 +38,5 @@ class TemplateList extends DatabaseObjectList
             ON          package.packageID = template.packageID
             LEFT JOIN   wcf" . WCF_N . "_template_group template_group
             ON          template_group.templateGroupID = template.templateGroupID";
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readObjects()
-    {
-        parent::readObjects();
-
-        foreach ($this->objects as $template) {
-            if ($template->application != 'wcf') {
-                $application = ApplicationHandler::getInstance()->getApplication($template->application);
-            } else {
-                $application = ApplicationHandler::getInstance()->getWCF();
-            }
-            $package = PackageCache::getInstance()->getPackage($application->packageID);
-
-            // set directory of the application package the template
-            // belongs to
-            $template->packageDir = $package->packageDir;
-        }
     }
 }
