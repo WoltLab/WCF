@@ -2,8 +2,6 @@ import DomUtil from "../Dom/Util";
 import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
 import * as Language from "../Language";
 
-type CallbackReturnFocus = () => HTMLElement | null;
-
 interface WoltlabCoreDialogEventMap {
   afterClose: CustomEvent;
   backdrop: CustomEvent;
@@ -27,7 +25,6 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   readonly #content: HTMLElement;
   readonly #dialog: HTMLDialogElement;
   #form?: HTMLFormElement;
-  #returnFocus?: CallbackReturnFocus;
   readonly #title: HTMLElement;
 
   constructor() {
@@ -36,10 +33,6 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#content = document.createElement("div");
     this.#dialog = document.createElement("dialog");
     this.#title = document.createElement("div");
-  }
-
-  connectedCallback(): void {
-    this.#attachDialog();
   }
 
   show(title: string): void {
@@ -65,11 +58,6 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   close(): void {
     this.#dialog.close();
 
-    if (this.#returnFocus !== undefined) {
-      const element = this.#returnFocus();
-      element?.focus();
-    }
-
     const event = new CustomEvent("afterClose");
     this.dispatchEvent(event);
 
@@ -82,14 +70,6 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
   get content(): HTMLElement {
     return this.#content;
-  }
-
-  set returnFocus(returnFocus: CallbackReturnFocus) {
-    if (typeof returnFocus !== "function") {
-      throw new TypeError("Expected a callback function for the return focus.");
-    }
-
-    this.#returnFocus = returnFocus;
   }
 
   get open(): boolean {
@@ -142,7 +122,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     this.#dialog.addEventListener("close", () => {
       if (this.#dialog.returnValue === "") {
-        // Dialog was not closed by submitting it.
+        // Dialog was programmatically closed.
         return;
       }
 
@@ -167,7 +147,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     }
   }
 
-  #attachDialog(): void {
+  connectedCallback(): void {
     if (this.#dialog.parentElement !== null) {
       return;
     }

@@ -9,16 +9,12 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         #content;
         #dialog;
         #form;
-        #returnFocus;
         #title;
         constructor() {
             super();
             this.#content = document.createElement("div");
             this.#dialog = document.createElement("dialog");
             this.#title = document.createElement("div");
-        }
-        connectedCallback() {
-            this.#attachDialog();
         }
         show(title) {
             if (title.trim().length === 0) {
@@ -36,10 +32,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         }
         close() {
             this.#dialog.close();
-            if (this.#returnFocus !== undefined) {
-                const element = this.#returnFocus();
-                element?.focus();
-            }
             const event = new CustomEvent("afterClose");
             this.dispatchEvent(event);
             (0, PageOverlay_1.releasePageOverlayContainer)(this.#dialog);
@@ -49,12 +41,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         }
         get content() {
             return this.#content;
-        }
-        set returnFocus(returnFocus) {
-            if (typeof returnFocus !== "function") {
-                throw new TypeError("Expected a callback function for the return focus.");
-            }
-            this.#returnFocus = returnFocus;
         }
         get open() {
             return this.#dialog.open;
@@ -96,7 +82,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             });
             this.#dialog.addEventListener("close", () => {
                 if (this.#dialog.returnValue === "") {
-                    // Dialog was not closed by submitting it.
+                    // Dialog was programmatically closed.
                     return;
                 }
                 const evt = new CustomEvent("primary");
@@ -116,7 +102,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                 });
             }
         }
-        #attachDialog() {
+        connectedCallback() {
             if (this.#dialog.parentElement !== null) {
                 return;
             }
