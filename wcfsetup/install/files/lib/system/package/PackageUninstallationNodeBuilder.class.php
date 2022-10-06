@@ -2,6 +2,7 @@
 
 namespace wcf\system\package;
 
+use wcf\data\package\Package;
 use wcf\system\WCF;
 
 /**
@@ -23,6 +24,8 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             $this->node = $this->getToken();
         }
 
+        $package = new Package($this->installation->queue->packageID);
+
         (new AuditLogger())->log(
             <<<EOT
             Building uninstallation nodes
@@ -31,6 +34,8 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             Queue#: {$this->installation->queue->queueID}
             Parent Queue#: {$this->installation->queue->parentQueueID}
             Parent Node: {$this->parentNode}
+
+            Package: {$package->package} ({$package->packageVersion})
             EOT
         );
 

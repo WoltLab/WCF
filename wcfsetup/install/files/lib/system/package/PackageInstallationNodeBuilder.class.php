@@ -96,8 +96,8 @@ class PackageInstallationNodeBuilder
             Queue#: {$this->installation->queue->queueID}
             Parent Queue#: {$this->installation->queue->parentQueueID}
             Parent Node: {$this->parentNode}
-            Archive: {$this->installation->getArchive()->getArchive()}
 
+            Archive: {$this->installation->getArchive()->getArchive()}
             Manifest ({$manifest->getHash()}):
             ---
             {$manifest->getManifest()}
