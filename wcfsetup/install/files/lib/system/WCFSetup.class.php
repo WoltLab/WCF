@@ -20,7 +20,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImagickImageAdapter;
-use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;

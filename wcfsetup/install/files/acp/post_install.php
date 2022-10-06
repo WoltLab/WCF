@@ -2,7 +2,6 @@
 
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\package\PackageCache;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\system\image\adapter\ImagickImageAdapter;

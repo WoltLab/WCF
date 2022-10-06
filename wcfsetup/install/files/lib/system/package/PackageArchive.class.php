@@ -4,7 +4,6 @@ namespace wcf\system\package;
 
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\WCF;

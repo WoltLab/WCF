@@ -4,7 +4,6 @@ namespace wcf\action;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use wcf\system\upload\UploadHandler;
-use wcf\util\JSON;
 
 /**
  * Default implementation for file uploads using the AJAX-API.

@@ -12,7 +12,6 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
-use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\command\ClearCache;

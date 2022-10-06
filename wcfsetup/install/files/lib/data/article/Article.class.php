@@ -8,7 +8,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IUserContent;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
