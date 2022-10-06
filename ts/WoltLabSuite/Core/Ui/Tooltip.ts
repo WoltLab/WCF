@@ -7,9 +7,9 @@
  * @module  WoltLabSuite/Core/Ui/Tooltip
  */
 
-import DomChangeListener from "../Dom/Change/Listener";
 import * as Environment from "../Environment";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
+import { wheneverSeen } from "../Helper/Selector";
 import * as UiAlignment from "./Alignment";
 
 let _pointer: HTMLElement;
@@ -92,17 +92,7 @@ export function setup(): void {
 
   getPageOverlayContainer().append(_tooltip);
 
-  init();
-
-  DomChangeListener.add("WoltLabSuite/Core/Ui/Tooltip", init);
-  window.addEventListener("scroll", mouseLeave);
-}
-
-/**
- * Initializes tooltip elements.
- */
-export function init(): void {
-  document.querySelectorAll(".jsTooltip").forEach((element: HTMLElement) => {
+  wheneverSeen(".jsTooltip", (element) => {
     element.classList.remove("jsTooltip");
 
     const title = element.title.trim();
@@ -116,4 +106,6 @@ export function init(): void {
       element.addEventListener("click", mouseLeave);
     }
   });
+
+  window.addEventListener("scroll", mouseLeave);
 }

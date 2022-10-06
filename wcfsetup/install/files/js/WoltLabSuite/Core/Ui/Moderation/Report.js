@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "../../Dom/Observer", "../../Dom/Util", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Observer_1, Util_1, Language, UiNotification) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "../../Dom/Util", "../../Helper/Selector", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, Selector_1, Language, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -67,7 +67,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "
         return true;
     }
     function setup() {
-        (0, Observer_1.findUniqueElements)("[data-report-content]", (element) => {
+        (0, Selector_1.wheneverFirstSeen)("[data-report-content]", (element) => {
             if (validateButton(element)) {
                 element.addEventListener("click", (event) => {
                     if (element.tagName === "A") {

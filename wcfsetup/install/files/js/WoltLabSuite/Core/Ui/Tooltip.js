@@ -6,11 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Tooltip
  */
-define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Environment", "../Helper/PageOverlay", "./Alignment"], function (require, exports, tslib_1, Listener_1, Environment, PageOverlay_1, UiAlignment) {
+define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay", "../Helper/Selector", "./Alignment"], function (require, exports, tslib_1, Environment, PageOverlay_1, Selector_1, UiAlignment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.init = exports.setup = void 0;
-    Listener_1 = tslib_1.__importDefault(Listener_1);
+    exports.setup = void 0;
     Environment = tslib_1.__importStar(Environment);
     UiAlignment = tslib_1.__importStar(UiAlignment);
     let _pointer;
@@ -81,16 +80,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Environment
         _pointer.appendChild(document.createElement("span"));
         _tooltip.appendChild(_pointer);
         (0, PageOverlay_1.getPageOverlayContainer)().append(_tooltip);
-        init();
-        Listener_1.default.add("WoltLabSuite/Core/Ui/Tooltip", init);
-        window.addEventListener("scroll", mouseLeave);
-    }
-    exports.setup = setup;
-    /**
-     * Initializes tooltip elements.
-     */
-    function init() {
-        document.querySelectorAll(".jsTooltip").forEach((element) => {
+        (0, Selector_1.wheneverSeen)(".jsTooltip", (element) => {
             element.classList.remove("jsTooltip");
             const title = element.title.trim();
             if (title.length) {
@@ -102,6 +92,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Environment
                 element.addEventListener("click", mouseLeave);
             }
         });
+        window.addEventListener("scroll", mouseLeave);
     }
-    exports.init = init;
+    exports.setup = setup;
 });

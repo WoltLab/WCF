@@ -1,8 +1,8 @@
 import { dboAction } from "../../Ajax";
 import { dialogFactory } from "../../Component/Dialog";
-import { findUniqueElements } from "../../Dom/Observer";
 import { innerError } from "../../Dom/Util";
 import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
+import { wheneverFirstSeen } from "../../Helper/Selector";
 import * as Language from "../../Language";
 import * as UiNotification from "../Notification";
 
@@ -87,7 +87,7 @@ function validateButton(element: HTMLElement): boolean {
 }
 
 export function setup(): void {
-  findUniqueElements("[data-report-content]", (element: HTMLElement) => {
+  wheneverFirstSeen("[data-report-content]", (element: HTMLElement) => {
     if (validateButton(element)) {
       element.addEventListener("click", (event) => {
         if (element.tagName === "A") {
