@@ -426,13 +426,13 @@ final class WCFSetup extends WCF
         $system['memoryLimit']['result'] = $this->compareMemoryLimit();
 
         // openssl extension
-        $system['openssl']['result'] = @\extension_loaded('openssl');
+        $system['openssl']['result'] = \extension_loaded('openssl');
 
         // curl
-        $system['curl']['result'] = @\extension_loaded('curl');
+        $system['curl']['result'] = \extension_loaded('curl');
 
         // intl
-        $system['intl']['result'] = @\extension_loaded('intl');
+        $system['intl']['result'] = \extension_loaded('intl');
 
         // misconfigured reverse proxy / cookies
         $system['hostname']['result'] = true;
