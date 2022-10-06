@@ -36,7 +36,7 @@ class RowFormFieldContainer extends FormContainer
     /**
      * @inheritDoc
      */
-    public function appendChild(IFormChildNode $child)
+    public function appendChild(IFormChildNode $child): static
     {
         if ((!$child instanceof IFormField)) {
             throw new \InvalidArgumentException(
