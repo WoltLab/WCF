@@ -18,6 +18,7 @@ use wcf\http\middleware\CheckUserBan;
 use wcf\http\middleware\EnforceAcpAuthentication;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
+use wcf\http\middleware\HandleStartupErrors;
 use wcf\http\middleware\PreventMimeSniffing;
 use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
@@ -94,6 +95,7 @@ final class RequestHandler extends SingletonFactory
                 $this->activeRequest = $builtRequest;
 
                 $pipeline = new Pipeline([
+                    new HandleStartupErrors(),
                     new PreventMimeSniffing(),
                     new AddAcpSecurityHeaders(),
                     new EnforceCacheControlPrivate(),
