@@ -37,10 +37,16 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
         if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
             // check if files are existing already
             if (!empty($files)) {
-                foreach ($files as &$file) {
-                    $file = \substr($file, 0, -4);
-                }
-                unset($file);
+                $files = \array_map(static function (string $file) {
+                    if (\basename($file) !== $file) {
+                        throw new \Exception('The template archive must not contain any directories.');
+                    }
+                    if (\pathinfo($file, \PATHINFO_EXTENSION) !== 'tpl') {
+                        throw new \Exception("All files must have the extension '.tpl'.");
+                    }
+
+                    return \pathinfo($file, \PATHINFO_FILENAME);
+                }, $files);
 
                 // get by other packages registered files
                 $conditions = new PreparedStatementConditionBuilder();
@@ -80,10 +86,16 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
     public function logFiles(array $files)
     {
         // remove file extension
-        foreach ($files as &$file) {
-            $file = \substr($file, 0, -4);
-        }
-        unset($file);
+        $files = \array_map(static function (string $file) {
+            if (\basename($file) !== $file) {
+                throw new \Exception('The template archive must not contain any directories.');
+            }
+            if (\pathinfo($file, \PATHINFO_EXTENSION) !== 'tpl') {
+                throw new \Exception("All files must have the extension '.tpl'.");
+            }
+
+            return \pathinfo($file, \PATHINFO_FILENAME);
+        }, $files);
 
         // fetch already installed acp templates
         $conditions = new PreparedStatementConditionBuilder();
