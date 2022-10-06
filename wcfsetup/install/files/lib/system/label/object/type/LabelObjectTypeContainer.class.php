@@ -7,76 +7,65 @@ use wcf\data\object\type\ObjectTypeCache;
 /**
  * Label object type container.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Label\Object\Type
  */
-class LabelObjectTypeContainer implements \Countable, \Iterator
+final class LabelObjectTypeContainer implements \Countable, \Iterator
 {
     /**
      * list of object types
      * @var LabelObjectType[]
      */
-    public $objectTypes = [];
+    public array $objectTypes = [];
 
     /**
      * object type id
-     * @var int
      */
-    public $objectTypeID = 0;
+    public int $objectTypeID = 0;
 
     /**
      * iterator position
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * Creates a new LabelObjectTypeContainer object.
-     *
-     * @param int $objectTypeID
      */
-    public function __construct($objectTypeID)
+    public function __construct(int $objectTypeID)
     {
         $this->objectTypeID = $objectTypeID;
     }
 
     /**
      * Adds a label object type.
-     *
-     * @param LabelObjectType $objectType
      */
-    public function add(LabelObjectType $objectType)
+    public function add(LabelObjectType $objectType): void
     {
         $this->objectTypes[] = $objectType;
     }
 
     /**
      * Returns the object type id.
-     *
-     * @return  int
      */
-    public function getObjectTypeID()
+    public function getObjectTypeID(): int
     {
         return $this->objectTypeID;
     }
 
     /**
      * Returns the object type name.
-     *
-     * @return  string
      */
-    public function getObjectTypeName()
+    public function getObjectTypeName(): string
     {
         return ObjectTypeCache::getInstance()->getObjectType($this->getObjectTypeID())->objectType;
     }
 
     /**
      * @inheritDoc
-     * @return  LabelObjectType
      */
-    public function current()
+    public function current(): LabelObjectType
     {
         return $this->objectTypes[$this->position];
     }
@@ -84,7 +73,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
@@ -92,7 +81,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -100,7 +89,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -108,7 +97,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->objectTypes[$this->position]);
     }
