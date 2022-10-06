@@ -279,7 +279,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function getAttribute($name)
+    public function getAttribute($name): mixed
     {
         return $this->field->getAttribute($name);
     }
