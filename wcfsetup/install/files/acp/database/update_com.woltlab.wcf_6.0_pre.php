@@ -10,7 +10,6 @@
  */
 
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
-use wcf\system\database\table\column\DecimalDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
@@ -36,7 +35,7 @@ return [
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
-                ->columns(['logID'])
+                ->columns(['logID']),
         ]),
     PartialDatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([

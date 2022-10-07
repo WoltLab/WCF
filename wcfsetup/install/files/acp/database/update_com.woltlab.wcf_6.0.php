@@ -46,7 +46,7 @@ return [
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
-                ->columns(['logID'])
+                ->columns(['logID']),
         ]),
     PartialDatabaseTable::create('wcf1_package_installation_file_log')
         ->columns([
