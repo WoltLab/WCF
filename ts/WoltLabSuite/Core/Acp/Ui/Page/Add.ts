@@ -7,75 +7,53 @@
  * @module  WoltLabSuite/Core/Acp/Ui/Page/Add
  */
 
-import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import * as Language from "../../../Language";
-import UiDialog from "../../../Ui/Dialog";
+import WoltlabCoreDialogElement from "../../../Element/woltlab-core-dialog";
+import { dialogFactory } from "../../../Component/Dialog";
 
-class AcpUiPageAdd implements DialogCallbackObject {
-  private readonly isI18n: boolean;
-  private readonly link: string;
+export class AcpUiPageAdd {
+  readonly #supportsI18n: boolean;
+  readonly #link: string;
+  #dialog?: WoltlabCoreDialogElement;
 
-  constructor(link: string, isI18n: boolean) {
-    this.link = link;
-    this.isI18n = isI18n;
+  constructor(link: string, supportsI18n: boolean) {
+    this.#link = link;
+    this.#supportsI18n = supportsI18n;
 
-    document.querySelectorAll(".jsButtonPageAdd").forEach((button: HTMLAnchorElement) => {
-      button.addEventListener("click", (ev) => this.openDialog(ev));
+    document.querySelectorAll(".jsButtonPageAdd").forEach((button: HTMLElement) => {
+      button.addEventListener("click", () => this.show());
     });
   }
 
   /**
    * Opens the 'Add Page' dialog.
    */
-  openDialog(event?: MouseEvent): void {
-    if (event instanceof Event) {
-      event.preventDefault();
+  show(): void {
+    if (!this.#dialog) {
+      this.#dialog = this.#createDialog();
     }
 
-    UiDialog.open(this);
+    this.#dialog.show(Language.get("wcf.acp.page.add"));
   }
 
-  _dialogSetup(): ReturnType<DialogCallbackSetup> {
-    return {
-      id: "pageAddDialog",
-      options: {
-        onSetup: (content) => {
-          const button = content.querySelector("button") as HTMLButtonElement;
-          button.addEventListener("click", (event) => {
-            event.preventDefault();
+  #createDialog(): WoltlabCoreDialogElement {
+    const dialog = dialogFactory().fromId("pageAddDialog").asPrompt();
+    const content = dialog.content;
 
-            const pageType = (content.querySelector('input[name="pageType"]:checked') as HTMLInputElement).value;
-            let isMultilingual = "0";
-            if (this.isI18n) {
-              isMultilingual = (content.querySelector('input[name="isMultilingual"]:checked') as HTMLInputElement)
-                .value;
-            }
+    dialog.addEventListener("primary", () => {
+      const pageTypeSelection = content.querySelector('input[name="pageType"]:checked') as HTMLInputElement;
+      const pageType = pageTypeSelection.value;
+      let isMultilingual = "0";
+      if (this.#supportsI18n) {
+        const i18nSelection = content.querySelector('input[name="isMultilingual"]:checked') as HTMLInputElement;
+        isMultilingual = i18nSelection.value;
+      }
 
-            window.location.href = this.link
-              .replace("{$pageType}", pageType)
-              .replace("{$isMultilingual}", isMultilingual);
-          });
-        },
-        title: Language.get("wcf.acp.page.add"),
-      },
-    };
+      window.location.href = this.#link.replace("{$pageType}", pageType).replace("{$isMultilingual}", isMultilingual);
+    });
+
+    return dialog;
   }
 }
 
-let acpUiPageAdd: AcpUiPageAdd;
-
-/**
- * Initializes the page add handler.
- */
-export function init(link: string, languages: number): void {
-  if (!acpUiPageAdd) {
-    acpUiPageAdd = new AcpUiPageAdd(link, languages > 1);
-  }
-}
-
-/**
- * Opens the 'Add Page' dialog.
- */
-export function openDialog(): void {
-  acpUiPageAdd.openDialog();
-}
+export default AcpUiPageAdd;

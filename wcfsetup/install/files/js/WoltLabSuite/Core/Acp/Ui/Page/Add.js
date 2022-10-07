@@ -6,70 +6,47 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/Page/Add
  */
-define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../../Language", "../../../Component/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.openDialog = exports.init = void 0;
+    exports.AcpUiPageAdd = void 0;
     Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class AcpUiPageAdd {
-        isI18n;
-        link;
-        constructor(link, isI18n) {
-            this.link = link;
-            this.isI18n = isI18n;
+        #supportsI18n;
+        #link;
+        #dialog;
+        constructor(link, supportsI18n) {
+            this.#link = link;
+            this.#supportsI18n = supportsI18n;
             document.querySelectorAll(".jsButtonPageAdd").forEach((button) => {
-                button.addEventListener("click", (ev) => this.openDialog(ev));
+                button.addEventListener("click", () => this.show());
             });
         }
         /**
          * Opens the 'Add Page' dialog.
          */
-        openDialog(event) {
-            if (event instanceof Event) {
-                event.preventDefault();
+        show() {
+            if (!this.#dialog) {
+                this.#dialog = this.#createDialog();
             }
-            Dialog_1.default.open(this);
+            this.#dialog.show(Language.get("wcf.acp.page.add"));
         }
-        _dialogSetup() {
-            return {
-                id: "pageAddDialog",
-                options: {
-                    onSetup: (content) => {
-                        const button = content.querySelector("button");
-                        button.addEventListener("click", (event) => {
-                            event.preventDefault();
-                            const pageType = content.querySelector('input[name="pageType"]:checked').value;
-                            let isMultilingual = "0";
-                            if (this.isI18n) {
-                                isMultilingual = content.querySelector('input[name="isMultilingual"]:checked')
-                                    .value;
-                            }
-                            window.location.href = this.link
-                                .replace("{$pageType}", pageType)
-                                .replace("{$isMultilingual}", isMultilingual);
-                        });
-                    },
-                    title: Language.get("wcf.acp.page.add"),
-                },
-            };
+        #createDialog() {
+            const dialog = (0, Dialog_1.dialogFactory)().fromId("pageAddDialog").asPrompt();
+            const content = dialog.content;
+            dialog.addEventListener("primary", () => {
+                const pageTypeSelection = content.querySelector('input[name="pageType"]:checked');
+                const pageType = pageTypeSelection.value;
+                let isMultilingual = "0";
+                if (this.#supportsI18n) {
+                    const i18nSelection = content.querySelector('input[name="isMultilingual"]:checked');
+                    isMultilingual = i18nSelection.value;
+                }
+                window.location.href = this.#link.replace("{$pageType}", pageType).replace("{$isMultilingual}", isMultilingual);
+            });
+            return dialog;
         }
     }
-    let acpUiPageAdd;
-    /**
-     * Initializes the page add handler.
-     */
-    function init(link, languages) {
-        if (!acpUiPageAdd) {
-            acpUiPageAdd = new AcpUiPageAdd(link, languages > 1);
-        }
-    }
-    exports.init = init;
-    /**
-     * Opens the 'Add Page' dialog.
-     */
-    function openDialog() {
-        acpUiPageAdd.openDialog();
-    }
-    exports.openDialog = openDialog;
+    exports.AcpUiPageAdd = AcpUiPageAdd;
+    exports.default = AcpUiPageAdd;
 });
