@@ -797,7 +797,7 @@ final class WCFSetup extends WCF
                             $dbPort = %s;
                             $dbUser = %s;
                             $dbPassword = %s;
-                            $dbName = %s';
+                            $dbName = %s;
                             if (!defined('WCF_N')) define('WCF_N', 1);
                             CONFIG,
                             \var_export($dbHostWithoutPort, true),
