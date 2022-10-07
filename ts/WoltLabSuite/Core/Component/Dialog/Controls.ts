@@ -1,4 +1,4 @@
-import WoltlabCoreDialogElement, { WoltlabCoreDialogFormControl } from "../../Element/woltlab-core-dialog";
+import WoltlabCoreDialogElement, { WoltlabCoreDialogControlOptions } from "../../Element/woltlab-core-dialog";
 import * as Language from "../../Language";
 
 type AlertOptions = {
@@ -22,40 +22,40 @@ export class DialogControls {
   }
 
   asAlert(options?: Partial<AlertOptions>): WoltlabCoreDialogElement {
-    const formControlOptions: WoltlabCoreDialogFormControl = {
+    const formControlOptions: WoltlabCoreDialogControlOptions = {
       cancel: undefined,
       extra: undefined,
       isAlert: true,
       primary: options?.primary || Language.get("wcf.dialog.button.primary"),
     };
 
-    this.#dialog.attachFormControls(formControlOptions);
+    this.#dialog.attachControls(formControlOptions);
 
     return this.#dialog;
   }
 
   asConfirmation(options?: Partial<ConfirmationOptions>): WoltlabCoreDialogElement {
-    const formControlOptions: WoltlabCoreDialogFormControl = {
+    const formControlOptions: WoltlabCoreDialogControlOptions = {
       cancel: "",
       extra: undefined,
       isAlert: true,
       primary: options?.primary || Language.get("wcf.dialog.button.primary.confirm"),
     };
 
-    this.#dialog.attachFormControls(formControlOptions);
+    this.#dialog.attachControls(formControlOptions);
 
     return this.#dialog;
   }
 
   asPrompt(options?: Partial<PromptOptions>): WoltlabCoreDialogElement {
-    const formControlOptions: WoltlabCoreDialogFormControl = {
+    const formControlOptions: WoltlabCoreDialogControlOptions = {
       cancel: "",
       extra: options?.extra,
       isAlert: false,
       primary: options?.primary || Language.get("wcf.dialog.button.primary.submit"),
     };
 
-    this.#dialog.attachFormControls(formControlOptions);
+    this.#dialog.attachControls(formControlOptions);
 
     return this.#dialog;
   }

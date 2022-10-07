@@ -62,7 +62,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add("formControl");
+    this.classList.add("dialog__control");
 
     if (!this.hasAttribute("primary")) {
       this.setAttribute("primary", "");
@@ -76,8 +76,8 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#primaryButton.classList.add(
         "button",
         "buttonPrimary",
-        "formControl__button",
-        "formControl__button--primary",
+        "dialog__control__button",
+        "dialog__control__button--primary",
       );
       this.#primaryButton.textContent = this.primary;
 
@@ -88,7 +88,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#cancelButton = document.createElement("button");
       this.#cancelButton.type = "button";
       this.#cancelButton.value = "cancel";
-      this.#cancelButton.classList.add("button", "formControl__button", "formControl__button--cancel");
+      this.#cancelButton.classList.add("button", "dialog__control__button", "dialog__control__button--cancel");
       this.#cancelButton.textContent = this.cancel;
       this.#cancelButton.addEventListener("click", () => {
         const event = new CustomEvent("cancel");
@@ -111,7 +111,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#extraButton = document.createElement("button");
       this.#extraButton.type = "button";
       this.#extraButton.value = "extra";
-      this.#extraButton.classList.add("button", "formControl__button", "formControl__button--extra");
+      this.#extraButton.classList.add("button", "dialog__control__button", "dialog__control__button--extra");
       this.#extraButton.textContent = this.extra;
       this.#extraButton.addEventListener("click", () => {
         const event = new CustomEvent("extra");

@@ -51,7 +51,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             return label;
         }
         connectedCallback() {
-            this.classList.add("formControl");
+            this.classList.add("dialog__control");
             if (!this.hasAttribute("primary")) {
                 this.setAttribute("primary", "");
             }
@@ -60,7 +60,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 this.#primaryButton.type = "submit";
                 this.#primaryButton.value = "primary";
                 this.#primaryButton.autofocus = true;
-                this.#primaryButton.classList.add("button", "buttonPrimary", "formControl__button", "formControl__button--primary");
+                this.#primaryButton.classList.add("button", "buttonPrimary", "dialog__control__button", "dialog__control__button--primary");
                 this.#primaryButton.textContent = this.primary;
                 this.append(this.#primaryButton);
             }
@@ -68,7 +68,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 this.#cancelButton = document.createElement("button");
                 this.#cancelButton.type = "button";
                 this.#cancelButton.value = "cancel";
-                this.#cancelButton.classList.add("button", "formControl__button", "formControl__button--cancel");
+                this.#cancelButton.classList.add("button", "dialog__control__button", "dialog__control__button--cancel");
                 this.#cancelButton.textContent = this.cancel;
                 this.#cancelButton.addEventListener("click", () => {
                     const event = new CustomEvent("cancel");
@@ -87,7 +87,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 this.#extraButton = document.createElement("button");
                 this.#extraButton.type = "button";
                 this.#extraButton.value = "extra";
-                this.#extraButton.classList.add("button", "formControl__button", "formControl__button--extra");
+                this.#extraButton.classList.add("button", "dialog__control__button", "dialog__control__button--extra");
                 this.#extraButton.textContent = this.extra;
                 this.#extraButton.addEventListener("click", () => {
                     const event = new CustomEvent("extra");

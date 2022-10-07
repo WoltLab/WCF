@@ -14,7 +14,7 @@ interface WoltlabCoreDialogEventMap {
 
 const dialogContainer = document.createElement("div");
 
-export type WoltlabCoreDialogFormControl = {
+export type WoltlabCoreDialogControlOptions = {
   cancel: string | undefined;
   extra: string | undefined;
   isAlert: boolean;
@@ -76,7 +76,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     return this.#dialog.open;
   }
 
-  attachFormControls(options: WoltlabCoreDialogFormControl): void {
+  attachControls(options: WoltlabCoreDialogControlOptions): void {
     if (this.#form !== undefined) {
       throw new Error("There is already a form control attached to this dialog.");
     }

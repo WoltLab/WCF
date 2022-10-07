@@ -45,7 +45,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         get open() {
             return this.#dialog.open;
         }
-        attachFormControls(options) {
+        attachControls(options) {
             if (this.#form !== undefined) {
                 throw new Error("There is already a form control attached to this dialog.");
             }

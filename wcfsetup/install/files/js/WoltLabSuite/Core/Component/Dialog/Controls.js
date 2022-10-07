@@ -15,7 +15,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 isAlert: true,
                 primary: options?.primary || Language.get("wcf.dialog.button.primary"),
             };
-            this.#dialog.attachFormControls(formControlOptions);
+            this.#dialog.attachControls(formControlOptions);
             return this.#dialog;
         }
         asConfirmation(options) {
@@ -25,7 +25,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 isAlert: true,
                 primary: options?.primary || Language.get("wcf.dialog.button.primary.confirm"),
             };
-            this.#dialog.attachFormControls(formControlOptions);
+            this.#dialog.attachControls(formControlOptions);
             return this.#dialog;
         }
         asPrompt(options) {
@@ -35,7 +35,7 @@ define(["require", "exports", "tslib", "../../Language"], function (require, exp
                 isAlert: false,
                 primary: options?.primary || Language.get("wcf.dialog.button.primary.submit"),
             };
-            this.#dialog.attachFormControls(formControlOptions);
+            this.#dialog.attachControls(formControlOptions);
             return this.#dialog;
         }
         withoutControls() {

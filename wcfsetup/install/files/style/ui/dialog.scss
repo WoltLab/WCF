@@ -395,7 +395,7 @@
 	white-space: initial;
 }
 
-.formControl {
+.dialog__control {
 	column-gap: 10px;
 	display: grid;
 	grid-template-areas: "extra cancel primary";
@@ -403,15 +403,15 @@
 	margin-top: 30px;
 }
 
-.formControl__button--primary {
+.dialog__control__button--primary {
 	grid-area: primary;
 }
 
-.formControl__button--cancel {
+.dialog__control__button--cancel {
 	grid-area: cancel;
 }
 
-.formControl__button--extra {
+.dialog__control__button--extra {
 	grid-area: extra;
 	margin-right: auto;
 }
