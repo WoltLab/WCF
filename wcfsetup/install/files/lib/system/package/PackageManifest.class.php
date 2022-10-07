@@ -2,6 +2,9 @@
 
 namespace wcf\system\package;
 
+use wcf\system\devtools\package\DevtoolsPackageArchive;
+use wcf\system\devtools\package\DevtoolsTar;
+
 /**
  * Generates a manifest for the given PackageArchive.
  *
@@ -95,7 +98,7 @@ final class PackageManifest
         $includedPackages = \array_merge($requirements, $optionals);
         $ignoredFiles = \array_merge($includedPackages, ['package.xml']);
 
-        return $this->stringifyV1([
+        $manifest = [
             'manifestVersion' => '1',
             'identifier' => $this->archive->getPackageInfo('name'),
             'version' => $this->archive->getPackageInfo('version'),
@@ -106,7 +109,16 @@ final class PackageManifest
             'files' => $this->getFiles($ignoredFiles),
             'install' => $this->getInstallInstructions(),
             'update' => $this->getUpdateInstructions(),
-        ]);
+        ];
+
+        if ($this->archive instanceof DevtoolsPackageArchive) {
+            $manifest = [
+                'Fake Devtools Archive' => 'Fake Devtools Archive',
+                ...$manifest,
+            ];
+        }
+
+        return $this->stringifyV1($manifest);
     }
 
     private function getDisplayNames(): array
@@ -156,7 +168,11 @@ final class PackageManifest
                 continue;
             }
 
-            $files[$file['filename']] = \hash('sha256', $tar->extractToString($file['index']));
+            if ($tar instanceof DevtoolsTar) {
+                $files[$file['filename']] = 'Fake Devtools Archive';
+            } else {
+                $files[$file['filename']] = \hash('sha256', $tar->extractToString($file['filename']));
+            }
         }
         \ksort($files);
 
