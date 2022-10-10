@@ -12,7 +12,7 @@
 	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
-<form method="post" action="{link controller='Settings'}{/link}">
+<form method="post" action="{$formAction}">
 	{if $category == 'general'}
 		{if $availableLanguages|count > 1}
 			<section class="section" id="section_language">

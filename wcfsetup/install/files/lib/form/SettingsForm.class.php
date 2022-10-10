@@ -16,6 +16,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\option\user\UserOptionHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -285,10 +286,20 @@ class SettingsForm extends AbstractForm
     {
         parent::assignVariables();
 
+        $formActionParameters = [];
+        if ($this->category !== 'general') {
+            $formActionParameters['category'] = $this->category;
+        }
+
         WCF::getTPL()->assign([
             'optionTree' => $this->optionHandler->getOptionTree(),
             'category' => $this->category,
+            'formAction' => LinkHandler::getInstance()->getControllerLink(
+                __CLASS__,
+                $formActionParameters
+            )
         ]);
+
         // static options
         if ($this->category == 'general') {
             WCF::getTPL()->assign([
