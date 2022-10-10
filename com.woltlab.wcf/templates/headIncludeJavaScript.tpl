@@ -183,7 +183,7 @@ window.addEventListener('pageshow', function(event) {
 			executeCronjobs: {if $executeCronjobs}true{else}false{/if},
 			{if ENABLE_SHARE_BUTTONS}
 				{assign var='__shareProviders' value="\n"|explode:SHARE_BUTTONS_PROVIDERS}
-			    shareButtonProviders: [
+				shareButtonProviders: [
 					{if 'Facebook'|in_array:$__shareProviders}["Facebook", "{jslang}wcf.message.share.facebook{/jslang}", {icon size=24 name='facebook' type='brand' encodeJson=true}],{/if} 
 					{if 'Twitter'|in_array:$__shareProviders}["Twitter", "{jslang}wcf.message.share.twitter{/jslang}", {icon size=24 name='twitter' type='brand' encodeJson=true}],{/if} 
 					{if 'Reddit'|in_array:$__shareProviders}["Reddit", "{jslang}wcf.message.share.reddit{/jslang}", {icon size=24 name='reddit' type='brand' encodeJson=true}],{/if} 
