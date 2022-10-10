@@ -10,6 +10,7 @@
 		"Language", "WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation", "WoltLabSuite/Core/Acp/Ui/Package/Search"],
 		(Language, AcpUiPackageQuickInstallation, AcpUiPackageSearch) => {
 		Language.addObject({
+			'wcf.acp.package.error.uniqueAlreadyInstalled': '{jslang}wcf.acp.package.error.uniqueAlreadyInstalled{/jslang}',
 			'wcf.acp.package.install.title': '{jslang}wcf.acp.package.install.title{/jslang}',
 			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}',
 			'wcf.acp.package.quickInstallation.code.error.invalid': '{jslang}wcf.acp.package.quickInstallation.code.error.invalid{/jslang}',

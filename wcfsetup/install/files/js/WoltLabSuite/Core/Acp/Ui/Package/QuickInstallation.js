@@ -56,8 +56,14 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         })
             .dispatch());
         if ("queueID" in response) {
-            const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
-            installation.prepareInstallation();
+            if (response.queueID === null) {
+                codeInput.value = "";
+                (0, Util_1.innerError)(codeInput, Language.get("wcf.acp.package.error.uniqueAlreadyInstalled"));
+            }
+            else {
+                const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
+                installation.prepareInstallation();
+            }
         }
         else if ("template" in response) {
             Dialog_1.default.open({
