@@ -295,7 +295,7 @@ class SettingsForm extends AbstractForm
             'optionTree' => $this->optionHandler->getOptionTree(),
             'category' => $this->category,
             'formAction' => LinkHandler::getInstance()->getControllerLink(
-                __CLASS__,
+                static::class,
                 $formActionParameters
             )
         ]);
