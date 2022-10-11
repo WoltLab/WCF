@@ -15,6 +15,7 @@ use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\MessageUtil;
+use wcf\util\StringUtil;
 
 /**
  * Handles user options.
@@ -388,7 +389,7 @@ class UserOptionHandler extends OptionHandler
 
         foreach ($this->rawValues as &$value) {
             if (\is_string($value)) {
-                $value = MessageUtil::stripCrap($value);
+                $value = MessageUtil::stripCrap(StringUtil::trim($value));
             }
         }
 
