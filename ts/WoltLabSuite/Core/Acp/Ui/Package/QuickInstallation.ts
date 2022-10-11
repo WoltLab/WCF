@@ -24,7 +24,7 @@ type InstallationCode = {
 
 type Response =
   | {
-      queueID: number;
+      queueID: number | null;
       type: "queue";
     }
   | {
@@ -79,8 +79,14 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
     .dispatch()) as Response;
 
   if ("queueID" in response) {
-    const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
-    installation.prepareInstallation();
+    if (response.queueID === null) {
+      codeInput.value = "";
+
+      innerError(codeInput, Language.get("wcf.acp.package.error.uniqueAlreadyInstalled"));
+    } else {
+      const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
+      installation.prepareInstallation();
+    }
   } else if ("template" in response) {
     UiDialog.open(
       {

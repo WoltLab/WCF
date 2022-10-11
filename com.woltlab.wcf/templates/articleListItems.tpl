@@ -2,6 +2,7 @@
 
 <div class="contentItemList">
 	{foreach from=$objects item='article' name='articles'}
+		{if $article->getArticleContent()}
 		<article class="contentItem contentItemMultiColumn">
 			<div class="contentItemLink">
 				<div class="contentItemImage contentItemImageLarge">
@@ -76,6 +77,7 @@
 				</div>
 			</div>
 		</article>
+		{/if}
 		
 		{if MODULE_WCF_AD && !$disableAds}
 			{if $tpl[foreach][articles][iteration] === 1}

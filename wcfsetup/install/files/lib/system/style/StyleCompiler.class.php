@@ -213,7 +213,7 @@ final class StyleCompiler extends SingletonFactory
                     ORDER BY    packageID";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
-                'style/([a-zA-Z0-9\-\.]+)\.scss',
+                '^style/([a-zA-Z0-9\-\.]+)\.scss',
                 1,
             ]);
             while ($row = $statement->fetchArray()) {

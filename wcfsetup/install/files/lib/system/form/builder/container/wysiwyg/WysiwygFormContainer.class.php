@@ -519,8 +519,7 @@ class WysiwygFormContainer extends FormContainer
 
                     TabFormContainer::create($this->wysiwygId . 'SettingsTab')
                         ->label('wcf.message.settings')
-                        ->appendChild($this->settingsContainer)
-                        ->available(MODULE_SMILEY),
+                        ->appendChild($this->settingsContainer),
 
                     TabFormContainer::create($this->wysiwygId . 'PollTab')
                         ->label('wcf.poll.management')
@@ -665,6 +664,10 @@ class WysiwygFormContainer extends FormContainer
      */
     public function supportSmilies($supportSmilies = true)
     {
+        if (!\MODULE_SMILEY) {
+            $supportSmilies = false;
+        }
+
         if ($this->smiliesContainer !== null) {
             $this->smiliesContainer->available($supportSmilies);
         } else {
