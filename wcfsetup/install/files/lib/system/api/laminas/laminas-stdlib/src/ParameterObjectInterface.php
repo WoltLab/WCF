@@ -8,10 +8,9 @@ interface ParameterObjectInterface
 {
     /**
      * @param string $key
-     * @param mixed $value
      * @return void
      */
-    public function __set($key, $value);
+    public function __set($key, mixed $value);
 
     /**
      * @param string $key

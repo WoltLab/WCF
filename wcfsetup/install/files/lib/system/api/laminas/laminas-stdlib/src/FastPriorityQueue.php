@@ -64,28 +64,28 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Max priority
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $maxPriority;
 
     /**
      * Total number of elements in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $count = 0;
 
     /**
      * Index of the current element in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $index = 0;
 
     /**
      * Sub index of the current element in the same priority level
      *
-     * @var integer
+     * @var int
      */
     protected $subIndex = 0;
 
@@ -112,11 +112,10 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Insert an element in the queue with a specified priority
      *
-     * @param mixed $value
-     * @param integer $priority
+     * @param int $priority
      * @return void
      */
-    public function insert($value, $priority)
+    public function insert(mixed $value, $priority)
     {
         if (! is_int($priority)) {
             throw new Exception\InvalidArgumentException('The priority must be an integer');
@@ -155,10 +154,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * the same item has been added multiple times, it will not remove other
      * instances.
      *
-     * @param  mixed $datum
      * @return bool False if the item was not found, true otherwise.
      */
-    public function remove($datum)
+    public function remove(mixed $datum)
     {
         $currentIndex    = $this->index;
         $currentSubIndex = $this->subIndex;
@@ -351,26 +349,21 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the extract flag
      *
-     * @param integer $flag
+     * @param int $flag
      * @return void
      */
     public function setExtractFlags($flag)
     {
-        switch ($flag) {
-            case self::EXTR_DATA:
-            case self::EXTR_PRIORITY:
-            case self::EXTR_BOTH:
-                $this->extractFlag = $flag;
-                break;
-            default:
-                throw new Exception\InvalidArgumentException("The extract flag specified is not valid");
-        }
+        $this->extractFlag = match ($flag) {
+            self::EXTR_DATA, self::EXTR_PRIORITY, self::EXTR_BOTH => $flag,
+            default => throw new Exception\InvalidArgumentException("The extract flag specified is not valid"),
+        };
     }
 
     /**
      * Check if the queue is empty
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty()
     {
@@ -380,10 +373,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Does the queue contain the given datum?
      *
-     * @param  mixed $datum
      * @return bool
      */
-    public function contains($datum)
+    public function contains(mixed $datum)
     {
         foreach ($this->values as $values) {
             if (in_array($datum, $values)) {

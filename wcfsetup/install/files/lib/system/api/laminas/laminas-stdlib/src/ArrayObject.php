@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use AllowDynamicProperties;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -17,7 +18,7 @@ use function array_keys;
 use function asort;
 use function class_exists;
 use function count;
-use function get_class;
+use function get_debug_type;
 use function get_object_vars;
 use function gettype;
 use function in_array;
@@ -30,7 +31,7 @@ use function natcasesort;
 use function natsort;
 use function serialize;
 use function sprintf;
-use function strpos;
+use function str_starts_with;
 use function uasort;
 use function uksort;
 use function unserialize;
@@ -40,6 +41,7 @@ use function unserialize;
  *
  * Extends version-specific "abstract" implementation.
  */
+#[AllowDynamicProperties]
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
 {
     /**
@@ -83,10 +85,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Returns whether the requested key exists
      *
-     * @param  mixed $key
      * @return bool
      */
-    public function __isset($key)
+    public function __isset(mixed $key)
     {
         if ($this->flag === self::ARRAY_AS_PROPS) {
             return $this->offsetExists($key);
@@ -102,11 +103,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the value at the specified key to value
      *
-     * @param  mixed $key
-     * @param  mixed $value
      * @return void
      */
-    public function __set($key, $value)
+    public function __set(mixed $key, mixed $value)
     {
         if ($this->flag === self::ARRAY_AS_PROPS) {
             $this->offsetSet($key, $value);
@@ -123,10 +122,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Unsets the value at the specified key
      *
-     * @param  mixed $key
      * @return void
      */
-    public function __unset($key)
+    public function __unset(mixed $key)
     {
         if ($this->flag === self::ARRAY_AS_PROPS) {
             $this->offsetUnset($key);
@@ -143,10 +141,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Returns the value at the specified key by reference
      *
-     * @param  mixed $key
      * @return mixed
      */
-    public function &__get($key)
+    public function &__get(mixed $key)
     {
         if ($this->flag === self::ARRAY_AS_PROPS) {
             $ret = &$this->offsetGet($key);
@@ -164,10 +161,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Appends the value
      *
-     * @param  mixed $value
      * @return void
      */
-    public function append($value)
+    public function append(mixed $value)
     {
         $this->storage[] = $value;
     }
@@ -297,11 +293,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Returns whether the requested key exists
      *
-     * @param  mixed $key
      * @return bool
      */
     #[ReturnTypeWillChange]
-    public function offsetExists($key)
+    public function offsetExists(mixed $key)
     {
         return isset($this->storage[$key]);
     }
@@ -309,11 +304,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Returns the value at the specified key
      *
-     * @param  mixed $key
      * @return mixed
      */
     #[ReturnTypeWillChange]
-    public function &offsetGet($key)
+    public function &offsetGet(mixed $key)
     {
         $ret = null;
         if (! $this->offsetExists($key)) {
@@ -327,12 +321,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the value at the specified key to value
      *
-     * @param  mixed $key
-     * @param  mixed $value
      * @return void
      */
     #[ReturnTypeWillChange]
-    public function offsetSet($key, $value)
+    public function offsetSet(mixed $key, mixed $value)
     {
         $this->storage[$key] = $value;
     }
@@ -340,11 +332,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Unsets the value at the specified key
      *
-     * @param  mixed $key
      * @return void
      */
     #[ReturnTypeWillChange]
-    public function offsetUnset($key)
+    public function offsetUnset(mixed $key)
     {
         if ($this->offsetExists($key)) {
             unset($this->storage[$key]);
@@ -396,7 +387,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             return;
         }
 
-        if (strpos($class, '\\') === 0) {
+        if (str_starts_with($class, '\\')) {
             $class = '\\' . $class;
             if (class_exists($class)) {
                 $this->iteratorClass = $class;
@@ -486,9 +477,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
                 throw new UnexpectedValueException(sprintf(
                     'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
                     self::class,
-                    is_object($data['iteratorClass'])
-                        ? get_class($data['iteratorClass'])
-                        : gettype($data['iteratorClass'])
+                    get_debug_type($data['iteratorClass'])
                 ));
             }
             $this->setIteratorClass($data['iteratorClass']);

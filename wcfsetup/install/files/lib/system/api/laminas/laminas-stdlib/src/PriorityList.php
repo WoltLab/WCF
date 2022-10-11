@@ -65,11 +65,10 @@ class PriorityList implements Iterator, Countable
      * Insert a new item.
      *
      * @param  string  $name
-     * @param  mixed   $value
      * @param  int     $priority
      * @return void
      */
-    public function insert($name, $value, $priority = 0)
+    public function insert($name, mixed $value, $priority = 0)
     {
         if (! isset($this->items[$name])) {
             $this->count++;
@@ -162,7 +161,6 @@ class PriorityList implements Iterator, Countable
      * Compare the priority of two items.
      *
      * @param  array $item1,
-     * @param  array $item2
      * @return int
      */
     protected function compare(array $item1, array $item2)
