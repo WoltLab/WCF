@@ -1454,14 +1454,16 @@ if (COMPILER_TARGET_DEFAULT) {
 			if (!this._dialog.find('input.jsCheckbox:checked').length) {
 				this._dialog.find('input.jsCheckbox').prop('checked', 'checked');
 			}
-			
-			// insert all quotes
-			this._dialog.find('input.jsCheckbox:checked').each($.proxy(function (index, input) {
-				this._insertQuote(null, input);
-			}, this));
-			
+
 			// close dialog
 			this._dialog.wcfDialog('close');
+			
+			// insert all quotes
+			window.setTimeout(() => {
+				this._dialog.find('input.jsCheckbox:checked').each($.proxy(function (index, input) {
+					this._insertQuote(null, input);
+				}, this));
+			}, 0);
 		},
 		
 		/**
