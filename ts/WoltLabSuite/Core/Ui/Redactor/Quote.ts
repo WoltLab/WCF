@@ -118,7 +118,11 @@ class UiRedactorQuote {
     });
 
     window.setTimeout(() => {
-      UiScroll.element(this._editor.core.box()[0]);
+      UiScroll.element(this._editor.core.box()[0], () => {
+        if (document.activeElement !== this._editor.core.editor()[0]) {
+          this._editor.WoltLabCaret.endOfEditor();
+        }
+      });
     }, 0);
   }
 
