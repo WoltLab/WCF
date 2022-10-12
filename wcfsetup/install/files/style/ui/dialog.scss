@@ -46,6 +46,8 @@
 }
 
 .dialogContainer {
+	background-color: var(--wcfContentBackground);
+	color: var(--wcfContentText);
 	z-index: 200;
 
 	@include screen-xs {
@@ -59,7 +61,8 @@
 		align-self: flex-start;
 		animation: wcfDialogOut 0.3s;
 		animation-fill-mode: forwards;
-		box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.3);
+		border-radius: 8px;
+		box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 		grid-area: dialog;
 		justify-self: center;
 		max-height: 80%;
@@ -92,8 +95,6 @@
 	}
 
 	> header {
-		background-color: $wcfHeaderBackground;
-		color: $wcfHeaderText;
 		display: flex;
 
 		@include screen-sm-down {
@@ -101,13 +102,15 @@
 		}
 
 		@include screen-md-up {
-			padding: 10px 20px;
+			padding: 20px;
 		}
 
 		> span {
 			flex: 1 auto;
 
 			@include wcfFontHeadline;
+
+			font-weight: 600;
 		}
 
 		> .dialogCloseButton {
@@ -136,7 +139,7 @@
 			}
 
 			@include screen-md-up {
-				padding: 30px 20px 10px 20px;
+				padding: 0 20px;
 			}
 
 			&::after {
@@ -151,8 +154,8 @@
 		}
 
 		&:not(.dialogForm) {
-			border-bottom-left-radius: 3px;
-			border-bottom-right-radius: 3px;
+			border-bottom-left-radius: 8px;
+			border-bottom-right-radius: 8px;
 		}
 
 		dl:not(.plain) {
@@ -172,21 +175,22 @@
 		}
 
 		.dialogFormSubmit {
-			background-color: $wcfSidebarBackground;
-			border-top: 1px solid $wcfContentBorderInner;
+			background-color: var(--wcfContentBackground);
 			bottom: 0;
+			border-radius: 0 0 8px 8px;
+			color: var(--wcfContentText);
+			column-gap: 10px;
+			display: flex;
+			flex-direction: row-reverse;
 			left: 0;
 			margin-bottom: 0;
-			padding: 10px 10px 0 10px;
+			padding: 20px;
 			position: absolute;
 			right: 0;
-		}
 
-		.section {
-			margin-top: 30px;
-
-			.sectionTitle {
-				@include wcfFontHeadline;
+			.button,
+			input {
+				margin: 0 !important;
 			}
 		}
 
@@ -204,6 +208,10 @@
 					margin-top: 0;
 				}
 			}
+		}
+
+		.contentHeader {
+			margin-top: 0;
 		}
 	}
 }
@@ -279,4 +287,153 @@
 /* highlight objects in confirmation messages */
 .confirmationObject {
 	font-weight: 600;
+}
+
+/* New dialog API */
+@keyframes dialog {
+	0% {
+		transform: translateY(-20px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.dialog {
+	--dialog-border-radius: 8px;
+	--dialog-padding: 20px;
+
+	animation: 0.24s dialog;
+	background-color: transparent;
+	border-radius: var(--dialog-border-radius);
+	border-width: 0;
+	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	display: flex;
+	flex-direction: column;
+	max-height: 80%;
+	max-width: 80%;
+	min-height: 0;
+	min-width: 500px;
+	padding: 0;
+}
+
+.dialog:not([open]) {
+	display: none;
+}
+
+@keyframes dialogBackdrop {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.dialog::backdrop {
+	animation: 0.24s dialogBackdrop;
+	background-color: rgba(0, 0, 0, 0.34);
+}
+
+.dialog__document {
+	background-color: var(--wcfContentBackground);
+	border-radius: var(--dialog-border-radius);
+	color: var(--wcfContentText);
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	padding: var(--dialog-padding);
+}
+
+.dialog__header {
+	column-gap: 10px;
+	display: grid;
+	grid-template-columns: auto max-content;
+	grid-template-areas: "title closeButton";
+	margin-bottom: var(--dialog-padding);
+}
+
+.dialog__title {
+	grid-area: title;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	@include wcfFontHeadline;
+
+	font-weight: 600;
+}
+
+.dialog__closeButton {
+	grid-area: closeButton;
+}
+
+.dialog__content {
+	margin: 0 calc(var(--dialog-padding) * -1);
+	overflow: auto;
+	padding: 0 var(--dialog-padding);
+}
+
+.dialog__form {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.dialog[role="alert"],
+.dialog[role="alertdialog"] {
+	max-width: 500px;
+}
+
+.dialog[role="alert"] .dialog__header,
+.dialog[role="alertdialog"] .dialog__header {
+	column-gap: 0;
+	grid-template-columns: auto;
+	grid-template-areas: "title";
+}
+
+.dialog[role="alert"] .dialog__title,
+.dialog[role="alertdialog"] .dialog__title {
+	overflow: initial;
+	text-overflow: initial;
+	white-space: initial;
+}
+
+.dialog__control {
+	column-gap: 10px;
+	display: grid;
+	grid-template-areas: "extra cancel primary";
+	grid-template-columns: auto max-content max-content;
+	margin-top: 30px;
+}
+
+.dialog__control__button--primary {
+	grid-area: primary;
+}
+
+.dialog__control__button--cancel {
+	grid-area: cancel;
+}
+
+.dialog__control__button--extra {
+	grid-area: extra;
+	margin-right: auto;
+}
+
+/* Sections inside dialogs */
+.dialogContent,
+.dialog__content {
+	.section .sectionTitle {
+		@include wcfFontDefault;
+
+		border-bottom-width: 0;
+		font-weight: 600;
+		padding-bottom: 0;
+	}
+
+	.section:not(:first-child) {
+		border-top: 1px solid var(--wcfContentBorderInner);
+		margin-top: 20px;
+		padding-top: 20px;
+	}
 }

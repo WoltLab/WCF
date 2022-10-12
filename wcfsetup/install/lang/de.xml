@@ -97,7 +97,6 @@
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Inhalt]]></item>
-		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich löschen?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Einsprachiger Artikel]]></item>
@@ -105,8 +104,6 @@
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Mehrsprachiger Artikel]]></item>
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.article.i18n.source"><![CDATA[Inhalt übernehmen]]></item>
-		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen mehrsprachigen Artikel umwandeln? Der aktuelle Inhalt wird für alle Sprachen übernommen, und die Bearbeitungshistorie für diesen Artikel wird gelöscht.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}Du fortfährst{else}Sie fortfahren{/if}.]]></item>
-		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen einsprachigen Artikel umwandeln? Die ausgewählte Sprache wird dabei als zukünftigen Inhalt übernommen. Die Angaben in anderen Sprachen, sowie die Bearbeitungshistorie dieses Artikels, werden bei diesem Vorgang verworfen.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du fortfährst{else}Sie fortfahren{/if}.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Artikel-Bild]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser-Bild]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
@@ -115,10 +112,8 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unveröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Zeitgesteuerte Veröffentlichung]]></item>
-		<item name="wcf.acp.article.restore.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich wiederherstellen?]]></item>
 		<item name="wcf.acp.article.setCategory"><![CDATA[Kategorie ändern]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Einleitungstext]]></item>
-		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich in den Papierkorb verschieben?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID isACP=true}{/link}">vorherige Versionen</a> dieses Artikels, die letzte Änderung erfolgte durch „{$lastVersion->username}“ ({@$lastVersion->time|time}).]]></item>
@@ -3311,6 +3306,10 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.like.notification.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.bbcode.type"><![CDATA[Artikel]]></item>
+		<item name="wcf.article.convertToI18n.question"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen mehrsprachigen Artikel umwandeln?]]></item>
+		<item name="wcf.article.convertToI18n.description"><![CDATA[Der aktuelle Inhalt wird für alle Sprachen übernommen, und die Bearbeitungshistorie für diesen Artikel wird gelöscht.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}Du fortfährst{else}Sie fortfahren{/if}.]]></item>
+		<item name="wcf.article.convertFromI18n.question"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen einsprachigen Artikel umwandeln?]]></item>
+		<item name="wcf.article.convertFromI18n.description"><![CDATA[Die ausgewählte Sprache wird dabei als zukünftigen Inhalt übernommen. Die Angaben in anderen Sprachen, sowie die Bearbeitungshistorie dieses Artikels, werden bei diesem Vorgang verworfen.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du fortfährst{else}Sie fortfahren{/if}.]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
@@ -3749,6 +3748,19 @@ Dateianhänge:
 		<item name="wcf.date.datePicker.year"><![CDATA[Jahr]]></item>
 		<item name="wcf.date.datePicker.hour"><![CDATA[Stunde]]></item>
 		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
+	</category>
+	<category name="wcf.dialog">
+		<item name="wcf.dialog.button.cancel"><![CDATA[Abbrechen]]></item>
+		<item name="wcf.dialog.button.close"><![CDATA[Dialog schließen]]></item>
+		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
+		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Bestätigen]]></item>
+		<item name="wcf.dialog.button.primary.delete"><![CDATA[Löschen]]></item>
+		<item name="wcf.dialog.button.primary.submit"><![CDATA[Absenden]]></item>
+		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[Dieser Vorgang kann nicht rückgängig gemacht werden.]]></item>
+		<item name="wcf.dialog.confirmation.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} „{$title}“ wirklich löschen?]]></item>
+		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ in den Papierkorb verschieben?]]></item>
+		<item name="wcf.dialog.confirmation.softDelete.reason"><![CDATA[Begründung (optional)]]></item>
+		<item name="wcf.dialog.confirmation.restore"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ wiederherstellen?]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
@@ -5576,5 +5588,10 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.index.system.software.legacyApiVersions"/>
 	<item name="wcf.acp.package.apiVersions"/>
 	<item name="wcf.acp.package.apiVersions.missing"/>
+	<item name="wcf.acp.article.delete.confirmMessage"/>
+	<item name="wcf.acp.article.i18n.toI18n.confirmMessage"/>
+	<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"/>
+	<item name="wcf.acp.article.restore.confirmMessage"/>
+	<item name="wcf.acp.article.trash.confirmMessage"/>
 </delete>
 </language>

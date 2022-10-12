@@ -4,12 +4,12 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Dom/Observer
+ * @module WoltLabSuite/Core/Helper/Observer
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.findUniqueElements = exports.wheneverSeen = void 0;
+    exports.wheneverFirstSeen = exports.wheneverSeen = void 0;
     let observer;
     const selectors = new Map();
     function findElements(node) {
@@ -59,7 +59,7 @@ define(["require", "exports"], function (require, exports) {
      * again. Useful for applying event listeners or transformations
      * that should be applied just once.
      */
-    function findUniqueElements(selector, callback) {
+    function wheneverFirstSeen(selector, callback) {
         const knownElements = new WeakSet();
         wheneverSeen(selector, (element) => {
             if (!knownElements.has(element)) {
@@ -68,5 +68,5 @@ define(["require", "exports"], function (require, exports) {
             }
         });
     }
-    exports.findUniqueElements = findUniqueElements;
+    exports.wheneverFirstSeen = wheneverFirstSeen;
 });

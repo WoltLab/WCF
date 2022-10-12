@@ -4,7 +4,7 @@
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Dom/Observer
+ * @module WoltLabSuite/Core/Helper/Observer
  */
 
 let observer: MutationObserver;
@@ -65,7 +65,7 @@ export function wheneverSeen(selector: string, callback: CallbackMatch): void {
  * again. Useful for applying event listeners or transformations
  * that should be applied just once.
  */
-export function findUniqueElements(selector: string, callback: CallbackMatch) {
+export function wheneverFirstSeen(selector: string, callback: CallbackMatch) {
   const knownElements = new WeakSet();
 
   wheneverSeen(selector, (element) => {

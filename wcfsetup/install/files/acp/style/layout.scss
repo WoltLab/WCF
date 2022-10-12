@@ -654,3 +654,16 @@ $wcfAcpSubMenuWidth: 300px;
 		right: 0 !important;
 	}
 }
+
+#pageOverlayContainer {
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+	position: fixed;
+	right: 0;
+	top: 0;
+}
+
+#pageOverlayContainer > *:not(.dropdownMenuContainer) {
+	pointer-events: all;
+}

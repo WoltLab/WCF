@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Util_1, EventHandler, Language, UiConfirmation, Dialog_1, UiNotification) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Confirmation", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Confirmation_1, ControllerClipboard, Core, Util_1, EventHandler, Language, Dialog_1, UiNotification) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
-    UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     const articles = new Map();
@@ -33,7 +32,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
                 redirectUrl: "",
             }, options);
             if (objectId) {
-                this.initArticle(undefined, ~~objectId);
+                this.initArticle(undefined, objectId);
             }
             else {
                 document.querySelectorAll(".jsArticleRow").forEach((article) => this.initArticle(article, 0));
@@ -74,7 +73,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
             event.preventDefault();
             const innerError = content.querySelector(".innerError");
             const select = content.querySelector("select[name=categoryID]");
-            const categoryId = ~~select.value;
+            const categoryId = parseInt(select.value);
             if (categoryId) {
                 Ajax.api(this, {
                     actionName: "setCategory",
@@ -97,24 +96,45 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
          */
         initArticle(article, objectId) {
             let isArticleEdit = false;
-            if (!article && ~~objectId > 0) {
+            if (!article && objectId > 0) {
                 isArticleEdit = true;
                 article = undefined;
             }
             else {
-                objectId = ~~article.dataset.objectId;
+                objectId = parseInt(article.dataset.objectId);
             }
             const scope = article || document;
+            let title;
+            if (isArticleEdit) {
+                const languageId = this.options.i18n.isI18n ? this.options.i18n.defaultLanguageId : 0;
+                const inputField = document.getElementById(`title${languageId}`);
+                title = inputField.value;
+            }
             const buttonDelete = scope.querySelector(".jsButtonDelete");
-            buttonDelete.addEventListener("click", (ev) => this.prompt(ev, objectId, "delete"));
+            buttonDelete.addEventListener("click", async () => {
+                const result = await (0, Confirmation_1.confirmationFactory)().delete(title);
+                if (result) {
+                    this.invoke(objectId, "delete");
+                }
+            });
             const buttonRestore = scope.querySelector(".jsButtonRestore");
-            buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));
+            buttonRestore.addEventListener("click", async () => {
+                const result = await (0, Confirmation_1.confirmationFactory)().restore(title);
+                if (result) {
+                    this.invoke(objectId, "restore");
+                }
+            });
             const buttonTrash = scope.querySelector(".jsButtonTrash");
-            buttonTrash.addEventListener("click", (ev) => this.prompt(ev, objectId, "trash"));
+            buttonTrash.addEventListener("click", async () => {
+                const result = await (0, Confirmation_1.confirmationFactory)().softDelete(title, false);
+                if (result) {
+                    this.invoke(objectId, "trash");
+                }
+            });
             if (isArticleEdit) {
                 const buttonToggleI18n = scope.querySelector(".jsButtonToggleI18n");
                 if (buttonToggleI18n !== null) {
-                    buttonToggleI18n.addEventListener("click", (ev) => this.toggleI18n(ev, objectId));
+                    buttonToggleI18n.addEventListener("click", () => void this.toggleI18n(objectId));
                 }
             }
             articles.set(objectId, {
@@ -128,55 +148,49 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Cli
             });
         }
         /**
-         * Prompts a user to confirm the clicked action before executing it.
-         */
-        prompt(event, objectId, actionName) {
-            event.preventDefault();
-            const article = articles.get(objectId);
-            UiConfirmation.show({
-                confirm: () => {
-                    this.invoke(objectId, actionName);
-                },
-                message: article.buttons[actionName].dataset.confirmMessageHtml,
-                messageIsHtml: true,
-            });
-        }
-        /**
          * Toggles an article between i18n and monolingual.
          */
-        toggleI18n(event, objectId) {
-            event.preventDefault();
-            const phrase = Language.get("wcf.acp.article.i18n." + (this.options.i18n.isI18n ? "fromI18n" : "toI18n") + ".confirmMessage");
-            let html = `<p>${phrase}</p>`;
-            // build language selection
+        async toggleI18n(objectId) {
+            const phraseType = this.options.i18n.isI18n ? "convertFromI18n" : "convertToI18n";
+            const phrase = Language.get(`wcf.article.${phraseType}.question`);
+            let dl;
             if (this.options.i18n.isI18n) {
-                html += `<dl><dt>${Language.get("wcf.acp.article.i18n.source")}</dt><dd>`;
                 const defaultLanguageId = this.options.i18n.defaultLanguageId.toString();
-                html += Object.entries(this.options.i18n.languages)
+                const html = Object.entries(this.options.i18n.languages)
                     .map(([languageId, languageName]) => {
                     return `<label><input type="radio" name="i18nLanguage" value="${languageId}" ${defaultLanguageId === languageId ? "checked" : ""}> ${languageName}</label>`;
                 })
                     .join("");
-                html += "</dd></dl>";
+                dl = document.createElement("dl");
+                dl.innerHTML = `
+        <dt>${Language.get("wcf.acp.article.i18n.source")}</dt>
+        <dd>${html}</dd>
+      `;
             }
-            UiConfirmation.show({
-                confirm: (parameters, content) => {
-                    let languageId = 0;
-                    if (this.options.i18n.isI18n) {
-                        const input = content.parentElement.querySelector("input[name='i18nLanguage']:checked");
-                        languageId = ~~input.value;
-                    }
-                    Ajax.api(this, {
-                        actionName: "toggleI18n",
-                        objectIDs: [objectId],
-                        parameters: {
-                            languageID: languageId,
-                        },
-                    });
-                },
-                message: html,
-                messageIsHtml: true,
+            const { result } = await (0, Confirmation_1.confirmationFactory)()
+                .custom(phrase)
+                .withFormElements((dialog) => {
+                const p = document.createElement("p");
+                p.innerHTML = Language.get(`wcf.article.${phraseType}.description`);
+                dialog.content.append(p);
+                if (dl !== undefined) {
+                    dialog.content.append(dl);
+                }
             });
+            if (result) {
+                let languageId = 0;
+                if (dl !== undefined) {
+                    const input = dl.querySelector("input[name='i18nLanguage']:checked");
+                    languageId = parseInt(input.value);
+                }
+                Ajax.api(this, {
+                    actionName: "toggleI18n",
+                    objectIDs: [objectId],
+                    parameters: {
+                        languageID: languageId,
+                    },
+                });
+            }
         }
         /**
          * Invokes the selected action.

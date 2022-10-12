@@ -477,6 +477,7 @@ WCF.Moderation.Report = { };
  * 
  * @param	string		objectType
  * @param	string		buttonSelector
+ * @deprecated 6.0 Use the `data-report-content="com.example.foo"` attribute on a `<button>` instead.
  */
 WCF.Moderation.Report.Content = Class.extend({
 	/**

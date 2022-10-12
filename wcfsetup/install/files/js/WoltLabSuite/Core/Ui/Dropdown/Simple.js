@@ -7,7 +7,7 @@
  * @module  Ui/SimpleDropdown (alias)
  * @module  WoltLabSuite/Core/Ui/Dropdown/Simple
  */
-define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay"], function (require, exports, tslib_1, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1) {
+define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../../Helper/PageOverlay"], function (require, exports, tslib_1, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1, PageOverlay_1) {
     "use strict";
     CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
     Core = tslib_1.__importStar(Core);
@@ -316,7 +316,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             _didInit = true;
             _menuContainer = document.createElement("div");
             _menuContainer.className = "dropdownMenuContainer";
-            document.body.appendChild(_menuContainer);
+            (0, PageOverlay_1.getPageOverlayContainer)().append(_menuContainer);
             _availableDropdowns = document.getElementsByClassName("dropdownToggle");
             UiDropdownSimple.initAll();
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.closeAll());

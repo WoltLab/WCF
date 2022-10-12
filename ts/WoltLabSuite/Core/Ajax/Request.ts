@@ -14,8 +14,8 @@ import * as AjaxStatus from "./Status";
 import { ResponseData, RequestOptions, RequestData, AjaxResponseException } from "./Data";
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
-import DomUtil from "../Dom/Util";
 import * as Language from "../Language";
+import { dialogFactory } from "../Component/Dialog";
 
 let _didInit = false;
 let _ignoreAllErrors = false;
@@ -292,11 +292,8 @@ class AjaxRequest {
       const html = this.getErrorHtml(data as AjaxResponseException, xhr);
 
       if (html) {
-        void import("../Ui/Dialog").then((UiDialog) => {
-          UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-            title: Language.get("wcf.global.error.title"),
-          });
-        });
+        const dialog = dialogFactory().fromHtml(html).asAlert();
+        dialog.show(Language.get("wcf.global.error.title"));
       }
     }
 

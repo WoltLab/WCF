@@ -97,7 +97,6 @@
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
-		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if}?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Monolingual article]]></item>
@@ -105,8 +104,6 @@
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Multilingual article]]></item>
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[The content will be provided for each language separately.]]></item>
 		<item name="wcf.acp.article.i18n.source"><![CDATA[Use values]]></item>
-		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[Do you really want to enable internationalization for this article? This will cause the current values to be copied over to all other languages, and causes the edit history of this article to be discarded.<br><br>Please submit any unsaved changes before executing this action.]]></item>
-		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[Do you really want to disable internationalization for this article? All values except the ones of the selected language will be discarded, this will also delete the edit history of this article.<br><br>Please submit any unsaved changes before executing this action.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser Image]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>
@@ -115,10 +112,8 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
-		<item name="wcf.acp.article.restore.confirmMessage"><![CDATA[Do you really want to restore {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if}?]]></item>
 		<item name="wcf.acp.article.setCategory"><![CDATA[Set Category]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
-		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[Do you really want to move {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if} to the trash bin?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[This article has been moved to the trash bin and is currently hidden from view.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
 		<item name="wcf.acp.article.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID isACP=true}{/link}">previous versions</a> of this article, the last change was by “{$lastVersion->username}” ({@$lastVersion->time|time}).]]></item>
@@ -3239,6 +3234,10 @@ Your account on the website: {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link
 		<item name="wcf.article.like.notification.message"><![CDATA[<strong>{$author}</strong> reacted to your article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.article.bbcode.type"><![CDATA[Article]]></item>
+		<item name="wcf.article.convertToI18n.question"><![CDATA[Are you sure you want to enable internationalization for this article?]]></item>
+		<item name="wcf.article.convertToI18n.description"><![CDATA[This will cause the current values to be copied over to all other languages, and causes the edit history of this article to be discarded.<br><br>Please submit any unsaved changes before executing this action.]]></item>
+		<item name="wcf.article.convertFromI18n.question"><![CDATA[Are you sure you want to disable internationalization for this article?]]></item>
+		<item name="wcf.article.convertFromI18n.description"><![CDATA[All values except the ones of the selected language will be discarded, this will also delete the edit history of this article.<br><br>Please submit any unsaved changes before executing this action.]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
@@ -3698,6 +3697,19 @@ Attachments:
 		<item name="wcf.date.datePicker.year"><![CDATA[Year]]></item>
 		<item name="wcf.date.datePicker.hour"><![CDATA[Hour]]></item>
 		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
+	</category>
+	<category name="wcf.dialog">
+		<item name="wcf.dialog.button.cancel"><![CDATA[Cancel]]></item>
+		<item name="wcf.dialog.button.close"><![CDATA[Close Dialog]]></item>
+		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
+		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Confirm]]></item>
+		<item name="wcf.dialog.button.primary.delete"><![CDATA[Delete]]></item>
+		<item name="wcf.dialog.button.primary.submit"><![CDATA[Submit]]></item>
+		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[This process cannot be undone.]]></item>
+		<item name="wcf.dialog.confirmation.delete"><![CDATA[Are you sure you want to delete “{$title}”?]]></item>
+		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[Do you want to move “{$title}” to the trash bin?]]></item>
+		<item name="wcf.dialog.confirmation.softDelete.reason"><![CDATA[Reason (optional)]]></item>
+		<item name="wcf.dialog.confirmation.restore"><![CDATA[Do you want to restore “{$title}”?]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
@@ -5578,5 +5590,10 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.index.system.software.legacyApiVersions"/>
 	<item name="wcf.acp.package.apiVersions"/>
 	<item name="wcf.acp.package.apiVersions.missing"/>
+	<item name="wcf.acp.article.delete.confirmMessage"/>
+	<item name="wcf.acp.article.i18n.toI18n.confirmMessage"/>
+	<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"/>
+	<item name="wcf.acp.article.restore.confirmMessage"/>
+	<item name="wcf.acp.article.trash.confirmMessage"/>
 </delete>
 </language>

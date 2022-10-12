@@ -7,7 +7,12 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsButtonPageAdd">{icon name='plus'} <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+			<li>
+				<button class="button jsButtonPageAdd">
+					{icon name='plus'}
+					<span>{lang}wcf.acp.page.add{/lang}</span>
+				</button>
+			</li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -182,7 +187,12 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="#" class="button jsButtonPageAdd">{icon name='plus'} <span>{lang}wcf.acp.page.add{/lang}</span></a></li>
+				<li>
+					<button class="button jsButtonPageAdd">
+						{icon name='plus'}
+						<span>{lang}wcf.acp.page.add{/lang}</span>
+					</button>
+				</li>
 				
 				{event name='contentFooterNavigation'}
 			</ul>

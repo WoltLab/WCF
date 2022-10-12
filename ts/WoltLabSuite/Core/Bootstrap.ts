@@ -36,6 +36,8 @@ import { PageMenuMainProvider } from "./Ui/Page/Menu/Main/Provider";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 import "perfect-scrollbar";
+import { whenFirstSeen } from "./LazyLoader";
+import { adoptPageOverlayContainer } from "./Helper/PageOverlay";
 
 // non strict equals by intent
 if (window.WCF == null) {
@@ -92,6 +94,8 @@ export function setup(options: BoostrapOptions): void {
     Devtools._internal_.enable();
   }
 
+  adoptPageOverlayContainer(document.body);
+
   Environment.setup();
   DateTimeRelative.setup();
   DatePicker.init();
@@ -145,4 +149,8 @@ export function setup(options: BoostrapOptions): void {
   initA11y();
 
   DomChangeListener.add("WoltLabSuite/Core/Bootstrap", () => initA11y);
+
+  whenFirstSeen("[data-report-content]", () => {
+    void import("./Ui/Moderation/Report").then(({ setup }) => setup());
+  });
 }

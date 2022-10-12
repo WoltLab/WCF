@@ -8,6 +8,7 @@
  * @since 5.5
  */
 
+import { dialogFactory } from "../Component/Dialog";
 import * as Core from "../Core";
 import * as Language from "../Language";
 
@@ -32,15 +33,8 @@ async function genericError(error: ApiError): Promise<void> {
   const html = await getErrorHtml(error);
 
   if (html !== "") {
-    // Load these modules on runtime to avoid circular dependencies.
-    const [UiDialog, DomUtil, Language] = await Promise.all([
-      import("../Ui/Dialog"),
-      import("../Dom/Util"),
-      import("../Language"),
-    ]);
-    UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-      title: Language.get("wcf.global.error.title"),
-    });
+    const dialog = dialogFactory().fromHtml(html).asAlert();
+    dialog.show(Language.get("wcf.global.error.title"));
   }
 }
 

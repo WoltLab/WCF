@@ -190,7 +190,18 @@
 						</a>
 					</li>
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
-						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip">{icon name='triangle-exclamation'} <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+						<li>
+							<button
+								type="button"
+								title="{lang}wcf.moderation.report.reportContent{/lang}"
+								class="button jsTooltip"
+								data-report-content="com.woltlab.wcf.article"
+								data-object-id="{$articleContent->articleID}"
+							>
+								{icon name='triangle-exclamation'}
+								<span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span>
+							</button>
+						</li>
 					{/if}
 					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
 						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}">{icon name='face-smile'} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
@@ -328,7 +339,6 @@
 				'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
 				'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 			});
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.article', '.jsReportArticle');
 		});
 	</script>
 {/if}

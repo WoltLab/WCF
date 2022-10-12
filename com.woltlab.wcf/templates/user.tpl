@@ -108,7 +108,6 @@
 					'wcf.moderation.report.reportContent': '{jslang}wcf.user.profile.report{/jslang}',
 					'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 				});
-				new WCF.Moderation.Report.Content('com.woltlab.wcf.user', '.jsReportUser');
 			{/if}
 			
 			{event name='javascriptInit'}
@@ -305,7 +304,16 @@
 	{/if}
 	
 	{if $user->userID != $__wcf->user->userID && $__wcf->session->getPermission('user.profile.canReportContent')}
-		<li class="jsReportUser" data-object-id="{@$user->userID}"><a href="#">{lang}wcf.user.profile.report{/lang}</a></li>
+		<li>
+			<a
+				href="#"
+				role="button"
+				data-report-content="com.woltlab.wcf.user"
+				data-object-id="{$user->userID}"
+			>
+				{lang}wcf.user.profile.report{/lang}
+			</a>
+		</li>
 	{/if}
 {/capture}
 

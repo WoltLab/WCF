@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Ui/Confirmation (alias)
  * @module  WoltLabSuite/Core/Ui/Confirmation
+ * @deprecated 6.0 Use `confirmationFactory()` instead.
  */
 
 import * as Core from "../Core";
@@ -188,6 +189,7 @@ export type ConfirmationOptions = LegacyConfirmationOptions | NewConfirmationOpt
 
 /**
  * Shows the confirmation dialog.
+ * @deprecated 6.0 Use `confirmationFactory()` instead.
  */
 export function show(options: ConfirmationOptions): void {
   if (getConfirmation().active) {
