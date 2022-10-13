@@ -1904,6 +1904,7 @@ else {
  * @param	string		className
  * @param	string		dialogTitle
  * @param	object		additionalParameters
+ * @deprecated 6.0 use `WoltLabSuite/Core/Component/User/List` instead
  */
 WCF.User.List = Class.extend({
 	/**
