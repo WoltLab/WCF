@@ -333,6 +333,5 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
             };
         }
     }
-    Core.enableLegacyInheritance(AcpUiArticleInlineEditor);
     return AcpUiArticleInlineEditor;
 });

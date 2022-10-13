@@ -8,8 +8,6 @@
  * @module  WoltLabSuite/Core/CallbackList
  */
 
-import * as Core from "./Core";
-
 class CallbackList {
   private readonly _callbacks = new Map<string, Callback[]>();
 
@@ -50,7 +48,5 @@ class CallbackList {
 }
 
 type Callback = (...args: any[]) => void;
-
-Core.enableLegacyInheritance(CallbackList);
 
 export = CallbackList;

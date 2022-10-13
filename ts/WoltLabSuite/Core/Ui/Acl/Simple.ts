@@ -2,7 +2,6 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Core from "../../Core";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
 import DomChangeListener from "../../Dom/Change/Listener";
@@ -137,7 +136,5 @@ class UiAclSimple {
     aclSearchInputLabel!.textContent = Language.get(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
   }
 }
-
-Core.enableLegacyInheritance(UiAclSimple);
 
 export = UiAclSimple;

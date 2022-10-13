@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Core from "../../Core";
 import * as EventHandler from "../../Event/Handler";
 
 class UiSmileyInsert {
@@ -90,7 +89,5 @@ class UiSmileyInsert {
     });
   }
 }
-
-Core.enableLegacyInheritance(UiSmileyInsert);
 
 export = UiSmileyInsert;

@@ -293,6 +293,5 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
             });
         }
     }
-    Core.enableLegacyInheritance(UiColorPicker);
     return UiColorPicker;
 });

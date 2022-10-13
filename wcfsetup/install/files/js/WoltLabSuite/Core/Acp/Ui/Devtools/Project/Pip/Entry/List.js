@@ -6,10 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List
  */
-define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../../../Core", "../../../../../../Language", "../../../../../../Ui/Confirmation", "../../../../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Core, Language, Confirmation_1, UiNotification) {
+define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../../../Language", "../../../../../../Ui/Confirmation", "../../../../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Language, Confirmation_1, UiNotification) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     UiNotification = tslib_1.__importStar(UiNotification);
     class DevtoolsProjectPipEntryList {
@@ -114,6 +113,5 @@ define(["require", "exports", "tslib", "../../../../../../Ajax", "../../../../..
             });
         }
     }
-    Core.enableLegacyInheritance(DevtoolsProjectPipEntryList);
     return DevtoolsProjectPipEntryList;
 });

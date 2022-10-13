@@ -281,27 +281,15 @@ export function debounce<F extends DebounceCallback>(
   };
 }
 
+/**
+ * @deprecated 6.0
+ */
 export function enableLegacyInheritance<T>(legacyClass: T): void {
-  (legacyClass as any).call = function (thisValue, ...args) {
-    if (window.ENABLE_DEVELOPER_TOOLS) {
-      console.log("Relying on legacy inheritance for ", legacyClass, thisValue);
-    }
-
-    const constructed = Reflect.construct(legacyClass as any, args, thisValue.constructor);
-    Object.entries(constructed).forEach(([key, value]) => {
-      if (typeof value === "function") {
-        value = value.bind(thisValue);
-      }
-
-      thisValue[key] = value;
-    });
-
-    for (const key in thisValue) {
-      if (typeof thisValue[key] === "function") {
-        constructed[key] = thisValue[key].bind(thisValue);
-      }
-    }
-  };
+  // This MUST NOT be an error to prevent bricking installations during the upgrade.
+  console.error(
+    "Relying on the legacy inheritance is no longer supported. Please migrate your code to use ES6 classes and inheritance.",
+    legacyClass,
+  );
 }
 
 export function getXsrfToken(): string {

@@ -8,11 +8,10 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/ValueI18n
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field", "../../../Language/Input", "../../../Core"], function (require, exports, tslib_1, Field_1, LanguageInput, Core) {
+define(["require", "exports", "tslib", "./Field", "../../../Language/Input"], function (require, exports, tslib_1, Field_1, LanguageInput) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
     LanguageInput = tslib_1.__importStar(LanguageInput);
-    Core = tslib_1.__importStar(Core);
     class ValueI18n extends Field_1.default {
         _getData() {
             const data = {};
@@ -34,6 +33,5 @@ define(["require", "exports", "tslib", "./Field", "../../../Language/Input", "..
             LanguageInput.unregister(this._fieldId);
         }
     }
-    Core.enableLegacyInheritance(ValueI18n);
     return ValueI18n;
 });

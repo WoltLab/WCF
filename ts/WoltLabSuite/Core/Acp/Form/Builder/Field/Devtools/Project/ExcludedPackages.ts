@@ -82,6 +82,4 @@ class ExcludedPackages<
   }
 }
 
-Core.enableLegacyInheritance(ExcludedPackages);
-
 export = ExcludedPackages;

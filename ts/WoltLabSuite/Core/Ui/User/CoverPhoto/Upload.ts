@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
 import * as EventHandler from "../../../Event/Handler";
 import { ResponseData } from "../../../Ajax/Data";
@@ -64,7 +63,5 @@ class UiUserCoverPhotoUpload extends Upload {
     }
   }
 }
-
-Core.enableLegacyInheritance(UiUserCoverPhotoUpload);
 
 export = UiUserCoverPhotoUpload;

@@ -372,6 +372,4 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   }
 }
 
-Core.enableLegacyInheritance(MediaManagerEditor);
-
 export = MediaManagerEditor;

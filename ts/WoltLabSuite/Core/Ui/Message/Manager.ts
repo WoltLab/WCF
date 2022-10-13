@@ -284,6 +284,4 @@ class UiMessageManager implements AjaxCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiMessageManager);
-
 export = UiMessageManager;

@@ -95,6 +95,4 @@ class MediaReplace extends MediaUpload {
   }
 }
 
-Core.enableLegacyInheritance(MediaReplace);
-
 export = MediaReplace;

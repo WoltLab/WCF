@@ -10,7 +10,6 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackSetup } from "../../../Ajax/Data";
-import * as Core from "../../../Core";
 import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
@@ -114,7 +113,5 @@ class AcpUiPackagePrepareInstallation {
     };
   }
 }
-
-Core.enableLegacyInheritance(AcpUiPackagePrepareInstallation);
 
 export = AcpUiPackagePrepareInstallation;

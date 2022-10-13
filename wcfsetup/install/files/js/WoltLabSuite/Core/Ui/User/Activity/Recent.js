@@ -80,6 +80,5 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             };
         }
     }
-    Core.enableLegacyInheritance(UiUserActivityRecent);
     return UiUserActivityRecent;
 });

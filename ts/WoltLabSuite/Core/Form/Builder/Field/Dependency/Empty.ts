@@ -10,7 +10,6 @@
  */
 
 import Abstract from "./Abstract";
-import * as Core from "../../../../Core";
 
 class Empty extends Abstract {
   public checkDependency(): boolean {
@@ -53,7 +52,5 @@ class Empty extends Abstract {
     return this._fields.every((field: HTMLInputElement) => !field.checked);
   }
 }
-
-Core.enableLegacyInheritance(Empty);
 
 export = Empty;

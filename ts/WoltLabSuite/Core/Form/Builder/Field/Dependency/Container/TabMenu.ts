@@ -14,7 +14,6 @@ import Abstract from "./Abstract";
 import * as DependencyManager from "../Manager";
 import * as DomUtil from "../../../../../Dom/Util";
 import * as UiTabMenu from "../../../../../Ui/TabMenu";
-import * as Core from "../../../../../Core";
 
 class TabMenu extends Abstract {
   public checkContainer(): void {
@@ -44,7 +43,5 @@ class TabMenu extends Abstract {
     }
   }
 }
-
-Core.enableLegacyInheritance(TabMenu);
 
 export = TabMenu;

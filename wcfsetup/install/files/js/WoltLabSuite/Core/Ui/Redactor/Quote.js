@@ -243,6 +243,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
             };
         }
     }
-    Core.enableLegacyInheritance(UiRedactorQuote);
     return UiRedactorQuote;
 });

@@ -1,4 +1,3 @@
-import * as Core from "../../../Core";
 import * as UiPageSearch from "../../../Ui/Page/Search";
 
 class AcpUiCodeMirrorPage {
@@ -21,7 +20,5 @@ class AcpUiCodeMirrorPage {
     (this.element as any).codemirror.replaceSelection(`{{ page="${pageID}" }}`);
   }
 }
-
-Core.enableLegacyInheritance(AcpUiCodeMirrorPage);
 
 export = AcpUiCodeMirrorPage;

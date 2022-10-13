@@ -139,6 +139,4 @@ class UiCommentResponseEdit extends UiCommentEdit {
   }
 }
 
-Core.enableLegacyInheritance(UiCommentResponseEdit);
-
 export = UiCommentResponseEdit;

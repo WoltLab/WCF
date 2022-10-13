@@ -10,7 +10,6 @@
 
 import UiSimpleDropdown from "../../../Ui/Dropdown/Simple";
 import * as EventHandler from "../../../Event/Handler";
-import * as Core from "../../../Core";
 
 type DestroyDropdownData = {
   formId: string;
@@ -57,8 +56,7 @@ class SuffixFormField {
     });
 
     this._suffixField.value = target.dataset.value!;
-    this._suffixDropdownToggle.innerHTML =
-      target.dataset.label! + ' <fa-icon name="caret-down" solid></fa-icon>';
+    this._suffixDropdownToggle.innerHTML = target.dataset.label! + ' <fa-icon name="caret-down" solid></fa-icon>';
   }
 
   /**
@@ -70,7 +68,5 @@ class SuffixFormField {
     }
   }
 }
-
-Core.enableLegacyInheritance(SuffixFormField);
 
 export = SuffixFormField;

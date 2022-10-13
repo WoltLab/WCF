@@ -364,8 +364,6 @@ class UiSearchInput {
   }
 }
 
-Core.enableLegacyInheritance(UiSearchInput);
-
 export = UiSearchInput;
 
 interface ListItemData {

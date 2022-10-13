@@ -8,7 +8,6 @@
  * @since 5.2
  */
 
-import * as Core from "../../../../Core";
 import * as Environment from "../../../../Environment";
 
 class Rating {
@@ -120,7 +119,5 @@ class Rating {
     }
   }
 }
-
-Core.enableLegacyInheritance(Rating);
 
 export = Rating;

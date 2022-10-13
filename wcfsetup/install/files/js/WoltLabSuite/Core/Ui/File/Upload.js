@@ -202,6 +202,5 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
             }
         }
     }
-    Core.enableLegacyInheritance(FileUpload);
     return FileUpload;
 });

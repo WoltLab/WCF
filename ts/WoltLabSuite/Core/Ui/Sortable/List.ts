@@ -85,6 +85,4 @@ class UiSortableList {
   }
 }
 
-Core.enableLegacyInheritance(UiSortableList);
-
 export = UiSortableList;

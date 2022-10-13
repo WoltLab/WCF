@@ -255,6 +255,4 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(FormBuilderDialog);
-
 export = FormBuilderDialog;

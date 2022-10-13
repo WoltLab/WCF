@@ -11,7 +11,6 @@
 import Field from "./Field";
 import * as UiItemList from "../../../Ui/ItemList";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class Tag extends Field {
   protected _getData(): FormBuilderData {
@@ -22,7 +21,5 @@ class Tag extends Field {
     };
   }
 }
-
-Core.enableLegacyInheritance(Tag);
 
 export = Tag;

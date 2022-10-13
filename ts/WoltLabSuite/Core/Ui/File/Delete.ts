@@ -179,6 +179,4 @@ class UiFileDelete implements AjaxCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiFileDelete);
-
 export = UiFileDelete;

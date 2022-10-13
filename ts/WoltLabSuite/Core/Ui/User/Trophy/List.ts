@@ -10,7 +10,6 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
-import * as Core from "../../../Core";
 import { DialogCallbackObject, DialogData, DialogCallbackSetup } from "../../Dialog/Data";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import UiDialog from "../../Dialog";
@@ -145,8 +144,6 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 }
-
-Core.enableLegacyInheritance(UiUserTrophyList);
 
 export = UiUserTrophyList;
 

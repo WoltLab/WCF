@@ -541,6 +541,5 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             return true;
         }
     }
-    Core.enableLegacyInheritance(Instructions);
     return Instructions;
 });

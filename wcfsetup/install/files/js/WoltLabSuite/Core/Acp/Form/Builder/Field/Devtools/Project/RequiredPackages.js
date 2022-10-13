@@ -63,6 +63,5 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
             return super.validateInput() && this.validateVersion(this.minVersion);
         }
     }
-    Core.enableLegacyInheritance(RequiredPackages);
     return RequiredPackages;
 });

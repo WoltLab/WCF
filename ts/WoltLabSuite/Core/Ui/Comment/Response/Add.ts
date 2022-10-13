@@ -122,6 +122,4 @@ class UiCommentResponseAdd extends UiCommentAdd {
   }
 }
 
-Core.enableLegacyInheritance(UiCommentResponseAdd);
-
 export = UiCommentResponseAdd;

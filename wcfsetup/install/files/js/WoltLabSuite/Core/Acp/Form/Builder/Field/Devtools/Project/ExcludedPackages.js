@@ -64,6 +64,5 @@ define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../
             return true;
         }
     }
-    Core.enableLegacyInheritance(ExcludedPackages);
     return ExcludedPackages;
 });

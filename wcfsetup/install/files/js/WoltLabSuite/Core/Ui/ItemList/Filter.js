@@ -307,6 +307,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
             }
         }
     }
-    Core.enableLegacyInheritance(UiItemListFilter);
     return UiItemListFilter;
 });

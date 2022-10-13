@@ -9,13 +9,12 @@
  * @see module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since	5.2
  */
-define(["require", "exports", "tslib", "./Abstract", "../Manager", "../../../../../Dom/Util", "../../../../../Ui/TabMenu", "../../../../../Core"], function (require, exports, tslib_1, Abstract_1, DependencyManager, DomUtil, UiTabMenu, Core) {
+define(["require", "exports", "tslib", "./Abstract", "../Manager", "../../../../../Dom/Util", "../../../../../Ui/TabMenu"], function (require, exports, tslib_1, Abstract_1, DependencyManager, DomUtil, UiTabMenu) {
     "use strict";
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     DependencyManager = tslib_1.__importStar(DependencyManager);
     DomUtil = tslib_1.__importStar(DomUtil);
     UiTabMenu = tslib_1.__importStar(UiTabMenu);
-    Core = tslib_1.__importStar(Core);
     class TabMenu extends Abstract_1.default {
         checkContainer() {
             // only consider containers that have not been hidden by their own dependencies
@@ -39,6 +38,5 @@ define(["require", "exports", "tslib", "./Abstract", "../Manager", "../../../../
             }
         }
     }
-    Core.enableLegacyInheritance(TabMenu);
     return TabMenu;
 });

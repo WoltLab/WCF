@@ -9,9 +9,8 @@
  * @module  ObjectMap (alias)
  * @module  WoltLabSuite/Core/ObjectMap
  */
-define(["require", "exports", "tslib", "./Core"], function (require, exports, tslib_1, Core) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     /** @deprecated 5.4 Use a `WeakMap` instead. */
     class ObjectMap {
         _map = new WeakMap();
@@ -46,6 +45,5 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
             return this._map.get(key);
         }
     }
-    Core.enableLegacyInheritance(ObjectMap);
     return ObjectMap;
 });

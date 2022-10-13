@@ -45,6 +45,5 @@ define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../
             }
         }
     }
-    Core.enableLegacyInheritance(Default);
     return Default;
 });

@@ -307,6 +307,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             return options;
         }
     }
-    Core.enableLegacyInheritance(UiPollEditor);
     return UiPollEditor;
 });

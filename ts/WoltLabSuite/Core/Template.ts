@@ -7,7 +7,6 @@
  * @module  WoltLabSuite/Core/Template
  */
 
-import * as Core from "./Core";
 import * as I18nPlural from "./I18n/Plural";
 import * as LanguageStore from "./Language/Store";
 import * as StringUtil from "./StringUtil";
@@ -53,7 +52,5 @@ Object.defineProperty(Template, "callbacks", {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
 });
-
-Core.enableLegacyInheritance(Template);
 
 export = Template;

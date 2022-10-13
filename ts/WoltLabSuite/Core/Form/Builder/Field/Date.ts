@@ -10,7 +10,6 @@
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
 import DatePicker from "../../../Date/Picker";
-import * as Core from "../../../Core";
 
 class Date extends Field {
   protected _getData(): FormBuilderData {
@@ -19,7 +18,5 @@ class Date extends Field {
     };
   }
 }
-
-Core.enableLegacyInheritance(Date);
 
 export = Date;

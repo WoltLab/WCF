@@ -279,6 +279,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
             });
         }
     }
-    Core.enableLegacyInheritance(UiRedactorAutosave);
     return UiRedactorAutosave;
 });

@@ -7,10 +7,9 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Acl
  * @since 5.2.3
  */
-define(["require", "exports", "tslib", "./Field", "../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
+define(["require", "exports", "tslib", "./Field"], function (require, exports, tslib_1, Field_1) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
-    Core = tslib_1.__importStar(Core);
     class Acl extends Field_1.default {
         _aclList;
         _getData() {
@@ -26,6 +25,5 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
             return this;
         }
     }
-    Core.enableLegacyInheritance(Acl);
     return Acl;
 });

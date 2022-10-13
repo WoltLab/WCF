@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Core from "../../Core";
 import * as UiPageSearch from "../Page/Search";
 import { RedactorEditor } from "./Editor";
 
@@ -33,7 +32,5 @@ class UiRedactorPage {
     this._editor.insert.text(`[wsp='${pageId}'][/wsp]`);
   }
 }
-
-Core.enableLegacyInheritance(UiRedactorPage);
 
 export = UiRedactorPage;

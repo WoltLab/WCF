@@ -4,7 +4,6 @@
 
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackSetup, ResponseData } from "../../Ajax/Data";
-import * as Core from "../../Core";
 import * as StringUtil from "../../StringUtil";
 import UiCloseOverlay from "../CloseOverlay";
 import { RedactorEditor, WoltLabEventData } from "./Editor";
@@ -446,7 +445,5 @@ class UiRedactorMention {
     this._updateDropdownPosition();
   }
 }
-
-Core.enableLegacyInheritance(UiRedactorMention);
 
 export = UiRedactorMention;

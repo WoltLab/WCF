@@ -14,7 +14,6 @@ import { Media } from "../Data";
 import * as DomTraverse from "../../Dom/Traverse";
 import * as Language from "../../Language";
 import * as Ajax from "../../Ajax";
-import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
 
 interface AjaxResponseData {
@@ -179,7 +178,5 @@ class MediaManagerSearch implements AjaxCallbackObject {
     });
   }
 }
-
-Core.enableLegacyInheritance(MediaManagerSearch);
 
 export = MediaManagerSearch;

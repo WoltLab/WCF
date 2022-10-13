@@ -284,6 +284,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Controller/Captcha",
             this._hideLoadingOverlay();
         }
     }
-    Core.enableLegacyInheritance(UiCommentAdd);
     return UiCommentAdd;
 });

@@ -9,14 +9,11 @@
  */
 
 import Value from "../Value";
-import * as Core from "../../../../Core";
 
 class Attachment extends Value {
   constructor(fieldId: string) {
     super(fieldId + "_tmpHash");
   }
 }
-
-Core.enableLegacyInheritance(Attachment);
 
 export = Attachment;

@@ -10,7 +10,6 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 import * as UiItemList from "../../../Ui/ItemList";
 
 class User extends Field {
@@ -22,7 +21,5 @@ class User extends Field {
     };
   }
 }
-
-Core.enableLegacyInheritance(User);
 
 export = User;

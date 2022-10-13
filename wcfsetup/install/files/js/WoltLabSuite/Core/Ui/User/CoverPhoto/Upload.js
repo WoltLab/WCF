@@ -7,9 +7,8 @@
  * @module  WoltLabSuite/Core/Ui/User/CoverPhoto/Upload
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../Dialog", "../../Notification", "../../../Upload"], function (require, exports, tslib_1, Core, Util_1, EventHandler, UiDialog, UiNotification, Upload_1) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Event/Handler", "../../Dialog", "../../Notification", "../../../Upload"], function (require, exports, tslib_1, Util_1, EventHandler, UiDialog, UiNotification, Upload_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiDialog = tslib_1.__importStar(UiDialog);
@@ -48,6 +47,5 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
             }
         }
     }
-    Core.enableLegacyInheritance(UiUserCoverPhotoUpload);
     return UiUserCoverPhotoUpload;
 });

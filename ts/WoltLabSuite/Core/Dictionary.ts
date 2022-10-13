@@ -13,8 +13,6 @@
  * @module  WoltLabSuite/Core/Dictionary
  */
 
-import * as Core from "./Core";
-
 /** @deprecated 5.4 Use a `Map` instead. */
 class Dictionary<T> {
   private readonly _dictionary = new Map<number | string, T>();
@@ -99,7 +97,5 @@ class Dictionary<T> {
     return this._dictionary.size;
   }
 }
-
-Core.enableLegacyInheritance(Dictionary);
 
 export = Dictionary;

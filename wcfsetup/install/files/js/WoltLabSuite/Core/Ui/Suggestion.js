@@ -204,6 +204,5 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
             }
         }
     }
-    Core.enableLegacyInheritance(UiSuggestion);
     return UiSuggestion;
 });

@@ -72,6 +72,5 @@ define(["require", "exports", "tslib", "../Core", "./Upload", "../Language", "..
             });
         }
     }
-    Core.enableLegacyInheritance(MediaReplace);
     return MediaReplace;
 });

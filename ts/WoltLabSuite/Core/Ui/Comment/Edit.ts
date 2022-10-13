@@ -325,6 +325,4 @@ class UiCommentEdit {
   }
 }
 
-Core.enableLegacyInheritance(UiCommentEdit);
-
 export = UiCommentEdit;

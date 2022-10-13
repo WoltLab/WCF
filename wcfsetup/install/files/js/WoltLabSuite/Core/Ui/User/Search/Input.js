@@ -37,6 +37,5 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
             return listItem;
         }
     }
-    Core.enableLegacyInheritance(UiUserSearchInput);
     return UiUserSearchInput;
 });

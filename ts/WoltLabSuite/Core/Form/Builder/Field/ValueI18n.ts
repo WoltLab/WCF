@@ -12,7 +12,6 @@
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
 import * as LanguageInput from "../../../Language/Input";
-import * as Core from "../../../Core";
 
 class ValueI18n extends Field {
   protected _getData(): FormBuilderData {
@@ -38,7 +37,5 @@ class ValueI18n extends Field {
     LanguageInput.unregister(this._fieldId);
   }
 }
-
-Core.enableLegacyInheritance(ValueI18n);
 
 export = ValueI18n;

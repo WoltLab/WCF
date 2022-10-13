@@ -194,6 +194,4 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(AcpUiWorker);
-
 export = AcpUiWorker;

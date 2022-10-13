@@ -8,7 +8,6 @@
  */
 
 import * as Ajax from "../../../../../../Ajax";
-import * as Core from "../../../../../../Core";
 import * as Language from "../../../../../../Language";
 import { ConfirmationCallbackParameters, show as showConfirmation } from "../../../../../../Ui/Confirmation";
 import * as UiNotification from "../../../../../../Ui/Notification";
@@ -136,7 +135,5 @@ class DevtoolsProjectPipEntryList {
     });
   }
 }
-
-Core.enableLegacyInheritance(DevtoolsProjectPipEntryList);
 
 export = DevtoolsProjectPipEntryList;

@@ -7,10 +7,9 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Wysiwyg/Poll
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../Field", "../../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
+define(["require", "exports", "tslib", "../Field"], function (require, exports, tslib_1, Field_1) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
-    Core = tslib_1.__importStar(Core);
     class Poll extends Field_1.default {
         _pollEditor;
         _getData() {
@@ -23,6 +22,5 @@ define(["require", "exports", "tslib", "../Field", "../../../../Core"], function
             this._pollEditor = pollEditor;
         }
     }
-    Core.enableLegacyInheritance(Poll);
     return Poll;
 });

@@ -215,6 +215,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener"
             return button;
         }
     }
-    Core.enableLegacyInheritance(UiLikeHandler);
     return UiLikeHandler;
 });

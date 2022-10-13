@@ -7,9 +7,8 @@
  * @module  WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../../../../../Core", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util"], function (require, exports, tslib_1, Core, Language, DomTraverse, Listener_1, Util_1) {
+define(["require", "exports", "tslib", "../../../../../../Language", "../../../../../../Dom/Traverse", "../../../../../../Dom/Change/Listener", "../../../../../../Dom/Util"], function (require, exports, tslib_1, Language, DomTraverse, Listener_1, Util_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Listener_1 = tslib_1.__importDefault(Listener_1);
@@ -194,6 +193,5 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             return true;
         }
     }
-    Core.enableLegacyInheritance(AbstractPackageList);
     return AbstractPackageList;
 });

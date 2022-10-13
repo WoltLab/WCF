@@ -71,6 +71,4 @@ class TrophyUpload extends Upload {
   }
 }
 
-Core.enableLegacyInheritance(TrophyUpload);
-
 export = TrophyUpload;

@@ -159,6 +159,5 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             }
         }
     }
-    Core.enableLegacyInheritance(MediaManagerSelect);
     return MediaManagerSelect;
 });

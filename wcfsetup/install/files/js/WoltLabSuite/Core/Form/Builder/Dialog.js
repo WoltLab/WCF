@@ -197,6 +197,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             }
         }
     }
-    Core.enableLegacyInheritance(FormBuilderDialog);
     return FormBuilderDialog;
 });

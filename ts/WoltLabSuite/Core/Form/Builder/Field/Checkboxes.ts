@@ -10,7 +10,6 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class Checkboxes extends Field {
   protected _fields: HTMLInputElement[];
@@ -35,7 +34,5 @@ class Checkboxes extends Field {
     this._fields = Array.from(document.querySelectorAll(`input[name="${this._fieldId}[]"]`));
   }
 }
-
-Core.enableLegacyInheritance(Checkboxes);
 
 export = Checkboxes;

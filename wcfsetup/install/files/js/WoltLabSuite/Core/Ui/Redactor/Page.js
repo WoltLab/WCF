@@ -7,9 +7,8 @@
  * @module  WoltLabSuite/Core/Ui/Redactor/Page
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../Page/Search"], function (require, exports, tslib_1, Core, UiPageSearch) {
+define(["require", "exports", "tslib", "../Page/Search"], function (require, exports, tslib_1, UiPageSearch) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     UiPageSearch = tslib_1.__importStar(UiPageSearch);
     class UiRedactorPage {
         _editor;
@@ -26,6 +25,5 @@ define(["require", "exports", "tslib", "../../Core", "../Page/Search"], function
             this._editor.insert.text(`[wsp='${pageId}'][/wsp]`);
         }
     }
-    Core.enableLegacyInheritance(UiRedactorPage);
     return UiRedactorPage;
 });

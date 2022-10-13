@@ -54,6 +54,5 @@ define(["require", "exports", "tslib", "../../Core", "../Screen"], function (req
                 .jQuery(`#${this._options.containerId} .sortableList`)[this._options.isSimpleSorting ? "sortable" : "nestedSortable"]("destroy");
         }
     }
-    Core.enableLegacyInheritance(UiSortableList);
     return UiSortableList;
 });

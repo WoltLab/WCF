@@ -10,7 +10,6 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class RadioButton extends Field {
   protected _fields: HTMLInputElement[];
@@ -34,7 +33,5 @@ class RadioButton extends Field {
     this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
   }
 }
-
-Core.enableLegacyInheritance(RadioButton);
 
 export = RadioButton;

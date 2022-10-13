@@ -8,7 +8,6 @@
  * @since 5.2
  */
 
-import * as Core from "../../../Core";
 import { FormBuilderData } from "../Data";
 
 class Field {
@@ -72,7 +71,5 @@ class Field {
     return this._fieldId;
   }
 }
-
-Core.enableLegacyInheritance(Field);
 
 export = Field;

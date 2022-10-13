@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Core from "../../Core";
 import * as EventHandler from "../../Event/Handler";
 import * as Language from "../../Language";
 import { RedactorEditor } from "./Editor";
@@ -89,7 +88,5 @@ class UiRedactorHtml {
     });
   }
 }
-
-Core.enableLegacyInheritance(UiRedactorHtml);
 
 export = UiRedactorHtml;

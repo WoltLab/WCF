@@ -9,7 +9,6 @@
  */
 
 import * as DependencyManager from "./Manager";
-import * as Core from "../../../../Core";
 
 abstract class FormBuilderFormFieldDependency {
   protected _dependentElement: HTMLElement;
@@ -99,7 +98,5 @@ abstract class FormBuilderFormFieldDependency {
     DependencyManager.addDependency(this);
   }
 }
-
-Core.enableLegacyInheritance(FormBuilderFormFieldDependency);
 
 export = FormBuilderFormFieldDependency;

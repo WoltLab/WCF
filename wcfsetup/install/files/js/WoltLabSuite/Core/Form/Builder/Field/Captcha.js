@@ -7,11 +7,10 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Captcha
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field", "../../../Controller/Captcha", "../../../Core"], function (require, exports, tslib_1, Field_1, Captcha_1, Core) {
+define(["require", "exports", "tslib", "./Field", "../../../Controller/Captcha"], function (require, exports, tslib_1, Field_1, Captcha_1) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
     Captcha_1 = tslib_1.__importDefault(Captcha_1);
-    Core = tslib_1.__importStar(Core);
     class Captcha extends Field_1.default {
         _getData() {
             if (Captcha_1.default.has(this._fieldId)) {
@@ -28,6 +27,5 @@ define(["require", "exports", "tslib", "./Field", "../../../Controller/Captcha",
             }
         }
     }
-    Core.enableLegacyInheritance(Captcha);
     return Captcha;
 });

@@ -1,6 +1,5 @@
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class SimpleAcl extends Field {
   protected _getData(): FormBuilderData {
@@ -24,7 +23,5 @@ class SimpleAcl extends Field {
     // does nothing
   }
 }
-
-Core.enableLegacyInheritance(SimpleAcl);
 
 export = SimpleAcl;

@@ -7,10 +7,9 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Dialog_1, Util_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Util_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -95,6 +94,5 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             };
         }
     }
-    Core.enableLegacyInheritance(AcpUiPackagePrepareInstallation);
     return AcpUiPackagePrepareInstallation;
 });

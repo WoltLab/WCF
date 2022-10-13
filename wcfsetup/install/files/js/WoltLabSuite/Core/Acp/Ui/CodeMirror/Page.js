@@ -1,6 +1,5 @@
-define(["require", "exports", "tslib", "../../../Core", "../../../Ui/Page/Search"], function (require, exports, tslib_1, Core, UiPageSearch) {
+define(["require", "exports", "tslib", "../../../Ui/Page/Search"], function (require, exports, tslib_1, UiPageSearch) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     UiPageSearch = tslib_1.__importStar(UiPageSearch);
     class AcpUiCodeMirrorPage {
         element;
@@ -17,6 +16,5 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Ui/Page/Search
             this.element.codemirror.replaceSelection(`{{ page="${pageID}" }}`);
         }
     }
-    Core.enableLegacyInheritance(AcpUiCodeMirrorPage);
     return AcpUiCodeMirrorPage;
 });

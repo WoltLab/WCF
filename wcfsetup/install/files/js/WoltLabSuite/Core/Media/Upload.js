@@ -256,6 +256,5 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
             });
         }
     }
-    Core.enableLegacyInheritance(MediaUpload);
     return MediaUpload;
 });

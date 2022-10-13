@@ -7,9 +7,8 @@
  * @module  WoltLabSuite/Core/Media/Editor
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "../Language", "../Ajax", "./Replace"], function (require, exports, tslib_1, Core, UiNotification, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language, Ajax, Replace_1) {
+define(["require", "exports", "tslib", "../Ui/Notification", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "../Language", "../Ajax", "./Replace"], function (require, exports, tslib_1, UiNotification, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language, Ajax, Replace_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     UiNotification = tslib_1.__importStar(UiNotification);
     UiDialog = tslib_1.__importStar(UiDialog);
     LanguageChooser = tslib_1.__importStar(LanguageChooser);
@@ -344,6 +343,5 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
             }
         }
     }
-    Core.enableLegacyInheritance(MediaEditor);
     return MediaEditor;
 });

@@ -102,6 +102,5 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util
             this._input.value = labelId;
         }
     }
-    Core.enableLegacyInheritance(Label);
     return Label;
 });

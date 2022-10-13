@@ -11,7 +11,6 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackSetup, ResponseData } from "../../../Ajax/Data";
-import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
 import * as Language from "../../../Language";
 
@@ -188,7 +187,5 @@ class UiReactionProfileLoader {
     };
   }
 }
-
-Core.enableLegacyInheritance(UiReactionProfileLoader);
 
 export = UiReactionProfileLoader;

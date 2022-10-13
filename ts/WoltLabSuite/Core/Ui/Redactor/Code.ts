@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
 import * as EventHandler from "../../Event/Handler";
 import * as Language from "../../Language";
@@ -264,12 +263,12 @@ class UiRedactorCode implements DialogCallbackObject {
           <button type="button" id="${idButtonSave}" class="button buttonPrimary" data-type="submit">${Language.get(
         "wcf.global.button.save",
       )}</button>
-          <button type="button" id="${idButtonDelete}" class="button">${Language.get("wcf.global.button.delete")}</button>
+          <button type="button" id="${idButtonDelete}" class="button">${Language.get(
+        "wcf.global.button.delete",
+      )}</button>
         </div>`,
     };
   }
 }
-
-Core.enableLegacyInheritance(UiRedactorCode);
 
 export = UiRedactorCode;

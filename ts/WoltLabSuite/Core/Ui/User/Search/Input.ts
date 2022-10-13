@@ -47,8 +47,6 @@ class UiUserSearchInput extends UiSearchInput {
   }
 }
 
-Core.enableLegacyInheritance(UiUserSearchInput);
-
 export = UiUserSearchInput;
 
 // https://stackoverflow.com/a/50677584/782822

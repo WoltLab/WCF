@@ -8,11 +8,10 @@
  * @see module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../Core"], function (require, exports, tslib_1, Abstract_1, DependencyManager, Core) {
+define(["require", "exports", "tslib", "./Abstract", "./Manager"], function (require, exports, tslib_1, Abstract_1, DependencyManager) {
     "use strict";
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     DependencyManager = tslib_1.__importStar(DependencyManager);
-    Core = tslib_1.__importStar(Core);
     class Value extends Abstract_1.default {
         _isNegated = false;
         _values;
@@ -70,6 +69,5 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../C
             return this;
         }
     }
-    Core.enableLegacyInheritance(Value);
     return Value;
 });

@@ -188,6 +188,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             };
         }
     }
-    Core.enableLegacyInheritance(CountButtons);
     return CountButtons;
 });

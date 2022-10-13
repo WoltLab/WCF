@@ -8,10 +8,9 @@
  * @see module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Abstract", "../../../../Core"], function (require, exports, tslib_1, Abstract_1, Core) {
+define(["require", "exports", "tslib", "./Abstract"], function (require, exports, tslib_1, Abstract_1) {
     "use strict";
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    Core = tslib_1.__importStar(Core);
     class NonEmpty extends Abstract_1.default {
         checkDependency() {
             if (this._field !== null) {
@@ -46,6 +45,5 @@ define(["require", "exports", "tslib", "./Abstract", "../../../../Core"], functi
             return this._fields.some((field) => field.checked);
         }
     }
-    Core.enableLegacyInheritance(NonEmpty);
     return NonEmpty;
 });

@@ -7,11 +7,10 @@
  * @module  WoltLabSuite/Core/Form/Builder/Container/SuffixFormField
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../Event/Handler", "../../../Core"], function (require, exports, tslib_1, Simple_1, EventHandler, Core) {
+define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../Event/Handler"], function (require, exports, tslib_1, Simple_1, EventHandler) {
     "use strict";
     Simple_1 = tslib_1.__importDefault(Simple_1);
     EventHandler = tslib_1.__importStar(EventHandler);
-    Core = tslib_1.__importStar(Core);
     class SuffixFormField {
         _formId;
         _suffixField;
@@ -44,8 +43,7 @@ define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../
                 }
             });
             this._suffixField.value = target.dataset.value;
-            this._suffixDropdownToggle.innerHTML =
-                target.dataset.label + ' <fa-icon name="caret-down" solid></fa-icon>';
+            this._suffixDropdownToggle.innerHTML = target.dataset.label + ' <fa-icon name="caret-down" solid></fa-icon>';
         }
         /**
          * Destroys the suffix dropdown if the parent form is unregistered.
@@ -56,6 +54,5 @@ define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../
             }
         }
     }
-    Core.enableLegacyInheritance(SuffixFormField);
     return SuffixFormField;
 });
