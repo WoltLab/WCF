@@ -15,7 +15,6 @@ import { dialogFactory } from "../Dialog";
 export class UserList {
   readonly #options: AjaxRequestOptions;
   readonly #dialogTitle: string;
-  readonly #cache = new Map<number, string>();
   #pageNo = 1;
   #pageCount = 0;
   #dialog?: WoltlabCoreDialogElement;
@@ -27,46 +26,37 @@ export class UserList {
 
   open(): void {
     this.#pageNo = 1;
-    this.#showPage();
+    void this.#loadPage(this.#pageNo);
   }
 
-  #showPage(pageNo?: number): void {
+  #showPage(pageNo: number, template: string): void {
     if (pageNo) {
       this.#pageNo = pageNo;
     }
 
-    if (this.#pageCount !== 0 && (this.#pageNo < 1 || this.#pageNo > this.#pageCount)) {
-      throw new RangeError(`pageNo must be between 1 and ${this.#pageCount} (${this.#pageNo} given).`);
-    }
+    const dialog = this.#getDialog();
+    dialog.content.innerHTML = template;
+    dialog.show(this.#dialogTitle);
 
-    if (this.#cache.has(this.#pageNo)) {
-      const dialog = this.#getDialog();
-      dialog.content.innerHTML = this.#cache.get(this.#pageNo)!;
-      dialog.show(this.#dialogTitle);
-
-      if (this.#pageCount > 1) {
-        const element = dialog.content.querySelector(".jsPagination") as HTMLElement;
-        if (element !== null) {
-          new UiPagination(element, {
-            activePage: this.#pageNo,
-            maxPage: this.#pageCount,
-            callbackSwitch: (pageNo) => this.#showPage(pageNo),
-          });
-        }
-
-        // scroll to the list start
-        /* todo: still necessary?
-        const container = dialog.content.parentElement!;
-        if (container.scrollTop > 0) {
-          container.scrollTop = 0;
-        }*/
+    if (this.#pageCount > 1) {
+      const element = dialog.content.querySelector(".jsPagination") as HTMLElement;
+      if (element !== null) {
+        new UiPagination(element, {
+          activePage: this.#pageNo,
+          maxPage: this.#pageCount,
+          callbackSwitch: (pageNo) => {
+            void this.#loadPage(pageNo);
+          },
+        });
       }
-    } else {
-      void this.#loadPage(this.#pageNo);
     }
   }
 
   async #loadPage(pageNo: number): Promise<void> {
+    if (this.#pageCount !== 0 && (pageNo < 1 || pageNo > this.#pageCount)) {
+      throw new RangeError(`pageNo must be between 1 and ${this.#pageCount} (${pageNo} given).`);
+    }
+
     this.#options.parameters.pageNo = pageNo;
 
     const response = (await dboAction("getGroupedUserList", this.#options.className)
@@ -77,8 +67,7 @@ export class UserList {
       this.#pageCount = response.pageCount;
     }
 
-    this.#cache.set(pageNo, response.template);
-    this.#showPage(pageNo);
+    this.#showPage(pageNo, response.template);
   }
 
   #getDialog(): WoltlabCoreDialogElement {
