@@ -11,7 +11,7 @@
 				</ul>
 				
 				{if $followingCount > 7}
-					<a id="followingAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
+					<button type="button" id="followingAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
 				{/if}
 			</div>
 		</section>
@@ -29,7 +29,7 @@
 				</ul>
 					
 				{if $followerCount > 7}
-					<a id="followerAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
+					<button type="button" id="followerAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
 				{/if}
 			</div>
 		</section>
@@ -47,7 +47,7 @@
 				</ul>
 					
 				{if $visitorCount > 7}
-					<a id="visitorAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
+					<button type="button" id="visitorAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
 				{/if}
 			</div>
 		</section>
