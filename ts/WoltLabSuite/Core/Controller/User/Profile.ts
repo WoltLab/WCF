@@ -23,7 +23,7 @@ function setupUserList(userId: number, buttonId: string, className: string): voi
               userID: userId,
             },
           },
-          button.closest("section")!.querySelector(".boxTitle")!.textContent!.replace(/ \d+$/, ""),
+          button.dataset.dialogTitle!,
         );
       }
       userList.open();

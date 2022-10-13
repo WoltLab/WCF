@@ -11,7 +11,7 @@
 				</ul>
 				
 				{if $followingCount > 7}
-					<button type="button" id="followingAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
+					<button type="button" id="followingAll" class="button small more jsOnly" data-dialog-title="{lang}wcf.user.profile.following{/lang}">{lang}wcf.global.button.showAll{/lang}</button>
 				{/if}
 			</div>
 		</section>
@@ -29,7 +29,7 @@
 				</ul>
 					
 				{if $followerCount > 7}
-					<button type="button" id="followerAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
+					<button type="button" id="followerAll" class="button small more jsOnly" data-dialog-title="{lang}wcf.user.profile.followers{/lang}">{lang}wcf.global.button.showAll{/lang}</button>
 				{/if}
 			</div>
 		</section>
@@ -47,7 +47,7 @@
 				</ul>
 					
 				{if $visitorCount > 7}
-					<button type="button" id="visitorAll" class="button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
+					<button type="button" id="visitorAll" class="button small more jsOnly" data-dialog-title="{lang}wcf.user.profile.visitors{/lang}">{lang}wcf.global.button.showAll{/lang}</button>
 				{/if}
 			</div>
 		</section>

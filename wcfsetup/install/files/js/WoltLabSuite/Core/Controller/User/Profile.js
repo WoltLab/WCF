@@ -21,7 +21,7 @@ define(["require", "exports", "../../Component/User/List"], function (require, e
                         parameters: {
                             userID: userId,
                         },
-                    }, button.closest("section").querySelector(".boxTitle").textContent.replace(/ \d+$/, ""));
+                    }, button.dataset.dialogTitle);
                 }
                 userList.open();
             });
