@@ -20,39 +20,33 @@ class GroupedUserList implements \Countable, \Iterator
      * list of user profiles shared across all instances of GroupedUserList
      * @var UserProfile[]
      */
-    protected static $users = [];
+    protected static array $users = [];
 
     /**
      * group name
-     * @var string
      */
-    protected $groupName = '';
+    protected string $groupName = '';
 
     /**
      * current iterator index
-     * @var int
      */
-    protected $index = 0;
+    protected int $index = 0;
 
     /**
      * message displayed if no users are in this group
-     * @var string
      */
-    protected $noUsersMessage = '';
+    protected string $noUsersMessage = '';
 
     /**
      * list of user ids assigned for this group
      * @var int[]
      */
-    protected $userIDs = [];
+    protected array $userIDs = [];
 
     /**
      * Creates a new grouped list of users.
-     *
-     * @param string $groupName
-     * @param string $noUsersMessage
      */
-    public function __construct($groupName = '', $noUsersMessage = '')
+    public function __construct(string $groupName = '', string $noUsersMessage = '')
     {
         $this->groupName = $groupName;
         $this->noUsersMessage = $noUsersMessage;
@@ -60,20 +54,16 @@ class GroupedUserList implements \Countable, \Iterator
 
     /**
      * Returns the group name.
-     *
-     * @return  string
      */
-    public function getGroupName()
+    public function getGroupName(): string
     {
         return $this->groupName;
     }
 
     /**
      * Returns the message if no users are in this group.
-     *
-     * @return  string
      */
-    public function getNoUsersMessage()
+    public function getNoUsersMessage(): string
     {
         return $this->noUsersMessage ? WCF::getLanguage()->get($this->noUsersMessage) : '';
     }
@@ -81,7 +71,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getGroupName();
     }
@@ -91,7 +81,7 @@ class GroupedUserList implements \Countable, \Iterator
      *
      * @param int[] $userIDs
      */
-    public function addUserIDs(array $userIDs)
+    public function addUserIDs(array $userIDs): void
     {
         foreach ($userIDs as $userID) {
             // already added, ignore
@@ -109,7 +99,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * Loads user profiles for outstanding user ids.
      */
-    public static function loadUsers()
+    public static function loadUsers(): void
     {
         $userIDs = [];
         foreach (self::$users as $userID => $user) {
@@ -140,7 +130,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): UserProfile
     {
         $userID = $this->userIDs[$this->index];
 
@@ -153,7 +143,7 @@ class GroupedUserList implements \Countable, \Iterator
      *
      * @see \Iterator::key()
      */
-    public function key()
+    public function key(): int
     {
         return $this->userIDs[$this->index];
     }
@@ -161,7 +151,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -169,7 +159,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -177,7 +167,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->userIDs[$this->index]);
     }
