@@ -1,0 +1,103 @@
+/**
+ * Object-based user list.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Component/User/List
+ */
+
+import { dboAction } from "../../Ajax";
+import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
+import UiPagination from "../../Ui/Pagination";
+import { dialogFactory } from "../Dialog";
+
+export class UserList {
+  readonly #options: AjaxRequestOptions;
+  readonly #dialogTitle: string;
+  readonly #cache = new Map<number, string>();
+  #pageNo = 1;
+  #pageCount = 0;
+  #dialog?: WoltlabCoreDialogElement;
+
+  constructor(options: AjaxRequestOptions, dialogTitle: string) {
+    this.#options = options;
+    this.#dialogTitle = dialogTitle;
+  }
+
+  open(): void {
+    this.#pageNo = 1;
+    this.#showPage();
+  }
+
+  #showPage(pageNo?: number): void {
+    if (pageNo) {
+      this.#pageNo = pageNo;
+    }
+
+    if (this.#pageCount !== 0 && (this.#pageNo < 1 || this.#pageNo > this.#pageCount)) {
+      throw new RangeError(`pageNo must be between 1 and ${this.#pageCount} (${this.#pageNo} given).`);
+    }
+
+    if (this.#cache.has(this.#pageNo)) {
+      const dialog = this.#getDialog();
+      dialog.content.innerHTML = this.#cache.get(this.#pageNo)!;
+      dialog.show(this.#dialogTitle);
+
+      if (this.#pageCount > 1) {
+        const element = dialog.content.querySelector(".jsPagination") as HTMLElement;
+        if (element !== null) {
+          new UiPagination(element, {
+            activePage: this.#pageNo,
+            maxPage: this.#pageCount,
+            callbackSwitch: (pageNo) => this.#showPage(pageNo),
+          });
+        }
+
+        // scroll to the list start
+        /* todo: still necessary?
+        const container = dialog.content.parentElement!;
+        if (container.scrollTop > 0) {
+          container.scrollTop = 0;
+        }*/
+      }
+    } else {
+      void this.#loadPage(this.#pageNo);
+    }
+  }
+
+  async #loadPage(pageNo: number): Promise<void> {
+    this.#options.parameters.pageNo = pageNo;
+
+    const response = (await dboAction("getGroupedUserList", this.#options.className)
+      .payload(this.#options.parameters)
+      .dispatch()) as ResponseGetGroupedUserList;
+
+    if (response.pageCount) {
+      this.#pageCount = response.pageCount;
+    }
+
+    this.#cache.set(pageNo, response.template);
+    this.#showPage(pageNo);
+  }
+
+  #getDialog(): WoltlabCoreDialogElement {
+    if (this.#dialog === undefined) {
+      this.#dialog = dialogFactory().withoutContent().withoutControls();
+    }
+
+    return this.#dialog;
+  }
+}
+
+type AjaxRequestOptions = {
+  className: string;
+  parameters: {
+    [key: string]: any;
+  };
+};
+
+type ResponseGetGroupedUserList = {
+  pageCount?: number;
+  template: string;
+};

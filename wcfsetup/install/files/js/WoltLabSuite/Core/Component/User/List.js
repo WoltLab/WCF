@@ -1,0 +1,80 @@
+/**
+ * Object-based user list.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Component/User/List
+ */
+define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Pagination", "../Dialog"], function (require, exports, tslib_1, Ajax_1, Pagination_1, Dialog_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.UserList = void 0;
+    Pagination_1 = tslib_1.__importDefault(Pagination_1);
+    class UserList {
+        #options;
+        #dialogTitle;
+        #cache = new Map();
+        #pageNo = 1;
+        #pageCount = 0;
+        #dialog;
+        constructor(options, dialogTitle) {
+            this.#options = options;
+            this.#dialogTitle = dialogTitle;
+        }
+        open() {
+            this.#pageNo = 1;
+            this.#showPage();
+        }
+        #showPage(pageNo) {
+            if (pageNo) {
+                this.#pageNo = pageNo;
+            }
+            if (this.#pageCount !== 0 && (this.#pageNo < 1 || this.#pageNo > this.#pageCount)) {
+                throw new RangeError(`pageNo must be between 1 and ${this.#pageCount} (${this.#pageNo} given).`);
+            }
+            if (this.#cache.has(this.#pageNo)) {
+                const dialog = this.#getDialog();
+                dialog.content.innerHTML = this.#cache.get(this.#pageNo);
+                dialog.show(this.#dialogTitle);
+                if (this.#pageCount > 1) {
+                    const element = dialog.content.querySelector(".jsPagination");
+                    if (element !== null) {
+                        new Pagination_1.default(element, {
+                            activePage: this.#pageNo,
+                            maxPage: this.#pageCount,
+                            callbackSwitch: (pageNo) => this.#showPage(pageNo),
+                        });
+                    }
+                    // scroll to the list start
+                    /* todo: still necessary?
+                    const container = dialog.content.parentElement!;
+                    if (container.scrollTop > 0) {
+                      container.scrollTop = 0;
+                    }*/
+                }
+            }
+            else {
+                void this.#loadPage(this.#pageNo);
+            }
+        }
+        async #loadPage(pageNo) {
+            this.#options.parameters.pageNo = pageNo;
+            const response = (await (0, Ajax_1.dboAction)("getGroupedUserList", this.#options.className)
+                .payload(this.#options.parameters)
+                .dispatch());
+            if (response.pageCount) {
+                this.#pageCount = response.pageCount;
+            }
+            this.#cache.set(pageNo, response.template);
+            this.#showPage(pageNo);
+        }
+        #getDialog() {
+            if (this.#dialog === undefined) {
+                this.#dialog = (0, Dialog_1.dialogFactory)().withoutContent().withoutControls();
+            }
+            return this.#dialog;
+        }
+    }
+    exports.UserList = UserList;
+});
