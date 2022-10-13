@@ -371,6 +371,8 @@ final class SessionHandler extends SingletonFactory
      */
     public function initSession()
     {
+        $this->initSecurityToken();
+
         // assign language
         $this->languageID = $this->getVar('languageID') ?: $this->user->languageID;
 
