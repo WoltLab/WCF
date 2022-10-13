@@ -250,8 +250,6 @@ class UiSuggestion implements AjaxCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiSuggestion);
-
 export = UiSuggestion;
 
 interface CallbackSelectData {

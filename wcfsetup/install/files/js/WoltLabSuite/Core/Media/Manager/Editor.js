@@ -300,6 +300,5 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
       </a>`;
         }
     }
-    Core.enableLegacyInheritance(MediaManagerEditor);
     return MediaManagerEditor;
 });

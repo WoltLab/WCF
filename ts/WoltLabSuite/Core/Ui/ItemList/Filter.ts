@@ -375,6 +375,4 @@ class UiItemListFilter {
   }
 }
 
-Core.enableLegacyInheritance(UiItemListFilter);
-
 export = UiItemListFilter;

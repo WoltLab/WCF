@@ -7,15 +7,13 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Field/Wysiwyg/Attachment
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../Value", "../../../../Core"], function (require, exports, tslib_1, Value_1, Core) {
+define(["require", "exports", "tslib", "../Value"], function (require, exports, tslib_1, Value_1) {
     "use strict";
     Value_1 = tslib_1.__importDefault(Value_1);
-    Core = tslib_1.__importStar(Core);
     class Attachment extends Value_1.default {
         constructor(fieldId) {
             super(fieldId + "_tmpHash");
         }
     }
-    Core.enableLegacyInheritance(Attachment);
     return Attachment;
 });

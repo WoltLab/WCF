@@ -7,9 +7,8 @@
  * @module      WoltLabSuite/Core/Ui/Smiley/Insert
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../../Event/Handler"], function (require, exports, tslib_1, Core, EventHandler) {
+define(["require", "exports", "tslib", "../../Event/Handler"], function (require, exports, tslib_1, EventHandler) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     class UiSmileyInsert {
         container;
@@ -79,6 +78,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler"], fun
             });
         }
     }
-    Core.enableLegacyInheritance(UiSmileyInsert);
     return UiSmileyInsert;
 });

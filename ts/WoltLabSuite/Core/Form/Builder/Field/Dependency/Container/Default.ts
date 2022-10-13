@@ -50,6 +50,4 @@ class Default extends Abstract {
   }
 }
 
-Core.enableLegacyInheritance(Default);
-
 export = Default;

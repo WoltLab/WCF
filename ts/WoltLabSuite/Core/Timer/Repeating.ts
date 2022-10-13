@@ -7,8 +7,6 @@
  * @module  WoltLabSuite/Core/Timer/Repeating
  */
 
-import * as Core from "../Core";
-
 class RepeatingTimer {
   private readonly _callback: (timer: RepeatingTimer) => void;
   private _delta: number;
@@ -63,7 +61,5 @@ class RepeatingTimer {
     this.restart();
   }
 }
-
-Core.enableLegacyInheritance(RepeatingTimer);
 
 export = RepeatingTimer;

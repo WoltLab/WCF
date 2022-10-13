@@ -8,7 +8,6 @@
  * @since 5.2
  */
 
-import * as Core from "../../../../../../Core";
 import * as Language from "../../../../../../Language";
 import * as DomTraverse from "../../../../../../Dom/Traverse";
 import DomChangeListener from "../../../../../../Dom/Change/Listener";
@@ -258,7 +257,5 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
     return true;
   }
 }
-
-Core.enableLegacyInheritance(AbstractPackageList);
 
 export = AbstractPackageList;

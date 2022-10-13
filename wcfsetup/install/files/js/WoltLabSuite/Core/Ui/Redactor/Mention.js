@@ -1,10 +1,9 @@
 /**
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../StringUtil", "../CloseOverlay"], function (require, exports, tslib_1, Ajax, Core, StringUtil, CloseOverlay_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../StringUtil", "../CloseOverlay"], function (require, exports, tslib_1, Ajax, StringUtil, CloseOverlay_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     StringUtil = tslib_1.__importStar(StringUtil);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     let _dropdownContainer = null;
@@ -349,6 +348,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../String
             this._updateDropdownPosition();
         }
     }
-    Core.enableLegacyInheritance(UiRedactorMention);
     return UiRedactorMention;
 });

@@ -127,6 +127,4 @@ class Label {
   }
 }
 
-Core.enableLegacyInheritance(Label);
-
 export = Label;

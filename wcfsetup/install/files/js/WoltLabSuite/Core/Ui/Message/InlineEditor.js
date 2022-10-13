@@ -565,6 +565,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             this._click(document.getElementById(containerId), null);
         }
     }
-    Core.enableLegacyInheritance(UiMessageInlineEditor);
     return UiMessageInlineEditor;
 });

@@ -7,12 +7,11 @@
  * @module  WoltLabSuite/Core/Media/Manager/Search
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Core, Util_1) {
+define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Util_1) {
     "use strict";
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSearch {
         _cancelButton;
@@ -141,6 +140,5 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
             });
         }
     }
-    Core.enableLegacyInheritance(MediaManagerSearch);
     return MediaManagerSearch;
 });

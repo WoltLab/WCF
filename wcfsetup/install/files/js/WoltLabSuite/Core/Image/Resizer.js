@@ -7,9 +7,8 @@
  * @module  WoltLabSuite/Core/Image/Resizer
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Core", "../FileUtil", "./ExifUtil", "pica"], function (require, exports, tslib_1, Core, FileUtil, ExifUtil, pica_1) {
+define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], function (require, exports, tslib_1, FileUtil, ExifUtil, pica_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     FileUtil = tslib_1.__importStar(FileUtil);
     ExifUtil = tslib_1.__importStar(ExifUtil);
     pica_1 = tslib_1.__importDefault(pica_1);
@@ -142,6 +141,5 @@ define(["require", "exports", "tslib", "../Core", "../FileUtil", "./ExifUtil", "
             return pica.resize(image, canvas, options);
         }
     }
-    Core.enableLegacyInheritance(ImageResizer);
     return ImageResizer;
 });

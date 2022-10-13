@@ -9,7 +9,6 @@
  */
 
 import * as AjaxStatus from "../../../Ajax/Status";
-import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
 import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
@@ -211,7 +210,5 @@ class ControllerMapRoutePlanner implements DialogCallbackObject {
     };
   }
 }
-
-Core.enableLegacyInheritance(ControllerMapRoutePlanner);
 
 export = ControllerMapRoutePlanner;

@@ -8,10 +8,9 @@
  * @since       5.2
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Core, Util_1, Language) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Util_1, Language) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     class UiReactionProfileLoader {
@@ -153,6 +152,5 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             };
         }
     }
-    Core.enableLegacyInheritance(UiReactionProfileLoader);
     return UiReactionProfileLoader;
 });

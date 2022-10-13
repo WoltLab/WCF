@@ -508,6 +508,4 @@ class UiReactionHandler {
   }
 }
 
-Core.enableLegacyInheritance(UiReactionHandler);
-
 export = UiReactionHandler;

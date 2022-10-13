@@ -7,9 +7,8 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Controller/Rating
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../../../Core", "../../../../Environment"], function (require, exports, tslib_1, Core, Environment) {
+define(["require", "exports", "tslib", "../../../../Environment"], function (require, exports, tslib_1, Environment) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     Environment = tslib_1.__importStar(Environment);
     class Rating {
         _field;
@@ -104,6 +103,5 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Environm
             }
         }
     }
-    Core.enableLegacyInheritance(Rating);
     return Rating;
 });

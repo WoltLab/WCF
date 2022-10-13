@@ -1,6 +1,5 @@
 import { Media, MediaInsertType } from "../../../Media/Data";
 import MediaManagerEditor from "../../../Media/Manager/Editor";
-import * as Core from "../../../Core";
 
 class AcpUiCodeMirrorMedia {
   protected readonly element: HTMLElement;
@@ -34,7 +33,5 @@ class AcpUiCodeMirrorMedia {
     }
   }
 }
-
-Core.enableLegacyInheritance(AcpUiCodeMirrorMedia);
 
 export = AcpUiCodeMirrorMedia;

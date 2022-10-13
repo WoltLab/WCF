@@ -11,7 +11,6 @@ import AcpUiPackagePrepareInstallation from "./PrepareInstallation";
 import * as Ajax from "../../../Ajax";
 import AjaxRequest from "../../../Ajax/Request";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
-import * as Core from "../../../Core";
 
 interface AjaxResponse {
   actionName: string;
@@ -147,7 +146,5 @@ class AcpUiPackageSearch implements AjaxCallbackObject {
     };
   }
 }
-
-Core.enableLegacyInheritance(AcpUiPackageSearch);
 
 export = AcpUiPackageSearch;

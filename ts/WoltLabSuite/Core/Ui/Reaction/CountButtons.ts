@@ -256,6 +256,4 @@ class CountButtons {
   }
 }
 
-Core.enableLegacyInheritance(CountButtons);
-
 export = CountButtons;

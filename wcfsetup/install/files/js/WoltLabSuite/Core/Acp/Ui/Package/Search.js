@@ -6,11 +6,10 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Package/Search
  */
-define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax", "../../../Core"], function (require, exports, tslib_1, PrepareInstallation_1, Ajax, Core) {
+define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax"], function (require, exports, tslib_1, PrepareInstallation_1, Ajax) {
     "use strict";
     PrepareInstallation_1 = tslib_1.__importDefault(PrepareInstallation_1);
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     class AcpUiPackageSearch {
         input;
         installation;
@@ -112,6 +111,5 @@ define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax",
             };
         }
     }
-    Core.enableLegacyInheritance(AcpUiPackageSearch);
     return AcpUiPackageSearch;
 });

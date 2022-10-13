@@ -11,7 +11,6 @@
 import Field from "./Field";
 import ControllerCaptcha from "../../../Controller/Captcha";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class Captcha extends Field {
   protected _getData(): FormBuilderData {
@@ -32,7 +31,5 @@ class Captcha extends Field {
     }
   }
 }
-
-Core.enableLegacyInheritance(Captcha);
 
 export = Captcha;

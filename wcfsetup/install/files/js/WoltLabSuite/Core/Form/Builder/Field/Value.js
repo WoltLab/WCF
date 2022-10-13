@@ -8,10 +8,9 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Value
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field", "../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
+define(["require", "exports", "tslib", "./Field"], function (require, exports, tslib_1, Field_1) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
-    Core = tslib_1.__importStar(Core);
     class Value extends Field_1.default {
         _getData() {
             return {
@@ -19,6 +18,5 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
             };
         }
     }
-    Core.enableLegacyInheritance(Value);
     return Value;
 });

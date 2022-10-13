@@ -550,6 +550,4 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   }
 }
 
-Core.enableLegacyInheritance(MediaManager);
-
 export = MediaManager;

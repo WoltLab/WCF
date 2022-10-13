@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Core from "../Core";
 import { Media, MediaEditorCallbackObject } from "./Data";
 import { AjaxCallbackObject, AjaxCallbackSetup } from "../Ajax/Data";
 import * as UiNotification from "../Ui/Notification";
@@ -408,7 +407,5 @@ class MediaEditor implements AjaxCallbackObject {
     }
   }
 }
-
-Core.enableLegacyInheritance(MediaEditor);
 
 export = MediaEditor;

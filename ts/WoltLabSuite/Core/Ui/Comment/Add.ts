@@ -352,6 +352,4 @@ class UiCommentAdd {
   }
 }
 
-Core.enableLegacyInheritance(UiCommentAdd);
-
 export = UiCommentAdd;

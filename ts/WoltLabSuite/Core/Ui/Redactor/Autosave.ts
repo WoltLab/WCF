@@ -344,6 +344,4 @@ class UiRedactorAutosave {
   }
 }
 
-Core.enableLegacyInheritance(UiRedactorAutosave);
-
 export = UiRedactorAutosave;

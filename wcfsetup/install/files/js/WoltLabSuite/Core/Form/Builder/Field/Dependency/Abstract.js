@@ -7,10 +7,9 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Manager", "../../../../Core"], function (require, exports, tslib_1, DependencyManager, Core) {
+define(["require", "exports", "tslib", "./Manager"], function (require, exports, tslib_1, DependencyManager) {
     "use strict";
     DependencyManager = tslib_1.__importStar(DependencyManager);
-    Core = tslib_1.__importStar(Core);
     class FormBuilderFormFieldDependency {
         _dependentElement;
         _field;
@@ -84,6 +83,5 @@ define(["require", "exports", "tslib", "./Manager", "../../../../Core"], functio
             DependencyManager.addDependency(this);
         }
     }
-    Core.enableLegacyInheritance(FormBuilderFormFieldDependency);
     return FormBuilderFormFieldDependency;
 });

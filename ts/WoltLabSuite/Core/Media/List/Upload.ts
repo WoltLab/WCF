@@ -40,6 +40,4 @@ class MediaListUpload extends MediaUpload<MediaListUploadOptions> {
   }
 }
 
-Core.enableLegacyInheritance(MediaListUpload);
-
 export = MediaListUpload;

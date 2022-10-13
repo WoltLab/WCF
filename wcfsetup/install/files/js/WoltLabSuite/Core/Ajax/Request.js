@@ -319,6 +319,5 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             return contentType.split(";", 1)[0].trim();
         }
     }
-    Core.enableLegacyInheritance(AjaxRequest);
     return AjaxRequest;
 });

@@ -7,10 +7,9 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/RadioButton
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field", "../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
+define(["require", "exports", "tslib", "./Field"], function (require, exports, tslib_1, Field_1) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
-    Core = tslib_1.__importStar(Core);
     class RadioButton extends Field_1.default {
         _fields;
         _getData() {
@@ -28,6 +27,5 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
             this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
         }
     }
-    Core.enableLegacyInheritance(RadioButton);
     return RadioButton;
 });

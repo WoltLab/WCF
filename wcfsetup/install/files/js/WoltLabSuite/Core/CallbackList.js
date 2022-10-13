@@ -7,9 +7,8 @@
  * @module  CallbackList (alias)
  * @module  WoltLabSuite/Core/CallbackList
  */
-define(["require", "exports", "tslib", "./Core"], function (require, exports, tslib_1, Core) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     class CallbackList {
         _callbacks = new Map();
         /**
@@ -44,6 +43,5 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
             }
         }
     }
-    Core.enableLegacyInheritance(CallbackList);
     return CallbackList;
 });

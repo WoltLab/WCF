@@ -41,6 +41,5 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
             return false;
         }
     }
-    Core.enableLegacyInheritance(TrophyUpload);
     return TrophyUpload;
 });

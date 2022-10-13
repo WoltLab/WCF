@@ -11,7 +11,6 @@
 
 import Abstract from "./Abstract";
 import * as DependencyManager from "./Manager";
-import * as Core from "../../../../Core";
 
 class Value extends Abstract {
   protected _isNegated = false;
@@ -81,7 +80,5 @@ class Value extends Abstract {
     return this;
   }
 }
-
-Core.enableLegacyInheritance(Value);
 
 export = Value;

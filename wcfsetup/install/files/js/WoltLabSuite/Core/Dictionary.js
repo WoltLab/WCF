@@ -12,9 +12,8 @@
  * @module  Dictionary (alias)
  * @module  WoltLabSuite/Core/Dictionary
  */
-define(["require", "exports", "tslib", "./Core"], function (require, exports, tslib_1, Core) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     /** @deprecated 5.4 Use a `Map` instead. */
     class Dictionary {
         _dictionary = new Map();
@@ -85,6 +84,5 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
             return this._dictionary.size;
         }
     }
-    Core.enableLegacyInheritance(Dictionary);
     return Dictionary;
 });

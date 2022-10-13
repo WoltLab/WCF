@@ -310,6 +310,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             };
         }
     }
-    Core.enableLegacyInheritance(UiSearchInput);
     return UiSearchInput;
 });

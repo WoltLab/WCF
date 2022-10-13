@@ -343,6 +343,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             };
         }
     }
-    Core.enableLegacyInheritance(UiMessageReply);
     return UiMessageReply;
 });

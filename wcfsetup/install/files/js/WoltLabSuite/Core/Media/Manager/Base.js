@@ -446,6 +446,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
             }
         }
     }
-    Core.enableLegacyInheritance(MediaManager);
     return MediaManager;
 });

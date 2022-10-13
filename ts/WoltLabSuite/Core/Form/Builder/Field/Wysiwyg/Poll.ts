@@ -9,7 +9,6 @@
  */
 
 import Field from "../Field";
-import * as Core from "../../../../Core";
 import { FormBuilderData } from "../../Data";
 import UiPollEditor from "../../../../Ui/Poll/Editor";
 
@@ -28,7 +27,5 @@ class Poll extends Field {
     this._pollEditor = pollEditor;
   }
 }
-
-Core.enableLegacyInheritance(Poll);
 
 export = Poll;

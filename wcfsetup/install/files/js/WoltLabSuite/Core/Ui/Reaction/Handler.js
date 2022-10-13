@@ -389,6 +389,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             return this.focusTrap;
         }
     }
-    Core.enableLegacyInheritance(UiReactionHandler);
     return UiReactionHandler;
 });

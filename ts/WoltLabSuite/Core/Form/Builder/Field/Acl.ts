@@ -10,7 +10,6 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 interface AclList {
   getData: () => object;
@@ -35,7 +34,5 @@ class Acl extends Field {
     return this;
   }
 }
-
-Core.enableLegacyInheritance(Acl);
 
 export = Acl;

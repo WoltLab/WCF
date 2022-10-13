@@ -119,8 +119,6 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiUserList);
-
 export = UiUserList;
 
 interface AjaxRequestOptions {

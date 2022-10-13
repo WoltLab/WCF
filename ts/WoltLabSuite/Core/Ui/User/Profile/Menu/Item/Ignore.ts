@@ -2,7 +2,6 @@
  * @woltlabExcludeBundle all
  */
 
-import * as Core from "../../../../../Core";
 import * as Language from "../../../../../Language";
 import * as UiNotification from "../../../../Notification";
 import UiUserProfileMenuItemAbstract from "./Abstract";
@@ -48,7 +47,5 @@ class UiUserProfileMenuItemIgnore extends UiUserProfileMenuItemAbstract {
     this.dialog.open();
   }
 }
-
-Core.enableLegacyInheritance(UiUserProfileMenuItemIgnore);
 
 export = UiUserProfileMenuItemIgnore;

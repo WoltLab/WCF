@@ -7,11 +7,10 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/ItemList
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field", "../../../Ui/ItemList/Static", "../../../Core"], function (require, exports, tslib_1, Field_1, UiItemListStatic, Core) {
+define(["require", "exports", "tslib", "./Field", "../../../Ui/ItemList/Static"], function (require, exports, tslib_1, Field_1, UiItemListStatic) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
     UiItemListStatic = tslib_1.__importStar(UiItemListStatic);
-    Core = tslib_1.__importStar(Core);
     class ItemList extends Field_1.default {
         _getData() {
             const values = [];
@@ -28,6 +27,5 @@ define(["require", "exports", "tslib", "./Field", "../../../Ui/ItemList/Static",
             };
         }
     }
-    Core.enableLegacyInheritance(ItemList);
     return ItemList;
 });

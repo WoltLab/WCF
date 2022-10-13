@@ -256,6 +256,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             };
         }
     }
-    Core.enableLegacyInheritance(UiCommentEdit);
     return UiCommentEdit;
 });

@@ -7,9 +7,8 @@
  * @module  List (alias)
  * @module  WoltLabSuite/Core/List
  */
-define(["require", "exports", "tslib", "./Core"], function (require, exports, tslib_1, Core) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     /** @deprecated 5.4 Use a `Set` instead. */
     class List {
         _set = new Set();
@@ -47,6 +46,5 @@ define(["require", "exports", "tslib", "./Core"], function (require, exports, ts
             return this._set.size;
         }
     }
-    Core.enableLegacyInheritance(List);
     return List;
 });

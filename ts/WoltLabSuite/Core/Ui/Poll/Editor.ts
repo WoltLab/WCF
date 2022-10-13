@@ -388,6 +388,4 @@ class UiPollEditor {
   }
 }
 
-Core.enableLegacyInheritance(UiPollEditor);
-
 export = UiPollEditor;

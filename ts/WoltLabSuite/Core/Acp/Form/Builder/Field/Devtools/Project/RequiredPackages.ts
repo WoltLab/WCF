@@ -79,6 +79,4 @@ class RequiredPackages<
   }
 }
 
-Core.enableLegacyInheritance(RequiredPackages);
-
 export = RequiredPackages;

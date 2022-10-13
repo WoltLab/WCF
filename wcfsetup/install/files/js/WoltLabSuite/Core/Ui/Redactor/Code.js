@@ -7,9 +7,8 @@
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./PseudoHeader", "../../prism-meta"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorPseudoHeader, prism_meta_1) {
+define(["require", "exports", "tslib", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./PseudoHeader", "../../prism-meta"], function (require, exports, tslib_1, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorPseudoHeader, prism_meta_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
@@ -217,6 +216,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
             };
         }
     }
-    Core.enableLegacyInheritance(UiRedactorCode);
     return UiRedactorCode;
 });

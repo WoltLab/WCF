@@ -1,7 +1,6 @@
-define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../../Core"], function (require, exports, tslib_1, Editor_1, Core) {
+define(["require", "exports", "tslib", "../../../Media/Manager/Editor"], function (require, exports, tslib_1, Editor_1) {
     "use strict";
     Editor_1 = tslib_1.__importDefault(Editor_1);
-    Core = tslib_1.__importStar(Core);
     class AcpUiCodeMirrorMedia {
         element;
         constructor(elementId) {
@@ -28,6 +27,5 @@ define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../.
             }
         }
     }
-    Core.enableLegacyInheritance(AcpUiCodeMirrorMedia);
     return AcpUiCodeMirrorMedia;
 });

@@ -10,14 +10,11 @@
 
 import Value from "../Value";
 import * as LanguageChooser from "../../../../Language/Chooser";
-import * as Core from "../../../../Core";
 
 class ContentLanguage extends Value {
   public destroy(): void {
     LanguageChooser.removeChooser(this._fieldId);
   }
 }
-
-Core.enableLegacyInheritance(ContentLanguage);
 
 export = ContentLanguage;

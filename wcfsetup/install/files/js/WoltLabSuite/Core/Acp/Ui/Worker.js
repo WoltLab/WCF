@@ -140,6 +140,5 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
             }
         }
     }
-    Core.enableLegacyInheritance(AcpUiWorker);
     return AcpUiWorker;
 });

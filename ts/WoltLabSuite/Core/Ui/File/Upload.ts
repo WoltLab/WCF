@@ -273,6 +273,4 @@ class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler 
   }
 }
 
-Core.enableLegacyInheritance(FileUpload);
-
 export = FileUpload;

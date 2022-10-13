@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import * as Core from "../../Core";
 import * as UiArticleSearch from "../Article/Search";
 import { RedactorEditor } from "./Editor";
 
@@ -33,7 +32,5 @@ class UiRedactorArticle {
     this._editor.insert.text(`[wsa='${articleId}'][/wsa]`);
   }
 }
-
-Core.enableLegacyInheritance(UiRedactorArticle);
 
 export = UiRedactorArticle;

@@ -310,6 +310,4 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
   }
 }
 
-Core.enableLegacyInheritance(MediaUpload);
-
 export = MediaUpload;

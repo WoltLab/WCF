@@ -432,6 +432,4 @@ class UiMessageReply {
   }
 }
 
-Core.enableLegacyInheritance(UiMessageReply);
-
 export = UiMessageReply;

@@ -255,6 +255,5 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             }
         }
     }
-    Core.enableLegacyInheritance(UiPagination);
     return UiPagination;
 });

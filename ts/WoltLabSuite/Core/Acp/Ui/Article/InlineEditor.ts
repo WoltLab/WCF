@@ -420,6 +420,4 @@ class AcpUiArticleInlineEditor {
   }
 }
 
-Core.enableLegacyInheritance(AcpUiArticleInlineEditor);
-
 export = AcpUiArticleInlineEditor;

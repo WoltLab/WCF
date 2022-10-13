@@ -83,6 +83,5 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Change/Lis
             return data;
         }
     }
-    Core.enableLegacyInheritance(UiCommentResponseAdd);
     return UiCommentResponseAdd;
 });

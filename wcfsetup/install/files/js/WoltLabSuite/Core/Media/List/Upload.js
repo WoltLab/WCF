@@ -30,6 +30,5 @@ define(["require", "exports", "tslib", "../Upload", "../../Core"], function (req
             return super._getParameters();
         }
     }
-    Core.enableLegacyInheritance(MediaListUpload);
     return MediaListUpload;
 });

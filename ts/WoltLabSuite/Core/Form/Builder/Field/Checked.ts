@@ -11,7 +11,6 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class Checked extends Field {
   protected _getData(): FormBuilderData {
@@ -20,7 +19,5 @@ class Checked extends Field {
     };
   }
 }
-
-Core.enableLegacyInheritance(Checked);
 
 export = Checked;

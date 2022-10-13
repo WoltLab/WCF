@@ -282,8 +282,6 @@ class UiPagination {
   }
 }
 
-Core.enableLegacyInheritance(UiPagination);
-
 export = UiPagination;
 
 type CallbackSwitch = (pageNo: number) => void;

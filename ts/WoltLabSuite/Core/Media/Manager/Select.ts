@@ -190,6 +190,4 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   }
 }
 
-Core.enableLegacyInheritance(MediaManagerSelect);
-
 export = MediaManagerSelect;

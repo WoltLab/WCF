@@ -64,6 +64,4 @@ class UiPageSearchInput extends UiSearchInput {
   }
 }
 
-Core.enableLegacyInheritance(UiPageSearchInput);
-
 export = UiPageSearchInput;

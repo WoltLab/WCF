@@ -10,7 +10,6 @@
  */
 
 import * as DependencyManager from "../Manager";
-import * as Core from "../../../../../Core";
 
 abstract class Abstract {
   protected _container: HTMLElement;
@@ -44,7 +43,5 @@ abstract class Abstract {
     DependencyManager.addContainerCheckCallback(() => this.checkContainer());
   }
 }
-
-Core.enableLegacyInheritance(Abstract);
 
 export = Abstract;

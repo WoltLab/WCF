@@ -7,10 +7,9 @@
  * @module  WoltLabSuite/Core/Controller/Map/Route/Planner
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Util_1, Language, Dialog_1) {
+define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Util_1, Language, Dialog_1) {
     "use strict";
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
-    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -172,6 +171,5 @@ define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", 
             };
         }
     }
-    Core.enableLegacyInheritance(ControllerMapRoutePlanner);
     return ControllerMapRoutePlanner;
 });

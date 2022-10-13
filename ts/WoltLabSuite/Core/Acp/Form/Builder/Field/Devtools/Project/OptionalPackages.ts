@@ -10,7 +10,6 @@
  */
 
 import AbstractPackageList from "./AbstractPackageList";
-import * as Core from "../../../../../../Core";
 import * as Language from "../../../../../../Language";
 import { PackageData } from "./Data";
 
@@ -23,7 +22,5 @@ class OptionalPackages extends AbstractPackageList {
     })}`;
   }
 }
-
-Core.enableLegacyInheritance(OptionalPackages);
 
 export = OptionalPackages;

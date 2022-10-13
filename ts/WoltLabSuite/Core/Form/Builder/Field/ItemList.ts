@@ -11,7 +11,6 @@
 import Field from "./Field";
 import * as UiItemListStatic from "../../../Ui/ItemList/Static";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class ItemList extends Field {
   protected _getData(): FormBuilderData {
@@ -29,7 +28,5 @@ class ItemList extends Field {
     };
   }
 }
-
-Core.enableLegacyInheritance(ItemList);
 
 export = ItemList;

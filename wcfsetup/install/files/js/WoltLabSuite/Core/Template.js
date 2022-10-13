@@ -6,9 +6,8 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Template
  */
-define(["require", "exports", "tslib", "./Core", "./I18n/Plural", "./Language/Store", "./StringUtil", "./Template/Compiler"], function (require, exports, tslib_1, Core, I18nPlural, LanguageStore, StringUtil, Compiler_1) {
+define(["require", "exports", "tslib", "./I18n/Plural", "./Language/Store", "./StringUtil", "./Template/Compiler"], function (require, exports, tslib_1, I18nPlural, LanguageStore, StringUtil, Compiler_1) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     I18nPlural = tslib_1.__importStar(I18nPlural);
     LanguageStore = tslib_1.__importStar(LanguageStore);
     StringUtil = tslib_1.__importStar(StringUtil);
@@ -49,6 +48,5 @@ define(["require", "exports", "tslib", "./Core", "./I18n/Plural", "./Language/St
             throw new Error("WCF.Template.callbacks is no longer supported");
         },
     });
-    Core.enableLegacyInheritance(Template);
     return Template;
 });

@@ -11,7 +11,6 @@
 
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
-import * as Core from "../../../Core";
 
 class Value extends Field {
   protected _getData(): FormBuilderData {
@@ -20,7 +19,5 @@ class Value extends Field {
     };
   }
 }
-
-Core.enableLegacyInheritance(Value);
 
 export = Value;

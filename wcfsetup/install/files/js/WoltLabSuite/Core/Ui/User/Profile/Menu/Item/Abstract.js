@@ -7,10 +7,9 @@
  * @module  WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Abstract
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Core"], function (require, exports, tslib_1, Ajax, Core) {
+define(["require", "exports", "tslib", "../../../../../Ajax"], function (require, exports, tslib_1, Ajax) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
-    Core = tslib_1.__importStar(Core);
     class UiUserProfileMenuItemAbstract {
         _button = document.createElement("a");
         _isActive;
@@ -92,6 +91,5 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Co
             throw new Error("Implement me!");
         }
     }
-    Core.enableLegacyInheritance(UiUserProfileMenuItemAbstract);
     return UiUserProfileMenuItemAbstract;
 });

@@ -7,9 +7,8 @@
  * @module      WoltLabSuite/Core/Ui/Redactor/Html
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "../../Language"], function (require, exports, tslib_1, Core, EventHandler, Language) {
+define(["require", "exports", "tslib", "../../Event/Handler", "../../Language"], function (require, exports, tslib_1, EventHandler, Language) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
     class UiRedactorHtml {
@@ -72,6 +71,5 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "../
             });
         }
     }
-    Core.enableLegacyInheritance(UiRedactorHtml);
     return UiRedactorHtml;
 });

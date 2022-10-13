@@ -106,6 +106,4 @@ class UiUserActivityRecent implements AjaxCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiUserActivityRecent);
-
 export = UiUserActivityRecent;

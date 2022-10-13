@@ -377,6 +377,4 @@ class AjaxRequest {
   }
 }
 
-Core.enableLegacyInheritance(AjaxRequest);
-
 export = AjaxRequest;

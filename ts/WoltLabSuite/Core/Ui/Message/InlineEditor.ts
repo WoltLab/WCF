@@ -714,6 +714,4 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiMessageInlineEditor);
-
 export = UiMessageInlineEditor;

@@ -418,6 +418,4 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
   }
 }
 
-Core.enableLegacyInheritance(Upload);
-
 export = Upload;

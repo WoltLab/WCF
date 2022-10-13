@@ -368,6 +368,4 @@ class UiColorPicker implements DialogCallbackObject {
   }
 }
 
-Core.enableLegacyInheritance(UiColorPicker);
-
 export = UiColorPicker;

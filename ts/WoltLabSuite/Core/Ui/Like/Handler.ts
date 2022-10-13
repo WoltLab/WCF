@@ -302,6 +302,4 @@ class UiLikeHandler {
   }
 }
 
-Core.enableLegacyInheritance(UiLikeHandler);
-
 export = UiLikeHandler;

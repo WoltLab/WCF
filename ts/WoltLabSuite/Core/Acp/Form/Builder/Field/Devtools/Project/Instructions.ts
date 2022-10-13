@@ -708,6 +708,4 @@ class Instructions {
   }
 }
 
-Core.enableLegacyInheritance(Instructions);
-
 export = Instructions;

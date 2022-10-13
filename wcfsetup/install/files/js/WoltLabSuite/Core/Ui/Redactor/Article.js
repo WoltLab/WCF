@@ -7,9 +7,8 @@
  * @module      WoltLabSuite/Core/Ui/Redactor/Article
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Core", "../Article/Search"], function (require, exports, tslib_1, Core, UiArticleSearch) {
+define(["require", "exports", "tslib", "../Article/Search"], function (require, exports, tslib_1, UiArticleSearch) {
     "use strict";
-    Core = tslib_1.__importStar(Core);
     UiArticleSearch = tslib_1.__importStar(UiArticleSearch);
     class UiRedactorArticle {
         _editor;
@@ -26,6 +25,5 @@ define(["require", "exports", "tslib", "../../Core", "../Article/Search"], funct
             this._editor.insert.text(`[wsa='${articleId}'][/wsa]`);
         }
     }
-    Core.enableLegacyInheritance(UiRedactorArticle);
     return UiRedactorArticle;
 });
