@@ -15,6 +15,7 @@ namespace {
 
 	if (PHP_VERSION_ID >= 80200) {
 		@ini_set('zend.exception_ignore_args', 0);
+		@ini_set('zend.exception_string_param_max_len', 25);
 	}
 	@ini_set('assert.exception', 1);
 
