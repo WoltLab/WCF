@@ -23,7 +23,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter
     {
         $tagName = 'ul';
         $listType = (!empty($attributes[0])) ? $attributes[0] : 'none';
-        if ($listType == 'a' || $listType == 'decimal') {
+        if ($listType === '1' || $listType === 'a' || $listType === 'decimal') {
             $tagName = 'ol';
         }
 
