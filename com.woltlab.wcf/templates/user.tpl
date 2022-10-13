@@ -54,7 +54,7 @@
 				{/if}
 			});
 		{/if}
-		
+
 		$(function() {
 			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
 				WCF.Language.addObject({
@@ -72,37 +72,6 @@
 				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}
 			
-			{if $followingCount > 7}
-				var $followingList = null;
-				$('#followingAll').click(function() {
-					if ($followingList === null) {
-						$followingList = new WCF.User.List('wcf\\data\\user\\follow\\UserFollowingAction', $('#followingAll').parents('section').children('.boxTitle').text().replace(/ \d+$/, ''), { userID: {@$user->userID} });
-					}
-					
-					$followingList.open();
-				});
-			{/if}
-			{if $followerCount > 7}
-				var $followerList = null;
-				$('#followerAll').click(function() {
-					if ($followerList === null) {
-						$followerList = new WCF.User.List('wcf\\data\\user\\follow\\UserFollowAction', $('#followerAll').parents('section').children('.boxTitle').text().replace(/ \d+$/, ''), { userID: {@$user->userID} });
-					}
-					
-					$followerList.open();
-				});
-			{/if}
-			{if $visitorCount > 7}
-				var $visitorList = null;
-				$('#visitorAll').click(function() {
-					if ($visitorList === null) {
-						$visitorList = new WCF.User.List('wcf\\data\\user\\profile\\visitor\\UserProfileVisitorAction', $('#visitorAll').parents('section').children('.boxTitle').text().replace(/ \d+$/, ''), { userID: {@$user->userID} });
-					}
-					
-					$visitorList.open();
-				});
-			{/if}
-			
 			{if $__wcf->session->getPermission('user.profile.canReportContent')}
 				WCF.Language.addObject({
 					'wcf.moderation.report.reportContent': '{jslang}wcf.user.profile.report{/jslang}',
@@ -111,6 +80,10 @@
 			{/if}
 			
 			{event name='javascriptInit'}
+		});
+
+		require(['WoltLabSuite/Core/Controller/User/Profile'], ({ setup }) => {
+			setup({$user->userID});
 		});
 	</script>
 	
