@@ -248,6 +248,8 @@ function getDateValue(attributeName: string): Date {
  * Opens the date picker.
  */
 function open(event: MouseEvent): void {
+  event.stopPropagation();
+
   createPicker();
 
   const target = event.currentTarget as HTMLInputElement;

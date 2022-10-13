@@ -209,6 +209,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
      * Opens the date picker.
      */
     function open(event) {
+        event.stopPropagation();
         createPicker();
         const target = event.currentTarget;
         const input = target.nodeName === "INPUT" ? target : target.previousElementSibling;
