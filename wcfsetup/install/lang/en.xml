@@ -662,7 +662,7 @@ This protocol file is very large. Please check the protocol manually: {'WCF_DIR'
 {/foreach}
 
 ATTENTION: The messages listed above are greatly shortened. You can view details of individual error messages in the admin panel under “Management » Logs » Errors”.
-You can access the error log under: {link controller='ExceptionLogView' isEmail=true isACP=true}{/link}]]></item>
+You can access the error log at: {link controller='ExceptionLogView' isEmail=true isACP=true}{/link}]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
