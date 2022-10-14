@@ -519,7 +519,7 @@ class UploadFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    public function cleanup()
+    public function cleanup(): static
     {
         if (!$this->cleaned) {
             $this->unregisterField();
