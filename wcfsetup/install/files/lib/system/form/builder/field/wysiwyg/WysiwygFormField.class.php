@@ -116,6 +116,8 @@ class WysiwygFormField extends AbstractFormField implements
     public function cleanup()
     {
         MessageQuoteManager::getInstance()->saved();
+
+        return $this;
     }
 
     /**
