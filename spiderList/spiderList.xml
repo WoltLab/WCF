@@ -351,6 +351,10 @@
 	<spider ident="EuripBot/">
 		<name>EuripBot</name>
 	</spider>
+	<spider ident="ev-crawler">
+		<name>Headline Web Crawler</name>
+		<url>https://headline.com/legal/crawler</url>
+	</spider>
 	<spider ident="Evliya Celebi">
 		<name>Evliya Celebi</name>
 	</spider>
