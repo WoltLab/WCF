@@ -4,6 +4,7 @@ namespace wcf\system\email;
 
 use wcf\data\user\User;
 use wcf\system\cache\runtime\UserRuntimeCache;
+use wcf\system\email\exception\UserDeleted;
 
 /**
  * Default implementation of the IUserMailbox interface.
@@ -39,6 +40,12 @@ class UserMailbox extends Mailbox implements IUserMailbox
      */
     public function getUser(): User
     {
-        return UserRuntimeCache::getInstance()->getObject($this->userID);
+        $user = UserRuntimeCache::getInstance()->getObject($this->userID);
+
+        if ($user === null) {
+            throw UserDeleted::forUserId($this->userID);
+        }
+
+        return $user;
     }
 }
