@@ -5,6 +5,7 @@ namespace wcf\system\background\job;
 use wcf\data\email\log\entry\EmailLogEntry;
 use wcf\data\email\log\entry\EmailLogEntryAction;
 use wcf\system\email\Email;
+use wcf\system\email\exception\UserDeleted;
 use wcf\system\email\IUserMailbox;
 use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
@@ -180,6 +181,16 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
         if (self::$transport === null) {
             $name = '\wcf\system\email\transport\\' . \ucfirst(MAIL_SEND_METHOD) . 'EmailTransport';
             self::$transport = new $name();
+        }
+
+        if ($this->envelopeTo instanceof IUserMailbox) {
+            try {
+                $this->envelopeTo->getUser();
+            } catch (UserDeleted $e) {
+                $this->updateStatus(EmailLogEntry::STATUS_DISCARDED, $e->getMessage());
+
+                return;
+            }
         }
 
         try {
