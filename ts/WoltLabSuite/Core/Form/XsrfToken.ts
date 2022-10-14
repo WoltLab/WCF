@@ -9,38 +9,16 @@
  */
 
 import { getXsrfToken } from "../Core";
+import { wheneverFirstSeen } from "../Helper/Selector";
 
 function isInput(node: Node): node is HTMLInputElement {
   return node.nodeName === "INPUT";
 }
 
-function createObserver(): void {
-  const observer = new MutationObserver((mutations) => {
-    const token = getXsrfToken();
-
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (!isInput(node)) {
-          return;
-        }
-        if (!node.classList.contains("xsrfTokenInput")) {
-          return;
-        }
-
-        node.value = token;
-        node.classList.add("xsrfTokenInputHandled");
-      });
-    });
-  });
-
-  observer.observe(document, { subtree: true, childList: true });
-}
-
 export function setup(): void {
-  createObserver();
-
   const token = getXsrfToken();
-  document.querySelectorAll(".xsrfTokenInput").forEach((node) => {
+
+  wheneverFirstSeen('.xsrfTokenInput', (node) => {
     if (!isInput(node)) {
       return;
     }
