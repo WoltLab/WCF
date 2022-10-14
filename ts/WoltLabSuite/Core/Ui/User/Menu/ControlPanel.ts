@@ -91,13 +91,6 @@ export function setup(): void {
       fallbackFocus: element,
     });
 
-    const logoutLink = element.querySelector(".userMenuFooterLink") as HTMLAnchorElement;
-    logoutLink.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      logoutLink.closest("form")!.submit();
-    });
-
     isInitialized = true;
   }
 }

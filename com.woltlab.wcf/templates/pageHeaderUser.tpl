@@ -78,7 +78,7 @@
 					</div>
 					<div class="userMenuFooter">
 						<form method="post" action="{link controller='Logout'}{/link}">
-							<a href="#" class="userMenuFooterLink" role="button">{lang}wcf.user.logout{/lang}</a>
+							<button type="submit" class="userMenuFooterLink">{lang}wcf.user.logout{/lang}</button>
 							{csrfToken}
 						</form>
 					</div>
