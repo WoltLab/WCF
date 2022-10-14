@@ -195,5 +195,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode
     public function cleanup()
     {
         ACLHandler::getInstance()->resetValues($this->getObjectType()->objectTypeID);
+
+        return $this;
     }
 }
