@@ -99,9 +99,6 @@ class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbac
 
     const primaryButton = dialog.querySelector(".formSubmit .buttonPrimary") as HTMLElement;
     primaryButton.classList.remove("buttonPrimary");
-    primaryButton.classList.add("button");
-
-    button.classList.remove("button");
     button.classList.add("buttonPrimary");
 
     document.getElementById("notificationTestDialog")!.parentElement!.scrollTop = 0;

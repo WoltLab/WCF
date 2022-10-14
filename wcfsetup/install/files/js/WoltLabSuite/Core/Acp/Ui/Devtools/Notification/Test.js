@@ -77,8 +77,6 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             Util_1.default.show(document.getElementById(containerId));
             const primaryButton = dialog.querySelector(".formSubmit .buttonPrimary");
             primaryButton.classList.remove("buttonPrimary");
-            primaryButton.classList.add("button");
-            button.classList.remove("button");
             button.classList.add("buttonPrimary");
             document.getElementById("notificationTestDialog").parentElement.scrollTop = 0;
         }
