@@ -45,6 +45,10 @@
 		<name>Almaden Crawler</name>
 		<url>http://www.almaden.ibm.com/cs/crawler/</url>
 	</spider>
+	<spider ident="Barkrowler">
+		<name>Barkrowler</name>
+		<url>https://www.babbar.tech/crawler</url>
+	</spider>
 	<spider ident="EMC Spider">
 		<name>ananzi</name>
 	</spider>
