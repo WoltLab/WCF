@@ -1089,6 +1089,10 @@
 		<name>Seekbot</name>
 		<url>http://www.seekbot.net/bot.html</url>
 	</spider>
+	<spider ident="SeekportBot">
+		<name>Seekport Bot</name>
+		<url>https://bot.seekport.com</url>
+	</spider>
 	<spider ident="Senrigan">
 		<name>Senrigan</name>
 	</spider>
