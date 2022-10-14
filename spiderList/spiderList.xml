@@ -312,7 +312,7 @@
 	<spider ident="DNAbot/1.0">
 		<name>DNAbot</name>
 	</spider>
-	<spider ident="DotBot/1.1">
+	<spider ident="DotBot">
 		<name>Moz DotBot</name>
 		<url>http://www.opensiteexplorer.org/dotbot</url>
 	</spider>
