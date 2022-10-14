@@ -90,7 +90,7 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
 		Language.addObject({
-			'wcf.article.convertFromI18n.question': '{jslang}wcf.article.convertFromI18n.description{/jslang}',
+			'wcf.article.convertFromI18n.question': '{jslang}wcf.article.convertFromI18n.question{/jslang}',
 			'wcf.article.convertFromI18n.description': '{jslang}wcf.article.convertFromI18n.description{/jslang}',
 			'wcf.article.convertToI18n.question': '{jslang}wcf.article.convertToI18n.question{/jslang}',
 			'wcf.article.convertToI18n.description': '{jslang}wcf.article.convertToI18n.description{/jslang}',

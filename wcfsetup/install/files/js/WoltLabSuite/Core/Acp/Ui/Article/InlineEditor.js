@@ -153,16 +153,15 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
         async toggleI18n(objectId) {
             const phraseType = this.options.i18n.isI18n ? "convertFromI18n" : "convertToI18n";
             const phrase = Language.get(`wcf.article.${phraseType}.question`);
-            let dl;
+            let languageSelection;
             if (this.options.i18n.isI18n) {
-                const defaultLanguageId = this.options.i18n.defaultLanguageId.toString();
                 const html = Object.entries(this.options.i18n.languages)
                     .map(([languageId, languageName]) => {
-                    return `<label><input type="radio" name="i18nLanguage" value="${languageId}" ${defaultLanguageId === languageId ? "checked" : ""}> ${languageName}</label>`;
+                    return `<label><input type="radio" name="i18nLanguage" value="${languageId}"> ${languageName}</label>`;
                 })
                     .join("");
-                dl = document.createElement("dl");
-                dl.innerHTML = `
+                languageSelection = document.createElement("dl");
+                languageSelection.innerHTML = `
         <dt>${Language.get("wcf.acp.article.i18n.source")}</dt>
         <dd>${html}</dd>
       `;
@@ -173,14 +172,18 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Component/Conf
                 const p = document.createElement("p");
                 p.innerHTML = Language.get(`wcf.article.${phraseType}.description`);
                 dialog.content.append(p);
-                if (dl !== undefined) {
-                    dialog.content.append(dl);
+                if (languageSelection !== undefined) {
+                    dialog.content.append(languageSelection);
+                    dialog.incomplete = true;
+                    languageSelection.querySelectorAll('input[name="i18nLanguage"]').forEach((input) => {
+                        input.addEventListener("change", () => (dialog.incomplete = false), { once: true });
+                    });
                 }
             });
             if (result) {
                 let languageId = 0;
-                if (dl !== undefined) {
-                    const input = dl.querySelector("input[name='i18nLanguage']:checked");
+                if (languageSelection !== undefined) {
+                    const input = languageSelection.querySelector("input[name='i18nLanguage']:checked");
                     languageId = parseInt(input.value);
                 }
                 Ajax.api(this, {

@@ -62,6 +62,8 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
   }
 
   connectedCallback() {
+    const dialog = this.closest("woltlab-core-dialog")!;
+
     this.classList.add("dialog__control");
 
     if (!this.hasAttribute("primary")) {
@@ -82,6 +84,17 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#primaryButton.textContent = this.primary;
 
       this.append(this.#primaryButton);
+
+      const observer = new MutationObserver(() => {
+        this.#primaryButton!.disabled = dialog.incomplete;
+      });
+      observer.observe(dialog, {
+        attributeFilter: ["incomplete"],
+      });
+
+      if (dialog.incomplete) {
+        this.#primaryButton.disabled = true;
+      }
     }
 
     if (this.#cancelButton === undefined && this.cancel !== undefined) {
@@ -97,14 +110,11 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
 
       this.append(this.#cancelButton);
 
-      const dialog = this.closest("woltlab-core-dialog");
-      if (dialog) {
-        dialog.addEventListener("backdrop", (event) => {
-          event.preventDefault();
+      dialog.addEventListener("backdrop", (event) => {
+        event.preventDefault();
 
-          this.#cancelButton!.click();
-        });
-      }
+        this.#cancelButton!.click();
+      });
     }
 
     if (this.#extraButton === undefined && this.extra !== undefined) {

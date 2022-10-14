@@ -76,6 +76,18 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     return this.#dialog.open;
   }
 
+  get incomplete(): boolean {
+    return this.hasAttribute("incomplete");
+  }
+
+  set incomplete(incomplete: boolean) {
+    if (incomplete) {
+      this.setAttribute("incomplete", "");
+    } else {
+      this.removeAttribute("incomplete");
+    }
+  }
+
   attachControls(options: WoltlabCoreDialogControlOptions): void {
     if (this.#form !== undefined) {
       throw new Error("There is already a form control attached to this dialog.");
@@ -112,6 +124,11 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     }
 
     this.#form.addEventListener("submit", (event) => {
+      if (this.incomplete) {
+        event.preventDefault();
+        return;
+      }
+
       const evt = new CustomEvent("validate", { cancelable: true });
       this.dispatchEvent(evt);
 

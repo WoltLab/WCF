@@ -51,6 +51,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             return label;
         }
         connectedCallback() {
+            const dialog = this.closest("woltlab-core-dialog");
             this.classList.add("dialog__control");
             if (!this.hasAttribute("primary")) {
                 this.setAttribute("primary", "");
@@ -63,6 +64,15 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 this.#primaryButton.classList.add("button", "buttonPrimary", "dialog__control__button", "dialog__control__button--primary");
                 this.#primaryButton.textContent = this.primary;
                 this.append(this.#primaryButton);
+                const observer = new MutationObserver(() => {
+                    this.#primaryButton.disabled = dialog.incomplete;
+                });
+                observer.observe(dialog, {
+                    attributeFilter: ["incomplete"],
+                });
+                if (dialog.incomplete) {
+                    this.#primaryButton.disabled = true;
+                }
             }
             if (this.#cancelButton === undefined && this.cancel !== undefined) {
                 this.#cancelButton = document.createElement("button");
@@ -75,13 +85,10 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     this.dispatchEvent(event);
                 });
                 this.append(this.#cancelButton);
-                const dialog = this.closest("woltlab-core-dialog");
-                if (dialog) {
-                    dialog.addEventListener("backdrop", (event) => {
-                        event.preventDefault();
-                        this.#cancelButton.click();
-                    });
-                }
+                dialog.addEventListener("backdrop", (event) => {
+                    event.preventDefault();
+                    this.#cancelButton.click();
+                });
             }
             if (this.#extraButton === undefined && this.extra !== undefined) {
                 this.#extraButton = document.createElement("button");

@@ -45,6 +45,17 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         get open() {
             return this.#dialog.open;
         }
+        get incomplete() {
+            return this.hasAttribute("incomplete");
+        }
+        set incomplete(incomplete) {
+            if (incomplete) {
+                this.setAttribute("incomplete", "");
+            }
+            else {
+                this.removeAttribute("incomplete");
+            }
+        }
         attachControls(options) {
             if (this.#form !== undefined) {
                 throw new Error("There is already a form control attached to this dialog.");
@@ -74,6 +85,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                 }
             }
             this.#form.addEventListener("submit", (event) => {
+                if (this.incomplete) {
+                    event.preventDefault();
+                    return;
+                }
                 const evt = new CustomEvent("validate", { cancelable: true });
                 this.dispatchEvent(evt);
                 if (evt.defaultPrevented) {
