@@ -254,6 +254,10 @@
 	<spider ident="conceptbot">
 		<name>Conceptbot</name>
 	</spider>
+	<spider ident="Cookiebot">
+		<name>Cookiebot</name>
+		<url>https://www.cookiebot.com/</url>
+	</spider>
 	<spider ident="Cooby.de Crawler">
 		<name>Cooby.de Crawler</name>
 	</spider>
