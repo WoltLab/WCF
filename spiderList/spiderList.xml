@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/spiderList.xsd">
 	<spider ident="ABCdatos">
 		<name>ABCdatos BotLink</name>
-		<url>http://www.robotstxt.org/wc/active/html/abcdatos.html</url>
+		<url>http://www.robotstxt.org/db/abcdatos.html</url>
 	</spider>
 	<spider ident="AbraveSpider">
 		<name>Abrave</name>
@@ -27,7 +27,7 @@
 	</spider>
 	<spider ident="Ahoy!">
 		<name>Ahoy!</name>
-		<url>http://www.robotstxt.org/wc/active/html/ahoythehomepagefinder.html</url>
+		<url>http://www.robotstxt.org/db/ahoythehomepagefinder.html</url>
 	</spider>
 	<spider ident="AhrefsBot">
 		<name>Ahrefs</name>
@@ -35,7 +35,7 @@
 	</spider>
 	<spider ident="AlkalineBOT">
 		<name>Alkaline</name>
-		<url>http://www.robotstxt.org/wc/active/html/Alkaline.html</url>
+		<url>http://www.robotstxt.org/db/Alkaline.html</url>
 	</spider>
 	<spider ident="AlexaBOT">
 		<name>Alexa</name>
@@ -54,7 +54,7 @@
 	</spider>
 	<spider ident="Anthill">
 		<name>Anthill</name>
-		<url>http://www.robotstxt.org/wc/active/html/anthill.html</url>
+		<url>http://www.robotstxt.org/db/anthill.html</url>
 	</spider>
 	<spider ident="Aport">
 		<name>Aport</name>
@@ -69,15 +69,15 @@
 	</spider>
 	<spider ident="Arachnophilia">
 		<name>Arachnophilia</name>
-		<url>http://www.robotstxt.org/wc/active/html/arachnophilia.html</url>
+		<url>http://www.robotstxt.org/db/arachnophilia.html</url>
 	</spider>
 	<spider ident="Araneo">
 		<name>Araneo</name>
-		<url>http://www.robotstxt.org/wc/active/html/araneo.html</url>
+		<url>http://www.robotstxt.org/db/araneo.html</url>
 	</spider>
 	<spider ident="ArchitextSpider">
 		<name>ArchitextSpider</name>
-		<url>http://www.robotstxt.org/wc/active/html/architext.html</url>
+		<url>http://www.robotstxt.org/db/architext.html</url>
 	</spider>
 	<spider ident="archive.org_bot">
 		<name>Archive.org</name>
@@ -85,35 +85,31 @@
 	</spider>
 	<spider ident="arks/1.0">
 		<name>arks</name>
-		<url>http://www.robotstxt.org/wc/active/html/arks.html</url>
+		<url>http://www.robotstxt.org/db/arks.html</url>
 	</spider>
 	<spider ident="ASpider">
 		<name>ASpider</name>
-		<url>http://www.robotstxt.org/wc/active/html/aspider.html</url>
+		<url>http://www.robotstxt.org/db/aspider.html</url>
 	</spider>
 	<spider ident="ATN_Worldwide">
 		<name>ATN Worldwide</name>
-		<url>http://www.robotstxt.org/wc/active/html/atn.txt.html</url>
+		<url>http://www.robotstxt.org/db/atn.html</url>
 	</spider>
 	<spider ident="Atomz">
 		<name>Atomz.com</name>
-		<url>http://www.robotstxt.org/wc/active/html/atomz.html</url>
+		<url>http://www.robotstxt.org/db/atomz.html</url>
 	</spider>
 	<spider ident="AURESYS">
 		<name>AURESYS</name>
-		<url>http://www.robotstxt.org/wc/active/html/auresys.html</url>
+		<url>http://www.robotstxt.org/db/auresys.html</url>
 	</spider>
 	<spider ident="BackRub">
 		<name>BackRub</name>
-		<url>http://www.robotstxt.org/wc/active/html/backrub.html</url>
+		<url>http://www.robotstxt.org/db/backrub.html</url>
 	</spider>
 	<spider ident="Baiduspider">
 		<name>Baiduspider</name>
 		<url>http://www.baidu.com/search/spider.htm</url>
-	</spider>
-	<spider ident="bbot">
-		<name>BBot</name>
-		<url>http://www.robotstxt.org/wc/active/html/bbot.html</url>
 	</spider>
 	<spider ident="BecomeBot">
 		<name>BecomeBot</name>
@@ -121,7 +117,7 @@
 	</spider>
 	<spider ident="Big Brother">
 		<name>Big Brother</name>
-		<url>http://www.robotstxt.org/wc/active/html/bigbrother.html</url>
+		<url>http://www.robotstxt.org/db/bigbrother.html</url>
 	</spider>
 	<spider ident="BigmirSpider">
 		<name>Bigmir</name>
@@ -141,11 +137,11 @@
 	</spider>
 	<spider ident="Bjaaland">
 		<name>Bjaaland</name>
-		<url>http://www.robotstxt.org/wc/active/html/bjaaland.html</url>
+		<url>http://www.robotstxt.org/db/bjaaland.html</url>
 	</spider>
 	<spider ident="BlackWidow">
 		<name>BlackWidow</name>
-		<url>http://www.robotstxt.org/wc/active/html/blackwidow.html</url>
+		<url>http://www.robotstxt.org/db/blackwidow.html</url>
 	</spider>
 	<spider ident="BLEXBot">
 		<name>BLEXBot</name>
@@ -203,11 +199,11 @@
 	</spider>
 	<spider ident="borg-bot">
 		<name>Borg-Bot</name>
-		<url>http://www.robotstxt.org/wc/active/html/borg-bot.html</url>
+		<url>http://www.robotstxt.org/db/borg-bot.html</url>
 	</spider>
 	<spider ident="BSpider">
 		<name>BSpider</name>
-		<url>http://www.robotstxt.org/wc/active/html/bspider.html</url>
+		<url>http://www.robotstxt.org/db/bspider.html</url>
 	</spider>
 	<spider ident="Buck/2.2">
 		<name>Buck</name>
@@ -281,7 +277,7 @@
 	</spider>
 	<spider ident="Die Blinde Kuh">
 		<name>Die Blinde Kuh</name>
-		<url>http://www.robotstxt.org/wc/active/html/blindekuh.html</url>
+		<url>http://www.robotstxt.org/db/blindekuh.html</url>
 	</spider>
 	<spider ident="dienstspider">
 		<name>DienstSpider</name>
@@ -1385,7 +1381,7 @@
 	</spider>
 	<spider ident="appie">
 		<name>Walhello appie</name>
-		<url>http://www.robotstxt.org/wc/active/html/appie.html</url>
+		<url>http://www.robotstxt.org/db/appie.html</url>
 	</spider>
 	<spider ident="CrawlPaper">
 		<name>WallPaper</name>
