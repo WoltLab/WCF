@@ -8,14 +8,30 @@
  */
 
 import * as Core from "../../Core";
-import * as DateUtil from "../Util";
-import DomChangeListener from "../../Dom/Change/Listener";
+import { wheneverFirstSeen } from "../../Helper/Selector";
 import * as Language from "../../Language";
 import RepeatingTimer from "../../Timer/Repeating";
 
 let _isActive = true;
 let _isPending = false;
-let _offset: number;
+
+const locale = document.documentElement.lang;
+
+const lessThanADayAgo = new Intl.RelativeTimeFormat(locale);
+const lessThanAWeekAgo = new Intl.DateTimeFormat(locale, {
+  weekday: "long",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+const moreThanAWeekAgo = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+const fullDate = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" });
+
+const enum TimePeriod {
+  OneMinute = 60,
+  OneHour = 3_600,
+  OneDay = 86_400,
+  OneWeek = 86_400 * 7,
+}
 
 function onVisibilityChange(): void {
   if (document.hidden) {
@@ -40,61 +56,44 @@ function refresh() {
     return;
   }
 
-  const date = new Date();
-  const timestamp = (date.getTime() - date.getMilliseconds()) / 1_000;
-
   document.querySelectorAll("time").forEach((element) => {
-    rebuild(element, date, timestamp);
+    rebuild(element);
   });
 }
 
-function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void {
+function rebuild(element: HTMLTimeElement): void {
   if (!element.classList.contains("datetime") || Core.stringToBool(element.dataset.isFutureDate || "")) {
     return;
   }
 
-  const elTimestamp = parseInt(element.dataset.timestamp!, 10) + _offset;
-  const elDate = element.dataset.date!;
-  const elTime = element.dataset.time!;
-  const elOffset = element.dataset.offset!;
+  const date = new Date(element.dateTime);
+  const difference = Math.trunc((Date.now() - date.getTime()) / 1000);
 
   if (!element.title) {
-    element.title = Language.get("wcf.date.dateTimeFormat")
-      .replace(/%date%/, elDate)
-      .replace(/%time%/, elTime);
+    element.title = fullDate.format(new Date(element.dateTime));
   }
 
   // timestamp is less than 60 seconds ago
-  if (elTimestamp >= timestamp || timestamp < elTimestamp + 60) {
+  if (difference < 60) {
     element.textContent = Language.get("wcf.date.relative.now");
   }
   // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-  else if (timestamp < elTimestamp + 3540) {
-    const minutes = Math.max(Math.round((timestamp - elTimestamp) / 60), 1);
-    element.textContent = Language.get("wcf.date.relative.minutes", { minutes: minutes });
+  else if (difference < TimePeriod.OneHour) {
+    const minutes = Math.trunc(difference / TimePeriod.OneMinute);
+    element.textContent = lessThanADayAgo.format(minutes * -1, "minutes");
   }
   // timestamp is less than 24 hours ago
-  else if (timestamp < elTimestamp + 86400) {
-    const hours = Math.round((timestamp - elTimestamp) / 3600);
-    element.textContent = Language.get("wcf.date.relative.hours", { hours: hours });
+  else if (difference < TimePeriod.OneDay) {
+    const hours = Math.trunc(difference / TimePeriod.OneHour);
+    element.textContent = lessThanADayAgo.format(hours * -1, "hours");
   }
   // timestamp is less than 6 days ago
-  else if (timestamp < elTimestamp + 518400) {
-    const midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    const days = Math.ceil((midnight.getTime() / 1000 - elTimestamp) / 86400);
-
-    // get day of week
-    const dateObj = DateUtil.getTimezoneDate(elTimestamp * 1000, parseInt(elOffset, 10) * 1000);
-    const dow = dateObj.getDay();
-    const day = (Language.get("__days") as any as string[])[dow];
-
-    element.textContent = Language.get("wcf.date.relative.pastDays", { days: days, day: day, time: elTime });
+  else if (difference < TimePeriod.OneWeek) {
+    element.textContent = lessThanAWeekAgo.format(new Date(element.dateTime));
   }
   // timestamp is between ~700 million years BC and last week
   else {
-    element.textContent = Language.get("wcf.date.shortDateTimeFormat")
-      .replace(/%date%/, elDate)
-      .replace(/%time%/, elTime);
+    element.textContent = moreThanAWeekAgo.format(new Date(element.dateTime));
   }
 }
 
@@ -102,11 +101,9 @@ function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void 
  * Transforms <time> elements on init and binds event listeners.
  */
 export function setup(): void {
-  _offset = Math.trunc(Date.now() / 1_000 - window.TIME_NOW);
+  new RepeatingTimer(() => refresh(), 60_000);
 
-  new RepeatingTimer(refresh, 60_000);
+  document.addEventListener("visibilitychange", () => onVisibilityChange());
 
-  DomChangeListener.add("WoltLabSuite/Core/Date/Time/Relative", refresh);
-
-  document.addEventListener("visibilitychange", onVisibilityChange);
+  wheneverFirstSeen("time", (element: HTMLTimeElement) => rebuild(element));
 }

@@ -314,4 +314,13 @@ class Language extends DatabaseObject
     {
         return $this->locale ?: $this->languageCode;
     }
+
+    /**
+     * Returns a BCP 47 compliant identifier.
+     */
+    public function getBcp47(): string
+    {
+        // PHP uses underscores in the region identifier, but HTML/JS expects a dash.
+        return \str_replace('_', '-', $this->getLocale());
+    }
 }

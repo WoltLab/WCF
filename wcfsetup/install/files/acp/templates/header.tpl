@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
+<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getBcp47()}">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">

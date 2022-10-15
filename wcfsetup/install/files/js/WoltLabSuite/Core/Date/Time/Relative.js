@@ -6,18 +6,24 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Date/Time/Relative
  */
-define(["require", "exports", "tslib", "../../Core", "../Util", "../../Dom/Change/Listener", "../../Language", "../../Timer/Repeating"], function (require, exports, tslib_1, Core, DateUtil, Listener_1, Language, Repeating_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Helper/Selector", "../../Language", "../../Timer/Repeating"], function (require, exports, tslib_1, Core, Selector_1, Language, Repeating_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     Core = tslib_1.__importStar(Core);
-    DateUtil = tslib_1.__importStar(DateUtil);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
     Language = tslib_1.__importStar(Language);
     Repeating_1 = tslib_1.__importDefault(Repeating_1);
     let _isActive = true;
     let _isPending = false;
-    let _offset;
+    const locale = document.documentElement.lang;
+    const lessThanADayAgo = new Intl.RelativeTimeFormat(locale);
+    const lessThanAWeekAgo = new Intl.DateTimeFormat(locale, {
+        weekday: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+    const moreThanAWeekAgo = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+    const fullDate = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" });
     function onVisibilityChange() {
         if (document.hidden) {
             _isActive = false;
@@ -40,64 +46,49 @@ define(["require", "exports", "tslib", "../../Core", "../Util", "../../Dom/Chang
                 _isPending = true;
             return;
         }
-        const date = new Date();
-        const timestamp = (date.getTime() - date.getMilliseconds()) / 1000;
         document.querySelectorAll("time").forEach((element) => {
-            rebuild(element, date, timestamp);
+            rebuild(element);
         });
     }
-    function rebuild(element, date, timestamp) {
+    function rebuild(element) {
         if (!element.classList.contains("datetime") || Core.stringToBool(element.dataset.isFutureDate || "")) {
             return;
         }
-        const elTimestamp = parseInt(element.dataset.timestamp, 10) + _offset;
-        const elDate = element.dataset.date;
-        const elTime = element.dataset.time;
-        const elOffset = element.dataset.offset;
+        const date = new Date(element.dateTime);
+        const difference = Math.trunc((Date.now() - date.getTime()) / 1000);
         if (!element.title) {
-            element.title = Language.get("wcf.date.dateTimeFormat")
-                .replace(/%date%/, elDate)
-                .replace(/%time%/, elTime);
+            element.title = fullDate.format(new Date(element.dateTime));
         }
         // timestamp is less than 60 seconds ago
-        if (elTimestamp >= timestamp || timestamp < elTimestamp + 60) {
+        if (difference < 60) {
             element.textContent = Language.get("wcf.date.relative.now");
         }
         // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-        else if (timestamp < elTimestamp + 3540) {
-            const minutes = Math.max(Math.round((timestamp - elTimestamp) / 60), 1);
-            element.textContent = Language.get("wcf.date.relative.minutes", { minutes: minutes });
+        else if (difference < 3600 /* TimePeriod.OneHour */) {
+            const minutes = Math.trunc(difference / 60 /* TimePeriod.OneMinute */);
+            element.textContent = lessThanADayAgo.format(minutes * -1, "minutes");
         }
         // timestamp is less than 24 hours ago
-        else if (timestamp < elTimestamp + 86400) {
-            const hours = Math.round((timestamp - elTimestamp) / 3600);
-            element.textContent = Language.get("wcf.date.relative.hours", { hours: hours });
+        else if (difference < 86400 /* TimePeriod.OneDay */) {
+            const hours = Math.trunc(difference / 3600 /* TimePeriod.OneHour */);
+            element.textContent = lessThanADayAgo.format(hours * -1, "hours");
         }
         // timestamp is less than 6 days ago
-        else if (timestamp < elTimestamp + 518400) {
-            const midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            const days = Math.ceil((midnight.getTime() / 1000 - elTimestamp) / 86400);
-            // get day of week
-            const dateObj = DateUtil.getTimezoneDate(elTimestamp * 1000, parseInt(elOffset, 10) * 1000);
-            const dow = dateObj.getDay();
-            const day = Language.get("__days")[dow];
-            element.textContent = Language.get("wcf.date.relative.pastDays", { days: days, day: day, time: elTime });
+        else if (difference < 604800 /* TimePeriod.OneWeek */) {
+            element.textContent = lessThanAWeekAgo.format(new Date(element.dateTime));
         }
         // timestamp is between ~700 million years BC and last week
         else {
-            element.textContent = Language.get("wcf.date.shortDateTimeFormat")
-                .replace(/%date%/, elDate)
-                .replace(/%time%/, elTime);
+            element.textContent = moreThanAWeekAgo.format(new Date(element.dateTime));
         }
     }
     /**
      * Transforms <time> elements on init and binds event listeners.
      */
     function setup() {
-        _offset = Math.trunc(Date.now() / 1000 - window.TIME_NOW);
-        new Repeating_1.default(refresh, 60000);
-        Listener_1.default.add("WoltLabSuite/Core/Date/Time/Relative", refresh);
-        document.addEventListener("visibilitychange", onVisibilityChange);
+        new Repeating_1.default(() => refresh(), 60000);
+        document.addEventListener("visibilitychange", () => onVisibilityChange());
+        (0, Selector_1.wheneverFirstSeen)("time", (element) => rebuild(element));
     }
     exports.setup = setup;
 });
