@@ -1347,6 +1347,10 @@
 	<spider ident="Valkyrie">
 		<name>Valkyrie</name>
 	</spider>
+	<spider ident="VelenPublicWebCrawler">
+		<name>Velen Crawler</name>
+		<url>https://velen.io</url>
+	</spider>
 	<spider ident="Verticrawl">
 		<name>Verticrawl</name>
 	</spider>
