@@ -9,12 +9,12 @@
  */
 
 import { Poll } from "../Poll";
-import UiUserList from "../../User/List";
+import { UserList } from "../../../Component/User/List";
 
 export class Participants {
   protected readonly pollManager: Poll;
   private button: HTMLButtonElement;
-  private userList?: UiUserList = undefined;
+  private userList?: UserList = undefined;
 
   public constructor(manager: Poll) {
     this.pollManager = manager;
@@ -37,13 +37,15 @@ export class Participants {
 
   private open(): void {
     if (!this.userList) {
-      this.userList = new UiUserList({
-        className: "wcf\\data\\poll\\PollAction",
-        dialogTitle: this.pollManager.question,
-        parameters: {
-          pollID: this.pollManager.pollId,
+      this.userList = new UserList(
+        {
+          className: "wcf\\data\\poll\\PollAction",
+          parameters: {
+            pollID: this.pollManager.pollId,
+          },
         },
-      });
+        this.pollManager.question,
+      );
     }
 
     this.userList.open();

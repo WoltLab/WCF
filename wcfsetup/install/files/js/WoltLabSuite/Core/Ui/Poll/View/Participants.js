@@ -7,11 +7,10 @@
  * @module  WoltLabSuite/Core/Ui/Poll/View/Participants
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../User/List"], function (require, exports, tslib_1, List_1) {
+define(["require", "exports", "../../../Component/User/List"], function (require, exports, List_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Participants = void 0;
-    List_1 = tslib_1.__importDefault(List_1);
     class Participants {
         pollManager;
         button;
@@ -32,13 +31,12 @@ define(["require", "exports", "tslib", "../../User/List"], function (require, ex
         }
         open() {
             if (!this.userList) {
-                this.userList = new List_1.default({
+                this.userList = new List_1.UserList({
                     className: "wcf\\data\\poll\\PollAction",
-                    dialogTitle: this.pollManager.question,
                     parameters: {
                         pollID: this.pollManager.pollId,
                     },
-                });
+                }, this.pollManager.question);
             }
             this.userList.open();
         }

@@ -12,20 +12,24 @@
 </ul>
 
 {if $birthdayUserProfiles|count >= 10}
-	<a class="jsTodaysBirthdays button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
+	<button type="button" class="jsTodaysBirthdays button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</button>
 	
 	<script data-relocate="true">
-		$(function() {
-			var $todaysBirthdays = null;
-			$('.jsTodaysBirthdays').click(function() {
-				if ($todaysBirthdays === null) {
-					$todaysBirthdays = new WCF.User.List('wcf\\data\\user\\UserBirthdayAction', '{@$box->getTitle()|encodeJS} ({@TIME_NOW|date})', {
-						date: '{@TIME_NOW|date:'Y-m-d'}',
-						sortField: '{$sortField}',
-						sortOrder: '{$sortOrder}'
-					});
+		require(['WoltLabSuite/Core/Component/User/List'], ({ UserList }) => {
+			let userList;
+			document.querySelector('.jsTodaysBirthdays').addEventListener('click', () => {
+				if (userList === undefined) {
+					userList = new UserList({
+						className: 'wcf\\data\\user\\UserBirthdayAction',
+						parameters: {
+							date: '{@TIME_NOW|date:'Y-m-d'}',
+							sortField: '{$sortField}',
+							sortOrder: '{$sortOrder}'
+						}
+					}, '{@$box->getTitle()|encodeJS} ({@TIME_NOW|date})');
 				}
-				$todaysBirthdays.open();
+
+				userList.open();
 			});
 		});
 	</script>
