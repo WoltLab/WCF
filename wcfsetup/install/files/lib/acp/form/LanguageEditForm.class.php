@@ -70,6 +70,7 @@ class LanguageEditForm extends LanguageAddForm
             'countryCode' => \mb_strtolower($this->countryCode),
             'languageName' => $this->languageName,
             'languageCode' => \mb_strtolower($this->languageCode),
+            'locale' => $this->locale,
         ]));
         LanguageFactory::getInstance()->clearCache();
         $this->saved();
@@ -89,6 +90,7 @@ class LanguageEditForm extends LanguageAddForm
             $this->countryCode = $this->language->countryCode;
             $this->languageName = $this->language->languageName;
             $this->languageCode = $this->language->languageCode;
+            $this->locale = $this->language->locale;
         }
     }
 
