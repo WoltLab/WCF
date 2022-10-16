@@ -10,8 +10,7 @@
 
 import * as NumberUtil from "./NumberUtil";
 
-let _decimalPoint = ".";
-let _thousandsSeparator = ",";
+const numberFormat = new Intl.NumberFormat(document.documentElement.lang);
 
 /**
  * Adds thousands separators to a given number.
@@ -19,7 +18,7 @@ let _thousandsSeparator = ",";
  * @see    http://stackoverflow.com/a/6502556/782822
  */
 export function addThousandsSeparator(number: number): string {
-  return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1" + _thousandsSeparator);
+  return numberFormat.format(number);
 }
 
 /**
@@ -42,17 +41,9 @@ export function escapeRegExp(string: string): string {
  * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
  */
 export function formatNumeric(number: number, decimalPlaces?: number): string {
-  let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
-  const numberParts = tmp.split(".");
+  number = NumberUtil.round(number, decimalPlaces || -2);
 
-  tmp = addThousandsSeparator(+numberParts[0]);
-  if (numberParts.length > 1) {
-    tmp += _decimalPoint + numberParts[1];
-  }
-
-  tmp = tmp.replace("-", "\u2212");
-
-  return tmp;
+  return numberFormat.format(number).replace("-", "\u2212");
 }
 
 /**
@@ -130,14 +121,4 @@ export function toCamelCase(value: string): string {
       return part;
     })
     .join("");
-}
-
-interface I18nValues {
-  decimalPoint: string;
-  thousandsSeparator: string;
-}
-
-export function setupI18n(values: I18nValues): void {
-  _decimalPoint = values.decimalPoint;
-  _thousandsSeparator = values.thousandsSeparator;
 }

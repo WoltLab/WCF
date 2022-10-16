@@ -18,7 +18,6 @@ import * as Environment from "./Environment";
 import * as EventHandler from "./Event/Handler";
 import * as XsrfToken from "./Form/XsrfToken";
 import * as Language from "./Language";
-import * as StringUtil from "./StringUtil";
 import UiDialog from "./Ui/Dialog";
 import UiDropdownSimple from "./Ui/Dropdown/Simple";
 import * as UiMobile from "./Ui/Mobile";
@@ -84,11 +83,6 @@ export function setup(options: BoostrapOptions): void {
   ) as BoostrapOptions;
 
   XsrfToken.setup();
-
-  StringUtil.setupI18n({
-    decimalPoint: Language.get("wcf.global.decimalPoint"),
-    thousandsSeparator: Language.get("wcf.global.thousandsSeparator"),
-  });
 
   if (window.ENABLE_DEVELOPER_TOOLS) {
     Devtools._internal_.enable();
