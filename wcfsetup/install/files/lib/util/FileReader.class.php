@@ -210,20 +210,10 @@ class FileReader
 
     /**
      * Returns an ASCII filename for the given filename.
-     *
-     * @param string $filename
-     * @return  string
      */
-    protected function getAsciiFilename($filename)
+    protected function getAsciiFilename(string $filename): string
     {
-        // Attempt to use the intl extension if possible, this will result
-        // in more readable filenames for Umlauts, because they will be converted
-        // into the base character instead of an underscore.
-        if (\function_exists('transliterator_transliterate')) {
-            return \transliterator_transliterate('Latin-ASCII', $filename);
-        } else {
-            return \preg_replace('/[^\x20-\x7E]/', '_', $filename);
-        }
+        return \transliterator_transliterate('Latin-ASCII', $filename);
     }
 
     /**
