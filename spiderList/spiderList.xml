@@ -321,7 +321,7 @@
 	</spider>
 	<spider ident="DuckDuckBot">
 		<name>DuckDuckGo</name>
-		<url>https://duckduckgo.com/</url>
+		<url>https://help.duckduckgo.com/duckduckgo-help-pages/results/duckduckbot/</url>
 	</spider>
 	<spider ident="DWCP/2.0">
 		<name>DWCP (Dridus' Web Cataloging Project)</name>
@@ -380,7 +380,7 @@
 	</spider>
 	<spider ident="facebookexternalhit">
 		<name>Facebook</name>
-		<url>http://www.facebook.com/externalhit_uatext.php</url>
+		<url>https://developers.facebook.com/docs/sharing/webmasters/crawler/</url>
 	</spider>
 	<spider ident="fast-webcrawler">
 		<name>FAST / AlltheWeb</name>
@@ -566,7 +566,7 @@
 	</spider>
 	<spider ident="heritrix">
 		<name>Heritrix</name>
-		<url>http://www.worio.com</url>
+		<url>https://github.com/internetarchive/heritrix3/wiki</url>
 	</spider>
 	<spider ident="HKU WWW Robot">
 		<name>HKU WWW Octopus</name>
