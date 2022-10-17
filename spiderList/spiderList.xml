@@ -1298,8 +1298,9 @@
 		<name>Turnitin.com</name>
 		<url>http://www.turnitin.com/static/products_services/search_engines.html</url>
 	</spider>
-	<spider ident="TurnitinBot/">
+	<spider ident="TurnitinBot">
 		<name>TurnitinBot</name>
+		<url>http://www.turnitin.com/robot/crawlerinfo.html</url>
 	</spider>
 	<spider ident="TurtleScanner">
 		<name>Turtle</name>
