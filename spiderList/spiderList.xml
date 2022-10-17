@@ -493,6 +493,10 @@
 		<name>Freshping</name>
 		<url>https://freshping.io/</url>
 	</spider>
+	<spider ident="FreshRSS">
+		<name>FreshRSS</name>
+		<url>https://freshrss.org</url>
+	</spider>
 	<spider ident="FunnelWeb">
 		<name>FunnelWeb</name>
 	</spider>
