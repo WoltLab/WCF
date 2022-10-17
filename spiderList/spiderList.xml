@@ -1175,6 +1175,10 @@
 	<spider ident="SEO Scanner">
 		<name>SEO Scanner</name>
 	</spider>
+	<spider ident="SeobilityBot">
+		<name>SeobilityBot</name>
+		<url>https://www.seobility.net/sites/bot.html</url>
+	</spider>
 	<spider ident="SEOkicks">
 		<name>SEOkicks</name>
 		<url>https://www.seokicks.de/robot.html</url>
