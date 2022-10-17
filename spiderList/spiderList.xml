@@ -716,6 +716,10 @@
 		<name>IRL Crawler</name>
 		<url>http://irl.cs.tamu.edu/crawler</url>
 	</spider>
+	<spider ident="IonCrawl">
+		<name>IonCrawl</name>
+		<url>https://www.ionos.de/terms-gtc/faq-crawler-en</url>
+	</spider>
 	<spider ident="Iron33">
 		<name>Iron33</name>
 	</spider>
