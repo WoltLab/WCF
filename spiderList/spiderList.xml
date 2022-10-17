@@ -1138,6 +1138,10 @@
 	<spider ident="Scooter">
 		<name>Scooter</name>
 	</spider>
+	<spider ident="SearchAtlas">
+		<name>SearchAtlas</name>
+		<url>https://searchatlas.com/</url>
+	</spider>
 	<spider ident="SearchNZ">
 		<name>SearchNZ</name>
 		<url>http://www.searchnz.co.nz/</url>
