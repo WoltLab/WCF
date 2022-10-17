@@ -69,32 +69,22 @@ class DailyCleanUpCronjob extends AbstractCronjob
         ]);
 
         // tracked visits
+        $visitLifetime = 120 * 86400;
+        \assert($visitLifetime > VisitTracker::LIFETIME);
+
         $sql = "DELETE FROM wcf1_tracked_visit
-                WHERE       objectTypeID = ?
-                        AND visitTime < ?";
-        $statement1 = WCF::getDB()->prepare($sql);
+                WHERE       visitTime < ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            TIME_NOW - $visitLifetime,
+        ]);
+
         $sql = "DELETE FROM wcf1_tracked_visit_type
-                WHERE       objectTypeID = ?
-                        AND visitTime < ?";
-        $statement2 = WCF::getDB()->prepare($sql);
-
-        WCF::getDB()->beginTransaction();
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.visitTracker.objectType');
-        foreach ($objectTypes as $objectType) {
-            $visitLifetime = 120 * 86400;
-            \assert($visitLifetime > VisitTracker::LIFETIME);
-
-            // delete data
-            $statement1->execute([
-                $objectType->objectTypeID,
-                TIME_NOW - $visitLifetime,
-            ]);
-            $statement2->execute([
-                $objectType->objectTypeID,
-                TIME_NOW - $visitLifetime,
-            ]);
-        }
-        WCF::getDB()->commitTransaction();
+                WHERE       visitTime < ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            TIME_NOW - $visitLifetime,
+        ]);
 
         // clean up cronjob log
         $sql = "DELETE FROM wcf1_cronjob_log
