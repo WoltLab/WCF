@@ -143,6 +143,10 @@
 		<name>Bitacle</name>
 		<url>http://bitacle.org/</url>
 	</spider>
+	<spider ident="BitBot">
+		<name>BitBot</name>
+		<url>https://bitbot.dev</url>
+	</spider>
 	<spider ident="Biz360 Spider">
 		<name>Biz</name>
 		<url>http://www.biz360.com</url>
