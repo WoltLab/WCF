@@ -16,7 +16,7 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
     /**
      * Adds thousands separators to a given number.
      *
-     * @see    http://stackoverflow.com/a/6502556/782822
+     * @deprecated 6.0 Use `formatNumeric()` instead.
      */
     function addThousandsSeparator(number) {
         return numberFormat.format(number);

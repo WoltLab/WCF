@@ -15,7 +15,7 @@ const numberFormat = new Intl.NumberFormat(document.documentElement.lang);
 /**
  * Adds thousands separators to a given number.
  *
- * @see    http://stackoverflow.com/a/6502556/782822
+ * @deprecated 6.0 Use `formatNumeric()` instead.
  */
 export function addThousandsSeparator(number: number): string {
   return numberFormat.format(number);

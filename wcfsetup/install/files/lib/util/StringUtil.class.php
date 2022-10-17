@@ -172,6 +172,8 @@ final class StringUtil
 
     /**
      * Formats an integer.
+     *
+     * @deprecated 6.0 Use `formatNumeric()` instead.
      */
     public static function formatInteger(int $integer): string
     {
@@ -186,6 +188,8 @@ final class StringUtil
 
     /**
      * Formats a double.
+     *
+     * @deprecated 6.0 Use `formatNumeric()` instead, apply `\round()` manually if required.
      */
     public static function formatDouble(float $double, int $maxDecimals = 0): string
     {
@@ -202,6 +206,8 @@ final class StringUtil
 
     /**
      * Adds thousands separators to a given number.
+     *
+     * @deprecated 6.0 Use `formatNumeric()` instead.
      */
     public static function addThousandsSeparator(int|float $number): string
     {
@@ -808,7 +814,7 @@ final class StringUtil
 
         $locale = WCF::getLanguage()->getLocale();
         if (!isset($formatters[$locale])) {
-            $formatters[$locale] = new \NumberFormatter($locale, \NumberFormatter::TYPE_DEFAULT);
+            $formatters[$locale] = new \NumberFormatter($locale, \NumberFormatter::DEFAULT_STYLE);
         }
 
         return $formatters[$locale];
