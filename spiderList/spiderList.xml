@@ -1343,6 +1343,10 @@
 		<name>Teoma/Ask Jeeves</name>
 		<url>http://sp.teoma.com/docs/teoma/about/</url>
 	</spider>
+	<spider ident="trovitBot">
+		<name>trovitBot</name>
+		<url>http://www.trovit.com/bot.html</url>
+	</spider>
 	<spider ident="JubiiRobot">
 		<name>The Jubii</name>
 	</spider>
