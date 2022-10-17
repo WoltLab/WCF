@@ -351,6 +351,10 @@
 		<name>Dragon Metrics</name>
 		<url>https://help.dragonmetrics.com/en/articles/213883-about-dragonbot</url>
 	</spider>
+	<spider ident="Dubbotbot">
+		<name>DubBot</name>
+		<url>https://help.dubbot.com/en/articles/2923576-dubbot-s-crawler-ip-address-and-user-agent</url>
+	</spider>
 	<spider ident="DuckDuckBot">
 		<name>DuckDuckGo</name>
 		<url>https://help.duckduckgo.com/duckduckgo-help-pages/results/duckduckbot/</url>
