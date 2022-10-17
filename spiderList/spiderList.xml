@@ -248,6 +248,10 @@
 	<spider ident="www.cienciaficcion.net">
 		<name>cIeNcIaFiCcIoN.nEt</name>
 	</spider>
+	<spider ident="Cincraw">
+		<name>Cincraw</name>
+		<url>http://cincrawdata.net/bot/</url>
+	</spider>
 	<spider ident="CipinetBot">
 		<name>Cipinet</name>
 		<url>http://www.cipinet.com/bot.html</url>
