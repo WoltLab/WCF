@@ -1299,6 +1299,10 @@
 		<name>Superfeedr</name>
 		<url>http://superfeedr.com</url>
 	</spider>
+	<spider ident="SurdotlyBot">
+		<name>SurdotlyBot</name>
+		<url>http://sur.ly/bot.html</url>
+	</spider>
 	<spider ident="Szukacz">
 		<name>Szukacz</name>
 		<url>http://www.szukacz.pl/html/RobotEnglishVersion.html</url>
