@@ -485,6 +485,10 @@
 	<spider ident="Freecrawl">
 		<name>Freecrawl</name>
 	</spider>
+	<spider ident="FreeWebMonitoring SiteChecker">
+		<name>FreeWebMonitoring SiteChecker</name>
+		<url>https://www.freewebmonitoring.com/bot.html</url>
+	</spider>
 	<spider ident="FreshpingBot">
 		<name>Freshping</name>
 		<url>https://freshping.io/</url>
