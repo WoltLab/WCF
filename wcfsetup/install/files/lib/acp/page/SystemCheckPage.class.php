@@ -68,6 +68,7 @@ class SystemCheckPage extends AbstractPage
         'exif',
         'gd',
         'hash',
+        'intl',
         'json',
         'libxml',
         'mbstring',
