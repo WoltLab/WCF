@@ -1367,6 +1367,10 @@
 		<name>TelegramBot (like TwitterBot)</name>
 		<url>https://telegram.org/</url>
 	</spider>
+	<spider ident="Testomatobot">
+		<name>TestomatoBot</name>
+		<url>https://www.testomato.com/bot</url>
+	</spider>
 	<spider ident="thumbshots-de-Bot">
 		<name>thumbshots-de-Bot</name>
 	</spider>
