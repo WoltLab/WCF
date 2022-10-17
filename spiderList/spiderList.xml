@@ -221,6 +221,10 @@
 		<name>BSpider</name>
 		<url>http://www.robotstxt.org/db/bspider.html</url>
 	</spider>
+	<spider ident="BublupBot">
+		<name>BublupBot</name>
+		<url>https://www.bublup.com/bublup-bot.html</url>
+	</spider>
 	<spider ident="Buck/2.2">
 		<name>Buck</name>
 		<url>https://app.hypefactors.com/media-monitoring/about.html</url>
