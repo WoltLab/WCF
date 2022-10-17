@@ -9,14 +9,29 @@
     // will always be correct _relative_ to the client’s clock.
     const drift = Date.now() - window.TIME_NOW * 1000;
     const locale = document.documentElement.lang;
-    const lessThanADayAgo = new Intl.RelativeTimeFormat(locale);
-    const lessThanAWeekAgo = new Intl.DateTimeFormat(locale, {
-        weekday: "long",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-    const moreThanAWeekAgo = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
-    const fullDate = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" });
+    let todayDayStart;
+    let yesterdayDayStart;
+    const updateTodayAndYesterday = () => {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        if (todayDayStart !== today.getTime()) {
+            todayDayStart = today.getTime();
+            const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+            yesterdayDayStart = yesterday.getTime();
+        }
+    };
+    updateTodayAndYesterday();
+    const DateFormatter = {
+        Date: new Intl.DateTimeFormat(locale, { dateStyle: "long" }),
+        DateAndTime: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" }),
+        DayOfWeekAndTime: new Intl.DateTimeFormat(locale, {
+            weekday: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+        }),
+        Minutes: new Intl.RelativeTimeFormat(locale),
+        TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
+    };
     class WoltlabCoreTimeElement extends HTMLElement {
         #date;
         #timeElement;
@@ -47,30 +62,40 @@
                 shadow.append(this.#timeElement);
             }
             if (updateTitle) {
-                this.#timeElement.title = fullDate.format(date);
+                this.#timeElement.title = DateFormatter.DateAndTime.format(date);
             }
-            // timestamp is less than 60 seconds ago
-            if (difference < 60) {
-                this.#timeElement.textContent = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
+            let value;
+            if (difference < 60 /* TimePeriod.OneMinute */) {
+                value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
             }
-            // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
             else if (difference < 3600 /* TimePeriod.OneHour */) {
                 const minutes = Math.trunc(difference / 60 /* TimePeriod.OneMinute */);
-                this.#timeElement.textContent = lessThanADayAgo.format(minutes * -1, "minutes");
+                value = DateFormatter.Minutes.format(minutes * -1, "minute");
             }
-            // timestamp is less than 24 hours ago
-            else if (difference < 86400 /* TimePeriod.OneDay */) {
-                const hours = Math.trunc(difference / 3600 /* TimePeriod.OneHour */);
-                this.#timeElement.textContent = lessThanADayAgo.format(hours * -1, "hours");
+            else if (date.getTime() > todayDayStart) {
+                value = this.#formatTodayOrYesterday(date, 0 /* TodayOrYesterday.Today */);
             }
-            // timestamp is less than 6 days ago
+            else if (date.getTime() > yesterdayDayStart) {
+                value = this.#formatTodayOrYesterday(date, -1 /* TodayOrYesterday.Yesterday */);
+            }
             else if (difference < 604800 /* TimePeriod.OneWeek */) {
-                this.#timeElement.textContent = lessThanAWeekAgo.format(date);
+                value = DateFormatter.DayOfWeekAndTime.format(date);
             }
-            // timestamp is between ~700 million years BC and last week
             else {
-                this.#timeElement.textContent = moreThanAWeekAgo.format(date);
+                value = DateFormatter.Date.format(date);
             }
+            value = value.charAt(0).toUpperCase() + value.slice(1);
+            this.#timeElement.textContent = value;
+        }
+        #formatTodayOrYesterday(date, dayOffset) {
+            let value = DateFormatter.TodayOrYesterday.format(dayOffset, "day");
+            const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
+            if (dateParts[0].type === "weekday") {
+                const datePartsWithoutDayOfWeek = dateParts.slice(1).map((part) => part.value);
+                datePartsWithoutDayOfWeek.unshift(value);
+                value = datePartsWithoutDayOfWeek.join("");
+            }
+            return value;
         }
     }
     window.customElements.define("woltlab-core-time", WoltlabCoreTimeElement);
@@ -79,7 +104,10 @@
     };
     let timer = undefined;
     const startTimer = () => {
-        timer = window.setInterval(() => refreshAllTimeElements(), 60000);
+        timer = window.setInterval(() => {
+            updateTodayAndYesterday();
+            refreshAllTimeElements();
+        }, 60000);
     };
     document.addEventListener("DOMContentLoaded", () => startTimer(), { once: true });
     document.addEventListener("visibilitychange", () => {

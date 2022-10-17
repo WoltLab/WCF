@@ -10,14 +10,36 @@
 
   const locale = document.documentElement.lang;
 
-  const lessThanADayAgo = new Intl.RelativeTimeFormat(locale);
-  const lessThanAWeekAgo = new Intl.DateTimeFormat(locale, {
-    weekday: "long",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const moreThanAWeekAgo = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
-  const fullDate = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" });
+  let todayDayStart: number;
+  let yesterdayDayStart: number;
+  const updateTodayAndYesterday = () => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (todayDayStart !== today.getTime()) {
+      todayDayStart = today.getTime();
+
+      const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+      yesterdayDayStart = yesterday.getTime();
+    }
+  };
+  updateTodayAndYesterday();
+
+  const enum TodayOrYesterday {
+    Today = 0,
+    Yesterday = -1,
+  }
+
+  const DateFormatter = {
+    Date: new Intl.DateTimeFormat(locale, { dateStyle: "long" }),
+    DateAndTime: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" }),
+    DayOfWeekAndTime: new Intl.DateTimeFormat(locale, {
+      weekday: "long",
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    Minutes: new Intl.RelativeTimeFormat(locale),
+    TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
+  };
 
   const enum TimePeriod {
     OneMinute = 60,
@@ -66,31 +88,40 @@
       }
 
       if (updateTitle) {
-        this.#timeElement.title = fullDate.format(date);
+        this.#timeElement.title = DateFormatter.DateAndTime.format(date);
       }
 
-      // timestamp is less than 60 seconds ago
-      if (difference < 60) {
-        this.#timeElement.textContent = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
-      }
-      // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-      else if (difference < TimePeriod.OneHour) {
+      let value: string;
+      if (difference < TimePeriod.OneMinute) {
+        value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
+      } else if (difference < TimePeriod.OneHour) {
         const minutes = Math.trunc(difference / TimePeriod.OneMinute);
-        this.#timeElement.textContent = lessThanADayAgo.format(minutes * -1, "minutes");
+        value = DateFormatter.Minutes.format(minutes * -1, "minute");
+      } else if (date.getTime() > todayDayStart) {
+        value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Today);
+      } else if (date.getTime() > yesterdayDayStart) {
+        value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Yesterday);
+      } else if (difference < TimePeriod.OneWeek) {
+        value = DateFormatter.DayOfWeekAndTime.format(date);
+      } else {
+        value = DateFormatter.Date.format(date);
       }
-      // timestamp is less than 24 hours ago
-      else if (difference < TimePeriod.OneDay) {
-        const hours = Math.trunc(difference / TimePeriod.OneHour);
-        this.#timeElement.textContent = lessThanADayAgo.format(hours * -1, "hours");
+
+      value = value.charAt(0).toUpperCase() + value.slice(1);
+
+      this.#timeElement.textContent = value;
+    }
+
+    #formatTodayOrYesterday(date: Date, dayOffset: TodayOrYesterday): string {
+      let value = DateFormatter.TodayOrYesterday.format(dayOffset, "day");
+      const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
+      if (dateParts[0].type === "weekday") {
+        const datePartsWithoutDayOfWeek: string[] = dateParts.slice(1).map((part) => part.value);
+        datePartsWithoutDayOfWeek.unshift(value);
+        value = datePartsWithoutDayOfWeek.join("");
       }
-      // timestamp is less than 6 days ago
-      else if (difference < TimePeriod.OneWeek) {
-        this.#timeElement.textContent = lessThanAWeekAgo.format(date);
-      }
-      // timestamp is between ~700 million years BC and last week
-      else {
-        this.#timeElement.textContent = moreThanAWeekAgo.format(date);
-      }
+
+      return value;
     }
   }
 
@@ -102,7 +133,10 @@
 
   let timer: number | undefined = undefined;
   const startTimer = () => {
-    timer = window.setInterval(() => refreshAllTimeElements(), 60_000);
+    timer = window.setInterval(() => {
+      updateTodayAndYesterday();
+      refreshAllTimeElements();
+    }, 60_000);
   };
 
   document.addEventListener("DOMContentLoaded", () => startTimer(), { once: true });
