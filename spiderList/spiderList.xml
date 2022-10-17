@@ -107,6 +107,14 @@
 		<name>AURESYS</name>
 		<url>http://www.robotstxt.org/db/auresys.html</url>
 	</spider>
+	<spider ident="AwarioSmartBot">
+		<name>AwarioSmartBot</name>
+		<url>https://awario.com/bots.html</url>
+	</spider>
+	<spider ident="AwarioRssBot">
+		<name>AwarioRssBot</name>
+		<url>https://awario.com/bots.html</url>
+	</spider>
 	<spider ident="BackRub">
 		<name>BackRub</name>
 		<url>http://www.robotstxt.org/db/backrub.html</url>
