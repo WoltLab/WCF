@@ -16,7 +16,7 @@
 	</spider>
 	<spider ident="Accoona-AI-Agent">
 		<name>Accoona</name>
-		<url>http://accoona.com/about/about_accoona.jsp</url>
+		<url>https://www.accoona.com/about/</url>
 	</spider>
 	<spider ident="aconon Index">
 		<name>aconon Index (raubfische.de)</name>
@@ -1537,7 +1537,7 @@
 	</spider>
 	<spider ident="Yandex">
 		<name>Yandex</name>
-		<url>http://www.yandex.ru/</url>
+		<url>http://yandex.com/bots</url>
 	</spider>
 	<spider ident="zeus">
 		<name>Zeus Internet Marketing</name>
