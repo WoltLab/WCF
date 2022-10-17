@@ -37,6 +37,10 @@
 		<name>Alkaline</name>
 		<url>http://www.robotstxt.org/db/Alkaline.html</url>
 	</spider>
+	<spider ident="Amazonbot">
+		<name>Amazonbot</name>
+		<url>https://developer.amazon.com/support/amazonbot</url>
+	</spider>
 	<spider ident="AlexaBOT">
 		<name>Alexa</name>
 		<url>http://www.alexa.com/help/webmasters</url>
