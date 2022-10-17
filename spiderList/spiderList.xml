@@ -1183,6 +1183,10 @@
 		<name>SEOkicks</name>
 		<url>https://www.seokicks.de/robot.html</url>
 	</spider>
+	<spider ident="seostar.co">
+		<name>Seostar</name>
+		<url>https://seostar.co/robot/</url>
+	</spider>
 	<spider ident="serpstatbot">
 		<name>serpstatbot</name>
 		<url>http://serpstatbot.com/</url>
