@@ -664,6 +664,10 @@
 	<spider ident="IncyWincy">
 		<name>IncyWincy</name>
 	</spider>
+	<spider ident="infoobot">
+		<name>infoobot</name>
+		<url>https://www.infoo.nl/bot.html</url>
+	</spider>
 	<spider ident="Informant">
 		<name>Informant</name>
 	</spider>
