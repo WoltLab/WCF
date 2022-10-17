@@ -336,6 +336,10 @@
 	<spider ident="DNAbot/1.0">
 		<name>DNAbot</name>
 	</spider>
+	<spider ident="Domains Project">
+		<name>Domains Project</name>
+		<url>https://domainsproject.org/</url>
+	</spider>
 	<spider ident="DotBot">
 		<name>Moz DotBot</name>
 		<url>http://www.opensiteexplorer.org/dotbot</url>
