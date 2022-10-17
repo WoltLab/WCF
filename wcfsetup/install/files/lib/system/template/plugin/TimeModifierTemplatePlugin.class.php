@@ -33,6 +33,11 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
         $isFutureDate = ($timestamp > TIME_NOW);
         $dateTime = DateUtil::getRelativeTime($dateTimeObject, $timestamp, $date, $time, $isFutureDate);
 
+        return \sprintf(
+            '<woltlab-core-time date="%s"></woltlab-core-time>',
+            DateUtil::format($dateTimeObject, 'c'),
+        );
+
         return '<time datetime="' . DateUtil::format(
             $dateTimeObject,
             'c'
