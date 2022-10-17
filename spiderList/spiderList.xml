@@ -908,6 +908,10 @@
 		<name>Netcraft Web Server Survey</name>
 		<url>http://news.netcraft.com/</url>
 	</spider>
+	<spider ident="Neticle Crawler">
+		<name>Neticle Crawler</name>
+		<url>https://neticle.com/bot/en/</url>
+	</spider>
 	<spider ident="NetMechanic">
 		<name>NetMechanic</name>
 	</spider>
