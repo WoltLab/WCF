@@ -1211,6 +1211,10 @@
 	<spider ident="SimBot/1.0">
 		<name>Simmany Robot Ver1.0</name>
 	</spider>
+	<spider ident="SimplePie">
+		<name>SimplePie</name>
+		<url>https://simplepie.org</url>
+	</spider>
 	<spider ident="SkypeUriPreview">
 		<name>Skype Preview</name>
 		<url>https://www.skype.com/</url>
