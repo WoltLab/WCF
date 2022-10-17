@@ -10,6 +10,10 @@
 
   const locale = document.documentElement.lang;
 
+  // Compute the timestamps for both the start of “today” and “yesterday”
+  // for easier comparisons. Dates usually appear a lot of times on most
+  // pages, computing the values ahead of time and only updating them
+  // once every minute makes this process less expensive.
   let todayDayStart: number;
   let yesterdayDayStart: number;
   const updateTodayAndYesterday = () => {
@@ -30,14 +34,19 @@
   }
 
   const DateFormatter = {
+    // Example: November 17, 2022
     Date: new Intl.DateTimeFormat(locale, { dateStyle: "long" }),
+    // Example: November 17, 2022 at 11:41 AM
     DateAndTime: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" }),
+    // Example: Thursday 11:41 AM
     DayOfWeekAndTime: new Intl.DateTimeFormat(locale, {
       weekday: "long",
       hour: "2-digit",
       minute: "2-digit",
     }),
+    // Example: 16 minutes ago
     Minutes: new Intl.RelativeTimeFormat(locale),
+    // Example: today
     TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
   };
 
@@ -128,8 +137,19 @@
       this.#timeElement.textContent = value;
     }
 
+    /**
+     * The date formatter was not provide a reliable way to generate
+     * the “date” portion as a relative value such as “today” or
+     * “tomorrow” _along_ with the time.
+     *
+     * This workaround will generate the date using the day of week
+     * and the time, but replace the day of week with the relative
+     * value.
+     */
     #formatTodayOrYesterday(date: Date, dayOffset: TodayOrYesterday): string {
+      // This will generate the localized value of “today” or “tomorrow”.
       let value = DateFormatter.TodayOrYesterday.format(dayOffset, "day");
+
       const dateParts = DateFormatter.DayOfWeekAndTime.formatToParts(date);
       if (dateParts[0].type === "weekday") {
         const datePartsWithoutDayOfWeek: string[] = dateParts.slice(1).map((part) => part.value);
@@ -143,7 +163,7 @@
 
   window.customElements.define("woltlab-core-time", WoltlabCoreTimeElement);
 
-  const refreshAllTimeElements = function () {
+  const refreshAllTimeElements = () => {
     document.querySelectorAll<WoltlabCoreTimeElement>("woltlab-core-time").forEach((element) => element.refresh(false));
   };
 
