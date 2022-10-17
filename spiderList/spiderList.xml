@@ -1295,6 +1295,10 @@
 	<spider ident="suntek">
 		<name>suntek search engine</name>
 	</spider>
+	<spider ident="Superfeedr">
+		<name>Superfeedr</name>
+		<url>http://superfeedr.com</url>
+	</spider>
 	<spider ident="Szukacz">
 		<name>Szukacz</name>
 		<url>http://www.szukacz.pl/html/RobotEnglishVersion.html</url>
