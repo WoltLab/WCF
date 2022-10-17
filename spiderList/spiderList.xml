@@ -1634,7 +1634,7 @@
 	</spider>
 	<spider ident="Yandex">
 		<name>Yandex</name>
-		<url>http://yandex.com/bots</url>
+		<url>https://yandex.com/bots</url>
 	</spider>
 	<spider ident="zeus">
 		<name>Zeus Internet Marketing</name>
