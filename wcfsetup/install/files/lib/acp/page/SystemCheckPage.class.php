@@ -63,18 +63,18 @@ class SystemCheckPage extends AbstractPage
     ];
 
     public $phpExtensions = [
-        'mbstring',
-        'libxml',
+        'ctype',
         'dom',
-        'zlib',
-        'pdo',
-        'pdo_mysql',
-        'json',
-        'pcre',
+        'exif',
         'gd',
         'hash',
-        'exif',
-        'ctype',
+        'json',
+        'libxml',
+        'mbstring',
+        'pcre',
+        'pdo_mysql',
+        'pdo',
+        'zlib',
     ];
 
     public $phpMemoryLimit = 128;
