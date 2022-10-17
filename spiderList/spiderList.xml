@@ -347,6 +347,10 @@
 	<spider ident="DragonBot/1.0 libwww/5.0">
 		<name>DragonBot</name>
 	</spider>
+	<spider ident="dragonmetrics">
+		<name>Dragon Metrics</name>
+		<url>https://help.dragonmetrics.com/en/articles/213883-about-dragonbot</url>
+	</spider>
 	<spider ident="DuckDuckBot">
 		<name>DuckDuckGo</name>
 		<url>https://help.duckduckgo.com/duckduckgo-help-pages/results/duckduckbot/</url>
