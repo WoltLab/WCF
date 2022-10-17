@@ -49,6 +49,17 @@
             this.setAttribute("date", date.toISOString());
             this.refresh(true);
         }
+        get static() {
+            return this.hasAttribute("static");
+        }
+        set static(isStatic) {
+            if (isStatic === true) {
+                this.setAttribute("static", "");
+            }
+            else {
+                this.removeAttribute("static");
+            }
+        }
         connectedCallback() {
             this.refresh(true);
         }
@@ -65,24 +76,29 @@
                 this.#timeElement.title = DateFormatter.DateAndTime.format(date);
             }
             let value;
-            if (difference < 60 /* TimePeriod.OneMinute */) {
-                value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
-            }
-            else if (difference < 3600 /* TimePeriod.OneHour */) {
-                const minutes = Math.trunc(difference / 60 /* TimePeriod.OneMinute */);
-                value = DateFormatter.Minutes.format(minutes * -1, "minute");
-            }
-            else if (date.getTime() > todayDayStart) {
-                value = this.#formatTodayOrYesterday(date, 0 /* TodayOrYesterday.Today */);
-            }
-            else if (date.getTime() > yesterdayDayStart) {
-                value = this.#formatTodayOrYesterday(date, -1 /* TodayOrYesterday.Yesterday */);
-            }
-            else if (difference < 604800 /* TimePeriod.OneWeek */) {
-                value = DateFormatter.DayOfWeekAndTime.format(date);
+            if (this.static) {
+                value = this.#timeElement.title;
             }
             else {
-                value = DateFormatter.Date.format(date);
+                if (difference < 60 /* TimePeriod.OneMinute */) {
+                    value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
+                }
+                else if (difference < 3600 /* TimePeriod.OneHour */) {
+                    const minutes = Math.trunc(difference / 60 /* TimePeriod.OneMinute */);
+                    value = DateFormatter.Minutes.format(minutes * -1, "minute");
+                }
+                else if (date.getTime() > todayDayStart) {
+                    value = this.#formatTodayOrYesterday(date, 0 /* TodayOrYesterday.Today */);
+                }
+                else if (date.getTime() > yesterdayDayStart) {
+                    value = this.#formatTodayOrYesterday(date, -1 /* TodayOrYesterday.Yesterday */);
+                }
+                else if (difference < 604800 /* TimePeriod.OneWeek */) {
+                    value = DateFormatter.DayOfWeekAndTime.format(date);
+                }
+                else {
+                    value = DateFormatter.Date.format(date);
+                }
             }
             value = value.charAt(0).toUpperCase() + value.slice(1);
             this.#timeElement.textContent = value;

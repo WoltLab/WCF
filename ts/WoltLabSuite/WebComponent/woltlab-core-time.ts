@@ -71,6 +71,18 @@
       this.refresh(true);
     }
 
+    get static(): boolean {
+      return this.hasAttribute("static");
+    }
+
+    set static(isStatic: boolean) {
+      if (isStatic === true) {
+        this.setAttribute("static", "");
+      } else {
+        this.removeAttribute("static");
+      }
+    }
+
     connectedCallback() {
       this.refresh(true);
     }
@@ -92,19 +104,23 @@
       }
 
       let value: string;
-      if (difference < TimePeriod.OneMinute) {
-        value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
-      } else if (difference < TimePeriod.OneHour) {
-        const minutes = Math.trunc(difference / TimePeriod.OneMinute);
-        value = DateFormatter.Minutes.format(minutes * -1, "minute");
-      } else if (date.getTime() > todayDayStart) {
-        value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Today);
-      } else if (date.getTime() > yesterdayDayStart) {
-        value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Yesterday);
-      } else if (difference < TimePeriod.OneWeek) {
-        value = DateFormatter.DayOfWeekAndTime.format(date);
+      if (this.static) {
+        value = this.#timeElement.title;
       } else {
-        value = DateFormatter.Date.format(date);
+        if (difference < TimePeriod.OneMinute) {
+          value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
+        } else if (difference < TimePeriod.OneHour) {
+          const minutes = Math.trunc(difference / TimePeriod.OneMinute);
+          value = DateFormatter.Minutes.format(minutes * -1, "minute");
+        } else if (date.getTime() > todayDayStart) {
+          value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Today);
+        } else if (date.getTime() > yesterdayDayStart) {
+          value = this.#formatTodayOrYesterday(date, TodayOrYesterday.Yesterday);
+        } else if (difference < TimePeriod.OneWeek) {
+          value = DateFormatter.DayOfWeekAndTime.format(date);
+        } else {
+          value = DateFormatter.Date.format(date);
+        }
       }
 
       value = value.charAt(0).toUpperCase() + value.slice(1);

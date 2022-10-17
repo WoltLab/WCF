@@ -195,28 +195,15 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     }
     exports.gmdate = gmdate;
     /**
-     * Returns a `time` element based on the given date just like a `time`
-     * element created by `wcf\system\template\plugin\TimeModifierTemplatePlugin`.
-     *
-     * Note: The actual content of the element is empty and is expected
-     * to be automatically updated by `WoltLabSuite/Core/Date/Time/Relative`
-     * (for dates not in the future) after the DOM change listener has been triggered.
+     * Returns a `<woltlab-core-time>` element based on the given date just like a
+     * `<woltlab-core-time>` element created by
+     * `wcf\system\template\plugin\TimeModifierTemplatePlugin`.
      */
     function getTimeElement(date) {
-        const time = document.createElement("time");
-        time.className = "datetime";
-        const formattedDate = formatDate(date);
-        const formattedTime = formatTime(date);
-        time.setAttribute("datetime", format(date, "c"));
-        time.dataset.timestamp = ((date.getTime() - date.getMilliseconds()) / 1000).toString();
-        time.dataset.date = formattedDate;
-        time.dataset.time = formattedTime;
-        time.dataset.offset = (date.getTimezoneOffset() * 60).toString(); // PHP returns minutes, JavaScript returns seconds
+        const time = document.createElement("woltlab-core-time");
+        time.date = date;
         if (date.getTime() > Date.now()) {
-            time.dataset.isFutureDate = "true";
-            time.textContent = Language.get("wcf.date.dateTimeFormat")
-                .replace("%time%", formattedTime)
-                .replace("%date%", formattedDate);
+            time.static = true;
         }
         return time;
     }

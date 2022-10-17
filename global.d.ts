@@ -68,10 +68,18 @@ declare global {
     setIcon: (name: string, forceSolid?: boolean) => void;
   }
 
+  interface WoltlabCoreTime extends HTMLElement {
+    static: boolean;
+
+    get date(): Date;
+    set date(date: Date);
+  }
+
   interface HTMLElementTagNameMap {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
+    "woltlab-core-time": WoltlabCoreTime;
   }
 }
