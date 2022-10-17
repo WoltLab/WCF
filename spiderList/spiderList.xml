@@ -1187,6 +1187,10 @@
 		<name>Seostar</name>
 		<url>https://seostar.co/robot/</url>
 	</spider>
+	<spider ident="SerendeputyBot">
+		<name>SerendeputyBot</name>
+		<url>http://serendeputy.com/about/serendeputy-bot</url>
+	</spider>
 	<spider ident="serpstatbot">
 		<name>serpstatbot</name>
 		<url>http://serpstatbot.com/</url>
