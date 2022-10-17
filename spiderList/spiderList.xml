@@ -975,6 +975,10 @@
 	<spider ident="PageBoy">
 		<name>PageBoy</name>
 	</spider>
+	<spider ident="PagePeeker">
+		<name>PagePeeker</name>
+		<url>https://pagepeeker.com/robots/</url>
+	</spider>
 	<spider ident="Pandalytics">
 		<name>Pandalytics</name>
 		<url>https://domainsbot.com/pandalytics/</url>
