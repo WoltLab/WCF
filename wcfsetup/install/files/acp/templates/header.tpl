@@ -28,7 +28,7 @@
 		<meta name="theme-color" content="#3a6d9c">
 	{/if}
 	
-	<script>
+	<script data-eager="true">
 		var WCF_PATH = '{@$__wcf->getPath()}';
 		var WSC_API_URL = '{@$__wcf->getPath()}acp/';
 		{* The SECURITY_TOKEN is defined in wcf.globalHelper.js *}
