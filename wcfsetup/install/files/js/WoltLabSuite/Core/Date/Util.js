@@ -195,12 +195,12 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     }
     exports.gmdate = gmdate;
     /**
-     * Returns a `<woltlab-core-time>` element based on the given date just like a
-     * `<woltlab-core-time>` element created by
+     * Returns a `<woltlab-core-date-time>` element based on the given date
+     * just like a `<woltlab-core-date-time>` element created by
      * `wcf\system\template\plugin\TimeModifierTemplatePlugin`.
      */
     function getTimeElement(date) {
-        const time = document.createElement("woltlab-core-time");
+        const time = document.createElement("woltlab-core-date-time");
         time.date = date;
         if (date.getTime() > Date.now()) {
             time.static = true;

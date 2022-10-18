@@ -218,12 +218,12 @@ export function gmdate(date: Date): number {
 }
 
 /**
- * Returns a `<woltlab-core-time>` element based on the given date just like a
- * `<woltlab-core-time>` element created by
+ * Returns a `<woltlab-core-date-time>` element based on the given date
+ * just like a `<woltlab-core-date-time>` element created by
  * `wcf\system\template\plugin\TimeModifierTemplatePlugin`.
  */
-export function getTimeElement(date: Date): WoltlabCoreTime {
-  const time = document.createElement("woltlab-core-time");
+export function getTimeElement(date: Date): WoltlabCoreDateTime {
+  const time = document.createElement("woltlab-core-date-time");
   time.date = date;
 
   if (date.getTime() > Date.now()) {

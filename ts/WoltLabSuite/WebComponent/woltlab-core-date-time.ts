@@ -57,7 +57,7 @@
     OneWeek = 86_400 * 7,
   }
 
-  class WoltlabCoreTimeElement extends HTMLElement {
+  class WoltlabCoreDateTimeElement extends HTMLElement {
     #date?: Date;
     #timeElement?: HTMLTimeElement;
 
@@ -161,10 +161,10 @@
     }
   }
 
-  window.customElements.define("woltlab-core-time", WoltlabCoreTimeElement);
+  window.customElements.define("woltlab-core-date-time", WoltlabCoreDateTimeElement);
 
   const refreshAllTimeElements = () => {
-    document.querySelectorAll<WoltlabCoreTimeElement>("woltlab-core-time").forEach((element) => element.refresh(false));
+    document.querySelectorAll<WoltlabCoreDateTimeElement>("woltlab-core-date-time").forEach((element) => element.refresh(false));
   };
 
   let timer: number | undefined = undefined;

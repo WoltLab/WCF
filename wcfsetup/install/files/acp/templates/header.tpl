@@ -49,7 +49,7 @@
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-brand.js"></script>
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-metadata.js"></script>
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js"></script>
-	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/woltlab-core-time.js"></script>
+	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/woltlab-core-date-time.js"></script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}

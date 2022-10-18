@@ -68,7 +68,7 @@ declare global {
     setIcon: (name: string, forceSolid?: boolean) => void;
   }
 
-  interface WoltlabCoreTime extends HTMLElement {
+  interface WoltlabCoreDateTime extends HTMLElement {
     static: boolean;
 
     get date(): Date;
@@ -80,6 +80,6 @@ declare global {
     "fa-icon": FaIcon;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
-    "woltlab-core-time": WoltlabCoreTime;
+    "woltlab-core-date-time": WoltlabCoreDateTime;
   }
 }

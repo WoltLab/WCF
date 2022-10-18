@@ -41,7 +41,7 @@
         // Example: today
         TodayOrYesterday: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
     };
-    class WoltlabCoreTimeElement extends HTMLElement {
+    class WoltlabCoreDateTimeElement extends HTMLElement {
         #date;
         #timeElement;
         get date() {
@@ -133,9 +133,9 @@
             return value;
         }
     }
-    window.customElements.define("woltlab-core-time", WoltlabCoreTimeElement);
+    window.customElements.define("woltlab-core-date-time", WoltlabCoreDateTimeElement);
     const refreshAllTimeElements = () => {
-        document.querySelectorAll("woltlab-core-time").forEach((element) => element.refresh(false));
+        document.querySelectorAll("woltlab-core-date-time").forEach((element) => element.refresh(false));
     };
     let timer = undefined;
     const startTimer = () => {

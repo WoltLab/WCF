@@ -37,7 +37,7 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
         )->format($dateTimeObject);
 
         return \sprintf(
-            '<woltlab-core-time date="%s"%s>%s</woltlab-core-time>',
+            '<woltlab-core-date-time date="%s"%s>%s</woltlab-core-date-time>',
             DateUtil::format($dateTimeObject, 'c'),
             $isFutureDate ? ' static' : '',
             $dateAndTime
