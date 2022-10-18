@@ -431,9 +431,6 @@ final class WCFSetup extends WCF
         // curl
         $system['curl']['result'] = \extension_loaded('curl');
 
-        // intl
-        $system['intl']['result'] = \extension_loaded('intl');
-
         // misconfigured reverse proxy / cookies
         $system['hostname']['result'] = true;
         [$system['hostname']['value']] = \explode(':', $_SERVER['HTTP_HOST'], 2);

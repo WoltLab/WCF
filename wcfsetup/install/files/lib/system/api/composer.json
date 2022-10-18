@@ -27,7 +27,6 @@
         "psr/log": "^3.0",
         "scssphp/scssphp": "^1.11",
         "sebastian/diff": "^4.0.4",
-        "symfony/polyfill-intl-idn": "^1.26.0",
         "symfony/polyfill-php82": "^1.26.0"
     },
     "replace": {
