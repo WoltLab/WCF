@@ -1141,7 +1141,7 @@ class WCF
             $key = \random_bytes(16);
         }
 
-        return $scope . '_' .\hash_hmac('md5', WCF_UUID . ':' . self::class . ':' . $scope, $key);
+        return $scope . '_' .\hash_hmac('md5', \WCF_UUID . ':' . self::class . ':' . $scope, $key);
     }
 
     /**
