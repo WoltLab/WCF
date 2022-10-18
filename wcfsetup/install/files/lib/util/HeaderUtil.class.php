@@ -171,7 +171,7 @@ final class HeaderUtil
             self::$output
         );
 
-        $placeholder = '<!-- JAVASCRIPT_RELOCATE_POSITION -->';
+        $placeholder = '<!-- ' . WCF::getRequestNonce('JAVASCRIPT_RELOCATE_POSITION') . ' -->';
         if (($placeholderPosition = \strrpos(self::$output, $placeholder)) !== false) {
             self::$output = \substr(self::$output, 0, $placeholderPosition)
                 . \implode("\n", $javascript)

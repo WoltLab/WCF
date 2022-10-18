@@ -8,7 +8,7 @@
 
 {event name='footer'}
 
-<!-- JAVASCRIPT_RELOCATE_POSITION -->
+<!-- {$__wcf->getRequestNonce('JAVASCRIPT_RELOCATE_POSITION')} -->
 
 <span id="bottom"></span>
 
