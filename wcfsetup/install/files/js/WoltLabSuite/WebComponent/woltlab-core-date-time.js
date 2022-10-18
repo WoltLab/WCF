@@ -96,11 +96,11 @@
             const difference = Math.trunc((Date.now() - date.getTime() - drift) / 1000);
             if (this.#timeElement === undefined) {
                 this.#timeElement = document.createElement("time");
-                this.#timeElement.dateTime = date.toISOString();
                 const shadow = this.attachShadow({ mode: "open" });
                 shadow.append(this.#timeElement);
             }
             if (updateTitle) {
+                this.#timeElement.dateTime = date.toISOString();
                 this.#timeElement.title = DateFormatter.DateAndTime.format(date);
             }
             let value;
@@ -132,7 +132,7 @@
             this.#timeElement.textContent = value;
         }
         /**
-         * The date formatter was not provide a reliable way to generate
+         * The date formatter does not provide a reliable way to generate
          * the “date” portion as a relative value such as “today” or
          * “tomorrow” _along_ with the time.
          *
