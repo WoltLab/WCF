@@ -9,6 +9,24 @@
     // will always be correct _relative_ to the client’s clock.
     const drift = Date.now() - window.TIME_NOW * 1000;
     const locale = document.documentElement.lang;
+    const resolveTimeZone = () => {
+        let value = "";
+        const meta = document.querySelector('meta[name="timezone"]');
+        if (meta) {
+            value = meta.content;
+            try {
+                Intl.DateTimeFormat(undefined, { timeZone: value });
+            }
+            catch {
+                value = "";
+            }
+        }
+        if (!value) {
+            value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        }
+        return value;
+    };
+    const timeZone = resolveTimeZone();
     // Compute the timestamps for both the start of “today” and “yesterday”
     // for easier comparisons. Dates usually appear a lot of times on most
     // pages, computing the values ahead of time and only updating them
@@ -27,14 +45,15 @@
     updateTodayAndYesterday();
     const DateFormatter = {
         // Example: November 17, 2022
-        Date: new Intl.DateTimeFormat(locale, { dateStyle: "long" }),
+        Date: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone }),
         // Example: November 17, 2022 at 11:41 AM
-        DateAndTime: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short" }),
+        DateAndTime: new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "short", timeZone }),
         // Example: Thursday 11:41 AM
         DayOfWeekAndTime: new Intl.DateTimeFormat(locale, {
             weekday: "long",
             hour: "2-digit",
             minute: "2-digit",
+            timeZone,
         }),
         // Example: 16 minutes ago
         Minutes: new Intl.RelativeTimeFormat(locale),
@@ -135,7 +154,9 @@
     }
     window.customElements.define("woltlab-core-date-time", WoltlabCoreDateTimeElement);
     const refreshAllTimeElements = () => {
-        document.querySelectorAll("woltlab-core-date-time").forEach((element) => element.refresh(false));
+        document
+            .querySelectorAll("woltlab-core-date-time")
+            .forEach((element) => element.refresh(false));
     };
     let timer = undefined;
     const startTimer = () => {

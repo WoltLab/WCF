@@ -27,6 +27,8 @@
 		<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
 		<meta name="theme-color" content="#3a6d9c">
 	{/if}
+
+	<meta name="timezone" content="{$__wcf->user->getTimeZone()->getName()}">
 	
 	<script data-eager="true">
 		var WCF_PATH = '{@$__wcf->getPath()}';
