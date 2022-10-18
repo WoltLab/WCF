@@ -80,7 +80,7 @@ function getDialogElement(label: string, value: string): string {
             "wcf.message.share.copy",
           )}">
             <fa-icon name="copy"></fa-icon>
-          </a>
+          </button>
         </div>
       </dd>
     </dl>
