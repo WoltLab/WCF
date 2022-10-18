@@ -1128,6 +1128,23 @@ class WCF
     }
 
     /**
+     * Returns a random value that is derived from the given scope and a randomly
+     * generated value that remains constant for this request.
+     *
+     * @since 6.0
+     */
+    final public static function getRequestNonce(string $scope): string
+    {
+        static $key = null;
+
+        if ($key === null) {
+            $key = \random_bytes(16);
+        }
+
+        return $scope . '_' .\hash_hmac('md5', \WCF_UUID . ':' . self::class . ':' . $scope, $key);
+    }
+
+    /**
      * Returns true if currently active request represents the landing page.
      *
      * @return  bool

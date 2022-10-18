@@ -136,7 +136,7 @@
 	</noscript>
 </div>
 
-<!-- JAVASCRIPT_RELOCATE_POSITION -->
+<!-- {$__wcf->getRequestNonce('JAVASCRIPT_RELOCATE_POSITION')} -->
 
 {@FOOTER_CODE}
 
