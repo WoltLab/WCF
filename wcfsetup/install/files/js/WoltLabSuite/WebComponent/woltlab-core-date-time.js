@@ -1,4 +1,13 @@
 "use strict";
+/**
+ * The `<woltlab-core-date-time>` element formats a date time
+ * string based on the user’s timezone and website locale. For
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
 {
     // The client will always be lagging behind the server by at least a
     // fraction of a second. There are severe cases where the client will
