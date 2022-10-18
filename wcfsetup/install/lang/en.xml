@@ -409,7 +409,7 @@
 		<item name="wcf.acp.devtools.pip.target.noMatches"><![CDATA[(No matches)]]></item>
 		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[An error has occurred.]]></item>
 		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Ready.]]></item>
-		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
+		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{#$timeElapsed}s ({@TIME_NOW|time})]]></item>
 		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Sync All]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup"><![CDATA[Search Path]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path"><![CDATA[Path]]></item>
