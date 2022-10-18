@@ -217,8 +217,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 $left -= $half - $linksAfterPage;
             }
 
-            $right = \intval(\ceil($right));
-            $left = \intval(\ceil($left));
+            $right = (int)\ceil($right);
+            $left = (int)\ceil($left);
             if ($left < 1) {
                 $left = 1;
             }

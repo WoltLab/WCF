@@ -82,7 +82,7 @@ class DatabaseException extends SystemException
             $this->errorDesc = $this->db->getErrorDesc();
         }
 
-        parent::__construct($message, \intval($this->errorNumber));
+        parent::__construct($message, (int)$this->errorNumber);
     }
 
     /**

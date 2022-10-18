@@ -114,16 +114,16 @@ class MenuAddForm extends AbstractForm
             $this->position = $_POST['position'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
         if (isset($_POST['visibleEverywhere'])) {
-            $this->visibleEverywhere = \intval($_POST['visibleEverywhere']);
+            $this->visibleEverywhere = (int)$_POST['visibleEverywhere'];
         }
         if (isset($_POST['cssClassName'])) {
             $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
         }
         if (isset($_POST['showHeader'])) {
-            $this->showHeader = \intval($_POST['showHeader']);
+            $this->showHeader = (int)$_POST['showHeader'];
         }
         if (isset($_POST['pageIDs']) && \is_array($_POST['pageIDs'])) {
             $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);

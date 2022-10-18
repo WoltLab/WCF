@@ -69,7 +69,7 @@ class I18nPlural
             return 0;
         }
 
-        return \intval(\substr($n, $pos + 1));
+        return (int)\substr($n, $pos + 1);
     }
 
     /**

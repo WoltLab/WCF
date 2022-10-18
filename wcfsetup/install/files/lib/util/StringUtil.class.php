@@ -185,7 +185,7 @@ final class StringUtil
             if (\floatval($numeric) - (float)\intval($numeric)) {
                 return self::formatDouble($numeric);
             } else {
-                return self::formatInteger(\intval($numeric));
+                return self::formatInteger((int)$numeric);
             }
         }
     }

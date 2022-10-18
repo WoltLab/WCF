@@ -176,7 +176,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
      */
     protected function getBulkUserPermissionValue(array &$userPermissions, $userID, $permission)
     {
-        $userID = \intval($userID);
+        $userID = (int)$userID;
 
         // resolve non-existing users against the guest permission
         if ($userID && !isset($userPermissions[$userID])) {

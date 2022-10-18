@@ -71,7 +71,7 @@ class NewPasswordForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_GET['id']) && isset($_GET['k'])) {
-            $this->userID = \intval($_GET['id']);
+            $this->userID = (int)$_GET['id'];
             $this->lostPasswordKey = StringUtil::trim($_GET['k']);
             if (!$this->userID || !$this->lostPasswordKey) {
                 throw new IllegalLinkException();
@@ -101,7 +101,7 @@ class NewPasswordForm extends AbstractForm
             if (!\is_array(WCF::getSession()->getVar('lostPasswordRequest'))) {
                 throw new PermissionDeniedException();
             }
-            $this->userID = \intval(WCF::getSession()->getVar('lostPasswordRequest')['userID']);
+            $this->userID = (int)WCF::getSession()->getVar('lostPasswordRequest')['userID'];
 
             $this->user = new User($this->userID);
             if (!$this->user->userID) {

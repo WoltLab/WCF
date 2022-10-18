@@ -52,7 +52,7 @@ class ContactRecipientEditForm extends ContactRecipientAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->recipientID = \intval($_REQUEST['id']);
+            $this->recipientID = (int)$_REQUEST['id'];
         }
         $this->recipient = new ContactRecipient($this->recipientID);
         if (!$this->recipient->recipientID) {

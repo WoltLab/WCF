@@ -53,7 +53,7 @@ class TrophyEditForm extends TrophyAddForm
     public function readParameters()
     {
         if (!empty($_REQUEST['id'])) {
-            $this->trophyID = \intval($_REQUEST['id']);
+            $this->trophyID = (int)$_REQUEST['id'];
         }
         $this->trophy = new Trophy($this->trophyID);
 

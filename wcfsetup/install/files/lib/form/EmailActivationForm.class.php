@@ -48,10 +48,10 @@ class EmailActivationForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_GET['u']) && !empty($_GET['u'])) {
-            $this->userID = \intval($_GET['u']);
+            $this->userID = (int)$_GET['u'];
         }
         if (isset($_GET['a']) && !empty($_GET['a'])) {
-            $this->activationCode = \intval($_GET['a']);
+            $this->activationCode = (int)$_GET['a'];
         }
     }
 
@@ -63,10 +63,10 @@ class EmailActivationForm extends AbstractForm
         parent::readFormParameters();
 
         if (isset($_POST['u']) && !empty($_POST['u'])) {
-            $this->userID = \intval($_POST['u']);
+            $this->userID = (int)$_POST['u'];
         }
         if (isset($_POST['a']) && !empty($_POST['a'])) {
-            $this->activationCode = \intval($_POST['a']);
+            $this->activationCode = (int)$_POST['a'];
         }
     }
 

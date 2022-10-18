@@ -35,7 +35,7 @@ if (\str_starts_with(MAIL_SMTP_HOST, 'ssl://')) {
             $data = $connection->gets();
             if (\preg_match('/^(\d{3})([- ])(.*)$/', $data, $matches)) {
                 if ($code === null) {
-                    $code = \intval($matches[1]);
+                    $code = (int)$matches[1];
                 }
 
                 if ($code == $matches[1]) {

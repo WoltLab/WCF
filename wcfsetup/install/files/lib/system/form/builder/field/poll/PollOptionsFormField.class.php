@@ -67,7 +67,7 @@ class PollOptionsFormField extends AbstractFormField
             foreach ($value as $showOrder => $option) {
                 [$optionID, $optionValue] = \explode('_', $option, 2);
                 $this->value[$showOrder] = [
-                    'optionID' => \intval($optionID),
+                    'optionID' => (int)$optionID,
                     'optionValue' => StringUtil::trim($optionValue),
                 ];
             }

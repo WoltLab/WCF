@@ -44,7 +44,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->categoryID = \intval($_REQUEST['id']);
+            $this->categoryID = (int)$_REQUEST['id'];
         }
         $this->category = new UserOptionCategory($this->categoryID);
         if (!$this->category->categoryID) {

@@ -74,7 +74,7 @@ class HtmlToc
 
             $hElement->setAttribute('id', $id);
 
-            $headings[] = new HtmlTocItem(\intval(\substr($hElement->tagName, 1, 1)), $id, $title);
+            $headings[] = new HtmlTocItem((int)\substr($hElement->tagName, 1, 1), $id, $title);
         }
 
         if (\count($headings) < 3) {

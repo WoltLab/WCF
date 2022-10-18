@@ -50,7 +50,7 @@ class LabelGroupEditForm extends LabelGroupAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->groupID = \intval($_REQUEST['id']);
+            $this->groupID = (int)$_REQUEST['id'];
         }
         $this->group = new LabelGroup($this->groupID);
         if (!$this->group->groupID) {

@@ -90,7 +90,7 @@ class LanguageAddForm extends AbstractForm
             $this->languageCode = StringUtil::trim($_POST['languageCode']);
         }
         if (isset($_POST['sourceLanguageID'])) {
-            $this->sourceLanguageID = \intval($_POST['sourceLanguageID']);
+            $this->sourceLanguageID = (int)$_POST['sourceLanguageID'];
         }
     }
 

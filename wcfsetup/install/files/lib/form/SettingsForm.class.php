@@ -154,10 +154,10 @@ class SettingsForm extends AbstractForm
                 $this->contentLanguageIDs = ArrayUtil::toIntegerArray($_POST['contentLanguageIDs']);
             }
             if (isset($_POST['languageID'])) {
-                $this->languageID = \intval($_POST['languageID']);
+                $this->languageID = (int)$_POST['languageID'];
             }
             if (isset($_POST['styleID'])) {
-                $this->styleID = \intval($_POST['styleID']);
+                $this->styleID = (int)$_POST['styleID'];
             }
             if (isset($_POST['specialTrophies'])) {
                 $this->specialTrophies = ArrayUtil::toIntegerArray($_POST['specialTrophies']);

@@ -118,10 +118,10 @@ class LabelAddForm extends AbstractForm
             $this->customCssClassName = StringUtil::trim($_POST['customCssClassName']);
         }
         if (isset($_POST['groupID'])) {
-            $this->groupID = \intval($_POST['groupID']);
+            $this->groupID = (int)$_POST['groupID'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
     }
 

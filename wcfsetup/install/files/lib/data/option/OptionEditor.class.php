@@ -168,7 +168,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
             if ($writeValue === null) {
                 $writeValue = "''";
             } elseif ($option->optionType == 'boolean' || $option->optionType == 'integer') {
-                $writeValue = \intval($option->optionValue);
+                $writeValue = (int)$option->optionValue;
             } else {
                 $writeValue = "'" . \addcslashes($option->optionValue, "'\\") . "'";
             }

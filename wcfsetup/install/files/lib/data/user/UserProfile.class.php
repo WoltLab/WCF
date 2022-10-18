@@ -796,7 +796,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                 $birthdayYear = 0;
                 $value = \explode('-', $this->birthday);
                 if (isset($value[0])) {
-                    $birthdayYear = \intval($value[0]);
+                    $birthdayYear = (int)$value[0];
                 }
                 if ($birthdayYear) {
                     return $year - $birthdayYear;
@@ -829,13 +829,13 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         $birthdayYear = $month = $day = 0;
         $value = \explode('-', $this->birthday);
         if (isset($value[0])) {
-            $birthdayYear = \intval($value[0]);
+            $birthdayYear = (int)$value[0];
         }
         if (isset($value[1])) {
-            $month = \intval($value[1]);
+            $month = (int)$value[1];
         }
         if (isset($value[2])) {
-            $day = \intval($value[2]);
+            $day = (int)$value[2];
         }
 
         if (!$month || !$day) {

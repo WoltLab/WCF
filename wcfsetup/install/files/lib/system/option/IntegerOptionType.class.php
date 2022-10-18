@@ -40,7 +40,7 @@ class IntegerOptionType extends TextOptionType
      */
     public function getData(Option $option, $newValue)
     {
-        return \intval($newValue);
+        return (int)$newValue;
     }
 
     /**

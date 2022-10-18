@@ -196,7 +196,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 'options' => isset($data['options']) ? StringUtil::normalizeCsv($data['options']) : '',
                 'parentCategoryName' => $data['parent'] ?? '',
                 'permissions' => isset($data['permissions']) ? StringUtil::normalizeCsv($data['permissions']) : '',
-                'showOrder' => isset($data['showorder']) ? \intval($data['showorder']) : null,
+                'showOrder' => isset($data['showorder']) ? (int)$data['showorder'] : null,
             ];
 
             // adjust show order

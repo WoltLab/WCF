@@ -58,7 +58,7 @@ class UserGroupListPage extends SortablePage
 
         // detect group deletion
         if (isset($_REQUEST['deletedGroups'])) {
-            $this->deletedGroups = \intval($_REQUEST['deletedGroups']);
+            $this->deletedGroups = (int)$_REQUEST['deletedGroups'];
         }
     }
 

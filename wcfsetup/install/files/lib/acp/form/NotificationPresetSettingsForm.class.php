@@ -77,7 +77,7 @@ class NotificationPresetSettingsForm extends AbstractForm
             $this->settings = $_POST['settings'];
         }
         if (isset($_POST['applyChangesToExistingUsers'])) {
-            $this->applyChangesToExistingUsers = \intval($_POST['applyChangesToExistingUsers']);
+            $this->applyChangesToExistingUsers = (int)$_POST['applyChangesToExistingUsers'];
         }
     }
 

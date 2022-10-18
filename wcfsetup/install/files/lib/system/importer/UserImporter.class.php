@@ -155,14 +155,14 @@ class UserImporter extends AbstractImporter
                         break;
 
                     case 'integer':
-                        $optionValue = \intval($optionValue);
+                        $optionValue = (int)$optionValue;
                         if ($optionValue > 2147483647) {
                             $optionValue = 2147483647;
                         }
                         break;
 
                     case 'float':
-                        $optionValue = \floatval($optionValue);
+                        $optionValue = (float)$optionValue;
                         break;
 
                     case 'textarea':

@@ -391,7 +391,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         // now yields `false` where it was previously true.
         //
         // See https://wiki.php.net/rfc/string_to_number_comparison
-        $objectID = \intval($objectID);
+        $objectID = (int)$objectID;
 
         $embeddedObjectTypeID = ObjectTypeCache::getInstance()
             ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);

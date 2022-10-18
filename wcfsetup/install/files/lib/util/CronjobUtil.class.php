@@ -344,7 +344,7 @@ final class CronjobUtil
         $addAnDay = false;
 
         // compare hour
-        $currentHour = \intval(\date('G', $timeBase));
+        $currentHour = (int)\date('G', $timeBase);
         $index = self::findKey($currentHour, $values['hour'], false);
         if ($index === false) {
             $index = self::findKey($currentHour, $values['hour']);
@@ -633,7 +633,7 @@ final class CronjobUtil
                         $right = $compare['1'];
                     }
                     // now check the values.
-                    if (\intval($left) > \intval($right)) {
+                    if ((int)$left > (int)$right) {
                         throw new SystemException("invalid value '" . $value . "' given for cronjob attribute '" . $name . "'");
                     }
                 }

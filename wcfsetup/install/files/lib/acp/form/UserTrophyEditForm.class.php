@@ -47,7 +47,7 @@ class UserTrophyEditForm extends UserTrophyAddForm
     public function readParameters()
     {
         if (!empty($_REQUEST['id'])) {
-            $this->userTrophyID = \intval($_REQUEST['id']);
+            $this->userTrophyID = (int)$_REQUEST['id'];
         }
         $this->userTrophy = new UserTrophy($this->userTrophyID);
 

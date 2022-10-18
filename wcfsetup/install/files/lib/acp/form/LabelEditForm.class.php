@@ -50,7 +50,7 @@ class LabelEditForm extends LabelAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->labelID = \intval($_REQUEST['id']);
+            $this->labelID = (int)$_REQUEST['id'];
         }
         $this->labelObj = new Label($this->labelID);
         if (!$this->labelObj->labelID) {

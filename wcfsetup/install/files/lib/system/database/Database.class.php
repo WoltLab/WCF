@@ -381,8 +381,8 @@ abstract class Database
      */
     public function handleLimitParameter($query, $limit = 0, $offset = 0)
     {
-        $limit = \intval($limit);
-        $offset = \intval($offset);
+        $limit = (int)$limit;
+        $offset = (int)$offset;
         if ($limit < 0) {
             throw new \InvalidArgumentException('The limit must not be negative.');
         }

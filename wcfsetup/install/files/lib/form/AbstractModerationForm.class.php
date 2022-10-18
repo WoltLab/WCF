@@ -96,7 +96,7 @@ abstract class AbstractModerationForm extends AbstractForm
         ModerationQueueManager::getInstance()->getOutstandingModerationCount();
 
         if (isset($_REQUEST['id'])) {
-            $this->queueID = \intval($_REQUEST['id']);
+            $this->queueID = (int)$_REQUEST['id'];
         }
         $this->queue = ViewableModerationQueue::getViewableModerationQueue($this->queueID);
         if ($this->queue === null) {

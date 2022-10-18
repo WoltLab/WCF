@@ -43,7 +43,7 @@ class CategoryTrophyListPage extends TrophyListPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->categoryID = \intval($_REQUEST['id']);
+            $this->categoryID = (int)$_REQUEST['id'];
         }
 
         $this->category = TrophyCategoryCache::getInstance()->getCategoryByID($this->categoryID);

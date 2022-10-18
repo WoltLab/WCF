@@ -55,7 +55,7 @@ class ArticleEditForm extends ArticleAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->articleID = \intval($_REQUEST['id']);
+            $this->articleID = (int)$_REQUEST['id'];
         }
         $this->article = new Article($this->articleID);
         if (!$this->article->articleID) {

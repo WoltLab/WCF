@@ -28,7 +28,7 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
         $attachmentIDs = [];
         for ($i = 0, $length = \count($embeddedData['attach']); $i < $length; $i++) {
             $attributes = $embeddedData['attach'][$i];
-            $attachmentID = (!empty($attributes[0])) ? \intval($attributes[0]) : 0;
+            $attachmentID = (!empty($attributes[0])) ? (int)$attributes[0] : 0;
 
             if ($attachmentID > 0) {
                 $attachmentIDs[] = $attachmentID;

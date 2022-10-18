@@ -129,17 +129,17 @@ class QuickReplyManager extends SingletonFactory
             );
         }
 
-        $parameters['lastPostTime'] = isset($parameters['lastPostTime']) ? \intval($parameters['lastPostTime']) : 0;
+        $parameters['lastPostTime'] = isset($parameters['lastPostTime']) ? (int)$parameters['lastPostTime'] : 0;
         if (!$parameters['lastPostTime']) {
             throw new UserInputException('lastPostTime');
         }
 
-        $parameters['pageNo'] = isset($parameters['pageNo']) ? \intval($parameters['pageNo']) : 0;
+        $parameters['pageNo'] = isset($parameters['pageNo']) ? (int)$parameters['pageNo'] : 0;
         if (!$parameters['pageNo']) {
             throw new UserInputException('pageNo');
         }
 
-        $parameters['objectID'] = isset($parameters['objectID']) ? \intval($parameters['objectID']) : 0;
+        $parameters['objectID'] = isset($parameters['objectID']) ? (int)$parameters['objectID'] : 0;
         if (!$parameters['objectID']) {
             throw new UserInputException('objectID');
         }

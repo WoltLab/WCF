@@ -242,10 +242,10 @@ abstract class AbstractCategoryAddForm extends AbstractForm
             $this->descriptionUseHtml = 1;
         }
         if (isset($_POST['parentCategoryID'])) {
-            $this->parentCategoryID = \intval($_POST['parentCategoryID']);
+            $this->parentCategoryID = (int)$_POST['parentCategoryID'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
     }
 

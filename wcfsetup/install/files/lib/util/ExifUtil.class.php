@@ -132,11 +132,11 @@ final class ExifUtil
         $creationTime = 0;
         if (isset($exifData['EXIF'])) {
             if (isset($exifData['EXIF']['DateTimeOriginal'])) {
-                $creationTime = @\intval(\strtotime($exifData['EXIF']['DateTimeOriginal']));
+                $creationTime = @(int)\strtotime($exifData['EXIF']['DateTimeOriginal']);
             } elseif (isset($exifData['EXIF']['DateTimeDigitized'])) {
-                $creationTime = @\intval(\strtotime($exifData['EXIF']['DateTimeDigitized']));
+                $creationTime = @(int)\strtotime($exifData['EXIF']['DateTimeDigitized']);
             } elseif (!empty($exifData['EXIF']['DateTime'])) {
-                $creationTime = @\intval(\strtotime($exifData['EXIF']['DateTime']));
+                $creationTime = @(int)\strtotime($exifData['EXIF']['DateTime']);
             }
         }
         if ($creationTime < 0 || $creationTime > 2147483647) {
@@ -224,11 +224,11 @@ final class ExifUtil
         }
         if (isset($rawExifData['ISOSpeedRatings'])) {
             // CCD sensitivity equivalent to Ag-Hr film speedrate. (unsigned short)
-            $exifData['ISOSpeedRatings'] = \intval($rawExifData['ISOSpeedRatings']);
+            $exifData['ISOSpeedRatings'] = (int)$rawExifData['ISOSpeedRatings'];
         }
         if (isset($rawExifData['Flash'])) {
             // Indicates the status of flash when the image was shot. (unsigned short)
-            $exifData['Flash'] = \intval($rawExifData['Flash']);
+            $exifData['Flash'] = (int)$rawExifData['Flash'];
         }
 
         return $exifData;
@@ -244,7 +244,7 @@ final class ExifUtil
     {
         $orientation = self::ORIENTATION_ORIGINAL;
         if (isset($exifData['IFD0']['Orientation'])) {
-            $orientation = \intval($exifData['IFD0']['Orientation']);
+            $orientation = (int)$exifData['IFD0']['Orientation'];
             if ($orientation < self::ORIENTATION_ORIGINAL || $orientation > self::ORIENTATION_270_ROTATE) {
                 $orientation = self::ORIENTATION_ORIGINAL;
             }
@@ -284,15 +284,15 @@ final class ExifUtil
     {
         $data = \explode('/', $rational);
         if (\count($data) == 1) {
-            return \floatval($rational);
+            return (float)$rational;
         }
 
         // prevent division by zero if 2nd value is invalid
-        $data[1] = \floatval($data[1]);
+        $data[1] = (float)$data[1];
         if (!$data[1]) {
             return 0.0;
         }
 
-        return \floatval($data[0]) / $data[1];
+        return (float)$data[0] / $data[1];
     }
 }

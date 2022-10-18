@@ -121,19 +121,19 @@ class UserGroupAddForm extends AbstractOptionListForm
         }
 
         if (isset($_POST['priority'])) {
-            $this->priority = \intval($_POST['priority']);
+            $this->priority = (int)$_POST['priority'];
         }
         if (isset($_POST['userOnlineMarking'])) {
             $this->userOnlineMarking = StringUtil::trim($_POST['userOnlineMarking']);
         }
         if (isset($_POST['showOnTeamPage'])) {
-            $this->showOnTeamPage = \intval($_POST['showOnTeamPage']);
+            $this->showOnTeamPage = (int)$_POST['showOnTeamPage'];
         }
         if (isset($_POST['allowMention'])) {
-            $this->allowMention = \intval($_POST['allowMention']);
+            $this->allowMention = (int)$_POST['allowMention'];
         }
         if (isset($_POST['requireMultifactor'])) {
-            $this->requireMultifactor = \intval($_POST['requireMultifactor']);
+            $this->requireMultifactor = (int)$_POST['requireMultifactor'];
         }
     }
 

@@ -78,7 +78,7 @@ class SmileyListPage extends MultipleLinkPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->categoryID = \intval($_REQUEST['id']);
+            $this->categoryID = (int)$_REQUEST['id'];
             $this->category = new Category($this->categoryID);
             if (!$this->category->categoryID) {
                 throw new IllegalLinkException();

@@ -44,7 +44,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->templateGroupID = \intval($_REQUEST['id']);
+            $this->templateGroupID = (int)$_REQUEST['id'];
         }
         $this->templateGroup = new TemplateGroup($this->templateGroupID);
         if (!$this->templateGroup->templateGroupID) {

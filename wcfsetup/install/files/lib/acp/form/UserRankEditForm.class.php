@@ -45,7 +45,7 @@ class UserRankEditForm extends UserRankAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->rankID = \intval($_REQUEST['id']);
+            $this->rankID = (int)$_REQUEST['id'];
         }
         $this->rank = new UserRank($this->rankID);
         if (!$this->rank->rankID) {

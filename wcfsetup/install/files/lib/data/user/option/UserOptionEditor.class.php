@@ -112,7 +112,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     public function enable($enable = true)
     {
-        $value = \intval(!$enable);
+        $value = (int)!$enable;
 
         $sql = "UPDATE  wcf" . WCF_N . "_user_option
                 SET     isDisabled = ?

@@ -155,7 +155,7 @@ class UserAddForm extends UserOptionListForm
             $this->visibleLanguages = ArrayUtil::toIntegerArray($_POST['visibleLanguages']);
         }
         if (isset($_POST['languageID'])) {
-            $this->languageID = \intval($_POST['languageID']);
+            $this->languageID = (int)$_POST['languageID'];
         }
         if (isset($_POST['userTitle'])) {
             $this->userTitle = $_POST['userTitle'];

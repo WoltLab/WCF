@@ -164,7 +164,7 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId()));
+            $this->value = (int)$this->getDocument()->getRequestData($this->getPrefixedId());
         }
 
         return $this;

@@ -200,10 +200,10 @@ class PaidSubscriptionAddForm extends AbstractForm
             $this->isDisabled = 1;
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
         if (isset($_POST['cost'])) {
-            $this->cost = \floatval($_POST['cost']);
+            $this->cost = (float)$_POST['cost'];
         }
         if (isset($_POST['currency'])) {
             $this->currency = $_POST['currency'];
@@ -213,7 +213,7 @@ class PaidSubscriptionAddForm extends AbstractForm
         }
         if (!$this->subscriptionLengthPermanent) {
             if (isset($_POST['subscriptionLength'])) {
-                $this->subscriptionLength = \intval($_POST['subscriptionLength']);
+                $this->subscriptionLength = (int)$_POST['subscriptionLength'];
             }
             if (isset($_POST['subscriptionLengthUnit'])) {
                 $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];

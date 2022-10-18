@@ -32,7 +32,7 @@ class MessageUtil
 
         // convert html entities (utf-8)
         $text = Regex::compile('&#(3[2-9]|[4-9][0-9]|\d{3,5});')->replace($text, static function ($matches) {
-            return StringUtil::getCharacter(\intval($matches[1]));
+            return StringUtil::getCharacter((int)$matches[1]);
         });
 
         // unify new lines

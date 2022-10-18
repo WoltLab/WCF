@@ -57,7 +57,7 @@ class PageBoxOrderPage extends AbstractPage
         parent::readParameters();
 
         if (!empty($_REQUEST['id'])) {
-            $this->pageID = \intval($_REQUEST['id']);
+            $this->pageID = (int)$_REQUEST['id'];
         }
 
         $this->page = PageCache::getInstance()->getPage($this->pageID);

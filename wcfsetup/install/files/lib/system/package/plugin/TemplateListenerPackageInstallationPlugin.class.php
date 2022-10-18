@@ -75,7 +75,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      */
     protected function prepareImport(array $data)
     {
-        $niceValue = isset($data['elements']['nice']) ? \intval($data['elements']['nice']) : 0;
+        $niceValue = isset($data['elements']['nice']) ? (int)$data['elements']['nice'] : 0;
         if ($niceValue < -128) {
             $niceValue = -128;
         } elseif ($niceValue > 127) {

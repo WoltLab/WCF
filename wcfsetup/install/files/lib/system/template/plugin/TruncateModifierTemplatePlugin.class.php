@@ -31,7 +31,7 @@ class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin
         // get values
         $string = $tagArgs[0];
         if (isset($tagArgs[1])) {
-            $length = \intval($tagArgs[1]);
+            $length = (int)$tagArgs[1];
         }
         if (isset($tagArgs[2])) {
             $etc = $tagArgs[2];

@@ -57,10 +57,10 @@ class BirthdayOptionType extends DateOptionType
     {
         $ageFrom = $ageTo = '';
         if (!empty($value['ageFrom'])) {
-            $ageFrom = \intval($value['ageFrom']);
+            $ageFrom = (int)$value['ageFrom'];
         }
         if (!empty($value['ageTo'])) {
-            $ageTo = \intval($value['ageTo']);
+            $ageTo = (int)$value['ageTo'];
         }
 
         WCF::getTPL()->assign([
@@ -81,8 +81,8 @@ class BirthdayOptionType extends DateOptionType
             return false;
         }
 
-        $ageFrom = \intval($value['ageFrom']);
-        $ageTo = \intval($value['ageTo']);
+        $ageFrom = (int)$value['ageFrom'];
+        $ageTo = (int)$value['ageTo'];
         if ($ageFrom < 0 || $ageFrom > 120) {
             return false;
         }
@@ -120,8 +120,8 @@ class BirthdayOptionType extends DateOptionType
      */
     public function addCondition(UserList $userList, Option $option, $value)
     {
-        $ageFrom = \intval($value['ageFrom']);
-        $ageTo = \intval($value['ageTo']);
+        $ageFrom = (int)$value['ageFrom'];
+        $ageTo = (int)$value['ageTo'];
 
         if ($ageFrom < 0 || $ageFrom > 120 || $ageTo < 0 || $ageTo > 120) {
             return;
@@ -165,8 +165,8 @@ class BirthdayOptionType extends DateOptionType
             return false;
         }
 
-        $ageFrom = \intval($value['ageFrom']);
-        $ageTo = \intval($value['ageTo']);
+        $ageFrom = (int)$value['ageFrom'];
+        $ageTo = (int)$value['ageTo'];
 
         $userAge = DateUtil::getAge($user->birthday);
 

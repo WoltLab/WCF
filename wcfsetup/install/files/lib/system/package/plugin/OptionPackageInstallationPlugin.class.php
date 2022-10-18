@@ -94,10 +94,10 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
             $enableOptions = StringUtil::normalizeCsv($option['enableoptions']);
         }
         if (isset($option['showorder'])) {
-            $showOrder = \intval($option['showorder']);
+            $showOrder = (int)$option['showorder'];
         }
         if (isset($option['hidden'])) {
-            $hidden = \intval($option['hidden']);
+            $hidden = (int)$option['hidden'];
         }
         $showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
         if (isset($option['selectoptions'])) {

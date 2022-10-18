@@ -113,7 +113,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
             $statement->execute();
             $row = $statement->fetchArray();
             if (!empty($row)) {
-                $showOrder = \intval($row['showOrder']) + 1;
+                $showOrder = (int)$row['showOrder'] + 1;
             } else {
                 $showOrder = 1;
             }

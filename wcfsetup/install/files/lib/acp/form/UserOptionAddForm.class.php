@@ -227,22 +227,22 @@ class UserOptionAddForm extends AbstractForm
             $this->selectOptions = $_POST['selectOptions'];
         }
         if (isset($_POST['required'])) {
-            $this->required = \intval($_POST['required']);
+            $this->required = (int)$_POST['required'];
         }
         if (isset($_POST['askDuringRegistration'])) {
-            $this->askDuringRegistration = \intval($_POST['askDuringRegistration']);
+            $this->askDuringRegistration = (int)$_POST['askDuringRegistration'];
         }
         if (isset($_POST['editable'])) {
-            $this->editable = \intval($_POST['editable']);
+            $this->editable = (int)$_POST['editable'];
         }
         if (isset($_POST['visible'])) {
-            $this->visible = \intval($_POST['visible']);
+            $this->visible = (int)$_POST['visible'];
         }
         if (isset($_POST['searchable'])) {
-            $this->searchable = \intval($_POST['searchable']);
+            $this->searchable = (int)$_POST['searchable'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
         if (isset($_POST['outputClass'])) {
             $this->outputClass = StringUtil::trim($_POST['outputClass']);
@@ -252,10 +252,10 @@ class UserOptionAddForm extends AbstractForm
         }
 
         if ($this->optionType == 'boolean' || $this->optionType == 'integer') {
-            $this->defaultValue = \intval($this->defaultValue);
+            $this->defaultValue = (int)$this->defaultValue;
         }
         if ($this->optionType == 'float') {
-            $this->defaultValue = \floatval($this->defaultValue);
+            $this->defaultValue = (float)$this->defaultValue;
         }
         if ($this->optionType == 'date') {
             if (!\preg_match('/\d{4}-\d{2}-\d{2}/', $this->defaultValue)) {

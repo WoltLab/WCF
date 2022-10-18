@@ -64,7 +64,7 @@ class UserOptionImporter extends AbstractImporter
 
         if ($data['optionType'] == 'boolean' || $data['optionType'] == 'integer') {
             if (isset($data['defaultValue'])) {
-                $data['defaultValue'] = \intval($data['defaultValue']);
+                $data['defaultValue'] = (int)$data['defaultValue'];
             }
         }
 

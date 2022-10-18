@@ -79,7 +79,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
             return false;
         }
 
-        $conditions->add("option_value.userOption" . $option->optionID . " = ?", [\intval($value)]);
+        $conditions->add("option_value.userOption" . $option->optionID . " = ?", [(int)$value]);
 
         return true;
     }
@@ -91,7 +91,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
     {
         $userList->getConditionBuilder()->add(
             'user_option_value.userOption' . $option->optionID . ' = ?',
-            [\intval($value)]
+            [(int)$value]
         );
     }
 

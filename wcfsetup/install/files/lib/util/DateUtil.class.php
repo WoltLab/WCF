@@ -443,13 +443,13 @@ final class DateUtil
         $year = $month = $day = 0;
         $value = \explode('-', $date);
         if (isset($value[0])) {
-            $year = \intval($value[0]);
+            $year = (int)$value[0];
         }
         if (isset($value[1])) {
-            $month = \intval($value[1]);
+            $month = (int)$value[1];
         }
         if (isset($value[2])) {
-            $day = \intval($value[2]);
+            $day = (int)$value[2];
         }
 
         // calc
@@ -492,7 +492,7 @@ final class DateUtil
     public static function getFirstDayOfTheWeek()
     {
         if (self::$firstDayOfTheWeek === null) {
-            self::$firstDayOfTheWeek = \intval(WCF::getLanguage()->get('wcf.date.firstDayOfTheWeek'));
+            self::$firstDayOfTheWeek = (int)WCF::getLanguage(->get('wcf.date.firstDayOfTheWeek'));
             if (self::$firstDayOfTheWeek != 1 && self::$firstDayOfTheWeek != 0) {
                 self::$firstDayOfTheWeek = 0;
             }

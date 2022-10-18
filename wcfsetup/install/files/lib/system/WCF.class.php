@@ -515,7 +515,7 @@ class WCF
     protected function initLanguage()
     {
         if (isset($_GET['l']) && !self::getUser()->userID) {
-            self::getSession()->setLanguageID(\intval($_GET['l']));
+            self::getSession()->setLanguageID((int)$_GET['l']);
         }
 
         // set mb settings
@@ -548,7 +548,7 @@ class WCF
     {
         /** @deprecated The 'styleID' parameter is deprecated. */
         if (isset($_REQUEST['styleID'])) {
-            self::getSession()->setStyleID(\intval($_REQUEST['styleID']));
+            self::getSession()->setStyleID((int)$_REQUEST['styleID']);
         }
 
         $styleHandler = StyleHandler::getInstance();

@@ -110,9 +110,9 @@ class WCFSetup extends WCF
     protected static function getDeveloperMode()
     {
         if (isset($_GET['dev'])) {
-            self::$developerMode = \intval($_GET['dev']);
+            self::$developerMode = (int)$_GET['dev'];
         } elseif (isset($_POST['dev'])) {
-            self::$developerMode = \intval($_POST['dev']);
+            self::$developerMode = (int)$_POST['dev'];
         }
     }
 
@@ -303,7 +303,7 @@ class WCFSetup extends WCF
             case 'createDB':
                 $currentStep = 6;
                 if (isset($_POST['offset'])) {
-                    $currentStep += \intval($_POST['offset']);
+                    $currentStep += (int)$_POST['offset'];
                 }
 
                 $this->calcProgress($currentStep);
@@ -391,7 +391,7 @@ class WCFSetup extends WCF
 
         // upload_max_filesize
         $system['uploadMaxFilesize']['value'] = \min(\ini_get('upload_max_filesize'), \ini_get('post_max_size'));
-        $system['uploadMaxFilesize']['result'] = (\intval($system['uploadMaxFilesize']['value']) > 0);
+        $system['uploadMaxFilesize']['result'] = ((int)$system['uploadMaxFilesize']['value'] > 0);
 
         // graphics library
         $system['graphicsLibrary']['result'] = false;
@@ -685,7 +685,7 @@ class WCFSetup extends WCF
 
             // ensure that $dbNumber is zero or a positive integer
             if (isset($_POST['dbNumber'])) {
-                $dbNumber = \max(0, \intval($_POST['dbNumber']));
+                $dbNumber = \max(0, (int)$_POST['dbNumber']);
             }
 
             // get port
@@ -693,7 +693,7 @@ class WCFSetup extends WCF
             $dbPort = 0;
             if (\preg_match('/^(.+?):(\d+)$/', $dbHost, $match)) {
                 $dbHostWithoutPort = $match[1];
-                $dbPort = \intval($match[2]);
+                $dbPort = (int)$match[2];
             }
 
             // test connection
@@ -871,7 +871,7 @@ class WCFSetup extends WCF
 
         // split by offsets
         $sqlData = \explode('/* SQL_PARSER_OFFSET */', $sql);
-        $offset = isset($_POST['offset']) ? \intval($_POST['offset']) : 0;
+        $offset = isset($_POST['offset']) ? (int)$_POST['offset'] : 0;
         if (!isset($sqlData[$offset])) {
             throw new SystemException("Offset for SQL parser is out of bounds, " . $offset . " was requested, but there are only " . \count($sqlData) . " sections");
         }
@@ -1236,7 +1236,7 @@ class WCFSetup extends WCF
         $statement = self::getDB()->prepareStatement($sql);
         $statement->execute();
         $result = $statement->fetchArray();
-        $processNo = \intval($result['processNo']) + 1;
+        $processNo = (int)$result['processNo'] + 1;
 
         // search existing wcf package
         $sql = "SELECT  COUNT(*) AS count

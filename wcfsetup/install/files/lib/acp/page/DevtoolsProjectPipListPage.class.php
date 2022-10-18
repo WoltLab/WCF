@@ -53,7 +53,7 @@ class DevtoolsProjectPipListPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->projectID = \intval($_REQUEST['id']);
+            $this->projectID = (int)$_REQUEST['id'];
         }
         $this->project = new DevtoolsProject($this->projectID);
         if (!$this->project->projectID) {

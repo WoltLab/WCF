@@ -78,10 +78,10 @@ class CronjobLogListPage extends SortablePage
         parent::readParameters();
 
         if (!empty($_REQUEST['cronjobID'])) {
-            $this->cronjobID = \intval($_REQUEST['cronjobID']);
+            $this->cronjobID = (int)$_REQUEST['cronjobID'];
         }
         if (isset($_REQUEST['success'])) {
-            $this->success = \intval($_REQUEST['success']);
+            $this->success = (int)$_REQUEST['success'];
         }
     }
 

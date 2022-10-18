@@ -38,7 +38,7 @@ class DateOptionType extends TextOptionType
             throw new UserInputException($option->optionName, 'validationFailed');
         }
 
-        if (!\checkdate(\intval($match[2]), \intval($match[3]), \intval($match[1]))) {
+        if (!\checkdate((int)$match[2], (int)$match[3], (int)$match[1])) {
             throw new UserInputException($option->optionName, 'validationFailed');
         }
     }

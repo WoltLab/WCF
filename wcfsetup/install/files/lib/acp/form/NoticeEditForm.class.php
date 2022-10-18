@@ -124,7 +124,7 @@ class NoticeEditForm extends NoticeAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->noticeID = \intval($_REQUEST['id']);
+            $this->noticeID = (int)$_REQUEST['id'];
         }
         $this->notice = new Notice($this->noticeID);
         if (!$this->notice->noticeID) {

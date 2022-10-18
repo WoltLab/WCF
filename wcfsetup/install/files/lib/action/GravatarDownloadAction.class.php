@@ -48,7 +48,7 @@ class GravatarDownloadAction extends AbstractAction
         parent::readParameters();
 
         if (isset($_REQUEST['userID'])) {
-            $this->userID = \intval($_REQUEST['userID']);
+            $this->userID = (int)$_REQUEST['userID'];
         }
         $this->user = new User($this->userID);
         if (!$this->user->userID) {

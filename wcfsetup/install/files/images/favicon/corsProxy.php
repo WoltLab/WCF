@@ -17,7 +17,7 @@ $types = [
 if (!empty($_GET['type']) || !isset($types[$_GET['type']])) {
     // get parameters
     $type = $_GET['type'];
-    $styleID = (!empty($_GET['styleID'])) ? \intval($_GET['styleID']) : 'default';
+    $styleID = (!empty($_GET['styleID'])) ? (int)$_GET['styleID'] : 'default';
     if ($styleID === 'default' || $styleID > 0) {
         if ($styleID === 'default') {
             $filename = 'default.' . $types[$type]['filename'];

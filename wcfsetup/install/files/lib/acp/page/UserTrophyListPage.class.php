@@ -84,7 +84,7 @@ class UserTrophyListPage extends SortablePage
             $this->username = StringUtil::trim($_REQUEST['username']);
         }
         if (isset($_REQUEST['trophyID'])) {
-            $this->trophyID = \intval($_REQUEST['trophyID']);
+            $this->trophyID = (int)$_REQUEST['trophyID'];
             $this->trophy = new Trophy($this->trophyID);
 
             if (!$this->trophy->getObjectID()) {

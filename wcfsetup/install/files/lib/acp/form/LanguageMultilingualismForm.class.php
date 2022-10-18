@@ -72,7 +72,7 @@ class LanguageMultilingualismForm extends AbstractForm
         parent::readFormParameters();
 
         if (isset($_POST['enable'])) {
-            $this->enable = \intval($_POST['enable']);
+            $this->enable = (int)$_POST['enable'];
         }
         if (isset($_POST['languageIDs']) && \is_array($_POST['languageIDs'])) {
             $this->languageIDs = ArrayUtil::toIntegerArray($_POST['languageIDs']);

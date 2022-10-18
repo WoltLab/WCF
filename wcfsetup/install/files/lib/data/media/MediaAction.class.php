@@ -288,9 +288,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
                 ];
             }
 
-            $mediaData[$row['mediaID']]['altText'][\intval($row['languageID'])] = $row['altText'];
-            $mediaData[$row['mediaID']]['caption'][\intval($row['languageID'])] = $row['caption'];
-            $mediaData[$row['mediaID']]['title'][\intval($row['languageID'])] = $row['title'];
+            $mediaData[$row['mediaID']]['altText'][(int)$row['languageID']] = $row['altText'];
+            $mediaData[$row['mediaID']]['caption'][(int)$row['languageID']] = $row['caption'];
+            $mediaData[$row['mediaID']]['title'][(int)$row['languageID']] = $row['title'];
         }
 
         $i18nMediaData = [];
@@ -392,7 +392,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
 
             // isMultilingual: convert boolean to integer
-            $this->parameters['data']['isMultilingual'] = \intval($this->parameters['data']['isMultilingual']);
+            $this->parameters['data']['isMultilingual'] = (int)$this->parameters['data']['isMultilingual'];
         } else {
             $this->parameters['data']['isMultilingual'] = 0;
             $this->parameters['data']['languageID'] = WCF::getLanguage()->languageID;

@@ -167,19 +167,19 @@ class UserRankAddForm extends AbstractForm
             $this->customCssClassName = StringUtil::trim($_POST['customCssClassName']);
         }
         if (isset($_POST['groupID'])) {
-            $this->groupID = \intval($_POST['groupID']);
+            $this->groupID = (int)$_POST['groupID'];
         }
         if (isset($_POST['requiredPoints'])) {
-            $this->requiredPoints = \intval($_POST['requiredPoints']);
+            $this->requiredPoints = (int)$_POST['requiredPoints'];
         }
         if (isset($_POST['repeatImage'])) {
-            $this->repeatImage = \intval($_POST['repeatImage']);
+            $this->repeatImage = (int)$_POST['repeatImage'];
         }
         if (isset($_POST['requiredGender'])) {
-            $this->requiredGender = \intval($_POST['requiredGender']);
+            $this->requiredGender = (int)$_POST['requiredGender'];
         }
         if (isset($_POST['hideTitle'])) {
-            $this->hideTitle = \intval($_POST['hideTitle']);
+            $this->hideTitle = (int)$_POST['hideTitle'];
         }
 
         $this->removedRankImages = UploadHandler::getInstance()->getRemovedFiledByFieldId('rankImage');

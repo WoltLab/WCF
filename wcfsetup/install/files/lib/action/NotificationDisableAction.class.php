@@ -44,10 +44,10 @@ class NotificationDisableAction extends AbstractAction
         parent::readParameters();
 
         if (isset($_REQUEST['eventID'])) {
-            $this->eventID = \intval($_REQUEST['eventID']);
+            $this->eventID = (int)$_REQUEST['eventID'];
         }
         if (isset($_REQUEST['userID'])) {
-            $this->userID = \intval($_REQUEST['userID']);
+            $this->userID = (int)$_REQUEST['userID'];
         }
         if (isset($_REQUEST['token'])) {
             $this->token = StringUtil::trim($_REQUEST['token']);

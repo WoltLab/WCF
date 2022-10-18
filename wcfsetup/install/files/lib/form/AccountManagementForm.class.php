@@ -182,36 +182,36 @@ class AccountManagementForm extends AbstractForm
             $this->username = StringUtil::trim($_POST['username']);
         }
         if (isset($_POST['quit'])) {
-            $this->quit = \intval($_POST['quit']);
+            $this->quit = (int)$_POST['quit'];
         }
         if (isset($_POST['cancelQuit'])) {
-            $this->cancelQuit = \intval($_POST['cancelQuit']);
+            $this->cancelQuit = (int)$_POST['cancelQuit'];
         }
         if (isset($_POST['githubDisconnect'])) {
-            $this->githubDisconnect = \intval($_POST['githubDisconnect']);
+            $this->githubDisconnect = (int)$_POST['githubDisconnect'];
         }
         if (isset($_POST['twitterDisconnect'])) {
-            $this->twitterDisconnect = \intval($_POST['twitterDisconnect']);
+            $this->twitterDisconnect = (int)$_POST['twitterDisconnect'];
         }
         if (isset($_POST['facebookDisconnect'])) {
-            $this->facebookDisconnect = \intval($_POST['facebookDisconnect']);
+            $this->facebookDisconnect = (int)$_POST['facebookDisconnect'];
         }
         if (isset($_POST['googleDisconnect'])) {
-            $this->googleDisconnect = \intval($_POST['googleDisconnect']);
+            $this->googleDisconnect = (int)$_POST['googleDisconnect'];
         }
 
         if (!WCF::getUser()->hasAdministrativeAccess()) {
             if (isset($_POST['facebookConnect'])) {
-                $this->facebookConnect = \intval($_POST['facebookConnect']);
+                $this->facebookConnect = (int)$_POST['facebookConnect'];
             }
             if (isset($_POST['githubConnect'])) {
-                $this->githubConnect = \intval($_POST['githubConnect']);
+                $this->githubConnect = (int)$_POST['githubConnect'];
             }
             if (isset($_POST['googleConnect'])) {
-                $this->googleConnect = \intval($_POST['googleConnect']);
+                $this->googleConnect = (int)$_POST['googleConnect'];
             }
             if (isset($_POST['twitterConnect'])) {
-                $this->twitterConnect = \intval($_POST['twitterConnect']);
+                $this->twitterConnect = (int)$_POST['twitterConnect'];
             }
         }
     }

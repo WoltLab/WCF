@@ -78,7 +78,7 @@ abstract class AbstractArticlePage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->articleContentID = \intval($_REQUEST['id']);
+            $this->articleContentID = (int)$_REQUEST['id'];
         }
         $this->articleContent = ViewableArticleContent::getArticleContent($this->articleContentID);
         if ($this->articleContent === null) {

@@ -58,13 +58,13 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
         $year = $month = $day = 0;
         $value = \explode('-', $this->parameters['date']);
         if (isset($value[0])) {
-            $year = \intval($value[0]);
+            $year = (int)$value[0];
         }
         if (isset($value[1])) {
-            $month = \intval($value[1]);
+            $month = (int)$value[1];
         }
         if (isset($value[2])) {
-            $day = \intval($value[2]);
+            $day = (int)$value[2];
         }
 
         // get users

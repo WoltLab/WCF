@@ -192,7 +192,7 @@ HTML;
     {
         $endDays = $startDays = null;
         if (\strlen($this->startDays)) {
-            $startDays = \intval($this->startDays);
+            $startDays = (int)$this->startDays;
             if ($startDays <= 0) {
                 $this->errorMessage = 'wcf.user.condition.lastActivityTimeIntervalDays.error.invalidStart';
 
@@ -200,7 +200,7 @@ HTML;
             }
         }
         if (\strlen($this->endDays)) {
-            $endDays = \intval($this->endDays);
+            $endDays = (int)$this->endDays;
             if ($endDays <= 0) {
                 $this->errorMessage = 'wcf.user.condition.lastActivityTimeIntervalDays.error.invalidEnd';
 

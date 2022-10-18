@@ -91,15 +91,15 @@ class ModerationListPage extends SortablePage
         parent::readParameters();
 
         if (isset($_REQUEST['assignedUserID'])) {
-            $this->assignedUserID = \intval($_REQUEST['assignedUserID']);
+            $this->assignedUserID = (int)$_REQUEST['assignedUserID'];
         }
         if (isset($_REQUEST['status'])) {
-            $this->status = \intval($_REQUEST['status']);
+            $this->status = (int)$_REQUEST['status'];
         }
 
         $this->availableDefinitions = ModerationQueueManager::getInstance()->getDefinitions();
         if (isset($_REQUEST['definitionID'])) {
-            $this->definitionID = \intval($_REQUEST['definitionID']);
+            $this->definitionID = (int)$_REQUEST['definitionID'];
             if ($this->definitionID && !isset($this->availableDefinitions[$this->definitionID])) {
                 throw new IllegalLinkException();
             }

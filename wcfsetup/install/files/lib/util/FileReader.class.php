@@ -119,9 +119,9 @@ class FileReader
                 $regex = new Regex('^bytes=(?:(\d+)-(\d+)?|-(\d+))$');
                 if ($regex->match($_SERVER['HTTP_RANGE'])) {
                     $matches = $regex->getMatches();
-                    $start = (isset($matches[1]) && $matches[1] !== '' ? \intval($matches[1]) : null);
-                    $end = (isset($matches[2]) && $matches[2] !== '' ? \intval($matches[2]) : null);
-                    $last = (isset($matches[3]) && $matches[3] !== '' ? \intval($matches[3]) : null);
+                    $start = (isset($matches[1]) && $matches[1] !== '' ? (int)$matches[1] : null);
+                    $end = (isset($matches[2]) && $matches[2] !== '' ? (int)$matches[2] : null);
+                    $last = (isset($matches[3]) && $matches[3] !== '' ? (int)$matches[3] : null);
 
                     if ($start !== null) {
                         $this->startByte = $start;

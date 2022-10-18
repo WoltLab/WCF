@@ -247,10 +247,10 @@ class ModificationLogListPage extends SortablePage
 
             $afterDate = $beforeDate = 0;
             if (!empty($this->afterDate)) {
-                $afterDate = \intval(@\strtotime($this->afterDate));
+                $afterDate = (int)@\strtotime($this->afterDate);
             }
             if (!empty($this->beforeDate)) {
-                $beforeDate = \intval(@\strtotime($this->beforeDate));
+                $beforeDate = (int)@\strtotime($this->beforeDate);
             }
 
             if ($afterDate && $beforeDate) {

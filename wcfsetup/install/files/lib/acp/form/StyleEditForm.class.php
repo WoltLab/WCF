@@ -48,7 +48,7 @@ class StyleEditForm extends StyleAddForm
     public function readParameters()
     {
         if (isset($_REQUEST['id'])) {
-            $this->styleID = \intval($_REQUEST['id']);
+            $this->styleID = (int)$_REQUEST['id'];
         }
         $this->style = new Style($this->styleID);
         if (!$this->style->styleID) {

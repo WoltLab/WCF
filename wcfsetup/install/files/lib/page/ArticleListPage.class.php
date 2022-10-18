@@ -134,7 +134,7 @@ class ArticleListPage extends SortablePage
         }
 
         if (!empty($_GET['userID'])) {
-            $this->user = new User(\intval($_GET['userID']));
+            $this->user = new User((int)$_GET['userID']);
             if (!$this->user->userID) {
                 throw new IllegalLinkException();
             }

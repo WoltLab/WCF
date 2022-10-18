@@ -26,7 +26,7 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        $timestamp = \intval($tagArgs[0]);
+        $timestamp = (int)$tagArgs[0];
         $dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
         $date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
         $time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);

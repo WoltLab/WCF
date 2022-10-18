@@ -203,7 +203,7 @@ class DataImportForm extends AbstractForm
             $this->fileSystemPath = StringUtil::trim($_POST['fileSystemPath']);
         }
         if (isset($_POST['userMergeMode'])) {
-            $this->userMergeMode = \intval($_POST['userMergeMode']);
+            $this->userMergeMode = (int)$_POST['userMergeMode'];
         }
         if (isset($_POST['additionalData'])) {
             $this->additionalData = ArrayUtil::trim($_POST['additionalData']);

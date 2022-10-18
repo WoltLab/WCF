@@ -397,7 +397,7 @@ class StyleAddForm extends AbstractForm
                 $this->variables[$variableName] = (\in_array(
                     $variableName,
                     $integerValues
-                )) ? \abs(\intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
+                )) ? \abs((int)$_POST[$variableName]) : StringUtil::trim($_POST[$variableName]);
             }
         }
         $this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
@@ -431,7 +431,7 @@ class StyleAddForm extends AbstractForm
             $this->styleVersion = StringUtil::trim($_POST['styleVersion']);
         }
         if (isset($_POST['templateGroupID'])) {
-            $this->templateGroupID = \intval($_POST['templateGroupID']);
+            $this->templateGroupID = (int)$_POST['templateGroupID'];
         }
         if (isset($_POST['apiVersion']) && \in_array($_POST['apiVersion'], Style::$supportedApiVersions)) {
             $this->apiVersion = $_POST['apiVersion'];

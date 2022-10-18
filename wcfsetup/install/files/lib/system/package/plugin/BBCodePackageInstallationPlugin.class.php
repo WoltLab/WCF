@@ -215,7 +215,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 
         if (!empty($this->attributes)) {
             foreach ($this->attributes as $bbcodeID => $bbcodeAttributes) {
-                if ($bbcodeID != \intval($bbcodeID)) {
+                if ($bbcodeID != (int)$bbcodeID) {
                     $bbcodeID = BBCode::getBBCodeByTag($bbcodeID)->bbcodeID;
                 }
 

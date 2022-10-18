@@ -169,10 +169,10 @@ class AdAddForm extends AbstractForm
             $this->isDisabled = 1;
         }
         if (isset($_POST['objectTypeID'])) {
-            $this->objectTypeID = \intval($_POST['objectTypeID']);
+            $this->objectTypeID = (int)$_POST['objectTypeID'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
 
         foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {

@@ -81,7 +81,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
             throw new IllegalLinkException();
         }
 
-        $objectType = ObjectTypeCache::getInstance()->getObjectType(\intval($_GET['id']));
+        $objectType = ObjectTypeCache::getInstance()->getObjectType((int)$_GET['id']);
 
         if (!$objectType) {
             throw new IllegalLinkException();

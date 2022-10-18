@@ -100,7 +100,7 @@ class MembersListPage extends SortablePage
         }
 
         if (!empty($_REQUEST['id'])) {
-            $this->searchID = \intval($_REQUEST['id']);
+            $this->searchID = (int)$_REQUEST['id'];
             $this->search = new Search($this->searchID);
             if (!$this->search->searchID || $this->search->userID != WCF::getUser()->userID || $this->search->searchType != 'users') {
                 throw new IllegalLinkException();

@@ -51,7 +51,7 @@ class NotificationConfirmAction extends AbstractAction
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->notificationID = \intval($_REQUEST['id']);
+            $this->notificationID = (int)$_REQUEST['id'];
         }
 
         $this->notification = new UserNotification($this->notificationID);

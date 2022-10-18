@@ -37,7 +37,7 @@ class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandle
         $unfurlUrlIDs = [];
         foreach ($htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('a') as $element) {
             /** @var \DOMElement $element */
-            $id = \intval($element->getAttribute(HtmlNodeUnfurlLink::UNFURL_URL_ID_ATTRIBUTE_NAME));
+            $id = (int)$element->getAttribute(HtmlNodeUnfurlLink::UNFURL_URL_ID_ATTRIBUTE_NAME);
 
             if (!empty($id)) {
                 $unfurlUrlIDs[] = $id;

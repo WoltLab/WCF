@@ -211,7 +211,7 @@ class ArticleAddForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_REQUEST['categoryID'])) {
-            $this->categoryID = \intval($_REQUEST['categoryID']);
+            $this->categoryID = (int)$_REQUEST['categoryID'];
         }
 
         // get available languages
@@ -268,7 +268,7 @@ class ArticleAddForm extends AbstractForm
 
         if (WCF::getSession()->getPermission('admin.content.article.canManageArticle') || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
             if (isset($_POST['publicationStatus'])) {
-                $this->publicationStatus = \intval($_POST['publicationStatus']);
+                $this->publicationStatus = (int)$_POST['publicationStatus'];
             }
         } else {
             $this->publicationStatus = Article::UNPUBLISHED;

@@ -41,13 +41,13 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
             [$userID, $subscriptionID] = $tokenParts;
 
             // get user object
-            $user = new User(\intval($userID));
+            $user = new User((int)$userID);
             if (!$user->userID) {
                 throw new SystemException('invalid user');
             }
 
             // get subscription object
-            $subscription = new PaidSubscription(\intval($subscriptionID));
+            $subscription = new PaidSubscription((int)$subscriptionID);
             if (!$subscription->subscriptionID) {
                 throw new SystemException('invalid subscription');
             }

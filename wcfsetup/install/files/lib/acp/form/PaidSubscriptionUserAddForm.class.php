@@ -82,7 +82,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->subscriptionID = \intval($_REQUEST['id']);
+            $this->subscriptionID = (int)$_REQUEST['id'];
         }
         $this->subscription = new PaidSubscription($this->subscriptionID);
         if (!$this->subscription->subscriptionID) {

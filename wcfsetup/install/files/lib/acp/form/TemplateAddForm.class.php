@@ -91,7 +91,7 @@ class TemplateAddForm extends AbstractForm
         parent::readParameters();
 
         if (!empty($_REQUEST['copy'])) {
-            $this->copy = \intval($_REQUEST['copy']);
+            $this->copy = (int)$_REQUEST['copy'];
             $this->copiedTemplate = new Template($this->copy);
             if (!$this->copiedTemplate->templateID) {
                 throw new IllegalLinkException();
@@ -116,7 +116,7 @@ class TemplateAddForm extends AbstractForm
             $this->templateSource = StringUtil::unifyNewlines($_POST['templateSource']);
         }
         if (isset($_POST['templateGroupID'])) {
-            $this->templateGroupID = \intval($_POST['templateGroupID']);
+            $this->templateGroupID = (int)$_POST['templateGroupID'];
         }
 
         // get package id for this template

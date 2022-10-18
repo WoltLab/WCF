@@ -25,7 +25,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
         $pageIDs = [];
         if (!empty($embeddedData['wsp'])) {
             for ($i = 0, $length = \count($embeddedData['wsp']); $i < $length; $i++) {
-                $pageIDs[] = \intval($embeddedData['wsp'][$i][0]);
+                $pageIDs[] = (int)$embeddedData['wsp'][$i][0];
             }
         }
 
@@ -55,8 +55,8 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
     public function validateValues($objectType, $objectID, array $values)
     {
         // Pages can be referenced as `123#Some Text`, where everything after the number
-        // is a comment for better readability. Converting the values to integers via
-        // `intval()` will discard the everything after the ID.
+        // is a comment for better readability. Casting the values to integers via
+        // `(int)` will discard the everything after the ID.
         $values = ArrayUtil::toIntegerArray($values);
 
         return \array_filter($values, static function ($value) {

@@ -146,7 +146,7 @@ class Style extends DatabaseObject
                 $r = $matches[1];
                 $g = $matches[2];
                 $b = $matches[3];
-                $a = \floatval($matches[4]);
+                $a = (float)$matches[4];
 
                 // calculate alpha value assuming a white canvas, source rgb will be (255,255,255) or #fff
                 // see https://stackoverflow.com/a/2049362
@@ -156,7 +156,7 @@ class Style extends DatabaseObject
                     $b = ((1 - $a) * 255) + ($a * $b);
 
                     $clamp = static function ($v) {
-                        return \max(0, \min(255, \intval($v)));
+                        return \max(0, \min(255, (int)$v));
                     };
 
                     $r = $clamp($r);

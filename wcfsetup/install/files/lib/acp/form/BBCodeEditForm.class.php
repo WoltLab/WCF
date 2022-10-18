@@ -73,7 +73,7 @@ class BBCodeEditForm extends BBCodeAddForm
         AbstractForm::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->bbcodeID = \intval($_REQUEST['id']);
+            $this->bbcodeID = (int)$_REQUEST['id'];
         }
         $this->bbcode = new BBCode($this->bbcodeID);
         if (!$this->bbcode->bbcodeID) {

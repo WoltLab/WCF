@@ -89,7 +89,7 @@ class SearchResultPage extends MultipleLinkPage
             $this->highlight = $_REQUEST['highlight'];
         }
         if (isset($_REQUEST['id'])) {
-            $this->searchID = \intval($_REQUEST['id']);
+            $this->searchID = (int)$_REQUEST['id'];
         }
         $this->search = new Search($this->searchID);
         if (!$this->search->searchID || $this->search->searchType != 'messages') {

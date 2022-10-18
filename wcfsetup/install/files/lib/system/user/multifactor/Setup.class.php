@@ -98,7 +98,7 @@ final class Setup implements IIDObject
             $this->getId(),
         ]);
 
-        $setupId = \intval($statement->fetchSingleColumn());
+        $setupId = (int)$statement->fetchSingleColumn();
         \assert($setupId === $this->getId());
 
         return $this;

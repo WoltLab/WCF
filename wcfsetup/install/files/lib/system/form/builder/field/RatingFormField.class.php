@@ -186,7 +186,7 @@ class RatingFormField extends AbstractFormField implements
             if ($this->isNullable() && $value === '') {
                 $this->value = null;
             } else {
-                $this->value = \intval($value);
+                $this->value = (int)$value;
             }
         }
 

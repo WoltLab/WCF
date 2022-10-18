@@ -103,7 +103,7 @@ abstract class MultipleLinkPage extends AbstractPage
 
         // read page number parameter
         if (isset($_REQUEST['pageNo'])) {
-            $this->pageNo = \intval($_REQUEST['pageNo']);
+            $this->pageNo = (int)$_REQUEST['pageNo'];
         }
     }
 
@@ -183,7 +183,7 @@ abstract class MultipleLinkPage extends AbstractPage
 
         // calculate number of pages
         $this->items = $this->countItems();
-        $this->pages = \intval(\ceil($this->items / $this->itemsPerPage));
+        $this->pages = (int)\ceil($this->items / $this->itemsPerPage);
 
         // correct active page number
         if ($this->pageNo > $this->pages) {

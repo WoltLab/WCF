@@ -69,7 +69,7 @@ class TaggedPage extends MultipleLinkPage
 
         // get tag id
         if (isset($_REQUEST['id'])) {
-            $this->tagID = \intval($_REQUEST['id']);
+            $this->tagID = (int)$_REQUEST['id'];
         }
         $this->tag = new Tag($this->tagID);
         if (!$this->tag->tagID) {

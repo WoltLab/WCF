@@ -141,9 +141,9 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
 
             if ($value !== '') {
                 if ($this->integerValues) {
-                    $this->value = \intval($value);
+                    $this->value = (int)$value;
                 } else {
-                    $this->value = \floatval($value);
+                    $this->value = (float)$value;
                 }
             }
         }
@@ -222,9 +222,9 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
         if ($value !== null) {
             if (\is_string($value) && \is_numeric($value)) {
                 if (\preg_match('~^-?\d+$~', $value)) {
-                    $value = \intval($value);
+                    $value = (int)$value;
                 } else {
-                    $value = \floatval($value);
+                    $value = (float)$value;
                 }
             }
 

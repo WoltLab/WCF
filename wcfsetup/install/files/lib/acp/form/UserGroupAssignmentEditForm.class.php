@@ -76,7 +76,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->assignmentID = \intval($_REQUEST['id']);
+            $this->assignmentID = (int)$_REQUEST['id'];
         }
         $this->assignment = new UserGroupAssignment($this->assignmentID);
         if (!$this->assignment->assignmentID) {

@@ -40,7 +40,7 @@ final class ArrayUtil
     }
 
     /**
-     * Applies intval() to all elements of the given array.
+     * Casts all elements of the given array to integer.
      *
      * @param array|string $array
      * @return  array|string
@@ -48,7 +48,7 @@ final class ArrayUtil
     public static function toIntegerArray($array)
     {
         if (!\is_array($array)) {
-            return \intval($array);
+            return (int)$array;
         } else {
             foreach ($array as $key => $val) {
                 $array[$key] = self::toIntegerArray($val);

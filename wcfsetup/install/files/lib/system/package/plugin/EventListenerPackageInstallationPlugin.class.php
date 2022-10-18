@@ -94,7 +94,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     protected function prepareImport(array $data)
     {
-        $nice = isset($data['elements']['nice']) ? \intval($data['elements']['nice']) : 0;
+        $nice = isset($data['elements']['nice']) ? (int)$data['elements']['nice'] : 0;
         if ($nice < -128) {
             $nice = -128;
         } elseif ($nice > 127) {
@@ -110,7 +110,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
             'environment' => $data['elements']['environment'] ?? 'user',
             'eventClassName' => $data['elements']['eventclassname'],
             'eventName' => $eventName,
-            'inherit' => isset($data['elements']['inherit']) ? \intval($data['elements']['inherit']) : 0,
+            'inherit' => isset($data['elements']['inherit']) ? (int)$data['elements']['inherit'] : 0,
             'listenerClassName' => $data['elements']['listenerclassname'],
             'listenerName' => $data['attributes']['name'] ?? '',
             'niceValue' => $nice,

@@ -22,7 +22,7 @@ class WoltLabSuitePageBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
     {
-        $pageID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
+        $pageID = (!empty($openingTag['attributes'][0])) ? (int)$openingTag['attributes'][0] : 0;
         if (!$pageID) {
             return '';
         }

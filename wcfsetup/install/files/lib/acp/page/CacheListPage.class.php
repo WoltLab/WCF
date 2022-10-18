@@ -56,7 +56,7 @@ class CacheListPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['cleared'])) {
-            $this->cleared = \intval($_REQUEST['cleared']);
+            $this->cleared = (int)$_REQUEST['cleared'];
         }
     }
 

@@ -99,7 +99,7 @@ class AdEditForm extends AdAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->adID = \intval($_REQUEST['id']);
+            $this->adID = (int)$_REQUEST['id'];
         }
         $this->adObject = new Ad($this->adID);
         if (!$this->adObject->adID) {

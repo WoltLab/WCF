@@ -71,7 +71,7 @@ class FileSizeOptionType extends TextOptionType
      */
     public function getFormElement(Option $option, $value)
     {
-        $value = FileUtil::formatFilesize(\intval($value));
+        $value = FileUtil::formatFilesize((int)$value);
 
         return parent::getFormElement($option, $value);
     }

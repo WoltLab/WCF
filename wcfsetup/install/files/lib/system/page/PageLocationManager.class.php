@@ -56,7 +56,7 @@ class PageLocationManager extends SingletonFactory
                 $pageID = $page->pageID;
 
                 if (!empty($_REQUEST['id'])) {
-                    $pageObjectID = \intval($_REQUEST['id']);
+                    $pageObjectID = (int)$_REQUEST['id'];
                 }
             }
         }

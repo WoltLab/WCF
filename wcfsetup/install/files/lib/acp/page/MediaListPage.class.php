@@ -154,7 +154,7 @@ class MediaListPage extends SortablePage
         parent::readParameters();
 
         if (isset($_REQUEST['categoryID'])) {
-            $this->categoryID = \intval($_REQUEST['categoryID']);
+            $this->categoryID = (int)$_REQUEST['categoryID'];
         }
         if (isset($_REQUEST['q'])) {
             $this->query = StringUtil::trim($_REQUEST['q']);

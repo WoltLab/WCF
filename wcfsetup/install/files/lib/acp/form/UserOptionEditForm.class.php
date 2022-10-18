@@ -44,7 +44,7 @@ class UserOptionEditForm extends UserOptionAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->optionID = \intval($_REQUEST['id']);
+            $this->optionID = (int)$_REQUEST['id'];
         }
         $this->userOption = new UserOption($this->optionID);
         if (!$this->userOption->optionID) {

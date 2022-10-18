@@ -44,7 +44,7 @@ class MenuItemEditForm extends MenuItemAddForm
         AbstractForm::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->itemID = \intval($_REQUEST['id']);
+            $this->itemID = (int)$_REQUEST['id'];
         }
         $this->menuItem = new MenuItem($this->itemID);
         if (!$this->menuItem->itemID) {

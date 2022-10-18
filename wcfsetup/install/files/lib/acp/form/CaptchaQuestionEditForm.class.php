@@ -84,7 +84,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->captchaQuestionID = \intval($_REQUEST['id']);
+            $this->captchaQuestionID = (int)$_REQUEST['id'];
         }
         $this->captchaQuestion = new CaptchaQuestion($this->captchaQuestionID);
         if (!$this->captchaQuestion->questionID) {

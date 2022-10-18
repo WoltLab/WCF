@@ -348,7 +348,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     public function readConditions()
     {
         if (isset($_POST['limit'])) {
-            $this->limit = \intval($_POST['limit']);
+            $this->limit = (int)$_POST['limit'];
         }
         if (isset($_POST['sortField'])) {
             $this->sortField = StringUtil::trim($_POST['sortField']);

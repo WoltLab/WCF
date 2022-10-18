@@ -26,7 +26,7 @@ class WoltLabSuiteArticleBBCode extends AbstractBBCode
     {
         $objectID = 0;
         if (isset($openingTag['attributes'][0])) {
-            $objectID = \intval($openingTag['attributes'][0]);
+            $objectID = (int)$openingTag['attributes'][0];
         }
         if (!$objectID) {
             return '';

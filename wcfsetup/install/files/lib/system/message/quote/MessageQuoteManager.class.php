@@ -557,7 +557,7 @@ class MessageQuoteManager extends SingletonFactory
     public function readParameters()
     {
         if (isset($_REQUEST['quoteMessageID'])) {
-            $this->quoteMessageID = \intval($_REQUEST['quoteMessageID']);
+            $this->quoteMessageID = (int)$_REQUEST['quoteMessageID'];
         }
     }
 

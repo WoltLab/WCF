@@ -105,7 +105,7 @@ class VersionTrackerListPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['objectID'])) {
-            $this->objectID = \intval($_REQUEST['objectID']);
+            $this->objectID = (int)$_REQUEST['objectID'];
         }
         if (isset($_REQUEST['objectType'])) {
             $this->objectType = $_REQUEST['objectType'];
@@ -132,14 +132,14 @@ class VersionTrackerListPage extends AbstractPage
         $this->versions = VersionTracker::getInstance()->getVersions($this->objectType, $this->objectID);
 
         if (isset($_REQUEST['oldID'])) {
-            $this->oldID = \intval($_REQUEST['oldID']);
+            $this->oldID = (int)$_REQUEST['oldID'];
             $this->old = VersionTracker::getInstance()->getVersion($this->objectType, $this->oldID);
             if (!$this->old->versionID) {
                 throw new IllegalLinkException();
             }
 
             if (isset($_REQUEST['newID']) && $_REQUEST['newID'] !== 'current') {
-                $this->newID = \intval($_REQUEST['newID']);
+                $this->newID = (int)$_REQUEST['newID'];
                 $this->new = VersionTracker::getInstance()->getVersion($this->objectType, $this->newID);
                 if (!$this->new->versionID) {
                     throw new IllegalLinkException();

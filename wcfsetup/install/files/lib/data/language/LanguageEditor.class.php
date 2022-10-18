@@ -707,7 +707,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $category = \preg_quote($category, '~');
         }
         if ($languageID != '.*') {
-            $languageID = \intval($languageID);
+            $languageID = (int)$languageID;
         }
 
         DirectoryUtil::getInstance(WCF_DIR . 'language/')->removePattern(new Regex($languageID . '_' . $category . '\.php$'));

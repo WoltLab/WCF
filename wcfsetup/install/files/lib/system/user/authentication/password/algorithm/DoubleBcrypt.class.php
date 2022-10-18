@@ -131,8 +131,8 @@ final class DoubleBcrypt implements IPasswordAlgorithm
      */
     private static function isDifferentBlowfish($hash)
     {
-        $currentCost = \intval(self::BCRYPT_COST);
-        $hashCost = \intval(\mb_substr($hash, 4, 2, '8bit'));
+        $currentCost = (int)self::BCRYPT_COST;
+        $hashCost = (int)\mb_substr($hash, 4, 2, '8bit');
 
         if ($currentCost != $hashCost) {
             return true;

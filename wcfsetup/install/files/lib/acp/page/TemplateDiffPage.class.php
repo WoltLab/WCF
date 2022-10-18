@@ -70,14 +70,14 @@ class TemplateDiffPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->templateID = \intval($_REQUEST['id']);
+            $this->templateID = (int)$_REQUEST['id'];
         }
         $this->template = new Template($this->templateID);
         if (!$this->template->templateID) {
             throw new IllegalLinkException();
         }
         if (isset($_REQUEST['parentID'])) {
-            $this->parentID = \intval($_REQUEST['parentID']);
+            $this->parentID = (int)$_REQUEST['parentID'];
         }
         $this->parent = new Template($this->parentID);
         if ($this->parent->templateID) {

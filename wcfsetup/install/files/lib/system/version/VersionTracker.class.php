@@ -239,8 +239,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         }
 
         $objectTypeName = (isset($_POST['parameters']['objectType'])) ? StringUtil::trim($_POST['parameters']['objectType']) : '';
-        $objectID = (isset($_POST['parameters']['objectID'])) ? \intval($_POST['parameters']['objectID']) : 0;
-        $versionID = (isset($_POST['parameters']['versionID'])) ? \intval($_POST['parameters']['versionID']) : 0;
+        $objectID = (isset($_POST['parameters']['objectID'])) ? (int)$_POST['parameters']['objectID'] : 0;
+        $versionID = (isset($_POST['parameters']['versionID'])) ? (int)$_POST['parameters']['versionID'] : 0;
 
         $objectType = $this->getObjectType($objectTypeName);
         /** @var IVersionTrackerProvider $processor */

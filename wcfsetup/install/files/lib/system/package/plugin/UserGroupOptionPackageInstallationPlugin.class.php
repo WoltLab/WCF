@@ -113,7 +113,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
             $validationPattern = $option['validationpattern'];
         }
         if (!empty($option['showorder'])) {
-            $showOrder = \intval($option['showorder']);
+            $showOrder = (int)$option['showorder'];
         }
         $showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
         if (isset($option['enableoptions'])) {

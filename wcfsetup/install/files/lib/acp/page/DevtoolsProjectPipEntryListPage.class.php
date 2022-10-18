@@ -135,7 +135,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->projectID = \intval($_REQUEST['id']);
+            $this->projectID = (int)$_REQUEST['id'];
         }
         $this->project = new DevtoolsProject($this->projectID);
         if (!$this->project->projectID) {
@@ -176,7 +176,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
         }
 
         if (isset($_REQUEST['pageNo'])) {
-            $this->pageNo = \intval($_REQUEST['pageNo']);
+            $this->pageNo = (int)$_REQUEST['pageNo'];
         }
 
         $linkParameters = [
@@ -216,7 +216,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage
         }
 
         $this->items = \count($this->entryList->getEntries());
-        $this->pages = \intval(\ceil($this->items / $this->itemsPerPage));
+        $this->pages = (int)\ceil($this->items / $this->itemsPerPage);
 
         // correct active page number
         if ($this->pageNo > $this->pages) {

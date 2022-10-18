@@ -23,7 +23,7 @@ class UserMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHand
         $objectIDs = [];
         if (!empty($embeddedData['user'])) {
             for ($i = 0, $length = \count($embeddedData['user']); $i < $length; $i++) {
-                $objectIDs[] = \intval($embeddedData['user'][$i][0]);
+                $objectIDs[] = (int)$embeddedData['user'][$i][0];
             }
         }
 

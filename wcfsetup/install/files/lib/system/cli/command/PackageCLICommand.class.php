@@ -190,7 +190,7 @@ class PackageCLICommand implements IArgumentedCLICommand
             'packageID' => ($package !== null) ? $package->packageID : null,
             'archive' => $file,
             'action' => $package !== null ? 'update' : 'install',
-            'isApplication' => ($package !== null) ? $package->isApplication : \intval($archive->getPackageInfo('isApplication')),
+            'isApplication' => ($package !== null) ? $package->isApplication : (int)$archive->getPackageInfo('isApplication'),
         ]);
 
         // PackageInstallationDispatcher::openQueue()

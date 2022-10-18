@@ -54,7 +54,7 @@ class StyleGlobalValuesForm extends AbstractForm
             $this->styles = StringUtil::unifyNewlines(StringUtil::trim($_POST['styles']));
         }
         if (isset($_POST['stylesScrollOffset'])) {
-            $this->stylesScrollOffset = \intval($_POST['stylesScrollOffset']);
+            $this->stylesScrollOffset = (int)$_POST['stylesScrollOffset'];
         }
     }
 

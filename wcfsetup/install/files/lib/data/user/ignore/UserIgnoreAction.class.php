@@ -257,7 +257,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
                 new CustomFormDataProcessor(
                     'type',
                     static function (IFormDocument $document, array $parameters) {
-                        $parameters['data']['type'] = \intval($parameters['data']['type']);
+                        $parameters['data']['type'] = (int)$parameters['data']['type'];
 
                         return $parameters;
                     }

@@ -52,7 +52,7 @@ class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
         AbstractForm::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->subscriptionUserID = \intval($_REQUEST['id']);
+            $this->subscriptionUserID = (int)$_REQUEST['id'];
         }
         $this->subscriptionUser = new PaidSubscriptionUser($this->subscriptionUserID);
         if (!$this->subscriptionUser->subscriptionUserID || !$this->subscriptionUser->endDate || !$this->subscriptionUser->isActive) {

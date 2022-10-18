@@ -236,7 +236,7 @@ class PageAddForm extends AbstractForm
         $this->availableBoxes = $boxList->getObjects();
 
         if (isset($_GET['presetPageID'])) {
-            $this->presetPageID = \intval($_GET['presetPageID']);
+            $this->presetPageID = (int)$_GET['presetPageID'];
         }
         if ($this->presetPageID) {
             $this->presetPage = new Page($this->presetPageID);
@@ -292,7 +292,7 @@ class PageAddForm extends AbstractForm
 
         $this->allowSpidersToIndex = 0;
         if (isset($_POST['parentPageID'])) {
-            $this->parentPageID = \intval($_POST['parentPageID']);
+            $this->parentPageID = (int)$_POST['parentPageID'];
         }
         if (isset($_POST['name'])) {
             $this->name = StringUtil::trim($_POST['name']);
@@ -316,10 +316,10 @@ class PageAddForm extends AbstractForm
             $this->addPageToMainMenu = 1;
         }
         if (isset($_POST['applicationPackageID'])) {
-            $this->applicationPackageID = \intval($_POST['applicationPackageID']);
+            $this->applicationPackageID = (int)$_POST['applicationPackageID'];
         }
         if (!empty($_POST['parentMenuItemID'])) {
-            $this->parentMenuItemID = \intval($_POST['parentMenuItemID']);
+            $this->parentMenuItemID = (int)$_POST['parentMenuItemID'];
         }
         if (isset($_POST['enableShareButtons'])) {
             $this->enableShareButtons = 1;

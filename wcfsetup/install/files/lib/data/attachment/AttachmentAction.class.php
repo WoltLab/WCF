@@ -116,8 +116,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
         // check upload permissions
         if (
             !$processor->canUpload(
-                (!empty($this->parameters['objectID']) ? \intval($this->parameters['objectID']) : 0),
-                (!empty($this->parameters['parentObjectID']) ? \intval($this->parameters['parentObjectID']) : 0)
+                (!empty($this->parameters['objectID']) ? (int)$this->parameters['objectID'] : 0),
+                (!empty($this->parameters['parentObjectID']) ? (int)$this->parameters['parentObjectID'] : 0)
             )
         ) {
             throw new PermissionDeniedException();
@@ -126,7 +126,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
         // check max count of uploads
         $handler = new AttachmentHandler(
             $this->parameters['objectType'],
-            \intval($this->parameters['objectID']),
+            (int)$this->parameters['objectID'],
             $this->parameters['tmpHash']
         );
         /** @noinspection PhpUndefinedMethodInspection */
@@ -161,7 +161,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
             'generateThumbnails' => true,
             'rotateImages' => true,
         ], [
-            'objectID' => \intval($this->parameters['objectID']),
+            'objectID' => (int)$this->parameters['objectID'],
             'objectTypeID' => $objectType->objectTypeID,
             'tmpHash' => !$this->parameters['objectID'] ? $this->parameters['tmpHash'] : '',
         ]);

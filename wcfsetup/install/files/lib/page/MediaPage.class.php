@@ -120,7 +120,7 @@ class MediaPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->mediaID = \intval($_REQUEST['id']);
+            $this->mediaID = (int)$_REQUEST['id'];
         }
         $this->media = new Media($this->mediaID);
         if (!$this->media->mediaID) {

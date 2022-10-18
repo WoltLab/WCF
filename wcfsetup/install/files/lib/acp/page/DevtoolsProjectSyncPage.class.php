@@ -53,7 +53,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->objectID = \intval($_REQUEST['id']);
+            $this->objectID = (int)$_REQUEST['id'];
         }
         $this->object = new DevtoolsProject($this->objectID);
         if (!$this->object->projectID) {

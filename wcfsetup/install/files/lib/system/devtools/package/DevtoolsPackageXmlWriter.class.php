@@ -257,7 +257,7 @@ class DevtoolsPackageXmlWriter
         if (!empty($this->packageXmlData['isApplication'])) {
             $this->xmlWriter->writeElement(
                 'isapplication',
-                \intval($this->packageXmlData['isApplication']),
+                (int)$this->packageXmlData['isApplication'],
                 [],
                 false
             );

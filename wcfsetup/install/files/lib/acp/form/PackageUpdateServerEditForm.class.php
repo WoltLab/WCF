@@ -43,7 +43,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->packageUpdateServerID = \intval($_REQUEST['id']);
+            $this->packageUpdateServerID = (int)$_REQUEST['id'];
         }
         $this->updateServer = new PackageUpdateServer($this->packageUpdateServerID);
         if (!$this->updateServer->packageUpdateServerID) {

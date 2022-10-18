@@ -462,7 +462,7 @@ class ImportCLICommand implements ICLICommand
                     }
 
                     // validate selected secondary import data type
-                    if ($selectedSecondaryObjectTypeIndex == \intval($selectedSecondaryObjectTypeIndex) && !$selectedSecondaryObjectTypeIndex) {
+                    if ($selectedSecondaryObjectTypeIndex == (int)$selectedSecondaryObjectTypeIndex && !$selectedSecondaryObjectTypeIndex) {
                         // selected all secondary import data type
                         $selectedData[$selectedObjectType] = \array_merge(
                             $selectedData[$selectedObjectType],
@@ -528,7 +528,7 @@ class ImportCLICommand implements ICLICommand
             if ($this->userMergeMode === null) {
                 exit;
             }
-            switch (\intval($this->userMergeMode)) {
+            switch ((int)$this->userMergeMode) {
                 case 1:
                     $this->userMergeMode = UserImporter::MERGE_MODE_EMAIL;
                     break;

@@ -118,7 +118,7 @@ class ArticleListPage extends SortablePage
         parent::readParameters();
 
         if (isset($_REQUEST['categoryID'])) {
-            $this->categoryID = \intval($_REQUEST['categoryID']);
+            $this->categoryID = (int)$_REQUEST['categoryID'];
         }
         if (!empty($_REQUEST['username'])) {
             $this->username = StringUtil::trim($_REQUEST['username']);
@@ -133,10 +133,10 @@ class ArticleListPage extends SortablePage
             $this->showArticleAddDialog = 1;
         }
         if (isset($_REQUEST['publicationStatus'])) {
-            $this->publicationStatus = \intval($_REQUEST['publicationStatus']);
+            $this->publicationStatus = (int)$_REQUEST['publicationStatus'];
         }
         if (!empty($_REQUEST['isDeleted'])) {
-            $this->isDeleted = \intval($_REQUEST['isDeleted']);
+            $this->isDeleted = (int)$_REQUEST['isDeleted'];
         }
     }
 

@@ -266,7 +266,7 @@ class CommentHandler extends SingletonFactory
             $notificationList->sqlJoins .= "
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
                 ON          comment.commentID = user_notification.objectID
-                        AND comment.objectTypeID = " . \intval($this->getObjectTypeID($objectType));
+                        AND comment.objectTypeID = " . (int)$this->getObjectTypeID($objectType);
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment.time <= ?', [$time]);
             $notificationList->readObjects();
@@ -315,7 +315,7 @@ class CommentHandler extends SingletonFactory
             $notificationList->sqlJoins .= "
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
                 ON          comment.commentID = user_notification.baseObjectID
-                        AND comment.objectTypeID = " . \intval($this->getObjectTypeID($objectType));
+                        AND comment.objectTypeID = " . (int)$this->getObjectTypeID($objectType);
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment.time <= ?', [$time]);
             $notificationList->readObjects();

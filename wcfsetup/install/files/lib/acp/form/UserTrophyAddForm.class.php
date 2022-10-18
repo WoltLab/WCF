@@ -110,7 +110,7 @@ class UserTrophyAddForm extends AbstractAcpForm
             $this->user = StringUtil::trim($_POST['user']);
         }
         if (isset($_POST['trophyID'])) {
-            $this->trophyID = \intval($_POST['trophyID']);
+            $this->trophyID = (int)$_POST['trophyID'];
         }
         if (isset($_POST['useCustomDescription'])) {
             $this->useCustomDescription = 1;

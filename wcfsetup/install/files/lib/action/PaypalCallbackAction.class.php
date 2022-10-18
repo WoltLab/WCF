@@ -93,7 +93,7 @@ class PaypalCallbackAction extends AbstractAction
                 throw new \Exception('invalid custom item');
             }
             // get payment type object type
-            $objectType = ObjectTypeCache::getInstance()->getObjectType(\intval($tokenParts[0]));
+            $objectType = ObjectTypeCache::getInstance()->getObjectType((int)$tokenParts[0]);
             if ($objectType === null || !($objectType->getProcessor() instanceof IPaymentType)) {
                 throw new \Exception('invalid payment type id');
             }

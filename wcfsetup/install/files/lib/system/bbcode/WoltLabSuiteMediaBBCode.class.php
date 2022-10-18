@@ -31,7 +31,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
     {
-        $mediaID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
+        $mediaID = (!empty($openingTag['attributes'][0])) ? (int)$openingTag['attributes'][0] : 0;
         if (!$mediaID) {
             return '';
         }

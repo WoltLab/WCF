@@ -78,6 +78,6 @@ class FloatOptionType extends TextOptionType
         $value = \str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $value);
         $value = \str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $value);
 
-        return \floatval($value);
+        return (float)$value;
     }
 }

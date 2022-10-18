@@ -165,7 +165,7 @@ class UserEditForm extends UserAddForm
     public function readParameters()
     {
         if (isset($_REQUEST['id'])) {
-            $this->userID = \intval($_REQUEST['id']);
+            $this->userID = (int)$_REQUEST['id'];
         }
         $user = new User($this->userID);
         if (!$user->userID) {
@@ -211,7 +211,7 @@ class UserEditForm extends UserAddForm
         }
         if ($this->banned && !isset($_POST['banNeverExpires'])) {
             if (isset($_POST['banExpires'])) {
-                $this->banExpires = @\intval(\strtotime(StringUtil::trim($_POST['banExpires'])));
+                $this->banExpires = (int)@\strtotime(StringUtil::trim($_POST['banExpires']));
             }
         }
 
@@ -219,7 +219,7 @@ class UserEditForm extends UserAddForm
             $this->avatarType = $_POST['avatarType'];
         }
         if (isset($_POST['styleID'])) {
-            $this->styleID = \intval($_POST['styleID']);
+            $this->styleID = (int)$_POST['styleID'];
         }
 
         if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {

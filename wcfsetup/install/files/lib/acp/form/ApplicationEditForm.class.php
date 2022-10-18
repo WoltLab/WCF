@@ -98,7 +98,7 @@ class ApplicationEditForm extends AbstractForm
         }
 
         if (isset($_REQUEST['id'])) {
-            $this->packageID = \intval($_REQUEST['id']);
+            $this->packageID = (int)$_REQUEST['id'];
         }
         $this->application = new ViewableApplication(new Application($this->packageID));
         if (!$this->application->packageID) {
@@ -125,7 +125,7 @@ class ApplicationEditForm extends AbstractForm
             $this->domainPath = StringUtil::trim($_POST['domainPath']);
         }
         if (isset($_POST['landingPageID'])) {
-            $this->landingPageID = \intval($_POST['landingPageID']);
+            $this->landingPageID = (int)$_POST['landingPageID'];
         }
     }
 

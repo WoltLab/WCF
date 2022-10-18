@@ -63,7 +63,7 @@ class PackageInstallationConfirmPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['queueID'])) {
-            $this->queueID = \intval($_REQUEST['queueID']);
+            $this->queueID = (int)$_REQUEST['queueID'];
         }
         $this->queue = new PackageInstallationQueue($this->queueID);
         if (!$this->queue->queueID || $this->queue->done) {

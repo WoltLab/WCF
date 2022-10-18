@@ -65,7 +65,7 @@ class UserOptionCategoryAddForm extends AbstractForm
             $this->categoryName = I18nHandler::getInstance()->getValue('categoryName');
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
     }
 

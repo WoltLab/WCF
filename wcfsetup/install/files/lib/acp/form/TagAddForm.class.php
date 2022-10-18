@@ -83,7 +83,7 @@ class TagAddForm extends AbstractForm
             $this->name = \str_replace(',', '', StringUtil::trim($_POST['name']));
         }
         if (isset($_POST['languageID'])) {
-            $this->languageID = \intval($_POST['languageID']);
+            $this->languageID = (int)$_POST['languageID'];
         }
 
         // actually these are synonyms

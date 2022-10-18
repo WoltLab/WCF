@@ -101,7 +101,7 @@ class UserSearchForm extends UserOptionListForm
 
         // search user from passed groupID by group-view
         if (isset($_GET['groupID'])) {
-            $this->groupID = \intval($_GET['groupID']);
+            $this->groupID = (int)$_GET['groupID'];
 
             try {
                 // Enforce the visibility of the default columns when filtering the list of
@@ -146,7 +146,7 @@ class UserSearchForm extends UserOptionListForm
         }
 
         if (isset($_POST['itemsPerPage'])) {
-            $this->itemsPerPage = \intval($_POST['itemsPerPage']);
+            $this->itemsPerPage = (int)$_POST['itemsPerPage'];
         }
         if (isset($_POST['sortField'])) {
             $this->sortField = $_POST['sortField'];

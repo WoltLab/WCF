@@ -232,7 +232,7 @@ class PackageArchive
                     break;
 
                 case 'isapplication':
-                    $this->packageInfo['isApplication'] = \intval($element->nodeValue);
+                    $this->packageInfo['isApplication'] = (int)$element->nodeValue;
                     break;
 
                 case 'applicationdirectory':

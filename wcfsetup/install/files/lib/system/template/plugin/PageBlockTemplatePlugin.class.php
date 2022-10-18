@@ -51,7 +51,7 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin
     {
         $pageID = null;
         if (!empty($tagArgs['pageID'])) {
-            $pageID = \intval($tagArgs['pageID']);
+            $pageID = (int)$tagArgs['pageID'];
         } elseif (!empty($blockContent)) {
             $page = Page::getPageByIdentifier($blockContent);
             $pageID = $page ? $page->pageID : 0;
@@ -63,7 +63,7 @@ class PageBlockTemplatePlugin implements IBlockTemplatePlugin
 
         $languageID = -1;
         if (!empty($tagArgs['languageID'])) {
-            $languageID = \intval($tagArgs['languageID']);
+            $languageID = (int)$tagArgs['languageID'];
         } elseif (!empty($tagArgs['language'])) {
             $language = LanguageFactory::getInstance()->getLanguageByCode($tagArgs['language']);
             if ($language !== null) {

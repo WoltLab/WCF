@@ -110,7 +110,7 @@ class UserGroupAssignmentAddForm extends AbstractForm
         parent::readFormParameters();
 
         if (isset($_POST['groupID'])) {
-            $this->groupID = \intval($_POST['groupID']);
+            $this->groupID = (int)$_POST['groupID'];
         }
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;

@@ -72,7 +72,7 @@ final class Totp
      */
     public function generateTotpCode(\DateTime $time): string
     {
-        $counter = \intval($time->getTimestamp() / self::TIME_STEP);
+        $counter = (int)$time->getTimestamp() / self::TIME_STEP;
 
         return $this->generateHotpCode($counter);
     }
@@ -85,7 +85,7 @@ final class Totp
      */
     public function validateTotpCode(string $userCode, int &$minCounter, \DateTime $time): bool
     {
-        $counter = \intval($time->getTimestamp() / self::TIME_STEP);
+        $counter = (int)$time->getTimestamp() / self::TIME_STEP;
 
         for ($offset = -self::LEEWAY; $offset < self::LEEWAY; $offset++) {
             $possibleCode = $this->generateHotpCode($counter + $offset);

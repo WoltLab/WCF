@@ -50,7 +50,7 @@ class BoxEditForm extends BoxAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->boxID = \intval($_REQUEST['id']);
+            $this->boxID = (int)$_REQUEST['id'];
         }
         $this->box = new Box($this->boxID);
         if (!$this->box->boxID) {

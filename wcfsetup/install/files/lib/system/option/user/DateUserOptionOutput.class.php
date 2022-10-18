@@ -52,13 +52,13 @@ class DateUserOptionOutput implements IUserOptionOutput
         $year = $month = $day = 0;
         $optionValue = \explode('-', $value);
         if (isset($optionValue[0])) {
-            $year = \intval($optionValue[0]);
+            $year = (int)$optionValue[0];
         }
         if (isset($optionValue[1])) {
-            $month = \intval($optionValue[1]);
+            $month = (int)$optionValue[1];
         }
         if (isset($optionValue[2])) {
-            $day = \intval($optionValue[2]);
+            $day = (int)$optionValue[2];
         }
 
         return ['year' => $year, 'month' => $month, 'day' => $day];

@@ -183,7 +183,7 @@ class LabelListPage extends SortablePage
         if (!empty($_POST)) {
             $parameters = [];
             if (!empty($_POST['groupID'])) {
-                $parameters['id'] = \intval($_POST['groupID']);
+                $parameters['id'] = (int)$_POST['groupID'];
             }
             if (!empty($_POST['label'])) {
                 $parameters['label'] = StringUtil::trim($_POST['label']);
@@ -200,7 +200,7 @@ class LabelListPage extends SortablePage
         }
 
         if (isset($_REQUEST['id'])) {
-            $this->groupID = \intval($_REQUEST['id']);
+            $this->groupID = (int)$_REQUEST['id'];
         }
         if (isset($_REQUEST['label'])) {
             $this->label = StringUtil::trim($_REQUEST['label']);

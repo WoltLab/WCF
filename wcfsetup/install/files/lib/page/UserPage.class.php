@@ -87,7 +87,7 @@ class UserPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->userID = \intval($_REQUEST['id']);
+            $this->userID = (int)$_REQUEST['id'];
         }
         $this->user = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
         if ($this->user === null) {

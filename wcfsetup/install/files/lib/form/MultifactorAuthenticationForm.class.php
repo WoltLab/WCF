@@ -104,7 +104,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
 
         $setupId = \array_keys($this->setups)[0];
         if (isset($_GET['id'])) {
-            $setupId = \intval($_GET['id']);
+            $setupId = (int)$_GET['id'];
         }
 
         if (!isset($this->setups[$setupId])) {

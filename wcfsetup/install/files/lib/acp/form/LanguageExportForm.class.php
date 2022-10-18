@@ -75,7 +75,7 @@ class LanguageExportForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->languageID = \intval($_REQUEST['id']);
+            $this->languageID = (int)$_REQUEST['id'];
         }
     }
 
@@ -95,10 +95,10 @@ class LanguageExportForm extends AbstractForm
         }
 
         if (isset($_POST['exportCustomValues'])) {
-            $this->exportCustomValues = \intval($_POST['exportCustomValues']);
+            $this->exportCustomValues = (int)$_POST['exportCustomValues'];
         }
         if (isset($_POST['languageID'])) {
-            $this->languageID = \intval($_POST['languageID']);
+            $this->languageID = (int)$_POST['languageID'];
         }
     }
 

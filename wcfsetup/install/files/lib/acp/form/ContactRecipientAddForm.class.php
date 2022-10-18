@@ -89,10 +89,10 @@ class ContactRecipientAddForm extends AbstractForm
         }
 
         if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = \intval($_POST['isDisabled']);
+            $this->isDisabled = (int)$_POST['isDisabled'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
     }
 

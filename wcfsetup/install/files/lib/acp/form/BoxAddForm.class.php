@@ -237,7 +237,7 @@ class BoxAddForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_GET['presetBoxID'])) {
-            $this->presetBoxID = \intval($_GET['presetBoxID']);
+            $this->presetBoxID = (int)$_GET['presetBoxID'];
         }
         if ($this->presetBoxID) {
             $this->presetBox = new Box($this->presetBoxID);
@@ -336,16 +336,16 @@ class BoxAddForm extends AbstractForm
             $this->position = $_POST['position'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
         if (isset($_POST['visibleEverywhere'])) {
-            $this->visibleEverywhere = \intval($_POST['visibleEverywhere']);
+            $this->visibleEverywhere = (int)$_POST['visibleEverywhere'];
         }
         if (isset($_POST['cssClassName'])) {
             $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
         }
         if (isset($_POST['showHeader'])) {
-            $this->showHeader = \intval($_POST['showHeader']);
+            $this->showHeader = (int)$_POST['showHeader'];
         }
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;
@@ -357,10 +357,10 @@ class BoxAddForm extends AbstractForm
             $this->linkType = $_POST['linkType'];
         }
         if (!empty($_POST['linkPageID'])) {
-            $this->linkPageID = \intval($_POST['linkPageID']);
+            $this->linkPageID = (int)$_POST['linkPageID'];
         }
         if (!empty($_POST['linkPageObjectID'])) {
-            $this->linkPageObjectID = \intval($_POST['linkPageObjectID']);
+            $this->linkPageObjectID = (int)$_POST['linkPageObjectID'];
         }
         if (isset($_POST['externalURL'])) {
             $this->externalURL = StringUtil::trim($_POST['externalURL']);
@@ -372,7 +372,7 @@ class BoxAddForm extends AbstractForm
             $this->content = ArrayUtil::trim($_POST['content']);
         }
         if (isset($_POST['boxControllerID'])) {
-            $this->boxControllerID = \intval($_POST['boxControllerID']);
+            $this->boxControllerID = (int)$_POST['boxControllerID'];
         }
         if (isset($_POST['aclValues']) && \is_array($_POST['aclValues'])) {
             $this->aclValues = $_POST['aclValues'];

@@ -44,10 +44,10 @@ class DateIntervalFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         if (isset($tagArgs['start'])) {
-            $start = \intval($tagArgs['start']);
+            $start = (int)$tagArgs['start'];
         }
         if (isset($tagArgs['end'])) {
-            $end = \intval($tagArgs['end']);
+            $end = (int)$tagArgs['end'];
         }
 
         $startTime = DateUtil::getDateTimeByTimestamp($start);

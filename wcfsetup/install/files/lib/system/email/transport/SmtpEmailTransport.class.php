@@ -95,7 +95,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
         $starttls = MAIL_SMTP_STARTTLS
     ) {
         $this->host = StringUtil::trim($host);
-        $this->port = \intval($port);
+        $this->port = (int)$port;
         $this->username = StringUtil::trim($username);
         $this->password = StringUtil::trim($password);
 
@@ -190,7 +190,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
 
             if (\preg_match('/^(\d{3})([- ])(.*)$/', $data, $matches)) {
                 if ($code === null) {
-                    $code = \intval($matches[1]);
+                    $code = (int)$matches[1];
 
                     if (!\in_array($code, $expectedCodes)) {
                         // 4xx is a transient failure

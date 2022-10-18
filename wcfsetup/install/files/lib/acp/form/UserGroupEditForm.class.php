@@ -57,7 +57,7 @@ class UserGroupEditForm extends UserGroupAddForm
 
         // get group
         if (isset($_REQUEST['id'])) {
-            $this->groupID = \intval($_REQUEST['id']);
+            $this->groupID = (int)$_REQUEST['id'];
         }
         $group = new UserGroup($this->groupID);
         if (!$group->groupID) {

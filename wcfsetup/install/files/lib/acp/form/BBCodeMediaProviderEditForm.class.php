@@ -48,7 +48,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->providerID = \intval($_REQUEST['id']);
+            $this->providerID = (int)$_REQUEST['id'];
         }
         $this->mediaProvider = new BBCodeMediaProvider($this->providerID);
         if (!$this->mediaProvider->providerID) {

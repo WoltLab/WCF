@@ -79,7 +79,7 @@ class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
                 continue;
             }
 
-            $package['file'] = \intval($package['file']);
+            $package['file'] = (int)$package['file'];
 
             $requiredPackages[] = $package;
         }

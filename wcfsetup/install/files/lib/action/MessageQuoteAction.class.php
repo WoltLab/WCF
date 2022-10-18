@@ -62,7 +62,7 @@ class MessageQuoteAction extends AJAXProxyAction
             throw new UserInputException('actionName');
         }
         if (isset($_POST['getFullQuoteObjectIDs'])) {
-            $this->_getFullQuoteObjectIDs = \intval($_POST['getFullQuoteObjectIDs']);
+            $this->_getFullQuoteObjectIDs = (int)$_POST['getFullQuoteObjectIDs'];
         }
         if (isset($_POST['objectTypes']) && \is_array($_POST['objectTypes'])) {
             $this->objectTypes = ArrayUtil::trim($_POST['objectTypes']);

@@ -169,7 +169,7 @@ abstract class MessageForm extends AbstractCaptchaForm
 
         // multilingualism
         if (isset($_POST['languageID'])) {
-            $this->languageID = \intval($_POST['languageID']);
+            $this->languageID = (int)$_POST['languageID'];
         }
     }
 

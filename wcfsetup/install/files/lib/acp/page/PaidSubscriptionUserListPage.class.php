@@ -73,7 +73,7 @@ class PaidSubscriptionUserListPage extends SortablePage
             $this->username = StringUtil::trim($_REQUEST['username']);
         }
         if (isset($_REQUEST['subscriptionID'])) {
-            $this->subscriptionID = \intval($_REQUEST['subscriptionID']);
+            $this->subscriptionID = (int)$_REQUEST['subscriptionID'];
         }
     }
 

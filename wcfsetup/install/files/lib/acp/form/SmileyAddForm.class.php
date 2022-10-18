@@ -176,10 +176,10 @@ class SmileyAddForm extends AbstractForm
         }
 
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
         if (isset($_POST['categoryID'])) {
-            $this->categoryID = \intval($_POST['categoryID']);
+            $this->categoryID = (int)$_POST['categoryID'];
         }
         if (isset($_POST['smileyCode'])) {
             $this->smileyCode = StringUtil::trim($_POST['smileyCode']);

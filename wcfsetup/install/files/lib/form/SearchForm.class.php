@@ -159,7 +159,7 @@ class SearchForm extends AbstractCaptchaForm
             $this->username = StringUtil::trim($_REQUEST['username']);
         }
         if (isset($_REQUEST['userID'])) {
-            $this->userID = \intval($_REQUEST['userID']);
+            $this->userID = (int)$_REQUEST['userID'];
         }
         if (isset($_REQUEST['types']) && \is_array($_REQUEST['types'])) {
             $this->selectedObjectTypes = $_REQUEST['types'];
@@ -182,7 +182,7 @@ class SearchForm extends AbstractCaptchaForm
         $this->submit = (!empty($_POST) || !empty($this->query) || !empty($this->username) || $this->userID);
 
         if (isset($_REQUEST['modify'])) {
-            $this->modifySearchID = \intval($_REQUEST['modify']);
+            $this->modifySearchID = (int)$_REQUEST['modify'];
             $this->modifySearch = new Search($this->modifySearchID);
 
             if (!$this->modifySearch->searchID || ($this->modifySearch->userID && $this->modifySearch->userID != WCF::getUser()->userID)) {
@@ -260,10 +260,10 @@ class SearchForm extends AbstractCaptchaForm
 
         $this->nameExactly = 0;
         if (isset($_POST['nameExactly'])) {
-            $this->nameExactly = \intval($_POST['nameExactly']);
+            $this->nameExactly = (int)$_POST['nameExactly'];
         }
         if (isset($_POST['subjectOnly'])) {
-            $this->subjectOnly = \intval($_POST['subjectOnly']);
+            $this->subjectOnly = (int)$_POST['subjectOnly'];
         }
         if (isset($_POST['startDate'])) {
             $this->startDate = $_POST['startDate'];

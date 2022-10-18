@@ -61,7 +61,7 @@ class PackagePage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->packageID = \intval($_REQUEST['id']);
+            $this->packageID = (int)$_REQUEST['id'];
         }
         $this->package = new Package($this->packageID);
         if (!$this->package->packageID) {
@@ -82,7 +82,7 @@ class PackagePage extends AbstractPage
                     AND pluginStoreFileID <> 0";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->package->package]);
-        $this->pluginStoreFileID = \intval($statement->fetchSingleColumn());
+        $this->pluginStoreFileID = (int)$statement->fetchSingleColumn();
     }
 
     /**

@@ -49,7 +49,7 @@ class SmileyEditForm extends SmileyAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->smileyID = \intval($_REQUEST['id']);
+            $this->smileyID = (int)$_REQUEST['id'];
         }
         $this->smiley = new Smiley($this->smileyID);
         if (!$this->smiley->smileyID) {

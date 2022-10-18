@@ -42,16 +42,16 @@ class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider
         $result = 0;
         if (\preg_match('~^(?:(?:(?P<h>\d+)h)?(?P<m>\d+)m(?P<s>\d+))|(?P<t>\d+)~', $time, $match)) {
             if (!empty($match['h'])) {
-                $result += \intval($match['h']) * 3600;
+                $result += (int)$match['h'] * 3600;
             }
             if (!empty($match['m'])) {
-                $result += \intval($match['m']) * 60;
+                $result += (int)$match['m'] * 60;
             }
             if (!empty($match['s'])) {
-                $result += \intval($match['s']);
+                $result += (int)$match['s'];
             }
             if (!empty($match['t'])) {
-                $result += \intval($match['t']);
+                $result += (int)$match['t'];
             }
         }
 

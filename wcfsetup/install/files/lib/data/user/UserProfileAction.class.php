@@ -708,7 +708,7 @@ class UserProfileAction extends UserAction implements IPopoverAction
     public function uploadCoverPhoto()
     {
         $saveStrategy = new UserCoverPhotoUploadFileSaveStrategy(
-            (!empty($this->parameters['userID']) ? \intval($this->parameters['userID']) : WCF::getUser()->userID)
+            (!empty($this->parameters['userID']) ? (int)$this->parameters['userID'] : WCF::getUser()->userID)
         );
         /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->saveFiles($saveStrategy);

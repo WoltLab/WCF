@@ -145,7 +145,7 @@ class UserListPage extends SortablePage
         $this->conditions = new PreparedStatementConditionBuilder();
 
         if (!empty($_REQUEST['id'])) {
-            $this->searchID = \intval($_REQUEST['id']);
+            $this->searchID = (int)$_REQUEST['id'];
             if ($this->searchID) {
                 $this->readSearchResult();
             }
@@ -307,7 +307,7 @@ class UserListPage extends SortablePage
                 $row['editable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEditUser')) ? 1 : 0;
                 $row['bannable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canBanUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
                 $row['canBeEnabled'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEnableUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
-                $row['isMarked'] = \intval(\in_array($row['userID'], $this->markedUsers));
+                $row['isMarked'] = (int)\in_array($row['userID'], $this->markedUsers);
 
                 $this->users[] = new UserProfile(new User(null, $row));
             }

@@ -33,7 +33,7 @@ class LanguageEditForm extends LanguageAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->languageID = \intval($_REQUEST['id']);
+            $this->languageID = (int)$_REQUEST['id'];
         }
         $this->language = new Language($this->languageID);
         if (!$this->language->languageID) {

@@ -87,7 +87,7 @@ class UserGroupOptionForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->userGroupOptionID = \intval($_REQUEST['id']);
+            $this->userGroupOptionID = (int)$_REQUEST['id'];
         }
         $this->userGroupOption = new UserGroupOption($this->userGroupOptionID);
         if (!$this->userGroupOption->optionID) {

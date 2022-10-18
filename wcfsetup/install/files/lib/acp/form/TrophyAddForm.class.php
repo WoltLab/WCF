@@ -190,13 +190,13 @@ class TrophyAddForm extends AbstractAcpForm
         parent::readFormParameters();
 
         if (isset($_POST['categoryID'])) {
-            $this->categoryID = \intval($_POST['categoryID']);
+            $this->categoryID = (int)$_POST['categoryID'];
         }
         if (isset($_POST['type'])) {
-            $this->type = \intval($_POST['type']);
+            $this->type = (int)$_POST['type'];
         }
         if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = \intval($_POST['isDisabled']);
+            $this->isDisabled = (int)$_POST['isDisabled'];
         }
         if (isset($_POST['iconName'])) {
             $this->iconName = StringUtil::trim($_POST['iconName']);
@@ -217,7 +217,7 @@ class TrophyAddForm extends AbstractAcpForm
             $this->trophyUseHtml = 1;
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
 
         // read file upload

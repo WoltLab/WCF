@@ -40,6 +40,6 @@ class PackageInstallationQueue extends DatabaseObject
         $statement->execute();
         $row = $statement->fetchArray();
 
-        return \intval($row['processNo']) + 1;
+        return (int)$row['processNo'] + 1;
     }
 }

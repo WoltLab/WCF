@@ -145,13 +145,13 @@ abstract class CustomOption extends Option implements ITitledObject
                 $year = $month = $day = 0;
                 $optionValue = \explode('-', $this->optionValue);
                 if (isset($optionValue[0])) {
-                    $year = \intval($optionValue[0]);
+                    $year = (int)$optionValue[0];
                 }
                 if (isset($optionValue[1])) {
-                    $month = \intval($optionValue[1]);
+                    $month = (int)$optionValue[1];
                 }
                 if (isset($optionValue[2])) {
-                    $day = \intval($optionValue[2]);
+                    $day = (int)$optionValue[2];
                 }
 
                 return DateUtil::format(
@@ -160,10 +160,10 @@ abstract class CustomOption extends Option implements ITitledObject
                 );
 
             case 'float':
-                return StringUtil::formatDouble(\doubleval($this->optionValue));
+                return StringUtil::formatDouble((double)$this->optionValue);
 
             case 'integer':
-                return StringUtil::formatInteger(\intval($this->optionValue));
+                return StringUtil::formatInteger((int)$this->optionValue);
 
             case 'radioButton':
             case 'select':

@@ -145,7 +145,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
 
         UserObjectWatchEditor::create([
             'userID' => WCF::getUser()->userID,
-            'objectID' => \intval($this->parameters['data']['objectID']),
+            'objectID' => (int)$this->parameters['data']['objectID'],
             'objectTypeID' => $objectType->objectTypeID,
             'notification' => !empty($this->parameters['enableNotification']) ? 1 : 0,
         ]);
@@ -170,7 +170,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
             $userObjectWatch = UserObjectWatch::getUserObjectWatch(
                 $objectType->objectTypeID,
                 WCF::getUser()->userID,
-                \intval($this->parameters['data']['objectID'])
+                (int)$this->parameters['data']['objectID']
             );
         }
         $editor = new UserObjectWatchEditor($userObjectWatch);
@@ -198,13 +198,13 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         }
 
         // validate object id
-        $objectType->getProcessor()->validateObjectID(\intval($this->parameters['data']['objectID']));
+        $objectType->getProcessor()->validateObjectID((int)$this->parameters['data']['objectID']);
 
         // get existing subscription
         $this->userObjectWatch = UserObjectWatch::getUserObjectWatch(
             $objectType->objectTypeID,
             WCF::getUser()->userID,
-            \intval($this->parameters['data']['objectID'])
+            (int)$this->parameters['data']['objectID']
         );
     }
 

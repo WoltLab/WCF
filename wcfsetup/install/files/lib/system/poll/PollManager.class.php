@@ -120,7 +120,7 @@ class PollManager extends SingletonFactory
             throw new SystemException("Object type '" . $objectType . "' is unknown");
         }
 
-        $this->objectID = \intval($objectID);
+        $this->objectID = (int)$objectID;
         $this->objectType = $objectType;
         $this->pollID = $pollID;
 
@@ -181,7 +181,7 @@ class PollManager extends SingletonFactory
         }
 
         if (isset($postData['pollMaxVotes'])) {
-            $this->pollData['maxVotes'] = \max(\intval($postData['pollMaxVotes']), 1); // force a minimum of 1
+            $this->pollData['maxVotes'] = \max((int)$postData['pollMaxVotes'], 1); // force a minimum of 1
         }
         if (isset($postData['pollQuestion'])) {
             $this->pollData['question'] = StringUtil::trim($postData['pollQuestion']);
@@ -204,7 +204,7 @@ class PollManager extends SingletonFactory
             foreach ($postData['pollOptions'] as $showOrder => $value) {
                 [$optionID, $optionValue] = \explode('_', $value, 2);
                 $this->pollOptions[$showOrder] = [
-                    'optionID' => \intval($optionID),
+                    'optionID' => (int)$optionID,
                     'optionValue' => StringUtil::trim($optionValue),
                 ];
             }
@@ -262,7 +262,7 @@ class PollManager extends SingletonFactory
     public function save($objectID = null)
     {
         if ($objectID !== null) {
-            $this->objectID = \intval($objectID);
+            $this->objectID = (int)$objectID;
         }
 
         // create a new poll

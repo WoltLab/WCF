@@ -50,7 +50,7 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
         AbstractDialogAction::readParameters();
 
         if (isset($_POST['projectID'])) {
-            $this->projectID = \intval($_POST['projectID']);
+            $this->projectID = (int)$_POST['projectID'];
         }
         $this->project = new DevtoolsProject($this->projectID);
         if (!$this->project->projectID) {
@@ -62,7 +62,7 @@ class DevtoolsInstallPackageAction extends InstallPackageAction
         }
 
         if (isset($_POST['queueID'])) {
-            $this->queueID = \intval($_POST['queueID']);
+            $this->queueID = (int)$_POST['queueID'];
         }
         $this->queue = new PackageInstallationQueue($this->queueID);
         if (!$this->queue->queueID) {

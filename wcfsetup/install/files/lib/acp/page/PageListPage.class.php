@@ -124,7 +124,7 @@ class PageListPage extends SortablePage
             $this->content = StringUtil::trim($_REQUEST['content']);
         }
         if (isset($_REQUEST['applicationPackageID'])) {
-            $this->applicationPackageID = \intval($_REQUEST['applicationPackageID']);
+            $this->applicationPackageID = (int)$_REQUEST['applicationPackageID'];
         }
         if (!empty($_REQUEST['pageType'])) {
             $this->pageType = $_REQUEST['pageType'];

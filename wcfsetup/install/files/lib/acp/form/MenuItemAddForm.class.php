@@ -125,7 +125,7 @@ class MenuItemAddForm extends AbstractForm
         parent::readParameters();
 
         if (isset($_REQUEST['menuID'])) {
-            $this->menuID = \intval($_REQUEST['menuID']);
+            $this->menuID = (int)$_REQUEST['menuID'];
         }
         $this->menu = new Menu($this->menuID);
         if (!$this->menu->menuID) {
@@ -171,16 +171,16 @@ class MenuItemAddForm extends AbstractForm
             $this->isInternalLink = (bool)$_POST['isInternalLink'];
         }
         if (!empty($_POST['pageID'])) {
-            $this->pageID = \intval($_POST['pageID']);
+            $this->pageID = (int)$_POST['pageID'];
         }
         if (!empty($_POST['pageObjectID'])) {
-            $this->pageObjectID = \intval($_POST['pageObjectID']);
+            $this->pageObjectID = (int)$_POST['pageObjectID'];
         }
         if (!empty($_POST['parentItemID'])) {
-            $this->parentItemID = \intval($_POST['parentItemID']);
+            $this->parentItemID = (int)$_POST['parentItemID'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
     }
 

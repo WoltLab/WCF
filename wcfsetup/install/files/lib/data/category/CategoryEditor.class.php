@@ -83,7 +83,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $row = $statement->fetchArray();
                 $maxShowOrder = 0;
                 if (!empty($row)) {
-                    $maxShowOrder = \intval($row['showOrder']);
+                    $maxShowOrder = (int)$row['showOrder'];
                 }
 
                 if ($showOrder > $maxShowOrder) {
@@ -181,7 +181,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $row = $statement->fetchArray();
         $maxShowOrder = 0;
         if (!empty($row)) {
-            $maxShowOrder = \intval($row['showOrder']);
+            $maxShowOrder = (int)$row['showOrder'];
         }
 
         if ($maxShowOrder && $showOrder <= $maxShowOrder) {

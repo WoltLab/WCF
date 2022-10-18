@@ -120,7 +120,7 @@ class ContactForm extends AbstractCaptchaForm
             $this->name = StringUtil::trim($_POST['name']);
         }
         if (isset($_POST['recipientID'])) {
-            $this->recipientID = \intval($_POST['recipientID']);
+            $this->recipientID = (int)$_POST['recipientID'];
         }
         if (!empty($_POST['privacyPolicyConfirmed'])) {
             $this->privacyPolicyConfirmed = 1;

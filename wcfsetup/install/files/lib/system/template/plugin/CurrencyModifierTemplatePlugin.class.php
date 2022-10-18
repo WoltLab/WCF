@@ -27,7 +27,7 @@ class CurrencyModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        $decimals = \intval($tagArgs[1] ?? 2);
+        $decimals = (int)$tagArgs[1] ?? 2;
 
         return \number_format(
             \round($tagArgs[0], $decimals),

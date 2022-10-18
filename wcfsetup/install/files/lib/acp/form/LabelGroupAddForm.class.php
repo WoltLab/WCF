@@ -118,7 +118,7 @@ class LabelGroupAddForm extends AbstractForm
             $this->objectTypes = $_POST['objectTypes'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
     }
 

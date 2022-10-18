@@ -88,8 +88,8 @@ final class PasswordUtil
      */
     public static function isDifferentBlowfish($hash)
     {
-        $currentCost = \intval(self::BCRYPT_COST);
-        $hashCost = \intval(\substr($hash, 4, 2));
+        $currentCost = (int)self::BCRYPT_COST;
+        $hashCost = (int)\substr($hash, 4, 2);
 
         if ($currentCost != $hashCost) {
             return true;

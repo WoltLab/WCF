@@ -71,7 +71,7 @@ class ACPSessionLogPage extends SortablePage
 
         // get session log
         if (isset($_REQUEST['id'])) {
-            $this->sessionLogID = \intval($_REQUEST['id']);
+            $this->sessionLogID = (int)$_REQUEST['id'];
         }
         $this->sessionLog = new ACPSessionLog($this->sessionLogID);
         if (!$this->sessionLog->sessionLogID) {

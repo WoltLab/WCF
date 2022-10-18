@@ -129,7 +129,7 @@ class TrophyPage extends MultipleLinkPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->trophyID = \intval($_REQUEST['id']);
+            $this->trophyID = (int)$_REQUEST['id'];
         }
 
         $this->trophy = TrophyCache::getInstance()->getTrophyByID($this->trophyID);

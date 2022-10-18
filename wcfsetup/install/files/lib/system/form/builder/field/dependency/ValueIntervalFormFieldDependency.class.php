@@ -39,7 +39,7 @@ final class ValueIntervalFormFieldDependency extends AbstractFormFieldDependency
             return false;
         }
 
-        $value = \floatval($value);
+        $value = (float)$value;
 
         if ($this->minimum !== null && $this->minimum > $value) {
             return false;

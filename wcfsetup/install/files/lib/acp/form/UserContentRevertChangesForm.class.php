@@ -84,7 +84,7 @@ class UserContentRevertChangesForm extends AbstractForm
         parent::readFormParameters();
 
         if (isset($_POST['timeframe'])) {
-            $this->timeframe = \intval($_POST['timeframe']);
+            $this->timeframe = (int)$_POST['timeframe'];
         }
     }
 

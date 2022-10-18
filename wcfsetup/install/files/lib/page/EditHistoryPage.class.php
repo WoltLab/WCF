@@ -93,14 +93,14 @@ class EditHistoryPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['oldID'])) {
-            $this->oldID = \intval($_REQUEST['oldID']);
+            $this->oldID = (int)$_REQUEST['oldID'];
             $this->old = new EditHistoryEntry($this->oldID);
             if (!$this->old->entryID) {
                 throw new IllegalLinkException();
             }
 
             if (isset($_REQUEST['newID']) && $_REQUEST['newID'] !== 'current') {
-                $this->newID = \intval($_REQUEST['newID']);
+                $this->newID = (int)$_REQUEST['newID'];
                 $this->new = new EditHistoryEntry($this->newID);
                 if (!$this->new->entryID) {
                     throw new IllegalLinkException();
@@ -122,7 +122,7 @@ class EditHistoryPage extends AbstractPage
             $this->objectID = $this->old->objectID;
             $this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->old->objectTypeID);
         } elseif (isset($_REQUEST['objectID']) && isset($_REQUEST['objectType'])) {
-            $this->objectID = \intval($_REQUEST['objectID']);
+            $this->objectID = (int)$_REQUEST['objectID'];
             $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
                 'com.woltlab.wcf.edit.historySavingObject',
                 $_REQUEST['objectType']

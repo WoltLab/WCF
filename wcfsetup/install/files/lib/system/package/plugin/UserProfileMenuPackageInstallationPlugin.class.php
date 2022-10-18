@@ -225,7 +225,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 
         $showOrder = $element->getElementsByTagName('showorder')->item(0);
         if ($showOrder) {
-            $data['showOrder'] = \intval($showOrder->nodeValue);
+            $data['showOrder'] = (int)$showOrder->nodeValue;
         }
         if ($saveData && $this->editedEntry === null) {
             // only set explicit showOrder when adding new menu item

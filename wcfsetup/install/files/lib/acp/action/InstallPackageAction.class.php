@@ -63,7 +63,7 @@ class InstallPackageAction extends AbstractDialogAction
             $this->node = StringUtil::trim($_POST['node']);
         }
         if (isset($_POST['queueID'])) {
-            $this->queueID = \intval($_POST['queueID']);
+            $this->queueID = (int)$_POST['queueID'];
         }
         $this->queue = new PackageInstallationQueue($this->queueID);
 

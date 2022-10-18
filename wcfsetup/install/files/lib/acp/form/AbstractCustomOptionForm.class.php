@@ -146,7 +146,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
 
         if ($this->action === 'edit') {
             if (isset($_REQUEST['id'])) {
-                $this->optionID = \intval($_REQUEST['id']);
+                $this->optionID = (int)$_REQUEST['id'];
             }
             $this->option = new $this->baseClass($this->optionID);
             if (!$this->option->getObjectID()) {
@@ -181,24 +181,24 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm
             $this->selectOptions = $_POST['selectOptions'];
         }
         if (isset($_POST['required'])) {
-            $this->required = \intval($_POST['required']);
+            $this->required = (int)$_POST['required'];
         }
         if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+            $this->showOrder = (int)$_POST['showOrder'];
         }
         if (isset($_POST['isDisabled'])) {
             $this->isDisabled = 1;
         }
 
         if ($this->optionType == 'boolean' || $this->optionType == 'integer') {
-            $this->defaultValue = \intval($this->defaultValue);
+            $this->defaultValue = (int)$this->defaultValue;
 
             if ($this->optionType == 'boolean') {
                 $this->validationPattern = '';
             }
         }
         if ($this->optionType == 'float') {
-            $this->defaultValue = \floatval($this->defaultValue);
+            $this->defaultValue = (float)$this->defaultValue;
         }
     }
 

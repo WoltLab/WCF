@@ -106,12 +106,12 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     protected function prepareImport(array $data)
     {
         return [
-            'canBeDisabled' => isset($data['elements']['canbedisabled']) ? \intval($data['elements']['canbedisabled']) : 1,
-            'canBeEdited' => isset($data['elements']['canbeedited']) ? \intval($data['elements']['canbeedited']) : 1,
+            'canBeDisabled' => isset($data['elements']['canbedisabled']) ? (int)$data['elements']['canbedisabled'] : 1,
+            'canBeEdited' => isset($data['elements']['canbeedited']) ? (int)$data['elements']['canbeedited'] : 1,
             'className' => $data['elements']['classname'] ?? '',
             'cronjobName' => $data['attributes']['name'] ?? '',
             'description' => $data['elements']['description'] ?? '',
-            'isDisabled' => isset($data['elements']['isdisabled']) ? \intval($data['elements']['isdisabled']) : 0,
+            'isDisabled' => isset($data['elements']['isdisabled']) ? (int)$data['elements']['isdisabled'] : 0,
             'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
             'startDom' => $data['elements']['startdom'],
             'startDow' => $data['elements']['startdow'],

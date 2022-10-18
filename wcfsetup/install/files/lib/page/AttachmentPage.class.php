@@ -89,7 +89,7 @@ class AttachmentPage extends AbstractPage
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->attachmentID = \intval($_REQUEST['id']);
+            $this->attachmentID = (int)$_REQUEST['id'];
         }
         $this->attachment = new Attachment($this->attachmentID);
         if (!$this->attachment->attachmentID) {
@@ -98,11 +98,11 @@ class AttachmentPage extends AbstractPage
 
         $parameters = ['object' => $this->attachment];
         if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) {
-            $this->tiny = \intval($_REQUEST['tiny']);
+            $this->tiny = (int)$_REQUEST['tiny'];
             $parameters['tiny'] = $this->tiny;
         }
         if (isset($_REQUEST['thumbnail']) && $this->attachment->thumbnailType) {
-            $this->thumbnail = \intval($_REQUEST['thumbnail']);
+            $this->thumbnail = (int)$_REQUEST['thumbnail'];
             $parameters['thumbnail'] = $this->thumbnail;
         }
 

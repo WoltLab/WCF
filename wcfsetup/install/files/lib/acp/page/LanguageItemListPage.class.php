@@ -120,10 +120,10 @@ class LanguageItemListPage extends SortablePage
         parent::readParameters();
 
         if (isset($_REQUEST['languageID'])) {
-            $this->languageID = \intval($_REQUEST['languageID']);
+            $this->languageID = (int)$_REQUEST['languageID'];
         }
         if (isset($_REQUEST['languageCategoryID'])) {
-            $this->languageCategoryID = \intval($_REQUEST['languageCategoryID']);
+            $this->languageCategoryID = (int)$_REQUEST['languageCategoryID'];
         }
         if (isset($_REQUEST['languageItem'])) {
             $this->languageItem = StringUtil::trim($_REQUEST['languageItem']);

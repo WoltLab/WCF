@@ -26,7 +26,7 @@ class ArticleMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedO
         $articleIDs = [];
         if (!empty($embeddedData['wsa'])) {
             for ($i = 0, $length = \count($embeddedData['wsa']); $i < $length; $i++) {
-                $articleIDs[] = \intval($embeddedData['wsa'][$i][0]);
+                $articleIDs[] = (int)$embeddedData['wsa'][$i][0];
             }
         }
 

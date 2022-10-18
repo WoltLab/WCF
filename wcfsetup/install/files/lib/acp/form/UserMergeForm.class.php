@@ -94,7 +94,7 @@ class UserMergeForm extends AbstractForm
         parent::readFormParameters();
 
         if (isset($_POST['destinationUserID'])) {
-            $this->destinationUserID = \intval($_POST['destinationUserID']);
+            $this->destinationUserID = (int)$_POST['destinationUserID'];
         }
     }
 

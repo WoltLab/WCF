@@ -80,7 +80,7 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements
     public function readFormParameters()
     {
         if (!empty($_POST['userID'])) {
-            $this->userID = \intval($_POST['userID']);
+            $this->userID = (int)$_POST['userID'];
         }
     }
 

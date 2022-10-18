@@ -56,7 +56,7 @@ class WorkerProxyAction extends AJAXInvokeAction
             $this->className = $_POST['className'];
         }
         if (isset($_POST['loopCount'])) {
-            $this->loopCount = \intval($_POST['loopCount']);
+            $this->loopCount = (int)$_POST['loopCount'];
         }
         if (isset($_POST['parameters']) && \is_array($_POST['parameters'])) {
             $this->parameters = $_POST['parameters'];

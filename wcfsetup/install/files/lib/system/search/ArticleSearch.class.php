@@ -99,7 +99,7 @@ class ArticleSearch extends AbstractSearchProvider
     public function getConditionBuilder(array $parameters): ?PreparedStatementConditionBuilder
     {
         if (!empty($parameters['articleCategoryID'])) {
-            $this->articleCategoryID = \intval($parameters['articleCategoryID']);
+            $this->articleCategoryID = (int)$parameters['articleCategoryID'];
         }
 
         $articleCategoryIDs = $this->getArticleCategoryIDs($this->articleCategoryID);

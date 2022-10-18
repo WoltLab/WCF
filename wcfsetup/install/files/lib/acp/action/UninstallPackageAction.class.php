@@ -46,10 +46,10 @@ class UninstallPackageAction extends InstallPackageAction
         }
 
         if (isset($_POST['packageID'])) {
-            $this->packageID = \intval($_POST['packageID']);
+            $this->packageID = (int)$_POST['packageID'];
         } else {
             if (isset($_POST['queueID'])) {
-                $this->queueID = \intval($_POST['queueID']);
+                $this->queueID = (int)$_POST['queueID'];
             }
             $this->queue = new PackageInstallationQueue($this->queueID);
 

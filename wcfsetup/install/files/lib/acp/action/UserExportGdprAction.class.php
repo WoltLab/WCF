@@ -134,7 +134,7 @@ class UserExportGdprAction extends AbstractAction
         parent::readParameters();
 
         if (isset($_GET['id'])) {
-            $this->userID = \intval($_GET['id']);
+            $this->userID = (int)$_GET['id'];
         }
 
         $this->user = UserProfileRuntimeCache::getInstance()->getObject($this->userID);

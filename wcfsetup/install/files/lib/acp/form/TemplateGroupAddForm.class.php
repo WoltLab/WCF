@@ -72,7 +72,7 @@ class TemplateGroupAddForm extends AbstractForm
             }
         }
         if (isset($_POST['parentTemplateGroupID'])) {
-            $this->parentTemplateGroupID = \intval($_POST['parentTemplateGroupID']);
+            $this->parentTemplateGroupID = (int)$_POST['parentTemplateGroupID'];
         }
     }
 

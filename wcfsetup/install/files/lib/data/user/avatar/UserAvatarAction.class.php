@@ -82,7 +82,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
     {
         /** @var UploadFile $file */
         $file = $this->parameters['__files']->getFiles()[0];
-        $saveStrategy = new AvatarUploadFileSaveStrategy((!empty($this->parameters['userID']) ? \intval($this->parameters['userID']) : WCF::getUser()->userID));
+        $saveStrategy = new AvatarUploadFileSaveStrategy((!empty($this->parameters['userID']) ? (int)$this->parameters['userID'] : WCF::getUser()->userID));
         /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->saveFiles($saveStrategy);
 

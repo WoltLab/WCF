@@ -57,7 +57,7 @@ class PageEditForm extends PageAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->pageID = \intval($_REQUEST['id']);
+            $this->pageID = (int)$_REQUEST['id'];
         }
         $this->page = new Page($this->pageID);
         if (!$this->page->pageID) {
@@ -84,7 +84,7 @@ class PageEditForm extends PageAddForm
         parent::readFormParameters();
 
         if (isset($_POST['overrideApplicationPackageID'])) {
-            $this->overrideApplicationPackageID = \intval($_POST['overrideApplicationPackageID']);
+            $this->overrideApplicationPackageID = (int)$_POST['overrideApplicationPackageID'];
         }
 
         $this->pageType = $this->page->pageType;

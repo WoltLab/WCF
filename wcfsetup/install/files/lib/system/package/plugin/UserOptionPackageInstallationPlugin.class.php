@@ -136,22 +136,22 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             $validationPattern = $option['validationpattern'];
         }
         if (isset($option['required'])) {
-            $required = \intval($option['required']);
+            $required = (int)$option['required'];
         }
         if (isset($option['askduringregistration'])) {
-            $askDuringRegistration = \intval($option['askduringregistration']);
+            $askDuringRegistration = (int)$option['askduringregistration'];
         }
         if (isset($option['editable'])) {
-            $editable = \intval($option['editable']);
+            $editable = (int)$option['editable'];
         }
         if (isset($option['visible'])) {
-            $visible = \intval($option['visible']);
+            $visible = (int)$option['visible'];
         }
         if (isset($option['searchable'])) {
-            $searchable = \intval($option['searchable']);
+            $searchable = (int)$option['searchable'];
         }
         if (isset($option['showorder'])) {
-            $showOrder = \intval($option['showorder']);
+            $showOrder = (int)$option['showorder'];
         }
         if (isset($option['outputclass'])) {
             $outputClass = $option['outputclass'];
@@ -163,7 +163,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             $enableOptions = StringUtil::normalizeCsv($option['enableoptions']);
         }
         if (isset($option['isdisabled'])) {
-            $isDisabled = \intval($option['isdisabled']);
+            $isDisabled = (int)$option['isdisabled'];
         }
         $showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
         if (isset($option['permissions'])) {

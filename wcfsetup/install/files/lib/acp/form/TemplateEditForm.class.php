@@ -43,7 +43,7 @@ class TemplateEditForm extends TemplateAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->templateID = \intval($_REQUEST['id']);
+            $this->templateID = (int)$_REQUEST['id'];
         }
         $this->template = new Template($this->templateID);
         if (!$this->template->templateID || !$this->template->templateGroupID) {

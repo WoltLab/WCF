@@ -91,7 +91,7 @@ class TemplateListPage extends SortablePage
         parent::readParameters();
 
         if (isset($_REQUEST['templateGroupID'])) {
-            $this->templateGroupID = \intval($_REQUEST['templateGroupID']);
+            $this->templateGroupID = (int)$_REQUEST['templateGroupID'];
         }
         if (isset($_REQUEST['searchTemplateName'])) {
             $this->searchTemplateName = StringUtil::trim($_REQUEST['searchTemplateName']);

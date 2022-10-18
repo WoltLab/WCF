@@ -50,7 +50,7 @@ class TagEditForm extends TagAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->tagID = \intval($_REQUEST['id']);
+            $this->tagID = (int)$_REQUEST['id'];
         }
         $this->tagObj = new Tag($this->tagID);
         if (!$this->tagObj->tagID) {

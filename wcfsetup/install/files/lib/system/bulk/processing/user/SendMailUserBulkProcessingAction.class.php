@@ -113,7 +113,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction
     public function readFormParameters()
     {
         if (isset($_POST['enableHTML'])) {
-            $this->enableHTML = \intval($_POST['enableHTML']);
+            $this->enableHTML = (int)$_POST['enableHTML'];
         }
         if (isset($_POST['from'])) {
             $this->from = StringUtil::trim($_POST['from']);

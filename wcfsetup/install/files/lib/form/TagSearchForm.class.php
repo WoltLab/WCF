@@ -77,7 +77,7 @@ class TagSearchForm extends AbstractCaptchaForm
         parent::readFormParameters();
 
         if (isset($_POST['languageID'])) {
-            $this->languageID = \intval($_POST['languageID']);
+            $this->languageID = (int)$_POST['languageID'];
         }
         if (isset($_POST['tagNames']) && \is_array($_POST['tagNames'])) {
             $this->tagNames = ArrayUtil::trim($_POST['tagNames']);

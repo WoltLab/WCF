@@ -21,7 +21,7 @@ class GroupBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
     {
-        $groupID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
+        $groupID = (!empty($openingTag['attributes'][0])) ? (int)$openingTag['attributes'][0] : 0;
         $group = UserGroup::getGroupByID($groupID);
         if ($group === null || !$group->canBeMentioned()) {
             return "[group]{$content}[/group]";

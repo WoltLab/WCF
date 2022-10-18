@@ -32,7 +32,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
 
             case 1:
                 if (\is_numeric($attributes[0])) {
-                    $line = \intval($attributes[0]);
+                    $line = (int)$attributes[0];
                 } elseif (\mb_strpos($attributes[0], '.') === false) {
                     $highlighter = $attributes[0];
                 } else {
@@ -42,7 +42,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
 
             case 2:
                 if (\is_numeric($attributes[0])) {
-                    $line = \intval($attributes[0]);
+                    $line = (int)$attributes[0];
                     if (\mb_strpos($attributes[1], '.') === false) {
                         $highlighter = $attributes[1];
                     } else {
@@ -56,7 +56,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter
 
             default:
                 $highlighter = $attributes[0];
-                $line = \intval($attributes[1]);
+                $line = (int)$attributes[1];
                 $file = $attributes[2];
                 break;
         }

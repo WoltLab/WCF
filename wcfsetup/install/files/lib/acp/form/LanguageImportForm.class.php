@@ -90,10 +90,10 @@ class LanguageImportForm extends AbstractForm
             $this->filename = $_FILES['languageUpload']['tmp_name'];
         }
         if (isset($_POST['sourceLanguageID'])) {
-            $this->sourceLanguageID = \intval($_POST['sourceLanguageID']);
+            $this->sourceLanguageID = (int)$_POST['sourceLanguageID'];
         }
         if (isset($_POST['packageID'])) {
-            $this->packageID = \intval($_POST['packageID']);
+            $this->packageID = (int)$_POST['packageID'];
         }
     }
 

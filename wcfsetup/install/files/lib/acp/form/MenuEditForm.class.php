@@ -48,7 +48,7 @@ class MenuEditForm extends MenuAddForm
         parent::readParameters();
 
         if (isset($_REQUEST['id'])) {
-            $this->menuID = \intval($_REQUEST['id']);
+            $this->menuID = (int)$_REQUEST['id'];
         }
         $this->menu = new Menu($this->menuID);
         if (!$this->menu->menuID) {
