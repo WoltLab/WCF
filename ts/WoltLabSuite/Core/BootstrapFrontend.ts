@@ -19,6 +19,7 @@ import { ShareProvider, addShareProviders } from "./Ui/Message/Share/Providers";
 import * as UiFeedDialog from "./Ui/Feed/Dialog";
 import User from "./User";
 import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
+import { maybeSyncServerTimezone } from "./Controller/User/Profile/TimezoneSync";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -106,4 +107,6 @@ export function setup(options: BootstrapOptions): void {
   if (User.userId) {
     UiFeedDialog.setup();
   }
+
+  void maybeSyncServerTimezone();
 }
