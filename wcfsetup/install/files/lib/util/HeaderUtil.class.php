@@ -170,11 +170,12 @@ final class HeaderUtil
             self::$output
         );
 
-        self::$output = \str_replace(
-            '<!-- JAVASCRIPT_RELOCATE_POSITION -->',
-            \implode("\n", $javascript),
-            self::$output
-        );
+        $placeholder = '<!-- JAVASCRIPT_RELOCATE_POSITION -->';
+        if (($placeholderPosition = \strrpos(self::$output, $placeholder)) !== false) {
+            self::$output = \substr(self::$output, 0, $placeholderPosition)
+                . \implode("\n", $javascript)
+                . \substr(self::$output, $placeholderPosition + \strlen($placeholder));
+        }
 
         // 3rd party plugins may differ the actual output before it is sent to the browser
         // please be aware, that $eventObj is not available here due to this being a static
