@@ -11,7 +11,6 @@
 
 import * as Core from "./Core";
 import DatePicker from "./Date/Picker";
-import * as DateTimeRelative from "./Date/Time/Relative";
 import Devtools from "./Devtools";
 import DomChangeListener from "./Dom/Change/Listener";
 import * as Environment from "./Environment";
@@ -91,7 +90,6 @@ export function setup(options: BoostrapOptions): void {
   adoptPageOverlayContainer(document.body);
 
   Environment.setup();
-  DateTimeRelative.setup();
   DatePicker.init();
   UiDropdownSimple.setup();
   UiMobile.setup(options.enableMobileMenu, options.pageMenuMainProvider);

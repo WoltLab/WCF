@@ -8,13 +8,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Bootstrap
  */
-define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Form/XsrfToken", "./Language", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password", "./Ui/Empty", "./Ui/Object/Action", "./Ui/Object/Action/Delete", "./Ui/Object/Action/Toggle", "./Ui/Search", "./LazyLoader", "./Helper/PageOverlay", "perfect-scrollbar"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, XsrfToken, Language, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword, UiEmpty, UiObjectAction, UiObjectActionDelete, UiObjectActionToggle, Search_1, LazyLoader_1, PageOverlay_1) {
+define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Form/XsrfToken", "./Language", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password", "./Ui/Empty", "./Ui/Object/Action", "./Ui/Object/Action/Delete", "./Ui/Object/Action/Toggle", "./Ui/Search", "./LazyLoader", "./Helper/PageOverlay", "perfect-scrollbar"], function (require, exports, tslib_1, Core, Picker_1, Devtools_1, Listener_1, Environment, EventHandler, XsrfToken, Language, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword, UiEmpty, UiObjectAction, UiObjectActionDelete, UiObjectActionToggle, Search_1, LazyLoader_1, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     Core = tslib_1.__importStar(Core);
     Picker_1 = tslib_1.__importDefault(Picker_1);
-    DateTimeRelative = tslib_1.__importStar(DateTimeRelative);
     Devtools_1 = tslib_1.__importDefault(Devtools_1);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Environment = tslib_1.__importStar(Environment);
@@ -71,7 +70,6 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
         }
         (0, PageOverlay_1.adoptPageOverlayContainer)(document.body);
         Environment.setup();
-        DateTimeRelative.setup();
         Picker_1.default.init();
         Simple_1.default.setup();
         UiMobile.setup(options.enableMobileMenu, options.pageMenuMainProvider);
