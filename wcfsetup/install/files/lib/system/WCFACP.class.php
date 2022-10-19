@@ -63,6 +63,8 @@ class WCFACP extends WCF
             $this->initApplications();
         }
 
+        $this->runBootstrappers();
+
         $this->initAuth();
 
         EventHandler::getInstance()->fireAction($this, 'initialized');

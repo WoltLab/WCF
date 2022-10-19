@@ -23,6 +23,7 @@ use wcf\system\exception\IPrintableException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
@@ -170,7 +171,30 @@ class WCF
         $this->initCoreObjects();
         $this->initApplications();
 
+        $this->runBootstrappers();
+
         EventHandler::getInstance()->fireAction($this, 'initialized');
+    }
+
+    /**
+     * @since 6.0
+     */
+    final protected function runBootstrappers(): void
+    {
+        try {
+            $bootstrappers = require(\WCF_DIR . 'lib/bootstrap.php');
+        } catch (\Exception $e) {
+            \wcf\functions\exception\logThrowable($e);
+
+            $command = new RebuildBootstrapper();
+            $command();
+
+            $bootstrappers = require(\WCF_DIR . 'lib/bootstrap.php');
+        }
+
+        foreach ($bootstrappers as $bootstrapper) {
+            $bootstrapper();
+        }
     }
 
     /**
