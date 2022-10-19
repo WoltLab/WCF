@@ -601,9 +601,6 @@ class WCF
             foreach ($loadedApplications as $application) {
                 $application->__run();
             }
-
-            /** @deprecated The below variable is deprecated. */
-            self::getTPL()->assign('__sessionKeepAlive', 59 * 60);
         }
     }
 
