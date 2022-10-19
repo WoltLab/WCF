@@ -17,7 +17,7 @@ use wcf\system\user\storage\UserStorageHandler;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Cache\Event
+ * @package WoltLabSuite\Core\System\Cache\Command
  * @since   6.0
  */
 final class ClearCache
