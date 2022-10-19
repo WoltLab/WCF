@@ -28,6 +28,7 @@ use wcf\system\form\element\MultipleSelectionFormElement;
 use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\RouteHandler;
@@ -219,6 +220,9 @@ class PackageInstallationDispatcher
             SearchIndexManager::getInstance()->createSearchIndices();
 
             VersionTracker::getInstance()->createStorageTables();
+
+            $command = new RebuildBootstrapper();
+            $command();
 
             EventHandler::getInstance()->fireAction($this, 'postInstall');
 
