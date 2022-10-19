@@ -11,6 +11,7 @@
     },
     "require": {
         "chrisjean/php-ico": "^1.0.4",
+        "cuyz/valinor": "^0.16.0",
         "dragonmantank/cron-expression": "^3.3.2",
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "^4.16",
