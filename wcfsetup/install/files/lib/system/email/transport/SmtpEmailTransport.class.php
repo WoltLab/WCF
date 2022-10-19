@@ -474,6 +474,10 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
             throw $this->locked;
         }
 
+        // Fetch the payload early. This avoids starting an SMTP transaction if
+        // generating the email contents ultimately does not succeed.
+        $payload = $email->getEmail();
+
         if (!$this->connection || $this->connection->eof()) {
             try {
                 $this->connect();
@@ -530,7 +534,7 @@ class SmtpEmailTransport implements IStatusReportingEmailTransport
             }
 
             return $item;
-        }, \explode("\r\n", $email->getEmail()))) . "\r\n");
+        }, \explode("\r\n", $payload))) . "\r\n");
         $this->write(".");
         [, $message] = $this->read([250]);
 
