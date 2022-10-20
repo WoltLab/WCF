@@ -71,7 +71,7 @@ final class EventHandler extends SingletonFactory
     private function executeInheritedActions($eventObj, string $eventName, string $className, string $name, array &$parameters)
     {
         // create objects of the actions
-        if (!isset($this->inheritedActionsObjects[$name]) || !\is_array($this->inheritedActionsObjects[$name])) {
+        if (!isset($this->inheritedActionsObjects[$name])) {
             $this->inheritedActionsObjects[$name] = [];
 
             // get parent classes
@@ -83,7 +83,7 @@ final class EventHandler extends SingletonFactory
             }
 
             foreach ($familyTree as $member) {
-                if (empty($this->inheritedActions[$member][$eventName])) {
+                if (!isset($this->inheritedActions[$member][$eventName])) {
                     continue;
                 }
 
@@ -184,13 +184,11 @@ final class EventHandler extends SingletonFactory
         $name = self::generateKey($className, $eventName);
 
         // execute inherited actions first
-        if (!empty($this->inheritedActions)) {
-            $this->executeInheritedActions($eventObj, $eventName, $className, $name, $parameters);
-        }
+        $this->executeInheritedActions($eventObj, $eventName, $className, $name, $parameters);
 
         // create objects of the actions
-        if (!isset($this->actionsObjects[$name]) || !\is_array($this->actionsObjects[$name])) {
-            if (!isset($this->actions[$name]) || !\is_array($this->actions[$name])) {
+        if (!isset($this->actionsObjects[$name])) {
+            if (!isset($this->actions[$name])) {
                 // no action registered
                 return;
             }
