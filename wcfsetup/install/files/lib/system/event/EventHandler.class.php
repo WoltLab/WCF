@@ -56,7 +56,7 @@ final class EventHandler extends SingletonFactory
     /**
      * Loads all registered actions of the active package.
      */
-    protected function loadActions()
+    protected function init(): void
     {
         $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists(
             'wcf\system\CLIWCF',
@@ -201,11 +201,6 @@ final class EventHandler extends SingletonFactory
             $className = \get_class($eventObj);
         } else {
             $className = $eventObj;
-        }
-
-        // load actions from cache if necessary
-        if ($this->actions === null && $this->inheritedActions === null) {
-            $this->loadActions();
         }
 
         // generate action name
