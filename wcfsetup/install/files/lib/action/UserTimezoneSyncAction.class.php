@@ -15,6 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\http\middleware\Xsrf;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
@@ -60,7 +61,7 @@ final class UserTimezoneSyncAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if (!WCF::getSession()->checkSecurityToken($request->getHeaderLine('x-xsrf-token'))) {
+        if ($request->getAttribute(Xsrf::HAS_VALID_HEADER_ATTRIBUTE) !== true) {
             throw new InvalidSecurityTokenException();
         }
 
