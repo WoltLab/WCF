@@ -3,9 +3,8 @@
 namespace wcf\system\template\plugin;
 
 use wcf\system\exception\SystemException;
-use wcf\system\language\I18nPlural;
 use wcf\system\template\TemplateEngine;
-use wcf\util\StringUtil;
+use wcf\system\WCF;
 
 /**
  * Template function plugin which generate plural phrases.
@@ -30,8 +29,13 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Template\Plugin
  * @since   5.3
  */
-class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
+final class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
+    /**
+     * CLDR categories supported by the ICU message parser.
+     */
+    private const CATEGORIES = ['zero', 'one', 'two', 'few', 'many', 'other'];
+
     /**
      * @inheritDoc
      */
@@ -58,16 +62,39 @@ class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin
             }
         }
 
-        $category = I18nPlural::getCategory($value);
-        if (!isset($tagArgs[$category])) {
-            $category = I18nPlural::PLURAL_OTHER;
+        return \MessageFormatter::formatMessage(
+            WCF::getLanguage()->getLocale(),
+            $this->createMessageFromValues($tagArgs),
+            ['value' => $value],
+        );
+    }
+
+    /**
+     * Creates a message string that is understood by the ICU message parser.
+     *
+     * This extra step is required because the existing implementation for
+     * plurals resolved the category and then picked the appropriate value
+     * itself.
+     */
+    private function createMessageFromValues(array $values): string
+    {
+        $items = [];
+        foreach ($values as $category => $value) {
+            if (!\in_array($category, self::CATEGORIES)) {
+                continue;
+            }
+
+            $items[] = \sprintf(
+                '%s{%s}',
+                $category,
+                // ICU requires apostrophes (U+0027) to be escaped.
+                \str_replace("'", "''", $value),
+            );
         }
 
-        $string = $tagArgs[$category];
-        if (\strpos($string, '#') !== false) {
-            return \str_replace('#', StringUtil::formatNumeric($value), $string);
-        }
-
-        return $string;
+        return \sprintf(
+            '{value, plural, %s}',
+            \implode(' ', $items),
+        );
     }
 }

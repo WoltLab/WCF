@@ -74,6 +74,34 @@ class LanguageAddForm extends AbstractForm
     public $sourceLanguageID = 0;
 
     /**
+     * @var string[]
+     */
+    public array $locales;
+
+    public string $locale = '';
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        $locales = \ResourceBundle::getLocales('');
+        if ($locales === false) {
+            throw new \RuntimeException('Unable to query the ICU database to retrieve the available locales.');
+        }
+
+        $displayLocale = WCF::getLanguage()->getLocale();
+        foreach ($locales as $locale) {
+            $this->locales[$locale] = \Locale::getDisplayName($locale, $displayLocale);
+        }
+
+        $collator = new \Collator($displayLocale);
+        $collator->asort($this->locales, \Collator::SORT_STRING);
+    }
+
+    /**
      * @inheritDoc
      */
     public function readFormParameters()
@@ -91,6 +119,9 @@ class LanguageAddForm extends AbstractForm
         }
         if (isset($_POST['sourceLanguageID'])) {
             $this->sourceLanguageID = \intval($_POST['sourceLanguageID']);
+        }
+        if (isset($_POST['locale'])) {
+            $this->locale = $_POST['locale'];
         }
     }
 
@@ -116,6 +147,10 @@ class LanguageAddForm extends AbstractForm
 
         // source language id
         $this->validateSource();
+
+        if (!isset($this->locales[$this->locale])) {
+            throw new UserInputException('locale');
+        }
     }
 
     /**
@@ -158,6 +193,7 @@ class LanguageAddForm extends AbstractForm
             'countryCode' => \mb_strtolower($this->countryCode),
             'languageName' => $this->languageName,
             'languageCode' => \mb_strtolower($this->languageCode),
+            'locale' => $this->locale,
         ]));
         $languageEditor = new LanguageEditor($this->sourceLanguage);
         $languageEditor->copy($this->language);
@@ -181,7 +217,7 @@ class LanguageAddForm extends AbstractForm
         ]);
 
         // reset values
-        $this->countryCode = $this->languageCode = $this->languageName = '';
+        $this->countryCode = $this->languageCode = $this->languageName = $this->locale = '';
         $this->sourceLanguageID = 0;
     }
 
@@ -208,6 +244,8 @@ class LanguageAddForm extends AbstractForm
             'languageCode' => $this->languageCode,
             'sourceLanguageID' => $this->sourceLanguageID,
             'languages' => $this->languages,
+            'locale' => $this->locale,
+            'locales' => $this->locales,
             'action' => 'add',
         ]);
     }

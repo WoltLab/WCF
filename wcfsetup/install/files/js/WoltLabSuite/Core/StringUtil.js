@@ -10,17 +10,16 @@
 define(["require", "exports", "tslib", "./NumberUtil"], function (require, exports, tslib_1, NumberUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setupI18n = exports.toCamelCase = exports.shortUnit = exports.unescapeHTML = exports.ucfirst = exports.lcfirst = exports.formatNumeric = exports.escapeRegExp = exports.escapeHTML = exports.addThousandsSeparator = void 0;
+    exports.toCamelCase = exports.shortUnit = exports.unescapeHTML = exports.ucfirst = exports.lcfirst = exports.formatNumeric = exports.escapeRegExp = exports.escapeHTML = exports.addThousandsSeparator = void 0;
     NumberUtil = tslib_1.__importStar(NumberUtil);
-    let _decimalPoint = ".";
-    let _thousandsSeparator = ",";
+    const numberFormat = new Intl.NumberFormat(document.documentElement.lang);
     /**
      * Adds thousands separators to a given number.
      *
-     * @see    http://stackoverflow.com/a/6502556/782822
+     * @deprecated 6.0 Use `formatNumeric()` instead.
      */
     function addThousandsSeparator(number) {
-        return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1" + _thousandsSeparator);
+        return numberFormat.format(number);
     }
     exports.addThousandsSeparator = addThousandsSeparator;
     /**
@@ -43,14 +42,8 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
      * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
      */
     function formatNumeric(number, decimalPlaces) {
-        let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
-        const numberParts = tmp.split(".");
-        tmp = addThousandsSeparator(+numberParts[0]);
-        if (numberParts.length > 1) {
-            tmp += _decimalPoint + numberParts[1];
-        }
-        tmp = tmp.replace("-", "\u2212");
-        return tmp;
+        number = NumberUtil.round(number, decimalPlaces || -2);
+        return numberFormat.format(number).replace("-", "\u2212");
     }
     exports.formatNumeric = formatNumeric;
     /**
@@ -125,9 +118,4 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
             .join("");
     }
     exports.toCamelCase = toCamelCase;
-    function setupI18n(values) {
-        _decimalPoint = values.decimalPoint;
-        _thousandsSeparator = values.thousandsSeparator;
-    }
-    exports.setupI18n = setupI18n;
 });

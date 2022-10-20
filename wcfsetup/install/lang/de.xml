@@ -1043,6 +1043,8 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.language.item.languageCategoryID.mode.new"><![CDATA[Neue Sprachvariablen-Kategorie]]></item>
 		<item name="wcf.acp.language.add.package"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.language.add.package.description"><![CDATA[Die importierten Texte werden dem ausgewählten Paket zugeordnet.]]></item>
+		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
+		<item name="wcf.acp.language.locale.description"><![CDATA[Die ausgewählte Region beeinflusst Datumsangaben und die Formatierung von Zahlen.]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>

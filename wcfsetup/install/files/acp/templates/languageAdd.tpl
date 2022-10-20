@@ -69,6 +69,28 @@
 			</dd>
 		</dl>
 		
+		<dl{if $errorField == 'locale'} class="formError"{/if}>
+			<dt><label for="locale">{lang}wcf.acp.language.locale{/lang}</label></dt>
+			<dd>
+				<select id="locale" name="locale" class="medium" required>
+					<option value="">{lang}wcf.global.noSelection{/lang}</option>
+					{foreach from=$locales key='identifier' item='displayName'}
+						<option value="{$identifier}"{if $identifier === $locale} selected{/if}>{$displayName}</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'locale'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.language.add.locale.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.language.locale.description{/lang}</small>
+			</dd>
+		</dl>
+		
 		{if $action == 'add'}
 			<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>
 				<dt><label for="sourceLanguageID">{lang}wcf.acp.language.add.source{/lang}</label></dt>

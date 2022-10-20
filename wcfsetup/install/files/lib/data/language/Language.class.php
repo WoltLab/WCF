@@ -23,6 +23,7 @@ use wcf\util\StringUtil;
  * @property-read   int $isDefault      is `1` if the language is the default language, otherwise `0`
  * @property-read   int $hasContent     is `1` if the language can be selected when creating language-specific content, otherwise `0`
  * @property-read   int $isDisabled     is `1` if the language is disabled and thus not selectable, otherwise `0`
+ * @property-read string $locale IETF language tag (BCP 47)
  */
 class Language extends DatabaseObject
 {
@@ -304,5 +305,22 @@ class Language extends DatabaseObject
     public function isDeletable(): bool
     {
         return !$this->isDefault && $this->languageCode !== 'de' && $this->languageCode !== 'en';
+    }
+
+    /**
+     * Returns the selected locale or if empty the set language code.
+     */
+    public function getLocale(): string
+    {
+        return $this->locale ?: $this->languageCode;
+    }
+
+    /**
+     * Returns a BCP 47 compliant identifier.
+     */
+    public function getBcp47(): string
+    {
+        // PHP uses underscores in the region identifier, but HTML/JS expects a dash.
+        return \str_replace('_', '-', $this->getLocale());
     }
 }

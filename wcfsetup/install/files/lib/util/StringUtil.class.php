@@ -164,32 +164,20 @@ final class StringUtil
 
     /**
      * Formats a numeric.
-     *
-     * @param number $numeric
      */
-    public static function formatNumeric($numeric): string
+    public static function formatNumeric(int|float $numeric): string
     {
-        if (\is_int($numeric)) {
-            return self::formatInteger($numeric);
-        } elseif (\is_float($numeric)) {
-            return self::formatDouble($numeric);
-        } else {
-            if (\floatval($numeric) - (float)\intval($numeric)) {
-                return self::formatDouble($numeric);
-            } else {
-                return self::formatInteger(\intval($numeric));
-            }
-        }
+        return self::getNumberFormatter()->format($numeric);
     }
 
     /**
      * Formats an integer.
      *
-     * @param int $integer
+     * @deprecated 6.0 Use `formatNumeric()` instead.
      */
-    public static function formatInteger($integer): string
+    public static function formatInteger(int $integer): string
     {
-        $integer = self::addThousandsSeparator($integer);
+        $integer = self::getNumberFormatter()->format($integer);
 
         if ($integer < 0) {
             return self::formatNegative($integer);
@@ -201,50 +189,29 @@ final class StringUtil
     /**
      * Formats a double.
      *
-     * @param double $double
-     * @param int $maxDecimals
+     * @deprecated 6.0 Use `formatNumeric()` instead, apply `\round()` manually if required.
      */
-    public static function formatDouble($double, $maxDecimals = 0): string
+    public static function formatDouble(float $double, int $maxDecimals = 0): string
     {
-        // round
-        $double = (string)\round($double, ($maxDecimals > 0 ? $maxDecimals : 2));
+        $double = \round($double, ($maxDecimals > 0 ? $maxDecimals : 2));
 
-        // consider as integer, if no decimal places found
-        if (!$maxDecimals && \preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
-            return self::formatInteger($match[1]);
+        $double = self::getNumberFormatter()->format($double);
+
+        if ($double < 0) {
+            $double = self::formatNegative($double);
         }
 
-        // remove last 0
-        if ($maxDecimals < 2 && \substr($double, -1) == '0') {
-            $double = \substr($double, 0, -1);
-        }
-
-        // replace decimal point
-        $double = \str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $double);
-
-        // add thousands separator
-        $double = self::addThousandsSeparator($double);
-
-        // format minus
-        return self::formatNegative($double);
+        return $double;
     }
 
     /**
      * Adds thousands separators to a given number.
      *
-     * @param mixed $number
+     * @deprecated 6.0 Use `formatNumeric()` instead.
      */
-    public static function addThousandsSeparator($number): string
+    public static function addThousandsSeparator(int|float $number): string
     {
-        if ($number >= 1000 || $number <= -1000) {
-            $number = \preg_replace(
-                '~(?<=\d)(?=(\d{3})+(?!\d))~',
-                WCF::getLanguage()->get('wcf.global.thousandsSeparator'),
-                $number
-            );
-        }
-
-        return $number;
+        return self::getNumberFormatter()->format($number);
     }
 
     /**
@@ -839,6 +806,18 @@ final class StringUtil
     public static function normalizeCsv($string): string
     {
         return \implode(',', ArrayUtil::trim(\explode(',', $string)));
+    }
+
+    private static function getNumberFormatter(): \NumberFormatter
+    {
+        static $formatters = [];
+
+        $locale = WCF::getLanguage()->getLocale();
+        if (!isset($formatters[$locale])) {
+            $formatters[$locale] = new \NumberFormatter($locale, \NumberFormatter::DEFAULT_STYLE);
+        }
+
+        return $formatters[$locale];
     }
 
     /**

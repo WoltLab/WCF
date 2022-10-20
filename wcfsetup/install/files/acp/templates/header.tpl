@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
+<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getBcp47()}">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,8 +27,10 @@
 		<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
 		<meta name="theme-color" content="#3a6d9c">
 	{/if}
+
+	<meta name="timezone" content="{$__wcf->user->getTimeZone()->getName()}">
 	
-	<script>
+	<script data-eager="true">
 		var WCF_PATH = '{@$__wcf->getPath()}';
 		var WSC_API_URL = '{@$__wcf->getPath()}acp/';
 		{* The SECURITY_TOKEN is defined in wcf.globalHelper.js *}
@@ -49,6 +51,7 @@
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-brand.js"></script>
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-metadata.js"></script>
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/fa-icon.js"></script>
+	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent/woltlab-core-date-time.js"></script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}

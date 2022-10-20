@@ -8,6 +8,8 @@
 {@$__wcf->getStyleHandler()->getStylesheet()}
 {event name='stylesheets'}
 
+<meta name="timezone" content="{$__wcf->user->getTimeZone()->getName()}">
+
 {include file='headIncludeJavaScript'}
 
 <!-- Icons -->

@@ -1022,6 +1022,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[The entered category contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.language.add.package"><![CDATA[Package]]></item>
 		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
+		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
+		<item name="wcf.acp.language.locale.description"><![CDATA[The selected region affects dates and the formatting of numbers.]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>

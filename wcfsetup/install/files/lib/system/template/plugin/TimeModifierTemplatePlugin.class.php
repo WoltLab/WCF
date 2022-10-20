@@ -3,8 +3,8 @@
 namespace wcf\system\template\plugin;
 
 use wcf\system\template\TemplateEngine;
+use wcf\system\WCF;
 use wcf\util\DateUtil;
-use wcf\util\StringUtil;
 
 /**
  * Template modifier plugin which formats a unix timestamp.
@@ -14,8 +14,8 @@ use wcf\util\StringUtil;
  *  {$timestamp|time}
  *  {"132845333"|time}
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @author Alexander Ebert, Marcel Werk
+ * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Template\Plugin
  */
@@ -28,14 +28,19 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
     {
         $timestamp = \intval($tagArgs[0]);
         $dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
-        $date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
-        $time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
         $isFutureDate = ($timestamp > TIME_NOW);
-        $dateTime = DateUtil::getRelativeTime($dateTimeObject, $timestamp, $date, $time, $isFutureDate);
+        $dateAndTime = \IntlDateFormatter::create(
+            WCF::getLanguage()->getLocale(),
+            \IntlDateFormatter::LONG,
+            \IntlDateFormatter::SHORT,
+            WCF::getUser()->getTimeZone()
+        )->format($dateTimeObject);
 
-        return '<time datetime="' . DateUtil::format(
-            $dateTimeObject,
-            'c'
-        ) . '" class="datetime" data-timestamp="' . $timestamp . '" data-date="' . StringUtil::encodeHTML($date) . '" data-time="' . StringUtil::encodeHTML($time) . '" data-offset="' . $dateTimeObject->getOffset() . '"' . ($isFutureDate ? ' data-is-future-date="true"' : '') . '>' . $dateTime . '</time>';
+        return \sprintf(
+            '<woltlab-core-date-time date="%s"%s>%s</woltlab-core-date-time>',
+            DateUtil::format($dateTimeObject, 'c'),
+            $isFutureDate ? ' static' : '',
+            $dateAndTime
+        );
     }
 }

@@ -9,6 +9,8 @@ type IconMetadata = [Codepoint, HasRegularVariant];
 
 declare global {
   interface Window {
+    TIME_NOW: number;
+
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
   }
 }
