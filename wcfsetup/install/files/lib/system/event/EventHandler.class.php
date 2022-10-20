@@ -59,20 +59,8 @@ final class EventHandler extends SingletonFactory
         )) ? 'admin' : 'user');
         $cache = EventListenerCacheBuilder::getInstance()->getData();
 
-        if (isset($cache['actions'][$environment])) {
-            $this->actions = $cache['actions'][$environment];
-        }
-        if (isset($cache['inheritedActions'][$environment])) {
-            $this->inheritedActions = $cache['inheritedActions'][$environment];
-        }
-        unset($cache);
-
-        if (!\is_array($this->actions)) {
-            $this->actions = [];
-        }
-        if (!\is_array($this->inheritedActions)) {
-            $this->inheritedActions = [];
-        }
+        $this->actions = $cache['actions'][$environment];
+        $this->inheritedActions = $cache['inheritedActions'][$environment];
     }
 
     /**
