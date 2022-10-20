@@ -49,6 +49,16 @@ final class EventHandler extends SingletonFactory
     private array $listenerObjects = [];
 
     /**
+     * @var array<class-string, callable>
+     */
+    private array $psr14Listeners = [];
+
+    /**
+     * @var array<class-string, class-string>
+     */
+    private array $psr14ListenerClasses = [];
+
+    /**
      * Loads all registered actions of the active package.
      */
     protected function init(): void
@@ -183,6 +193,12 @@ final class EventHandler extends SingletonFactory
         // generate action name
         $name = self::generateKey($className, $eventName);
 
+        if ($eventObj instanceof IEvent && $eventName === self::DEFAULT_EVENT_NAME) {
+            foreach ($this->getListenersForEvent($eventObj) as $listener) {
+                $listener($eventObj);
+            }
+        }
+
         // execute inherited actions first
         $this->executeInheritedActions($eventObj, $eventName, $className, $name, $parameters);
 
@@ -224,6 +240,66 @@ final class EventHandler extends SingletonFactory
     public function fire(IEvent $event): void
     {
         $this->fireAction($event, self::DEFAULT_EVENT_NAME);
+    }
+
+    /**
+     * This method matches PSR-14's ListenerProviderInterface, except that
+     * it is private. We do not want to provide PSR-14 compatibility as part
+     * of the public API yet.
+     *
+     * @return iterable<callable>
+     */
+    private function getListenersForEvent(object $event) : iterable
+    {
+        $classes = \array_values([
+            $event::class,
+            ...\class_implements($event),
+            ...\class_parents($event),
+        ]);
+
+        foreach ($classes as $class) {
+            yield from $this->getPsr14Listeners($class);
+        }
+    }
+
+    /**
+     * @param class-string $eventClass 
+     * @return iterable<callable>
+     */
+    private function getPsr14Listeners(string $eventClass): iterable
+    {
+        if (isset($this->psr14ListenerClasses[$eventClass])) {
+            $this->psr14Listeners[$eventClass] ??= [];
+
+            foreach ($this->psr14ListenerClasses[$eventClass] as $listenerClass) {
+                $object = $this->getListenerObject($listenerClass);
+
+                $this->psr14Listeners[$eventClass][] = $object;
+            }
+
+            unset($this->psr14ListenerClasses[$eventClass]);
+        }
+
+        return $this->psr14Listeners[$eventClass] ?? [];
+    }
+
+    /**
+     * Returns a new event listener for the given event. The listener
+     * must either be a class name of a class that implements __invoke()
+     * or a callable.
+     *
+     * @param class-string $event 
+     * @param class-string|callable $listener 
+     */
+    public function register(string $event, string|callable $listener): void
+    {
+        if (\is_string($listener)) {
+            $this->psr14ListenerClasses[$event] ??= [];
+            $this->psr14ListenerClasses[$event][] = $listener;
+        } else {
+            $this->psr14Listeners[$event] ??= [];
+            $this->psr14Listeners[$event][] = $listener;
+        }
     }
 
     /**
