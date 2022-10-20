@@ -167,7 +167,6 @@ class WCF
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
-        $this->initCronjobs();
         $this->initCoreObjects();
         $this->initApplications();
 
@@ -1177,19 +1176,6 @@ class WCF
         }
 
         return self::getActiveRequest()->isLandingPage();
-    }
-
-    /**
-     * Initialises the cronjobs.
-     */
-    protected function initCronjobs()
-    {
-        if (PACKAGE_ID) {
-            self::getTPL()->assign(
-                'executeCronjobs',
-                CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE
-            );
-        }
     }
 
     /**
