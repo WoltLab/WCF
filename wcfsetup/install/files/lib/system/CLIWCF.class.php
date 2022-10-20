@@ -9,7 +9,6 @@ use phpline\TerminalFactory;
 use wcf\data\session\SessionEditor;
 use wcf\system\cli\command\CLICommandHandler;
 use wcf\system\cli\command\CLICommandNameCompleter;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -126,8 +125,6 @@ class CLIWCF extends WCF
             ArgvParser::CONFIG_DASHDASH => false,
         ]);
 
-        // parse arguments
-        EventHandler::getInstance()->fireAction($this, 'beforeArgumentParsing');
         try {
             self::getArgvParser()->parse();
         } catch (ArgvException $e) {
@@ -137,7 +134,6 @@ class CLIWCF extends WCF
 
             exit;
         }
-        EventHandler::getInstance()->fireAction($this, 'afterArgumentParsing');
 
         // handle arguments
         if (self::getArgvParser()->help === true) {
