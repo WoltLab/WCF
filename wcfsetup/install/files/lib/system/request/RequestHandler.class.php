@@ -20,6 +20,7 @@ use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\middleware\HandleStartupErrors;
 use wcf\http\middleware\PreventMimeSniffing;
+use wcf\http\middleware\Xsrf;
 use wcf\http\Pipeline;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
@@ -100,6 +101,7 @@ final class RequestHandler extends SingletonFactory
                     new AddAcpSecurityHeaders(),
                     new EnforceCacheControlPrivate(),
                     new EnforceFrameOptions(),
+                    new Xsrf(),
                     new CheckSystemEnvironment(),
                     new CheckUserBan(),
                     new EnforceAcpAuthentication(),
