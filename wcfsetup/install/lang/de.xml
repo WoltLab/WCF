@@ -3399,19 +3399,11 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
 	<category name="wcf.cli">
-		<item name="wcf.cli.help.noLongHelp"><![CDATA[Zu dem Parameter "{$topic}" ist keine ausführliche Erklärung verfügbar.]]></item>
-		<item name="wcf.cli.help.language"><![CDATA[Erzwingt die Sprache mit dem angegebenen Sprachcode.]]></item>
 		<item name="wcf.cli.help.version"><![CDATA[Zeigt die Versionsnummer an und beendet das Script.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Zeigt diese Hilfe an und beendet das Script.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Zeigt weniger Informationen an.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Zeigt mehr Informationen an.]]></item>
-		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Nach dem Anmelden wird nicht nach Updates gesucht.]]></item>
 		<item name="wcf.cli.help.exitOnFail"><![CDATA[Das Script wird beendet, sobald ein Fehler aufgetreten ist.]]></item>
-		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[Wenn dieser Parameter gesetzt ist, dann wird die Ausführung des Scriptes abgebrochen, sobald ein Fehler aufgetreten ist.
-Fehler sind beispielsweise:
-- Nicht gefundene Befehle
-- Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
-- Systemfehler]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Übergibt einen Parameter an den Worker. Bsp.: --setParameter param=wert]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Gewünschte Anzahl von parallelen Prozessen.]]></item>
@@ -3419,7 +3411,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.cli.worker.threadId"><![CDATA[Gibt die Thread-ID während einer parallelen Verarbeitung an. Wird intern genutzt, wenn --threads gesetzt ist.]]></item>
 		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[Die angegebene Thread-ID ist ungültig.]]></item>
 		<item name="wcf.cli.error.help.noArguments"><![CDATA[Der Befehl "{$command}" unterstützt keine Parameter.]]></item>
-		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden. Benutze "commands", um verfügbare Befehle aufzulisten.]]></item>
 	</category>
 	<category name="wcf.clipboard">
@@ -5594,5 +5585,10 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"/>
 	<item name="wcf.acp.article.restore.confirmMessage"/>
 	<item name="wcf.acp.article.trash.confirmMessage"/>
+	<item name="wcf.cli.help.disableUpdateCheck"/>
+	<item name="wcf.cli.help.language"/>
+	<item name="wcf.cli.error.language.notFound"/>
+	<item name="wcf.cli.help.noLongHelp"/>
+	<item name="wcf.cli.help.exitOnFail.description"/>
 </delete>
 </language>
