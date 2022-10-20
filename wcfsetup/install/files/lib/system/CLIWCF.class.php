@@ -13,7 +13,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
@@ -116,7 +115,6 @@ class CLIWCF extends WCF
     {
         // initialise ArgvParser
         self::$argvParser = new ArgvParser([
-            'language=s' => WCF::getLanguage()->get('wcf.cli.help.language'),
             'v' => WCF::getLanguage()->get('wcf.cli.help.v'),
             'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
             'h|help-s' => WCF::getLanguage()->get('wcf.cli.help.help'),
@@ -165,19 +163,6 @@ class CLIWCF extends WCF
             echo WCF_VERSION . \PHP_EOL;
 
             exit;
-        }
-        if (self::getArgvParser()->language) {
-            // set language
-            $language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->language);
-            if ($language === null) {
-                echo WCF::getLanguage()->getDynamicVariable(
-                    'wcf.cli.error.language.notFound',
-                    ['languageCode' => self::getArgvParser()->language]
-                ) . \PHP_EOL;
-
-                exit;
-            }
-            self::setLanguage($language->languageID);
         }
         if (\in_array('moo', self::getArgvParser()->getRemainingArgs())) {
             echo '...."Have you mooed today?"...' . \PHP_EOL;
