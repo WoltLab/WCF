@@ -90,4 +90,6 @@ return [
         ->drop(),
     PartialDatabaseTable::create('wcf1_user_notification_to_user')
         ->drop(),
+    PartialDatabaseTable::create('wcf1_cli_history')
+        ->drop(),
 ];

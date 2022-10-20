@@ -3,12 +3,12 @@
 namespace wcf\system;
 
 use phpline\console\ConsoleReader;
+use phpline\console\history\MemoryHistory;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
 use wcf\data\session\SessionEditor;
 use wcf\system\cli\command\CLICommandHandler;
 use wcf\system\cli\command\CLICommandNameCompleter;
-use wcf\system\cli\DatabaseCLICommandHistory;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -96,17 +96,6 @@ class CLIWCF extends WCF
      */
     public static function destruct()
     {
-        // Giving WCF_SESSION_ID disables saving of the command history.
-        if (empty($_ENV['WCF_SESSION_ID'])) {
-            if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
-                /** @var DatabaseCLICommandHistory $history */
-                $history = self::getReader()->getHistory();
-
-                $history->save();
-                $history->autoSave = false;
-            }
-        }
-
         if (empty($_ENV['WCF_SESSION_ID'])) {
             self::getSession()->delete();
         }
@@ -254,6 +243,7 @@ class CLIWCF extends WCF
      */
     protected function initAuth()
     {
+        self::getReader()->setHistoryEnabled(false);
         if (!empty($_ENV['WCF_SESSION_ID'])) {
             self::getSession()->delete();
             self::getSession()->load(SessionEditor::class, $_ENV['WCF_SESSION_ID']);
@@ -296,11 +286,8 @@ class CLIWCF extends WCF
                 exit(1);
             }
         }
-
-        // initialize history
-        $history = new DatabaseCLICommandHistory();
-        $history->load();
-        self::getReader()->setHistory($history);
+        self::getReader()->setHistoryEnabled(true);
+        self::getReader()->setHistory(new MemoryHistory());
 
         // initialize language
         if (!self::getArgvParser()->language) {
