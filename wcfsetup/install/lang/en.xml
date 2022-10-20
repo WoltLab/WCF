@@ -3333,7 +3333,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.cli.help.help"><![CDATA[Displays this help and exits.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Display less information.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Display more information.]]></item>
-		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Do not search for updates after login.]]></item>
 		<item name="wcf.cli.help.exitOnFail"><![CDATA[Exits the script if an error occurs.]]></item>
 		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[If this parameter is set the script execution will be terminated once an error occurs.
 Errors are:
@@ -5596,5 +5595,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"/>
 	<item name="wcf.acp.article.restore.confirmMessage"/>
 	<item name="wcf.acp.article.trash.confirmMessage"/>
+	<item name="wcf.cli.help.disableUpdateCheck"/>
 </delete>
 </language>

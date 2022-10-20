@@ -14,9 +14,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\user\authentication\UserAuthenticationFactory;
-use wcf\util\CLIUtil;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
@@ -90,7 +88,6 @@ class CLIWCF extends WCF
         $this->initArgv();
         $this->initPHPLine();
         $this->initAuth();
-        $this->checkForUpdates();
         $this->initCommands();
     }
 
@@ -135,7 +132,6 @@ class CLIWCF extends WCF
             'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
             'h|help-s' => WCF::getLanguage()->get('wcf.cli.help.help'),
             'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
-            'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
             'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
         ]);
         self::getArgvParser()->setOptions([
@@ -371,43 +367,6 @@ class CLIWCF extends WCF
                     exit(1);
                 }
                 continue;
-            }
-        }
-    }
-
-    /**
-     * Checks for updates.
-     *
-     * @return  string
-     */
-    public function checkForUpdates()
-    {
-        if (WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage') && VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
-            $updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
-            if (!empty($updates)) {
-                self::getReader()->println(\count($updates) . ' update' . (\count($updates) > 1 ? 's are' : ' is') . ' available');
-
-                if (VERBOSITY >= 1) {
-                    $table = [
-                        [
-                            WCF::getLanguage()->get('wcf.acp.package.name'),
-                            WCF::getLanguage()->get('wcf.acp.package.version'),
-                            WCF::getLanguage()->get('wcf.acp.package.newVersion'),
-                        ],
-                    ];
-
-                    foreach ($updates as $update) {
-                        $row = [
-                            WCF::getLanguage()->get($update['packageName']),
-                            $update['packageVersion'],
-                            $update['version']['packageVersion'],
-                        ];
-
-                        $table[] = $row;
-                    }
-
-                    self::getReader()->println(CLIUtil::generateTable($table));
-                }
             }
         }
     }
