@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\Tree\Message\MessageBuilder;
 use CuyZ\Valinor\Mapper\Tree\Message\MessagesFlattener;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
@@ -39,7 +40,19 @@ final class UserTimezoneSyncAction implements RequestHandlerInterface
 
     public function __construct()
     {
-        $this->mapper = (new MapperBuilder())->mapper();
+        $this->mapper = (new MapperBuilder())
+            ->registerConstructor(
+                static function (string $tz): \DateTimeZone {
+                    try {
+                        return new \DateTimeZone($tz);
+                    } catch (\Exception) {
+                        throw MessageBuilder::newError('The timezone {tz} is not valid.')
+                            ->withParameter('tz', $tz)
+                            ->build();
+                    }
+                }
+            )
+            ->mapper();
     }
 
     /**
