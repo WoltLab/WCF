@@ -94,7 +94,7 @@ final class EventHandler extends SingletonFactory
                         && $eventListener->validatePermissions()
                         && !isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])
                     ) {
-                        $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
+                        $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener->listenerClassName);
                     }
                 }
             }
@@ -112,18 +112,18 @@ final class EventHandler extends SingletonFactory
     /**
      * @since   5.5
      */
-    private function getListenerObject(EventListener $eventListener): object
+    private function getListenerObject(string $className): object
     {
-        if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
-            return $this->listenerObjects[$eventListener->listenerClassName];
+        if (isset($this->listenerObjects[$className])) {
+            return $this->listenerObjects[$className];
         }
 
-        if (!\class_exists($eventListener->listenerClassName)) {
-            throw new \LogicException("Unable to find class '" . $eventListener->listenerClassName . "'.");
+        if (!\class_exists($className)) {
+            throw new \LogicException("Unable to find class '" . $className . "'.");
         }
 
-        $object = new $eventListener->listenerClassName();
-        $this->listenerObjects[$eventListener->listenerClassName] = $object;
+        $object = new $className();
+        $this->listenerObjects[$className] = $object;
 
         return $object;
     }
@@ -203,7 +203,7 @@ final class EventHandler extends SingletonFactory
                     && $eventListener->validatePermissions()
                     && !isset($this->actionsObjects[$name][$eventListener->listenerClassName])
                 ) {
-                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
+                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener->listenerClassName);
                 }
             }
         }
