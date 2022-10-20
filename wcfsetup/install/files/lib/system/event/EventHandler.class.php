@@ -26,27 +26,27 @@ final class EventHandler extends SingletonFactory
     /**
      * @var array<string, class-string>
      */
-    protected array $actions = [];
+    private array $actions = [];
 
     /**
      * @var array<string, class-string>
      */
-    protected array $inheritedActions = [];
+    private array $inheritedActions = [];
 
     /**
      * @var array<string, array<class-string, object>>
      */
-    protected array $actionsObjects = [];
+    private array $actionsObjects = [];
 
     /**
      * @var array<string, array<class-string, object>>
      */
-    protected array $inheritedActionsObjects = [];
+    private array $inheritedActionsObjects = [];
 
     /**
      * @var array<class-string, object>
      */
-    protected array $listenerObjects = [];
+    private array $listenerObjects = [];
 
     /**
      * Loads all registered actions of the active package.
@@ -80,7 +80,7 @@ final class EventHandler extends SingletonFactory
      *
      * @param mixed $eventObj
      */
-    protected function executeInheritedActions($eventObj, string $eventName, string $className, string $name, array &$parameters)
+    private function executeInheritedActions($eventObj, string $eventName, string $className, string $name, array &$parameters)
     {
         // create objects of the actions
         if (!isset($this->inheritedActionsObjects[$name]) || !\is_array($this->inheritedActionsObjects[$name])) {
@@ -124,7 +124,7 @@ final class EventHandler extends SingletonFactory
     /**
      * @since   5.5
      */
-    protected function getListenerObject(EventListener $eventListener): object
+    private function getListenerObject(EventListener $eventListener): object
     {
         if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
             return $this->listenerObjects[$eventListener->listenerClassName];
@@ -144,7 +144,7 @@ final class EventHandler extends SingletonFactory
      * @param   EventListener[]     $eventListeners
      * @since   5.5
      */
-    protected function executeListeners(
+    private function executeListeners(
         array $eventListeners,
         $eventObj,
         string $className,
