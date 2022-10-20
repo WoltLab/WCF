@@ -24,34 +24,29 @@ final class EventHandler extends SingletonFactory
     public const DEFAULT_EVENT_NAME = ':default';
 
     /**
-     * registered actions
-     * @var array
+     * @var array<string, class-string>
      */
-    protected $actions;
+    protected array $actions = [];
 
     /**
-     * registered inherit actions
-     * @var array
+     * @var array<string, class-string>
      */
-    protected $inheritedActions;
+    protected array $inheritedActions = [];
 
     /**
-     * instances of registered actions
-     * @var array
+     * @var array<string, array<class-string, object>>
      */
-    protected $actionsObjects = [];
+    protected array $actionsObjects = [];
 
     /**
-     * instances of registered inherit actions
-     * @var array
+     * @var array<string, array<class-string, object>>
      */
-    protected $inheritedActionsObjects = [];
+    protected array $inheritedActionsObjects = [];
 
     /**
-     * instances of listener objects
-     * @var IEventListener[]
+     * @var array<class-string, object>
      */
-    protected $listenerObjects = [];
+    protected array $listenerObjects = [];
 
     /**
      * Loads all registered actions of the active package.
@@ -84,12 +79,8 @@ final class EventHandler extends SingletonFactory
      * Executes all inherited listeners for the given event.
      *
      * @param mixed $eventObj
-     * @param string $eventName
-     * @param string $className
-     * @param string $name
-     * @param array       &$parameters
      */
-    protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters)
+    protected function executeInheritedActions($eventObj, string $eventName, string $className, string $name, array &$parameters)
     {
         // create objects of the actions
         if (!isset($this->inheritedActionsObjects[$name]) || !\is_array($this->inheritedActionsObjects[$name])) {
@@ -191,10 +182,8 @@ final class EventHandler extends SingletonFactory
      * event listener.
      *
      * @param mixed $eventObj
-     * @param string $eventName
-     * @param array       &$parameters
      */
-    public function fireAction($eventObj, $eventName, array &$parameters = [])
+    public function fireAction($eventObj, string $eventName, array &$parameters = [])
     {
         // get class name
         if (\is_object($eventObj)) {
@@ -253,12 +242,8 @@ final class EventHandler extends SingletonFactory
 
     /**
      * Generates an unique name for an action.
-     *
-     * @param string $className
-     * @param string $eventName
-     * @return  string  unique action name
      */
-    public static function generateKey($className, $eventName)
+    public static function generateKey(string $className, string $eventName): string
     {
         return $eventName . '@' . $className;
     }
