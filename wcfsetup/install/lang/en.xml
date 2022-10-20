@@ -3327,17 +3327,11 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 	</category>
 	<category name="wcf.cli">
-		<item name="wcf.cli.help.noLongHelp"><![CDATA[There is no long help for the parameter "{$topic}".]]></item>
 		<item name="wcf.cli.help.version"><![CDATA[Displays the version number and exits.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Displays this help and exits.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Display less information.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Display more information.]]></item>
 		<item name="wcf.cli.help.exitOnFail"><![CDATA[Exits the script if an error occurs.]]></item>
-		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[If this parameter is set the script execution will be terminated once an error occurs.
-Errors are:
-- Missing commands
-- Failing commands
-- Core errors]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Sets a worker parameter e.g.: --setParameter param=value]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Lists all workers.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Requested number of parallel processes.]]></item>
@@ -5596,5 +5590,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.cli.help.disableUpdateCheck"/>
 	<item name="wcf.cli.help.language"/>
 	<item name="wcf.cli.error.language.notFound"/>
+	<item name="wcf.cli.help.noLongHelp"/>
+	<item name="wcf.cli.help.exitOnFail.description"/>
 </delete>
 </language>
