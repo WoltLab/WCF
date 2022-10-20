@@ -16,7 +16,7 @@ use wcf\system\SingletonFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Event
  */
-class EventHandler extends SingletonFactory
+final class EventHandler extends SingletonFactory
 {
     /**
      * @since 5.5
