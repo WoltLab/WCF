@@ -4,7 +4,6 @@ namespace wcf\system\template\plugin;
 
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
-use wcf\util\DateUtil;
 
 /**
  * Template modifier plugin which formats a unix timestamp.
@@ -27,18 +26,20 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
         $timestamp = \intval($tagArgs[0]);
-        $dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
-        $isFutureDate = ($timestamp > TIME_NOW);
+        $dateTime = new \DateTimeImmutable('@' . $timestamp);
+
+        $isFutureDate = $dateTime->getTimestamp() > TIME_NOW;
+
         $dateAndTime = \IntlDateFormatter::create(
             WCF::getLanguage()->getLocale(),
             \IntlDateFormatter::LONG,
             \IntlDateFormatter::SHORT,
             WCF::getUser()->getTimeZone()
-        )->format($dateTimeObject);
+        )->format($dateTime);
 
         return \sprintf(
             '<woltlab-core-date-time date="%s"%s>%s</woltlab-core-date-time>',
-            DateUtil::format($dateTimeObject, 'c'),
+            $dateTime->format('c'),
             $isFutureDate ? ' static' : '',
             $dateAndTime
         );
