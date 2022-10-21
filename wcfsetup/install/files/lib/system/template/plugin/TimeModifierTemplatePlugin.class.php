@@ -6,12 +6,12 @@ use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 
 /**
- * Template modifier plugin which formats a unix timestamp.
- * Default date format contains year, month, day, hour and minute.
+ * Template modifier plugin which renders a \DateTimeInterface or
+ * a unix timestamp as `<woltlab-core-date-time>`.
  *
  * Usage:
- *  {$timestamp|time}
- *  {"132845333"|time}
+ *  {$foo->getDateTime()|time}
+ *  {$bar->time|time}
  *
  * @author Alexander Ebert, Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
@@ -25,8 +25,12 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        $timestamp = \intval($tagArgs[0]);
-        $dateTime = new \DateTimeImmutable('@' . $timestamp);
+        if ($tagArgs[0] instanceof \DateTimeInterface) {
+            $dateTime = $tagArgs[0];
+        } else {
+            $timestamp = \intval($tagArgs[0]);
+            $dateTime = new \DateTimeImmutable('@' . $timestamp);
+        }
 
         $isFutureDate = $dateTime->getTimestamp() > TIME_NOW;
 
