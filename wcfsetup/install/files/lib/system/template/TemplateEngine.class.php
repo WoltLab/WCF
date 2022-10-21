@@ -167,15 +167,7 @@ class TemplateEngine extends SingletonFactory
     {
         $this->v['tpl'] = [];
 
-        // assign super globals
-        $this->v['tpl']['get'] = &$_GET;
-        $this->v['tpl']['post'] = &$_POST;
-        $this->v['tpl']['cookie'] = &$_COOKIE;
-        $this->v['tpl']['server'] = &$_SERVER;
-        $this->v['tpl']['env'] = &$_ENV;
-
         // system info
-        $this->v['tpl']['now'] = TIME_NOW;
         $this->v['tpl']['template'] = '';
         $this->v['tpl']['includedTemplates'] = [];
 
