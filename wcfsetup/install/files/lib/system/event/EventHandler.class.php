@@ -16,7 +16,7 @@ use wcf\system\SingletonFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Event
  */
-class EventHandler extends SingletonFactory
+final class EventHandler extends SingletonFactory
 {
     /**
      * @since 5.5
@@ -24,39 +24,44 @@ class EventHandler extends SingletonFactory
     public const DEFAULT_EVENT_NAME = ':default';
 
     /**
-     * registered actions
-     * @var array
+     * @var array<string, class-string>
      */
-    protected $actions;
+    private array $actions = [];
 
     /**
-     * registered inherit actions
-     * @var array
+     * @var array<string, class-string>
      */
-    protected $inheritedActions;
+    private array $inheritedActions = [];
 
     /**
-     * instances of registered actions
-     * @var array
+     * @var array<string, array<class-string, object>>
      */
-    protected $actionsObjects = [];
+    private array $actionsObjects = [];
 
     /**
-     * instances of registered inherit actions
-     * @var array
+     * @var array<string, array<class-string, object>>
      */
-    protected $inheritedActionsObjects = [];
+    private array $inheritedActionsObjects = [];
 
     /**
-     * instances of listener objects
-     * @var IEventListener[]
+     * @var array<class-string, object>
      */
-    protected $listenerObjects = [];
+    private array $listenerObjects = [];
+
+    /**
+     * @var array<class-string, callable>
+     */
+    private array $psr14Listeners = [];
+
+    /**
+     * @var array<class-string, class-string>
+     */
+    private array $psr14ListenerClasses = [];
 
     /**
      * Loads all registered actions of the active package.
      */
-    protected function loadActions()
+    protected function init(): void
     {
         $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists(
             'wcf\system\CLIWCF',
@@ -64,35 +69,19 @@ class EventHandler extends SingletonFactory
         )) ? 'admin' : 'user');
         $cache = EventListenerCacheBuilder::getInstance()->getData();
 
-        if (isset($cache['actions'][$environment])) {
-            $this->actions = $cache['actions'][$environment];
-        }
-        if (isset($cache['inheritedActions'][$environment])) {
-            $this->inheritedActions = $cache['inheritedActions'][$environment];
-        }
-        unset($cache);
-
-        if (!\is_array($this->actions)) {
-            $this->actions = [];
-        }
-        if (!\is_array($this->inheritedActions)) {
-            $this->inheritedActions = [];
-        }
+        $this->actions = $cache['actions'][$environment];
+        $this->inheritedActions = $cache['inheritedActions'][$environment];
     }
 
     /**
      * Executes all inherited listeners for the given event.
      *
      * @param mixed $eventObj
-     * @param string $eventName
-     * @param string $className
-     * @param string $name
-     * @param array       &$parameters
      */
-    protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters)
+    private function executeInheritedActions($eventObj, string $eventName, string $className, string $name, array &$parameters)
     {
         // create objects of the actions
-        if (!isset($this->inheritedActionsObjects[$name]) || !\is_array($this->inheritedActionsObjects[$name])) {
+        if (!isset($this->inheritedActionsObjects[$name])) {
             $this->inheritedActionsObjects[$name] = [];
 
             // get parent classes
@@ -104,7 +93,7 @@ class EventHandler extends SingletonFactory
             }
 
             foreach ($familyTree as $member) {
-                if (empty($this->inheritedActions[$member][$eventName])) {
+                if (!isset($this->inheritedActions[$member][$eventName])) {
                     continue;
                 }
 
@@ -115,7 +104,7 @@ class EventHandler extends SingletonFactory
                         && $eventListener->validatePermissions()
                         && !isset($this->inheritedActionsObjects[$name][$eventListener->listenerClassName])
                     ) {
-                        $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
+                        $this->inheritedActionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener->listenerClassName);
                     }
                 }
             }
@@ -133,18 +122,18 @@ class EventHandler extends SingletonFactory
     /**
      * @since   5.5
      */
-    protected function getListenerObject(EventListener $eventListener): object
+    private function getListenerObject(string $className): object
     {
-        if (isset($this->listenerObjects[$eventListener->listenerClassName])) {
-            return $this->listenerObjects[$eventListener->listenerClassName];
+        if (isset($this->listenerObjects[$className])) {
+            return $this->listenerObjects[$className];
         }
 
-        if (!\class_exists($eventListener->listenerClassName)) {
-            throw new \LogicException("Unable to find class '" . $eventListener->listenerClassName . "'.");
+        if (!\class_exists($className)) {
+            throw new \LogicException("Unable to find class '" . $className . "'.");
         }
 
-        $object = new $eventListener->listenerClassName();
-        $this->listenerObjects[$eventListener->listenerClassName] = $object;
+        $object = new $className();
+        $this->listenerObjects[$className] = $object;
 
         return $object;
     }
@@ -153,7 +142,7 @@ class EventHandler extends SingletonFactory
      * @param   EventListener[]     $eventListeners
      * @since   5.5
      */
-    protected function executeListeners(
+    private function executeListeners(
         array $eventListeners,
         $eventObj,
         string $className,
@@ -191,10 +180,8 @@ class EventHandler extends SingletonFactory
      * event listener.
      *
      * @param mixed $eventObj
-     * @param string $eventName
-     * @param array       &$parameters
      */
-    public function fireAction($eventObj, $eventName, array &$parameters = [])
+    public function fireAction($eventObj, string $eventName, array &$parameters = [])
     {
         // get class name
         if (\is_object($eventObj)) {
@@ -203,22 +190,21 @@ class EventHandler extends SingletonFactory
             $className = $eventObj;
         }
 
-        // load actions from cache if necessary
-        if ($this->actions === null && $this->inheritedActions === null) {
-            $this->loadActions();
-        }
-
         // generate action name
         $name = self::generateKey($className, $eventName);
 
-        // execute inherited actions first
-        if (!empty($this->inheritedActions)) {
-            $this->executeInheritedActions($eventObj, $eventName, $className, $name, $parameters);
+        if ($eventObj instanceof IEvent && $eventName === self::DEFAULT_EVENT_NAME) {
+            foreach ($this->getListenersForEvent($eventObj) as $listener) {
+                $listener($eventObj);
+            }
         }
 
+        // execute inherited actions first
+        $this->executeInheritedActions($eventObj, $eventName, $className, $name, $parameters);
+
         // create objects of the actions
-        if (!isset($this->actionsObjects[$name]) || !\is_array($this->actionsObjects[$name])) {
-            if (!isset($this->actions[$name]) || !\is_array($this->actions[$name])) {
+        if (!isset($this->actionsObjects[$name])) {
+            if (!isset($this->actions[$name])) {
                 // no action registered
                 return;
             }
@@ -231,7 +217,7 @@ class EventHandler extends SingletonFactory
                     && $eventListener->validatePermissions()
                     && !isset($this->actionsObjects[$name][$eventListener->listenerClassName])
                 ) {
-                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener);
+                    $this->actionsObjects[$name][$eventListener->listenerClassName] = $this->getListenerObject($eventListener->listenerClassName);
                 }
             }
         }
@@ -257,13 +243,69 @@ class EventHandler extends SingletonFactory
     }
 
     /**
-     * Generates an unique name for an action.
+     * This method matches PSR-14's ListenerProviderInterface, except that
+     * it is private. We do not want to provide PSR-14 compatibility as part
+     * of the public API yet.
      *
-     * @param string $className
-     * @param string $eventName
-     * @return  string  unique action name
+     * @return iterable<callable>
      */
-    public static function generateKey($className, $eventName)
+    private function getListenersForEvent(object $event) : iterable
+    {
+        $classes = \array_values([
+            $event::class,
+            ...\class_implements($event),
+            ...\class_parents($event),
+        ]);
+
+        foreach ($classes as $class) {
+            yield from $this->getPsr14Listeners($class);
+        }
+    }
+
+    /**
+     * @param class-string $eventClass 
+     * @return iterable<callable>
+     */
+    private function getPsr14Listeners(string $eventClass): iterable
+    {
+        if (isset($this->psr14ListenerClasses[$eventClass])) {
+            $this->psr14Listeners[$eventClass] ??= [];
+
+            foreach ($this->psr14ListenerClasses[$eventClass] as $listenerClass) {
+                $object = $this->getListenerObject($listenerClass);
+
+                $this->psr14Listeners[$eventClass][] = $object;
+            }
+
+            unset($this->psr14ListenerClasses[$eventClass]);
+        }
+
+        return $this->psr14Listeners[$eventClass] ?? [];
+    }
+
+    /**
+     * Returns a new event listener for the given event. The listener
+     * must either be a class name of a class that implements __invoke()
+     * or a callable.
+     *
+     * @param class-string $event 
+     * @param class-string|callable $listener 
+     */
+    public function register(string $event, string|callable $listener): void
+    {
+        if (\is_string($listener)) {
+            $this->psr14ListenerClasses[$event] ??= [];
+            $this->psr14ListenerClasses[$event][] = $listener;
+        } else {
+            $this->psr14Listeners[$event] ??= [];
+            $this->psr14Listeners[$event][] = $listener;
+        }
+    }
+
+    /**
+     * Generates an unique name for an action.
+     */
+    public static function generateKey(string $className, string $eventName): string
     {
         return $eventName . '@' . $className;
     }
