@@ -6,8 +6,8 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\DateUtil;
 
 /**
- * Template modifier plugin which formats a unix timestamp.
- * The default date format contains year, month and day.
+ * Template modifier plugin which renders a \DateTimeInterface or
+ * a unix timestamp into a date-only format.
  *
  * Usage:
  *  {$timestamp|date}
@@ -25,8 +25,15 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
+        if ($tagArgs[0] instanceof \DateTimeInterface) {
+            $dateTime = $tagArgs[0];
+        } else {
+            $timestamp = \intval($tagArgs[0]);
+            $dateTime = new \DateTimeImmutable('@' . $timestamp);
+        }
+
         return DateUtil::format(
-            DateUtil::getDateTimeByTimestamp($tagArgs[0]),
+            $dateTime,
             (!empty($tagArgs[1]) ? $tagArgs[1] : DateUtil::DATE_FORMAT)
         );
     }
