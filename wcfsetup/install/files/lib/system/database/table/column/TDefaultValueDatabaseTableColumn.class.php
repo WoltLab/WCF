@@ -25,7 +25,7 @@ trait TDefaultValueDatabaseTableColumn
      * @param mixed $defaultValue validated default value
      * @throws  \InvalidArgumentException   if given default value is invalid
      */
-    protected function validateDefaultValue($defaultValue)
+    protected function validateDefaultValue(mixed $defaultValue)
     {
         // does nothing
     }
@@ -33,10 +33,9 @@ trait TDefaultValueDatabaseTableColumn
     /**
      * Sets the default value of the column and returns the column.
      *
-     * @param mixed $defaultValue
      * @return  $this
      */
-    public function defaultValue($defaultValue)
+    public function defaultValue(mixed $defaultValue)
     {
         $this->validateDefaultValue($defaultValue);
 
@@ -47,10 +46,8 @@ trait TDefaultValueDatabaseTableColumn
 
     /**
      * Returns the default value of the column.
-     *
-     * @return  mixed
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): mixed
     {
         return $this->defaultValue;
     }
