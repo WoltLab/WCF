@@ -100,7 +100,7 @@ class DatabaseTable
                 );
             }
 
-            if (empty($foreignKey->getColumns())) {
+            if ($foreignKey->getColumns() === []) {
                 throw new \InvalidArgumentException("Missing columns for foreign key.");
             }
 

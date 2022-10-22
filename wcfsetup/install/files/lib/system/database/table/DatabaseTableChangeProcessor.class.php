@@ -372,7 +372,7 @@ final class DatabaseTableChangeProcessor
             ];
         }
 
-        if (!empty($columnData)) {
+        if ($columnData !== []) {
             foreach ($dropForeignKeys as $foreignKey) {
                 $this->dropForeignKey($tableName, $foreignKey);
                 $this->deleteForeignKeyLog($tableName, $foreignKey);
@@ -458,7 +458,7 @@ final class DatabaseTableChangeProcessor
 
                 // all column-related changes are executed in one query thus break
                 // here and not within the previous loop
-                if (!empty($this->columnsToAdd) || !empty($this->columnsToAlter) || !empty($this->columnsToDrop)) {
+                if ($this->columnsToAdd !== [] || $this->columnsToAlter !== [] || $this->columnsToDrop !== []) {
                     $this->splitNodeMessage .= "Altered columns of table '{$tableName}'.";
                     break;
                 }
@@ -467,7 +467,7 @@ final class DatabaseTableChangeProcessor
                 foreach ($table->getForeignKeys() as $foreignKey) {
                     $matchingExistingForeignKey = null;
                     foreach ($existingForeignKeys as $existingForeignKey) {
-                        if (empty(\array_diff_assoc($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
+                        if (\array_diff_assoc($foreignKey->getDiffData(), $existingForeignKey->getDiffData()) === []) {
                             $matchingExistingForeignKey = $existingForeignKey;
                             break;
                         }
@@ -505,7 +505,7 @@ final class DatabaseTableChangeProcessor
                             $foreignKey->getColumns()
                         ) . "'.";
                         break 2;
-                    } elseif (!empty(\array_diff_assoc($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
+                    } elseif (\array_diff_assoc($foreignKey->getData(), $matchingExistingForeignKey->getData()) !== []) {
                         if (!isset($this->foreignKeysToDrop[$tableName])) {
                             $this->foreignKeysToDrop[$tableName] = [];
                         }
@@ -555,7 +555,7 @@ final class DatabaseTableChangeProcessor
                         // names are not deterministic)
                         if (
                             !$index->hasGeneratedName()
-                            && !empty(\array_diff_assoc($matchingExistingIndex->getData(), $index->getData()))
+                            && \array_diff_assoc($matchingExistingIndex->getData(), $index->getData()) !== []
                         ) {
                             if (!isset($this->indicesToDrop[$tableName])) {
                                 $this->indicesToDrop[$tableName] = [];
@@ -780,7 +780,7 @@ final class DatabaseTableChangeProcessor
     protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn): bool
     {
         $diff = \array_diff_assoc($oldColumn->getData(), $newColumn->getData());
-        if (!empty($diff)) {
+        if ($diff !== []) {
             // see https://github.com/WoltLab/WCF/pull/3167
             if (\array_key_exists('length', $diff)) {
                 if (
@@ -797,7 +797,7 @@ final class DatabaseTableChangeProcessor
                 }
             }
 
-            if (!empty($diff)) {
+            if ($diff !== []) {
                 return true;
             }
         }
@@ -837,7 +837,7 @@ final class DatabaseTableChangeProcessor
     protected function diffIndices(DatabaseTableIndex $oldIndex, DatabaseTableIndex $newIndex): bool
     {
         if ($newIndex->hasGeneratedName()) {
-            return !empty(\array_diff_assoc($oldIndex->getData(), $newIndex->getData()));
+            return \array_diff_assoc($oldIndex->getData(), $newIndex->getData()) !== [];
         }
 
         return $oldIndex->getName() !== $newIndex->getName();
@@ -1082,7 +1082,7 @@ final class DatabaseTableChangeProcessor
         $this->checkPendingLogEntries();
 
         $errors = $this->validate();
-        if (!empty($errors)) {
+        if ($errors !== []) {
             throw new \RuntimeException(WCF::getLanguage()->getDynamicVariable(
                 'wcf.acp.package.error.databaseChange',
                 [
@@ -1182,7 +1182,7 @@ final class DatabaseTableChangeProcessor
 
                         foreach ($table->getIndices() as $index) {
                             foreach ($existingIndices as $existingIndex) {
-                                if (empty(\array_diff_assoc($index->getData(), $existingIndex->getData()))) {
+                                if (\array_diff_assoc($index->getData(), $existingIndex->getData()) === []) {
                                     if ($index->willBeDropped()) {
                                         if ($this->getIndexPackageID($table, $index) !== $this->package->packageID) {
                                             $errors[] = [
@@ -1200,7 +1200,7 @@ final class DatabaseTableChangeProcessor
 
                         foreach ($table->getForeignKeys() as $foreignKey) {
                             foreach ($existingForeignKeys as $existingForeignKey) {
-                                if (empty(\array_diff_assoc($foreignKey->getData(), $existingForeignKey->getData()))) {
+                                if (\array_diff_assoc($foreignKey->getData(), $existingForeignKey->getData()) === []) {
                                     if ($foreignKey->willBeDropped()) {
                                         if (
                                             $this->getForeignKeyPackageID(
