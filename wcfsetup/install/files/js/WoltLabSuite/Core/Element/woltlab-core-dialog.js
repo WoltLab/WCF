@@ -12,7 +12,7 @@
 define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Language"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = exports.WoltlabCoreDialogElement = void 0;
+    exports.WoltlabCoreDialogElement = void 0;
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     const dialogContainer = document.createElement("div");
@@ -199,12 +199,6 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         }
     }
     exports.WoltlabCoreDialogElement = WoltlabCoreDialogElement;
+    window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);
     exports.default = WoltlabCoreDialogElement;
-    function setup() {
-        const name = "woltlab-core-dialog";
-        if (window.customElements.get(name) === undefined) {
-            window.customElements.define(name, WoltlabCoreDialogElement);
-        }
-    }
-    exports.setup = setup;
 });

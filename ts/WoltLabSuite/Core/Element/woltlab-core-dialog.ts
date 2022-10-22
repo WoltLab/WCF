@@ -267,11 +267,6 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   }
 }
 
-export default WoltlabCoreDialogElement;
+window.customElements.define("woltlab-core-dialog", WoltlabCoreDialogElement);
 
-export function setup(): void {
-  const name = "woltlab-core-dialog";
-  if (window.customElements.get(name) === undefined) {
-    window.customElements.define(name, WoltlabCoreDialogElement);
-  }
-}
+export default WoltlabCoreDialogElement;
