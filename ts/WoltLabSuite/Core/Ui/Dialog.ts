@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Ui/Dialog (alias)
  * @module  WoltLabSuite/Core/Ui/Dialog
+ * @deprecated 6.0 Use `dialogFactory()` instead.
  */
 
 import * as Core from "../Core";
@@ -41,6 +42,7 @@ const _validInputTypes = ["number", "password", "search", "tel", "text", "url"];
 
 /**
  * @exports  WoltLabSuite/Core/Ui/Dialog
+ * @deprecated 6.0 Use `dialogFactory()` instead.
  */
 const UiDialog = {
   /**
