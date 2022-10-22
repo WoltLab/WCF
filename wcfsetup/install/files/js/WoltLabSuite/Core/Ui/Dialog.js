@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Ui/Dialog (alias)
  * @module  WoltLabSuite/Core/Ui/Dialog
+ * @deprecated 6.0 Use `dialogFactory()` instead.
  */
 define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./CloseOverlay", "focus-trap"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, CloseOverlay_1, focus_trap_1) {
     "use strict";
@@ -29,6 +30,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
     const _validInputTypes = ["number", "password", "search", "tel", "text", "url"];
     /**
      * @exports  WoltLabSuite/Core/Ui/Dialog
+     * @deprecated 6.0 Use `dialogFactory()` instead.
      */
     const UiDialog = {
         /**
