@@ -11,7 +11,7 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn
+final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn
 {
     /**
      * @inheritDoc

@@ -11,7 +11,7 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-class TinyintDatabaseTableColumn extends AbstractIntDatabaseTableColumn
+final class TinyintDatabaseTableColumn extends AbstractIntDatabaseTableColumn
 {
     /**
      * @inheritDoc
