@@ -31,120 +31,117 @@ final class DatabaseTableChangeProcessor
      * maps the registered database table column names to the ids of the packages they belong to
      * @var int[][]
      */
-    protected $columnPackageIDs = [];
+    protected array $columnPackageIDs = [];
 
     /**
      * database table columns that will be added grouped by the name of the table to which they
      * will be added
      * @var IDatabaseTableColumn[][]
      */
-    protected $columnsToAdd = [];
+    protected array $columnsToAdd = [];
 
     /**
      * database table columns that will be altered grouped by the name of the table to which
      * they belong
      * @var IDatabaseTableColumn[][]
      */
-    protected $columnsToAlter = [];
+    protected array $columnsToAlter = [];
 
     /**
      * database table columns that will be dropped grouped by the name of the table from which
      * they will be dropped
      * @var IDatabaseTableColumn[][]
      */
-    protected $columnsToDrop = [];
+    protected array $columnsToDrop = [];
 
     /**
      * database editor to apply the relevant changes to the table layouts
-     * @var DatabaseEditor
      */
-    protected $dbEditor;
+    protected DatabaseEditor $dbEditor;
 
     /**
      * list of all existing tables in the used database
      * @var string[]
      */
-    protected $existingTableNames = [];
+    protected array $existingTableNames = [];
 
     /**
      * existing database tables
      * @var DatabaseTable[]
      */
-    protected $existingTables = [];
+    protected array $existingTables = [];
 
     /**
      * maps the registered database table index names to the ids of the packages they belong to
      * @var int[][]
      */
-    protected $indexPackageIDs = [];
+    protected array $indexPackageIDs = [];
 
     /**
      * indices that will be added grouped by the name of the table to which they will be added
      * @var DatabaseTableIndex[][]
      */
-    protected $indicesToAdd = [];
+    protected array $indicesToAdd = [];
 
     /**
      * indices that will be dropped grouped by the name of the table from which they will be dropped
      * @var DatabaseTableIndex[][]
      */
-    protected $indicesToDrop = [];
+    protected array $indicesToDrop = [];
 
     /**
      * maps the registered database table foreign key names to the ids of the packages they belong to
      * @var int[][]
      */
-    protected $foreignKeyPackageIDs = [];
+    protected array $foreignKeyPackageIDs = [];
 
     /**
      * foreign keys that will be added grouped by the name of the table to which they will be
      * added
      * @var DatabaseTableForeignKey[][]
      */
-    protected $foreignKeysToAdd = [];
+    protected array $foreignKeysToAdd = [];
 
     /**
      * foreign keys that will be dropped grouped by the name of the table from which they will
      * be dropped
      * @var DatabaseTableForeignKey[][]
      */
-    protected $foreignKeysToDrop = [];
+    protected array $foreignKeysToDrop = [];
 
     /**
      * package that wants to apply the changes
-     * @var Package
      */
-    protected $package;
+    protected Package $package;
 
     /**
      * message for the split node exception thrown after the changes have been applied
-     * @var string
      */
-    protected $splitNodeMessage = '';
+    protected string $splitNodeMessage = '';
 
     /**
      * layouts/layout changes of the relevant database table
      * @var DatabaseTable[]
      */
-    protected $tables;
+    protected array $tables;
 
     /**
      * maps the registered database table names to the ids of the packages they belong to
      * @var int[]
      */
-    protected $tablePackageIDs = [];
+    protected array $tablePackageIDs = [];
 
     /**
      * database table that will be created
      * @var DatabaseTable[]
      */
-    protected $tablesToCreate = [];
+    protected array $tablesToCreate = [];
 
     /**
      * database tables that will be dropped
      * @var DatabaseTable[]
      */
-    protected $tablesToDrop = [];
+    protected array $tablesToDrop = [];
 
     /**
      * database tables, that are unknown (but belongs theoretically to the WoltLab Suite)
@@ -152,7 +149,7 @@ final class DatabaseTableChangeProcessor
      * @var DatabaseTable[]
      * @since 5.5
      */
-    protected $tablesToCleanup = [];
+    protected array $tablesToCleanup = [];
 
     /**
      * Creates a new instance of `DatabaseTableChangeProcessor`.
@@ -1102,8 +1099,6 @@ final class DatabaseTableChangeProcessor
     /**
      * Checks if the relevant table layout changes can be executed and returns an array with information
      * on all validation errors.
-     *
-     * @return  array
      */
     public function validate(): array
     {
