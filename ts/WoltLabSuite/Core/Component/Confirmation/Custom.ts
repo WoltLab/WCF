@@ -1,3 +1,14 @@
+/**
+ * Helper module to expose a fluent API for custom
+ * prompts created through `notificationFactory()`.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Confirmation/Custom
+ * @since 6.0
+ */
+
 import { dialogFactory } from "../Dialog";
 import * as Language from "../../Language";
 import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";

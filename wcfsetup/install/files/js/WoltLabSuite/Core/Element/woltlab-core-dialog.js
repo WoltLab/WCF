@@ -1,3 +1,14 @@
+/**
+ * The web component `<woltlab-core-dialog>` represents a
+ * modal dialog with a unified event access for consistent
+ * interactions. This is the low-level API of dialogs, you
+ * should use the `dialogFactory()` to create them.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Language"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

@@ -1,3 +1,16 @@
+/**
+ * The web component `<woltlab-core-dialog-control>` adds
+ * buttons to a dialog to allow for a consistent interaction
+ * with dialogs in generals and dialogs containing forms in
+ * particular. This is the low-level API, the controls are
+ * automatically added through the `dialogFactory()`.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import * as Language from "../Language";
 
 interface WoltlabCoreDialogControlEventMap {

@@ -1,3 +1,27 @@
+/**
+ * The `confirmationFactory()` offers a consistent way to
+ * prompt the user to confirm an action.
+ *
+ * The actions at minimum require you to provide the question
+ * of the dialog. The question is used as the title of dialog
+ * and must always be a full sentence that makes a reference
+ * to the elements being affectedby the action.
+ *
+ * Confirmation dialogs should only be presented for actions
+ * that are either destructive or that might have a severe
+ * impact when executed unintentionally. You should not prompt
+ * the user for actions that have no harmful impact in order
+ * to prevent confirmation fatigue.
+ *
+ * Please see the documentation for the guidelines on
+ * confirmation dialogs and the phrasing of the question.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Confirmation
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util", "./Confirmation/Custom"], function (require, exports, tslib_1, Dialog_1, Language, DomUtil, Custom_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

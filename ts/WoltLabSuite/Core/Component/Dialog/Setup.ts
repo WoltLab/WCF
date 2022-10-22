@@ -1,3 +1,14 @@
+/**
+ * Helper module to expose a fluent API to create
+ * dialogs through `dialogFactory()`.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Dialog/Setup
+ * @since 6.0
+ */
+
 import DialogControls from "./Controls";
 
 export class DialogSetup {

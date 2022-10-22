@@ -1,3 +1,15 @@
+/**
+ * The web component `<woltlab-core-dialog>` represents a
+ * modal dialog with a unified event access for consistent
+ * interactions. This is the low-level API of dialogs, you
+ * should use the `dialogFactory()` to create them.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import DomUtil from "../Dom/Util";
 import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
 import * as Language from "../Language";

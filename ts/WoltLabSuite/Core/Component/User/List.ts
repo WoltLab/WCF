@@ -1,10 +1,11 @@
 /**
  * Object-based user list.
  *
- * @author  Marcel Werk
- * @copyright  2001-2022 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Component/User/List
+ * @author Marcel Werk
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/User/List
+ * @since 6.0
  */
 
 import { dboAction } from "../../Ajax";
