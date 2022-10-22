@@ -15,9 +15,8 @@ trait TDroppableDatabaseComponent
 {
     /**
      * is `true` if the component will be dropped
-     * @var bool
      */
-    protected $drop = false;
+    protected bool $drop = false;
 
     /**
      * Marks the component to be dropped.
@@ -33,10 +32,8 @@ trait TDroppableDatabaseComponent
 
     /**
      * Returns `true` if the component will be dropped.
-     *
-     * @return  bool
      */
-    public function willBeDropped()
+    public function willBeDropped(): bool
     {
         return $this->drop;
     }
