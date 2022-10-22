@@ -21,12 +21,12 @@ final class CharDatabaseTableColumn extends AbstractDatabaseTableColumn implemen
     /**
      * @inheritDoc
      */
-    protected $type = 'char';
+    protected string $type = 'char';
 
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 255;
     }
@@ -34,7 +34,7 @@ final class CharDatabaseTableColumn extends AbstractDatabaseTableColumn implemen
     /**
      * @inheritDoc
      */
-    public function getMinimumLength()
+    public function getMinimumLength(): int
     {
         return 1;
     }

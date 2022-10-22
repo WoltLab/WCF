@@ -14,7 +14,7 @@ namespace wcf\system\database\table\column;
  */
 final class DefaultFalseBooleanDatabaseTableColumn
 {
-    public static function create($name): IDatabaseTableColumn
+    public static function create(string $name): IDatabaseTableColumn
     {
         return TinyintDatabaseTableColumn::create($name)
             ->length(1)

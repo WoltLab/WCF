@@ -16,10 +16,8 @@ interface ILengthDatabaseTableColumn extends IDatabaseTableColumn
 {
     /**
      * Returns the (maximum) length of the column's values or `null` if no length has been set.
-     *
-     * @return  null|int
      */
-    public function getLength();
+    public function getLength(): ?int;
 
     /**
      * Sets the (maximum) length of the column's values.
@@ -28,5 +26,5 @@ interface ILengthDatabaseTableColumn extends IDatabaseTableColumn
      * @return  $this               this column
      * @throws  \InvalidArgumentException   if given length is invalid
      */
-    public function length($length);
+    public function length(?int $length);
 }

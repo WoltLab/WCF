@@ -16,5 +16,5 @@ final class LongblobDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'longblob';
+    protected string $type = 'longblob';
 }

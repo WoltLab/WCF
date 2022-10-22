@@ -16,12 +16,12 @@ final class IntDatabaseTableColumn extends AbstractIntDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'int';
+    protected string $type = 'int';
 
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 11;
     }

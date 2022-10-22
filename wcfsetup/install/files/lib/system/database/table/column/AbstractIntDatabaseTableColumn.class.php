@@ -23,7 +23,7 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
     /**
      * @inheritDoc
      */
-    public function getMinimumLength()
+    public function getMinimumLength(): int
     {
         return 1;
     }
@@ -31,7 +31,7 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
     /**
      * @inheritDoc
      */
-    public static function createFromData($name, array $data)
+    public static function createFromData(string $name, array $data)
     {
         $length = $data['length'] ?? null;
 

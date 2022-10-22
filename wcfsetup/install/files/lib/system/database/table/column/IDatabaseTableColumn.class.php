@@ -22,17 +22,13 @@ interface IDatabaseTableColumn
 
     /**
      * Returns the data used by `DatabaseEditor` to add the column to a table.
-     *
-     * @return  array
      */
-    public function getData();
+    public function getData(): array;
 
     /**
      * Returns the name of the column.
-     *
-     * @return  string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the new name of the column or `null` if the column's name is unchanged.
@@ -43,33 +39,27 @@ interface IDatabaseTableColumn
 
     /**
      * Returns the type of the column.
-     *
-     * @return  string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * Returns `true` if the values of the column cannot be `null`.
-     *
-     * @return  bool
      */
-    public function isNotNull();
+    public function isNotNull(): bool;
 
     /**
      * Sets the name of the column and returns the column.
      *
-     * @param string $name
      * @return  $this
      */
-    public function name($name);
+    public function name(string $name);
 
     /**
      * Sets if the values of the column cannot be `null`.
      *
-     * @param bool $notNull
      * @return  $this
      */
-    public function notNull($notNull = true);
+    public function notNull(bool $notNull = true);
 
     /**
      * Sets the new name of the column and returns the column.
@@ -81,25 +71,21 @@ interface IDatabaseTableColumn
 
     /**
      * Returns `true` if the column will be dropped.
-     *
-     * @return  bool
      */
-    public function willBeDropped();
+    public function willBeDropped(): bool;
 
     /**
      * Returns a `DatabaseTableColumn` object with the given name.
      *
-     * @param string $name
      * @return  $this
      */
-    public static function create($name);
+    public static function create(string $name);
 
     /**
      * Returns a `DatabaseTableColumn` object with the given name and data.
      *
-     * @param string $name
      * @param array $data data returned by `DatabaseEditor::getColumns()`
      * @return  $this
      */
-    public static function createFromData($name, array $data);
+    public static function createFromData(string $name, array $data);
 }

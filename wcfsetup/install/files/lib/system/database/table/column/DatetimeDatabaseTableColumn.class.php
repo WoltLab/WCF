@@ -18,5 +18,5 @@ final class DatetimeDatabaseTableColumn extends AbstractDatabaseTableColumn impl
     /**
      * @inheritDoc
      */
-    protected $type = 'datetime';
+    protected string $type = 'datetime';
 }

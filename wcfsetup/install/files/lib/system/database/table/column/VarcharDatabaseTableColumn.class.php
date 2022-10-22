@@ -23,12 +23,12 @@ final class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn imple
     /**
      * @inheritDoc
      */
-    protected $type = 'varchar';
+    protected string $type = 'varchar';
 
     /**
      * @inheritDoc
      */
-    public function getLength()
+    public function getLength(): int
     {
         if ($this->length === null) {
             throw new \LogicException('The length of varchar fields must be explicitly set.');
@@ -40,7 +40,7 @@ final class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn imple
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 65535;
     }
@@ -48,7 +48,7 @@ final class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn imple
     /**
      * @inheritDoc
      */
-    public function getMinimumLength()
+    public function getMinimumLength(): int
     {
         return 1;
     }

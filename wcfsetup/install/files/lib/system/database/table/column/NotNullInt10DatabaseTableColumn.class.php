@@ -13,7 +13,7 @@ namespace wcf\system\database\table\column;
  */
 final class NotNullInt10DatabaseTableColumn
 {
-    public static function create($name): AbstractIntDatabaseTableColumn
+    public static function create(string $name): IntDatabaseTableColumn
     {
         return IntDatabaseTableColumn::create($name)
             ->notNull()

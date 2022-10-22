@@ -15,15 +15,15 @@ trait TEnumDatabaseTableColumn
 {
     /**
      * predetermined set of valid values for the database table column
-     * @var array
+     * @var string[]
      */
-    protected $enumValues = [];
+    protected array $enumValues = [];
 
     /**
      * Sets the predetermined set of valid values for the database table column and returns this
      * column.
      *
-     * @param array $values
+     * @param string[] $values
      * @return  $this
      */
     public function enumValues(array $values)
@@ -36,9 +36,9 @@ trait TEnumDatabaseTableColumn
     /**
      * Returns the predetermined set of valid values for the database table column.
      *
-     * @return  array
+     * @return  string[]
      */
-    public function getEnumValues()
+    public function getEnumValues(): array
     {
         return $this->enumValues;
     }

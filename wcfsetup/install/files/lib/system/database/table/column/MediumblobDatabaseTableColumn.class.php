@@ -16,5 +16,5 @@ final class MediumblobDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'mediumblob';
+    protected string $type = 'mediumblob';
 }

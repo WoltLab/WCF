@@ -16,12 +16,12 @@ final class MediumintDatabaseTableColumn extends AbstractIntDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'mediumint';
+    protected string $type = 'mediumint';
 
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 9;
     }

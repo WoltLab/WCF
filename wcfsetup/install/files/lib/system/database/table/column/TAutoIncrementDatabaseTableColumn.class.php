@@ -15,17 +15,15 @@ trait TAutoIncrementDatabaseTableColumn
 {
     /**
      * is `true` if the values of the database table column are auto-increment
-     * @var bool
      */
-    protected $autoIncrement = false;
+    protected bool $autoIncrement = false;
 
     /**
      * Sets if the values of the database table column are auto-increment and returns this column.
      *
-     * @param bool $autoIncrement
      * @return  $this
      */
-    public function autoIncrement($autoIncrement = true)
+    public function autoIncrement(bool $autoIncrement = true)
     {
         $this->autoIncrement = $autoIncrement;
 
@@ -34,10 +32,8 @@ trait TAutoIncrementDatabaseTableColumn
 
     /**
      * Returns `true` if the values of the database table column are auto-increment.
-     *
-     * @return  bool
      */
-    public function isAutoIncremented()
+    public function isAutoIncremented(): bool
     {
         return $this->autoIncrement;
     }

@@ -16,15 +16,12 @@ interface IAutoIncrementDatabaseTableColumn
     /**
      * Sets if the values of the database table column are auto-increment and returns this column.
      *
-     * @param bool $autoIncrement
      * @return  $this
      */
-    public function autoIncrement($autoIncrement = true);
+    public function autoIncrement(bool $autoIncrement = true);
 
     /**
      * Returns `true` if the values of the database table column are auto-increment.
-     *
-     * @return  bool
      */
-    public function isAutoIncremented();
+    public function isAutoIncremented(): bool;
 }

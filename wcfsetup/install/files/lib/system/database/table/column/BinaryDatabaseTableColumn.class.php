@@ -21,12 +21,12 @@ final class BinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implem
     /**
      * @inheritDoc
      */
-    protected $type = 'binary';
+    protected string $type = 'binary';
 
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 255;
     }
@@ -34,7 +34,7 @@ final class BinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implem
     /**
      * @inheritDoc
      */
-    public function getMinimumLength()
+    public function getMinimumLength(): int
     {
         return 1;
     }

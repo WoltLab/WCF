@@ -16,5 +16,5 @@ final class TinytextDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'tinytext';
+    protected string $type = 'tinytext';
 }

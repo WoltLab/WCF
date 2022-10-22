@@ -21,5 +21,5 @@ final class EnumDatabaseTableColumn extends AbstractDatabaseTableColumn implemen
     /**
      * @inheritDoc
      */
-    protected $type = 'enum';
+    protected string $type = 'enum';
 }

@@ -16,5 +16,5 @@ final class TextDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'text';
+    protected string $type = 'text';
 }

@@ -18,7 +18,7 @@ interface IEnumDatabaseTableColumn extends IDatabaseTableColumn
      * Sets the predetermined set of valid values for the database table column and returns this
      * column.
      *
-     * @param array $values
+     * @param string[] $values
      * @return  $this
      */
     public function enumValues(array $values);
@@ -26,7 +26,7 @@ interface IEnumDatabaseTableColumn extends IDatabaseTableColumn
     /**
      * Returns the predetermined set of valid values for the database table column.
      *
-     * @return  array
+     * @return string[]
      */
-    public function getEnumValues();
+    public function getEnumValues(): array;
 }

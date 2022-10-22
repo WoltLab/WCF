@@ -16,5 +16,5 @@ final class LongtextDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'longtext';
+    protected string $type = 'longtext';
 }
