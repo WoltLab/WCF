@@ -102,7 +102,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      */
     public function getName(): string
     {
-        if ($this->name === null) {
+        if (!isset($this->name)) {
             throw new \BadMethodCallException("Name of the database table column has not been set yet");
         }
 
@@ -136,7 +136,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      */
     public function name(string $name)
     {
-        if ($this->name !== null) {
+        if (isset($this->name)) {
             throw new \BadMethodCallException("Name of the database table column has already been set.");
         }
 
