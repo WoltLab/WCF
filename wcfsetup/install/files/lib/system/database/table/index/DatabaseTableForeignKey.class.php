@@ -14,7 +14,7 @@ use wcf\system\database\table\TDroppableDatabaseComponent;
  * @package WoltLabSuite\Core\System\Database\Table\Index
  * @since   5.2
  */
-class DatabaseTableForeignKey
+final class DatabaseTableForeignKey
 {
     use TDroppableDatabaseComponent;
 
