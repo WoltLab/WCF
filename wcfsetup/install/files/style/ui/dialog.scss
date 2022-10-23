@@ -1,6 +1,8 @@
 .dialogOverlay {
 	background-color: rgba(0, 0, 0, 0.4);
 	bottom: 0;
+	display: grid;
+	grid-template-areas: "dialog";
 	left: 0;
 	opacity: 0;
 	position: fixed;
@@ -15,11 +17,6 @@
 		opacity: 1;
 		transition-delay: 0s;
 		visibility: visible;
-	}
-
-	@include screen-sm-up {
-		display: grid;
-		grid-template-areas: "dialog";
 	}
 }
 
@@ -47,23 +44,21 @@
 
 .dialogContainer {
 	background-color: var(--wcfContentBackground);
+	border-radius: 8px;
+	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	color: var(--wcfContentText);
+	grid-area: dialog;
 	z-index: 200;
 
 	@include screen-xs {
-		left: 0 !important;
-		position: fixed;
-		right: 0 !important;
-		top: 0 !important;
+		margin: auto;
+		position: relative;
 	}
 
 	@include screen-sm-up {
 		align-self: flex-start;
 		animation: wcfDialogOut 0.3s;
 		animation-fill-mode: forwards;
-		border-radius: 8px;
-		box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
-		grid-area: dialog;
 		justify-self: center;
 		max-height: 80%;
 		max-width: 80%;
@@ -96,14 +91,7 @@
 
 	> header {
 		display: flex;
-
-		@include screen-sm-down {
-			padding: 10px;
-		}
-
-		@include screen-md-up {
-			padding: 20px;
-		}
+		padding: 20px;
 
 		> span {
 			flex: 1 auto;
@@ -134,13 +122,7 @@
 		// do not use `-webkit-overflow-scrolling` as it will cut off content in iOS Safari
 
 		&:not(.dialogContentNoPadding) {
-			@include screen-sm-down {
-				padding: 10px;
-			}
-
-			@include screen-md-up {
-				padding: 0 20px;
-			}
+			padding: 0 20px;
 
 			&::after {
 				content: "";
@@ -435,5 +417,13 @@
 		border-top: 1px solid var(--wcfContentBorderInner);
 		margin-top: 20px;
 		padding-top: 20px;
+	}
+}
+
+@include screen-xs {
+	.dialog {
+		max-height: calc(100% - 20px);
+		max-width: calc(100% - 20px);
+		min-width: 0;
 	}
 }
