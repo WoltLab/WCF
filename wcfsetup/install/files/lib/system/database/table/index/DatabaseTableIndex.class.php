@@ -21,22 +21,22 @@ final class DatabaseTableIndex
      * indexed columns
      * @var string[]
      */
-    protected array $columns;
+    private array $columns;
 
     /**
      * is `true` if index name has been automatically generated
      */
-    protected bool $generatedName = false;
+    private bool $generatedName = false;
 
     /**
      * name of index
      */
-    protected string $name;
+    private string $name;
 
     /**
      * type of index (see `*_TYPE` constants)
      */
-    protected ?string $type = null;
+    private ?string $type = null;
 
     const DEFAULT_TYPE = null;
 
@@ -49,7 +49,7 @@ final class DatabaseTableIndex
     /**
      * Creates a new `DatabaseTableIndex` object.
      */
-    protected function __construct(string $name)
+    private function __construct(string $name)
     {
         $this->name = $name;
     }
