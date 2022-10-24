@@ -15,32 +15,32 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Registry
  */
-class RegistryHandler extends SingletonFactory
+final class RegistryHandler extends SingletonFactory
 {
     /**
      * data cache
      * @var string[][]
      */
-    protected $cache = [];
+    private array $cache = [];
 
     /**
      * list of outdated data records
      * @var string[][]
      */
-    protected $resetFields = [];
+    private array $resetFields = [];
 
     /**
      * list of updated or new data records
      * @var string[][]
      */
-    protected $updateFields = [];
+    private array $updateFields = [];
 
     /**
      * Loads the storage for the provided packages.
      *
      * @param string[] $packages
      */
-    public function loadStorage(array $packages)
+    public function loadStorage(array $packages): void
     {
         $tmp = [];
         foreach ($packages as $package) {
@@ -51,7 +51,7 @@ class RegistryHandler extends SingletonFactory
         }
 
         // ignore packages whose storage data is already loaded
-        if (empty($tmp)) {
+        if ($tmp === []) {
             return;
         }
 
@@ -59,9 +59,9 @@ class RegistryHandler extends SingletonFactory
         $conditions->add("packageID IN (?)", [$tmp]);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_registry
-                " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_registry
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (!isset($this->cache[$row['packageID']])) {
@@ -74,12 +74,8 @@ class RegistryHandler extends SingletonFactory
 
     /**
      * Returns the value of the given field or null if no such value exists.
-     *
-     * @param string $package
-     * @param string $field
-     * @return  string|null
      */
-    public function get($package, $field)
+    public function get(string $package, string $field): ?string
     {
         $packageID = $this->getPackageID($package);
 
@@ -93,12 +89,8 @@ class RegistryHandler extends SingletonFactory
 
     /**
      * Inserts new data records into database.
-     *
-     * @param string $package
-     * @param string $field
-     * @param string $fieldValue
      */
-    public function set($package, $field, $fieldValue)
+    public function set(string $package, string $field, string $fieldValue): void
     {
         $packageID = $this->getPackageID($package);
 
@@ -115,11 +107,8 @@ class RegistryHandler extends SingletonFactory
 
     /**
      * Removes a data record from database.
-     *
-     * @param string $package
-     * @param string $field
      */
-    public function delete($package, $field)
+    public function delete(string $package, string $field): void
     {
         $packageID = $this->getPackageID($package);
 
@@ -136,7 +125,7 @@ class RegistryHandler extends SingletonFactory
     /**
      * Removes and inserts data records on shutdown.
      */
-    public function shutdown()
+    public function shutdown(): void
     {
         $toReset = [];
 
@@ -187,18 +176,18 @@ class RegistryHandler extends SingletonFactory
                     $conditions->add("packageID IN (?)", [$packageIDs]);
                     $conditions->add("field = ?", [$field]);
 
-                    $sql = "DELETE FROM wcf" . WCF_N . "_registry
-                            " . $conditions;
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $sql = "DELETE FROM wcf1_registry
+                            {$conditions}";
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute($conditions->getParameters());
                 }
 
                 // insert data
-                if (!empty($this->updateFields)) {
-                    $sql = "INSERT INTO wcf" . WCF_N . "_registry
+                if ($this->updateFields !== []) {
+                    $sql = "INSERT INTO wcf1_registry
                                         (packageID, field, fieldValue)
                             VALUES      (?, ?, ?)";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
 
                     foreach ($this->updateFields as $packageID => $fieldValues) {
                         \ksort($fieldValues);
@@ -232,11 +221,8 @@ class RegistryHandler extends SingletonFactory
 
     /**
      * Returns the package id of the provided package.
-     *
-     * @param string $package
-     * @return      int
      */
-    protected function getPackageID($package)
+    protected function getPackageID(string $package): int
     {
         $packageObj = PackageCache::getInstance()->getPackageByIdentifier($package);
         if ($packageObj === null) {
