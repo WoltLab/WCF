@@ -26,5 +26,5 @@ interface ILengthDatabaseTableColumn extends IDatabaseTableColumn
      * @return  $this               this column
      * @throws  \InvalidArgumentException   if given length is invalid
      */
-    public function length(?int $length);
+    public function length(?int $length): static;
 }

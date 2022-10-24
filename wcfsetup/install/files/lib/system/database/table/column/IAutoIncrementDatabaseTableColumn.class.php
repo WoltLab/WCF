@@ -18,7 +18,7 @@ interface IAutoIncrementDatabaseTableColumn
      *
      * @return  $this
      */
-    public function autoIncrement(bool $autoIncrement = true);
+    public function autoIncrement(bool $autoIncrement = true): static;
 
     /**
      * Returns `true` if the values of the database table column are auto-increment.

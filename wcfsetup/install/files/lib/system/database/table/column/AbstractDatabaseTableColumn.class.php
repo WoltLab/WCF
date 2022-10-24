@@ -134,7 +134,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    public function name(string $name)
+    public function name(string $name): static
     {
         if (isset($this->name)) {
             throw new \BadMethodCallException("Name of the database table column has already been set.");
@@ -148,7 +148,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    public function notNull(bool $notNull = true)
+    public function notNull(bool $notNull = true): static
     {
         $this->notNull = $notNull;
 
@@ -159,7 +159,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      * @inheritDoc
      * @since       5.4
      */
-    public function renameTo(string $newName)
+    public function renameTo(string $newName): static
     {
         if ($newName === $this->getName()) {
             throw new \InvalidArgumentException("'{$newName}' is the current name of the column.");
@@ -174,7 +174,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      * @inheritDoc
      * @return  static
      */
-    public static function create(string $name)
+    public static function create(string $name): static
     {
         return (new static())->name($name);
     }
@@ -182,7 +182,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    public static function createFromData(string $name, array $data)
+    public static function createFromData(string $name, array $data): static
     {
         $column = static::create($name)
             ->notNull($data['notNull']);

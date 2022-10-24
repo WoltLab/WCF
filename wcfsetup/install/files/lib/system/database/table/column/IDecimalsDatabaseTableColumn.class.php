@@ -19,7 +19,7 @@ interface IDecimalsDatabaseTableColumn extends ILengthDatabaseTableColumn
      *
      * @return  $this
      */
-    public function decimals(?int $decimals);
+    public function decimals(?int $decimals): static;
 
     /**
      * Returns the number of decimals the database table column supports or `null` if the number

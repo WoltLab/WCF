@@ -18,7 +18,7 @@ interface IDatabaseTableColumn
      *
      * @return  $this
      */
-    public function drop();
+    public function drop(): static;
 
     /**
      * Returns the data used by `DatabaseEditor` to add the column to a table.
@@ -52,14 +52,14 @@ interface IDatabaseTableColumn
      *
      * @return  $this
      */
-    public function name(string $name);
+    public function name(string $name): static;
 
     /**
      * Sets if the values of the column cannot be `null`.
      *
      * @return  $this
      */
-    public function notNull(bool $notNull = true);
+    public function notNull(bool $notNull = true): static;
 
     /**
      * Sets the new name of the column and returns the column.
@@ -67,7 +67,7 @@ interface IDatabaseTableColumn
      * @since       5.4
      * @return $this
      */
-    public function renameTo(string $newName);
+    public function renameTo(string $newName): static;
 
     /**
      * Returns `true` if the column will be dropped.
@@ -79,7 +79,7 @@ interface IDatabaseTableColumn
      *
      * @return  $this
      */
-    public static function create(string $name);
+    public static function create(string $name): static;
 
     /**
      * Returns a `DatabaseTableColumn` object with the given name and data.
@@ -87,5 +87,5 @@ interface IDatabaseTableColumn
      * @param array $data data returned by `DatabaseEditor::getColumns()`
      * @return  $this
      */
-    public static function createFromData(string $name, array $data);
+    public static function createFromData(string $name, array $data): static;
 }

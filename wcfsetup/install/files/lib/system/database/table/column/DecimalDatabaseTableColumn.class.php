@@ -21,7 +21,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
-    public function decimals(?int $decimals): self
+    public function decimals(?int $decimals): static
     {
         if ($this->getLength() === null) {
             throw new \BadMethodCallException("Before setting the decimals, the length has to be set.");

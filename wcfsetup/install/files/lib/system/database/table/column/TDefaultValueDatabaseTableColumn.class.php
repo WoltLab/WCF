@@ -35,7 +35,7 @@ trait TDefaultValueDatabaseTableColumn
      *
      * @return  $this
      */
-    public function defaultValue(mixed $defaultValue)
+    public function defaultValue(mixed $defaultValue): static
     {
         $this->validateDefaultValue($defaultValue);
 

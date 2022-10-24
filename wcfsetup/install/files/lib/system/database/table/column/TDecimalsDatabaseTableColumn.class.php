@@ -26,7 +26,7 @@ trait TDecimalsDatabaseTableColumn
      *
      * @return  $this
      */
-    public function decimals(?int $decimals)
+    public function decimals(?int $decimals): static
     {
         if ($this->getMaximumDecimals() !== null && $decimals > $this->getMaximumDecimals()) {
             throw new \InvalidArgumentException(

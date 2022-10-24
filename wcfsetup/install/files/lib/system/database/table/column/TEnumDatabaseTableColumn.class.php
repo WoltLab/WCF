@@ -26,7 +26,7 @@ trait TEnumDatabaseTableColumn
      * @param string[] $values
      * @return  $this
      */
-    public function enumValues(array $values)
+    public function enumValues(array $values): static
     {
         $this->enumValues = $values;
 

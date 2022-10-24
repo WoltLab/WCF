@@ -62,7 +62,7 @@ class DatabaseTable
      * @return  $this                   this database table
      * @throws  \InvalidArgumentException       if any column is invalid or duplicate column names exist
      */
-    public function columns(array $columns)
+    public function columns(array $columns): static
     {
         $this->columns = [];
         foreach ($columns as $column) {
@@ -89,7 +89,7 @@ class DatabaseTable
      * @return  $this                       this database table
      * @throws  \InvalidArgumentException           if any foreign key is invalid or duplicate foreign key names exist
      */
-    public function foreignKeys(array $foreignKeys)
+    public function foreignKeys(array $foreignKeys): static
     {
         $this->foreignKeys = [];
         foreach ($foreignKeys as $foreignKey) {
@@ -216,7 +216,7 @@ class DatabaseTable
      * @return  $this                   this database table
      * @throws  \InvalidArgumentException       if any index is invalid or duplicate index key names exist
      */
-    public function indices(array $indices)
+    public function indices(array $indices): static
     {
         $this->indices = [];
         foreach ($indices as $index) {

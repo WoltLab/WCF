@@ -23,7 +23,7 @@ trait TAutoIncrementDatabaseTableColumn
      *
      * @return  $this
      */
-    public function autoIncrement(bool $autoIncrement = true)
+    public function autoIncrement(bool $autoIncrement = true): static
     {
         $this->autoIncrement = $autoIncrement;
 
