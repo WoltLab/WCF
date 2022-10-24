@@ -196,7 +196,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
         }
 
         if ($column instanceof IAutoIncrementDatabaseTableColumn) {
-            $column->autoIncrement($data['autoIncrement'] ?: null);
+            $column->autoIncrement($data['autoIncrement'] ?: false);
         }
 
         if ($column instanceof ILengthDatabaseTableColumn) {

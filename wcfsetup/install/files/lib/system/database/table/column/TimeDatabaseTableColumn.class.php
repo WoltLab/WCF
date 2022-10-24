@@ -11,7 +11,7 @@ namespace wcf\system\database\table\column;
  * @package WoltLabSuite\Core\System\Database\Table\Column
  * @since   5.2
  */
-final class TimeDatabaseTableColumn extends AbstractDatabaseTableColumnimplements implements IDefaultValueDatabaseTableColumn
+final class TimeDatabaseTableColumn extends AbstractDatabaseTableColumn implements IDefaultValueDatabaseTableColumn
 {
     use TDefaultValueDatabaseTableColumn;
 
