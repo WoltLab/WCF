@@ -51,7 +51,7 @@ final class RegistryHandler extends SingletonFactory
         }
 
         // ignore packages whose storage data is already loaded
-        if (empty($tmp)) {
+        if ($tmp === []) {
             return;
         }
 
@@ -183,7 +183,7 @@ final class RegistryHandler extends SingletonFactory
                 }
 
                 // insert data
-                if (!empty($this->updateFields)) {
+                if ($this->updateFields !== []) {
                     $sql = "INSERT INTO wcf1_registry
                                         (packageID, field, fieldValue)
                             VALUES      (?, ?, ?)";
