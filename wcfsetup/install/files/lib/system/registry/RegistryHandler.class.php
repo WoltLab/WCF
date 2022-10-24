@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Registry
  */
-class RegistryHandler extends SingletonFactory
+final class RegistryHandler extends SingletonFactory
 {
     /**
      * data cache
