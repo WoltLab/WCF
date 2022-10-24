@@ -55,13 +55,14 @@ class WCFACP extends WCF
         $this->initSession();
         $this->initLanguage();
         $this->initTPL();
-        $this->initCronjobs();
         $this->initCoreObjects();
 
         // prevent application loading during setup
         if (PACKAGE_ID) {
             $this->initApplications();
         }
+
+        $this->runBootstrappers();
 
         $this->initAuth();
 
