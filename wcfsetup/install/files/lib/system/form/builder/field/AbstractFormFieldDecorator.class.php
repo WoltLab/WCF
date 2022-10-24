@@ -211,7 +211,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function addClass($class)
+    public function addClass($class): static
     {
         $this->field->addClass($class);
 
@@ -221,7 +221,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function addClasses(array $classes)
+    public function addClasses(array $classes): static
     {
         $this->field->addClasses($classes);
 
@@ -231,7 +231,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function addDependency(IFormFieldDependency $dependency)
+    public function addDependency(IFormFieldDependency $dependency): static
     {
         $this->field->addDependency($dependency);
 
@@ -241,7 +241,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function attribute($name, $value = null)
+    public function attribute($name, $value = null): static
     {
         $this->field->attribute($name, $value);
 
@@ -251,7 +251,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function available($available = true)
+    public function available($available = true): static
     {
         $this->field->available($available);
 
@@ -261,7 +261,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function cleanup()
+    public function cleanup(): static
     {
         $this->field->cleanup();
 
@@ -271,7 +271,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function checkDependencies()
+    public function checkDependencies(): bool
     {
         return $this->field->checkDependencies();
     }
@@ -287,7 +287,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->field->getAttributes();
     }
@@ -295,7 +295,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     /**
      * @inheritDoc
      */
-    public function getClasses()
+    public function getClasses(): array
     {
         return $this->field->getClasses();
     }

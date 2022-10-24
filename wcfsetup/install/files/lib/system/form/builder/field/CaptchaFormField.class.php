@@ -49,7 +49,7 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode
     /**
      * @inheritDoc
      */
-    public function cleanup()
+    public function cleanup(): static
     {
         try {
             /** @var ICaptchaHandler $captcha */
