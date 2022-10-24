@@ -17,15 +17,12 @@ interface IDefaultValueDatabaseTableColumn extends IDatabaseTableColumn
     /**
      * Sets the default value of the column and returns the column.
      *
-     * @param mixed $defaultValue
      * @return  $this
      */
-    public function defaultValue($defaultValue);
+    public function defaultValue(mixed $defaultValue): static;
 
     /**
      * Returns the default value of the column.
-     *
-     * @return  mixed
      */
-    public function getDefaultValue();
+    public function getDefaultValue(): mixed;
 }

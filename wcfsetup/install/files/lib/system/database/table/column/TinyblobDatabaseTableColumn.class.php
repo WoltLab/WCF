@@ -16,5 +16,5 @@ final class TinyblobDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'tinyblob';
+    protected string $type = 'tinyblob';
 }

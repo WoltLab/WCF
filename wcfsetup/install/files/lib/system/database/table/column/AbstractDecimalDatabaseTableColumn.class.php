@@ -23,7 +23,7 @@ abstract class AbstractDecimalDatabaseTableColumn extends AbstractDatabaseTableC
     /**
      * @inheritDoc
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): string|null
     {
         $defaultValue = $this->traitGetDefaultValue();
         if ($defaultValue === null) {

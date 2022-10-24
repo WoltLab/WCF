@@ -16,7 +16,7 @@ namespace wcf\system\database\table\column;
  */
 final class ObjectIdDatabaseTableColumn
 {
-    public static function create($name): IDatabaseTableColumn
+    public static function create(string $name): IDatabaseTableColumn
     {
         return IntDatabaseTableColumn::create($name)
             ->notNull()

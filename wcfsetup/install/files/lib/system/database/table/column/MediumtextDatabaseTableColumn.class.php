@@ -16,5 +16,5 @@ final class MediumtextDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'mediumtext';
+    protected string $type = 'mediumtext';
 }

@@ -23,12 +23,12 @@ final class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn imp
     /**
      * @inheritDoc
      */
-    protected $type = 'varbinary';
+    protected string $type = 'varbinary';
 
     /**
      * @inheritDoc
      */
-    public function getLength()
+    public function getLength(): int
     {
         if ($this->length === null) {
             throw new \LogicException('The length of varbinary fields must be explicitly set.');
@@ -40,7 +40,7 @@ final class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn imp
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 65535;
     }

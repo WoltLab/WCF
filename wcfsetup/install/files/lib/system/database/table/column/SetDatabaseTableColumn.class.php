@@ -21,5 +21,5 @@ final class SetDatabaseTableColumn extends AbstractDatabaseTableColumn implement
     /**
      * @inheritDoc
      */
-    protected $type = 'set';
+    protected string $type = 'set';
 }

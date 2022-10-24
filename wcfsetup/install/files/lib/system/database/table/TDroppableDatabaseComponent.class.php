@@ -23,7 +23,7 @@ trait TDroppableDatabaseComponent
      *
      * @return  $this
      */
-    public function drop()
+    public function drop(): static
     {
         $this->drop = true;
 

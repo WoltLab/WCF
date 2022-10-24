@@ -16,5 +16,5 @@ final class BlobDatabaseTableColumn extends AbstractDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'blob';
+    protected string $type = 'blob';
 }

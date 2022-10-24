@@ -26,32 +26,31 @@ class DatabaseTable
      * intended database table's columns
      * @var IDatabaseTableColumn[]
      */
-    protected $columns = [];
+    protected array $columns = [];
 
     /**
      * intended database table's foreign keys
      * @var DatabaseTableForeignKey[]
      */
-    protected $foreignKeys = [];
+    protected array $foreignKeys = [];
 
     /**
      * intended database table's indices
      * @var DatabaseTableIndex[]
      */
-    protected $indices = [];
+    protected array $indices = [];
 
     /**
      * name of the database table
-     * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Creates a new instance of `DatabaseTable`.
      *
      * @param string $name name of the database table
      */
-    protected function __construct($name)
+    protected function __construct(string $name)
     {
         $this->name = ApplicationHandler::insertRealDatabaseTableNames($name, true);
     }
@@ -63,7 +62,7 @@ class DatabaseTable
      * @return  $this                   this database table
      * @throws  \InvalidArgumentException       if any column is invalid or duplicate column names exist
      */
-    public function columns(array $columns)
+    public function columns(array $columns): static
     {
         $this->columns = [];
         foreach ($columns as $column) {
@@ -90,7 +89,7 @@ class DatabaseTable
      * @return  $this                       this database table
      * @throws  \InvalidArgumentException           if any foreign key is invalid or duplicate foreign key names exist
      */
-    public function foreignKeys(array $foreignKeys)
+    public function foreignKeys(array $foreignKeys): static
     {
         $this->foreignKeys = [];
         foreach ($foreignKeys as $foreignKey) {
@@ -127,7 +126,7 @@ class DatabaseTable
      *
      * @return  IDatabaseTableColumn[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->columns;
     }
@@ -137,7 +136,7 @@ class DatabaseTable
      *
      * @return  DatabaseTableForeignKey[]
      */
-    public function getForeignKeys()
+    public function getForeignKeys(): array
     {
         return $this->foreignKeys;
     }
@@ -147,7 +146,7 @@ class DatabaseTable
      *
      * @return  DatabaseTableIndex[]
      */
-    public function getIndices()
+    public function getIndices(): array
     {
         return $this->indices;
     }
@@ -157,30 +156,23 @@ class DatabaseTable
      *
      * @return  string      database table name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Returns a `DatabaseTable` object with the given name.
-     *
-     * @param string $tableName
-     * @return  static
      */
-    public static function create($tableName)
+    public static function create(string $tableName): static
     {
         return new static($tableName);
     }
 
     /**
      * Returns a `DatabaseTable` object for an existing database table with the given name.
-     *
-     * @param DatabaseEditor $dbEditor
-     * @param string $tableName
-     * @return  DatabaseTable
      */
-    public static function createFromExistingTable(DatabaseEditor $dbEditor, $tableName)
+    public static function createFromExistingTable(DatabaseEditor $dbEditor, string $tableName): static
     {
         $table = new static($tableName);
 
@@ -224,7 +216,7 @@ class DatabaseTable
      * @return  $this                   this database table
      * @throws  \InvalidArgumentException       if any index is invalid or duplicate index key names exist
      */
-    public function indices(array $indices)
+    public function indices(array $indices): static
     {
         $this->indices = [];
         foreach ($indices as $index) {

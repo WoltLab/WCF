@@ -18,5 +18,5 @@ final class TimeDatabaseTableColumn extends AbstractDatabaseTableColumn implemen
     /**
      * @inheritDoc
      */
-    protected $type = 'time';
+    protected string $type = 'time';
 }

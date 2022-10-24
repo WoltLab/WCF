@@ -16,12 +16,12 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
-    protected $type = 'decimal';
+    protected string $type = 'decimal';
 
     /**
      * @inheritDoc
      */
-    public function decimals($decimals)
+    public function decimals(?int $decimals): static
     {
         if ($this->getLength() === null) {
             throw new \BadMethodCallException("Before setting the decimals, the length has to be set.");
@@ -33,7 +33,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
-    public function getMaximumDecimals()
+    public function getMaximumDecimals(): int
     {
         return 30;
     }
@@ -41,7 +41,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 65;
     }
@@ -49,7 +49,7 @@ final class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColum
     /**
      * @inheritDoc
      */
-    public function getMinimumLength()
+    public function getMinimumLength(): int
     {
         return 1;
     }

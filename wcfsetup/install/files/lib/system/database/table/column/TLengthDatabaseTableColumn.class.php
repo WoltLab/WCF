@@ -15,17 +15,14 @@ trait TLengthDatabaseTableColumn
 {
     /**
      * (maximum) length of the column's values
-     * @var null|int
      */
-    protected $length;
+    protected ?int $length;
 
     /**
      * Returns the maxium length value supported by this column or `null` if there is no such
      * maximum.
-     *
-     * @return  null|int
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): ?int
     {
         return null;
     }
@@ -33,20 +30,16 @@ trait TLengthDatabaseTableColumn
     /**
      * Returns the minimum length value supported by this column or `null` if there is no such
      * minimum.
-     *
-     * @return  null|int
      */
-    public function getMinimumLength()
+    public function getMinimumLength(): ?int
     {
         return null;
     }
 
     /**
      * Returns the (maximum) length of the column's values or `null` if no length has been set.
-     *
-     * @return  null|int
      */
-    public function getLength()
+    public function getLength(): ?int
     {
         return $this->length;
     }
@@ -58,7 +51,7 @@ trait TLengthDatabaseTableColumn
      * @return  $this               this column
      * @throws  \InvalidArgumentException   if given length is invalid
      */
-    public function length($length)
+    public function length(?int $length): static
     {
         if ($length !== null) {
             $length = (int)$length;
@@ -74,10 +67,9 @@ trait TLengthDatabaseTableColumn
     /**
      * Validates the given length.
      *
-     * @param int $length
      * @throws  \InvalidArgumentException   if given length is invalid
      */
-    protected function validateLength($length)
+    protected function validateLength(int $length): void
     {
         if ($this->getMinimumLength() !== null && $length < $this->getMinimumLength()) {
             throw new \InvalidArgumentException(

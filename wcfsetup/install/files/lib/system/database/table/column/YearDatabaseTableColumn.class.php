@@ -21,12 +21,12 @@ final class YearDatabaseTableColumn extends AbstractDatabaseTableColumn implemen
     /**
      * @inheritDoc
      */
-    protected $type = 'year';
+    protected string $type = 'year';
 
     /**
      * @inheritDoc
      */
-    protected function validateLength($length)
+    protected function validateLength(int $length): void
     {
         if ($length !== 4) {
             throw new \InvalidArgumentException("Only '4' is a valid length for year columns.");

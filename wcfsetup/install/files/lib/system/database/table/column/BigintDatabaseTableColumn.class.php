@@ -16,12 +16,12 @@ final class BigintDatabaseTableColumn extends AbstractIntDatabaseTableColumn
     /**
      * @inheritDoc
      */
-    protected $type = 'bigint';
+    protected string $type = 'bigint';
 
     /**
      * @inheritDoc
      */
-    public function getMaximumLength()
+    public function getMaximumLength(): int
     {
         return 20;
     }

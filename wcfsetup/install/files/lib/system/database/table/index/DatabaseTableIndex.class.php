@@ -21,22 +21,22 @@ final class DatabaseTableIndex
      * indexed columns
      * @var string[]
      */
-    protected array $columns;
+    private array $columns;
 
     /**
      * is `true` if index name has been automatically generated
      */
-    protected bool $generatedName = false;
+    private bool $generatedName = false;
 
     /**
      * name of index
      */
-    protected string $name;
+    private string $name;
 
     /**
      * type of index (see `*_TYPE` constants)
      */
-    protected ?string $type = null;
+    private ?string $type = null;
 
     const DEFAULT_TYPE = null;
 
@@ -49,7 +49,7 @@ final class DatabaseTableIndex
     /**
      * Creates a new `DatabaseTableIndex` object.
      */
-    protected function __construct(string $name)
+    private function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -60,7 +60,7 @@ final class DatabaseTableIndex
      * @param string[] $columns indexed columns
      * @return  $this
      */
-    public function columns(array $columns): self
+    public function columns(array $columns): static
     {
         $this->columns = \array_values($columns);
 
@@ -72,7 +72,7 @@ final class DatabaseTableIndex
      *
      * @return  $this
      */
-    public function generatedName(string $name): self
+    public function generatedName(string $name): static
     {
         $this->name($name);
         $this->generatedName = true;
@@ -138,7 +138,7 @@ final class DatabaseTableIndex
      *
      * @return  $this
      */
-    public function name(string $name): self
+    public function name(string $name): static
     {
         $this->name = $name;
 
@@ -150,7 +150,7 @@ final class DatabaseTableIndex
      *
      * @throws  \InvalidArgumentException   if given type is invalid
      */
-    public function type(?string $type): self
+    public function type(?string $type): static
     {
         if (
             $type !== static::DEFAULT_TYPE
@@ -169,9 +169,9 @@ final class DatabaseTableIndex
     /**
      * Returns a `DatabaseTableIndex` object with the given name.
      */
-    public static function create(string $name): self
+    public static function create(string $name): static
     {
-        return new self($name);
+        return new static($name);
     }
 
     /**
@@ -179,7 +179,7 @@ final class DatabaseTableIndex
      *
      * @param array $data data returned by `DatabaseEditor::getIndexInformation()`
      */
-    public static function createFromData(string $name, array $data): self
+    public static function createFromData(string $name, array $data): static
     {
         return self::create($name)
             ->type($data['type'])
