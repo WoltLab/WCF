@@ -59,9 +59,9 @@ final class RegistryHandler extends SingletonFactory
         $conditions->add("packageID IN (?)", [$tmp]);
 
         $sql = "SELECT  *
-                FROM    wcf" . WCF_N . "_registry
-                " . $conditions;
-        $statement = WCF::getDB()->prepareStatement($sql);
+                FROM    wcf1_registry
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (!isset($this->cache[$row['packageID']])) {
@@ -176,18 +176,18 @@ final class RegistryHandler extends SingletonFactory
                     $conditions->add("packageID IN (?)", [$packageIDs]);
                     $conditions->add("field = ?", [$field]);
 
-                    $sql = "DELETE FROM wcf" . WCF_N . "_registry
-                            " . $conditions;
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $sql = "DELETE FROM wcf1_registry
+                            {$conditions}";
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute($conditions->getParameters());
                 }
 
                 // insert data
                 if (!empty($this->updateFields)) {
-                    $sql = "INSERT INTO wcf" . WCF_N . "_registry
+                    $sql = "INSERT INTO wcf1_registry
                                         (packageID, field, fieldValue)
                             VALUES      (?, ?, ?)";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
 
                     foreach ($this->updateFields as $packageID => $fieldValues) {
                         \ksort($fieldValues);
