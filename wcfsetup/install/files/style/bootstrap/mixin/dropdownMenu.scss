@@ -1,11 +1,11 @@
 @mixin dropdownMenu {
 	background-color: $wcfDropdownBackground;
-	border-radius: 2px;
+	border-radius: 4px;
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	color: $wcfDropdownText;
 	display: none;
 	min-width: 160px;
-	padding: 3px 0;
+	padding: 4px 0;
 	pointer-events: all;
 	position: absolute;
 	text-align: left;
@@ -40,11 +40,11 @@
 
 		&.dropdownDivider {
 			border-top: 1px solid $wcfDropdownBorderInner;
-			margin: 3px 0;
+			margin: 4px 0;
 		}
 
 		&.dropdownText {
-			padding: 5px 20px;
+			padding: 6px 12px;
 
 			@include wcfFontSmall;
 		}
@@ -73,7 +73,7 @@
 			display: block;
 			max-width: 350px;
 			overflow: hidden;
-			padding: 5px 20px;
+			padding: 6px 12px;
 			text-decoration: none;
 			text-overflow: ellipsis;
 			user-select: none;
