@@ -21,19 +21,19 @@ final class RegistryHandler extends SingletonFactory
      * data cache
      * @var string[][]
      */
-    protected array $cache = [];
+    private array $cache = [];
 
     /**
      * list of outdated data records
      * @var string[][]
      */
-    protected array $resetFields = [];
+    private array $resetFields = [];
 
     /**
      * list of updated or new data records
      * @var string[][]
      */
-    protected array $updateFields = [];
+    private array $updateFields = [];
 
     /**
      * Loads the storage for the provided packages.
