@@ -21,26 +21,26 @@ final class RegistryHandler extends SingletonFactory
      * data cache
      * @var string[][]
      */
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * list of outdated data records
      * @var string[][]
      */
-    protected $resetFields = [];
+    protected array $resetFields = [];
 
     /**
      * list of updated or new data records
      * @var string[][]
      */
-    protected $updateFields = [];
+    protected array $updateFields = [];
 
     /**
      * Loads the storage for the provided packages.
      *
      * @param string[] $packages
      */
-    public function loadStorage(array $packages)
+    public function loadStorage(array $packages): void
     {
         $tmp = [];
         foreach ($packages as $package) {
@@ -74,12 +74,8 @@ final class RegistryHandler extends SingletonFactory
 
     /**
      * Returns the value of the given field or null if no such value exists.
-     *
-     * @param string $package
-     * @param string $field
-     * @return  string|null
      */
-    public function get($package, $field)
+    public function get(string $package, string $field): ?string
     {
         $packageID = $this->getPackageID($package);
 
@@ -93,12 +89,8 @@ final class RegistryHandler extends SingletonFactory
 
     /**
      * Inserts new data records into database.
-     *
-     * @param string $package
-     * @param string $field
-     * @param string $fieldValue
      */
-    public function set($package, $field, $fieldValue)
+    public function set(string $package, string $field, string $fieldValue): void
     {
         $packageID = $this->getPackageID($package);
 
@@ -115,11 +107,8 @@ final class RegistryHandler extends SingletonFactory
 
     /**
      * Removes a data record from database.
-     *
-     * @param string $package
-     * @param string $field
      */
-    public function delete($package, $field)
+    public function delete(string $package, string $field): void
     {
         $packageID = $this->getPackageID($package);
 
@@ -136,7 +125,7 @@ final class RegistryHandler extends SingletonFactory
     /**
      * Removes and inserts data records on shutdown.
      */
-    public function shutdown()
+    public function shutdown(): void
     {
         $toReset = [];
 
@@ -232,11 +221,8 @@ final class RegistryHandler extends SingletonFactory
 
     /**
      * Returns the package id of the provided package.
-     *
-     * @param string $package
-     * @return      int
      */
-    protected function getPackageID($package)
+    protected function getPackageID(string $package): int
     {
         $packageObj = PackageCache::getInstance()->getPackageByIdentifier($package);
         if ($packageObj === null) {
