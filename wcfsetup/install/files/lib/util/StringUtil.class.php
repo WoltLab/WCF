@@ -134,19 +134,6 @@ final class StringUtil
     }
 
     /**
-     * @deprecated 5.5 This function is broken due to the implicit HTML encoding and cannot be fixed without introducing security issues. Use JSON::encode() or the |json template modifier instead.
-     */
-    public static function encodeJSON($string): string
-    {
-        $string = self::unifyNewlines($string);
-
-        // This differs from encodeJS() by not encoding the single quote.
-        $string = \str_replace(["\\", '"', "\n", "/"], ["\\\\", '\\"', '\\n', '\\/'], $string);
-
-        return self::encodeHTML($string);
-    }
-
-    /**
      * Decodes html entities.
      *
      * @param string $string
