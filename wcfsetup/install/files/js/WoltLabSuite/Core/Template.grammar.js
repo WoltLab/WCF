@@ -1,9 +1,6 @@
 define(function (require) {
-    var o = function (k, v, o, l) {
-        for (o = o || {}, l = k.length; l--; o[k[l]] = v)
-            ;
-        return o;
-    }, $V0 = [2, 44], $V1 = [5, 9, 11, 12, 13, 18, 19, 21, 22, 23, 25, 26, 28, 29, 30, 32, 33, 34, 35, 37, 39, 41], $V2 = [1, 25], $V3 = [1, 27], $V4 = [1, 33], $V5 = [1, 31], $V6 = [1, 32], $V7 = [1, 28], $V8 = [1, 29], $V9 = [1, 26], $Va = [1, 35], $Vb = [1, 41], $Vc = [1, 40], $Vd = [11, 12, 15, 42, 43, 47, 49, 51, 52, 54, 55], $Ve = [9, 11, 12, 13, 18, 19, 21, 23, 26, 28, 30, 32, 33, 34, 35, 37, 39], $Vf = [11, 12, 15, 42, 43, 46, 47, 48, 49, 51, 52, 54, 55], $Vg = [1, 64], $Vh = [1, 65], $Vi = [18, 37, 39], $Vj = [12, 15];
+    var o = function (k, v, o, l) { for (o = o || {}, l = k.length; l--; o[k[l]] = v)
+        ; return o; }, $V0 = [2, 44], $V1 = [5, 9, 11, 12, 13, 18, 19, 21, 22, 23, 25, 26, 28, 29, 30, 32, 33, 34, 35, 37, 39, 41], $V2 = [1, 25], $V3 = [1, 27], $V4 = [1, 33], $V5 = [1, 31], $V6 = [1, 32], $V7 = [1, 28], $V8 = [1, 29], $V9 = [1, 26], $Va = [1, 35], $Vb = [1, 41], $Vc = [1, 40], $Vd = [11, 12, 15, 42, 43, 47, 49, 51, 52, 54, 55], $Ve = [9, 11, 12, 13, 18, 19, 21, 23, 26, 28, 30, 32, 33, 34, 35, 37, 39], $Vf = [11, 12, 15, 42, 43, 46, 47, 48, 49, 51, 52, 54, 55], $Vg = [1, 64], $Vh = [1, 65], $Vi = [18, 37, 39], $Vj = [12, 15];
     var parser = { trace: function trace() { },
         yy: {},
         symbols_: { "error": 2, "TEMPLATE": 3, "CHUNK_STAR": 4, "EOF": 5, "CHUNK_STAR_repetition0": 6, "CHUNK": 7, "PLAIN_ANY": 8, "T_LITERAL": 9, "COMMAND": 10, "T_ANY": 11, "T_WS": 12, "{if": 13, "COMMAND_PARAMETERS": 14, "}": 15, "COMMAND_repetition0": 16, "COMMAND_option0": 17, "{/if}": 18, "{include": 19, "COMMAND_PARAMETER_LIST": 20, "{implode": 21, "{/implode}": 22, "{foreach": 23, "COMMAND_option1": 24, "{/foreach}": 25, "{plural": 26, "PLURAL_PARAMETER_LIST": 27, "{lang}": 28, "{/lang}": 29, "{": 30, "VARIABLE": 31, "{#": 32, "{@": 33, "{ldelim}": 34, "{rdelim}": 35, "ELSE": 36, "{else}": 37, "ELSE_IF": 38, "{elseif": 39, "FOREACH_ELSE": 40, "{foreachelse}": 41, "T_VARIABLE": 42, "T_VARIABLE_NAME": 43, "VARIABLE_repetition0": 44, "VARIABLE_SUFFIX": 45, "[": 46, "]": 47, ".": 48, "(": 49, "VARIABLE_SUFFIX_option0": 50, ")": 51, "=": 52, "COMMAND_PARAMETER_VALUE": 53, "T_QUOTED_STRING": 54, "T_DIGITS": 55, "COMMAND_PARAMETERS_repetition_plus0": 56, "COMMAND_PARAMETER": 57, "T_PLURAL_PARAMETER_NAME": 58, "$accept": 0, "$end": 1 },
@@ -82,7 +79,7 @@ define(function (require) {
                         + "return (looped ? result : " + ($$[$0 - 1] || "''") + "); })()";
                     break;
                 case 12:
-                    this.$ = "I18nPlural.getCategoryFromTemplateParameters({";
+                    this.$ = "selectPlural({";
                     var needsComma = false;
                     for (var key in $$[$0 - 1]) {
                         if (objOwns($$[$0 - 1], key)) {
