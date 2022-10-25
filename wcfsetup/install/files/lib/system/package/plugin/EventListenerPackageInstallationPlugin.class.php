@@ -39,7 +39,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     IGuiPackageInstallationPlugin,
     IUniqueNameXMLPackageInstallationPlugin
 {
-    use TXmlGuiPackageInstallationPlugin;
+    use TXmlGuiPackageInstallationPlugin {
+        setEntryData as private traitSetEntryData;
+        editEntry as private traitEditEntry;
+    }
 
     /**
      * @inheritDoc
@@ -332,15 +335,63 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 ->packageIDs(\array_merge(
                     [$this->installation->getPackage()->packageID],
                     \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-                )),
+                ))
+                ->available($form->getFormMode() !== IFormDocument::FORM_MODE_CREATE),
 
             UserGroupOptionFormField::create()
                 ->description('wcf.acp.pip.eventListener.permissions.description')
                 ->packageIDs(\array_merge(
                     [$this->installation->getPackage()->packageID],
                     \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-                )),
+                ))
+                ->available($form->getFormMode() !== IFormDocument::FORM_MODE_CREATE),
         ]);
+    }
+
+    /**
+     * Shows options and permissions if already specified.
+     */
+    public function setEntryData($identifier, IFormDocument $document): bool
+    {
+        $options = $document->getNodeById('options');
+        \assert($options instanceof OptionFormField);
+        $permissions = $document->getNodeById('permissions');
+        \assert($permissions instanceof UserGroupOptionFormField);
+
+        $result = $this->traitSetEntryData($identifier, $document);
+
+        if ($result) {
+            if (!$options->getValue()) {
+                $options->available(false);
+            }
+            if (!$permissions->getValue()) {
+                $permissions->available(false);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Shows options and permissions if already specified.
+     */
+    public function editEntry(IFormDocument $form, $identifier)
+    {
+        $options = $form->getNodeById('options');
+        \assert($options instanceof OptionFormField);
+        $permissions = $form->getNodeById('permissions');
+        \assert($permissions instanceof UserGroupOptionFormField);
+
+        $result = $this->traitEditEntry($form, $identifier);
+
+        if (!$options->getValue()) {
+            $options->available(false);
+        }
+        if (!$permissions->getValue()) {
+            $permissions->available(false);
+        }
+
+        return $result;
     }
 
     /**
