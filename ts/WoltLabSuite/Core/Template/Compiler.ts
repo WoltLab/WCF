@@ -12,7 +12,6 @@
 import * as parser from "../Template.grammar";
 import type { escapeHTML, formatNumeric } from "../StringUtil";
 import type { get as getLanguage } from "../Language";
-import type { getCategoryFromTemplateParameters } from "../I18n/Plural";
 
 interface TemplateLanguage {
   get: typeof getLanguage;
@@ -23,11 +22,12 @@ interface TemplateStringUtil {
   formatNumeric: typeof formatNumeric;
 }
 
-interface TemplatePlural {
-  getCategoryFromTemplateParameters: typeof getCategoryFromTemplateParameters;
-}
-
-export type CompiledTemplate = (S: TemplateStringUtil, L: TemplateLanguage, P: TemplatePlural, v: object) => string;
+export type CompiledTemplate = (
+  S: TemplateStringUtil,
+  L: TemplateLanguage,
+  selectPlural: (object: object) => string,
+  v: object,
+) => string;
 
 /**
  * Compiles the given template.
@@ -41,5 +41,5 @@ export function compile(template: string): CompiledTemplate {
     `;
 
   // eslint-disable-next-line @typescript-eslint/no-implied-eval
-  return new Function("StringUtil", "Language", "I18nPlural", "v", compiled) as CompiledTemplate;
+  return new Function("StringUtil", "Language", "selectPlural", "v", compiled) as CompiledTemplate;
 }
