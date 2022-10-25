@@ -2,15 +2,11 @@
  * Provides helper functions for String handling.
  *
  * @author  Tim Duesterhus, Joshua Ruesweg
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  StringUtil (alias)
  * @module  WoltLabSuite/Core/StringUtil
  */
-
-import * as NumberUtil from "./NumberUtil";
-
-const numberFormat = new Intl.NumberFormat(document.documentElement.lang);
 
 /**
  * Adds thousands separators to a given number.
@@ -18,7 +14,7 @@ const numberFormat = new Intl.NumberFormat(document.documentElement.lang);
  * @deprecated 6.0 Use `formatNumeric()` instead.
  */
 export function addThousandsSeparator(number: number): string {
-  return numberFormat.format(number);
+  return number.toLocaleString(document.documentElement.lang);
 }
 
 /**
@@ -41,9 +37,13 @@ export function escapeRegExp(string: string): string {
  * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
  */
 export function formatNumeric(number: number, decimalPlaces?: number): string {
-  number = NumberUtil.round(number, decimalPlaces || -2);
+  const maximumFractionDigits = decimalPlaces ? -decimalPlaces : 2;
 
-  return numberFormat.format(number).replace("-", "\u2212");
+  return number
+    .toLocaleString(document.documentElement.lang, {
+      maximumFractionDigits,
+    })
+    .replace("-", "\u2212");
 }
 
 /**
@@ -82,8 +82,6 @@ export function shortUnit(number: number): string {
 
     if (number > 10) {
       number = Math.floor(number);
-    } else {
-      number = NumberUtil.round(number, -1);
     }
 
     unitSuffix = "M";
@@ -92,14 +90,12 @@ export function shortUnit(number: number): string {
 
     if (number > 10) {
       number = Math.floor(number);
-    } else {
-      number = NumberUtil.round(number, -1);
     }
 
     unitSuffix = "k";
   }
 
-  return formatNumeric(number) + unitSuffix;
+  return formatNumeric(number, -1) + unitSuffix;
 }
 
 /**

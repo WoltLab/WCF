@@ -2,15 +2,14 @@
  * Provides helper functions for Number handling.
  *
  * @author  Tim Duesterhus
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/NumberUtil
+ * @deprecated 6.0 All functionality in this module is deprecated.
  */
 
 /**
- * Decimal adjustment of a number.
- *
- * @see  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+ * @deprecated 6.0 Use `Number.toLocaleString()` or `Number.toFixed()` as appropriate.
  */
 export function round(value: number, exp: number): number {
   // If the exp is undefined or zero...
