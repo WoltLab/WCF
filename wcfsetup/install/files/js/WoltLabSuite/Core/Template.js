@@ -38,15 +38,5 @@ define(["require", "exports", "tslib", "./I18n/Plural", "./Language/Store", "./S
             return this.compiled(StringUtil, LanguageStore, I18nPlural, v);
         }
     }
-    Object.defineProperty(Template, "callbacks", {
-        enumerable: false,
-        configurable: false,
-        get: function () {
-            throw new Error("WCF.Template.callbacks is no longer supported");
-        },
-        set: function (_value) {
-            throw new Error("WCF.Template.callbacks is no longer supported");
-        },
-    });
     return Template;
 });
