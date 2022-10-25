@@ -17,16 +17,14 @@ define(["require", "exports", "tslib", "../Template.grammar"], function (require
      * Compiles the given template.
      */
     function compile(template) {
-        template = parser.parse(template);
-        template =
-            "var tmp = {};\n" +
-                "for (var key in v) tmp[key] = v[key];\n" +
-                "v = tmp;\n" +
-                "v.__wcf = window.WCF; v.__window = window;\n" +
-                "return " +
-                template;
+        const compiled = `var tmp = {};
+    for (var key in v) tmp[key] = v[key];
+    v = tmp;
+    v.__wcf = window.WCF; v.__window = window;
+    return ${parser.parse(template)}
+    `;
         // eslint-disable-next-line @typescript-eslint/no-implied-eval
-        return new Function("StringUtil", "Language", "I18nPlural", "v", template);
+        return new Function("StringUtil", "Language", "I18nPlural", "v", compiled);
     }
     exports.compile = compile;
 });

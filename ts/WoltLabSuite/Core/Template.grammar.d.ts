@@ -7,4 +7,4 @@
  * @module	WoltLabSuite/Core/Template.grammar
  */
 
-export function parse(input: string): unknown;
+export function parse(input: string): string;
