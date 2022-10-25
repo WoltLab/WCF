@@ -1161,7 +1161,13 @@ class WCF
             $key = \random_bytes(16);
         }
 
-        return $scope . '_' .\hash_hmac('md5', \WCF_UUID . ':' . self::class . ':' . $scope, $key);
+        if (PACKAGE_ID) {
+            $prefix = \WCF_UUID . ':' . self::class . ':';
+        } else {
+            $prefix = '';
+        }
+
+        return $scope . '_' .\hash_hmac('md5', $prefix . $scope, $key);
     }
 
     /**
