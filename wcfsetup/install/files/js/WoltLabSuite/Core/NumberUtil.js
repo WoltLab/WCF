@@ -2,18 +2,17 @@
  * Provides helper functions for Number handling.
  *
  * @author  Tim Duesterhus
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/NumberUtil
+ * @deprecated 6.0 All functionality in this module is deprecated.
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.round = void 0;
     /**
-     * Decimal adjustment of a number.
-     *
-     * @see  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+     * @deprecated 6.0 Use `Number.toLocaleString()` or `Number.toFixed()` as appropriate.
      */
     function round(value, exp) {
         // If the exp is undefined or zero...
