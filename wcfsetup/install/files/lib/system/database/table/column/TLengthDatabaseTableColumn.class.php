@@ -16,7 +16,7 @@ trait TLengthDatabaseTableColumn
     /**
      * (maximum) length of the column's values
      */
-    protected ?int $length;
+    protected ?int $length = null;
 
     /**
      * Returns the maxium length value supported by this column or `null` if there is no such

@@ -18,7 +18,7 @@ trait TDecimalsDatabaseTableColumn
     /**
      * number of decimals the database table column supports
      */
-    protected ?int $decimals;
+    protected ?int $decimals = null;
 
     /**
      * Sets the number of decimals the database table column supports or unsets the previously
