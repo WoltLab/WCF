@@ -42,15 +42,4 @@ class Template {
   }
 }
 
-Object.defineProperty(Template, "callbacks", {
-  enumerable: false,
-  configurable: false,
-  get: function () {
-    throw new Error("WCF.Template.callbacks is no longer supported");
-  },
-  set: function (_value) {
-    throw new Error("WCF.Template.callbacks is no longer supported");
-  },
-});
-
 export = Template;

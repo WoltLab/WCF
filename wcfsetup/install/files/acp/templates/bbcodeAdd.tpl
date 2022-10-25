@@ -43,35 +43,37 @@
 {/capture}
 
 <script data-relocate="true">
-	$(function() {
-		$('.jsDeleteButton').click(function (event) {
-			$(event.target).parent().parent().remove();
-		});
-		
-		var attributeNo = {if !$attributes|count}0{else}{assign var='lastAttribute' value=$attributes|end}{$lastAttribute->attributeNo+1}{/if};
-		var attributeTemplate = new WCF.Template('{@$attributeTemplate|encodeJS}');
-		
-		$('.jsAddButton').click(function (event) {
-			var $html = $($.parseHTML(attributeTemplate.fetch({ attributeNo: attributeNo++ })));
-			$html.find('.jsDeleteButton').click(function (event) {
+	require(['WoltLabSuite/Core/Template'], (Template) => {
+		$(function() {
+			$('.jsDeleteButton').click(function (event) {
 				$(event.target).parent().parent().remove();
 			});
-			$('#attributeFieldset').append($html);
+			
+			var attributeNo = {if !$attributes|count}0{else}{assign var='lastAttribute' value=$attributes|end}{$lastAttribute->attributeNo+1}{/if};
+			var attributeTemplate = new Template('{@$attributeTemplate|encodeJS}');
+			
+			$('.jsAddButton').click(function (event) {
+				var $html = $($.parseHTML(attributeTemplate.fetch({ attributeNo: attributeNo++ })));
+				$html.find('.jsDeleteButton').click(function (event) {
+					$(event.target).parent().parent().remove();
+				});
+				$('#attributeFieldset').append($html);
+			});
+			
+			var $buttonSettings = $('.jsButtonSetting');
+			var $showButton = $('#showButton');
+			function toggleButtonSettings() {
+				if ($showButton.is(':checked')) {
+					$buttonSettings.show();
+				}
+				else {
+					$buttonSettings.hide();
+				}
+			}
+			
+			$showButton.change(toggleButtonSettings);
+			toggleButtonSettings();
 		});
-		
-		var $buttonSettings = $('.jsButtonSetting');
-		var $showButton = $('#showButton');
-		function toggleButtonSettings() {
-			if ($showButton.is(':checked')) {
-				$buttonSettings.show();
-			}
-			else {
-				$buttonSettings.hide();
-			}
-		}
-		
-		$showButton.change(toggleButtonSettings);
-		toggleButtonSettings();
 	});
 </script>
 
