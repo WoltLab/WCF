@@ -2,24 +2,22 @@
  * Provides helper functions for String handling.
  *
  * @author  Tim Duesterhus, Joshua Ruesweg
- * @copyright  2001-2019 WoltLab GmbH
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  StringUtil (alias)
  * @module  WoltLabSuite/Core/StringUtil
  */
-define(["require", "exports", "tslib", "./NumberUtil"], function (require, exports, tslib_1, NumberUtil) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.toCamelCase = exports.shortUnit = exports.unescapeHTML = exports.ucfirst = exports.lcfirst = exports.formatNumeric = exports.escapeRegExp = exports.escapeHTML = exports.addThousandsSeparator = void 0;
-    NumberUtil = tslib_1.__importStar(NumberUtil);
-    const numberFormat = new Intl.NumberFormat(document.documentElement.lang);
     /**
      * Adds thousands separators to a given number.
      *
      * @deprecated 6.0 Use `formatNumeric()` instead.
      */
     function addThousandsSeparator(number) {
-        return numberFormat.format(number);
+        return number.toLocaleString(document.documentElement.lang);
     }
     exports.addThousandsSeparator = addThousandsSeparator;
     /**
@@ -42,8 +40,12 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
      * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
      */
     function formatNumeric(number, decimalPlaces) {
-        number = NumberUtil.round(number, decimalPlaces || -2);
-        return numberFormat.format(number).replace("-", "\u2212");
+        const maximumFractionDigits = decimalPlaces ? -decimalPlaces : 2;
+        return number
+            .toLocaleString(document.documentElement.lang, {
+            maximumFractionDigits,
+        })
+            .replace("-", "\u2212");
     }
     exports.formatNumeric = formatNumeric;
     /**
@@ -81,9 +83,6 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
             if (number > 10) {
                 number = Math.floor(number);
             }
-            else {
-                number = NumberUtil.round(number, -1);
-            }
             unitSuffix = "M";
         }
         else if (number >= 1000) {
@@ -91,12 +90,9 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
             if (number > 10) {
                 number = Math.floor(number);
             }
-            else {
-                number = NumberUtil.round(number, -1);
-            }
             unitSuffix = "k";
         }
-        return formatNumeric(number) + unitSuffix;
+        return formatNumeric(number, -1) + unitSuffix;
     }
     exports.shortUnit = shortUnit;
     /**
