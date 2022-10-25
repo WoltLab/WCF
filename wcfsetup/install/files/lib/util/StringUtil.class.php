@@ -167,7 +167,13 @@ final class StringUtil
      */
     public static function formatNumeric(int|float $numeric): string
     {
-        return self::getNumberFormatter()->format($numeric);
+        $formatted = self::getNumberFormatter()->format($numeric);
+
+        if ($numeric < 0) {
+            return self::formatNegative($formatted);
+        }
+
+        return $formatted;
     }
 
     /**
