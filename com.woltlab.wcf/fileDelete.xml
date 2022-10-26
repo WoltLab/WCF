@@ -240,8 +240,8 @@
 		<file>font/fontawesome-webfont.eot</file>
 		<file>font/fontawesome-webfont.svg</file>
 		<file>font/fontawesome-webfont.ttf</file>
-		<file>font/fontawesome-webfont.woff</file>
 		<file>font/fontawesome-webfont.woff2</file>
+		<file>font/fontawesome-webfont.woff</file>
 		<file>font/getFont.php</file>
 		<file>icon/add.svg</file>
 		<file>icon/add1.svg</file>
@@ -1397,9 +1397,22 @@
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
+		<file>js/WoltLabSuite/Core/Component/Confirmation/Delete.js</file>
+		<file>js/WoltLabSuite/Core/Component/Confirmation/Prefab.js</file>
+		<file>js/WoltLabSuite/Core/Component/Confirmation/SoftDelete.js</file>
+		<file>js/WoltLabSuite/Core/Component/Dialog/woltlab-core-dialog-control.js</file>
+		<file>js/WoltLabSuite/Core/Component/Dialog/woltlab-core-dialog.js</file>
 		<file>js/WoltLabSuite/Core/Controller/ClipboardData.js</file>
 		<file>js/WoltLabSuite/Core/Core.ts</file>
+		<file>js/WoltLabSuite/Core/Date/Time/Relative.js</file>
+		<file>js/WoltLabSuite/Core/Dialog.js</file>
+		<file>js/WoltLabSuite/Core/Dialog/Controls.js</file>
+		<file>js/WoltLabSuite/Core/Dialog/Setup.js</file>
+		<file>js/WoltLabSuite/Core/Dialog/modal-dialog.js</file>
+		<file>js/WoltLabSuite/Core/Dialog/woltlab-core-dialog-control.js</file>
+		<file>js/WoltLabSuite/Core/Dialog/woltlab-core-dialog.js</file>
 		<file>js/WoltLabSuite/Core/Dictionary.ts</file>
+		<file>js/WoltLabSuite/Core/Dom/Observer.js</file>
 		<file>js/WoltLabSuite/Core/ExifUtil.js</file>
 		<file>js/WoltLabSuite/Core/File/Util.js</file>
 		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList.js</file>
@@ -1409,6 +1422,9 @@
 		<file>js/WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/RequiredPackages.js</file>
 		<file>js/WoltLabSuite/Core/Form/Builder/Field/Label.js</file>
 		<file>js/WoltLabSuite/Core/Form/Builder/Field/Rating.js</file>
+		<file>js/WoltLabSuite/Core/Form/form-control.js</file>
+		<file>js/WoltLabSuite/Core/Helper/Overlay.js</file>
+		<file>js/WoltLabSuite/Core/I18n/Plural.js</file>
 		<file>js/WoltLabSuite/Core/ImageResizer.js</file>
 		<file>js/WoltLabSuite/Core/Media/Search.js</file>
 		<file>js/WoltLabSuite/Core/Template.grammar.jison</file>
@@ -1428,6 +1444,7 @@
 		<file>js/WoltLabSuite/Core/Ui/Reaction/ReputationButtons.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Redactor/RuntimeStyle.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/Menu/DropDown.js</file>
+		<file>js/WoltLabSuite/WebComponent/woltlab-core-time.js</file>
 		<file>js/closest.js</file>
 		<file>js/require.build-acp.js</file>
 		<file>js/wcombined.min.js</file>
@@ -1697,8 +1714,8 @@
 		<file>lib/system/api/erusev/parsedown/test/data/url_autolinking.md</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.html</file>
 		<file>lib/system/api/erusev/parsedown/test/data/whitespace.md</file>
-		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/INSTALL.fr.utf8</file>
+		<file>lib/system/api/ezyang/htmlpurifier/INSTALL</file>
 		<file>lib/system/api/ezyang/htmlpurifier/NEWS</file>
 		<file>lib/system/api/ezyang/htmlpurifier/README</file>
 		<file>lib/system/api/ezyang/htmlpurifier/TODO</file>
@@ -1782,11 +1799,20 @@
 		<file>lib/system/api/guzzlehttp/psr7/src/functions_include.php</file>
 		<file>lib/system/api/laminas/laminas-diactoros/.laminas-ci.json</file>
 		<file>lib/system/api/laminas/laminas-diactoros/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-diactoros/composer.lock</file>
+		<file>lib/system/api/laminas/laminas-diactoros/psalm-baseline.xml</file>
+		<file>lib/system/api/laminas/laminas-diactoros/psalm.xml.dist</file>
 		<file>lib/system/api/laminas/laminas-diactoros/renovate.json</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-httphandlerrunner/composer.lock</file>
 		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm-baseline.xml</file>
+		<file>lib/system/api/laminas/laminas-httphandlerrunner/psalm.xml.dist</file>
+		<file>lib/system/api/laminas/laminas-httphandlerrunner/renovate.json</file>
 		<file>lib/system/api/laminas/laminas-progressbar/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-progressbar/composer.lock</file>
+		<file>lib/system/api/laminas/laminas-progressbar/phpcs.xml.dist</file>
 		<file>lib/system/api/laminas/laminas-stdlib/CHANGELOG.md</file>
+		<file>lib/system/api/laminas/laminas-stdlib/composer.lock</file>
 		<file>lib/system/api/laminas/laminas-stdlib/phpcs.xml.dist</file>
 		<file>lib/system/api/laminas/laminas-stdlib/psalm-baseline.xml</file>
 		<file>lib/system/api/laminas/laminas-stdlib/psalm.xml.dist</file>
@@ -1859,8 +1885,8 @@
 		<file>lib/system/api/paragonie/random_compat/LICENSE</file>
 		<file>lib/system/api/paragonie/random_compat/build-phar.sh</file>
 		<file>lib/system/api/paragonie/random_compat/composer.json</file>
-		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey.asc</file>
+		<file>lib/system/api/paragonie/random_compat/dist/random_compat.phar.pubkey</file>
 		<file>lib/system/api/paragonie/random_compat/lib/random.php</file>
 		<file>lib/system/api/paragonie/random_compat/other/build_phar.php</file>
 		<file>lib/system/api/paragonie/random_compat/psalm-autoload.php</file>
@@ -2151,6 +2177,33 @@
 		<file>lib/system/api/symfony/css-selector/Tests/XPath/Fixtures/shakespear.html</file>
 		<file>lib/system/api/symfony/css-selector/Tests/XPath/TranslatorTest.php</file>
 		<file>lib/system/api/symfony/css-selector/phpunit.xml.dist</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Idn.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Info.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/LICENSE</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/README.md</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/DisallowedRanges.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/Regex.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/deviation.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/disallowed.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/disallowed_STD3_mapped.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/disallowed_STD3_valid.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/ignored.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/mapped.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/Resources/unidata/virama.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/bootstrap.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/bootstrap80.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-idn/composer.json</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/LICENSE</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/Normalizer.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/README.md</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/canonicalComposition.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/canonicalDecomposition.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/combiningClass.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/Resources/unidata/compatibilityDecomposition.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/bootstrap.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/bootstrap80.php</file>
+		<file>lib/system/api/symfony/polyfill-intl-normalizer/composer.json</file>
 		<file>lib/system/api/symfony/polyfill-mbstring/LICENSE</file>
 		<file>lib/system/api/symfony/polyfill-mbstring/Mbstring.php</file>
 		<file>lib/system/api/symfony/polyfill-mbstring/README.md</file>
@@ -2327,6 +2380,7 @@
 		<file>lib/system/cleanup/CleanupHandler.class.php</file>
 		<file>lib/system/cleanup/ICleanupAdapter.class.php</file>
 		<file>lib/system/cleanup/ICleanupHandler.class.php</file>
+		<file>lib/system/cli/DatabaseCLICommandHistory.class.php</file>
 		<file>lib/system/cli/DatabaseCommandHistory.class.php</file>
 		<file>lib/system/cli/command/CommandHandler.class.php</file>
 		<file>lib/system/cli/command/CommandNameCompleter.class.php</file>
@@ -2367,6 +2421,7 @@
 		<file>lib/system/database/table/DatabaseTableUtil.class.php</file>
 		<file>lib/system/database/table/column/IUnsignedDatabaseTableColumn.class.php</file>
 		<file>lib/system/database/table/column/TUnsignedDatabaseTableColumn.class.php</file>
+		<file>lib/system/database/table/column/TUnsupportedDefaultValue.class.php</file>
 		<file>lib/system/dialog/TestDialog.class.php</file>
 		<file>lib/system/email/mime/AbstractRecipientAwareTextMimePart.class.php</file>
 		<file>lib/system/email/transport/EmailTransport.class.php</file>
@@ -2418,6 +2473,7 @@
 		<file>lib/system/html/output/node/HtmlOutputNodeWoltlabSize.class.php</file>
 		<file>lib/system/html/output/node/QuoteHtmlOutputNode.class.php</file>
 		<file>lib/system/image/Thumbnail.class.php</file>
+		<file>lib/system/language/I18nPlural.class.php</file>
 		<file>lib/system/language/LanguageServerProcessor.class.php</file>
 		<file>lib/system/log/modification/ModificationLogHandler.class.php</file>
 		<file>lib/system/mail/DebugMailSender.class.php</file>
@@ -2566,9 +2622,9 @@
 		<file>lib/system/template/TemplatePluginModifier.class.php</file>
 		<file>lib/system/template/TemplatePluginPrefilter.class.php</file>
 		<file>lib/system/template/plugin/ArrayfromlistModifierTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/EncodeJSONModifierTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/FetchCompilerTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconCompilerTemplatePlugin.class.php</file>
-		<file>lib/system/template/plugin/IconPrefilterTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/StaticlangTemplatePluginCompiler.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginBlockLink.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginCompilerAppend.class.php</file>
