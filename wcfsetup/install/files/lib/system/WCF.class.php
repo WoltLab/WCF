@@ -79,9 +79,10 @@ if (\function_exists('mb_regex_encoding')) {
 \define('TIME_NOW', \time());
 
 // wcf imports
+require_once(__DIR__ . '/api/autoload.php');
+
 if (!\defined('NO_IMPORTS')) {
-    require_once(WCF_DIR . 'lib/system/api/autoload.php');
-    require_once(WCF_DIR . 'lib/core.functions.php');
+    require_once(__DIR__ . '/../core.functions.php');
 }
 
 /**
