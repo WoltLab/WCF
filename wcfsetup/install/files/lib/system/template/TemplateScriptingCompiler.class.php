@@ -1436,6 +1436,7 @@ class TemplateScriptingCompiler
                 $variable == 'true'
                 || $variable == 'false'
                 || $variable == 'null'
+                || $variable == '[]'
                 || \preg_match('/^[A-Z0-9_]*$/', $variable)
             )
         ) {
@@ -2131,7 +2132,7 @@ class TemplateScriptingCompiler
     public function replaceConstants($string)
     {
         return \preg_replace_callback(
-            '~(?<=^|' . $this->variableOperatorPattern . ')(?i)((?:\-?\d+(?:\.\d+)?)|true|false|null)(?=$|' . $this->variableOperatorPattern . ')~',
+            '~(?<=^|' . $this->variableOperatorPattern . ')(?i)((?:\-?\d+(?:\.\d+)?)|true|false|null|\[\])(?=$|' . $this->variableOperatorPattern . ')~',
             [$this, 'replaceConstantsCallback'],
             $string
         );
