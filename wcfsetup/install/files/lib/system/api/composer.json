@@ -16,7 +16,7 @@
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "^4.16",
         "guzzlehttp/guzzle": "^7.5",
-        "guzzlehttp/psr7": "^2.4.2",
+        "guzzlehttp/psr7": "^2.4.3",
         "laminas/laminas-diactoros": "^2.20",
         "laminas/laminas-httphandlerrunner": "^2.4",
         "laminas/laminas-progressbar": "^2.11",
