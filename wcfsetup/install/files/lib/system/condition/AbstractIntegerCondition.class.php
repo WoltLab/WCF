@@ -23,12 +23,6 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition
     protected $greaterThan;
 
     /**
-     * identifier used for the input fields
-     * @var string
-     */
-    protected $identifier = '';
-
-    /**
      * property value has to be less than the given value
      * @var int
      */
@@ -131,13 +125,8 @@ HTML;
 
     /**
      * Returns the identifier used for the input fields.
-     *
-     * @return  string
      */
-    protected function getIdentifier()
-    {
-        return $this->identifier;
-    }
+    abstract protected function getIdentifier(): string;
 
     /**
      * Returns the maximum value the property can have or `null` if there is no
