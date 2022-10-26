@@ -53,6 +53,13 @@ if (!@\ini_get('date.timezone')) {
     @\date_default_timezone_set('Europe/London');
 }
 
+// Make stack traces more useful with PHP 8.2 (which has SensitiveParameter).
+if (\PHP_VERSION_ID >= 80200) {
+    @\ini_set('zend.exception_ignore_args', 0);
+    @\ini_set('zend.exception_string_param_max_len', 25);
+}
+@\ini_set('assert.exception', 1);
+
 // Ensure a correct mbstring configuration
 \mb_internal_encoding('UTF-8');
 if (\function_exists('mb_regex_encoding')) {
