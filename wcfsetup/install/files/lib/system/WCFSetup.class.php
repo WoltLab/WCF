@@ -164,14 +164,6 @@ final class WCFSetup extends WCF
      */
     protected function initLanguage()
     {
-        // set mb settings
-        \mb_internal_encoding('UTF-8');
-        if (\function_exists('mb_regex_encoding')) {
-            \mb_regex_encoding('UTF-8');
-        }
-        \mb_language('uni');
-
-        // init setup language
         self::$languageObj = new SetupLanguage(null, ['languageCode' => self::$selectedLanguageCode]);
     }
 

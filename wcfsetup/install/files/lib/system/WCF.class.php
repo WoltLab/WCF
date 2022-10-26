@@ -53,6 +53,13 @@ if (!@\ini_get('date.timezone')) {
     @\date_default_timezone_set('Europe/London');
 }
 
+// Ensure a correct mbstring configuration
+\mb_internal_encoding('UTF-8');
+if (\function_exists('mb_regex_encoding')) {
+    \mb_regex_encoding('UTF-8');
+}
+\mb_language('uni');
+
 // define current woltlab suite version
 \define('WCF_VERSION', '6.0.0 dev 1');
 
@@ -540,13 +547,6 @@ class WCF
         if (isset($_GET['l']) && !self::getUser()->userID) {
             self::getSession()->setLanguageID(\intval($_GET['l']));
         }
-
-        // set mb settings
-        \mb_internal_encoding('UTF-8');
-        if (\function_exists('mb_regex_encoding')) {
-            \mb_regex_encoding('UTF-8');
-        }
-        \mb_language('uni');
 
         // get language
         self::$languageObj = LanguageFactory::getInstance()->getUserLanguage(self::getSession()->getLanguageID());
