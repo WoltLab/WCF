@@ -1301,8 +1301,5 @@ if (!class_exists(\wcf\system\WCFSetup::class)) {
 	));
 }
 
-// Composer autoloader
-require_once(TMP_DIR.'install/files/lib/system/api/autoload.php');
-
 // start setup
 new \wcf\system\WCFSetup();

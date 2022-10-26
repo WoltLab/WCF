@@ -13,12 +13,6 @@ namespace {
 	// set php error handler
 	set_error_handler([WCF::class, 'handleError'], E_ALL);
 
-	if (PHP_VERSION_ID >= 80200) {
-		@ini_set('zend.exception_ignore_args', 0);
-		@ini_set('zend.exception_string_param_max_len', 25);
-	}
-	@ini_set('assert.exception', 1);
-
 	// set shutdown function
 	register_shutdown_function([WCF::class, 'destruct']);
 	// set autoload function
@@ -85,11 +79,6 @@ namespace {
 				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
 			}
 		}
-	}
-	
-	// setting global gzip compression breaks output buffering
-	if (@ini_get('zlib.output_compression')) {
-		@ini_set('zlib.output_compression', '0');
 	}
 }
 

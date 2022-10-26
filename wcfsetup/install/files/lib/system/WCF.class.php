@@ -53,6 +53,25 @@ if (!@\ini_get('date.timezone')) {
     @\date_default_timezone_set('Europe/London');
 }
 
+// Make stack traces more useful with PHP 8.2 (which has SensitiveParameter).
+if (\PHP_VERSION_ID >= 80200) {
+    @\ini_set('zend.exception_ignore_args', 0);
+    @\ini_set('zend.exception_string_param_max_len', 25);
+}
+@\ini_set('assert.exception', 1);
+
+// setting global gzip compression breaks output buffering
+if (@\ini_get('zlib.output_compression')) {
+    @\ini_set('zlib.output_compression', '0');
+}
+
+// Ensure a correct mbstring configuration
+\mb_internal_encoding('UTF-8');
+if (\function_exists('mb_regex_encoding')) {
+    \mb_regex_encoding('UTF-8');
+}
+\mb_language('uni');
+
 // define current woltlab suite version
 \define('WCF_VERSION', '6.0.0 dev 1');
 
@@ -60,9 +79,10 @@ if (!@\ini_get('date.timezone')) {
 \define('TIME_NOW', \time());
 
 // wcf imports
+require_once(__DIR__ . '/api/autoload.php');
+
 if (!\defined('NO_IMPORTS')) {
-    require_once(WCF_DIR . 'lib/system/api/autoload.php');
-    require_once(WCF_DIR . 'lib/core.functions.php');
+    require_once(__DIR__ . '/../core.functions.php');
 }
 
 /**
@@ -540,13 +560,6 @@ class WCF
         if (isset($_GET['l']) && !self::getUser()->userID) {
             self::getSession()->setLanguageID(\intval($_GET['l']));
         }
-
-        // set mb settings
-        \mb_internal_encoding('UTF-8');
-        if (\function_exists('mb_regex_encoding')) {
-            \mb_regex_encoding('UTF-8');
-        }
-        \mb_language('uni');
 
         // get language
         self::$languageObj = LanguageFactory::getInstance()->getUserLanguage(self::getSession()->getLanguageID());
