@@ -27,7 +27,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
     /**
      * @inheritDoc
      */
-    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
+    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData): void
     {
         if (!($objectList instanceof UserList)) {
             throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
@@ -51,7 +51,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
     /**
      * @inheritDoc
      */
-    public function checkUser(Condition $condition, User $user)
+    public function checkUser(Condition $condition, User $user): bool
     {
         if (
             $condition->greaterThan !== null
@@ -72,7 +72,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
     /**
      * @inheritDoc
      */
-    protected function getIdentifier()
+    protected function getIdentifier(): string
     {
         return 'user_' . $this->getDecoratedObject()->propertyname;
     }
@@ -80,7 +80,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
     /**
      * @inheritDoc
      */
-    protected function getLabel()
+    protected function getLabel(): string
     {
         return WCF::getLanguage()->get('wcf.user.condition.' . $this->getDecoratedObject()->propertyname);
     }
@@ -88,7 +88,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
     /**
      * @inheritDoc
      */
-    public function showContent(Condition $condition)
+    public function showContent(Condition $condition): bool
     {
         if (!WCF::getUser()->userID) {
             return false;

@@ -39,7 +39,7 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     /**
      * @inheritDoc
      */
-    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData)
+    public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData): void
     {
         if (!($objectList instanceof UserList)) {
             throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
@@ -62,7 +62,7 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     /**
      * @inheritDoc
      */
-    public function checkUser(Condition $condition, User $user)
+    public function checkUser(Condition $condition, User $user): bool
     {
         /** @noinspection PhpUndefinedFieldInspection */
         $greaterThan = $condition->greaterThan;
@@ -82,7 +82,7 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     /**
      * @inheritDoc
      */
-    protected function getIdentifier()
+    protected function getIdentifier(): string
     {
         return 'user_registrationDateInterval';
     }
@@ -90,7 +90,7 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
     /**
      * @inheritDoc
      */
-    public function showContent(Condition $condition)
+    public function showContent(Condition $condition): bool
     {
         if (!WCF::getUser()->userID) {
             return false;
@@ -104,7 +104,7 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
      *
      * @since   3.0
      */
-    protected function validateConflictingValues()
+    protected function validateConflictingValues(): void
     {
         if ($this->lessThan !== null && $this->greaterThan !== null && $this->greaterThan >= $this->lessThan) {
             $this->errorMessage = 'wcf.condition.greaterThan.error.lessThan';
