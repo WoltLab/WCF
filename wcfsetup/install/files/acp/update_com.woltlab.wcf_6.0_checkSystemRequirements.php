@@ -64,7 +64,7 @@ if (!\version_compare($compareSQLVersion, $neededSqlVersion, '>=')) {
 }
 
 $sql = "SELECT 1";
-$statement = $db->prepareStatement($sql);
+$statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute();
 if ($statement->fetchSingleColumn() !== 1) {
     if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
