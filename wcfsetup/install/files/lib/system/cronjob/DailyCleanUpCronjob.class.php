@@ -68,23 +68,7 @@ class DailyCleanUpCronjob extends AbstractCronjob
             TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME,
         ]);
 
-        // tracked visits
-        $visitLifetime = 120 * 86400;
-        \assert($visitLifetime > VisitTracker::LIFETIME);
-
-        $sql = "DELETE FROM wcf1_tracked_visit
-                WHERE       visitTime < ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            TIME_NOW - $visitLifetime,
-        ]);
-
-        $sql = "DELETE FROM wcf1_tracked_visit_type
-                WHERE       visitTime < ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            TIME_NOW - $visitLifetime,
-        ]);
+        VisitTracker::getInstance()->prune();
 
         // clean up cronjob log
         $sql = "DELETE FROM wcf1_cronjob_log

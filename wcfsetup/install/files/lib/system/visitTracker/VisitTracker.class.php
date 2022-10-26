@@ -245,4 +245,29 @@ class VisitTracker extends SingletonFactory
             WCF::getSession()->register('trackedUserVisits', $this->userVisits);
         }
     }
+
+    /**
+     * Removes expired entries from the database.
+     *
+     * @since 6.0
+     */
+    public function prune(): void
+    {
+        $visitLifetime = 120 * 86400;
+        \assert($visitLifetime > self::LIFETIME);
+
+        $sql = "DELETE FROM wcf1_tracked_visit
+                WHERE       visitTime < ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            TIME_NOW - $visitLifetime,
+        ]);
+
+        $sql = "DELETE FROM wcf1_tracked_visit_type
+                WHERE       visitTime < ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            TIME_NOW - $visitLifetime,
+        ]);
+    }
 }
