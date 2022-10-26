@@ -27,7 +27,17 @@ if (\PHP_INT_SIZE != 8) {
     if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
         $message = "Die eingesetzte PHP-Version muss 64-Bit-Ganzzahlen unterst&uuml;tzen.";
     } else {
-        $message = "The PHP version must support 64-bit integers";
+        $message = "The PHP version must support 64-bit integers.";
+    }
+
+    throw new \RuntimeException($message);
+}
+
+if (!\extension_loaded('intl')) {
+    if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+        $message = "Die 'intl' PHP-Erweiterung muss aktiv sein.";
+    } else {
+        $message = "The 'intl' PHP extension needs to be enabled.";
     }
 
     throw new \RuntimeException($message);
