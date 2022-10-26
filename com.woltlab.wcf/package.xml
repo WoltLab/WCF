@@ -53,9 +53,19 @@
 	<instructions type="update" fromversion="5.5.*">
 		<!--
 tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
-	acp/database/update_com.woltlab.wcf_6.0_pre.php
+	acp/update_com.woltlab.wcf_6.0_checkSystemRequirements.php \
+	acp/update_com.woltlab.wcf_6.0_checkCache.php \
+	acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php \
+	acp/database/update_com.woltlab.wcf_6.0_pre.php \
+	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php
 		-->
 		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
+
+		<!-- Checks that need to happen before the upgrade starts. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkSystemRequirements.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkCache.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php</instruction>
+		<!--instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php</instruction-->
 
 		<!-- Required for wcf1_package_installation_file_log. -->
 		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.0_pre.php</instruction>
@@ -77,11 +87,13 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!-- Misc. PIPs. -->
 		<instruction type="acpMenu" />
 		<instruction type="bbcode" />
+		<instruction type="eventListener" />
 		<instruction type="objectType" />
 		<instruction type="userMenu" />
 		<instruction type="userOption" />
 
 		<!-- Clean Up. -->
 		<instruction type="fileDelete" />
+		<instruction type="templateDelete" />
 	</instructions>
 </package>
