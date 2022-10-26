@@ -80,11 +80,6 @@ namespace {
 			}
 		}
 	}
-	
-	// setting global gzip compression breaks output buffering
-	if (@ini_get('zlib.output_compression')) {
-		@ini_set('zlib.output_compression', '0');
-	}
 }
 
 namespace wcf {

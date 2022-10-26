@@ -60,6 +60,11 @@ if (\PHP_VERSION_ID >= 80200) {
 }
 @\ini_set('assert.exception', 1);
 
+// setting global gzip compression breaks output buffering
+if (@\ini_get('zlib.output_compression')) {
+    @\ini_set('zlib.output_compression', '0');
+}
+
 // Ensure a correct mbstring configuration
 \mb_internal_encoding('UTF-8');
 if (\function_exists('mb_regex_encoding')) {
