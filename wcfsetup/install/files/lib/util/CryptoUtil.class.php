@@ -46,19 +46,7 @@ final class CryptoUtil
      */
     public static function validateSignedString(string $string): bool
     {
-        $parts = \explode('-', $string, 2);
-        if (\count($parts) !== 2) {
-            return false;
-        }
-        [$signature, $value] = $parts;
-
-        try {
-            $value = Base64::decode($value);
-        } catch (\RangeException $e) {
-            return false;
-        }
-
-        return \hash_equals($signature, self::getSignature($value));
+        return self::getValueFromSignedString($string) !== null;
     }
 
     /**
@@ -71,16 +59,23 @@ final class CryptoUtil
      */
     public static function getValueFromSignedString(string $string): ?string
     {
-        if (!self::validateSignedString($string)) {
+        $parts = \explode('-', $string, 2);
+        if (\count($parts) !== 2) {
+            return null;
+        }
+        [$signature, $value] = $parts;
+
+        try {
+            $value = Base64::decode($value);
+        } catch (\RangeException) {
             return null;
         }
 
-        $parts = \explode('-', $string, 2);
-        try {
-            return Base64::decode($parts[1]);
-        } catch (\RangeException $e) {
-            throw new \LogicException('Unreachable', 0, $e);
+        if (!\hash_equals($signature, self::getSignature($value))) {
+            return null;
         }
+
+        return $value;
     }
 
     /**
