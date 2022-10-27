@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
@@ -15,14 +16,13 @@ use wcf\system\io\HttpFactory;
 use wcf\system\user\authentication\oauth\exception\StateValidationException;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\JSON;
 
 /**
  * Generic implementation to handle the OAuth 2 flow.
  *
  * @author  Tim Duesterhus
- * @copyright   2001-2021 WoltLab GmbH
+ * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
  * @since 5.4
@@ -114,7 +114,7 @@ abstract class AbstractOauth2Action extends AbstractAction
     /**
      * Processes the user (e.g. by registering session variables and redirecting somewhere).
      */
-    abstract protected function processUser(OauthUser $oauthUser);
+    abstract protected function processUser(OauthUser $oauthUser): ResponseInterface;
 
     /**
      * Validates the state parameter.
@@ -191,7 +191,7 @@ abstract class AbstractOauth2Action extends AbstractAction
         return $parsed;
     }
 
-    protected function handleError(string $error)
+    protected function handleError(string $error): ResponseInterface
     {
         throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.' . $error));
     }
@@ -199,7 +199,7 @@ abstract class AbstractOauth2Action extends AbstractAction
     /**
      * Initiates the OAuth flow by redirecting to the '/authorize' URL.
      */
-    protected function initiate()
+    protected function initiate(): ResponseInterface
     {
         $parameters = [
             'response_type' => 'code',
@@ -233,9 +233,7 @@ abstract class AbstractOauth2Action extends AbstractAction
             $url = $url->withQuery($encodedParameters);
         }
 
-        HeaderUtil::redirect($url);
-
-        exit;
+        return new RedirectResponse($url);
     }
 
     /**
@@ -250,15 +248,11 @@ abstract class AbstractOauth2Action extends AbstractAction
                 $accessToken = $this->codeToAccessToken($_GET['code']);
                 $oauthUser = $this->getUser($accessToken);
 
-                $result = $this->processUser($oauthUser);
+                return $this->processUser($oauthUser);
             } elseif (isset($_GET['error'])) {
-                $result = $this->handleError($_GET['error']);
+                return $this->handleError($_GET['error']);
             } else {
-                $result = $this->initiate();
-            }
-
-            if ($result instanceof ResponseInterface) {
-                return $result;
+                return $this->initiate();
             }
         } catch (NamedUserException | PermissionDeniedException $e) {
             throw $e;
