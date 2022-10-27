@@ -29,6 +29,13 @@ return [
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
         ]),
+    PartialDatabaseTable::create('wcf1_language')
+        ->columns([
+            VarcharDatabaseTableColumn::create('locale')
+                ->notNull()
+                ->length(50)
+                ->defaultValue('')
+        ]),
     PartialDatabaseTable::create('wcf1_package_installation_node')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('nodeType'),
