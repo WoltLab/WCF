@@ -265,12 +265,10 @@ class ApplicationHandler extends SingletonFactory
      * This method can either be used for database table names directly or for
      * queries, for example.
      *
-     * @param string $string string to be processed
-     * @param bool $skipCache if `true`, no caches will be used and relevant application packages will be read from database directly
-     * @return  string              processed string
+     * @param $skipCache if `true`, no caches will be used and relevant application packages will be read from database directly
      * @since   5.2
      */
-    public static function insertRealDatabaseTableNames($string, $skipCache = false)
+    public static function insertRealDatabaseTableNames(string $string, bool $skipCache = false): string
     {
         // This method is a no-op if WCF_N is 1 which is also the most common case.
         // Bypass the complete logic, as it can be expensive, especially for the $skipCache = true
@@ -284,15 +282,38 @@ class ApplicationHandler extends SingletonFactory
             $packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
             $packageList->readObjects();
 
-            foreach ($packageList as $package) {
-                $abbreviation = Package::getAbbreviation($package->package);
+            $abbreviations = \implode(
+                '|',
+                \array_map(static function (Package $package): string {
+                    return \preg_quote(Package::getAbbreviation($package->package), '~');
+                }, $packageList->getObjects())
+            );
+            $regex = "~(\\b(?:{$abbreviations}))1_~";
 
-                $string = \str_replace($abbreviation . '1_', $abbreviation . WCF_N . '_', $string);
-            }
+            $string = \preg_replace(
+                $regex,
+                '${1}' . WCF_N . '_',
+                $string
+            );
         } else {
-            foreach (static::getInstance()->getAbbreviations() as $abbreviation) {
-                $string = \str_replace($abbreviation . '1_', $abbreviation . WCF_N . '_', $string);
+            static $regex = null;
+
+            if ($regex === null) {
+                $abbreviations = \implode(
+                    '|',
+                    \array_map(static function (Application $app): string {
+                        return \preg_quote($app->getAbbreviation(), '~');
+                    }, static::getInstance()->getApplications())
+                );
+
+                $regex = "~(\\b(?:{$abbreviations}))1_~";
             }
+
+            $string = \preg_replace(
+                $regex,
+                '${1}' . WCF_N . '_',
+                $string
+            );
         }
 
         return $string;

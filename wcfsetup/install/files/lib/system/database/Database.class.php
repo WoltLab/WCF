@@ -345,27 +345,7 @@ abstract class Database
      */
     public function prepare(string $statement, int $limit = 0, int $offset = 0): PreparedStatement
     {
-        static $regex = null;
-        if ($regex === null) {
-            if (!PACKAGE_ID) {
-                $abbreviations = 'wcf';
-            } else {
-                $abbreviations = \implode(
-                    '|',
-                    \array_map(static function (Application $app): string {
-                        return \preg_quote($app->getAbbreviation(), '~');
-                    }, ApplicationHandler::getInstance()->getApplications())
-                );
-            }
-
-            $regex = "~(\\b(?:{$abbreviations}))1_~";
-        }
-
-        $statement = \preg_replace(
-            $regex,
-            '${1}' . WCF_N . '_',
-            $statement
-        );
+        $statement = ApplicationHandler::insertRealDatabaseTableNames($statement);
 
         return $this->prepareStatement($statement, $limit, $offset);
     }
