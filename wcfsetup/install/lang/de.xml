@@ -779,7 +779,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canSeeAvatars"><![CDATA[Kann Avatare anderer Benutzer sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Kann eigenen Avatar hochladen]]></item>
-		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Kann E-Mail-Adresse ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Kann eigenen Benutzertitel bearbeiten]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Kann Benutzerkonto löschen]]></item>
@@ -5176,7 +5175,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}.
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar verwalten]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID} {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} derzeitigen Avatar gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} und maximal eine Dateigröße von {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Keinen Avatar verwenden]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Bereits hochgeladene Avatare werden bei Auswahl dieser Option gelöscht.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>

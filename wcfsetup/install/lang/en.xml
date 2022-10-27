@@ -757,7 +757,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Allowed Image Extensions]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canSeeAvatars"><![CDATA[Can view users’ avatars]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Can upload their avatar]]></item>
-		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change their email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit their user title]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can delete their user account]]></item>
@@ -5174,7 +5173,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 128×128 pixels.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar. The minimum dimensions are 128×128 pixels.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>

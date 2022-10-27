@@ -807,14 +807,7 @@ bmp</defaultvalue>
 				<categoryname>user.profile.avatar</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<enableoptions>user.profile.avatar.maxSize,user.profile.avatar.allowedFileExtensions</enableoptions>
-				<usersonly>1</usersonly>
-			</option>
-			<option name="user.profile.avatar.maxSize">
-				<categoryname>user.profile.avatar</categoryname>
-				<optiontype>fileSize</optiontype>
-				<defaultvalue>100000</defaultvalue>
-				<minvalue>10000</minvalue>
+				<enableoptions>user.profile.avatar.allowedFileExtensions</enableoptions>
 				<usersonly>1</usersonly>
 			</option>
 			<option name="user.profile.avatar.allowedFileExtensions">
@@ -1075,4 +1068,7 @@ webp</defaultvalue>
 			</option>
 		</options>
 	</import>
+	<delete>
+		<option name="user.profile.avatar.maxSize"/>
+	</delete>
 </data>
