@@ -299,16 +299,12 @@ class ApplicationHandler extends SingletonFactory
             static $regex = null;
 
             if ($regex === null) {
-                if (!PACKAGE_ID) {
-                    $abbreviations = 'wcf';
-                } else {
-                    $abbreviations = \implode(
-                        '|',
-                        \array_map(static function (Application $app): string {
-                            return \preg_quote($app->getAbbreviation(), '~');
-                        }, static::getInstance()->getApplications())
-                    );
-                }
+                $abbreviations = \implode(
+                    '|',
+                    \array_map(static function (Application $app): string {
+                        return \preg_quote($app->getAbbreviation(), '~');
+                    }, static::getInstance()->getApplications())
+                );
 
                 $regex = "~(\\b(?:{$abbreviations}))1_~";
             }
