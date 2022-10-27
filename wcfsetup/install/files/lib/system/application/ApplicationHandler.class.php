@@ -265,12 +265,10 @@ class ApplicationHandler extends SingletonFactory
      * This method can either be used for database table names directly or for
      * queries, for example.
      *
-     * @param string $string string to be processed
-     * @param bool $skipCache if `true`, no caches will be used and relevant application packages will be read from database directly
-     * @return  string              processed string
+     * @param $skipCache if `true`, no caches will be used and relevant application packages will be read from database directly
      * @since   5.2
      */
-    public static function insertRealDatabaseTableNames($string, $skipCache = false)
+    public static function insertRealDatabaseTableNames(string $string, bool $skipCache = false): string
     {
         // This method is a no-op if WCF_N is 1 which is also the most common case.
         // Bypass the complete logic, as it can be expensive, especially for the $skipCache = true
