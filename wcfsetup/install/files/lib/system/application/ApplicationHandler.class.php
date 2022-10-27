@@ -282,15 +282,42 @@ class ApplicationHandler extends SingletonFactory
             $packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
             $packageList->readObjects();
 
-            foreach ($packageList as $package) {
-                $abbreviation = Package::getAbbreviation($package->package);
+            $abbreviations = \implode(
+                '|',
+                \array_map(static function (Package $package): string {
+                    return \preg_quote(Package::getAbbreviation($package->package), '~');
+                }, $packageList->getObjects())
+            );
+            $regex = "~(\\b(?:{$abbreviations}))1_~";
 
-                $string = \str_replace($abbreviation . '1_', $abbreviation . WCF_N . '_', $string);
-            }
+            $string = \preg_replace(
+                $regex,
+                '${1}' . WCF_N . '_',
+                $string
+            );
         } else {
-            foreach (static::getInstance()->getAbbreviations() as $abbreviation) {
-                $string = \str_replace($abbreviation . '1_', $abbreviation . WCF_N . '_', $string);
+            static $regex = null;
+
+            if ($regex === null) {
+                if (!PACKAGE_ID) {
+                    $abbreviations = 'wcf';
+                } else {
+                    $abbreviations = \implode(
+                        '|',
+                        \array_map(static function (Application $app): string {
+                            return \preg_quote($app->getAbbreviation(), '~');
+                        }, static::getInstance()->getApplications())
+                    );
+                }
+
+                $regex = "~(\\b(?:{$abbreviations}))1_~";
             }
+
+            $string = \preg_replace(
+                $regex,
+                '${1}' . WCF_N . '_',
+                $string
+            );
         }
 
         return $string;
