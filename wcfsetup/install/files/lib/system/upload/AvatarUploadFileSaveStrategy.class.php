@@ -37,6 +37,17 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
     protected $avatar;
 
     /**
+     * Reject the file if it is larger than 750 kB after resizing. A worst-case
+     * completely-random 128x128 PNG is around 35 kB and JPEG is around 50 kB.
+     *
+     * Animated GIFs can be much larger depending on the length of animation,
+     * 750 kB seems to be a reasonable upper bound for anything that can be
+     * considered reasonable with regard to "distraction" and mobile data
+     * volume.
+     */
+    private const MAXIMUM_FILESIZE = 750_000;
+
+    /**
      * Creates a new instance of AvatarUploadFileSaveStrategy.
      *
      * @param int $userID
@@ -81,8 +92,7 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
                 return;
             }
 
-            // check filesize (after shrink)
-            if (@\filesize($fileLocation) > WCF::getSession()->getPermission('user.profile.avatar.maxSize')) {
+            if (\filesize($fileLocation) > self::MAXIMUM_FILESIZE) {
                 $uploadFile->setValidationErrorType('tooLarge');
 
                 return;
