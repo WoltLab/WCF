@@ -41,8 +41,7 @@ final class CryptoUtil
     }
 
     /**
-     * Returns whether the given string is a proper signed string.
-     * (i.e. consists of a valid signature + encoded value)
+     * @deprecated 6.0 Check if getValueFromSignedString() is !== null.
      */
     public static function validateSignedString(string $string): bool
     {
@@ -50,12 +49,13 @@ final class CryptoUtil
     }
 
     /**
-     * Returns the value of a signed string, after
-     * validating whether it is properly signed.
+     * Extracts the value from a string created with `createSignedString()`
+     * after verifying the signature. If the signature is not valid, `null`
+     * is returned.
      *
-     * - Returns null if the string is not properly signed.
-     *
-     * @see     \wcf\util\CryptoUtil::validateSignedString()
+     * Note: The return value MUST be checked with a type-safe `!== null`
+     * operation to not confuse a valid, but falsy, value such as `"0"`
+     * with an invalid value (`null`).
      */
     public static function getValueFromSignedString(string $string): ?string
     {
