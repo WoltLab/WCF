@@ -280,6 +280,19 @@ class PackageArchive
                 $data[$attribute->name] = $attribute->value;
             }
 
+            if (
+                !isset($data['minversion'])
+                || !Package::isValidVersion($data['minversion'])
+            ) {
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_REQUIRED_PACKAGE_VERSION_NUMBER,
+                    [
+                        'version' => $data['version'] ?? '',
+                        'packageName' => $element->nodeValue,
+                    ]
+                );
+            }
+
             $this->requirements[$element->nodeValue] = $data;
         }
 
