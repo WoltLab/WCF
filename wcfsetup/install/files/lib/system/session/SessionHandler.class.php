@@ -414,7 +414,10 @@ final class SessionHandler extends SingletonFactory
             // The only reason we sign the cookie is that an XSS vulnerability or a rogue application on a subdomain
             // is not able to create a valid `XSRF-TOKEN`, e.g. by setting the `XSRF-TOKEN` cookie to the static
             // value `1234`, possibly allowing later exploitation.
-            if (!PACKAGE_ID || CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])) {
+            if (
+                !PACKAGE_ID
+                || CryptoUtil::getValueFromSignedString($_COOKIE['XSRF-TOKEN']) !== null
+            ) {
                 $xsrfToken = $_COOKIE['XSRF-TOKEN'];
             }
         }

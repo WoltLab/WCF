@@ -41,46 +41,41 @@ final class CryptoUtil
     }
 
     /**
-     * Returns whether the given string is a proper signed string.
-     * (i.e. consists of a valid signature + encoded value)
+     * @deprecated 6.0 Check if getValueFromSignedString() is !== null.
      */
     public static function validateSignedString(string $string): bool
     {
+        return self::getValueFromSignedString($string) !== null;
+    }
+
+    /**
+     * Extracts the value from a string created with `createSignedString()`
+     * after verifying the signature. If the signature is not valid, `null`
+     * is returned.
+     *
+     * Note: The return value MUST be checked with a type-safe `!== null`
+     * operation to not confuse a valid, but falsy, value such as `"0"`
+     * with an invalid value (`null`).
+     */
+    public static function getValueFromSignedString(string $string): ?string
+    {
         $parts = \explode('-', $string, 2);
         if (\count($parts) !== 2) {
-            return false;
+            return null;
         }
         [$signature, $value] = $parts;
 
         try {
             $value = Base64::decode($value);
-        } catch (\RangeException $e) {
-            return false;
-        }
-
-        return \hash_equals($signature, self::getSignature($value));
-    }
-
-    /**
-     * Returns the value of a signed string, after
-     * validating whether it is properly signed.
-     *
-     * - Returns null if the string is not properly signed.
-     *
-     * @see     \wcf\util\CryptoUtil::validateSignedString()
-     */
-    public static function getValueFromSignedString(string $string): ?string
-    {
-        if (!self::validateSignedString($string)) {
+        } catch (\RangeException) {
             return null;
         }
 
-        $parts = \explode('-', $string, 2);
-        try {
-            return Base64::decode($parts[1]);
-        } catch (\RangeException $e) {
-            throw new \LogicException('Unreachable', 0, $e);
+        if (!\hash_equals($signature, self::getSignature($value))) {
+            return null;
         }
+
+        return $value;
     }
 
     /**
