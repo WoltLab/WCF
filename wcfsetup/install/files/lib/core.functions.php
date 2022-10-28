@@ -105,7 +105,6 @@ namespace wcf {
 namespace wcf\functions\exception {
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
-	use wcf\system\exception\ILoggingAwareException;
 	use wcf\system\exception\SystemException;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
@@ -241,20 +240,6 @@ namespace wcf\functions\exception {
 		$entry = "<<<<<<<<".$exceptionID."<<<<\n".$message."<<<<\n\n";
 		
 		file_put_contents($logFile, $entry, FILE_APPEND);
-
-		// let the Exception know it has been logged
-		$prev = $e;
-		do {
-			/** @deprecated 5.5 The ILoggingAwareException interface and feature is deprecated. See the interface for details. */
-			if (
-				$prev instanceof ILoggingAwareException
-				|| (method_exists($prev, 'finalizeLog') && is_callable([$prev, 'finalizeLog']))
-			) {
-				/** @var ILoggingAwareException $prev */
-				$prev->finalizeLog($exceptionID, $logFile);
-			}
-		}
-		while ($prev = $prev->getPrevious());
 
 		return $exceptionID;
 	}
