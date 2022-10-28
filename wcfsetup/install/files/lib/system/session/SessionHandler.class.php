@@ -239,7 +239,7 @@ final class SessionHandler extends SingletonFactory
             $cookieData = CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]);
 
             // Check whether the sessionId was correctly signed.
-            if (!$cookieData) {
+            if ($cookieData === null) {
                 return null;
             }
 
