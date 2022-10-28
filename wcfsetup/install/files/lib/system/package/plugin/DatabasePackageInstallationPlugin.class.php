@@ -61,8 +61,6 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 
     /**
      * Runs the database script at the given path.
-     *
-     * @param   string  $scriptPath
      */
     private function updateDatabase(string $scriptPath): void
     {
