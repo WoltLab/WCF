@@ -24,7 +24,7 @@ final class BackgroundQueueHandler extends SingletonFactory
      * Forces checking whether a background queue item is due.
      * This means that the AJAX request to BackgroundQueuePerformAction is triggered.
      */
-    public function forceCheck()
+    public function forceCheck(): void
     {
         WCF::getSession()->register('forceBackgroundQueuePerform', true);
 
@@ -37,11 +37,11 @@ final class BackgroundQueueHandler extends SingletonFactory
      * Enqueues the given job(s) for execution in the specified number of
      * seconds. Defaults to "as soon as possible" (0 seconds).
      *
-     * @param mixed $jobs Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
-     * @param int $time Minimum number of seconds to wait before performing the job.
+     * @param AbstractBackgroundJob|AbstractBackgroundJob[] $jobs
+     * @param $time Minimum number of seconds to wait before performing the job.
      * @see \wcf\system\background\BackgroundQueueHandler::enqueueAt()
      */
-    public function enqueueIn($jobs, $time = 0)
+    public function enqueueIn(AbstractBackgroundJob|array $jobs, int $time = 0): void
     {
         $this->enqueueAt($jobs, TIME_NOW + $time);
     }
@@ -51,11 +51,11 @@ final class BackgroundQueueHandler extends SingletonFactory
      * Note: The time is a minimum time. Depending on the size of
      * the queue the job can be performed later as well!
      *
-     * @param mixed $jobs Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
-     * @param int $time Earliest time to consider the job for execution.
+     * @param AbstractBackgroundJob|AbstractBackgroundJob[] $jobs
+     * @param $time Earliest time to consider the job for execution.
      * @throws  \InvalidArgumentException
      */
-    public function enqueueAt($jobs, $time)
+    public function enqueueAt(AbstractBackgroundJob|array $jobs, int $time): void
     {
         if ($time < TIME_NOW) {
             throw new \InvalidArgumentException("You may not schedule a job in the past (" . $time . " is smaller than the current timestamp " . TIME_NOW . ").");
@@ -92,11 +92,10 @@ final class BackgroundQueueHandler extends SingletonFactory
      * don't want to miss the automated error handling mechanism of the
      * queue.
      *
-     * @param AbstractBackgroundJob $job The job to perform.
-     * @param bool $debugSynchronousExecution Disables fail-safe mechanisms, errors will no longer be suppressed.
+     * @param $debugSynchronousExecution Disables fail-safe mechanisms, errors will no longer be suppressed.
      * @throws  \Throwable
      */
-    public function performJob(AbstractBackgroundJob $job, $debugSynchronousExecution = false)
+    public function performJob(AbstractBackgroundJob $job, bool $debugSynchronousExecution = false): void
     {
         $user = WCF::getUser();
 
@@ -140,7 +139,7 @@ final class BackgroundQueueHandler extends SingletonFactory
      *
      * @return      bool         true if this call attempted to execute a job regardless of its result
      */
-    public function performNextJob()
+    public function performNextJob(): bool
     {
         WCF::getDB()->beginTransaction();
         $committed = false;
@@ -212,13 +211,12 @@ final class BackgroundQueueHandler extends SingletonFactory
 
     /**
      * Returns how many items are due.
+     *
      * Note: Do not rely on the return value being correct, some other process may
      * have modified the queue contents, before this method returns. Think of it as an
      * approximation to know whether you should spend some time to clear the queue.
-     *
-     * @return  int
      */
-    public function getRunnableCount()
+    public function getRunnableCount(): int
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf1_background_job
