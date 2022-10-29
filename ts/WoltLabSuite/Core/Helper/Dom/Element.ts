@@ -23,20 +23,44 @@
  * @since 6.0
  */
 
+import "reflect-metadata";
 import { DomView } from "./View";
 
-export function DomElement(selector: string): PropertyDecorator {
+type DomElementOptions = {
+  nullable: boolean;
+  type: new () => HTMLElement;
+};
+
+export function DomElement(selector: string, options?: DomElementOptions): PropertyDecorator {
   return function (target: DomView, propertyKey: string): void {
     if (!(target instanceof DomView)) {
       throw new Error("@DomElement() is only supported on `DomView`");
     }
 
+    const { nullable, type } = Object.assign(
+      {
+        nullable: false,
+        type: Reflect.getMetadata("design:type", target, propertyKey),
+      } as DomElementOptions,
+      options,
+    );
+
     Object.defineProperty(target, propertyKey, {
       configurable: true,
-      get(this: DomView): HTMLElement {
+      get(this: DomView): HTMLElement | null {
         const element = this.root.querySelector<HTMLElement>(selector);
         if (element === null) {
+          if (nullable) {
+            return null;
+          }
+
           throw new Error(`Unable to find an element with the selector '${selector}'.`);
+        }
+
+        if (!(element instanceof type)) {
+          throw new Error(
+            `Expected an element of type '${type.name}' but found '${(element as HTMLElement).nodeName}'.`,
+          );
         }
 
         return element;
@@ -45,16 +69,36 @@ export function DomElement(selector: string): PropertyDecorator {
   };
 }
 
-export function DomElementList(selector: string): PropertyDecorator {
+type DomElementListOptions = {
+  type: new () => HTMLElement;
+};
+
+export function DomElementList(selector: string, options: DomElementListOptions): PropertyDecorator {
   return function (target: DomView, propertyKey: string): void {
     if (!(target instanceof DomView)) {
-      throw new Error("@DomElement() is only supported on `DomView`");
+      throw new Error("@DomElementList() is only supported on `DomView`");
     }
+
+    const reflectedType = Reflect.getMetadata("design:type", target, propertyKey);
+    if (reflectedType.prototype !== Array.prototype) {
+      throw new Error("The type must be an array of elements.");
+    }
+
+    const { type } = options;
 
     Object.defineProperty(target, propertyKey, {
       configurable: true,
       get(this: DomView): HTMLElement[] {
-        return Array.from(this.root.querySelectorAll<HTMLElement>(selector));
+        const elements = Array.from(this.root.querySelectorAll<HTMLElement>(selector));
+        for (const element of elements) {
+          if (!(element instanceof type)) {
+            throw new Error(
+              `Expected an element of type '${type.name}' but found '${(element as HTMLElement).nodeName}'.`,
+            );
+          }
+        }
+
+        return elements;
       },
     });
   };

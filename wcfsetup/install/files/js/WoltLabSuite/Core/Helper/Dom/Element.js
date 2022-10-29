@@ -22,21 +22,31 @@
  * @module WoltLabSuite/Core/Helper/Dom/Element
  * @since 6.0
  */
-define(["require", "exports", "./View"], function (require, exports, View_1) {
+define(["require", "exports", "./View", "reflect-metadata"], function (require, exports, View_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DomElementList = exports.DomElement = void 0;
-    function DomElement(selector) {
+    function DomElement(selector, options) {
         return function (target, propertyKey) {
             if (!(target instanceof View_1.DomView)) {
                 throw new Error("@DomElement() is only supported on `DomView`");
             }
+            const { nullable, type } = Object.assign({
+                nullable: false,
+                type: Reflect.getMetadata("design:type", target, propertyKey),
+            }, options);
             Object.defineProperty(target, propertyKey, {
                 configurable: true,
                 get() {
                     const element = this.root.querySelector(selector);
                     if (element === null) {
+                        if (nullable) {
+                            return null;
+                        }
                         throw new Error(`Unable to find an element with the selector '${selector}'.`);
+                    }
+                    if (!(element instanceof type)) {
+                        throw new Error(`Expected an element of type '${type.name}' but found '${element.nodeName}'.`);
                     }
                     return element;
                 },
@@ -44,15 +54,26 @@ define(["require", "exports", "./View"], function (require, exports, View_1) {
         };
     }
     exports.DomElement = DomElement;
-    function DomElementList(selector) {
+    function DomElementList(selector, options) {
         return function (target, propertyKey) {
             if (!(target instanceof View_1.DomView)) {
-                throw new Error("@DomElement() is only supported on `DomView`");
+                throw new Error("@DomElementList() is only supported on `DomView`");
             }
+            const reflectedType = Reflect.getMetadata("design:type", target, propertyKey);
+            if (reflectedType.prototype !== Array.prototype) {
+                throw new Error("The type must be an array of elements.");
+            }
+            const { type } = options;
             Object.defineProperty(target, propertyKey, {
                 configurable: true,
                 get() {
-                    return Array.from(this.root.querySelectorAll(selector));
+                    const elements = Array.from(this.root.querySelectorAll(selector));
+                    for (const element of elements) {
+                        if (!(element instanceof type)) {
+                            throw new Error(`Expected an element of type '${type.name}' but found '${element.nodeName}'.`);
+                        }
+                    }
+                    return elements;
                 },
             });
         };
