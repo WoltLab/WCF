@@ -8,6 +8,7 @@ requirejs.config({
 		prism: '3rdParty/prism',
 		'prismjs': '3rdParty/prism/prism',
 		'qr-creator': '3rdParty/qr-creator.min',
+		'reflect-metadata': '3rdParty/reflect-metadata',
 		tabbable: '3rdParty/focus-trap/index.umd.min',
 		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',

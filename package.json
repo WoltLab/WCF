@@ -24,6 +24,7 @@
     "@types/twitter-for-web": "0.0.2",
     "focus-trap": "^7.0.0",
     "qr-creator": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
     "tabbable": "^6.0.0",
     "tslib": "^2.4.0"
   }
