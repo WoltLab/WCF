@@ -461,7 +461,7 @@ WCF.Comment.Handler = Class.extend({
 		var anchor = elCreate('a');
 		anchor.href = link + (link.indexOf('#') === -1 ? '#' : '/') + 'comment' + elData(comment, 'object-id');
 		
-		var time = elBySel('.commentContent:not(.commentResponseContent) .containerHeadline time', comment);
+		var time = elBySel('.commentContent:not(.commentResponseContent) .containerHeadline woltlab-core-date-time', comment);
 		time.parentNode.insertBefore(anchor, time);
 		anchor.appendChild(time);
 	},
@@ -529,7 +529,7 @@ WCF.Comment.Handler = Class.extend({
 		var anchor = elCreate('a');
 		anchor.href = link + (link.indexOf('#') === -1 ? '#' : '/') + 'comment' + commentId + '/response' + responseId;
 		
-		var time = elBySel('.commentResponseContent .containerHeadline time', response);
+		var time = elBySel('.commentResponseContent .containerHeadline woltlab-core-date-time', response);
 		time.parentNode.insertBefore(anchor, time);
 		anchor.appendChild(time);
 	},
