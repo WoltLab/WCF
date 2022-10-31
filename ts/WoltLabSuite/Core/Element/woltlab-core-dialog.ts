@@ -13,6 +13,7 @@
 import DomUtil from "../Dom/Util";
 import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helper/PageOverlay";
 import * as Language from "../Language";
+import { scrollDisable, scrollEnable } from "../Ui/Screen";
 
 interface WoltlabCoreDialogEventMap {
   afterClose: CustomEvent;
@@ -65,6 +66,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#dialog.showModal();
 
     adoptPageOverlayContainer(this.#dialog);
+    scrollDisable();
   }
 
   close(): void {
@@ -74,6 +76,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.dispatchEvent(event);
 
     releasePageOverlayContainer(this.#dialog);
+    scrollEnable();
   }
 
   get dialog(): HTMLDialogElement {

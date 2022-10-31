@@ -9,7 +9,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Language"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Language) {
+define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "../Language", "../Ui/Screen"], function (require, exports, tslib_1, Util_1, PageOverlay_1, Language, Screen_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreDialogElement = void 0;
@@ -40,12 +40,14 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
             }
             this.#dialog.showModal();
             (0, PageOverlay_1.adoptPageOverlayContainer)(this.#dialog);
+            (0, Screen_1.scrollDisable)();
         }
         close() {
             this.#dialog.close();
             const event = new CustomEvent("afterClose");
             this.dispatchEvent(event);
             (0, PageOverlay_1.releasePageOverlayContainer)(this.#dialog);
+            (0, Screen_1.scrollEnable)();
         }
         get dialog() {
             return this.#dialog;
