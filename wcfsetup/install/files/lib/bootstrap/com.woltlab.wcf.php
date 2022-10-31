@@ -6,7 +6,7 @@ use wcf\system\event\listener\UserLoginCancelLostPasswordListener;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
 
-return static function () {
+return static function (): void {
     WCF::getTPL()->assign(
         'executeCronjobs',
         CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE

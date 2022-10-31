@@ -16,7 +16,7 @@ use wcf\system\user\authentication\event\UserLoggedIn;
  */
 final class UserLoginCancelLostPasswordListener
 {
-    public function __invoke(UserLoggedIn $event)
+    public function __invoke(UserLoggedIn $event): void
     {
         $user = $event->getUser();
         if (!$user->lostPasswordKey) {
