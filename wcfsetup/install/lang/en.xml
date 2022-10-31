@@ -1394,7 +1394,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="https://github.com/settings/developers" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
 		<item name="wcf.acp.option.twitter_public_key"><![CDATA[Twitter API key]]></item>
-		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[You can obtain both your API key and API secret at <a href="https://dev.twitter.com/apps" class="externalURL">Twitter</a>. The Callback URL is: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[You can obtain both your API key and API secret at <a href="https://developer.twitter.com/en/portal/projects-and-apps" class="externalURL">Twitter</a>. The Callback URL is: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.twitter_private_key"><![CDATA[Twitter API secret]]></item>
 		<item name="wcf.acp.option.facebook_public_key"><![CDATA[Facebook APP-ID]]></item>
 		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[You can obtain your APP-ID and Application Secret at <a href="https://developers.facebook.com/apps" class="externalURL">Facebook</a>. The OAuth redirect URI is: {link controller="FacebookAuth" forceFrontend=true}{/link}]]></item>
