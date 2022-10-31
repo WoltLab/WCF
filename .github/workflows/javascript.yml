@@ -51,3 +51,6 @@ jobs:
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/focus-trap/index.umd.min.js node_modules/tabbable/dist/index.umd.min.js
         diff -wu wcfsetup/install/files/js/3rdParty/focus-trap/index.umd.min.js.map node_modules/tabbable/dist/index.umd.min.js.map
+    - name: "Check 'reflect-metadata'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/reflect-metadata.js node_modules/reflect-metadata/Reflect.js
