@@ -23,6 +23,7 @@ fa-icon {
   height: var(--icon-size);
   justify-content: center;
   pointer-events: none;
+  vertical-align: text-bottom;
   width: calc(var(--icon-size) * 1.25);
 
   &:not(:upgraded) {
