@@ -5,7 +5,7 @@ namespace wcf\system\form\builder\field\dependency;
 use wcf\data\DatabaseObjectList;
 
 /**
- * Represents a dependency that requires that requires a field to have a certain value.
+ * Represents a dependency that requires a field to have a certain value.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
