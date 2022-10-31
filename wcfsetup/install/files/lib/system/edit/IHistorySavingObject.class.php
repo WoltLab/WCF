@@ -7,7 +7,7 @@ use wcf\data\IDatabaseObjectProcessor;
 use wcf\data\IUserContent;
 
 /**
- * Represents an object that saves it's edit history.
+ * Represents an object that saves its edit history.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH

@@ -75,8 +75,8 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
         // The wcf1_moderation_queue_to_user table caches the access to the queue item with
         // the isAffected column, so we don't need to calculate the access for these users.
         // For performance reasons, the query is also limited to 100 userIDs, because each
-        // permission calculation could perform own SQL queries within the calculation and we
-        // have to calculate the permissions for each user separately.
+        // permission calculation could perform own SQL queries within the calculation, and
+        // we have to calculate the permissions for each user separately.
         $sql = "SELECT  DISTINCT userID
                 FROM    (
                             SELECT  userID

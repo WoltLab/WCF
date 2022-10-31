@@ -151,7 +151,7 @@ trait TFormParentNode
             return $node;
         }
 
-        // signal leafs to \RecursiveIteratorIterator so that leaves do no have to
+        // signal leafs to \RecursiveIteratorIterator so that leaves do not have to
         // implement \RecursiveIterator; exception will be ignored because of the
         // constructor flag `\RecursiveIteratorIterator::CATCH_GET_CHILD`
         throw new \BadMethodCallException();

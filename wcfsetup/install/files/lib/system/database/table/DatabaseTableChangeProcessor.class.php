@@ -224,7 +224,7 @@ class DatabaseTableChangeProcessor
     }
 
     /**
-     * Applies all of the previously determined changes to achieve the desired database layout.
+     * Applies all the previously determined changes to achieve the desired database layout.
      *
      * @throws  SplitNodeException  if any change has been applied
      */
@@ -390,7 +390,7 @@ class DatabaseTableChangeProcessor
     }
 
     /**
-     * Calculates all of the necessary changes to be executed.
+     * Calculates all the necessary changes to be executed.
      */
     protected function calculateChanges()
     {
@@ -415,7 +415,7 @@ class DatabaseTableChangeProcessor
                 }
 
                 // The table is currently unknown to the system and should be removed,
-                // before it will be created again. This protect us from havely outdated
+                // before it will be created again. This protects us from heavily outdated
                 // tables.
                 $this->tablesToCleanup[] = $table;
                 $this->splitNodeMessage .= "Clean up table '{$tableName}'.";
@@ -496,7 +496,7 @@ class DatabaseTableChangeProcessor
                             $this->deleteForeignKeyLog($tableName, $foreignKey);
                         }
                     } elseif ($matchingExistingForeignKey === null) {
-                        // If the referenced database table does not already exists, delay the
+                        // If the referenced database table does not already exist, delay the
                         // foreign key creation until after the referenced table has been created.
                         if (!\in_array($foreignKey->getReferencedTable(), $this->existingTableNames)) {
                             continue;

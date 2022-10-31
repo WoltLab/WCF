@@ -7,7 +7,7 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * Represents a acp session log entry.
+ * Represents an ACP session log entry.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

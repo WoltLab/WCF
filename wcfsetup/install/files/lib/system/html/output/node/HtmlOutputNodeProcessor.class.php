@@ -13,7 +13,7 @@ use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
- * Processes a HTML string and renders the final output for display.
+ * Processes an HTML string and renders the final output for display.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

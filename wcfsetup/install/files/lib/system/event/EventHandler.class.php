@@ -257,7 +257,7 @@ class EventHandler extends SingletonFactory
     }
 
     /**
-     * Generates an unique name for an action.
+     * Generates a unique name for an action.
      *
      * @param string $className
      * @param string $eventName

@@ -190,8 +190,8 @@ final class HTTPRequest
 
         $options = [
             // We cannot use the 'timeout' value as the overall timeout for compatibility with
-            // pre-Guzzle users. However the combined connect and read timeout is not sufficient to
-            // reliably terminate all requests timely. Thus we configure a large emergency timeout to
+            // pre-Guzzle users. However, the combined connect and read timeout is not sufficient to
+            // reliably terminate all requests timely. Thus, we configure a large emergency timeout to
             // either the configured timeout or 10 minutes (whichever is larger). This ensures that the
             // request terminates eventually and the PHP worker will be freed.
             RequestOptions::TIMEOUT => \max($this->options['timeout'], 10 * 60),

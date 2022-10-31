@@ -48,7 +48,7 @@ class IntegerOptionType extends TextOptionType
      */
     public function validate(Option $option, $newValue)
     {
-        // Safeguard against values outside of 32 bit integers.
+        // Safeguard against values outside 32-bit integers.
         // Use the PHP constants once we have migrated to 64 bit only.
         if ($newValue < -2147483648) {
             throw new UserInputException($option->optionName, 'tooLow');

@@ -33,7 +33,7 @@ class UploadFormField extends AbstractFormField
     protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
 
     /**
-     * This flag indicates whether only images can uploaded via this field.
+     * This flag indicates whether only images can be uploaded via this field.
      * <strong>Attention</strong>: SVG images can contain bad code, therefore do not
      * use this option, outside the acp or check the file whether remote code is contained.
      * @var bool
@@ -820,7 +820,7 @@ class UploadFormField extends AbstractFormField
 
     /**
      * Sets the flag for `imageOnly`. This flag indicates whether only images
-     * can uploaded via this field. Other file types will be rejected during upload.
+     * can be uploaded via this field. Other file types will be rejected during upload.
      *
      * If set to `true` will also set the acceptable types to `image/*`. If set to
      * false it will clear the acceptable types if they are `image/*`.
@@ -927,7 +927,7 @@ class UploadFormField extends AbstractFormField
      * file. You are responsible to perform (proper) validation on the server side.
      *
      * Valid values are specified as "Unique file type specifiers":
-     * - A case insensitive file extension starting with a dot.
+     * - A case-insensitive file extension starting with a dot.
      * - A mime type.
      * - `audio/*`
      * - `image/*`

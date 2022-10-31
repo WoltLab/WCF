@@ -24,7 +24,7 @@ use wcf\system\WCF;
 trait TAJAXException
 {
     /**
-     * Throws an previously caught exception while maintaining the propriate stacktrace.
+     * Throws a previously caught exception while maintaining the propriate stacktrace.
      *
      * @param \Exception|\Throwable $e
      * @throws  AJAXException

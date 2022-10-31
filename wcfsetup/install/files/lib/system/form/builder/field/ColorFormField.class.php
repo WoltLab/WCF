@@ -5,7 +5,7 @@ namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
- * Implementation of a form field for a RGBA color.
+ * Implementation of a form field for an RGBA color.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2021 WoltLab GmbH

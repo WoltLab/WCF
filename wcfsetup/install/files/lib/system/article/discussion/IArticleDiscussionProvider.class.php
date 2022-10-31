@@ -25,7 +25,7 @@ interface IArticleDiscussionProvider
 
     /**
      * Returns the simple phrase "X <discussions>" that is used for both the statistics
-     * and the meta data in the article's headline.
+     * and the metadata in the article's headline.
      *
      * @return      string
      */

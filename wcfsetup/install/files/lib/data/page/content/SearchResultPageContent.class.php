@@ -8,7 +8,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchResultTextParser;
 
 /**
- * Represents an page content as a search result.
+ * Represents a page content as a search result.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

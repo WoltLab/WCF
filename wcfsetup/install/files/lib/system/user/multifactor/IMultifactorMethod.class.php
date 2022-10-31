@@ -5,7 +5,7 @@ namespace wcf\system\user\multifactor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
- * Handles multi-factor authentication for a specific authentication method.
+ * Handles multifactor authentication for a specific authentication method.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
@@ -16,14 +16,14 @@ use wcf\system\form\builder\IFormDocument;
 interface IMultifactorMethod
 {
     /**
-     * Returns a human readable status text regarding the set-up status for the given setup.
+     * Returns a human-readable status text regarding the set-up status for the given setup.
      *
      * An example text could be: "5 backup codes remaining".
      */
     public function getStatusText(Setup $setup): string;
 
     /**
-     * Populates the form to set-up and manage this method.
+     * Populates the form to set up and manage this method.
      */
     public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void;
 
@@ -36,7 +36,7 @@ interface IMultifactorMethod
      *
      * An example of an invalid state could be the removal of all multifactor devices.
      *
-     * It is recommended that this method double checks the state of the database to prevent TOCTOU
+     * It is recommended that this method double-checks the state of the database to prevent TOCTOU
      * issues with the validation performed by the form fields and the actual database update.
      *
      * @return  mixed   Opaque data that will be passed as `$returnData` in createManagementForm().

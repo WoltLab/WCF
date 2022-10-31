@@ -60,7 +60,7 @@ abstract class AbstractBackgroundJob
 
     /**
      * Performs the job. It will automatically be requeued up to MAX_FAILURES times
-     * if it fails (either throws an Exception or does not finish until the clean up
+     * if it fails (either throws an Exception or does not finish until the cleanup
      * cronjob comes along).
      */
     abstract public function perform();

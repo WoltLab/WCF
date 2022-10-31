@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * Shows the a list of objects matching a combination of tags.
+ * Shows a list of objects matching a combination of tags.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

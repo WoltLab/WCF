@@ -30,7 +30,7 @@ class UploadFile
     private $imageLink;
 
     /**
-     * Flag whether svg files should detected as image
+     * Flag whether svg files should be detected as image
      * @var bool
      */
     private $detectSvgAsImage;

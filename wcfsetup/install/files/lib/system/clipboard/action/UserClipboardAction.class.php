@@ -293,7 +293,7 @@ class UserClipboardAction extends AbstractClipboardAction
     }
 
     /**
-     * Returns the ids of the users which can be merge.
+     * Returns the ids of the users which can be merged.
      *
      * @return  int[]
      * @since   3.0

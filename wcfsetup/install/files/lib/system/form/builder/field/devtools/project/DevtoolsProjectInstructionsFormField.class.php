@@ -173,7 +173,7 @@ class DevtoolsProjectInstructionsFormField extends AbstractFormField
                 }
 
                 // Do not validate the actual version. The actual installation process
-                // does not validate it either and we should not *silently* drop uncommon
+                // does not validate it either, and we should not *silently* drop uncommon
                 // (but valid) formats.
                 // The JavaScript validation should be sufficient to nudge the user
                 // into the correct direction.

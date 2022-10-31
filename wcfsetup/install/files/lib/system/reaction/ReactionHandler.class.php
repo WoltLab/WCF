@@ -179,7 +179,7 @@ class ReactionHandler extends SingletonFactory
     }
 
     /**
-     * Get an likeable object from the internal cache.
+     * Get a likeable object from the internal cache.
      *
      * @param string $objectTypeName
      * @param int $objectID

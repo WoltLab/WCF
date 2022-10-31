@@ -9,7 +9,7 @@ namespace wcf\system\form\builder\field;
  * The values of such attributes cannot be accessed or set with this API but only "additional" attributes for which
  * no dedicated methods exist.
  * If a class implementing this interface should add dedicated methods for certain attributes in the future, the methods
- * of this interface should forwards calls to these dedicated methods.
+ * of this interface should forward calls to these dedicated methods.
  *
  * @author      Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH

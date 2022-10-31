@@ -56,7 +56,7 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
     {
         // Pages can be referenced as `123#Some Text`, where everything after the number
         // is a comment for better readability. Converting the values to integers via
-        // `intval()` will discard the everything after the ID.
+        // `intval()` will discard everything after the ID.
         $values = ArrayUtil::toIntegerArray($values);
 
         return \array_filter($values, static function ($value) {

@@ -11,7 +11,7 @@ use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
- * Reads a HTML string, applies filters and parses all nodes including bbcodes.
+ * Reads an HTML string, applies filters and parses all nodes including bbcodes.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
@@ -80,7 +80,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     }
 
     /**
-     * Processes a HTML string to provide the general DOM API. This method
+     * Processes an HTML string to provide the general DOM API. This method
      * does not perform any filtering or validation. You SHOULD NOT use this
      * to deal with HTML that has not been filtered previously.
      *

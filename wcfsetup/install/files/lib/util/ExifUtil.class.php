@@ -41,7 +41,7 @@ final class ExifUtil
     const ORIENTATION_VERTICAL_FLIP = 4;
 
     /**
-     * orientation value of a vertical flip and a 270 degree rotation
+     * orientation value of a vertical flip and a 270-degree rotation
      * @see http://jpegclub.org/exif_orientation.html
      * @var int
      */
@@ -55,14 +55,14 @@ final class ExifUtil
     const ORIENTATION_90_ROTATE = 6;
 
     /**
-     * orientation value of a horizontal flip and a 270 degree rotation
+     * orientation value of a horizontal flip and a 270-degree rotation
      * @see http://jpegclub.org/exif_orientation.html
      * @var int
      */
     const ORIENTATION_HORIZONTAL_FLIP_270_ROTATE = 7;
 
     /**
-     * orientation value of a 270 degree rotation
+     * orientation value of a 270-degree rotation
      * @see http://jpegclub.org/exif_orientation.html
      * @var int
      */
@@ -254,7 +254,7 @@ final class ExifUtil
     }
 
     /**
-     * Converts the format of exif geo tagging coordinates.
+     * Converts the format of exif geotagging coordinates.
      *
      * @param string $coordinate
      * @return  double

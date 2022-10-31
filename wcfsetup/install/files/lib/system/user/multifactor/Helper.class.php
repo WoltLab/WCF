@@ -3,7 +3,7 @@
 namespace wcf\system\user\multifactor;
 
 /**
- * Provides re-usable helper methods for use in multi-factor authentication.
+ * Provides re-usable helper methods for use in multifactor authentication.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH

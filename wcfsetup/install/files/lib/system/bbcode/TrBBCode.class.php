@@ -17,7 +17,7 @@ class TrBBCode extends AbstractBBCode
      */
     public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
     {
-        // ignore these tags as they occur outside of a table
+        // ignore these tags as they occur outside a table
         return '[tr]' . $content . '[/tr]';
     }
 }

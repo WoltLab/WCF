@@ -121,7 +121,7 @@ abstract class AbstractAction implements IAction
 
     /**
      * Calls the 'executed' event after the successful execution of this action.
-     * This functions won't called automatically. You must do this manually, if you inherit AbstractAction.
+     * This functions won't be called automatically. You must do this manually, if you inherit AbstractAction.
      */
     protected function executed()
     {

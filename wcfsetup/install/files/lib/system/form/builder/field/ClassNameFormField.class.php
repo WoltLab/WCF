@@ -114,7 +114,7 @@ class ClassNameFormField extends TextFormField
      * @param string $interface name of the interface the entered class must implement
      * @return  static              this field
      *
-     * @throws  \InvalidArgumentException   if the entered interface does not exists
+     * @throws  \InvalidArgumentException   if the entered interface does not exist
      */
     public function implementedInterface($interface)
     {
@@ -164,7 +164,7 @@ class ClassNameFormField extends TextFormField
      * @param string $parentClass name of the class the entered class must extend
      * @return  static              this field
      *
-     * @throws  \InvalidArgumentException   if the entered class does not exists
+     * @throws  \InvalidArgumentException   if the entered class does not exist
      */
     public function parentClass($parentClass)
     {

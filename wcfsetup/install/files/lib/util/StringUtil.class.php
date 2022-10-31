@@ -55,7 +55,7 @@ final class StringUtil
     }
 
     /**
-     * Creates an UUID.
+     * Creates a UUID.
      *
      * @return  string
      */
@@ -803,7 +803,7 @@ final class StringUtil
     }
 
     /**
-     * Simple multi-byte safe wordwrap() function.
+     * Simple multibyte safe wordwrap() function.
      *
      * @param string $string
      * @param int $width

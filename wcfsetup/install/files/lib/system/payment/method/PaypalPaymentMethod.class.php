@@ -7,7 +7,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * IPaymentMethod implementation for Paypal.
+ * IPaymentMethod implementation for PayPal.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

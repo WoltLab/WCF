@@ -96,7 +96,7 @@ class TrophyConditionHandler extends SingletonFactory
     }
 
     /**
-     * Revoke user trophies which are not longer fulfills the conditions.
+     * Revoke user trophies which are no longer fulfilling the conditions.
      *
      * @param int $maxRevokes
      * @since       5.2
@@ -197,7 +197,7 @@ class TrophyConditionHandler extends SingletonFactory
         // has joined a table.
         $userList->sqlJoins = $pseudoUserList->sqlJoins;
 
-        // We joining the user_trophy table to receive the userTrophyID, which should be deleted.
+        // We're joining the user_trophy table to receive the userTrophyID, which should be deleted.
         $userList->sqlJoins .= "
             LEFT JOIN   wcf" . WCF_N . "_user_trophy user_trophy
             ON          user_table.userID = user_trophy.userID";

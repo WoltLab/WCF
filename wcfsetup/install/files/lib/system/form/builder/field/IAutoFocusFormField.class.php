@@ -3,7 +3,7 @@
 namespace wcf\system\form\builder\field;
 
 /**
- * Represents a form field that can be auto-focused.
+ * Represents a form field that can be autofocused.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
@@ -14,17 +14,17 @@ namespace wcf\system\form\builder\field;
 interface IAutoFocusFormField extends IFormField
 {
     /**
-     * Sets whether this field is auto-focused and returns this field.
+     * Sets whether this field is autofocused and returns this field.
      *
-     * @param bool $autoFocus determines if field is auto-focused
+     * @param bool $autoFocus determines if field is autofocused
      * @return  static              this field
      */
     public function autoFocus($autoFocus = true);
 
     /**
-     * Returns `true` if this field is auto-focused and returns `false` otherwise.
+     * Returns `true` if this field is autofocused and returns `false` otherwise.
      *
-     * By default, fields are not auto-focused.
+     * By default, fields are not autofocused.
      *
      * @return  bool
      */

@@ -245,7 +245,7 @@ class PollManager extends SingletonFactory
             $this->pollOptions = \array_slice($this->pollOptions, 0, POLL_MAX_OPTIONS);
         }
 
-        // less options available than allowed
+        // more options available than allowed
         if ($count < $this->pollData['maxVotes']) {
             throw new UserInputException('pollMaxVotes', 'invalid');
         }

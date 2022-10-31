@@ -31,7 +31,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
     protected $label = 'wcf.user.condition.state';
 
     /**
-     * true if the the user has to be banned
+     * true if the user has to be banned
      * @var int
      */
     protected $userIsBanned = 0;
@@ -49,20 +49,20 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
     protected $userIsEnabled = 0;
 
     /**
-     * true if the the user may not be banned
+     * true if the user may not be banned
      * @var int
      */
     protected $userIsNotBanned = 0;
 
     /**
-     * true if the the user has confirmed their email address
+     * true if the user has confirmed their email address
      *
      * @var int
      */
     protected $userIsEmailConfirmed = 0;
 
     /**
-     * true if the the user has not confirmed their email address
+     * true if the user has not confirmed their email address
      * @var int
      */
     protected $userIsNotEmailConfirmed = 0;

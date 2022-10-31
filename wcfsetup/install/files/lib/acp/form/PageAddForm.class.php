@@ -54,7 +54,7 @@ class PageAddForm extends AbstractForm
     public $neededPermissions = ['admin.content.cms.canManagePage'];
 
     /**
-     * true if created page is multi-lingual
+     * true if created page is multilingual
      * @var bool
      */
     public $isMultilingual = 0;

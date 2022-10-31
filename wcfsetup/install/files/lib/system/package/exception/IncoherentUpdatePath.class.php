@@ -6,7 +6,7 @@ use wcf\data\package\PackageCache;
 use wcf\system\WCF;
 
 /**
- * Caused by gaps in the update path where a never version is requested but
+ * Caused by gaps in the update path where a newer version is requested but
  * there are no updates in-between that would allow a step-by-step update
  * to the requested version.
  *

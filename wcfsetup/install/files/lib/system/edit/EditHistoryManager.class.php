@@ -133,7 +133,7 @@ class EditHistoryManager extends SingletonFactory
         // 2: Check whether the edit was made by the offending users ("vandalizedEntries")
         // 3: Fetch the newest version that is either:
         //    a) older than $timeframe days
-        //    b) by a non offending user
+        //    b) by a non-offending user
         $userIDPlaceholders = '?' . \str_repeat(',?', \count($userIDs) - 1);
         $sql = "SELECT      MAX(entryID)
                 FROM        wcf" . WCF_N . "_edit_history_entry revertTo

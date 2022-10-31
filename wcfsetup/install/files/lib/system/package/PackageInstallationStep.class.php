@@ -33,7 +33,7 @@ class PackageInstallationStep
     protected $node = '';
 
     /**
-     * indicates if current current node should be splitted
+     * indicates if current node should be split
      * @var bool
      */
     protected $splitNode = false;
@@ -111,7 +111,7 @@ class PackageInstallationStep
     }
 
     /**
-     * Returns true if node should be splitted.
+     * Returns true if node should be split.
      *
      * @return  bool
      */

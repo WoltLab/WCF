@@ -48,7 +48,7 @@ class LikeObject extends DatabaseObject
 
     /**
      * An array with all reaction types, which were received for the object. As key, the reactionTypeID
-     * is used. As value there is another array. If the object does not received any reaction yet,
+     * is used. As value there is another array. If the object did not receive any reaction yet,
      * an empty array is returned.
      * @var array
      */
@@ -159,7 +159,7 @@ class LikeObject extends DatabaseObject
      *      'reactionTitle' => string,
      * ]
      *
-     * If the object does not received any reaction yet, an empty array is returned.
+     * If the object did not receive any reaction yet, an empty array is returned.
      *
      * @return  array
      * @since   5.2

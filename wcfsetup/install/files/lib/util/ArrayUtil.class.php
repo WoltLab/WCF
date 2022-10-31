@@ -132,7 +132,7 @@ final class ArrayUtil
     }
 
     /**
-     * Converts a array of strings to requested character encoding.
+     * Converts an array of strings to requested character encoding.
      * @param string $inCharset
      * @param string $outCharset
      * @param array|string $array

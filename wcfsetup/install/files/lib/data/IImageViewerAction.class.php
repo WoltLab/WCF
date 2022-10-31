@@ -21,7 +21,7 @@ interface IImageViewerAction
      * Returns a list of images, array indices given for 'images' are discarded (series and series 'url' are optional).
      * The first response (offset = 0) must return the total number of images.
      *
-     * Each requests contains three parameters:
+     * Each requests contain three parameters:
      *  - offset: number of already loaded image
      *  - maximumHeight: image provided in 'url' must be as close as possible to this value
      *  - maximumWidth: see above

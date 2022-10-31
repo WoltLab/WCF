@@ -430,7 +430,7 @@ class TemplateEngine extends SingletonFactory
     }
 
     /**
-     * Returns the absolute filename for template's meta data.
+     * Returns the absolute filename for template's metadata.
      *
      * @param string $templateName
      * @return  string

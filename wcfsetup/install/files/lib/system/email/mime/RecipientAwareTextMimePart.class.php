@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Default implementation of a recipient aware TextMimePart.
  *
  * This implementation generates the final content by passing the content
- * to a specified template. The language will be changed to the Mailbox' language,
+ * to a specified template. The language will be changed to the Mailboxes language,
  * before evaluating the template.
  *
  * @author  Tim Duesterhus

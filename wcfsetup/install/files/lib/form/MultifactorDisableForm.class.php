@@ -20,7 +20,7 @@ use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**
- * Represents the multi-factor disable form.
+ * Represents the multifactor disable form.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH

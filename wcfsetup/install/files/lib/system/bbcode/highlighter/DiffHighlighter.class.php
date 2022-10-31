@@ -23,7 +23,7 @@ class DiffHighlighter extends Highlighter
     protected $add = ["+", ">"];
 
     /**
-     * keywords for an deleted line, the - is used in unified diff, the < in
+     * keywords for a deleted line, the - is used in unified diff, the < in
      * normal diffs
      * @var string[]
      */

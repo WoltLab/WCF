@@ -41,7 +41,7 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
     }
 
     /**
-     * Adds an box content object as child.
+     * Adds a box content object as child.
      *
      * @param BoxContent $content box content object
      */

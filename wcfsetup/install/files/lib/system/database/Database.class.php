@@ -301,7 +301,7 @@ abstract class Database
             // This allows the system administrator to find offending requests
             // in MySQL's slow query log and / or MySQL's process list.
             // Note: This is meant to be run unconditionally in production to be
-            //       useful. Thus the code to retrieve the request information
+            //       useful. Thus, the code to retrieve the request information
             //       must be absolutely lightweight.
             static $requestInformation = null;
             if ($requestInformation === null) {
@@ -484,7 +484,7 @@ abstract class Database
     /**
      * Returns the name of the database user.
      *
-     * @return  string      user name
+     * @return  string      username
      */
     public function getUser()
     {

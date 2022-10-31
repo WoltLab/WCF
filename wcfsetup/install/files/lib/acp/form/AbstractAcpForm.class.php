@@ -124,7 +124,7 @@ abstract class AbstractAcpForm extends AbstractForm
     }
 
     /**
-     * Saves the i18n data for the given database object befor the changes of
+     * Saves the i18n data for the given database object before the changes of
      * the given database object are saved.
      *
      * @param DatabaseObject $databaseObject

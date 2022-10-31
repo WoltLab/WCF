@@ -141,7 +141,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         $returnValues = parent::delete();
 
         if (!empty($this->objects)) {
-            // update user special trophies trophies
+            // update user special trophies
             $userTrophies = UserTrophyList::getUserTrophies($userIDs);
 
             foreach ($userTrophies as $userID => $trophies) {

@@ -585,7 +585,7 @@ class PackageArchive
     }
 
     /**
-     * Returns true if the package is an application and has an unique abbreviation.
+     * Returns true if the package is an application and has a unique abbreviation.
      *
      * @return  bool
      */
@@ -817,7 +817,7 @@ class PackageArchive
             foreach ($existingPackages as $packageName => $instances) {
                 \uksort($instances, [Package::class, 'compareVersion']);
 
-                // get package with highest version number (get last package)
+                // get package with the highest version number (get last package)
                 $existingPackages[$packageName] = \array_pop($instances);
             }
         }

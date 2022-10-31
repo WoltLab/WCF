@@ -11,7 +11,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Shows the a list of tagged objects.
+ * Shows a list of tagged objects.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

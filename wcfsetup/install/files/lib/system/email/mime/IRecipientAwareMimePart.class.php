@@ -16,7 +16,7 @@ use wcf\system\email\Mailbox;
 interface IRecipientAwareMimePart
 {
     /**
-     * Makes this mime part aware of it's recipient.
+     * Makes this mime part aware of its recipient.
      * Note: `null` is a valid parameter and denotes that this mime part should
      * not be individualized.
      *

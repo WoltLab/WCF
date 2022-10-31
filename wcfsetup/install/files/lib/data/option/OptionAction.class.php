@@ -150,7 +150,7 @@ class OptionAction extends AbstractDatabaseObjectAction
 
     /**
      * Returns an array with rewrite rules per necessary directory/file
-     * Applications in sub-directories of another application will be mapped to the top one
+     * Applications in subdirectories of another application will be mapped to the top one
      *
      * @return string[][]
      */

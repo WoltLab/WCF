@@ -200,7 +200,7 @@ class UploadHandler extends SingletonFactory
     }
 
     /**
-     * Removes an file by file object.
+     * Removes a file by file object.
      *
      * @param string $internalId
      * @param UploadFile $file
@@ -464,7 +464,7 @@ class UploadHandler extends SingletonFactory
     }
 
     /**
-     * Registers an field in the storage.
+     * Registers a field in the storage.
      *
      * @param UploadField $field
      */

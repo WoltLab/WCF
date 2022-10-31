@@ -298,7 +298,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
     {
         $smallestThumbnailSize = \reset($this->options['thumbnailSizes']);
 
-        // image is smaller than smallest thumbnail size
+        // image is smaller than the smallest thumbnail size
         if ($file->width <= $smallestThumbnailSize['width'] && $file->height <= $smallestThumbnailSize['height']) {
             return;
         }

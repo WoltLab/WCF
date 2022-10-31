@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Parses bbcodes and transforms them into the custom HTML element <woltlab-bbcode>
  * that can be safely passed through HTMLPurifier's validation mechanism.
  *
- * All though not exactly required for all bbcodes, the actual output of an bbcode
+ * Although not exactly required for all bbcodes, the actual output of a bbcode
  * cannot be foreseen and potentially conflict with HTMLPurifier's whitelist. Examples
  * are <iframe> or other embedded media that is allowed as a result of a bbcode, but
  * not allowed to be directly provided by a user.
@@ -137,7 +137,7 @@ class HtmlBBCodeParser extends BBCodeParser
 
     /**
      * Reverts tags to their source representation if they either
-     * have no matching counter part (such as opening tags without
+     * have no matching counterpart (such as opening tags without
      * closing one), or if they're inside code bbcodes.
      */
     protected function ignoreUnclosedTags()

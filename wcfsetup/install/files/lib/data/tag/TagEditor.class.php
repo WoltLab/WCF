@@ -25,7 +25,7 @@ class TagEditor extends DatabaseObjectEditor
     protected static $baseClass = Tag::class;
 
     /**
-     * Adds the given tag, and all of it's synonyms as a synonym.
+     * Adds the given tag, and all of its synonyms as a synonym.
      *
      * @param Tag $synonym
      */

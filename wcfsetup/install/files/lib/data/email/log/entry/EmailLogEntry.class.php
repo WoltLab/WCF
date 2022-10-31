@@ -21,7 +21,7 @@ use wcf\system\email\Email;
  * @property-read   string $recipient    the recipient ("RCPT TO")
  * @property-read   ?int   $recipientID  the recipient's userID (if the email is being sent to a registered user)
  * @property-read   string $status       one of the `STATUS_*` constants
- * @property-read   string $message      a human readable explanation for the status
+ * @property-read   string $message      a human-readable explanation for the status
  *
  */
 class EmailLogEntry extends DatabaseObject

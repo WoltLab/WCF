@@ -7,7 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 
 /**
- * Every implementation for user conditions needs to implements this interface.
+ * Every implementation for user conditions needs to implement this interface.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH

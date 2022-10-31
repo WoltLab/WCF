@@ -82,8 +82,8 @@ trait TSelectionFormField
     /**
      * Sets the possible options of this field and returns this field.
      *
-     * Note: If PHP considers the key of the first selectable option to be empty
-     * and the this field is nullable, then the save value of that key is `null`
+     * Note: If PHP considers the key of the first selectable option to be empty,
+     * and the field is nullable, then the save value of that key is `null`
      * instead of the given empty value.
      *
      * If a `callable` is passed, it is expected that it either returns an array
@@ -93,7 +93,7 @@ trait TSelectionFormField
      * `$options->readObjects()` is called so that the `readObjects()` does not have
      * to be called by the API user.
      *
-     * If nested options are passed, the given options must be a array or a
+     * If nested options are passed, the given options must be an array or a
      * callable returning an array. Each array value must be an array with the
      * following entries: `depth`, `label`, and `value`.
      *

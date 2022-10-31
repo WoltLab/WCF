@@ -136,8 +136,8 @@ class TwitterAuthAction extends AbstractAction
             WCF::getSession()->register('__3rdPartyProvider', 'twitter');
 
             if (WCF::getUser()->userID) {
-                // This account does not belong to anyone and we are already logged in.
-                // Thus we want to connect this account.
+                // This account does not belong to anyone, and we are already logged in.
+                // Thus, we want to connect this account.
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
 
@@ -149,8 +149,8 @@ class TwitterAuthAction extends AbstractAction
                     )
                 );
             } else {
-                // This account does not belong to anyone and we are not logged in.
-                // Thus we want to connect this account to a newly registered user.
+                // This account does not belong to anyone, and we are not logged in.
+                // Thus, we want to connect this account to a newly registered user.
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
                 WCF::getSession()->register('__username', $oauthUser->getUsername());
@@ -277,7 +277,7 @@ class TwitterAuthAction extends AbstractAction
     }
 
     /**
-     * Requests an request_token to initiate the OAuth flow.
+     * Requests a request_token to initiate the OAuth flow.
      */
     private function getRequestToken()
     {

@@ -13,7 +13,7 @@ use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**
- * Abstract implementation of a package installation plugin using a XML file.
+ * Abstract implementation of a package installation plugin using an XML file.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

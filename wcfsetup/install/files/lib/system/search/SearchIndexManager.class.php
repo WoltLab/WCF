@@ -66,7 +66,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     }
 
     /**
-     * Returns the the object type with the given name.
+     * Returns the object type with the given name.
      *
      * @param string $objectType
      * @return  ObjectType

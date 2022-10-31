@@ -5,7 +5,7 @@ namespace wcf\data\user\option\category;
 use wcf\data\DatabaseObjectList;
 
 /**
- * Represents an list of user option categories.
+ * Represents a list of user option categories.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

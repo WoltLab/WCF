@@ -3,7 +3,7 @@
 namespace wcf\system\exception;
 
 /**
- * Exception implementation for cases when an object type of a certain object type
+ * Exception implementation for cases when an object type of certain object type
  * definition is expected but the object type is of a different object type definition.
  *
  * @author  Matthias Schmidt

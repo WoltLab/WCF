@@ -31,7 +31,7 @@ class Uninstaller
     protected $deleteEmptyTargetDir;
 
     /**
-     * indicates if sub directory will be deleted if empty
+     * indicates if subdirectory will be deleted if empty
      * @var bool
      */
     protected $deleteEmptyDirectories;

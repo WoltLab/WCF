@@ -48,7 +48,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     // output as raw code instead
                     $htmlNodeProcessor->replaceElementWithText($element, ' ' . $code . ' ', false);
                 } else {
-                    // Ensure that the smiley's HTML is up to date.
+                    // Ensure that the smiley's HTML is up-to-date.
                     $doc = new \DOMDocument();
                     $doc->loadHTML(\sprintf(
                         '<?xml version="1.0" encoding="UTF-8"?><html><body>%s</body></html>',

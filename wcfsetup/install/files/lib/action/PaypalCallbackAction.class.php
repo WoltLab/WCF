@@ -11,7 +11,7 @@ use wcf\system\payment\type\IPaymentType;
 use wcf\util\StringUtil;
 
 /**
- * Handles Paypal callbacks.
+ * Handles PayPal callbacks.
  *
  * @author  Marcel Werk
  * @copyright   2001-2021 WoltLab GmbH
@@ -31,7 +31,7 @@ class PaypalCallbackAction extends AbstractAction
         // check response
         $processor = null;
         try {
-            // post back to paypal to validate
+            // post back to PayPal to validate
             /** @noinspection PhpUnusedLocalVariableInspection */
             $content = '';
             try {

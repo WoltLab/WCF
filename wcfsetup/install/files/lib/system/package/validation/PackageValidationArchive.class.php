@@ -10,7 +10,7 @@ use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 
 /**
- * Recursively validates the package archive and it's delivered requirements.
+ * Recursively validates the package archive, and it's delivered requirements.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

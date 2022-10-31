@@ -270,7 +270,7 @@ class UserImporter extends AbstractImporter
     }
 
     /**
-     * Revolves duplicate user names and returns the new user name.
+     * Revolves duplicate usernames and returns the new username.
      *
      * @param string $username
      * @return  string

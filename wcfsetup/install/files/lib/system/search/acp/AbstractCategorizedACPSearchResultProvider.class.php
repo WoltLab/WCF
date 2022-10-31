@@ -7,7 +7,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\exception\SystemException;
 
 /**
- * Abstract implementation of a ACP search result provider with nested categories.
+ * Abstract implementation of an ACP search result provider with nested categories.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

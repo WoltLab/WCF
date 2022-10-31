@@ -180,7 +180,7 @@ class TemplateScriptingCompiler
     protected $constantPattern;
 
     /**
-     * pattern to match double quoted strings like "blah" or "quote: \"blah\""
+     * pattern to match double-quoted strings like "blah" or "quote: \"blah\""
      * @var string
      */
     protected $doubleQuotePattern;
@@ -192,7 +192,7 @@ class TemplateScriptingCompiler
     protected $singleQuotePattern;
 
     /**
-     * pattern to match single or double quoted strings
+     * pattern to match single or double-quoted strings
      * @var string
      */
     protected $quotePattern;

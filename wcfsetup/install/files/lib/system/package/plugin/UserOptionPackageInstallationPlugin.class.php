@@ -431,7 +431,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
                             $data[$optionalPropertyName] = $optionalProperty->nodeValue;
                         }
                     } elseif ($saveData && $optionalPropertyName === 'selectOptions') {
-                        // all of the other fields will be put in `additionalData`,
+                        // all the other fields will be put in `additionalData`,
                         // thus empty values are not necessary
                         $data['selectoptions'] = '';
                     }

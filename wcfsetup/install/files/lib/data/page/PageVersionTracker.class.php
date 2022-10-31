@@ -41,7 +41,7 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     }
 
     /**
-     * Adds an page content object as child.
+     * Adds a page content object as child.
      *
      * @param PageContent $content page content object
      */

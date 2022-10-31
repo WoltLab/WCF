@@ -150,8 +150,8 @@ final class FacebookAuthAction extends AbstractOauth2Action
             WCF::getSession()->register('__3rdPartyProvider', 'facebook');
 
             if (WCF::getUser()->userID) {
-                // This account does not belong to anyone and we are already logged in.
-                // Thus we want to connect this account.
+                // This account does not belong to anyone, and we are already logged in.
+                // Thus, we want to connect this account.
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
 
@@ -163,8 +163,8 @@ final class FacebookAuthAction extends AbstractOauth2Action
                     )
                 );
             } else {
-                // This account does not belong to anyone and we are not logged in.
-                // Thus we want to connect this account to a newly registered user.
+                // This account does not belong to anyone, and we are not logged in.
+                // Thus, we want to connect this account to a newly registered user.
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
                 WCF::getSession()->register('__username', $oauthUser->getUsername());

@@ -374,7 +374,7 @@ class WCF
 
         $filename = WCF_DIR . 'options.inc.php';
 
-        // create options file if doesn't exist
+        // create options file if it doesn't exist
         if (!\file_exists($filename) || \filemtime($filename) <= 1) {
             OptionEditor::rebuild();
         }

@@ -9,8 +9,8 @@ use wcf\system\WCF;
  * Implementation of a form field to set the rating of an object.
  *
  * The minimum and maximum rating are handled via `minimum()` and `maximum()`. Fields of this type
- * must have a minimum value and a maximum value. If no value has been set for a field of this class
- * the the field is not nullable, the minimum value will be automatically set when the field's value
+ * must have a minimum value and a maximum value. If no value has been set for a field of this class,
+ * and the field is not nullable, the minimum value will be automatically set when the field's value
  * is requested the first time.
  *
  * By default, the active rating state is represented by orange stars and the default state by white

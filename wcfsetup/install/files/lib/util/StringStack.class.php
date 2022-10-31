@@ -25,7 +25,7 @@ final class StringStack
     protected static $stringStack = [];
 
     /**
-     * Replaces a string with an unique hash value.
+     * Replaces a string with a unique hash value.
      *
      * @param string $string
      * @param string $type

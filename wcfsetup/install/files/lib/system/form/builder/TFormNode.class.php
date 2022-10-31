@@ -139,14 +139,14 @@ trait TFormNode
     /**
      * Sets if this node is available and returns this node.
      *
-     * By default, every node is available. This methods makes it easier to create forms
-     * that contains node that are only avaiable if certain options have specific values
+     * By default, every node is available. This method makes it easier to create forms
+     * that contains node that are only available if certain options have specific values
      * or the active user has specific permissions, for example. Furthermore, fields
      * themselves are also able to mark themselves as unavailable, for example, a selection
      * field without any options. A `IFormContainer` is automatically unavailable if it
      * contains no available children.
      *
-     * Unavailable fields produce no output, their value is not read, they are not validated
+     * Unavailable fields produce no output, their value is not read, they are not validated,
      * and they are not checked for save values.
      *
      * Note: Form field dependencies manage dynamic availability of form nodes based on
@@ -250,7 +250,7 @@ trait TFormNode
     }
 
     /**
-     * Returns all of the node's dependencies.
+     * Returns all the node's dependencies.
      *
      * @return  IFormFieldDependency[]      node's dependencies
      */
@@ -297,7 +297,7 @@ trait TFormNode
 
     /**
      * Returns the prefixed id of this node that means a combination of the form
-     * documents global prefix and this nodes ids.
+     * documents global prefix and this nodes' id.
      *
      * The prefixed id is primarily intended to be used when outputting the form's
      * fields and reading their values.

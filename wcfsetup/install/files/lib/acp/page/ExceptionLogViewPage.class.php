@@ -144,7 +144,7 @@ class ExceptionLogViewPage extends MultipleLinkPage
             return;
         }
 
-        // show latest exceptions first
+        // show the latest exceptions first
         $this->exceptions = \array_reverse($this->exceptions, true);
 
         if ($this->exceptionID) {

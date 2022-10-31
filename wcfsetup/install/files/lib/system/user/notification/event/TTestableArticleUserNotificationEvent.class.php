@@ -8,7 +8,7 @@ use wcf\data\category\Category;
 use wcf\data\user\UserProfile;
 
 /**
- * Provides a method to create a article for testing user notification
+ * Provides a method to create an article for testing user notification
  * events.
  *
  * @author  Joshua Ruesweg
@@ -20,7 +20,7 @@ use wcf\data\user\UserProfile;
 trait TTestableArticleUserNotificationEvent
 {
     /**
-     * Creates an test article.
+     * Creates a test article.
      *
      * @param Category $category
      * @param UserProfile $author

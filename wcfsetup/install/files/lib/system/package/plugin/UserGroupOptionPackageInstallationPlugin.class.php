@@ -351,7 +351,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                             $data[$optionalPropertyName] = $optionalProperty->nodeValue;
                         }
                     } elseif ($saveData && $optionalPropertyName === 'usersOnly') {
-                        // all of the other fields will be put in `additionalData`
+                        // all the other fields will be put in `additionalData`
                         // or not saved thus empty values are not necessary
                         $data['usersonly'] = 0;
                     }

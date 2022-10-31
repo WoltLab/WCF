@@ -55,7 +55,7 @@ class ArticleAddForm extends AbstractForm
     ];
 
     /**
-     * true if created article is multi-lingual
+     * true if created article is multilingual
      * @var bool
      */
     public $isMultilingual = 0;

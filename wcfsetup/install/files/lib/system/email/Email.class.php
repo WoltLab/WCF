@@ -14,7 +14,7 @@ use wcf\util\DateUtil;
 use wcf\util\StringUtil;
 
 /**
- * Represents a RFC 5322 message using the Mime format as defined in RFC 2045.
+ * Represents an RFC 5322 message using the Mime format as defined in RFC 2045.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
@@ -68,7 +68,7 @@ class Email
     protected $listId;
 
     /**
-     * Human readable part of the List-Id header
+     * Human-readable part of the List-Id header
      * @var string
      * @since 5.3
      */

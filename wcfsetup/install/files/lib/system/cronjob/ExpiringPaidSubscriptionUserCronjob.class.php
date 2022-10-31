@@ -28,7 +28,7 @@ class ExpiringPaidSubscriptionUserCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        // determine when the notification will be send prior to its expiration
+        // determine when the notification will be sent prior to its expiration
         $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
 
         // one week before if the subscription lasts months or years (and not just days)

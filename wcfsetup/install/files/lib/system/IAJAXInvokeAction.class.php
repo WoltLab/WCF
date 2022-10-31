@@ -7,7 +7,7 @@ namespace wcf\system;
  *
  * You SHOULD NOT implement this interface in generic classes, as each method is entirely
  * responsible to verify parameters and permissions. Implementing this class in generic
- * classes leads to a potential breach of security and unforeseen side-effects.
+ * classes leads to a potential breach of security and unforeseen side effects.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

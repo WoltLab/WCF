@@ -38,7 +38,7 @@ use wcf\util\UserUtil;
  * @property-read   int $banned             is `1` if the user is banned, otherwise `0`
  * @property-read   string $banReason          reason why the user is banned
  * @property-read   int $banExpires         timestamp at which the banned user is automatically unbanned
- * @property-read   int $activationCode         flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
+ * @property-read   int $activationCode         flag which determines, whether the user is activated (for legacy reasons a random integer, if the user is *not* activated)
  * @property-read   string $emailConfirmed         code sent to the user's email address used for account activation or null if the email is confirmed
  * @property-read   int $lastLostPasswordRequestTime    timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
  * @property-read   string $lostPasswordKey        code used for authenticating setting new password after password loss or empty if password has not been reported as lost
@@ -55,7 +55,7 @@ use wcf\util\UserUtil;
  * @property-read   int $enableGravatar         is `1` if the user uses a gravatar as avatar, otherwise `0`
  * @property-read   string $gravatarFileExtension      extension of the user's gravatar file
  * @property-read   string $signature          text of the user's signature
- * @property-read   int $signatureEnableHtml        is `1` if HTML will rendered in the user's signature, otherwise `0`
+ * @property-read   int $signatureEnableHtml        is `1` if HTML will be rendered in the user's signature, otherwise `0`
  * @property-read   int $disableSignature       is `1` if the user's signature has been disabled, otherwise `0`
  * @property-read   string $disableSignatureReason     reason why the user's signature is disabled
  * @property-read   int $disableSignatureExpires    timestamp at which the user's signature will automatically be enabled again
@@ -185,8 +185,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
             ]);
         }
 
-        // $isValid is always true at this point. However we intentionally use a variable
-        // that defaults to false to prevent accidents during refactoring.
+        // $isValid is always true at this point. However, we intentionally use a variable
+        // that defaults to "false" to prevent accidents during refactoring.
         \assert($isValid);
 
         return $isValid;
@@ -657,7 +657,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * Returns a human readable list of fields that have positive matches against the
+     * Returns a human-readable list of fields that have positive matches against the
      * blacklist. If you require the raw field names, please use `getBlacklistMatches()`
      * instead.
      *
@@ -709,7 +709,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * Returns true if this user can confirm the email themself.
+     * Returns true if this user can confirm the email himself.
      *
      * @return  bool
      * @since       5.3
@@ -720,7 +720,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
-     * Returns true, if the user must confirm his email by themself.
+     * Returns true, if the user must confirm his email by himself.
      *
      * @return      bool
      * @since       5.3
@@ -732,7 +732,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns true if the user is a member of a user group that requires
-     * multi-factor authentication to be enabled.
+     * multifactor authentication to be enabled.
      *
      * @since   5.4
      */

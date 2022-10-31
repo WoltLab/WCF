@@ -52,7 +52,7 @@ final class DateUtil
      * @var string[]
      */
     protected static $availableTimezones = [
-        // there is not support for UTC-12:00 in php
+        // there is no support for UTC-12:00 in php
         // '...', // (UTC-12:00) International Date Line West
         'Pacific/Samoa', // (UTC-11:00) Midway Island, American Samoa
         'Pacific/Honolulu', // (UTC-10:00) Hawaii

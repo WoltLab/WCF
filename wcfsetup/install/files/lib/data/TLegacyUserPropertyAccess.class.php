@@ -15,7 +15,7 @@ namespace wcf\data;
 trait TLegacyUserPropertyAccess
 {
     /**
-     * Returns the value of a object data variable with the given name.
+     * Returns the value of an object data variable with the given name.
      *
      * @param string $name
      * @return  mixed

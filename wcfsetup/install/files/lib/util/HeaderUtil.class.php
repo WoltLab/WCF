@@ -113,7 +113,7 @@ final class HeaderUtil
     }
 
     /**
-     * Returns an response matching the given response with headers preventing in-browser
+     * Returns a response matching the given response with headers preventing in-browser
      * caching attached.
      *
      * @since 5.5

@@ -36,7 +36,7 @@ interface IApplication
 
     /**
      * Returns the id of the WoltLab Plugin-Store file where this app is for purchase. The
-     * special value `0` indicates that there is no such file or it is a WoltLab app.
+     * special value `0` indicates that there is no such file, or it is a WoltLab app.
      *
      * @return      int
      */

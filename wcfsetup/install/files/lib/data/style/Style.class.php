@@ -434,7 +434,7 @@ class Style extends DatabaseObject
     }
 
     /**
-     * Splits the less variables string.
+     * Splits the Less/SCSS variables string.
      *
      * @param string $variables
      * @return  array
@@ -451,7 +451,7 @@ class Style extends DatabaseObject
     }
 
     /**
-     * Joins the less variables.
+     * Joins the Less/SCSS variables.
      *
      * @param string $preset
      * @param string $custom

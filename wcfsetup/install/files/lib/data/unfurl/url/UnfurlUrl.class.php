@@ -77,7 +77,7 @@ class UnfurlUrl extends DatabaseObject
     }
 
     /**
-     * Renders the unfurl url card and returns the template.
+     * Renders the unfurl-url card and returns the template.
      */
     public function render(bool $enableUgc = true): string
     {

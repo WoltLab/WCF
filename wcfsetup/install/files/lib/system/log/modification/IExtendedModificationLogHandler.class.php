@@ -34,7 +34,7 @@ interface IExtendedModificationLogHandler
 
     /**
      * Processes a list of items by converting them into IViewableModificationLog
-     * instances and pre-loading their data.
+     * instances and preloading their data.
      *
      * @param ModificationLog[] $items
      * @return  IViewableModificationLog[]

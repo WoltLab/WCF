@@ -132,14 +132,14 @@ final class EmailGrammar
         $maximumLength = 70;
 
         // If the raw data already exceeds the maximum length we always encode
-        // to keep the encoder simple. Otherwise we must carefully handle spaces
+        // to keep the encoder simple. Otherwise, we must carefully handle spaces
         // across linebreaks without encoding, while the encoder already contains
         // the necessary logic.
         $needEncoding = \strlen($header) > $maximumLength;
 
         if (!$needEncoding) {
             // Check if the raw data contains characters that need to be encoded.
-            // If it does we simply encode *everything*, instead of attempting to
+            // If it does, we simply encode *everything*, instead of attempting to
             // encode just the words with special characters.
             //
             // This keeps the encoder simple with regard to handling of spaces, as

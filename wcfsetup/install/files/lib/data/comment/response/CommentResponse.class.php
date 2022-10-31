@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
  * @property-read   int|null $userID     id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
  * @property-read   string $username   name of the user or guest who wrote the comment response
  * @property-read   string $message    comment response message
- * @property-read       int $enableHtml     is 1 if HTML will rendered in the comment response, otherwise 0
+ * @property-read       int $enableHtml     is 1 if HTML will be rendered in the comment response, otherwise 0
  * @property-read   int $isDisabled is 1 if the comment response is disabled, otherwise 0
  * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the comment response, otherwise `0`
  */

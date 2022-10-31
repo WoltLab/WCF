@@ -25,7 +25,7 @@ class Mailbox
     protected $address;
 
     /**
-     * The human readable name of this mailbox.
+     * The human-readable name of this mailbox.
      * @var string
      */
     protected $name;
@@ -40,7 +40,7 @@ class Mailbox
      * Creates a new Mailbox.
      *
      * @param string $address email address of this mailbox
-     * @param string $name human readable name of this mailbox (or null)
+     * @param string $name human-readable name of this mailbox (or null)
      * @param Language $language Language to use for localization (or null for the default language)
      * @throws  \DomainException
      */
@@ -102,7 +102,7 @@ class Mailbox
     }
 
     /**
-     * Returns the human readable name of this mailbox.
+     * Returns the human-readable name of this mailbox.
      *
      * @return  string
      */
@@ -133,7 +133,7 @@ class Mailbox
     }
 
     /**
-     * Returns a string representation for use in a RFC 5322 message.
+     * Returns a string representation for use in an RFC 5322 message.
      *
      * @return  string
      */

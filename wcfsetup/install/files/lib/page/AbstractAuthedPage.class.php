@@ -8,7 +8,7 @@ use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
- * Automatically authes the user for the current request via an access-token.
+ * Automatically authenticates the user for the current request via an access-token.
  * A missing token will be ignored, an invalid token results in a throw of a IllegalLinkException.
  *
  * @author  Tim Duesterhus

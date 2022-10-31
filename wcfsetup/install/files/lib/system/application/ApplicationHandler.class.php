@@ -54,7 +54,7 @@ class ApplicationHandler extends SingletonFactory
     }
 
     /**
-     * Returns an application based upon it's abbreviation. Will return the
+     * Returns an application based upon its abbreviation. Will return the
      * primary application if the abbreviation is `wcf` or `null` if no such
      * application exists.
      *

@@ -46,7 +46,7 @@ abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColum
             try {
                 $column->length($length);
             } catch (\InvalidArgumentException $e) {
-                // Ignore exceptions due to the length being to large.
+                // Ignore exceptions due to the length being too large.
                 // Such cases can happen when columns were created using the SQL PIP
                 // where the length (which is just a display length for integer column
                 // types) is not validated. To update tables with such columns,

@@ -151,7 +151,7 @@ class UploadHandler
     }
 
     /**
-     * Returns the mime type of a file.
+     * Returns the mimetype of a file.
      *
      * @param string $file
      * @param string $mimeType mime type transferred by client

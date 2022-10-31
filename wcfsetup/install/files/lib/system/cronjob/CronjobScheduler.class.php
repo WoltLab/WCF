@@ -101,8 +101,8 @@ class CronjobScheduler extends SingletonFactory
     }
 
     /**
-     * Resets any cronjobs that have previously failed to execute. Cronjobs that have failed too often will
-     * be disabled automatically.
+     * Resets any cronjobs that have previously failed to execute. Cronjobs that have failed too often,
+     * will be disabled automatically.
      */
     protected function resetFailedCronjobs()
     {

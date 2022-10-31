@@ -40,7 +40,7 @@ final class Url implements \ArrayAccess
     ];
 
     /**
-     * Tests if provided $url appears to be an URL.
+     * Tests if provided $url appears to be a URL.
      *
      * This method is a wrapper around filter_var with FILTER_VALIDATE_URL.
      *

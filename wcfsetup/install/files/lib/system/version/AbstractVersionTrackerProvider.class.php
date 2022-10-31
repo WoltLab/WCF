@@ -7,7 +7,7 @@ use wcf\data\object\type\AbstractObjectTypeProvider;
 use wcf\system\WCF;
 
 /**
- * Abstract implementation of an version tracker object type provider.
+ * Abstract implementation of a version tracker object type provider.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

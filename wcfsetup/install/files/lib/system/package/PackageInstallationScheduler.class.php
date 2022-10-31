@@ -177,7 +177,7 @@ class PackageInstallationScheduler
     }
 
     /**
-     * Resolves the package requirements of an package update.
+     * Resolves the package requirements of a package update.
      * Starts the installation or update to higher version of required packages.
      *
      * @param int $packageUpdateVersionID
@@ -318,7 +318,7 @@ class PackageInstallationScheduler
             $archive = new PackageArchive($filename);
             $archive->openArchive();
 
-            // check install instructions
+            // check install-instructions
             if ($validateInstallInstructions) {
                 $installInstructions = $archive->getInstallInstructions();
                 if (empty($installInstructions)) {
@@ -536,7 +536,7 @@ class PackageInstallationScheduler
             }
         }
 
-        // get highest version of the required major release
+        // get the highest version of the required major release
         if (\preg_match('/(\d+\.\d+\.)/', $version, $match)) {
             $sql = "SELECT  DISTINCT packageVersion
                     FROM    wcf" . WCF_N . "_package_update_version
@@ -595,7 +595,7 @@ class PackageInstallationScheduler
         // sort by version number
         \uksort($fromversions, [Package::class, 'compareVersion']);
 
-        // find shortest update thread
+        // find the shortest update thread
         try {
             $updateThread = $this->findShortestUpdateThread($package->package, $fromversions, $packageVersion, $version);
         } catch (IncoherentUpdatePath | UnknownUpdatePath $e) {

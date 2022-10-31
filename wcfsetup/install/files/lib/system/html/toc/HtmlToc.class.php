@@ -61,7 +61,7 @@ class HtmlToc
             // existing anchors, because there is no other reliable way to identify them.
             //
             // The only solution for this problem would be the ability for user-defined ids, but
-            // this comes with a whole lot of other issues, such as misleading anchors due to
+            // this comes with a lot of other issues, such as misleading anchors due to
             // significant changes to the phrasing. Worst of all, it would no longer work without
             // the need of user interactions, making it a somewhat cumbersome experience. KISS.
             $id = "{$idPrefix}-{$id}";
@@ -82,7 +82,7 @@ class HtmlToc
             return '';
         }
 
-        // we cannot expect the headings to be set-up in a nice hierarchy, e. g. there might
+        // we cannot expect the headings to be set-up in a nice hierarchy, e.g. there might
         // be no top-level ("2") heading, but instead all headings are level 3 or below
         $toc = new HtmlTocItem(0, '', '');
         $lastItem = $toc;

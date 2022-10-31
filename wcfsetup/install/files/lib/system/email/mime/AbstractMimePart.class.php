@@ -3,7 +3,7 @@
 namespace wcf\system\email\mime;
 
 /**
- * Represents a RFC 2045 / 2046 mime part of an email.
+ * Represents an RFC 2045 / 2046 mime part of an email.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH

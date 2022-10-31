@@ -7,7 +7,7 @@ use wcf\data\user\User;
 use wcf\util\DateUtil;
 
 /**
- * User option output implementation for for the output of a date input.
+ * User option output implementation for the output of a date input.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

@@ -68,7 +68,7 @@ class AccountManagementForm extends AbstractForm
     public $confirmNewPassword = '';
 
     /**
-     * new user name
+     * new username
      * @var string
      */
     public $username = '';
@@ -92,49 +92,49 @@ class AccountManagementForm extends AbstractForm
     public $quitStarted = 0;
 
     /**
-     * indicates if the user wants to connect github
+     * indicates if the user wants to connect GitHub
      * @var int
      */
     public $githubConnect = 0;
 
     /**
-     * indicates if the user wants to disconnect github
+     * indicates if the user wants to disconnect GitHub
      * @var int
      */
     public $githubDisconnect = 0;
 
     /**
-     * indicates if the user wants to connect twitter
+     * indicates if the user wants to connect Twitter
      * @var int
      */
     public $twitterConnect = 0;
 
     /**
-     * indicates if the user wants to disconnect twitter
+     * indicates if the user wants to disconnect Twitter
      * @var int
      */
     public $twitterDisconnect = 0;
 
     /**
-     * indicates if the user wants to connect facebook
+     * indicates if the user wants to connect Facebook
      * @var int
      */
     public $facebookConnect = 0;
 
     /**
-     * indicates if the user wants to disconnect facebook
+     * indicates if the user wants to disconnect Facebook
      * @var int
      */
     public $facebookDisconnect = 0;
 
     /**
-     * indicates if the user wants to connect google
+     * indicates if the user wants to connect Google
      * @var int
      */
     public $googleConnect = 0;
 
     /**
-     * indicates if the user wants to disconnect google
+     * indicates if the user wants to disconnect Google
      * @var int
      */
     public $googleDisconnect = 0;
@@ -234,7 +234,7 @@ class AccountManagementForm extends AbstractForm
             }
         }
 
-        // user name
+        // username
         if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
                 if (WCF::getUser()->lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > TIME_NOW) {
@@ -246,7 +246,7 @@ class AccountManagementForm extends AbstractForm
                     throw new UserInputException('username', 'invalid');
                 }
 
-                // checks if user name exists already.
+                // checks if username exists already.
                 $user2 = User::getUserByUsername($this->username);
                 if ($user2->userID && $user2->userID != WCF::getUser()->userID) {
                     throw new UserInputException('username', 'notUnique');
@@ -383,7 +383,7 @@ class AccountManagementForm extends AbstractForm
             }
         }
 
-        // user name
+        // username
         if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
             if (\mb_strtolower($this->username) != \mb_strtolower(WCF::getUser()->username)) {
                 $updateParameters['lastUsernameChange'] = TIME_NOW;

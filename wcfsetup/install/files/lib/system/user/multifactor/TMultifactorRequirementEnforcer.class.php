@@ -6,7 +6,7 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\WCF;
 
 /**
- * Provides a method enforce the multi-factor requirement.
+ * Provides a method enforce the multifactor requirement.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
@@ -17,10 +17,10 @@ use wcf\system\WCF;
 trait TMultifactorRequirementEnforcer
 {
     /**
-     * If the current user is in a group that requires multi-factor authentication and
-     * they do not have multi-factor authentication enabled, then an exception will be thrown.
+     * If the current user is in a group that requires multifactor authentication, and
+     * they do not have multifactor authentication enabled, then an exception will be thrown.
      *
-     * @throws NamedUserException If the user needs to enable multi-factor authentication.
+     * @throws NamedUserException If the user needs to enable multifactor authentication.
      */
     private function enforceMultifactorAuthentication(): void
     {

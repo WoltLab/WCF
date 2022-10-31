@@ -141,7 +141,7 @@ class BlacklistStatus extends DatabaseObject
                 }
 
                 // The `full.json` file is not considered for now, because it is very unlikely that none of the
-                // delta files are available. Also, it's significant larger than the delta updates and we cannot
+                // delta files are available. Also, it's significant larger than the delta updates, and we cannot
                 // reliably predict if we're able to import it at all: slow hosts or max_execution_time almost
                 // exhausted by other cronjobs.
             }

@@ -9,7 +9,7 @@ use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 
 /**
- * PHP representation of an existing database table or the intended layout of an non-existing or
+ * PHP representation of an existing database table or the intended layout of a non-existing or
  * existing database table.
  *
  * @author  Alexander Ebert, Matthias Schmidt

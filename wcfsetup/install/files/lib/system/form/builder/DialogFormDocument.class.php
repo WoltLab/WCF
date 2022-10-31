@@ -7,7 +7,7 @@ use wcf\system\form\builder\button\FormButton;
 /**
  * Represents a form (document) in a dialog.
  *
- * By default, the global form error message is now shown for dialog forms and it is assumed that
+ * By default, the global form error message is now shown for dialog forms, and it is assumed that
  * the form is requested via an AJAX request.
  *
  * @author  Matthias Schmidt

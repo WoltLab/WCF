@@ -94,7 +94,7 @@ class ViewableUserActivityEventList extends UserActivityEventList
     }
 
     /**
-     * Returns timestamp of oldest entry fetched.
+     * Returns timestamp of the oldest entry fetched.
      *
      * @return  int
      */

@@ -47,7 +47,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     protected $objects = [];
 
     /**
-     * multi-dimensional array of parameters required by an action
+     * multidimensional array of parameters required by an action
      * @var array
      */
     protected $parameters = [];
@@ -520,8 +520,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 
     /**
      * Reads a value and validates it. If you set $allowEmpty to true, no exception will
-     * be thrown if the variable evaluates to 0 (int) or '' (string). Furthermore the
-     * variable will be always created with a sane value if it does not exist.
+     * be thrown if the variable evaluates to 0 (int) or '' (string). Furthermore, the
+     * variable will always be created with a sane value if it does not exist.
      *
      * @param string $variableName
      * @param bool $allowEmpty

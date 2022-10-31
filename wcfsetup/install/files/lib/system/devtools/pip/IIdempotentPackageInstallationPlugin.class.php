@@ -6,11 +6,11 @@ use wcf\system\package\plugin\IPackageInstallationPlugin;
 
 /**
  * Default interface for package installation plugins that indicate to have
- * no side-effects when run more than once. Furthermore such plugins may not
+ * no side effects when run more than once. Furthermore, such plugins may not
  * throw a `SplitNodeException` during its normal operation.
  *
  * This is especially important for the developer tools that rely on PIPs
- * being invokable at any point, regardless if they have been ran before.
+ * being invokable at any point, regardless if they have been run before.
  *
  * Classic examples include the menu-PIPs that will at most update existing
  * data, but not cause items to be duplicated when evaluated once more. The

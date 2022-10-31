@@ -211,7 +211,7 @@ final class CronjobUtil
         $month = \date('n', $timeBase);
         $year = \date('Y', $timeBase);
 
-        // calculate month of next execution and if its not the current one reset previous calculations
+        // calculate month of next execution and if it's not the current one reset previous calculations
         $dateMonth = self::calculateMonth($month, $year, $values);
         if ($month != $dateMonth['month'] || $year != $dateMonth['year']) {
             $day = 1;

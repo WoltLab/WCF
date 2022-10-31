@@ -171,7 +171,7 @@ class SimpleMessageParser extends SingletonFactory
     }
 
     /**
-     * Returns the hash for an matched URL in the message.
+     * Returns the hash for a matched URL in the message.
      *
      * @param array $matches
      * @return  string
@@ -185,7 +185,7 @@ class SimpleMessageParser extends SingletonFactory
     }
 
     /**
-     * Returns the hash for an matched e-mail in the message.
+     * Returns the hash for a matched e-mail in the message.
      *
      * @param array $matches
      * @return  string

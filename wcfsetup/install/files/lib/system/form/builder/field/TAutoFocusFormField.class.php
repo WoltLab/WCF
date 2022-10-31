@@ -14,15 +14,15 @@ namespace wcf\system\form\builder\field;
 trait TAutoFocusFormField
 {
     /**
-     * `true` if this field is auto-focused and `false` otherwise
+     * `true` if this field is autofocused and `false` otherwise
      * @var bool
      */
     protected $autoFocus = false;
 
     /**
-     * Sets whether this field is auto-focused and returns this field.
+     * Sets whether this field is autofocused and returns this field.
      *
-     * @param bool $autoFocus determines if field is auto-focused
+     * @param bool $autoFocus determines if field is autofocused
      * @return  static              this field
      */
     public function autoFocus($autoFocus = true)
@@ -33,9 +33,9 @@ trait TAutoFocusFormField
     }
 
     /**
-     * Returns `true` if this field is auto-focused and returns `false` otherwise.
+     * Returns `true` if this field is autofocused and returns `false` otherwise.
      *
-     * By default, fields are not auto-focused.
+     * By default, fields are not autofocused.
      *
      * @return  bool
      */

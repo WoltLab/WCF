@@ -21,7 +21,7 @@ interface IHistorySavingObjectTypeProvider extends IObjectTypeProvider
      *
      * @param IHistorySavingObject $object
      * @throws  PermissionDeniedException   if access is denied
-     * @throws  \InvalidArgumentException   if given object has not be provided by this provider and thus cannot be checked by this method
+     * @throws  \InvalidArgumentException   if given object has not been provided by this provider and thus cannot be checked by this method
      */
     public function checkPermissions(IHistorySavingObject $object);
 

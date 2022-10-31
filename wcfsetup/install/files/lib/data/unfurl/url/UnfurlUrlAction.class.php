@@ -80,7 +80,7 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Returns the unfurl url object to a given url.
+     * Returns the unfurl-url object to a given url.
      */
     public function findOrCreate(): UnfurlUrl
     {

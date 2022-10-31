@@ -23,7 +23,7 @@ use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 
 /**
- * Represents the multi-factor setup form.
+ * Represents the multifactor setup form.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
@@ -163,7 +163,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
 
         WCF::getDB()->commitTransaction();
 
-        // Send the email outside of the transaction.
+        // Send the email outside the transaction.
         //
         // Sending the email is not an absolute requirement and queueing some external
         // process that might need to be rolled back is a bit wonky from an UX perspective.
@@ -230,7 +230,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
     }
 
     /**
-     * Enables multi-factor authentication for the user.
+     * Enables multifactor authentication for the user.
      */
     protected function enableMultifactorAuth(): void
     {
@@ -253,7 +253,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm
     }
 
     /**
-     * Sends an email letting the user know that multi-factor authentication
+     * Sends an email letting the user know that multifactor authentication
      * is enabled now.
      */
     protected function sendEmail(): void

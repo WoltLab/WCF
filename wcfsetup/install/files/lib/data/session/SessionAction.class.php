@@ -47,7 +47,7 @@ class SessionAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * Updates session's last activity time to prevent it from expiring. In addition this method
+     * Updates session's last activity time to prevent it from expiring. In addition, this method
      * will return updated counters for notifications and 3rd party components.
      *
      * @return  mixed[]
@@ -88,7 +88,7 @@ class SessionAction extends AbstractDatabaseObjectAction
         // get notifications
         if (!empty($keepAliveData['userNotificationCount'])) {
             // We can synchronize notification polling between tabs of the same domain, but
-            // this doesn't work for different origins, that is different sub-domains that
+            // this doesn't work for different origins, that is different subdomains that
             // belong to the same instance.
             //
             // Storing the time of the last request on the server has the benefit of avoiding

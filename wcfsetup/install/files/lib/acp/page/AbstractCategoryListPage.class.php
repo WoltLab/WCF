@@ -149,7 +149,7 @@ abstract class AbstractCategoryListPage extends AbstractPage
         $this->readCategories();
 
         // note that the implementation of wcf\system\category\ICategoryType
-        // needs to support a object type of the pseudo definition
+        // needs to support an object type of the pseudo definition
         // 'com.woltlab.wcf.collapsibleContent.acp' which has to be registered
         // during package installation as a 'com.woltlab.wcf.collapsibleContent'
         // object type if you want to support collapsible categories in the

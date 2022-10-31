@@ -14,8 +14,8 @@ use wcf\data\acp\session\ACPSession;
  *
  * @property-read   int|null $pageID         id of the latest page visited
  * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to
- * @property-read   int|null $parentPageID       id of the parent page of latest page visited
- * @property-read   int|null $parentPageObjectID id of the object the parent page of latest page visited belongs to
+ * @property-read   int|null $parentPageID       id of the parent page of the latest page visited
+ * @property-read   int|null $parentPageObjectID id of the object the parent page of the latest page visited belongs to
  * @property-read   int $spiderID       id of the spider the session belongs to
  */
 class Session extends ACPSession

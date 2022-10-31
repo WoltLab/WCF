@@ -19,7 +19,7 @@ use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
 
 /**
- * Exports the stored data of a user in compliance with Art. 20 "Right to data portability" of the
+ * Exports the stored data of a user in compliance with Art. 20 "Right to data portability" of
  * the General Data Protection Regulation (GDPR) of the European Union.
  *
  * The file formats XML, JSON and CSV are explicitly listed as being a structured

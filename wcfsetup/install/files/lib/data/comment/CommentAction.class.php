@@ -445,7 +445,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 
         if (!$this->createdComment->userID) {
-            // save user name is session
+            // save username is session
             WCF::getSession()->register('username', $this->createdComment->username);
 
             // save last comment time for flood control
@@ -647,7 +647,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 
         if (!$this->createdResponse->userID) {
-            // save user name is session
+            // save username is session
             WCF::getSession()->register('username', $this->createdResponse->username);
 
             // save last comment time for flood control

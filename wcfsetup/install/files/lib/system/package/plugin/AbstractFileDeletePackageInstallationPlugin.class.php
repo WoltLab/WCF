@@ -164,7 +164,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
             return;
         }
 
-        // If the filesystem is case insensitive, we must check, whether the casing of the file
+        // If the filesystem is case-insensitive, we must check, whether the casing of the file
         // matches the casing of the file, which we want to delete. Therefore, we must iterate
         // through the whole dir to find the potential file.
         $pathInfo = \pathinfo($filePath);

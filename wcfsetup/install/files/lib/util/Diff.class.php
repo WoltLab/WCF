@@ -208,12 +208,12 @@ class Diff
         $positionA = 0;
         $positionB = 0;
         foreach ($lcs as $item) {
-            // find next matching item in a, every item in between must be removed
+            // find next matching item in A, every item in between must be removed
             while ($positionA < $this->sizeA && $this->a[$positionA] !== $item) {
                 $this->d[] = [self::REMOVED, $this->a[$positionA++]];
             }
 
-            // find next matching item in b, every item in between must be added
+            // find next matching item in B, every item in between must be added
             while ($positionB < $this->sizeB && $this->b[$positionB] !== $item) {
                 $this->d[] = [self::ADDED, $this->b[$positionB++]];
             }

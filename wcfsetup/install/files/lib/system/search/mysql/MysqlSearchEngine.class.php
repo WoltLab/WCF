@@ -495,7 +495,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 ) {
                     // Ignore valid prefixes after a word is fully parsed: The word
                     // parsing was aborted, because the prefix character was encountered.
-                    // Thus an input such as `compound-word` would see the hyphen as a
+                    // Thus, an input such as `compound-word` would see the hyphen as an
                     // exclusion prefix of `word` instead of a hyphen. By ignoring such
                     // prefixes (unless they are clearly delimited with a space) the parsed
                     // result will better match user expectations.

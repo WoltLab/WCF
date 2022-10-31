@@ -56,7 +56,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     public $userProfile;
 
     /**
-     * Adds an response
+     * Adds a response
      *
      * @param StructuredCommentResponse $response
      */
@@ -76,7 +76,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     }
 
     /**
-     * Returns timestamp of oldest response loaded.
+     * Returns timestamp of the oldest response loaded.
      *
      * @return  int
      */

@@ -5,7 +5,7 @@ namespace wcf\acp\form;
 use wcf\system\WCF;
 
 /**
- * Represents the multi-factor authentication form.
+ * Represents the multifactor authentication form.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH

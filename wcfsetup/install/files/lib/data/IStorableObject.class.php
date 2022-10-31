@@ -13,7 +13,7 @@ namespace wcf\data;
 interface IStorableObject
 {
     /**
-     * Returns the value of a object data variable with the given name or `null` if no
+     * Returns the value of an object data variable with the given name or `null` if no
      * such data variable exists.
      *
      * @param string $name

@@ -16,7 +16,7 @@ interface ICustomIconSearchResultObject extends ISearchResultObject
 {
     /**
      * Returns either a FontAwesome icon name including the `fa-` prefix or
-     * a string that is interpreted as an URL to an image that can be scaled
+     * a string that is interpreted as a URL to an image that can be scaled
      * to 48x48. Returning an empty string will trigger the default behavior.
      *
      * @return      string

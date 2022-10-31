@@ -89,7 +89,7 @@ final class DirectoryUtil
      * Returns an instance of DirectoryUtil (or child).
      *
      * @param string $tmpDirectory path
-     * @param bool $recursive walk through sub-directories too
+     * @param bool $recursive walk through subdirectories too
      * @return  DirectoryUtil
      * @throws  SystemException
      */
@@ -134,7 +134,7 @@ final class DirectoryUtil
         $this->scanFiles();
         $files = $this->files;
 
-        // sort out non matching files
+        // sort out non-matching files
         if ($pattern !== null) {
             foreach ($files as $filename => $value) {
                 if (((bool)$pattern->match($filename)) === $negativeMatch) {
@@ -171,7 +171,7 @@ final class DirectoryUtil
         $this->scanFileObjects();
         $objects = $this->fileObjects;
 
-        // sort out non matching files
+        // sort out non-matching files
         if ($pattern !== null) {
             foreach ($objects as $filename => $value) {
                 if (((bool)$pattern->match($filename)) === $negativeMatch) {

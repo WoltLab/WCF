@@ -5,7 +5,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 
 /**
- * Every implementation for content conditions needs to implements this interface.
+ * Every implementation for content conditions needs to implement this interface.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH

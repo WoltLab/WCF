@@ -310,7 +310,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 }
 
                 // If neither the regular, nor the WebP variant is readable then the
-                // cover photo is missing and we must clear the database information.
+                // cover photo is missing, and we must clear the database information.
                 if (
                     !\is_readable($coverPhoto->getLocation(false))
                     && !\is_readable($coverPhoto->getLocation(true))

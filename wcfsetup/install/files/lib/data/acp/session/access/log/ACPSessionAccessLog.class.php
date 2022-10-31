@@ -6,7 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\util\UserUtil;
 
 /**
- * Represents a acp session access log entry.
+ * Represents an ACP session access log entry.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

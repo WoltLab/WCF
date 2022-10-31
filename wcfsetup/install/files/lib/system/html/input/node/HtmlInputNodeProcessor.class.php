@@ -533,7 +533,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                 }
             }
 
-            // Do not strip content that contains non empty spans, such as icons.
+            // Do not strip content that contains non-empty spans, such as icons.
             /** @var \DOMElement $element */
             foreach ($paragraph->getElementsByTagName('span') as $element) {
                 if ($element->getAttribute('class')) {
@@ -616,7 +616,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     public function getTextContent()
     {
         // cloning the body allows custom event handlers to alter the contents
-        // without making permanent changes to the document, avoids side-effects
+        // without making permanent changes to the document, avoids side effects
         $body = $this->getDocument()->getElementsByTagName('body')->item(0)->cloneNode(true);
 
         $parameters = ['body' => $body];
@@ -728,7 +728,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     }
 
     /**
-     * Detects links that contain nothing but their link target. Additionally, standalone links, i. e.
+     * Detects links that contain nothing but their link target. Additionally, standalone links, i.e.
      * those that are the only content in their line, are offered separately.
      *
      * @since 5.2

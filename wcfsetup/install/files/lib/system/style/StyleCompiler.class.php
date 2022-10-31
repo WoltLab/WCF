@@ -105,7 +105,7 @@ final class StyleCompiler extends SingletonFactory
 
     /**
      * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
-     * error, null is returned. Otherwise the exception is returned (!).
+     * error, null is returned. Otherwise, the exception is returned (!).
      *
      * @param string $testFileDir
      * @param string $styleName
@@ -199,7 +199,7 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Returns a array with all files, which should be compiled for a style.
+     * Returns an array with all files, which should be compiled for a style.
      *
      * @return      string[]
      * @since       5.3
@@ -586,7 +586,7 @@ EOT;
 
         $variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
 
-        // Define the font family set for the OS default fonts. This needs to be happen statically to
+        // Define the font family set for the OS default fonts. This needs to happen statically to
         // allow modifications in the future in case of changes.
         $variables['wcfFontFamilyMonospace'] = self::SYSTEM_FONT_FAMILY_MONOSPACE;
 

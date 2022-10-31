@@ -3,7 +3,7 @@
 namespace wcf\system\package\plugin;
 
 /**
- * Every PackageInstallationPlugin, which have unique names must be implement this interface
+ * Every PackageInstallationPlugin, which have unique names must implement this interface
  * to enforce, that only unique names will be processed.
  *
  * @author  Joshua Ruesweg

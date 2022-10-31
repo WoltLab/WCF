@@ -7,7 +7,7 @@ use wcf\data\article\ArticleList;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 
 /**
- * Represents a article as a notification object type.
+ * Represents an article as a notification object type.
  *
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH

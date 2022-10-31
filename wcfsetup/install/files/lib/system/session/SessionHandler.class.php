@@ -37,8 +37,8 @@ use wcf\util\UserUtil;
  * @property-read   int|null $userID         id of the user the session belongs to or `null` if the session belongs to a guest
  * @property-read   int|null $pageID         id of the latest page visited
  * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to
- * @property-read   int|null $parentPageID       id of the parent page of latest page visited
- * @property-read   int|null $parentPageObjectID id of the object the parent page of latest page visited belongs to
+ * @property-read   int|null $parentPageID       id of the parent page of the latest page visited
+ * @property-read   int|null $parentPageObjectID id of the object the parent page of the latest page visited belongs to
  * @property-read   int $spiderID       id of the spider the session belongs to
  */
 final class SessionHandler extends SingletonFactory
@@ -489,7 +489,7 @@ final class SessionHandler extends SingletonFactory
             }
 
             // We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
-            // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
+            // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications,
             //    and it is supported by default in common JavaScript frameworks.
             // 2) We want to set the SameSite=lax parameter.
             // 3) We don't want the HttpOnly parameter.
@@ -906,7 +906,7 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
-     * If multi-factor authentication is enabled for the given user then
+     * If multifactor authentication is enabled for the given user then
      * - the userID will be stored in the session variables, and
      * - `true` is returned.
      * Otherwise,
@@ -1341,7 +1341,7 @@ final class SessionHandler extends SingletonFactory
      *
      * This method is useful if you have controllers that are likely to be
      * accessed by a user agent that is not going to re-use sessions (e.g.
-     * curl in a cronjob). It immediately remove the session that was created
+     * curl in a cronjob). It immediately removes the session that was created
      * just for that request and that is not going to be used ever again.
      *
      * @since 5.2

@@ -128,7 +128,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
             }
 
             foreach ($this->getObjects() as $cronjob) {
-                // it now time for executing
+                // it's now time for executing
                 $cronjob->update(['state' => Cronjob::EXECUTING]);
                 $className = $cronjob->className;
 

@@ -63,7 +63,7 @@ interface ICommentManager
     public function canDeleteResponse(CommentResponse $response);
 
     /**
-     * Returns true if the current user may moderated content identified by
+     * Returns true if the current user may moderate content identified by
      * object type id and object id.
      *
      * @param int $objectTypeID

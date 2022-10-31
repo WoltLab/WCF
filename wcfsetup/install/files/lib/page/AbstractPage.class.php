@@ -59,7 +59,7 @@ abstract class AbstractPage implements IPage
     public $canonicalURL = '';
 
     /**
-     * is true if canonical URL will be enforced even if POST data is represent
+     * is true if canonical URL will be enforced even if POST data is present
      * @var bool
      */
     public $forceCanonicalURL = false;

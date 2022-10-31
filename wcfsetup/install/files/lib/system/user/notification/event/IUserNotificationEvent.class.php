@@ -66,7 +66,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
      *             'in-reply-to' => [...],
      *             'references' => [...]]
      *   array to be included into the notification email.
-     *   message-id, in-reply-to and references refer to the respective headers
+     *   "message-id", "in-reply-to" and "references" refer to the respective headers
      *   of an email and are optional. You MUST NOT generate a message-id if you
      *   cannot ensure that it will *never* repeat.
      *

@@ -136,7 +136,7 @@ abstract class AbstractForm extends AbstractPage implements IForm
 
     /**
      * Calls the 'saved' event after the successful call of the save method.
-     * This functions won't called automatically. You must do this manually, if you inherit AbstractForm.
+     * This functions won't be called automatically. You must do this manually, if you inherit AbstractForm.
      */
     protected function saved()
     {

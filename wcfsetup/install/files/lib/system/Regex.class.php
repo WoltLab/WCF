@@ -27,7 +27,7 @@ final class Regex
     const MODIFIER_NONE = 0;
 
     /**
-     * indicates case insensitive matching
+     * indicates case-insensitive matching
      * @var int
      */
     const CASE_INSENSITIVE = 1;
@@ -81,7 +81,7 @@ final class Regex
     const FLAGS_DEFAULT = 1;
 
     /**
-     * captures the offset of an match (all excluding replace)
+     * captures the offset of a match (all excluding replace)
      * @var int
      */
     const CAPTURE_OFFSET = 2;
@@ -99,7 +99,7 @@ final class Regex
     const ORDER_MATCH_BY_SET = 8;
 
     /**
-     * indicates that only non-empty pieces will be splitted (split only)
+     * indicates that only non-empty pieces will be split (split only)
      * @var int
      */
     const SPLIT_NON_EMPTY_ONLY = 16;

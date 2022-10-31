@@ -34,7 +34,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
     protected $label = 'wcf.page.requestedPage';
 
     /**
-     * is `true` if the logic should be reversed, thus all of the non-selected pages fulfill the
+     * is `true` if the logic should be reversed, thus all the non-selected pages fulfill the
      * condition
      * @var bool
      */

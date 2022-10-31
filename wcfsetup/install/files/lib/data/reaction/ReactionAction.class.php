@@ -156,7 +156,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
     }
 
     /**
-     * React on an given object with the given reactionType.
+     * React on a given object with the given reactionType.
      *
      * @return array
      */

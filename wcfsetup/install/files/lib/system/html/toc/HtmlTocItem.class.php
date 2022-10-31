@@ -53,7 +53,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     public function getTitle()
     {
         return \preg_replace_callback('/^\s*(\d+)([\.):]|\s*-)\s*/', function ($matches) {
-            // Strip of a enumeration prefix if the prefixed number matches
+            // Strip of an enumeration prefix if the prefixed number matches
             // the current offset within the ToC.
             if ($this->getParent() && \intval($matches[1]) === ($this->getParent()->position + 1)) {
                 return '';

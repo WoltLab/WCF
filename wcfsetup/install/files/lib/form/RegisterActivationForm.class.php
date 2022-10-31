@@ -84,7 +84,7 @@ class RegisterActivationForm extends AbstractForm
     {
         EventHandler::getInstance()->fireAction($this, 'validate');
 
-        // check given user name
+        // check given username
         if ($this->user === null || !$this->user->userID) {
             throw new UserInputException('username', 'notFound');
         }

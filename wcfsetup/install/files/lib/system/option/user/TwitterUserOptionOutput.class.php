@@ -7,7 +7,7 @@ use wcf\data\user\User;
 use wcf\util\StringUtil;
 
 /**
- * User option output implementation for the output of a twitter user profile.
+ * User option output implementation for the output of a Twitter user profile.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

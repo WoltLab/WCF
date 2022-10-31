@@ -183,8 +183,8 @@ final class DOMUtil
     }
 
     /**
-     * Returns a cloned parent tree that is virtually readonly. In fact it can be
-     * modified, but all changes are non permanent and do not affect the source
+     * Returns a cloned parent tree that is virtually readonly. In fact, it can be
+     * modified, but all changes are non-permanent and do not affect the source
      * document at all.
      *
      * @param \DOMNode $node node

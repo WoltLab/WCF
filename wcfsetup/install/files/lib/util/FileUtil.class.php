@@ -218,7 +218,7 @@ final class FileUtil
 
     /**
      * Creates a path on the local filesystem and returns true on success.
-     * Parent directories do not need to exists as they will be created if
+     * Parent directories do not need to exist as they will be created if
      * necessary.
      *
      * @param string $path
@@ -425,7 +425,7 @@ final class FileUtil
     }
 
     /**
-     * Downloads a package archive from an http URL and returns the path to
+     * Downloads a package archive from a http URL and returns the path to
      * the downloaded file.
      *
      * @param string $httpUrl
@@ -527,7 +527,7 @@ final class FileUtil
     }
 
     /**
-     * Returns the mime type of a file.
+     * Returns the mimetype of a file.
      *
      * @param string $filename
      * @return  string

@@ -99,7 +99,7 @@ final class ClipboardEditorItem
     }
 
     /**
-     * Adds an parameter passed to ClipboardProxyAction.
+     * Adds a parameter passed to ClipboardProxyAction.
      *
      * @param string $name
      * @param mixed $value

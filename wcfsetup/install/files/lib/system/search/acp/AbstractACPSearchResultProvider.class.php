@@ -6,7 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Abstract implementation of a ACP search result provider.
+ * Abstract implementation of an ACP search result provider.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH

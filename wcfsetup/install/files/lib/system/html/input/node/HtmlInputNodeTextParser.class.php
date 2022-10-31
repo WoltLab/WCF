@@ -389,7 +389,7 @@ class HtmlInputNodeTextParser
 
                     $marker = $this->addReplacement($text, $element);
 
-                    // we use preg_replace() because the username could appear multiple times
+                    // we use preg_replace() because the username could appear multiple times,
                     // and we need to replace them one by one, also avoiding only replacing
                     // the non-quoted username even though both variants are present
                     $value = \preg_replace('~' . \preg_quote($needle, '~') . '~iu', $marker, $value, 1);

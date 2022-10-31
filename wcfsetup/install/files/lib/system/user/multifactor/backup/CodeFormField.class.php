@@ -8,7 +8,7 @@ use wcf\system\user\multifactor\BackupMultifactorMethod;
 use wcf\system\user\multifactor\Helper;
 
 /**
- * Handles the input of a emergency code.
+ * Handles the input of an emergency code.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH

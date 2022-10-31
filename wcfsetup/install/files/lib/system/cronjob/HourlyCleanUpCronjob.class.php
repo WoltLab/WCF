@@ -7,7 +7,7 @@ use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 
 /**
- * Cronjob for a hourly system cleanup.
+ * Cronjob for an hourly system cleanup.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH

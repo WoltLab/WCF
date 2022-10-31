@@ -56,12 +56,12 @@ class CssHighlighter extends Highlighter
             '053a0024219422ca9215c0a3ed0578ee76cff477',
             $string
         ); // fix to not highlight the spans of the highlighter
-        $string = \str_replace(':link', ':li@@nk', $string); // fix to highlight pseudo-class different than tag
+        $string = \str_replace(':link', ':li@@nk', $string); // fix to highlight pseudo-class different from tag
         $string = \str_replace(
             ['right:', 'left:'],
             ['r@@ight:', 'l@@eft:'],
             $string
-        ); // fix to highlight properties different than values
+        ); // fix to highlight properties different from values
 
         $string = parent::highlight($string);
 
@@ -69,8 +69,8 @@ class CssHighlighter extends Highlighter
             ['r@@ight', 'l@@eft'],
             ['right', 'left'],
             $string
-        ); // fix to highlight properties different than values
-        $string = \str_replace('li@@nk', 'link', $string); // fix to highlight pseudo-class different than tag
+        ); // fix to highlight properties different from values
+        $string = \str_replace('li@@nk', 'link', $string); // fix to highlight pseudo-class different from tag
 
         return \str_replace(
             '053a0024219422ca9215c0a3ed0578ee76cff477',

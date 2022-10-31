@@ -1148,7 +1148,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * Returns a HTML anchor link pointing to the decorated user.
+     * Returns an HTML anchor link pointing to the decorated user.
      *
      * @return  string
      */

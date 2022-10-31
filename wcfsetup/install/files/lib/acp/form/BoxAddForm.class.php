@@ -52,7 +52,7 @@ class BoxAddForm extends AbstractForm
     public $neededPermissions = ['admin.content.cms.canManageBox'];
 
     /**
-     * true if created box is multi-lingual
+     * true if created box is multilingual
      * @var bool
      */
     public $isMultilingual = 0;

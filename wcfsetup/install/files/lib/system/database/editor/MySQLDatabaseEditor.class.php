@@ -442,7 +442,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     /**
-     * Builds a column definition for execution in a create table or alter table statement.
+     * Builds a column definition for execution in a CREATE TABLE or ALTER TABLE statement.
      *
      * @param string $columnName
      * @param array $columnData
@@ -486,7 +486,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
     }
 
     /**
-     * Builds a index definition for execution in a create table or alter table statement.
+     * Builds an index definition for execution in a CREATE TABLE or ALTER TABLE statement.
      *
      * @param string $indexName
      * @param array $indexData

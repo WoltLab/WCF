@@ -18,7 +18,7 @@ use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**
- * Represents the multi-factor authentication form.
+ * Represents the multifactor authentication form.
  *
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH

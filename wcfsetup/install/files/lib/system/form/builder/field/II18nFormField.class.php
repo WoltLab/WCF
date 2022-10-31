@@ -23,7 +23,7 @@ interface II18nFormField extends IFormField
     public function getLanguageItemPattern();
 
     /**
-     * Returns `true` if the current field value is a i18n value and returns `false`
+     * Returns `true` if the current field value is an i18n value and returns `false`
      * otherwise or if no value has been set.
      *
      * @return  bool

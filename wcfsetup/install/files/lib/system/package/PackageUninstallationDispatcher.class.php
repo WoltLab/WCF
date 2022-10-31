@@ -70,7 +70,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
                 case 'pip':
                     // the file pip is always executed last, thus, just before it,
-                    // execute the uninstall script
+                    // execute the uninstall-script
                     if ($nodeData['pluginName'] == 'file' && !$this->didExecuteUninstallScript) {
                         $this->executeUninstallScript();
 
@@ -175,7 +175,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     }
 
     /**
-     * Adds an uninstall entry to the package installation queue.
+     * Adds an uninstall-entry to the package installation queue.
      *
      * @param Package $package
      * @param array $packages

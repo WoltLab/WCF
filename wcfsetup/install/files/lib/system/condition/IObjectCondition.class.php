@@ -5,7 +5,7 @@ namespace wcf\system\condition;
 use wcf\data\DatabaseObject;
 
 /**
- * Every implementation of database object-related conditions needs to implements
+ * Every implementation of database object-related conditions needs to implement
  * this interface.
  *
  * @author  Matthias Schmidt

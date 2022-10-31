@@ -128,7 +128,7 @@ class Gravatar extends DefaultAvatar
                 return true;
             }
         } catch (ClientExceptionInterface $e) {
-            // Ignore exception, because we return false anyways.
+            // Ignore exception, because we return false anyway.
         }
 
         return false;

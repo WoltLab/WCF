@@ -34,7 +34,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
     public $uniqueFileId;
 
     /**
-     * The adressed file.
+     * The addressed file.
      * @var UploadFile
      */
     private $file;

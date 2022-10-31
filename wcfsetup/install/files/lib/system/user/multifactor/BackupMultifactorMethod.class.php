@@ -43,7 +43,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     // latter case the TOTP secret which needs to be stored in a form
     // that allows generating valid codes poses a far bigger threat
     // to a single user's security.
-    // Thus we use a 20 digit code. It gives users a warm and fuzzy
+    // Thus, we use a 20-digit code. It gives users a warm and fuzzy
     // feeling that the codes cannot be easily guessed (due to being
     // longish), while not being unwieldy like a hexadecimal, base32
     // or base64 string.
@@ -148,7 +148,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
             $form->appendChild($regenerateContainer);
         } else {
             // This part of the form is not visible to the end user. It will be implicitly filled in
-            // when setting up the first multi-factor method.
+            // when setting up the first multifactor method.
             $generateContainer = FormContainer::create('generateCodesContainer')
                 ->label('wcf.user.security.multifactor.backup.generateCodes')
                 ->appendChildren([

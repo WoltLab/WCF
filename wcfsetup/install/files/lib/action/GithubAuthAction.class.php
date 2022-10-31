@@ -140,8 +140,8 @@ final class GithubAuthAction extends AbstractOauth2Action
             WCF::getSession()->register('__3rdPartyProvider', 'github');
 
             if (WCF::getUser()->userID) {
-                // This account does not belong to anyone and we are already logged in.
-                // Thus we want to connect this account.
+                // This account does not belong to anyone, and we are already logged in.
+                // Thus, we want to connect this account.
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);
 
@@ -153,8 +153,8 @@ final class GithubAuthAction extends AbstractOauth2Action
                     )
                 );
             } else {
-                // This account does not belong to anyone and we are not logged in.
-                // Thus we want to connect this account to a newly registered user.
+                // This account does not belong to anyone, and we are not logged in.
+                // Thus, we want to connect this account to a newly registered user.
 
                 try {
                     $request = new Request('GET', 'https://api.github.com/user/emails', [

@@ -7,7 +7,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\util\Url;
 
 /**
- * Implementation of a form field to enter a url.
+ * Implementation of a form field to enter a URL.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH

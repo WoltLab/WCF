@@ -867,7 +867,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
     /**
      * Returns a form container for the object type definition-specific fields
-     * of the the object type definition with the given name.
+     * of the object type definition with the given name.
      *
      * The returned form container is already appended to the given form and
      * has a dependency on the `definitionName` field so that the form container

@@ -11,7 +11,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
- * Condition implementation for the multi-factor status of users.
+ * Condition implementation for the multifactor status of users.
  *
  * @author  Joshua Ruesweg
  * @copyright   2001-2020 WoltLab GmbH

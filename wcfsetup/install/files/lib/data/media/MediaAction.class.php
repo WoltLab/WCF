@@ -565,7 +565,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             // check if page is requested that might have existed but does not exist anymore due to deleted
             // media files
             if ($this->parameters['pageNo'] > 1 && $this->parameters['searchString'] === '' && !$this->parameters['categoryID']) {
-                // request media dialog page with highest page number
+                // request media dialog page with the highest page number
                 $parameters = $this->parameters;
                 $parameters['pageNo'] = \ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE);
 

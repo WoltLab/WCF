@@ -179,7 +179,7 @@ class MessageParser extends BBCodeParser
     }
 
     /**
-     * Returns the hash for an matched code bbcode in the message.
+     * Returns the hash for a matched code bbcode in the message.
      *
      * @param array $matches
      * @return  string

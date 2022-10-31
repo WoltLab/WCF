@@ -8,7 +8,7 @@ use wcf\system\form\builder\IFormDocument;
 /**
  * Represents a data processor for forms that can be used to process certain form field values
  * before they are stored in database and process these values back again when an object is edited
- * the the form field values need to be set.
+ * the form field values need to be set.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH

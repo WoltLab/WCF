@@ -137,7 +137,7 @@ class ItemListFormField extends AbstractFormField implements
     {
         parent::populate();
 
-        // an array should be passed as a parameter outside of the `data` array
+        // an array should be passed as a parameter outside the `data` array
         if ($this->getSaveValueType() === self::SAVE_VALUE_TYPE_ARRAY) {
             $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
                 'itemList',

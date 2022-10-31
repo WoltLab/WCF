@@ -104,7 +104,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
             }
 
             if ($converter === null) {
-                // check if the bbcode's content should be used as first attribute and it
+                // check if the bbcode's content should be used as first attribute, and it
                 // matches the elements content
                 $bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
                 if ($bbcode !== null) {
@@ -149,7 +149,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
                 // nodes will otherwise stick around for a while. They continue to exist
                 // until `createElement` or `createDocumentFragment` are called which
                 // cause an internal GC process that throws away the children, making
-                // the end of their lifetime unpredictable. Thanks PHP.
+                // the end of their lifetime unpredictable. Thanks, PHP.
                 unset($fragment);
             } else {
                 // attributes are invalid, remove element from DOM

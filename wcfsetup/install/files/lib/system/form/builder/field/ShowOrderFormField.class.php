@@ -18,7 +18,7 @@ use wcf\system\WCF;
  *
  * While the options of the field work with the ids of the appropriate sibling objects
  * as keys, the value of the field is the actual position of the relevant object (from
- * `1` to `count($siblings)`.
+ * `1` to `count($siblings)`).
  *
  * If an object is edited, thus `$this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE`,
  * it is expected that the edited objects itself is not part of the sibling list provided

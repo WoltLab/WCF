@@ -7,7 +7,7 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
 
 /**
- * Represents the unfurl url embedded object handlers.
+ * Represents the unfurl-url embedded object handlers.
  *
  * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH

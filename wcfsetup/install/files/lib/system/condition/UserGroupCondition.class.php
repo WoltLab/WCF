@@ -14,7 +14,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * Condition implementation for all of the user groups a user has to be a member
+ * Condition implementation for all the user groups a user has to be a member
  * of and the user groups a user may not be a member of.
  *
  * @author  Matthias Schmidt

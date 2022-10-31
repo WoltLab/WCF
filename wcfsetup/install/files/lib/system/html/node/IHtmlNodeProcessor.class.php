@@ -37,7 +37,7 @@ interface IHtmlNodeProcessor
     public function getHtmlProcessor();
 
     /**
-     * Loads a HTML string for processing.
+     * Loads an HTML string for processing.
      *
      * @param IHtmlProcessor $htmlProcessor html processor
      * @param string $html HTML string

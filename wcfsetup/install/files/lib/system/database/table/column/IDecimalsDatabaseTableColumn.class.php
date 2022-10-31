@@ -24,7 +24,7 @@ interface IDecimalsDatabaseTableColumn extends ILengthDatabaseTableColumn
 
     /**
      * Returns the number of decimals the database table column supports or `null` if the number
-     * of decimals has not be specified.
+     * of decimals has not been specified.
      *
      * @return  null|int
      */

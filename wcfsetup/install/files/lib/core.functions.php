@@ -292,8 +292,8 @@ namespace wcf\functions\exception {
 <p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">
-	The error code can be used by an administrator to lookup the full error message in the Administration Control Panel via “Logs » Errors”.
-	In addition the error has been written to the log file located at <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$logFile}</span></span> and can be accessed with an FTP program or similar.
+	The error code can be used by an administrator to look up the full error message in the Administration Control Panel via “Logs » Errors”.
+	In addition, the error has been written to the log file located at <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$logFile}</span></span> and can be accessed with an FTP program or similar.
 </p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>
