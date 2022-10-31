@@ -210,8 +210,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                 vertical = verticalFlipped;
             }
         }
-        const bottom = vertical.bottom;
-        const top = vertical.top;
+        let bottom = vertical.bottom;
+        let top = vertical.top;
         // set pointer position
         if (options.pointer) {
             const pointers = DomTraverse.childrenByClass(element, "elementPointer");
@@ -238,6 +238,16 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
         else if (options.pointerClassNames.length === 2) {
             element.classList[top === "auto" ? "add" : "remove"](options.pointerClassNames[0 /* PointerClass.Bottom */]);
             element.classList[left === "auto" ? "add" : "remove"](options.pointerClassNames[1 /* PointerClass.Right */]);
+        }
+        // Check if the element itself has a position of `fixed`.
+        if (window.getComputedStyle(element).position === "fixed" ||
+            (element.offsetParent && window.getComputedStyle(element.offsetParent).position === "fixed")) {
+            // Ignore offsets caused by page scrolling.
+            if (bottom !== "auto")
+                bottom = bottom + window.scrollY;
+            if (top !== "auto")
+                top = top - window.scrollY;
+            ;
         }
         Util_1.default.setStyles(element, {
             bottom: bottom === "auto" ? bottom : Math.round(bottom).toString() + "px",
