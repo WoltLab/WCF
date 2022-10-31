@@ -62,7 +62,7 @@ class ArticleListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['articleID', 'title', 'time', 'views', 'comments'];
+    public $validSortFields = ['articleID', 'title', 'time', 'views'];
 
     /**
      * @inheritDoc
