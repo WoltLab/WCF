@@ -158,7 +158,10 @@ EventElement.prototype.bind = function (eventName, handler) {
     this.events[eventName] = [];
   }
   this.events[eventName].push(handler);
-  this.element.addEventListener(eventName, handler, false);
+  this.element.addEventListener(eventName, handler, {
+    capture: false,
+    passive: false,
+  });
 };
 
 EventElement.prototype.unbind = function (eventName, handler) {
@@ -167,7 +170,10 @@ EventElement.prototype.unbind = function (eventName, handler) {
     if (isHandlerProvided && hdlr !== handler) {
       return true;
     }
-    this.element.removeEventListener(eventName, hdlr, false);
+    this.element.removeEventListener(eventName, hdlr, {
+      capture: false,
+      passive: false,
+    });
     return false;
   }, this);
 };
