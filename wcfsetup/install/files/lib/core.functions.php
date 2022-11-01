@@ -317,8 +317,10 @@ EXPLANATION;
 
 				.exceptionContainer {
 					box-sizing: border-box;
-					font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-					font-size: 14px;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+						"Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+						"Helvetica Neue", Arial, sans-serif;
+					font-size: 15px;
 					padding-bottom: 20px;
 				}
 
@@ -337,7 +339,7 @@ EXPLANATION;
 				.exceptionTitle {
 					color: #fff;
 					font-size: 28px;
-					font-weight: 300;
+					font-weight: 600;
 				}
 
 				.exceptionErrorCode {
@@ -357,7 +359,7 @@ EXPLANATION;
 				.exceptionSubtitle {
 					border-bottom: 1px solid rgb(238, 238, 238);
 					font-size: 24px;
-					font-weight: 300;
+					font-weight: 600;
 					margin-bottom: 15px;
 					padding-bottom: 10px;
 				}
@@ -373,7 +375,10 @@ EXPLANATION;
 				}
 
 				.exceptionText .exceptionInlineCode {
-					font-family: monospace;
+					font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono",
+						"Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+						"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+					font-size: 14px;
 					white-space: nowrap;
 				}
 
@@ -418,8 +423,11 @@ EXPLANATION;
 				.exceptionStacktraceFile span,
 				.exceptionStacktraceCall,
 				.exceptionStacktraceCall span {
-					font-family: monospace !important;
-					white-space: nowrap !important;
+					font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono",
+						"Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+						"Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+					font-size: 14px;
+					white-space: nowrap;
 				}
 
 				.exceptionStacktraceCall+.exceptionStacktraceFile {
