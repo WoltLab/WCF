@@ -5,7 +5,9 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
+
 namespace {
+
 	use wcf\system\WCF;
 
 	// set exception handler
@@ -17,43 +19,42 @@ namespace {
 	register_shutdown_function([WCF::class, 'destruct']);
 	// set autoload function
 	spl_autoload_register([WCF::class, 'autoload'], true, true);
-	
+
 	/**
 	 * Helper method to output debug data for all passed variables,
 	 * uses `print_r()` for arrays and objects, `var_dump()` otherwise.
 	 */
-	function wcfDebug() {
+	function wcfDebug()
+	{
 		echo "<pre>";
-		
+
 		$args = func_get_args();
 		$length = count($args);
 		if ($length === 0) {
 			echo "ERROR: No arguments provided.<hr>";
-		}
-		else {
+		} else {
 			for ($i = 0; $i < $length; $i++) {
 				$arg = $args[$i];
-				
+
 				echo "<h2>Argument {$i} (" . gettype($arg) . ")</h2>";
-				
+
 				if (is_array($arg) || is_object($arg)) {
 					print_r($arg);
-				}
-				else {
+				} else {
 					var_dump($arg);
 				}
-				
+
 				echo "<hr>";
 			}
 		}
-		
+
 		$backtrace = debug_backtrace();
-		
+
 		// output call location to help finding these debug outputs again
 		echo "wcfDebug() called in {$backtrace[0]['file']} on line {$backtrace[0]['line']}";
-		
+
 		echo "</pre>";
-		
+
 		exit;
 	}
 
@@ -76,13 +77,15 @@ namespace {
 }
 
 namespace wcf {
-	function getRequestId(): string {
+	function getRequestId(): string
+	{
 		if (!defined('WCF_REQUEST_ID_HEADER') || !WCF_REQUEST_ID_HEADER) return '';
-		
+
 		return $_SERVER[WCF_REQUEST_ID_HEADER] ?? '';
 	}
-	
-	function getMinorVersion(): string {
+
+	function getMinorVersion(): string
+	{
 		return preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
 	}
 
@@ -96,6 +99,7 @@ namespace wcf {
 }
 
 namespace wcf\functions\exception {
+
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
 	use wcf\system\exception\SystemException;
@@ -106,31 +110,34 @@ namespace wcf\functions\exception {
 	 * If the stacktrace contains a compiled template, the context of the relevant template line
 	 * is returned, otherwise an empty array is returned.
 	 */
-	function getTemplateContextLines(\Throwable $e): array {
+	function getTemplateContextLines(\Throwable $e): array
+	{
 		try {
 			$contextLineCount = 5;
 			foreach ($e->getTrace() as $traceEntry) {
-				if (isset($traceEntry['file']) && \preg_match('~/templates/compiled/.+\.php$~',
-					$traceEntry['file'])) {
+				if (isset($traceEntry['file']) && \preg_match(
+					'~/templates/compiled/.+\.php$~',
+					$traceEntry['file']
+				)) {
 					$startLine = $traceEntry['line'] - $contextLineCount;
 					$relativeErrorLine = $contextLineCount;
 					if ($startLine < 0) {
 						$startLine = 0;
 						$relativeErrorLine = $traceEntry['line'] - 1;
 					}
-					
+
 					$file = \fopen($traceEntry['file'], 'r');
 					if (!$file) {
 						return [];
 					}
-					
+
 					for ($line = 0; $line < $startLine; $line++) {
 						if (\substr(\fgets($file, 1024), -1) !== "\n") {
 							// We don't want to handle a file where lines exceed 1024 Bytes.
 							return [];
 						}
 					}
-					
+
 					$maxLineCount = 2 * $contextLineCount + 1;
 					$lines = [];
 					while (!\feof($file) && \count($lines) < $maxLineCount) {
@@ -139,46 +146,46 @@ namespace wcf\functions\exception {
 							// We don't want to handle a file where lines exceed 1024 Bytes.
 							return [];
 						}
-						
+
 						if (count($lines) === $relativeErrorLine - 1) {
 							$line = "====> {$line}";
 						}
-						
+
 						$lines[] = $line;
 					}
-					
+
 					return $lines;
 				}
 			}
-		}
-		catch (\Throwable $e) {
+		} catch (\Throwable $e) {
 			// Ignore errors while extracting the template context to be saved in the exception log.
 		}
-		
+
 		return [];
 	}
-	
+
 	/**
 	 * Logs the given Throwable.
 	 * 
 	 * @param	string			$logFile	The log file to use. If set to `null` the default log file will be used and the variable contents will be replaced by the actual path.
 	 * @return	string					The ID of the log entry.
 	 */
-	function logThrowable(\Throwable $e, &$logFile = null): string {
+	function logThrowable(\Throwable $e, &$logFile = null): string
+	{
 		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		touch($logFile);
-		
+
 		$stripNewlines = function ($item) {
 			return str_replace("\n", ' ', $item);
 		};
-		
+
 		$getExtraInformation = function (\Throwable $e) {
 			$extraInformation = [];
-			
+
 			if ($e instanceof IExtraInformationException) {
 				$extraInformation = $e->getExtraInformation();
 			}
-			
+
 			$templateContextLines = getTemplateContextLines($e);
 			if (!empty($templateContextLines)) {
 				$extraInformation[] = [
@@ -186,52 +193,51 @@ namespace wcf\functions\exception {
 					\implode("", $templateContextLines),
 				];
 			}
-			
+
 			return !empty($extraInformation) ? base64_encode(serialize($extraInformation)) : "-";
 		};
-		
+
 		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
-		$message = gmdate('r', TIME_NOW)."\n".
-			'Message: '.$stripNewlines($e->getMessage())."\n".
-			'PHP version: '.phpversion()."\n".
-			'WoltLab Suite version: '.WCF_VERSION."\n".
-			'Request URI: '.$stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '').' '.($_SERVER['REQUEST_URI'] ?? '')).(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
-			'Referrer: '.$stripNewlines($_SERVER['HTTP_REFERER'] ?? '')."\n".
-			'User Agent: '.$stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '')."\n".
-			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
+		$message = gmdate('r', TIME_NOW) . "\n" .
+			'Message: ' . $stripNewlines($e->getMessage()) . "\n" .
+			'PHP version: ' . phpversion() . "\n" .
+			'WoltLab Suite version: ' . WCF_VERSION . "\n" .
+			'Request URI: ' . $stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '') . ' ' . ($_SERVER['REQUEST_URI'] ?? '')) . (\wcf\getRequestId() ? ' (' . \wcf\getRequestId() . ')' : '') . "\n" .
+			'Referrer: ' . $stripNewlines($_SERVER['HTTP_REFERER'] ?? '') . "\n" .
+			'User Agent: ' . $stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '') . "\n" .
+			'Peak Memory Usage: ' . memory_get_peak_usage() . '/' . FileUtil::getMemoryLimit() . "\n";
 		$prev = $e;
 		do {
-			$message .= "======\n".
-			'Error Class: '.get_class($prev)."\n".
-			'Error Message: '.$stripNewlines($prev->getMessage())."\n".
-			'Error Code: '.$stripNewlines($prev->getCode())."\n".
-			'File: '.$stripNewlines($prev->getFile()).' ('.$prev->getLine().')'."\n".
-			'Extra Information: ' . $getExtraInformation($prev) . "\n".
-			'Stack Trace: '.json_encode(array_map(function ($item) {
-				$item['args'] = array_map(function ($item) {
-					switch (gettype($item)) {
-						case 'object':
-							return get_class($item);
-						case 'array':
-							return array_map(function () {
-								return '[redacted]';
-							}, $item);
-						case 'resource':
-							return 'resource('.get_resource_type($item).')';
-						default:
-							return $item;
-					}
-				}, $item['args']);
-				
-				return $item;
-			}, sanitizeStacktrace($prev, true)))."\n";
-		}
-		while ($prev = $prev->getPrevious());
-		
+			$message .= "======\n" .
+				'Error Class: ' . get_class($prev) . "\n" .
+				'Error Message: ' . $stripNewlines($prev->getMessage()) . "\n" .
+				'Error Code: ' . $stripNewlines($prev->getCode()) . "\n" .
+				'File: ' . $stripNewlines($prev->getFile()) . ' (' . $prev->getLine() . ')' . "\n" .
+				'Extra Information: ' . $getExtraInformation($prev) . "\n" .
+				'Stack Trace: ' . json_encode(array_map(function ($item) {
+					$item['args'] = array_map(function ($item) {
+						switch (gettype($item)) {
+							case 'object':
+								return get_class($item);
+							case 'array':
+								return array_map(function () {
+									return '[redacted]';
+								}, $item);
+							case 'resource':
+								return 'resource(' . get_resource_type($item) . ')';
+							default:
+								return $item;
+						}
+					}, $item['args']);
+
+					return $item;
+				}, sanitizeStacktrace($prev, true))) . "\n";
+		} while ($prev = $prev->getPrevious());
+
 		// calculate Exception-ID
 		$exceptionID = sha1($message);
-		$entry = "<<<<<<<<".$exceptionID."<<<<\n".$message."<<<<\n\n";
-		
+		$entry = "<<<<<<<<" . $exceptionID . "<<<<\n" . $message . "<<<<\n\n";
+
 		file_put_contents($logFile, $entry, FILE_APPEND);
 
 		return $exceptionID;
@@ -243,10 +249,11 @@ namespace wcf\functions\exception {
 	 * 
 	 * @throws	\Exception
 	 */
-	function printThrowable(\Throwable $e) {
+	function printThrowable(\Throwable $e)
+	{
 		$exceptionID = logThrowable($e, $logFile);
-		if (\wcf\getRequestId()) $exceptionID .= '/'.\wcf\getRequestId();
-		
+		if (\wcf\getRequestId()) $exceptionID .= '/' . \wcf\getRequestId();
+
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
 		try {
@@ -255,15 +262,14 @@ namespace wcf\functions\exception {
 				$exceptionSubtitle = str_replace('{$exceptionID}', $exceptionID, WCF::getLanguage()->get('wcf.global.exception.subtitle', true));
 				$exceptionExplanation = str_replace('{$logFile}', $logFile, WCF::getLanguage()->get('wcf.global.exception.explanation', true));
 			}
-		}
-		catch (\Throwable $e) {
+		} catch (\Throwable $e) {
 			// ignore
 		}
-		
+
 		if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
 			// one or more failed, fallback to english
 			$exceptionTitle = 'An error has occurred';
-			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">'.$exceptionID.'</span></span>';
+			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">' . $exceptionID . '</span></span>';
 			$exceptionExplanation = <<<EXPLANATION
 <p class="exceptionSubtitle">What happened?</p>
 <p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
@@ -275,9 +281,8 @@ namespace wcf\functions\exception {
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>
 EXPLANATION;
-
 		}
-		
+
 		/*
 		 * A notice on the HTML used below:
 		 * 
@@ -290,14 +295,16 @@ EXPLANATION;
 		 * compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
 		 * without the potential of messing up the formatting and thus harming the readability.
 		 */
-	?><!DOCTYPE html>
-	<html>
+?>
+		<!DOCTYPE html>
+		<html>
+
 		<head>
 			<meta charset="utf-8">
 			<?php if (!defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
-			<title>Fatal Error: <?php echo StringUtil::encodeHTML($e->getMessage()); ?></title>
+				<title>Fatal Error: <?php echo StringUtil::encodeHTML($e->getMessage()); ?></title>
 			<?php } else { ?>
-			<title>Fatal Error</title>
+				<title>Fatal Error</title>
 			<?php } ?>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<style>
@@ -307,37 +314,37 @@ EXPLANATION;
 					margin: 0;
 					padding: 0;
 				}
-				
+
 				.exceptionContainer {
 					box-sizing: border-box;
 					font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 					font-size: 14px;
 					padding-bottom: 20px;
 				}
-				
+
 				.exceptionContainer * {
 					box-sizing: inherit;
 					line-height: 1.5em;
 					margin: 0;
 					padding: 0;
 				}
-				
+
 				.exceptionHeader {
 					background-color: rgb(58, 109, 156);
 					padding: 30px 0;
 				}
-				
+
 				.exceptionTitle {
 					color: #fff;
 					font-size: 28px;
 					font-weight: 300;
 				}
-				
+
 				.exceptionErrorCode {
 					color: #fff;
 					margin-top: .5em;
 				}
-				
+
 				.exceptionErrorCode .exceptionInlineCode {
 					background-color: rgb(43, 79, 113);
 					border-radius: 3px;
@@ -346,7 +353,7 @@ EXPLANATION;
 					padding: 3px 10px;
 					white-space: nowrap;
 				}
-				
+
 				.exceptionSubtitle {
 					border-bottom: 1px solid rgb(238, 238, 238);
 					font-size: 24px;
@@ -354,59 +361,59 @@ EXPLANATION;
 					margin-bottom: 15px;
 					padding-bottom: 10px;
 				}
-				
-				.exceptionContainer > .exceptionBoundary {
+
+				.exceptionContainer>.exceptionBoundary {
 					margin-top: 30px;
 				}
-				
+
 				.exceptionText .exceptionInlineCodeWrapper {
 					border: 1px solid rgb(169, 169, 169);
 					border-radius: 3px;
 					padding: 2px 5px;
 				}
-				
+
 				.exceptionText .exceptionInlineCode {
 					font-family: monospace;
 					white-space: nowrap;
 				}
-				
+
 				.exceptionFieldTitle {
 					color: rgb(59, 109, 169);
 				}
-				
+
 				.exceptionFieldTitle .exceptionColon {
 					/* hide colon in browser, but will be visible after copy & paste */
 					opacity: 0;
 				}
-				
+
 				.exceptionFieldValue {
 					font-size: 18px;
 					min-height: 1.5em;
 				}
-				
+
 				pre.exceptionFieldValue {
 					font-size: 14px;
 					white-space: pre-wrap;
 				}
-				
+
 				.exceptionSystemInformation,
 				.exceptionErrorDetails,
 				.exceptionStacktrace {
 					list-style-type: none;
 				}
-				
-				.exceptionSystemInformation > li:not(:first-child),
-				.exceptionErrorDetails > li:not(:first-child) {
+
+				.exceptionSystemInformation>li:not(:first-child),
+				.exceptionErrorDetails>li:not(:first-child) {
 					margin-top: 10px;
 				}
-				
+
 				.exceptionStacktrace {
 					display: block;
 					margin-top: 5px;
 					overflow: auto;
 					padding-bottom: 20px;
 				}
-				
+
 				.exceptionStacktraceFile,
 				.exceptionStacktraceFile span,
 				.exceptionStacktraceCall,
@@ -414,39 +421,39 @@ EXPLANATION;
 					font-family: monospace !important;
 					white-space: nowrap !important;
 				}
-				
-				.exceptionStacktraceCall + .exceptionStacktraceFile {
+
+				.exceptionStacktraceCall+.exceptionStacktraceFile {
 					margin-top: 5px;
 				}
-				
+
 				.exceptionStacktraceCall {
 					padding-left: 40px;
 				}
-				
+
 				.exceptionStacktraceCall,
 				.exceptionStacktraceCall span {
 					color: rgb(102, 102, 102) !important;
 					font-size: 13px !important;
 				}
-				
+
 				/* mobile */
 				@media (max-width: 767px) {
 					.exceptionBoundary {
 						min-width: 320px;
 						padding: 0 10px;
 					}
-					
+
 					.exceptionText .exceptionInlineCodeWrapper {
 						display: inline-block;
 						overflow: auto;
 					}
-					
+
 					.exceptionErrorCode .exceptionInlineCode {
 						font-size: 13px;
 						padding: 2px 5px;
 					}
 				}
-				
+
 				/* desktop */
 				@media (min-width: 768px) {
 					.exceptionBoundary {
@@ -455,19 +462,19 @@ EXPLANATION;
 						min-width: 1200px;
 						padding: 0 10px;
 					}
-					
+
 					.exceptionSystemInformation {
 						display: flex;
 						flex-wrap: wrap;
 					}
-					
+
 					.exceptionSystemInformation1,
 					.exceptionSystemInformation3,
 					.exceptionSystemInformation5 {
 						flex: 0 0 200px;
 						margin: 0 0 10px 0 !important;
 					}
-					
+
 					.exceptionSystemInformation2,
 					.exceptionSystemInformation4,
 					.exceptionSystemInformation6 {
@@ -475,14 +482,31 @@ EXPLANATION;
 						margin: 0 0 10px 10px !important;
 						max-width: calc(100% - 210px);
 					}
-					
-					.exceptionSystemInformation1 { order: 1; }
-					.exceptionSystemInformation2 { order: 2; }
-					.exceptionSystemInformation3 { order: 3; }
-					.exceptionSystemInformation4 { order: 4; }
-					.exceptionSystemInformation5 { order: 5; }
-					.exceptionSystemInformation6 { order: 6; }
-					
+
+					.exceptionSystemInformation1 {
+						order: 1;
+					}
+
+					.exceptionSystemInformation2 {
+						order: 2;
+					}
+
+					.exceptionSystemInformation3 {
+						order: 3;
+					}
+
+					.exceptionSystemInformation4 {
+						order: 4;
+					}
+
+					.exceptionSystemInformation5 {
+						order: 5;
+					}
+
+					.exceptionSystemInformation6 {
+						order: 6;
+					}
+
 					.exceptionSystemInformation .exceptionFieldValue {
 						overflow: hidden;
 						text-overflow: ellipsis;
@@ -491,6 +515,7 @@ EXPLANATION;
 				}
 			</style>
 		</head>
+
 		<body class="exceptionBody">
 			<div class="exceptionContainer">
 				<div class="exceptionHeader">
@@ -499,7 +524,7 @@ EXPLANATION;
 						<p class="exceptionErrorCode"><?php echo str_replace('{$exceptionID}', $exceptionID, $exceptionSubtitle); ?></p>
 					</div>
 				</div>
-				
+
 				<div class="exceptionBoundary">
 					<?php echo $exceptionExplanation; ?>
 				</div>
@@ -533,88 +558,91 @@ EXPLANATION;
 							</li>
 						</ul>
 					</div>
-					
+
 					<?php
 					$first = true;
 					$exceptions = [];
 					$current = $e;
 					do {
 						$exceptions[] = $current;
-					}
-					while ($current = $current->getPrevious());
-					
+					} while ($current = $current->getPrevious());
+
 					$e = array_pop($exceptions);
 					do {
 					?>
-					<div class="exceptionBoundary">
-						<p class="exceptionSubtitle"><?php if (!empty($exceptions) && $first) { echo "Original "; } else if (empty($exceptions) && !$first) { echo "Final "; } ?>Error</p>
-						<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
-							<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
-						<?php } ?>
-						<ul class="exceptionErrorDetails">
-							<li>
-								<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
-								<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
-							</li>
-							<li>
-								<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
-								<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getMessage()); ?></p>
-							</li>
-							<?php if ($e->getCode()) { ?>
-								<li>
-									<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
-									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getCode()); ?></p>
-								</li>
+						<div class="exceptionBoundary">
+							<p class="exceptionSubtitle"><?php if (!empty($exceptions) && $first) {
+																echo "Original ";
+															} else if (empty($exceptions) && !$first) {
+																echo "Final ";
+															} ?>Error</p>
+							<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
+								<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
 							<?php } ?>
-							<li>
-								<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
-								<p class="exceptionFieldValue" style="word-break: break-all"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?> (<?php echo $e->getLine(); ?>)</p>
-							</li>
-							
-							<?php
-							if ($e instanceof SystemException) {
-								ob_start();
-								$e->show();
-								ob_end_clean();
+							<ul class="exceptionErrorDetails">
+								<li>
+									<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
+									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
+								</li>
+								<li>
+									<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
+									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getMessage()); ?></p>
+								</li>
+								<?php if ($e->getCode()) { ?>
+									<li>
+										<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
+										<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getCode()); ?></p>
+									</li>
+								<?php } ?>
+								<li>
+									<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
+									<p class="exceptionFieldValue" style="word-break: break-all"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?> (<?php echo $e->getLine(); ?>)</p>
+								</li>
 
-								$reflection = new \ReflectionClass($e);
-								$property = $reflection->getProperty('information');
-								if ($property->getValue($e)) {
-									throw new \Exception("Using the 'information' property of SystemException is not supported any more.");
+								<?php
+								if ($e instanceof SystemException) {
+									ob_start();
+									$e->show();
+									ob_end_clean();
+
+									$reflection = new \ReflectionClass($e);
+									$property = $reflection->getProperty('information');
+									if ($property->getValue($e)) {
+										throw new \Exception("Using the 'information' property of SystemException is not supported any more.");
+									}
 								}
-							}
-							if ($e instanceof IExtraInformationException) {
-								foreach ($e->getExtraInformation() as list($key, $value)) {
+								if ($e instanceof IExtraInformationException) {
+									foreach ($e->getExtraInformation() as list($key, $value)) {
+								?>
+										<li>
+											<p class="exceptionFieldTitle"><?php echo StringUtil::encodeHTML($key); ?><span class="exceptionColon">:</span></p>
+											<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($value); ?></p>
+										</li>
+									<?php
+									}
+								}
+
+								$templateContextLines = getTemplateContextLines($e);
+								if (!empty($templateContextLines)) {
 									?>
 									<li>
-										<p class="exceptionFieldTitle"><?php echo StringUtil::encodeHTML($key); ?><span class="exceptionColon">:</span></p>
-										<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($value); ?></p>
+										<p class="exceptionFieldTitle">Template Context<span class="exceptionColon">:</span></p>
+										<pre class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(implode("", $templateContextLines)); ?></pre>
 									</li>
-									<?php
+								<?php
 								}
-							}
-
-							$templateContextLines = getTemplateContextLines($e);
-							if (!empty($templateContextLines)) {
 								?>
 								<li>
-									<p class="exceptionFieldTitle">Template Context<span class="exceptionColon">:</span></p>
-									<pre class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(implode("", $templateContextLines));?></pre>
-								</li>
-								<?php
-							}
-							?>
-							<li>
-								<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span></p>
-								<ul class="exceptionStacktrace">
-									<?php
-									$trace = sanitizeStacktrace($e);
-									for ($i = 0, $max = count($trace); $i < $max; $i++) {
-										?>
-										<li class="exceptionStacktraceFile"><?php echo '#'.$i.' '.StringUtil::encodeHTML($trace[$i]['file']).' ('.$trace[$i]['line'].')'.':'; ?></li>
-										<li class="exceptionStacktraceCall">
+									<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span></p>
+									<ul class="exceptionStacktrace">
 										<?php
-											echo $trace[$i]['class'].$trace[$i]['type'].$trace[$i]['function'].'(';
+										$trace = sanitizeStacktrace($e);
+										for ($i = 0, $max = count($trace); $i < $max; $i++) {
+										?>
+											<li class="exceptionStacktraceFile"><?php echo '#' . $i . ' ' . StringUtil::encodeHTML($trace[$i]['file']) . ' (' . $trace[$i]['line'] . ')' . ':'; ?></li>
+											<li class="exceptionStacktraceCall">
+											<?php
+											echo $trace[$i]['class'] . $trace[$i]['type'] . $trace[$i]['function'] . '(';
 											echo implode(', ', array_map(function ($item) {
 												switch (gettype($item)) {
 													case 'integer':
@@ -623,41 +651,42 @@ EXPLANATION;
 													case 'NULL':
 														return 'null';
 													case 'string':
-														return "'".addcslashes(StringUtil::encodeHTML($item), "\\'")."'";
+														return "'" . addcslashes(StringUtil::encodeHTML($item), "\\'") . "'";
 													case 'boolean':
 														return $item ? 'true' : 'false';
 													case 'array':
 														$keys = array_keys($item);
-														if (count($keys) > 5) return "[ ".count($keys)." items ]";
-														return '[ '.implode(', ', array_map(function ($item) {
-															return $item.' => ';
-														}, $keys)).']';
+														if (count($keys) > 5) return "[ " . count($keys) . " items ]";
+														return '[ ' . implode(', ', array_map(function ($item) {
+															return $item . ' => ';
+														}, $keys)) . ']';
 													case 'object':
 														return get_class($item);
 													case 'resource':
-														return 'resource('.get_resource_type($item).')';
+														return 'resource(' . get_resource_type($item) . ')';
 													case 'resource (closed)':
 														return 'resource (closed)';
 												}
-												
+
 												throw new \LogicException('Unreachable');
 											}, $trace[$i]['args']));
-										echo ')</li>';
-									}
-									?>
-								</ul>
-							</li>
-						</ul>
-					</div>
+											echo ')</li>';
+										}
+											?>
+									</ul>
+								</li>
+							</ul>
+						</div>
 					<?php
-					$first = false;
+						$first = false;
 					} while ($e = array_pop($exceptions));
 					?>
 				<?php } ?>
 			</div>
 		</body>
-	</html>
-	<?php
+
+		</html>
+<?php
 	}
 
 	/**
@@ -667,7 +696,8 @@ EXPLANATION;
 	 * @param	bool			$ignorePaths	If set to `true`: Don't call `sanitizePath`.
 	 * @return	mixed[]
 	 */
-	function sanitizeStacktrace(\Throwable $e, bool $ignorePaths = false) {
+	function sanitizeStacktrace(\Throwable $e, bool $ignorePaths = false)
+	{
 		$trace = $e->getTrace();
 
 		return array_map(function ($item) use ($ignorePaths) {
@@ -688,8 +718,7 @@ EXPLANATION;
 				if (!empty($item['args']) && !$cannotBeReflected) {
 					if ($item['class']) {
 						$function = new \ReflectionMethod($item['class'], $item['function']);
-					}
-					else {
+					} else {
 						$function = new \ReflectionFunction($item['function']);
 					}
 
@@ -719,7 +748,7 @@ EXPLANATION;
 						}
 						$i++;
 					}
-					
+
 					// strip database credentials
 					if (
 						preg_match('~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~', $item['class'])
@@ -741,25 +770,25 @@ EXPLANATION;
 					return '[error_during_sanitization]';
 				}, $item['args']);
 			}
-			
+
 			if (!$ignorePaths) {
 				$item['args'] = array_map(function ($item) {
 					if (!is_string($item)) return $item;
-					
-					if (preg_match('~^('.preg_quote($_SERVER['DOCUMENT_ROOT'], '~').'|'.preg_quote(WCF_DIR, '~').')~', $item)) {
+
+					if (preg_match('~^(' . preg_quote($_SERVER['DOCUMENT_ROOT'], '~') . '|' . preg_quote(WCF_DIR, '~') . ')~', $item)) {
 						$item = sanitizePath($item);
 					}
 
 					return $item;
 				}, $item['args']);
-				
+
 				$item['file'] = sanitizePath($item['file']);
 			}
-			
+
 			return $item;
 		}, $trace);
 	}
-	
+
 	/**
 	 * Returns the given path relative to `WCF_DIR`, unless both,
 	 * `EXCEPTION_PRIVACY` is `public` and the debug mode is enabled.
@@ -767,11 +796,12 @@ EXPLANATION;
 	 * @param	string		$path
 	 * @return	string
 	 */
-	function sanitizePath(string $path): string {
+	function sanitizePath(string $path): string
+	{
 		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
-		
-		return '*/'.FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
+
+		return '*/' . FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
 	}
 }
