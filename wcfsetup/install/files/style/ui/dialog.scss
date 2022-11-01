@@ -283,6 +283,8 @@
 
 .dialog {
 	--dialog-border-radius: 8px;
+	--dialog-max-height: 80%;
+	--dialog-max-width: 80%;
 	--dialog-padding: 20px;
 
 	animation: 0.24s dialog;
@@ -292,8 +294,8 @@
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	display: flex;
 	flex-direction: column;
-	max-height: 80%;
-	max-width: 80%;
+	max-height: var(--dialog-max-height);
+	max-width: var(--dialog-max-width);
 	min-height: 0;
 	min-width: 500px;
 	padding: 0;
@@ -362,7 +364,7 @@
 	min-height: 0;
 }
 
-.dialog[role="alert"],
+.dialog[role="alert"]:not(.dialog--iframe),
 .dialog[role="alertdialog"] {
 	max-width: 500px;
 }
@@ -420,10 +422,33 @@
 	}
 }
 
+/* <iframe> as the result of an unexpected HTTP response */
+.dialog.dialog--iframe {
+	height: var(--dialog-max-height);
+	width: var(--dialog-max-width);
+}
+
+.dialog.dialog--iframe .dialog__document,
+.dialog.dialog--iframe .dialog__form,
+.dialog.dialog--iframe .dialog__content {
+	height: 100%;
+}
+
+.dialog.dialog--iframe .dialog__iframeContainer {
+	border: 2px dashed red;
+	height: 100%;
+	padding: 5px;
+}
+
+.dialog.dialog--iframe .dialog__iframe {
+	height: 100%;
+	width: 100%;
+}
+
 @include screen-xs {
 	.dialog {
-		max-height: calc(100% - 20px);
-		max-width: calc(100% - 20px);
+		--dialog-max-height: calc(100% - 20px);
+		--dialog-max-width: calc(100% - 20px);
 		min-width: 0;
 	}
 }
