@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Ui/User/Menu/Manager
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util", "../../Screen"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1, UiScreen) {
+define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", "../../../Event/Handler", "../../../Dom/Util", "../../Screen", "../../../Helper/PageOverlay"], function (require, exports, tslib_1, Alignment, CloseOverlay_1, EventHandler, Util_1, UiScreen, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerProvider = exports.getContainer = exports.getUserMenuProviders = void 0;
@@ -84,7 +84,7 @@ define(["require", "exports", "tslib", "../../Alignment", "../../CloseOverlay", 
         if (container === undefined) {
             container = document.createElement("div");
             container.classList.add("dropdownMenuContainer");
-            document.body.append(container);
+            (0, PageOverlay_1.getPageOverlayContainer)().append(container);
         }
         return container;
     }

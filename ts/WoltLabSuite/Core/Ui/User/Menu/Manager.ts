@@ -15,6 +15,7 @@ import CloseOverlay from "../../CloseOverlay";
 import * as EventHandler from "../../../Event/Handler";
 import DomUtil from "../../../Dom/Util";
 import * as UiScreen from "../../Screen";
+import { getPageOverlayContainer } from "../../../Helper/PageOverlay";
 
 let container: HTMLElement | undefined = undefined;
 const providers = new Set<UserMenuProvider>();
@@ -103,7 +104,7 @@ export function getContainer(): HTMLElement {
   if (container === undefined) {
     container = document.createElement("div");
     container.classList.add("dropdownMenuContainer");
-    document.body.append(container);
+    getPageOverlayContainer().append(container);
   }
 
   return container;

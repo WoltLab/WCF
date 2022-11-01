@@ -207,6 +207,7 @@ html.iOS select {
 	position: fixed;
 	right: 0;
 	top: 0;
+	z-index: 450;
 }
 
 #pageOverlayContainer > *:not(.dropdownMenuContainer) {
