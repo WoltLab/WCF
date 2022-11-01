@@ -432,10 +432,16 @@ EXPLANATION;
 					margin-top: 10px;
 				}
 
+				.exceptionFieldDetails {
+					padding-left: 20px;
+					word-break: break-all;
+				}
+
 				.exceptionStacktraceFile {
 					padding-left: 40px;
 				}
 
+				.exceptionFieldDetails,
 				.exceptionStacktraceFile {
 					color: rgb(115 115 115) !important;
 					font-size: 13px !important;
@@ -614,22 +620,19 @@ EXPLANATION;
 							<?php } ?>
 							<ul class="exceptionErrorDetails">
 								<li>
-									<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
-									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
-								</li>
-								<li>
 									<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
 									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getMessage()); ?></p>
 								</li>
-								<?php if ($e->getCode()) { ?>
-									<li>
-										<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
-										<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getCode()); ?></p>
-									</li>
-								<?php } ?>
 								<li>
-									<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
-									<p class="exceptionFieldValue" style="word-break: break-all"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?> (<?php echo $e->getLine(); ?>)</p>
+									<p class="exceptionFieldTitle">
+										<?php if ($e->getCode()) { ?>
+											Error Type (<?php echo StringUtil::encodeHTML($e->getCode()); ?>)<span class="exceptionColon">:</span>
+										<?php } else { ?>
+											Error Type<span class="exceptionColon">:</span>
+										<?php } ?>
+									</p>
+									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
+									<p class="exceptionFieldDetails"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?>:<?php echo $e->getLine(); ?></p>
 								</li>
 
 								<?php
