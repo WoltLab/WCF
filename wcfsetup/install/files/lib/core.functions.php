@@ -631,7 +631,7 @@ EXPLANATION;
 											(<?php echo StringUtil::encodeHTML($e->getCode()); ?>)
 										<?php } ?>
 									</p>
-									<p class="exceptionFieldDetails"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile(), false)); ?>:<?php echo $e->getLine(); ?></p>
+									<p class="exceptionFieldDetails"><?php echo formatPath(sanitizePath($e->getFile(), false), $e->getLine()); ?></p>
 								</li>
 
 								<?php
@@ -866,6 +866,22 @@ EXPLANATION;
 		}
 
 		return '*/' . FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
+	}
+
+	function formatPath(string $path, int $lineNumber): string
+	{
+		$path = FileUtil::unifyDirSeparator($path);
+		[
+			'dirname' => $dirname,
+			'basename' => $basename
+		] = \pathinfo($path);
+
+		return \sprintf(
+			'%s/<strong>%s</strong>:<strong>%s</strong>',
+			StringUtil::encodeHTML($dirname),
+			StringUtil::encodeHTML($basename),
+			$lineNumber,
+		);
 	}
 
 	function isMiddlewareStart(array $segment): bool
