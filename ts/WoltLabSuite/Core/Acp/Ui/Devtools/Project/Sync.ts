@@ -1,9 +1,9 @@
 import * as Ajax from "../../../../Ajax";
 import * as Language from "../../../../Language";
-import UiDialog from "../../../../Ui/Dialog";
 import * as UiNotification from "../../../../Ui/Notification";
 import { AjaxCallbackSetup, AjaxResponseException } from "../../../../Ajax/Data";
 import { DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
+import { dialogFactory } from "../../../../Component/Dialog";
 
 interface PipData {
   dependencies: string[];
@@ -225,7 +225,17 @@ class AcpUiDevtoolsProjectSync {
     buttonStatus.children[0].addEventListener("click", (event) => {
       event.preventDefault();
 
-      UiDialog.open(this, Ajax.getRequestObject(this).getErrorHtml(data, xhr));
+      const html = Ajax.getRequestObject(this).getErrorHtml(data, xhr);
+      if (html instanceof HTMLIFrameElement) {
+        const dialog = dialogFactory()
+          .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
+          .asAlert();
+        dialog.show(Language.get("wcf.global.error.title"));
+        dialog.querySelector("dialog")!.classList.add("dialog--iframe");
+      } else if (html) {
+        const dialog = dialogFactory().fromHtml(html).asAlert();
+        dialog.show(Language.get("wcf.global.error.title"));
+      }
     });
 
     this.buttonSyncAll!.classList.remove("disabled");
