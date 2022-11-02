@@ -624,11 +624,11 @@ EXPLANATION;
 									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getMessage()); ?></p>
 								</li>
 								<li>
-									<p class="exceptionFieldTitle">
+									<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
+									<p class="exceptionFieldValue">
+										<?php echo StringUtil::encodeHTML(get_class($e)); ?>
 										<?php if ($e->getCode()) { ?>
-											Error Type (<?php echo StringUtil::encodeHTML($e->getCode()); ?>)<span class="exceptionColon">:</span>
-										<?php } else { ?>
-											Error Type<span class="exceptionColon">:</span>
+											(<?php echo StringUtil::encodeHTML($e->getCode()); ?>)
 										<?php } ?>
 									</p>
 									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
