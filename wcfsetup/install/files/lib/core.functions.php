@@ -631,8 +631,7 @@ EXPLANATION;
 											(<?php echo StringUtil::encodeHTML($e->getCode()); ?>)
 										<?php } ?>
 									</p>
-									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
-									<p class="exceptionFieldDetails"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?>:<?php echo $e->getLine(); ?></p>
+									<p class="exceptionFieldDetails"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile(), false)); ?>:<?php echo $e->getLine(); ?></p>
 								</li>
 
 								<?php
@@ -857,13 +856,10 @@ EXPLANATION;
 	/**
 	 * Returns the given path relative to `WCF_DIR`, unless both,
 	 * `EXCEPTION_PRIVACY` is `public` and the debug mode is enabled.
-	 * 
-	 * @param	string		$path
-	 * @return	string
 	 */
-	function sanitizePath(string $path): string
+	function sanitizePath(string $path, bool $removePath = true): string
 	{
-		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
+		if (!$removePath && WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
 
