@@ -291,7 +291,13 @@ class AjaxRequest {
     if (options.ignoreError !== true && showError) {
       const html = this.getErrorHtml(data as AjaxResponseException, xhr);
 
-      if (html) {
+      if (html instanceof HTMLIFrameElement) {
+        const dialog = dialogFactory()
+          .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
+          .asAlert();
+        dialog.show(Language.get("wcf.global.error.title"));
+        dialog.querySelector("dialog")!.classList.add("dialog--iframe");
+      } else if (html) {
         const dialog = dialogFactory().fromHtml(html).asAlert();
         dialog.show(Language.get("wcf.global.error.title"));
       }
@@ -303,7 +309,7 @@ class AjaxRequest {
   /**
    * Returns the inner HTML for an error/exception display.
    */
-  getErrorHtml(data: AjaxResponseException | null, xhr: XMLHttpRequest): string | null {
+  getErrorHtml(data: AjaxResponseException | null, xhr: XMLHttpRequest): string | HTMLIFrameElement | null {
     let details = "";
     let message: string;
 
@@ -328,6 +334,13 @@ class AjaxRequest {
         details += `<hr><p>${previous.message}</p>`;
         details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
       });
+    } else if (xhr.getResponseHeader("content-type")?.startsWith("text/html")) {
+      // The content is possibly HTML, use an iframe for rendering.
+      const iframe = document.createElement("iframe");
+      iframe.classList.add("dialog__iframe");
+      iframe.srcdoc = xhr.responseText;
+
+      return iframe;
     } else {
       message = xhr.responseText;
     }

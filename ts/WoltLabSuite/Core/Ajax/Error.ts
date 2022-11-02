@@ -31,14 +31,17 @@ type ErrorResponse = {
 
 async function genericError(error: ApiError): Promise<void> {
   const html = await getErrorHtml(error);
-
-  if (html !== "") {
+  if (html instanceof HTMLIFrameElement) {
+    const dialog = dialogFactory().fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`).asAlert();
+    dialog.show(Language.get("wcf.global.error.title"));
+    dialog.querySelector("dialog")!.classList.add("dialog--iframe");
+  } else if (html !== "") {
     const dialog = dialogFactory().fromHtml(html).asAlert();
     dialog.show(Language.get("wcf.global.error.title"));
   }
 }
 
-async function getErrorHtml(error: ApiError): Promise<string> {
+async function getErrorHtml(error: ApiError): Promise<string | HTMLIFrameElement> {
   let details = "";
   let message = "";
 
@@ -81,6 +84,13 @@ async function getErrorHtml(error: ApiError): Promise<string> {
           details += `<hr><p>${previous.message}</p>`;
           details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
         });
+      } else if (json === undefined) {
+        // The content is possibly HTML, use an iframe for rendering.
+        const iframe = document.createElement("iframe");
+        iframe.classList.add("dialog__iframe");
+        iframe.srcdoc = message;
+
+        return iframe;
       }
     }
   }

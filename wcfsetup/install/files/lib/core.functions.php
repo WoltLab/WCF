@@ -100,9 +100,11 @@ namespace wcf {
 
 namespace wcf\functions\exception {
 
+	use wcf\http\Pipeline;
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
 	use wcf\system\exception\SystemException;
+	use wcf\system\request\Request;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
 
@@ -357,11 +359,9 @@ EXPLANATION;
 				}
 
 				.exceptionSubtitle {
-					border-bottom: 1px solid rgb(238, 238, 238);
 					font-size: 24px;
 					font-weight: 600;
-					margin-bottom: 15px;
-					padding-bottom: 10px;
+					margin-bottom: 10px;
 				}
 
 				.exceptionContainer>.exceptionBoundary {
@@ -430,18 +430,51 @@ EXPLANATION;
 					white-space: nowrap;
 				}
 
-				.exceptionStacktraceCall+.exceptionStacktraceFile {
-					margin-top: 5px;
+				.exceptionStacktraceFile+.exceptionStacktraceCall {
+					margin-top: 10px;
 				}
 
-				.exceptionStacktraceCall {
+				.exceptionFieldDetails {
+					padding-left: 20px;
+					word-break: break-all;
+				}
+
+				.exceptionStacktraceFile {
 					padding-left: 40px;
 				}
 
-				.exceptionStacktraceCall,
-				.exceptionStacktraceCall span {
-					color: rgb(102, 102, 102) !important;
+				.exceptionFieldDetails,
+				.exceptionStacktraceFile {
+					color: rgb(115 115 115) !important;
 					font-size: 13px !important;
+				}
+
+				.exceptionStacktraceMiddleware {
+					padding: 20px 0;
+				}
+
+				.exceptionStacktraceMiddleware summary {
+					cursor: pointer;
+					-webkit-user-select: none;
+					user-select: none;
+				}
+
+				.exceptionStacktraceMiddleware ul {
+					border-left: 5px solid #ccc;
+					list-style: none;
+					margin-top: 20px;
+					padding-left: 15px;
+				}
+
+				.exceptionStacktraceSensitiveParameterValue {
+					border: 1px dashed #d81b60;
+					padding: 2px 5px;
+					font-size: 12px !important;
+				}
+
+				.exceptionStacktraceCounter,
+				.exceptionStacktraceType {
+					color: rgb(115 115 115);
 				}
 
 				/* mobile */
@@ -589,22 +622,18 @@ EXPLANATION;
 							<?php } ?>
 							<ul class="exceptionErrorDetails">
 								<li>
-									<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
-									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(get_class($e)); ?></p>
-								</li>
-								<li>
 									<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
 									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getMessage()); ?></p>
 								</li>
-								<?php if ($e->getCode()) { ?>
-									<li>
-										<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
-										<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getCode()); ?></p>
-									</li>
-								<?php } ?>
 								<li>
-									<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
-									<p class="exceptionFieldValue" style="word-break: break-all"><?php echo StringUtil::encodeHTML(sanitizePath($e->getFile())); ?> (<?php echo $e->getLine(); ?>)</p>
+									<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
+									<p class="exceptionFieldValue">
+										<?php echo StringUtil::encodeHTML(get_class($e)); ?>
+										<?php if ($e->getCode()) { ?>
+											(<?php echo StringUtil::encodeHTML($e->getCode()); ?>)
+										<?php } ?>
+									</p>
+									<p class="exceptionFieldDetails"><?php echo formatPath(sanitizePath($e->getFile(), false), $e->getLine()); ?></p>
 								</li>
 
 								<?php
@@ -640,49 +669,80 @@ EXPLANATION;
 								<?php
 								}
 								?>
-								<li>
-									<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span></p>
-									<ul class="exceptionStacktrace">
+							</ul>
+						</div>
+						<div class="exceptionBoundary">
+							<p class="exceptionSubtitle">Stack Trace</p>
+							<ul class="exceptionStacktrace">
+								<?php
+								$trace = sanitizeStacktrace($e);
+								$foundMiddlewareEnd = false;
+								for ($i = 0, $max = count($trace); $i < $max; $i++) {
+									// The stacktrace is in reverse order, therefore we need to check for
+									// the end of the middleware first.
+									if (isMiddlewareEnd($trace[$i])) {
+										$foundMiddlewareEnd = true;
+								?>
+										<li class="exceptionStacktraceMiddleware">
+											<details>
+												<summary>Middleware</summary>
+												<ul>
+												<?php
+											} elseif (isMiddlewareStart($trace[$i]) && $foundMiddlewareEnd) {
+												?>
+												</ul>
+											</details>
+										</li>
+									<?php
+											}
+									?>
+									<li class="exceptionStacktraceCall">
+										<span class="exceptionStacktraceCounter">#<?php echo $i; ?></span>
 										<?php
-										$trace = sanitizeStacktrace($e);
-										for ($i = 0, $max = count($trace); $i < $max; $i++) {
-										?>
-											<li class="exceptionStacktraceFile"><?php echo '#' . $i . ' ' . StringUtil::encodeHTML($trace[$i]['file']) . ' (' . $trace[$i]['line'] . ')' . ':'; ?></li>
-											<li class="exceptionStacktraceCall">
-											<?php
-											echo $trace[$i]['class'] . $trace[$i]['type'] . $trace[$i]['function'] . '(';
-											echo implode(', ', array_map(function ($item) {
-												switch (gettype($item)) {
-													case 'integer':
-													case 'double':
-														return $item;
-													case 'NULL':
-														return 'null';
-													case 'string':
-														return "'" . addcslashes(StringUtil::encodeHTML($item), "\\'") . "'";
-													case 'boolean':
-														return $item ? 'true' : 'false';
-													case 'array':
-														$keys = array_keys($item);
-														if (count($keys) > 5) return "[ " . count($keys) . " items ]";
-														return '[ ' . implode(', ', array_map(function ($item) {
-															return $item . ' => ';
-														}, $keys)) . ']';
-													case 'object':
-														return get_class($item);
-													case 'resource':
-														return 'resource(' . get_resource_type($item) . ')';
-													case 'resource (closed)':
-														return 'resource (closed)';
-												}
+										echo \sprintf(
+											'<strong>%s</strong><span class="exceptionStacktraceType">%s</span>%s(',
+											$trace[$i]['class'],
+											$trace[$i]['type'],
+											$trace[$i]['function'],
+										);
+										echo implode(', ', array_map(function ($item) {
+											switch (gettype($item)) {
+												case 'integer':
+												case 'double':
+													return $item;
+												case 'NULL':
+													return 'null';
+												case 'string':
+													return "'" . addcslashes(StringUtil::encodeHTML($item), "\\'") . "'";
+												case 'boolean':
+													return $item ? 'true' : 'false';
+												case 'array':
+													$keys = array_keys($item);
+													if (count($keys) > 5) return "[ " . count($keys) . " items ]";
+													return '[ ' . implode(', ', array_map(function ($item) {
+														return $item . ' => ';
+													}, $keys)) . ']';
+												case 'object':
+													$className = get_class($item);
+													if ($className === 'SensitiveParameterValue') {
+														return '<span class="exceptionStacktraceSensitiveParameterValue">' . $className . '</span>';
+													}
 
-												throw new \LogicException('Unreachable');
-											}, $trace[$i]['args']));
-											echo ')</li>';
-										}
-											?>
-									</ul>
-								</li>
+													return $className;
+												case 'resource':
+													return 'resource(' . get_resource_type($item) . ')';
+												case 'resource (closed)':
+													return 'resource (closed)';
+											}
+
+											throw new \LogicException('Unreachable');
+										}, $trace[$i]['args']));
+										echo ')</li>';
+										?>
+									<li class="exceptionStacktraceFile"><?php echo StringUtil::encodeHTML($trace[$i]['file']) . ':' . $trace[$i]['line']; ?></li>
+								<?php
+								}
+								?>
 							</ul>
 						</div>
 					<?php
@@ -800,16 +860,39 @@ EXPLANATION;
 	/**
 	 * Returns the given path relative to `WCF_DIR`, unless both,
 	 * `EXCEPTION_PRIVACY` is `public` and the debug mode is enabled.
-	 * 
-	 * @param	string		$path
-	 * @return	string
 	 */
-	function sanitizePath(string $path): string
+	function sanitizePath(string $path, bool $removePath = true): string
 	{
-		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
+		if (!$removePath && WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
 
 		return '*/' . FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
+	}
+
+	function formatPath(string $path, int $lineNumber): string
+	{
+		$path = FileUtil::unifyDirSeparator($path);
+		[
+			'dirname' => $dirname,
+			'basename' => $basename
+		] = \pathinfo($path);
+
+		return \sprintf(
+			'%s/<strong>%s</strong>:<strong>%s</strong>',
+			StringUtil::encodeHTML($dirname),
+			StringUtil::encodeHTML($basename),
+			$lineNumber,
+		);
+	}
+
+	function isMiddlewareStart(array $segment): bool
+	{
+		return $segment['class'] === Pipeline::class && $segment['function'] === 'process';
+	}
+
+	function isMiddlewareEnd(array $segment): bool
+	{
+		return $segment['class'] === Request::class && $segment['function'] === 'handle';
 	}
 }

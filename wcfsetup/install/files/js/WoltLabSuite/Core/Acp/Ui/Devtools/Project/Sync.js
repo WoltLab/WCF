@@ -1,10 +1,9 @@
-define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, UiNotification) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Notification", "../../../../Component/Dialog"], function (require, exports, tslib_1, Ajax, Language, UiNotification, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Language = tslib_1.__importStar(Language);
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     class AcpUiDevtoolsProjectSync {
         buttons = new Map();
@@ -154,7 +153,18 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             buttonStatus.innerHTML = '<a href="#">' + Language.get("wcf.acp.devtools.sync.status.failure") + "</a>";
             buttonStatus.children[0].addEventListener("click", (event) => {
                 event.preventDefault();
-                Dialog_1.default.open(this, Ajax.getRequestObject(this).getErrorHtml(data, xhr));
+                const html = Ajax.getRequestObject(this).getErrorHtml(data, xhr);
+                if (html instanceof HTMLIFrameElement) {
+                    const dialog = (0, Dialog_1.dialogFactory)()
+                        .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
+                        .asAlert();
+                    dialog.show(Language.get("wcf.global.error.title"));
+                    dialog.querySelector("dialog").classList.add("dialog--iframe");
+                }
+                else if (html) {
+                    const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
+                    dialog.show(Language.get("wcf.global.error.title"));
+                }
             });
             this.buttonSyncAll.classList.remove("disabled");
             return true;

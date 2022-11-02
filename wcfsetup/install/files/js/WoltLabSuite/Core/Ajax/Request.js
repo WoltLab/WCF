@@ -248,7 +248,14 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             }
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
-                if (html) {
+                if (html instanceof HTMLIFrameElement) {
+                    const dialog = (0, Dialog_1.dialogFactory)()
+                        .fromHtml(`<div class="dialog__iframeContainer">${html.outerHTML}</div>`)
+                        .asAlert();
+                    dialog.show(Language.get("wcf.global.error.title"));
+                    dialog.querySelector("dialog").classList.add("dialog--iframe");
+                }
+                else if (html) {
                     const dialog = (0, Dialog_1.dialogFactory)().fromHtml(html).asAlert();
                     dialog.show(Language.get("wcf.global.error.title"));
                 }
@@ -279,6 +286,13 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     details += `<hr><p>${previous.message}</p>`;
                     details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
                 });
+            }
+            else if (xhr.getResponseHeader("content-type")?.startsWith("text/html")) {
+                // The content is possibly HTML, use an iframe for rendering.
+                const iframe = document.createElement("iframe");
+                iframe.classList.add("dialog__iframe");
+                iframe.srcdoc = xhr.responseText;
+                return iframe;
             }
             else {
                 message = xhr.responseText;
