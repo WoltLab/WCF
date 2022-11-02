@@ -100,9 +100,11 @@ namespace wcf {
 
 namespace wcf\functions\exception {
 
+	use wcf\http\Pipeline;
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
 	use wcf\system\exception\SystemException;
+	use wcf\system\request\Request;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
 
@@ -886,11 +888,11 @@ EXPLANATION;
 
 	function isMiddlewareStart(array $segment): bool
 	{
-		return $segment['class'] === 'wcf\http\Pipeline';
+		return $segment['class'] === Pipeline::class && $segment['function'] === 'process';
 	}
 
 	function isMiddlewareEnd(array $segment): bool
 	{
-		return $segment['class'] === 'wcf\system\request\Request';
+		return $segment['class'] === Request::class && $segment['function'] === 'handle';
 	}
 }
