@@ -674,17 +674,19 @@ EXPLANATION;
 							<ul class="exceptionStacktrace">
 								<?php
 								$trace = sanitizeStacktrace($e);
+								$foundMiddlewareEnd = false;
 								for ($i = 0, $max = count($trace); $i < $max; $i++) {
 									// The stacktrace is in reverse order, therefore we need to check for
 									// the end of the middleware first.
 									if (isMiddlewareEnd($trace[$i])) {
+										$foundMiddlewareEnd = true;
 								?>
 										<li class="exceptionStacktraceMiddleware">
 											<details>
 												<summary>Middleware</summary>
 												<ul>
 												<?php
-											} elseif (isMiddlewareStart($trace[$i])) {
+											} elseif (isMiddlewareStart($trace[$i]) && $foundMiddlewareEnd) {
 												?>
 												</ul>
 											</details>
