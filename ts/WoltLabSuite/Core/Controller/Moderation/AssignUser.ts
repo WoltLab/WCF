@@ -31,8 +31,7 @@ export function setup(button: HTMLElement): void {
       // TODO: Show success / update UI
       // TODO: Handle incorrect form inputs
     });
-    dialog.addEventListener("close", () => {
-      // TODO: This appears to be broken
+    dialog.addEventListener("cancel", () => {
       if (FormBuilderManager.hasForm(json.formId)) {
         FormBuilderManager.unregisterForm(json.formId);
       }
