@@ -1,5 +1,5 @@
+import { prepareRequest } from "../../Ajax/Backend";
 import { dialogFactory } from "../../Component/Dialog";
-import { getXsrfToken } from "../../Core";
 import * as FormBuilderManager from "../../Form/Builder/Manager";
 
 type Response = {
@@ -8,25 +8,14 @@ type Response = {
 };
 
 export function setup(button: HTMLElement): void {
-  button.addEventListener("click", async (event) => {
-    const response = await fetch(button.dataset.url!);
-    const json: Response = await response.json();
+  button.addEventListener("click", async () => {
+    const json = (await prepareRequest(button.dataset.url!).get().fetchAsJson()) as Response;
 
     const dialog = dialogFactory().fromHtml(json.dialog).asPrompt();
     dialog.addEventListener("primary", async () => {
       const data = await FormBuilderManager.getData(json.formId);
 
-      const response = await fetch(
-        button.dataset.url!,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=UTF-8",
-            "X-XSRF-TOKEN": getXsrfToken(),
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const _response = await prepareRequest(button.dataset.url!).post(data).fetchAsJson();
 
       // TODO: Show success / update UI
       // TODO: Handle incorrect form inputs
@@ -37,22 +26,5 @@ export function setup(button: HTMLElement): void {
       }
     });
     dialog.show("yadayada");
-    reinsertScripts(dialog.content);
   });
-}
-
-function reinsertScripts(container: HTMLElement) {
-  const scripts = container.querySelectorAll<HTMLScriptElement>("script");
-  for (let i = 0, length = scripts.length; i < length; i++) {
-    const script = scripts[i];
-    const newScript = document.createElement("script");
-    if (script.src) {
-      newScript.src = script.src;
-    } else {
-      newScript.textContent = script.textContent;
-    }
-
-    container.appendChild(newScript);
-    script.remove();
-  }
 }
