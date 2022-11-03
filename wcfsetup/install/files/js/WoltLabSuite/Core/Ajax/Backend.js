@@ -1,0 +1,121 @@
+define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], function (require, exports, tslib_1, LoadingIndicator, Error_1, Core_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.prepareRequest = void 0;
+    LoadingIndicator = tslib_1.__importStar(LoadingIndicator);
+    class SetupRequest {
+        url;
+        constructor(url) {
+            this.url = url;
+        }
+        get() {
+            return new BackendRequest(this.url, 0 /* RequestType.GET */);
+        }
+        post(payload) {
+            return new BackendRequest(this.url, 1 /* RequestType.POST */, payload);
+        }
+    }
+    let ignoreConnectionErrors = false;
+    window.addEventListener("unload", () => (ignoreConnectionErrors = true));
+    class BackendRequest {
+        #url;
+        #type;
+        #payload;
+        #abortController;
+        #showLoadingIndicator = true;
+        constructor(url, type, payload) {
+            this.#url = url;
+            this.#type = type;
+            this.#payload = payload;
+        }
+        getAbortController() {
+            if (this.#abortController === undefined) {
+                this.#abortController = new AbortController();
+            }
+            return this.#abortController;
+        }
+        disableLoadingIndicator() {
+            this.#showLoadingIndicator = false;
+            return this;
+        }
+        async dispatch() {
+            (0, Error_1.registerGlobalRejectionHandler)();
+            const init = {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-XSRF-TOKEN": (0, Core_1.getXsrfToken)(),
+                },
+                mode: "same-origin",
+                credentials: "same-origin",
+                cache: "no-store",
+                redirect: "error",
+            };
+            if (this.#type === 1 /* RequestType.POST */) {
+                init.method = "POST";
+                init.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+                if (this.#payload) {
+                    init.body = JSON.stringify(this.#payload);
+                }
+            }
+            else {
+                init.method = "GET";
+            }
+            if (this.#abortController) {
+                init.signal = this.#abortController.signal;
+            }
+            // Use a local copy to isolate the behavior in case of changes before
+            // the request handling has completed.
+            const showLoadingIndicator = this.#showLoadingIndicator;
+            if (showLoadingIndicator) {
+                LoadingIndicator.show();
+            }
+            try {
+                const response = await fetch(this.#url, init);
+                if (!response.ok) {
+                    throw new Error_1.StatusNotOk(response);
+                }
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error_1.ExpectedJson(response);
+                }
+                let json;
+                try {
+                    json = await response.json();
+                }
+                catch (e) {
+                    throw new Error_1.InvalidJson(response);
+                }
+                if (json.forceBackgroundQueuePerform) {
+                    void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
+                }
+                return json.returnValues;
+            }
+            catch (error) {
+                if (error instanceof Error_1.ApiError) {
+                    throw error;
+                }
+                else {
+                    if (error instanceof DOMException && error.name === "AbortError") {
+                        // `fetch()` will reject the promise with an `AbortError` when
+                        // the request is either explicitly (through an `AbortController`)
+                        // or implicitly (page navigation) aborted.
+                        return;
+                    }
+                    if (!ignoreConnectionErrors) {
+                        // Re-package the error for use in our global "unhandledrejection" handler.
+                        throw new Error_1.ConnectionError(error);
+                    }
+                }
+            }
+            finally {
+                if (showLoadingIndicator) {
+                    LoadingIndicator.hide();
+                }
+            }
+        }
+    }
+    function prepareRequest(url) {
+        return new SetupRequest(url);
+    }
+    exports.prepareRequest = prepareRequest;
+});
