@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "../Template.grammar"], function (require
     return ${parser.parse(template)}
     `;
         // eslint-disable-next-line @typescript-eslint/no-implied-eval
-        return new Function("StringUtil", "Language", "selectPlural", "v", compiled);
+        return new Function("Language", "h", "v", compiled);
     }
     exports.compile = compile;
 });

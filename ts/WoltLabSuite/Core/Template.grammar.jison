@@ -125,7 +125,7 @@ COMMAND:
 		+ "return (looped ? result : " + ($5 || "''") + "); })()"
 	}
 |	'{plural' PLURAL_PARAMETER_LIST '}' {
-		$$ = "selectPlural({"
+		$$ = "h.selectPlural({"
 		var needsComma = false;
 		for (var key in $2) {
 			if (objOwns($2, key)) {
@@ -136,8 +136,8 @@ COMMAND:
 		$$ += "})";
 	}
 |	'{lang}' CHUNK_STAR '{/lang}' -> "Language.get(" + $2 + ", v)"
-|	'{' VARIABLE '}'  -> "StringUtil.escapeHTML(" + $2 + ")"
-|	'{#' VARIABLE '}' -> "StringUtil.formatNumeric(" + $2 + ")"
+|	'{' VARIABLE '}'  -> "h.escapeHTML(" + $2 + ")"
+|	'{#' VARIABLE '}' -> "h.formatNumeric(" + $2 + ")"
 |	'{@' VARIABLE '}' -> $2
 |	'{ldelim}' -> "'{'"
 |	'{rdelim}' -> "'}'"

@@ -8,7 +8,6 @@
  */
 
 import * as LanguageStore from "./Language/Store";
-import * as StringUtil from "./StringUtil";
 import { compile, CompiledTemplate } from "./Template/Compiler";
 
 // @todo: still required?
@@ -20,6 +19,18 @@ import { compile, CompiledTemplate } from "./Template/Compiler";
 Parser.prototype = parser;
 parser.Parser = Parser;
 parser = new Parser();*/
+
+function escapeHTML(string: string): string {
+  return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function formatNumeric(string: string | number): string {
+  return Number(string)
+    .toLocaleString(document.documentElement.lang, {
+      maximumFractionDigits: 2,
+    })
+    .replace("-", "\u2212");
+}
 
 const pluralRules = new Intl.PluralRules(document.documentElement.lang);
 
@@ -66,7 +77,7 @@ function selectPlural(parameters: PluralParameters): string {
 
   const string = parameters[category]!;
   if (string.includes("#")) {
-    return string.replace("#", StringUtil.formatNumeric(value));
+    return string.replace("#", formatNumeric(value));
   }
 
   return string;
@@ -88,7 +99,7 @@ class Template {
    * Evaluates the Template using the given parameters.
    */
   fetch(v: object): string {
-    return this.compiled(StringUtil, LanguageStore, selectPlural, v);
+    return this.compiled(LanguageStore, { selectPlural, escapeHTML, formatNumeric }, v);
   }
 }
 

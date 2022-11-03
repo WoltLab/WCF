@@ -79,7 +79,7 @@ define(function (require) {
                         + "return (looped ? result : " + ($$[$0 - 1] || "''") + "); })()";
                     break;
                 case 12:
-                    this.$ = "selectPlural({";
+                    this.$ = "h.selectPlural({";
                     var needsComma = false;
                     for (var key in $$[$0 - 1]) {
                         if (objOwns($$[$0 - 1], key)) {
@@ -93,10 +93,10 @@ define(function (require) {
                     this.$ = "Language.get(" + $$[$0 - 1] + ", v)";
                     break;
                 case 14:
-                    this.$ = "StringUtil.escapeHTML(" + $$[$0 - 1] + ")";
+                    this.$ = "h.escapeHTML(" + $$[$0 - 1] + ")";
                     break;
                 case 15:
-                    this.$ = "StringUtil.formatNumeric(" + $$[$0 - 1] + ")";
+                    this.$ = "h.formatNumeric(" + $$[$0 - 1] + ")";
                     break;
                 case 16:
                     this.$ = $$[$0 - 1];

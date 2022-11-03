@@ -10,22 +10,19 @@
  */
 
 import * as parser from "../Template.grammar";
-import type { escapeHTML, formatNumeric } from "../StringUtil";
 import type { get as getLanguage } from "../Language";
 
 interface TemplateLanguage {
   get: typeof getLanguage;
 }
 
-interface TemplateStringUtil {
-  escapeHTML: typeof escapeHTML;
-  formatNumeric: typeof formatNumeric;
-}
-
 export type CompiledTemplate = (
-  S: TemplateStringUtil,
   L: TemplateLanguage,
-  selectPlural: (object: object) => string,
+  h: {
+    escapeHTML: (string: string) => string;
+    formatNumeric: (number: string | number) => string;
+    selectPlural: (object: object) => string;
+  },
   v: object,
 ) => string;
 
@@ -41,5 +38,5 @@ export function compile(template: string): CompiledTemplate {
     `;
 
   // eslint-disable-next-line @typescript-eslint/no-implied-eval
-  return new Function("StringUtil", "Language", "selectPlural", "v", compiled) as CompiledTemplate;
+  return new Function("Language", "h", "v", compiled) as CompiledTemplate;
 }
