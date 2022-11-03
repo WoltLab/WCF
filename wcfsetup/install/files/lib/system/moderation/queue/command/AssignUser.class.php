@@ -49,6 +49,12 @@ final class AssignUser
 
         $oldAssignee = $moderationQueueEditor->assignedUserID ? new User($moderationQueueEditor->assignedUserID) : null;
 
+        // If the old assignee matches the new assignee, we do not need to
+        // do anything.
+        if ($oldAssignee?->userID === $user?->userID) {
+            return;
+        }
+
         $data = [
             'assignedUserID' => $user !== null ? $user->userID : null,
         ];
