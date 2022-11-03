@@ -33,7 +33,7 @@ final class AssignUser
         ?User $user,
     ) {
         $this->moderationQueueId = $moderationQueue->queueID;
-        $this->userId = $user !== null ? $user->userID : null;
+        $this->userId = $user?->userID;
 
         $this->eventHandler = EventHandler::getInstance();
     }
@@ -56,7 +56,7 @@ final class AssignUser
         }
 
         $data = [
-            'assignedUserID' => $user !== null ? $user->userID : null,
+            'assignedUserID' => $user?->userID,
         ];
 
         if ($user !== null) {

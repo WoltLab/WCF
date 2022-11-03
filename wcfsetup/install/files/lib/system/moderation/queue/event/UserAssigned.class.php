@@ -29,8 +29,8 @@ final class UserAssigned implements IEvent
         ?User $oldAssignee,
     ) {
         $this->moderationQueueId = $moderationQueue->queueID;
-        $this->newAssigneeId = $newAssignee !== null ? $newAssignee->userID : null;
-        $this->oldAssigneeId = $oldAssignee !== null ? $oldAssignee->userID : null;
+        $this->newAssigneeId = $newAssignee?->userID;
+        $this->oldAssigneeId = $oldAssignee?->userID;
     }
 
     public function getModerationQueue(): ModerationQueue
