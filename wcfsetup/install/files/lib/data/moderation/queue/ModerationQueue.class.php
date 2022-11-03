@@ -4,6 +4,7 @@ namespace wcf\data\moderation\queue;
 
 use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
@@ -71,12 +72,16 @@ class ModerationQueue extends DatabaseObject
     }
 
     /**
-     * Returns true if current user can edit this moderation queue.
+     * Returns true if the given user can edit this moderation queue.
      *
-     * @return  bool
+     * @param $user The user to check permissions for. null to use WCF::getUser().
      */
-    public function canEdit()
+    public function canEdit(?User $user = null): bool
     {
+        if ($user === null) {
+            $user = WCF::getUser();
+        }
+
         $sql = "SELECT  isAffected
                 FROM    wcf" . WCF_N . "_moderation_queue_to_user
                 WHERE   queueID = ?
@@ -84,7 +89,7 @@ class ModerationQueue extends DatabaseObject
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->queueID,
-            WCF::getUser()->userID,
+            $user->userID,
         ]);
         $row = $statement->fetchArray();
 
