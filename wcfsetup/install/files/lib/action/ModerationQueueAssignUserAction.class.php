@@ -66,7 +66,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
-        $form = $this->getForm();
+        $form = $this->getForm($moderationQueue);
 
         if ($request->getMethod() === 'GET') {
             return new JsonResponse([
@@ -107,7 +107,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
         }
     }
 
-    private function getForm(): FormDocument
+    private function getForm(ModerationQueue $moderationQueue): FormDocument
     {
         $form = new class extends FormDocument {
             public function validate()
@@ -123,12 +123,22 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                     'none' => 'none',
                     'me' => 'me',
                     'other' => 'other',
-                ]),
+                ])
+                ->value(
+                    match ($moderationQueue->assignedUserID) {
+                        WCF::getUser()->userID => 'me',
+                        null => 'none',
+                        default => 'other'
+                    }
+                ),
             UserFormField::create('other')
                 ->addDependency(
                     ValueFormFieldDependency::create('other')
                         ->fieldId('assignee')
                         ->values(['other'])
+                )
+                ->value(
+                    $moderationQueue->assignedUserID ?: []
                 ),
         ]);
         $form->ajax();
