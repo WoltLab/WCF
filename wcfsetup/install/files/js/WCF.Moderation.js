@@ -94,7 +94,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			$(this._buttonSelector).click($.proxy(this._click, this));
 			
-			$('#moderationAssignUser').click($.proxy(this._clickAssignedUser, this));
+		//	$('#moderationAssignUser').click($.proxy(this._clickAssignedUser, this));
 		},
 		
 		/**

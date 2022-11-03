@@ -45,7 +45,17 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button type="button" id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{icon name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
+	<button
+		type="button"
+		id="moderationAssignUser"
+		class="contentInteractionButton button small jsOnly"
+		data-url="{link controller='ModerationQueueAssignUser' application='wcf' object=$queue}{/link}"
+	>{icon name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
+	<script>
+		require(['WoltLabSuite/Core/Controller/Moderation/AssignUser'], ({ setup }) => {
+			setup(document.getElementById('moderationAssignUser'));
+		});
+	</script>
 	{if !$queue->isDone()}
 		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}
 			<button type="button" id="removeContent" class="contentInteractionButton button small jsOnly">{icon name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>
