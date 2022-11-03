@@ -15,7 +15,7 @@ const enum RequestType {
   POST,
 }
 
-type Payload = Record<string, unknown>;
+type Payload = FormData | Record<string, unknown>;
 
 class SetupRequest {
   private readonly url: string;
@@ -79,10 +79,15 @@ class BackendRequest {
 
     if (this.#type === RequestType.POST) {
       init.method = "POST";
-      init.headers!["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
 
       if (this.#payload) {
-        init.body = JSON.stringify(this.#payload);
+        if (this.#payload instanceof FormData) {
+          init.headers!["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+          init.body = this.#payload;
+        } else {
+          init.headers!["Content-Type"] = "application/json; charset=UTF-8";
+          init.body = JSON.stringify(this.#payload);
+        }
       }
     } else {
       init.method = "GET";

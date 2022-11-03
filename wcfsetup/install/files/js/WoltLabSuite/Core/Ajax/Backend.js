@@ -52,9 +52,15 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             };
             if (this.#type === 1 /* RequestType.POST */) {
                 init.method = "POST";
-                init.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
                 if (this.#payload) {
-                    init.body = JSON.stringify(this.#payload);
+                    if (this.#payload instanceof FormData) {
+                        init.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+                        init.body = this.#payload;
+                    }
+                    else {
+                        init.headers["Content-Type"] = "application/json; charset=UTF-8";
+                        init.body = JSON.stringify(this.#payload);
+                    }
                 }
             }
             else {
