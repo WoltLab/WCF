@@ -14,7 +14,9 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\form\builder\FormDocument;
 use wcf\system\moderation\queue\command\AssignUser;
 use wcf\system\WCF;
@@ -88,7 +90,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             $user = match ($data['assignee']) {
                 'none' => null,
                 'me' => WCF::getUser(),
-                'other' => throw new \Exception('Not implemented')
+                'other' => new User($data['other']),
             };
 
             $command = new AssignUser(
@@ -114,7 +116,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             }
         };
         $form->id(static::class);
-        $form->appendChild(
+        $form->appendChildren([
             SingleSelectionFormField::create('assignee')
                 ->required()
                 ->options([
@@ -122,7 +124,13 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                     'me' => 'me',
                     'other' => 'other',
                 ]),
-        );
+            UserFormField::create('other')
+                ->addDependency(
+                    ValueFormFieldDependency::create('other')
+                        ->fieldId('assignee')
+                        ->values(['other'])
+                ),
+        ]);
         $form->ajax();
 
         $form->build();
