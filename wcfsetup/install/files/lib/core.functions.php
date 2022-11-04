@@ -220,7 +220,11 @@ namespace wcf\functions\exception {
 					$item['args'] = array_map(function ($item) {
 						switch (gettype($item)) {
 							case 'object':
-								return get_class($item);
+								if ($item instanceof \UnitEnum) {
+									return $item::class . '::' . $item->name;
+								}
+
+								return $item::class;
 							case 'array':
 								return array_map(function () {
 									return '[redacted]';
@@ -723,12 +727,14 @@ EXPLANATION;
 														return $item . ' => ';
 													}, $keys)) . ']';
 												case 'object':
-													$className = get_class($item);
-													if ($className === 'SensitiveParameterValue') {
-														return '<span class="exceptionStacktraceSensitiveParameterValue">' . $className . '</span>';
+													if ($item instanceof \UnitEnum) {
+														return $item::class . '::' . $item->name;
+													}
+													if ($item instanceof \SensitiveParameterValue) {
+														return '<span class="exceptionStacktraceSensitiveParameterValue">' . $item::class . '</span>';
 													}
 
-													return $className;
+													return $item::class;
 												case 'resource':
 													return 'resource(' . get_resource_type($item) . ')';
 												case 'resource (closed)':
