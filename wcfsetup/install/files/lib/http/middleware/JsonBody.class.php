@@ -2,6 +2,7 @@
 
 namespace wcf\http\middleware;
 
+use GuzzleHttp\Psr7\Header;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -24,18 +25,13 @@ final class JsonBody implements MiddlewareInterface
 {
     public const HAS_VALID_JSON_ATTRIBUTE = self::class . "\0hasValidJson";
 
-    private const EXPECTED_CONTENT_TYPE = 'application/json';
-
     /**
      * @inheritDoc
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $hasValidJson = false;
-        if (
-            $request->getHeaderLine('content-type') === self::EXPECTED_CONTENT_TYPE
-            || \str_starts_with($request->getHeaderLine('content-type'), self::EXPECTED_CONTENT_TYPE)
-        ) {
+        if ($this->contentTypeIsJson($request)) {
             try {
                 $data = JSON::decode($request->getBody());
             } catch (SystemException $e) {
@@ -53,5 +49,41 @@ final class JsonBody implements MiddlewareInterface
         );
 
         return $handler->handle($request);
+    }
+
+    private function contentTypeIsJson(ServerRequestInterface $request): bool
+    {
+        $headers = Header::parse($request->getHeaderLine('content-type'));
+
+        // If multiple content-type headers are given, we refuse to process any.
+        if (\count($headers) !== 1) {
+            return false;
+        }
+
+        $header = $headers[0];
+
+        // The content-type itself is not part of a key-value pair and thus is numerically
+        // indexed.
+        if (!isset($header[0])) {
+            return false;
+        }
+
+        // If the content-type is not application/json, we don't understand it.
+        if ($header[0] !== 'application/json') {
+            return false;
+        }
+
+        foreach ($header as $key => $value) {
+            // If a charset pararameter exists ...
+            if (\strtolower($key) === 'charset') {
+                // ... and the charset is not UTF-8, we don't understand it.
+                if (\strtolower($value) !== 'utf-8') {
+                    return false;
+                }
+            }
+        }
+
+        // If no charset is given or the charset is UTF-8, we understand it.
+        return true;
     }
 }
