@@ -49,9 +49,12 @@
 		type="button"
 		id="moderationAssignUser"
 		class="contentInteractionButton button small jsOnly"
-		data-url="{link controller='ModerationQueueAssignUser' application='wcf' object=$queue}{/link}"
-	>{icon name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
-	<script>
+		data-url="{$queue->endpointAssignUser()}"
+	>
+		{icon name='user-plus' type='solid'}
+		<span>{lang}wcf.moderation.assignedUser.change{/lang}</span>
+	</button>
+	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Controller/Moderation/AssignUser'], ({ setup }) => {
 			setup(document.getElementById('moderationAssignUser'));
 		});
