@@ -63,7 +63,33 @@ class BackendRequest {
     return this;
   }
 
-  async dispatch(): Promise<unknown> {
+  async fetchAsJson(): Promise<unknown> {
+    const response = await this.fetchAsResponse();
+    if (response === undefined) {
+      // Aborted requests do not have a return value.
+      return undefined;
+    }
+
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new ExpectedJson(response);
+    }
+
+    let json: ResponseData;
+    try {
+      json = await response.json();
+    } catch (e) {
+      throw new InvalidJson(response);
+    }
+
+    if (json.forceBackgroundQueuePerform) {
+      void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
+    }
+
+    return json.returnValues;
+  }
+
+  async fetchAsResponse(): Promise<Response | undefined> {
     registerGlobalRejectionHandler();
 
     const init: RequestInit = {
@@ -111,23 +137,7 @@ class BackendRequest {
         throw new StatusNotOk(response);
       }
 
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new ExpectedJson(response);
-      }
-
-      let json: ResponseData;
-      try {
-        json = await response.json();
-      } catch (e) {
-        throw new InvalidJson(response);
-      }
-
-      if (json.forceBackgroundQueuePerform) {
-        void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
-      }
-
-      return json.returnValues;
+      return response;
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -136,7 +146,7 @@ class BackendRequest {
           // `fetch()` will reject the promise with an `AbortError` when
           // the request is either explicitly (through an `AbortController`)
           // or implicitly (page navigation) aborted.
-          return;
+          return undefined;
         }
 
         if (!ignoreConnectionErrors) {

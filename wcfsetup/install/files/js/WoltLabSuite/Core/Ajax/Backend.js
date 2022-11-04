@@ -38,7 +38,29 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             this.#showLoadingIndicator = false;
             return this;
         }
-        async dispatch() {
+        async fetchAsJson() {
+            const response = await this.fetchAsResponse();
+            if (response === undefined) {
+                // Aborted requests do not have a return value.
+                return undefined;
+            }
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                throw new Error_1.ExpectedJson(response);
+            }
+            let json;
+            try {
+                json = await response.json();
+            }
+            catch (e) {
+                throw new Error_1.InvalidJson(response);
+            }
+            if (json.forceBackgroundQueuePerform) {
+                void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
+            }
+            return json.returnValues;
+        }
+        async fetchAsResponse() {
             (0, Error_1.registerGlobalRejectionHandler)();
             const init = {
                 headers: {
@@ -80,21 +102,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                 if (!response.ok) {
                     throw new Error_1.StatusNotOk(response);
                 }
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error_1.ExpectedJson(response);
-                }
-                let json;
-                try {
-                    json = await response.json();
-                }
-                catch (e) {
-                    throw new Error_1.InvalidJson(response);
-                }
-                if (json.forceBackgroundQueuePerform) {
-                    void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
-                }
-                return json.returnValues;
+                return response;
             }
             catch (error) {
                 if (error instanceof Error_1.ApiError) {
@@ -105,7 +113,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                         // `fetch()` will reject the promise with an `AbortError` when
                         // the request is either explicitly (through an `AbortController`)
                         // or implicitly (page navigation) aborted.
-                        return;
+                        return undefined;
                     }
                     if (!ignoreConnectionErrors) {
                         // Re-package the error for use in our global "unhandledrejection" handler.
