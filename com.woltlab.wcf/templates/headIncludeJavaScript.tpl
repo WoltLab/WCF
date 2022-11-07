@@ -203,6 +203,7 @@ window.addEventListener('pageshow', function(event) {
 					{if 'LinkedIn'|in_array:$__shareProviders}["LinkedIn", "{jslang}wcf.message.share.linkedIn{/jslang}", {icon size=24 name='linkedin-in' type='brand' encodeJson=true}],{/if} 
 					{if 'Pinterest'|in_array:$__shareProviders}["Pinterest", "{jslang}wcf.message.share.pinterest{/jslang}", {icon size=24 name='pinterest' type='brand' encodeJson=true}],{/if} 
 					{if 'XING'|in_array:$__shareProviders}["XING", "{jslang}wcf.message.share.xing{/jslang}", {icon size=24 name='xing' type='brand' encodeJson=true}],{/if} 
+					{event name='javascriptShareButtonProviders'}
 				],
 			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
