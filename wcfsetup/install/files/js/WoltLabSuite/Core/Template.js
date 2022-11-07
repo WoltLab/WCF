@@ -10,6 +10,5 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     const Template = window.WoltLabTemplate;
-    return class extends Template {
-    };
+    return Template;
 });

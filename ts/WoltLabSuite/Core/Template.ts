@@ -10,5 +10,9 @@
 
 const Template = window.WoltLabTemplate;
 
-// TODO: This extra 'extends' is necessary to satisfy the TSC.
-export = class extends Template {}
+interface Template {
+  new (template: string): typeof window.WoltLabTemplate;
+  fetch(v: object): string;
+}
+
+export = Template;
