@@ -7,7 +7,7 @@ type Codepoint = string;
 type HasRegularVariant = boolean;
 type IconMetadata = [Codepoint, HasRegularVariant];
 
-import type * as LanguageStore from "./LanguageStore";
+import type * as Language from "./Language";
 import { Template } from "./Template";
 
 declare global {
@@ -16,7 +16,7 @@ declare global {
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
 
-    WoltLabLanguageStore: typeof LanguageStore;
+    WoltLabLanguage: typeof Language;
     WoltLabTemplate: typeof Template;
   }
 }

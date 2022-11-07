@@ -46,10 +46,11 @@ declare global {
     __wcf_bc_datePicker: typeof DatePicker;
     __wcf_bc_eventHandler: typeof EventHandler;
 
-    WoltLabLanguageStore: {
+    WoltLabLanguage: {
       get(key: string, parameters?: object): string;
-      add(key: string, value: (parameters: object) => string): void;
-    }
+      add(key: string, value: string): void;
+      addObject(object: { [key: string]: string }): void;
+    };
 
     WoltLabTemplate: typeof WoltLabTemplate;
   }

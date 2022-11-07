@@ -1,7 +1,7 @@
-import * as LanguageStore from "./LanguageStore.js";
+import * as Language from "./Language.js";
 import { Template } from "./Template.js";
 
-window.WoltLabLanguageStore = LanguageStore;
+window.WoltLabLanguage = Language;
 window.WoltLabTemplate = Template;
 
 import "./fa-metadata.js";

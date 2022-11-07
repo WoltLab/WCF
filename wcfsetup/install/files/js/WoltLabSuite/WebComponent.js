@@ -747,6 +747,17 @@
     }
   });
 
+  // ts/WoltLabSuite/WebComponent/Language.ts
+  var Language_exports = {};
+  __export(Language_exports, {
+    add: () => add2,
+    addObject: () => addObject,
+    get: () => get
+  });
+
+  // ts/WoltLabSuite/WebComponent/Template.ts
+  var parser = __toESM(require_Template_grammar());
+
   // ts/WoltLabSuite/WebComponent/LanguageStore.ts
   var LanguageStore_exports = {};
   __export(LanguageStore_exports, {
@@ -766,7 +777,6 @@
   }
 
   // ts/WoltLabSuite/WebComponent/Template.ts
-  var parser = __toESM(require_Template_grammar());
   function escapeHTML(string) {
     return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -826,6 +836,37 @@
       return this.compiled(LanguageStore_exports, { selectPlural, escapeHTML, formatNumeric }, v);
     }
   };
+
+  // ts/WoltLabSuite/WebComponent/Language.ts
+  function addObject(object) {
+    Object.entries(object).forEach(([key, value]) => {
+      add2(key, value);
+    });
+  }
+  function add2(key, value) {
+    if (typeof value === "string") {
+      add(key, compile2(value));
+    } else {
+      add(key, function() {
+        return value;
+      });
+    }
+  }
+  function compile2(value) {
+    if (!value.includes("{")) {
+      return function() {
+        return value;
+      };
+    }
+    try {
+      const template = new Template(value);
+      return template.fetch.bind(template);
+    } catch (e) {
+      return function() {
+        return value;
+      };
+    }
+  }
 
   // ts/WoltLabSuite/WebComponent/fa-metadata.js
   (() => {
@@ -1160,7 +1201,7 @@
   }
 
   // ts/WoltLabSuite/WebComponent/index.ts
-  window.WoltLabLanguageStore = LanguageStore_exports;
+  window.WoltLabLanguage = Language_exports;
   window.WoltLabTemplate = Template;
 })();
 /**
@@ -1168,6 +1209,13 @@
  *
  * @author  Tim Duesterhus
  * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+/**
+ * Manages language items.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 /**
