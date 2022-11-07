@@ -58,27 +58,10 @@ class UserAvatarEditor extends DatabaseObjectEditor
     }
 
     /**
-     * Deletes the legacy thumbnail sizes.
-     *
-     * @since 5.4
-     * @deprecated 5.4 This relies on the deprecated UserAvatar::$avatarThumbnailSizes.
-     */
-    public function deleteLegacyThumbnails(): void
-    {
-        // delete wcf2.1 files
-        foreach (UserAvatar::$avatarThumbnailSizes as $size) {
-            @\unlink($this->getLocation($size, false));
-        }
-        @\unlink($this->getLocation('resize', false));
-    }
-
-    /**
      * Deletes avatar files.
      */
     public function deleteFiles()
     {
-        $this->deleteLegacyThumbnails();
-
         // delete original size
         @\unlink($this->getLocation(null, false));
 

@@ -27,27 +27,6 @@ use wcf\util\StringUtil;
 class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvatar
 {
     /**
-     * needed avatar thumbnail sizes
-     * @var int[]
-     * @deprecated 3.0
-     */
-    public static $avatarThumbnailSizes = [32, 96, 128, 256];
-
-    /**
-     * maximum thumbnail size
-     * @var int
-     * @deprecated 3.0
-     */
-    public static $maxThumbnailSize = 128;
-
-    /**
-     * minimum height and width of an uploaded avatar
-     * @var int
-     * @deprecated 3.0
-     */
-    const MIN_AVATAR_SIZE = 96;
-
-    /**
      * minimum height and width of an uploaded avatar
      * @var int
      */
