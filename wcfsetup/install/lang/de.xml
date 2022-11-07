@@ -446,7 +446,7 @@
 		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[Es ist ein Fehler aufgetreten.]]></item>
 		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Bereit.]]></item>
 		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
-		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles Abgleichen]]></item>
+		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles abgleichen]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup"><![CDATA[Pfad durchsuchen]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[Alle Ordner, die sich direkt in dem angegebenen Pfad befinden, werden überprüft, ob sie ein Paket enthalten.]]></item>
