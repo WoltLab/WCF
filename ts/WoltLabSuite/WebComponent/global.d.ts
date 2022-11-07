@@ -7,10 +7,14 @@ type Codepoint = string;
 type HasRegularVariant = boolean;
 type IconMetadata = [Codepoint, HasRegularVariant];
 
+import type * as LanguageStore from "./LanguageStore";
+
 declare global {
   interface Window {
     TIME_NOW: number;
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
+
+    WoltLabLanguageStore: typeof LanguageStore;
   }
 }

@@ -1,5 +1,29 @@
 "use strict";
 (() => {
+  var __defProp = Object.defineProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+
+  // ts/WoltLabSuite/WebComponent/LanguageStore.ts
+  var LanguageStore_exports = {};
+  __export(LanguageStore_exports, {
+    add: () => add,
+    get: () => get
+  });
+  var languageItems = /* @__PURE__ */ new Map();
+  function get(key, parameters = {}) {
+    const value = languageItems.get(key);
+    if (value === void 0) {
+      return key;
+    }
+    return value(parameters);
+  }
+  function add(key, value) {
+    languageItems.set(key, value);
+  }
+
   // ts/WoltLabSuite/WebComponent/fa-metadata.js
   (() => {
     const aliases = /* @__PURE__ */ new Map(
@@ -331,7 +355,17 @@
       }
     });
   }
+
+  // ts/WoltLabSuite/WebComponent/index.ts
+  window.WoltLabLanguageStore = LanguageStore_exports;
 })();
+/**
+ * Handles the low level management of language items.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
 /**
  * The `<woltlab-core-date-time>` element formats a date time
  * string based on the user’s timezone and website locale. For
