@@ -3,6 +3,7 @@
  * 
  * Recompile using:
  *    jison -m commonjs -o Template.grammar.js Template.grammar.jison
+ *    sed -i 's/_token_stack://' Template.grammar.js
  * after making changes to the grammar.
  * 
  * @author	Tim Duesterhus
