@@ -2,7 +2,7 @@
  * Grammar for WoltLabSuite/Core/Template.
  * 
  * Recompile using:
- *    jison -m amd -o Template.grammar.js Template.grammar.jison
+ *    jison -m commonjs -o Template.grammar.js Template.grammar.jison
  * after making changes to the grammar.
  * 
  * @author	Tim Duesterhus
@@ -56,6 +56,8 @@
 
 %start TEMPLATE
 %ebnf
+
+%options moduleMain 1
 
 %%
 

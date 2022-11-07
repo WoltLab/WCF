@@ -16,6 +16,11 @@ type IconMetadata = [Codepoint, HasRegularVariant];
 type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
 
 declare global {
+  class WoltLabTemplate {
+    constructor(template: string);
+    fetch(v: object): string;
+  }
+
   interface Window {
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
@@ -45,6 +50,8 @@ declare global {
       get(key: string, parameters?: object): string;
       add(key: string, value: (parameters: object) => string): void;
     }
+
+    WoltLabTemplate: typeof WoltLabTemplate;
   }
 
   interface String {
