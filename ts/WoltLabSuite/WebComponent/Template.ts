@@ -106,7 +106,10 @@ export class Template {
     try {
       this.compiled = compile(template);
     } catch (e) {
-      console.debug(e.message);
+      if (e instanceof Error) {
+        console.debug(e.message);
+      }
+
       throw e;
     }
   }
