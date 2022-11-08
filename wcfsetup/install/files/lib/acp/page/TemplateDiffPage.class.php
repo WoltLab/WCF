@@ -124,6 +124,14 @@ class TemplateDiffPage extends AbstractPage
             $this->templateGroupHierarchy[$template->templateGroupID ?: 0]['hasTemplate'] = $template->templateID;
         }
 
+        // Automatically compare with default template if it is the only option.
+        if (!isset($_REQUEST['parentID'])) {
+            if (\count($this->templateGroupHierarchy) === 2 && $this->templateGroupHierarchy[0]['hasTemplate']) {
+                $this->parentID = $this->templateGroupHierarchy[0]['hasTemplate'];
+                $this->parent = new Template($this->parentID);
+            }
+        }
+
         // a valid parent template was given, calculate diff
         if ($this->parent->templateID) {
             $a = \explode("\n", StringUtil::unifyNewlines($this->parent->getSource()));
