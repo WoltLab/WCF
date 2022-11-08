@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor\Mapper\Tree\Builder;
 
-use CuyZ\Valinor\Mapper\Tree\Exception\ShapedArrayElementMissing;
 use CuyZ\Valinor\Mapper\Tree\Exception\SourceMustBeIterable;
 use CuyZ\Valinor\Mapper\Tree\Exception\UnexpectedShapedArrayKeys;
 use CuyZ\Valinor\Mapper\Tree\Shell;
@@ -19,17 +18,17 @@ use function is_array;
 /** @internal */
 final class ShapedArrayNodeBuilder implements NodeBuilder
 {
-    private bool $flexible;
+    private bool $allowSuperfluousKeys;
 
-    public function __construct(bool $flexible)
+    public function __construct(bool $allowSuperfluousKeys)
     {
-        $this->flexible = $flexible;
+        $this->allowSuperfluousKeys = $allowSuperfluousKeys;
     }
 
     public function build(Shell $shell, RootNodeBuilder $rootBuilder): TreeNode
     {
         $type = $shell->type();
-        $value = $shell->hasValue() ? $shell->value() : null;
+        $value = $shell->value();
 
         assert($type instanceof ShapedArrayType);
 
@@ -59,21 +58,18 @@ final class ShapedArrayNodeBuilder implements NodeBuilder
 
             $child = $shell->child((string)$key, $element->type());
 
-            if (! array_key_exists($key, $value)) {
-                if (! $element->isOptional()) {
-                    $children[$key] = TreeNode::error($child, new ShapedArrayElementMissing($element));
-                }
-
+            if (array_key_exists($key, $value)) {
+                $child = $child->withValue($value[$key]);
+            } elseif ($element->isOptional()) {
                 continue;
             }
 
-            $child = $child->withValue($value[$key]);
             $children[$key] = $rootBuilder->build($child);
 
             unset($value[$key]);
         }
 
-        if (! $this->flexible && count($value) > 0) {
+        if (! $this->allowSuperfluousKeys && count($value) > 0) {
             throw new UnexpectedShapedArrayKeys(array_keys($value), $elements);
         }
 

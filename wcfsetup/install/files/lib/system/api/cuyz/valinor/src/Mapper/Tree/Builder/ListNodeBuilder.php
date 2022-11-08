@@ -17,21 +17,21 @@ use function is_array;
 /** @internal */
 final class ListNodeBuilder implements NodeBuilder
 {
-    private bool $flexible;
+    private bool $enableFlexibleCasting;
 
-    public function __construct(bool $flexible)
+    public function __construct(bool $enableFlexibleCasting)
     {
-        $this->flexible = $flexible;
+        $this->enableFlexibleCasting = $enableFlexibleCasting;
     }
 
     public function build(Shell $shell, RootNodeBuilder $rootBuilder): TreeNode
     {
         $type = $shell->type();
-        $value = $shell->hasValue() ? $shell->value() : null;
+        $value = $shell->value();
 
         assert($type instanceof ListType || $type instanceof NonEmptyListType);
 
-        if (null === $value && $this->flexible) {
+        if ($this->enableFlexibleCasting && $value === null) {
             return TreeNode::branch($shell, [], []);
         }
 
@@ -58,7 +58,7 @@ final class ListNodeBuilder implements NodeBuilder
         $children = [];
 
         foreach ($values as $key => $value) {
-            if ($this->flexible || $key === $expected) {
+            if ($this->enableFlexibleCasting || $key === $expected) {
                 $child = $shell->child((string)$expected, $subType);
                 $children[$expected] = $rootBuilder->build($child->withValue($value));
             } else {
