@@ -161,9 +161,9 @@
             'dev_requirement' => false,
         ),
         'pelago/emogrifier' => array(
-            'pretty_version' => 'v6.0.0',
-            'version' => '6.0.0.0',
-            'reference' => 'aa72d5407efac118f3896bcb995a2cba793df0ae',
+            'pretty_version' => 'v7.0.0',
+            'version' => '7.0.0.0',
+            'reference' => '547b8c814794aec871e3c98b1c712f416755f4eb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../pelago/emogrifier',
             'aliases' => array(),
