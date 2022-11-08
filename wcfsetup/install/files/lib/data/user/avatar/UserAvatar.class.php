@@ -33,7 +33,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     const AVATAR_SIZE = 128;
 
     /**
-     * minimum height and width of an uploaded avatar (4k version)
+     * minimum height and width of an uploaded avatar (HiDPI version)
      * @var int
      */
     const AVATAR_SIZE_2X = 256;
