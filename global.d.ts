@@ -46,9 +46,8 @@ declare global {
     __wcf_bc_eventHandler: typeof EventHandler;
 
     WoltLabLanguage: {
-      get(key: string, parameters?: object): string;
-      add(key: string, value: string): void;
-      addObject(object: { [key: string]: string }): void;
+      getPhrase(key: string, parameters?: object): string;
+      registerPhrase(key: string, value: string): void;
     };
 
     WoltLabTemplate: new (template: string) => WoltLabTemplate;

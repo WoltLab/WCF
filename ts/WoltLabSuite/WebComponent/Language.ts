@@ -10,21 +10,12 @@ import { Template } from "./Template.js";
 
 import { add as addToStore, Phrase } from "./LanguageStore.js";
 
-export { get } from "./LanguageStore.js";
-
-/**
- * Adds all the language items in the given object to the store.
- */
-export function addObject(object: LanguageItems): void {
-  Object.entries(object).forEach(([key, value]) => {
-    add(key, value);
-  });
-}
+export { get as getPhrase } from "./LanguageStore.js";
 
 /**
  * Adds a single language item to the store.
  */
-export function add(key: string, value: string): void {
+export function registerPhrase(key: string, value: string): void {
   if (typeof value === "string") {
     addToStore(key, compile(value));
   } else {

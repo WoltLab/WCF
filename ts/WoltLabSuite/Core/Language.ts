@@ -9,13 +9,15 @@
  */
 
 export function get(key: string, parameters: object = {}): string {
-  return window.WoltLabLanguage.get(key, parameters);
+  return window.WoltLabLanguage.getPhrase(key, parameters);
 }
 
 export function add(key: string, value: string): void {
-  window.WoltLabLanguage.add(key, value);
+  window.WoltLabLanguage.registerPhrase(key, value);
 }
 
 export function addObject(object: { [key: string]: string }): void {
-  window.WoltLabLanguage.addObject(object);
+  Object.entries(object).forEach(([key, value]) => {
+    add(key, value);
+  });
 }
