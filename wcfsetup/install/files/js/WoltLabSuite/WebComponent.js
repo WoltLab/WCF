@@ -749,9 +749,8 @@
   // ts/WoltLabSuite/WebComponent/Language.ts
   var Language_exports = {};
   __export(Language_exports, {
-    add: () => add2,
-    addObject: () => addObject,
-    get: () => get
+    getPhrase: () => get,
+    registerPhrase: () => registerPhrase
   });
 
   // ts/WoltLabSuite/WebComponent/Template.ts
@@ -839,12 +838,7 @@
   };
 
   // ts/WoltLabSuite/WebComponent/Language.ts
-  function addObject(object) {
-    Object.entries(object).forEach(([key, value]) => {
-      add2(key, value);
-    });
-  }
-  function add2(key, value) {
+  function registerPhrase(key, value) {
     if (typeof value === "string") {
       add(key, compile2(value));
     } else {

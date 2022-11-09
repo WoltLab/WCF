@@ -50,7 +50,3 @@ function compile(value: string): Phrase {
     };
   }
 }
-
-interface LanguageItems {
-  [key: string]: string;
-}
