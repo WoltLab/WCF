@@ -589,7 +589,10 @@ class UserProfileAction extends UserAction implements IPopoverAction
             throw new \InvalidArgumentException("The given file is not an image.");
         }
 
-        if ($imageData[0] != UserAvatar::AVATAR_SIZE || $imageData[1] != UserAvatar::AVATAR_SIZE) {
+        if (
+            ($imageData[0] != UserAvatar::AVATAR_SIZE || $imageData[1] != UserAvatar::AVATAR_SIZE)
+            && ($imageData[0] != UserAvatar::AVATAR_SIZE_2X || $imageData[1] != UserAvatar::AVATAR_SIZE_2X)
+        ) {
             throw new \InvalidArgumentException(
                 \sprintf(
                     "The given file does not have the size of %dx%d",
