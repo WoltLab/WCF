@@ -9,6 +9,13 @@
  * file that was distributed with this source code.
  */
 
-if (\PHP_VERSION_ID >= 80200) {
-    return;
+namespace Random;
+
+use Symfony\Polyfill\Php82\NoDynamicProperties;
+
+if (\PHP_VERSION_ID < 80200) {
+    class RandomError extends \Error
+    {
+        use NoDynamicProperties;
+    }
 }

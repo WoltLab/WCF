@@ -320,9 +320,9 @@
             ),
         ),
         'symfony/polyfill-php82' => array(
-            'pretty_version' => 'v1.26.0',
-            'version' => '1.26.0.0',
-            'reference' => 'a88014fcea4120c9f77b4fefd48942ce38e412e7',
+            'pretty_version' => 'v1.27.0',
+            'version' => '1.27.0.0',
+            'reference' => '80ddf7bfa17ef7b06db4e6d007a95bf584e07b44',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php82',
             'aliases' => array(),
