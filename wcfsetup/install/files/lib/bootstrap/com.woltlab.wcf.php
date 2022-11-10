@@ -2,9 +2,11 @@
 
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
+use wcf\system\event\listener\PhraseChangedPreloadListener;
 use wcf\system\event\listener\UserLoginCancelLostPasswordListener;
+use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
-use wcf\system\language\preload\command\RebuildPreloadPhrases;
+use wcf\system\language\preload\command\ResetPreloadCache;
 use wcf\system\package\event\PackageListChanged;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
@@ -18,8 +20,9 @@ return static function (): void {
     EventHandler::getInstance()->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
     EventHandler::getInstance()->register(PackageListChanged::class, function () {
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-            $command = new RebuildPreloadPhrases($language);
+            $command = new ResetPreloadCache($language);
             $command();
         }
     });
+    EventHandler::getInstance()->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
 };
