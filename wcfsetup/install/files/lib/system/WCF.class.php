@@ -22,6 +22,7 @@ use wcf\system\exception\IPrintableException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\language\preload\PhrasePreloadCache;
 use wcf\system\package\command\RebuildBootstrapper;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\registry\RegistryHandler;
@@ -814,6 +815,10 @@ class WCF
                 self::getSession()->unregister('forceBackgroundQueuePerform');
             }
         }
+
+        self::getTPL()->assign([
+            '__phrasePreloadCacheUrl' => PhrasePreloadCache::getUrl(self::getLanguage()),
+        ]);
 
         EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang']);
         EmailTemplateEngine::getInstance()->assign([
