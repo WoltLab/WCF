@@ -51,13 +51,6 @@
 			</ol>
 		</amp-sidebar>
 		
-		{if MODULE_COOKIE_POLICY_PAGE && !$__wcf->user->userID}
-			<amp-user-notification layout="nodisplay" id="cookie-policy-notice">
-				{lang}wcf.page.cookiePolicy.info{/lang}
-				<button type="button" on="tap:cookie-policy-notice.dismiss">{lang}wcf.global.button.close{/lang}</button>
-			</amp-user-notification>
-		{/if}
-		
 		<footer class="footer">
 			<div class="copyright">{lang}wcf.page.copyright{/lang}</div>
 		</footer>
