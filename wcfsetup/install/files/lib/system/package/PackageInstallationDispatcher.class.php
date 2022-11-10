@@ -29,6 +29,7 @@ use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\command\RebuildBootstrapper;
+use wcf\system\package\event\PackageListChanged;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\RouteHandler;
@@ -223,6 +224,8 @@ class PackageInstallationDispatcher
 
             $command = new RebuildBootstrapper();
             $command();
+
+            EventHandler::getInstance()->fire(new PackageListChanged());
 
             EventHandler::getInstance()->fireAction($this, 'postInstall');
 
