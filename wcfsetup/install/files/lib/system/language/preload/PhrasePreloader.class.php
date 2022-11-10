@@ -28,7 +28,12 @@ final class PhrasePreloader
             $this->rebuild($language);
         }
 
-        return WCF::getPath() . $language->getPreloadCacheFilename();
+        return \sprintf(
+            '%s%s?v=%d',
+            WCF::getPath(),
+            $language->getPreloadCacheFilename(),
+            \LAST_UPDATE_TIME
+        );
     }
 
     private function needsRebuild(Language $language): bool

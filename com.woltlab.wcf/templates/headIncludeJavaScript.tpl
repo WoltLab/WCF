@@ -25,7 +25,7 @@
 </script>
 
 <script src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
-<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js"></script>
+<script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js?v={@LAST_UPDATE_TIME}"></script>
 
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
