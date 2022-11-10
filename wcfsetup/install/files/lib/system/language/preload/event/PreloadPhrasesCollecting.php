@@ -20,7 +20,7 @@ final class PreloadPhrasesCollecting implements IEvent
     public readonly Language $language;
 
     /**
-     * @var PreloadPhrase[]
+     * @var string[]
      */
     private array $phrases = [];
 
@@ -29,17 +29,13 @@ final class PreloadPhrasesCollecting implements IEvent
         $this->language = $language;
     }
 
-    public function preload(string|PreloadPhrase $phrase): void
+    public function preload(string $phrase): void
     {
-        if (\is_string($phrase)) {
-            $phrase = new PreloadPhrase($phrase, false);
-        }
-
         $this->phrases[] = $phrase;
     }
 
     /**
-     * @return PreloadPhrase[]
+     * @return string[]
      */
     public function getPhrases(): array
     {

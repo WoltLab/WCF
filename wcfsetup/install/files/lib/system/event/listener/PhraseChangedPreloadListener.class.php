@@ -6,7 +6,6 @@ use wcf\data\language\Language;
 use wcf\system\event\EventHandler;
 use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\preload\command\ResetPreloadCache;
-use wcf\system\language\preload\PreloadPhrase;
 use wcf\system\language\preload\PreloadPhrasesCollecting;
 
 /**
@@ -34,7 +33,7 @@ final class PhraseChangedPreloadListener
 
         $preloadPhrases = $this->getPhrasesForPreloading($event->language);
         foreach ($preloadPhrases as $phrase) {
-            if ($phrase->name === $event->name) {
+            if ($phrase === $event->name) {
                 $resetCache = true;
                 break;
             }
@@ -47,7 +46,7 @@ final class PhraseChangedPreloadListener
     }
 
     /**
-     * @return PreloadPhrase[]
+     * @return string[]
      */
     private function getPhrasesForPreloading(Language $language): array
     {
