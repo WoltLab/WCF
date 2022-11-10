@@ -199,9 +199,11 @@ class WCFACP extends WCF
                             $e->getTraceAsString()
                         );
                     } else {
-                        throw new NamedUserException(
-                            self::getLanguage()->getDynamicVariable('wcf.user.username.error.acpNotAuthorized')
+                        self::getTPL()->display(
+                            'acpNotAuthorized'
                         );
+
+                        exit;
                     }
                 }
 
