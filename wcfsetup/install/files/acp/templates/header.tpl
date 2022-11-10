@@ -48,6 +48,7 @@
 		var COMPILER_TARGET_DEFAULT = true;
 	</script>
 
+	<script data-eager="true" src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
 	<script data-eager="true" src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js"></script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}

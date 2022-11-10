@@ -24,6 +24,7 @@
 	{/if}
 </script>
 
+<script src="{$phrasePreloader->getUrl($__wcf->language)}"></script>
 <script src="{$__wcf->getPath()}js/WoltLabSuite/WebComponent.js"></script>
 
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}

@@ -8,7 +8,7 @@ use wcf\system\language\event\LanguageImported;
 use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
-use wcf\system\language\preload\PhrasePreloadCache;
+use wcf\system\language\preload\PhrasePreloader;
 use wcf\system\package\event\PackageListChanged;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
@@ -32,5 +32,5 @@ return static function (): void {
         $command();
     });
     EventHandler::getInstance()->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
-    WCF::getTPL()->assign('__phrasePreloadCacheUrl', PhrasePreloadCache::getUrl(WCF::getLanguage()));
+    WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
 };
