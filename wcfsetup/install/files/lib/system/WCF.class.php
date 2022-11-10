@@ -15,7 +15,6 @@ use wcf\system\application\IApplication;
 use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
-use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ErrorException;
@@ -1180,7 +1179,7 @@ class WCF
             $prefix = '';
         }
 
-        return $scope . '_' .\hash_hmac('md5', $prefix . $scope, $key);
+        return $scope . '_' . \hash_hmac('md5', $prefix . $scope, $key);
     }
 
     /**
