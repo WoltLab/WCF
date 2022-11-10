@@ -2,9 +2,12 @@
 
 namespace wcf\system\language\preload\command;
 
+use Laminas\Diactoros\Stream;
 use wcf\data\language\Language;
 use wcf\system\event\EventHandler;
+use wcf\system\language\preload\PreloadPhrase;
 use wcf\system\language\preload\PreloadPhrasesCollecting;
+use wcf\util\StringUtil;
 
 /**
  * Rebuilds the phrase preload cache for the
@@ -32,6 +35,27 @@ final class CachePreloadPhrases
         $event = new PreloadPhrasesCollecting($this->language);
         $this->eventHandler->fire($event);
 
-        // TODO: Do something with the collected phrases.
+        $file = new Stream(\WCF_DIR . $this->language->getPreloadCacheFilename(), 'wb');
+        foreach ($event->getPhrases() as $phrase) {
+            $file->write(
+                \sprintf(
+                    "WoltLabLanguage.registerPhrase('%s', '%s');\n",
+                    $phrase->name,
+                    $this->getEncodedValue($phrase),
+                )
+            );
+        }
+        $file->close();
+    }
+
+    private function getEncodedValue(PreloadPhrase $phrase): string
+    {
+        if ($phrase->literal) {
+            $value = $this->language->getDynamicVariable($phrase->name);
+        } else {
+            $value = $this->language->get($phrase->name);
+        }
+
+        return StringUtil::encodeJS($value);
     }
 }
