@@ -29,6 +29,10 @@ final class PreloadPhrasesCollecting implements IEvent
         $this->language = $language;
     }
 
+    /**
+     * Registers the name of a phrases that should
+     * be added to the list of preloaded values.
+     */
     public function preload(string $phrase): void
     {
         $this->phrases[] = $phrase;

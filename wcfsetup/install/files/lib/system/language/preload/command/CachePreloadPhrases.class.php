@@ -36,6 +36,14 @@ final class CachePreloadPhrases
         $this->eventHandler->fire($event);
 
         $file = new Stream(\WCF_DIR . $this->language->getPreloadCacheFilename(), 'wb');
+        $file->write(
+            \sprintf(
+                "/* cache for '%s' (generated at %s) -- DO NOT EDIT */\n",
+                $this->language->getLocale(),
+                \gmdate('r'),
+            )
+        );
+
         foreach ($event->getPhrases() as $phrase) {
             $file->write(
                 \sprintf(
@@ -45,6 +53,11 @@ final class CachePreloadPhrases
                 )
             );
         }
+
+        // Add a distinct marker at the end to prove
+        // that the file was fully written.
+        $file->write("/* EOF */\n");
+
         $file->close();
     }
 
