@@ -5,7 +5,17 @@ namespace wcf\system\language\preload;
 use wcf\data\language\Language;
 use wcf\system\event\IEvent;
 
-final class RegisterPreloadPhrases implements IEvent
+/**
+ * Requests the collection of phrases that should
+ * be included in the preload cache.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core\System\Language\Preload\Event
+ * @since 6.0
+ */
+final class PreloadPhrasesCollecting implements IEvent
 {
     public readonly Language $language;
 
@@ -31,7 +41,7 @@ final class RegisterPreloadPhrases implements IEvent
     /**
      * @return PreloadPhrase[]
      */
-    public function getPreloadPhrases(): array
+    public function getPhrases(): array
     {
         return $this->phrases;
     }
