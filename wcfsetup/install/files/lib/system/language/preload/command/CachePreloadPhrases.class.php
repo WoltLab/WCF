@@ -16,7 +16,7 @@ use wcf\system\language\preload\PreloadPhrasesCollecting;
  * @package WoltLabSuite\Core\System\Language\Preload\Command
  * @since 6.0
  */
-final class RebuildPreloadPhrases
+final class CachePreloadPhrases
 {
     private readonly EventHandler $eventHandler;
     private readonly Language $language;
