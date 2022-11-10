@@ -7,58 +7,39 @@
  * @module  Language (alias)
  * @module  WoltLabSuite/Core/Language
  */
-define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Language/Store"], function (require, exports, tslib_1, Template_1, Store_1, Store_2) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.add = exports.addObject = exports.get = void 0;
-    Template_1 = tslib_1.__importDefault(Template_1);
-    Object.defineProperty(exports, "get", { enumerable: true, get: function () { return Store_2.get; } });
-    /**
-     * Adds all the language items in the given object to the store.
-     */
-    function addObject(object) {
-        Object.entries(object).forEach(([key, value]) => {
-            add(key, value);
-        });
+    exports.addObject = exports.add = exports.get = exports.registerPhrase = exports.getPhrase = void 0;
+    function getPhrase(key, parameters = {}) {
+        return window.WoltLabLanguage.getPhrase(key, parameters);
     }
-    exports.addObject = addObject;
+    exports.getPhrase = getPhrase;
+    function registerPhrase(key, value) {
+        window.WoltLabLanguage.registerPhrase(key, value);
+    }
+    exports.registerPhrase = registerPhrase;
     /**
-     * Adds a single language item to the store.
+     * @deprecated 6.0 Use `getPhrase()` instead
+     */
+    function get(key, parameters = {}) {
+        return getPhrase(key, parameters);
+    }
+    exports.get = get;
+    /**
+     * @deprecated 6.0 Use `registerPhrase()` instead
      */
     function add(key, value) {
-        if (typeof value === "string") {
-            (0, Store_1.add)(key, compile(value));
-        }
-        else {
-            // Historically a few items that are added to the language store do not represent actual phrases, but
-            // instead contain a collection (i.e. Array) of items. Most notably these are entries related to date
-            // processing, containg lists of localized month / weekday names.
-            //
-            // Despite this method technically only taking `string`s as the `value` we need to correctly handle
-            // them which we do by simply storing a function that returns the value as-is.
-            (0, Store_1.add)(key, function () {
-                return value;
-            });
-        }
+        registerPhrase(key, value);
     }
     exports.add = add;
     /**
-     * Compiles the given value into a phrase.
+     * @deprecated 6.0 Use `registerPhrase()` instead
      */
-    function compile(value) {
-        if (!value.includes("{")) {
-            return function () {
-                return value;
-            };
-        }
-        try {
-            const template = new Template_1.default(value);
-            return template.fetch.bind(template);
-        }
-        catch (e) {
-            return function () {
-                return value;
-            };
-        }
+    function addObject(object) {
+        Object.entries(object).forEach(([key, value]) => {
+            registerPhrase(key, value);
+        });
     }
+    exports.addObject = addObject;
 });

@@ -1,0 +1,11 @@
+import * as Language from "./Language.js";
+import { Template } from "./Template.js";
+
+window.WoltLabLanguage = Language;
+window.WoltLabTemplate = Template;
+
+import "./fa-metadata.js";
+import "./fa-icon.ts";
+import "./fa-icon.ts";
+import "./woltlab-core-date-time.ts";
+

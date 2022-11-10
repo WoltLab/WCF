@@ -8,60 +8,33 @@
  * @module  WoltLabSuite/Core/Language
  */
 
-import Template from "./Template";
+export function getPhrase(key: string, parameters: object = {}): string {
+  return window.WoltLabLanguage.getPhrase(key, parameters);
+}
 
-import { add as addToStore, Phrase } from "./Language/Store";
-
-export { get } from "./Language/Store";
-
-/**
- * Adds all the language items in the given object to the store.
- */
-export function addObject(object: LanguageItems): void {
-  Object.entries(object).forEach(([key, value]) => {
-    add(key, value);
-  });
+export function registerPhrase(key: string, value: string): void {
+  window.WoltLabLanguage.registerPhrase(key, value);
 }
 
 /**
- * Adds a single language item to the store.
+ * @deprecated 6.0 Use `getPhrase()` instead
+ */
+export function get(key: string, parameters: object = {}): string {
+  return getPhrase(key, parameters);
+}
+
+/**
+ * @deprecated 6.0 Use `registerPhrase()` instead
  */
 export function add(key: string, value: string): void {
-  if (typeof value === "string") {
-    addToStore(key, compile(value));
-  } else {
-    // Historically a few items that are added to the language store do not represent actual phrases, but
-    // instead contain a collection (i.e. Array) of items. Most notably these are entries related to date
-    // processing, containg lists of localized month / weekday names.
-    //
-    // Despite this method technically only taking `string`s as the `value` we need to correctly handle
-    // them which we do by simply storing a function that returns the value as-is.
-    addToStore(key, function () {
-      return value;
-    });
-  }
+  registerPhrase(key, value);
 }
 
 /**
- * Compiles the given value into a phrase.
+ * @deprecated 6.0 Use `registerPhrase()` instead
  */
-function compile(value: string): Phrase {
-  if (!value.includes("{")) {
-    return function () {
-      return value;
-    };
-  }
-
-  try {
-    const template = new Template(value);
-    return template.fetch.bind(template);
-  } catch (e) {
-    return function () {
-      return value;
-    };
-  }
-}
-
-interface LanguageItems {
-  [key: string]: string;
+export function addObject(object: { [key: string]: string }): void {
+  Object.entries(object).forEach(([key, value]) => {
+    registerPhrase(key, value);
+  });
 }

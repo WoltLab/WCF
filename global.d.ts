@@ -16,6 +16,10 @@ type IconMetadata = [Codepoint, HasRegularVariant];
 type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
 
 declare global {
+  interface WoltLabTemplate {
+    fetch(v: object): string;
+  }
+
   interface Window {
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
@@ -40,6 +44,13 @@ declare global {
     __wcf_bc_colorUtil: typeof ColorUtil;
     __wcf_bc_datePicker: typeof DatePicker;
     __wcf_bc_eventHandler: typeof EventHandler;
+
+    WoltLabLanguage: {
+      getPhrase(key: string, parameters?: object): string;
+      registerPhrase(key: string, value: string): void;
+    };
+
+    WoltLabTemplate: new (template: string) => WoltLabTemplate;
   }
 
   interface String {

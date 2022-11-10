@@ -4,6 +4,7 @@
     "ts/**/*"
   ],
   "exclude": [
+    "ts/WoltLabSuite/WebComponent.*",
     "ts/WoltLabSuite/WebComponent/**"
   ],
   "compilerOptions": {
