@@ -538,6 +538,9 @@ class WCF
         // The option for article visit tracking was removed in 6.0.
         // https://github.com/WoltLab/WCF/issues/4965
         \define('ARTICLE_ENABLE_VISIT_TRACKING', 1);
+
+        // The option for the legacy cookie banner was removed in 6.0.
+        \define('MODULE_COOKIE_POLICY_PAGE', 0);
     }
 
     /**

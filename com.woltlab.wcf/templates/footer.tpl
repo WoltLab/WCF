@@ -108,23 +108,6 @@
 {event name='footer'}
 
 <div class="pageFooterStickyNotice">
-	{if MODULE_COOKIE_POLICY_PAGE && $__wcf->session->isFirstVisit() && !$__wcf->user->userID}
-		<div class="info cookiePolicyNotice">
-			<div class="layoutBoundary">
-				<span class="cookiePolicyNoticeText">{lang}wcf.page.cookiePolicy.info{/lang}</span>
-				<a href="{page}com.woltlab.wcf.CookiePolicy{/page}" class="button buttonPrimary small cookiePolicyNoticeMoreInformation">{lang}wcf.page.cookiePolicy.info.moreInformation{/lang}</a>
-				<a href="#" class="button small jsOnly cookiePolicyNoticeDismiss">{lang}wcf.global.button.close{/lang}</a>
-				<script data-relocate="true">
-					elBySel('.cookiePolicyNoticeDismiss').addEventListener('click', function(event) {
-						event.preventDefault();
-
-						elRemove(elBySel('.cookiePolicyNotice'));
-					});
-				</script>
-			</div>
-		</div>
-	{/if}
-	
 	{event name='pageFooterStickyNotice'}
 	
 	<noscript>
