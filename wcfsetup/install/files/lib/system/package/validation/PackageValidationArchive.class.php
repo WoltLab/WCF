@@ -128,9 +128,9 @@ class PackageValidationArchive implements \RecursiveIterator
                         if (empty($requirement['file'])) {
                             // check if package is known
                             $sql = "SELECT  *
-                                    FROM    wcf" . WCF_N . "_package
+                                    FROM    wcf1_package
                                     WHERE   package = ?";
-                            $statement = WCF::getDB()->prepareStatement($sql);
+                            $statement = WCF::getDB()->prepare($sql);
                             $statement->execute([$requirement['name']]);
                             $package = $statement->fetchObject(Package::class);
 
@@ -305,11 +305,11 @@ class PackageValidationArchive implements \RecursiveIterator
 
         // excluding packages: installed -> current
         $sql = "SELECT      package.*, package_exclusion.*
-                FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
-                LEFT JOIN   wcf" . WCF_N . "_package package
+                FROM        wcf1_package_exclusion package_exclusion
+                LEFT JOIN   wcf1_package package
                 ON          package.packageID = package_exclusion.packageID
                 WHERE       excludedPackage = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->getArchive()->getPackageInfo('name')]);
         $excludingPackages = [];
         while ($row = $statement->fetchArray()) {
@@ -356,9 +356,9 @@ class PackageValidationArchive implements \RecursiveIterator
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [\array_keys(self::$excludedPackages[$package])]);
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_package
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_package
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             $packages = [];
             while ($row = $statement->fetchArray()) {
