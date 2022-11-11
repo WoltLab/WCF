@@ -17,10 +17,8 @@ use wcf\system\event\IEvent;
  */
 final class LanguageImported implements IEvent
 {
-    public readonly Language $language;
-
-    public function __construct(Language $language)
-    {
-        $this->language = $language;
+    public function __construct(
+        public readonly Language $language
+    ) {
     }
 }

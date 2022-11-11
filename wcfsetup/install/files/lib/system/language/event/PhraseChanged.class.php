@@ -16,12 +16,9 @@ use wcf\system\event\IEvent;
  */
 final class PhraseChanged implements IEvent
 {
-    public readonly Language $language;
-    public readonly string $name;
-
-    public function __construct(Language $language, string $name)
-    {
-        $this->language = $language;
-        $this->name = $name;
+    public function __construct(
+        public readonly Language $language,
+        public readonly string $name
+    ) {
     }
 }
