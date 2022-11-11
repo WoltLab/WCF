@@ -480,10 +480,8 @@ class PackageArchive
 
     /**
      * Returns true if the package archive supports a new installation.
-     *
-     * @return  bool
      */
-    public function isValidInstall()
+    public function isValidInstall(): bool
     {
         return !empty($this->instructions['install']);
     }
@@ -491,11 +489,8 @@ class PackageArchive
     /**
      * Checks if the new package is compatible with
      * the package that is about to be updated.
-     *
-     * @param Package $package
-     * @return  bool        isValidUpdate
      */
-    public function isValidUpdate(?Package $package = null)
+    public function isValidUpdate(?Package $package = null): bool
     {
         if ($this->package === null && $package !== null) {
             $this->setPackage($package);
@@ -527,10 +522,8 @@ class PackageArchive
      * Checks if the current package is already installed, as it is not
      * possible to install non-applications multiple times within the
      * same environment.
-     *
-     * @return  bool
      */
-    public function isAlreadyInstalled()
+    public function isAlreadyInstalled(): bool
     {
         $sql = "SELECT  COUNT(*)
                 FROM    wcf" . WCF_N . "_package
@@ -543,10 +536,8 @@ class PackageArchive
 
     /**
      * Returns true if the package is an application and has an unique abbreviation.
-     *
-     * @return  bool
      */
-    public function hasUniqueAbbreviation()
+    public function hasUniqueAbbreviation(): bool
     {
         if (!$this->packageInfo['isApplication']) {
             return true;
@@ -591,9 +582,8 @@ class PackageArchive
      * Returns a localized information about this package.
      *
      * @param string $name
-     * @return  string
      */
-    public function getLocalizedPackageInfo($name)
+    public function getLocalizedPackageInfo($name): string
     {
         if (isset($this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()])) {
             return $this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()];
