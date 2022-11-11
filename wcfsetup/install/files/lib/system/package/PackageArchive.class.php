@@ -105,16 +105,6 @@ class PackageArchive
     }
 
     /**
-     * Sets associated package object.
-     *
-     * @param Package $package
-     */
-    public function setPackage(Package $package)
-    {
-        $this->package = $package;
-    }
-
-    /**
      * Returns the name of the package archive.
      *
      * @return  string
@@ -493,7 +483,7 @@ class PackageArchive
     public function isValidUpdate(?Package $package = null): bool
     {
         if ($this->package === null && $package !== null) {
-            $this->setPackage($package);
+            $this->package = $package;
 
             // re-evaluate update data
             $this->filterUpdateInstructions();
