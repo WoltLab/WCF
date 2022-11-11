@@ -916,15 +916,4 @@ class PackageArchive
 
         return $conflictedPackages;
     }
-
-    /**
-     * Returns a list of instructions for installation or update.
-     *
-     * @param string $type
-     * @return  array
-     */
-    public function getInstructions($type)
-    {
-        return $this->instructions[$type] ?? null;
-    }
 }
