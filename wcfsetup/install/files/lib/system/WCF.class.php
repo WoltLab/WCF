@@ -815,7 +815,6 @@ class WCF
             }
         }
 
-
         EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang']);
         EmailTemplateEngine::getInstance()->assign([
             '__wcf' => $wcf,
