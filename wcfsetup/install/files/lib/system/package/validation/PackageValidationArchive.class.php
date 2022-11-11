@@ -343,7 +343,7 @@ class PackageValidationArchive implements \RecursiveIterator
             }
         }
 
-        if (!empty($excludingPackages)) {
+        if ($excludingPackages !== []) {
             throw new PackageValidationException(
                 PackageValidationException::EXCLUDING_PACKAGES,
                 ['packages' => $excludingPackages]
@@ -388,7 +388,7 @@ class PackageValidationArchive implements \RecursiveIterator
                 }
             }
 
-            if (!empty($excludedPackages)) {
+            if ($excludedPackages !== []) {
                 throw new PackageValidationException(
                     PackageValidationException::EXCLUDED_PACKAGES,
                     ['packages' => $excludedPackages]
