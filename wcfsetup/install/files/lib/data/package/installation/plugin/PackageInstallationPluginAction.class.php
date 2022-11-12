@@ -9,9 +9,11 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\event\PackageInstallationPluginSynced;
 use wcf\system\package\plugin\OptionPackageInstallationPlugin;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
@@ -146,6 +148,10 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
                 LanguageFactory::getInstance()->deleteLanguageCache();
                 break;
         }
+
+        EventHandler::getInstance()->fire(
+            new PackageInstallationPluginSynced($this->packageInstallationPlugin, $invokeAgain)
+        );
 
         return [
             'invokeAgain' => $invokeAgain,
