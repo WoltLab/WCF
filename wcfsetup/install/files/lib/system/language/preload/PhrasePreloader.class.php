@@ -24,7 +24,7 @@ final class PhrasePreloader
      */
     public function getUrl(Language $language): string
     {
-        if ($this->needsRebuild($language)) {
+        if (!$this->needsRebuild($language)) {
             $this->rebuild($language);
         }
 
