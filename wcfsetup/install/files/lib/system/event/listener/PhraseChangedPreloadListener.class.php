@@ -6,7 +6,7 @@ use wcf\data\language\Language;
 use wcf\system\event\EventHandler;
 use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\preload\command\ResetPreloadCache;
-use wcf\system\language\preload\PreloadPhrasesCollecting;
+use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 
 /**
  * Resets the preload cache if the modified phrase is

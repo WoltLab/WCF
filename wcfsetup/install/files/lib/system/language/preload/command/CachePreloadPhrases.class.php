@@ -5,7 +5,7 @@ namespace wcf\system\language\preload\command;
 use Laminas\Diactoros\Stream;
 use wcf\data\language\Language;
 use wcf\system\event\EventHandler;
-use wcf\system\language\preload\PreloadPhrasesCollecting;
+use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\util\StringUtil;
 
 /**

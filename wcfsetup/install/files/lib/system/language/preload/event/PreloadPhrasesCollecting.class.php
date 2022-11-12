@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\language\preload;
+namespace wcf\system\language\preload\event;
 
 use wcf\data\language\Language;
 use wcf\system\event\IEvent;
