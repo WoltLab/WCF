@@ -4,6 +4,7 @@ use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\event\EventHandler;
 use wcf\system\event\listener\PhraseChangedPreloadListener;
 use wcf\system\event\listener\PipSyncedPhrasePreloadListener;
+use wcf\system\event\listener\PreloadPhrasesCollectingListener;
 use wcf\system\event\listener\UserLoginCancelLostPasswordListener;
 use wcf\system\language\event\LanguageImported;
 use wcf\system\language\event\PhraseChanged;
@@ -37,7 +38,5 @@ return static function (): void {
     EventHandler::getInstance()->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
     EventHandler::getInstance()->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
     WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
-    EventHandler::getInstance()->register(PreloadPhrasesCollecting::class, static function (PreloadPhrasesCollecting $event) {
-        $event->preload('wcf.date.relative.now');
-    });
+    EventHandler::getInstance()->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
 };
