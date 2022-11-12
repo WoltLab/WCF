@@ -24,6 +24,7 @@ final class ResetPreloadCache
 
     public function __invoke(): void
     {
-        \unlink(\WCF_DIR . $this->language->getPreloadCacheFilename());
+        // Try to remove the file if it exists.
+        @\unlink(\WCF_DIR . $this->language->getPreloadCacheFilename());
     }
 }
