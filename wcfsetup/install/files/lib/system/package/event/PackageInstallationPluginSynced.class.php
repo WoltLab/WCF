@@ -2,7 +2,6 @@
 
 namespace wcf\system\package\event;
 
-use wcf\data\package\installation\plugin\PackageInstallationPlugin;
 use wcf\system\event\IEvent;
 
 /**
@@ -18,7 +17,7 @@ use wcf\system\event\IEvent;
 final class PackageInstallationPluginSynced implements IEvent
 {
     public function __construct(
-        public readonly PackageInstallationPlugin $pip,
+        public readonly string $pluginName,
         public readonly bool $isInvokedAgain,
     ) {
     }

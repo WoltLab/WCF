@@ -150,7 +150,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         }
 
         EventHandler::getInstance()->fire(
-            new PackageInstallationPluginSynced($this->packageInstallationPlugin, $invokeAgain)
+            new PackageInstallationPluginSynced($this->packageInstallationPlugin->pluginName, $invokeAgain)
         );
 
         return [

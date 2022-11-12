@@ -5,8 +5,6 @@ namespace wcf\system\event\listener;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
 use wcf\system\package\event\PackageInstallationPluginSynced;
-use wcf\system\package\plugin\FilePackageInstallationPlugin;
-use wcf\system\package\plugin\LanguagePackageInstallationPlugin;
 
 /**
  * Resets the preload cache when certain PIPs have been synced.
@@ -32,7 +30,7 @@ final class PipSyncedPhrasePreloadListener
             return;
         }
 
-        if ($event->pip->pluginName === 'file' || $event->pip->pluginName === 'language') {
+        if ($event->pluginName === 'file' || $event->pluginName === 'language') {
             foreach ($this->languageFactory->getLanguages() as $language) {
                 $command = new ResetPreloadCache($language);
                 $command();
