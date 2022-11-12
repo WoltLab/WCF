@@ -8,6 +8,7 @@ use wcf\system\language\event\LanguageImported;
 use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
 use wcf\system\language\preload\command\ResetPreloadCache;
+use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\system\language\preload\PhrasePreloader;
 use wcf\system\package\event\PackageListChanged;
 use wcf\system\user\authentication\event\UserLoggedIn;
@@ -33,4 +34,8 @@ return static function (): void {
     });
     EventHandler::getInstance()->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
     WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
+
+    EventHandler::getInstance()->register(PreloadPhrasesCollecting::class, static function (PreloadPhrasesCollecting $event) {
+        $event->preload('wcf.date.relative.now');
+    });
 };

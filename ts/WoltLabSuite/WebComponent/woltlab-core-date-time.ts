@@ -149,7 +149,7 @@
         value = this.#timeElement.title;
       } else {
         if (difference < TimePeriod.OneMinute) {
-          value = "TODO: a moment ago"; // Language.get("wcf.date.relative.now");
+          value = window.WoltLabLanguage.getPhrase("wcf.date.relative.now");
         } else if (difference < TimePeriod.OneHour) {
           const minutes = Math.trunc(difference / TimePeriod.OneMinute);
           value = DateFormatter.Minutes.format(minutes * -1, "minute");

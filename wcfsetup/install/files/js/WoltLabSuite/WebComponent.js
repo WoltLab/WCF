@@ -1145,7 +1145,7 @@
           value = this.#timeElement.title;
         } else {
           if (difference < 60 /* OneMinute */) {
-            value = "TODO: a moment ago";
+            value = window.WoltLabLanguage.getPhrase("wcf.date.relative.now");
           } else if (difference < 3600 /* OneHour */) {
             const minutes = Math.trunc(difference / 60 /* OneMinute */);
             value = DateFormatter.Minutes.format(minutes * -1, "minute");

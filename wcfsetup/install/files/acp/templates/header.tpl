@@ -79,7 +79,6 @@
 				'wcf.clipboard.item.unmarkAll': '{jslang}wcf.clipboard.item.unmarkAll{/jslang}',
 				'wcf.clipboard.item.markAll': '{jslang}wcf.clipboard.item.markAll{/jslang}',
 				'wcf.clipboard.item.mark': '{jslang}wcf.clipboard.item.mark{/jslang}',
-				'wcf.date.relative.now': '{jslang __literal=true}wcf.date.relative.now{/jslang}',
 				'wcf.date.relative.minutes': '{jslang __literal=true}wcf.date.relative.minutes{/jslang}',
 				'wcf.date.relative.hours': '{jslang __literal=true}wcf.date.relative.hours{/jslang}',
 				'wcf.date.relative.pastDays': '{jslang __literal=true}wcf.date.relative.pastDays{/jslang}',
