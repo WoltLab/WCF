@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
             Dialog_1.default.setTitle(this, Language.get("wcf.editor.link." + (options.insert ? "add" : "edit")));
             const submitButton = document.getElementById("redactor-modal-button-action");
             submitButton.textContent = Language.get("wcf.global.button." + (options.insert ? "insert" : "save"));
+            this.closeCallback = options.closeCallback;
             this.submitCallback = options.submitCallback;
             // Redactor might modify the button, thus we cannot bind it in the dialog's `onSetup()` callback.
             if (!this.boundListener) {
@@ -48,6 +49,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
                         if (small && small.nodeName === "SMALL") {
                             small.remove();
                         }
+                        this.closeCallback();
                     },
                     onSetup: (content) => {
                         const submitButton = content.querySelector(".formSubmit > .buttonPrimary");
