@@ -90,6 +90,18 @@
 					> .message {
 						transform: translateY(79px);
 					}
+
+					@include screen-xs {
+						margin-top: -60px;
+
+						&::after {
+							height: 50px;
+						}
+
+						> .message {
+							transform: translateY(49px);
+						}
+					}
 				}
 			}
 
