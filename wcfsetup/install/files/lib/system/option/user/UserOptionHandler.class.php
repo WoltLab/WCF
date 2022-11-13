@@ -11,6 +11,7 @@ use wcf\data\user\User;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\ISearchableConditionUserOption;
+use wcf\system\option\ISearchableUserOption;
 use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -225,6 +226,7 @@ class UserOptionHandler extends OptionHandler
     {
         if ($this->searchMode) {
             $optionType = $this->getTypeObject($type);
+            \assert($optionType instanceof ISearchableUserOption);
 
             if ($this->conditionMode) {
                 $hasProperty = \property_exists($optionType, 'forceSearchOption');
@@ -233,8 +235,7 @@ class UserOptionHandler extends OptionHandler
                     $optionType->forceSearchOption = $this->optionValues[$option->optionName] == $option->defaultValue;
                 }
 
-                $element = $this->getTypeObject($type)
-                    ->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
+                $element = $optionType->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
 
                 if ($hasProperty && isset($this->optionValues[$option->optionName])) {
                     $optionType->forceSearchOption = false;
@@ -243,9 +244,7 @@ class UserOptionHandler extends OptionHandler
                 return $element;
             }
 
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $this->getTypeObject($type)
-                ->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
+            return $optionType->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
         }
 
         return parent::getFormElement($type, $option);
