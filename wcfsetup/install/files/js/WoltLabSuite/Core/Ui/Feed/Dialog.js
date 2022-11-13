@@ -54,7 +54,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "../../L
   </dd>
 </dl>
 `, {
-            onSetup(content) {
+            onShow(content) {
                 content
                     .querySelectorAll(".feedLinkDialogCopyButton")
                     .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
