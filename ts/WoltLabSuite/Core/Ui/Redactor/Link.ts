@@ -8,15 +8,18 @@ import * as Language from "../../Language";
 import UiDialog from "../Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 
+type CloseCallback = () => void;
 type SubmitCallback = () => boolean;
 
 interface LinkOptions {
+  closeCallback: CloseCallback;
   insert: boolean;
   submitCallback: SubmitCallback;
 }
 
 class UiRedactorLink implements DialogCallbackObject {
   private boundListener = false;
+  private closeCallback: CloseCallback;
   private submitCallback: SubmitCallback;
 
   open(options: LinkOptions) {
@@ -27,6 +30,7 @@ class UiRedactorLink implements DialogCallbackObject {
     const submitButton = document.getElementById("redactor-modal-button-action")!;
     submitButton.textContent = Language.get("wcf.global.button." + (options.insert ? "insert" : "save"));
 
+    this.closeCallback = options.closeCallback;
     this.submitCallback = options.submitCallback;
 
     // Redactor might modify the button, thus we cannot bind it in the dialog's `onSetup()` callback.
@@ -63,6 +67,8 @@ class UiRedactorLink implements DialogCallbackObject {
           if (small && small.nodeName === "SMALL") {
             small.remove();
           }
+
+          this.closeCallback();
         },
         onSetup: (content) => {
           const submitButton = content.querySelector(".formSubmit > .buttonPrimary") as HTMLButtonElement;

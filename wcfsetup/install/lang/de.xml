@@ -432,7 +432,7 @@
 		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[Es ist ein Fehler aufgetreten.]]></item>
 		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Bereit.]]></item>
 		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{#$timeElapsed}s ({@TIME_NOW|time})]]></item>
-		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles Abgleichen]]></item>
+		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles abgleichen]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup"><![CDATA[Pfad durchsuchen]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[Alle Ordner, die sich direkt in dem angegebenen Pfad befinden, werden überprüft, ob sie ein Paket enthalten.]]></item>
@@ -1917,7 +1917,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.22"><![CDATA[Das Paket „com.woltlab.wcf“ muss mindestens in Version 5.4.22 vorausgesetzt werden.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.23"><![CDATA[Die Versionsnummer „{$version}“ des benötigten Paketes „{$packageName}“ ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
-		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. Bitte aktualisiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} auf die aktuellste Version, um diese Software weiterhin legal betreiben zu können.{if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/de/kaufen/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
+		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. Bitte aktualisiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} auf die aktuelle Version, um diese Software weiterhin legal betreiben zu können.{if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/de/kaufen/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) ablaufen. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
 <ul class="nativeList">
 	{foreach from=$pendingApps item=pendingApp}
@@ -2088,7 +2088,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Paket-Server muss abgefragt werden]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Neuere Version verfügbar]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Paket-Server nicht installiert]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[Aktuellste Version bereits installiert]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[Aktuelle Version bereits installiert]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Produkt <span class="confirmationObject">{$product[packageName]}</span> wirklich installieren?]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) ist deaktiviert und steht weder für Neuinstallation noch Updates zur Verfügung.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ ist bei {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} nicht eingetragen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die unten stehenden Pakete installieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} diesen zuvor <a href="{link controller='PackageUpdateServerAdd'}{/link}">hinzufügen</a>.<br>Die Adresse des Servers lautet: „http://store.woltlab.com/{$wcfMajorRelease}/“]]></item>

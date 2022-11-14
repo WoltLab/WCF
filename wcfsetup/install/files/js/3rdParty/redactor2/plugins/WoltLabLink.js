@@ -108,9 +108,12 @@ $.Redactor.prototype.WoltLabLink = function() {
 
 			// WoltLab START
 			// this.link.buildModal($el);
+			let userHasAbortedDialog = true;
 			_dialogApi.showDialog({
 				insert: ($el === false),
 				submitCallback: (function() {
+					userHasAbortedDialog = false;
+
 					// build link
 					var link = this.link.buildLinkFromModal();
 					if (link === false) {
@@ -139,7 +142,20 @@ $.Redactor.prototype.WoltLabLink = function() {
 					}, 0);
 					
 					return true;
-				}).bind(this)
+				}).bind(this),
+				closeCallback: () => {
+					if (userHasAbortedDialog) {
+						// Closing the dialog without submitting it can cause
+						// stray markers to persist in the editor. These are
+						// then picked up when the user tries to paste into
+						// the editor some time later.
+						window.setTimeout(() => {
+							this.core.editor()[0]
+								.querySelectorAll(".redactor-selection-marker")
+								.forEach((marker) => marker.remove());
+						}, 0);
+					}
+				}
 			});
 			// WoltLab END
 			

@@ -2,6 +2,7 @@
 
 namespace wcf\http\middleware;
 
+use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -112,6 +113,14 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         } else {
             throw new NamedUserException(
                 WCF::getLanguage()->getDynamicVariable('wcf.user.username.error.acpNotAuthorized')
+            );
+
+            return new HtmlResponse(
+                WCF::getTPL()->fetchStream(
+                    'acpNotAuthorized',
+                    'wcf',
+                ),
+                403
             );
         }
     }

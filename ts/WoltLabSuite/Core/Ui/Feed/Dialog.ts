@@ -70,7 +70,7 @@ function openDialog(event: Event): void {
 </dl>
 `,
     {
-      onSetup(content: HTMLElement) {
+      onShow(content: HTMLElement) {
         content
           .querySelectorAll(".feedLinkDialogCopyButton")
           .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
