@@ -36,15 +36,17 @@ final class TriggerBackgroundQueue implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        if ($this->requestHandler->isACPRequest()) {
+            return $handler->handle($request);
+        }
+
         $response = $handler->handle($request);
-        if (
-            $this->requestHandler->isACPRequest()
-            || !$this->backgroundQueueHandler->hasPendingCheck()
-        ) {
+
+        if ($response instanceof LegacyPlaceholderResponse) {
             return $response;
         }
 
-        if ($response instanceof LegacyPlaceholderResponse) {
+        if (!$this->backgroundQueueHandler->hasPendingCheck()) {
             return $response;
         }
 
