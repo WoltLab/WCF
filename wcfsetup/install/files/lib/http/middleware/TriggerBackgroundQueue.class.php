@@ -8,6 +8,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\http\LegacyPlaceholderResponse;
 use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\WCFACP;
 
 /**
  * Adds 'woltlab-background-queue-check: yes' to the response
@@ -37,7 +38,10 @@ final class TriggerBackgroundQueue implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
-        if (!$this->backgroundQueueHandler->hasPendingCheck()) {
+        if (
+            \class_exists(WCFACP::class, false)
+            || !$this->backgroundQueueHandler->hasPendingCheck()
+        ) {
             return $response;
         }
 
