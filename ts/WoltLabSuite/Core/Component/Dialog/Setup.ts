@@ -10,6 +10,7 @@
  */
 
 import DialogControls from "./Controls";
+import * as DomUtil from "../../Dom/Util";
 
 export class DialogSetup {
   fromElement(element: HTMLElement | DocumentFragment): DialogControls {
@@ -33,14 +34,10 @@ export class DialogSetup {
   }
 
   fromHtml(html: string): DialogControls {
-    const element = document.createElement("div");
-    element.innerHTML = html;
-    if (element.childElementCount === 0 && element.textContent!.trim() === "") {
+    const fragment = DomUtil.createFragmentFromHtml(html);
+    if (fragment.childElementCount === 0 && fragment.textContent!.trim() === "") {
       throw new TypeError("The provided HTML string was empty.");
     }
-
-    const fragment = document.createDocumentFragment();
-    fragment.append(...element.childNodes);
 
     return this.fromElement(fragment);
   }

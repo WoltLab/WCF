@@ -8,11 +8,12 @@
  * @module WoltLabSuite/Core/Component/Dialog/Setup
  * @since 6.0
  */
-define(["require", "exports", "tslib", "./Controls"], function (require, exports, tslib_1, Controls_1) {
+define(["require", "exports", "tslib", "./Controls", "../../Dom/Util"], function (require, exports, tslib_1, Controls_1, DomUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DialogSetup = void 0;
     Controls_1 = tslib_1.__importDefault(Controls_1);
+    DomUtil = tslib_1.__importStar(DomUtil);
     class DialogSetup {
         fromElement(element) {
             if (element instanceof HTMLTemplateElement) {
@@ -30,13 +31,10 @@ define(["require", "exports", "tslib", "./Controls"], function (require, exports
             return this.fromElement(element);
         }
         fromHtml(html) {
-            const element = document.createElement("div");
-            element.innerHTML = html;
-            if (element.childElementCount === 0 && element.textContent.trim() === "") {
+            const fragment = DomUtil.createFragmentFromHtml(html);
+            if (fragment.childElementCount === 0 && fragment.textContent.trim() === "") {
                 throw new TypeError("The provided HTML string was empty.");
             }
-            const fragment = document.createDocumentFragment();
-            fragment.append(...element.childNodes);
             return this.fromElement(fragment);
         }
         withoutContent() {
