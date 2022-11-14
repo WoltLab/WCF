@@ -1,4 +1,4 @@
-<ol class="nativeList" id="{@$field->getPrefixedId()}_packageList"></ol>
+<ol class="nativeList" id="{$field->getPrefixedId()}_packageList"></ol>
 
 {include file='__formFieldErrors'}
 
@@ -6,21 +6,21 @@
 	<dl class="col-xs-12 col-md-4">
 		<dt></dt>
 		<dd>
-			<input type="text" id="{@$field->getPrefixedId()}_packageIdentifier" class="long" placeholder="{lang}wcf.acp.devtools.project.packageIdentifier{/lang}">
+			<input type="text" id="{$field->getPrefixedId()}_packageIdentifier" class="long" placeholder="{lang}wcf.acp.devtools.project.packageIdentifier{/lang}">
 		</dd>
 	</dl>
 	
 	<dl class="col-xs-12 col-md-2">
 		<dt></dt>
 		<dd>
-			<input type="text" id="{@$field->getPrefixedId()}_minVersion" class="long" placeholder="{lang}wcf.acp.devtools.project.requiredPackage.minVersion{/lang}">
+			<input type="text" id="{$field->getPrefixedId()}_minVersion" class="long" placeholder="{lang}wcf.acp.devtools.project.requiredPackage.minVersion{/lang}">
 		</dd>
 	</dl>
 	
 	<dl class="col-xs-12 col-md-5">
 		<dt></dt>
 		<dd>
-			<label><input type="checkbox" id="{@$field->getPrefixedId()}_file" value="1"> {lang}wcf.acp.devtools.project.requiredPackage.file{/lang}</label>
+			<label><input type="checkbox" id="{$field->getPrefixedId()}_file" value="1"> {lang}wcf.acp.devtools.project.requiredPackage.file{/lang}</label>
 			<small>{lang}wcf.acp.devtools.project.requiredPackage.file.description{/lang}</small>
 		</dd>
 	</dl>
@@ -28,7 +28,7 @@
 	<dl class="col-xs-12 col-md-1">
 		<dt></dt>
 		<dd>
-			<a href="#" class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
+			<a href="#" class="button small" id="{$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
 		</dd>
 	</dl>
 </div>
@@ -45,7 +45,7 @@
 			'wcf.acp.devtools.project.requiredPackage.requiredPackage': '{jslang __literal=true}wcf.acp.devtools.project.requiredPackage.requiredPackage{/jslang}'
 		});
 		
-		new RequiredPackagesFormField('{@$field->getPrefixedId()}', [
+		new RequiredPackagesFormField('{@$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=requiredPackage}
 				{
 					file: {if $requiredPackage[file]}true{else}false{/if},

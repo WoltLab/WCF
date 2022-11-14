@@ -1,4 +1,4 @@
-<ul id="{@$field->getPrefixedID()}_attachmentList" {*
+<ul id="{$field->getPrefixedID()}_attachmentList" {*
 	*}class="formAttachmentList jsObjectActionContainer" {*
 	*}data-object-action-class-name="wcf\data\attachment\AttachmentAction"{*
 	*}{if !$field->getAttachmentHandler()->getAttachmentList()|count} style="display: none"{/if}{*
@@ -37,7 +37,7 @@
 		</li>
 	{/foreach}
 </ul>
-<div id="{@$field->getPrefixedID()}_uploadButton" class="formAttachmentButtons" data-max-size="{@$field->getAttachmentHandler()->getMaxSize()}"></div>
+<div id="{$field->getPrefixedID()}_uploadButton" class="formAttachmentButtons" data-max-size="{@$field->getAttachmentHandler()->getMaxSize()}"></div>
 
 <script data-relocate="true">
 	$(function() {
@@ -56,8 +56,8 @@
 		});
 		
 		new WCF.Attachment.Upload(
-			$('#{@$field->getPrefixedID()}_uploadButton'),
-			$('#{@$field->getPrefixedID()}_attachmentList'),
+			$('#{@$field->getPrefixedID()|encodeJS}_uploadButton'),
+			$('#{@$field->getPrefixedID()|encodeJS}_attachmentList'),
 			'{@$field->getAttachmentHandler()->getObjectType()->objectType}',
 			'{@$field->getAttachmentHandler()->getObjectID()}',
 			'{$field->getAttachmentHandler()->getTmpHashes()[0]|encodeJS}',
@@ -68,4 +68,4 @@
 	});
 </script>
 
-<input type="hidden" id="{@$field->getPrefixedID()}_tmpHash" name="{@$field->getPrefixedID()}_tmpHash" value="{$field->getAttachmentHandler()->getTmpHashes()[0]}">
+<input type="hidden" id="{$field->getPrefixedID()}_tmpHash" name="{$field->getPrefixedID()}_tmpHash" value="{$field->getAttachmentHandler()->getTmpHashes()[0]}">

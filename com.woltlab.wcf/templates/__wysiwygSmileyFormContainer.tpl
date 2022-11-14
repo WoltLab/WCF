@@ -4,16 +4,16 @@
 	$(function() {
 		{if $container->children()|count > 1}
 			new WCF.Message.SmileyCategories(
-				'{@$container->getPrefixedWysiwygId()}',
-				'{@$container->getPrefixedId()}Container',
+				'{@$container->getPrefixedWysiwygId()|encodeJS}',
+				'{@$container->getPrefixedId()|encodeJS}Container',
 				true
 			);
 			
-			$('#{@$container->getPrefixedId()}Container').messageTabMenu();
+			$('#{@$container->getPrefixedId()|encodeJS}Container').messageTabMenu();
 		{/if}
 		
 		require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function(UiSmileyInsert) {
-			new UiSmileyInsert('{@$container->getPrefixedWysiwygId()}');
+			new UiSmileyInsert('{@$container->getPrefixedWysiwygId()|encodeJS}');
 		});
 	});
 </script>

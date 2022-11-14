@@ -1,5 +1,5 @@
-<textarea id="{@$field->getPrefixedId()}" {*
-    *}name="{@$field->getPrefixedId()}" {*
+<textarea id="{$field->getPrefixedId()}" {*
+    *}name="{$field->getPrefixedId()}" {*
     *}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
     *}{if $field->isAutofocused()} autofocus{/if}{*
     *}{if $field->isImmutable()} disabled{/if}{*
@@ -10,6 +10,6 @@
 
 <script data-relocate="true">
     (() => {
-        document.getElementById('{@$field->getPrefixedId()}').parentNode.dir = 'ltr';
+        document.getElementById('{@$field->getPrefixedId()|encodeJS}').parentNode.dir = 'ltr';
     })();
 </script>

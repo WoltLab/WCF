@@ -2,6 +2,6 @@
 
 <script data-relocate="true">
 	$(function() {
-		$('#{@$container->getPrefixedId()}Container').messageTabMenu();
+		$('#{@$container->getPrefixedId()|encodeJS}Container').messageTabMenu();
 	});
 </script>

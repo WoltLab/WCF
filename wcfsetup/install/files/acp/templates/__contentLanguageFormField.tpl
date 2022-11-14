@@ -1,5 +1,5 @@
 <noscript>
-	<select name="{@$field->getPrefixedId()}" id="{@$field->getPrefixedId()}"{if $field->isImmutable()} disabled{/if}>
+	<select name="{$field->getPrefixedId()}" id="{$field->getPrefixedId()}"{if $field->isImmutable()} disabled{/if}>
 		{if !$field->isRequired()}
 			<option>{lang}wcf.global.language.noSelection{/lang}</option>
 		{/if}
@@ -21,8 +21,8 @@
 		};
 		
 		LanguageChooser.init(
-			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()}Container'), 'DD')),
-			'{@$field->getPrefixedId()}',
+			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()|encodeJS}Container'), 'DD')),
+			'{@$field->getPrefixedId()|encodeJS}',
 			{if $field->getValue()}{@$field->getValue()}{else}0{/if},
 			languages,
 			undefined,

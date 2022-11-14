@@ -1,6 +1,6 @@
 <input type="email" {*
-	*}id="{@$field->getPrefixedId()}" {*
-	*}name="{@$field->getPrefixedId()}" {*
+	*}id="{$field->getPrefixedId()}" {*
+	*}name="{$field->getPrefixedId()}" {*
 	*}value="{if !$field->isI18n() || !$field->hasI18nValues()}{$field->getValue()}{/if}" {*
 	*}maxlength="191"{*
 	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*

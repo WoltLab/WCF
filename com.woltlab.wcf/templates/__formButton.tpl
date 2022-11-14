@@ -1,5 +1,5 @@
 {if $button->isSubmit()}
-	<input id="{@$button->getPrefixedId()}" {*
+	<input id="{$button->getPrefixedId()}" {*
 		*}type="submit" {*
 		*}value="{$button->getLabel()}"{*
 		*}{if $button->getAccessKey()} accesskey="{$button->getAccessKey()}"{/if}{*
@@ -7,7 +7,7 @@
 		*}{foreach from=$button->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 		*}>
 {else}
-	<button id="{@$button->getPrefixedId()}"{*
+	<button id="{$button->getPrefixedId()}"{*
 		*}type="button" {*
 		*}{if !$button->getClasses()|empty} class="button {implode from=$button->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 		*}{foreach from=$button->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*

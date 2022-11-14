@@ -1,4 +1,4 @@
-<ol class="nativeList" id="{@$field->getPrefixedId()}_packageList"></ol>
+<ol class="nativeList" id="{$field->getPrefixedId()}_packageList"></ol>
 
 {include file='__formFieldErrors'}
 
@@ -6,7 +6,7 @@
 	<dl class="col-xs-12 col-md-11">
 		<dt></dt>
 		<dd>
-			<input type="text" id="{@$field->getPrefixedId()}_packageIdentifier" class="long" placeholder="{lang}wcf.acp.devtools.project.packageIdentifier{/lang}">
+			<input type="text" id="{$field->getPrefixedId()}_packageIdentifier" class="long" placeholder="{lang}wcf.acp.devtools.project.packageIdentifier{/lang}">
 			<small>{lang}wcf.acp.devtools.project.optionalPackage.packageIdentifier.description{/lang}</small>
 		</dd>
 	</dl>
@@ -14,7 +14,7 @@
 	<dl class="col-xs-12 col-md-1">
 		<dt></dt>
 		<dd>
-			<a href="#" class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
+			<a href="#" class="button small" id="{$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
 		</dd>
 	</dl>
 </div>
@@ -31,7 +31,7 @@
 			'wcf.acp.devtools.project.optionalPackage.optionalPackage': '{jslang __literal=true}wcf.acp.devtools.project.optionalPackage.optionalPackage{/jslang}'
 		});
 		
-		new OptionalPackagesFormField('{@$field->getPrefixedId()}', [
+		new OptionalPackagesFormField('{@$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=optionalPackage}
 			{
 				packageIdentifier: '{$optionalPackage[packageIdentifier]}'

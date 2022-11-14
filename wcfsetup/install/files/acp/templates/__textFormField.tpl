@@ -1,6 +1,6 @@
 <input type="text" {*
-	*}id="{@$field->getPrefixedId()}" {*
-	*}name="{@$field->getPrefixedId()}" {*
+	*}id="{$field->getPrefixedId()}" {*
+	*}name="{$field->getPrefixedId()}" {*
 	*}value="{if !$field->isI18n() || !$field->hasI18nValues() || $availableLanguages|count === 1}{$field->getValue()}{/if}"{*
 	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{if $field->getInputMode() !== null} inputmode="{$field->getInputMode()}"{/if}{*

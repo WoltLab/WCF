@@ -1,6 +1,6 @@
 <input type="password" {*
-	*}id="{@$field->getPrefixedId()}" {*
-	*}name="{@$field->getPrefixedId()}" {*
+	*}id="{$field->getPrefixedId()}" {*
+	*}name="{$field->getPrefixedId()}" {*
 	*}value="{$field->getValue()}"{*
 	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{if $field->getInputMode() !== null} inputmode="{$field->getInputMode()}"{/if}{*

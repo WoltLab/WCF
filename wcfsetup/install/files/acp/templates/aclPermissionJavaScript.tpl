@@ -101,8 +101,8 @@
 		{if !$aclFormBuilderMode|empty}
 			require(['WoltLabSuite/Core/Form/Builder/Manager'], function(FormBuilderManager) {
 				FormBuilderManager.getField(
-					'{@$field->getDocument()->getId()}',
-					'{@$field->getPrefixedId()}'
+					'{@$field->getDocument()->getId()|encodeJS}',
+					'{@$field->getPrefixedId()|encodeJS}'
 				).setAclList(aclList);
 			});
 		{/if}
