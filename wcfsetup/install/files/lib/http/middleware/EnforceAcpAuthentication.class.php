@@ -111,10 +111,6 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
                 AJAXException::INSUFFICIENT_PERMISSIONS
             );
         } else {
-            throw new NamedUserException(
-                WCF::getLanguage()->getDynamicVariable('wcf.user.username.error.acpNotAuthorized')
-            );
-
             return new HtmlResponse(
                 WCF::getTPL()->fetchStream(
                     'acpNotAuthorized',
