@@ -3,13 +3,12 @@
 namespace wcf\action;
 
 use wcf\data\IDatabaseObjectAction;
-use wcf\http\middleware\TriggerBackgroundQueue;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -120,8 +119,8 @@ class AJAXProxyAction extends AJAXInvokeAction
             @\header(
                 \sprintf(
                     '%s: %s',
-                    TriggerBackgroundQueue::HEADER_NAME,
-                    TriggerBackgroundQueue::HEADER_VALUE,
+                    BackgroundQueueHandler::FORCE_CHECK_HTTP_HEADER_NAME,
+                    BackgroundQueueHandler::FORCE_CHECK_HTTP_HEADER_VALUE,
                 )
             );
         }

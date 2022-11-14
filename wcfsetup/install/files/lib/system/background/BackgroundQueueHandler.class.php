@@ -20,6 +20,9 @@ use wcf\system\WCF;
  */
 final class BackgroundQueueHandler extends SingletonFactory
 {
+    public const FORCE_CHECK_HTTP_HEADER_NAME = 'woltlab-background-queue-check';
+    public const FORCE_CHECK_HTTP_HEADER_VALUE = 'yes';
+
     private bool $hasPendingCheck = false;
 
     /**

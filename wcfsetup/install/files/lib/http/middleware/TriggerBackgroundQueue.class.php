@@ -22,9 +22,6 @@ use wcf\system\request\RequestHandler;
  */
 final class TriggerBackgroundQueue implements MiddlewareInterface
 {
-    public const HEADER_NAME = 'woltlab-background-queue-check';
-    public const HEADER_VALUE = 'yes';
-
     private readonly BackgroundQueueHandler $backgroundQueueHandler;
     private readonly RequestHandler $requestHandler;
 
@@ -51,6 +48,9 @@ final class TriggerBackgroundQueue implements MiddlewareInterface
             return $response;
         }
 
-        return $response->withHeader(self::HEADER_NAME, self::HEADER_VALUE);
+        return $response->withHeader(
+            BackgroundQueueHandler::FORCE_CHECK_HTTP_HEADER_NAME,
+            BackgroundQueueHandler::FORCE_CHECK_HTTP_HEADER_VALUE,
+        );
     }
 }
