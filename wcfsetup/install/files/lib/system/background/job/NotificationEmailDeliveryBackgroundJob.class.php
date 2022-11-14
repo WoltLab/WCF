@@ -107,6 +107,24 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob
             // Switch user, because processNotifications() checks the permissions as the current user.
             SessionHandler::getInstance()->changeUser(new User($notification->userID), true);
 
+            if (!WCF::getUser()->isEmailConfirmed()) {
+                $this->job->updateStatus(
+                    EmailLogEntry::STATUS_DISCARDED,
+                    'email is no longer confirmed'
+                );
+
+                return;
+            }
+
+            if (WCF::getUser()->banned) {
+                $this->job->updateStatus(
+                    EmailLogEntry::STATUS_DISCARDED,
+                    'user is banned'
+                );
+
+                return;
+            }
+
             $processedNotifications = UserNotificationHandler::getInstance()->processNotifications([$notification]);
 
             // Drop email if the processing dropped the notification (most likely due to a lack of permissions).
