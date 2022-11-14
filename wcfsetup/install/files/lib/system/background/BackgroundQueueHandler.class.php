@@ -21,6 +21,12 @@ use wcf\system\WCF;
 final class BackgroundQueueHandler extends SingletonFactory
 {
     /**
+     * Indicates that the client should trigger a check for
+     * pending jobs in the background queue.
+     */
+    private bool $hasPendingCheck = false;
+
+    /**
      * Forces checking whether a background queue item is due.
      * This means that the AJAX request to BackgroundQueuePerformAction is triggered.
      */
@@ -31,6 +37,8 @@ final class BackgroundQueueHandler extends SingletonFactory
         WCF::getTPL()->assign([
             'forceBackgroundQueuePerform' => true,
         ]);
+
+        $this->hasPendingCheck = true;
     }
 
     /**
@@ -226,5 +234,13 @@ final class BackgroundQueueHandler extends SingletonFactory
         $statement->execute(['ready', TIME_NOW]);
 
         return $statement->fetchSingleColumn();
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function hasPendingCheck(): bool
+    {
+        return $this->hasPendingCheck;
     }
 }
