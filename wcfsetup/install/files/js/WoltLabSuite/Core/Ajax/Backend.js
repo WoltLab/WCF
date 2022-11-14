@@ -39,7 +39,11 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             return this;
         }
         async fetchAsJson() {
-            const response = await this.fetchAsResponse();
+            const response = await this.#fetch({
+                headers: {
+                    accept: "application/json",
+                },
+            });
             if (response === undefined) {
                 // Aborted requests do not have a return value.
                 return undefined;
@@ -58,8 +62,11 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             return json.returnValues;
         }
         async fetchAsResponse() {
+            return this.#fetch();
+        }
+        async #fetch(requestOptions = {}) {
             (0, Error_1.registerGlobalRejectionHandler)();
-            const init = {
+            const init = (0, Core_1.extend)({
                 headers: {
                     "X-Requested-With": "XMLHttpRequest",
                     "X-XSRF-TOKEN": (0, Core_1.getXsrfToken)(),
@@ -68,7 +75,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                 credentials: "same-origin",
                 cache: "no-store",
                 redirect: "error",
-            };
+            }, requestOptions);
             if (this.#type === 1 /* RequestType.POST */) {
                 init.method = "POST";
                 if (this.#payload) {

@@ -7,7 +7,7 @@ import {
   registerGlobalRejectionHandler,
   StatusNotOk,
 } from "./Error";
-import { getXsrfToken } from "../Core";
+import { extend, getXsrfToken } from "../Core";
 import { ResponseData } from "./Data";
 
 const enum RequestType {
@@ -64,7 +64,12 @@ class BackendRequest {
   }
 
   async fetchAsJson(): Promise<unknown> {
-    const response = await this.fetchAsResponse();
+    const response = await this.#fetch({
+      headers: {
+        accept: "application/json",
+      },
+    });
+
     if (response === undefined) {
       // Aborted requests do not have a return value.
       return undefined;
@@ -86,18 +91,25 @@ class BackendRequest {
   }
 
   async fetchAsResponse(): Promise<Response | undefined> {
+    return this.#fetch();
+  }
+
+  async #fetch(requestOptions: RequestInit = {}): Promise<Response | undefined> {
     registerGlobalRejectionHandler();
 
-    const init: RequestInit = {
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "X-XSRF-TOKEN": getXsrfToken(),
+    const init: RequestInit = extend(
+      {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "X-XSRF-TOKEN": getXsrfToken(),
+        },
+        mode: "same-origin",
+        credentials: "same-origin",
+        cache: "no-store",
+        redirect: "error",
       },
-      mode: "same-origin",
-      credentials: "same-origin",
-      cache: "no-store",
-      redirect: "error",
-    };
+      requestOptions,
+    );
 
     if (this.#type === RequestType.POST) {
       init.method = "POST";
