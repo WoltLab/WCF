@@ -105,16 +105,6 @@ class PackageArchive
     }
 
     /**
-     * Sets associated package object.
-     *
-     * @param Package $package
-     */
-    public function setPackage(Package $package)
-    {
-        $this->package = $package;
-    }
-
-    /**
      * Returns the name of the package archive.
      *
      * @return  string
@@ -480,10 +470,8 @@ class PackageArchive
 
     /**
      * Returns true if the package archive supports a new installation.
-     *
-     * @return  bool
      */
-    public function isValidInstall()
+    public function isValidInstall(): bool
     {
         return !empty($this->instructions['install']);
     }
@@ -491,14 +479,11 @@ class PackageArchive
     /**
      * Checks if the new package is compatible with
      * the package that is about to be updated.
-     *
-     * @param Package $package
-     * @return  bool        isValidUpdate
      */
-    public function isValidUpdate(?Package $package = null)
+    public function isValidUpdate(?Package $package = null): bool
     {
         if ($this->package === null && $package !== null) {
-            $this->setPackage($package);
+            $this->package = $package;
 
             // re-evaluate update data
             $this->filterUpdateInstructions();
@@ -527,15 +512,13 @@ class PackageArchive
      * Checks if the current package is already installed, as it is not
      * possible to install non-applications multiple times within the
      * same environment.
-     *
-     * @return  bool
      */
-    public function isAlreadyInstalled()
+    public function isAlreadyInstalled(): bool
     {
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_package
+                FROM    wcf1_package
                 WHERE   package = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->packageInfo['name']]);
 
         return $statement->fetchSingleColumn() > 0;
@@ -543,20 +526,18 @@ class PackageArchive
 
     /**
      * Returns true if the package is an application and has an unique abbreviation.
-     *
-     * @return  bool
      */
-    public function hasUniqueAbbreviation()
+    public function hasUniqueAbbreviation(): bool
     {
         if (!$this->packageInfo['isApplication']) {
             return true;
         }
 
         $sql = "SELECT  COUNT(*)
-                FROM    wcf" . WCF_N . "_package
+                FROM    wcf1_package
                 WHERE   isApplication = ?
                     AND package LIKE ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             1,
             '%.' . Package::getAbbreviation($this->packageInfo['name']),
@@ -591,9 +572,8 @@ class PackageArchive
      * Returns a localized information about this package.
      *
      * @param string $name
-     * @return  string
      */
-    public function getLocalizedPackageInfo($name)
+    public function getLocalizedPackageInfo($name): string
     {
         if (isset($this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()])) {
             return $this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()];
@@ -670,11 +650,11 @@ class PackageArchive
         $existingPackages = [];
         if ($this->package !== null) {
             $sql = "SELECT      package.*
-                    FROM        wcf" . WCF_N . "_package_requirement requirement
-                    LEFT JOIN   wcf" . WCF_N . "_package package
+                    FROM        wcf1_package_requirement requirement
+                    LEFT JOIN   wcf1_package package
                     ON          package.packageID = requirement.requirement
                     WHERE       requirement.packageID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([$this->package->packageID]);
             while ($row = $statement->fetchArray()) {
                 $existingRequirements[$row['package']] = $row;
@@ -699,9 +679,9 @@ class PackageArchive
             $conditions->add("package.package IN (?)", [$packageNames]);
 
             $sql = "SELECT  package.*
-                    FROM    wcf" . WCF_N . "_package package
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_package package
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 // check required package version
@@ -747,9 +727,9 @@ class PackageArchive
             $conditions->add("package IN (?)", [$packageNames]);
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_package
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_package
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 if (!isset($existingPackages[$row['package']])) {
@@ -859,11 +839,11 @@ class PackageArchive
     {
         $conflictedPackages = [];
         $sql = "SELECT      package.*, package_exclusion.*
-                FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
-                LEFT JOIN   wcf" . WCF_N . "_package package
+                FROM        wcf1_package_exclusion package_exclusion
+                LEFT JOIN   wcf1_package package
                 ON          package.packageID = package_exclusion.packageID
                 WHERE       excludedPackage = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->packageInfo['name']]);
         while ($row = $statement->fetchArray()) {
             if (
@@ -895,9 +875,9 @@ class PackageArchive
             $conditions->add("package IN (?)", [\array_keys($excludedPackages)]);
 
             $sql = "SELECT  *
-                    FROM    wcf" . WCF_N . "_package
-                    " . $conditions;
-            $statement = WCF::getDB()->prepareStatement($sql);
+                    FROM    wcf1_package
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 if (
@@ -915,16 +895,5 @@ class PackageArchive
         }
 
         return $conflictedPackages;
-    }
-
-    /**
-     * Returns a list of instructions for installation or update.
-     *
-     * @param string $type
-     * @return  array
-     */
-    public function getInstructions($type)
-    {
-        return $this->instructions[$type] ?? null;
     }
 }
