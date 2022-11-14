@@ -20,10 +20,6 @@ use wcf\system\WCF;
  */
 final class BackgroundQueueHandler extends SingletonFactory
 {
-    /**
-     * Indicates that the client should trigger a check for
-     * pending jobs in the background queue.
-     */
     private bool $hasPendingCheck = false;
 
     /**
@@ -237,6 +233,9 @@ final class BackgroundQueueHandler extends SingletonFactory
     }
 
     /**
+     * Indicates that the client should trigger a check for
+     * pending jobs in the background queue.
+     *
      * @since 6.0
      */
     public function hasPendingCheck(): bool
