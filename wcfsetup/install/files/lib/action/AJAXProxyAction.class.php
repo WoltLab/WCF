@@ -3,9 +3,11 @@
 namespace wcf\action;
 
 use wcf\data\IDatabaseObjectAction;
+use wcf\http\middleware\TriggerBackgroundQueue;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
@@ -112,6 +114,16 @@ class AJAXProxyAction extends AJAXInvokeAction
                 /** @noinspection PhpUndefinedMethodInspection */
                 $this->response['benchmark']['items'] = WCF::getBenchmark()->getItems();
             }
+        }
+
+        if (!RequestHandler::getInstance()->isACPRequest() && WCF::getSession()->getVar('forceBackgroundQueuePerform')) {
+            @\header(
+                \sprintf(
+                    '%s: %s',
+                    TriggerBackgroundQueue::HEADER_NAME,
+                    TriggerBackgroundQueue::HEADER_VALUE,
+                )
+            );
         }
 
         parent::sendResponse();

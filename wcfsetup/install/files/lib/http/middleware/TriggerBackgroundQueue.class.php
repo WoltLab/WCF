@@ -22,8 +22,8 @@ use wcf\system\request\RequestHandler;
  */
 final class TriggerBackgroundQueue implements MiddlewareInterface
 {
-    private const HEADER_NAME = 'woltlab-background-queue-check';
-    private const HEADER_VALUE = 'yes';
+    public const HEADER_NAME = 'woltlab-background-queue-check';
+    public const HEADER_VALUE = 'yes';
 
     private readonly BackgroundQueueHandler $backgroundQueueHandler;
     private readonly RequestHandler $requestHandler;
@@ -48,10 +48,6 @@ final class TriggerBackgroundQueue implements MiddlewareInterface
         }
 
         if ($response instanceof LegacyPlaceholderResponse) {
-            \header(
-                \sprintf('%s: %s', self::HEADER_NAME, self::HEADER_VALUE)
-            );
-
             return $response;
         }
 
