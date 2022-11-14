@@ -114,11 +114,6 @@ class AJAXProxyAction extends AJAXInvokeAction
             }
         }
 
-        // force background queue invocation
-        if (!\class_exists(WCFACP::class, false) && WCF::getSession()->getVar('forceBackgroundQueuePerform')) {
-            $this->response['forceBackgroundQueuePerform'] = true;
-        }
-
         parent::sendResponse();
     }
 }

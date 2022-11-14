@@ -23,7 +23,6 @@ import * as Core from "../Core";
 type Payload = Record<string, unknown>;
 type ResponseData = {
   actionName: string;
-  forceBackgroundQueuePerform?: boolean;
   objectIDs: number[];
   returnValues: unknown;
 };
@@ -148,7 +147,7 @@ export class DboAction {
         throw new InvalidJson(response);
       }
 
-      if (response.headers.get("woltlab-background-queue-check") === "yes" || json.forceBackgroundQueuePerform) {
+      if (response.headers.get("woltlab-background-queue-check") === "yes") {
         void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
       }
 
