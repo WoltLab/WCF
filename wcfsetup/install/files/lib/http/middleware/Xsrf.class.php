@@ -6,6 +6,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\system\exception\InvalidSecurityTokenException;
+use wcf\system\request\Request;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
 /**
@@ -23,6 +26,13 @@ final class Xsrf implements MiddlewareInterface
 
     public const HAS_VALID_HEADER_ATTRIBUTE = self::class . "\0hasValidHeader";
 
+    private readonly RequestHandler $requestHandler;
+
+    public function __construct()
+    {
+        $this->requestHandler = RequestHandler::getInstance();
+    }
+
     /**
      * @inheritDoc
      */
@@ -34,11 +44,30 @@ final class Xsrf implements MiddlewareInterface
             self::TOKEN_ATTRIBUTE,
             $xsrfToken
         );
+
+        $hasValidXsrfToken = \hash_equals($xsrfToken, $request->getHeaderLine('x-xsrf-token'));
+
         $request = $request->withAttribute(
             self::HAS_VALID_HEADER_ATTRIBUTE,
-            \hash_equals($xsrfToken, $request->getHeaderLine('x-xsrf-token'))
+            $hasValidXsrfToken
         );
 
+        if (
+            $request->getMethod() !== 'GET'
+            && $request->getMethod() !== 'HEAD'
+            && $this->requestHandler->getActiveRequest()
+            && \is_subclass_of($this->requestHandler->getActiveRequest()->getClassName(), RequestHandlerInterface::class)
+        ) {
+            if (!$this->validateXsrfToken($this->requestHandler->getActiveRequest(), $hasValidXsrfToken)) {
+                throw new InvalidSecurityTokenException();
+            }
+        }
+
         return $handler->handle($request);
+    }
+
+    private function validateXsrfToken(Request $request, $hasValidXsrfToken): bool
+    {
+        return $hasValidXsrfToken;
     }
 }
