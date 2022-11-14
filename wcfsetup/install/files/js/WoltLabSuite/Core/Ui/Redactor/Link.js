@@ -10,6 +10,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../La
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiRedactorLink {
         boundListener = false;
+        closeCallback;
         submitCallback;
         open(options) {
             Dialog_1.default.open(this);
