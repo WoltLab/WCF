@@ -1,4 +1,4 @@
-<ol class="nativeList" id="{@$field->getPrefixedId()}_packageList"></ol>
+<ol class="nativeList" id="{$field->getPrefixedId()}_packageList"></ol>
 
 {include file='__formFieldErrors'}
 
@@ -6,21 +6,21 @@
 	<dl class="col-xs-12 col-md-8">
 		<dt></dt>
 		<dd>
-			<input type="text" id="{@$field->getPrefixedId()}_packageIdentifier" class="long" placeholder="{lang}wcf.acp.devtools.project.packageIdentifier{/lang}">
+			<input type="text" id="{$field->getPrefixedId()}_packageIdentifier" class="long" placeholder="{lang}wcf.acp.devtools.project.packageIdentifier{/lang}">
 		</dd>
 	</dl>
 
 	<dl class="col-xs-12 col-md-3">
 		<dt></dt>
 		<dd>
-			<input type="text" id="{@$field->getPrefixedId()}_version" class="long" placeholder="{lang}wcf.acp.devtools.project.excludedPackage.version{/lang}">
+			<input type="text" id="{$field->getPrefixedId()}_version" class="long" placeholder="{lang}wcf.acp.devtools.project.excludedPackage.version{/lang}">
 		</dd>
 	</dl>
 	
 	<dl class="col-xs-12 col-md-1">
 		<dt></dt>
 		<dd>
-			<a href="#" class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
+			<a href="#" class="button small" id="{$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
 		</dd>
 	</dl>
 </div>
@@ -37,7 +37,7 @@
 			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}'
 		});
 		
-		new ExcludedPackagesFormField('{@$field->getPrefixedId()}', [
+		new ExcludedPackagesFormField('{@$field->getPrefixedId()|encodeJS}', [
 			{implode from=$field->getValue() item=excludedPackage}
 			{
 				packageIdentifier: '{$excludedPackage[packageIdentifier]}',

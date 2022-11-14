@@ -11,10 +11,10 @@
 			, FormBuilderManager
 		{/if}
 	) {
-		FormBuilderFieldDependencyManager.register('{@$form->getId()}');
+		FormBuilderFieldDependencyManager.register('{@$form->getId()|encodeJS}');
 		
 		{if $form->isAjax()}
-			FormBuilderManager.registerForm('{@$form->getId()}');
+			FormBuilderManager.registerForm('{@$form->getId()|encodeJS}');
 		{/if}
 	});
 </script>
@@ -33,14 +33,14 @@
 {/if}
 
 {if $form->isAjax()}
-	<section id="{@$form->getId()}"{*
+	<section id="{$form->getId()}"{*
 		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}>
 {else}
 	<form method="{@$form->getMethod()}" {*
 		*}action="{$form->getAction()}" {*
-		*}id="{@$form->getId()}"{*
+		*}id="{$form->getId()}"{*
 		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}>

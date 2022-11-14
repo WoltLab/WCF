@@ -12,8 +12,8 @@
 			FormBuilderField = tslib.__importDefault(FormBuilderField);
 
 			FormBuilderManager.registerField(
-				'{@$field->getDocument()->getId()}',
-				new (FormBuilderField.default)('{@$field->getPrefixedId()}')
+				'{@$field->getDocument()->getId()|encodeJS}',
+				new (FormBuilderField.default)('{@$field->getPrefixedId()|encodeJS}')
 			);
 		});
 	</script>

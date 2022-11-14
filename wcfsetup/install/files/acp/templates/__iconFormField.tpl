@@ -1,12 +1,12 @@
-<span id="{@$field->getPrefixedId()}_icon">
+<span id="{$field->getPrefixedId()}_icon">
 	{if $field->getIcon()}
 		{@$field->getIcon()->toHtml(64)}
 	{/if}
 </span>
 {if !$field->isImmutable()}
-	<button type="button" class="button small" id="{@$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</button>
+	<button type="button" class="button small" id="{$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</button>
 {/if}
-<input type="hidden" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="{$field->getValue()}">
+<input type="hidden" id="{$field->getPrefixedId()}" name="{$field->getPrefixedId()}" value="{$field->getValue()}">
 
 {if !$field->isImmutable()}
 	{if $__iconFormFieldIncludeJavaScript}
@@ -15,8 +15,8 @@
 	
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], (UiStyleFontAwesome) => {
-			const iconContainer = document.getElementById('{@$field->getPrefixedId()}_icon');
-			const input = document.getElementById('{@$field->getPrefixedId()}');
+			const iconContainer = document.getElementById('{@$field->getPrefixedId()|encodeJS}_icon');
+			const input = document.getElementById('{@$field->getPrefixedId()|encodeJS}');
 			
 			const callback = (iconName, forceSolid) => {
 				input.value = iconName;
@@ -32,7 +32,7 @@
 				}
 			};
 			
-			const button = document.getElementById('{@$field->getPrefixedId()}_openIconDialog');
+			const button = document.getElementById('{@$field->getPrefixedId()|encodeJS}_openIconDialog');
 			button.addEventListener('click', () => UiStyleFontAwesome.open(callback));
 		});
 	</script>

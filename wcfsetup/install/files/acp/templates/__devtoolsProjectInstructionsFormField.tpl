@@ -1,15 +1,15 @@
-<dl id="{@$field->getPrefixedId()}Container"{*
+<dl id="{$field->getPrefixedId()}Container"{*
 	*}{if !$field->getClasses()|empty} class="{implode from=$field->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{foreach from=$field->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$field->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<dt>{if $field->getLabel() !== null}<label for="{@$field->getPrefixedId()}">{@$field->getLabel()}</label>{/if}</dt>
+	<dt>{if $field->getLabel() !== null}<label for="{$field->getPrefixedId()}">{@$field->getLabel()}</label>{/if}</dt>
 	<dd>
 		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-10">
 				<dt></dt>
 				<dd>
-					<select id="{@$field->getPrefixedId()}_instructionsType">
+					<select id="{$field->getPrefixedId()}_instructionsType">
 						<option value="" selected disabled>{lang}wcf.acp.devtools.project.instructions.type{/lang}</option>
 						<option value="install">{lang}wcf.acp.devtools.project.instructions.type.install{/lang}</option>
 						<option value="update">{lang}wcf.acp.devtools.project.instructions.type.update{/lang}</option>
@@ -20,7 +20,7 @@
 			<dl class="col-xs-12 col-md-5" style="display: none;">
 				<dt></dt>
 				<dd>
-					<input type="text" id="{@$field->getPrefixedId()}_fromVersion" class="long" placeholder="{lang}wcf.acp.devtools.project.instructions.update.fromVersion{/lang}">
+					<input type="text" id="{$field->getPrefixedId()}_fromVersion" class="long" placeholder="{lang}wcf.acp.devtools.project.instructions.update.fromVersion{/lang}">
 					<small>{lang}wcf.acp.devtools.project.instructions.update.fromVersion.description{/lang}</small>
 				</dd>
 			</dl>
@@ -28,21 +28,21 @@
 			<dl class="col-xs-12 col-md-2 text-right">
 				<dt></dt>
 				<dd>
-					<a href="#" class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
+					<a href="#" class="button small" id="{$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
 				</dd>
 			</dl>
 		</div>
 		
-		<ul id="{@$field->getPrefixedId()}_instructionsList"></ul>
+		<ul id="{$field->getPrefixedId()}_instructionsList"></ul>
 		
 		{capture assign='instructionsTemplate'}
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">
 					{literal}{if $type === 'update'}{/literal}
-						<button type="button" class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}">
+						<button type="button" class="jsTooltip" id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_editButton" title="{lang}wcf.global.button.edit{/lang}">
 							{icon name='pencil'}
 						</button>
-						<button type="button" class="jsTooltip" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}">
+						<button type="button" class="jsTooltip" id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_deleteButton" title="{lang}wcf.global.button.delete{/lang}">
 							{icon name='xmark'}
 						</button>
 					{literal}{/if}{/literal}
@@ -51,15 +51,15 @@
 				<p class="sectionDescription">{lang}wcf.acp.devtools.project.instructions.instructions.description{/lang}</p>
 			</header>
 			
-			<div id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_instructionListContainer">
-				<ol class="sortableList nativeList" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_instructionList"></ol>
+			<div id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_instructionListContainer">
+				<ol class="sortableList nativeList" id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_instructionList"></ol>
 			</div>
 			
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-3">
 					<dt></dt>
 					<dd>
-						<select id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_pip">
+						<select id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_pip">
 							<option value="" selected disabled>{lang}wcf.acp.devtools.project.instruction.packageInstallationPlugin{/lang}</option>
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
 								<option value="{@$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
@@ -71,15 +71,15 @@
 				<dl class="col-xs-12 col-md-9">
 					<dt></dt>
 					<dd>
-						<input type="text" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_value" class="long" placeholder="{lang}wcf.acp.devtools.project.instruction.value{/lang}">
-						<small id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_valueDescription">{lang}wcf.acp.devtools.project.instruction.value.description{/lang}</small>
+						<input type="text" id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_value" class="long" placeholder="{lang}wcf.acp.devtools.project.instruction.value{/lang}">
+						<small id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_valueDescription">{lang}wcf.acp.devtools.project.instruction.value.description{/lang}</small>
 					</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-2" style="display: none;">
 					<dt></dt>
 					<dd>
-						<select id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_application">
+						<select id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_application">
 							<option value="" selected disabled>{lang}wcf.acp.devtools.project.instruction.application{/lang}</option>
 							{foreach from=$apps item=app}
 								<option value="{@$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
@@ -91,7 +91,7 @@
 				<dl class="col-xs-12 col-md-10">
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_runStandalone" value="1"> {lang}wcf.acp.devtools.project.instruction.runStandalone{/lang}</label>
+						<label><input type="checkbox" id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_runStandalone" value="1"> {lang}wcf.acp.devtools.project.instruction.runStandalone{/lang}</label>
 						<small>{lang}wcf.acp.devtools.project.instruction.runStandalone.description{/lang}</small>
 					</dd>
 				</dl>
@@ -99,7 +99,7 @@
 				<dl class="col-xs-12 col-md-2 text-right">
 					<dt></dt>
 					<dd>
-						<a href="#" class="button small" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_addButton">{lang}wcf.global.button.add{/lang}</a>
+						<a href="#" class="button small" id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_addButton">{lang}wcf.global.button.add{/lang}</a>
 					</dd>
 				</dl>
 			</div>
@@ -206,7 +206,7 @@
 		var instructionEditDialogTemplate = new Template('{@$instructionEditDialogContent|encodeJS}');
 		
 		new InstructionsFormField(
-			'{@$field->getPrefixedId()}',
+			'{@$field->getPrefixedId()|encodeJS}',
 			instructionsTemplate,
 			instructionsEditDialogTemplate,
 			instructionEditDialogTemplate,

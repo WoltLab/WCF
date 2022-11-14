@@ -16,7 +16,7 @@
 		});
 		
 		var pollEditor = new UiPollEditor(
-			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()}Container'), 'DD')),
+			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()|encodeJS}Container'), 'DD')),
 			[ {implode from=$field->getValue() item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
 			'{@$field->getPrefixedWysiwygId()}',
 			{
@@ -26,7 +26,7 @@
 		);
 		
 		EventHandler.add('WoltLabSuite/Core/Form/Builder/Manager', 'registerField', function(data) {
-			if (data.formId === '{@$field->getDocument()->getId()}' && data.field.getId() === '{@$field->getPrefixedId()}') {
+			if (data.formId === '{@$field->getDocument()->getId()|encodeJS}' && data.field.getId() === '{@$field->getPrefixedId()|encodeJS}') {
 				data.field.setPollEditor(pollEditor);
 			}
 		});

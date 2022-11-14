@@ -3,12 +3,12 @@
         <span{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
     </span>
 {else}
-    <a href="#" class="colorPickerButton jsTooltip" id="{@$field->getPrefixedId()}_colorPickerButton" title="{lang}wcf.style.colorPicker.button.changeColor{/lang}" data-store="{@$field->getPrefixedId()}">
+    <a href="#" class="colorPickerButton jsTooltip" id="{$field->getPrefixedId()}_colorPickerButton" title="{lang}wcf.style.colorPicker.button.changeColor{/lang}" data-store="{$field->getPrefixedId()}">
         <span{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
     </a>
     <input type="hidden" {*
-        *}id="{@$field->getPrefixedId()}" {*
-        *}name="{@$field->getPrefixedId()}" {*
+        *}id="{$field->getPrefixedId()}" {*
+        *}name="{$field->getPrefixedId()}" {*
         *}value="{$field->getValue()}"{*
     *}>
 
@@ -16,7 +16,7 @@
 
     <script data-relocate="true">
         require(['WoltLabSuite/Core/Ui/Color/Picker'], (UiColorPicker) => {
-            UiColorPicker.fromSelector("#{@$field->getPrefixedId()}_colorPickerButton");
+            UiColorPicker.fromSelector("#{@$field->getPrefixedId()|encodeJS}_colorPickerButton");
         });
     </script>
 {/if}

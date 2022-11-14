@@ -1,6 +1,6 @@
 <input type="password" {*
-	*}id="{@$field->getPrefixedId()}" {*
-	*}name="{@$field->getPrefixedId()}" {*
+	*}id="{$field->getPrefixedId()}" {*
+	*}name="{$field->getPrefixedId()}" {*
 	*}value="{$field->getValue()}" {*
 	*}class="long"{*
 	*}{if $field->getAutoComplete() !== null} autocomplete="{$field->getAutoComplete()}"{/if}{*

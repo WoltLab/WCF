@@ -16,7 +16,7 @@
 </ul>
 
 <noscript>
-	<select name="{@$field->getPrefixedId()}[{@$field->getLabelGroup()->groupID}]">
+	<select name="{$field->getPrefixedId()}[{@$field->getLabelGroup()->groupID}]">
 		{foreach from=$field->getLabelGroup() item=label}
 			<option value="{@$label->labelID}">{$label->getTitle()}</option>
 		{/foreach}
@@ -31,7 +31,7 @@
 		});
 		
 		new FormBuilderFieldLabel(
-			'{@$field->getPrefixedId()}',
+			'{@$field->getPrefixedId()|encodeJS}',
 			{if $field->getValue()}'{$field->getValue()|encodeJS}'{else}null{/if},
 			{
 				forceSelection: {if $field->getLabelGroup()->forceSelection}true{else}false{/if}

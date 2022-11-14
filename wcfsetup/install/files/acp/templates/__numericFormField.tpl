@@ -4,8 +4,8 @@
 
 <input type="number" {*
 	*}step="{@$field->getStep()}" {*
-	*}id="{@$field->getPrefixedId()}" {*
-	*}name="{@$field->getPrefixedId()}" {*
+	*}id="{$field->getPrefixedId()}" {*
+	*}name="{$field->getPrefixedId()}" {*
 	*}value="{$field->getValue()}"{*
 	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{if $field->getAutoComplete() !== null} autocomplete="{$field->getAutoComplete()}"{/if}{*

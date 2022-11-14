@@ -1,4 +1,4 @@
-<button type="button" id="{@$button->getPrefixedId()}"{*
+<button type="button" id="{$button->getPrefixedId()}"{*
 	*}{if !$button->getClasses()|empty} class="button {implode from=$button->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{foreach from=$button->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if $button->getAccessKey()} accesskey="{$button->getAccessKey()}"{/if}{*
@@ -11,9 +11,9 @@
 		});
 		
 		new WCF.Message.DefaultPreview({
-			messageFieldID: '{@$button->getPrefixedWysiwygId()}',
-			previewButtonID: '{@$button->getPrefixedId()}',
-			messageObjectType: '{@$button->getObjectType()->objectType}',
+			messageFieldID: '{@$button->getPrefixedWysiwygId()|encodeJS}',
+			previewButtonID: '{@$button->getPrefixedId()|encodeJS}',
+			messageObjectType: '{@$button->getObjectType()->objectType|encodeJS}',
 			messageObjectID: '{@$button->getObjectId()}'
 		});
 	});

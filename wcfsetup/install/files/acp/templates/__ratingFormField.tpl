@@ -19,7 +19,7 @@
 	{/if}
 </ul>
 <noscript>
-	<select name="{@$field->getPrefixedId()}" {if $field->isImmutable()} disabled{/if}>
+	<select name="{$field->getPrefixedId()}" {if $field->isImmutable()} disabled{/if}>
 		{foreach from=$field->getRatings() item=rating}
 			<option value="{@$rating}">{@$rating}</option>
 		{/foreach}
@@ -29,7 +29,7 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/Controller/Rating'], function(FormBuilderFieldRating) {
 		new FormBuilderFieldRating(
-			'{@$field->getPrefixedId()}',
+			'{$field->getPrefixedId()}',
 			{if $field->getValue() !== null}{@$field->getValue()}{else}''{/if}
 		);
 	});
