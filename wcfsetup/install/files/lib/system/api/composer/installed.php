@@ -110,9 +110,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-diactoros' => array(
-            'pretty_version' => '2.20.0',
-            'version' => '2.20.0.0',
-            'reference' => '10696c809866bebd9d71dca14de6c0d6c1cac2f8',
+            'pretty_version' => '2.21.0',
+            'version' => '2.21.0.0',
+            'reference' => 'e5b6419fea007b8b4a71034edc8ec96c88d4c57d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-diactoros',
             'aliases' => array(),
