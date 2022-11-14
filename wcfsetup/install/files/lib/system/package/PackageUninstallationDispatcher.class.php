@@ -9,6 +9,7 @@ use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\cache\command\ClearCache;
 use wcf\system\event\EventHandler;
 use wcf\system\package\command\RebuildBootstrapper;
+use wcf\system\package\event\PackageListChanged;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
@@ -107,6 +108,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
             // rebuild application paths
             ApplicationHandler::rebuild();
+
+            EventHandler::getInstance()->fire(new PackageListChanged());
 
             EventHandler::getInstance()->fireAction($this, 'postUninstall');
 

@@ -3,8 +3,10 @@
 namespace wcf\data\language\item;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\event\PhraseChanged;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -162,6 +164,11 @@ class LanguageItemAction extends AbstractDatabaseObjectAction
         // clear cache
         LanguageFactory::getInstance()->clearCache();
         LanguageFactory::getInstance()->deleteLanguageCache();
+
+        $language = LanguageFactory::getInstance()->getLanguage($editor->languageID);
+        EventHandler::getInstance()->fire(
+            new PhraseChanged($language, $editor->languageItem)
+        );
     }
 
     /**

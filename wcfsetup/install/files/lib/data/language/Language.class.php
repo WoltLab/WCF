@@ -309,6 +309,8 @@ class Language extends DatabaseObject
 
     /**
      * Returns the selected locale or if empty the set language code.
+     *
+     * @since 6.0
      */
     public function getLocale(): string
     {
@@ -317,10 +319,25 @@ class Language extends DatabaseObject
 
     /**
      * Returns a BCP 47 compliant identifier.
+     *
+     * @since 6.0
      */
     public function getBcp47(): string
     {
         // PHP uses underscores in the region identifier, but HTML/JS expects a dash.
         return \str_replace('_', '-', $this->getLocale());
+    }
+
+    /**
+     * Returns the name and relative path to the preload cache file.
+     *
+     * @since 6.0
+     */
+    public function getPreloadCacheFilename(): string
+    {
+        return \sprintf(
+            'js/preload/%s.preload.js',
+            $this->getLocale(),
+        );
     }
 }
