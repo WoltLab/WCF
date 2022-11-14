@@ -82,10 +82,6 @@ class BackendRequest {
       throw new InvalidJson(response);
     }
 
-    if (json.forceBackgroundQueuePerform) {
-      void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
-    }
-
     return json.returnValues;
   }
 
@@ -135,6 +131,10 @@ class BackendRequest {
 
       if (!response.ok) {
         throw new StatusNotOk(response);
+      }
+
+      if (response.headers.get("woltlab-background-queue-check") === "yes") {
+        void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
       }
 
       return response;

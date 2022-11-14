@@ -55,9 +55,6 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             catch (e) {
                 throw new Error_1.InvalidJson(response);
             }
-            if (json.forceBackgroundQueuePerform) {
-                void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
-            }
             return json.returnValues;
         }
         async fetchAsResponse() {
@@ -101,6 +98,9 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                 const response = await fetch(this.#url, init);
                 if (!response.ok) {
                     throw new Error_1.StatusNotOk(response);
+                }
+                if (response.headers.get("woltlab-background-queue-check") === "yes") {
+                    void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
                 }
                 return response;
             }
