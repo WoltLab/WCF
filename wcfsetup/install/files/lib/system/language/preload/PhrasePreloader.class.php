@@ -24,7 +24,7 @@ final class PhrasePreloader
      */
     public function getUrl(Language $language): string
     {
-        if (!$this->needsRebuild($language)) {
+        if ($this->needsRebuild($language)) {
             $this->rebuild($language);
         }
 
@@ -38,7 +38,7 @@ final class PhrasePreloader
 
     private function needsRebuild(Language $language): bool
     {
-        return \file_exists(\WCF_DIR . $language->getPreloadCacheFilename());
+        return !\file_exists(\WCF_DIR . $language->getPreloadCacheFilename());
     }
 
     private function rebuild(Language $language): void
