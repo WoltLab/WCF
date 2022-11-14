@@ -3,11 +3,12 @@
 namespace wcf\action;
 
 use wcf\data\IDatabaseObjectAction;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -114,9 +115,14 @@ class AJAXProxyAction extends AJAXInvokeAction
             }
         }
 
-        // force background queue invocation
-        if (!\class_exists(WCFACP::class, false) && WCF::getSession()->getVar('forceBackgroundQueuePerform')) {
-            $this->response['forceBackgroundQueuePerform'] = true;
+        if (!RequestHandler::getInstance()->isACPRequest() && WCF::getSession()->getVar('forceBackgroundQueuePerform')) {
+            @\header(
+                \sprintf(
+                    '%s: %s',
+                    BackgroundQueueHandler::FORCE_CHECK_HTTP_HEADER_NAME,
+                    BackgroundQueueHandler::FORCE_CHECK_HTTP_HEADER_VALUE,
+                )
+            );
         }
 
         parent::sendResponse();

@@ -214,7 +214,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                         data.returnValues.template = data.returnValues.template.trim();
                     }
                     // force-invoke the background queue
-                    if (data && data.forceBackgroundQueuePerform) {
+                    if (xhr.getResponseHeader("woltlab-background-queue-check") === "yes") {
                         void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((backgroundQueue) => backgroundQueue.invoke());
                     }
                 }
