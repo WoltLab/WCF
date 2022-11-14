@@ -56,18 +56,33 @@ final class Xsrf implements MiddlewareInterface
             $request->getMethod() !== 'GET'
             && $request->getMethod() !== 'HEAD'
             && $this->requestHandler->getActiveRequest()
-            && \is_subclass_of($this->requestHandler->getActiveRequest()->getClassName(), RequestHandlerInterface::class)
         ) {
-            if (!$this->validateXsrfToken($this->requestHandler->getActiveRequest(), $hasValidXsrfToken)) {
-                throw new InvalidSecurityTokenException();
-            }
+            $this->assertHasValidXsrfToken($this->requestHandler->getActiveRequest(), $hasValidXsrfToken);
         }
 
         return $handler->handle($request);
     }
 
-    private function validateXsrfToken(Request $request, $hasValidXsrfToken): bool
+    private function assertHasValidXsrfToken(Request $request, $hasValidXsrfToken): void
     {
-        return $hasValidXsrfToken;
+        if (!\is_subclass_of($request->getClassName(), RequestHandlerInterface::class)) {
+            // Skip the XSRF check for legacy controllers.
+            return;
+        }
+
+        $reflectionClass = new \ReflectionClass($request->getClassName());
+        if ($reflectionClass->getAttributes('DisableXsrfCheck') !== []) {
+            // Controller has opted out of the XSRF check.
+            return;
+        }
+
+        if (!$hasValidXsrfToken) {
+            throw new InvalidSecurityTokenException();
+        }
     }
+}
+
+#[\Attribute(\Attribute::TARGET_CLASS)]
+final class DisableXsrfCheck
+{
 }
