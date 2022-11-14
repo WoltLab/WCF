@@ -2,9 +2,9 @@
 
 namespace wcf\system\language\preload\command;
 
-use Laminas\Diactoros\Stream;
 use wcf\data\language\Language;
 use wcf\system\event\EventHandler;
+use wcf\system\io\AtomicWriter;
 use wcf\system\language\preload\event\PreloadPhrasesCollecting;
 use wcf\util\StringUtil;
 
@@ -35,7 +35,7 @@ final class CachePreloadPhrases
         $event = new PreloadPhrasesCollecting($this->language);
         $this->eventHandler->fire($event);
 
-        $file = new Stream(\WCF_DIR . $this->language->getPreloadCacheFilename(), 'wb');
+        $file = new AtomicWriter(\WCF_DIR . $this->language->getPreloadCacheFilename());
         $file->write(
             \sprintf(
                 "/* cache for '%s' (generated at %s) -- DO NOT EDIT */\n",
@@ -58,6 +58,7 @@ final class CachePreloadPhrases
         // that the file was fully written.
         $file->write("/* EOF */\n");
 
+        $file->flush();
         $file->close();
     }
 
