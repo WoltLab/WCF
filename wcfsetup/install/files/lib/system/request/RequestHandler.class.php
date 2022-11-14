@@ -19,6 +19,7 @@ use wcf\http\middleware\EnforceAcpAuthentication;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\middleware\HandleStartupErrors;
+use wcf\http\middleware\JsonBody;
 use wcf\http\middleware\PreventMimeSniffing;
 use wcf\http\middleware\Xsrf;
 use wcf\http\Pipeline;
@@ -108,6 +109,7 @@ final class RequestHandler extends SingletonFactory
                     new CheckForEnterpriseNonOwnerAccess(),
                     new CheckForExpiredAppEvaluation(),
                     new CheckForOfflineMode(),
+                    new JsonBody(),
                 ]);
 
                 $response = $pipeline->process($psrRequest, $this->getActiveRequest());
