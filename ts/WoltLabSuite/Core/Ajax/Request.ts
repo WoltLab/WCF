@@ -250,7 +250,10 @@ class AjaxRequest {
         }
 
         // force-invoke the background queue
-        if (data && data.forceBackgroundQueuePerform) {
+        if (
+          xhr.getResponseHeader("woltlab-background-queue-check") === "yes" ||
+          (data && data.forceBackgroundQueuePerform)
+        ) {
           void import("../BackgroundQueue").then((backgroundQueue) => backgroundQueue.invoke());
         }
       }

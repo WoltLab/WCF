@@ -104,7 +104,7 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
                 catch (e) {
                     throw new Error_1.InvalidJson(response);
                 }
-                if (json.forceBackgroundQueuePerform) {
+                if (response.headers.get("woltlab-background-queue-check") === "yes" || json.forceBackgroundQueuePerform) {
                     void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
                 }
                 return json.returnValues;

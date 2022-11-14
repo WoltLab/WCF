@@ -148,7 +148,7 @@ export class DboAction {
         throw new InvalidJson(response);
       }
 
-      if (json.forceBackgroundQueuePerform) {
+      if (response.headers.get("woltlab-background-queue-check") === "yes" || json.forceBackgroundQueuePerform) {
         void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
       }
 
