@@ -23,40 +23,40 @@ final class PackageValidationArchive implements \RecursiveIterator
      * list of excluded packages grouped by package
      * @var string[][][]
      */
-    protected static $excludedPackages = [];
+    private static $excludedPackages = [];
 
     /**
      * package archive object
      */
-    protected PackageArchive $archive;
+    private PackageArchive $archive;
 
     /**
      * list of direct requirements delivered by this package
      * @var PackageValidationArchive[]
      */
-    protected $children = [];
+    private $children = [];
 
     /**
      * nesting depth
      */
-    protected int $depth = 0;
+    private int $depth = 0;
 
     /**
      * exception occurred during validation
      */
-    protected \Throwable $exception;
+    private \Throwable $exception;
 
     /**
      * associated package object
      * @var Package
      */
-    protected $package;
+    private $package;
 
     /**
      * parent package validation archive object
      * @var PackageValidationArchive
      */
-    protected $parent;
+    private $parent;
 
     /**
      * children pointer
@@ -190,7 +190,7 @@ final class PackageValidationArchive implements \RecursiveIterator
      * @throws  PackageValidationException
      * @since   5.4
      */
-    protected function validateApplication(): void
+    private function validateApplication(): void
     {
         if ($this->archive->getPackageInfo('isApplication')) {
             $identifier = $this->archive->getPackageInfo('name');
@@ -212,7 +212,7 @@ final class PackageValidationArchive implements \RecursiveIterator
      * @param int $validationMode
      * @throws  PackageValidationException
      */
-    protected function validateInstructions(string $requiredVersion, $validationMode)
+    private function validateInstructions(string $requiredVersion, $validationMode)
     {
         $package = $this->getPackage();
 
@@ -271,7 +271,7 @@ final class PackageValidationArchive implements \RecursiveIterator
      * @param mixed[][] $instructions
      * @throws  PackageValidationException
      */
-    protected function validatePackageInstallationPlugins($type, array $instructions)
+    private function validatePackageInstallationPlugins($type, array $instructions)
     {
         for ($i = 0, $length = \count($instructions); $i < $length; $i++) {
             $instruction = $instructions[$i];
@@ -299,7 +299,7 @@ final class PackageValidationArchive implements \RecursiveIterator
      *
      * @throws  PackageValidationException
      */
-    protected function validateExclusion(string $package)
+    private function validateExclusion(string $package)
     {
         $packageVersion = $this->archive->getPackageInfo('version');
 
