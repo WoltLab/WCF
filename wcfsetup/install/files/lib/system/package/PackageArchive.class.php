@@ -638,6 +638,10 @@ class PackageArchive
      */
     public function getExistingRequirements()
     {
+        if ($this->packageInfo['name'] === 'com.woltlab.wcf') {
+            return [];
+        }
+
         $packageNames = \array_column($this->requirements, 'name');
         \assert($packageNames !== []);
 
