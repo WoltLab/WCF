@@ -86,6 +86,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
 		this._fileListSelector.find('.jsButtonAttachmentInsertThumbnail').click($.proxy(this._insert, this));
 		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
+		this._fileListSelector.children("li").addClass("formAttachmentListItem");
 		
 		WCF.System.Event.addListener("WoltLabSuite/Core/Ui/Object/Action", "delete", (data) => this._onDelete(data));
 		
