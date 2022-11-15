@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\http\attribute\DisableXsrfCheck;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
@@ -71,7 +72,7 @@ final class Xsrf implements MiddlewareInterface
         }
 
         $reflectionClass = new \ReflectionClass($request->getClassName());
-        if ($reflectionClass->getAttributes('DisableXsrfCheck') !== []) {
+        if ($reflectionClass->getAttributes(DisableXsrfCheck::class) !== []) {
             // Controller has opted out of the XSRF check.
             return;
         }
@@ -80,9 +81,4 @@ final class Xsrf implements MiddlewareInterface
             throw new InvalidSecurityTokenException();
         }
     }
-}
-
-#[\Attribute(\Attribute::TARGET_CLASS)]
-final class DisableXsrfCheck
-{
 }
