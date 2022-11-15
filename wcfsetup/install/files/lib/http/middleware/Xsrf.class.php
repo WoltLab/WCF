@@ -54,7 +54,7 @@ final class Xsrf implements MiddlewareInterface
         );
 
         if (
-            $this->isSafeHttpMethod($request->getMethod())
+            !$this->isSafeHttpMethod($request->getMethod())
             && $this->requestHandler->getActiveRequest()
         ) {
             $this->assertHasValidXsrfToken($this->requestHandler->getActiveRequest(), $hasValidXsrfToken);
@@ -69,7 +69,7 @@ final class Xsrf implements MiddlewareInterface
         return $verb === 'GET' || $verb === 'HEAD';
     }
 
-    private function assertHasValidXsrfToken(Request $request, $hasValidXsrfToken): void
+    private function assertHasValidXsrfToken(Request $request, bool $hasValidXsrfToken): void
     {
         if (!\is_subclass_of($request->getClassName(), RequestHandlerInterface::class)) {
             // Skip the XSRF check for legacy controllers.
