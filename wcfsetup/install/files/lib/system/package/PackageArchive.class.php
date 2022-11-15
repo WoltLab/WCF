@@ -724,19 +724,7 @@ class PackageArchive
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
-                if (!isset($existingPackages[$row['package']])) {
-                    $existingPackages[$row['package']] = [];
-                }
-
-                $existingPackages[$row['package']][$row['packageVersion']] = $row;
-            }
-
-            // sort multiple packages by version number
-            foreach ($existingPackages as $packageName => $instances) {
-                \uksort($instances, [Package::class, 'compareVersion']);
-
-                // get package with highest version number (get last package)
-                $existingPackages[$packageName] = \array_pop($instances);
+                $existingPackages[$row['package']] = $row;
             }
         }
 
