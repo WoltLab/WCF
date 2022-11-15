@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Validation
  */
-class PackageValidationArchive implements \RecursiveIterator
+final class PackageValidationArchive implements \RecursiveIterator
 {
     /**
      * list of excluded packages grouped by package
