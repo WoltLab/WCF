@@ -604,22 +604,22 @@ class PackageInstallationDispatcher
             }
         }
 
-        // insert requirements and dependencies
-        $requirements = $this->getArchive()->getAllExistingRequirements();
-        if (!empty($requirements)) {
-            $sql = "INSERT INTO wcf1_package_requirement
-                                (packageID, requirement)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
+        $requirements = $this->getArchive()->getExistingRequirements();
+        \assert(
+            \count($requirements) === \count($this->getArchive()->getRequirements()),
+            "The existence of all requirements has been checked at the start of the method."
+        );
 
-            foreach ($requirements as $possibleRequirements) {
-                $requirement = \array_shift($possibleRequirements);
+        $sql = "INSERT INTO wcf1_package_requirement
+                            (packageID, requirement)
+                VALUES      (?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
 
-                $statement->execute([
-                    $this->queue->packageID,
-                    $requirement['packageID'],
-                ]);
-            }
+        foreach ($requirements as $requirement) {
+            $statement->execute([
+                $this->queue->packageID,
+                $requirement['packageID'],
+            ]);
         }
 
         if (

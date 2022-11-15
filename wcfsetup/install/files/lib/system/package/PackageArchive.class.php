@@ -469,14 +469,6 @@ class PackageArchive
     }
 
     /**
-     * Returns true if the package archive supports a new installation.
-     */
-    public function isValidInstall(): bool
-    {
-        return !empty($this->instructions['install']);
-    }
-
-    /**
      * Checks if the new package is compatible with
      * the package that is about to be updated.
      */
@@ -639,74 +631,6 @@ class PackageArchive
     }
 
     /**
-     * Checks which package requirements do already exist in right version.
-     * Returns a list with all existing requirements.
-     *
-     * @return  array
-     */
-    public function getAllExistingRequirements()
-    {
-        $existingRequirements = [];
-        $existingPackages = [];
-        if ($this->package !== null) {
-            $sql = "SELECT      package.*
-                    FROM        wcf1_package_requirement requirement
-                    LEFT JOIN   wcf1_package package
-                    ON          package.packageID = requirement.requirement
-                    WHERE       requirement.packageID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->package->packageID]);
-            while ($row = $statement->fetchArray()) {
-                $existingRequirements[$row['package']] = $row;
-            }
-        }
-
-        // build sql
-        $packageNames = [];
-        $requirements = $this->getRequirements();
-        foreach ($requirements as $requirement) {
-            if (isset($existingRequirements[$requirement['name']])) {
-                $existingPackages[$requirement['name']] = [];
-                $existingPackages[$requirement['name']][$existingRequirements[$requirement['name']]['packageID']] = $existingRequirements[$requirement['name']];
-            } else {
-                $packageNames[] = $requirement['name'];
-            }
-        }
-
-        // check whether the required packages do already exist
-        if (!empty($packageNames)) {
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("package.package IN (?)", [$packageNames]);
-
-            $sql = "SELECT  package.*
-                    FROM    wcf1_package package
-                    {$conditions}";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            while ($row = $statement->fetchArray()) {
-                // check required package version
-                if (
-                    isset($requirements[$row['package']]['minversion'])
-                    && Package::compareVersion(
-                        $row['packageVersion'],
-                        $requirements[$row['package']]['minversion']
-                    ) == -1
-                ) {
-                    continue;
-                }
-
-                if (!isset($existingPackages[$row['package']])) {
-                    $existingPackages[$row['package']] = [];
-                }
-
-                $existingPackages[$row['package']][$row['packageID']] = $row;
-            }
-        }
-
-        return $existingPackages;
-    }
-
-    /**
      * Checks which package requirements do already exist in database.
      * Returns a list with the existing requirements.
      *
@@ -714,38 +638,21 @@ class PackageArchive
      */
     public function getExistingRequirements()
     {
-        // build sql
-        $packageNames = [];
-        foreach ($this->requirements as $requirement) {
-            $packageNames[] = $requirement['name'];
-        }
+        $packageNames = \array_column($this->requirements, 'name');
+        \assert($packageNames !== []);
 
         // check whether the required packages do already exist
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("package IN (?)", [$packageNames]);
+
+        $sql = "SELECT  *
+                FROM    wcf1_package
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
         $existingPackages = [];
-        if (!empty($packageNames)) {
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("package IN (?)", [$packageNames]);
-
-            $sql = "SELECT  *
-                    FROM    wcf1_package
-                    {$conditions}";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            while ($row = $statement->fetchArray()) {
-                if (!isset($existingPackages[$row['package']])) {
-                    $existingPackages[$row['package']] = [];
-                }
-
-                $existingPackages[$row['package']][$row['packageVersion']] = $row;
-            }
-
-            // sort multiple packages by version number
-            foreach ($existingPackages as $packageName => $instances) {
-                \uksort($instances, [Package::class, 'compareVersion']);
-
-                // get package with highest version number (get last package)
-                $existingPackages[$packageName] = \array_pop($instances);
-            }
+        while ($row = $statement->fetchArray()) {
+            $existingPackages[$row['package']] = $row;
         }
 
         return $existingPackages;
