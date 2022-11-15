@@ -469,14 +469,6 @@ class PackageArchive
     }
 
     /**
-     * Returns true if the package archive supports a new installation.
-     */
-    public function isValidInstall(): bool
-    {
-        return !empty($this->instructions['install']);
-    }
-
-    /**
      * Checks if the new package is compatible with
      * the package that is about to be updated.
      */
