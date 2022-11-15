@@ -373,12 +373,8 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * For example, if "fromversion" is "1.1.*" and this package updates to
      * version 1.2.0, all releases from 1.1.0 to 1.1.9 may be updated using
      * this package.
-     *
-     * @param string $currentVersion
-     * @param string $fromVersion
-     * @return  bool
      */
-    public static function checkFromversion($currentVersion, $fromVersion)
+    public static function checkFromversion(string $currentVersion, string $fromVersion): bool
     {
         if (\str_contains($fromVersion, '*')) {
             // from version with wildcard
