@@ -54,14 +54,19 @@ final class Xsrf implements MiddlewareInterface
         );
 
         if (
-            $request->getMethod() !== 'GET'
-            && $request->getMethod() !== 'HEAD'
+            $this->isSafeHttpMethod($request->getMethod())
             && $this->requestHandler->getActiveRequest()
         ) {
             $this->assertHasValidXsrfToken($this->requestHandler->getActiveRequest(), $hasValidXsrfToken);
         }
 
         return $handler->handle($request);
+    }
+
+    private function isSafeHttpMethod(string $verb): bool {
+        // HTTP requests using the 'GET' or 'HEAD' verb are safe
+        // by design, because those should not alter the state.
+        return $verb === 'GET' || $verb === 'HEAD';
     }
 
     private function assertHasValidXsrfToken(Request $request, $hasValidXsrfToken): void
