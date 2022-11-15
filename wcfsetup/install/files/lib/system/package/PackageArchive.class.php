@@ -706,26 +706,21 @@ class PackageArchive
      */
     public function getExistingRequirements()
     {
-        // build sql
-        $packageNames = [];
-        foreach ($this->requirements as $requirement) {
-            $packageNames[] = $requirement['name'];
-        }
+        $packageNames = \array_column($this->requirements, 'name');
+        \assert($packageNames !== []);
 
         // check whether the required packages do already exist
-        $existingPackages = [];
-        if (!empty($packageNames)) {
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("package IN (?)", [$packageNames]);
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("package IN (?)", [$packageNames]);
 
-            $sql = "SELECT  *
-                    FROM    wcf1_package
-                    {$conditions}";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            while ($row = $statement->fetchArray()) {
-                $existingPackages[$row['package']] = $row;
-            }
+        $sql = "SELECT  *
+                FROM    wcf1_package
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        $existingPackages = [];
+        while ($row = $statement->fetchArray()) {
+            $existingPackages[$row['package']] = $row;
         }
 
         return $existingPackages;
