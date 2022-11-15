@@ -530,11 +530,8 @@ class PackageInstallationDispatcher
         }
         unset($nodeData['requirements']);
 
-        $applicationDirectory = '';
-        if (isset($nodeData['applicationDirectory'])) {
-            $applicationDirectory = $nodeData['applicationDirectory'];
-            unset($nodeData['applicationDirectory']);
-        }
+        $applicationDirectory = $nodeData['applicationDirectory'];
+        unset($nodeData['applicationDirectory']);
 
         // update package
         if ($this->queue->packageID) {
