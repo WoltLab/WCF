@@ -869,6 +869,10 @@ EXPLANATION;
 	 */
 	function sanitizePath(string $path, bool $removePath = true): string
 	{
+		if ($path === '[internal function]') {
+			return $path;
+		}
+
 		if (!$removePath && WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
