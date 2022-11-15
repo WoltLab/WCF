@@ -71,6 +71,11 @@ final class Xsrf implements MiddlewareInterface
 
     private function assertHasValidXsrfToken(Request $request, bool $hasValidXsrfToken): void
     {
+        if ($hasValidXsrfToken) {
+            // No need to do anything for a valid token.
+            return;
+        }
+
         if (!\is_subclass_of($request->getClassName(), RequestHandlerInterface::class)) {
             // Skip the XSRF check for legacy controllers.
             return;
@@ -82,8 +87,8 @@ final class Xsrf implements MiddlewareInterface
             return;
         }
 
-        if (!$hasValidXsrfToken) {
-            throw new InvalidSecurityTokenException();
-        }
+        // The controller requires a valid XSRF Token and no valid
+        // token was provided, abort the processing.
+        throw new InvalidSecurityTokenException();
     }
 }
