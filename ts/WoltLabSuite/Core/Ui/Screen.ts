@@ -141,7 +141,7 @@ export function scrollEnable(): void {
         // Slightly delay this to prevent conflicts caused by a CSS recalculation.
         window.setTimeout(() => {
           document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;
-        }, 1);
+        }, 0);
       }
     }
   }
