@@ -127,7 +127,7 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
                     // Slightly delay this to prevent conflicts caused by a CSS recalculation.
                     window.setTimeout(() => {
                         document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;
-                    }, 1);
+                    }, 0);
                 }
             }
         }
