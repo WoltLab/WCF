@@ -168,25 +168,6 @@ class PackageInstallationNodeBuilder
     }
 
     /**
-     * Returns package name associated with given queue id.
-     */
-    public function getPackageNameByQueue(int $queueID): string
-    {
-        $sql = "SELECT  packageName
-                FROM    wcf1_package_installation_queue
-                WHERE   queueID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$queueID]);
-        $row = $statement->fetchArray();
-
-        if (!$row) {
-            return '';
-        }
-
-        return $row['packageName'];
-    }
-
-    /**
      * Returns data for current node.
      *
      * @return  array

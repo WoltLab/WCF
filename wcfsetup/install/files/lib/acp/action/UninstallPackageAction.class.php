@@ -185,7 +185,7 @@ final class UninstallPackageAction extends AbstractSecureAction
             $currentAction = WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.' . $this->queue->action . '.success');
         } else {
             // build package name
-            $packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
+            $packageName = PackageInstallationQueue::getPackageNameByQueue($queueID);
             $installationType = PackageInstallationQueue::getInstallationTypeByQueue($queueID);
             $currentAction = WCF::getLanguage()->getDynamicVariable(
                 'wcf.acp.package.uninstallation.step.' . $installationType,
