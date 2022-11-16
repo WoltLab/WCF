@@ -469,38 +469,6 @@ class PackageArchive
     }
 
     /**
-     * Checks if the new package is compatible with
-     * the package that is about to be updated.
-     */
-    public function isValidUpdate(?Package $package = null): bool
-    {
-        if ($this->package === null && $package !== null) {
-            $this->package = $package;
-
-            // re-evaluate update data
-            $this->filterUpdateInstructions();
-        }
-
-        // Check name of the installed package against the name of the update. Both must be identical.
-        if ($this->packageInfo['name'] != $this->package->package) {
-            return false;
-        }
-
-        // Check if the version number of the installed package is lower than the version number to which
-        // it's about to be updated.
-        if (Package::compareVersion($this->packageInfo['version'], $this->package->packageVersion) != 1) {
-            return false;
-        }
-
-        // Check if the package provides an instructions block for the update from the installed package version
-        if (empty($this->instructions['update'])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Checks if the current package is already installed, as it is not
      * possible to install non-applications multiple times within the
      * same environment.
@@ -628,6 +596,23 @@ class PackageArchive
     public function getUpdateInstructions()
     {
         return $this->instructions['update'];
+    }
+
+    /**
+     * Returns the appropriate update instructions to update the given package,
+     * `null` if no appropriate instruction could be found.
+     *
+     * @since 6.0
+     */
+    public function getUpdateInstructionsFor(Package $package): ?array
+    {
+        foreach ($this->instructions['update'] as $fromVersion => $instructions) {
+            if (Package::checkFromversion($package->packageVersion, $fromVersion)) {
+                return $instructions;
+            }
+        }
+
+        return null;
     }
 
     /**

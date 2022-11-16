@@ -498,45 +498,40 @@ class PackageInstallationDispatcher
         $installationStep = new PackageInstallationStep();
 
         // check requirements
-        if (!empty($nodeData['requirements'])) {
-            foreach ($nodeData['requirements'] as $package => $requirementData) {
-                // get existing package
-                if ($requirementData['packageID']) {
-                    $sql = "SELECT  packageName, packageVersion
-                            FROM    wcf1_package
-                            WHERE   packageID = ?";
-                    $statement = WCF::getDB()->prepare($sql);
-                    $statement->execute([$requirementData['packageID']]);
-                } else {
-                    // try to find matching package
-                    $sql = "SELECT  packageName, packageVersion
-                            FROM    wcf1_package
-                            WHERE   package = ?";
-                    $statement = WCF::getDB()->prepare($sql);
-                    $statement->execute([$package]);
-                }
-                $row = $statement->fetchArray();
+        foreach ($nodeData['requirements'] as $package => $requirementData) {
+            // get existing package
+            if ($requirementData['packageID']) {
+                $sql = "SELECT  packageName, packageVersion
+                        FROM    wcf1_package
+                        WHERE   packageID = ?";
+                $statement = WCF::getDB()->prepare($sql);
+                $statement->execute([$requirementData['packageID']]);
+            } else {
+                // try to find matching package
+                $sql = "SELECT  packageName, packageVersion
+                        FROM    wcf1_package
+                        WHERE   package = ?";
+                $statement = WCF::getDB()->prepare($sql);
+                $statement->execute([$package]);
+            }
+            $row = $statement->fetchArray();
 
-                // package is required but not available
-                if ($row === false) {
-                    throw new SystemException("Package '" . $package . "' is required by '" . $nodeData['packageName'] . "', but is neither installed nor shipped.");
-                }
+            // package is required but not available
+            if ($row === false) {
+                throw new SystemException("Package '" . $package . "' is required by '" . $nodeData['packageName'] . "', but is neither installed nor shipped.");
+            }
 
-                // check version requirements
-                if ($requirementData['minVersion']) {
-                    if (Package::compareVersion($row['packageVersion'], $requirementData['minVersion']) < 0) {
-                        throw new SystemException("Package '" . $nodeData['packageName'] . "' requires package '" . $row['packageName'] . "' in version '" . $requirementData['minVersion'] . "', but only version '" . $row['packageVersion'] . "' is installed");
-                    }
+            // check version requirements
+            if ($requirementData['minVersion']) {
+                if (Package::compareVersion($row['packageVersion'], $requirementData['minVersion']) < 0) {
+                    throw new SystemException("Package '" . $nodeData['packageName'] . "' requires package '" . $row['packageName'] . "' in version '" . $requirementData['minVersion'] . "', but only version '" . $row['packageVersion'] . "' is installed");
                 }
             }
         }
         unset($nodeData['requirements']);
 
-        $applicationDirectory = '';
-        if (isset($nodeData['applicationDirectory'])) {
-            $applicationDirectory = $nodeData['applicationDirectory'];
-            unset($nodeData['applicationDirectory']);
-        }
+        $applicationDirectory = $nodeData['applicationDirectory'];
+        unset($nodeData['applicationDirectory']);
 
         // update package
         if ($this->queue->packageID) {
@@ -589,19 +584,17 @@ class PackageInstallationDispatcher
         }
 
         // save excluded packages
-        if (\count($this->getArchive()->getExcludedPackages())) {
-            $sql = "INSERT INTO wcf1_package_exclusion
-                                (packageID, excludedPackage, excludedPackageVersion)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
+        $sql = "INSERT INTO wcf1_package_exclusion
+                            (packageID, excludedPackage, excludedPackageVersion)
+                VALUES      (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
 
-            foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
-                $statement->execute([
-                    $this->queue->packageID,
-                    $excludedPackage['name'],
-                    $excludedPackage['version'],
-                ]);
-            }
+        foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
+            $statement->execute([
+                $this->queue->packageID,
+                $excludedPackage['name'],
+                $excludedPackage['version'],
+            ]);
         }
 
         $requirements = $this->getArchive()->getExistingRequirements();

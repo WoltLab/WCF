@@ -17,46 +17,40 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Validation
  */
-class PackageValidationArchive implements \RecursiveIterator
+final class PackageValidationArchive implements \RecursiveIterator
 {
     /**
      * list of excluded packages grouped by package
      * @var string[][][]
      */
-    protected static $excludedPackages = [];
+    private static $excludedPackages = [];
 
     /**
      * package archive object
      */
-    protected PackageArchive $archive;
+    private readonly PackageArchive $archive;
 
     /**
      * list of direct requirements delivered by this package
      * @var PackageValidationArchive[]
      */
-    protected $children = [];
+    private $children = [];
 
     /**
      * nesting depth
      */
-    protected int $depth = 0;
+    private int $depth = 0;
 
     /**
      * exception occurred during validation
      */
-    protected \Throwable $exception;
+    private \Throwable $exception;
 
     /**
      * associated package object
      * @var Package
      */
-    protected $package;
-
-    /**
-     * parent package validation archive object
-     * @var PackageValidationArchive
-     */
-    protected $parent;
+    private $package;
 
     /**
      * children pointer
@@ -69,7 +63,6 @@ class PackageValidationArchive implements \RecursiveIterator
     public function __construct(string $archive, ?self $parent = null, int $depth = 0)
     {
         $this->archive = new PackageArchive($archive);
-        $this->parent = $parent;
         $this->depth = $depth;
     }
 
@@ -190,7 +183,7 @@ class PackageValidationArchive implements \RecursiveIterator
      * @throws  PackageValidationException
      * @since   5.4
      */
-    protected function validateApplication(): void
+    private function validateApplication(): void
     {
         if ($this->archive->getPackageInfo('isApplication')) {
             $identifier = $this->archive->getPackageInfo('name');
@@ -212,7 +205,7 @@ class PackageValidationArchive implements \RecursiveIterator
      * @param int $validationMode
      * @throws  PackageValidationException
      */
-    protected function validateInstructions(string $requiredVersion, $validationMode)
+    private function validateInstructions(string $requiredVersion, $validationMode)
     {
         $package = $this->getPackage();
 
@@ -240,7 +233,8 @@ class PackageValidationArchive implements \RecursiveIterator
             }
         } else {
             // package is already installed, check update path
-            if (!$this->archive->isValidUpdate($package)) {
+            $instructions = $this->archive->getUpdateInstructionsFor($package);
+            if ($instructions === null) {
                 $deliveredPackageVersion = $this->archive->getPackageInfo('version');
 
                 // check if the package is already installed with the same exact version
@@ -259,7 +253,7 @@ class PackageValidationArchive implements \RecursiveIterator
             }
 
             if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
-                $this->validatePackageInstallationPlugins('update', $this->archive->getUpdateInstructions());
+                $this->validatePackageInstallationPlugins('update', $instructions);
             }
         }
     }
@@ -271,7 +265,7 @@ class PackageValidationArchive implements \RecursiveIterator
      * @param mixed[][] $instructions
      * @throws  PackageValidationException
      */
-    protected function validatePackageInstallationPlugins($type, array $instructions)
+    private function validatePackageInstallationPlugins($type, array $instructions)
     {
         for ($i = 0, $length = \count($instructions); $i < $length; $i++) {
             $instruction = $instructions[$i];
@@ -299,7 +293,7 @@ class PackageValidationArchive implements \RecursiveIterator
      *
      * @throws  PackageValidationException
      */
-    protected function validateExclusion(string $package)
+    private function validateExclusion(string $package)
     {
         $packageVersion = $this->archive->getPackageInfo('version');
 
