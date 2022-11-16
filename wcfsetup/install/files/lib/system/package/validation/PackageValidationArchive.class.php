@@ -28,7 +28,7 @@ final class PackageValidationArchive implements \RecursiveIterator
     /**
      * package archive object
      */
-    private PackageArchive $archive;
+    private readonly PackageArchive $archive;
 
     /**
      * list of direct requirements delivered by this package
