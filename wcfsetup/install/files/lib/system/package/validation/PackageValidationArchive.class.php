@@ -53,12 +53,6 @@ final class PackageValidationArchive implements \RecursiveIterator
     private $package;
 
     /**
-     * parent package validation archive object
-     * @var PackageValidationArchive
-     */
-    private $parent;
-
-    /**
      * children pointer
      */
     private int $position = 0;
@@ -69,7 +63,6 @@ final class PackageValidationArchive implements \RecursiveIterator
     public function __construct(string $archive, ?self $parent = null, int $depth = 0)
     {
         $this->archive = new PackageArchive($archive);
-        $this->parent = $parent;
         $this->depth = $depth;
     }
 
