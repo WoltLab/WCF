@@ -631,6 +631,23 @@ class PackageArchive
     }
 
     /**
+     * Returns the appropriate update instructions to update the given package,
+     * `null` if no appropriate instruction could be found.
+     *
+     * @since 6.0
+     */
+    public function getUpdateInstructionsFor(Package $package): ?array
+    {
+        foreach ($this->instructions['update'] as $fromVersion => $instructions) {
+            if (Package::checkFromversion($package->packageVersion, $fromVersion)) {
+                return $instructions;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Checks which package requirements do already exist in database.
      * Returns a list with the existing requirements.
      *
