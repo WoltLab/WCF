@@ -74,10 +74,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Sets parent node.
-     *
-     * @param string $parentNode
      */
-    public function setParentNode($parentNode)
+    public function setParentNode(string $parentNode)
     {
         $this->parentNode = $parentNode;
     }
@@ -148,11 +146,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Returns the succeeding node.
-     *
-     * @param string $parentNode
-     * @return  string
      */
-    public function getNextNode($parentNode = '')
+    public function getNextNode(string $parentNode = ''): string
     {
         $sql = "SELECT  node
                 FROM    wcf1_package_installation_node
@@ -174,11 +169,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Returns package name associated with given queue id.
-     *
-     * @param int $queueID
-     * @return  string
      */
-    public function getPackageNameByQueue($queueID)
+    public function getPackageNameByQueue(int $queueID): string
     {
         $sql = "SELECT  packageName
                 FROM    wcf1_package_installation_queue
@@ -196,11 +188,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Returns installation type by queue id.
-     *
-     * @param int $queueID
-     * @return  string
      */
-    public function getInstallationTypeByQueue($queueID)
+    public function getInstallationTypeByQueue(int $queueID): string
     {
         $sql = "SELECT  action
                 FROM    wcf1_package_installation_queue
@@ -215,10 +204,9 @@ class PackageInstallationNodeBuilder
     /**
      * Returns data for current node.
      *
-     * @param string $node
      * @return  array
      */
-    public function getNodeData($node)
+    public function getNodeData(string $node)
     {
         $sql = "SELECT      nodeType, nodeData, sequenceNo
                 FROM        wcf1_package_installation_node
@@ -236,10 +224,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Marks a node as completed.
-     *
-     * @param string $node
      */
-    public function completeNode($node)
+    public function completeNode(string $node)
     {
         $sql = "UPDATE  wcf1_package_installation_node
                 SET     done = 1
@@ -609,10 +595,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Returns current node
-     *
-     * @return  string
      */
-    public function getCurrentNode()
+    public function getCurrentNode(): string
     {
         return $this->node;
     }
@@ -827,10 +811,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Returns a short SHA1-hash.
-     *
-     * @return  string
      */
-    protected function getToken()
+    protected function getToken(): string
     {
         return \mb_substr(StringUtil::getRandomID(), 0, 8);
     }
@@ -838,11 +820,9 @@ class PackageInstallationNodeBuilder
     /**
      * Returns queue id based upon current node.
      *
-     * @param int $processNo
-     * @param string $node
      * @return  int|null
      */
-    public function getQueueByNode($processNo, $node)
+    public function getQueueByNode(int $processNo, string $node)
     {
         $sql = "SELECT  queueID
                 FROM    wcf1_package_installation_node
