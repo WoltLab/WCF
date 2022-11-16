@@ -469,38 +469,6 @@ class PackageArchive
     }
 
     /**
-     * Checks if the new package is compatible with
-     * the package that is about to be updated.
-     */
-    public function isValidUpdate(?Package $package = null): bool
-    {
-        if ($this->package === null && $package !== null) {
-            $this->package = $package;
-
-            // re-evaluate update data
-            $this->filterUpdateInstructions();
-        }
-
-        // Check name of the installed package against the name of the update. Both must be identical.
-        if ($this->packageInfo['name'] != $this->package->package) {
-            return false;
-        }
-
-        // Check if the version number of the installed package is lower than the version number to which
-        // it's about to be updated.
-        if (Package::compareVersion($this->packageInfo['version'], $this->package->packageVersion) != 1) {
-            return false;
-        }
-
-        // Check if the package provides an instructions block for the update from the installed package version
-        if (empty($this->instructions['update'])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Checks if the current package is already installed, as it is not
      * possible to install non-applications multiple times within the
      * same environment.
