@@ -42,4 +42,21 @@ class PackageInstallationQueue extends DatabaseObject
 
         return \intval($row['processNo']) + 1;
     }
+
+    /**
+     * Returns installation type by queue id.
+     *
+     * @since 6.0
+     */
+    public static function getInstallationTypeByQueue(int $queueID): string
+    {
+        $sql = "SELECT  action
+                FROM    wcf1_package_installation_queue
+                WHERE   queueID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$queueID]);
+        $row = $statement->fetchArray();
+
+        return $row['action'];
+    }
 }
