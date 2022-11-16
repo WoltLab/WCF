@@ -1,7 +1,7 @@
 <div class="jsOnly formAttachmentContent messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	<ul class="formAttachmentList clearfix jsObjectActionContainer" data-object-action-class-name="wcf\data\attachment\AttachmentAction"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
-			<li class="box64 jsObjectActionObject" data-object-id="{@$attachment->getObjectID()}" data-height="{@$attachment->height}" data-width="{@$attachment->width}" data-is-image="{@$attachment->isImage}">
+			<li class="box64 formAttachmentListItem jsObjectActionObject" data-object-id="{@$attachment->getObjectID()}" data-height="{@$attachment->height}" data-width="{@$attachment->width}" data-is-image="{@$attachment->isImage}">
 				{if $attachment->tinyThumbnailType}
 					<img src="{$attachment->getThumbnailLink('tiny')}" alt="" class="attachmentTinyThumbnail">
 				{else}
