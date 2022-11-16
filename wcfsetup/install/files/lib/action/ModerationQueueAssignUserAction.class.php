@@ -139,7 +139,8 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                 )
                 ->value(
                     $moderationQueue->assignedUserID ?: []
-                ),
+                )
+                ->required(),
         ]);
         $form->ajax();
 
