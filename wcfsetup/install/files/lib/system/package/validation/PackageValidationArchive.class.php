@@ -233,7 +233,8 @@ final class PackageValidationArchive implements \RecursiveIterator
             }
         } else {
             // package is already installed, check update path
-            if (!$this->archive->isValidUpdate($package)) {
+            $instructions = $this->archive->getUpdateInstructionsFor($package);
+            if ($instructions === null) {
                 $deliveredPackageVersion = $this->archive->getPackageInfo('version');
 
                 // check if the package is already installed with the same exact version
@@ -252,7 +253,7 @@ final class PackageValidationArchive implements \RecursiveIterator
             }
 
             if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
-                $this->validatePackageInstallationPlugins('update', $this->archive->getUpdateInstructions());
+                $this->validatePackageInstallationPlugins('update', $instructions);
             }
         }
     }
