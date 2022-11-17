@@ -60,7 +60,6 @@ fs.readdirSync("./")
         }
     });
 
-const rjsCmd = (process.platform === "win32") ? "r.js.cmd" : "r.js";
 rjsPaths.forEach(async path => {
     let buildConfig = `${path}require.build.js`;
     let outFilename = require(process.cwd() + `/${buildConfig}`).out;
@@ -73,7 +72,7 @@ rjsPaths.forEach(async path => {
         }
 
         console.time(outFilename);
-        childProcess.execSync(`${rjsCmd} -o require.build.js ${overrides}`, {
+        childProcess.execSync(`node ${__dirname}/node_modules/.bin/r.js -o require.build.js ${overrides}`, {
             cwd: path,
             stdio: [0, 1, 2]
         });

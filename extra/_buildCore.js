@@ -66,7 +66,6 @@ async function compile(destination, files, overrides) {
 	//
 	// step3) build rjs
 	//
-	const rjsCmd = process.platform === "win32" ? "r.js.cmd" : "r.js";
 	process.chdir("../../");
 
 	{
@@ -77,7 +76,7 @@ async function compile(destination, files, overrides) {
 
 			console.time(name);
 			{
-				childProcess.execSync(`${rjsCmd} -o ${configFile} name=${name} out=${name}.js`, {
+				childProcess.execSync(`node ${__dirname}/node_modules/.bin/r.js -o ${configFile} name=${name} out=${name}.js`, {
 					cwd: process.cwd(),
 					stdio: [0, 1, 2],
 				});
