@@ -8,7 +8,6 @@ import {
   StatusNotOk,
 } from "./Error";
 import { extend, getXsrfToken } from "../Core";
-import { ResponseData } from "./Data";
 
 const enum RequestType {
   GET,
@@ -80,14 +79,14 @@ class BackendRequest {
       throw new ExpectedJson(response);
     }
 
-    let json: ResponseData;
+    let json: unknown;
     try {
       json = await response.json();
     } catch (e) {
       throw new InvalidJson(response);
     }
 
-    return json.returnValues;
+    return json;
   }
 
   async fetchAsResponse(): Promise<Response | undefined> {

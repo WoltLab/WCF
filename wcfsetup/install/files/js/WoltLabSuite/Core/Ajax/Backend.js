@@ -59,7 +59,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             catch (e) {
                 throw new Error_1.InvalidJson(response);
             }
-            return json.returnValues;
+            return json;
         }
         async fetchAsResponse() {
             return this.#fetch();
