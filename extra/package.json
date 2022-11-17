@@ -3,12 +3,12 @@
     "deepmerge": "^4.2.2",
     "requirejs": "^2.3.6",
     "terser": "^5.14.2",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "@woltlab/r.js": "git+https://github.com/WoltLab/r.js.git#ad2413df45fdf6164611243f9870943de3d2bce3"
   },
   "devDependencies": {
     "@types/md5-file": "^4.0.2",
     "@types/node": "^18.0.6",
-    "@woltlab/r.js": "git+https://github.com/WoltLab/r.js.git",
     "md5-file": "^5.0.0",
     "typescript": "^4.7.4"
   }
