@@ -148,8 +148,8 @@
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
 		new UiUserSearchInput(document.getElementById('searchUsername'), {
 			callbackSelect(item) {
-				const link = '{link controller='User' id=2147483646 title='wcftitleplaceholder' encode=false}{/link}';
-				window.location = link.replace('2147483646', item.dataset.objectId).replace('wcftitleplaceholder', item.dataset.label);
+				const link = '{link controller='User' id=2147483646  encode=false}{/link}';
+				window.location = link.replace('2147483646', item.dataset.objectId);
 			}
 		});
 	});
