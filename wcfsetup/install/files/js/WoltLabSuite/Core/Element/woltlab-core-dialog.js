@@ -102,10 +102,34 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     event.preventDefault();
                     return;
                 }
-                const evt = new CustomEvent("validate", { cancelable: true });
+                const callbacks = [];
+                const evt = new CustomEvent("validate", {
+                    cancelable: true,
+                    detail: callbacks,
+                });
                 this.dispatchEvent(evt);
                 if (evt.defaultPrevented) {
                     event.preventDefault();
+                }
+                if (evt.detail.length > 0) {
+                    // DOM events cannot wait for async functions. We must
+                    // reject the event and then wait for the async
+                    // callbacks to complete.
+                    event.preventDefault();
+                    // Blocking further attempts to submit the dialog
+                    // while the validation is running.
+                    this.incomplete = true;
+                    void Promise.all(evt.detail).then((results) => {
+                        this.incomplete = false;
+                        const failedValidation = results.some((result) => result === false);
+                        if (!failedValidation) {
+                            // The `primary` event is triggered once the validation
+                            // has completed. Triggering the submit again would cause
+                            // `validate` to run again, causing an infinite loop.
+                            this.#dispatchPrimaryEvent();
+                            this.#dialog.close();
+                        }
+                    });
                 }
             });
             this.#dialog.addEventListener("close", () => {
@@ -113,8 +137,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     // Dialog was programmatically closed.
                     return;
                 }
-                const evt = new CustomEvent("primary");
-                this.dispatchEvent(evt);
+                this.#dispatchPrimaryEvent();
             });
             formControl.addEventListener("cancel", () => {
                 const event = new CustomEvent("cancel", { cancelable: true });
@@ -129,6 +152,10 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     this.dispatchEvent(event);
                 });
             }
+        }
+        #dispatchPrimaryEvent() {
+            const evt = new CustomEvent("primary");
+            this.dispatchEvent(evt);
         }
         connectedCallback() {
             if (this.#dialog.parentElement !== null) {

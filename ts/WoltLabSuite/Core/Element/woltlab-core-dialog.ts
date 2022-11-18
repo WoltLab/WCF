@@ -15,6 +15,8 @@ import { adoptPageOverlayContainer, releasePageOverlayContainer } from "../Helpe
 import * as Language from "../Language";
 import { scrollDisable, scrollEnable } from "../Ui/Screen";
 
+type ValidateCallback = Promise<boolean>;
+
 interface WoltlabCoreDialogEventMap {
   afterClose: CustomEvent;
   backdrop: CustomEvent;
@@ -22,7 +24,7 @@ interface WoltlabCoreDialogEventMap {
   close: CustomEvent;
   extra: CustomEvent;
   primary: CustomEvent;
-  validate: CustomEvent;
+  validate: CustomEvent<ValidateCallback[]>;
 }
 
 const dialogContainer = document.createElement("div");
@@ -144,11 +146,39 @@ export class WoltlabCoreDialogElement extends HTMLElement {
         return;
       }
 
-      const evt = new CustomEvent("validate", { cancelable: true });
+      const callbacks: ValidateCallback[] = [];
+      const evt = new CustomEvent("validate", {
+        cancelable: true,
+        detail: callbacks,
+      });
       this.dispatchEvent(evt);
 
       if (evt.defaultPrevented) {
         event.preventDefault();
+      }
+
+      if (evt.detail.length > 0) {
+        // DOM events cannot wait for async functions. We must
+        // reject the event and then wait for the async
+        // callbacks to complete.
+        event.preventDefault();
+
+        // Blocking further attempts to submit the dialog
+        // while the validation is running.
+        this.incomplete = true;
+
+        void Promise.all(evt.detail).then((results) => {
+          this.incomplete = false;
+
+          const failedValidation = results.some((result) => result === false);
+          if (!failedValidation) {
+            // The `primary` event is triggered once the validation
+            // has completed. Triggering the submit again would cause
+            // `validate` to run again, causing an infinite loop.
+            this.#dispatchPrimaryEvent();
+            this.#dialog.close();
+          }
+        });
       }
     });
 
@@ -158,8 +188,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
         return;
       }
 
-      const evt = new CustomEvent("primary");
-      this.dispatchEvent(evt);
+      this.#dispatchPrimaryEvent();
     });
 
     formControl.addEventListener("cancel", () => {
@@ -177,6 +206,11 @@ export class WoltlabCoreDialogElement extends HTMLElement {
         this.dispatchEvent(event);
       });
     }
+  }
+
+  #dispatchPrimaryEvent(): void {
+    const evt = new CustomEvent("primary");
+    this.dispatchEvent(evt);
   }
 
   connectedCallback(): void {
