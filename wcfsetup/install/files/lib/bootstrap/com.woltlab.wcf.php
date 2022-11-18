@@ -51,11 +51,11 @@ return static function (): void {
         $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
         $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
         $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
-        $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 100);
-        $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 105);
-        $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 110);
         $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
-        $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 120);
-        $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 130);
+        $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
+        $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
+        $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+        $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
+        $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
     });
 };
