@@ -420,13 +420,6 @@ class PackageArchive
             }
         }
 
-        // during installations, `Package::$packageVersion` can be `null` which causes issues
-        // in `PackageArchive::filterUpdateInstructions()`; as update instructions are not needed
-        // for installations, not filtering update instructions is okay
-        if ($this->package !== null && $this->package->packageVersion !== null) {
-            $this->filterUpdateInstructions();
-        }
-
         // set default values
         if (!isset($this->packageInfo['isApplication'])) {
             $this->packageInfo['isApplication'] = 0;
@@ -595,6 +588,10 @@ class PackageArchive
      */
     public function getUpdateInstructions()
     {
+        if ($this->package !== null && $this->package->packageVersion !== null) {
+            $this->filterUpdateInstructions();
+        }
+
         return $this->instructions['update'];
     }
 
