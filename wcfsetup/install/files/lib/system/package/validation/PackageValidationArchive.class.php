@@ -233,23 +233,21 @@ final class PackageValidationArchive implements \RecursiveIterator
             }
         } else {
             // package is already installed, check update path
+            $deliveredPackageVersion = $this->archive->getPackageInfo('version');
+            if (Package::compareVersion($package->packageVersion, $deliveredPackageVersion, '>=')) {
+                throw new PackageValidationException(PackageValidationException::ALREADY_INSTALLED, [
+                    'packageName' => $package->packageName,
+                    'packageVersion' => $package->packageVersion,
+                ]);
+            }
+
             $instructions = $this->archive->getUpdateInstructionsFor($package->packageVersion);
             if ($instructions === null) {
-                $deliveredPackageVersion = $this->archive->getPackageInfo('version');
-
-                // check if the package is already installed with the same exact version
-                if ($package->packageVersion === $deliveredPackageVersion) {
-                    throw new PackageValidationException(PackageValidationException::ALREADY_INSTALLED, [
-                        'packageName' => $package->packageName,
-                        'packageVersion' => $package->packageVersion,
-                    ]);
-                } else {
-                    throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
-                        'packageName' => $package->packageName,
-                        'packageVersion' => $package->packageVersion,
-                        'deliveredPackageVersion' => $deliveredPackageVersion,
-                    ]);
-                }
+                throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
+                    'packageName' => $package->packageName,
+                    'packageVersion' => $package->packageVersion,
+                    'deliveredPackageVersion' => $deliveredPackageVersion,
+                ]);
             }
 
             if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
