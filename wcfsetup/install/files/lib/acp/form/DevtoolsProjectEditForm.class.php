@@ -311,7 +311,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
             ],
         ];
 
-        foreach ($packageArchive->getUpdateInstructions() as $fromVersion => $updateInstructions) {
+        foreach ($packageArchive->getAllUpdateInstructions() as $fromVersion => $updateInstructions) {
             $versionUpdateInstructions = [];
 
             foreach ($updateInstructions as $instruction) {

@@ -586,12 +586,8 @@ class PackageArchive
      *
      * @return  array
      */
-    public function getUpdateInstructions()
+    public function getAllUpdateInstructions()
     {
-        if ($this->package !== null && $this->package->packageVersion !== null) {
-            $this->filterUpdateInstructions();
-        }
-
         return $this->instructions['update'];
     }
 

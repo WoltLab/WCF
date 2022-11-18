@@ -186,7 +186,7 @@ final class PackageManifest
 
     private function getUpdateInstructions(): array
     {
-        $updateInstructions = $this->archive->getUpdateInstructions();
+        $updateInstructions = $this->archive->getAllUpdateInstructions();
         \ksort($updateInstructions);
 
         return \array_map($this->cleanInstructions(...), $updateInstructions);
