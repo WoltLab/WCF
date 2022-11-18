@@ -99,7 +99,19 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             );
             $command();
 
-            return new JsonResponse([]);
+            if ($user === null) {
+                return new JsonResponse([
+                    'assignee' => null,
+                ]);
+            } else {
+                return new JsonResponse([
+                    'assignee' => [
+                        'username' => $user->username,
+                        'userID' => $user->userID,
+                        'link' => $user->getLink(),
+                    ],
+                ]);
+            }
         } else {
             return new TextResponse('The used HTTP method is not allowed.', 405, [
                 'allow' => 'POST, GET',

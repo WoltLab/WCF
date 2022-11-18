@@ -1,30 +1,83 @@
 import { prepareRequest } from "../../Ajax/Backend";
 import { dialogFactory } from "../../Component/Dialog";
+import DomUtil from "../../Dom/Util";
 import * as FormBuilderManager from "../../Form/Builder/Manager";
 
-type Response = {
+type ResponseGetForm = {
   dialog: string;
   formId: string;
 };
 
-export function setup(button: HTMLElement): void {
-  button.addEventListener("click", async () => {
-    const json = (await prepareRequest(button.dataset.url!).get().fetchAsJson()) as Response;
+type Assignee = {
+  username: string;
+  userID: number;
+  link: string;
+};
 
-    const dialog = dialogFactory().fromHtml(json.dialog).asPrompt();
-    dialog.addEventListener("primary", async () => {
-      const data = await FormBuilderManager.getData(json.formId);
+type ResponseSubmitForm =
+  | ResponseGetForm
+  | {
+      assignee: Assignee | null;
+    };
 
-      const _response = await prepareRequest(button.dataset.url!).post(data).fetchAsJson();
+async function showDialog(url: string): Promise<void> {
+  const json = (await prepareRequest(url).get().fetchAsJson()) as ResponseGetForm;
 
-      // TODO: Show success / update UI
-      // TODO: Handle incorrect form inputs
-    });
-    dialog.addEventListener("cancel", () => {
-      if (FormBuilderManager.hasForm(json.formId)) {
-        FormBuilderManager.unregisterForm(json.formId);
+  const dialog = dialogFactory().fromHtml(json.dialog).asPrompt();
+
+  dialog.addEventListener("validate", (event) => {
+    const callback = FormBuilderManager.getData(json.formId).then(async (data) => {
+      if (data instanceof Promise) {
+        data = await data;
+      }
+
+      const response = (await prepareRequest(url).post(data).fetchAsJson()) as ResponseSubmitForm;
+      if ("dialog" in response) {
+        DomUtil.setInnerHtml(dialog.content, response.dialog);
+
+        return false;
+      } else {
+        dialog.addEventListener(
+          "primary",
+          () => {
+            updateAssignee(response.assignee);
+          },
+          { once: true },
+        );
+
+        return true;
       }
     });
-    dialog.show("yadayada");
+
+    event.detail.push(callback);
+  });
+
+  dialog.addEventListener("cancel", () => {
+    if (FormBuilderManager.hasForm(json.formId)) {
+      FormBuilderManager.unregisterForm(json.formId);
+    }
+  });
+  dialog.show("TODO: title");
+}
+
+function updateAssignee(assignee: Assignee | null): void {
+  const span = document.getElementById("moderationAssignedUser")!;
+  if (assignee === null) {
+    span.textContent = "TODO: nobody";
+  } else {
+    const link = document.createElement("a");
+    link.href = assignee.link;
+    link.dataset.objectId = assignee.userID.toString();
+    link.classList.add("userLink");
+    link.innerHTML = assignee.username;
+
+    span.innerHTML = "";
+    span.append(link);
+  }
+}
+
+export function setup(button: HTMLElement): void {
+  button.addEventListener("click", () => {
+    void showDialog(button.dataset.url!);
   });
 }
