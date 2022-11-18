@@ -557,6 +557,7 @@ class PackageArchive
      * Returns the package update instructions.
      *
      * @return  array
+     * @since 6.0
      */
     public function getAllUpdateInstructions()
     {
