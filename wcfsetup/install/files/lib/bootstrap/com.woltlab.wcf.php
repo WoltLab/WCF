@@ -18,25 +18,27 @@ use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
 
 return static function (): void {
+    $eventHandler = EventHandler::getInstance();
+
     WCF::getTPL()->assign(
         'executeCronjobs',
         CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE
     );
 
-    EventHandler::getInstance()->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
+    $eventHandler->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
 
-    EventHandler::getInstance()->register(PackageListChanged::class, static function () {
+    $eventHandler->register(PackageListChanged::class, static function () {
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
             $command = new ResetPreloadCache($language);
             $command();
         }
     });
-    EventHandler::getInstance()->register(LanguageImported::class, static function (LanguageImported $event) {
+    $eventHandler->register(LanguageImported::class, static function (LanguageImported $event) {
         $command = new ResetPreloadCache($event->language);
         $command();
     });
-    EventHandler::getInstance()->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
-    EventHandler::getInstance()->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
+    $eventHandler->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
+    $eventHandler->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
     WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
-    EventHandler::getInstance()->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
+    $eventHandler->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
 };
