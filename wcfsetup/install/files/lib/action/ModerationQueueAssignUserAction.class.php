@@ -155,6 +155,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                 ->required(),
         ]);
         $form->ajax();
+        $form->addDefaultButton(false);
 
         $form->build();
 

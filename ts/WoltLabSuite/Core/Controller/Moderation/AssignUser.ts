@@ -40,6 +40,10 @@ async function showDialog(url: string): Promise<void> {
         dialog.addEventListener(
           "primary",
           () => {
+            if (FormBuilderManager.hasForm(json.formId)) {
+              FormBuilderManager.unregisterForm(json.formId);
+            }
+
             updateAssignee(response.assignee);
           },
           { once: true },

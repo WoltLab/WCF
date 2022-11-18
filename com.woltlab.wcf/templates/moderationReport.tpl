@@ -14,14 +14,12 @@
 			
 			<dl class="plain inlineDataList" id="moderationAssignedUserContainer">
 				<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
-				<dd>
-					<span>
-						{if $queue->assignedUserID}
-							<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-object-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
-						{else}
-							{lang}wcf.moderation.assignedUser.nobody{/lang}
-						{/if}
-					</span>
+				<dd id="moderationAssignedUser">
+					{if $queue->assignedUserID}
+						<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-object-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
+					{else}
+						{lang}wcf.moderation.assignedUser.nobody{/lang}
+					{/if}
 				</dd>
 			</dl>
 			

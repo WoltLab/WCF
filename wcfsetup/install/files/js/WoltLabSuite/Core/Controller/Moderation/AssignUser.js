@@ -19,6 +19,9 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Component/Di
                 }
                 else {
                     dialog.addEventListener("primary", () => {
+                        if (FormBuilderManager.hasForm(json.formId)) {
+                            FormBuilderManager.unregisterForm(json.formId);
+                        }
                         updateAssignee(response.assignee);
                     }, { once: true });
                     return true;
