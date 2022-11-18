@@ -233,7 +233,7 @@ final class PackageValidationArchive implements \RecursiveIterator
             }
         } else {
             // package is already installed, check update path
-            $instructions = $this->archive->getUpdateInstructionsFor($package);
+            $instructions = $this->archive->getUpdateInstructionsFor($package->packageVersion);
             if ($instructions === null) {
                 $deliveredPackageVersion = $this->archive->getPackageInfo('version');
 
