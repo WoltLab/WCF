@@ -16,6 +16,7 @@ use wcf\system\package\event\PackageInstallationPluginSynced;
 use wcf\system\package\event\PackageListChanged;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
+use wcf\system\worker\event\RebuildWorkerCollecting;
 
 return static function (): void {
     $eventHandler = EventHandler::getInstance();
@@ -41,4 +42,20 @@ return static function (): void {
     $eventHandler->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
     WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
     $eventHandler->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
+
+    $eventHandler->register(RebuildWorkerCollecting::class, static function (RebuildWorkerCollecting $event) {
+        $event->register(\wcf\system\worker\LikeRebuildDataWorker::class, -100);
+        $event->register(\wcf\system\worker\ArticleRebuildDataWorker::class, 50);
+        $event->register(\wcf\system\worker\PageRebuildDataWorker::class, 50);
+        $event->register(\wcf\system\worker\PollRebuildDataWorker::class, 60);
+        $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
+        $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
+        $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
+        $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 100);
+        $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 105);
+        $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 110);
+        $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
+        $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 120);
+        $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 130);
+    });
 };
