@@ -57,11 +57,11 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     this.#title.textContent = title;
 
-    if (this.#dialog.parentElement === null) {
-      if (dialogContainer.parentElement === null) {
-        document.getElementById("content")!.append(dialogContainer);
-      }
+    if (dialogContainer.parentElement === null) {
+      document.getElementById("content")!.append(dialogContainer);
+    }
 
+    if (this.parentElement !== dialogContainer) {
       dialogContainer.append(this);
     }
 
@@ -79,6 +79,13 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     releasePageOverlayContainer(this.#dialog);
     scrollEnable();
+
+    // Remove the dialog from the DOM, preventing it from
+    // causing any collisions caused by elements with IDs
+    // contained inside it. Will also cause the DOM element
+    // to be garbage collected when there are no more
+    // references to it.
+    this.remove();
   }
 
   get dialog(): HTMLDialogElement {
