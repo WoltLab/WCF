@@ -49,8 +49,6 @@ final class PackageInstallationStep
 
     /**
      * Sets form document object.
-     *
-     * @param FormDocument $document
      */
     public function setDocument(FormDocument $document): void
     {
