@@ -616,7 +616,10 @@ class PackageInstallationNodeBuilder
         $pluginNodes = [];
 
         $this->emptyNode = true;
-        $instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
+        $instructions = match ($this->installation->getAction()) {
+            'install' => $this->installation->getArchive()->getInstallInstructions(),
+            'update' => $this->installation->getArchive()->getUpdateInstructions(),
+        };
         $count = \count($instructions);
 
         if ($count === 0) {
