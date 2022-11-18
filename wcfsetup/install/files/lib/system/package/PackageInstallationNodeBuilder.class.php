@@ -618,7 +618,10 @@ class PackageInstallationNodeBuilder
         $this->emptyNode = true;
         $instructions = match ($this->installation->getAction()) {
             'install' => $this->installation->getArchive()->getInstallInstructions(),
-            'update' => $this->installation->getArchive()->getUpdateInstructions(),
+            'update' => $this->installation->getArchive()->getUpdateInstructionsFor(
+                self::$pendingPackages[$this->installation->getPackage()->package]
+                ?? $this->installation->getPackage()->packageVersion
+            ) ?? [],
         };
         $count = \count($instructions);
 
