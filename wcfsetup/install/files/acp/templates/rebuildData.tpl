@@ -44,18 +44,19 @@
 		<p class="sectionDescription">{lang}wcf.acp.rebuildData.description{/lang}</p>
 	</header>
 	
-	{foreach from=$objectTypes item=objectType}
+	{assign var='offset' value=0}
+	{foreach from=$workers item=worker}
 		<dl class="wide">
 			<dd>
-				<a href="#"
+				<button
 				   class="button small jsRebuildDataWorker"
-				   data-class-name="{$objectType->className}"
-				   data-object-type="{$objectType->objectType}"
-				   data-nicevalue="{if $objectType->nicevalue}{$objectType->nicevalue}{else}0{/if}"
-				>{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
-				<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
+				   data-nicevalue="{$offset}"
+				   data-class-name="{$worker->classname}"
+				>{$worker->getName()}</button>
+				<small>{$worker->getDescription()}</small>
 			</dd>
 		</dl>
+		{assign var='offset' value=$offset+1}
 	{/foreach}
 </section>
 
