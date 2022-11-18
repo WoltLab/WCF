@@ -360,11 +360,8 @@ class PackageInstallationNodeBuilder
 
     /**
      * Shifts nodes to allow dynamic inserts at runtime.
-     *
-     * @param string $oldParentNode
-     * @param string $newParentNode
      */
-    public function shiftNodes($oldParentNode, $newParentNode)
+    public function shiftNodes(string $oldParentNode, string $newParentNode)
     {
         $sql = "UPDATE  wcf1_package_installation_node
                 SET     parentNode = ?
