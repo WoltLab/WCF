@@ -29,12 +29,6 @@ class PackageArchive
     protected $archive;
 
     /**
-     * package object of an existing package
-     * @var Package
-     */
-    protected $package;
-
-    /**
      * tar archive object
      * @var Tar
      */
@@ -95,13 +89,11 @@ class PackageArchive
      * Creates a new PackageArchive object.
      *
      * @param string $archive
-     * @param Package $package
      */
-    public function __construct($archive, ?Package $package = null)
+    public function __construct($archive)
     {
         $this->archive = $archive;  // be careful: this is a string within this class,
         // but an object in the packageStartInstallForm.class!
-        $this->package = $package;
     }
 
     /**
