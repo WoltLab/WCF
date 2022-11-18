@@ -29,12 +29,6 @@ class PackageArchive
     protected $archive;
 
     /**
-     * package object of an existing package
-     * @var Package
-     */
-    protected $package;
-
-    /**
      * tar archive object
      * @var Tar
      */
@@ -95,13 +89,11 @@ class PackageArchive
      * Creates a new PackageArchive object.
      *
      * @param string $archive
-     * @param Package $package
      */
-    public function __construct($archive, ?Package $package = null)
+    public function __construct($archive)
     {
         $this->archive = $archive;  // be careful: this is a string within this class,
         // but an object in the packageStartInstallForm.class!
-        $this->package = $package;
     }
 
     /**
@@ -420,39 +412,12 @@ class PackageArchive
             }
         }
 
-        // during installations, `Package::$packageVersion` can be `null` which causes issues
-        // in `PackageArchive::filterUpdateInstructions()`; as update instructions are not needed
-        // for installations, not filtering update instructions is okay
-        if ($this->package !== null && $this->package->packageVersion !== null) {
-            $this->filterUpdateInstructions();
-        }
-
         // set default values
         if (!isset($this->packageInfo['isApplication'])) {
             $this->packageInfo['isApplication'] = 0;
         }
         if (!isset($this->packageInfo['packageURL'])) {
             $this->packageInfo['packageURL'] = '';
-        }
-    }
-
-    /**
-     * Filters update instructions.
-     */
-    protected function filterUpdateInstructions()
-    {
-        $validFromVersion = null;
-        foreach ($this->instructions['update'] as $fromVersion => $update) {
-            if (Package::checkFromversion($this->package->packageVersion, $fromVersion)) {
-                $validFromVersion = $fromVersion;
-                break;
-            }
-        }
-
-        if ($validFromVersion === null) {
-            $this->instructions['update'] = [];
-        } else {
-            $this->instructions['update'] = $this->instructions['update'][$validFromVersion];
         }
     }
 
@@ -593,7 +558,7 @@ class PackageArchive
      *
      * @return  array
      */
-    public function getUpdateInstructions()
+    public function getAllUpdateInstructions()
     {
         return $this->instructions['update'];
     }
