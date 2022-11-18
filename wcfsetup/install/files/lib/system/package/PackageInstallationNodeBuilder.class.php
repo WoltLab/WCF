@@ -616,13 +616,22 @@ class PackageInstallationNodeBuilder
         $pluginNodes = [];
 
         $this->emptyNode = true;
-        $instructions = match ($this->installation->getAction()) {
-            'install' => $this->installation->getArchive()->getInstallInstructions(),
-            'update' => $this->installation->getArchive()->getUpdateInstructionsFor(
-                self::$pendingPackages[$this->installation->getPackage()->package]
-                ?? $this->installation->getPackage()->packageVersion
-            ) ?? [],
-        };
+
+        switch ($this->installation->getAction()) {
+            case 'install':
+                $instructions = $this->installation->getArchive()->getInstallInstructions();
+
+                break;
+            case 'update':
+                $package = $this->installation->getPackage();
+                $currentPackageVersion = self::$pendingPackages[$package->package] ?? $package->packageVersion;
+                $instructions = $this->installation->getArchive()->getUpdateInstructionsFor($currentPackageVersion) ?? [];
+
+                break;
+            default:
+                throw new \LogicException('Unreachable');
+        }
+
         $count = \count($instructions);
 
         if ($count === 0) {
