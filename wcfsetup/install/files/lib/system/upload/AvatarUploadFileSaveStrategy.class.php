@@ -79,13 +79,13 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
             // shrink avatar if necessary
             try {
                 $newWidth = $newHeight = UserAvatar::AVATAR_SIZE;
-                
+
                 // Save HiDPI version if possible.
                 $imageData = \getimagesize($fileLocation);
                 if ($imageData[0] >= UserAvatar::AVATAR_SIZE_2X && $imageData[1] >= UserAvatar::AVATAR_SIZE_2X) {
                     $newWidth = $newHeight = UserAvatar::AVATAR_SIZE_2X;
                 }
-                
+
                 $fileLocation = ImageUtil::enforceDimensions(
                     $fileLocation,
                     $newWidth,

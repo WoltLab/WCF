@@ -4,7 +4,6 @@ namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
 use wcf\data\email\log\entry\EmailLogEntryAction;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\flood\FloodControl;
 use wcf\system\user\multifactor\EmailMultifactorMethod;
 use wcf\system\visitTracker\VisitTracker;

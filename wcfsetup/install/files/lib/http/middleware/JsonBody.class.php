@@ -3,7 +3,6 @@
 namespace wcf\http\middleware;
 
 use GuzzleHttp\Psr7\Header;
-use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

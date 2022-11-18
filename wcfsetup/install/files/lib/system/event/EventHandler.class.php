@@ -249,7 +249,7 @@ final class EventHandler extends SingletonFactory
      *
      * @return iterable<callable>
      */
-    private function getListenersForEvent(object $event) : iterable
+    private function getListenersForEvent(object $event): iterable
     {
         $classes = \array_values([
             $event::class,
@@ -263,7 +263,7 @@ final class EventHandler extends SingletonFactory
     }
 
     /**
-     * @param class-string $eventClass 
+     * @param class-string $eventClass
      * @return iterable<callable>
      */
     private function getPsr14Listeners(string $eventClass): iterable
@@ -288,8 +288,8 @@ final class EventHandler extends SingletonFactory
      * must either be a class name of a class that implements __invoke()
      * or a callable.
      *
-     * @param class-string $event 
-     * @param class-string|callable $listener 
+     * @param class-string $event
+     * @param class-string|callable $listener
      */
     public function register(string $event, string|callable $listener): void
     {

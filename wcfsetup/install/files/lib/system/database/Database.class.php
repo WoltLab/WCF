@@ -2,7 +2,6 @@
 
 namespace wcf\system\database;
 
-use wcf\data\application\Application;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\editor\DatabaseEditor;

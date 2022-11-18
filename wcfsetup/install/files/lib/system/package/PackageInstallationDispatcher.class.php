@@ -177,7 +177,7 @@ class PackageInstallationDispatcher
                 Process#: {$this->queue->processNo}
                 EOT
             );
-            
+
             $this->logInstallationStep([], 'start cleanup');
 
             // update "last update time" option

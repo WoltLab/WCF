@@ -23,6 +23,7 @@ use wcf\system\request\RequestHandler;
 final class TriggerBackgroundQueue implements MiddlewareInterface
 {
     private readonly BackgroundQueueHandler $backgroundQueueHandler;
+
     private readonly RequestHandler $requestHandler;
 
     public function __construct()

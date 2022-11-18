@@ -63,7 +63,8 @@ final class Xsrf implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    private function isSafeHttpMethod(string $verb): bool {
+    private function isSafeHttpMethod(string $verb): bool
+    {
         // HTTP requests using the 'GET' or 'HEAD' verb are safe
         // by design, because those should not alter the state.
         return $verb === 'GET' || $verb === 'HEAD';

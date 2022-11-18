@@ -21,6 +21,7 @@ use wcf\util\StringUtil;
 final class CachePreloadPhrases
 {
     private readonly EventHandler $eventHandler;
+
     private readonly Language $language;
 
     public function __construct(Language $language)

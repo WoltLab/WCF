@@ -14,7 +14,6 @@ use wcf\acp\form\MultifactorAuthenticationForm;
 use wcf\acp\form\ReauthenticationForm;
 use wcf\http\Helper;
 use wcf\system\exception\AJAXException;
-use wcf\system\exception\NamedUserException;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;

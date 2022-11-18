@@ -297,7 +297,7 @@ class SettingsForm extends AbstractForm
             'formAction' => LinkHandler::getInstance()->getControllerLink(
                 static::class,
                 $formActionParameters
-            )
+            ),
         ]);
 
         // static options

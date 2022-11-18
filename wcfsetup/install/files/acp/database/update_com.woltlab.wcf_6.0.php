@@ -34,7 +34,7 @@ return [
             VarcharDatabaseTableColumn::create('locale')
                 ->notNull()
                 ->length(50)
-                ->defaultValue('')
+                ->defaultValue(''),
         ]),
     PartialDatabaseTable::create('wcf1_package_installation_node')
         ->columns([
