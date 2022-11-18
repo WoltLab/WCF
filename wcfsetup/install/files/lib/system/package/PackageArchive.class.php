@@ -599,15 +599,15 @@ class PackageArchive
     }
 
     /**
-     * Returns the appropriate update instructions to update the given package,
+     * Returns the appropriate update instructions to update the given package version,
      * `null` if no appropriate instruction could be found.
      *
      * @since 6.0
      */
-    public function getUpdateInstructionsFor(Package $package): ?array
+    public function getUpdateInstructionsFor(string $version): ?array
     {
         foreach ($this->instructions['update'] as $fromVersion => $instructions) {
-            if (Package::checkFromversion($package->packageVersion, $fromVersion)) {
+            if (Package::checkFromversion($version, $fromVersion)) {
                 return $instructions;
             }
         }

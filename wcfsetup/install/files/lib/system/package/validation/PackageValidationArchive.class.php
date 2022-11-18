@@ -233,23 +233,21 @@ final class PackageValidationArchive implements \RecursiveIterator
             }
         } else {
             // package is already installed, check update path
-            $instructions = $this->archive->getUpdateInstructionsFor($package);
-            if ($instructions === null) {
-                $deliveredPackageVersion = $this->archive->getPackageInfo('version');
+            $deliveredPackageVersion = $this->archive->getPackageInfo('version');
+            if (Package::compareVersion($package->packageVersion, $deliveredPackageVersion, '>=')) {
+                throw new PackageValidationException(PackageValidationException::ALREADY_INSTALLED, [
+                    'packageName' => $package->packageName,
+                    'packageVersion' => $package->packageVersion,
+                ]);
+            }
 
-                // check if the package is already installed with the same exact version
-                if ($package->packageVersion === $deliveredPackageVersion) {
-                    throw new PackageValidationException(PackageValidationException::ALREADY_INSTALLED, [
-                        'packageName' => $package->packageName,
-                        'packageVersion' => $package->packageVersion,
-                    ]);
-                } else {
-                    throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
-                        'packageName' => $package->packageName,
-                        'packageVersion' => $package->packageVersion,
-                        'deliveredPackageVersion' => $deliveredPackageVersion,
-                    ]);
-                }
+            $instructions = $this->archive->getUpdateInstructionsFor($package->packageVersion);
+            if ($instructions === null) {
+                throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
+                    'packageName' => $package->packageName,
+                    'packageVersion' => $package->packageVersion,
+                    'deliveredPackageVersion' => $deliveredPackageVersion,
+                ]);
             }
 
             if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
