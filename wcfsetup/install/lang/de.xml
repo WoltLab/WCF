@@ -2661,8 +2661,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointUpdateEventsWorker.description"><![CDATA[Berechnet Punkte pro Aktivität neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker"><![CDATA[Punkte-Aktivitäten aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker.description"><![CDATA[Berechnet Anzahl an Aktivitäten neu, für die Benutzer Punkte erhalten; aktualisiert Benutzerränge]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"><![CDATA[Stellt die Tabellen des Suchindex auf die InnoDB-Engine um.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"><![CDATA[Suchindex auf InnoDB umstellen]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[Es wird dringend empfohlen, während der Aktualisierung der Anzeigen den Wartungsmodus zu aktivieren.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Alle aktualisieren]]></item>
 	</category>
@@ -5592,5 +5590,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.acp.option.module_cookie_policy_page.description"/>
 	<item name="wcf.page.cookiePolicy.info"/>
 	<item name="wcf.page.cookiePolicy.info.moreInformation"/>
+	<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"/>
+	<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"/>
 </delete>
 </language>

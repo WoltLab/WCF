@@ -2593,8 +2593,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointUpdateEventsWorker.description"><![CDATA[Recalculates points per activity.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker"><![CDATA[Rebuilds Point Activities]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserActivityPointItemsRebuildDataWorker.description"><![CDATA[Recalculates the number of activities for which users get points and rebuilds user ranks.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"><![CDATA[Migrates the search engine tables to the InnoDB storage engine.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"><![CDATA[Migrate Search Index to InnoDB]]></item>
 		<item name="wcf.acp.rebuildData.offline"><![CDATA[It is strongly recommended to enable the maintenance mode while performing a data rebuild.]]></item>
 		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Rebuild All]]></item>
 	</category>
@@ -5594,5 +5592,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.option.module_cookie_policy_page.description"/>
 	<item name="wcf.page.cookiePolicy.info"/>
 	<item name="wcf.page.cookiePolicy.info.moreInformation"/>
+	<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"/>
+	<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"/>
 </delete>
 </language>
