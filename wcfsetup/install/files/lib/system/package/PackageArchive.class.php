@@ -430,26 +430,6 @@ class PackageArchive
     }
 
     /**
-     * Filters update instructions.
-     */
-    protected function filterUpdateInstructions()
-    {
-        $validFromVersion = null;
-        foreach ($this->instructions['update'] as $fromVersion => $update) {
-            if (Package::checkFromversion($this->package->packageVersion, $fromVersion)) {
-                $validFromVersion = $fromVersion;
-                break;
-            }
-        }
-
-        if ($validFromVersion === null) {
-            $this->instructions['update'] = [];
-        } else {
-            $this->instructions['update'] = $this->instructions['update'][$validFromVersion];
-        }
-    }
-
-    /**
      * Closes and deletes the tar archive of this package.
      */
     public function deleteArchive()
