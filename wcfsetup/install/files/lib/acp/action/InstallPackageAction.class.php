@@ -164,10 +164,9 @@ class InstallPackageAction extends AbstractSecureAction
      * Returns the link to the page to which the user is redirected after
      * the installation finished.
      *
-     * @return  string
      * @since   5.2
      */
-    protected function getRedirectLink()
+    protected function getRedirectLink(): string
     {
         // get domain path
         $sql = "SELECT  *
@@ -203,11 +202,8 @@ class InstallPackageAction extends AbstractSecureAction
 
     /**
      * Returns current action by queue id.
-     *
-     * @param int $queueID
-     * @return  string
      */
-    protected function getCurrentAction($queueID)
+    protected function getCurrentAction(?int $queueID): string
     {
         if ($queueID === null) {
             // success message

@@ -178,7 +178,7 @@ final class UninstallPackageAction extends AbstractSecureAction
     /**
      * @inheritDoc
      */
-    protected function getCurrentAction($queueID)
+    protected function getCurrentAction(?int $queueID): string
     {
         if ($queueID === null) {
             // success message
