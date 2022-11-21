@@ -29,7 +29,7 @@ final class DevtoolsInstallPackageAction extends InstallPackageAction
     /**
      * @inheritDoc
      */
-    protected function getRedirectLink()
+    protected function getRedirectLink(): string
     {
         return LinkHandler::getInstance()->getLink('DevtoolsProjectList');
     }
