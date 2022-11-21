@@ -24,31 +24,26 @@ final class RegisteredWorker
 
     public function getName(): string
     {
-        if ($this->legacyObjectType !== null) {
-            return WCF::getLanguage()->get(\sprintf(
-                'wcf.acp.rebuildData.%s',
-                $this->legacyObjectType->objectType
-            ));
-        }
-
         return WCF::getLanguage()->get(\sprintf(
             'wcf.acp.rebuildData.%s',
-            \str_replace('\\', '_', $this->classname)
+            $this->getIdentifier(),
         ));
     }
 
     public function getDescription(): string
     {
-        if ($this->legacyObjectType !== null) {
-            return WCF::getLanguage()->get(\sprintf(
-                'wcf.acp.rebuildData.%s.description',
-                $this->legacyObjectType->objectType
-            ));
-        }
-
         return WCF::getLanguage()->get(\sprintf(
             'wcf.acp.rebuildData.%s.description',
-            \str_replace('\\', '_', $this->classname)
+            $this->getIdentifier(),
         ));
+    }
+
+    private function getIdentifier(): string
+    {
+        if ($this->legacyObjectType !== null) {
+             return $this->legacyObjectType->objectType;
+        }
+
+        return \str_replace('\\', '_', $this->classname);
     }
 }
