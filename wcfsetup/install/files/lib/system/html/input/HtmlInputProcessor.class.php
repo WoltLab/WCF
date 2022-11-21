@@ -295,7 +295,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
         // syntax. This will be safe from a security perspective, as the resulting HTML
         // will still be processed by HTML Purifier which will filter out anything that
         // is questionable or malicious.
-        $html = \str_replace(['<', '>', '&', '"'], ['&lt;', '&gt;', '&amp;', '&quot;'], $html);
+        $html = \str_replace(['&', '<', '>', '"'], ['&amp;', '&lt;', '&gt;', '&quot;'], $html);
         $html = \preg_replace('/\[attach=(\d+)\]/', "[attach=\\1,'none','2']", $html);
         $parts = \preg_split('~(\n+)~', $html, -1, \PREG_SPLIT_DELIM_CAPTURE);
 
