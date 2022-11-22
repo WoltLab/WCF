@@ -65,10 +65,10 @@ class UiConfirmation implements DialogCallbackObject {
 
     if (typeof options.legacyCallback === "function") {
       this.callbackCancel = (parameters) => {
-        options.legacyCallback!("cancel", parameters, this.content);
+        options.legacyCallback("cancel", parameters, this.content);
       };
       this.callbackConfirm = (parameters) => {
-        options.legacyCallback!("confirm", parameters, this.content);
+        options.legacyCallback("confirm", parameters, this.content);
       };
     } else {
       if (typeof options.cancel !== "function") {

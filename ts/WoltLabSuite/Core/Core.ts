@@ -287,7 +287,7 @@ export function enableLegacyInheritance<T>(legacyClass: T): void {
       console.log("Relying on legacy inheritance for ", legacyClass, thisValue);
     }
 
-    const constructed = Reflect.construct(legacyClass as any, args, thisValue.constructor);
+    const constructed: any = Reflect.construct(legacyClass as any, args, thisValue.constructor);
     Object.entries(constructed).forEach(([key, value]) => {
       if (typeof value === "function") {
         value = value.bind(thisValue);
