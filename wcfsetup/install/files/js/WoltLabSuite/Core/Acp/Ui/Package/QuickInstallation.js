@@ -7,10 +7,11 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module WoltLabSuite/Core/Acp/Ui/Package/QuickInstallation
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Dom/Util", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax_1, Core_1, Language, Util_1, Dialog_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", "../../../Core", "../../../Language", "../../../Dom/Util", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax_1, AjaxStatus, Core_1, Language, Util_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
+    AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Language = tslib_1.__importStar(Language);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     let codeInput;
@@ -41,7 +42,23 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             (0, Util_1.innerError)(codeInput, Language.get("wcf.acp.package.quickInstallation.code.error.invalid"));
         }
     }
+    let refreshedPackageDatabase = undefined;
+    function refreshPackageDatabase() {
+        if (refreshedPackageDatabase === undefined) {
+            refreshedPackageDatabase = (0, Ajax_1.dboAction)("refreshDatabase", "wcf\\data\\package\\update\\PackageUpdateAction")
+                .disableLoadingIndicator()
+                .dispatch();
+        }
+        return refreshedPackageDatabase;
+    }
     async function prepareInstallation(data) {
+        try {
+            AjaxStatus.show();
+            await refreshPackageDatabase();
+        }
+        finally {
+            AjaxStatus.hide();
+        }
         const response = (await (0, Ajax_1.dboAction)("prepareInstallation", "wcf\\data\\package\\update\\PackageUpdateAction")
             .payload({
             packages: {
@@ -84,6 +101,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     }
     function setup() {
         codeInput = document.getElementById("quickInstallationCode");
+        codeInput.addEventListener("focus", () => {
+            // Refresh the package database when focusing the input to hide the latency of the package
+            // server querying from the user, because the refresh runs, while the user is busy with
+            // pasting the StoreCode into the input.
+            void refreshPackageDatabase();
+        });
         codeInput.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
                 event.preventDefault();

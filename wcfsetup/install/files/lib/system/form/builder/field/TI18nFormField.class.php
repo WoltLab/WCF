@@ -50,12 +50,6 @@ trait TI18nFormField
     protected $languageItemPattern;
 
     /**
-     * name of the nin-i18n JavaScript data handler module used for Ajax dialogs
-     * @var null|string
-     */
-    protected $nonI18nJavaScriptDataHandlerModule;
-
-    /**
      * Returns additional template variables used to generate the html representation
      * of this node.
      *
@@ -197,18 +191,21 @@ trait TI18nFormField
      */
     public function i18n($i18n = true)
     {
-        if ($this->javaScriptDataHandlerModule) {
-            if ($this->isI18n() && !$i18n) {
-                $this->javaScriptDataHandlerModule = $this->nonI18nJavaScriptDataHandlerModule;
-            } elseif (!$this->isI18n() && $i18n) {
-                $this->nonI18nJavaScriptDataHandlerModule = $this->javaScriptDataHandlerModule;
-                $this->javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/ValueI18n';
-            }
-        }
-
         $this->i18n = $i18n;
 
         return $this;
+    }
+
+    /**
+     * @see IFormField::getJavaScriptDataHandlerModule()
+     */
+    public function getJavaScriptDataHandlerModule(): string
+    {
+        if ($this->isI18n() && \count(LanguageFactory::getInstance()->getLanguages()) > 1) {
+            return 'WoltLabSuite/Core/Form/Builder/Field/ValueI18n';
+        } else {
+            return $this->javaScriptDataHandlerModule;
+        }
     }
 
     /**
