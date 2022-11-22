@@ -18,36 +18,32 @@ class ACPSearchResultList implements \Countable, \Iterator
      * current iterator index
      * @var int
      */
-    protected $index = 0;
+    protected int $index = 0;
 
     /**
      * result list title
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * result list
      * @var ACPSearchResult[]
      */
-    protected $results = [];
+    protected array $results = [];
 
     /**
      * Creates a new ACPSearchResultList.
-     *
-     * @param string $title
      */
-    public function __construct($title)
+    public function __construct(string $title)
     {
         $this->title = WCF::getLanguage()->get('wcf.acp.search.provider.' . $title);
     }
 
     /**
      * Adds a result to the collection.
-     *
-     * @param ACPSearchResult $result
      */
-    public function addResult(ACPSearchResult $result)
+    public function addResult(ACPSearchResult $result): void
     {
         $this->results[] = $result;
     }
@@ -55,10 +51,8 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * Reduces the result collection by given count. If the count is higher
      * than the actual amount of results, the results will be cleared.
-     *
-     * @param int $count
      */
-    public function reduceResults($count)
+    public function reduceResults(int $count): void
     {
         // more results than available should be wiped, just set it to 0
         if ($count >= \count($this->results)) {
@@ -76,10 +70,8 @@ class ACPSearchResultList implements \Countable, \Iterator
 
     /**
      * Reduces the result collection to specified size.
-     *
-     * @param int $size
      */
-    public function reduceResultsTo($size)
+    public function reduceResultsTo(int $size): void
     {
         $count = \count($this->results);
 
@@ -92,7 +84,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * Sorts results by title.
      */
-    public function sort()
+    public function sort(): void
     {
         \usort($this->results, static function (ACPSearchResult $a, ACPSearchResult $b) {
             return \strcmp($a->getTitle(), $b->getTitle());
@@ -101,10 +93,8 @@ class ACPSearchResultList implements \Countable, \Iterator
 
     /**
      * Returns the result list title.
-     *
-     * @return  string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -112,7 +102,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->title;
     }
@@ -128,7 +118,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): ACPSearchResult
     {
         return $this->results[$this->index];
     }
@@ -136,7 +126,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->index;
     }
@@ -144,7 +134,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -152,7 +142,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }
@@ -160,7 +150,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->results[$this->index]);
     }
