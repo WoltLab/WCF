@@ -9,6 +9,7 @@
  */
 
 import { dboAction } from "../../../Ajax";
+import * as AjaxStatus from "../../../Ajax/Status";
 import { isPlainObject } from "../../../Core";
 import * as Language from "../../../Language";
 import { innerError } from "../../../Dom/Util";
@@ -63,7 +64,25 @@ function detectCode(): void {
   }
 }
 
+let refreshedPackageDatabase: Promise<unknown> | undefined = undefined;
+function refreshPackageDatabase() {
+  if (refreshedPackageDatabase === undefined) {
+    refreshedPackageDatabase = dboAction("refreshDatabase", "wcf\\data\\package\\update\\PackageUpdateAction")
+      .disableLoadingIndicator()
+      .dispatch();
+  }
+
+  return refreshedPackageDatabase;
+}
+
 async function prepareInstallation(data: InstallationCode): Promise<void> {
+  try {
+    AjaxStatus.show();
+    await refreshPackageDatabase();
+  } finally {
+    AjaxStatus.hide();
+  }
+
   const response = (await dboAction("prepareInstallation", "wcf\\data\\package\\update\\PackageUpdateAction")
     .payload({
       packages: {
@@ -109,6 +128,13 @@ async function prepareInstallation(data: InstallationCode): Promise<void> {
 
 export function setup(): void {
   codeInput = document.getElementById("quickInstallationCode") as HTMLInputElement;
+
+  codeInput.addEventListener("focus", () => {
+    // Refresh the package database when focusing the input to hide the latency of the package
+    // server querying from the user, because the refresh runs, while the user is busy with
+    // pasting the StoreCode into the input.
+    void refreshPackageDatabase();
+  });
 
   codeInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
