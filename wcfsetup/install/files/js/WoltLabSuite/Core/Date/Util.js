@@ -12,32 +12,46 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getTimezoneDate = exports.getTimeElement = exports.gmdate = exports.format = exports.formatDateTime = exports.formatTime = exports.formatDate = void 0;
     Language = tslib_1.__importStar(Language);
+    const locale = document.documentElement.lang;
+    const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+    const timeFormatter = new Intl.DateTimeFormat(locale, {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+    });
+    const dateTimeFormatter = new Intl.DateTimeFormat(locale, {
+        year: "numeric",
+        day: "numeric",
+        month: "long",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+    });
     /**
      * Returns the formatted date.
      */
     function formatDate(date) {
-        return format(date, Language.get("wcf.date.dateFormat"));
+        return dateFormatter.format(date);
     }
     exports.formatDate = formatDate;
     /**
      * Returns the formatted time.
      */
     function formatTime(date) {
-        return format(date, Language.get("wcf.date.timeFormat"));
+        return timeFormatter.format(date);
     }
     exports.formatTime = formatTime;
     /**
      * Returns the formatted date time.
      */
     function formatDateTime(date) {
-        const dateTimeFormat = Language.get("wcf.date.dateTimeFormat");
-        const dateFormat = Language.get("wcf.date.dateFormat");
-        const timeFormat = Language.get("wcf.date.timeFormat");
-        return format(date, dateTimeFormat.replace(/%date%/, dateFormat).replace(/%time%/, timeFormat));
+        return dateTimeFormatter.format(date);
     }
     exports.formatDateTime = formatDateTime;
     /**
      * Formats a date using PHP's `date()` modifiers.
+     *
+     * @deprecated Use `Intl.DateTimeFormat()` instead.
      */
     function format(date, format) {
         // ISO 8601 date, best recognition by PHP's strtotime()

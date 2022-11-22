@@ -10,33 +10,47 @@
 
 import * as Language from "../Language";
 
+const locale = document.documentElement.lang;
+const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+const timeFormatter = new Intl.DateTimeFormat(locale, {
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+});
+const dateTimeFormatter = new Intl.DateTimeFormat(locale, {
+  year: "numeric",
+  day: "numeric",
+  month: "long",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+});
+
 /**
  * Returns the formatted date.
  */
 export function formatDate(date: Date): string {
-  return format(date, Language.get("wcf.date.dateFormat"));
+  return dateFormatter.format(date);
 }
 
 /**
  * Returns the formatted time.
  */
 export function formatTime(date: Date): string {
-  return format(date, Language.get("wcf.date.timeFormat"));
+  return timeFormatter.format(date);
 }
 
 /**
  * Returns the formatted date time.
  */
 export function formatDateTime(date: Date): string {
-  const dateTimeFormat = Language.get("wcf.date.dateTimeFormat");
-  const dateFormat = Language.get("wcf.date.dateFormat");
-  const timeFormat = Language.get("wcf.date.timeFormat");
-
-  return format(date, dateTimeFormat.replace(/%date%/, dateFormat).replace(/%time%/, timeFormat));
+  return dateTimeFormatter.format(date);
 }
 
 /**
  * Formats a date using PHP's `date()` modifiers.
+ *
+ * @deprecated Use `Intl.DateTimeFormat()` instead.
  */
 export function format(date: Date, format: string): string {
   // ISO 8601 date, best recognition by PHP's strtotime()
