@@ -16,27 +16,46 @@ use wcf\system\package\event\PackageInstallationPluginSynced;
 use wcf\system\package\event\PackageListChanged;
 use wcf\system\user\authentication\event\UserLoggedIn;
 use wcf\system\WCF;
+use wcf\system\worker\event\RebuildWorkerCollecting;
 
 return static function (): void {
+    $eventHandler = EventHandler::getInstance();
+
     WCF::getTPL()->assign(
         'executeCronjobs',
         CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE
     );
 
-    EventHandler::getInstance()->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
+    $eventHandler->register(UserLoggedIn::class, UserLoginCancelLostPasswordListener::class);
 
-    EventHandler::getInstance()->register(PackageListChanged::class, static function () {
+    $eventHandler->register(PackageListChanged::class, static function () {
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
             $command = new ResetPreloadCache($language);
             $command();
         }
     });
-    EventHandler::getInstance()->register(LanguageImported::class, static function (LanguageImported $event) {
+    $eventHandler->register(LanguageImported::class, static function (LanguageImported $event) {
         $command = new ResetPreloadCache($event->language);
         $command();
     });
-    EventHandler::getInstance()->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
-    EventHandler::getInstance()->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
+    $eventHandler->register(PhraseChanged::class, PhraseChangedPreloadListener::class);
+    $eventHandler->register(PackageInstallationPluginSynced::class, PipSyncedPhrasePreloadListener::class);
     WCF::getTPL()->assign('phrasePreloader', new PhrasePreloader());
-    EventHandler::getInstance()->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
+    $eventHandler->register(PreloadPhrasesCollecting::class, PreloadPhrasesCollectingListener::class);
+
+    $eventHandler->register(RebuildWorkerCollecting::class, static function (RebuildWorkerCollecting $event) {
+        $event->register(\wcf\system\worker\LikeRebuildDataWorker::class, -100);
+        $event->register(\wcf\system\worker\ArticleRebuildDataWorker::class, 50);
+        $event->register(\wcf\system\worker\PageRebuildDataWorker::class, 50);
+        $event->register(\wcf\system\worker\PollRebuildDataWorker::class, 60);
+        $event->register(\wcf\system\worker\UserActivityPointUpdateEventsWorker::class, 65);
+        $event->register(\wcf\system\worker\UserRebuildDataWorker::class, 70);
+        $event->register(\wcf\system\worker\UserActivityPointItemsRebuildDataWorker::class, 75);
+        $event->register(\wcf\system\worker\CommentRebuildDataWorker::class, 120);
+        $event->register(\wcf\system\worker\CommentResponseRebuildDataWorker::class, 121);
+        $event->register(\wcf\system\worker\AttachmentRebuildDataWorker::class, 450);
+        $event->register(\wcf\system\worker\MediaRebuildDataWorker::class, 450);
+        $event->register(\wcf\system\worker\SitemapRebuildWorker::class, 500);
+        $event->register(\wcf\system\worker\StatDailyRebuildDataWorker::class, 800);
+    });
 };
