@@ -74,9 +74,10 @@ function createPicker() {
   monthYearContainer.appendChild(_dateMonth);
 
   let months = "";
-  const monthNames = Language.get("__monthsShort") as any as string[];
+  const monthNames = new Intl.DateTimeFormat(document.documentElement.lang, { month: "long" });
   for (let i = 0; i < 12; i++) {
-    months += `<option value="${i}">${monthNames[i]}</option>`;
+    const monthName = monthNames.format(new Date(2000, i, 15));
+    months += `<option value="${i}">${monthName}</option>`;
   }
   _dateMonth.innerHTML = months;
 
@@ -103,15 +104,19 @@ function createPicker() {
   item.className = "weekdays";
   _dateGrid.appendChild(item);
 
-  const weekdays = Language.get("__daysShort") as any as string[];
+  // There is no simple way to access the names
+  // of the weekdays. We can work around this by
+  // taking todays date and shift it to the start
+  // of the week.
+  const weekdays = new Intl.DateTimeFormat(document.documentElement.lang, { weekday: "short" });
+  const now = new Date();
+  const startOfWeekOffset = now.getDay() - _firstDayOfWeek;
   for (let i = 0; i < 7; i++) {
-    let day = i + _firstDayOfWeek;
-    if (day > 6) {
-      day -= 7;
-    }
+    const offset = i - startOfWeekOffset;
+    const day = new Date(new Date().setDate(now.getDate() + offset));
 
     const span = document.createElement("span");
-    span.textContent = weekdays[day];
+    span.textContent = weekdays.format(day);
     item.appendChild(span);
   }
 
