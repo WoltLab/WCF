@@ -23,6 +23,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.clipboard.item.markAll');
         $event->preload('wcf.clipboard.item.unmarkAll');
 
+        $event->preload('wcf.date.firstDayOfTheWeek');
         $event->preload('wcf.date.hour');
         $event->preload('wcf.date.minute');
         $event->preload('wcf.date.relative.now');
