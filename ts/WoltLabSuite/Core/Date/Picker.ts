@@ -144,12 +144,26 @@ function createPicker() {
   _dateHour.addEventListener("change", formatValue);
 
   const date = new Date(2000, 0, 1);
-  const timeFormat = Language.get("wcf.date.timeFormat").replace(/:/, "").replace(/[isu]/g, "");
+  const timeFormatter = new Intl.DateTimeFormat(document.documentElement.lang, { hour: "numeric" });
   let tmp = "";
   for (let i = 0; i < 24; i++) {
     date.setHours(i);
 
-    const value = DateUtil.format(date, timeFormat);
+    let parts = timeFormatter.formatToParts(date);
+
+    // The formatter yields results containing string
+    // literals that add noise to the selection without
+    // offering any value.
+    //
+    // One example is the German output which appends
+    // ` Uhr` to every hour, even when this is completely
+    // useless in this context.
+    const containsDayPeriod = parts.some((part) => part.type === "dayPeriod");
+    if (parts.length === 2 && !containsDayPeriod) {
+      parts = parts.filter((part) => part.type !== "literal");
+    }
+
+    const value = parts.map((part) => part.value).join("");
     tmp += `<option value="${i}">${value}</option>`;
   }
   _dateHour.innerHTML = tmp;
