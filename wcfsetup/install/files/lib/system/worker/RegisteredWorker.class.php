@@ -24,7 +24,7 @@ final class RegisteredWorker
 
     public function getName(): string
     {
-        return WCF::getLanguage()->get(\sprintf(
+        return WCF::getLanguage()->getDynamicVariable(\sprintf(
             'wcf.acp.rebuildData.%s',
             $this->getIdentifier(),
         ));
@@ -32,7 +32,7 @@ final class RegisteredWorker
 
     public function getDescription(): string
     {
-        return WCF::getLanguage()->get(\sprintf(
+        return WCF::getLanguage()->getDynamicVariable(\sprintf(
             'wcf.acp.rebuildData.%s.description',
             $this->getIdentifier(),
         ));
