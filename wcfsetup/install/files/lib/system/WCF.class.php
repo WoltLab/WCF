@@ -52,6 +52,10 @@ if (!@\ini_get('date.timezone')) {
     @\date_default_timezone_set('Europe/London');
 }
 
+// Force enable the reporting of all errors, no matter what's
+// configured in php.ini.
+\error_reporting(E_ALL);
+
 // Make stack traces more useful with PHP 8.2 (which has SensitiveParameter).
 if (\PHP_VERSION_ID >= 80200) {
     @\ini_set('zend.exception_ignore_args', 0);
