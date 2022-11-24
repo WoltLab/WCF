@@ -235,7 +235,7 @@ class UserOptionHandler extends OptionHandler
                     $optionType->forceSearchOption = $this->optionValues[$option->optionName] == $option->defaultValue;
                 }
 
-                $element = $optionType->getSearchFormElement($option, $this->optionValues[$option->optionName] ?? '');
+                $element = $optionType->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
 
                 if ($hasProperty && isset($this->optionValues[$option->optionName])) {
                     $optionType->forceSearchOption = false;
@@ -244,7 +244,7 @@ class UserOptionHandler extends OptionHandler
                 return $element;
             }
 
-            return $optionType->getSearchFormElement($option, $this->optionValues[$option->optionName] ?? '');
+            return $optionType->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
         }
 
         return parent::getFormElement($type, $option);
