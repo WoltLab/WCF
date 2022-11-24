@@ -16,7 +16,7 @@ if (!\defined('RELATIVE_WCF_DIR')) {
 }
 
 // include config
-require_once(RELATIVE_WCF_DIR . 'app.config.inc.php');
+require_once(__DIR__ . '/../app.config.inc.php');
 
 // starting wcf acp
 require_once(WCF_DIR . 'lib/system/WCF.class.php');

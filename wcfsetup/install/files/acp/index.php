@@ -7,5 +7,5 @@
  * @package WoltLabSuite\Core
  */
 
-require_once('./global.php');
+require_once(__DIR__ . '/global.php');
 wcf\system\request\RequestHandler::getInstance()->handle('wcf', true);
