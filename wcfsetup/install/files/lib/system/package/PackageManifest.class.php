@@ -202,6 +202,10 @@ final class PackageManifest
         // Note: The $instructions array *must not* be sorted. The order
         // of instructions is important!
         return \array_map(static function ($instruction) {
+            if ($instruction['pip'] === PackageArchive::VOID_MARKER) {
+                return PackageArchive::VOID_MARKER;
+            }
+
             unset($instruction['attributes']['type']);
             \ksort($instruction['attributes']);
 
@@ -271,7 +275,7 @@ final class PackageManifest
 
     private function escape(string $v): string
     {
-        return \preg_replace_callback('/[^a-zA-Z0-9 \\/\\.:_\\*\\-]/', static function ($matches) {
+        return \preg_replace_callback('/[^a-zA-Z0-9 \\/\\.:_=\\*\\-]/', static function ($matches) {
             return \sprintf("\\x%s", \bin2hex($matches[0]));
         }, $v);
     }
