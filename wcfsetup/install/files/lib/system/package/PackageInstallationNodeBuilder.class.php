@@ -663,11 +663,10 @@ class PackageInstallationNodeBuilder
 
         $this->node = $this->getToken();
 
-        $pluginNodes = [];
-
         $this->emptyNode = true;
 
         $i = 0;
+        $pluginNodes = [];
         foreach ($instructions as $pip) {
             $i++;
 
