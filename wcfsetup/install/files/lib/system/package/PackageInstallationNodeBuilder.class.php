@@ -134,9 +134,6 @@ class PackageInstallationNodeBuilder
 
         $this->buildStartMarkerNode();
 
-        // register package version
-        self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
-
         // install package itself
         if ($this->installation->getAction() == 'install') {
             $this->buildPackageNode();
@@ -144,6 +141,9 @@ class PackageInstallationNodeBuilder
 
         // package installation plugins
         $this->buildPluginNodes();
+
+        // register package version
+        self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 
         // optional packages (ignored on update)
         if ($this->installation->getAction() == 'install') {
