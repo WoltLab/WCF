@@ -2,7 +2,6 @@
 
 namespace wcf\system\package;
 
-use wcf\data\package\Package;
 use wcf\system\WCF;
 
 /**
@@ -24,7 +23,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             $this->node = $this->getToken();
         }
 
-        $package = new Package($this->installation->queue->packageID);
+        $package = $this->installation->getPackage();
 
         (new AuditLogger())->log(
             <<<EOT
