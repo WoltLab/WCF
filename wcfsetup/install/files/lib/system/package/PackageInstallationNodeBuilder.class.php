@@ -60,7 +60,7 @@ class PackageInstallationNodeBuilder
      * list of packages about to be installed
      * @var string[]
      */
-    protected static $pendingPackages = [];
+    private static $pendingPackages = [];
 
     /**
      * Creates a new instance of PackageInstallationNodeBuilder
