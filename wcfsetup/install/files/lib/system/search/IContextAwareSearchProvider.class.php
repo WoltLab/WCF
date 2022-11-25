@@ -2,9 +2,6 @@
 
 namespace wcf\system\search;
 
-use wcf\data\search\ISearchResultObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-
 /**
  * Interface for full-text search providers that provide
  * additional context information for messages.

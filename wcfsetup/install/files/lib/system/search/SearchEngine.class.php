@@ -123,7 +123,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
         array $objectTypes,
         bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
-        array $contextFilter,
+        array $contextFilter = [],
         array $additionalConditions = [],
         string $orderBy = 'time DESC',
         int $limit = 1000
@@ -181,7 +181,7 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
         string $q,
         bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
-        array $contextFilter,
+        array $contextFilter = [],
         string $orderBy = 'time DESC',
         int $limit = 1000
     ): array {

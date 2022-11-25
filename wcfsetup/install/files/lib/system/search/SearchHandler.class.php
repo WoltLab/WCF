@@ -319,8 +319,8 @@ final class SearchHandler
             $this->objectTypeNames,
             $this->parameters['subjectOnly'] ?? 0,
             $this->conditionBuilder,
-            $this->typeBasedConditionBuilders,
             $this->typeBasedContextFilter,
+            $this->typeBasedConditionBuilders,
             $this->parameters['sortField'] . ' ' . $this->parameters['sortOrder']
         );
 

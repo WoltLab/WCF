@@ -38,7 +38,7 @@ interface IContextAwareSearchEngine extends ISearchEngine
         string $q,
         bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
-        array $contextFilter,
+        array $contextFilter = [],
         string $orderBy = 'time DESC',
         int $limit = 1000
     ): array;
@@ -51,7 +51,7 @@ interface IContextAwareSearchEngine extends ISearchEngine
         array $objectTypes,
         bool $subjectOnly = false,
         ?PreparedStatementConditionBuilder $searchIndexCondition = null,
-        array $contextFilter,
+        array $contextFilter = [],
         array $additionalConditions = [],
         string $orderBy = 'time DESC',
         int $limit = 1000
