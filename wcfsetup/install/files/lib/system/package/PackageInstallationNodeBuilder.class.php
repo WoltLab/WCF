@@ -86,22 +86,48 @@ class PackageInstallationNodeBuilder
     public function buildNodes()
     {
         $manifest = new PackageManifest($this->installation->getArchive());
-        (new AuditLogger())->log(
-            <<<EOT
-            Building installation nodes
-            ===========================
-            Process#: {$this->installation->queue->processNo}
-            Queue#: {$this->installation->queue->queueID}
-            Parent Queue#: {$this->installation->queue->parentQueueID}
-            Parent Node: {$this->parentNode}
+        $auditLogger = new AuditLogger();
 
-            Archive: {$this->installation->getArchive()->getArchive()}
-            Manifest ({$manifest->getHash()}):
-            ---
-            {$manifest->getManifest()}
-            ---
-            EOT
-        );
+        $package = $this->installation->getPackage();
+        switch ($this->installation->getAction()) {
+            case 'install':
+                $auditLogger->log(
+                    <<<EOT
+                    Building installation nodes
+                    ===========================
+                    Process#: {$this->installation->queue->processNo}
+                    Queue#: {$this->installation->queue->queueID}
+                    Parent Queue#: {$this->installation->queue->parentQueueID}
+                    Parent Node: {$this->parentNode}
+
+                    Archive: {$this->installation->getArchive()->getArchive()}
+                    Manifest ({$manifest->getHash()}):
+                    ---
+                    {$manifest->getManifest()}
+                    ---
+                    EOT
+                );
+                break;
+            case 'update':
+                $auditLogger->log(
+                    <<<EOT
+                    Building update nodes
+                    =====================
+                    Process#: {$this->installation->queue->processNo}
+                    Queue#: {$this->installation->queue->queueID}
+                    Parent Queue#: {$this->installation->queue->parentQueueID}
+                    Parent Node: {$this->parentNode}
+
+                    Package: {$package->package}
+                    Archive: {$this->installation->getArchive()->getArchive()}
+                    Manifest ({$manifest->getHash()}):
+                    ---
+                    {$manifest->getManifest()}
+                    ---
+                    EOT
+                );
+                break;
+        }
 
         // required packages
         $this->buildRequirementNodes();
@@ -130,7 +156,7 @@ class PackageInstallationNodeBuilder
 
         $this->buildEndMarkerNode();
 
-        (new AuditLogger())->log(
+        $auditLogger->log(
             <<<EOT
             Finished building nodes
             =======================
