@@ -75,7 +75,7 @@ class PackageInstallationDispatcher
      * instance of Package
      * @var Package
      */
-    public $package;
+    protected $package;
 
     /**
      * instance of PackageInstallationQueue
