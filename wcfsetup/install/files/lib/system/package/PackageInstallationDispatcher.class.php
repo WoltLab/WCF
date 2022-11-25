@@ -63,7 +63,7 @@ class PackageInstallationDispatcher
      * instance of PackageArchive
      * @var PackageArchive
      */
-    public $archive;
+    protected $archive;
 
     /**
      * instance of PackageInstallationNodeBuilder
