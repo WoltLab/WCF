@@ -109,6 +109,8 @@ class PackageInstallationNodeBuilder
                 );
                 break;
             case 'update':
+                $currentPackageVersion = self::$pendingPackages[$package->package] ?? $package->packageVersion;
+
                 $auditLogger->log(
                     <<<EOT
                     Building update nodes
@@ -118,7 +120,8 @@ class PackageInstallationNodeBuilder
                     Parent Queue#: {$this->installation->queue->parentQueueID}
                     Parent Node: {$this->parentNode}
 
-                    Package: {$package->package}
+                    Package: {$package->package} ({$currentPackageVersion})
+
                     Archive: {$this->installation->getArchive()->getArchive()}
                     Manifest ({$manifest->getHash()}):
                     ---
@@ -140,7 +143,20 @@ class PackageInstallationNodeBuilder
         }
 
         // package installation plugins
-        $this->buildPluginNodes();
+        switch ($this->installation->getAction()) {
+            case 'install':
+                $instructions = $this->installation->getArchive()->getInstallInstructions();
+
+                break;
+            case 'update':
+                $instructions = $this->installation->getArchive()->getUpdateInstructionsFor($currentPackageVersion) ?? [];
+
+                break;
+            default:
+                throw new \LogicException('Unreachable');
+        }
+
+        $this->buildPluginNodes($instructions);
 
         // register package version
         self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
@@ -631,23 +647,8 @@ class PackageInstallationNodeBuilder
      *
      * @return  string
      */
-    protected function buildPluginNodes()
+    protected function buildPluginNodes(array $instructions)
     {
-        switch ($this->installation->getAction()) {
-            case 'install':
-                $instructions = $this->installation->getArchive()->getInstallInstructions();
-
-                break;
-            case 'update':
-                $package = $this->installation->getPackage();
-                $currentPackageVersion = self::$pendingPackages[$package->package] ?? $package->packageVersion;
-                $instructions = $this->installation->getArchive()->getUpdateInstructionsFor($currentPackageVersion) ?? [];
-
-                break;
-            default:
-                throw new \LogicException('Unreachable');
-        }
-
         $count = \count($instructions);
 
         if ($count === 0) {

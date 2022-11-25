@@ -40,7 +40,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
 
         $this->buildStartMarkerNode();
 
-        $this->buildPluginNodes();
+        $this->buildUninstallationPluginNodes();
 
         $this->buildPackageNode();
 
@@ -60,7 +60,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
     /**
      * @inheritDoc
      */
-    protected function buildPluginNodes()
+    protected function buildUninstallationPluginNodes()
     {
         if (empty($this->node)) {
             $this->node = $this->getToken();
