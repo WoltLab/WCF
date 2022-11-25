@@ -112,7 +112,7 @@ class PackageInstallationNodeBuilder
         self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 
         // install package itself
-        if ($this->installation->queue->action == 'install') {
+        if ($this->installation->getAction() == 'install') {
             $this->buildPackageNode();
         }
 
@@ -120,11 +120,11 @@ class PackageInstallationNodeBuilder
         $this->buildPluginNodes();
 
         // optional packages (ignored on update)
-        if ($this->installation->queue->action == 'install') {
+        if ($this->installation->getAction() == 'install') {
             $this->buildOptionalNodes();
         }
 
-        if ($this->installation->queue->action == 'update') {
+        if ($this->installation->getAction() == 'update') {
             $this->buildPackageNode();
         }
 
