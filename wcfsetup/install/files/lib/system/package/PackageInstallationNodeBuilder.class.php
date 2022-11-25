@@ -633,17 +633,6 @@ class PackageInstallationNodeBuilder
      */
     protected function buildPluginNodes()
     {
-        if (!empty($this->node)) {
-            $this->parentNode = $this->node;
-            $this->sequenceNo = 0;
-        }
-
-        $this->node = $this->getToken();
-
-        $pluginNodes = [];
-
-        $this->emptyNode = true;
-
         switch ($this->installation->getAction()) {
             case 'install':
                 $instructions = $this->installation->getArchive()->getInstallInstructions();
@@ -666,6 +655,17 @@ class PackageInstallationNodeBuilder
             // the update instructions have been erroneously discarded.
             throw new \Exception('Received an empty list of instructions.');
         }
+
+        if (!empty($this->node)) {
+            $this->parentNode = $this->node;
+            $this->sequenceNo = 0;
+        }
+
+        $this->node = $this->getToken();
+
+        $pluginNodes = [];
+
+        $this->emptyNode = true;
 
         $i = 0;
         foreach ($instructions as $pip) {
