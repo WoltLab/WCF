@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Search
  */
-class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
+class SearchIndexManager extends SingletonFactory implements IContextAwareSearchIndexManager
 {
     /**
      * list of available object types
@@ -121,6 +121,46 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 
         $this->getSearchIndexManager()
             ->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+    }
+
+    /**
+     * @inheritDoc
+     * @since 6.0
+     */
+    public function setWithContext(
+        string $objectType,
+        int $objectID,
+        int $parentID,
+        int $containerID,
+        string $message,
+        string $subject,
+        int $time,
+        ?int $userID,
+        string $username,
+        ?int $languageID = null,
+        string $metaData = ''
+    ): void {
+        $searchIndexManager = $this->getSearchIndexManager();
+        if ($searchIndexManager instanceof IContextAwareSearchIndexManager) {
+            $message = StringUtil::trim(StringUtil::stripHTML($message));
+
+            $searchIndexManager->setWithContext(
+                $objectType,
+                $objectID,
+                $parentID,
+                $containerID,
+                $message,
+                $subject,
+                $time,
+                $userID,
+                $username,
+                $languageID,
+                $metaData
+            );
+        } else {
+            $searchIndexManager
+                ->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+        }
     }
 
     /**
