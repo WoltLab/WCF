@@ -228,4 +228,15 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
     {
         return $this->getSearchEngine()->removeSpecialCharacters($string);
     }
+
+    /**
+     * Returns true if the search backend supports
+     * context information for messages.
+     *
+     * @since 6.0
+     */
+    public function isContextAware(): bool
+    {
+        return ($this->getSearchEngine() instanceof IContextAwareSearchEngine);
+    }
 }
