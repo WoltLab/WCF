@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CuyZ\Valinor\Mapper\Object;
 
 use CuyZ\Valinor\Definition\Attributes;
-use CuyZ\Valinor\Definition\EmptyAttributes;
+use CuyZ\Valinor\Definition\AttributesContainer;
 use CuyZ\Valinor\Definition\ParameterDefinition;
 use CuyZ\Valinor\Definition\PropertyDefinition;
 use CuyZ\Valinor\Type\Type;
@@ -17,8 +17,7 @@ final class Argument
 
     private Type $type;
 
-    /** @var mixed */
-    private $defaultValue;
+    private mixed $defaultValue = null;
 
     private bool $isRequired = true;
 
@@ -26,8 +25,8 @@ final class Argument
 
     private function __construct(string $name, Type $type)
     {
-        $this->name = $name;
         $this->type = $type;
+        $this->name = $name;
     }
 
     public static function fromParameter(ParameterDefinition $parameter): self
@@ -66,10 +65,7 @@ final class Argument
         return $this->type;
     }
 
-    /**
-     * @return mixed
-     */
-    public function defaultValue()
+    public function defaultValue(): mixed
     {
         return $this->defaultValue;
     }
@@ -81,6 +77,6 @@ final class Argument
 
     public function attributes(): Attributes
     {
-        return $this->attributes ?? EmptyAttributes::get();
+        return $this->attributes ?? AttributesContainer::empty();
     }
 }

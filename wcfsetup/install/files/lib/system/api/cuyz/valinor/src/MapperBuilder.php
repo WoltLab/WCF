@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CuyZ\Valinor;
 
-use CuyZ\Valinor\Cache\FileSystemCache;
 use CuyZ\Valinor\Library\Container;
 use CuyZ\Valinor\Library\Settings;
+use CuyZ\Valinor\Mapper\ArgumentsMapper;
 use CuyZ\Valinor\Mapper\Object\DateTimeFormatConstructor;
 use CuyZ\Valinor\Mapper\Tree\Message\ErrorMessage;
 use CuyZ\Valinor\Mapper\TreeMapper;
@@ -34,6 +34,9 @@ final class MapperBuilder
      * using the given source. These arguments can then be used to decide which
      * implementation should be used.
      *
+     * The callback *must* be pure, its output must be deterministic.
+     * @see https://en.wikipedia.org/wiki/Pure_function
+     *
      * Example:
      *
      * ```php
@@ -52,6 +55,7 @@ final class MapperBuilder
      * ```
      *
      * @param interface-string $interfaceName
+     * @psalm-param pure-callable $callback
      */
     public function infer(string $interfaceName, callable $callback): self
     {
@@ -79,6 +83,9 @@ final class MapperBuilder
      * `__construct` method — of the targeted class. If for some reason it still
      * needs to be handled as well, the name of the class must be given to this
      * method.
+     *
+     * A constructor *must* be pure, its output must be deterministic.
+     * @see https://en.wikipedia.org/wiki/Pure_function
      *
      * ```php
      * final class SomeClass
@@ -156,9 +163,10 @@ final class MapperBuilder
      *     ]);
      * ```
      *
+     * @psalm-param pure-callable|class-string ...$constructors
      * @param callable|class-string ...$constructors
      */
-    public function registerConstructor(...$constructors): self
+    public function registerConstructor(callable|string ...$constructors): self
     {
         $clone = clone $this;
 
@@ -237,28 +245,13 @@ final class MapperBuilder
 
     /**
      * @template T
+     * @psalm-param pure-callable(T): T $callback
      * @param callable(T): T $callback
      */
     public function alter(callable $callback): self
     {
         $clone = clone $this;
         $clone->settings->valueModifier[] = $callback;
-
-        return $clone;
-    }
-
-    /**
-     * @deprecated use the following method(s) depending on your needs:
-     * @see \CuyZ\Valinor\MapperBuilder::enableFlexibleCasting()
-     * @see \CuyZ\Valinor\MapperBuilder::allowSuperfluousKeys()
-     * @see \CuyZ\Valinor\MapperBuilder::allowPermissiveTypes()
-     */
-    public function flexible(): self
-    {
-        $clone = clone $this;
-        $clone->settings->enableFlexibleCasting = true;
-        $clone->settings->allowSuperfluousKeys = true;
-        $clone->settings->allowPermissiveTypes = true;
 
         return $clone;
     }
@@ -372,6 +365,9 @@ final class MapperBuilder
      * part of a query should never be allowed. Therefore, only an exhaustive
      * list of carefully chosen exceptions should be filtered.
      *
+     * The filter callback *must* be pure, its output must be deterministic.
+     * @see https://en.wikipedia.org/wiki/Pure_function
+     *
      * ```php
      * final class SomeClass
      * {
@@ -397,6 +393,7 @@ final class MapperBuilder
      *     ]);
      * ```
      *
+     * @psalm-param pure-callable(Throwable): ErrorMessage $filter
      * @param callable(Throwable): ErrorMessage $filter
      */
     public function filterExceptions(callable $filter): self
@@ -405,23 +402,6 @@ final class MapperBuilder
         $clone->settings->exceptionFilter = $filter;
 
         return $clone;
-    }
-
-    /**
-     * @deprecated instead, use:
-     *
-     * ```php
-     * (new \CuyZ\Valinor\MapperBuilder())
-     *     ->withCache(new FileSystemCache('cache-directory'))
-     *     ->mapper()
-     *     ->map(SomeClass::class, [
-     *         // …
-     *     ]);
-     * ```
-     */
-    public function withCacheDir(string $cacheDir): self
-    {
-        return $this->withCache(new FileSystemCache($cacheDir));
     }
 
     /**
@@ -435,29 +415,14 @@ final class MapperBuilder
         $this->container()->cacheWarmupService()->warmup(...$signatures);
     }
 
-    /**
-     * @deprecated It is not advised to use DoctrineAnnotation when using
-     *             PHP >= 8, you should use built-in PHP attributes instead.
-     */
-    public function enableLegacyDoctrineAnnotations(): self
-    {
-        $clone = clone $this;
-        $clone->settings->enableLegacyDoctrineAnnotations = true;
-
-        return $clone;
-    }
-
-    /**
-     * @deprecated use method `registerConstructor` instead.
-     */
-    public function bind(callable $callback): self
-    {
-        return $this->registerConstructor($callback);
-    }
-
     public function mapper(): TreeMapper
     {
         return $this->container()->treeMapper();
+    }
+
+    public function argumentsMapper(): ArgumentsMapper
+    {
+        return $this->container()->argumentsMapper();
     }
 
     public function __clone()

@@ -37,14 +37,9 @@ final class Settings
     /** @var callable(Throwable): ErrorMessage */
     public $exceptionFilter;
 
-    public bool $enableLegacyDoctrineAnnotations = PHP_VERSION_ID < 8_00_00;
-
     public function __construct()
     {
         $this->interfaceMapping[DateTimeInterface::class] = static fn () => DateTimeImmutable::class;
-        $this->exceptionFilter = function (Throwable $exception) {
-            // @PHP8.0 use throw exception expression in short closure
-            throw $exception;
-        };
+        $this->exceptionFilter = fn (Throwable $exception) => throw $exception;
     }
 }

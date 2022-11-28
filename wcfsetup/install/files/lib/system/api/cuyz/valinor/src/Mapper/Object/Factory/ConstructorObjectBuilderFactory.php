@@ -7,8 +7,6 @@ namespace CuyZ\Valinor\Mapper\Object\Factory;
 use CuyZ\Valinor\Definition\ClassDefinition;
 use CuyZ\Valinor\Definition\FunctionObject;
 use CuyZ\Valinor\Definition\FunctionsContainer;
-use CuyZ\Valinor\Mapper\Object\BackwardCompatibilityDateTimeConstructor;
-use CuyZ\Valinor\Mapper\Object\DateTimeFormatConstructor;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
 use CuyZ\Valinor\Mapper\Object\Exception\CannotInstantiateObject;
 use CuyZ\Valinor\Mapper\Object\Exception\InvalidConstructorClassTypeParameter;
@@ -29,24 +27,12 @@ use function count;
 /** @internal */
 final class ConstructorObjectBuilderFactory implements ObjectBuilderFactory
 {
-    private ObjectBuilderFactory $delegate;
-
-    /** @var array<class-string, null> */
-    public array $nativeConstructors = [];
-
-    private FunctionsContainer $constructors;
-
-    /**
-     * @param array<class-string, null> $nativeConstructors
-     */
     public function __construct(
-        ObjectBuilderFactory $delegate,
-        array $nativeConstructors,
-        FunctionsContainer $constructors
+        private ObjectBuilderFactory $delegate,
+        /** @var array<class-string, null> */
+        public array $nativeConstructors,
+        private FunctionsContainer $constructors
     ) {
-        $this->delegate = $delegate;
-        $this->nativeConstructors = $nativeConstructors;
-        $this->constructors = $constructors;
     }
 
     public function for(ClassDefinition $class): array
@@ -115,11 +101,7 @@ final class ConstructorObjectBuilderFactory implements ObjectBuilderFactory
             return false;
         }
 
-        if (! $definition->attributes()->has(DynamicConstructor::class)
-            // @PHP8.0 remove
-            && $definition->class() !== DateTimeFormatConstructor::class
-            && $definition->class() !== BackwardCompatibilityDateTimeConstructor::class
-        ) {
+        if (! $definition->attributes()->has(DynamicConstructor::class)) {
             return true;
         }
 

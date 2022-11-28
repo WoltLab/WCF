@@ -22,15 +22,12 @@ final class CannotResolveTypeFromUnion extends RuntimeException implements Error
     /** @var array<string, string> */
     private array $parameters;
 
-    /**
-     * @param mixed $source
-     */
-    public function __construct($source, UnionType $unionType)
+    public function __construct(mixed $source, UnionType $unionType)
     {
         $this->parameters = [
             'allowed_types' => implode(
                 ', ',
-                // @PHP8.1 First-class callable syntax
+                // PHP8.1 First-class callable syntax
                 array_map([TypeHelper::class, 'dump'], $unionType->types())
             ),
         ];

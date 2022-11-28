@@ -27,7 +27,13 @@ final class TreeMapperPsalmPlugin implements MethodReturnTypeProviderInterface
             return null;
         }
 
-        $type = $event->getSource()->getNodeTypeProvider()->getType($event->getCallArgs()[0]->value);
+        $arguments = $event->getCallArgs();
+
+        if (count($arguments) === 0) {
+            return null;
+        }
+
+        $type = $event->getSource()->getNodeTypeProvider()->getType($arguments[0]->value);
 
         if (! $type) {
             return null;
@@ -45,24 +51,16 @@ final class TreeMapperPsalmPlugin implements MethodReturnTypeProviderInterface
             $types[] = $inferred;
         }
 
-        if (count($types) === 0) {
-            return null;
-        }
-
         return Type::combineUnionTypeArray($types, $event->getSource()->getCodebase());
     }
 
     private static function type(Atomic $node): ?Union
     {
-        switch (true) {
-            case $node instanceof TLiteralString:
-                return Type::parseString($node->value);
-            case $node instanceof TDependentGetClass:
-                return $node->as_type;
-            case $node instanceof TClassString && $node->as_type:
-                return new Union([$node->as_type]);
-            default:
-                return null;
-        }
+        return match (true) {
+            $node instanceof TLiteralString => Type::parseString($node->value),
+            $node instanceof TDependentGetClass => $node->as_type,
+            $node instanceof TClassString && $node->as_type => new Union([$node->as_type]),
+            default => null,
+        };
     }
 }

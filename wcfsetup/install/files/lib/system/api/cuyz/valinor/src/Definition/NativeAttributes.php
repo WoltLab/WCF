@@ -11,7 +11,6 @@ use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
-use Reflector;
 use Traversable;
 
 use function array_map;
@@ -25,12 +24,11 @@ final class NativeAttributes implements Attributes
     private array $reflectionAttributes;
 
     /**
-     * @PHP8.0 union
      * @param ReflectionClass<object>|ReflectionProperty|ReflectionMethod|ReflectionFunction|ReflectionParameter $reflection
      */
-    public function __construct(Reflector $reflection)
+    public function __construct(ReflectionClass|ReflectionProperty|ReflectionMethod|ReflectionFunction|ReflectionParameter $reflection)
     {
-        $this->reflectionAttributes = $this->attributes($reflection);
+        $this->reflectionAttributes = $reflection->getAttributes();
 
         $attributes = array_filter(
             array_map(
@@ -80,15 +78,5 @@ final class NativeAttributes implements Attributes
     public function reflectionAttributes(): array
     {
         return $this->reflectionAttributes;
-    }
-
-    /**
-     * @PHP8.0 union
-     * @param ReflectionClass<object>|ReflectionProperty|ReflectionMethod|ReflectionFunction|ReflectionParameter $reflection
-     * @return array<ReflectionAttribute<object>>
-     */
-    private function attributes(Reflector $reflection): array
-    {
-        return $reflection->getAttributes();
     }
 }

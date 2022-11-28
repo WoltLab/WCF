@@ -8,10 +8,11 @@ namespace CuyZ\Valinor\Mapper;
 interface TreeMapper
 {
     /**
+     * @pure
+     *
      * @template T of object
      *
      * @param string|class-string<T> $signature
-     * @param mixed $source
      * @return (
      *     $signature is class-string<T>
      *         ? T
@@ -20,5 +21,5 @@ interface TreeMapper
      *
      * @throws MappingError
      */
-    public function map(string $signature, $source);
+    public function map(string $signature, mixed $source): mixed;
 }
