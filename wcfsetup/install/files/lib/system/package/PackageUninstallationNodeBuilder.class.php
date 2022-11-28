@@ -2,7 +2,6 @@
 
 namespace wcf\system\package;
 
-use wcf\data\package\Package;
 use wcf\system\WCF;
 
 /**
@@ -24,7 +23,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
             $this->node = $this->getToken();
         }
 
-        $package = new Package($this->installation->queue->packageID);
+        $package = $this->installation->getPackage();
 
         (new AuditLogger())->log(
             <<<EOT
@@ -41,7 +40,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
 
         $this->buildStartMarkerNode();
 
-        $this->buildPluginNodes();
+        $this->buildUninstallationPluginNodes();
 
         $this->buildPackageNode();
 
@@ -61,7 +60,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
     /**
      * @inheritDoc
      */
-    protected function buildPluginNodes()
+    protected function buildUninstallationPluginNodes()
     {
         if (empty($this->node)) {
             $this->node = $this->getToken();

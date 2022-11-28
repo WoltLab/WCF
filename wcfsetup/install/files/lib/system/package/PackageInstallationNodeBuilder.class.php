@@ -60,7 +60,7 @@ class PackageInstallationNodeBuilder
      * list of packages about to be installed
      * @var string[]
      */
-    protected static $pendingPackages = [];
+    private static $pendingPackages = [];
 
     /**
      * Creates a new instance of PackageInstallationNodeBuilder
@@ -86,51 +86,93 @@ class PackageInstallationNodeBuilder
     public function buildNodes()
     {
         $manifest = new PackageManifest($this->installation->getArchive());
-        (new AuditLogger())->log(
-            <<<EOT
-            Building installation nodes
-            ===========================
-            Process#: {$this->installation->queue->processNo}
-            Queue#: {$this->installation->queue->queueID}
-            Parent Queue#: {$this->installation->queue->parentQueueID}
-            Parent Node: {$this->parentNode}
+        $auditLogger = new AuditLogger();
 
-            Archive: {$this->installation->getArchive()->getArchive()}
-            Manifest ({$manifest->getHash()}):
-            ---
-            {$manifest->getManifest()}
-            ---
-            EOT
-        );
+        $package = $this->installation->getPackage();
+        switch ($this->installation->getAction()) {
+            case 'install':
+                $auditLogger->log(
+                    <<<EOT
+                    Building installation nodes
+                    ===========================
+                    Process#: {$this->installation->queue->processNo}
+                    Queue#: {$this->installation->queue->queueID}
+                    Parent Queue#: {$this->installation->queue->parentQueueID}
+                    Parent Node: {$this->parentNode}
+
+                    Archive: {$this->installation->getArchive()->getArchive()}
+                    Manifest ({$manifest->getHash()}):
+                    ---
+                    {$manifest->getManifest()}
+                    ---
+                    EOT
+                );
+                break;
+            case 'update':
+                $currentPackageVersion = self::$pendingPackages[$package->package] ?? $package->packageVersion;
+
+                $auditLogger->log(
+                    <<<EOT
+                    Building update nodes
+                    =====================
+                    Process#: {$this->installation->queue->processNo}
+                    Queue#: {$this->installation->queue->queueID}
+                    Parent Queue#: {$this->installation->queue->parentQueueID}
+                    Parent Node: {$this->parentNode}
+
+                    Package: {$package->package} ({$currentPackageVersion})
+
+                    Archive: {$this->installation->getArchive()->getArchive()}
+                    Manifest ({$manifest->getHash()}):
+                    ---
+                    {$manifest->getManifest()}
+                    ---
+                    EOT
+                );
+                break;
+        }
 
         // required packages
         $this->buildRequirementNodes();
 
         $this->buildStartMarkerNode();
 
-        // register package version
-        self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
-
         // install package itself
-        if ($this->installation->queue->action == 'install') {
+        if ($this->installation->getAction() == 'install') {
             $this->buildPackageNode();
         }
 
         // package installation plugins
-        $this->buildPluginNodes();
+        switch ($this->installation->getAction()) {
+            case 'install':
+                $instructions = $this->installation->getArchive()->getInstallInstructions();
+
+                break;
+            case 'update':
+                $instructions = $this->installation->getArchive()->getUpdateInstructionsFor($currentPackageVersion) ?? [];
+
+                break;
+            default:
+                throw new \LogicException('Unreachable');
+        }
+
+        $this->buildPluginNodes($instructions);
+
+        // register package version
+        self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 
         // optional packages (ignored on update)
-        if ($this->installation->queue->action == 'install') {
+        if ($this->installation->getAction() == 'install') {
             $this->buildOptionalNodes();
         }
 
-        if ($this->installation->queue->action == 'update') {
+        if ($this->installation->getAction() == 'update') {
             $this->buildPackageNode();
         }
 
         $this->buildEndMarkerNode();
 
-        (new AuditLogger())->log(
+        $auditLogger->log(
             <<<EOT
             Finished building nodes
             =======================
@@ -605,34 +647,8 @@ class PackageInstallationNodeBuilder
      *
      * @return  string
      */
-    protected function buildPluginNodes()
+    protected function buildPluginNodes(array $instructions)
     {
-        if (!empty($this->node)) {
-            $this->parentNode = $this->node;
-            $this->sequenceNo = 0;
-        }
-
-        $this->node = $this->getToken();
-
-        $pluginNodes = [];
-
-        $this->emptyNode = true;
-
-        switch ($this->installation->getAction()) {
-            case 'install':
-                $instructions = $this->installation->getArchive()->getInstallInstructions();
-
-                break;
-            case 'update':
-                $package = $this->installation->getPackage();
-                $currentPackageVersion = self::$pendingPackages[$package->package] ?? $package->packageVersion;
-                $instructions = $this->installation->getArchive()->getUpdateInstructionsFor($currentPackageVersion) ?? [];
-
-                break;
-            default:
-                throw new \LogicException('Unreachable');
-        }
-
         $count = \count($instructions);
 
         if ($count === 0) {
@@ -641,7 +657,17 @@ class PackageInstallationNodeBuilder
             throw new \Exception('Received an empty list of instructions.');
         }
 
+        if (!empty($this->node)) {
+            $this->parentNode = $this->node;
+            $this->sequenceNo = 0;
+        }
+
+        $this->node = $this->getToken();
+
+        $this->emptyNode = true;
+
         $i = 0;
+        $pluginNodes = [];
         foreach ($instructions as $pip) {
             $i++;
 
