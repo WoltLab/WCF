@@ -68,6 +68,11 @@ if (@\ini_get('zlib.output_compression')) {
     @\ini_set('zlib.output_compression', '0');
 }
 
+// Clean out any output buffer that is enabled by default ('output_buffering' ini setting).
+while (\ob_get_level()) {
+    \ob_end_flush();
+}
+
 // Ensure a correct mbstring configuration
 \mb_internal_encoding('UTF-8');
 if (\function_exists('mb_regex_encoding')) {
