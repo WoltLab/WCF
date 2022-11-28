@@ -6,6 +6,9 @@ namespace wcf\system\search;
  * Context aware search index managers are able to support
  * the parent id and container id of a message.
  *
+ * CAUTION: This is an experimental API that is not designed
+ *          for general consumption.
+ *
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

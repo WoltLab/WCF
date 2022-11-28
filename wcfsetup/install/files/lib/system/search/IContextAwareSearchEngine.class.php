@@ -8,6 +8,9 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * Default interface for search engines that support
  * filtering by context.
  *
+ * CAUTION: This is an experimental API that is not designed
+ *          for general consumption.
+ *
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
