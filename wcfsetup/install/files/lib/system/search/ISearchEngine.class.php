@@ -23,13 +23,7 @@ interface ISearchEngine
 
     /**
      * Returns the inner join query and the condition parameters. This method is allowed to return NULL for both the
-     * 'fulltextCondition' and 'searchIndexCondition' index instead of a PreparedStatementConditionBuilder instance:
-     *
-     * array(
-     *  'fulltextCondition' => $fulltextCondition || null,
-     *  'searchIndexCondition' => $searchIndexCondition || null,
-     *  'sql' => $sql
-     * );
+     * 'fulltextCondition' and 'searchIndexCondition' index instead of a PreparedStatementConditionBuilder instance.
      *
      * @param string $objectTypeName
      * @param string $q
@@ -37,7 +31,11 @@ interface ISearchEngine
      * @param PreparedStatementConditionBuilder $searchIndexCondition
      * @param string $orderBy
      * @param int $limit
-     * @return  array
+     * @return  array{
+     *              fulltextCondition: ?PreparedStatementConditionBuilder
+     *              searchIndexCondition: ?PreparedStatementConditionBuilder
+     *              sql: string
+     *          }
      */
     public function getInnerJoin(
         $objectTypeName,
