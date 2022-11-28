@@ -16,7 +16,7 @@ use wcf\system\SingletonFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Search
  */
-class SearchEngine extends SingletonFactory implements ISearchEngine
+class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
 {
     /**
      * limit for inner search limits
@@ -118,6 +118,44 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     /**
      * @inheritDoc
      */
+    public function searchWithContext(
+        string $q,
+        array $objectTypes,
+        bool $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        array $contextFilter = [],
+        array $additionalConditions = [],
+        string $orderBy = 'time DESC',
+        int $limit = 1000
+    ): array {
+        $searchEngine = $this->getSearchEngine();
+        if ($searchEngine instanceof IContextAwareSearchEngine) {
+            return $searchEngine->searchWithContext(
+                $q,
+                $objectTypes,
+                $subjectOnly,
+                $searchIndexCondition,
+                $contextFilter,
+                $additionalConditions,
+                $orderBy,
+                $limit
+            );
+        }
+
+        return $searchEngine->search(
+            $q,
+            $objectTypes,
+            $subjectOnly,
+            $searchIndexCondition,
+            $additionalConditions,
+            $orderBy,
+            $limit
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getInnerJoin(
         $objectTypeName,
         $q,
@@ -138,6 +176,46 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     /**
      * @inheritDoc
      */
+    public function getInnerJoinWithContext(
+        string $objectTypeName,
+        string $q,
+        bool $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        array $contextFilter = [],
+        string $orderBy = 'time DESC',
+        int $limit = 1000
+    ): array {
+        $conditionBuilderClassName = $this->getConditionBuilderClassName();
+        if ($searchIndexCondition !== null && !($searchIndexCondition instanceof $conditionBuilderClassName)) {
+            throw new SystemException("Search engine '" . SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
+        }
+
+        $searchEngine = $this->getSearchEngine();
+        if ($searchEngine instanceof IContextAwareSearchEngine) {
+            return $searchEngine->getInnerJoinWithContext(
+                $objectTypeName,
+                $q,
+                $subjectOnly,
+                $searchIndexCondition,
+                $contextFilter,
+                $orderBy,
+                $limit
+            );
+        }
+
+        return $searchEngine->getInnerJoin(
+            $objectTypeName,
+            $q,
+            $subjectOnly,
+            $searchIndexCondition,
+            $orderBy,
+            $limit
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getConditionBuilderClassName()
     {
         return $this->getSearchEngine()->getConditionBuilderClassName();
@@ -149,5 +227,16 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     public function removeSpecialCharacters($string)
     {
         return $this->getSearchEngine()->removeSpecialCharacters($string);
+    }
+
+    /**
+     * Returns true if the search backend supports
+     * context information for messages.
+     *
+     * @since 6.0
+     */
+    public function isContextAware(): bool
+    {
+        return ($this->getSearchEngine() instanceof IContextAwareSearchEngine);
     }
 }

@@ -45,6 +45,11 @@ final class SearchHandler
     private $typeBasedConditionBuilders = [];
 
     /**
+     * @var mixed[]
+     */
+    private $typeBasedContextFilter = [];
+
+    /**
      * @var int[]
      */
     private $userIDs;
@@ -182,7 +187,8 @@ final class SearchHandler
                 }
 
                 if ($objectType instanceof ISearchProvider) {
-                    if (($conditionBuilder = $objectType->getConditionBuilder((\count($this->objectTypeNames) === 1 ? $this->parameters : []))) !== null) {
+                    $parameters = \count($this->objectTypeNames) === 1 ? $this->parameters : [];
+                    if (($conditionBuilder = $objectType->getConditionBuilder($parameters)) !== null) {
                         $this->typeBasedConditionBuilders[$objectTypeName] = $conditionBuilder;
                     }
 
@@ -191,6 +197,10 @@ final class SearchHandler
                         && ($newSortField = $objectType->getCustomSortField($this->parameters['sortField']))
                     ) {
                         $this->parameters['sortField'] = $newSortField;
+                    }
+
+                    if ($objectType instanceof IContextAwareSearchProvider) {
+                        $this->typeBasedContextFilter[$objectTypeName] = $objectType->getContextFilter($parameters);
                     }
                 } else {
                     if (($conditionBuilder = $objectType->getConditions($form)) !== null) {
@@ -269,6 +279,7 @@ final class SearchHandler
             $this->parameters['subjectOnly'] ?? 0,
             $this->conditionBuilder,
             $this->typeBasedConditionBuilders,
+            $this->typeBasedContextFilter,
             $this->parameters['sortField'],
             $this->parameters['sortOrder'],
             $this->getAdditionalData(),
@@ -303,11 +314,12 @@ final class SearchHandler
 
     private function loadResults(): bool
     {
-        $this->results = SearchEngine::getInstance()->search(
+        $this->results = SearchEngine::getInstance()->searchWithContext(
             $this->parameters['q'] ?? '',
             $this->objectTypeNames,
             $this->parameters['subjectOnly'] ?? 0,
             $this->conditionBuilder,
+            $this->typeBasedContextFilter,
             $this->typeBasedConditionBuilders,
             $this->parameters['sortField'] . ' ' . $this->parameters['sortOrder']
         );
