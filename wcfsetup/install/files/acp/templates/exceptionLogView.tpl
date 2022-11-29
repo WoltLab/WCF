@@ -15,19 +15,6 @@
 		$('.jsCopyException').click(function () {
 			$(this).select();
 		});
-		
-		elBySelAll('.exceptionContainer', undefined, function (container) {
-			var button = elBySel('.collapsibleButton', container);
-			const icon = button.querySelector("fa-icon");
-			button.addEventListener('click', function (event) {
-				if (container.classList.toggle('collapsed')) {
-					icon.setIcon("chevron-right");
-				}
-				else {
-					icon.setIcon("chevron-down");
-				}
-			});
-		})
 	});
 </script>
 
@@ -87,17 +74,10 @@
 {if !$logFiles|empty}
 	{if $logFile}
 		{foreach from=$exceptions item='exception' key='exceptionKey'}
-			<section id="{$exceptionKey}" class="section exceptionContainer{if $exception[collapsed]|isset && $exception[collapsed]} collapsed{/if}">
-				<h2 class="sectionTitle">
-					<button type="button" class="collapsibleButton jsTooltip" title="{lang}wcf.global.button.collapsible{/lang}">
-						{if $exception[collapsed]|isset && $exception[collapsed]}
-							{icon name='chevron-right'}
-						{else}
-							{icon name='chevron-down'}
-						{/if}
-					</button>
+			<details id="{$exceptionKey}" class="section exceptionContainer"{if $exception[collapsed]|empty} open{/if}>
+				<summary class="sectionTitle">
 					{$exception[message]}
-				</h2>
+				</summary>
 				
 				<div class="exceptionDetails">
 					<dl>
@@ -158,7 +138,7 @@
 						<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
 					</dl>
 				</div>
-			</section>
+			</details>
 		{/foreach}
 
 		<footer class="contentFooter">
