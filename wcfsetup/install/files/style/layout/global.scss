@@ -214,3 +214,9 @@ a.externalURL::after {
 .js-focus-visible :focus:not(.focus-visible) {
 	outline: none;
 }
+
+summary {
+	cursor: pointer;
+	-webkit-user-select: none;
+	user-select: none;
+}
