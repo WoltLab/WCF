@@ -10,8 +10,20 @@ type IconMetadata = [Codepoint, HasRegularVariant];
 import type * as Language from "./Language";
 import { Template } from "./Template";
 
+interface Reaction {
+  title: string;
+  renderedIcon: string;
+  iconPath: string;
+  showOrder: number;
+  reactionTypeID: number;
+  isAssignable: 1 | 0;
+}
+
 declare global {
   interface Window {
+    REACTION_TYPES: {
+      [key: string]: Reaction;
+    };
     TIME_NOW: number;
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
