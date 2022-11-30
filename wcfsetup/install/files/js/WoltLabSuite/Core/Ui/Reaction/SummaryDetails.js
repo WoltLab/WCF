@@ -13,11 +13,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog"], function (req
     exports.SummaryDetails = void 0;
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class SummaryDetails {
+        objectType;
+        objectId;
         constructor(objectType, objectId) {
             this.objectType = objectType;
             this.objectId = objectId;
-            const component = document.querySelector(`reaction-summary[object-type="${this.objectType}"][object-id="${this.objectId}"]`);
-            component === null || component === void 0 ? void 0 : component.addEventListener("showDetails", () => {
+            const component = document.querySelector(`woltlab-core-reaction-summary[object-type="${this.objectType}"][object-id="${this.objectId}"]`);
+            component?.addEventListener("showDetails", () => {
                 void this.loadDetails();
             });
         }
