@@ -1204,6 +1204,12 @@
       setData(data, selectedReaction) {
         this.#render(data, selectedReaction);
       }
+      get objectId() {
+        return parseInt(this.getAttribute("object-id"));
+      }
+      get objectType() {
+        return this.getAttribute("object-type");
+      }
       #render(data, selectedReaction) {
         this.innerHTML = "";
         if (!data.size)

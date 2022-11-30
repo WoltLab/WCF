@@ -10,41 +10,31 @@
 
 import { dboAction } from "../../Ajax";
 import { dialogFactory } from "../../Component/Dialog";
+import { wheneverFirstSeen } from "../../Helper/Selector";
 
 type ResponseGetReactionDetails = {
   template: string;
   title: string;
 };
 
-export class SummaryDetails {
-  readonly #objectType: string;
-  readonly #objectId: number;
+async function showDetails(objectID: number, objectType: string): Promise<void> {
+  const response = (await dboAction("getReactionDetails", "wcf\\data\\reaction\\ReactionAction")
+    .payload({
+      data: {
+        objectID,
+        objectType,
+      },
+    })
+    .dispatch()) as ResponseGetReactionDetails;
 
-  constructor(objectType: string, objectId: number) {
-    this.#objectType = objectType;
-    this.#objectId = objectId;
-
-    const component = document.querySelector(
-      `woltlab-core-reaction-summary[object-type="${this.#objectType}"][object-id="${this.#objectId}"]`,
-    ) as WoltlabCoreReactionSummaryElement;
-    component?.addEventListener("showDetails", () => {
-      void this.#loadDetails();
-    });
-  }
-
-  async #loadDetails(): Promise<void> {
-    const response = (await dboAction("getReactionDetails", "wcf\\data\\reaction\\ReactionAction")
-      .payload({
-        data: {
-          objectID: this.#objectId,
-          objectType: this.#objectType,
-        },
-      })
-      .dispatch()) as ResponseGetReactionDetails;
-
-    const dialog = dialogFactory().fromHtml(response.template).withoutControls();
-    dialog.show(response.title);
-  }
+  const dialog = dialogFactory().fromHtml(response.template).withoutControls();
+  dialog.show(response.title);
 }
 
-export default SummaryDetails;
+export function setup(): void {
+  wheneverFirstSeen("woltlab-core-reaction-summary", (element: WoltlabCoreReactionSummaryElement) => {
+    element.addEventListener("showDetails", () => {
+      void showDetails(element.objectId, element.objectType);
+    });
+  });
+}

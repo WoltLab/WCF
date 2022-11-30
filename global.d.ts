@@ -87,6 +87,8 @@ declare global {
   }
 
   interface WoltlabCoreReactionSummaryElement extends HTMLElement {
+    get objectId(): number;
+    get objectType(): string;
     setData: (data: Map<number, number>, selectedReaction?: number) => void;
   }
 

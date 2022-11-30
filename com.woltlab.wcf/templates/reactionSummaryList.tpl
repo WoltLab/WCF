@@ -10,10 +10,4 @@
 		object-id="{$objectID}"
 		selected-reaction="{if $reactionData[$objectID]|isset && $reactionData[$objectID]->reactionTypeID}{$reactionData[$objectID]->reactionTypeID}{else}0{/if}"
 	></woltlab-core-reaction-summary>
-
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Reaction/SummaryDetails'], ({ SummaryDetails }) => {
-			new SummaryDetails('{$objectType}', {$objectID});
-		});
-	</script>
 {/if}

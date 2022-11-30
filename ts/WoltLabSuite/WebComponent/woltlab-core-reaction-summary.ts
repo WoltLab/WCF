@@ -23,6 +23,14 @@
       this.#render(data, selectedReaction);
     }
 
+    get objectId(): number {
+      return parseInt(this.getAttribute("object-id")!);
+    }
+
+    get objectType(): string {
+      return this.getAttribute("object-type")!;
+    }
+
     #render(data: Data, selectedReaction?: number): void {
       this.innerHTML = "";
 
