@@ -2863,10 +2863,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
 		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
-		<item name="wcf.acp.style.apiVersion"><![CDATA[Kompatibilität mit WoltLab Suite in Version]]></item>
-		<item name="wcf.acp.style.apiVersion.deprecated"><![CDATA[veraltet]]></item>
-		<item name="wcf.acp.style.apiVersion.description"><![CDATA[Deaktiviert ausgewählte Stil-Verbesserungen, um die Kompatibilität mit Stilen für eine ältere Version von WoltLab Suite zu gewährleisten.]]></item>
-		<item name="wcf.acp.style.apiVersion.recommended"><![CDATA[aktuelle Version, empfohlen]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Export starten]]></item>
@@ -2880,7 +2876,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.colors.content"><![CDATA[Inhaltsbereich]]></item>
 		<item name="wcf.acp.style.colors.color"><![CDATA[Schriftfarbe]]></item>
 		<item name="wcf.acp.style.colors.description"><![CDATA[Wählen Sie eine Kategorie aus, um die Farbpalette zu bearbeiten.]]></item>
-		<item name="wcf.acp.style.colors.description.apiVersion"><![CDATA[Erfordert WoltLab Suite {$version} oder höher]]></item>
 		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Schriftfarbe (abgeschwächt)]]></item>
 		<item name="wcf.acp.style.colors.formInput"><![CDATA[Eingabeelemente in Formularen]]></item>
 		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Hintergrundfarbe (Hover)]]></item>
@@ -7513,5 +7508,10 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.usersOnline.location.TeamPage"/>
 	<item name="wcf.user.usersOnline.location.UserPage"/>
 	<item name="wcf.user.usersOnline.location.UsersOnlineListPage"/>
+	<item name="wcf.acp.style.apiVersion"/>
+	<item name="wcf.acp.style.apiVersion.deprecated"/>
+	<item name="wcf.acp.style.apiVersion.description"/>
+	<item name="wcf.acp.style.apiVersion.recommended"/>
+	<item name="wcf.acp.style.colors.description.apiVersion"/>
 </delete>
 </language>

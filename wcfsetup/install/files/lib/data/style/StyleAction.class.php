@@ -570,7 +570,6 @@ BROWSERCONFIG;
             'authorName' => $this->styleEditor->authorName,
             'authorURL' => $this->styleEditor->authorURL,
             'imagePath' => $this->styleEditor->imagePath,
-            'apiVersion' => $this->styleEditor->apiVersion,
 
             'coverPhotoExtension' => $this->styleEditor->coverPhotoExtension,
             'hasFavicon' => $this->styleEditor->hasFavicon,

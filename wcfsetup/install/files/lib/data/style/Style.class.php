@@ -36,7 +36,6 @@ use wcf\util\ImageUtil;
  * @property-read   int $isTainted      is `0` if the original declarations of an imported or installed style are not and cannot be altered, otherwise `1`
  * @property-read   int $hasFavicon     is `0` if the default favicon data should be used
  * @property-read   int $coverPhotoExtension    extension of the style's cover photo file
- * @property-read       string $apiVersion             the style's compatibility version, possible values: '3.0' or '3.1'
  */
 class Style extends DatabaseObject
 {
@@ -66,12 +65,7 @@ class Style extends DatabaseObject
      */
     protected $variables = [];
 
-    /**
-     * list of supported API versions
-     * @var string[]
-     */
-    public static $supportedApiVersions = ['3.0', '3.1', '5.2', '5.5'];
-
+    /** @deprecated 6.0 This property is no longer supported. */
     const API_VERSION = '5.5';
 
     const PREVIEW_IMAGE_MAX_HEIGHT = 64;

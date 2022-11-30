@@ -21,7 +21,6 @@
 			<xs:element name="packageName" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="date" type="xs:date" minOccurs="0" maxOccurs="1" />
 			<xs:element name="version" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
-			<xs:element name="apiVersion" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="image" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="image2x" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="copyright" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />

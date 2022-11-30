@@ -98,7 +98,6 @@ class StyleEditForm extends StyleAddForm
         $result = StyleCompiler::getInstance()->testStyle(
             $this->styleTestFileDir,
             $this->styleName,
-            $this->apiVersion,
             $this->style->imagePath,
             $variables
         );
@@ -119,18 +118,6 @@ class StyleEditForm extends StyleAddForm
     {
         if ($this->style->isTainted) {
             parent::enforcePackageNameRestriction();
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validateApiVersion()
-    {
-        if ($this->style->isTainted) {
-            parent::validateApiVersion();
-        } else {
-            $this->apiVersion = $this->style->apiVersion;
         }
     }
 
@@ -213,7 +200,6 @@ class StyleEditForm extends StyleAddForm
         );
 
         if (empty($_POST)) {
-            $this->apiVersion = $this->style->apiVersion;
             $this->authorName = $this->style->authorName;
             $this->authorURL = $this->style->authorURL;
             $this->copyright = $this->style->copyright;
@@ -321,7 +307,6 @@ class StyleEditForm extends StyleAddForm
                 'license' => $this->license,
                 'authorName' => $this->authorName,
                 'authorURL' => $this->authorURL,
-                'apiVersion' => $this->apiVersion,
             ]),
             'uploads' => $this->uploads,
             'customAssets' => $this->customAssets,

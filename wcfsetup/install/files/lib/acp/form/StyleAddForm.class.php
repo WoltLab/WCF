@@ -55,12 +55,6 @@ class StyleAddForm extends AbstractForm
     public $authorURL = '';
 
     /**
-     * style api version
-     * @var string
-     */
-    public $apiVersion = Style::API_VERSION;
-
-    /**
      * list of available font families
      * @var string[]
      */
@@ -133,33 +127,6 @@ class StyleAddForm extends AbstractForm
      * @inheritDoc
      */
     public $neededPermissions = ['admin.style.canManageStyle'];
-
-    /**
-     * list of variables that were added after 3.0
-     * @var string[]
-     */
-    public $newVariables = [
-        // 3.1
-        'wcfContentContainerBackground' => '3.1',
-        'wcfContentContainerBorder' => '3.1',
-        'wcfEditorButtonBackground' => '3.1',
-        'wcfEditorButtonBackgroundActive' => '3.1',
-        'wcfEditorButtonText' => '3.1',
-        'wcfEditorButtonTextActive' => '3.1',
-        'wcfEditorButtonTextDisabled' => '3.1',
-
-        // 5.2
-        'wcfEditorTableBorder' => '5.2',
-
-        // 5.5
-        'wcfUserMenuBackground' => '5.5',
-        'wcfUserMenuBackgroundActive' => '5.5',
-        'wcfUserMenuText' => '5.5',
-        'wcfUserMenuTextActive' => '5.5',
-        'wcfUserMenuTextDimmed' => '5.5',
-        'wcfUserMenuIndicator' => '5.5',
-        'wcfUserMenuBorder' => '5.5',
-    ];
 
     /**
      * style package name
@@ -237,13 +204,6 @@ class StyleAddForm extends AbstractForm
      * @since 5.3
      */
     public $customAssets = [];
-
-    public $supportedApiVersionsCompatibility = [
-        '3.0' => '3.0',
-        '3.1' => '3.1',
-        '5.2' => '5.2, 5.3, 5.4',
-        '5.5' => '5.5',
-    ];
 
     /**
      * @inheritDoc
@@ -433,9 +393,6 @@ class StyleAddForm extends AbstractForm
         if (isset($_POST['templateGroupID'])) {
             $this->templateGroupID = \intval($_POST['templateGroupID']);
         }
-        if (isset($_POST['apiVersion']) && \in_array($_POST['apiVersion'], Style::$supportedApiVersions)) {
-            $this->apiVersion = $_POST['apiVersion'];
-        }
 
         // codemirror scroll offset
         if (isset($_POST['scrollOffsets']) && \is_array($_POST['scrollOffsets'])) {
@@ -539,8 +496,6 @@ class StyleAddForm extends AbstractForm
 
         $this->validateIndividualScss();
 
-        $this->validateApiVersion();
-
         $this->validateUploads();
     }
 
@@ -559,7 +514,6 @@ class StyleAddForm extends AbstractForm
         $result = StyleCompiler::getInstance()->testStyle(
             $this->styleTestFileDir,
             $this->styleName,
-            $this->apiVersion,
             false,
             $variables
         );
@@ -583,19 +537,6 @@ class StyleAddForm extends AbstractForm
         // 3rd party styles may never have com.woltlab.* as name
         if (\strpos($this->packageName, 'com.woltlab.') !== false) {
             throw new UserInputException('packageName', 'reserved');
-        }
-    }
-
-    /**
-     * Validates the style API version.
-     *
-     * @throws      UserInputException
-     * @since       3.1
-     */
-    protected function validateApiVersion()
-    {
-        if (!\in_array($this->apiVersion, Style::$supportedApiVersions)) {
-            throw new UserInputException('apiVersion', 'invalid');
         }
     }
 
@@ -910,7 +851,6 @@ class StyleAddForm extends AbstractForm
                 'license' => $this->license,
                 'authorName' => $this->authorName,
                 'authorURL' => $this->authorURL,
-                'apiVersion' => $this->apiVersion,
             ]),
             'uploads' => $this->uploads,
             'customAssets' => $this->customAssets,
@@ -984,7 +924,6 @@ class StyleAddForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'action' => 'add',
-            'apiVersion' => $this->apiVersion,
             'authorName' => $this->authorName,
             'authorURL' => $this->authorURL,
             'availableFontFamilies' => $this->availableFontFamilies,
@@ -996,7 +935,6 @@ class StyleAddForm extends AbstractForm
             'isTainted' => $this->isTainted,
             'license' => $this->license,
             'packageName' => $this->packageName,
-            'recommendedApiVersion' => Style::API_VERSION,
             'styleDate' => $this->styleDate,
             'styleDescription' => $this->styleDescription,
             'styleName' => $this->styleName,
@@ -1004,8 +942,6 @@ class StyleAddForm extends AbstractForm
             'templateGroupID' => $this->templateGroupID,
             'tmpHash' => $this->tmpHash,
             'variables' => $this->variables,
-            'supportedApiVersions' => Style::$supportedApiVersions,
-            'supportedApiVersionsCompatibility' => $this->supportedApiVersionsCompatibility,
             'newVariables' => $this->newVariables,
             'scrollOffsets' => $this->scrollOffsets,
             'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,

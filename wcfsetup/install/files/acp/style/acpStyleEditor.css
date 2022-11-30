@@ -113,7 +113,6 @@ html:not(.touch) .spColorBox { cursor: pointer; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
-.spApiVersion { color: #E65100; font-family: Consolas, Courier, monospace; font-size: 12px; }
 #spSidebar .button { display: block; }
 @media (min-width: 769px) {
 	#spVariablesWrapper { position: -webkit-sticky; position: sticky; top: 60px; }
@@ -183,5 +182,4 @@ html:not(.touch) .spColorBox { cursor: pointer; }
         #spWindow.spColorPalette + #spSidebar .spSidebarBox { break-inside: avoid; display: block !important; page-break-inside: avoid; position: relative; }
 	#spWindow.spColorPalette + #spSidebar .spSidebarBox[data-category="none"], #spWindow.spColorPalette + #spSidebar .spSidebarBox.spSidebarBoxCategorySelection { display: none !important; }
 	#spWindow.spColorPalette + #spSidebar .spSidebarBox::before { color: rgb(125, 130, 135); content: attr(data-category); display: block; font-family: Consolas, Courier, monospace; font-size: 1.2rem; margin-bottom: 10px; }
-	#spWindow.spColorPalette + #spSidebar .spSidebarBox[data-category="apiVersion"]::before { display: none; }
 }

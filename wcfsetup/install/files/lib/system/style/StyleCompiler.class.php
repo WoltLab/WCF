@@ -104,7 +104,7 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
+     * Test a style with the given imagePath and variables. If the style is valid and does not throw an
      * error, null is returned. Otherwise the exception is returned (!).
      *
      * @param mixed[] $variables
@@ -113,7 +113,6 @@ final class StyleCompiler extends SingletonFactory
     public function testStyle(
         string $testFileDir,
         string $styleName,
-        string $apiVersion,
         string $imagePath,
         array $variables,
         ?string $customCustomSCSSFile = null
@@ -145,7 +144,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // api version
-        $variables['apiVersion'] = $apiVersion;
+        $variables['apiVersion'] = Style::API_VERSION;
 
         $variables = $this->prepareVariables($variables);
 
@@ -269,7 +268,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // api version
-        $variables['apiVersion'] = $style->apiVersion;
+        $variables['apiVersion'] = Style::API_VERSION;
 
         $variables = $this->prepareVariables($variables);
 
@@ -585,22 +584,14 @@ final class StyleCompiler extends SingletonFactory
                     $variables['wcf_option_' . \mb_strtolower($constantName)] = \is_int($option->optionValue) ? $option->optionValue : '"' . $option->optionValue . '"';
                 }
             }
-
-            // api version
-            if (!isset($variables['apiVersion'])) {
-                $variables['apiVersion'] = Style::API_VERSION;
-            }
         } else {
             // workaround during setup
             $variables['wcf_option_attachment_thumbnail_height'] = 210;
             $variables['wcf_option_attachment_thumbnail_width'] = 280;
             $variables['wcf_option_signature_max_image_height'] = 150;
-
-            $variables['apiVersion'] = Style::API_VERSION;
         }
 
-        // convert into numeric value for comparison, e.g. `3.1` -> `31`
-        $variables['apiVersion'] = \str_replace('.', '', $variables['apiVersion']);
+        $variables['apiVersion'] = \str_replace('.', '', Style::API_VERSION);
 
         return $variables;
     }

@@ -161,7 +161,6 @@ function initVisualEditor(styleRuleMap: StyleRuleMap): void {
     }
   };
 
-  const apiVersions = container.querySelector('.spSidebarBox[data-category="apiVersion"]') as HTMLElement;
   const callbackChange = () => {
     let element = container.querySelector(`.spSidebarBox[data-category="${lastValue}"]`) as HTMLElement;
     DomUtil.hide(element);
@@ -169,13 +168,6 @@ function initVisualEditor(styleRuleMap: StyleRuleMap): void {
     lastValue = select.value;
     element = container.querySelector(`.spSidebarBox[data-category="${lastValue}"]`) as HTMLElement;
     DomUtil.show(element);
-
-    const showCompatibilityNotice = element.querySelector(".spApiVersion") !== null;
-    if (showCompatibilityNotice) {
-      DomUtil.show(apiVersions);
-    } else {
-      DomUtil.hide(apiVersions);
-    }
 
     // set region marker
     _updateRegionMarker();

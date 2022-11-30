@@ -144,17 +144,6 @@
 						{/if}
 					</dd>
 				</dl>
-				<dl{if $errorField == 'apiVersion'} class="formError"{/if}>
-					<dt><label for="apiVersion">{lang}wcf.acp.style.apiVersion{/lang}</label></dt>
-					<dd>
-						<select name="apiVersion" id="apiVersion"{if !$isTainted} disabled{/if}>
-							{foreach from=$supportedApiVersions item=supportedApiVersion}
-								<option value="{$supportedApiVersion}"{if $supportedApiVersion === $apiVersion} selected{/if}>{$supportedApiVersionsCompatibility[$supportedApiVersion]} ({lang}wcf.acp.style.apiVersion.{if $supportedApiVersion === $recommendedApiVersion}recommended{else}deprecated{/if}{/lang})</option>
-							{/foreach}
-						</select>
-						<small>{lang}wcf.acp.style.apiVersion.description{/lang}</small>
-					</dd>
-				</dl>
 				<dl{if $errorField == 'styleDate'} class="formError"{/if}>
 					<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
 					<dd>
@@ -890,7 +879,7 @@
 													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
 												</div>
 												<div>
-													<span class="spVariable">${$spColor}{if $newVariables[$spColor]|isset} <sup class="spApiVersion">{$newVariables[$spColor]}</sup>{/if}</span>
+													<span class="spVariable">${$spColor}</span>
 													<span class="spDescription">{$spType}</span>
 												</div>
 											</li>
@@ -898,12 +887,6 @@
 									</ul>
 								</div>
 							{/foreach}
-							
-							<div class="spSidebarBox" data-category="apiVersion" style="display: none;">
-								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
-								<p><sup class="spApiVersion">5.2</sup> <small>{lang version='5.2'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
-								<p><sup class="spApiVersion">5.5</sup> <small>{lang version='5.5'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
-							</div>
 						</div>
 					</div>
 				</div>

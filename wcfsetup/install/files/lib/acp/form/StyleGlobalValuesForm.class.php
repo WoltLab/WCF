@@ -94,7 +94,6 @@ class StyleGlobalValuesForm extends AbstractForm
                 $errorMessage = StyleCompiler::getInstance()->testStyle(
                     $this->styleTestFileDir,
                     $defaultStyle->styleName,
-                    $defaultStyle->apiVersion,
                     $defaultStyle->imagePath,
                     $defaultStyle->getVariables(),
                     $tmpFile
