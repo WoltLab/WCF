@@ -1,5 +1,7 @@
-var(--wcfAcpMenuWidth): 150px;
-var(--wcfAcpSubMenuWidth): 300px;
+html {
+	--wcfAcpMenuWidth: 150px;
+	--wcfAcpSubMenuWidth: 300px;
+}
 
 .layoutBoundary {
 	margin: 0;

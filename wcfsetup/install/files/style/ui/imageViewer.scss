@@ -1,8 +1,9 @@
 /* ImageViewer for WCF */
-var(--wcfImageViewerBorderColor): rgba(51, 51, 51, 1);
-var(--wcfImageViewerFontColor): rgba(211, 211, 211, 1);
-
 .wcfImageViewer {
+	--wcfImageViewerBorderColor: rgba(51, 51, 51, 1);
+	--wcfImageViewerBorderColor-rgb: 51 51 51;
+	--wcfImageViewerFontColor: rgba(211, 211, 211, 1);
+
 	background-color: rgba(0, 0, 0, 1);
 	bottom: 0;
 	display: none;
@@ -29,7 +30,7 @@ var(--wcfImageViewerFontColor): rgba(211, 211, 211, 1);
 
 		> div {
 			bottom: 0;
-			border-color: fade(var(--wcfImageViewerBorderColor), 0%);
+			border-color: rgba(var(--wcfImageViewerBorderColor-rgb) / 0);
 			top: 0;
 		}
 
