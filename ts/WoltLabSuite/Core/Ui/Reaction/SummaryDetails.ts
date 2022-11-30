@@ -1,16 +1,15 @@
 /**
  * Handles the reaction summary details dialog.
  *
- * @author  Marcel Werk
- * @copyright  2001-2022 WoltLab GmbH
- * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Ui/Reaction/SummaryDetails
- * @since       6.0
+ * @author Marcel Werk
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Reaction/SummaryDetails
+ * @since 6.0
  */
 
 import { dboAction } from "../../Ajax";
-import { DialogCallbackSetup } from "../Dialog/Data";
-import UiDialog from "../Dialog";
+import { dialogFactory } from "../../Component/Dialog";
 
 type ResponseGetReactionDetails = {
   template: string;
@@ -43,17 +42,9 @@ export class SummaryDetails {
       })
       .dispatch()) as ResponseGetReactionDetails;
 
-    UiDialog.open(this, response.template);
-    UiDialog.setTitle(`userReactionOverlay-${this.#objectType}`, response.title);
-  }
-
-  _dialogSetup(): ReturnType<DialogCallbackSetup> {
-    return {
-      id: `userReactionOverlay-${this.#objectType}`,
-      options: {
-        title: "",
-      },
-      source: null,
-    };
+    const dialog = dialogFactory().fromHtml(response.template).withoutControls();
+    dialog.show(response.title);
   }
 }
+
+export default SummaryDetails;
