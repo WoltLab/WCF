@@ -713,7 +713,30 @@ final class StyleCompiler extends SingletonFactory
                 continue;
             }
 
+            if (\in_array($key, $skipVariables)) {
+                continue;
+            }
+
             $css .= "\t--{$key}: {$value};\n";
+
+            // Export colors as 'r g b' values, omitting the alpha channel.
+            // These values can be used for gradients from a color value to
+            // its transparent value.
+            if (\preg_match('~^rgba\((?<r>\d+), (?<g>\d+), (?<b>\d+),~', $value, $matches)) {
+                [
+                    'r' => $r,
+                    'g' => $g,
+                    'b' => $b,
+                ] = $matches;
+
+                $css .= \sprintf(
+                    "\t--%s-rgb: %d %d %d;\n",
+                    $key,
+                    $r,
+                    $g,
+                    $b,
+                );
+            }
         }
 
         return $css . '}';
