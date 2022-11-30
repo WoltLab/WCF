@@ -13,7 +13,6 @@ import * as Ajax from "../Ajax";
 import { AjaxCallbackSetup } from "../Ajax/Data";
 import * as Core from "../Core";
 import * as EventHandler from "../Event/Handler";
-import * as StringUtil from "../StringUtil";
 
 interface NotificationHandlerOptions {
   icon: string;
@@ -212,11 +211,15 @@ class NotificationHandler {
     if (typeof pollData.notification === "object" && typeof pollData.notification.message === "string") {
       let notification: Notification;
 
+      const div = document.createElement("div");
+      div.innerHTML = pollData.notification.message;
+      div.querySelectorAll("img").forEach((img) => {
+        img.replaceWith(document.createTextNode(img.alt));
+      });
+
       try {
         notification = new window.Notification(pollData.notification.title, {
-          body: StringUtil.unescapeHTML(pollData.notification.message)
-            .replace(/&#x202F;/g, "\u202F")
-            .replace(/&#39;/g, "'"),
+          body: div.textContent!.replace(/&#x202F;/g, "\u202F").replace(/&#39;/g, "'"),
           icon: this.icon,
         });
       } catch (e) {
