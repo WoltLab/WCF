@@ -88,7 +88,7 @@
 		&::after {
 			background-image: linear-gradient(
 				to bottom,
-				transparentize(var(--wcfContentBackground), 1),
+				rgba(var(--wcfContentBackground-rgb) / 0),
 				var(--wcfContentBackground)
 			);
 			bottom: 0;
@@ -98,7 +98,11 @@
 		}
 
 		&::before {
-			background-image: linear-gradient(to top, transparentize(var(--wcfContentBackground), 1), var(--wcfContentBackground));
+			background-image: linear-gradient(
+				to top,
+				rgba(var(--wcfContentBackground-rgb) / 0),
+				var(--wcfContentBackground)
+			);
 			top: 0;
 		}
 		&.overflowTop::before {
@@ -231,7 +235,7 @@
 		white-space: nowrap;
 	}
 
-    .selected .reactionCount {
-      font-weight: 600;
-    }
+	.selected .reactionCount {
+		font-weight: 600;
+	}
 }

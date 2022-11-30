@@ -241,14 +241,14 @@
 	.tabMenuOverlayLeft {
 		background: linear-gradient(
 			to left,
-			transparentize(var(--wcfContentContainerBackground), 1) 0%,
+			rgba(var(--wcfContentContainerBackground-rgb) / 0) 0%,
 			var(--wcfContentContainerBackground) 50%
 		);
 	}
 	.tabMenuOverlayRight {
 		background: linear-gradient(
 			to right,
-			transparentize(var(--wcfContentContainerBackground), 1) 0%,
+			rgba(var(--wcfContentContainerBackground-rgb) / 0) 0%,
 			var(--wcfContentContainerBackground) 50%
 		);
 	}

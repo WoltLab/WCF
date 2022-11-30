@@ -46,7 +46,7 @@ woltlab-quote,
 
 		> .toggleButton {
 			bottom: 0;
-			box-shadow: 0 -10px 50px 10px opacify(var(--wcfContentBackground), 0.9);
+			box-shadow: 0 -10px 50px 10px rgba(var(--wcfContentBackground-rgb) / 0.9);
 			left: 0;
 			padding-bottom: 10px;
 			position: absolute;
@@ -56,7 +56,7 @@ woltlab-quote,
 	}
 
 	> .toggleButton {
-		background-color: opacify(var(--wcfContentBackground), 0.9);
+		background-color: rgba(var(--wcfContentBackground-rgb) / 0.9);
 		cursor: pointer;
 		display: block;
 		padding: 10px 20px 0 10px;

@@ -69,8 +69,8 @@
 			&::before {
 				background-image: linear-gradient(
 					to top,
-					opacify(var(--wcfContentBackground), 0.9),
-					transparentize(var(--wcfContentBackground), 1)
+					rgba(var(--wcfContentBackground-rgb) / 0.9),
+					rgba(var(--wcfContentBackground-rgb) / 0)
 				);
 				content: "";
 				height: 60px;
@@ -168,7 +168,7 @@
 	}
 
 	> .toggleButton {
-		background-color: opacify(var(--wcfContentBackground), 0.9);
+		background-color: rgba(var(--wcfContentBackground-rgb) / 0.9);
 		cursor: pointer;
 		display: block;
 		padding: 10px 20px 0 10px;

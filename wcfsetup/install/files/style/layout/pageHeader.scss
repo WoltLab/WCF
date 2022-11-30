@@ -172,7 +172,7 @@
 	.mainMenuShowPrevious {
 		background: linear-gradient(
 			to left,
-			transparentize(var(--wcfHeaderMenuBackground), 1) 0%,
+			rgba(var(--wcfHeaderMenuBackground-rgb) / 0) 0%,
 			var(--wcfHeaderMenuBackground) 75%
 		);
 		left: 0;
@@ -181,7 +181,7 @@
 	.mainMenuShowNext {
 		background: linear-gradient(
 			to right,
-			transparentize(var(--wcfHeaderMenuBackground), 1) 0%,
+			rgba(var(--wcfHeaderMenuBackground-rgb) / 0) 0%,
 			var(--wcfHeaderMenuBackground) 75%
 		);
 		justify-content: flex-end;
