@@ -1,10 +1,10 @@
-(() => {
+{
   type ReactionTypeId = number;
   type Count = number;
   type ReactionData = [ReactionTypeId, Count];
   type Data = Map<ReactionTypeId, Count>;
 
-  class ReactionSummary extends HTMLElement {
+  class WoltlabCoreReactionSummaryElement extends HTMLElement {
     private readonly summaryContainer = document.createElement("div");
 
     connectedCallback() {
@@ -68,7 +68,7 @@
     }
   }
 
-  window.customElements.define("reaction-summary", ReactionSummary);
+  window.customElements.define("woltlab-core-reaction-summary", WoltlabCoreReactionSummaryElement);
 
   const css = `
     button {
@@ -113,4 +113,4 @@
       font-weight: 600;
     }
   `;
-})();
+}

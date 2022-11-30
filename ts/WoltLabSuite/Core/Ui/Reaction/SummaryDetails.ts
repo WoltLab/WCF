@@ -26,8 +26,8 @@ export class SummaryDetails {
     this.objectId = objectId;
 
     const component = document.querySelector(
-      `reaction-summary[object-type="${this.objectType}"][object-id="${this.objectId}"]`,
-    );
+      `woltlab-core-reaction-summary[object-type="${this.objectType}"][object-id="${this.objectId}"]`,
+    ) as WoltlabCoreReactionSummaryElement;
     component?.addEventListener("showDetails", () => {
       void this.loadDetails();
     });

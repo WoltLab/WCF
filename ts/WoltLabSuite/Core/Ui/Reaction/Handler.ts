@@ -481,8 +481,8 @@ class UiReactionHandler {
     });
 
     const component = document.querySelector(
-      `reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`,
-    ) as ReactionSummary;
+      `woltlab-core-reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`,
+    ) as WoltlabCoreReactionSummaryElement;
     component?.setData(reactions, data.returnValues.reactionTypeID);
 
     this._updateReactButton(objectId, data.returnValues.reactionTypeID);

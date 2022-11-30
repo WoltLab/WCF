@@ -86,7 +86,7 @@ declare global {
     set date(date: Date);
   }
 
-  interface ReactionSummary extends HTMLElement {
+  interface WoltlabCoreReactionSummaryElement extends HTMLElement {
     setData: (data: Map<number, number>, selectedReaction?: number) => void;
   }
 
@@ -96,6 +96,6 @@ declare global {
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
-    "reaction-summary": ReactionSummary;
+    "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
   }
 }
