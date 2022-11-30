@@ -1195,6 +1195,60 @@
     });
   }
 
+  // ts/WoltLabSuite/WebComponent/woltlab-core-reaction-summary.ts
+  {
+    class WoltlabCoreReactionSummaryElement extends HTMLElement {
+      connectedCallback() {
+        this.setData(this.#getData(), this.#getSelectedReaction());
+      }
+      setData(data, selectedReaction) {
+        this.#render(data, selectedReaction);
+      }
+      get objectId() {
+        return parseInt(this.getAttribute("object-id"));
+      }
+      get objectType() {
+        return this.getAttribute("object-type");
+      }
+      #render(data, selectedReaction) {
+        this.innerHTML = "";
+        if (!data.size)
+          return;
+        const button = document.createElement("button");
+        button.classList.add("reactionSummary", "jsTooltip");
+        button.title = window.WoltLabLanguage.getPhrase("wcf.reactions.summary.listReactions");
+        button.addEventListener("click", () => {
+          this.dispatchEvent(new Event("showDetails"));
+        });
+        this.append(button);
+        data.forEach((value, key) => {
+          const countButton = document.createElement("span");
+          countButton.classList.add("reactionCountButton");
+          if (key === selectedReaction) {
+            countButton.classList.add("selected");
+          }
+          const icon = document.createElement("span");
+          icon.innerHTML = window.REACTION_TYPES[key].renderedIcon;
+          countButton.append(icon);
+          const counter = document.createElement("span");
+          counter.classList.add("reactionCount");
+          counter.textContent = value.toString();
+          countButton.append(counter);
+          button.append(countButton);
+        });
+      }
+      #getData() {
+        const data = JSON.parse(this.getAttribute("data"));
+        this.removeAttribute("data");
+        return new Map(data);
+      }
+      #getSelectedReaction() {
+        return parseInt(this.getAttribute("selected-reaction"));
+      }
+    }
+    window.customElements.define("woltlab-core-reaction-summary", WoltlabCoreReactionSummaryElement);
+  }
+
   // ts/WoltLabSuite/WebComponent/index.ts
   window.WoltLabLanguage = Language_exports;
   window.WoltLabTemplate = Template;
@@ -1227,6 +1281,15 @@
  * string based on the user’s timezone and website locale. For
  *
  * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
+/**
+ * The `<woltlab-core-reaction-summary>` element presents the
+ * reactions of an element and offers a detailed summary.
+ *
+ * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all

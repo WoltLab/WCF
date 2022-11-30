@@ -132,6 +132,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.page.pagePosition');
 
         $event->preload('wcf.reactions.react');
+        $event->preload('wcf.reactions.summary.listReactions');
 
         $event->preload('wcf.style.changeStyle');
 

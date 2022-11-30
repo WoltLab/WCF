@@ -16,7 +16,6 @@ import DomUtil from "../../Dom/Util";
 import * as UiAlignment from "../Alignment";
 import UiCloseOverlay from "../CloseOverlay";
 import * as UiScreen from "../Screen";
-import CountButtons from "./CountButtons";
 import { Reaction, ReactionStats } from "./Data";
 import { createFocusTrap, FocusTrap } from "focus-trap";
 
@@ -56,7 +55,6 @@ const availableReactions = Object.values(window.REACTION_TYPES);
 
 class UiReactionHandler {
   protected activeButton?: HTMLElement | undefined = undefined;
-  readonly countButtons: CountButtons;
   protected readonly _cache = new Map<string, unknown>();
   protected focusTrap?: FocusTrap = undefined;
   protected readonly _containers = new Map<string, ElementData>();
@@ -99,8 +97,6 @@ class UiReactionHandler {
     ) as ReactionHandlerOptions;
 
     this.initReactButtons();
-
-    this.countButtons = new CountButtons(this._objectType, this._options);
 
     DomChangeListener.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
@@ -478,7 +474,16 @@ class UiReactionHandler {
 
   _ajaxSuccess(data: AjaxResponse): void {
     const objectId = ~~data.returnValues.objectID;
-    this.countButtons.updateCountButtons(objectId, data.returnValues.reactions);
+
+    const reactions = new Map<number, number>();
+    Object.entries(data.returnValues.reactions).forEach(([key, value]) => {
+      reactions.set(parseInt(key), value);
+    });
+
+    const component = document.querySelector(
+      `woltlab-core-reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`,
+    ) as WoltlabCoreReactionSummaryElement;
+    component?.setData(reactions, data.returnValues.reactionTypeID);
 
     this._updateReactButton(objectId, data.returnValues.reactionTypeID);
   }
