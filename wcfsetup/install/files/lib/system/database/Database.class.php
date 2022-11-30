@@ -157,7 +157,7 @@ abstract class Database
      *
      * @param string $table
      * @param string $field
-     * @return  int
+     * @return  string|false
      * @throws  DatabaseException
      */
     public function getInsertID($table, $field)
