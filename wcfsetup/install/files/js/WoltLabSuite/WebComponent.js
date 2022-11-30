@@ -1199,12 +1199,12 @@
   {
     class WoltlabCoreReactionSummaryElement extends HTMLElement {
       connectedCallback() {
-        this.setData(this.getData(), this.getSelectedReaction());
+        this.setData(this.#getData(), this.#getSelectedReaction());
       }
       setData(data, selectedReaction) {
-        this.render(data, selectedReaction);
+        this.#render(data, selectedReaction);
       }
-      render(data, selectedReaction) {
+      #render(data, selectedReaction) {
         this.innerHTML = "";
         if (!data.size)
           return;
@@ -1231,12 +1231,12 @@
           button.append(countButton);
         });
       }
-      getData() {
+      #getData() {
         const data = JSON.parse(this.getAttribute("data"));
         this.removeAttribute("data");
         return new Map(data);
       }
-      getSelectedReaction() {
+      #getSelectedReaction() {
         return parseInt(this.getAttribute("selected-reaction"));
       }
     }
@@ -1275,6 +1275,15 @@
  * string based on the user’s timezone and website locale. For
  *
  * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
+/**
+ * The `<woltlab-core-reaction-summary>` element presents the
+ * reactions of an element and offers a detailed summary.
+ *
+ * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all

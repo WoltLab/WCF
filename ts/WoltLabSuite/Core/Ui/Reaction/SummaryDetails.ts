@@ -18,38 +18,38 @@ type ResponseGetReactionDetails = {
 };
 
 export class SummaryDetails {
-  private objectType: string;
-  private objectId: number;
+  readonly #objectType: string;
+  readonly #objectId: number;
 
   constructor(objectType: string, objectId: number) {
-    this.objectType = objectType;
-    this.objectId = objectId;
+    this.#objectType = objectType;
+    this.#objectId = objectId;
 
     const component = document.querySelector(
-      `woltlab-core-reaction-summary[object-type="${this.objectType}"][object-id="${this.objectId}"]`,
+      `woltlab-core-reaction-summary[object-type="${this.#objectType}"][object-id="${this.#objectId}"]`,
     ) as WoltlabCoreReactionSummaryElement;
     component?.addEventListener("showDetails", () => {
-      void this.loadDetails();
+      void this.#loadDetails();
     });
   }
 
-  async loadDetails(): Promise<void> {
+  async #loadDetails(): Promise<void> {
     const response = (await dboAction("getReactionDetails", "wcf\\data\\reaction\\ReactionAction")
       .payload({
         data: {
-          objectID: this.objectId,
-          objectType: this.objectType,
+          objectID: this.#objectId,
+          objectType: this.#objectType,
         },
       })
       .dispatch()) as ResponseGetReactionDetails;
 
     UiDialog.open(this, response.template);
-    UiDialog.setTitle(`userReactionOverlay-${this.objectType}`, response.title);
+    UiDialog.setTitle(`userReactionOverlay-${this.#objectType}`, response.title);
   }
 
   _dialogSetup(): ReturnType<DialogCallbackSetup> {
     return {
-      id: `userReactionOverlay-${this.objectType}`,
+      id: `userReactionOverlay-${this.#objectType}`,
       options: {
         title: "",
       },

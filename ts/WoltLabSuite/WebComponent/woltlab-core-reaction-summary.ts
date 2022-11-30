@@ -16,14 +16,14 @@
 
   class WoltlabCoreReactionSummaryElement extends HTMLElement {
     connectedCallback() {
-      this.setData(this.getData(), this.getSelectedReaction());
+      this.setData(this.#getData(), this.#getSelectedReaction());
     }
 
     setData(data: Data, selectedReaction?: number): void {
-      this.render(data, selectedReaction);
+      this.#render(data, selectedReaction);
     }
 
-    private render(data: Data, selectedReaction?: number): void {
+    #render(data: Data, selectedReaction?: number): void {
       this.innerHTML = "";
 
       if (!data.size) return;
@@ -56,13 +56,13 @@
       });
     }
 
-    private getData(): Data {
+    #getData(): Data {
       const data = JSON.parse(this.getAttribute("data")!) as ReactionData[];
       this.removeAttribute("data");
       return new Map(data);
     }
 
-    private getSelectedReaction(): number {
+    #getSelectedReaction(): number {
       return parseInt(this.getAttribute("selected-reaction")!);
     }
   }
