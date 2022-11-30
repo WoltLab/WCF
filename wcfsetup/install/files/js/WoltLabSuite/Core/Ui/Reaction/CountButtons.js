@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
- * @deprecated  6.0 use reaction-summary web component instead
+ * @deprecated  6.0 use <woltlab-core-reaction-summary> instead
  */
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../StringUtil", "../Dialog"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, StringUtil, Dialog_1) {
     "use strict";

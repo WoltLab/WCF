@@ -169,6 +169,9 @@ class LikeObject extends DatabaseObject
         return $this->reactions;
     }
 
+    /**
+     * @since 6.0
+     */
     public function getReactionsJson(): string
     {
         $data = [];

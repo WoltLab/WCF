@@ -1,3 +1,13 @@
+/**
+ * The `<woltlab-core-reaction-summary>` element presents the
+ * reactions of an element and offers a detailed summary.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @woltlabExcludeBundle all
+ */
+
 {
   type ReactionTypeId = number;
   type Count = number;
