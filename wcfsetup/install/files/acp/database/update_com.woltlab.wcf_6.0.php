@@ -10,6 +10,7 @@
  */
 
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
+use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
@@ -76,6 +77,11 @@ return [
     PartialDatabaseTable::create('wcf1_page')
         ->columns([
             TinyintDatabaseTableColumn::create('isLandingPage')
+                ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_style')
+        ->columns([
+            EnumDatabaseTableColumn::create('apiVersion')
                 ->drop(),
         ]),
     PartialDatabaseTable::create('wcf1_user_group_option')

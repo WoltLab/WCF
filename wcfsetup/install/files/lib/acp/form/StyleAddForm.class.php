@@ -942,7 +942,6 @@ class StyleAddForm extends AbstractForm
             'templateGroupID' => $this->templateGroupID,
             'tmpHash' => $this->tmpHash,
             'variables' => $this->variables,
-            'newVariables' => $this->newVariables,
             'scrollOffsets' => $this->scrollOffsets,
             'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
             'coverPhotoMaxHeight' => UserCoverPhoto::MAX_HEIGHT,
