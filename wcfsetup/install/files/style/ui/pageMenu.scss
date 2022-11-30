@@ -11,16 +11,8 @@
 }
 
 .pageMenuContent {
-	--background-color: #{var(--wcfUserMenuBackground)};
-	--background-color-active: #{var(--wcfUserMenuBackgroundActive)};
-	--border-color: #{var(--wcfUserMenuBorder)};
-	--color: #{var(--wcfUserMenuText)};
-	--color-active: #{var(--wcfUserMenuTextActive)};
-	--color-dimmed: #{var(--wcfUserMenuTextDimmed)};
-	--color-indicator: #{var(--wcfUserMenuIndicator)};
-
-	background-color: var(--background-color);
-	color: var(--color);
+	background-color: var(--wcfUserMenuBackground);
+	color: var(--wcfUserMenuText);
 	grid-area: content;
 }
 
@@ -76,7 +68,7 @@
 }
 
 .pageMenuMainItem {
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--wcfUserMenuBorder);
 	column-gap: 10px;
 	display: grid;
 	grid-template-areas: "item";
@@ -124,7 +116,7 @@
 	position: relative;
 
 	&::before {
-		border-left: 1px solid var(--border-color);
+		border-left: 1px solid var(--wcfUserMenuBorder);
 		bottom: 10px;
 		content: "";
 		left: 0;
@@ -133,7 +125,7 @@
 	}
 
 	.icon {
-		color: var(--color);
+		color: var(--wcfUserMenuText);
 		transform: rotate(0);
 	}
 
@@ -203,7 +195,7 @@
 }
 
 .pageMenuUserTabList {
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--wcfUserMenuBorder);
 	display: grid;
 	flex: 0 0 auto;
 	grid-auto-columns: minmax(70px, 1fr);
@@ -219,19 +211,19 @@
 	position: relative;
 
 	&:not(:last-child) {
-		border-right: 1px solid var(--border-color);
+		border-right: 1px solid var(--wcfUserMenuBorder);
 	}
 
 	&[aria-selected="true"] {
-		background-color: var(--background-color-active);
+		background-color: var(--wcfUserMenuBackgroundActive);
 
 		.icon {
-			color: var(--color-active);
+			color: var(--wcfUserMenuTextActive);
 		}
 	}
 
 	&[data-has-unread-content="true"]::after {
-		background-color: var(--color-indicator);
+		background-color: var(--wcfUserMenuIndicator);
 		border-radius: 50%;
 		content: "";
 		height: 10px;
@@ -243,7 +235,7 @@
 	}
 
 	.icon {
-		color: var(--color);
+		color: var(--wcfUserMenuText);
 	}
 }
 

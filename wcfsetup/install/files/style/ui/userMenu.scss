@@ -1,14 +1,6 @@
 .userMenu {
-	--background-color: #{var(--wcfUserMenuBackground)};
-	--background-color-active: #{var(--wcfUserMenuBackgroundActive)};
-	--border-color: #{var(--wcfUserMenuBorder)};
-	--color: #{var(--wcfUserMenuText)};
-	--color-active: #{var(--wcfUserMenuTextActive)};
-	--color-dimmed: #{var(--wcfUserMenuTextDimmed)};
-	--color-indicator: #{var(--wcfUserMenuIndicator)};
-
-	background-color: var(--background-color);
-	color: var(--color);
+	background-color: var(--wcfUserMenuBackground);
+	color: var(--wcfUserMenuText);
 	pointer-events: all;
 
 	&.userMenuControlPanel {
@@ -21,12 +13,12 @@
 		}
 
 		.icon {
-			color: var(--color-dimmed);
+			color: var(--wcfUserMenuTextDimmed);
 		}
 	}
 
 	.icon {
-		color: var(--color);
+		color: var(--wcfUserMenuText);
 	}
 }
 
@@ -99,7 +91,7 @@ html:not(.touch) .userMenuButton {
 
 .userMenuContentStatus {
 	align-items: center;
-	color: var(--color-dimmed);
+	color: var(--wcfUserMenuTextDimmed);
 	display: flex;
 	height: 60px;
 	justify-content: center;
@@ -120,7 +112,7 @@ html:not(.touch) .userMenuButton {
 }
 
 .userMenuItem {
-	background-color: var(--background-color);
+	background-color: var(--wcfUserMenuBackground);
 	display: grid;
 	grid-template-areas:
 		"image content"
@@ -168,11 +160,11 @@ html:not(.touch) .userMenuButton {
 }
 
 html:not(.touch) .userMenuItem:hover {
-	background-color: var(--background-color-active);
-	color: var(--color-active);
+	background-color: var(--wcfUserMenuBackgroundActive);
+	color: var(--wcfUserMenuTextActive);
 
 	.icon {
-		color: var(--color-active);
+		color: var(--wcfUserMenuTextActive);
 	}
 }
 
@@ -217,7 +209,7 @@ html:not(.touch) .userMenuItem:hover {
 
 .userMenuItemUsernames,
 .userMenuItemMeta {
-	color: var(--color-dimmed);
+	color: var(--wcfUserMenuTextDimmed);
 	margin-top: 2px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -236,7 +228,7 @@ html:not(.touch) .userMenuItem:hover {
 	width: 34px;
 
 	&::before {
-		background-color: var(--color-indicator);
+		background-color: var(--wcfUserMenuIndicator);
 		border-radius: 50%;
 		content: "";
 		height: 10px;
@@ -289,7 +281,7 @@ html.touch .userMenuItem .userMenuItemMarkAsRead {
 }
 
 .userMenuFooter {
-	border-top: 1px solid var(--border-color);
+	border-top: 1px solid var(--wcfUserMenuBorder);
 	padding: 10px;
 	position: relative;
 	text-align: center;
@@ -318,11 +310,11 @@ html.touch .userMenuItem .userMenuItemMarkAsRead {
 }
 
 .userMenuContentDivider {
-	border-top: 1px solid var(--border-color);
+	border-top: 1px solid var(--wcfUserMenuBorder);
 }
 
 .userMenuNotifications {
-	border: 1px solid var(--color-indicator);
+	border: 1px solid var(--wcfUserMenuIndicator);
 	border-radius: 5px;
 	margin: 0 10px;
 	padding: 10px;
