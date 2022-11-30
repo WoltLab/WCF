@@ -11,13 +11,13 @@
 }
 
 .pageMenuContent {
-	--background-color: #{$wcfUserMenuBackground};
-	--background-color-active: #{$wcfUserMenuBackgroundActive};
-	--border-color: #{$wcfUserMenuBorder};
-	--color: #{$wcfUserMenuText};
-	--color-active: #{$wcfUserMenuTextActive};
-	--color-dimmed: #{$wcfUserMenuTextDimmed};
-	--color-indicator: #{$wcfUserMenuIndicator};
+	--background-color: #{var(--wcfUserMenuBackground)};
+	--background-color-active: #{var(--wcfUserMenuBackgroundActive)};
+	--border-color: #{var(--wcfUserMenuBorder)};
+	--color: #{var(--wcfUserMenuText)};
+	--color-active: #{var(--wcfUserMenuTextActive)};
+	--color-dimmed: #{var(--wcfUserMenuTextDimmed)};
+	--color-indicator: #{var(--wcfUserMenuIndicator)};
 
 	background-color: var(--background-color);
 	color: var(--color);
@@ -257,7 +257,7 @@
 	.pageHeaderUserMobile[aria-expanded="true"]::after {
 		border: 8px solid transparent;
 		border-top-width: 0;
-		border-bottom-color: $wcfUserMenuBackground;
+		border-bottom-color: var(--wcfUserMenuBackground);
 		bottom: 0;
 		content: "";
 		position: absolute;

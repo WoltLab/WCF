@@ -31,15 +31,15 @@
 			display: inline-block;
 
 			> a > .icon {
-				color: $wcfButtonBackground;
+				color: var(--wcfButtonBackground);
 
 				&.active {
-					color: $wcfButtonPrimaryBackground;
+					color: var(--wcfButtonPrimaryBackground);
 				}
 			}
 
 			&:hover > a > .icon {
-				color: $wcfButtonPrimaryBackgroundActive;
+				color: var(--wcfButtonPrimaryBackgroundActive);
 			}
 		}
 	}

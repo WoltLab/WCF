@@ -1,8 +1,8 @@
 .badge,
 a.badge {
-	background-color: $wcfContentText;
+	background-color: var(--wcfContentText);
 	border-radius: 2px;
-	color: $wcfContentBackground;
+	color: var(--wcfContentBackground);
 	display: inline-block;
 	line-height: 1.28;
 	padding: 2px 6px;
@@ -68,7 +68,7 @@ a.badge {
 }
 
 a.badge:hover {
-	color: $wcfContentBackground;
+	color: var(--wcfContentBackground);
 	text-decoration: none;
 
 	&.black {

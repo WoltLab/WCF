@@ -106,17 +106,17 @@
 			flex: 0 0 auto;
 
 			&:hover > .icon {
-				color: $wcfHeaderLinkActive;
+				color: var(--wcfHeaderLinkActive);
 			}
 
 			> .icon {
-				color: $wcfHeaderLink;
+				color: var(--wcfHeaderLink);
 			}
 		}
 	}
 
 	> .dialogContent {
-		background-color: $wcfContentBackground;
+		background-color: var(--wcfContentBackground);
 		overflow: auto;
 
 		// do not use `-webkit-overflow-scrolling` as it will cut off content in iOS Safari

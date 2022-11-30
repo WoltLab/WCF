@@ -1,8 +1,8 @@
 @mixin dropdownMenu {
-	background-color: $wcfDropdownBackground;
+	background-color: var(--wcfDropdownBackground);
 	border-radius: 4px;
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
-	color: $wcfDropdownText;
+	color: var(--wcfDropdownText);
 	display: none;
 	min-width: 160px;
 	padding: 4px 0;
@@ -30,16 +30,16 @@
 		&.dropdownList > li:hover:not(.dropdownDivider),
 		&.dropdownNavigationItem,
 		&.active {
-			background-color: $wcfDropdownBackgroundActive;
-			color: $wcfDropdownLinkActive;
+			background-color: var(--wcfDropdownBackgroundActive);
+			color: var(--wcfDropdownLinkActive);
 
 			> a {
-				color: $wcfDropdownLinkActive;
+				color: var(--wcfDropdownLinkActive);
 			}
 		}
 
 		&.dropdownDivider {
-			border-top: 1px solid $wcfDropdownBorderInner;
+			border-top: 1px solid var(--wcfDropdownBorderInner);
 			margin: 4px 0;
 		}
 
@@ -59,7 +59,7 @@
 		}
 
 		&.disabled {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 
 			> span {
 				cursor: not-allowed !important;
@@ -87,7 +87,7 @@
 		}
 
 		> a {
-			color: $wcfDropdownLink;
+			color: var(--wcfDropdownLink);
 		}
 
 		> a > small {

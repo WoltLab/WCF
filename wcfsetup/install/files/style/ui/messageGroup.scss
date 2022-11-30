@@ -72,7 +72,7 @@
 			right: -6px;
 
 			> img {
-				border: 1px solid $wcfContentBackground;
+				border: 1px solid var(--wcfContentBackground);
 				box-sizing: content-box;
 			}
 		}
@@ -124,7 +124,7 @@
 		}
 
 		time {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 		}
 
 		a {
@@ -266,7 +266,7 @@
 				}
 
 				.messageGroupInfoMobile {
-					color: $wcfContentDimmedText;
+					color: var(--wcfContentDimmedText);
 					display: flex;
 
 					@include wcfFontSmall;
@@ -309,7 +309,7 @@
 			@include wcfFontDefault;
 
 			fa-icon {
-				color: $wcfTabularBoxHeadline;
+				color: var(--wcfTabularBoxHeadline);
 			}
 		}
 
@@ -339,7 +339,7 @@
 }
 
 .messageGroupListStatsSimple {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	font-size: 1rem;
 	left: 50%;
 	position: absolute;

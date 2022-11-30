@@ -12,9 +12,9 @@
 
 .ignoredUserMessage {
 	@include screen-md-up {
-		background-color: $wcfStatusInfoBackground !important;
-		border-left: 5px solid $wcfStatusInfoBorder !important;
-		color: $wcfStatusInfoText !important;
+		background-color: var(--wcfStatusInfoBackground) !important;
+		border-left: 5px solid var(--wcfStatusInfoBorder) !important;
+		color: var(--wcfStatusInfoText) !important;
 		cursor: pointer !important;
 
 		&::before {
@@ -24,14 +24,14 @@
 	}
 
 	@include screen-sm-down {
-		border-top: 1px solid $wcfContentBorder;
+		border-top: 1px solid var(--wcfContentBorder);
 		margin: 0 -10px;
 		padding-top: 30px;
 
 		&::before {
-			background-color: $wcfStatusInfoBackground !important;
-			border-left: 5px solid $wcfStatusInfoBorder !important;
-			color: $wcfStatusInfoText !important;
+			background-color: var(--wcfStatusInfoBackground) !important;
+			border-left: 5px solid var(--wcfStatusInfoBorder) !important;
+			color: var(--wcfStatusInfoText) !important;
 			content: attr(data-ignored-user-message);
 			cursor: pointer !important;
 			display: block;

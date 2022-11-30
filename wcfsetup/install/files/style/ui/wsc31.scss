@@ -18,8 +18,8 @@
 	.content > .section,
 	.content > form,
 	.sectionContainer {
-		border: 1px solid $wcfContentContainerBorder;
-		background-color: $wcfContentContainerBackground;
+		border: 1px solid var(--wcfContentContainerBorder);
+		background-color: var(--wcfContentContainerBackground);
 		padding: 20px;
 
 		@include screen-sm-down {
@@ -133,44 +133,44 @@
 
 	// individual variables for the editor toolbar
 	.redactor-toolbar {
-		background-color: $wcfEditorButtonBackground;
+		background-color: var(--wcfEditorButtonBackground);
 
 		> li {
 			> a {
-				color: $wcfEditorButtonText;
+				color: var(--wcfEditorButtonText);
 
 				&.redactor-button-disabled {
-					color: $wcfEditorButtonTextDisabled !important;
+					color: var(--wcfEditorButtonTextDisabled) !important;
 				}
 
 				&.redactor-act,
 				&.dropact {
-					background-color: $wcfEditorButtonBackgroundActive;
-					color: $wcfEditorButtonTextActive;
+					background-color: var(--wcfEditorButtonBackgroundActive);
+					color: var(--wcfEditorButtonTextActive);
 				}
 
 				@include screen-lg {
 					&:hover {
-						background-color: $wcfEditorButtonBackgroundActive;
-						color: $wcfEditorButtonTextActive;
+						background-color: var(--wcfEditorButtonBackgroundActive);
+						color: var(--wcfEditorButtonTextActive);
 					}
 				}
 			}
 
 			@include screen-sm-up {
 				&.redactor-toolbar-separator::before {
-					border-left: 1px solid $wcfEditorButtonText;
+					border-left: 1px solid var(--wcfEditorButtonText);
 				}
 			}
 		}
 
 		@include screen-xs {
 			&.redactorToolbarOverride > .redactor-toolbar-separator::before {
-				border-left: 1px solid $wcfEditorButtonText;
+				border-left: 1px solid var(--wcfEditorButtonText);
 			}
 
 			.redactorToolbarToggle::before {
-				border-left: 1px solid $wcfEditorButtonText;
+				border-left: 1px solid var(--wcfEditorButtonText);
 			}
 		}
 	}
@@ -180,20 +180,20 @@
 	.messageTabMenuNavigation > ul,
 	.messageTabMenu > .messageTabMenuContent.active,
 	.messageContent.loading > .messageContentLoadingOverlay {
-		background-color: $wcfContentContainerBackground;
+		background-color: var(--wcfContentContainerBackground);
 	}
 
 	.messageTabMenuNavigation > ul > li.active > a::after {
-		border-bottom-color: $wcfContentContainerBackground;
+		border-bottom-color: var(--wcfContentContainerBackground);
 	}
 
 	// use the `alert` variables rather than fixed values
 	.innerError {
-		background-color: $wcfStatusErrorBackground;
-		color: $wcfStatusErrorText;
+		background-color: var(--wcfStatusErrorBackground);
+		color: var(--wcfStatusErrorText);
 
 		&::before {
-			border-bottom-color: $wcfStatusErrorBackground;
+			border-bottom-color: var(--wcfStatusErrorBackground);
 		}
 	}
 
@@ -203,26 +203,26 @@
 		dl:not(.plain) > dt,
 		dl.dataList > dt,
 		.separatorLeft::before {
-			color: $wcfSidebarDimmedText;
+			color: var(--wcfSidebarDimmedText);
 		}
 	}
 	.messageReduced {
 		.messageTitle a {
-			color: $wcfSidebarText;
+			color: var(--wcfSidebarText);
 		}
 
 		.messageHeaderMetaData {
 			.messagePublicationTime,
 			> li:not(:last-child)::after {
-				color: $wcfSidebarDimmedText;
+				color: var(--wcfSidebarDimmedText);
 			}
 		}
 	}
 	.userMention {
-		color: $wcfSidebarLink;
+		color: var(--wcfSidebarLink);
 
 		&:hover {
-			color: $wcfSidebarLinkActive;
+			color: var(--wcfSidebarLinkActive);
 		}
 	}
 	.boxesSidebarLeft .box,
@@ -241,20 +241,20 @@
 	.tabMenuOverlayLeft {
 		background: linear-gradient(
 			to left,
-			transparentize($wcfContentContainerBackground, 1) 0%,
-			$wcfContentContainerBackground 50%
+			transparentize(var(--wcfContentContainerBackground), 1) 0%,
+			var(--wcfContentContainerBackground) 50%
 		);
 	}
 	.tabMenuOverlayRight {
 		background: linear-gradient(
 			to right,
-			transparentize($wcfContentContainerBackground, 1) 0%,
-			$wcfContentContainerBackground 50%
+			transparentize(var(--wcfContentContainerBackground), 1) 0%,
+			var(--wcfContentContainerBackground) 50%
 		);
 	}
 
 	// background-color when saving messages
 	.messageContent.loading > .messageContentLoadingOverlay {
-		background-color: $wcfContentContainerBackground;
+		background-color: var(--wcfContentContainerBackground);
 	}
 }

@@ -1,7 +1,7 @@
 @include screen-md-up {
 	.pageNavigation {
-		background-color: $wcfNavigationBackground;
-		color: $wcfNavigationText;
+		background-color: var(--wcfNavigationBackground);
+		color: var(--wcfNavigationText);
 		flex: 0 0 auto;
 		padding: 10px 0;
 
@@ -17,10 +17,10 @@
 		}
 
 		a {
-			color: $wcfNavigationLink;
+			color: var(--wcfNavigationLink);
 
 			&:hover {
-				color: $wcfNavigationLinkActive;
+				color: var(--wcfNavigationLinkActive);
 			}
 		}
 	}
@@ -41,14 +41,14 @@
 
 		&:last-child {
 			align-items: center;
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 			display: flex;
 			flex: 1;
 
 			@include wcfFontDefault;
 
 			> a {
-				color: $wcfContentDimmedLink;
+				color: var(--wcfContentDimmedLink);
 				display: block;
 				flex: 1;
 				overflow: hidden;

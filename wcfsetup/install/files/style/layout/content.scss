@@ -3,7 +3,7 @@
 .contentHeader,
 .boxHeadline {
 	// deprecated
-	color: $wcfContentHeadlineText;
+	color: var(--wcfContentHeadlineText);
 
 	.contentTitle,
 	> h1 {
@@ -17,10 +17,10 @@
 		}
 
 		a {
-			color: $wcfContentHeadlineLink;
+			color: var(--wcfContentHeadlineLink);
 
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: var(--wcfContentHeadlineLinkActive);
 			}
 		}
 	}
@@ -50,12 +50,12 @@
 	}
 
 	.contentHeaderDescription {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		margin-top: 5px;
 	}
 
 	.contentHeaderMetaData {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		margin-top: 5px;
 
 		&.inlineList {
@@ -68,7 +68,7 @@
 			a,
 			a:hover,
 			.icon {
-				color: $wcfContentDimmedText;
+				color: var(--wcfContentDimmedText);
 			}
 		}
 	}
@@ -78,7 +78,7 @@
 	}
 
 	.inlineDataList {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 	}
 
 	.contentHeaderNavigation {
@@ -125,15 +125,15 @@
 	margin-bottom: 20px;
 
 	> h2 {
-		color: $wcfContentHeadlineText;
+		color: var(--wcfContentHeadlineText);
 
 		@include wcfFontSection;
 
 		a {
-			color: $wcfContentHeadlineLink;
+			color: var(--wcfContentHeadlineLink);
 
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: var(--wcfContentHeadlineLinkActive);
 			}
 		}
 
@@ -152,15 +152,15 @@
 	}
 
 	.sectionTitle {
-		color: $wcfContentHeadlineText;
+		color: var(--wcfContentHeadlineText);
 
 		@include wcfFontSection;
 
 		a {
-			color: $wcfContentHeadlineLink;
+			color: var(--wcfContentHeadlineLink);
 
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: var(--wcfContentHeadlineLinkActive);
 			}
 		}
 
@@ -170,7 +170,7 @@
 	}
 
 	.sectionDescription {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 	}
 
 	> .sectionHeader,
@@ -185,7 +185,7 @@
 	&:not(.sectionContainerList) {
 		> .sectionHeader,
 		> .sectionTitle {
-			border-bottom: 1px solid $wcfContentBorderInner;
+			border-bottom: 1px solid var(--wcfContentBorderInner);
 			padding-bottom: 10px;
 		}
 	}
@@ -200,7 +200,7 @@
 	&.tabularBox {
 		> .sectionHeader,
 		> .sectionTitle {
-			border-color: $wcfContentBorder;
+			border-color: var(--wcfContentBorder);
 			margin-bottom: 0;
 		}
 	}
@@ -228,8 +228,8 @@ fieldset {
 	margin-top: 40px;
 
 	> legend {
-		border-bottom: 1px solid $wcfContentBorderInner;
-		color: $wcfContentHeadlineText;
+		border-bottom: 1px solid var(--wcfContentBorderInner);
+		color: var(--wcfContentHeadlineText);
 		float: left;
 		margin-bottom: 20px;
 		padding-bottom: 10px;
@@ -238,10 +238,10 @@ fieldset {
 		@include wcfFontSection;
 
 		a {
-			color: $wcfContentHeadlineLink;
+			color: var(--wcfContentHeadlineLink);
 
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: var(--wcfContentHeadlineLinkActive);
 			}
 		}
 
@@ -254,7 +254,7 @@ fieldset {
 		}
 
 		+ small {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 			position: relative;
 			top: -12px;
 		}

@@ -28,21 +28,21 @@ body {
 }
 
 body {
-	background-color: $wcfContentBackground;
-	color: $wcfContentText;
-	font-family: $wcfFontFamily;
+	background-color: var(--wcfContentBackground);
+	color: var(--wcfContentText);
+	font-family: var(--wcfFontFamily);
 	position: relative;
 	width: 100%;
 	word-wrap: break-word;
 }
 
 a {
-	color: $wcfContentLink;
+	color: var(--wcfContentLink);
 	cursor: pointer;
 	text-decoration: none;
 
 	&:hover {
-		color: $wcfContentLinkActive;
+		color: var(--wcfContentLinkActive);
 		text-decoration: none;
 	}
 }

@@ -1,7 +1,7 @@
 .reactionPopover {
 	animation: wcfPopoverOut 0.3s;
 	animation-fill-mode: forwards;
-	background-color: $wcfContentBackground;
+	background-color: var(--wcfContentBackground);
 	border-radius: 2px;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 	overflow: hidden;
@@ -48,15 +48,15 @@
 }
 
 .reactionPopoverContent {
-	background-color: $wcfContentBackground;
+	background-color: var(--wcfContentBackground);
 	border-radius: 3px;
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 
 	a {
-		color: $wcfContentLink;
+		color: var(--wcfContentLink);
 
 		&:hover {
-			color: $wcfContentLinkActive;
+			color: var(--wcfContentLinkActive);
 		}
 	}
 
@@ -88,8 +88,8 @@
 		&::after {
 			background-image: linear-gradient(
 				to bottom,
-				transparentize($wcfContentBackground, 1),
-				$wcfContentBackground
+				transparentize(var(--wcfContentBackground), 1),
+				var(--wcfContentBackground)
 			);
 			bottom: 0;
 		}
@@ -98,7 +98,7 @@
 		}
 
 		&::before {
-			background-image: linear-gradient(to top, transparentize($wcfContentBackground, 1), $wcfContentBackground);
+			background-image: linear-gradient(to top, transparentize(var(--wcfContentBackground), 1), var(--wcfContentBackground));
 			top: 0;
 		}
 		&.overflowTop::before {
@@ -115,7 +115,7 @@
 			padding: 5px 25px;
 
 			&.active {
-				background-color: $wcfContentBorderInner;
+				background-color: var(--wcfContentBorderInner);
 			}
 
 			> .reactionTypeButtonTitle {
@@ -223,11 +223,11 @@
 	gap: 5px 5px;
 
 	&:hover .reactionCountButton {
-		color: $wcfContentText;
+		color: var(--wcfContentText);
 	}
 
 	.reactionCountButton {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		white-space: nowrap;
 	}
 

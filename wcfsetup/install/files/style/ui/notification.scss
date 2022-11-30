@@ -9,7 +9,7 @@
 
 .notificationSettingsCategory {
 	border-bottom: 2px solid currentColor;
-	color: $wcfTabularBoxHeadline;
+	color: var(--wcfTabularBoxHeadline);
 	font-weight: 600;
 	padding: 5px 0;
 }
@@ -20,7 +20,7 @@
 }
 
 .notificationSettingsItem:not(:last-child) {
-	border-bottom: 1px solid $wcfContentBorderInner;
+	border-bottom: 1px solid var(--wcfContentBorderInner);
 }
 
 .notificationSettingsEvent {

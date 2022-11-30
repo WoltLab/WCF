@@ -95,7 +95,7 @@
 	}
 
 	.attachmentMetaData {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		padding: 10px;
 
 		@include wcfFontSmall;
@@ -194,7 +194,7 @@
 /* embedded images */
 .embeddedAttachmentLink,
 .embeddedImageLink {
-	border: 1px solid $wcfContentBorderInner;
+	border: 1px solid var(--wcfContentBorderInner);
 	display: inline-block;
 	height: auto;
 	margin: 2px 0;
@@ -235,14 +235,14 @@
 	margin-bottom: 10px;
 
 	&::before {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		content: "";
 		flex: 0 0 20px;
 		margin-right: 10px;
 	}
 
 	&::after {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		content: "";
 		flex: 1 0 auto;
 		margin-left: 10px;
@@ -260,7 +260,7 @@
 }
 
 .messageAttachment {
-	border: 1px solid $wcfContentBorderInner;
+	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: 3px;
 	color: inherit;
 	column-gap: 8px;
@@ -309,6 +309,6 @@
 .messageAttachmentMeta {
 	@include wcfFontSmall;
 
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	grid-area: meta;
 }

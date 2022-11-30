@@ -1,5 +1,5 @@
 .embeddedContent {
-	background-color: $wcfContentBackground;
+	background-color: var(--wcfContentBackground);
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	border-radius: 3px;
 	margin: 10px 0;
@@ -45,13 +45,13 @@
 }
 
 .embeddedContentCategory {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 
 	@include wcfFontSmall;
 }
 
 .embeddedContentTitle {
-	color: $wcfContentHeadlineText;
+	color: var(--wcfContentHeadlineText);
 	display: -webkit-box;
 	margin-bottom: 5px;
 	overflow: hidden;
@@ -69,26 +69,26 @@
 }
 
 .embeddedContentDescription {
-	color: $wcfContentDimmedText;
-	max-height: calc(5 * #{$wcfFontLineHeight}em);
+	color: var(--wcfContentDimmedText);
+	max-height: calc(5 * #{var(--wcfFontLineHeight)}em);
 	overflow: hidden;
 	position: relative;
 
 	&::after {
-		background-image: linear-gradient(to top, $wcfContentBackground, transparentize($wcfContentBackground, 1));
+		background-image: linear-gradient(to top, var(--wcfContentBackground), transparentize(var(--wcfContentBackground), 1));
 		content: "";
 		left: 0;
-		height: #{$wcfFontLineHeight}em;
+		height: #{var(--wcfFontLineHeight)}em;
 		position: absolute;
 		right: 0;
-		top: calc(4 * #{$wcfFontLineHeight}em);
+		top: calc(4 * #{var(--wcfFontLineHeight)}em);
 	}
 }
 
 .embeddedContentMeta {
 	align-items: center;
-	border-top: 1px solid $wcfContentBorderInner;
-	color: $wcfContentDimmedText;
+	border-top: 1px solid var(--wcfContentBorderInner);
+	color: var(--wcfContentDimmedText);
 	display: flex;
 	padding: 10px;
 
@@ -105,7 +105,7 @@
 }
 
 .embeddedContentMetaAuthor {
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 
 	> a {
 		color: inherit;

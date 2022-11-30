@@ -3,7 +3,7 @@
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	border-radius: 2px;
 	color: rgb(68, 68, 68) !important;
-	font-family: $wcfFontFamilyMonospace;
+	font-family: var(--wcfFontFamilyMonospace);
 	font-size: 14px;
 	margin: 1em 0;
 	padding: 10px 20px;
@@ -14,11 +14,11 @@
 
 	&:not(.redactorCalcHeight)::before,
 	&.woltlabHtml::before {
-		color: $wcfContentLink;
+		color: var(--wcfContentLink);
 		content: attr(data-title);
 		cursor: pointer;
 		display: block;
-		font-family: $wcfFontFamily;
+		font-family: var(--wcfFontFamily);
 		margin-bottom: 20px;
 
 		@include wcfFontHeadline;
@@ -30,11 +30,11 @@
 		}
 
 		&::after {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 			content: attr(data-description);
 			cursor: pointer;
 			display: block;
-			font-family: $wcfFontFamily;
+			font-family: var(--wcfFontFamily);
 			position: absolute;
 			top: 32px;
 
@@ -44,7 +44,7 @@
 }
 
 .codeBox {
-	background-color: $wcfContentBackground;
+	background-color: var(--wcfContentBackground);
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	border-radius: 2px;
 	clear: both;
@@ -69,8 +69,8 @@
 			&::before {
 				background-image: linear-gradient(
 					to top,
-					opacify($wcfContentBackground, 0.9),
-					transparentize($wcfContentBackground, 1)
+					opacify(var(--wcfContentBackground), 0.9),
+					transparentize(var(--wcfContentBackground), 1)
 				);
 				content: "";
 				height: 60px;
@@ -89,7 +89,7 @@
 		z-index: 1;
 		padding: 10px 10px 10px;
 		margin: -10px -10px 0;
-		background-color: $wcfContentBackground;
+		background-color: var(--wcfContentBackground);
 
 		align-items: center;
 		display: flex;
@@ -125,7 +125,7 @@
 		> code {
 			display: block;
 			overflow-x: auto;
-			font-family: $wcfFontFamilyMonospace;
+			font-family: var(--wcfFontFamilyMonospace);
 			font-size: 14px;
 
 			.codeBoxLine {
@@ -168,7 +168,7 @@
 	}
 
 	> .toggleButton {
-		background-color: opacify($wcfContentBackground, 0.9);
+		background-color: opacify(var(--wcfContentBackground), 0.9);
 		cursor: pointer;
 		display: block;
 		padding: 10px 20px 0 10px;

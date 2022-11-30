@@ -9,7 +9,7 @@
 		}
 
 		&.active {
-			background-color: $wcfContentBackground;
+			background-color: var(--wcfContentBackground);
 			display: block;
 			margin-top: 0;
 		}
@@ -21,14 +21,14 @@
 
 	// prevent double formatting with nested tab menus
 	&:not(.messageTabMenuContent) > .messageTabMenuContent.active {
-		border: 1px solid $wcfContentBorderInner;
+		border: 1px solid var(--wcfContentBorderInner);
 		border-top-width: 0;
 		padding: 20px;
 	}
 
 	// sub tab menu
 	&.messageTabMenuContent > nav {
-		border-bottom: 1px solid $wcfContentBorderInner;
+		border-bottom: 1px solid var(--wcfContentBorderInner);
 		margin: -20px -20px 20px -20px;
 		padding: 5px 20px;
 
@@ -45,7 +45,7 @@
 				}
 
 				&.active > a {
-					color: $wcfContentLinkActive;
+					color: var(--wcfContentLinkActive);
 				}
 
 				> a {
@@ -70,25 +70,25 @@
 .messageTabMenu > nav.tabMenu,
 .messageTabMenuNavigation {
 	> ul {
-		background-color: $wcfContentBackground;
-		border: 1px solid $wcfContentBorderInner;
+		background-color: var(--wcfContentBackground);
+		border: 1px solid var(--wcfContentBorderInner);
 		border-top-width: 0;
 
 		@include inlineList;
 
 		> li {
-			border-right: 1px solid $wcfContentBorderInner;
+			border-right: 1px solid var(--wcfContentBorderInner);
 
 			&:not(:last-child) {
 				margin-right: 0;
 			}
 
 			&.active > a {
-				color: $wcfContentLinkActive;
+				color: var(--wcfContentLinkActive);
 				position: relative;
 
 				&::after {
-					border-bottom: 1px solid $wcfContentBackground;
+					border-bottom: 1px solid var(--wcfContentBackground);
 					bottom: -1px;
 					content: "";
 					display: block;

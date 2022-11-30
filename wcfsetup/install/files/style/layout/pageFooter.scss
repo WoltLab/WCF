@@ -1,6 +1,6 @@
 .pageFooterCopyright {
-	background-color: $wcfFooterCopyrightBackground;
-	color: $wcfFooterCopyrightText;
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
 	text-align: center;
 
 	@include screen-md-up {
@@ -18,10 +18,10 @@
 	}
 
 	a {
-		color: $wcfFooterCopyrightLink;
+		color: var(--wcfFooterCopyrightLink);
 
 		&:hover {
-			color: $wcfFooterCopyrightLinkActive;
+			color: var(--wcfFooterCopyrightLinkActive);
 			text-decoration: underline;
 		}
 	}

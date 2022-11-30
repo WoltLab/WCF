@@ -4,8 +4,8 @@
 	overflow: auto;
 
 	&:not(:empty) {
-		border-bottom: 1px solid $wcfContentBorder;
-		border-top: 1px solid $wcfContentBorder;
+		border-bottom: 1px solid var(--wcfContentBorder);
+		border-top: 1px solid var(--wcfContentBorder);
 	}
 
 	> li {
@@ -18,7 +18,7 @@
 		}
 
 		&.active {
-			background-color: $wcfTabularBoxBackgroundActive;
+			background-color: var(--wcfTabularBoxBackgroundActive);
 		}
 
 		> .icon {

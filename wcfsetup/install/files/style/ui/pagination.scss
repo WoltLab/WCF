@@ -19,19 +19,19 @@
 
 			> a,
 			> span {
-				color: $wcfContentText;
+				color: var(--wcfContentText);
 				padding: 2px 8px 0;
 			}
 
 			&.disabled > span {
-				color: $wcfContentDimmedText;
+				color: var(--wcfContentDimmedText);
 			}
 
 			&.active > a,
 			&.active > span,
 			> a:hover {
-				background-color: $wcfButtonBackgroundActive;
-				color: $wcfButtonTextActive;
+				background-color: var(--wcfButtonBackgroundActive);
+				color: var(--wcfButtonTextActive);
 			}
 
 			> .icon {

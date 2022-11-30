@@ -35,7 +35,7 @@
 }
 
 .boxContentSeparator {
-	background: $wcfContentBorderInner;
+	background: var(--wcfContentBorderInner);
 	border: 0;
 	height: 1px;
 	margin: 30px auto;
@@ -103,19 +103,19 @@
 
 /* styling for boxes in <headerBoxes> position */
 .boxesHeaderBoxes {
-	background-color: $wcfFooterBoxBackground;
-	color: $wcfFooterBoxText;
+	background-color: var(--wcfFooterBoxBackground);
+	color: var(--wcfFooterBoxText);
 
 	a {
-		color: $wcfFooterBoxLink;
+		color: var(--wcfFooterBoxLink);
 
 		&:hover {
-			color: $wcfFooterBoxLinkActive;
+			color: var(--wcfFooterBoxLinkActive);
 		}
 	}
 
 	.icon {
-		color: $wcfFooterBoxText;
+		color: var(--wcfFooterBoxText);
 	}
 
 	.boxContainer {
@@ -222,15 +222,15 @@
 	}
 
 	.boxTitle {
-		color: $wcfContentHeadlineText;
+		color: var(--wcfContentHeadlineText);
 
 		@include wcfFontSection;
 
 		a {
-			color: $wcfContentHeadlineLink;
+			color: var(--wcfContentHeadlineLink);
 
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: var(--wcfContentHeadlineLinkActive);
 			}
 		}
 	}
@@ -302,23 +302,23 @@
 }
 
 .boxesTop {
-	border-bottom: 1px solid $wcfContentBorderInner;
+	border-bottom: 1px solid var(--wcfContentBorderInner);
 }
 
 .boxesBottom {
-	border-top: 1px solid $wcfContentBorderInner;
+	border-top: 1px solid var(--wcfContentBorderInner);
 }
 
 /* styling for boxes in <sidebarLeft>/<sidebarRight> position */
 .boxesSidebarLeft,
 .boxesSidebarRight {
-	color: $wcfSidebarText;
+	color: var(--wcfSidebarText);
 
 	a {
-		color: $wcfSidebarLink;
+		color: var(--wcfSidebarLink);
 
 		&:hover {
-			color: $wcfSidebarLinkActive;
+			color: var(--wcfSidebarLinkActive);
 		}
 	}
 
@@ -364,37 +364,37 @@
 	}
 
 	.icon {
-		color: $wcfSidebarText;
+		color: var(--wcfSidebarText);
 	}
 
 	small,
 	.dimmed {
-		color: $wcfSidebarDimmedText;
+		color: var(--wcfSidebarDimmedText);
 
 		a {
-			color: $wcfSidebarDimmedLink;
+			color: var(--wcfSidebarDimmedLink);
 
 			&:hover {
-				color: $wcfSidebarDimmedLinkActive;
+				color: var(--wcfSidebarDimmedLinkActive);
 			}
 		}
 	}
 
 	.boxTitle {
-		color: $wcfSidebarHeadlineText;
+		color: var(--wcfSidebarHeadlineText);
 
 		a {
-			color: $wcfSidebarHeadlineLink;
+			color: var(--wcfSidebarHeadlineLink);
 
 			&:hover {
-				color: $wcfSidebarHeadlineLinkActive;
+				color: var(--wcfSidebarHeadlineLinkActive);
 			}
 		}
 	}
 
 	.box {
 		&:not(.boxBorderless) {
-			background-color: $wcfSidebarBackground;
+			background-color: var(--wcfSidebarBackground);
 
 			@include screen-md-down {
 				padding: 20px 10px;
@@ -437,53 +437,53 @@
 		}
 
 		&.boxError {
-			background-color: $wcfStatusErrorBackground;
-			color: $wcfStatusErrorText;
+			background-color: var(--wcfStatusErrorBackground);
+			color: var(--wcfStatusErrorText);
 
 			a:not(.button) {
-				color: $wcfStatusErrorLink;
+				color: var(--wcfStatusErrorLink);
 
 				&:hover {
-					color: $wcfStatusErrorLinkActive;
+					color: var(--wcfStatusErrorLinkActive);
 				}
 			}
 		}
 
 		&.boxInfo {
-			background-color: $wcfStatusInfoBackground;
-			color: $wcfStatusInfoText;
+			background-color: var(--wcfStatusInfoBackground);
+			color: var(--wcfStatusInfoText);
 
 			a:not(.button) {
-				color: $wcfStatusInfoLink;
+				color: var(--wcfStatusInfoLink);
 
 				&:hover {
-					color: $wcfStatusInfoLinkActive;
+					color: var(--wcfStatusInfoLinkActive);
 				}
 			}
 		}
 
 		&.boxSuccess {
-			background-color: $wcfStatusSuccessBackground;
-			color: $wcfStatusSuccessText;
+			background-color: var(--wcfStatusSuccessBackground);
+			color: var(--wcfStatusSuccessText);
 
 			a:not(.button) {
-				color: $wcfStatusSuccessLink;
+				color: var(--wcfStatusSuccessLink);
 
 				&:hover {
-					color: $wcfStatusSuccessLinkActive;
+					color: var(--wcfStatusSuccessLinkActive);
 				}
 			}
 		}
 
 		&.boxWarning {
-			background-color: $wcfStatusWarningBackground;
-			color: $wcfStatusWarningText;
+			background-color: var(--wcfStatusWarningBackground);
+			color: var(--wcfStatusWarningText);
 
 			a:not(.button) {
-				color: $wcfStatusWarningLink;
+				color: var(--wcfStatusWarningLink);
 
 				&:hover {
-					color: $wcfStatusWarningLinkActive;
+					color: var(--wcfStatusWarningLinkActive);
 				}
 			}
 		}
@@ -504,11 +504,11 @@
 			}
 
 			li.active > .boxMenuLink {
-				background-color: $wcfContentBackground;
-				color: $wcfContentLink;
+				background-color: var(--wcfContentBackground);
+				color: var(--wcfContentLink);
 
 				&:hover {
-					color: $wcfContentLinkActive;
+					color: var(--wcfContentLinkActive);
 				}
 			}
 
@@ -652,8 +652,8 @@
 		}
 
 		&::before {
-			background-color: $wcfSidebarBackground;
-			color: $wcfSidebarLink;
+			background-color: var(--wcfSidebarBackground);
+			color: var(--wcfSidebarLink);
 			content: attr(data-show-sidebar);
 			display: block;
 			padding: 10px 0;
@@ -692,32 +692,32 @@
 	}
 
 	.boxTitle {
-		color: $wcfContentHeadlineText;
+		color: var(--wcfContentHeadlineText);
 
 		@include wcfFontSection;
 
 		a {
-			color: $wcfContentHeadlineLink;
+			color: var(--wcfContentHeadlineLink);
 
 			&:hover {
-				color: $wcfContentHeadlineLinkActive;
+				color: var(--wcfContentHeadlineLinkActive);
 			}
 		}
 	}
 
 	.boxInfo {
-		background-color: $wcfStatusInfoBackground;
-		color: $wcfStatusInfoText;
+		background-color: var(--wcfStatusInfoBackground);
+		color: var(--wcfStatusInfoText);
 		padding: 20px;
 		text-align: center;
 
 		a:not(.button) {
-			color: $wcfStatusInfoLink;
+			color: var(--wcfStatusInfoLink);
 
 			@include wcfFontBold;
 
 			&:hover {
-				color: $wcfStatusInfoLinkActive;
+				color: var(--wcfStatusInfoLinkActive);
 				text-decoration: underline;
 			}
 		}
@@ -772,19 +772,19 @@
 
 /* styling for boxes in <footerBoxes> position */
 .boxesFooterBoxes {
-	background-color: $wcfFooterBoxBackground;
-	color: $wcfFooterBoxText;
+	background-color: var(--wcfFooterBoxBackground);
+	color: var(--wcfFooterBoxText);
 
 	a {
-		color: $wcfFooterBoxLink;
+		color: var(--wcfFooterBoxLink);
 
 		&:hover {
-			color: $wcfFooterBoxLinkActive;
+			color: var(--wcfFooterBoxLinkActive);
 		}
 	}
 
 	.icon {
-		color: $wcfFooterBoxText;
+		color: var(--wcfFooterBoxText);
 	}
 
 	.boxContainer {
@@ -834,13 +834,13 @@
 	}
 
 	.boxTitle {
-		color: $wcfFooterBoxHeadlineText;
+		color: var(--wcfFooterBoxHeadlineText);
 
 		a {
-			color: $wcfFooterBoxHeadlineLink;
+			color: var(--wcfFooterBoxHeadlineLink);
 
 			&:hover {
-				color: $wcfFooterBoxHeadlineLinkActive;
+				color: var(--wcfFooterBoxHeadlineLinkActive);
 			}
 		}
 	}
@@ -857,19 +857,19 @@
 
 /* styling for boxes in <footer> position */
 .boxesFooter {
-	background-color: $wcfFooterBackground;
-	color: $wcfFooterText;
+	background-color: var(--wcfFooterBackground);
+	color: var(--wcfFooterText);
 	padding: 20px 0;
 
 	.icon {
-		color: $wcfFooterText;
+		color: var(--wcfFooterText);
 	}
 
 	a {
-		color: $wcfFooterLink;
+		color: var(--wcfFooterLink);
 
 		&:hover {
-			color: $wcfFooterLinkActive;
+			color: var(--wcfFooterLinkActive);
 			text-decoration: underline;
 		}
 	}
@@ -881,13 +881,13 @@
 	}
 
 	.boxTitle {
-		color: $wcfFooterHeadlineText;
+		color: var(--wcfFooterHeadlineText);
 
 		a {
-			color: $wcfFooterHeadlineLink;
+			color: var(--wcfFooterHeadlineLink);
 
 			&:hover {
-				color: $wcfFooterHeadlineLinkActive;
+				color: var(--wcfFooterHeadlineLinkActive);
 			}
 		}
 	}
@@ -932,7 +932,7 @@
 				> ol {
 					a {
 						// use text color instead
-						color: $wcfFooterText;
+						color: var(--wcfFooterText);
 					}
 				}
 			}

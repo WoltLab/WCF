@@ -13,7 +13,7 @@
 	position: relative;
 
 	&:not(:first-child)::before {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		content: "";
 		left: 0;
 		pointer-events: none;
@@ -24,7 +24,7 @@
 }
 
 html:not(.touch) .gridListItem:hover {
-	background-color: $wcfTabularBoxBackgroundActive;
+	background-color: var(--wcfTabularBoxBackgroundActive);
 }
 
 .gridListItemMessage {
@@ -45,12 +45,12 @@ html:not(.touch) .gridListItem:hover {
 }
 
 .gridListItemMeta {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	grid-area: meta;
 }
 
 .gridListItemType {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	grid-area: type;
 	justify-self: end;
 }

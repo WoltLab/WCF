@@ -10,10 +10,10 @@
 		padding: 0 20px;
 
 		@if $useFluidLayout == 1 {
-			min-width: $wcfLayoutMinWidth;
-			max-width: $wcfLayoutMaxWidth;
+			min-width: var(--wcfLayoutMinWidth);
+			max-width: var(--wcfLayoutMaxWidth);
 		} @else {
-			width: $wcfLayoutFixedWidth;
+			width: var(--wcfLayoutFixedWidth);
 		}
 	}
 }
@@ -28,7 +28,7 @@
 }
 
 .monospace {
-	font-family: $wcfFontFamilyMonospace !important;
+	font-family: var(--wcfFontFamilyMonospace) !important;
 	font-size: 14px;
 }
 
@@ -173,19 +173,19 @@ ol.nativeList {
 .htmlContent {
 	hr {
 		border: 0;
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		height: 0;
 	}
 }
 
 .separatorLeft::before {
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 	content: "\00b7";
 	margin-right: 0.25em;
 }
 
 .separatorRight::after {
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 	content: "\00b7";
 	margin-left: 0.25em;
 }

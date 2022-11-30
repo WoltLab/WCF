@@ -1,7 +1,7 @@
 .groupMention {
-	background-color: $wcfSidebarBackground;
+	background-color: var(--wcfSidebarBackground);
 	border-radius: 2px;
-	color: $wcfSidebarLink;
+	color: var(--wcfSidebarLink);
 	padding: 1px 5px;
 
 	&::before {
@@ -12,6 +12,6 @@
 	}
 
 	&:hover {
-		color: $wcfSidebarLinkActive;
+		color: var(--wcfSidebarLinkActive);
 	}
 }

@@ -12,19 +12,19 @@
 		}
 
 		&:not(:last-child) {
-			border-bottom: 1px solid $wcfContentBorderInner;
+			border-bottom: 1px solid var(--wcfContentBorderInner);
 		}
 
 		&:first-child {
-			border-top: 1px solid $wcfContentBorder;
+			border-top: 1px solid var(--wcfContentBorder);
 		}
 
 		&:last-child {
-			border-bottom: 1px solid $wcfContentBorder;
+			border-bottom: 1px solid var(--wcfContentBorder);
 		}
 
 		&:hover {
-			background-color: $wcfTabularBoxBackgroundActive;
+			background-color: var(--wcfTabularBoxBackgroundActive);
 		}
 
 		&.showMore {
@@ -39,7 +39,7 @@
 			position: relative;
 
 			> .containerContentType {
-				color: $wcfContentDimmedText;
+				color: var(--wcfContentDimmedText);
 				position: absolute;
 				top: 5px;
 				right: 0;
@@ -127,7 +127,7 @@
 				}
 
 				> ul {
-					background-color: $wcfContentBackground;
+					background-color: var(--wcfContentBackground);
 					border: 1px solid rgba(0, 0, 0, 0.15);
 					border-radius: 6px;
 
@@ -155,7 +155,7 @@
 							> button {
 								> fa-icon,
 								> .invisible {
-									color: $wcfContentText;
+									color: var(--wcfContentText);
 									opacity: 1;
 								}
 							}
@@ -209,8 +209,8 @@
 				}
 			}
 
-			border-top: 1px solid $wcfContentBorder;
-			border-bottom: 1px solid $wcfContentBorder;
+			border-top: 1px solid var(--wcfContentBorder);
+			border-bottom: 1px solid var(--wcfContentBorder);
 		}
 
 		&.doubleColumned > li {
@@ -310,7 +310,7 @@
 			margin-left: 21px;
 
 			> li {
-				font-size: $wcfFontSizeSmall;
+				font-size: var(--wcfFontSizeSmall);
 			}
 		}
 	}
@@ -319,7 +319,7 @@
 .containerListDisplayOptions {
 	align-items: center;
 	border-bottom: 2px solid currentColor;
-	color: $wcfTabularBoxHeadline;
+	color: var(--wcfTabularBoxHeadline);
 	display: flex;
 }
 
@@ -343,7 +343,7 @@
 	}
 
 	fa-icon {
-		color: $wcfTabularBoxHeadline;
+		color: var(--wcfTabularBoxHeadline);
 	}
 }
 

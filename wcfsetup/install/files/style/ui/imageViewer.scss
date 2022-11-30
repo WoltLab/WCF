@@ -1,6 +1,6 @@
 /* ImageViewer for WCF */
-$wcfImageViewerBorderColor: rgba(51, 51, 51, 1);
-$wcfImageViewerFontColor: rgba(211, 211, 211, 1);
+var(--wcfImageViewerBorderColor): rgba(51, 51, 51, 1);
+var(--wcfImageViewerFontColor): rgba(211, 211, 211, 1);
 
 .wcfImageViewer {
 	background-color: rgba(0, 0, 0, 1);
@@ -29,7 +29,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 
 		> div {
 			bottom: 0;
-			border-color: fade($wcfImageViewerBorderColor, 0%);
+			border-color: fade(var(--wcfImageViewerBorderColor), 0%);
 			top: 0;
 		}
 
@@ -168,10 +168,10 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		h1,
 		h2,
 		h3 {
-			color: $wcfImageViewerFontColor;
+			color: var(--wcfImageViewerFontColor);
 
 			> a {
-				color: $wcfImageViewerFontColor;
+				color: var(--wcfImageViewerFontColor);
 			}
 		}
 
@@ -184,7 +184,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		}
 
 		h3 {
-			color: $wcfImageViewerFontColor;
+			color: var(--wcfImageViewerFontColor);
 			font-size: 0.85rem;
 			margin-top: 0.25rem;
 		}
@@ -198,8 +198,8 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 
 	> div {
 		background-color: rgba(0, 0, 0, 1);
-		border-bottom: 1px solid $wcfImageViewerBorderColor;
-		border-top: 1px solid $wcfImageViewerBorderColor;
+		border-bottom: 1px solid var(--wcfImageViewerBorderColor);
+		border-top: 1px solid var(--wcfImageViewerBorderColor);
 		bottom: 100px;
 		top: 100px;
 		transition-property: top, bottom, border-color;
@@ -262,7 +262,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 
 			> ul {
 				background-color: rgba(0, 0, 0, 0.9);
-				border: 1px solid $wcfImageViewerBorderColor;
+				border: 1px solid var(--wcfImageViewerBorderColor);
 				border-bottom-width: 0;
 				border-radius: 2px 2px 0 0;
 				display: flex;
@@ -298,7 +298,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 
 					&.wcfImageViewerSlideshowButtonEnlarge,
 					&.wcfImageViewerSlideshowButtonFull {
-						border-left: 1px solid $wcfImageViewerBorderColor;
+						border-left: 1px solid var(--wcfImageViewerBorderColor);
 						box-sizing: border-box;
 					}
 

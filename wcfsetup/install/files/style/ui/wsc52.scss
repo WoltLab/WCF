@@ -6,14 +6,14 @@
 	.htmlContent table,
 	.table {
 		tr:hover > td {
-			background-color: $wcfTabularBoxBackgroundActive;
+			background-color: var(--wcfTabularBoxBackgroundActive);
 		}
 	}
 
 	.redactor-layer table {
 		th,
 		td {
-			border-color: $wcfEditorTableBorder !important;
+			border-color: var(--wcfEditorTableBorder) !important;
 		}
 	}
 

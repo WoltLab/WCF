@@ -34,7 +34,7 @@
 	}
 
 	figcaption {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		flex: 1 0 100%;
 		margin-top: 5px;
 		text-align: center;
@@ -108,7 +108,7 @@
 }
 
 .articleNavigationArticle {
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 	display: grid;
 	grid-template-rows: repeat(2, minmax(0, max-content));
 	position: relative;
@@ -149,7 +149,7 @@
 }
 
 body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
-	color: $wcfContentLinkActive;
+	color: var(--wcfContentLinkActive);
 }
 
 .articleNavigationArticleImage {
@@ -171,7 +171,7 @@ body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
 }
 
 .articleNavigationEntityName {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	display: block;
 }
 
@@ -183,7 +183,7 @@ body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
 }
 
 .articleNavigationArticleLink {
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 
 	&::before {
 		bottom: 0;
@@ -197,7 +197,7 @@ body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
 
 .articleList {
 	.articleListMetaData {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		margin-top: 2px;
 
 		.icon {
@@ -216,7 +216,7 @@ body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
 			}
 
 			.articleListTitle {
-				color: $wcfContentLinkActive;
+				color: var(--wcfContentLinkActive);
 			}
 		}
 	}
