@@ -137,20 +137,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 }
             }
         };
-        const apiVersions = container.querySelector('.spSidebarBox[data-category="apiVersion"]');
         const callbackChange = () => {
             let element = container.querySelector(`.spSidebarBox[data-category="${lastValue}"]`);
             Util_1.default.hide(element);
             lastValue = select.value;
             element = container.querySelector(`.spSidebarBox[data-category="${lastValue}"]`);
             Util_1.default.show(element);
-            const showCompatibilityNotice = element.querySelector(".spApiVersion") !== null;
-            if (showCompatibilityNotice) {
-                Util_1.default.show(apiVersions);
-            }
-            else {
-                Util_1.default.hide(apiVersions);
-            }
             // set region marker
             _updateRegionMarker();
         };
