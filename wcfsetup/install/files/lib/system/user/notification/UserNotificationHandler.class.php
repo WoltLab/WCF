@@ -1046,7 +1046,7 @@ class UserNotificationHandler extends SingletonFactory
 
                 return [
                     'title' => \strip_tags($event->getTitle()),
-                    'message' => \strip_tags($event->getMessage()),
+                    'message' => $event->getMessage(),
                     'link' => LinkHandler::getInstance()->getLink(
                         'NotificationConfirm',
                         ['id' => $event->getNotification()->notificationID]

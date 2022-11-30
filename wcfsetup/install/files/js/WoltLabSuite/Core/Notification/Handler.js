@@ -8,14 +8,13 @@
  * @module      WoltLabSuite/Core/Notification/Handler
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler", "../StringUtil"], function (require, exports, tslib_1, Ajax, Core, EventHandler, StringUtil) {
+define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"], function (require, exports, tslib_1, Ajax, Core, EventHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.poll = exports.enableNotifications = exports.setup = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
-    StringUtil = tslib_1.__importStar(StringUtil);
     class NotificationHandler {
         allowNotification;
         icon;
@@ -159,11 +158,14 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler",
             }
             if (typeof pollData.notification === "object" && typeof pollData.notification.message === "string") {
                 let notification;
+                const div = document.createElement("div");
+                div.innerHTML = pollData.notification.message;
+                div.querySelectorAll("img").forEach((img) => {
+                    img.replaceWith(document.createTextNode(img.alt));
+                });
                 try {
                     notification = new window.Notification(pollData.notification.title, {
-                        body: StringUtil.unescapeHTML(pollData.notification.message)
-                            .replace(/&#x202F;/g, "\u202F")
-                            .replace(/&#39;/g, "'"),
+                        body: div.textContent.replace(/&#x202F;/g, "\u202F").replace(/&#39;/g, "'"),
                         icon: this.icon,
                     });
                 }
