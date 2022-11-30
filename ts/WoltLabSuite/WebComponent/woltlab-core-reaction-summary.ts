@@ -5,10 +5,7 @@
   type Data = Map<ReactionTypeId, Count>;
 
   class WoltlabCoreReactionSummaryElement extends HTMLElement {
-    private readonly summaryContainer = document.createElement("div");
-
     connectedCallback() {
-      this.setupShadow();
       this.setData(this.getData(), this.getSelectedReaction());
     }
 
@@ -17,16 +14,17 @@
     }
 
     private render(data: Data, selectedReaction?: number): void {
-      this.summaryContainer.innerHTML = "";
+      this.innerHTML = "";
 
       if (!data.size) return;
 
       const button = document.createElement("button");
-      button.classList.add("reactionSummary");
+      button.classList.add("reactionSummary", "jsTooltip");
+      button.title = window.WoltLabLanguage.getPhrase("wcf.reactions.summary.listReactions");
       button.addEventListener("click", () => {
         this.dispatchEvent(new Event("showDetails"));
       });
-      this.summaryContainer.append(button);
+      this.append(button);
 
       data.forEach((value, key) => {
         const countButton = document.createElement("span");
@@ -57,60 +55,7 @@
     private getSelectedReaction(): number {
       return parseInt(this.getAttribute("selected-reaction")!);
     }
-
-    private setupShadow(): void {
-      const root = this.attachShadow({ mode: "open" });
-
-      const style = document.createElement("style");
-      style.textContent = css;
-
-      root.append(style, this.summaryContainer);
-    }
   }
 
   window.customElements.define("woltlab-core-reaction-summary", WoltlabCoreReactionSummaryElement);
-
-  const css = `
-    button {
-    	all: unset;
-    	cursor: pointer;
-    }
-
-    button:focus {
-      outline: 5px auto -webkit-focus-ring-color;
-    }
-
-    button:hover .reactionCountButton {
-      color: #7d8287; // todo: we need css variables ($wcfContentText) for this.
-    }
-
-    .reactionSummary {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 5px 5px;
-    }
-
-    .reactionCountButton {
-      color: #7d8287; // todo: we need css variables ($wcfContentDimmedText) for this.
-      white-space: nowrap;
-    }
-
-    .reactionType {
-      height: 20px;
-      width: 20px;
-      vertical-align: middle;
-    }
-
-    .reactionCount {
-      vertical-align: middle;
-    }
-
-    .reactionCount::before {
-  		content: "\u202f×\u202f";
-  	}
-
-    .selected .reactionCount {
-      font-weight: 600;
-    }
-  `;
 }

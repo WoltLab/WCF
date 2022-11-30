@@ -484,14 +484,14 @@
 	flex-wrap: wrap;
 
 	&:not(:first-child) {
-		> reaction-summary,
+		> woltlab-core-reaction-summary,
 		> .messageFooterButtons,
 		> .messageFooterButtonsExtra {
 			margin-top: 20px;
 		}
 	}
 
-	> reaction-summary {
+	> woltlab-core-reaction-summary {
 		flex: 0 1 auto;
 
 		@include wcfFontSmall;

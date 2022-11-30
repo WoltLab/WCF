@@ -216,3 +216,22 @@
 	vertical-align: top;
 	width: 16px;
 }
+
+.reactionSummary {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 5px 5px;
+
+	&:hover .reactionCountButton {
+		color: $wcfContentText;
+	}
+
+	.reactionCountButton {
+		color: $wcfContentDimmedText;
+		white-space: nowrap;
+	}
+
+    .selected .reactionCount {
+      font-weight: 600;
+    }
+}
