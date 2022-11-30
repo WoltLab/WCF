@@ -278,7 +278,7 @@ html {
 	.pageContainer.acpPageSubMenuActive {
 		.acpPageContentContainer,
 		.pageFooter {
-			padding-left: var(--wcfAcpMenuWidth) + var(--wcfAcpSubMenuWidth);
+			padding-left: calc(var(--wcfAcpMenuWidth) + var(--wcfAcpSubMenuWidth));
 		}
 	}
 }
