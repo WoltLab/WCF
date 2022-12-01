@@ -7,7 +7,7 @@ dl {
 		}
 
 		> dt {
-			color: $wcfInputLabel;
+			color: var(--wcfInputLabel);
 
 			display: block;
 
@@ -24,7 +24,7 @@ dl {
 			}
 
 			> small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
-				color: $wcfContentDimmedText;
+				color: var(--wcfContentDimmedText);
 				display: block;
 				margin-top: 3px;
 			}
@@ -122,7 +122,7 @@ dl {
 
 		> dt {
 			clear: right;
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 			float: left;
 			margin-right: 4px;
 			text-align: left;
@@ -172,7 +172,7 @@ dl {
 		flex-wrap: wrap;
 
 		> dt {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 			flex: 0 0 60%;
 			margin-left: 5px;
 			overflow: hidden;

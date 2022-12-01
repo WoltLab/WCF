@@ -5,10 +5,10 @@
 }
 
 .datePicker {
-	background-color: $wcfDropdownBackground;
+	background-color: var(--wcfDropdownBackground);
 	border-radius: 2px;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	color: $wcfDropdownText;
+	color: var(--wcfDropdownText);
 	display: none;
 	position: absolute;
 	width: 240px;
@@ -62,12 +62,12 @@
 	}
 
 	> ul > li {
-		border-top: 1px solid $wcfDropdownBorderInner;
+		border-top: 1px solid var(--wcfDropdownBorderInner);
 		display: flex;
 
 		&.weekdays,
 		&.weekdays + li {
-			border-top-color: $wcfDropdownBorderInner;
+			border-top-color: var(--wcfDropdownBorderInner);
 		}
 
 		> a,
@@ -78,12 +78,12 @@
 			text-align: center;
 
 			&:not(:last-child) {
-				border-right: 1px solid $wcfDropdownBorderInner;
+				border-right: 1px solid var(--wcfDropdownBorderInner);
 			}
 		}
 
 		> a {
-			color: $wcfDropdownLink;
+			color: var(--wcfDropdownLink);
 
 			&:hover {
 				text-decoration: none;
@@ -91,25 +91,25 @@
 
 			&.active,
 			&:not(.otherMonth):hover {
-				background-color: $wcfDropdownBackgroundActive;
-				color: $wcfDropdownLinkActive;
+				background-color: var(--wcfDropdownBackgroundActive);
+				color: var(--wcfDropdownLinkActive);
 			}
 
 			&.otherMonth {
-				color: $wcfContentDimmedText;
+				color: var(--wcfContentDimmedText);
 				cursor: default;
 			}
 		}
 
 		> span {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 
 			@include wcfFontSmall;
 		}
 	}
 
 	> footer {
-		border-top: 1px solid $wcfDropdownBorderInner;
+		border-top: 1px solid var(--wcfDropdownBorderInner);
 		display: none;
 		padding: 10px;
 		position: relative;

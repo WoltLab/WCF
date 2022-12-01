@@ -1,5 +1,5 @@
 .tableOfContentsContainer {
-	border: 1px solid $wcfContentBorderInner;
+	border: 1px solid var(--wcfContentBorderInner);
 	/* The list numbers extend into the horizontal padding, 10px is not enough for double digit numbers. */
 	padding: 10px 20px;
 

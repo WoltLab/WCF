@@ -1,10 +1,10 @@
 .colorPreview {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
-	border: 1px solid $wcfContentBorderInner;
+	border: 1px solid var(--wcfContentBorderInner);
 	display: inline-block;
 
 	> div {
-		border: 2px solid $wcfContentBackground;
+		border: 2px solid var(--wcfContentBackground);
 		cursor: pointer;
 		display: block;
 		height: 60px;
@@ -53,7 +53,7 @@
 .colorPickerChannels {
 	align-items: center;
 	column-gap: 3px;
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	display: flex !important;
 
 	input[type="number"] {

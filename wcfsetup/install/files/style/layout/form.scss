@@ -24,28 +24,28 @@ input[type="tel"],
 input[type="text"],
 input[type="url"] {
 	&::placeholder {
-		color: $wcfInputPlaceholder;
+		color: var(--wcfInputPlaceholder);
 
 		&:focus,
 		&:hover {
-			color: $wcfInputPlaceholderActive;
+			color: var(--wcfInputPlaceholderActive);
 		}
 	}
 
 	&[disabled],
 	&[readonly] {
-		background-color: $wcfInputDisabledBackground !important;
-		border-color: $wcfInputDisabledBorder !important;
-		color: $wcfInputDisabledText !important;
+		background-color: var(--wcfInputDisabledBackground) !important;
+		border-color: var(--wcfInputDisabledBorder) !important;
+		color: var(--wcfInputDisabledText) !important;
 	}
 }
 
 textarea::placeholder {
-	color: $wcfInputPlaceholder;
+	color: var(--wcfInputPlaceholder);
 
 	&:focus,
 	&:hover {
-		color: $wcfInputPlaceholderActive;
+		color: var(--wcfInputPlaceholderActive);
 	}
 }
 
@@ -82,15 +82,15 @@ textarea {
 
 	&[disabled],
 	&[readonly] {
-		background-color: $wcfInputDisabledBackground !important;
-		border-color: $wcfInputDisabledBorder !important;
-		color: $wcfInputDisabledText !important;
+		background-color: var(--wcfInputDisabledBackground) !important;
+		border-color: var(--wcfInputDisabledBorder) !important;
+		color: var(--wcfInputDisabledText) !important;
 	}
 }
 
 input[disabled],
 textarea[disabled] {
-	-webkit-text-fill-color: $wcfInputDisabledText; /* override safari font color change */
+	-webkit-text-fill-color: var(--wcfInputDisabledText); /* override safari font color change */
 	-webkit-opacity: 1; /* override mobile safari opacity change affecting text color */
 }
 
@@ -158,9 +158,9 @@ select {
 		}
 
 		&:not(.button) {
-			background-color: $wcfButtonBackground;
-			border: 1px solid $wcfInputBorder;
-			color: $wcfButtonText;
+			background-color: var(--wcfButtonBackground);
+			border: 1px solid var(--wcfInputBorder);
+			color: var(--wcfButtonText);
 			cursor: default;
 			padding: 3px 5px;
 		}

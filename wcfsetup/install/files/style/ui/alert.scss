@@ -23,57 +23,57 @@
 }
 
 .error {
-	background-color: $wcfStatusErrorBackground;
-	border-color: $wcfStatusErrorBorder;
-	color: $wcfStatusErrorText;
+	background-color: var(--wcfStatusErrorBackground);
+	border-color: var(--wcfStatusErrorBorder);
+	color: var(--wcfStatusErrorText);
 
 	a {
-		color: $wcfStatusErrorLink;
+		color: var(--wcfStatusErrorLink);
 
 		&:hover {
-			color: $wcfStatusErrorLinkActive;
+			color: var(--wcfStatusErrorLinkActive);
 		}
 	}
 }
 
 .info {
-	background-color: $wcfStatusInfoBackground;
-	border-color: $wcfStatusInfoBorder;
-	color: $wcfStatusInfoText;
+	background-color: var(--wcfStatusInfoBackground);
+	border-color: var(--wcfStatusInfoBorder);
+	color: var(--wcfStatusInfoText);
 
 	a {
-		color: $wcfStatusInfoLink;
+		color: var(--wcfStatusInfoLink);
 
 		&:hover {
-			color: $wcfStatusInfoLinkActive;
+			color: var(--wcfStatusInfoLinkActive);
 		}
 	}
 }
 
 .success {
-	background-color: $wcfStatusSuccessBackground;
-	border-color: $wcfStatusSuccessBorder;
-	color: $wcfStatusSuccessText;
+	background-color: var(--wcfStatusSuccessBackground);
+	border-color: var(--wcfStatusSuccessBorder);
+	color: var(--wcfStatusSuccessText);
 
 	a {
-		color: $wcfStatusSuccessLink;
+		color: var(--wcfStatusSuccessLink);
 
 		&:hover {
-			color: $wcfStatusSuccessLinkActive;
+			color: var(--wcfStatusSuccessLinkActive);
 		}
 	}
 }
 
 .warning {
-	background-color: $wcfStatusWarningBackground;
-	border-color: $wcfStatusWarningBorder;
-	color: $wcfStatusWarningText;
+	background-color: var(--wcfStatusWarningBackground);
+	border-color: var(--wcfStatusWarningBorder);
+	color: var(--wcfStatusWarningText);
 
 	a {
-		color: $wcfStatusWarningLink;
+		color: var(--wcfStatusWarningLink);
 
 		&:hover {
-			color: $wcfStatusWarningLinkActive;
+			color: var(--wcfStatusWarningLinkActive);
 		}
 	}
 }
@@ -111,42 +111,42 @@
 	}
 
 	a {
-		color: $wcfStatusErrorLink;
+		color: var(--wcfStatusErrorLink);
 
 		&:hover {
-			color: $wcfStatusErrorLinkActive;
+			color: var(--wcfStatusErrorLinkActive);
 		}
 	}
 }
 .innerSuccess {
-	background-color: $wcfStatusSuccessBackground;
-	color: $wcfStatusSuccessText;
+	background-color: var(--wcfStatusSuccessBackground);
+	color: var(--wcfStatusSuccessText);
 
 	&::before {
-		border-bottom-color: $wcfStatusSuccessBackground;
+		border-bottom-color: var(--wcfStatusSuccessBackground);
 	}
 
 	a {
-		color: $wcfStatusSuccessLink;
+		color: var(--wcfStatusSuccessLink);
 
 		&:hover {
-			color: $wcfStatusSuccessLinkActive;
+			color: var(--wcfStatusSuccessLinkActive);
 		}
 	}
 }
 .innerWarning {
-	background-color: $wcfStatusWarningBackground;
-	color: $wcfStatusWarningText;
+	background-color: var(--wcfStatusWarningBackground);
+	color: var(--wcfStatusWarningText);
 
 	&::before {
-		border-bottom-color: $wcfStatusWarningBackground;
+		border-bottom-color: var(--wcfStatusWarningBackground);
 	}
 
 	a {
-		color: $wcfStatusWarningLink;
+		color: var(--wcfStatusWarningLink);
 
 		&:hover {
-			color: $wcfStatusWarningLinkActive;
+			color: var(--wcfStatusWarningLinkActive);
 		}
 	}
 }
@@ -218,18 +218,18 @@
 
 /* inline infos */
 .innerInfo {
-	background-color: $wcfStatusInfoBackground;
-	color: $wcfStatusInfoText;
+	background-color: var(--wcfStatusInfoBackground);
+	color: var(--wcfStatusInfoText);
 
 	&::before {
-		border-bottom-color: $wcfStatusInfoBackground;
+		border-bottom-color: var(--wcfStatusInfoBackground);
 	}
 
 	a {
-		color: $wcfStatusInfoLink;
+		color: var(--wcfStatusInfoLink);
 
 		&:hover {
-			color: $wcfStatusInfoLinkActive;
+			color: var(--wcfStatusInfoLinkActive);
 		}
 	}
 }

@@ -1,16 +1,16 @@
 .likesSummary {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	cursor: pointer;
 	flex: 0 0 auto;
 
 	> .icon {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		margin-right: 5px;
 	}
 }
 
 .wcfLikeCounter {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 
 	.icon {
 		color: inherit !important;
@@ -26,6 +26,6 @@
 
 html.touch .wcfLikeButton > .button:not(.active):hover,
 html.touch .wcfDislikeButton > .button:not(.active):hover {
-	background-color: $wcfButtonBackground !important;
-	color: $wcfButtonText !important;
+	background-color: var(--wcfButtonBackground) !important;
+	color: var(--wcfButtonText) !important;
 }

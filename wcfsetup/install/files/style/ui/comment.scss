@@ -22,7 +22,7 @@
 
 		+ .commentOptionContainer {
 			.commentResponseAdd {
-				border-top: 1px solid $wcfContentBorderInner;
+				border-top: 1px solid var(--wcfContentBorderInner);
 				padding-top: 20px;
 				margin-top: 20px;
 			}
@@ -54,7 +54,7 @@
 		> li {
 			&:first-child,
 			&:last-child {
-				border-color: $wcfContentBorderInner;
+				border-color: var(--wcfContentBorderInner);
 			}
 		}
 	}
@@ -109,9 +109,9 @@
 
 		.commentListAddCommentPlaceholder {
 			align-items: center;
-			background-color: $wcfSidebarBackground;
+			background-color: var(--wcfSidebarBackground);
 			column-gap: 10px;
-			color: $wcfSidebarText;
+			color: var(--wcfSidebarText);
 			display: flex;
 			padding: 10px 20px;
 			width: 100%;
@@ -217,7 +217,7 @@
 
 .commentPermalinkContainer,
 .commentResponsePermalinkContainer {
-	border-bottom-color: $wcfContentBorder !important;
+	border-bottom-color: var(--wcfContentBorder) !important;
 
 	&.loading > .icon {
 		left: calc(50% - 24px);

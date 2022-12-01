@@ -15,7 +15,7 @@ kbd {
 	box-decoration-break: clone;
 	color: rgba(68, 68, 68, 1) !important;
 	display: inline;
-	font-family: $wcfFontFamilyMonospace;
+	font-family: var(--wcfFontFamilyMonospace);
 	font-size: 14px;
 	font-style: normal;
 	font-weight: normal;

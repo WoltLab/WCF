@@ -1,10 +1,10 @@
 .messageList {
 	&:not(.messageReducedList) {
 		@include screen-md-up {
-			border-top: 1px solid $wcfContentBorder;
+			border-top: 1px solid var(--wcfContentBorder);
 
 			> li {
-				border-bottom: 1px solid $wcfContentBorder;
+				border-bottom: 1px solid var(--wcfContentBorder);
 				padding: 30px 0;
 
 				&.messageListPagination:last-child {
@@ -15,11 +15,11 @@
 
 		@include screen-sm-down {
 			.messageSidebar {
-				border-top: 1px solid $wcfContentBorder;
+				border-top: 1px solid var(--wcfContentBorder);
 			}
 
 			> .messageListPagination {
-				border-top: 1px solid $wcfContentBorder;
+				border-top: 1px solid var(--wcfContentBorder);
 				margin: 0 -10px;
 				padding: 20px 10px;
 			}
@@ -90,8 +90,8 @@
 
 /* sidebar */
 .messageSidebar {
-	background-color: $wcfSidebarBackground;
-	color: $wcfSidebarText;
+	background-color: var(--wcfSidebarBackground);
+	color: var(--wcfSidebarText);
 	position: relative;
 
 	@include screen-md-up {
@@ -176,10 +176,10 @@
 	}
 
 	a {
-		color: $wcfSidebarLink;
+		color: var(--wcfSidebarLink);
 
 		&:hover {
-			color: $wcfSidebarLinkActive;
+			color: var(--wcfSidebarLinkActive);
 		}
 	}
 
@@ -293,7 +293,7 @@
 
 		> .messageContentLoadingOverlay {
 			align-items: center;
-			background-color: $wcfContentBackground;
+			background-color: var(--wcfContentBackground);
 			bottom: -1px;
 			display: flex;
 			justify-content: center;
@@ -349,13 +349,13 @@
 }
 
 .messageTitle {
-	color: $wcfContentHeadlineText;
+	color: var(--wcfContentHeadlineText);
 
 	a {
-		color: $wcfContentHeadlineLink;
+		color: var(--wcfContentHeadlineLink);
 
 		&:hover {
-			color: $wcfContentHeadlineLinkActive;
+			color: var(--wcfContentHeadlineLinkActive);
 		}
 	}
 }
@@ -368,7 +368,7 @@
 	@include wcfFontSmall;
 
 	.messagePublicationTime {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 	}
 
 	+ .messageStatus {
@@ -461,18 +461,18 @@
 }
 
 .messageFooterNote {
-	border-left: 5px solid $wcfContentBorderInner;
-	color: $wcfContentDimmedText;
+	border-left: 5px solid var(--wcfContentBorderInner);
+	color: var(--wcfContentDimmedText);
 	margin-top: 20px;
 	padding: 5px 10px;
 
 	@include wcfFontSmall;
 
 	a {
-		color: $wcfContentDimmedLink;
+		color: var(--wcfContentDimmedLink);
 
 		&:hover {
-			color: $wcfContentDimmedLinkActive;
+			color: var(--wcfContentDimmedLinkActive);
 			text-decoration: underline;
 		}
 	}
@@ -552,7 +552,7 @@
 
 @include screen-md-up {
 	.messageSignature {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		margin-top: 20px;
 		opacity: 0.6;
 		padding-top: 10px;
@@ -588,7 +588,7 @@
 
 .messageCollapsed {
 	@include screen-sm-down {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		margin: 0 -10px;
 		padding: 30px 10px 0;
 	}
@@ -596,8 +596,8 @@
 
 .messageReduced {
 	.messageHeader {
-		background-color: $wcfSidebarBackground;
-		color: $wcfSidebarText;
+		background-color: var(--wcfSidebarBackground);
+		color: var(--wcfSidebarText);
 
 		@include screen-sm-down {
 			margin: 0 -10px;
@@ -610,13 +610,13 @@
 	}
 
 	.messageTitle {
-		color: $wcfSidebarHeadlineText;
+		color: var(--wcfSidebarHeadlineText);
 
 		a {
-			color: $wcfSidebarHeadlineLink;
+			color: var(--wcfSidebarHeadlineLink);
 
 			&:hover {
-				color: $wcfSidebarHeadlineLinkActive;
+				color: var(--wcfSidebarHeadlineLinkActive);
 			}
 		}
 	}

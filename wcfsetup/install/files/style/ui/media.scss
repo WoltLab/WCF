@@ -29,15 +29,15 @@
 		&.jsMarked {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: transparentize($wcfButtonPrimaryBackground, 0.2);
-				color: $wcfButtonPrimaryText;
+				background-color: rgba(var(--wcfButtonPrimaryBackground-rgb) / 0.2);
+				color: var(--wcfButtonPrimaryText);
 
 				a {
-					color: $wcfButtonPrimaryText;
+					color: var(--wcfButtonPrimaryText);
 				}
 
 				fa-icon {
-					color: $wcfButtonPrimaryText;
+					color: var(--wcfButtonPrimaryText);
 					text-shadow: none;
 				}
 			}
@@ -46,7 +46,7 @@
 		&.jsSelected {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: transparentize(green, 0.2);
+				background-color: rgba(0, 128, 0, 0.2);
 				color: white;
 
 				a {
@@ -64,8 +64,8 @@
 			cursor: pointer;
 
 			> .mediaInformation {
-				background-color: $wcfStatusErrorBackground;
-				color: $wcfStatusErrorText;
+				background-color: var(--wcfStatusErrorBackground);
+				color: var(--wcfStatusErrorText);
 
 				.mediaTitle {
 					max-height: 144px;
@@ -187,7 +187,7 @@
 		margin-bottom: 20px;
 
 		+ .box48 > dl {
-			font-size: $wcfFontSizeSmall;
+			font-size: var(--wcfFontSizeSmall);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 .fontAwesomeIcons {
-	border: 1px solid $wcfContentBorderInner;
+	border: 1px solid var(--wcfContentBorderInner);
 	max-height: 540px;
 	overflow: auto;
 
@@ -15,8 +15,8 @@
 		width: 150px;
 
 		&:hover {
-			background-color: $wcfButtonBackgroundActive;
-			color: $wcfButtonTextActive;
+			background-color: var(--wcfButtonBackgroundActive);
+			color: var(--wcfButtonTextActive);
 			cursor: pointer;
 
 			> .icon,
@@ -27,7 +27,7 @@
 		}
 
 		> small {
-			color: $wcfContentDimmedText;
+			color: var(--wcfContentDimmedText);
 			flex: 0 0 100%;
 			text-align: center;
 		}

@@ -12,7 +12,7 @@
 			}
 
 			&::before {
-				border-top: 1px solid $wcfContentLink;
+				border-top: 1px solid var(--wcfContentLink);
 				bottom: 0;
 				content: "";
 				left: 50%;
@@ -74,7 +74,7 @@
 
 	@include screen-md-up {
 		> ul {
-			border-bottom: 1px solid $wcfContentBorderInner;
+			border-bottom: 1px solid var(--wcfContentBorderInner);
 
 			> li::before {
 				bottom: -1px;
@@ -125,17 +125,21 @@
 	}
 
 	&::before {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 	}
 }
 
 .tabMenuOverlayLeft {
-	background: linear-gradient(to left, transparentize($wcfContentBackground, 1) 0%, $wcfContentBackground 50%);
+	background: linear-gradient(to left, rgba(var(--wcfContentBackground-rgb) / 0) 0%, var(--wcfContentBackground) 50%);
 	left: 0;
 }
 
 .tabMenuOverlayRight {
-	background: linear-gradient(to right, transparentize($wcfContentBackground, 1) 0%, $wcfContentBackground 50%);
+	background: linear-gradient(
+		to right,
+		rgba(var(--wcfContentBackground-rgb) / 0) 0%,
+		var(--wcfContentBackground) 50%
+	);
 	justify-content: flex-end;
 	right: 0;
 }

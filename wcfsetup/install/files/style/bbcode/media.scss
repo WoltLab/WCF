@@ -3,7 +3,7 @@
 	max-width: 100%;
 
 	.mediaBBCodeCaption {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		// https://stackoverflow.com/a/11652170/782822
 		display: table-caption;
 		caption-side: bottom;

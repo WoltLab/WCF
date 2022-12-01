@@ -29,7 +29,7 @@
 		> div:not(.box),
 		> fieldset,
 		> section:not(.box) {
-			background-color: $wcfSidebarBackground;
+			background-color: var(--wcfSidebarBackground);
 
 			@include screen-md-up {
 				padding: 20px;
@@ -46,7 +46,7 @@
 
 		section:not(.box) > h1,
 		fieldset > legend {
-			color: $wcfSidebarHeadlineText;
+			color: var(--wcfSidebarHeadlineText);
 			border-bottom-width: 0;
 			margin-bottom: 15px;
 			padding: 0;
@@ -54,17 +54,17 @@
 			@include wcfFontHeadline;
 
 			> a {
-				color: $wcfSidebarHeadlineLink;
+				color: var(--wcfSidebarHeadlineLink);
 
 				> .icon {
-					color: $wcfSidebarHeadlineLink;
+					color: var(--wcfSidebarHeadlineLink);
 				}
 
 				&:hover {
-					color: $wcfSidebarHeadlineLinkActive;
+					color: var(--wcfSidebarHeadlineLinkActive);
 
 					> .icon {
-						color: $wcfSidebarHeadlineLinkActive;
+						color: var(--wcfSidebarHeadlineLinkActive);
 					}
 				}
 			}

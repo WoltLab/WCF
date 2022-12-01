@@ -29,19 +29,19 @@
 
 .searchFiltersTitle {
 	align-items: center;
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	display: flex;
 	margin-top: 10px;
 
 	&::before {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		content: "";
 		flex: 0 0 20px;
 		margin-right: 10px;
 	}
 
 	&::after {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		content: "";
 		flex: 1 0 auto;
 		margin-left: 10px;

@@ -1,5 +1,7 @@
-$wcfAcpMenuWidth: 150px;
-$wcfAcpSubMenuWidth: 300px;
+html {
+	--wcfAcpMenuWidth: 150px;
+	--wcfAcpSubMenuWidth: 300px;
+}
 
 .layoutBoundary {
 	margin: 0;
@@ -18,7 +20,7 @@ $wcfAcpSubMenuWidth: 300px;
 
 		.pageHeaderLogo {
 			background-color: rgb(58, 109, 156);
-			flex: 0 0 $wcfAcpMenuWidth;
+			flex: 0 0 var(--wcfAcpMenuWidth);
 			height: 50px;
 			margin: 0;
 			order: 1;
@@ -68,7 +70,7 @@ $wcfAcpSubMenuWidth: 300px;
 
 			.pageHeaderSearchType > .button {
 				background-color: rgba(0, 0, 0, 0.2);
-				color: $wcfHeaderSearchBoxPlaceholderActive;
+				color: var(--wcfHeaderSearchBoxPlaceholderActive);
 				align-items: center;
 				border-radius: 0;
 				display: flex;
@@ -81,7 +83,7 @@ $wcfAcpSubMenuWidth: 300px;
 			}
 
 			.pageHeaderSearchInputContainer {
-				background-color: $wcfHeaderMenuLinkBackground;
+				background-color: var(--wcfHeaderMenuLinkBackground);
 				border-radius: 0;
 				box-shadow: none;
 				padding: 0;
@@ -92,7 +94,7 @@ $wcfAcpSubMenuWidth: 300px;
 				width: 300px !important;
 
 				background-color: transparent;
-				color: $wcfHeaderMenuLinkActive;
+				color: var(--wcfHeaderMenuLinkActive);
 				padding: 6px 8px;
 
 				&:hover,
@@ -136,7 +138,7 @@ $wcfAcpSubMenuWidth: 300px;
 	}
 
 	> .dropdownText {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 	}
 
 	li > a,
@@ -167,7 +169,7 @@ $wcfAcpSubMenuWidth: 300px;
 		overflow: hidden;
 		position: fixed;
 		top: 50px;
-		width: $wcfAcpMenuWidth;
+		width: var(--wcfAcpMenuWidth);
 
 		.acpPageMenuLink {
 			align-items: center;
@@ -196,7 +198,7 @@ $wcfAcpSubMenuWidth: 300px;
 	.acpPageSubMenu {
 		background-color: rgb(36, 66, 95);
 		bottom: 0;
-		left: $wcfAcpMenuWidth;
+		left: var(--wcfAcpMenuWidth);
 		overflow: hidden;
 		position: fixed;
 		top: 50px;
@@ -204,7 +206,7 @@ $wcfAcpSubMenuWidth: 300px;
 
 	.acpPageSubMenuCategoryList {
 		overflow: hidden;
-		width: $wcfAcpSubMenuWidth;
+		width: var(--wcfAcpSubMenuWidth);
 
 		&:not(.active) {
 			display: none;
@@ -265,18 +267,18 @@ $wcfAcpSubMenuWidth: 300px;
 
 	.pageContainer:not(.acpPageHiddenMenu) {
 		.acpPageContentContainer {
-			padding-left: $wcfAcpMenuWidth;
+			padding-left: var(--wcfAcpMenuWidth);
 		}
 
 		.pageFooter {
-			padding-left: $wcfAcpMenuWidth;
+			padding-left: var(--wcfAcpMenuWidth);
 		}
 	}
 
 	.pageContainer.acpPageSubMenuActive {
 		.acpPageContentContainer,
 		.pageFooter {
-			padding-left: $wcfAcpMenuWidth + $wcfAcpSubMenuWidth;
+			padding-left: calc(var(--wcfAcpMenuWidth) + var(--wcfAcpSubMenuWidth));
 		}
 	}
 }
@@ -513,7 +515,7 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 .packageSearchVersion {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	font-weight: 400;
 }
 
@@ -522,8 +524,8 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 .packageSearchPackage {
-	color: $wcfContentDimmedText;
-	font-family: $wcfFontFamilyMonospace;
+	color: var(--wcfContentDimmedText);
+	font-family: var(--wcfFontFamilyMonospace);
 }
 
 .packageSearchAuthor,
@@ -627,7 +629,7 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 .packageUpdateNewVersion {
-	color: $wcfContentText;
+	color: var(--wcfContentText);
 	font-weight: 600;
 }
 

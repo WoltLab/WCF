@@ -32,8 +32,8 @@ ol.nativeList {
 	}
 
 	.tag {
-		background-color: $wcfButtonBackground;
-		color: $wcfButtonText;
+		background-color: var(--wcfButtonBackground);
+		color: var(--wcfButtonText);
 		display: inline-block;
 		margin-left: 11px;
 		padding: 3px 6px 2px 2px;
@@ -46,7 +46,7 @@ ol.nativeList {
 		&::before {
 			border: 11px solid transparent;
 			border-left-width: 0;
-			border-right-color: $wcfButtonBackground;
+			border-right-color: var(--wcfButtonBackground);
 			content: "";
 			display: block;
 			left: -11px;
@@ -55,12 +55,12 @@ ol.nativeList {
 		}
 
 		&:hover {
-			background-color: $wcfButtonPrimaryBackgroundActive;
-			color: $wcfButtonPrimaryTextActive;
+			background-color: var(--wcfButtonPrimaryBackgroundActive);
+			color: var(--wcfButtonPrimaryTextActive);
 			text-decoration: none;
 
 			&::before {
-				border-right-color: $wcfButtonPrimaryBackgroundActive;
+				border-right-color: var(--wcfButtonPrimaryBackgroundActive);
 			}
 		}
 	}

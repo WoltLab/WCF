@@ -15,7 +15,7 @@
 				margin-right: 10px;
 
 				&:after {
-					color: $wcfNavigationText;
+					color: var(--wcfNavigationText);
 					content: "/";
 				}
 
@@ -25,11 +25,11 @@
 			}
 
 			> a {
-				color: $wcfNavigationLink;
+				color: var(--wcfNavigationLink);
 				text-decoration: none;
 
 				&:hover {
-					color: $wcfNavigationLinkActive;
+					color: var(--wcfNavigationLinkActive);
 					text-decoration: underline;
 				}
 			}

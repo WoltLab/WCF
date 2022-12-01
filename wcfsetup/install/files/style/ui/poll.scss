@@ -20,7 +20,7 @@
 
 /* displayed poll */
 .pollContainer {
-	border: 1px solid $wcfContentBorder;
+	border: 1px solid var(--wcfContentBorder);
 	border-width: 1px 0;
 	margin-bottom: 10px;
 	min-width: 300px;
@@ -51,7 +51,7 @@
 	}
 
 	.formSubmit {
-		border-top: 1px solid $wcfContentBorderInner;
+		border-top: 1px solid var(--wcfContentBorderInner);
 		padding-top: 10px;
 	}
 
@@ -78,12 +78,12 @@
 
 		/* visual representation of relative votes per option */
 		.pollMeter {
-			background-color: $wcfContentBorderInner;
+			background-color: var(--wcfContentBorderInner);
 			height: 5px;
 			margin-top: 5px;
 
 			> .pollMeterValue {
-				background-color: $wcfContentBorder;
+				background-color: var(--wcfContentBorder);
 				height: 100%;
 			}
 		}

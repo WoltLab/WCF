@@ -29,7 +29,7 @@
 			}
 
 			&:last-child:not(:first-child) {
-				border-left: 1px solid $wcfContentBorderInner;
+				border-left: 1px solid var(--wcfContentBorderInner);
 			}
 
 			&.diffAdded {

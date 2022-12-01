@@ -18,10 +18,10 @@ input[type="submit"],
 .button,
 a.button {
 	// a.button is required to override link formatting, such as drop-down buttons
-	background-color: $wcfButtonBackground;
+	background-color: var(--wcfButtonBackground);
 	border-radius: 4px;
 	border-width: 0;
-	color: $wcfButtonText;
+	color: var(--wcfButtonText);
 	cursor: pointer;
 	display: inline-block;
 	font-weight: 400;
@@ -31,7 +31,7 @@ a.button {
 	text-decoration: none;
 
 	// input elements do not inherit font family, size and line-height from body
-	font-family: $wcfFontFamily;
+	font-family: var(--wcfFontFamily);
 	@include wcfFontDefault;
 	@include wcfLineHeight;
 
@@ -45,8 +45,8 @@ a.button {
 	}
 
 	&.active {
-		background-color: $wcfButtonBackgroundActive;
-		color: $wcfButtonTextActive;
+		background-color: var(--wcfButtonBackgroundActive);
+		color: var(--wcfButtonTextActive);
 		text-decoration: none;
 	}
 
@@ -66,12 +66,12 @@ input[type="submit"],
 .button.buttonPrimary,
 a.button.buttonPrimary {
 	// a.button is required to override link formatting, such as dropdown buttons
-	background-color: $wcfButtonPrimaryBackground;
-	color: $wcfButtonPrimaryText;
+	background-color: var(--wcfButtonPrimaryBackground);
+	color: var(--wcfButtonPrimaryText);
 
 	&.active {
-		background-color: $wcfButtonPrimaryBackgroundActive;
-		color: $wcfButtonPrimaryTextActive;
+		background-color: var(--wcfButtonPrimaryBackgroundActive);
+		color: var(--wcfButtonPrimaryTextActive);
 	}
 }
 
@@ -83,8 +83,8 @@ html:not(.touch) {
 	.button,
 	a.button {
 		&:hover {
-			background-color: $wcfButtonBackgroundActive;
-			color: $wcfButtonTextActive;
+			background-color: var(--wcfButtonBackgroundActive);
+			color: var(--wcfButtonTextActive);
 			text-decoration: none;
 		}
 	}
@@ -95,8 +95,8 @@ html:not(.touch) {
 	a.button.buttonPrimary {
 		// a.button is required to override link formatting, such as dropdown buttons
 		&:hover {
-			background-color: $wcfButtonPrimaryBackgroundActive;
-			color: $wcfButtonPrimaryTextActive;
+			background-color: var(--wcfButtonPrimaryBackgroundActive);
+			color: var(--wcfButtonPrimaryTextActive);
 		}
 	}
 }
@@ -109,8 +109,8 @@ input[type="submit"],
 a.button {
 	&:disabled,
 	&.disabled {
-		background-color: $wcfButtonDisabledBackground !important;
-		color: $wcfButtonDisabledText !important;
+		background-color: var(--wcfButtonDisabledBackground) !important;
+		color: var(--wcfButtonDisabledText) !important;
 		cursor: not-allowed !important;
 		pointer-events: none;
 	}
@@ -123,16 +123,16 @@ a.button {
 	> input[type="submit"],
 	> .button,
 	> a.button {
-		background-color: $wcfButtonBackgroundActive;
-		color: $wcfButtonTextActive;
+		background-color: var(--wcfButtonBackgroundActive);
+		color: var(--wcfButtonTextActive);
 	}
 
 	> input[type="button"].buttonPrimary,
 	> input[type="submit"],
 	> .button.buttonPrimary,
 	> a.button.buttonPrimary {
-		background-color: $wcfButtonPrimaryBackgroundActive;
-		color: $wcfButtonPrimaryTextActive;
+		background-color: var(--wcfButtonPrimaryBackgroundActive);
+		color: var(--wcfButtonPrimaryTextActive);
 	}
 }
 

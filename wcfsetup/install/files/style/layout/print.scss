@@ -94,7 +94,7 @@
 
 	.messageList,
 	.messageList > li:not(:first-child) {
-		border-top: 1px solid $wcfContentBorder;
+		border-top: 1px solid var(--wcfContentBorder);
 	}
 
 	.messageList > li {

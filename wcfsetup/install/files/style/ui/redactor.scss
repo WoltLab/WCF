@@ -1,5 +1,5 @@
 .redactor-box {
-	background-color: $wcfContentBackground;
+	background-color: var(--wcfContentBackground);
 	position: relative;
 
 	&:not(:first-child):not(.redactorBoxFullscreen) {
@@ -30,7 +30,7 @@
 }
 
 .redactor-layer {
-	border: 1px solid $wcfContentBorderInner;
+	border: 1px solid var(--wcfContentBorderInner);
 	border-top-width: 0;
 	max-height: 500px;
 	padding: 10px;
@@ -45,7 +45,7 @@
 	}
 
 	&.redactor-placeholder::after {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		content: attr(placeholder);
 		display: block;
 		pointer-events: none;
@@ -157,7 +157,7 @@
 	}
 
 	a:hover {
-		background-color: $wcfDropdownBackgroundActive;
+		background-color: var(--wcfDropdownBackgroundActive);
 	}
 
 	.redactor-dropdown-link-inactive {
@@ -165,8 +165,8 @@
 		opacity: 0.6;
 
 		> a:hover {
-			background-color: $wcfDropdownBackground !important;
-			color: $wcfDropdownText !important;
+			background-color: var(--wcfDropdownBackground) !important;
+			color: var(--wcfDropdownText) !important;
 			cursor: default !important;
 		}
 	}
@@ -181,7 +181,7 @@
 }
 
 .redactor-toolbar {
-	background-color: $wcfHeaderBackground;
+	background-color: var(--wcfHeaderBackground);
 	display: flex;
 	flex-wrap: wrap;
 
@@ -189,7 +189,7 @@
 		flex: 0 0 auto;
 
 		> a {
-			color: $wcfHeaderMenuLink;
+			color: var(--wcfHeaderMenuLink);
 			display: block;
 			outline: none;
 			padding: 10px;
@@ -199,29 +199,29 @@
 
 			&.redactor-button-disabled {
 				background-color: transparent !important;
-				color: $wcfButtonDisabledText !important;
+				color: var(--wcfButtonDisabledText) !important;
 				cursor: default;
 				pointer-events: none;
 			}
 
 			&.redactor-act,
 			&.dropact {
-				background-color: $wcfHeaderMenuLinkBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
+				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+				color: var(--wcfHeaderMenuLinkActive);
 			}
 
 			@include screen-lg {
 				// hover-styles on mobile are misleading as they stay much longer
 				// due to the click-like behavior
 				&:hover {
-					background-color: $wcfHeaderMenuLinkBackgroundActive;
-					color: $wcfHeaderMenuLinkActive;
+					background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+					color: var(--wcfHeaderMenuLinkActive);
 				}
 			}
 
 			&:focus {
-				background-color: $wcfHeaderMenuLinkBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
+				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+				color: var(--wcfHeaderMenuLinkActive);
 			}
 		}
 
@@ -232,7 +232,7 @@
 
 				&::before {
 					bottom: 7px;
-					border-left: 1px solid $wcfHeaderMenuLink;
+					border-left: 1px solid var(--wcfHeaderMenuLink);
 					content: "";
 					left: -6px;
 					opacity: 0.6;
@@ -255,7 +255,7 @@
 
 			&::before {
 				bottom: 7px;
-				border-left: 1px solid $wcfHeaderMenuLink;
+				border-left: 1px solid var(--wcfHeaderMenuLink);
 				content: "";
 				left: 0;
 				opacity: 0.6;
@@ -269,7 +269,7 @@
 
 			&::before {
 				bottom: 7px;
-				border-left: 1px solid $wcfHeaderMenuLink;
+				border-left: 1px solid var(--wcfHeaderMenuLink);
 				content: "";
 				left: 0;
 				opacity: 0.6;
@@ -301,7 +301,7 @@
 		padding: 0 4px;
 
 		&:hover {
-			background-color: $wcfDropdownBackground !important;
+			background-color: var(--wcfDropdownBackground) !important;
 		}
 
 		> a {
@@ -319,10 +319,10 @@
 
 .redactorDropArea {
 	align-items: center;
-	background-color: $wcfStatusInfoBackground;
+	background-color: var(--wcfStatusInfoBackground);
 	border: 5px dashed currentColor;
 	bottom: 0;
-	color: $wcfStatusInfoText;
+	color: var(--wcfStatusInfoText);
 	display: flex;
 	justify-content: center;
 	left: 0;
@@ -337,8 +337,8 @@
 	}
 
 	&.active {
-		background-color: $wcfStatusSuccessBackground;
-		color: $wcfStatusSuccessText;
+		background-color: var(--wcfStatusSuccessBackground);
+		color: var(--wcfStatusSuccessText);
 
 		&::before {
 			content: attr(data-drop-now);
@@ -347,16 +347,16 @@
 }
 
 .redactor-link-tooltip {
-	background-color: $wcfTooltipBackground;
+	background-color: var(--wcfTooltipBackground);
 	border-radius: 2px;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	color: $wcfTooltipText;
+	color: var(--wcfTooltipText);
 	padding: 5px 10px 7px;
 	position: absolute;
 	z-index: 800;
 
 	> a {
-		color: $wcfTooltipText;
+		color: var(--wcfTooltipText);
 	}
 }
 
@@ -471,7 +471,7 @@
 
 .wysiwygTextarea {
 	background-color: transparent !important;
-	border: 1px solid $wcfContentBorderInner !important;
+	border: 1px solid var(--wcfContentBorderInner) !important;
 	color: transparent !important;
 	display: block;
 	height: 238px;
@@ -498,9 +498,9 @@
 
 .messageQuickReplyContentButton {
 	align-items: center;
-	background-color: $wcfSidebarBackground;
+	background-color: var(--wcfSidebarBackground);
 	column-gap: 5px;
-	color: $wcfSidebarText;
+	color: var(--wcfSidebarText);
 	display: flex;
 	padding: 10px 20px;
 	width: 100%;
@@ -511,8 +511,8 @@
 }
 
 .redactorAutosaveRestored {
-	background-color: $wcfContentBackground;
-	border-top: 1px solid $wcfContentBorderInner;
+	background-color: var(--wcfContentBackground);
+	border-top: 1px solid var(--wcfContentBorderInner);
 	bottom: 1px;
 	display: flex;
 	opacity: 0;
@@ -528,19 +528,19 @@
 	}
 
 	> a {
-		border-left: 1px solid $wcfContentBorderInner;
+		border-left: 1px solid var(--wcfContentBorderInner);
 		flex: 0 0 auto;
 		padding: 10px;
 	}
 
 	> span {
-		color: $wcfContentDimmedText;
+		color: var(--wcfContentDimmedText);
 		flex: 1 1 auto;
 		padding: 10px;
 	}
 
 	@include screen-sm-up {
-		border-left: 1px solid $wcfContentBorderInner;
+		border-left: 1px solid var(--wcfContentBorderInner);
 		border-top-left-radius: 2px;
 
 		> span {

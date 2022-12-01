@@ -12,7 +12,7 @@
 		}
 
 		&:hover {
-			background-color: $wcfTabularBoxBackgroundActive;
+			background-color: var(--wcfTabularBoxBackgroundActive);
 		}
 
 		> span {

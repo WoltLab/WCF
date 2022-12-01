@@ -1,5 +1,5 @@
 .tabularList {
-	border-bottom: 1px solid $wcfContentBorder;
+	border-bottom: 1px solid var(--wcfContentBorder);
 	display: flex;
 	flex-direction: column;
 }
@@ -10,17 +10,17 @@
 	transition: background-color 0.12s;
 
 	&.divider + li:not(.divider) {
-		border-top-color: $wcfContentBorder;
+		border-top-color: var(--wcfContentBorder);
 	}
 
 	&:not(.tabularListRowHead):hover {
-		background-color: $wcfTabularBoxBackgroundActive;
+		background-color: var(--wcfTabularBoxBackgroundActive);
 	}
 }
 
 .tabularListRowHead {
 	border-bottom: 2px solid currentColor;
-	color: $wcfTabularBoxHeadline;
+	color: var(--wcfTabularBoxHeadline);
 
 	& + li {
 		border-top-width: 0 !important;
@@ -28,7 +28,7 @@
 }
 
 .tabularListRow:not(.tabularListRowHead) {
-	border-top: 1px solid $wcfContentBorderInner;
+	border-top: 1px solid var(--wcfContentBorderInner);
 }
 
 .tabularListColumns {
@@ -42,12 +42,12 @@
 }
 
 .tabularListRowHead > .tabularListColumns > li {
-	color: $wcfTabularBoxHeadline;
+	color: var(--wcfTabularBoxHeadline);
 
 	@include wcfFontHeadline;
 
 	> a {
-		color: $wcfTabularBoxHeadline;
+		color: var(--wcfTabularBoxHeadline);
 		display: block;
 	}
 
@@ -71,7 +71,7 @@
 
 	&.active > a,
 	> a:hover {
-		color: $wcfTabularBoxHeadlineActive;
+		color: var(--wcfTabularBoxHeadlineActive);
 	}
 }
 
@@ -82,7 +82,7 @@
 .tabularBoxTitle {
 	> header {
 		border-bottom: 1px solid currentColor;
-		color: $wcfTabularBoxHeadline;
+		color: var(--wcfTabularBoxHeadline);
 		padding: 10px 0;
 
 		> h1,
@@ -101,10 +101,10 @@
 
 		a,
 		.icon {
-			color: $wcfTabularBoxHeadline;
+			color: var(--wcfTabularBoxHeadline);
 
 			&:hover {
-				color: $wcfTabularBoxHeadlineActive;
+				color: var(--wcfTabularBoxHeadlineActive);
 			}
 		}
 
@@ -118,7 +118,7 @@
 /* table */
 .htmlContent table,
 .table {
-	border-bottom: 1px solid $wcfContentBorder;
+	border-bottom: 1px solid var(--wcfContentBorder);
 	border-spacing: 0;
 	width: 100%;
 
@@ -136,20 +136,20 @@
 
 	th {
 		border-bottom: 2px solid currentColor;
-		color: $wcfTabularBoxHeadline;
+		color: var(--wcfTabularBoxHeadline);
 		text-align: left;
 		white-space: nowrap;
 
 		@include wcfFontHeadline;
 
 		> a {
-			color: $wcfTabularBoxHeadline;
+			color: var(--wcfTabularBoxHeadline);
 			display: block;
 		}
 
 		&.active > a,
 		> a:hover {
-			color: $wcfTabularBoxHeadlineActive;
+			color: var(--wcfTabularBoxHeadlineActive);
 		}
 
 		&.ASC,
@@ -207,7 +207,7 @@
 			word-wrap: normal;
 
 			fa-icon {
-				color: $wcfContentText;
+				color: var(--wcfContentText);
 			}
 		}
 
@@ -266,7 +266,7 @@
 		}
 
 		&:not(:last-child) > td:not(.lastRow) {
-			border-bottom: 1px solid $wcfContentBorderInner;
+			border-bottom: 1px solid var(--wcfContentBorderInner);
 		}
 	}
 
@@ -285,6 +285,6 @@
 
 	// table without header
 	tbody:first-child > tr:first-child > td {
-		border-top: 1px solid $wcfContentBorder;
+		border-top: 1px solid var(--wcfContentBorder);
 	}
 }

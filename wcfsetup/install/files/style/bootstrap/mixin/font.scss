@@ -1,6 +1,6 @@
 @mixin wcfFontDefault {
 	@include screen-md-up {
-		font-size: $wcfFontSizeDefault;
+		font-size: var(--wcfFontSizeDefault);
 	}
 
 	@include screen-sm-down {
@@ -12,7 +12,7 @@
 	font-weight: 400;
 
 	@include screen-md-up {
-		font-size: $wcfFontSizeSmall;
+		font-size: var(--wcfFontSizeSmall);
 	}
 
 	@include screen-sm-down {
@@ -29,7 +29,7 @@
 	line-height: 1.28;
 
 	@include screen-md-up {
-		font-size: $wcfFontSizeHeadline;
+		font-size: var(--wcfFontSizeHeadline);
 	}
 
 	@include screen-sm-down {
@@ -42,7 +42,7 @@
 	line-height: 1.28;
 
 	@include screen-md-up {
-		font-size: $wcfFontSizeSection;
+		font-size: var(--wcfFontSizeSection);
 	}
 
 	@include screen-sm-down {
@@ -55,7 +55,7 @@
 	line-height: 1.05;
 
 	@include screen-md-up {
-		font-size: $wcfFontSizeTitle;
+		font-size: var(--wcfFontSizeTitle);
 	}
 
 	@include screen-sm-down {
@@ -64,5 +64,5 @@
 }
 
 @mixin wcfLineHeight {
-	line-height: $wcfFontLineHeight;
+	line-height: var(--wcfFontLineHeight);
 }

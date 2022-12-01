@@ -21,9 +21,9 @@
 	}
 
 	> .item {
-		background-color: $wcfButtonBackground;
+		background-color: var(--wcfButtonBackground);
 		border-radius: 2px;
-		color: $wcfButtonText;
+		color: var(--wcfButtonText);
 		cursor: default;
 		max-width: 100%;
 		padding: 1px 5px;
@@ -33,15 +33,15 @@
 		}
 
 		&.active {
-			background-color: $wcfButtonBackgroundActive;
-			color: $wcfButtonTextActive;
+			background-color: var(--wcfButtonBackgroundActive);
+			color: var(--wcfButtonTextActive);
 		}
 	}
 
 	&:not(.disabled) {
 		> item:hover {
-			background-color: $wcfButtonBackgroundActive;
-			color: $wcfButtonTextActive;
+			background-color: var(--wcfButtonBackgroundActive);
+			color: var(--wcfButtonTextActive);
 		}
 	}
 
@@ -54,7 +54,7 @@
 }
 
 .inputItemListLimitReached {
-	color: $wcfContentDimmedText;
+	color: var(--wcfContentDimmedText);
 	vertical-align: middle;
 
 	/* The input field does not have a distinct appearance, making the text unselectable

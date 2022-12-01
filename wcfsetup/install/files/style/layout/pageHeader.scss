@@ -1,18 +1,18 @@
 .pageHeaderContainer {
-	background-color: $wcfHeaderBackground;
-	color: $wcfHeaderText;
+	background-color: var(--wcfHeaderBackground);
+	color: var(--wcfHeaderText);
 	z-index: 100;
 
 	a {
-		color: $wcfHeaderLink;
+		color: var(--wcfHeaderLink);
 
 		&:hover {
-			color: $wcfHeaderLinkActive;
+			color: var(--wcfHeaderLinkActive);
 		}
 	}
 
 	.icon {
-		color: $wcfHeaderText;
+		color: var(--wcfHeaderText);
 	}
 
 	/* reserved space for `.pageHeaderPanel` */
@@ -31,7 +31,7 @@
 	}
 
 	@include screen-lg {
-		background-color: $wcfHeaderMenuBackground;
+		background-color: var(--wcfHeaderMenuBackground);
 	}
 }
 
@@ -69,9 +69,9 @@
 			}
 
 			> a {
-				background: $wcfHeaderMenuLinkBackground;
+				background: var(--wcfHeaderMenuLinkBackground);
 				align-items: center;
-				color: $wcfHeaderMenuLink;
+				color: var(--wcfHeaderMenuLink);
 				display: flex;
 				height: 50px;
 				padding: 0 15px;
@@ -91,8 +91,8 @@
 
 			&.active > a,
 			&:hover > a {
-				background: $wcfHeaderMenuLinkBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
+				background: var(--wcfHeaderMenuLinkBackgroundActive);
+				color: var(--wcfHeaderMenuLinkActive);
 			}
 		}
 
@@ -104,7 +104,7 @@
 		}
 
 		.boxMenuDepth1 {
-			background-color: $wcfHeaderMenuDropdownBackground;
+			background-color: var(--wcfHeaderMenuDropdownBackground);
 			border-radius: 0 0 3px 3px;
 			padding: 5px 0;
 			position: absolute;
@@ -114,7 +114,7 @@
 
 			> li {
 				> a {
-					color: $wcfHeaderMenuDropdownLink;
+					color: var(--wcfHeaderMenuDropdownLink);
 				}
 
 				> a,
@@ -126,8 +126,8 @@
 
 				&.active > a,
 				> a:hover {
-					background-color: $wcfHeaderMenuDropdownBackgroundActive;
-					color: $wcfHeaderMenuDropdownLinkActive;
+					background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+					color: var(--wcfHeaderMenuDropdownLinkActive);
 					text-decoration: none;
 				}
 			}
@@ -135,7 +135,7 @@
 
 		.boxMenuDepth2 li {
 			> a {
-				color: $wcfHeaderMenuDropdownLink;
+				color: var(--wcfHeaderMenuDropdownLink);
 				display: block;
 				padding: 5px 20px 5px 40px;
 				white-space: nowrap;
@@ -143,8 +143,8 @@
 
 			&.active > a,
 			> a:hover {
-				background-color: $wcfHeaderMenuDropdownBackgroundActive;
-				color: $wcfHeaderMenuDropdownLinkActive;
+				background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+				color: var(--wcfHeaderMenuDropdownLinkActive);
 				text-decoration: none;
 			}
 		}
@@ -172,8 +172,8 @@
 	.mainMenuShowPrevious {
 		background: linear-gradient(
 			to left,
-			transparentize($wcfHeaderMenuBackground, 1) 0%,
-			$wcfHeaderMenuBackground 75%
+			rgba(var(--wcfHeaderMenuBackground-rgb) / 0) 0%,
+			var(--wcfHeaderMenuBackground) 75%
 		);
 		left: 0;
 	}
@@ -181,8 +181,8 @@
 	.mainMenuShowNext {
 		background: linear-gradient(
 			to right,
-			transparentize($wcfHeaderMenuBackground, 1) 0%,
-			$wcfHeaderMenuBackground 75%
+			rgba(var(--wcfHeaderMenuBackground-rgb) / 0) 0%,
+			var(--wcfHeaderMenuBackground) 75%
 		);
 		justify-content: flex-end;
 		right: 0;
@@ -217,8 +217,8 @@
 
 			> a {
 				align-items: center;
-				background: $wcfHeaderMenuLinkBackground;
-				color: $wcfHeaderMenuLink;
+				background: var(--wcfHeaderMenuLinkBackground);
+				color: var(--wcfHeaderMenuLink);
 				display: flex;
 				flex: 0 0 auto;
 				height: 50px;
@@ -241,18 +241,18 @@
 				}
 
 				.icon {
-					color: $wcfHeaderMenuLink;
+					color: var(--wcfHeaderMenuLink);
 				}
 			}
 
 			&.dropdownOpen > a,
 			&.open > a,
 			&:hover > a {
-				background: $wcfHeaderMenuLinkBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
+				background: var(--wcfHeaderMenuLinkBackgroundActive);
+				color: var(--wcfHeaderMenuLinkActive);
 
 				.icon {
-					color: $wcfHeaderMenuLinkActive;
+					color: var(--wcfHeaderMenuLinkActive);
 				}
 			}
 
@@ -331,9 +331,9 @@
 
 		> .button {
 			align-items: center;
-			background-color: $wcfHeaderMenuLinkBackground;
+			background-color: var(--wcfHeaderMenuLinkBackground);
 			border-radius: 0 0 0 2px;
-			color: $wcfHeaderMenuLink;
+			color: var(--wcfHeaderMenuLink);
 			display: flex;
 			max-width: 200px;
 			min-width: 130px;
@@ -351,38 +351,38 @@
 
 		> .button:hover,
 		&.dropdownOpen > .button {
-			background: $wcfHeaderMenuLinkBackgroundActive;
-			color: $wcfHeaderMenuLinkActive;
+			background: var(--wcfHeaderMenuLinkBackgroundActive);
+			color: var(--wcfHeaderMenuLinkActive);
 		}
 	}
 
 	.pageHeaderSearchInput {
-		background-color: $wcfHeaderSearchBoxBackground;
+		background-color: var(--wcfHeaderSearchBoxBackground);
 		border-width: 0;
-		color: $wcfHeaderSearchBoxText;
+		color: var(--wcfHeaderSearchBoxText);
 		padding-bottom: 8px;
 		padding-top: 8px;
 		width: 250px;
 
 		&:focus,
 		&:hover {
-			background-color: $wcfHeaderSearchBoxBackgroundActive;
-			color: $wcfHeaderSearchBoxTextActive;
+			background-color: var(--wcfHeaderSearchBoxBackgroundActive);
+			color: var(--wcfHeaderSearchBoxTextActive);
 
 			/* set placeholder color, do not chain these with a comma
 			   as an unrecognized value causes the instruction to be
 			   discarded in entirety */
 			&::-webkit-input-placeholder {
 				/* WebKit browsers */
-				color: $wcfHeaderSearchBoxPlaceholderActive;
+				color: var(--wcfHeaderSearchBoxPlaceholderActive);
 			}
 			&::-moz-placeholder {
 				/* Mozilla Firefox 19+ */
-				color: $wcfHeaderSearchBoxPlaceholderActive;
+				color: var(--wcfHeaderSearchBoxPlaceholderActive);
 			}
 			&:-ms-input-placeholder {
 				/* Internet Explorer 10+ */
-				color: $wcfHeaderSearchBoxPlaceholderActive;
+				color: var(--wcfHeaderSearchBoxPlaceholderActive);
 			}
 		}
 
@@ -391,15 +391,15 @@
 		   discarded in entirety */
 		&::-webkit-input-placeholder {
 			/* WebKit browsers */
-			color: $wcfHeaderSearchBoxPlaceholder;
+			color: var(--wcfHeaderSearchBoxPlaceholder);
 		}
 		&::-moz-placeholder {
 			/* Mozilla Firefox 19+ */
-			color: $wcfHeaderSearchBoxPlaceholder;
+			color: var(--wcfHeaderSearchBoxPlaceholder);
 		}
 		&:-ms-input-placeholder {
 			/* Internet Explorer 10+ */
-			color: $wcfHeaderSearchBoxPlaceholder;
+			color: var(--wcfHeaderSearchBoxPlaceholder);
 		}
 
 		/* remove broken cancel-button (webkit) */
@@ -410,14 +410,14 @@
 
 	/* Increases the specificity to overrule the CSS for <button>. */
 	.pageHeaderSearchInputButton.pageHeaderSearchInputButton {
-		background-color: $wcfHeaderMenuLinkBackground;
+		background-color: var(--wcfHeaderMenuLinkBackground);
 		border-radius: 0 0 2px 0;
-		color: $wcfHeaderMenuLink;
+		color: var(--wcfHeaderMenuLink);
 		padding: 4px 9px;
 
 		&:hover {
-			background-color: $wcfHeaderMenuLinkBackgroundActive;
-			color: $wcfHeaderMenuLinkActive;
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+			color: var(--wcfHeaderMenuLinkActive);
 		}
 	}
 }
@@ -425,7 +425,7 @@
 @include screen-md-down {
 	.pageHeader {
 		align-items: center;
-		background-color: $wcfHeaderBackground;
+		background-color: var(--wcfHeaderBackground);
 		column-gap: 10px;
 		display: grid;
 		grid-template-areas: "logo search user menu";
@@ -509,7 +509,7 @@
 
 		&.pageMenuMobileButtonHasContent::after {
 			background-color: rgb(244, 67, 54);
-			border: 2px solid $wcfHeaderBackground;
+			border: 2px solid var(--wcfHeaderBackground);
 			border-radius: 50%;
 			content: "";
 			height: 14px;
@@ -522,7 +522,7 @@
 
 	.mainMenu {
 		&::before {
-			color: $wcfHeaderLink;
+			color: var(--wcfHeaderLink);
 			font-family: FontAwesome;
 			font-size: 28px;
 			line-height: 32px;
@@ -530,7 +530,7 @@
 		}
 
 		&:hover::before {
-			color: $wcfHeaderLinkActive;
+			color: var(--wcfHeaderLinkActive);
 		}
 	}
 
