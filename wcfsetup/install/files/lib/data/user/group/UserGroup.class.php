@@ -69,7 +69,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
 
     /**
      * group cache
-     * @var UserGroup[]
+     * @var UserGroup[][]|int[][]
      */
     protected static $cache;
 
