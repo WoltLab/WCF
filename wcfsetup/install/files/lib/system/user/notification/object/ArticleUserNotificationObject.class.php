@@ -25,7 +25,7 @@ class ArticleUserNotificationObject extends DatabaseObjectDecorator implements I
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }

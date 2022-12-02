@@ -118,7 +118,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);
     }

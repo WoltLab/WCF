@@ -141,7 +141,7 @@ class CommentResponse extends DatabaseObject implements IMessage
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle(
             $this->getComment()->objectTypeID,

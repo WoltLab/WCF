@@ -246,7 +246,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->filename;
     }

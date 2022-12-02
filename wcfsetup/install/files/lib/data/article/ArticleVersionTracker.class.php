@@ -104,7 +104,7 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }

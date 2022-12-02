@@ -24,7 +24,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getLanguage()->get('wcf.user.notification.article.title');
     }

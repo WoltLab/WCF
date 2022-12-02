@@ -186,11 +186,9 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
     }
 
     /**
-     * Returns the article's title.
-     *
-     * @return      string
+     * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getTitle();

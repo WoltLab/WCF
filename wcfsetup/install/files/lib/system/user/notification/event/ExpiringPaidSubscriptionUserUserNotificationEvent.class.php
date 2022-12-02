@@ -68,7 +68,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getLanguage()->get('wcf.paidSubscription.expiringSubscription.notification.title');
     }

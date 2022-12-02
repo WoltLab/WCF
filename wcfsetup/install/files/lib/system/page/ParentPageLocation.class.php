@@ -50,7 +50,7 @@ class ParentPageLocation implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

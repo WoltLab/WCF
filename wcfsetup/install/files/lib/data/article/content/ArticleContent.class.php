@@ -63,7 +63,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

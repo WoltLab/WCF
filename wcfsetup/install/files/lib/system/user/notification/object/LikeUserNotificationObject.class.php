@@ -25,7 +25,7 @@ class LikeUserNotificationObject extends DatabaseObjectDecorator implements IUse
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return '';
     }

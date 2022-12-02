@@ -35,7 +35,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }

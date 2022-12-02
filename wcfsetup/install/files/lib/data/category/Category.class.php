@@ -230,7 +230,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);
     }

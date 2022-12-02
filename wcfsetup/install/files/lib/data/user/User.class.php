@@ -504,7 +504,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->username;
     }
