@@ -260,8 +260,6 @@ class PackageInstallationSQLParser extends SQLParser
             return $row['packageID'];
         } elseif (isset($this->knownTables[$tableName])) {
             return $this->knownTables[$tableName];
-        } else {
-            return;
         }
     }
 
