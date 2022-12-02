@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @method  string      hGet($key, $hashKey)
  * @method  int     hSet($key, $hashKey, $value)
  * @method  int     incr($key)
- * @method  string      info($option = null)
+ * @method  array      info($option = null)
  * @method  bool        setex($key, $ttl, $value)
  * @method  bool        setnx($key, $value)
  * @method  int     ttl($key)
