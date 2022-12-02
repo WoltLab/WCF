@@ -62,7 +62,7 @@ class ArticleCategoryCache extends SingletonFactory
     /**
      * Counts the articles contained in this category and its children.
      *
-     * @param int[] $categoryToParent
+     * @param int[][] $categoryToParent
      * @param int[] $articles
      * @param int $categoryID
      * @return      int
