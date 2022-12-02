@@ -18,7 +18,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
 {
     use TImmutableFormField;
 
-    private FontAwesomeIcon $icon;
+    private ?FontAwesomeIcon $icon;
 
     /**
      * @inheritDoc
