@@ -79,7 +79,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('Trophy', [
             'object' => $this,

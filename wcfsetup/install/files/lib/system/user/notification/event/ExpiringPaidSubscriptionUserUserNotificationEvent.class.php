@@ -30,7 +30,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('PaidSubscriptionList', ['forceFrontend' => true]);
     }

@@ -69,7 +69,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getUserNotificationObject()->getLink();
     }

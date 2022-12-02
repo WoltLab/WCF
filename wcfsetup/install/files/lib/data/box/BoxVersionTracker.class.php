@@ -72,7 +72,7 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }

@@ -42,7 +42,7 @@ class ParentPageLocation implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }

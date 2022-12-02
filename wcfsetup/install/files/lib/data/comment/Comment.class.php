@@ -140,7 +140,7 @@ class Comment extends DatabaseObject implements IMessage
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         /** @var ICommentManager $processor */
         $processor = CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();

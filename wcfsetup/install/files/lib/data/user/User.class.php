@@ -601,7 +601,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('User', [
             'application' => 'wcf',

@@ -1148,7 +1148,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }

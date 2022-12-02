@@ -78,7 +78,7 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->author->getLink();
     }

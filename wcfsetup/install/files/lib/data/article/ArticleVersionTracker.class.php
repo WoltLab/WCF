@@ -72,7 +72,7 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }

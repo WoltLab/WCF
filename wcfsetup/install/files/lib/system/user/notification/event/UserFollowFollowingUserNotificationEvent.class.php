@@ -80,7 +80,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->author->getLink();
     }

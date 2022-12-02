@@ -27,7 +27,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }

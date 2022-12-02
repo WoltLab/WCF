@@ -91,7 +91,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('Media', ['object' => $this]);
     }

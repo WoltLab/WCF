@@ -88,7 +88,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->moderationQueue->getLink() . '#comments';
     }

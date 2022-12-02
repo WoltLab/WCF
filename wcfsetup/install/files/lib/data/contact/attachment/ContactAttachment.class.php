@@ -67,7 +67,7 @@ class ContactAttachment extends DatabaseObject implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('ContactAttachment', [
             'object' => $this->getAttachment(),

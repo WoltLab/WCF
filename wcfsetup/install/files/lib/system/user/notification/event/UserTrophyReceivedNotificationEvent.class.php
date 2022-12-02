@@ -60,7 +60,7 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getUserNotificationObject()->getTrophy()->getLink();
     }

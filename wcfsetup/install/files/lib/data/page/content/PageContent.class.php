@@ -135,7 +135,7 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
     }
