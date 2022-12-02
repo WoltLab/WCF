@@ -81,7 +81,7 @@ final class ArrayUtil
      * Applies stripslashes on all elements of the given array.
      *
      * @param array $array
-     * @return  array
+     * @return  array|string
      */
     public static function stripslashes($array)
     {
