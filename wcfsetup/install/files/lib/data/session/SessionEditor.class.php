@@ -13,6 +13,7 @@ use wcf\data\acp\session\ACPSessionEditor;
  * @package WoltLabSuite\Core\Data\Session
  *
  * @method  Session     getDecoratedObject()
+ * @method static  Session     create(array $parameters = [])
  * @mixin   Session
  */
 class SessionEditor extends ACPSessionEditor
