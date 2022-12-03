@@ -1452,6 +1452,7 @@
 		<file>lib/acp/action/ClipboardLoadMarkedItemsAction.class.php</file>
 		<file>lib/acp/action/ClipboardProxyAction.class.php</file>
 		<file>lib/acp/action/OptionExportAction.class.php</file>
+		<file>lib/acp/form/AbstractCategoryEditForm.class.php</file>
 		<file>lib/acp/form/ACPForm.class.php</file>
 		<file>lib/acp/form/ApplicationEditForm.class.php</file>
 		<file>lib/acp/form/ApplicationGroupAddForm.class.php</file>

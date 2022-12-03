@@ -10,10 +10,13 @@ use wcf\data\language\item\LanguageItemAction;
 use wcf\data\TDatabaseObjectToggle;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
+use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\category\ICategoryType;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\I18nHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
@@ -25,7 +28,6 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Category
  *
- * @method  Category        create()
  * @method  CategoryEditor[]    getObjects()
  * @method  CategoryEditor      getSingleObject()
  */
@@ -46,6 +48,60 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
      * @inheritDoc
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
+
+    /**
+     * @inheritDoc
+     * @return Category
+     */
+    public function create()
+    {
+        if (isset($this->parameters['additionalData']) && \is_array($this->parameters['additionalData'])) {
+            $this->parameters['data']['additionalData'] = \serialize($this->parameters['additionalData']);
+        }
+
+        /** @var Category $object */
+        $object = parent::create();
+        $updateData = [];
+
+        $processor = $object->getProcessor();
+        \assert($processor instanceof ICategoryType);
+
+        if (isset($this->parameters['title_i18n'])) {
+            $languageItem = "{$processor->getI18nLangVarPrefix()}.title.category{$object->getObjectID()}";
+            $updateData['title'] = $languageItem;
+            I18nHandler::getInstance()->save(
+                $this->parameters['title_i18n'],
+                $languageItem,
+                $processor->getTitleLangVarCategory(),
+                $object->getDecoratedObject()->getObjectType()->packageID
+            );
+        }
+
+        if (isset($this->parameters['description_i18n'])) {
+            $languageItem = "{$processor->getI18nLangVarPrefix()}.description.category{$object->getObjectID()}";
+            $updateData['description'] = $languageItem;
+            I18nHandler::getInstance()->save(
+                $this->parameters['title_i18n'],
+                $languageItem,
+                $processor->getDescriptionLangVarCategory(),
+                $object->getDecoratedObject()->getObjectType()->packageID
+            );
+        }
+
+        if (isset($this->parameters['aclPermissions_aclObjectTypeID'])) {
+            ACLHandler::getInstance()->save(
+                $object->getObjectID(),
+                $this->parameters['aclPermissions_aclObjectTypeID']
+            );
+            CategoryPermissionHandler::getInstance()->resetCache();
+        }
+
+        if (!empty($updateData)) {
+            (new CategoryEditor($object))->update($updateData);
+        }
+
+        return new Category($object->getObjectID());
+    }
 
     /**
      * @inheritDoc
@@ -134,6 +190,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
      */
     public function update()
     {
+        if (isset($this->parameters['additionalData']) && \is_array($this->parameters['additionalData'])) {
+            $this->parameters['data']['additionalData'] = \serialize($this->parameters['additionalData']);
+        }
+
         // check if showOrder needs to be recalculated
         if (\count($this->objects) == 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
             $categoryEditor = $this->getObjects()[0];
@@ -167,6 +227,49 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
             if (!empty($parentUpdates)) {
                 $objectType->getProcessor()->changedParentCategories($parentUpdates);
             }
+        }
+
+        foreach ($this->getObjects() as $objectEditor) {
+            $updateData = [];
+            $processor = $objectEditor->getDecoratedObject()->getProcessor();
+            \assert($processor instanceof ICategoryType);
+
+            if (isset($this->parameters['title_i18n'])) {
+                $languageItem = "{$processor->getI18nLangVarPrefix()}.title.category{$objectEditor->getObjectID()}";
+                $updateData['title'] = $languageItem;
+                I18nHandler::getInstance()->save(
+                    $this->parameters['title_i18n'],
+                    $languageItem,
+                    $processor->getTitleLangVarCategory(),
+                    $objectEditor->getDecoratedObject()->getObjectType()->packageID
+                );
+            }
+
+            if (isset($this->parameters['description_i18n'])) {
+                $languageItem = "{$processor->getI18nLangVarPrefix()}.description.category{$objectEditor->getObjectID()}";
+                $updateData['description'] = $languageItem;
+                I18nHandler::getInstance()->save(
+                    $this->parameters['description_i18n'],
+                    $languageItem,
+                    $processor->getDescriptionLangVarCategory(),
+                    $objectEditor->getDecoratedObject()->getObjectType()->packageID
+                );
+            }
+
+            if (isset($this->parameters['aclPermissions_aclObjectTypeID'])) {
+                ACLHandler::getInstance()->save(
+                    $objectEditor->getObjectID(),
+                    $this->parameters['aclPermissions_aclObjectTypeID']
+                );
+            }
+
+            if (!empty($updateData)) {
+                $objectEditor->update($updateData);
+            }
+        }
+
+        if (isset($this->parameters['aclPermissions_aclObjectTypeID'])) {
+            CategoryPermissionHandler::getInstance()->resetCache();
         }
     }
 

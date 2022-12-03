@@ -2,120 +2,99 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\category\Category;
 use wcf\data\category\CategoryAction;
-use wcf\data\category\CategoryEditor;
+use wcf\data\category\CategoryNodeTree;
 use wcf\data\category\UncachedCategoryNodeTree;
+use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectType;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\form\AbstractFormBuilderForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
-use wcf\system\category\CategoryPermissionHandler;
 use wcf\system\category\ICategoryType;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
-use wcf\system\language\I18nHandler;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\acl\AclFormField;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\ShowOrderFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Abstract implementation of a form to create categories.
  *
- * @author  Matthias Schmidt
+ * @author  Florian Gail
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Form
+ *
+ * @property CategoryAction $objectAction
+ * @property Category|null  $formObject
  */
-abstract class AbstractCategoryAddForm extends AbstractForm
+abstract class AbstractCategoryAddForm extends AbstractFormBuilderForm
 {
     /**
-     * id of the category acl object type
-     * @var int
-     */
-    public $aclObjectTypeID = 0;
-
-    /**
      * name of the controller used to add new categories
-     * @var string
      */
-    public $addController = '';
-
-    /**
-     * additional category data
-     * @var array
-     */
-    public $additionalData = [];
+    public string $addController;
 
     /**
      * tree with the category nodes
      * @var UncachedCategoryNodeTree
      */
-    public $categoryNodeTree;
-
-    /**
-     * is `1` if HTML is used in the description
-     * @var int
-     */
-    public $descriptionUseHtml = 0;
-
-    /**
-     * indicates if the category is disabled
-     * @var int
-     */
-    public $isDisabled = 0;
+    public CategoryNodeTree $categoryNodeTree;
 
     /**
      * name of the controller used to edit categories
-     * @var string
      */
-    public $editController = '';
+    public string $editController;
 
     /**
      * name of the controller used to list the categories
-     * @var string
      */
-    public $listController = '';
+    public string $listController;
 
     /**
      * category object type object
-     * @var ObjectType
      */
-    public $objectType;
+    public ObjectType $objectType;
 
     /**
-     * name of the category object type
-     * @var string
+     * category acl object type object
      */
-    public $objectTypeName = '';
+    public ?ObjectType $aclObjectType;
 
     /**
      * id of the package the created package belongs to
-     * @var int
      */
-    public $packageID = 0;
+    public int $packageID;
 
     /**
      * language item with the page title
-     * @var string
      */
-    public $pageTitle = 'wcf.category.add';
-
-    /**
-     * id of the parent category id
-     * @var int
-     */
-    public $parentCategoryID = 0;
-
-    /**
-     * category show order
-     * @var int
-     */
-    public $showOrder = 0;
+    public string $pageTitle;
 
     /**
      * @inheritDoc
      */
     public $templateName = 'categoryAdd';
+
+    /**
+     * @inheritDoc
+     */
+    public $objectActionClass = CategoryAction::class;
 
     /**
      * @inheritDoc
@@ -126,17 +105,349 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         $className = \array_pop($classNameParts);
 
         // autoset controllers
-        if (empty($this->addController)) {
+        if (!isset($this->listController)) {
+            $this->listController = \str_replace(['AddForm', 'EditForm'], 'List', $className);
+        }
+        if (!isset($this->addController)) {
             $this->addController = \str_replace(['AddForm', 'EditForm'], 'Add', $className);
         }
-        if (empty($this->editController)) {
-            $this->editController = \str_replace(['AddForm', 'EditForm'], 'Edit', $className);
+        if (!isset($this->editController)) {
+            if (!empty($this->objectEditLinkController)) {
+                $classNameParts = \explode('\\', $this->objectEditLinkController);
+                $className = \array_pop($classNameParts);
+
+                $this->editController = \preg_replace('/Form$/', '', $className);
+            } else {
+                $this->editController = \str_replace(['AddForm', 'EditForm'], 'Edit', $className);
+            }
         }
-        if (empty($this->listController)) {
-            $this->listController = \str_replace(['AddForm', 'EditForm'], 'List', $className);
+
+        $objectTypeName = $this->getObjectTypeName();
+        $objectType = CategoryHandler::getInstance()->getObjectTypeByName($objectTypeName);
+        if ($objectType === null) {
+            throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.category');
+        }
+        $this->objectType = $objectType;
+
+        // get acl object type id
+        $aclObjectTypeName = $this->getObjectTypeProcessor()->getObjectTypeName('com.woltlab.wcf.acl');
+        if ($aclObjectTypeName) {
+            $this->aclObjectType = ObjectTypeCache::getInstance()->getObjectType(
+                ACLHandler::getInstance()->getObjectTypeID($aclObjectTypeName)
+            );
+        }
+
+        // autoset package id
+        if (!$this->packageID) {
+            $this->packageID = $this->objectType->packageID;
         }
 
         return parent::__run();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        if ($this->formAction !== 'create') {
+            $this->readFormObject();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkPermissions()
+    {
+        AbstractForm::checkPermissions();
+
+        // check permissions
+        $this->checkCategoryPermissions();
+
+        $this->buildForm();
+    }
+
+    /**
+     * Checks if the active user has the needed permissions to add a new category.
+     */
+    protected function checkCategoryPermissions(): void
+    {
+        $processor = $this->getObjectTypeProcessor();
+        \assert($processor instanceof ICategoryType);
+
+        if ($this->formObject instanceof DatabaseObject) {
+            if ($this->formObject->objectTypeID !== $this->objectType->getObjectID()) {
+                throw new IllegalLinkException();
+            }
+
+            if (!$processor->canEditCategory()) {
+                throw new PermissionDeniedException();
+            }
+
+            return;
+        }
+
+        if (!$processor->canAddCategory()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createForm()
+    {
+        parent::createForm();
+
+        $processor = $this->getObjectTypeProcessor();
+
+        $categoryNodeTree = new UncachedCategoryNodeTree(
+            $this->objectType->objectType,
+            0,
+            true,
+            [$this->formObject instanceof DatabaseObject ? $this->formObject->getObjectID() : -1]
+        );
+
+        $maximumNestingLevel = $processor->getMaximumNestingLevel();
+        if (\is_numeric($maximumNestingLevel) && $maximumNestingLevel !== -1) {
+            $categoryNodeTree->setMaxDepth($maximumNestingLevel - 1);
+        }
+
+        $this->form->appendChildren([
+            TabMenuFormContainer::create('tabMenu')
+                ->appendChildren([
+                    TabFormContainer::create('general')
+                        ->label('wcf.global.form.data')
+                        ->appendChildren([
+                            FormContainer::create('data')
+                                ->label('wcf.global.form.data')
+                                ->appendChildren([
+                                    TitleFormField::create()
+                                        ->label($processor->getLanguageVariable('title'))
+                                        ->description($processor->getLanguageVariable('title.description', true))
+                                        ->maximumLength(255)
+                                        ->i18n()
+                                        ->languageItemPattern($processor->getI18nLangVarPrefix() . '.title.category\d+')
+                                        ->required(),
+                                    MultilineTextFormField::create('description')
+                                        ->label($processor->getLanguageVariable('description'))
+                                        ->description($processor->getLanguageVariable('description.description', true))
+                                        ->maximumLength(5000)
+                                        ->rows(10)
+                                        ->i18n()
+                                        ->languageItemPattern(
+                                            $processor->getI18nLangVarPrefix() . '.description.category\d+'
+                                        )
+                                        ->available($processor->hasDescription())
+                                        ->required($processor->forceDescription()),
+                                    BooleanFormField::create('descriptionUseHtml')
+                                        ->label($processor->getLanguageVariable('descriptionUseHtml'))
+                                        ->available(
+                                            $processor->hasDescription() && $processor->supportsHtmlDescription()
+                                        ),
+                                    BooleanFormField::create('isDisabled')
+                                        ->label($processor->getLanguageVariable('isDisabled'))
+                                        ->description($processor->getLanguageVariable('isDisabled.description', true)),
+                                ]),
+                        ]),
+                    TabFormContainer::create('appearanceTab')
+                        ->label('wcf.category.appearance')
+                        ->appendChildren([
+                            FormContainer::create('position')
+                                ->label($processor->getLanguageVariable('position'))
+                                ->appendChildren([
+                                    SingleSelectionFormField::create('parentCategoryID')
+                                        ->label($processor->getLanguageVariable('parentCategoryID'))
+                                        ->description(
+                                            $processor->getLanguageVariable('parentCategoryID.description', true)
+                                        )
+                                        ->options($categoryNodeTree, true)
+                                        ->allowEmptySelection()
+                                        //->nullable() // it doesn't make any sense, but this column is not nullable
+                                        ->addValidator(
+                                            new FormFieldValidator(
+                                                'recursion',
+                                                function (SingleSelectionFormField $formField) use ($processor) {
+                                                    if (empty($formField->getValue())) {
+                                                        return;
+                                                    }
+
+                                                    if (!($this->formObject instanceof DatabaseObject)) {
+                                                        return;
+                                                    }
+
+                                                    if ($this->formObject->getObjectID() === $formField->getValue()) {
+                                                        $formField->addValidationError(
+                                                            new FormFieldValidationError(
+                                                                'invalid',
+                                                                $processor->getLanguageVariable(
+                                                                    'parentCategoryID.error.invalid'
+                                                                )
+                                                            )
+                                                        );
+
+                                                        return;
+                                                    }
+
+                                                    $childCategories = CategoryHandler::getInstance()->getChildCategories(
+                                                        $this->formObject->getObjectID(),
+                                                        $this->objectType->getObjectID()
+                                                    );
+
+                                                    if (isset($childCategories[$formField->getValue()])) {
+                                                        $formField->addValidationError(
+                                                            new FormFieldValidationError(
+                                                                'invalid',
+                                                                $processor->getLanguageVariable(
+                                                                    'parentCategoryID.error.invalid'
+                                                                )
+                                                            )
+                                                        );
+                                                    }
+                                                }
+                                            )
+                                        )
+                                        ->addValidator(
+                                            new FormFieldValidator(
+                                                'nestingLevel',
+                                                static function (SingleSelectionFormField $formField) use ($processor) {
+                                                    if (empty($formField->getValue())) {
+                                                        return;
+                                                    }
+
+                                                    if ($processor->getMaximumNestingLevel() === -1) {
+                                                        return;
+                                                    }
+
+                                                    if (!$processor->getMaximumNestingLevel()) {
+                                                        $formField->addValidationError(
+                                                            new FormFieldValidationError(
+                                                                'invalid',
+                                                                $processor->getLanguageVariable(
+                                                                    'parentCategoryID.error.invalid'
+                                                                )
+                                                            )
+                                                        );
+
+                                                        return;
+                                                    }
+
+                                                    $category = CategoryHandler::getInstance()->getCategory(
+                                                        $formField->getValue()
+                                                    );
+                                                    $nestingLevel = \count($category->getParentCategories()) + 1;
+                                                    if ($nestingLevel > $processor->getMaximumNestingLevel()) {
+                                                        $formField->addValidationError(
+                                                            new FormFieldValidationError(
+                                                                'invalid',
+                                                                $processor->getLanguageVariable(
+                                                                    'parentCategoryID.error.invalid'
+                                                                )
+                                                            )
+                                                        );
+                                                    }
+                                                }
+                                            )
+                                        )
+                                        ->available($this->getObjectTypeProcessor()->getMaximumNestingLevel()),
+                                    ShowOrderFormField::create()
+                                        ->description($processor->getLanguageVariable('showOrder.description', true))
+                                        ->options($categoryNodeTree, true)
+                                        ->nullable()
+                                        ->required(),
+                                ]),
+                        ]),
+                    TabFormContainer::create('permissionsTab')
+                        ->label('wcf.category.permissions')
+                        ->appendChildren([
+                            FormContainer::create('permissions')
+                                ->label('wcf.category.permissions'),
+                        ]),
+                ]),
+        ]);
+
+        if (!empty($this->aclObjectType)) {
+            /** @var FormContainer $permissionsContainer */
+            $permissionsContainer = $this->form->getNodeById('permissions');
+            $permissionsContainer->appendChild(
+                AclFormField::create('aclPermissions')
+                    ->label('wcf.acl.permissions')
+                    ->objectType($this->aclObjectType->objectType)
+            );
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildForm()
+    {
+        parent::buildForm();
+
+        $this->form->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'additionalData',
+                function (IFormDocument $document, array $parameters) {
+                    if (!isset($parameters['additionalData'])) {
+                        $parameters['additionalData'] = [];
+                    }
+
+                    return $parameters;
+                }
+            )
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function finalizeForm()
+    {
+        parent::finalizeForm();
+
+        // make sure these processors are queued at the very end
+        $this->form->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'processor',
+                function (IFormDocument $document, array $parameters) {
+                    $parameters['objectTypeProcessor'] = $this->getObjectTypeProcessor();
+
+                    return $parameters;
+                }
+            )
+        );
+
+        $this->form->getDataHandler()->addProcessor(
+            new CustomFormDataProcessor(
+                'data',
+                function (IFormDocument $document, array $parameters) {
+                    $parameters['data']['objectTypeID'] = $this->objectType->getObjectID();
+
+                    return $parameters;
+                }
+            )
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readData()
+    {
+        parent::readData();
+
+        $this->readCategories();
+    }
+
+    /**
+     * Reads the categories.
+     */
+    protected function readCategories(): void
+    {
+        $this->categoryNodeTree = new UncachedCategoryNodeTree($this->objectType->objectType, 0, true);
     }
 
     /**
@@ -146,241 +457,52 @@ abstract class AbstractCategoryAddForm extends AbstractForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables();
-        if ($this->aclObjectTypeID) {
-            ACLHandler::getInstance()->assignVariables($this->aclObjectTypeID);
+        if (!isset($this->pageTitle)) {
+            switch ($this->formAction) {
+                case 'create':
+                    $this->pageTitle = 'wcf.category.add';
+                    break;
+
+                case 'edit':
+                    $this->pageTitle = 'wcf.category.edit';
+                    break;
+            }
         }
 
         WCF::getTPL()->assign([
-            'aclObjectTypeID' => $this->aclObjectTypeID,
-            'action' => 'add',
             'addController' => $this->addController,
-            'additionalData' => $this->additionalData,
-            'categoryNodeList' => $this->categoryNodeTree->getIterator(),
-            'descriptionUseHtml' => $this->descriptionUseHtml,
             'editController' => $this->editController,
-            'isDisabled' => $this->isDisabled,
             'listController' => $this->listController,
             'objectType' => $this->objectType,
-            'parentCategoryID' => $this->parentCategoryID,
-            'showOrder' => $this->showOrder,
+            'categoryNodeList' => $this->categoryNodeTree->getIterator(),
+            'pageTitle' => $this->pageTitle,
         ]);
-
-        if ($this->pageTitle) {
-            WCF::getTPL()->assign('pageTitle', $this->pageTitle);
-        }
     }
 
     /**
-     * Checks if the active user has the needed permissions to add a new category.
+     * Returns the category object type's name.
      */
-    protected function checkCategoryPermissions()
+    abstract public function getObjectTypeName(): string;
+
+    /**
+     * Returns the category processor.
+     */
+    public function getObjectTypeProcessor(): ICategoryType
     {
-        if (!$this->objectType->getProcessor()->canAddCategory()) {
-            throw new PermissionDeniedException();
-        }
+        return $this->objectType->getProcessor();
     }
 
     /**
-     * Reads the categories.
+     * @throws IllegalLinkException
      */
-    protected function readCategories()
+    protected function readFormObject(): void
     {
-        $this->categoryNodeTree = new UncachedCategoryNodeTree($this->objectType->objectType, 0, true);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        $this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
-        if ($this->objectType === null) {
-            throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.category');
+        if (!empty($_REQUEST['id']) && \is_numeric($_REQUEST['id'])) {
+            $this->formObject = new Category((int)$_REQUEST['id']);
         }
 
-        // check permissions
-        $this->checkCategoryPermissions();
-
-        // get acl object type id
-        $aclObjectTypeName = $this->objectType->getProcessor()->getObjectTypeName('com.woltlab.wcf.acl');
-        if ($aclObjectTypeName) {
-            $this->aclObjectTypeID = ACLHandler::getInstance()->getObjectTypeID($aclObjectTypeName);
-        }
-
-        // autoset package id
-        if (!$this->packageID) {
-            $this->packageID = $this->objectType->packageID;
-        }
-
-        if ($this->objectType->getProcessor()->hasDescription()) {
-            I18nHandler::getInstance()->register('description');
-        }
-        I18nHandler::getInstance()->register('title');
-
-        parent::readData();
-
-        $this->readCategories();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        I18nHandler::getInstance()->readValues();
-
-        if (isset($_POST['additionalData'])) {
-            $this->additionalData = ArrayUtil::trim($_POST['additionalData']);
-        }
-        if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = 1;
-        }
-        if (isset($_POST['descriptionUseHtml'])) {
-            $this->descriptionUseHtml = 1;
-        }
-        if (isset($_POST['parentCategoryID'])) {
-            $this->parentCategoryID = \intval($_POST['parentCategoryID']);
-        }
-        if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
-
-        /** @var ICategoryType $categoryType */
-        $categoryType = $this->objectType->getProcessor();
-
-        $this->objectAction = new CategoryAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'additionalData' => \serialize($this->additionalData),
-                'description' => ($categoryType->hasDescription() && I18nHandler::getInstance()->isPlainValue('description')) ? I18nHandler::getInstance()->getValue('description') : '',
-                'descriptionUseHtml' => $categoryType->supportsHtmlDescription() ? $this->descriptionUseHtml : 0,
-                'isDisabled' => $this->isDisabled,
-                'objectTypeID' => $this->objectType->objectTypeID,
-                'parentCategoryID' => $this->parentCategoryID,
-                'showOrder' => $this->showOrder > 0 ? $this->showOrder : null,
-                'title' => I18nHandler::getInstance()->isPlainValue('title') ? I18nHandler::getInstance()->getValue('title') : '',
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-        $returnValues = $this->objectAction->getReturnValues();
-
-        if (($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->isPlainValue('description')) || !I18nHandler::getInstance()->isPlainValue('title')) {
-            $categoryID = $returnValues['returnValues']->categoryID;
-
-            $updateData = [];
-            if ($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->isPlainValue('description')) {
-                $updateData['description'] = $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.description.category' . $categoryID;
-                I18nHandler::getInstance()->save(
-                    'description',
-                    $updateData['description'],
-                    $this->objectType->getProcessor()->getDescriptionLangVarCategory(),
-                    $this->packageID
-                );
-            }
-            if (!I18nHandler::getInstance()->isPlainValue('title')) {
-                $updateData['title'] = $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.title.category' . $categoryID;
-                I18nHandler::getInstance()->save(
-                    'title',
-                    $updateData['title'],
-                    $this->objectType->getProcessor()->getTitleLangVarCategory(),
-                    $this->packageID
-                );
-            }
-
-            // update description/title
-            $editor = new CategoryEditor($returnValues['returnValues']);
-            $editor->update($updateData);
-        }
-
-        // save acl
-        if ($this->aclObjectTypeID) {
-            ACLHandler::getInstance()->save($returnValues['returnValues']->categoryID, $this->aclObjectTypeID);
-            ACLHandler::getInstance()->disableAssignVariables();
-            CategoryPermissionHandler::getInstance()->resetCache();
-        }
-
-        // reload cache
-        CategoryHandler::getInstance()->reloadCache();
-        $this->readCategories();
-
-        // reset values
-        $this->parentCategoryID = 0;
-        $this->showOrder = 0;
-        $this->additionalData = [];
-
-        $this->saved();
-
-        // reset i18n values
-        I18nHandler::getInstance()->reset();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate()
-    {
-        parent::validate();
-
-        $this->validateParentCategory();
-
-        if (!I18nHandler::getInstance()->validateValue('title')) {
-            if (I18nHandler::getInstance()->isPlainValue('title')) {
-                throw new UserInputException('title');
-            } else {
-                throw new UserInputException('title', 'multilingual');
-            }
-        }
-
-        if (
-            $this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->validateValue(
-                'description',
-                false,
-                !$this->objectType->getProcessor()->forceDescription()
-            )
-        ) {
-            if (I18nHandler::getInstance()->isPlainValue('description')) {
-                throw new UserInputException('description');
-            } else {
-                throw new UserInputException('description', 'multilingual');
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validateParentCategory()
-    {
-        if ($this->parentCategoryID) {
-            if (!$this->objectType->getProcessor()->getMaximumNestingLevel()) {
-                $this->parentCategoryID = 0;
-
-                return;
-            }
-
-            $category = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
-            if ($category === null) {
-                throw new UserInputException('parentCategoryID', 'invalid');
-            }
-
-            if ($this->objectType->getProcessor()->getMaximumNestingLevel() != -1) {
-                if (\count($category->getParentCategories()) + 1 > $this->objectType->getProcessor()->getMaximumNestingLevel()) {
-                    throw new UserInputException('parentCategoryID', 'invalid');
-                }
-            }
+        if ($this->formObject === null || !$this->formObject->getObjectID()) {
+            throw new IllegalLinkException();
         }
     }
 }
