@@ -44,7 +44,6 @@ class SingleSelectionFormField extends AbstractFormField implements
         if (
             empty($this->getValue())
             && isset($this->getOptions()[$this->getValue()])
-            && $this instanceof INullableFormField
             && $this->isNullable()
         ) {
             return;
