@@ -11,17 +11,12 @@ namespace wcf\acp\form;
  * @package WoltLabSuite\Core\Acp\Form
  * @since   3.1
  */
-class TrophyCategoryEditForm extends AbstractCategoryEditForm
+class TrophyCategoryEditForm extends TrophyCategoryAddForm
 {
     /**
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.trophy.category.list';
-
-    /**
-     * @inheritDoc
-     */
-    public $objectTypeName = 'com.woltlab.wcf.trophy.category';
 
     /**
      * @inheritDoc
