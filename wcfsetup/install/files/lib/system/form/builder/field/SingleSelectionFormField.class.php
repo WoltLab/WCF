@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for selecting a single value.
@@ -37,16 +38,31 @@ class SingleSelectionFormField extends AbstractFormField implements
     protected $templateName = '__singleSelectionFormField';
 
     /**
+     * @var bool
+     */
+    protected bool $allowEmptySelection = false;
+
+    /**
+     * @var string
+     */
+    protected string $emptyOptionLanguageItem = 'wcf.global.noSelection';
+
+    /**
+     * @var string|int|float
+     */
+    protected string|int|float $emptyOptionValue = 0;
+
+    /**
      * @inheritDoc
      */
     public function getSaveValue()
     {
         if (
-            empty($this->getValue())
-            && isset($this->getOptions()[$this->getValue()])
+            $this->allowsEmptySelection()
             && $this->isNullable()
+            && $this->getValue() === $this->getEmptyOptionValue()
         ) {
-            return;
+            return null;
         }
 
         return parent::getSaveValue();
@@ -87,6 +103,12 @@ class SingleSelectionFormField extends AbstractFormField implements
      */
     public function validate()
     {
+        if ($this->allowsEmptySelection() && $this->getValue() === $this->getEmptyOptionValue()) {
+            AbstractFormField::validate();
+
+            return;
+        }
+
         if (!isset($this->getOptions()[$this->getValue()])) {
             $this->addValidationError(new FormFieldValidationError(
                 'invalidValue',
@@ -113,5 +135,87 @@ class SingleSelectionFormField extends AbstractFormField implements
         }
 
         return parent::value($value);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOptions(): array
+    {
+        $options = parent::getOptions();
+
+        if ($this->allowsEmptySelection()) {
+            $options[$this->getEmptyOptionValue()] = $this->getEmptyOptionLabel();
+        }
+
+        return $options;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNestedOptions(): array
+    {
+        $options = parent::getNestedOptions();
+
+        if ($this->allowsEmptySelection()) {
+            $options = \array_merge([
+                [
+                    'depth' => 0,
+                    'isSelectable' => true,
+                    'label' => $this->getEmptyOptionLabel(),
+                    'value' => $this->getEmptyOptionValue(),
+                ],
+            ], $options);
+        }
+
+        return $options;
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function allowEmptySelection(
+        bool $allowEmptySelection = true,
+        string $languageItem = 'wcf.global.noSelection'
+    ): self {
+        $this->allowEmptySelection = $allowEmptySelection;
+        $this->emptyOptionLanguageItem = $languageItem;
+
+        return $this;
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function emptyOptionValue(string|int|float $value): self
+    {
+        $this->emptyOptionValue = $value;
+
+        return $this;
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function allowsEmptySelection(): bool
+    {
+        return $this->allowEmptySelection;
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getEmptyOptionLabel(): string
+    {
+        return WCF::getLanguage()->get($this->emptyOptionLanguageItem);
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getEmptyOptionValue(): string|int|float
+    {
+        return $this->emptyOptionValue;
     }
 }
