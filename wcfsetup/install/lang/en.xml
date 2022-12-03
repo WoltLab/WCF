@@ -93,7 +93,9 @@
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Article]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
-		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.article.category.sorting"><![CDATA[Sorting]]></item>
+		<item name="wcf.acp.article.category.sortField"><![CDATA[Sort By]]></item>
+		<item name="wcf.acp.article.category.sortField.description"><![CDATA[The selected object property is used for sorting.]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>

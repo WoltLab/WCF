@@ -44,6 +44,7 @@
 		<file>acp/style/wcf.css</file>
 		<file>acp/style/wcf.less</file>
 		<file>acp/style/wcfAcp.css</file>
+		<file>acp/templates/__articleSortField.tpl</file>
 		<file>acp/templates/__dialogForm.tpl</file>
 		<file>acp/templates/__formFieldFooter.tpl</file>
 		<file>acp/templates/__formFieldHeader.tpl</file>
