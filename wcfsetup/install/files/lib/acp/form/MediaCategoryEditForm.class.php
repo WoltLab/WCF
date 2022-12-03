@@ -11,7 +11,7 @@ namespace wcf\acp\form;
  * @package WoltLabSuite\Core\Acp\Form
  * @since   3.1
  */
-class MediaCategoryEditForm extends AbstractCategoryEditForm
+class MediaCategoryEditForm extends MediaCategoryAddForm
 {
     /**
      * @inheritDoc
@@ -21,5 +21,5 @@ class MediaCategoryEditForm extends AbstractCategoryEditForm
     /**
      * @inheritDoc
      */
-    public $objectTypeName = 'com.woltlab.wcf.media.category';
+    public $formAction = 'edit';
 }
