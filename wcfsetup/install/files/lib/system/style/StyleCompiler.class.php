@@ -393,14 +393,15 @@ final class StyleCompiler extends SingletonFactory
         }
 
         // read default values
-        $sql = "SELECT      variableName, defaultValue
+        $sql = "SELECT      variableName, defaultValue, defaultValueDarkMode
                 FROM        wcf" . WCF_N . "_style_variable
                 ORDER BY    variableID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
-        $variables = [];
+        $variables = $darkModeVariables = [];
         while ($row = $statement->fetchArray()) {
             $variables[$row['variableName']] = $row['defaultValue'];
+            $darkModeVariables[$row['variableName']] = $row['defaultValueDarkMode'] ?? '';
         }
 
         $variables['style_image_path'] = "'../images/'";
@@ -408,7 +409,7 @@ final class StyleCompiler extends SingletonFactory
         $variables = $this->prepareVariables($variables);
 
         $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
-        $scss .= $this->bootstrap($variables);
+        $scss .= $this->bootstrap($variables, $darkModeVariables);
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -496,10 +497,21 @@ final class StyleCompiler extends SingletonFactory
      * the CSS reset and mixins.
      *
      * @param mixed[] $variables
+     * @param mixed[] $darkModeVariables
      */
-    private function bootstrap(array $variables): string
+    private function bootstrap(array $variables, array $darkModeVariables = []): string
     {
+        /* TODO: Remove the default value for `$darkModeVariables` */
+
         $content = $this->exportStyleVariables($variables);
+
+        // Skip variables for the dark mode that are not colors.
+        $darkModeVariables = \array_filter($darkModeVariables, fn (string $value) => \str_starts_with($value, 'rgba('));
+
+        $content .= \sprintf(
+            "\n@media (prefers-color-scheme: dark) {\n%s}\n",
+            $this->exportStyleVariables($darkModeVariables),
+        );
 
         // add reset like a boss
         $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
