@@ -1329,6 +1329,7 @@ CREATE TABLE wcf1_style_variable (
 	variableID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	variableName VARCHAR(50) NOT NULL,
 	defaultValue MEDIUMTEXT,
+	defaultValueDarkMode MEDIUMTEXT,
 	UNIQUE KEY variableName (variableName)
 );
 
@@ -1337,6 +1338,7 @@ CREATE TABLE wcf1_style_variable_value (
 	styleID INT(10) NOT NULL,
 	variableID INT(10) NOT NULL,
 	variableValue MEDIUMTEXT,
+	variableValueDarkMode MEDIUMTEXT,
 	UNIQUE KEY (styleID, variableID)
 );
 

@@ -14,6 +14,7 @@ use wcf\data\DatabaseObject;
  * @property-read   int $variableID     unique id of the style variable
  * @property-read   string $variableName       name of the style variable
  * @property-read   string $defaultValue       default value of the style variable
+ * @property-read string $defaultValueDarkMode
  */
 class StyleVariable extends DatabaseObject
 {

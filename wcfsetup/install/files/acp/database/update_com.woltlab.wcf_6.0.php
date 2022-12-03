@@ -103,6 +103,14 @@ return [
             TinyintDatabaseTableColumn::create('hasDarkMode')
                 ->defaultValue(0),
         ]),
+    PartialDatabaseTable::create('wcf1_style_variable')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('defaultValueDarkMode'),
+        ]),
+    PartialDatabaseTable::create('wcf1_style_variable_value')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('variableValueDarkMode'),
+        ]),
     PartialDatabaseTable::create('wcf1_user_group_option')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
