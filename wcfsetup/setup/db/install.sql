@@ -1320,7 +1320,8 @@ CREATE TABLE wcf1_style (
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
-	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT ''
+	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
+	hasDarkMode TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;

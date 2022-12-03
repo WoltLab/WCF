@@ -100,6 +100,8 @@ return [
         ->columns([
             EnumDatabaseTableColumn::create('apiVersion')
                 ->drop(),
+            TinyintDatabaseTableColumn::create('hasDarkMode')
+                ->defaultValue(0),
         ]),
     PartialDatabaseTable::create('wcf1_user_group_option')
         ->columns([

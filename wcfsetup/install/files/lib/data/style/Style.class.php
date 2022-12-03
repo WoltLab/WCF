@@ -35,6 +35,7 @@ use wcf\util\ImageUtil;
  * @property-read   int $isTainted      is `0` if the original declarations of an imported or installed style are not and cannot be altered, otherwise `1`
  * @property-read   int $hasFavicon     is `0` if the default favicon data should be used
  * @property-read   int $coverPhotoExtension    extension of the style's cover photo file
+ * @property-read int $hasDarkMode
  */
 class Style extends DatabaseObject
 {
