@@ -19,6 +19,7 @@
 	.content > form,
 	.sectionContainer {
 		border: 1px solid var(--wcfContentContainerBorder);
+		border-radius: var(--wcfBorderRadius);
 		background-color: var(--wcfContentContainerBackground);
 		padding: 20px;
 

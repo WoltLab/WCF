@@ -393,6 +393,8 @@
 	}
 
 	.box {
+		border-radius: var(--wcfBorderRadius);
+
 		&:not(.boxBorderless) {
 			background-color: var(--wcfSidebarBackground);
 

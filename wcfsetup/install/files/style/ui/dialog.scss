@@ -44,7 +44,7 @@
 
 .dialogContainer {
 	background-color: var(--wcfContentBackground);
-	border-radius: 8px;
+	border-radius: var(--wcfBorderRadiusContainer);
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	color: var(--wcfContentText);
 	grid-area: dialog;
@@ -159,7 +159,7 @@
 		.dialogFormSubmit {
 			background-color: var(--wcfContentBackground);
 			bottom: 0;
-			border-radius: 0 0 8px 8px;
+			border-radius: 0 0 var(--wcfBorderRadiusContainer) var(--wcfBorderRadiusContainer);
 			color: var(--wcfContentText);
 			column-gap: 10px;
 			display: flex;
@@ -276,14 +276,13 @@
 }
 
 .dialog {
-	--dialog-border-radius: 8px;
 	--dialog-max-height: 80%;
 	--dialog-max-width: 80%;
 	--dialog-padding: 20px;
 
 	animation: 0.24s dialog;
 	background-color: transparent;
-	border-radius: var(--dialog-border-radius);
+	border-radius: var(--wcfBorderRadiusContainer);
 	border-width: 0;
 	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
 	display: flex;
@@ -316,7 +315,7 @@
 
 .dialog__document {
 	background-color: var(--wcfContentBackground);
-	border-radius: var(--dialog-border-radius);
+	border-radius: var(--wcfBorderRadiusContainer);
 	color: var(--wcfContentText);
 	display: flex;
 	flex-direction: column;

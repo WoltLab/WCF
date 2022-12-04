@@ -1,7 +1,7 @@
 @mixin input {
 	background-color: var(--wcfInputBackground);
 	border: 1px solid var(--wcfInputBorder);
-	border-radius: 0;
+	border-radius: var(--wcfBorderRadius);
 	color: var(--wcfInputText);
 	font-weight: 400;
 	outline: none;
