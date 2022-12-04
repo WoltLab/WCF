@@ -78,6 +78,8 @@ class Style extends DatabaseObject
 
     const BASE_ASSET_PATH = WCF_DIR . 'images/';
 
+    const DARK_MODE_PREFIX = "darkMode\0";
+
     /**
      * Returns the name of this style.
      */
@@ -186,7 +188,7 @@ class Style extends DatabaseObject
             return;
         }
 
-        $sql = "SELECT      variable.variableName, variable.defaultValue, value.variableValue
+        $sql = "SELECT      variable.variableName, variable.defaultValue, variable.defaultValueDarkMode, value.variableValue, value.variableValueDarkMode
                 FROM        wcf" . WCF_N . "_style_variable variable
                 LEFT JOIN   wcf" . WCF_N . "_style_variable_value value
                 ON          value.variableID = variable.variableID
@@ -199,11 +201,25 @@ class Style extends DatabaseObject
             $variableValue = $row['variableValue'] ?? $row['defaultValue'];
 
             $this->variables[$variableName] = $variableValue;
+
+            if ($this->hasDarkMode) {
+                $this->variables[self::DARK_MODE_PREFIX . $variableName] = $row['variableValueDarkMode'] ?? $row['defaultValueDarkMode'];
+
+                // TODO: Workaround during development to prevent
+                //       the SCSS compiler from tripping over `null`.
+                if ($this->variables[self::DARK_MODE_PREFIX . $variableName] === null) {
+                    $this->variables[self::DARK_MODE_PREFIX . $variableName] = '';
+                }
+            }
         }
 
         // see https://github.com/WoltLab/WCF/issues/2636
         if (empty($this->variables['wcfPageThemeColor'])) {
             $this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
+
+            if ($this->hasDarkMode) {
+                $this->variables[self::DARK_MODE_PREFIX . 'wcfPageThemeColor'] = $this->variables[self::DARK_MODE_PREFIX . 'wcfHeaderBackground'];
+            }
         }
 
         // Fetch the dimensions of the small logo, avoding calls to `getimagesize` with every request.

@@ -80,7 +80,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         $style = parent::create();
 
         // add variables
-        $this->updateVariables($style);
+        $this->setStyleVariables($style, false);
 
         // handle style preview image
         $this->updateStylePreviewImage($style);
@@ -106,7 +106,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         foreach ($this->getObjects() as $style) {
             // update variables
-            $this->updateVariables($style->getDecoratedObject(), true);
+            $this->setStyleVariables($style->getDecoratedObject(), $this->parameters['isDarkMode'] ?? false);
 
             // handle style preview image
             $this->updateStylePreviewImage($style->getDecoratedObject());
@@ -150,11 +150,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
     /**
      * Updates style variables for given style.
-     *
-     * @param Style $style
-     * @param bool $removePreviousVariables
      */
-    protected function updateVariables(Style $style, $removePreviousVariables = false)
+    private function setStyleVariables(Style $style, bool $isDarkMode): void
     {
         if (!isset($this->parameters['variables']) || !\is_array($this->parameters['variables'])) {
             return;
@@ -194,9 +191,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
         }
 
-        $sql = "SELECT  variableID, variableName, defaultValue
-                FROM    wcf" . WCF_N . "_style_variable";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $defaultValue = $isDarkMode ? 'defaultValueDarkMode' : 'defaultValue';
+
+        $sql = "SELECT  variableID, variableName, {$defaultValue}
+                FROM    wcf1_style_variable";
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute();
         $variables = [];
         while ($row = $statement->fetchArray()) {
@@ -204,7 +203,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
             // ignore variables with identical value
             if (isset($this->parameters['variables'][$variableName])) {
-                if ($this->parameters['variables'][$variableName] == $row['defaultValue']) {
+                if ($this->parameters['variables'][$variableName] == $row[$defaultValue]) {
                     continue;
                 } else {
                     $variables[$row['variableID']] = $this->parameters['variables'][$variableName];
@@ -212,20 +211,15 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
         }
 
-        // remove previously set variables
-        if ($removePreviousVariables) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_style_variable_value
-                    WHERE       styleID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute([$style->styleID]);
-        }
+        // Set values that differ from the default values
+        if ($variables !== []) {
+            $variableValue = $isDarkMode ? 'variableValueDarkMode' : 'variableValue';
 
-        // insert variables that differ from default values
-        if (!empty($variables)) {
-            $sql = "INSERT INTO wcf" . WCF_N . "_style_variable_value
-                                (styleID, variableID, variableValue)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $sql = "INSERT INTO             wcf1_style_variable_value
+                                            (styleID, variableID, {$variableValue})
+                    VALUES                  (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE {$variableValue} = VALUES({$variableValue})";
+            $statement = WCF::getDB()->prepare($sql);
 
             WCF::getDB()->beginTransaction();
             foreach ($variables as $variableID => $variableValue) {

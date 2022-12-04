@@ -41,6 +41,8 @@ class StyleEditForm extends StyleAddForm
      */
     public $styleID = 0;
 
+    public bool $isDarkMode = false;
+
     /**
      * @inheritDoc
      */
@@ -53,6 +55,8 @@ class StyleEditForm extends StyleAddForm
         if (!$this->style->styleID) {
             throw new IllegalLinkException();
         }
+
+        $this->isDarkMode = ($_REQUEST['isDarkMode'] ?? '') === '1';
 
         parent::readParameters();
     }
@@ -126,6 +130,17 @@ class StyleEditForm extends StyleAddForm
     protected function readStyleVariables()
     {
         $this->variables = $this->style->getVariables();
+
+        $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
+        foreach ($this->variables as $key => $value) {
+            if (\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
+                unset($this->variables[$key]);
+
+                if ($this->isDarkMode && \str_starts_with($value, 'rgba(')) {
+                    $this->variables[\substr($key, $prefixLength)] = $value;
+                }
+            }
+        }
 
         // fix empty values ~""
         foreach ($this->variables as &$variableValue) {
@@ -311,6 +326,7 @@ class StyleEditForm extends StyleAddForm
             'customAssets' => $this->customAssets,
             'tmpHash' => $this->tmpHash,
             'variables' => $this->variables,
+            'isDarkMode' => $this->isDarkMode,
         ]);
         $this->objectAction->executeAction();
 
@@ -375,6 +391,7 @@ class StyleEditForm extends StyleAddForm
             'isTainted' => $this->style->isTainted,
             'style' => $this->style,
             'styleID' => $this->styleID,
+            'isDarkMode' => $this->isDarkMode,
         ]);
     }
 }
