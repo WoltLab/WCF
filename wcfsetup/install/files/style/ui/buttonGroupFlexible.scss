@@ -36,7 +36,7 @@
 		> label {
 			background-color: rgb(207, 216, 220);
 			border: 1px solid transparent;
-			border-radius: 2px;
+			border-radius: var(--wcfBorderRadius);
 			color: rgb(33, 33, 33);
 			cursor: pointer;
 			padding: 5px 10px;

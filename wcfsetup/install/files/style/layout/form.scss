@@ -137,6 +137,7 @@ select {
 }
 
 .inputAddon {
+	column-gap: 5px;
 	display: flex;
 
 	&:not(:last-child) {
@@ -148,36 +149,6 @@ select {
 		align-items: center;
 		display: flex;
 		flex: 0 0 auto;
-
-		&.button {
-			border-radius: 0;
-
-			.icon {
-				cursor: inherit;
-			}
-		}
-
-		&:not(.button) {
-			background-color: var(--wcfButtonBackground);
-			border: 1px solid var(--wcfInputBorder);
-			color: var(--wcfButtonText);
-			cursor: default;
-			padding: 3px 5px;
-		}
-	}
-
-	> .inputPrefix {
-		border-right-width: 0 !important;
-	}
-
-	> .inputSuffix {
-		&.button {
-			margin-left: 5px;
-		}
-
-		&:not(.button) {
-			border-left-width: 0 !important;
-		}
 	}
 
 	input {
@@ -190,12 +161,9 @@ select {
 }
 
 .inputAddonTextarea {
+	column-gap: 0;
 	flex-wrap: wrap;
-
-	> .inputPrefix.button {
-		border-bottom-width: 0;
-		border-radius: 0;
-	}
+	row-gap: 5px;
 
 	> textarea {
 		flex: 0 0 100%;
