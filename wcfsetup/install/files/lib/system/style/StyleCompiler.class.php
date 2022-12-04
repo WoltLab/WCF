@@ -401,7 +401,7 @@ final class StyleCompiler extends SingletonFactory
         $variables = $darkModeVariables = [];
         while ($row = $statement->fetchArray()) {
             $variables[$row['variableName']] = $row['defaultValue'];
-            $darkModeVariables[$row['variableName']] = $row['defaultValueDarkMode'] ?? '';
+            $darkModeVariables[Style::DARK_MODE_PREFIX . $row['variableName']] = $row['defaultValueDarkMode'] ?? '';
         }
 
         $variables['style_image_path'] = "'../images/'";
@@ -409,7 +409,7 @@ final class StyleCompiler extends SingletonFactory
         $variables = $this->prepareVariables($variables);
 
         $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
-        $scss .= $this->bootstrap($variables, $darkModeVariables);
+        $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -497,21 +497,36 @@ final class StyleCompiler extends SingletonFactory
      * the CSS reset and mixins.
      *
      * @param mixed[] $variables
-     * @param mixed[] $darkModeVariables
      */
-    private function bootstrap(array $variables, array $darkModeVariables = []): string
+    private function bootstrap(array $variables): string
     {
-        /* TODO: Remove the default value for `$darkModeVariables` */
+        $darkModeVariables = [];
+
+        $prefixLength = \strlen(Style::DARK_MODE_PREFIX);
+        $variables = \array_filter(
+            $variables,
+            function (string $value, string $key) use (&$darkModeVariables, $prefixLength) {
+                if (\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
+                    if (\str_starts_with($value, 'rgba(')) {
+                        $darkModeVariables[\substr($key, $prefixLength)] = $value;
+                    }
+
+                    return false;
+                }
+
+                return true;
+            },
+            \ARRAY_FILTER_USE_BOTH
+        );
 
         $content = $this->exportStyleVariables($variables);
 
-        // Skip variables for the dark mode that are not colors.
-        $darkModeVariables = \array_filter($darkModeVariables, fn (string $value) => \str_starts_with($value, 'rgba('));
-
-        $content .= \sprintf(
-            "\n@media (prefers-color-scheme: dark) {\n%s}\n",
-            $this->exportStyleVariables($darkModeVariables),
-        );
+        if ($darkModeVariables !== []) {
+            $content .= \sprintf(
+                "\n@media (prefers-color-scheme: dark) {\n%s}\n",
+                $this->exportStyleVariables($darkModeVariables),
+            );
+        }
 
         // add reset like a boss
         $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
