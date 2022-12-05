@@ -2,7 +2,7 @@
   "name": "@woltlab/wcf",
   "version": "6.0.0",
   "scripts": {
-    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --bundle --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.js"
+    "bundle-web-components": "npx esbuild ts/WoltLabSuite/WebComponent/index.ts --bundle --watch --outfile=wcfsetup/install/files/js/WoltLabSuite/WebComponent.js"
   },
   "files": [
     "ts/**/*",
