@@ -30,6 +30,9 @@ use function unserialize;
  * elements from the queue and it also acts like an Iterator without removing
  * the elements. This behaviour can be used in mixed scenarios with high
  * performance boost.
+ *
+ * @template TValue of mixed
+ * @template-implements Iterator<int, TValue>
  */
 class FastPriorityQueue implements Iterator, Countable, Serializable
 {
@@ -37,20 +40,20 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     public const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
     public const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
 
-    /** @var integer */
+    /** @var self::EXTR_* */
     protected $extractFlag = self::EXTR_DATA;
 
     /**
      * Elements of the queue, divided by priorities
      *
-     * @var array
+     * @var array<int, list<TValue>>
      */
     protected $values = [];
 
     /**
      * Array of priorities
      *
-     * @var array
+     * @var array<int, int>
      */
     protected $priorities = [];
 
@@ -112,7 +115,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Insert an element in the queue with a specified priority
      *
-     * @param int $priority
+     * @param TValue $value
+     * @param int    $priority
      * @return void
      */
     public function insert(mixed $value, $priority)
@@ -132,7 +136,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Extract an element in the queue according to the priority and the
      * order of insertion
      *
-     * @return mixed
+     * @return TValue|int|array{data: TValue, priority: int}|false
      */
     public function extract()
     {
@@ -209,7 +213,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Get the current element in the queue
      *
-     * @return mixed
+     * @return TValue|int|array{data: TValue|false, priority: int}|false
      */
     #[ReturnTypeWillChange]
     public function current()
@@ -306,7 +310,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * Array will be priority => data pairs
      *
-     * @return array
+     * @return list<TValue|int|array{data: TValue, priority: int}>
      */
     public function toArray()
     {
@@ -349,7 +353,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the extract flag
      *
-     * @param int $flag
+     * @param self::EXTR_* $flag
      * @return void
      */
     public function setExtractFlags($flag)
