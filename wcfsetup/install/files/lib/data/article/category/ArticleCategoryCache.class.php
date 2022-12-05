@@ -67,7 +67,7 @@ class ArticleCategoryCache extends SingletonFactory
      * @param int $categoryID
      * @return      int
      */
-    protected function countArticles(array &$categoryToParent, array &$articles, $categoryID)
+    protected function countArticles(array $categoryToParent, array &$articles, $categoryID)
     {
         $count = (isset($articles[$categoryID])) ? $articles[$categoryID] : 0;
         if (isset($categoryToParent[$categoryID])) {
