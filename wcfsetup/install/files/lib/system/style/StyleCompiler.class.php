@@ -523,7 +523,8 @@ final class StyleCompiler extends SingletonFactory
 
         if ($darkModeVariables !== []) {
             $content .= \sprintf(
-                "\n@media (prefers-color-scheme: dark) {\n%s}\n",
+                "\n@media (prefers-color-scheme: dark) {\n%s%s}\n",
+                "html {\n\tcolor-scheme: dark;\n}\n",
                 $this->exportStyleVariables($darkModeVariables),
             );
         }
