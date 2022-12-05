@@ -19,6 +19,8 @@ interface Reaction {
   isAssignable: 1 | 0;
 }
 
+type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
+
 declare global {
   interface Window {
     REACTION_TYPES: {
@@ -30,5 +32,17 @@ declare global {
 
     WoltLabLanguage: typeof Language;
     WoltLabTemplate: typeof Template;
+  }
+
+  interface FaIcon extends HTMLElement {
+    readonly name: string;
+    readonly solid: boolean;
+    size: IconSize;
+
+    setIcon: (name: string, forceSolid?: boolean) => void;
+  }
+
+  interface HTMLElementTagNameMap {
+    "fa-icon": FaIcon;
   }
 }
