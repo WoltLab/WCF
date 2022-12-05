@@ -71,7 +71,6 @@ class ArticleCategoryCache extends SingletonFactory
     {
         $count = (isset($articles[$categoryID])) ? $articles[$categoryID] : 0;
         if (isset($categoryToParent[$categoryID])) {
-            /** @var Category $category */
             foreach ($categoryToParent[$categoryID] as $childCategoryID) {
                 $count += $this->countArticles($categoryToParent, $articles, $childCategoryID);
             }
