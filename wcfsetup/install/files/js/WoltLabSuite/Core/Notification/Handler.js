@@ -165,7 +165,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Event/Handler"]
                 });
                 try {
                     notification = new window.Notification(pollData.notification.title, {
-                        body: div.textContent.replace(/&#x202F;/g, "\u202F").replace(/&#39;/g, "'"),
+                        body: div.textContent,
                         icon: this.icon,
                     });
                 }
