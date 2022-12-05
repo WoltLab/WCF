@@ -13,8 +13,6 @@ interface ITitledObject
 {
     /**
      * Returns the title of the object.
-     *
-     * @return  string
      */
-    public function getTitle();
+    public function getTitle(): string;
 }
