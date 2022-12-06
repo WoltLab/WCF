@@ -317,7 +317,7 @@ final class SearchHandler
 
     private function saveSearch(): Search
     {
-        $this->searchData = [
+        $searchData = [
             'results' => $this->results,
             'query' => $this->parameters['q'] ?? '',
             'additionalData' => $this->getAdditionalData(),
@@ -331,16 +331,16 @@ final class SearchHandler
             'objectTypeNames' => $this->objectTypeNames,
         ];
 
-        $this->objectAction = new SearchAction([], 'create', [
+        $objectAction = new SearchAction([], 'create', [
             'data' => [
                 'userID' => WCF::getUser()->userID ?: null,
-                'searchData' => \serialize($this->searchData),
+                'searchData' => \serialize($searchData),
                 'searchTime' => TIME_NOW,
                 'searchType' => 'messages',
                 'searchHash' => $this->searchHash,
             ],
         ]);
-        $resultValues = $this->objectAction->executeAction();
+        $resultValues = $objectAction->executeAction();
 
         return $resultValues['returnValues'];
     }
