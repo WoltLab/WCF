@@ -129,7 +129,9 @@ final class PreloadPhrasesCollectingListener
 
         $event->preload('wcf.page.jumpTo');
         $event->preload('wcf.page.jumpTo.description');
+        $event->preload('wcf.page.jumpTo.pageNo');
         $event->preload('wcf.page.pagePosition');
+        $event->preload('wcf.page.pagination');
 
         $event->preload('wcf.reactions.react');
         $event->preload('wcf.reactions.summary.listReactions');
