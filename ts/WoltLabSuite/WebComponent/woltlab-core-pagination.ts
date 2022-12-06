@@ -9,6 +9,11 @@
  */
 
 {
+  interface WoltlabCorePaginationEventMap {
+    jumpToPage: CustomEvent;
+    switchPage: CustomEvent<number>;
+  }
+
   class WoltlabCorePaginationElement extends HTMLElement {
     #className = "new-pagination";
 
@@ -70,17 +75,18 @@
       const div = document.createElement("div");
       div.classList.add(this.#className + "__prev");
 
-      const a = document.createElement("a");
-      a.href = this.getLinkUrl(this.page - 1);
-      a.rel = "prev";
-      a.title = window.WoltLabLanguage.getPhrase("wcf.global.page.previous");
-      a.classList.add("jsTooltip", this.#className + "__link");
-      div.append(a);
+      const button = this.#getButtonElement(this.page - 1);
+      if (button instanceof HTMLAnchorElement) {
+        button.rel = "prev";
+      }
+      button.title = window.WoltLabLanguage.getPhrase("wcf.global.page.previous");
+      button.classList.add("jsTooltip");
+      div.append(button);
 
       const icon = document.createElement("fa-icon");
       icon.setIcon("arrow-left");
       icon.ariaHidden = "true";
-      a.append(icon);
+      button.append(icon);
 
       return div;
     }
@@ -93,35 +99,59 @@
       const div = document.createElement("div");
       div.classList.add(this.#className + "__next");
 
-      const a = document.createElement("a");
-      a.href = this.getLinkUrl(this.page + 1);
-      a.rel = "next";
-      a.title = window.WoltLabLanguage.getPhrase("wcf.global.page.next");
-      a.classList.add("jsTooltip", this.#className + "__link");
-      div.append(a);
+      const button = this.#getButtonElement(this.page + 1);
+      if (button instanceof HTMLAnchorElement) {
+        button.rel = "next";
+      }
+      button.title = window.WoltLabLanguage.getPhrase("wcf.global.page.next");
+      button.classList.add("jsTooltip");
+      div.append(button);
 
       const icon = document.createElement("fa-icon");
       icon.setIcon("arrow-right");
       icon.ariaHidden = "true";
-      a.append(icon);
+      button.append(icon);
 
       return div;
+    }
+
+    #getButtonElement(page: number): HTMLAnchorElement | HTMLButtonElement {
+      let button: HTMLAnchorElement | HTMLButtonElement;
+      const url = this.getLinkUrl(page);
+
+      if (url) {
+        button = document.createElement("a");
+        button.href = url;
+      } else {
+        button = document.createElement("button");
+        button.type = "button";
+
+        if (this.page === page) {
+          button.disabled = true;
+        } else {
+          button.addEventListener("click", () => {
+            this.#switchPage(page);
+          });
+        }
+      }
+
+      button.classList.add(this.#className + "__link");
+
+      return button;
     }
 
     #getLinkItem(page: number): HTMLLIElement {
       const li = document.createElement("li");
       li.classList.add(this.#className + "__item");
 
-      const a = document.createElement("a");
-      a.href = this.getLinkUrl(page);
-      a.ariaLabel = `Page ${page}`;
-      a.classList.add(this.#className + "__link");
+      const button = this.#getButtonElement(page);
+      button.ariaLabel = window.WoltLabLanguage.getPhrase("wcf.page.pageNo", { pageNo: page });
       if (page === this.page) {
-        a.ariaCurrent = "page";
-        a.classList.add(this.#className + "__link--current");
+        button.ariaCurrent = "page";
+        button.classList.add(this.#className + "__link--current");
       }
-      a.textContent = page.toString();
-      li.append(a);
+      button.textContent = page.toString();
+      li.append(button);
 
       return li;
     }
@@ -154,11 +184,12 @@
       li.classList.add(this.#className + "__item", this.#className + "__item--ellipses");
 
       const button = document.createElement("button");
+      button.type = "button";
       button.title = window.WoltLabLanguage.getPhrase("wcf.page.jumpTo");
       button.classList.add("jsTooltip");
       button.innerHTML = "&ctdot;";
       button.addEventListener("click", () => {
-        this.dispatchEvent(new Event("jumpToPage"));
+        this.dispatchEvent(new CustomEvent("jumpToPage"));
       });
       li.append(button);
 
@@ -166,6 +197,10 @@
     }
 
     getLinkUrl(page: number): string {
+      if (!this.url) {
+        return "";
+      }
+
       const url = new URL(this.url);
       url.search += url.search !== "" ? "&" : "?";
       url.search += new URLSearchParams([["pageNo", page.toString()]]);
@@ -174,19 +209,64 @@
     }
 
     jumpToPage(page: number): void {
-      window.location.href = this.getLinkUrl(page);
+      const url = this.getLinkUrl(page);
+      if (url) {
+        window.location.href = url;
+      } else {
+        this.#switchPage(page);
+      }
+    }
+
+    #switchPage(page: number): void {
+      const event = new CustomEvent("switchPage", {
+        cancelable: true,
+        detail: page,
+      });
+      this.dispatchEvent(event);
+
+      if (!event.defaultPrevented) {
+        this.page = page;
+      }
     }
 
     get count(): number {
       return this.hasAttribute("count") ? parseInt(this.getAttribute("count")!) : 0;
     }
 
+    set count(count: number) {
+      this.setAttribute("count", count.toString());
+      this.#render();
+    }
+
     get page(): number {
       return this.hasAttribute("page") ? parseInt(this.getAttribute("page")!) : 1;
     }
 
+    set page(page: number) {
+      this.setAttribute("page", page.toString());
+      this.#render();
+    }
+
     get url(): string {
       return this.getAttribute("url")!;
+    }
+
+    set url(url: string) {
+      this.setAttribute("url", url);
+      this.#render();
+    }
+
+    public addEventListener<T extends keyof WoltlabCorePaginationEventMap>(
+      type: T,
+      listener: (this: WoltlabCorePaginationElement, ev: WoltlabCorePaginationEventMap[T]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    public addEventListener(
+      type: string,
+      listener: (this: WoltlabCorePaginationElement, ev: Event) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void {
+      super.addEventListener(type, listener, options);
     }
   }
 
