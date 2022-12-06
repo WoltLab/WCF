@@ -19,7 +19,7 @@
     #render(): void {
       this.innerHTML = "";
 
-      if (this.#getCount() < 2) return;
+      if (this.count < 2) return;
 
       const nav = this.#getNavElement();
       this.append(nav);
@@ -34,7 +34,7 @@
       nav.append(ul);
 
       ul.append(this.#getLinkItem(1));
-      if (this.#getPage() > 4) {
+      if (this.page > 4) {
         ul.append(this.#getEllipsesItem());
       }
 
@@ -42,10 +42,10 @@
         ul.append(item);
       });
 
-      if (this.#getCount() - this.#getPage() > 3) {
+      if (this.count - this.page > 3) {
         ul.append(this.#getEllipsesItem());
       }
-      ul.append(this.#getLinkItem(this.#getCount()));
+      ul.append(this.#getLinkItem(this.count));
 
       const nextLinkElement = this.#getNextLinkElement();
       if (nextLinkElement) {
@@ -56,14 +56,14 @@
     #getNavElement(): HTMLElement {
       const nav = document.createElement("nav");
       nav.setAttribute("role", "navigation");
-      nav.ariaLabel = "Pagination Navigation";
+      nav.ariaLabel = window.WoltLabLanguage.getPhrase("wcf.page.pagination");
       nav.classList.add(this.#className);
 
       return nav;
     }
 
     #getPreviousLinkElement(): HTMLDivElement | undefined {
-      if (this.#getPage() === 1) {
+      if (this.page === 1) {
         return;
       }
 
@@ -71,9 +71,9 @@
       div.classList.add(this.#className + "__prev");
 
       const a = document.createElement("a");
-      a.href = this.#getLinkUrl(this.#getPage() - 1);
+      a.href = this.getLinkUrl(this.page - 1);
       a.rel = "prev";
-      a.title = "Goto Previous Page";
+      a.title = window.WoltLabLanguage.getPhrase("wcf.global.page.previous");
       a.classList.add("jsTooltip", this.#className + "__link");
       div.append(a);
 
@@ -86,7 +86,7 @@
     }
 
     #getNextLinkElement(): HTMLDivElement | undefined {
-      if (this.#getPage() === this.#getCount()) {
+      if (this.page === this.count) {
         return;
       }
 
@@ -94,9 +94,9 @@
       div.classList.add(this.#className + "__next");
 
       const a = document.createElement("a");
-      a.href = this.#getLinkUrl(this.#getPage() + 1);
+      a.href = this.getLinkUrl(this.page + 1);
       a.rel = "next";
-      a.title = "Goto Next Page";
+      a.title = window.WoltLabLanguage.getPhrase("wcf.global.page.next");
       a.classList.add("jsTooltip", this.#className + "__link");
       div.append(a);
 
@@ -113,10 +113,10 @@
       li.classList.add(this.#className + "__item");
 
       const a = document.createElement("a");
-      a.href = this.#getLinkUrl(page);
+      a.href = this.getLinkUrl(page);
       a.ariaLabel = `Page ${page}`;
       a.classList.add(this.#className + "__link");
-      if (page === this.#getPage()) {
+      if (page === this.page) {
         a.ariaCurrent = "page";
         a.classList.add(this.#className + "__link--current");
       }
@@ -129,17 +129,17 @@
     #getLinkItems(): HTMLLIElement[] {
       const items: HTMLLIElement[] = [];
 
-      let start = this.#getPage() - 1;
+      let start = this.page - 1;
       if (start === 3) {
         start--;
       }
-      let end = this.#getPage() + 1;
-      if (end === this.#getCount() - 2) {
+      let end = this.page + 1;
+      if (end === this.count - 2) {
         end++;
       }
 
       for (let i = start; i <= end; i++) {
-        if (i <= 1 || i >= this.#getCount()) {
+        if (i <= 1 || i >= this.count) {
           continue;
         }
 
@@ -152,28 +152,40 @@
     #getEllipsesItem(): HTMLLIElement {
       const li = document.createElement("li");
       li.classList.add(this.#className + "__item", this.#className + "__item--ellipses");
-      li.innerHTML = "&ctdot;";
+
+      const button = document.createElement("button");
+      button.title = window.WoltLabLanguage.getPhrase("wcf.page.jumpTo");
+      button.classList.add("jsTooltip");
+      button.innerHTML = "&ctdot;";
+      button.addEventListener("click", () => {
+        this.dispatchEvent(new Event("jumpToPage"));
+      });
+      li.append(button);
 
       return li;
     }
 
-    #getLinkUrl(page: number): string {
-      const url = new URL(this.#getUrl());
+    getLinkUrl(page: number): string {
+      const url = new URL(this.url);
       url.search += url.search !== "" ? "&" : "?";
       url.search += new URLSearchParams([["pageNo", page.toString()]]);
 
       return url.toString();
     }
 
-    #getCount(): number {
-      return this.getAttribute("count") ? parseInt(this.getAttribute("count")!) : 0;
+    jumpToPage(page: number): void {
+      window.location.href = this.getLinkUrl(page);
     }
 
-    #getPage(): number {
-      return this.getAttribute("page") ? parseInt(this.getAttribute("page")!) : 1;
+    get count(): number {
+      return this.hasAttribute("count") ? parseInt(this.getAttribute("count")!) : 0;
     }
 
-    #getUrl(): string {
+    get page(): number {
+      return this.hasAttribute("page") ? parseInt(this.getAttribute("page")!) : 1;
+    }
+
+    get url(): string {
       return this.getAttribute("url")!;
     }
   }
