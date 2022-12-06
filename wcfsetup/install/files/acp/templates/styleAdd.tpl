@@ -568,7 +568,10 @@
 									<li><a>Sit Amet Lorem</a></li>
 									
 									<li class="active">
-										<a>Sadipscing</a>
+										<a>
+											<span>Sadipscing</span>
+											{icon name='caret-down'}
+										</a>
 										<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
 											<li><a>Lorem</a></li>
 											<li><a>Ipsum</a></li>
