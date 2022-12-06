@@ -24,9 +24,19 @@
 			<dl>
 				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 				<dd>
-					<select name="templateGroupID" id="templateGroupID">
+					<select name="templateGroupID" id="templateGroupID" required>
+						<option value="">{lang}wcf.global.noSelection{/lang}</option>
 						{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 					</select>
+					{if $errorField == 'templateGroupID'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.template.templateGroupID.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
 			
