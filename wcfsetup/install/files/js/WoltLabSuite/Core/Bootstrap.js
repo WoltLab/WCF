@@ -115,6 +115,9 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
             void new Promise((resolve_1, reject_1) => { require(["./Ui/Moderation/Report"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-pagination", () => {
+            void new Promise((resolve_2, reject_2) => { require(["./Ui/Pagination/JumpToPage"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
     }
     exports.setup = setup;
 });
