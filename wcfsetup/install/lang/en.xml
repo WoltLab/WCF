@@ -525,7 +525,7 @@
 		{/if}
 		{if $runStandalone}
 			<dt>Run in separate step</dt>
-			<dd>{icon name='check'}</dd>
+			<dd><fa-icon name="check"></fa-icon></dd>
 		{/if}
 	</dl>
 {/if}]]></item>
