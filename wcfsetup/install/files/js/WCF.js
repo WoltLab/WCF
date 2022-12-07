@@ -972,37 +972,6 @@ if (COMPILER_TARGET_DEFAULT) {
 	};
 }
 else {
-	WCF.Dropdown.Interactive.Handler = {
-		_dropdownContainer: {},
-		_dropdownMenus: {},
-		create: function() {},
-		open: function() {},
-		close: function() {},
-		closeAll: function() {},
-		getOpenDropdown: function() {},
-		getDropdown: function() {}
-	};
-	
-	WCF.Dropdown.Interactive.Instance = Class.extend({
-		_container: {},
-		_itemList: {},
-		_linkList: {},
-		_options: {},
-		_pointer: {},
-		_triggerElement: {},
-		init: function() {},
-		getContainer: function() {},
-		getItemList: function() {},
-		getLinkList: function() {},
-		open: function() {},
-		close: function() {},
-		isOpen: function() {},
-		toggle: function() {},
-		resetItems: function() {},
-		render: function() {},
-		rebuildScrollbar: function() {}
-	});
-	
 	WCF.Clipboard = {
 		init: function() {},
 		reload: function() {}
