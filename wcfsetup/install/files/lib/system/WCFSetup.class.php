@@ -222,29 +222,19 @@ final class WCFSetup extends WCF
         // execute current step
         switch ($step) {
             case 'selectSetupLanguage':
-                if (!self::$developerMode) {
-                    $this->calcProgress(0);
+                $this->calcProgress(0);
 
-                    return $this->selectSetupLanguage();
-                }
+                return $this->selectSetupLanguage();
 
-                // no break
             case 'showLicense':
-                if (!self::$developerMode) {
-                    $this->calcProgress(1);
+                $this->calcProgress(1);
 
-                    return $this->showLicense();
-                }
+                return $this->showLicense();
 
-                // no break
             case 'showSystemRequirements':
-                if (!self::$developerMode) {
-                    $this->calcProgress(2);
+                $this->calcProgress(2);
 
-                    return $this->showSystemRequirements();
-                }
-
-                // no break
+                return $this->showSystemRequirements();
 
             case 'configureDB':
                 $this->calcProgress(3);
@@ -288,6 +278,10 @@ final class WCFSetup extends WCF
      */
     protected function selectSetupLanguage(): ResponseInterface
     {
+        if (self::$developerMode) {
+            return $this->gotoNextStep('showLicense');
+        }
+
         return new HtmlResponse(
             WCF::getTPL()->fetchStream(
                 'stepSelectSetupLanguage',
@@ -305,6 +299,10 @@ final class WCFSetup extends WCF
      */
     protected function showLicense(): ResponseInterface
     {
+        if (self::$developerMode) {
+            return $this->gotoNextStep('showSystemRequirements');
+        }
+
         $missingAcception = false;
 
         if (isset($_POST['send'])) {
