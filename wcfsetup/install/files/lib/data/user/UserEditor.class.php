@@ -121,10 +121,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     /**
      * Inserts default options.
-     *
-     * @param int $userID
      */
-    protected static function createUserOptions($userID)
+    protected static function createUserOptions(int $userID)
     {
         // fetch default values
         if (self::$userOptionDefaultValues === null) {
@@ -162,7 +160,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
      *
      * @param array $userOptions
      */
-    public function updateUserOptions(array $userOptions = [])
+    public function updateUserOptions(array $userOptions = []): void
     {
         $updateSQL = '';
         $statementParameters = [];
@@ -188,11 +186,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Adds a user to the groups he should be in.
      *
-     * @param array $groupIDs
-     * @param bool $deleteOldGroups
-     * @param bool $addDefaultGroups
+     * @param int[] $groupIDs
      */
-    public function addToGroups(array $groupIDs, $deleteOldGroups = true, $addDefaultGroups = true)
+    public function addToGroups(array $groupIDs, bool $deleteOldGroups = true, bool $addDefaultGroups = true): void
     {
         // add default groups
         if ($addDefaultGroups) {
@@ -222,10 +218,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     /**
      * Adds a user to a user group.
-     *
-     * @param int $groupID
      */
-    public function addToGroup($groupID)
+    public function addToGroup(int $groupID): void
     {
         $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
                                     (userID, groupID)
@@ -236,10 +230,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
     /**
      * Removes a user from a user group.
-     *
-     * @param int $groupID
      */
-    public function removeFromGroup($groupID)
+    public function removeFromGroup(int $groupID): void
     {
         $sql = "DELETE FROM wcf" . WCF_N . "_user_to_group
                 WHERE       userID = ?
@@ -251,9 +243,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Removes a user from multiple user groups.
      *
-     * @param array $groupIDs
+     * @param int[] $groupIDs
      */
-    public function removeFromGroups(array $groupIDs)
+    public function removeFromGroups(array $groupIDs): void
     {
         $sql = "DELETE FROM wcf" . WCF_N . "_user_to_group
                 WHERE       userID = ?
@@ -270,10 +262,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Saves the visible languages of a user.
      *
-     * @param array $languageIDs
-     * @param bool $deleteOldLanguages
+     * @param int[] $languageIDs
      */
-    public function addToLanguages(array $languageIDs, $deleteOldLanguages = true)
+    public function addToLanguages(array $languageIDs, bool $deleteOldLanguages = true): void
     {
         // remove previous languages
         if ($deleteOldLanguages) {
@@ -310,7 +301,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * @inheritDoc
      */
-    public static function resetCache()
+    public static function resetCache(): void
     {
         UserStorageHandler::getInstance()->resetAll('groupIDs');
         UserStorageHandler::getInstance()->resetAll('languageIDs');
