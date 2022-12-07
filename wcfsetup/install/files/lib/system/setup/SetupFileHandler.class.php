@@ -42,7 +42,7 @@ class SetupFileHandler implements IFileHandler
         $sql = "INSERT INTO wcf1_acp_template
                             (packageID, templateName, application)
                 VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($acpTemplateInserts as $acpTemplate) {
@@ -53,7 +53,7 @@ class SetupFileHandler implements IFileHandler
         $sql = "INSERT INTO wcf1_package_installation_file_log
                             (packageID, filename, application, sha256, lastUpdated)
                 VALUES      (?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($fileInserts as $file) {
