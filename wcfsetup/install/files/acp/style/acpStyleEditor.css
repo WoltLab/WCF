@@ -21,7 +21,6 @@ html[dir="rtl"] #spWindow { margin-left: 40px; }
 html[dir="ltr"] #spHeaderPanel ol.inlineList > li { margin-right: 0; }
 html[dir="rtl"] #spHeaderPanel ol.inlineList > li { margin-left: 0; }
 #spHeaderPanel ol.inlineList > li > a { align-items: center; display: flex; font-size: 14px; font-weight: 400; height: 50px; padding: 0 15px; }
-#spHeaderPanel ol.inlineList > li.active > a::after { content: "\f107"; display: inline-block; font-family: FontAwesome; }
 html[dir="ltr"] #spHeaderPanel ol.inlineList > li.active > a::after { margin-left: 5px; }
 html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after { margin-right: 5px; }
 #spHeaderPanel ol.inlineList > li.active { position: relative; }
