@@ -918,7 +918,7 @@ class PackageInstallationDispatcher
                 || DevtoolsSetup::getInstance()->useDefaultInstallPath()
             )
         ) {
-            $directory = $applicationDirectory;
+            $directory = WCF_DIR . $applicationDirectory . '/';
         } elseif (
             ENABLE_ENTERPRISE_MODE
             && \defined('ENTERPRISE_MODE_APP_DIRECTORIES')
