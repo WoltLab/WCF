@@ -46,9 +46,6 @@
 		<input type="hidden" name="tmpFilePrefix" value="{$tmpFilePrefix}">
 		<input type="hidden" name="languageCode" value="{$languageCode}">
 		<input type="hidden" name="dev" value="{$developerMode}">
-		{foreach from=$directories key=application item=directory}
-			<input type="hidden" name="directories[{$application}]" value="{$directory}">
-		{/foreach}
 	</div>
 </form>
 <script>
