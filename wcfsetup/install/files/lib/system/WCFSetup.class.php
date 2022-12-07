@@ -191,11 +191,19 @@ final class WCFSetup extends WCF
 
     /**
      * Calculates the current state of the progress bar.
-     *
-     * @param int $currentStep
      */
-    protected function calcProgress($currentStep)
+    protected function calcProgress(int $currentStep)
     {
+        $lastStep = \intval(\file_get_contents(\TMP_DIR . 'lastStep'));
+        if ($lastStep > $currentStep) {
+            throw new \Exception('Refusing to step back to a previous step.');
+        }
+        if ($lastStep !== $currentStep - 1 && $lastStep !== $currentStep) {
+            throw new \Exception('Refusing to skip a step.');
+        }
+
+        \file_put_contents(\TMP_DIR . 'lastStep', $currentStep);
+
         // calculate progress
         $progress = \round((100 / 22) * ++$currentStep, 0);
         self::getTPL()->assign(['progress' => $progress]);

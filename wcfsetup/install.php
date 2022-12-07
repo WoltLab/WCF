@@ -1255,6 +1255,7 @@ if ($prefix === null) {
 	$dir = INSTALL_SCRIPT_DIR . "/WCFSetup-{$prefix}/";
 	\mkdir($dir);
 	BasicFileUtil::makeWritable($dir);
+	\file_put_contents($dir . 'lastStep', '0');
 }
 
 \define('TMP_FILE_PREFIX', $prefix);
