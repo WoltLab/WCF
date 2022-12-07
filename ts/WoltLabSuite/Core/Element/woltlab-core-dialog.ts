@@ -183,7 +183,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
             // has completed. Triggering the submit again would cause
             // `validate` to run again, causing an infinite loop.
             this.#dispatchPrimaryEvent();
-            this.#dialog.close();
+            this.close();
           }
         });
       }
