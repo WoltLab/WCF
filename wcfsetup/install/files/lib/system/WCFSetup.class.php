@@ -245,18 +245,14 @@ final class WCFSetup extends WCF
                 }
 
                 // no break
-            case 'unzipFiles':
-                $this->calcProgress(3);
-
-                return $this->unzipFiles();
 
             case 'configureDB':
-                $this->calcProgress(4);
+                $this->calcProgress(3);
 
                 return $this->configureDB();
 
             case 'createDB':
-                $currentStep = 5;
+                $currentStep = 4;
                 if (isset($_POST['offset'])) {
                     $currentStep += \intval($_POST['offset']);
                 }
@@ -264,6 +260,11 @@ final class WCFSetup extends WCF
                 $this->calcProgress($currentStep);
 
                 return $this->createDB();
+
+            case 'unzipFiles':
+                $this->calcProgress(18);
+
+                return $this->unzipFiles();
 
             case 'logFiles':
                 $this->calcProgress(19);
@@ -416,7 +417,7 @@ final class WCFSetup extends WCF
         }
 
         // If all system requirements are met, directly go to next step.
-        return $this->gotoNextStep('unzipFiles');
+        return $this->gotoNextStep('configureDB');
     }
 
     /**
@@ -460,25 +461,6 @@ final class WCFSetup extends WCF
         }
 
         return false;
-    }
-
-    /**
-     * Unzips the files of the wcfsetup tar archive.
-     */
-    protected function unzipFiles(): ResponseInterface
-    {
-        // WCF seems to be installed, abort
-        if (@\is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')) {
-            throw new SystemException(
-                'Target directory seems to be an existing installation of WCF, unable to continue.'
-            );
-        }
-
-        $fileHandler = new SetupFileHandler();
-        new Installer(INSTALL_SCRIPT_DIR, SETUP_FILE, $fileHandler, 'install/files/');
-        $fileHandler->dumpToFile(INSTALL_SCRIPT_DIR . 'files.log');
-
-        return $this->gotoNextStep('configureDB');
     }
 
     /**
@@ -754,8 +736,27 @@ final class WCFSetup extends WCF
                 'wcf\system\package\plugin\PIPPackageInstallationPlugin',
             ]);
 
-            return $this->gotoNextStep('logFiles');
+            return $this->gotoNextStep('unzipFiles');
         }
+    }
+
+    /**
+     * Unzips the files of the wcfsetup tar archive.
+     */
+    protected function unzipFiles(): ResponseInterface
+    {
+        // WCF seems to be installed, abort
+        if (@\is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')) {
+            throw new SystemException(
+                'Target directory seems to be an existing installation of WCF, unable to continue.'
+            );
+        }
+
+        $fileHandler = new SetupFileHandler();
+        new Installer(INSTALL_SCRIPT_DIR, SETUP_FILE, $fileHandler, 'install/files/');
+        $fileHandler->dumpToFile(INSTALL_SCRIPT_DIR . 'files.log');
+
+        return $this->gotoNextStep('logFiles');
     }
 
     /**
