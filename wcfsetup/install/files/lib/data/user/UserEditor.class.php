@@ -109,9 +109,6 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         if (\array_key_exists('password', $parameters) && $parameters['password'] !== '') {
             $parameters['password'] = self::getPasswordHash($parameters['password']);
             $parameters['accessToken'] = Hex::encode(\random_bytes(20));
-
-            // update accessToken
-            $this->accessToken = $parameters['accessToken'];
         } else {
             unset($parameters['password'], $parameters['accessToken']);
         }
