@@ -197,7 +197,7 @@ final class WCFSetup extends WCF
     protected function calcProgress($currentStep)
     {
         // calculate progress
-        $progress = \round((100 / 23) * ++$currentStep, 0);
+        $progress = \round((100 / 22) * ++$currentStep, 0);
         self::getTPL()->assign(['progress' => $progress]);
     }
 
@@ -266,23 +266,18 @@ final class WCFSetup extends WCF
 
                 return $this->unzipFiles();
 
-            case 'logFiles':
-                $this->calcProgress(19);
-
-                return $this->logFiles();
-
             case 'installLanguage':
-                $this->calcProgress(20);
+                $this->calcProgress(19);
 
                 return $this->installLanguage();
 
             case 'createUser':
-                $this->calcProgress(21);
+                $this->calcProgress(20);
 
                 return $this->createUser();
 
             case 'installPackages':
-                $this->calcProgress(22);
+                $this->calcProgress(21);
 
                 return $this->installPackages();
         }
@@ -752,80 +747,12 @@ final class WCFSetup extends WCF
             );
         }
 
-        $fileHandler = new SetupFileHandler();
-        new Installer(INSTALL_SCRIPT_DIR, SETUP_FILE, $fileHandler, 'install/files/');
-        $fileHandler->dumpToFile(INSTALL_SCRIPT_DIR . 'files.log');
-
-        return $this->gotoNextStep('logFiles');
-    }
-
-    /**
-     * Logs the unzipped files.
-     */
-    protected function logFiles(): ResponseInterface
-    {
         $this->initDB();
 
-        $this->getInstalledFiles(WCF_DIR);
-        $acpTemplateInserts = $fileInserts = [];
-        foreach (self::$installedFiles as $file) {
-            $match = [];
-            if (\preg_match('~^acp/templates/([^/]+)\.tpl$~', $file, $match)) {
-                // acp template
-                $acpTemplateInserts[] = $match[1];
-            } else {
-                // regular file
-                $fileInserts[] = $file;
-            }
-        }
-
-        $sql = "INSERT INTO wcf1_acp_template
-                            (packageID, templateName, application)
-                VALUES      (?, ?, ?)";
-        $statement = self::getDB()->prepareStatement($sql);
-
-        self::getDB()->beginTransaction();
-        foreach ($acpTemplateInserts as $acpTemplate) {
-            $statement->execute([1, $acpTemplate, 'wcf']);
-        }
-        self::getDB()->commitTransaction();
-
-        $sql = "INSERT INTO wcf1_package_installation_file_log
-                            (packageID, filename, application, sha256, lastUpdated)
-                VALUES      (?, ?, ?, ?, ?)";
-        $statement = self::getDB()->prepareStatement($sql);
-
-        self::getDB()->beginTransaction();
-        foreach ($fileInserts as $file) {
-            $statement->execute([
-                1,
-                $file,
-                'wcf',
-                \hash_file('sha256', \WCF_DIR . $file, true),
-                \TIME_NOW,
-            ]);
-        }
-        self::getDB()->commitTransaction();
+        $fileHandler = new SetupFileHandler();
+        new Installer(INSTALL_SCRIPT_DIR, SETUP_FILE, $fileHandler, 'install/files/');
 
         return $this->gotoNextStep('installLanguage');
-    }
-
-    /**
-     * Scans the given dir for installed files.
-     *
-     * @param string $dir
-     * @throws      SystemException
-     */
-    protected function getInstalledFiles($dir)
-    {
-        $logFile = $dir . 'files.log';
-        if (!\file_exists($logFile)) {
-            throw new SystemException("Expected a valid file log at '" . $logFile . "'.");
-        }
-
-        self::$installedFiles = \explode("\n", \file_get_contents($logFile));
-
-        @\unlink($logFile);
     }
 
     /**
