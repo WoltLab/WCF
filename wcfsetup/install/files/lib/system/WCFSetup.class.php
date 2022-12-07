@@ -207,8 +207,8 @@ final class WCFSetup extends WCF
     protected function dispatch(): ResponseInterface
     {
         // get current step
-        if (isset($_REQUEST['step'])) {
-            $step = $_REQUEST['step'];
+        if (isset($_POST['step'])) {
+            $step = $_POST['step'];
         } else {
             $step = 'selectSetupLanguage';
         }

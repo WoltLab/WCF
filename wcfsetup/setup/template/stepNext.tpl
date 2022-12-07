@@ -7,8 +7,9 @@
 	
 	<p>{lang}wcf.global.next.description{/lang}</p>
 	
-	<form method="post" action="install.php?step={$nextStep|rawurlencode}">
+	<form method="post" action="install.php">
 		<div class="formSubmit">
+			<input type="hidden" name="step" value="{$nextStep}">
 			<input type="hidden" name="tmpFilePrefix" value="{$tmpFilePrefix}">
 			<input type="hidden" name="languageCode" value="{$languageCode}">
 			<input type="hidden" name="dev" value="{$developerMode}">
