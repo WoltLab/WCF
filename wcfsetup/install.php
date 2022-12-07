@@ -1250,7 +1250,7 @@ final class GZipFile extends File {
 
 // Bootstrap Setup.
 
-$prefix = $_GET['tmpFilePrefix'] ?? $_POST['tmpFilePrefix'] ?? \bin2hex(\random_bytes(8));
+$prefix = $_POST['tmpFilePrefix'] ?? \bin2hex(\random_bytes(8));
 \define(
 	'TMP_FILE_PREFIX',
 	\preg_replace('/[^a-f0-9_]+/', '', $prefix)
