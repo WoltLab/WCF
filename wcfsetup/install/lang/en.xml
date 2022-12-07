@@ -460,7 +460,7 @@
 		<dd><kbd>{$minVersion}</kbd></dd>
 	{/if}
 	<dt>Package file included in package</dt>
-	<dd>{if $file}{icon name='check'}{else}{icon name='xmark'}{/if}</dd>
+	<dd>{if $file}<fa-icon name="check"></fa-icon>{else}<fa-icon name="xmark"></fa-icon>{/if}</dd>
 </dl>]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[The package identifier must not be longer than 191 characters.]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[The package identifier must be longer than three characters.]]></item>

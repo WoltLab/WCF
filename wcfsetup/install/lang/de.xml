@@ -482,7 +482,7 @@
 		<dd><kbd>{$minVersion}</kbd></dd>
 	{/if}
 	<dt>Paketdatei im Paket enthalten</dt>
-	<dd>{if $file}{icon name='check'}{else}{icon name='xmark'}{/if}/dd>
+	<dd>{if $file}<fa-icon name="check"></fa-icon>{else}<fa-icon name="xmark"></fa-icon>{/if}</dd>
 </dl>]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[Der Paketbezeichner darf nicht länger als 191 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[Der Paketbezeichner muss länger als drei Zeichen sein.]]></item>
