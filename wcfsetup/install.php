@@ -611,17 +611,6 @@ class BasicFileUtil {
 	 * @var	int
 	 */
 	protected static $mode = null;
-
-	/**
-	 * Returns the temp folder for the installation.
-	 */
-	public static function getInstallTempFolder(): string {
-		$dir = INSTALL_SCRIPT_DIR . '/WCFSetup-' . TMP_FILE_PREFIX . '/';
-		@mkdir($dir);
-		self::makeWritable($dir);
-		
-		return $dir;
-	}
 	
 	/**
 	 * Tries to make a file or directory writable. It starts of with the least
@@ -1250,16 +1239,26 @@ final class GZipFile extends File {
 
 // Bootstrap Setup.
 
-$prefix = $_GET['tmpFilePrefix'] ?? $_POST['tmpFilePrefix'] ?? \bin2hex(\random_bytes(8));
-\define(
-	'TMP_FILE_PREFIX',
-	\preg_replace('/[^a-f0-9_]+/', '', $prefix)
-);
+$prefix = null;
+if (isset($_POST['tmpFilePrefix'])) {
+	$inputPrefix = \preg_replace('/[^a-f0-9_]+/', '', $_POST['tmpFilePrefix']);
 
-\define(
-	'TMP_DIR',
-	BasicFileUtil::getInstallTempFolder()
-);
+	if (\is_dir(INSTALL_SCRIPT_DIR . "/WCFSetup-{$inputPrefix}/")) {
+		// We accept the input prefix if a corresponding directory exists.
+		$prefix = $inputPrefix;
+	}
+}
+
+// If no trusted prefix was provided, we generate a random prefix and corresponding directory.
+if ($prefix === null) {
+	$prefix = \bin2hex(\random_bytes(8));
+	$dir = INSTALL_SCRIPT_DIR . "/WCFSetup-{$prefix}/";
+	\mkdir($dir);
+	BasicFileUtil::makeWritable($dir);
+}
+
+\define('TMP_FILE_PREFIX', $prefix);
+\define('TMP_DIR', INSTALL_SCRIPT_DIR . "/WCFSetup-{$prefix}/");
 
 // check whether setup files are already unzipped
 if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
