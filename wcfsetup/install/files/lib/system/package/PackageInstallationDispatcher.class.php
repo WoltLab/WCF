@@ -904,11 +904,21 @@ class PackageInstallationDispatcher
      */
     protected function promptPackageDir($applicationDirectory)
     {
-        // check for pre-defined directories originating from WCFSetup
-        $directory = WCF::getSession()->getVar('__wcfSetup_directories');
+        $directory = null;
         $abbreviation = Package::getAbbreviation($this->getPackage()->package);
-        if ($directory !== null) {
-            $directory = $directory[$abbreviation] ?? null;
+
+        if (!$applicationDirectory) {
+            $applicationDirectory = $abbreviation;
+        }
+
+        if (
+            WCF::getSession()->getVar('__wcfSetup_developerMode')
+            && (
+                isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])
+                || DevtoolsSetup::getInstance()->useDefaultInstallPath()
+            )
+        ) {
+            $directory = $applicationDirectory;
         } elseif (
             ENABLE_ENTERPRISE_MODE
             && \defined('ENTERPRISE_MODE_APP_DIRECTORIES')
@@ -947,9 +957,6 @@ class PackageInstallationDispatcher
             $defaultPath = WCF_DIR;
             if ($isParent === false) {
                 $defaultPath = \dirname(WCF_DIR);
-            }
-            if (!$applicationDirectory) {
-                $applicationDirectory = Package::getAbbreviation($this->getPackage()->package);
             }
             $defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . $applicationDirectory . '/';
 

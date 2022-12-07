@@ -7,14 +7,12 @@
 	
 	<p>{lang}wcf.global.next.description{/lang}</p>
 	
-	<form method="post" action="install.php?step={$nextStep|rawurlencode}">
+	<form method="post" action="install.php">
 		<div class="formSubmit">
+			<input type="hidden" name="step" value="{$nextStep}">
 			<input type="hidden" name="tmpFilePrefix" value="{$tmpFilePrefix}">
 			<input type="hidden" name="languageCode" value="{$languageCode}">
 			<input type="hidden" name="dev" value="{$developerMode}">
-			{foreach from=$directories key=application item=directory}
-				<input type="hidden" name="directories[{$application}]" value="{$directory}">
-			{/foreach}
 			{if $__additionalParameters|isset}
 				{foreach from=$__additionalParameters key=__name item=__value}
 					<input type="hidden" name="{$__name}" value="{$__value}">

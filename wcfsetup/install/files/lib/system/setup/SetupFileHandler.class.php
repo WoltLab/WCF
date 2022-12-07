@@ -2,6 +2,8 @@
 
 namespace wcf\system\setup;
 
+use wcf\system\WCF;
+
 /**
  * Special file handler used during setup to log the deployed files.
  *
@@ -12,12 +14,6 @@ namespace wcf\system\setup;
  */
 class SetupFileHandler implements IFileHandler
 {
-    /**
-     * list of installed files
-     * @var string[]
-     */
-    protected $files;
-
     /**
      * @inheritDoc
      */
@@ -31,16 +27,44 @@ class SetupFileHandler implements IFileHandler
      */
     public function logFiles(array $files)
     {
-        $this->files = $files;
-    }
+        $acpTemplateInserts = $fileInserts = [];
+        foreach ($files as $file) {
+            $match = [];
+            if (\preg_match('~^acp/templates/([^/]+)\.tpl$~', $file, $match)) {
+                // acp template
+                $acpTemplateInserts[] = $match[1];
+            } else {
+                // regular file
+                $fileInserts[] = $file;
+            }
+        }
 
-    /**
-     * Writes the list of files to a log file.
-     *
-     * @param string $filename
-     */
-    public function dumpToFile($filename)
-    {
-        \file_put_contents($filename, \implode("\n", $this->files));
+        $sql = "INSERT INTO wcf1_acp_template
+                            (packageID, templateName, application)
+                VALUES      (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($acpTemplateInserts as $acpTemplate) {
+            $statement->execute([1, $acpTemplate, 'wcf']);
+        }
+        WCF::getDB()->commitTransaction();
+
+        $sql = "INSERT INTO wcf1_package_installation_file_log
+                            (packageID, filename, application, sha256, lastUpdated)
+                VALUES      (?, ?, ?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($fileInserts as $file) {
+            $statement->execute([
+                1,
+                $file,
+                'wcf',
+                \hash_file('sha256', \WCF_DIR . $file, true),
+                \TIME_NOW,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
     }
 }

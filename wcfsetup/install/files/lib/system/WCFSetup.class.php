@@ -30,7 +30,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\setup\SetupFileHandler;
 use wcf\system\template\SetupTemplateEngine;
-use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -58,12 +57,6 @@ final class WCFSetup extends WCF
      * @var string[]
      */
     protected static $availableLanguages = [];
-
-    /**
-     * installation directories
-     * @var string[]
-     */
-    protected static $directories = [];
 
     /**
      * language code of selected installation language
@@ -94,7 +87,8 @@ final class WCFSetup extends WCF
 
         static::getDeveloperMode();
         static::getLanguageSelection();
-        static::getInstallationDirectories();
+        \define('WCF_DIR', INSTALL_SCRIPT_DIR);
+        \define('RELATIVE_WCF_DIR', './');
         $this->initLanguage();
         $this->initTPL();
         /** @noinspection PhpUndefinedMethodInspection */
@@ -137,29 +131,6 @@ final class WCFSetup extends WCF
     }
 
     /**
-     * Sets the selected wcf dir from request.
-     *
-     * @since   3.0
-     */
-    protected static function getInstallationDirectories()
-    {
-        if (!empty($_REQUEST['directories']) && \is_array($_REQUEST['directories'])) {
-            foreach ($_REQUEST['directories'] as $application => $directory) {
-                self::$directories[$application] = $directory;
-
-                if ($application === 'wcf' && @\file_exists(self::$directories['wcf'])) {
-                    \define(
-                        'RELATIVE_WCF_DIR',
-                        FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$directories['wcf'])
-                    );
-                }
-            }
-        }
-
-        \define('WCF_DIR', (self::$directories['wcf'] ?? ''));
-    }
-
-    /**
      * Initialises the language engine.
      */
     protected function initLanguage()
@@ -180,7 +151,6 @@ final class WCFSetup extends WCF
             '__wcf' => $this,
             'tmpFilePrefix' => TMP_FILE_PREFIX,
             'languageCode' => self::$selectedLanguageCode,
-            'directories' => self::$directories,
             'developerMode' => self::$developerMode,
 
             'setupAssets' => [
@@ -227,7 +197,7 @@ final class WCFSetup extends WCF
     protected function calcProgress($currentStep)
     {
         // calculate progress
-        $progress = \round((100 / 24) * ++$currentStep, 0);
+        $progress = \round((100 / 22) * ++$currentStep, 0);
         self::getTPL()->assign(['progress' => $progress]);
     }
 
@@ -237,8 +207,8 @@ final class WCFSetup extends WCF
     protected function dispatch(): ResponseInterface
     {
         // get current step
-        if (isset($_REQUEST['step'])) {
-            $step = $_REQUEST['step'];
+        if (isset($_POST['step'])) {
+            $step = $_POST['step'];
         } else {
             $step = 'selectSetupLanguage';
         }
@@ -275,23 +245,14 @@ final class WCFSetup extends WCF
                 }
 
                 // no break
-            case 'configureDirectories':
-                $this->calcProgress(3);
-
-                return $this->configureDirectories();
-
-            case 'unzipFiles':
-                $this->calcProgress(4);
-
-                return $this->unzipFiles();
 
             case 'configureDB':
-                $this->calcProgress(5);
+                $this->calcProgress(3);
 
                 return $this->configureDB();
 
             case 'createDB':
-                $currentStep = 6;
+                $currentStep = 4;
                 if (isset($_POST['offset'])) {
                     $currentStep += \intval($_POST['offset']);
                 }
@@ -300,23 +261,23 @@ final class WCFSetup extends WCF
 
                 return $this->createDB();
 
-            case 'logFiles':
-                $this->calcProgress(20);
+            case 'unzipFiles':
+                $this->calcProgress(18);
 
-                return $this->logFiles();
+                return $this->unzipFiles();
 
             case 'installLanguage':
-                $this->calcProgress(21);
+                $this->calcProgress(19);
 
                 return $this->installLanguage();
 
             case 'createUser':
-                $this->calcProgress(22);
+                $this->calcProgress(20);
 
                 return $this->createUser();
 
             case 'installPackages':
-                $this->calcProgress(23);
+                $this->calcProgress(21);
 
                 return $this->installPackages();
         }
@@ -443,7 +404,7 @@ final class WCFSetup extends WCF
                         'wcf',
                         [
                             'system' => $system,
-                            'nextStep' => 'configureDirectories',
+                            'nextStep' => 'unzipFiles',
                         ]
                     )
                 );
@@ -451,7 +412,7 @@ final class WCFSetup extends WCF
         }
 
         // If all system requirements are met, directly go to next step.
-        return $this->gotoNextStep('configureDirectories');
+        return $this->gotoNextStep('configureDB');
     }
 
     /**
@@ -495,148 +456,6 @@ final class WCFSetup extends WCF
         }
 
         return false;
-    }
-
-    /**
-     * Searches the wcf dir.
-     *
-     * @since   3.0
-     */
-    protected function configureDirectories()
-    {
-        // get available packages
-        $packages = [];
-        foreach (\glob(TMP_DIR . 'install/packages/*') as $file) {
-            $filename = \basename($file);
-            if (\preg_match('~\.(?:tar|tar\.gz|tgz)$~', $filename)) {
-                $package = new PackageArchive($file);
-                $package->openArchive();
-
-                $application = Package::getAbbreviation($package->getPackageInfo('name'));
-
-                $packages[$application] = [
-                    'directory' => $package->getPackageInfo('applicationDirectory') ?: $application,
-                    'packageDescription' => $package->getLocalizedPackageInfo('packageDescription'),
-                    'packageName' => $package->getLocalizedPackageInfo('packageName'),
-                ];
-            }
-        }
-
-        \uasort($packages, static function ($a, $b) {
-            return \strcmp($a['packageName'], $b['packageName']);
-        });
-
-        // force cms being shown first
-        $showOrder = ['wcf'];
-        foreach (\array_keys($packages) as $application) {
-            if ($application !== 'wcf') {
-                $showOrder[] = $application;
-            }
-        }
-
-        $documentRoot = FileUtil::unifyDirSeparator(\realpath($_SERVER['DOCUMENT_ROOT']));
-        if (
-            self::$developerMode
-            && (isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR']) || DevtoolsSetup::getInstance()->useDefaultInstallPath())
-        ) {
-            // resolve path relative to document root
-            $relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
-            foreach ($packages as $application => $packageData) {
-                self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
-            }
-        }
-
-        $errors = [];
-        if (!empty(self::$directories)) {
-            $applicationPaths = $knownPaths = [];
-
-            // use $showOrder to ensure that the error message for duplicate directories
-            // will trigger in display order rather than the random sort order returned
-            // by glob() above
-            foreach ($showOrder as $application) {
-                $path = FileUtil::getRealPath(
-                    $documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application]))
-                );
-                if (!empty($documentRoot) && \strpos($path, $documentRoot) !== 0) {
-                    // verify that given path is still within the current document root
-                    $errors[$application] = 'outsideDocumentRoot';
-                } elseif (\in_array($path, $knownPaths)) {
-                    // prevent the same path for two or more applications
-                    $errors[$application] = 'duplicate';
-                } elseif (@\is_file($path . 'global.php')) {
-                    // check if directory is empty (dotfiles are okay)
-                    $errors[$application] = 'notEmpty';
-                } else {
-                    // try to create directory if it does not exist
-                    if (!\is_dir($path) && !FileUtil::makePath($path)) {
-                        $errors[$application] = 'makePath';
-                    }
-
-                    try {
-                        FileUtil::makeWritable($path);
-                    } catch (SystemException $e) {
-                        $errors[$application] = 'makeWritable';
-                    }
-                }
-
-                $applicationPaths[$application] = $path;
-                $knownPaths[] = $path;
-            }
-
-            if (empty($errors)) {
-                // copy over the actual paths
-                self::$directories = \array_merge(self::$directories, $applicationPaths);
-                WCF::getTPL()->assign(['directories' => self::$directories]);
-
-                return $this->unzipFiles();
-            }
-        } else {
-            // resolve path relative to document root
-            $relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
-            foreach ($packages as $application => $packageData) {
-                $dir = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
-                if (\str_starts_with($dir, './')) {
-                    $dir = \mb_substr($dir, 1);
-                }
-
-                self::$directories[$application] = $dir;
-            }
-        }
-
-        return new HtmlResponse(
-            WCF::getTPL()->fetchStream(
-                'stepConfigureDirectories',
-                'wcf',
-                [
-                    'directories' => self::$directories,
-                    'documentRoot' => $documentRoot,
-                    'errors' => $errors,
-                    'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR),
-                    'nextStep' => 'configureDirectories', // call this step again to validate paths
-                    'packages' => $packages,
-                    'showOrder' => $showOrder,
-                ]
-            )
-        );
-    }
-
-    /**
-     * Unzips the files of the wcfsetup tar archive.
-     */
-    protected function unzipFiles(): ResponseInterface
-    {
-        // WCF seems to be installed, abort
-        if (@\is_file(self::$directories['wcf'] . 'lib/system/WCF.class.php')) {
-            throw new SystemException(
-                'Target directory seems to be an existing installation of WCF, unable to continue.'
-            );
-        }
-
-        $fileHandler = new SetupFileHandler();
-        new Installer(self::$directories['wcf'], SETUP_FILE, $fileHandler, 'install/files/');
-        $fileHandler->dumpToFile(self::$directories['wcf'] . 'files.log');
-
-        return $this->gotoNextStep('configureDB');
     }
 
     /**
@@ -912,77 +731,28 @@ final class WCFSetup extends WCF
                 'wcf\system\package\plugin\PIPPackageInstallationPlugin',
             ]);
 
-            return $this->gotoNextStep('logFiles');
+            return $this->gotoNextStep('unzipFiles');
         }
     }
 
     /**
-     * Logs the unzipped files.
+     * Unzips the files of the wcfsetup tar archive.
      */
-    protected function logFiles(): ResponseInterface
+    protected function unzipFiles(): ResponseInterface
     {
+        // WCF seems to be installed, abort
+        if (@\is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')) {
+            throw new SystemException(
+                'Target directory seems to be an existing installation of WCF, unable to continue.'
+            );
+        }
+
         $this->initDB();
 
-        $this->getInstalledFiles(WCF_DIR);
-        $acpTemplateInserts = $fileInserts = [];
-        foreach (self::$installedFiles as $file) {
-            $match = [];
-            if (\preg_match('~^acp/templates/([^/]+)\.tpl$~', $file, $match)) {
-                // acp template
-                $acpTemplateInserts[] = $match[1];
-            } else {
-                // regular file
-                $fileInserts[] = $file;
-            }
-        }
-
-        $sql = "INSERT INTO wcf1_acp_template
-                            (packageID, templateName, application)
-                VALUES      (?, ?, ?)";
-        $statement = self::getDB()->prepareStatement($sql);
-
-        self::getDB()->beginTransaction();
-        foreach ($acpTemplateInserts as $acpTemplate) {
-            $statement->execute([1, $acpTemplate, 'wcf']);
-        }
-        self::getDB()->commitTransaction();
-
-        $sql = "INSERT INTO wcf1_package_installation_file_log
-                            (packageID, filename, application, sha256, lastUpdated)
-                VALUES      (?, ?, ?, ?, ?)";
-        $statement = self::getDB()->prepareStatement($sql);
-
-        self::getDB()->beginTransaction();
-        foreach ($fileInserts as $file) {
-            $statement->execute([
-                1,
-                $file,
-                'wcf',
-                \hash_file('sha256', \WCF_DIR . $file, true),
-                \TIME_NOW,
-            ]);
-        }
-        self::getDB()->commitTransaction();
+        $fileHandler = new SetupFileHandler();
+        new Installer(INSTALL_SCRIPT_DIR, SETUP_FILE, $fileHandler, 'install/files/');
 
         return $this->gotoNextStep('installLanguage');
-    }
-
-    /**
-     * Scans the given dir for installed files.
-     *
-     * @param string $dir
-     * @throws      SystemException
-     */
-    protected function getInstalledFiles($dir)
-    {
-        $logFile = $dir . 'files.log';
-        if (!\file_exists($logFile)) {
-            throw new SystemException("Expected a valid file log at '" . $logFile . "'.");
-        }
-
-        self::$installedFiles = \explode("\n", \file_get_contents($logFile));
-
-        @\unlink($logFile);
     }
 
     /**
@@ -1298,7 +1068,6 @@ final class WCFSetup extends WCF
 
         SessionHandler::getInstance()->changeUser($admin);
         SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
-        SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
         SessionHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
 
