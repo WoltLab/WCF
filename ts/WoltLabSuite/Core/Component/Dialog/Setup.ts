@@ -11,6 +11,7 @@
 
 import DialogControls from "./Controls";
 import * as DomUtil from "../../Dom/Util";
+import FormBuilderSetup from "../FormBuilder/Setup";
 
 export class DialogSetup {
   fromElement(element: HTMLElement | DocumentFragment): DialogControls {
@@ -40,6 +41,10 @@ export class DialogSetup {
     }
 
     return this.fromElement(fragment);
+  }
+
+  usingFormBuilder(endpoint: string): FormBuilderSetup {
+    return new FormBuilderSetup(endpoint);
   }
 
   withoutContent(): DialogControls {
