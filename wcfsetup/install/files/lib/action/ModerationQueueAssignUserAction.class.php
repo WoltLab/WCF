@@ -72,6 +72,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             return new JsonResponse([
                 'dialog' => $form->getHtml(),
                 'formId' => $form->getId(),
+                'title' => WCF::getLanguage()->get('wcf.moderation.assignedUser.change'),
             ]);
         } elseif ($request->getMethod() === 'POST') {
             $form->requestData($request->getParsedBody());
@@ -82,6 +83,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                 return new JsonResponse([
                     'dialog' => $form->getHtml(),
                     'formId' => $form->getId(),
+                    'title' => WCF::getLanguage()->get('wcf.moderation.assignedUser.change'),
                 ]);
             }
 
@@ -99,19 +101,20 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             );
             $command();
 
-            if ($user === null) {
-                return new JsonResponse([
-                    'assignee' => null,
-                ]);
-            } else {
-                return new JsonResponse([
-                    'assignee' => [
-                        'username' => $user->username,
-                        'userID' => $user->userID,
-                        'link' => $user->getLink(),
-                    ],
-                ]);
+            $assignee = null;
+            if ($user !== null) {
+                $assignee = [
+                    'username' => $user->username,
+                    'userID' => $user->userID,
+                    'link' => $user->getLink(),
+                ];
             }
+
+            return new JsonResponse([
+                'result' => [
+                    'assignee' => $assignee,
+                ],
+            ]);
         } else {
             return new TextResponse('The used HTTP method is not allowed.', 405, [
                 'allow' => 'POST, GET',
@@ -121,7 +124,8 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
 
     private function getForm(ModerationQueue $moderationQueue): FormDocument
     {
-        $form = new class extends FormDocument {
+        $form = new class extends FormDocument
+        {
             public function validate()
             {
                 return $this->traitValidate();
