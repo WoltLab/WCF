@@ -1,4 +1,13 @@
-define(["require", "exports", "../../Component/Dialog", "../../Language"], function (require, exports, Dialog_1, Language_1) {
+/**
+ * Assign a user to a moderation queue.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Dialog/Setup
+ * @since 6.0
+ */
+define(["require", "exports", "../../Component/Dialog", "../../Language", "../../Ui/Notification"], function (require, exports, Dialog_1, Language_1, Notification_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -6,6 +15,7 @@ define(["require", "exports", "../../Component/Dialog", "../../Language"], funct
         const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(url);
         if (ok) {
             updateAssignee(result.assignee);
+            (0, Notification_1.show)();
         }
     }
     function updateAssignee(assignee) {

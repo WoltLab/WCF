@@ -1,5 +1,16 @@
+/**
+ * Assign a user to a moderation queue.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Dialog/Setup
+ * @since 6.0
+ */
+
 import { dialogFactory } from "../../Component/Dialog";
 import { getPhrase } from "../../Language";
+import { show as showNotification } from "../../Ui/Notification";
 
 type Assignee = {
   username: string;
@@ -16,6 +27,7 @@ async function showDialog(url: string): Promise<void> {
 
   if (ok) {
     updateAssignee(result.assignee);
+    showNotification();
   }
 }
 
