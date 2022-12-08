@@ -31,7 +31,7 @@ final class JsphrasePrefilterTemplatePlugin implements IPrefilterTemplatePlugin
                 $name = $match['name'];
 
                 return \sprintf(
-                    "WoltLabLanguage.add('%s', '{jslang}%s{/jslang}');",
+                    "WoltLabLanguage.registerPhrase('%s', '{jslang}%s{/jslang}');",
                     $name,
                     $name,
                 );
