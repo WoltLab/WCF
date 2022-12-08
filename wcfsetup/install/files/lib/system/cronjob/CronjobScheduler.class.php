@@ -5,9 +5,11 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\user\User;
 use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
+use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -53,40 +55,47 @@ final class CronjobScheduler extends SingletonFactory
         // clear cache
         self::clearCache();
 
-        foreach ($cronjobEditors as $cronjobEditor) {
-            // mark cronjob as being executed
-            $cronjobEditor->update([
-                'state' => Cronjob::EXECUTING,
-            ]);
+        $user = WCF::getUser();
+        try {
+            SessionHandler::getInstance()->changeUser(new User(null), true);
 
-            // create log entry
-            $log = CronjobLogEditor::create([
-                'cronjobID' => $cronjobEditor->cronjobID,
-                'execTime' => TIME_NOW,
-            ]);
-            $logEditor = new CronjobLogEditor($log);
+            foreach ($cronjobEditors as $cronjobEditor) {
+                // mark cronjob as being executed
+                $cronjobEditor->update([
+                    'state' => Cronjob::EXECUTING,
+                ]);
 
-            // check if all required options are set for cronjob to be executed
-            // note: a general log is created to avoid confusion why a cronjob
-            // apparently is not executed while that is indeed the correct internal
-            // behavior
-            if ($cronjobEditor->validateOptions()) {
-                try {
-                    $this->executeCronjob($cronjobEditor, $logEditor);
-                } catch (\Throwable $e) {
-                    $this->logResult($logEditor, $e);
-                } catch (\Exception $e) {
-                    $this->logResult($logEditor, $e);
+                // create log entry
+                $log = CronjobLogEditor::create([
+                    'cronjobID' => $cronjobEditor->cronjobID,
+                    'execTime' => TIME_NOW,
+                ]);
+                $logEditor = new CronjobLogEditor($log);
+
+                // check if all required options are set for cronjob to be executed
+                // note: a general log is created to avoid confusion why a cronjob
+                // apparently is not executed while that is indeed the correct internal
+                // behavior
+                if ($cronjobEditor->validateOptions()) {
+                    try {
+                        $this->executeCronjob($cronjobEditor, $logEditor);
+                    } catch (\Throwable $e) {
+                        $this->logResult($logEditor, $e);
+                    } catch (\Exception $e) {
+                        $this->logResult($logEditor, $e);
+                    }
+                } else {
+                    $this->logResult($logEditor);
                 }
-            } else {
-                $this->logResult($logEditor);
-            }
 
-            // mark cronjob as done
-            $cronjobEditor->update([
-                'failCount' => 0,
-                'state' => Cronjob::READY,
-            ]);
+                // mark cronjob as done
+                $cronjobEditor->update([
+                    'failCount' => 0,
+                    'state' => Cronjob::READY,
+                ]);
+            }
+        } finally {
+            SessionHandler::getInstance()->changeUser($user, true);
         }
     }
 
