@@ -27,7 +27,7 @@ function jumpToPage(element: WoltlabCorePaginationElement): void {
           placeholder="${getPhrase("wcf.page.jumpTo.pageNo")}"
           required
         >
-        <small>${getPhrase("wcf.page.jumpTo.description").replace(/#pages#/, element.count.toString())}</small>
+        <small>${getPhrase("wcf.page.jumpTo.description", { pages: element.count })}</small>
       </dd>
     </dl>
   `;

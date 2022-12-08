@@ -26,7 +26,7 @@ define(["require", "exports", "../../Component/Dialog", "../../Helper/Selector",
           placeholder="${(0, Language_1.getPhrase)("wcf.page.jumpTo.pageNo")}"
           required
         >
-        <small>${(0, Language_1.getPhrase)("wcf.page.jumpTo.description").replace(/#pages#/, element.count.toString())}</small>
+        <small>${(0, Language_1.getPhrase)("wcf.page.jumpTo.description", { pages: element.count })}</small>
       </dd>
     </dl>
   `;
