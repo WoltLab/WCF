@@ -12,6 +12,10 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
     Field_1 = tslib_1.__importDefault(Field_1);
     class RadioButton extends Field_1.default {
         _fields;
+        constructor(fieldId) {
+            super(fieldId);
+            this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+        }
         _getData() {
             const data = {};
             this._fields.some((input) => {
@@ -24,7 +28,7 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
             return data;
         }
         _readField() {
-            this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+            /* Does nothing. */
         }
     }
     return RadioButton;

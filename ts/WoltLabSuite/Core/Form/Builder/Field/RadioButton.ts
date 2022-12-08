@@ -14,6 +14,12 @@ import { FormBuilderData } from "../Data";
 class RadioButton extends Field {
   protected _fields: HTMLInputElement[];
 
+  constructor(fieldId: string) {
+    super(fieldId);
+
+    this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+  }
+
   protected _getData(): FormBuilderData {
     const data = {};
 
@@ -30,7 +36,7 @@ class RadioButton extends Field {
   }
 
   protected _readField(): void {
-    this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+    /* Does nothing. */
   }
 }
 
