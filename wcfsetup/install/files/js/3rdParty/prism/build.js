@@ -23,7 +23,11 @@ fs.readdirSync("components").forEach(function (component) {
 });
 
 {
-	const contents = `export interface LanguageData {
+	const contents = `/**
+ * @woltlabExcludeBundle tiny
+ */
+
+export interface LanguageData {
   title: string;
   file: string;
 }

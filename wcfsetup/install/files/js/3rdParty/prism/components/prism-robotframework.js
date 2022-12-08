@@ -29,7 +29,7 @@ define(["prism/prism"], function () {
 		}
 
 		extendecInside['tag'] = {
-			pattern: /([\r\n](?:  |\t)[ \t]*)\[[-\w]+\]/,
+			pattern: /([\r\n](?: {2}|\t)[ \t]*)\[[-\w]+\]/,
 			lookbehind: true,
 			inside: {
 				'punctuation': /\[|\]/
@@ -47,7 +47,7 @@ define(["prism/prism"], function () {
 
 
 	var docTag = {
-		pattern: /(\[Documentation\](?:  |\t)[ \t]*)(?![ \t]|#)(?:.|(?:\r\n?|\n)[ \t]*\.{3})+/,
+		pattern: /(\[Documentation\](?: {2}|\t)[ \t]*)(?![ \t]|#)(?:.|(?:\r\n?|\n)[ \t]*\.{3})+/,
 		lookbehind: true,
 		alias: 'string'
 	};
@@ -62,7 +62,7 @@ define(["prism/prism"], function () {
 	};
 
 	var testPropertyLike = {
-		pattern: /([\r\n](?:  |\t)[ \t]*)(?!\[|\.{3}|#)(?:\S(?:[ \t]\S)*)+/,
+		pattern: /([\r\n](?: {2}|\t)[ \t]*)(?!\[|\.{3}|#)(?:\S(?:[ \t]\S)*)+/,
 		lookbehind: true,
 		inside: {
 			'variable': variable
@@ -72,7 +72,7 @@ define(["prism/prism"], function () {
 	Prism.languages['robotframework'] = {
 		'settings': createSection('Settings', {
 			'documentation': {
-				pattern: /([\r\n] ?Documentation(?:  |\t)[ \t]*)(?![ \t]|#)(?:.|(?:\r\n?|\n)[ \t]*\.{3})+/,
+				pattern: /([\r\n] ?Documentation(?: {2}|\t)[ \t]*)(?![ \t]|#)(?:.|(?:\r\n?|\n)[ \t]*\.{3})+/,
 				lookbehind: true,
 				alias: 'string'
 			},

@@ -50,8 +50,8 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 				'keyword': parser.keyword,
 				'variable': parser.variable,
 				'function': parser.function,
-				'boolean': /\b(?:true|false)\b/,
-				'number': /\b(?:0x[a-f\d]+|\d+\.?\d*(?:e[+-]?\d+)?)\b/i,
+				'boolean': /\b(?:false|true)\b/,
+				'number': /\b(?:0x[a-f\d]+|\d+(?:\.\d*)?(?:e[+-]?\d+)?)\b/i,
 				'escape': parser.escape,
 				'operator': /[~+*\/\\%]|!(?:\|\|?|=)?|&&?|\|\|?|==|<[<=]?|>[>=]?|-[fd]?|\b(?:def|eq|ge|gt|in|is|le|lt|ne)\b/,
 				'punctuation': parser.punctuation
@@ -59,7 +59,7 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 		}
 	});
 
-	parser = Prism.languages.insertBefore('inside', 'punctuation', {
+	Prism.languages.insertBefore('inside', 'punctuation', {
 		'expression': parser.expression,
 		'keyword': parser.keyword,
 		'variable': parser.variable,

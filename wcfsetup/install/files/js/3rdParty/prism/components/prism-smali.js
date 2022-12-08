@@ -10,7 +10,8 @@ Prism.languages.smali = {
 	},
 
 	'class-name': {
-		pattern: /L(?:(?:\w+|`[^`\r\n]*`)\/)*(?:[\w$]+|`[^`\r\n]*`)(?=\s*;)/,
+		pattern: /(^|[^L])L(?:(?:\w+|`[^`\r\n]*`)\/)*(?:[\w$]+|`[^`\r\n]*`)(?=\s*;)/,
+		lookbehind: true,
 		inside: {
 			'class-name': {
 				pattern: /(^L|\/)(?:[\w$]+|`[^`\r\n]*`)$/,
@@ -68,7 +69,7 @@ Prism.languages.smali = {
 	},
 
 	'boolean': {
-		pattern: /(^|[^\w.-])(?:true|false)(?![\w.-])/,
+		pattern: /(^|[^\w.-])(?:false|true)(?![\w.-])/,
 		lookbehind: true
 	},
 	'number': {

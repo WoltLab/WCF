@@ -13,12 +13,12 @@ define(["prism/prism","prism/components/prism-javascript","prism/components/pris
 		}
 	};
 
-	Prism.hooks.add('before-tokenize', function(env) {
+	Prism.hooks.add('before-tokenize', function (env) {
 		var ejsPattern = /<%(?!%)[\s\S]+?%>/g;
 		Prism.languages['markup-templating'].buildPlaceholders(env, 'ejs', ejsPattern);
 	});
 
-	Prism.hooks.add('after-tokenize', function(env) {
+	Prism.hooks.add('after-tokenize', function (env) {
 		Prism.languages['markup-templating'].tokenizePlaceholders(env, 'ejs');
 	});
 

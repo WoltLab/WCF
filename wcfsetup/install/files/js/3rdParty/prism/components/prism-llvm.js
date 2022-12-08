@@ -1,12 +1,12 @@
 define(["prism/prism"], function () {
-(function(Prism) {
+(function (Prism) {
 	Prism.languages.llvm = {
 		'comment': /;.*/,
 		'string': {
 			pattern: /"[^"]*"/,
 			greedy: true,
 		},
-		'boolean': /\b(?:true|false)\b/,
+		'boolean': /\b(?:false|true)\b/,
 		'variable': /[%@!#](?:(?!\d)(?:[-$.\w]|\\[a-f\d]{2})+|\d+)/i,
 		'label': /(?!\d)(?:[-$.\w]|\\[a-f\d]{2})+:/i,
 		'type': {

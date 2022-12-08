@@ -34,8 +34,8 @@ define(["prism/prism"], function () {
 								'punctuation': /^=|^["']|["']$/
 							}
 						},
-						'keyword': /\w+(?=\s)/,
-						'attr-name': /\w+/
+						'keyword': /\b\w+(?=\s)/,
+						'attr-name': /\b\w+/
 					}),
 					'expression': createBlock('=', grammar, className),
 					'class-feature': createBlock('\\+', grammar, className),

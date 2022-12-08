@@ -26,7 +26,7 @@ define(["prism/prism"], function () {
 			alias: 'operator'
 		},
 		'definition': {
-			pattern: /(^[ \t]*)(?:[a-z][\w-]*|<[^>\r\n]*>)(?=\s*=)/m,
+			pattern: /(^[ \t]*)(?:[a-z][\w-]*|<[^<>\r\n]*>)(?=\s*=)/m,
 			lookbehind: true,
 			alias: 'keyword',
 			inside: {
@@ -42,7 +42,7 @@ define(["prism/prism"], function () {
 			}
 		},
 		'rule': {
-			pattern: /(^|[^<\w-])[a-z][\w-]*|<[^>\r\n]*>/i,
+			pattern: /(^|[^<\w-])[a-z][\w-]*|<[^<>\r\n]*>/i,
 			lookbehind: true,
 			inside: {
 				'punctuation': /<|>/
@@ -52,6 +52,6 @@ define(["prism/prism"], function () {
 		'punctuation': /[()\[\]]/
 	};
 
-})(Prism);
+}(Prism));
 
 return Prism; })

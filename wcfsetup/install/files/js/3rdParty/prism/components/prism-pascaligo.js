@@ -4,7 +4,7 @@ define(["prism/prism"], function () {
 	// Pascaligo is a layer 2 smart contract language for the tezos blockchain
 
 	var braces = /\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\)/.source;
-	var type = /(?:\w+(?:<braces>)?|<braces>)/.source.replace(/<braces>/g, function () { return braces; });
+	var type = /(?:\b\w+(?:<braces>)?|<braces>)/.source.replace(/<braces>/g, function () { return braces; });
 
 	var pascaligo = Prism.languages.pascaligo = {
 		'comment': /\(\*[\s\S]+?\*\)|\/\/.*/,
@@ -33,14 +33,14 @@ define(["prism/prism"], function () {
 			lookbehind: true
 		},
 		'boolean': {
-			pattern: /(^|[^&])\b(?:True|False)\b/i,
+			pattern: /(^|[^&])\b(?:False|True)\b/i,
 			lookbehind: true
 		},
 		'builtin': {
 			pattern: /(^|[^&])\b(?:bool|int|list|map|nat|record|string|unit)\b/i,
 			lookbehind: true
 		},
-		'function': /\w+(?=\s*\()/i,
+		'function': /\b\w+(?=\s*\()/,
 		'number': [
 			// Hexadecimal, octal and binary
 			/%[01]+|&[0-7]+|\$[a-f\d]+/i,
@@ -56,7 +56,7 @@ define(["prism/prism"], function () {
 		return accum;
 	}, {});
 
-	pascaligo["class-name"].forEach(function (p) {
+	pascaligo['class-name'].forEach(function (p) {
 		p.inside = classNameInside;
 	});
 

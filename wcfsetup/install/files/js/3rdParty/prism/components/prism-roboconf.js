@@ -2,7 +2,7 @@ define(["prism/prism"], function () {
 Prism.languages.roboconf = {
 	'comment': /#.*/,
 	'keyword': {
-		'pattern': /(^|\s)(?:(?:facet|instance of)(?=[ \t]+[\w-]+[ \t]*\{)|(?:external|import)\b)/,
+		'pattern': /(^|\s)(?:(?:external|import)\b|(?:facet|instance of)(?=[ \t]+[\w-]+[ \t]*\{))/,
 		lookbehind: true
 	},
 	'component': {
@@ -11,7 +11,7 @@ Prism.languages.roboconf = {
 	},
 	'property': /[\w.-]+(?=[ \t]*:)/,
 	'value': {
-		pattern: /(=[ \t]*)[^,;]+/,
+		pattern: /(=[ \t]*(?![ \t]))[^,;]+/,
 		lookbehind: true,
 		alias: 'attr-value'
 	},
@@ -26,4 +26,5 @@ Prism.languages.roboconf = {
 	},
 	'punctuation': /[{},.;:=]/
 };
+
 return Prism; })
