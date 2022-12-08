@@ -38,8 +38,8 @@ define(["require", "exports", "tslib", "./Controls", "../../Dom/Util", "../FormB
             }
             return this.fromElement(fragment);
         }
-        usingFormBuilder(endpoint) {
-            return new Setup_1.default(endpoint);
+        usingFormBuilder() {
+            return new Setup_1.default();
         }
         withoutContent() {
             const dialog = document.createElement("woltlab-core-dialog");

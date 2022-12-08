@@ -43,8 +43,8 @@ export class DialogSetup {
     return this.fromElement(fragment);
   }
 
-  usingFormBuilder(endpoint: string): FormBuilderSetup {
-    return new FormBuilderSetup(endpoint);
+  usingFormBuilder(): FormBuilderSetup {
+    return new FormBuilderSetup();
   }
 
   withoutContent(): DialogControls {
