@@ -11,12 +11,15 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\moderation\queue\ModerationQueue;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\user\UserFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\moderation\queue\command\AssignUser;
 use wcf\system\WCF;
@@ -39,8 +42,12 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
 
     private TreeMapper $mapper;
 
+    private readonly ObjectTypeCache $objectTypeCache;
+
     public function __construct()
     {
+        $this->objectTypeCache = ObjectTypeCache::getInstance();
+
         $this->mapper = (new MapperBuilder())
             ->allowSuperfluousKeys()
             ->enableFlexibleCasting()
@@ -142,7 +149,25 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                     $moderationQueue->assignedUserID ?: []
                 )
                 ->label('wcf.user.username')
-                ->required(),
+                ->required()
+                ->addValidator(new FormFieldValidator('isAffected', function (UserFormField $formField) use ($moderationQueue) {
+                    $user = User::getUserByUsername($formField->getValue());
+
+                    $objectType = $this->objectTypeCache->getObjectType($moderationQueue->objectTypeID);
+                    if (
+                        !$objectType->getProcessor()->isAffectedUser(
+                            $moderationQueue,
+                            $user->userID
+                        )
+                    ) {
+                        $formField->addValidationError(
+                            new FormFieldValidationError(
+                                'notAffected',
+                                'wcf.moderation.assignedUser.error.notAffected'
+                            )
+                        );
+                    }
+                })),
         ]);
 
         $form->markRequiredFields(false);
