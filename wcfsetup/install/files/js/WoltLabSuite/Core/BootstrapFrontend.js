@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/BootstrapFrontend
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -16,7 +16,6 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     UiUserIgnore = tslib_1.__importStar(UiUserIgnore);
     UiPageHeaderMenu = tslib_1.__importStar(UiPageHeaderMenu);
     UiMessageUserConsent = tslib_1.__importStar(UiMessageUserConsent);
-    Ajax = tslib_1.__importStar(Ajax);
     UiMessageShareDialog = tslib_1.__importStar(UiMessageShareDialog);
     UiFeedDialog = tslib_1.__importStar(UiFeedDialog);
     User_1 = tslib_1.__importDefault(User_1);
@@ -57,14 +56,13 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
         if (options.enableUserPopover) {
             _initUserPopover();
         }
-        if (options.executeCronjobs) {
-            Ajax.apiOnce({
-                data: {
-                    className: "wcf\\data\\cronjob\\CronjobAction",
-                    actionName: "executeCronjobs",
-                },
-                failure: () => false,
-                silent: true,
+        if (options.executeCronjobs !== undefined) {
+            void (0, Backend_1.prepareRequest)(options.executeCronjobs)
+                .get()
+                .disableLoadingIndicator()
+                .fetchAsResponse()
+                .catch(() => {
+                /* Ignore errors. */
             });
         }
         BackgroundQueue.setUrl(options.backgroundQueue.url);

@@ -70,7 +70,7 @@ window.addEventListener('pageshow', function(event) {
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
 			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
-			executeCronjobs: {if $executeCronjobs}true{else}false{/if},
+			executeCronjobs: {if $executeCronjobs}'{link controller="CronjobPerform"}{/link}'{else}undefined{/if},
 			{if ENABLE_SHARE_BUTTONS}
 				{assign var='__shareProviders' value="\n"|explode:SHARE_BUTTONS_PROVIDERS}
 				shareButtonProviders: [
