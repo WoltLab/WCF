@@ -1,4 +1,4 @@
-define(["require", "exports", "../../Component/Dialog"], function (require, exports, Dialog_1) {
+define(["require", "exports", "../../Component/Dialog", "../../Language"], function (require, exports, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -11,7 +11,7 @@ define(["require", "exports", "../../Component/Dialog"], function (require, expo
     function updateAssignee(assignee) {
         const span = document.getElementById("moderationAssignedUser");
         if (assignee === null) {
-            span.textContent = "TODO: nobody";
+            span.textContent = (0, Language_1.getPhrase)("wcf.moderation.assignedUser.nobody");
         }
         else {
             const link = document.createElement("a");

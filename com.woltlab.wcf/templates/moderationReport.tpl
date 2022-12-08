@@ -54,6 +54,8 @@
 	</button>
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Controller/Moderation/AssignUser'], ({ setup }) => {
+			{jsphrase name='wcf.moderation.assignedUser.nobody'}
+			
 			setup(document.getElementById('moderationAssignUser'));
 		});
 	</script>

@@ -1,4 +1,5 @@
 import { dialogFactory } from "../../Component/Dialog";
+import { getPhrase } from "../../Language";
 
 type Assignee = {
   username: string;
@@ -21,7 +22,7 @@ async function showDialog(url: string): Promise<void> {
 function updateAssignee(assignee: Assignee | null): void {
   const span = document.getElementById("moderationAssignedUser")!;
   if (assignee === null) {
-    span.textContent = "TODO: nobody";
+    span.textContent = getPhrase("wcf.moderation.assignedUser.nobody");
   } else {
     const link = document.createElement("a");
     link.href = assignee.link;

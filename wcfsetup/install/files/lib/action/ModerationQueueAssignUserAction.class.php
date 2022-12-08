@@ -15,9 +15,8 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\user\UserFormField;
-use wcf\system\form\builder\FormDocument;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\moderation\queue\command\AssignUser;
 use wcf\system\WCF;
@@ -119,12 +118,12 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             WCF::getLanguage()->get('wcf.moderation.assignedUser.change')
         );
         $form->appendChildren([
-            SingleSelectionFormField::create('assignee')
+            RadioButtonFormField::create('assignee')
                 ->required()
                 ->options([
-                    'none' => 'none',
-                    'me' => 'me',
-                    'other' => 'other',
+                    'none' => WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody'),
+                    'me' => WCF::getUser()->username,
+                    'other' => WCF::getLanguage()->get('wcf.moderation.assignedUser.other'),
                 ])
                 ->value(
                     match ($moderationQueue->assignedUserID) {
@@ -142,8 +141,11 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                 ->value(
                     $moderationQueue->assignedUserID ?: []
                 )
+                ->label('wcf.user.username')
                 ->required(),
         ]);
+
+        $form->markRequiredFields(false);
 
         $form->build();
 

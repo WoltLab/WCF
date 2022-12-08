@@ -4244,6 +4244,7 @@ Dateianhänge:
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[Benutzer zuweisen]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[Dieser Benutzer hat unzureichende Zugriffsrechte]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
+		<item name="wcf.moderation.assignedUser.other"><![CDATA[Anderer Benutzer]]></item>
 		<item name="wcf.moderation.assignedUsername"><![CDATA[Zugewiesener Benutzer]]></item>
 		<item name="wcf.moderation.filter"><![CDATA[Einträge filtern]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
