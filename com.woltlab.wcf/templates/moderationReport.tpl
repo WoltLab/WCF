@@ -25,7 +25,7 @@
 			
 			<dl class="plain inlineDataList" id="moderationStatusContainer">
 				<dt>{lang}wcf.moderation.status{/lang}</dt>
-				<dd>{$queue->getStatus()}</dd>
+				<dd id="moderationQueueStatus">{$queue->getStatus()}</dd>
 			</dl>
 		</div>
 		

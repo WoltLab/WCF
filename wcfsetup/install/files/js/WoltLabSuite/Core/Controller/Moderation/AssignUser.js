@@ -15,6 +15,7 @@ define(["require", "exports", "../../Component/Dialog", "../../Language", "../..
         const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(url);
         if (ok) {
             updateAssignee(result.assignee);
+            updateStatus(result.status);
             (0, Notification_1.show)();
         }
     }
@@ -32,6 +33,9 @@ define(["require", "exports", "../../Component/Dialog", "../../Language", "../..
             span.innerHTML = "";
             span.append(link);
         }
+    }
+    function updateStatus(status) {
+        document.getElementById("moderationQueueStatus").textContent = status;
     }
     function setup(button) {
         button.addEventListener("click", () => {

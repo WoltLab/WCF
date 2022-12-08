@@ -20,6 +20,7 @@ type Assignee = {
 
 type Response = {
   assignee: Assignee | null;
+  status: string;
 };
 
 async function showDialog(url: string): Promise<void> {
@@ -27,6 +28,8 @@ async function showDialog(url: string): Promise<void> {
 
   if (ok) {
     updateAssignee(result.assignee);
+    updateStatus(result.status);
+
     showNotification();
   }
 }
@@ -45,6 +48,10 @@ function updateAssignee(assignee: Assignee | null): void {
     span.innerHTML = "";
     span.append(link);
   }
+}
+
+function updateStatus(status: string): void {
+  document.getElementById("moderationQueueStatus")!.textContent = status;
 }
 
 export function setup(button: HTMLElement): void {

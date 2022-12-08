@@ -97,6 +97,9 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             );
             $command();
 
+            // Reload the moderation queue to fetch the new status.
+            $moderationQueue = new ModerationQueue($moderationQueue->queueID);
+
             $assignee = null;
             if ($user !== null) {
                 $assignee = [
@@ -109,6 +112,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
             return new JsonResponse([
                 'result' => [
                     'assignee' => $assignee,
+                    'status' => $moderationQueue->getStatus(),
                 ],
             ]);
         } else {
