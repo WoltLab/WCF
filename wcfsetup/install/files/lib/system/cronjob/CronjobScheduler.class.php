@@ -104,7 +104,7 @@ final class CronjobScheduler extends SingletonFactory
      * Resets any cronjobs that have previously failed to execute. Cronjobs that have failed too often will
      * be disabled automatically.
      */
-    protected function resetFailedCronjobs()
+    private function resetFailedCronjobs()
     {
         WCF::getDB()->beginTransaction();
         /** @noinspection PhpUnusedLocalVariableInspection */
@@ -195,7 +195,7 @@ final class CronjobScheduler extends SingletonFactory
     /**
      * Loads outstanding cronjobs.
      */
-    protected function loadCronjobs()
+    private function loadCronjobs()
     {
         WCF::getDB()->beginTransaction();
         /** @noinspection PhpUnusedLocalVariableInspection */
@@ -250,11 +250,9 @@ final class CronjobScheduler extends SingletonFactory
     /**
      * Executes a cronjob.
      *
-     * @param CronjobEditor $cronjobEditor
-     * @param CronjobLogEditor $logEditor
      * @throws  SystemException
      */
-    protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor)
+    private function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor)
     {
         $className = $cronjobEditor->className;
         if (!\class_exists($className)) {
@@ -277,10 +275,9 @@ final class CronjobScheduler extends SingletonFactory
     /**
      * Logs cronjob exec success or failure.
      *
-     * @param CronjobLogEditor $logEditor
      * @param \Throwable $exception
      */
-    protected function logResult(CronjobLogEditor $logEditor, $exception = null)
+    private function logResult(CronjobLogEditor $logEditor, $exception = null)
     {
         if ($exception !== null) {
             \wcf\functions\exception\logThrowable($exception);
@@ -307,7 +304,7 @@ final class CronjobScheduler extends SingletonFactory
     /**
      * Loads the cached data for cronjob execution.
      */
-    protected function loadCache()
+    private function loadCache()
     {
         $this->cache = CronjobCacheBuilder::getInstance()->getData();
     }
