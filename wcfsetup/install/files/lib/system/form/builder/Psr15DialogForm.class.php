@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\system\form\builder\button\IFormButton;
 
@@ -31,7 +32,13 @@ final class Psr15DialogForm extends FormDocument
         $this->ajax = true;
     }
 
-    public function validatePsr7Request(ServerRequestInterface $request): ?JsonResponse
+    /**
+     * Processes the form using the request's parsed body. Returns 'null'
+     * if validation succeeded and the result of 'toJsonResponse()' otherwise.
+     *
+     * @see Psr15DialogForm::toJsonResponse()
+     */
+    public function validatePsr7Request(ServerRequestInterface $request): ?ResponseInterface
     {
         $this->requestData($request->getParsedBody());
         $this->readValues();
@@ -44,7 +51,10 @@ final class Psr15DialogForm extends FormDocument
         return null;
     }
 
-    public function toJsonResponse(): JsonResponse
+    /**
+     * Returns a response that can be consumed by JavaScript's `dialogFactory().usingFormBuilder()`.
+     */
+    public function toJsonResponse(): ResponseInterface
     {
         return new JsonResponse([
             'dialog' => $this->getHtml(),
