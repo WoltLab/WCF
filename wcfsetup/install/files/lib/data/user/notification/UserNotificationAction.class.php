@@ -53,10 +53,10 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         }
 
         // insert author
-        $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_author
+        $sql = "INSERT INTO wcf1_user_notification_author
                             (notificationID, authorID, time)
                 VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($notifications as $notificationData) {
@@ -118,17 +118,17 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         });
 
         // insert author
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_author
+        $sql = "INSERT IGNORE INTO  wcf1_user_notification_author
                                     (notificationID, authorID, time)
                 VALUES              (?, ?, ?)";
-        $authorStatement = WCF::getDB()->prepareStatement($sql);
+        $authorStatement = WCF::getDB()->prepare($sql);
 
         // update trigger count
-        $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+        $sql = "UPDATE  wcf1_user_notification
                 SET     timesTriggered = timesTriggered + ?,
                         guestTimesTriggered = guestTimesTriggered + ?
                 WHERE   notificationID = ?";
-        $triggerStatement = WCF::getDB()->prepareStatement($sql);
+        $triggerStatement = WCF::getDB()->prepare($sql);
 
         WCF::getDB()->beginTransaction();
         $notificationIDs = [];
@@ -265,11 +265,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         // to prevent concurrent threads from inserting new notifications for proper
         // consistency, possibly leading to deadlocks.
         $sql = "SELECT  notificationID
-                FROM    wcf" . WCF_N . "_user_notification
+                FROM    wcf1_user_notification
                 WHERE   userID = ?
                     AND confirmTime = ?
                     AND time < ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             WCF::getUser()->userID,
             0,
@@ -282,10 +282,10 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('notificationID IN (?)', [$notificationIDs]);
 
-            $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+            $sql = "UPDATE  wcf1_user_notification
                     SET     confirmTime = ?
                     {$condition}";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute(\array_merge([TIME_NOW], $condition->getParameters()));
         }
 
