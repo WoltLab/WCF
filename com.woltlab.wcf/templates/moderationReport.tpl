@@ -52,13 +52,6 @@
 		{icon name='user-plus' type='solid'}
 		<span>{lang}wcf.moderation.assignedUser.change{/lang}</span>
 	</button>
-	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Controller/Moderation/AssignUser'], ({ setup }) => {
-			{jsphrase name='wcf.moderation.assignedUser.nobody'}
-			
-			setup(document.getElementById('moderationAssignUser'));
-		});
-	</script>
 	{if !$queue->isDone()}
 		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}
 			<button type="button" id="removeContent" class="contentInteractionButton button small jsOnly">{icon name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>
@@ -121,6 +114,12 @@
 </section>
 
 <script data-relocate="true">
+	require(['WoltLabSuite/Core/Controller/Moderation/AssignUser'], ({ setup }) => {
+		{jsphrase name='wcf.moderation.assignedUser.nobody'}
+		
+		setup(document.getElementById('moderationAssignUser'));
+	});
+
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.moderation.assignedUser': '{jslang}wcf.moderation.assignedUser{/jslang}',

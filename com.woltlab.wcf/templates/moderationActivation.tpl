@@ -43,7 +43,15 @@
 {/capture}
 
 {capture assign='contentInteractionButtons'}
-	<button type="button" id="moderationAssignUser" class="contentInteractionButton button small jsOnly">{icon name='user-plus' type='solid'} <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></button>
+	<button
+		type="button"
+		id="moderationAssignUser"
+		class="contentInteractionButton button small jsOnly"
+		data-url="{$queue->endpointAssignUser()}"
+	>
+		{icon name='user-plus' type='solid'}
+		<span>{lang}wcf.moderation.assignedUser.change{/lang}</span>
+	</button>
 	{if !$queue->isDone()}
 		<button type="button" id="enableContent" class="contentInteractionButton button small jsOnly">{icon name='check'} <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></button>
 		{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<button type="button" id="removeContent" class="contentInteractionButton button small jsOnly">{icon name='xmark'} <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></button>{/if}
@@ -78,6 +86,12 @@
 </section>
 
 <script data-relocate="true">
+	require(['WoltLabSuite/Core/Controller/Moderation/AssignUser'], ({ setup }) => {
+		{jsphrase name='wcf.moderation.assignedUser.nobody'}
+		
+		setup(document.getElementById('moderationAssignUser'));
+	});
+	
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.moderation.activation.enableContent.confirmMessage': '{jslang}wcf.moderation.activation.enableContent.confirmMessage{/jslang}',
