@@ -210,6 +210,21 @@ final class WCFSetup extends WCF
     }
 
     /**
+     * Throws an exception if it appears that the 'unzipFiles' step already ran.
+     */
+    protected function assertNotUnzipped()
+    {
+        if (
+            \is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')
+            || \is_file(INSTALL_SCRIPT_DIR . 'global.php')
+        ) {
+            throw new \Exception(
+                'Target directory seems to be an existing installation of WoltLab Suite Core, refusing to continue.'
+            );
+        }
+    }
+
+    /**
      * Executes the setup steps.
      */
     protected function dispatch(): ResponseInterface
@@ -231,21 +246,25 @@ final class WCFSetup extends WCF
         switch ($step) {
             case 'selectSetupLanguage':
                 $this->calcProgress(0);
+                $this->assertNotUnzipped();
 
                 return $this->selectSetupLanguage();
 
             case 'showLicense':
                 $this->calcProgress(1);
+                $this->assertNotUnzipped();
 
                 return $this->showLicense();
 
             case 'showSystemRequirements':
                 $this->calcProgress(2);
+                $this->assertNotUnzipped();
 
                 return $this->showSystemRequirements();
 
             case 'configureDB':
                 $this->calcProgress(3);
+                $this->assertNotUnzipped();
 
                 return $this->configureDB();
 
@@ -256,11 +275,13 @@ final class WCFSetup extends WCF
                 }
 
                 $this->calcProgress($currentStep);
+                $this->assertNotUnzipped();
 
                 return $this->createDB();
 
             case 'unzipFiles':
                 $this->calcProgress(18);
+                $this->assertNotUnzipped();
 
                 return $this->unzipFiles();
 
@@ -746,13 +767,6 @@ final class WCFSetup extends WCF
      */
     protected function unzipFiles(): ResponseInterface
     {
-        // WCF seems to be installed, abort
-        if (@\is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')) {
-            throw new SystemException(
-                'Target directory seems to be an existing installation of WCF, unable to continue.'
-            );
-        }
-
         $this->initDB();
 
         $fileHandler = new SetupFileHandler();
