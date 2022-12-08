@@ -15,7 +15,7 @@
     return callbackPromise;
   };
 
-  class GoogleMaps extends HTMLElement {
+  class WoltlabCoreGoogleMapsElement extends HTMLElement {
     private _map?: google.maps.Map = undefined;
     private mapLoaded: Promise<void>;
     private mapLoadedResolve?: () => void = undefined;
@@ -76,5 +76,5 @@
     }
   }
 
-  window.customElements.define("google-maps", GoogleMaps);
+  window.customElements.define("woltlab-core-google-maps", WoltlabCoreGoogleMapsElement);
 }

@@ -1107,72 +1107,6 @@
     window.customElements.define("fa-icon", FaIcon);
   })();
 
-  // ts/WoltLabSuite/WebComponent/google-maps.ts
-  {
-    let initCalled = false;
-    const callbackPromise = new Promise((resolve) => {
-      window.__initGoogleMaps = resolve;
-    });
-    const loadGoogleMaps = (apiKey) => {
-      if (!initCalled) {
-        const script = document.createElement("script");
-        script.src = "https://maps.googleapis.com/maps/api/js?" + (apiKey ? `key=${apiKey}&` : "") + "callback=__initGoogleMaps";
-        document.head.appendChild(script);
-        initCalled = true;
-      }
-      return callbackPromise;
-    };
-    class GoogleMaps extends HTMLElement {
-      _map = void 0;
-      mapLoaded;
-      mapLoadedResolve = void 0;
-      constructor() {
-        super();
-        this.mapLoaded = new Promise((resolve) => {
-          this.mapLoadedResolve = resolve;
-        });
-      }
-      connectedCallback() {
-        this.validate();
-        void loadGoogleMaps(this.apiKey).then(() => {
-          this._map = new google.maps.Map(this, {
-            zoom: 13,
-            center: {
-              lat: 0,
-              lng: 0
-            }
-          });
-          if (this.mapLoadedResolve) {
-            this.mapLoadedResolve();
-            this.mapLoadedResolve = void 0;
-          }
-        });
-      }
-      async addMarker(latitude, longitude, title, focus) {
-        await this.mapLoaded;
-        const marker = new google.maps.Marker({
-          map: this.map,
-          position: new google.maps.LatLng(latitude, longitude),
-          title
-        });
-        if (focus) {
-          this.map.setCenter(marker.getPosition());
-        }
-      }
-      validate() {
-        if (!this.apiKey) {
-        }
-      }
-      get apiKey() {
-        return this.getAttribute("api-key") || "";
-      }
-      get map() {
-        return this._map;
-      }
-    }
-    window.customElements.define("google-maps", GoogleMaps);
-  }
-
   // ts/WoltLabSuite/WebComponent/woltlab-core-date-time.ts
   {
     const drift = Date.now() - window.TIME_NOW * 1e3;
@@ -1547,6 +1481,72 @@
       }
     }
     window.customElements.define("woltlab-core-pagination", WoltlabCorePaginationElement);
+  }
+
+  // ts/WoltLabSuite/WebComponent/woltlab-core-google-maps.ts
+  {
+    let initCalled = false;
+    const callbackPromise = new Promise((resolve) => {
+      window.__initGoogleMaps = resolve;
+    });
+    const loadGoogleMaps = (apiKey) => {
+      if (!initCalled) {
+        const script = document.createElement("script");
+        script.src = "https://maps.googleapis.com/maps/api/js?" + (apiKey ? `key=${apiKey}&` : "") + "callback=__initGoogleMaps";
+        document.head.appendChild(script);
+        initCalled = true;
+      }
+      return callbackPromise;
+    };
+    class WoltlabCoreGoogleMapsElement extends HTMLElement {
+      _map = void 0;
+      mapLoaded;
+      mapLoadedResolve = void 0;
+      constructor() {
+        super();
+        this.mapLoaded = new Promise((resolve) => {
+          this.mapLoadedResolve = resolve;
+        });
+      }
+      connectedCallback() {
+        this.validate();
+        void loadGoogleMaps(this.apiKey).then(() => {
+          this._map = new google.maps.Map(this, {
+            zoom: 13,
+            center: {
+              lat: 0,
+              lng: 0
+            }
+          });
+          if (this.mapLoadedResolve) {
+            this.mapLoadedResolve();
+            this.mapLoadedResolve = void 0;
+          }
+        });
+      }
+      async addMarker(latitude, longitude, title, focus) {
+        await this.mapLoaded;
+        const marker = new google.maps.Marker({
+          map: this.map,
+          position: new google.maps.LatLng(latitude, longitude),
+          title
+        });
+        if (focus) {
+          this.map.setCenter(marker.getPosition());
+        }
+      }
+      validate() {
+        if (!this.apiKey) {
+        }
+      }
+      get apiKey() {
+        return this.getAttribute("api-key") || "";
+      }
+      get map() {
+        return this._map;
+      }
+    }
+    window.customElements.define("woltlab-core-google-maps", WoltlabCoreGoogleMapsElement);
   }
 
   // ts/WoltLabSuite/WebComponent/woltlab-core-reaction-summary.ts
