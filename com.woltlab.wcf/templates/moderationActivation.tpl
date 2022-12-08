@@ -96,11 +96,6 @@
 		WCF.Language.addObject({
 			'wcf.moderation.activation.enableContent.confirmMessage': '{jslang}wcf.moderation.activation.enableContent.confirmMessage{/jslang}',
 			'wcf.moderation.activation.removeContent.confirmMessage': '{jslang}wcf.moderation.activation.removeContent.confirmMessage{/jslang}',
-			'wcf.moderation.assignedUser': '{jslang}wcf.moderation.assignedUser{/jslang}',
-			'wcf.moderation.assignedUser.error.notAffected': '{jslang}wcf.moderation.assignedUser.error.notAffected{/jslang}',
-			'wcf.moderation.status.outstanding': '{jslang}wcf.moderation.status.outstanding{/jslang}',
-			'wcf.moderation.status.processing': '{jslang}wcf.moderation.status.processing{/jslang}',
-			'wcf.user.username.error.notFound': '{jslang __literal=true}wcf.user.username.error.notFound{/jslang}'
 		});
 		
 		new WCF.Moderation.Activation.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');

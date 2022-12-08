@@ -122,8 +122,6 @@
 
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.moderation.assignedUser': '{jslang}wcf.moderation.assignedUser{/jslang}',
-			'wcf.moderation.assignedUser.error.notAffected': '{jslang}wcf.moderation.assignedUser.error.notAffected{/jslang}',
 			'wcf.moderation.report.removeContent.confirmMessage': '{jslang}wcf.moderation.report.removeContent.confirmMessage{/jslang}',
 			'wcf.moderation.report.removeContent.reason': '{jslang}wcf.moderation.report.removeContent.reason{/jslang}',
 			'wcf.moderation.report.removeReport.confirmMessage': '{jslang}wcf.moderation.report.removeReport.confirmMessage{/jslang}',
@@ -131,9 +129,6 @@
 			'wcf.moderation.report.removeReport.confirmMessage': '{jslang}wcf.moderation.report.removeReport.confirmMessage{/jslang}',
 			'wcf.moderation.report.changeJustifiedStatus.markAsJustified': '{jslang}wcf.moderation.report.changeJustifiedStatus.markAsJustified{/jslang}',
 			'wcf.moderation.report.changeJustifiedStatus.confirmMessage': '{jslang}wcf.moderation.report.changeJustifiedStatus.confirmMessage{/jslang}',
-			'wcf.moderation.status.outstanding': '{jslang}wcf.moderation.status.outstanding{/jslang}',
-			'wcf.moderation.status.processing': '{jslang}wcf.moderation.status.processing{/jslang}',
-			'wcf.user.username.error.notFound': '{jslang __literal=true}wcf.user.username.error.notFound{/jslang}'
 		});
 		
 		new WCF.Moderation.Report.Management(
