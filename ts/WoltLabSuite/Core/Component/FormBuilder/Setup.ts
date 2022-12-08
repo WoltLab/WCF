@@ -1,3 +1,13 @@
+/**
+ * Promise-based API to use the Form Builder API with PSR-7 controllers.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/FormBuilder/Setup
+ * @since 6.0
+ */
+
 import { prepareRequest } from "../../Ajax/Backend";
 import * as DomUtil from "../../Dom/Util";
 import * as FormBuilderManager from "../../Form/Builder/Manager";

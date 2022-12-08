@@ -1,3 +1,12 @@
+/**
+ * Promise-based API to use the Form Builder API with PSR-7 controllers.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/FormBuilder/Setup
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "../../Form/Builder/Manager"], function (require, exports, tslib_1, Backend_1, DomUtil, FormBuilderManager) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
