@@ -120,6 +120,13 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
 
     private function getForm(ModerationQueue $moderationQueue): Psr15DialogForm
     {
+        // The current user should not appear in the
+        // "other user" selection if they are assigned.
+        $assignedUserID = 0;
+        if ($moderationQueue->assignedUserID && $moderationQueue->assignedUserID !== WCF::getUser()->userID) {
+            $assignedUserID = $moderationQueue->assignedUserID;
+        }
+
         $form = new Psr15DialogForm(
             static::class,
             WCF::getLanguage()->get('wcf.moderation.assignedUser.change')
@@ -146,7 +153,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                         ->values(['other'])
                 )
                 ->value(
-                    $moderationQueue->assignedUserID ?: []
+                    $assignedUserID ?: []
                 )
                 ->label('wcf.user.username')
                 ->required()
