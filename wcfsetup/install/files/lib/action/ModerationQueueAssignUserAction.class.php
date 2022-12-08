@@ -18,6 +18,7 @@ use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\form\builder\FormDocument;
+use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\moderation\queue\command\AssignUser;
 use wcf\system\WCF;
 
@@ -69,22 +70,11 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
         $form = $this->getForm($moderationQueue);
 
         if ($request->getMethod() === 'GET') {
-            return new JsonResponse([
-                'dialog' => $form->getHtml(),
-                'formId' => $form->getId(),
-                'title' => WCF::getLanguage()->get('wcf.moderation.assignedUser.change'),
-            ]);
+            return $form->toJsonResponse();
         } elseif ($request->getMethod() === 'POST') {
-            $form->requestData($request->getParsedBody());
-            $form->readValues();
-            $form->validate();
-
-            if ($form->hasValidationErrors()) {
-                return new JsonResponse([
-                    'dialog' => $form->getHtml(),
-                    'formId' => $form->getId(),
-                    'title' => WCF::getLanguage()->get('wcf.moderation.assignedUser.change'),
-                ]);
+            $response = $form->validatePsr7Request($request);
+            if ($response !== null) {
+                return $response;
             }
 
             $data = $form->getData()['data'];
@@ -122,16 +112,12 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
         }
     }
 
-    private function getForm(ModerationQueue $moderationQueue): FormDocument
+    private function getForm(ModerationQueue $moderationQueue): Psr15DialogForm
     {
-        $form = new class extends FormDocument
-        {
-            public function validate()
-            {
-                return $this->traitValidate();
-            }
-        };
-        $form->id(static::class);
+        $form = new Psr15DialogForm(
+            static::class,
+            WCF::getLanguage()->get('wcf.moderation.assignedUser.change')
+        );
         $form->appendChildren([
             SingleSelectionFormField::create('assignee')
                 ->required()
@@ -158,8 +144,6 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                 )
                 ->required(),
         ]);
-        $form->ajax();
-        $form->addDefaultButton(false);
 
         $form->build();
 
