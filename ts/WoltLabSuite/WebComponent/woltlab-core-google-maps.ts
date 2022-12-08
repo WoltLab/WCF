@@ -12,27 +12,28 @@
       document.head.appendChild(script);
       initCalled = true;
     }
+
     return callbackPromise;
   };
 
   class WoltlabCoreGoogleMapsElement extends HTMLElement {
-    private _map?: google.maps.Map = undefined;
-    private mapLoaded: Promise<void>;
-    private mapLoadedResolve?: () => void = undefined;
+    #map?: google.maps.Map;
+    #mapLoaded: Promise<void>;
+    #mapLoadedResolve?: () => void;
 
     constructor() {
       super();
 
-      this.mapLoaded = new Promise<void>((resolve) => {
-        this.mapLoadedResolve = resolve;
+      this.#mapLoaded = new Promise<void>((resolve) => {
+        this.#mapLoadedResolve = resolve;
       });
     }
 
     connectedCallback() {
-      this.validate();
+      this.#validate();
 
       void loadGoogleMaps(this.apiKey).then(() => {
-        this._map = new google.maps.Map(this, {
+        this.#map = new google.maps.Map(this, {
           zoom: 13,
           center: {
             lat: 0,
@@ -40,15 +41,15 @@
           },
         });
 
-        if (this.mapLoadedResolve) {
-          this.mapLoadedResolve();
-          this.mapLoadedResolve = undefined;
+        if (this.#mapLoadedResolve) {
+          this.#mapLoadedResolve();
+          this.#mapLoadedResolve = undefined;
         }
       });
     }
 
     async addMarker(latitude: number, longitude: number, title: string, focus?: boolean): Promise<void> {
-      await this.mapLoaded;
+      await this.#mapLoaded;
 
       const marker = new google.maps.Marker({
         map: this.map,
@@ -61,7 +62,7 @@
       }
     }
 
-    private validate(): void {
+    #validate(): void {
       if (!this.apiKey) {
         //throw new TypeError("Must provide an api key.");
       }
@@ -72,7 +73,7 @@
     }
 
     get map(): google.maps.Map | undefined {
-      return this._map;
+      return this.#map;
     }
   }
 

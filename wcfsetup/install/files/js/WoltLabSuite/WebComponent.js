@@ -1499,33 +1499,33 @@
       return callbackPromise;
     };
     class WoltlabCoreGoogleMapsElement extends HTMLElement {
-      _map = void 0;
-      mapLoaded;
-      mapLoadedResolve = void 0;
+      #map;
+      #mapLoaded;
+      #mapLoadedResolve;
       constructor() {
         super();
-        this.mapLoaded = new Promise((resolve) => {
-          this.mapLoadedResolve = resolve;
+        this.#mapLoaded = new Promise((resolve) => {
+          this.#mapLoadedResolve = resolve;
         });
       }
       connectedCallback() {
-        this.validate();
+        this.#validate();
         void loadGoogleMaps(this.apiKey).then(() => {
-          this._map = new google.maps.Map(this, {
+          this.#map = new google.maps.Map(this, {
             zoom: 13,
             center: {
               lat: 0,
               lng: 0
             }
           });
-          if (this.mapLoadedResolve) {
-            this.mapLoadedResolve();
-            this.mapLoadedResolve = void 0;
+          if (this.#mapLoadedResolve) {
+            this.#mapLoadedResolve();
+            this.#mapLoadedResolve = void 0;
           }
         });
       }
       async addMarker(latitude, longitude, title, focus) {
-        await this.mapLoaded;
+        await this.#mapLoaded;
         const marker = new google.maps.Marker({
           map: this.map,
           position: new google.maps.LatLng(latitude, longitude),
@@ -1535,7 +1535,7 @@
           this.map.setCenter(marker.getPosition());
         }
       }
-      validate() {
+      #validate() {
         if (!this.apiKey) {
         }
       }
@@ -1543,7 +1543,7 @@
         return this.getAttribute("api-key") || "";
       }
       get map() {
-        return this._map;
+        return this.#map;
       }
     }
     window.customElements.define("woltlab-core-google-maps", WoltlabCoreGoogleMapsElement);
