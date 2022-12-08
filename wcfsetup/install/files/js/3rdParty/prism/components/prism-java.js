@@ -56,7 +56,8 @@ define(["prism/prism","prism/components/prism-clike"], function () {
 		'operator': {
 			pattern: /(^|[^.])(?:<<=?|>>>?=?|->|--|\+\+|&&|\|\||::|[?:~]|[-+*/%&|^!=<>]=?)/m,
 			lookbehind: true
-		}
+		},
+		'constant': /\b[A-Z][A-Z_\d]+\b/
 	});
 
 	Prism.languages.insertBefore('java', 'string', {
