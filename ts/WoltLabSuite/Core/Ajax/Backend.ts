@@ -1,3 +1,13 @@
+/**
+ * Promise-based API to interact with PSR-7 controllers.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ajax/Backend
+ * @since 6.0
+ */
+
 import * as LoadingIndicator from "./Status";
 import {
   ApiError,
