@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Cronjob
  */
-class CronjobScheduler extends SingletonFactory
+final class CronjobScheduler extends SingletonFactory
 {
     /**
      * cached times of the next and after next cronjob execution
