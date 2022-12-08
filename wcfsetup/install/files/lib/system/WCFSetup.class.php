@@ -191,14 +191,37 @@ final class WCFSetup extends WCF
 
     /**
      * Calculates the current state of the progress bar.
-     *
-     * @param int $currentStep
      */
-    protected function calcProgress($currentStep)
+    protected function calcProgress(int $currentStep)
     {
+        $lastStep = \intval(\file_get_contents(\TMP_DIR . 'lastStep'));
+        if ($lastStep > $currentStep) {
+            throw new \Exception('Refusing to step back to a previous step.');
+        }
+        if ($lastStep !== $currentStep - 1 && $lastStep !== $currentStep) {
+            throw new \Exception('Refusing to skip a step.');
+        }
+
+        \file_put_contents(\TMP_DIR . 'lastStep', $currentStep);
+
         // calculate progress
         $progress = \round((100 / 22) * ++$currentStep, 0);
         self::getTPL()->assign(['progress' => $progress]);
+    }
+
+    /**
+     * Throws an exception if it appears that the 'unzipFiles' step already ran.
+     */
+    protected function assertNotUnzipped()
+    {
+        if (
+            \is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')
+            || \is_file(INSTALL_SCRIPT_DIR . 'global.php')
+        ) {
+            throw new \Exception(
+                'Target directory seems to be an existing installation of WoltLab Suite Core, refusing to continue.'
+            );
+        }
     }
 
     /**
@@ -223,21 +246,25 @@ final class WCFSetup extends WCF
         switch ($step) {
             case 'selectSetupLanguage':
                 $this->calcProgress(0);
+                $this->assertNotUnzipped();
 
                 return $this->selectSetupLanguage();
 
             case 'showLicense':
                 $this->calcProgress(1);
+                $this->assertNotUnzipped();
 
                 return $this->showLicense();
 
             case 'showSystemRequirements':
                 $this->calcProgress(2);
+                $this->assertNotUnzipped();
 
                 return $this->showSystemRequirements();
 
             case 'configureDB':
                 $this->calcProgress(3);
+                $this->assertNotUnzipped();
 
                 return $this->configureDB();
 
@@ -248,11 +275,13 @@ final class WCFSetup extends WCF
                 }
 
                 $this->calcProgress($currentStep);
+                $this->assertNotUnzipped();
 
                 return $this->createDB();
 
             case 'unzipFiles':
                 $this->calcProgress(18);
+                $this->assertNotUnzipped();
 
                 return $this->unzipFiles();
 
@@ -738,13 +767,6 @@ final class WCFSetup extends WCF
      */
     protected function unzipFiles(): ResponseInterface
     {
-        // WCF seems to be installed, abort
-        if (@\is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')) {
-            throw new SystemException(
-                'Target directory seems to be an existing installation of WCF, unable to continue.'
-            );
-        }
-
         $this->initDB();
 
         $fileHandler = new SetupFileHandler();
