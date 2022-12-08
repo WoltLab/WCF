@@ -4,6 +4,7 @@ namespace wcf\system\form\builder;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\system\form\builder\button\IFormButton;
 
 /**
  * Represents a PSR15 compatible form builder that
@@ -27,13 +28,7 @@ final class Psr15DialogForm extends FormDocument
         $this->id($id);
         $this->title = $title;
 
-        $this->ajax();
-        $this->addDefaultButton(false);
-    }
-
-    public function validate()
-    {
-        return $this->traitValidate();
+        $this->ajax = true;
     }
 
     public function validatePsr7Request(ServerRequestInterface $request): ?JsonResponse
@@ -56,5 +51,39 @@ final class Psr15DialogForm extends FormDocument
             'formId' => $this->getId(),
             'title' => $this->title,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addButton(IFormButton $button)
+    {
+        throw new \LogicException(self::class . ' does not support custom buttons.');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validate()
+    {
+        return $this->traitValidate();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDefaultButton()
+    {
+        /* Buttons are implicitly added by the dialog API. */
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function ajax($ajax = true)
+    {
+        /* This implementation forces `$ajax = true`. */
+
+        return $this;
     }
 }
