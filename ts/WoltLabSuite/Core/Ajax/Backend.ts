@@ -1,5 +1,5 @@
 /**
- * Promise-based API to interact with PSR-7 controllers.
+ * Promise-based API to interact with PSR-15 controllers.
  *
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
