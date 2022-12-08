@@ -807,7 +807,7 @@ class WCF
             $wcf = new TemplateScriptingCore($wcf);
         }
 
-        self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang', 'csrfToken', 'icon']);
+        self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jsphrase', 'jslang', 'csrfToken', 'icon']);
         self::getTPL()->assign([
             '__wcf' => $wcf,
         ]);
