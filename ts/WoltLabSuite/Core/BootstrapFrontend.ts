@@ -13,7 +13,6 @@ import * as ControllerPopover from "./Controller/Popover";
 import * as UiUserIgnore from "./Ui/User/Ignore";
 import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
 import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
-import * as Ajax from "./Ajax";
 import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
 import { ShareProvider, addShareProviders } from "./Ui/Message/Share/Providers";
 import * as UiFeedDialog from "./Ui/Feed/Dialog";
