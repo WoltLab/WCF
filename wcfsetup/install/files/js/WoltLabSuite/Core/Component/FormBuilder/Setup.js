@@ -27,6 +27,7 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "
                         }
                         const response = (await (0, Backend_1.prepareRequest)(url).post(data).fetchAsJson());
                         if ("dialog" in response) {
+                            FormBuilderManager.unregisterForm(json.formId);
                             DomUtil.setInnerHtml(dialog.content, response.dialog);
                             return false;
                         }

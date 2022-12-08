@@ -52,6 +52,8 @@ export class FormBuilderSetup {
 
           const response = (await prepareRequest(url).post(data).fetchAsJson()) as ResponseSubmitForm;
           if ("dialog" in response) {
+            FormBuilderManager.unregisterForm(json.formId);
+
             DomUtil.setInnerHtml(dialog.content, response.dialog);
 
             return false;
