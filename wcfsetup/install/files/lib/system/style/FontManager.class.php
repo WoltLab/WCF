@@ -25,10 +25,7 @@ use wcf\util\JSON;
  */
 final class FontManager extends SingletonFactory
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $http;
+    private ClientInterface $http;
 
     /**
      * @inheritDoc
@@ -43,10 +40,8 @@ final class FontManager extends SingletonFactory
 
     /**
      * Returns the path to the family's CSS file.
-     *
-     * @return  string
      */
-    public function getCssFilename($family)
+    public function getCssFilename(string $family): string
     {
         return WCF_DIR . 'font/families/' . $family . '/font.css';
     }
@@ -54,10 +49,8 @@ final class FontManager extends SingletonFactory
     /**
      * Returns whether the family's CSS file exists, implying that
      * the family is available.
-     *
-     * @return  bool
      */
-    public function isFamilyDownloaded($family)
+    public function isFamilyDownloaded(string $family): bool
     {
         return \is_readable($this->getCssFilename($family));
     }
@@ -82,7 +75,7 @@ final class FontManager extends SingletonFactory
      * @param string $family
      * @return  mixed[]
      */
-    public function downloadFamily($family)
+    public function downloadFamily(string $family)
     {
         try {
             $request = new Request('GET', \rawurlencode($family) . '/manifest.json');
