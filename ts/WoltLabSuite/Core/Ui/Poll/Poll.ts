@@ -97,9 +97,16 @@ export class Poll {
     this.resultsView?.checkVisibility(key);
     this.voteHandler?.checkVisibility(key);
 
-    if (!this.participants && this.canViewParticipants()) {
-      this.participants = new Participants(this);
-      this.participants.showButton();
+    if (this.canViewParticipants()) {
+      if (key === PollViews.results) {
+        if (!this.participants) {
+          this.participants = new Participants(this);
+        }
+
+        this.participants.showButton();
+      } else {
+        this.participants?.hideButton();
+      }
     }
   }
 

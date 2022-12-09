@@ -52,6 +52,10 @@ export class Participants {
   public showButton(): void {
     this.button.hidden = false;
   }
+
+  public hideButton(): void {
+    this.button.hidden = true;
+  }
 }
 
 export default Participants;
