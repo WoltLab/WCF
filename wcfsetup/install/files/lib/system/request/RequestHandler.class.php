@@ -19,6 +19,7 @@ use wcf\http\middleware\EnforceAcpAuthentication;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
 use wcf\http\middleware\HandleStartupErrors;
+use wcf\http\middleware\HandleValinorMappingErrors;
 use wcf\http\middleware\JsonBody;
 use wcf\http\middleware\PreventMimeSniffing;
 use wcf\http\middleware\TriggerBackgroundQueue;
@@ -112,6 +113,7 @@ final class RequestHandler extends SingletonFactory
                     new CheckForOfflineMode(),
                     new JsonBody(),
                     new TriggerBackgroundQueue(),
+                    new HandleValinorMappingErrors(),
                 ]);
 
                 $response = $pipeline->process($psrRequest, $this->getActiveRequest());
