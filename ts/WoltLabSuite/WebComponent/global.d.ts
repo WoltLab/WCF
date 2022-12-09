@@ -29,7 +29,6 @@ declare global {
     TIME_NOW: number;
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
-    __initGoogleMaps: () => void;
 
     WoltLabLanguage: typeof Language;
     WoltLabTemplate: typeof Template;

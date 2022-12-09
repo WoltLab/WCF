@@ -1487,12 +1487,12 @@
   {
     let initCalled = false;
     const callbackPromise = new Promise((resolve) => {
-      window.__initGoogleMaps = resolve;
+      window.woltlab_core_google_maps_callback = resolve;
     });
     const loadGoogleMaps = (apiKey) => {
       if (!initCalled) {
         const script = document.createElement("script");
-        script.src = "https://maps.googleapis.com/maps/api/js?" + (apiKey ? `key=${apiKey}&` : "") + "callback=__initGoogleMaps";
+        script.src = "https://maps.googleapis.com/maps/api/js?" + (apiKey ? `key=${apiKey}&` : "") + "callback=woltlab_core_google_maps_callback";
         document.head.appendChild(script);
         initCalled = true;
       }

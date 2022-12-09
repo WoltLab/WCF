@@ -1,14 +1,16 @@
 {
   let initCalled = false;
   const callbackPromise = new Promise<void>((resolve) => {
-    window.__initGoogleMaps = resolve;
+    (window as any).woltlab_core_google_maps_callback = resolve;
   });
 
   const loadGoogleMaps = (apiKey: string): Promise<void> => {
     if (!initCalled) {
       const script = document.createElement("script");
       script.src =
-        "https://maps.googleapis.com/maps/api/js?" + (apiKey ? `key=${apiKey}&` : "") + "callback=__initGoogleMaps";
+        "https://maps.googleapis.com/maps/api/js?" +
+        (apiKey ? `key=${apiKey}&` : "") +
+        "callback=woltlab_core_google_maps_callback";
       document.head.appendChild(script);
       initCalled = true;
     }
