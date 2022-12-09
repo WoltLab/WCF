@@ -1512,10 +1512,10 @@
         this.#validate();
         void loadGoogleMaps(this.apiKey).then(() => {
           this.#map = new google.maps.Map(this, {
-            zoom: 13,
+            zoom: this.zoom,
             center: {
-              lat: 0,
-              lng: 0
+              lat: this.lat,
+              lng: this.lng
             }
           });
           if (this.#mapLoadedResolve) {
@@ -1544,6 +1544,15 @@
       }
       get map() {
         return this.#map;
+      }
+      get lat() {
+        return this.getAttribute("lat") ? parseFloat(this.getAttribute("lat")) : 0;
+      }
+      get lng() {
+        return this.getAttribute("lng") ? parseFloat(this.getAttribute("lng")) : 0;
+      }
+      get zoom() {
+        return this.getAttribute("zoom") ? parseInt(this.getAttribute("zoom")) : 13;
       }
     }
     window.customElements.define("woltlab-core-google-maps", WoltlabCoreGoogleMapsElement);
