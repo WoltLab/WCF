@@ -2,6 +2,10 @@
 
 namespace wcf\system\style;
 
+use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\TreeMapper;
+use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
@@ -12,7 +16,6 @@ use wcf\system\io\HttpFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\style\exception\FontDownloadFailed;
 use wcf\util\FileUtil;
-use wcf\util\JSON;
 
 /**
  * Manages webfont families.
@@ -27,6 +30,8 @@ final class FontManager extends SingletonFactory
 {
     private ClientInterface $http;
 
+    private TreeMapper $mapper;
+
     /**
      * @inheritDoc
      */
@@ -36,6 +41,10 @@ final class FontManager extends SingletonFactory
             'base_uri' => 'https://fonts.woltlab.com/',
             RequestOptions::TIMEOUT => 10,
         ]);
+
+        $this->mapper = (new MapperBuilder())
+            ->allowSuperfluousKeys()
+            ->mapper();
     }
 
     /**
@@ -60,12 +69,15 @@ final class FontManager extends SingletonFactory
      *
      * @return  string[]
      */
-    public function fetchAvailableFamilies()
+    public function fetchAvailableFamilies(): array
     {
         $request = new Request('GET', 'families.json');
         $response = $this->http->send($request);
 
-        return JSON::decode($response->getBody());
+        return $this->mapper->map(
+            'list<string>',
+            Source::json($response->getBody())
+        );
     }
 
     /**
@@ -80,7 +92,20 @@ final class FontManager extends SingletonFactory
         try {
             $request = new Request('GET', \rawurlencode($family) . '/manifest.json');
             $response = $this->http->send($request);
-            $manifest = JSON::decode($response->getBody());
+            $manifest = $this->mapper->map(
+                <<<'EOT'
+                    array {
+                        name: string,
+                        designer: string,
+                        license: string,
+                        license_text: string,
+                        font_files: list<string>,
+                        preload: list<string>,
+                        css: string,
+                    }
+                    EOT,
+                Source::json($response->getBody())
+            );
 
             $familyDirectory = \dirname($this->getCssFilename($family));
             FileUtil::makePath($familyDirectory);
@@ -146,12 +171,14 @@ final class FontManager extends SingletonFactory
             return $manifest;
         } catch (ClientException $e) {
             if ($e->getResponse()->getStatusCode() == 404) {
-                throw new FontDownloadFailed("Unable to download font family '" . $family . "'.", 'notFound', $e);
+                throw new FontDownloadFailed("Unable to download font family '{$family}'.", 'notFound', $e);
             } else {
-                throw new FontDownloadFailed("Unable to download font family '" . $family . "'.", '', $e);
+                throw new FontDownloadFailed("Unable to download font family '{$family}'.", '', $e);
             }
         } catch (ClientExceptionInterface $e) {
-            throw new FontDownloadFailed("Unable to download font family '" . $family . "'.", '', $e);
+            throw new FontDownloadFailed("Unable to download font family '{$family}'.", '', $e);
+        } catch (MappingError $e) {
+            throw new FontDownloadFailed("Unable to parse the manifest for font family '{$family}'.", 'parsingFailed', $e);
         }
     }
 }
