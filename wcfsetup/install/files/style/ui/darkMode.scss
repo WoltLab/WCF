@@ -1,0 +1,22 @@
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+
+    .contentItem {
+        border: 1px solid var(--wcfContentBorderInner);
+    }
+
+    .dialog,
+    .dialogContainer {
+        border: 1px solid var(--wcfContentBorderInner);
+    }
+
+    .dropdownMenu {
+        border: 1px solid var(--wcfDropdownBorderInner);
+    }
+
+    .userMenu {
+        border: 1px solid var(--wcfUserMenuBorder);
+    }
+}

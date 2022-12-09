@@ -461,8 +461,19 @@ final class StyleCompiler extends SingletonFactory
 
             \closedir($handle);
 
-            // directory order is not deterministic in some cases
-            \sort($files);
+            // Directory order is not deterministic in some cases,
+            // also the `darkMode.scss` must be at the end.
+            \usort($files, function (string $a, string $b) {
+                if (\str_ends_with($a, 'ui/darkMode.scss')) {
+                    return 1;
+                }
+                
+                if (\str_ends_with($b, 'ui/darkMode.scss')) {
+                    return -1;
+                }
+
+                return $a <=> $b;
+            });
         }
 
         return $files;
@@ -523,8 +534,7 @@ final class StyleCompiler extends SingletonFactory
 
         if ($darkModeVariables !== []) {
             $content .= \sprintf(
-                "\n@media (prefers-color-scheme: dark) {\n%s%s}\n",
-                "html {\n\tcolor-scheme: dark;\n}\n",
+                "\n@media (prefers-color-scheme: dark) {\n%s}\n",
                 $this->exportStyleVariables($darkModeVariables),
             );
         }
