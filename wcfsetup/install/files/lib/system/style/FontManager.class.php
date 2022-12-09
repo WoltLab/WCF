@@ -123,13 +123,12 @@ final class FontManager extends SingletonFactory
                 if (\in_array($filename, $preload)) {
                     $preloadRequests .= \sprintf(
                         <<<'EOT'
-                    --woltlab-suite-preload: #{preload(
-                        %s,
-                        $as: "font",
-                        $crossorigin: true
-                    )};
-EOT
-                        ,
+                            --woltlab-suite-preload: #{preload(
+                                %s,
+                                $as: "font",
+                                $crossorigin: true
+                            )};
+                            EOT,
                         \sprintf(
                             'getFont("%s", "%s", "%d")',
                             \rawurlencode($filename),
