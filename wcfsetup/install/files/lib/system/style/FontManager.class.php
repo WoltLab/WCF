@@ -23,7 +23,7 @@ use wcf\util\JSON;
  * @package WoltLabSuite\Core\System\Style
  * @since   5.3
  */
-class FontManager extends SingletonFactory
+final class FontManager extends SingletonFactory
 {
     /**
      * @var ClientInterface
