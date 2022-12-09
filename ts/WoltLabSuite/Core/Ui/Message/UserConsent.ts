@@ -62,9 +62,13 @@ class UserConsent {
   }
 
   private enableExternalMedia(container: HTMLElement): void {
-    const payload = atob(container.dataset.payload!);
+    if (container.dataset.target) {
+      document.getElementById(container.dataset.target)!.hidden = false;
+    } else {
+      const payload = atob(container.dataset.payload!);
+      DomUtil.insertHtml(payload, container, "before");
+    }
 
-    DomUtil.insertHtml(payload, container, "before");
     container.remove();
   }
 

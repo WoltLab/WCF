@@ -1,4 +1,4 @@
-<div class="messageUserConsent" data-payload="{$payload}">
+<div class="messageUserConsent" {if !$payload|empty}data-payload="{$payload}"{else}data-target="{$target}"{/if}>
 	<div class="messageUserConsentHeader">
 		<span class="messageUserConsentTitle">{lang}wcf.message.user.consent.title{/lang}</span>
 		<a href="{$url}" class="messageUserConsentHost externalURL">{$host}</a>

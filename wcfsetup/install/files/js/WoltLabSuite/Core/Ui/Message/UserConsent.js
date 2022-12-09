@@ -56,8 +56,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             }
         }
         enableExternalMedia(container) {
-            const payload = atob(container.dataset.payload);
-            Util_1.default.insertHtml(payload, container, "before");
+            if (container.dataset.target) {
+                document.getElementById(container.dataset.target).hidden = false;
+            }
+            else {
+                const payload = atob(container.dataset.payload);
+                Util_1.default.insertHtml(payload, container, "before");
+            }
             container.remove();
         }
         enableAllExternalMedia() {
