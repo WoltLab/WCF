@@ -2,6 +2,7 @@
 
 namespace wcf\data\moderation\queue;
 
+use wcf\action\ModerationQueueAssignUserAction;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ILinkableObject;
 use wcf\data\ITitledObject;
@@ -12,6 +13,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -247,5 +249,13 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         }
 
         return FontAwesomeIcon::fromValues('triangle-exclamation');
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function endpointAssignUser(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(ModerationQueueAssignUserAction::class, ['object' => $this]);
     }
 }

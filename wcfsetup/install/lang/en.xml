@@ -4194,6 +4194,7 @@ Attachments:
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[Assign User]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[This user does not have sufficient privileges.]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
+		<item name="wcf.moderation.assignedUser.other"><![CDATA[Other user]]></item>
 		<item name="wcf.moderation.assignedUsername"><![CDATA[Assigned User]]></item>
 		<item name="wcf.moderation.filter"><![CDATA[Filter Items]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Type]]></item>
