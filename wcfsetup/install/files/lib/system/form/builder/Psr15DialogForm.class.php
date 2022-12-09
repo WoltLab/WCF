@@ -34,18 +34,18 @@ final class Psr15DialogForm extends FormDocument
 
     /**
      * Processes the form using the request's parsed body. Returns 'null'
-     * if validation succeeded and the result of 'toJsonResponse()' otherwise.
+     * if validation succeeded and the result of 'toResponse()' otherwise.
      *
-     * @see Psr15DialogForm::toJsonResponse()
+     * @see Psr15DialogForm::toResponse()
      */
-    public function validatePsr7Request(ServerRequestInterface $request): ?ResponseInterface
+    public function validateRequest(ServerRequestInterface $request): ?ResponseInterface
     {
         $this->requestData($request->getParsedBody());
         $this->readValues();
         $this->validate();
 
         if ($this->hasValidationErrors()) {
-            return $this->toJsonResponse();
+            return $this->toResponse();
         }
 
         return null;
@@ -54,7 +54,7 @@ final class Psr15DialogForm extends FormDocument
     /**
      * Returns a response that can be consumed by JavaScript's `dialogFactory().usingFormBuilder()`.
      */
-    public function toJsonResponse(): ResponseInterface
+    public function toResponse(): ResponseInterface
     {
         return new JsonResponse([
             'dialog' => $this->getHtml(),
