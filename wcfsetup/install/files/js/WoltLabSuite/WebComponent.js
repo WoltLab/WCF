@@ -1502,6 +1502,7 @@
       #map;
       #mapLoaded;
       #mapLoadedResolve;
+      #rendered = false;
       constructor() {
         super();
         this.#mapLoaded = new Promise((resolve) => {
@@ -1509,6 +1510,22 @@
         });
       }
       connectedCallback() {
+        if (!this.hidden) {
+          this.#render();
+        }
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === "hidden" && newValue === null) {
+          this.#render();
+        }
+      }
+      static get observedAttributes() {
+        return ["hidden"];
+      }
+      #render() {
+        if (this.#rendered) {
+          return;
+        }
         this.#validate();
         void loadGoogleMaps(this.apiKey).then(() => {
           this.#map = new google.maps.Map(this, {
@@ -1523,6 +1540,7 @@
             this.#mapLoadedResolve = void 0;
           }
         });
+        this.#rendered = true;
       }
       async addMarker(latitude, longitude, title, focus) {
         await this.#mapLoaded;

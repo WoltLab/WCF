@@ -22,6 +22,7 @@
     #map?: google.maps.Map;
     #mapLoaded: Promise<void>;
     #mapLoadedResolve?: () => void;
+    #rendered = false;
 
     constructor() {
       super();
@@ -32,6 +33,25 @@
     }
 
     connectedCallback() {
+      if (!this.hidden) {
+        this.#render();
+      }
+    }
+
+    attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+      if (name === 'hidden' && newValue === null) {
+        this.#render();
+      }
+    }
+
+    static get observedAttributes(): string[] {
+      return ["hidden"];
+    }
+
+    #render(): void {
+      if (this.#rendered) {
+        return;
+      }
       this.#validate();
 
       void loadGoogleMaps(this.apiKey).then(() => {
@@ -48,6 +68,8 @@
           this.#mapLoadedResolve = undefined;
         }
       });
+
+      this.#rendered = true;
     }
 
     async addMarker(latitude: number, longitude: number, title: string, focus?: boolean): Promise<void> {
