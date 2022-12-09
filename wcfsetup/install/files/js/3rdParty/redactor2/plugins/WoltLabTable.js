@@ -2,6 +2,7 @@ $.Redactor.prototype.WoltLabTable = function() {
 	"use strict";
 	
 	var _dialogApi = null;
+	let interactWithRedactor;
 	
 	return {
 		init: function() {
@@ -50,6 +51,9 @@ $.Redactor.prototype.WoltLabTable = function() {
 			require(['WoltLabSuite/Core/Ui/Redactor/Table'], function(UiRedactorTable) {
 				_dialogApi = UiRedactorTable;
 			});
+			require(['WoltLabSuite/Core/Core'], (Core) => {
+				interactWithRedactor = Core.interactWithRedactor;
+			});
 		},
 		
 		_promptTableSize: function (event) {
@@ -58,15 +62,28 @@ $.Redactor.prototype.WoltLabTable = function() {
 			if (this.table.getTable()) {
 				return;
 			}
+
+			let hasRestoredSelection = false;
+			if (this.detect.isMobile() && !this.core.editor()[0].contains(document.activeElement)) {
+				this.selection.restore();
+
+				hasRestoredSelection = true;
+			}
 			
 			this.selection.save();
+
+			if (hasRestoredSelection) {
+				document.activeElement.blur();
+			}
 			
 			_dialogApi.showDialog({
 				submitCallback: (function() {
-					this.WoltLabTable._insertTable(
-						~~elById('redactor-table-rows').value,
-						~~elById('redactor-table-cols').value
-					);
+					interactWithRedactor(() => {
+						this.WoltLabTable._insertTable(
+							~~elById('redactor-table-rows').value,
+							~~elById('redactor-table-cols').value
+						);
+					});
 				}).bind(this)
 			});
 		},
