@@ -76,9 +76,9 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
         $form = $this->getForm($moderationQueue);
 
         if ($request->getMethod() === 'GET') {
-            return $form->toJsonResponse();
+            return $form->toResponse();
         } elseif ($request->getMethod() === 'POST') {
-            $response = $form->validatePsr7Request($request);
+            $response = $form->validateRequest($request);
             if ($response !== null) {
                 return $response;
             }
