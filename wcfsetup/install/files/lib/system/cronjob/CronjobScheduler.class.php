@@ -5,9 +5,11 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\user\User;
 use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
+use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -19,7 +21,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Cronjob
  */
-class CronjobScheduler extends SingletonFactory
+final class CronjobScheduler extends SingletonFactory
 {
     /**
      * cached times of the next and after next cronjob execution
@@ -53,40 +55,47 @@ class CronjobScheduler extends SingletonFactory
         // clear cache
         self::clearCache();
 
-        foreach ($cronjobEditors as $cronjobEditor) {
-            // mark cronjob as being executed
-            $cronjobEditor->update([
-                'state' => Cronjob::EXECUTING,
-            ]);
+        $user = WCF::getUser();
+        try {
+            SessionHandler::getInstance()->changeUser(new User(null), true);
 
-            // create log entry
-            $log = CronjobLogEditor::create([
-                'cronjobID' => $cronjobEditor->cronjobID,
-                'execTime' => TIME_NOW,
-            ]);
-            $logEditor = new CronjobLogEditor($log);
+            foreach ($cronjobEditors as $cronjobEditor) {
+                // mark cronjob as being executed
+                $cronjobEditor->update([
+                    'state' => Cronjob::EXECUTING,
+                ]);
 
-            // check if all required options are set for cronjob to be executed
-            // note: a general log is created to avoid confusion why a cronjob
-            // apparently is not executed while that is indeed the correct internal
-            // behavior
-            if ($cronjobEditor->validateOptions()) {
-                try {
-                    $this->executeCronjob($cronjobEditor, $logEditor);
-                } catch (\Throwable $e) {
-                    $this->logResult($logEditor, $e);
-                } catch (\Exception $e) {
-                    $this->logResult($logEditor, $e);
+                // create log entry
+                $log = CronjobLogEditor::create([
+                    'cronjobID' => $cronjobEditor->cronjobID,
+                    'execTime' => TIME_NOW,
+                ]);
+                $logEditor = new CronjobLogEditor($log);
+
+                // check if all required options are set for cronjob to be executed
+                // note: a general log is created to avoid confusion why a cronjob
+                // apparently is not executed while that is indeed the correct internal
+                // behavior
+                if ($cronjobEditor->validateOptions()) {
+                    try {
+                        $this->executeCronjob($cronjobEditor, $logEditor);
+                    } catch (\Throwable $e) {
+                        $this->logResult($logEditor, $e);
+                    } catch (\Exception $e) {
+                        $this->logResult($logEditor, $e);
+                    }
+                } else {
+                    $this->logResult($logEditor);
                 }
-            } else {
-                $this->logResult($logEditor);
-            }
 
-            // mark cronjob as done
-            $cronjobEditor->update([
-                'failCount' => 0,
-                'state' => Cronjob::READY,
-            ]);
+                // mark cronjob as done
+                $cronjobEditor->update([
+                    'failCount' => 0,
+                    'state' => Cronjob::READY,
+                ]);
+            }
+        } finally {
+            SessionHandler::getInstance()->changeUser($user, true);
         }
     }
 
@@ -104,7 +113,7 @@ class CronjobScheduler extends SingletonFactory
      * Resets any cronjobs that have previously failed to execute. Cronjobs that have failed too often will
      * be disabled automatically.
      */
-    protected function resetFailedCronjobs()
+    private function resetFailedCronjobs()
     {
         WCF::getDB()->beginTransaction();
         /** @noinspection PhpUnusedLocalVariableInspection */
@@ -195,7 +204,7 @@ class CronjobScheduler extends SingletonFactory
     /**
      * Loads outstanding cronjobs.
      */
-    protected function loadCronjobs()
+    private function loadCronjobs()
     {
         WCF::getDB()->beginTransaction();
         /** @noinspection PhpUnusedLocalVariableInspection */
@@ -250,11 +259,9 @@ class CronjobScheduler extends SingletonFactory
     /**
      * Executes a cronjob.
      *
-     * @param CronjobEditor $cronjobEditor
-     * @param CronjobLogEditor $logEditor
      * @throws  SystemException
      */
-    protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor)
+    private function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor)
     {
         $className = $cronjobEditor->className;
         if (!\class_exists($className)) {
@@ -277,10 +284,9 @@ class CronjobScheduler extends SingletonFactory
     /**
      * Logs cronjob exec success or failure.
      *
-     * @param CronjobLogEditor $logEditor
      * @param \Throwable $exception
      */
-    protected function logResult(CronjobLogEditor $logEditor, $exception = null)
+    private function logResult(CronjobLogEditor $logEditor, $exception = null)
     {
         if ($exception !== null) {
             \wcf\functions\exception\logThrowable($exception);
@@ -307,7 +313,7 @@ class CronjobScheduler extends SingletonFactory
     /**
      * Loads the cached data for cronjob execution.
      */
-    protected function loadCache()
+    private function loadCache()
     {
         $this->cache = CronjobCacheBuilder::getInstance()->getData();
     }

@@ -221,7 +221,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     }
 
     /**
-     * Validates the 'executeCronjobs' action.
+     * @deprecated 6.0 Either use CronjobScheduler::executeCronjobs() directly, or query CronjobPerformAction.
      */
     public function validateExecuteCronjobs()
     {
@@ -229,7 +229,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
     }
 
     /**
-     * Executes open cronjobs.
+     * @deprecated 6.0 Either use CronjobScheduler::executeCronjobs() directly, or query CronjobPerformAction.
      */
     public function executeCronjobs()
     {

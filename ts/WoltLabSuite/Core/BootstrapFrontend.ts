@@ -13,13 +13,13 @@ import * as ControllerPopover from "./Controller/Popover";
 import * as UiUserIgnore from "./Ui/User/Ignore";
 import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
 import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
-import * as Ajax from "./Ajax";
 import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
 import { ShareProvider, addShareProviders } from "./Ui/Message/Share/Providers";
 import * as UiFeedDialog from "./Ui/Feed/Dialog";
 import User from "./User";
 import UiPageMenuMainFrontend from "./Ui/Page/Menu/Main/Frontend";
 import { whenFirstSeen } from "./LazyLoader";
+import { prepareRequest } from "./Ajax/Backend";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -27,7 +27,7 @@ interface BootstrapOptions {
     force: boolean;
   };
   enableUserPopover: boolean;
-  executeCronjobs: boolean;
+  executeCronjobs: string | undefined;
   shareButtonProviders?: ShareProvider[];
   styleChanger: boolean;
 }
@@ -76,15 +76,14 @@ export function setup(options: BootstrapOptions): void {
     _initUserPopover();
   }
 
-  if (options.executeCronjobs) {
-    Ajax.apiOnce({
-      data: {
-        className: "wcf\\data\\cronjob\\CronjobAction",
-        actionName: "executeCronjobs",
-      },
-      failure: () => false,
-      silent: true,
-    });
+  if (options.executeCronjobs !== undefined) {
+    void prepareRequest(options.executeCronjobs)
+      .get()
+      .disableLoadingIndicator()
+      .fetchAsResponse()
+      .catch(() => {
+        /* Ignore errors. */
+      });
   }
 
   BackgroundQueue.setUrl(options.backgroundQueue.url);
