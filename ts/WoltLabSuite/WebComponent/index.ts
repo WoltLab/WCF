@@ -5,7 +5,7 @@ window.WoltLabLanguage = Language;
 window.WoltLabTemplate = Template;
 
 import "./fa-metadata.js";
-import "./fa-icon.ts";
+import "./fa-brand.ts";
 import "./fa-icon.ts";
 import "./woltlab-core-date-time.ts";
 import "./woltlab-core-reaction-summary.ts";
