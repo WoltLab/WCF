@@ -121,6 +121,10 @@
         border: 1px solid var(--wcfDropdownBorderInner);
     }
 
+    .popover {
+        border: 1px solid var(--wcfContentContainerBorder);
+    }
+
     .userMenu {
         border: 1px solid var(--wcfUserMenuBorder);
     }
