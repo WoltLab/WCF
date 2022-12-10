@@ -54,7 +54,7 @@ class DefaultAvatar implements IUserAvatar, ISafeFormatAvatar
                 \hexdec($backgroundColor[4] . $backgroundColor[5])
             );
 
-            $textColor = ($perceptiveLuminance < 0.3) ? '0 0 0' : '255 255 255';
+            $textColor = ($perceptiveLuminance < 0.5) ? '0 0 0' : '255 255 255';
 
             // the <path> is basically a shorter version of a <rect>
             $svg = <<<SVG
