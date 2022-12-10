@@ -3,6 +3,111 @@
         color-scheme: dark;
     }
 
+    .badge,
+    a.badge {
+        --background-color: #2f394c;
+        --color: #d1d2d3;
+
+        &.badgeUpdate {
+            --background-color: rgba(204, 0, 1, 1);
+        }
+
+        &.green {
+            --background-color: #1b5e20;
+            --color: #fff;
+        }
+
+        &.red {
+            --background-color: #c1183d;
+            --color: #fff;
+        }
+
+        &.black {
+            --background-color: #333;
+            --color: #ccc;
+        }
+
+        &.brown {
+            --background-color: #795548;
+            --color: #fff;
+        }
+
+        &.orange {
+            --background-color: #f57c00;
+            --color: #000;
+        }
+
+        &.yellow {
+            --background-color: #ffeb3b;
+            --color: #333;
+        }
+
+        &.blue {
+            --background-color: #1976d2;
+            --color: #fff;
+        }
+
+        &.purple {
+            --background-color: #673ab7;
+            --color: #fff;
+        }
+
+        &.pink {
+            --background-color: #e10fb0;
+            --color: #fff;
+        }
+    }
+
+    a.badge:hover {
+        --color: var(--wcfContentBackground);
+        text-decoration: none;
+
+        &.black {
+            --background-color: #000;
+            --color: #ccc;
+        }
+
+        &.brown {
+            --background-color: #3e2723;
+            --color: #000;
+        }
+
+        &.red {
+            --background-color: #900;
+            --color: #fff;
+        }
+
+        &.orange {
+            --background-color: #ef6c00;
+            --color: #000;
+        }
+
+        &.yellow {
+            --background-color: #cc0;
+            --color: #000;
+        }
+
+        &.green {
+            --background-color: #164b19;
+            --color: #fff;
+        }
+
+        &.blue {
+            --background-color: #0d47a1;
+            --color: #fff;
+        }
+
+        &.purple {
+            --background-color: #4527a0;
+            --color: #fff;
+        }
+
+        &.pink {
+            --background-color: #c09;
+            --color: #fff;
+        }
+    }
+
     .contentItem {
         border: 1px solid var(--wcfContentBorderInner);
     }

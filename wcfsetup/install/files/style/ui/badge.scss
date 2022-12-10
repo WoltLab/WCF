@@ -1,8 +1,11 @@
 .badge,
 a.badge {
-	background-color: var(--wcfContentText);
+	--background-color: var(--wcfContentText);
+	--color: var(--wcfContentBackground);
+
+	background-color: var(--background-color);
 	border-radius: 2px;
-	color: var(--wcfContentBackground);
+	color: var(--color);
 	display: inline-block;
 	line-height: 1.28;
 	padding: 2px 6px;
@@ -15,95 +18,95 @@ a.badge {
 
 	/* colors */
 	&.badgeUpdate {
-		background-color: rgba(204, 0, 1, 1);
-		color: rgba(255, 255, 255, 1);
+		--background-color: rgba(204, 0, 1, 1);
+		--color: rgba(255, 255, 255, 1);
 		font-weight: 600;
 	}
 
 	/* default label colors */
 	&.green {
-		background-color: rgba(0, 153, 0, 1);
-		color: rgba(238, 255, 238, 1);
+		--background-color: rgba(0, 153, 0, 1);
+		--color: rgba(238, 255, 238, 1);
 	}
 
 	&.red {
-		background-color: rgba(204, 0, 0, 1);
-		color: rgba(255, 238, 238, 1);
+		--background-color: rgba(204, 0, 0, 1);
+		--color: rgba(255, 238, 238, 1);
 	}
 
 	&.black {
-		background-color: #333;
-		color: #fff;
+		--background-color: #333;
+		--color: #fff;
 	}
 
 	&.brown {
-		background-color: #c63;
-		color: #fff;
+		--background-color: #c63;
+		--color: #fff;
 	}
 
 	&.orange {
-		background-color: #f90;
-		color: #fff;
+		--background-color: #f90;
+		--color: #fff;
 	}
 
 	&.yellow {
-		background-color: #ff0;
-		color: #333;
+		--background-color: #ff0;
+		--color: #333;
 	}
 
 	&.blue {
-		background-color: #369;
-		color: #fff;
+		--background-color: #369;
+		--color: #fff;
 	}
 
 	&.purple {
-		background-color: #c0f;
-		color: #fff;
+		--background-color: #c0f;
+		--color: #fff;
 	}
 
 	&.pink {
-		background-color: #f0c;
-		color: #fff;
+		--background-color: #f0c;
+		--color: #fff;
 	}
 }
 
 a.badge:hover {
-	color: var(--wcfContentBackground);
+	--color: var(--wcfContentBackground);
 	text-decoration: none;
 
 	&.black {
-		background-color: #000;
+		--background-color: #000;
 	}
 
 	&.brown {
-		background-color: #930;
+		--background-color: #930;
 	}
 
 	&.red {
-		background-color: #900;
+		--background-color: #900;
 	}
 
 	&.orange {
-		background-color: #f60;
+		--background-color: #f60;
 	}
 
 	&.yellow {
-		background-color: #cc0;
+		--background-color: #cc0;
 	}
 
 	&.green {
-		background-color: #060;
+		--background-color: #060;
 	}
 
 	&.blue {
-		background-color: #036;
+		--background-color: #036;
 	}
 
 	&.purple {
-		background-color: #90c;
+		--background-color: #90c;
 	}
 
 	&.pink {
-		background-color: #c09;
+		--background-color: #c09;
 	}
 }
