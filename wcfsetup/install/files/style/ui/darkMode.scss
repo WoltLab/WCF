@@ -9,17 +9,17 @@
         --color: #d1d2d3;
 
         &.badgeUpdate {
-            --background-color: rgba(204, 0, 1, 1);
+            --background-color: #027abb;
         }
 
         &.green {
             --background-color: #1b5e20;
-            --color: #fff;
+            --color: #cfdbcf;
         }
 
         &.red {
             --background-color: #c1183d;
-            --color: #fff;
+            --color: #f9e7ea;
         }
 
         &.black {
@@ -29,32 +29,32 @@
 
         &.brown {
             --background-color: #795548;
-            --color: #fff;
+            --color: #e1dad7;
         }
 
         &.orange {
             --background-color: #f57c00;
-            --color: #000;
+            --color: #361b06;
         }
 
         &.yellow {
             --background-color: #ffeb3b;
-            --color: #333;
+            --color: #38340f;
         }
 
         &.blue {
             --background-color: #204f7e;
-            --color: #fff;
+            --color: #cfd8e3;
         }
 
         &.purple {
             --background-color: #673ab7;
-            --color: #fff;
+            --color: #ded4f0;
         }
 
         &.pink {
             --background-color: #e10fb0;
-            --color: #fff;
+            --color: #1a0414;
         }
     }
 
@@ -69,42 +69,42 @@
 
         &.brown {
             --background-color: #3e2723;
-            --color: #000;
+            --color: #e1dad7;
         }
 
         &.red {
             --background-color: #900;
-            --color: #fff;
+            --color: #f9e7ea;
         }
 
         &.orange {
             --background-color: #ef6c00;
-            --color: #000;
+            --color: #361b06;
         }
 
         &.yellow {
             --background-color: #cc0;
-            --color: #000;
+            --color: #38340f;
         }
 
         &.green {
             --background-color: #164b19;
-            --color: #fff;
+            --color: #cfdbcf;
         }
 
         &.blue {
             --background-color: #1b4269;
-            --color: #fff;
+            --color: #cfd8e3;
         }
 
         &.purple {
             --background-color: #4527a0;
-            --color: #fff;
+            --color: #ded4f0;
         }
 
         &.pink {
             --background-color: #c09;
-            --color: #fff;
+            --color: #1a0414;
         }
     }
 
