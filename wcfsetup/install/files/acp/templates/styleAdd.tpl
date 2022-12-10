@@ -1000,6 +1000,7 @@
 				'wcfFooterCopyrightLink': '#spFooterCopyright a { color: VALUE; }',
 				'wcfFooterCopyrightLinkActive': '#spFooterCopyright a:hover { color: VALUE; }',
 				'wcfSidebarBackground': '#spContentSidebar .spContentSidebarBox { background-color: VALUE; }',
+				'wcfSidebarBorder': '#spContentSidebar .spContentSidebarBox { --border-color: VALUE; }',
 				'wcfSidebarText': '#spContentSidebar .spContentSidebarBox { color: VALUE; }',
 				'wcfSidebarLink': '#spContentSidebar .spContentSidebarBox a { color: VALUE; }',
 				'wcfSidebarLinkActive': '#spContentSidebar .spContentSidebarBox a:hover { color: VALUE; }',

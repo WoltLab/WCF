@@ -99,7 +99,7 @@ html[dir="ltr"] #spStatus > li > div { border-left: 5px solid #000; }
 html[dir="rtl"] #spStatus > li > div { border-right: 5px solid #000; }
 
 /* ### wrapper sidebar ### */
-.spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }
+.spSidebarBox { background-color: rgb(217, 237, 247); border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 10px; padding: 10px; }
 .spColor { align-items: center; }
 .spColor:not(:first-child) { margin-top: 5px; }
 html:not(.touch) .spColor:hover .spColorBox { border: 2px dashed #6e7792; left: -2px; padding: 2px; position: relative; }
