@@ -401,7 +401,7 @@ final class StyleCompiler extends SingletonFactory
         $variables = $darkModeVariables = [];
         while ($row = $statement->fetchArray()) {
             $variables[$row['variableName']] = $row['defaultValue'];
-            $darkModeVariables[Style::DARK_MODE_PREFIX . $row['variableName']] = $row['defaultValueDarkMode'] ?? '';
+            $variables[Style::DARK_MODE_PREFIX . $row['variableName']] = $row['defaultValueDarkMode'] ?? '';
         }
 
         $variables['style_image_path'] = "'../images/'";
@@ -467,7 +467,7 @@ final class StyleCompiler extends SingletonFactory
                 if (\str_ends_with($a, 'ui/darkMode.scss')) {
                     return 1;
                 }
-                
+
                 if (\str_ends_with($b, 'ui/darkMode.scss')) {
                     return -1;
                 }
