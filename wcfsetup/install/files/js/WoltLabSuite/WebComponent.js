@@ -1197,15 +1197,24 @@
 
   // ts/WoltLabSuite/WebComponent/woltlab-core-pagination.ts
   {
+    let mediaQuery;
+    const getMediaQueryScreenXs = () => {
+      if (mediaQuery === void 0) {
+        mediaQuery = window.matchMedia("(max-width: 544px)");
+      }
+      return mediaQuery;
+    };
     class WoltlabCorePaginationElement extends HTMLElement {
       #className = "pagination";
       connectedCallback() {
         this.#render();
+        getMediaQueryScreenXs().addEventListener("change", () => this.#render());
       }
       #render() {
         this.innerHTML = "";
-        if (this.count < 2)
+        if (this.count < 2) {
           return;
+        }
         this.classList.add(`${this.#className}__wrapper`);
         const nav = this.#getNavElement();
         this.append(nav);
@@ -1217,13 +1226,13 @@
         ul.classList.add(this.#className + "__list");
         nav.append(ul);
         ul.append(this.#getLinkItem(1));
-        if (this.page > 4) {
+        if (this.page > this.thresholdForEllispsis + 1) {
           ul.append(this.#getEllipsesItem());
         }
         this.#getLinkItems().forEach((item) => {
           ul.append(item);
         });
-        if (this.count - this.page > 3) {
+        if (this.count - this.page > this.thresholdForEllispsis) {
           ul.append(this.#getEllipsesItem());
         }
         ul.append(this.#getLinkItem(this.count));
@@ -1312,13 +1321,20 @@
       }
       #getLinkItems() {
         const items = [];
-        let start = this.page - 1;
-        if (start === 3) {
-          start--;
-        }
-        let end = this.page + 1;
-        if (end === this.count - 2) {
-          end++;
+        let start;
+        let end;
+        if (getMediaQueryScreenXs().matches) {
+          start = this.page;
+          end = this.page;
+        } else {
+          start = this.page - 1;
+          if (start === 3) {
+            start--;
+          }
+          end = this.page + 1;
+          if (end === this.count - 2) {
+            end++;
+          }
         }
         for (let i = start; i <= end; i++) {
           if (i <= 1 || i >= this.count) {
@@ -1341,6 +1357,12 @@
         });
         li.append(button);
         return li;
+      }
+      get thresholdForEllispsis() {
+        if (getMediaQueryScreenXs().matches) {
+          return 1;
+        }
+        return 3;
       }
       getLinkUrl(page) {
         if (!this.url) {

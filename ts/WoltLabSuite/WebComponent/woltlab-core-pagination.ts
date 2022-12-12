@@ -8,6 +8,15 @@
  */
 
 {
+  let mediaQuery: MediaQueryList;
+  const getMediaQueryScreenXs = (): MediaQueryList => {
+    if (mediaQuery === undefined) {
+      mediaQuery = window.matchMedia("(max-width: 544px)");
+    }
+
+    return mediaQuery;
+  };
+
   interface WoltlabCorePaginationEventMap {
     jumpToPage: CustomEvent;
     switchPage: CustomEvent<number>;
@@ -18,12 +27,16 @@
 
     connectedCallback() {
       this.#render();
+
+      getMediaQueryScreenXs().addEventListener("change", () => this.#render());
     }
 
     #render(): void {
       this.innerHTML = "";
 
-      if (this.count < 2) return;
+      if (this.count < 2) {
+        return;
+      }
 
       this.classList.add(`${this.#className}__wrapper`);
 
@@ -40,7 +53,7 @@
       nav.append(ul);
 
       ul.append(this.#getLinkItem(1));
-      if (this.page > 4) {
+      if (this.page > this.thresholdForEllispsis + 1) {
         ul.append(this.#getEllipsesItem());
       }
 
@@ -48,7 +61,7 @@
         ul.append(item);
       });
 
-      if (this.count - this.page > 3) {
+      if (this.count - this.page > this.thresholdForEllispsis) {
         ul.append(this.#getEllipsesItem());
       }
       ul.append(this.#getLinkItem(this.count));
@@ -163,17 +176,26 @@
     #getLinkItems(): HTMLLIElement[] {
       const items: HTMLLIElement[] = [];
 
-      let start = this.page - 1;
+      let start: number;
+      let end: number;
 
-      // Avoid generating an ellipsis which only skips a single
-      // page number. Instead of `1 ⋯ 3` this code will always
-      // generate `1 2 3`, but on page 5 it will be `1 ⋯ 4 5`.
-      if (start === 3) {
-        start--;
-      }
-      let end = this.page + 1;
-      if (end === this.count - 2) {
-        end++;
+      if (getMediaQueryScreenXs().matches) {
+        // On small devices show only the first, last and current
+        // page number.
+        start = this.page;
+        end = this.page;
+      } else {
+        // Avoid generating an ellipsis which only skips a single
+        // page number. Instead of `1 ⋯ 3` this code will always
+        // generate `1 2 3`, but on page 5 it will be `1 ⋯ 4 5`.
+        start = this.page - 1;
+        if (start === 3) {
+          start--;
+        }
+        end = this.page + 1;
+        if (end === this.count - 2) {
+          end++;
+        }
       }
 
       for (let i = start; i <= end; i++) {
@@ -202,6 +224,20 @@
       li.append(button);
 
       return li;
+    }
+
+    /**
+     * On smaller screens the ellipsis is shown when there
+     * is at least one page in-between the current page and
+     * the first or last page. On larger screens the ellipsis
+     * is only shown if it hides at least two numbers.
+     */
+    get thresholdForEllispsis(): number {
+      if (getMediaQueryScreenXs().matches) {
+        return 1;
+      }
+
+      return 3;
     }
 
     getLinkUrl(page: number): string {
