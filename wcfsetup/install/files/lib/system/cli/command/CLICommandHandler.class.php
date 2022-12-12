@@ -25,9 +25,7 @@ class CLICommandHandler
     private static $commands = [];
 
     /**
-     * Returns all available commands.
-     *
-     * @return  ICLICommand[]
+     * @deprecated 6.0 This method is unused and of questionable value.
      */
     public static function getCommands()
     {

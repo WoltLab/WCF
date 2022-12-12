@@ -271,8 +271,8 @@ class CLIWCF extends WCF
      */
     protected function initCommands()
     {
-        // add command name completer
-        self::getReader()->addCompleter(new CLICommandNameCompleter());
+        // Workaround to load commands for CLICommandHandler::getCommand().
+        CLICommandHandler::getCommands();
 
         while (true) {
             // roll back open transactions of the previous command, as they are dangerous in a long living script
