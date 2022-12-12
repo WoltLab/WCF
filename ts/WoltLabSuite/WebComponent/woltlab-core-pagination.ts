@@ -157,10 +157,17 @@
       return li;
     }
 
+    /**
+     * Generates page numbers that are adjacent to the current page.
+     */
     #getLinkItems(): HTMLLIElement[] {
       const items: HTMLLIElement[] = [];
 
       let start = this.page - 1;
+
+      // Avoid generating an ellipsis which only skips a single
+      // page number. Instead of `1 ⋯ 3` this code will always
+      // generate `1 2 3`, but on page 5 it will be `1 ⋯ 4 5`.
       if (start === 3) {
         start--;
       }
