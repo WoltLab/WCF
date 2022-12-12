@@ -271,6 +271,9 @@ class CLIWCF extends WCF
      */
     protected function initCommands()
     {
+        // Workaround to load commands for CLICommandHandler::getCommand().
+        CLICommandHandler::getCommands();
+
         while (true) {
             // roll back open transactions of the previous command, as they are dangerous in a long living script
             if (WCF::getDB()->rollBackTransaction()) {
