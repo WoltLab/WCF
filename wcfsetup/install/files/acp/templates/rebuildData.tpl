@@ -60,6 +60,15 @@
 	{/foreach}
 </section>
 
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.acp.rebuildData.cli{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.acp.rebuildData.cli.description{/lang}</p>
+	</header>
+
+	<textarea class="monospace" cols="40" rows="15">{implode from=$workers item='worker' glue="\n"}worker {$worker->getEncodedCliClassName()}{/implode}</textarea>
+</section>
+
 <footer class="contentFooter">
 	{hascontent}
 		<nav class="contentFooterNavigation">

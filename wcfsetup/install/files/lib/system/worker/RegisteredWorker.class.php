@@ -51,4 +51,15 @@ final class RegisteredWorker
     {
         return $this->classname;
     }
+
+    public function getEncodedCliClassName(): string
+    {
+        return \sprintf(
+            '"%s"',
+            \addcslashes(
+                $this->getClassName(),
+                '\\"'
+            )
+        );
+    }
 }

@@ -2635,6 +2635,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) {if LANGUAGE_USE_INFORMAL_VARIANT}führst du{else}führen Sie{/if} die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
+		<item name="wcf.acp.rebuildData.cli"><![CDATA[Via SSH aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.cli.description"><![CDATA[Die angegebenen Befehle können in der <kbd>cli.php</kbd> genutzt werden, um alle Aktionen in der korrekten Reihenfolge durchzuführen.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserRebuildDataWorker"><![CDATA[Benutzer aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserRebuildDataWorker.description"><![CDATA[Aktualisiert Zähler der Benutzer]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_LikeRebuildDataWorker"><![CDATA[Reaktionen aktualisieren]]></item>
