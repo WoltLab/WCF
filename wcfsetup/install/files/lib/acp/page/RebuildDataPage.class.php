@@ -54,7 +54,7 @@ final class RebuildDataPage extends AbstractPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'workers' => $this->workers,
+            'workers' => \iterator_to_array($this->workers),
         ]);
     }
 }

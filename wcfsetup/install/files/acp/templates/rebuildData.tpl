@@ -26,7 +26,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsRebuildAll">{icon name='down-long'} <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></a></li>
+			<li><button class="button jsRebuildAll">{icon name='down-long'} <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></button></li>
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
@@ -51,13 +51,22 @@
 				<button
 				   class="button small jsRebuildDataWorker"
 				   data-nicevalue="{$offset}"
-				   data-class-name="{$worker->classname}"
+				   data-class-name="{$worker->getClassName()}"
 				>{$worker->getName()}</button>
 				<small>{$worker->getDescription()}</small>
 			</dd>
 		</dl>
 		{assign var='offset' value=$offset+1}
 	{/foreach}
+</section>
+
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.acp.rebuildData.cli{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.acp.rebuildData.cli.description{/lang}</p>
+	</header>
+
+	<textarea class="monospace" cols="40" rows="15">{implode from=$workers item='worker' glue="\n"}worker {$worker->getEncodedCliClassName()}{/implode}</textarea>
 </section>
 
 <footer class="contentFooter">

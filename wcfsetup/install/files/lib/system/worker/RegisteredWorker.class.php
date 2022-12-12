@@ -17,7 +17,7 @@ use wcf\system\WCF;
 final class RegisteredWorker
 {
     public function __construct(
-        public readonly string $classname,
+        private readonly string $classname,
         private readonly ?ObjectType $legacyObjectType = null,
     ) {
     }
@@ -45,5 +45,21 @@ final class RegisteredWorker
         }
 
         return \str_replace('\\', '_', $this->classname);
+    }
+
+    public function getClassName(): string
+    {
+        return $this->classname;
+    }
+
+    public function getEncodedCliClassName(): string
+    {
+        return \sprintf(
+            '"%s"',
+            \addcslashes(
+                $this->getClassName(),
+                '\\"'
+            )
+        );
     }
 }
