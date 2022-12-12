@@ -3406,7 +3406,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.cli.worker.threads.windows"><![CDATA[Die parallele Verarbeitung mittels --threads steht unter Windows nicht zur Verfügung.]]></item>
 		<item name="wcf.cli.worker.threadId"><![CDATA[Gibt die Thread-ID während einer parallelen Verarbeitung an. Wird intern genutzt, wenn --threads gesetzt ist.]]></item>
 		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[Die angegebene Thread-ID ist ungültig.]]></item>
-		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden. Benutze "commands", um verfügbare Befehle aufzulisten.]]></item>
+		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>
 	</category>
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
