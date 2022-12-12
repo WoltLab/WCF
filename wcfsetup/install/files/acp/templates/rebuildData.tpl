@@ -51,7 +51,7 @@
 				<button
 				   class="button small jsRebuildDataWorker"
 				   data-nicevalue="{$offset}"
-				   data-class-name="{$worker->classname}"
+				   data-class-name="{$worker->getClassName()}"
 				>{$worker->getName()}</button>
 				<small>{$worker->getDescription()}</small>
 			</dd>
