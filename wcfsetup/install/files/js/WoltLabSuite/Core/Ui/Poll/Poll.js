@@ -79,9 +79,16 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             this.voteView?.checkVisibility(key);
             this.resultsView?.checkVisibility(key);
             this.voteHandler?.checkVisibility(key);
-            if (!this.participants && this.canViewParticipants()) {
-                this.participants = new Participants_1.default(this);
-                this.participants.showButton();
+            if (this.canViewParticipants()) {
+                if (key === PollViews.results) {
+                    if (!this.participants) {
+                        this.participants = new Participants_1.default(this);
+                    }
+                    this.participants.showButton();
+                }
+                else {
+                    this.participants?.hideButton();
+                }
             }
         }
         addView(key, html) {

@@ -129,7 +129,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
 
             $objectClassName = $this->objectClassName ?: $this->className;
             $baseClassName = \call_user_func([$this->decoratorClassName, 'getBaseClass']);
-            if ($objectClassName != $baseClassName && !\is_subclass_of($baseClassName, $objectClassName)) {
+            if ($objectClassName != $baseClassName && !\is_subclass_of($objectClassName, $baseClassName)) {
                 throw new SystemException("'" . $this->decoratorClassName . "' can't decorate objects of class '" . $objectClassName . "'");
             }
         }

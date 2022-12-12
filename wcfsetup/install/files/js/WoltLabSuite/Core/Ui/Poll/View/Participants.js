@@ -43,6 +43,9 @@ define(["require", "exports", "../../../Component/User/List"], function (require
         showButton() {
             this.button.hidden = false;
         }
+        hideButton() {
+            this.button.hidden = true;
+        }
     }
     exports.Participants = Participants;
     exports.default = Participants;
