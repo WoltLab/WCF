@@ -237,6 +237,6 @@ class SearchEngine extends SingletonFactory implements IContextAwareSearchEngine
      */
     public function isContextAware(): bool
     {
-        return ($this->getSearchEngine() instanceof IContextAwareSearchEngine);
+        return $this->getSearchEngine() instanceof IContextAwareSearchEngine;
     }
 }

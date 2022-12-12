@@ -41,7 +41,7 @@ final class RegisteredWorker
     private function getIdentifier(): string
     {
         if ($this->legacyObjectType !== null) {
-             return $this->legacyObjectType->objectType;
+            return $this->legacyObjectType->objectType;
         }
 
         return \str_replace('\\', '_', $this->classname);

@@ -177,7 +177,7 @@ class LikeObject extends DatabaseObject
         $data = [];
         foreach ($this->reactions as $reactionTypeID => $value) {
             $data[] = [
-                $reactionTypeID, $value['reactionCount']
+                $reactionTypeID, $value['reactionCount'],
             ];
         }
 

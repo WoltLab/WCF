@@ -7,7 +7,7 @@ use wcf\system\template\TemplateEngine;
 
 /**
  * See JsphrasePrefilterTemplatePlugin.
- * 
+ *
  * This function exists to catch misuses of {jsphrase}
  * that violate the specs and have not been caught
  * by the prefilter.

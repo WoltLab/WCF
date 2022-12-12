@@ -26,7 +26,7 @@ final class JsphrasePrefilterTemplatePlugin implements IPrefilterTemplatePlugin
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
 
         return \preg_replace_callback(
-            "~{$ldq}jsphrase name='(?<name>[A-z0-9-_]+(\.[A-z0-9-_]+){2,})'{$rdq}~",
+            "~{$ldq}jsphrase name='(?<name>[A-z0-9-_]+(\\.[A-z0-9-_]+){2,})'{$rdq}~",
             static function ($match) {
                 $name = $match['name'];
 
