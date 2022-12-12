@@ -24,7 +24,7 @@ use Zend\Console\Getopt as ArgvParser;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Cli\Command
  */
-class WorkerCLICommand implements IArgumentedCLICommand
+class WorkerCLICommand implements ICLICommand
 {
     /**
      * arguments parser
