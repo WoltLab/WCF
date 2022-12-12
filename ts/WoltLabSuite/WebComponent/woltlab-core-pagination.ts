@@ -5,7 +5,6 @@
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @woltlabExcludeBundle all
  */
 
 {
@@ -15,7 +14,7 @@
   }
 
   class WoltlabCorePaginationElement extends HTMLElement {
-    #className = "new-pagination";
+    readonly #className = "pagination";
 
     connectedCallback() {
       this.#render();
@@ -25,6 +24,8 @@
       this.innerHTML = "";
 
       if (this.count < 2) return;
+
+      this.classList.add(`${this.#className}__wrapper`);
 
       const nav = this.#getNavElement();
       this.append(nav);
@@ -186,7 +187,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.title = window.WoltLabLanguage.getPhrase("wcf.page.jumpTo");
-      button.classList.add("jsTooltip");
+      button.classList.add("pagination__link", "jsTooltip");
       button.innerHTML = "&ctdot;";
       button.addEventListener("click", () => {
         this.dispatchEvent(new CustomEvent("jumpToPage"));

@@ -1,65 +1,37 @@
+.pagination__wrapper {
+	display: block;
+}
+
 .pagination {
-	overflow: auto;
+	--column-gap: 1px;
 
-	@include screen-xs {
+	column-gap: var(--column-gap);
+	display: inline-grid;
+	grid-auto-flow: column;
+}
+
+.pagination__list {
+	column-gap: var(--column-gap);
+	display: grid;
+	grid-auto-flow: column;
+}
+
+.pagination__link {
+	border-radius: 4px;
+	color: var(--wcfContentText);
+	display: inline-block;
+	font-variant: tabular-nums;
+	padding: 4px 8px;
+}
+
+.pagination__link[aria-current="page"],
+body:not(.touch) .pagination__link:hover {
+	background-color: var(--wcfButtonBackgroundActive);
+	color: var(--wcfButtonTextActive);
+}
+
+@include screen-xs {
+	.pagination__wrapper {
 		text-align: center;
-	}
-
-	> ul {
-		display: inline-flex;
-		flex-wrap: nowrap;
-
-		> li {
-			display: flex;
-			flex: 0 0 auto;
-
-			> .invisible {
-				display: none;
-			}
-
-			> a,
-			> span {
-				color: var(--wcfContentText);
-				padding: 2px 8px 0;
-			}
-
-			&.disabled > span {
-				color: var(--wcfContentDimmedText);
-			}
-
-			&.active > a,
-			&.active > span,
-			> a:hover {
-				background-color: var(--wcfButtonBackgroundActive);
-				color: var(--wcfButtonTextActive);
-			}
-
-			> .icon {
-				height: auto;
-				line-height: inherit;
-				width: auto;
-			}
-
-			&:not(:last-child) {
-				margin-right: 1px;
-			}
-
-			&:not(.skip) {
-				> a,
-				> span {
-					padding: 4px 8px;
-				}
-			}
-
-			&:first-child {
-				> a,
-				> span {
-					&::before {
-						left: -1px;
-						position: relative;
-					}
-				}
-			}
-		}
 	}
 }

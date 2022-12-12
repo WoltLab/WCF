@@ -1198,7 +1198,7 @@
   // ts/WoltLabSuite/WebComponent/woltlab-core-pagination.ts
   {
     class WoltlabCorePaginationElement extends HTMLElement {
-      #className = "new-pagination";
+      #className = "pagination";
       connectedCallback() {
         this.#render();
       }
@@ -1206,6 +1206,7 @@
         this.innerHTML = "";
         if (this.count < 2)
           return;
+        this.classList.add(`${this.#className}__wrapper`);
         const nav = this.#getNavElement();
         this.append(nav);
         const previousLinkElement = this.#getPreviousLinkElement();
@@ -1333,7 +1334,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.title = window.WoltLabLanguage.getPhrase("wcf.page.jumpTo");
-        button.classList.add("jsTooltip");
+        button.classList.add("pagination__link", "jsTooltip");
         button.innerHTML = "&ctdot;";
         button.addEventListener("click", () => {
           this.dispatchEvent(new CustomEvent("jumpToPage"));
@@ -1493,7 +1494,6 @@
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @woltlabExcludeBundle all
  */
 /**
  * The `<woltlab-core-reaction-summary>` element presents the
