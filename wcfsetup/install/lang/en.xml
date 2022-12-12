@@ -2567,7 +2567,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[In order to ensure consistency, e.g. after a data import, it is highly recommended to perform all the actions below in their respective order, starting from top to bottom.]]></item>
-		<item name="wcf.acp.rebuildData.cli"><![CDATA[Rebuild via SSH]]></item>
+		<item name="wcf.acp.rebuildData.cli"><![CDATA[Rebuild Using the Command Line]]></item>
 		<item name="wcf.acp.rebuildData.cli.description"><![CDATA[The listed commands may be used in <kbd>cli.php</kbd> to perform all actions in the correct order.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserRebuildDataWorker"><![CDATA[Rebuild Users]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_UserRebuildDataWorker.description"><![CDATA[Rebuilds the user counters.]]></item>
