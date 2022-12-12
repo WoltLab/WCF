@@ -1426,8 +1426,11 @@
 		<file>js/WoltLabSuite/Core/Helper/Overlay.js</file>
 		<file>js/WoltLabSuite/Core/I18n/Plural.js</file>
 		<file>js/WoltLabSuite/Core/ImageResizer.js</file>
+		<file>js/WoltLabSuite/Core/Language/Store.js</file>
 		<file>js/WoltLabSuite/Core/Media/Search.js</file>
 		<file>js/WoltLabSuite/Core/Template.grammar.jison</file>
+		<file>js/WoltLabSuite/Core/Template.grammar.js</file>
+		<file>js/WoltLabSuite/Core/Template/Compiler.js</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
@@ -1444,6 +1447,11 @@
 		<file>js/WoltLabSuite/Core/Ui/Reaction/ReputationButtons.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Redactor/RuntimeStyle.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/Menu/DropDown.js</file>
+		<file>js/WoltLabSuite/WebComponent/fa-brand.js</file>
+		<file>js/WoltLabSuite/WebComponent/fa-icon.js</file>
+		<file>js/WoltLabSuite/WebComponent/fa-metadata.js</file>
+		<file>js/WoltLabSuite/WebComponent/reaction-summary.js</file>
+		<file>js/WoltLabSuite/WebComponent/woltlab-core-date-time.js</file>
 		<file>js/WoltLabSuite/WebComponent/woltlab-core-time.js</file>
 		<file>js/closest.js</file>
 		<file>js/require.build-acp.js</file>
@@ -1604,6 +1612,103 @@
 		<file>lib/system/api/container-interop/container-interop/src/Interop/Container/ContainerInterface.php</file>
 		<file>lib/system/api/container-interop/container-interop/src/Interop/Container/Exception/ContainerException.php</file>
 		<file>lib/system/api/container-interop/container-interop/src/Interop/Container/Exception/NotFoundException.php</file>
+		<file>lib/system/api/cuyz/valinor/composer.lock</file>
+		<file>lib/system/api/cuyz/valinor/docs/includes/links.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/mkdocs.yml</file>
+		<file>lib/system/api/cuyz/valinor/docs/overrides/main.html</file>
+		<file>lib/system/api/cuyz/valinor/docs/overrides/partials/toc-item.html</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/changelog.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/credits.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/getting-started.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/img/blackfire-logo.svg</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/img/valinor-banner.png</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/img/valinor-banner.svg</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/img/valinor-icon.svg</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/img/valinor-logo.svg</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/index.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/mapping/construction-strategy.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/mapping/handled-types.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/mapping/inferring-interfaces.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/mapping/type-strictness.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/message-customization.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/other/dealing-with-dates.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/other/performance-and-cache.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/other/static-analysis.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/robots.txt</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/source.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/stylesheets/extra.css</file>
+		<file>lib/system/api/cuyz/valinor/docs/pages/validation.md</file>
+		<file>lib/system/api/cuyz/valinor/docs/requirements.txt</file>
+		<file>lib/system/api/cuyz/valinor/src/Attribute/Identifier.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Attribute/StaticMethodConstructor.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/CombinedAttributes.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/DoctrineAnnotations.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/EmptyAttributes.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidReflectionParameter.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Cache/Compiler/Exception/IncompatibleAttributes.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/CombinedAttributesRepository.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/DoctrineAnnotationsRepository.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/BackwardCompatibilityDateTimeConstructor.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/CannotParseToBackwardCompatibilityDateTime.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/SourceIsNotAnArray.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/TooManyObjectBuilderFactoryAttributes.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Factory/AttributeObjectBuilderFactory.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/FilledArguments.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/JsonExtensionNotEnabled.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ShellVisitorNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/DuplicatedNodeChild.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/ShapedArrayElementMissing.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/Formatter/PlaceHolderMessageFormatter.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/MessagesFlattener.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/ThrowableMessage.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/TranslatableMessage.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/AttributeShellVisitor.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/ShellVisitor.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/TreeMapperContainer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveObjectType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveTypeFromUnion.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/UnionTypeDoesNotAllowNull.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Union/UnionNarrower.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Union/UnionNullNarrower.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Union/UnionScalarNarrower.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Utility/Polyfill.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Utility/Singleton.php</file>
+		<file>lib/system/api/doctrine/annotations/LICENSE</file>
+		<file>lib/system/api/doctrine/annotations/README.md</file>
+		<file>lib/system/api/doctrine/annotations/composer.json</file>
+		<file>lib/system/api/doctrine/annotations/docs/en/annotations.rst</file>
+		<file>lib/system/api/doctrine/annotations/docs/en/custom.rst</file>
+		<file>lib/system/api/doctrine/annotations/docs/en/index.rst</file>
+		<file>lib/system/api/doctrine/annotations/docs/en/sidebar.rst</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/Attribute.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/Attributes.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/Enum.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/IgnoreAnnotation.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/NamedArgumentConstructor.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/Required.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation/Target.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationException.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationReader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationRegistry.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/CachedReader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/DocLexer.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/DocParser.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/FileCacheReader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/ImplicitlyIgnoredAnnotationNames.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/IndexedReader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/NamedArgumentConstructorAnnotation.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/PhpParser.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/PsrCachedReader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/Reader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/SimpleAnnotationReader.php</file>
+		<file>lib/system/api/doctrine/annotations/lib/Doctrine/Common/Annotations/TokenParser.php</file>
+		<file>lib/system/api/doctrine/annotations/psalm.xml</file>
+		<file>lib/system/api/doctrine/lexer/LICENSE</file>
+		<file>lib/system/api/doctrine/lexer/README.md</file>
+		<file>lib/system/api/doctrine/lexer/composer.json</file>
+		<file>lib/system/api/doctrine/lexer/lib/Doctrine/Common/Lexer/AbstractLexer.php</file>
+		<file>lib/system/api/doctrine/lexer/psalm.xml</file>
 		<file>lib/system/api/erusev/parsedown/.travis.yml</file>
 		<file>lib/system/api/erusev/parsedown/phpunit.xml.dist</file>
 		<file>lib/system/api/erusev/parsedown/test/CommonMarkTest.php</file>
@@ -1924,6 +2029,7 @@
 		<file>lib/system/api/pelago/emogrifier/config/php-cs-fixer.php</file>
 		<file>lib/system/api/pelago/emogrifier/config/phpmd.xml</file>
 		<file>lib/system/api/pelago/emogrifier/phpcs.xml.dist</file>
+		<file>lib/system/api/pelago/emogrifier/phpunit.xml</file>
 		<file>lib/system/api/pelago/emogrifier/src/Emogrifier.php</file>
 		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/CssConcatenator.php</file>
 		<file>lib/system/api/pelago/emogrifier/src/Emogrifier/CssInliner.php</file>
@@ -2049,6 +2155,14 @@
 		<file>lib/system/api/php-di/phpdoc-reader/src/PhpDocReader/PhpDocReader.php</file>
 		<file>lib/system/api/php-di/phpdoc-reader/src/PhpDocReader/PhpParser/TokenParser.php</file>
 		<file>lib/system/api/php-di/phpdoc-reader/src/PhpDocReader/PhpParser/UseStatementParser.php</file>
+		<file>lib/system/api/psr/cache/CHANGELOG.md</file>
+		<file>lib/system/api/psr/cache/LICENSE.txt</file>
+		<file>lib/system/api/psr/cache/README.md</file>
+		<file>lib/system/api/psr/cache/composer.json</file>
+		<file>lib/system/api/psr/cache/src/CacheException.php</file>
+		<file>lib/system/api/psr/cache/src/CacheItemInterface.php</file>
+		<file>lib/system/api/psr/cache/src/CacheItemPoolInterface.php</file>
+		<file>lib/system/api/psr/cache/src/InvalidArgumentException.php</file>
 		<file>lib/system/api/rest/response/IRESTfulResponse.class.php</file>
 		<file>lib/system/api/sabberworm/php-css-parser/.gitignore</file>
 		<file>lib/system/api/sabberworm/php-css-parser/.travis.yml</file>
@@ -2177,6 +2291,7 @@
 		<file>lib/system/api/symfony/css-selector/Tests/XPath/Fixtures/shakespear.html</file>
 		<file>lib/system/api/symfony/css-selector/Tests/XPath/TranslatorTest.php</file>
 		<file>lib/system/api/symfony/css-selector/phpunit.xml.dist</file>
+		<file>lib/system/api/symfony/deprecation-contracts/.gitignore</file>
 		<file>lib/system/api/symfony/polyfill-intl-idn/Idn.php</file>
 		<file>lib/system/api/symfony/polyfill-intl-idn/Info.php</file>
 		<file>lib/system/api/symfony/polyfill-intl-idn/LICENSE</file>
@@ -2382,10 +2497,14 @@
 		<file>lib/system/cleanup/ICleanupHandler.class.php</file>
 		<file>lib/system/cli/DatabaseCLICommandHistory.class.php</file>
 		<file>lib/system/cli/DatabaseCommandHistory.class.php</file>
+		<file>lib/system/cli/command/CLICommandNameCompleter.class.php</file>
 		<file>lib/system/cli/command/CommandHandler.class.php</file>
 		<file>lib/system/cli/command/CommandNameCompleter.class.php</file>
+		<file>lib/system/cli/command/CommandsCLICommand.class.php</file>
+		<file>lib/system/cli/command/CronjobCLICommand.class.php</file>
 		<file>lib/system/cli/command/CronjobCommand.class.php</file>
 		<file>lib/system/cli/command/ExitCommand.class.php</file>
+		<file>lib/system/cli/command/HelpCLICommand.class.php</file>
 		<file>lib/system/cli/command/ICommand.class.php</file>
 		<file>lib/system/cli/command/PackageCLICommand.class.php</file>
 		<file>lib/system/cli/command/PackageCommand.class.php</file>
@@ -2432,6 +2551,7 @@
 		<file>lib/system/event/listener/PreParserAtUserListener.class.php</file>
 		<file>lib/system/event/listener/UserLoggedInEmailNotificationListener.class.php</file>
 		<file>lib/system/event/listener/UserMultifactorSucceededEmailNotificationListener.class.php</file>
+		<file>lib/system/exception/ILoggingAwareException.class.php</file>
 		<file>lib/system/exception/InvalidArgumentException.class.php</file>
 		<file>lib/system/exception/PrintableException.class.php</file>
 		<file>lib/system/form/FormElement.class.php</file>
@@ -2475,6 +2595,12 @@
 		<file>lib/system/image/Thumbnail.class.php</file>
 		<file>lib/system/language/I18nPlural.class.php</file>
 		<file>lib/system/language/LanguageServerProcessor.class.php</file>
+		<file>lib/system/language/preload/LanguagePreloader.class.php</file>
+		<file>lib/system/language/preload/PhrasePreloadCache.class.php</file>
+		<file>lib/system/language/preload/PreloadPhrase.class.php</file>
+		<file>lib/system/language/preload/RegisterPreloadPhrases.class.php</file>
+		<file>lib/system/language/preload/command/RebuildPreloadPhrases.class.php</file>
+		<file>lib/system/language/preload/event/PreloadPhrasesCollecting.php</file>
 		<file>lib/system/log/modification/ModificationLogHandler.class.php</file>
 		<file>lib/system/mail/DebugMailSender.class.php</file>
 		<file>lib/system/mail/Mail.class.php</file>
