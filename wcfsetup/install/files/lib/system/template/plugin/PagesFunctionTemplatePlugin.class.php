@@ -5,26 +5,26 @@ namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Template function plugin which generates sliding pagers.
  *
- * Usage:
- *  {pages pages=10 link='foo=bar&baz=1'}
- *  {pages page=8 pages=10 link='foo=bar&baz=1'}
+ * Starting with WoltLab Suite 6.0 you should migrate to the
+ * new web component that provides a similar API.
  *
- *  assign to variable 'output'; do not print:
- *  {pages page=8 pages=10 link='foo=bar&baz=1' assign='output'}
- *
- *  assign to variable 'output' and do print also:
- *  {pages page=8 pages=10 link='foo=bar&baz=1' assign='output' print=true}
+ * Example:
+ * <woltlab-core-pagination
+ *     page="1"
+ *     count="10"
+ *     url="{link application='foo' controller='bar'}{/link}"
+ * ></woltlab-core-pagination>
  *
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Template\Plugin
+ * @deprecated 6.0 Migrate to `<woltlab-core-pagination>`
  */
 final class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
 {
