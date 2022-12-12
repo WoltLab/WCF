@@ -5,6 +5,7 @@ namespace wcf\system\html\output\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
@@ -243,14 +244,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
     {
         static $matcher = null;
         if ($matcher === null) {
-            $whitelist = \explode("\n", StringUtil::unifyNewlines(IMAGE_EXTERNAL_SOURCE_WHITELIST));
-
-            foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-                $host = \mb_strtolower($application->domainName);
-                $whitelist[] = $host;
-            }
-
-            $matcher = Url::getHostnameMatcher($whitelist);
+            $matcher = Url::getHostnameMatcher(
+                BBCodeHandler::getInstance()->getImageExternalSourceWhitelist()
+            );
         }
 
         $host = Url::parse($src)['host'];
