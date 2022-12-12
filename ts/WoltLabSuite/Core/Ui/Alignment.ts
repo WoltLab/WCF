@@ -328,7 +328,6 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     // Ignore offsets caused by page scrolling.
     if (bottom !== "auto") bottom = bottom + window.scrollY;
     if (top !== "auto") top = top - window.scrollY;
-;
   }
 
   DomUtil.setStyles(element, {

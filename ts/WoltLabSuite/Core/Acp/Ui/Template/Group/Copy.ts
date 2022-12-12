@@ -98,7 +98,9 @@ class AcpUiTemplateGroupCopy implements AjaxCallbackObject, DialogCallbackObject
   </dd>
 </dl>
 <div class="formSubmit">
-  <button type="button" class="button buttonPrimary" data-type="submit">${Language.get("wcf.global.button.submit")}</button>
+  <button type="button" class="button buttonPrimary" data-type="submit">${Language.get(
+    "wcf.global.button.submit",
+  )}</button>
 </div>`,
     };
   }

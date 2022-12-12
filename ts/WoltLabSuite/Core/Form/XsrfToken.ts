@@ -18,7 +18,7 @@ function isInput(node: Node): node is HTMLInputElement {
 export function setup(): void {
   const token = getXsrfToken();
 
-  wheneverFirstSeen('.xsrfTokenInput', (node) => {
+  wheneverFirstSeen(".xsrfTokenInput", (node) => {
     if (!isInput(node)) {
       return;
     }

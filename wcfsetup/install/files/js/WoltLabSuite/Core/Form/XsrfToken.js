@@ -16,7 +16,7 @@ define(["require", "exports", "../Core", "../Helper/Selector"], function (requir
     }
     function setup() {
         const token = (0, Core_1.getXsrfToken)();
-        (0, Selector_1.wheneverFirstSeen)('.xsrfTokenInput', (node) => {
+        (0, Selector_1.wheneverFirstSeen)(".xsrfTokenInput", (node) => {
             if (!isInput(node)) {
                 return;
             }

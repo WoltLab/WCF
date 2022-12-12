@@ -247,7 +247,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                 bottom = bottom + window.scrollY;
             if (top !== "auto")
                 top = top - window.scrollY;
-            ;
         }
         Util_1.default.setStyles(element, {
             bottom: bottom === "auto" ? bottom : Math.round(bottom).toString() + "px",
