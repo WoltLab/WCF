@@ -26,7 +26,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsRebuildAll">{icon name='down-long'} <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></a></li>
+			<li><button class="button jsRebuildAll">{icon name='down-long'} <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></button></li>
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
