@@ -96,8 +96,11 @@ declare global {
     getLinkUrl(page: number): string;
     jumpToPage(page: number): void;
     get count(): number;
+    set count(count: number);
     get page(): number;
+    set page(page: number);
     get url(): string;
+    set url(url: string);
   }
 
   interface HTMLElementTagNameMap {
