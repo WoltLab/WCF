@@ -24,7 +24,6 @@ function jumpToPage(element: WoltlabCorePaginationElement): void {
           max="${element.count}"
           value="${element.count}"
           aria-label="${getPhrase("wcf.page.jumpTo.pageNo")}"
-          placeholder="${getPhrase("wcf.page.jumpTo.pageNo")}"
           required
         >
         <small>${getPhrase("wcf.page.jumpTo.description", { pages: element.count })}</small>

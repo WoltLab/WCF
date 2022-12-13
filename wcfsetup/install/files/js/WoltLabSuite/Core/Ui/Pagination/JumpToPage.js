@@ -23,7 +23,6 @@ define(["require", "exports", "../../Component/Dialog", "../../Helper/Selector",
           max="${element.count}"
           value="${element.count}"
           aria-label="${(0, Language_1.getPhrase)("wcf.page.jumpTo.pageNo")}"
-          placeholder="${(0, Language_1.getPhrase)("wcf.page.jumpTo.pageNo")}"
           required
         >
         <small>${(0, Language_1.getPhrase)("wcf.page.jumpTo.description", { pages: element.count })}</small>
