@@ -1227,13 +1227,13 @@
         nav.append(ul);
         ul.append(this.#getLinkItem(1));
         if (this.page > this.thresholdForEllipsis + 1) {
-          ul.append(this.#getEllipsesItem());
+          ul.append(this.#getEllipsisItem());
         }
         this.#getLinkItems().forEach((item) => {
           ul.append(item);
         });
         if (this.count - this.page > this.thresholdForEllipsis) {
-          ul.append(this.#getEllipsesItem());
+          ul.append(this.#getEllipsisItem());
         }
         ul.append(this.#getLinkItem(this.count));
         const nextLinkElement = this.#getNextLinkElement();
@@ -1342,9 +1342,9 @@
         }
         return items;
       }
-      #getEllipsesItem() {
+      #getEllipsisItem() {
         const li = document.createElement("li");
-        li.classList.add(`${this.#className}__item`, `${this.#className}__item--ellipses`);
+        li.classList.add(`${this.#className}__item`, `${this.#className}__item--ellipsis`);
         const button = document.createElement("button");
         button.type = "button";
         button.title = window.WoltLabLanguage.getPhrase("wcf.page.jumpTo");
