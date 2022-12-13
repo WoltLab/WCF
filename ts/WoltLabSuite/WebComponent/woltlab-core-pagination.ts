@@ -53,7 +53,7 @@
       nav.append(ul);
 
       ul.append(this.#getLinkItem(1));
-      if (this.page > this.thresholdForEllispsis + 1) {
+      if (this.page > this.thresholdForEllipsis + 1) {
         ul.append(this.#getEllipsesItem());
       }
 
@@ -61,7 +61,7 @@
         ul.append(item);
       });
 
-      if (this.count - this.page > this.thresholdForEllispsis) {
+      if (this.count - this.page > this.thresholdForEllipsis) {
         ul.append(this.#getEllipsesItem());
       }
       ul.append(this.#getLinkItem(this.count));
@@ -232,7 +232,7 @@
      * the first or last page. On larger screens the ellipsis
      * is only shown if it hides at least two numbers.
      */
-    get thresholdForEllispsis(): number {
+    get thresholdForEllipsis(): number {
       if (getMediaQueryScreenXs().matches) {
         return 1;
       }

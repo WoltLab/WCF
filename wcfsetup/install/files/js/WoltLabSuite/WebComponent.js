@@ -1226,13 +1226,13 @@
         ul.classList.add(`${this.#className}__list`);
         nav.append(ul);
         ul.append(this.#getLinkItem(1));
-        if (this.page > this.thresholdForEllispsis + 1) {
+        if (this.page > this.thresholdForEllipsis + 1) {
           ul.append(this.#getEllipsesItem());
         }
         this.#getLinkItems().forEach((item) => {
           ul.append(item);
         });
-        if (this.count - this.page > this.thresholdForEllispsis) {
+        if (this.count - this.page > this.thresholdForEllipsis) {
           ul.append(this.#getEllipsesItem());
         }
         ul.append(this.#getLinkItem(this.count));
@@ -1358,7 +1358,7 @@
         li.append(button);
         return li;
       }
-      get thresholdForEllispsis() {
+      get thresholdForEllipsis() {
         if (getMediaQueryScreenXs().matches) {
           return 1;
         }
