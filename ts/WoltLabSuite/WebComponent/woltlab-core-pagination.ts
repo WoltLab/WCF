@@ -161,7 +161,7 @@
       const button = this.#getButtonElement(page);
       button.ariaLabel = window.WoltLabLanguage.getPhrase("wcf.page.pageNo", { pageNo: page });
       if (page === this.page) {
-        button.ariaCurrent = "page";
+        button.setAttribute("aria-current", "page");
         button.classList.add(`${this.#className}__link--current`);
       }
       button.textContent = page.toString();
