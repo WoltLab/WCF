@@ -82,7 +82,6 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("{$this->getFilenameTableColumn()} IN (?)", [$files]);
             $conditions->add('application = ?', [$application]);
-            $conditions->add('packageID = ?', [$this->installation->getPackageID()]);
 
             $sql = "SELECT  packageID, application, {$this->getFilenameTableColumn()}
                     FROM    {$this->getLogTableName()}
