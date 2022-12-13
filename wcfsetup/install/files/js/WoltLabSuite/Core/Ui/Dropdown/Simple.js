@@ -87,7 +87,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
      * Toggles the drop-down's state between open and close.
      */
     function toggle(event, targetId, alternateElement, disableAutoFocus) {
-        let isKeyboardClick = false;
         if (event !== null) {
             event.preventDefault();
             event.stopPropagation();
@@ -95,7 +94,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             targetId = target.dataset.target;
             if (disableAutoFocus === undefined && event instanceof MouseEvent) {
                 if (Core.stringToBool(target.dataset.isKeyboardClick || "")) {
-                    isKeyboardClick = true;
                     delete target.dataset.isKeyboardClick;
                 }
                 else {
@@ -218,9 +216,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 UiDropdownSimple.setAlignment(dropdown, menu, alternateElement);
                 if (firstListItem !== null) {
                     firstListItem.focus();
-                    if (isKeyboardClick) {
-                        firstListItem.classList.add("focus-visible");
-                    }
                 }
             }
         });

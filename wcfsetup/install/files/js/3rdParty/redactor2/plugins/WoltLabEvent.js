@@ -22,7 +22,6 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				// WoltLab modification: do not suppress event if nodes have been added
 				// WoltLab modification 2: suppress broken MutationRecords in Vivaldi 1.13 that yield attribute changes without the attribute name
 				// WoltLab modification 3: do not suppres event if nodes have been removed
-				// WoltLab modification 4: suppress mutations caused by `focus-visible.js`
 				if (
 					(
 						(this.opts.type === 'textarea' || this.opts.type === 'div')
@@ -32,7 +31,6 @@ $.Redactor.prototype.WoltLabEvent = function() {
 					|| mutation.attributeName === 'class' && mutation.target === this.core.editor()[0]
 					|| mutation.attributeName === 'data-vivaldi-spatnav-clickable'
 					|| mutation.type === 'attributes' && mutation.attributeName === null
-					|| mutation.attributeName === "data-focus-visible-added"
 				)
 				{
 					stop = true;

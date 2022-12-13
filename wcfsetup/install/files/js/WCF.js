@@ -5004,7 +5004,7 @@ WCF.Upload = Class.extend({
 			$button.prepend(this._fileUpload);
 			
 			this._fileUpload[0].addEventListener('focus', function() {
-				if (this.classList.contains('focus-visible')) {
+				if (this.matches(":focus-visible")) {
 					$button[0].classList.add('active');
 				}
 			});

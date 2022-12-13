@@ -62,7 +62,7 @@
 		position: absolute;
 		z-index: -1;
 
-		&.focus-visible:focus ~ .icon {
+		&:focus-visible ~ .icon {
 			transform: scale(1.2);
 		}
 

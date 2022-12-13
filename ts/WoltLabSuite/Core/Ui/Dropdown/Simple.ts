@@ -96,7 +96,6 @@ function toggle(
   alternateElement?: HTMLElement,
   disableAutoFocus?: boolean,
 ): boolean {
-  let isKeyboardClick = false;
   if (event !== null) {
     event.preventDefault();
     event.stopPropagation();
@@ -106,7 +105,6 @@ function toggle(
 
     if (disableAutoFocus === undefined && event instanceof MouseEvent) {
       if (Core.stringToBool(target.dataset.isKeyboardClick || "")) {
-        isKeyboardClick = true;
         delete target.dataset.isKeyboardClick;
       } else {
         disableAutoFocus = true;
@@ -252,10 +250,6 @@ function toggle(
 
       if (firstListItem !== null) {
         firstListItem.focus();
-
-        if (isKeyboardClick) {
-          firstListItem.classList.add("focus-visible");
-        }
       }
     }
   });

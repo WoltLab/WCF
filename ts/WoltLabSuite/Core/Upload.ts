@@ -99,7 +99,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
     this._button.className = "button uploadButton";
     this._button.setAttribute("role", "button");
     this._fileUpload.addEventListener("focus", () => {
-      if (this._fileUpload.classList.contains("focus-visible")) {
+      if (this._fileUpload.matches(":focus-visible")) {
         this._button.classList.add("active");
       }
     });

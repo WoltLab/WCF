@@ -3,7 +3,7 @@ button {
 	-webkit-user-select: none;
 	user-select: none;
 
-	&.focus-visible:focus {
+	&:focus-visible {
 		outline: 5px auto -webkit-focus-ring-color;
 	}
 

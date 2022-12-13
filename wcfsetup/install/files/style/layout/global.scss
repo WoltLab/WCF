@@ -211,7 +211,7 @@ a.externalURL::after {
 
 /* Hide the focus ring for mouse interactions, but support them for keyboard navigation.
    See https://github.com/WICG/focus-visible and https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
-.js-focus-visible :focus:not(.focus-visible) {
+:focus:not(:focus-visible) {
 	outline: none;
 }
 
