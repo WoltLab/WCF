@@ -174,7 +174,14 @@ class BBCodeHandler extends SingletonFactory
         $hosts = [];
         // Hide these hosts unless external sources are actually denied.
         if (!IMAGE_ALLOW_EXTERNAL_SOURCE) {
-            $hosts = ArrayUtil::trim(\explode("\n", IMAGE_EXTERNAL_SOURCE_WHITELIST));
+            $hosts = ArrayUtil::trim(\explode(
+                "\n",
+                \sprintf(
+                    "%s\n%s",
+                    \IMAGE_EXTERNAL_SOURCE_WHITELIST,
+                    \INTERNAL_HOSTNAMES
+                )
+            ));
         }
 
         $hosts[] = ApplicationHandler::getInstance()->getDomainName();
