@@ -101,10 +101,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
             foreach ($files as $file) {
                 $filePackageID = $logFiles[$application][$file] ?? null;
                 if ($filePackageID !== null && $filePackageID != $this->installation->getPackageID()) {
-                    throw new \UnexpectedValueException(
-                        "'{$file}' does not belong to package '{$this->installation->getPackage()->package}'
-                        but to package '" . PackageCache::getInstance()->getPackage($filePackageID)->package . "'."
-                    );
+                    continue;
                 }
 
                 $filePath = $this->getFilePath($file, $application);
