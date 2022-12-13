@@ -1313,7 +1313,7 @@
           button.setAttribute("aria-current", "page");
           button.classList.add(`${this.#className}__link--current`);
         }
-        button.textContent = page.toString();
+        button.textContent = page.toLocaleString(document.documentElement.lang);
         li.append(button);
         return li;
       }
