@@ -8,6 +8,7 @@ import "@woltlab/zxcvbn";
 import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 import type WoltlabCoreDialogElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog";
 import type WoltlabCoreDialogControlElement from "./ts/WoltLabSuite/Core/Element/woltlab-core-dialog-control";
+import WoltlabCoreGoogleMapsElement from "./ts/WoltLabSuite/Core/Component/GoogleMaps/woltlab-core-google-maps";
 
 type Codepoint = string;
 type HasRegularVariant = boolean;
@@ -110,6 +111,7 @@ declare global {
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
     "woltlab-core-pagination": WoltlabCorePaginationElement;
+    "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
   }
 }

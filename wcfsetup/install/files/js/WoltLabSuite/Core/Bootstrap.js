@@ -118,8 +118,11 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-pagination", () => {
             void new Promise((resolve_2, reject_2) => { require(["./Ui/Pagination/JumpToPage"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-google-maps", () => {
+            void new Promise((resolve_3, reject_3) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_3, reject_3); }).then(tslib_1.__importStar);
+        });
         (0, LazyLoader_1.whenFirstSeen)("[data-google-maps-geocoding]", () => {
-            void new Promise((resolve_3, reject_3) => { require(["./Component/GoogleMaps/Geocoding"], resolve_3, reject_3); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_4, reject_4) => { require(["./Component/GoogleMaps/Geocoding"], resolve_4, reject_4); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
     exports.setup = setup;

@@ -9,5 +9,4 @@ import "./fa-brand.ts";
 import "./fa-icon.ts";
 import "./woltlab-core-date-time.ts";
 import "./woltlab-core-pagination.ts";
-import "./woltlab-core-google-maps.ts";
 import "./woltlab-core-reaction-summary.ts";
