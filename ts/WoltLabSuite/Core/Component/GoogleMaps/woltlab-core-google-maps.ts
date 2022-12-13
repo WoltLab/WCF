@@ -72,42 +72,6 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
     this.#rendered = true;
   }
 
-  async addMarker(latitude: number, longitude: number, title: string, focus?: boolean): Promise<void> {
-    await this.#mapLoaded;
-
-    const marker = new google.maps.Marker({
-      map: this.map,
-      position: new google.maps.LatLng(latitude, longitude),
-      title,
-    });
-
-    if (focus) {
-      this.map!.setCenter(marker.getPosition()!);
-    }
-  }
-
-  async addDraggableMarker(latitude?: number, longitude?: number): Promise<google.maps.Marker> {
-    await this.#mapLoaded;
-
-    if (latitude === undefined) {
-      latitude = this.lat;
-    }
-    if (longitude === undefined) {
-      longitude = this.lng;
-    }
-
-    const marker = new google.maps.Marker({
-      map: this.map,
-      position: new google.maps.LatLng(latitude, longitude),
-      draggable: true,
-      clickable: false,
-    });
-
-    this.map!.setCenter(marker.getPosition()!);
-
-    return marker;
-  }
-
   #validate(): void {
     if (!this.apiKey) {
       //throw new TypeError("Must provide an api key.");
@@ -118,8 +82,10 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
     return this.getAttribute("api-key") || "";
   }
 
-  get map(): google.maps.Map | undefined {
-    return this.#map;
+  async getMap(): Promise<google.maps.Map> {
+    await this.#mapLoaded;
+
+    return this.#map!;
   }
 
   get lat(): number {

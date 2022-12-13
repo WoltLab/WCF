@@ -63,34 +63,6 @@ define(["require", "exports"], function (require, exports) {
             });
             this.#rendered = true;
         }
-        async addMarker(latitude, longitude, title, focus) {
-            await this.#mapLoaded;
-            const marker = new google.maps.Marker({
-                map: this.map,
-                position: new google.maps.LatLng(latitude, longitude),
-                title,
-            });
-            if (focus) {
-                this.map.setCenter(marker.getPosition());
-            }
-        }
-        async addDraggableMarker(latitude, longitude) {
-            await this.#mapLoaded;
-            if (latitude === undefined) {
-                latitude = this.lat;
-            }
-            if (longitude === undefined) {
-                longitude = this.lng;
-            }
-            const marker = new google.maps.Marker({
-                map: this.map,
-                position: new google.maps.LatLng(latitude, longitude),
-                draggable: true,
-                clickable: false,
-            });
-            this.map.setCenter(marker.getPosition());
-            return marker;
-        }
         #validate() {
             if (!this.apiKey) {
                 //throw new TypeError("Must provide an api key.");
@@ -99,7 +71,8 @@ define(["require", "exports"], function (require, exports) {
         get apiKey() {
             return this.getAttribute("api-key") || "";
         }
-        get map() {
+        async getMap() {
+            await this.#mapLoaded;
             return this.#map;
         }
         get lat() {
