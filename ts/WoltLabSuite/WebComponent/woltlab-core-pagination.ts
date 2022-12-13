@@ -75,7 +75,7 @@
     #getNavElement(): HTMLElement {
       const nav = document.createElement("nav");
       nav.setAttribute("role", "navigation");
-      nav.ariaLabel = window.WoltLabLanguage.getPhrase("wcf.page.pagination");
+      nav.setAttribute("aria-label", window.WoltLabLanguage.getPhrase("wcf.page.pagination"));
       nav.classList.add(this.#className);
 
       return nav;
@@ -99,7 +99,6 @@
 
       const icon = document.createElement("fa-icon");
       icon.setIcon("arrow-left");
-      icon.ariaHidden = "true";
       button.append(icon);
 
       return div;
@@ -123,7 +122,6 @@
 
       const icon = document.createElement("fa-icon");
       icon.setIcon("arrow-right");
-      icon.ariaHidden = "true";
       button.append(icon);
 
       return div;
@@ -159,7 +157,7 @@
       li.classList.add(`${this.#className}__item`);
 
       const button = this.#getButtonElement(page);
-      button.ariaLabel = window.WoltLabLanguage.getPhrase("wcf.page.pageNo", { pageNo: page });
+      button.setAttribute("aria-label", window.WoltLabLanguage.getPhrase("wcf.page.pageNo", { pageNo: page }));
       if (page === this.page) {
         button.setAttribute("aria-current", "page");
         button.classList.add(`${this.#className}__link--current`);
