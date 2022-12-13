@@ -66,7 +66,7 @@ final class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
             // The previous implementation required the `pageNo=%d` placeholder
             // to be present in the link argument.
-            $tagArgs['link'] = \preg_replace('~(^pageNo=%d&?|&pageNo=%d)~', '', $tagArgs['link']);
+            $tagArgs['link'] = \preg_replace('~(?:^pageNo=%d(?:&|$))|(?:&pageNo=%d(?=&|$))~', '', $tagArgs['link']);
 
             $link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
                 $tagArgs['controller'],
