@@ -23,6 +23,7 @@
     #mapLoaded: Promise<void>;
     #mapLoadedResolve?: () => void;
     #rendered = false;
+    #geocoder?: google.maps.Geocoder;
 
     constructor() {
       super();
@@ -39,7 +40,7 @@
     }
 
     attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
-      if (name === 'hidden' && newValue === null) {
+      if (name === "hidden" && newValue === null) {
         this.#render();
       }
     }
@@ -78,12 +79,34 @@
       const marker = new google.maps.Marker({
         map: this.map,
         position: new google.maps.LatLng(latitude, longitude),
-        title: title,
+        title,
       });
 
       if (focus) {
         this.map!.setCenter(marker.getPosition()!);
       }
+    }
+
+    async addDraggableMarker(latitude?: number, longitude?: number): Promise<google.maps.Marker> {
+      await this.#mapLoaded;
+
+      if (latitude === undefined) {
+        latitude = this.lat;
+      }
+      if (longitude === undefined) {
+        longitude = this.lng;
+      }
+
+      const marker = new google.maps.Marker({
+        map: this.map,
+        position: new google.maps.LatLng(latitude, longitude),
+        draggable: true,
+        clickable: false,
+      });
+
+      this.map!.setCenter(marker.getPosition()!);
+
+      return marker;
     }
 
     #validate(): void {
@@ -110,6 +133,16 @@
 
     get zoom(): number {
       return this.getAttribute("zoom") ? parseInt(this.getAttribute("zoom")!) : 13;
+    }
+
+    async getGeocoder(): Promise<google.maps.Geocoder> {
+      await this.#mapLoaded;
+
+      if (this.#geocoder === undefined) {
+        this.#geocoder = new google.maps.Geocoder();
+      }
+
+      return this.#geocoder;
     }
   }
 

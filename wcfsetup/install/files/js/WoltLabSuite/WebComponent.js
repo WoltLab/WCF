@@ -1503,6 +1503,7 @@
       #mapLoaded;
       #mapLoadedResolve;
       #rendered = false;
+      #geocoder;
       constructor() {
         super();
         this.#mapLoaded = new Promise((resolve) => {
@@ -1553,6 +1554,23 @@
           this.map.setCenter(marker.getPosition());
         }
       }
+      async addDraggableMarker(latitude, longitude) {
+        await this.#mapLoaded;
+        if (latitude === void 0) {
+          latitude = this.lat;
+        }
+        if (longitude === void 0) {
+          longitude = this.lng;
+        }
+        const marker = new google.maps.Marker({
+          map: this.map,
+          position: new google.maps.LatLng(latitude, longitude),
+          draggable: true,
+          clickable: false
+        });
+        this.map.setCenter(marker.getPosition());
+        return marker;
+      }
       #validate() {
         if (!this.apiKey) {
         }
@@ -1571,6 +1589,13 @@
       }
       get zoom() {
         return this.getAttribute("zoom") ? parseInt(this.getAttribute("zoom")) : 13;
+      }
+      async getGeocoder() {
+        await this.#mapLoaded;
+        if (this.#geocoder === void 0) {
+          this.#geocoder = new google.maps.Geocoder();
+        }
+        return this.#geocoder;
       }
     }
     window.customElements.define("woltlab-core-google-maps", WoltlabCoreGoogleMapsElement);
