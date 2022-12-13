@@ -92,12 +92,24 @@ declare global {
     setData: (data: Map<number, number>, selectedReaction?: number) => void;
   }
 
+  interface WoltlabCorePaginationElement extends HTMLElement {
+    getLinkUrl(page: number): string;
+    jumpToPage(page: number): void;
+    get count(): number;
+    set count(count: number);
+    get page(): number;
+    set page(page: number);
+    get url(): string;
+    set url(url: string);
+  }
+
   interface HTMLElementTagNameMap {
     "fa-brand": FaBrand;
     "fa-icon": FaIcon;
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
+    "woltlab-core-pagination": WoltlabCorePaginationElement;
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
   }
 }
