@@ -1223,7 +1223,7 @@
           nav.append(previousLinkElement);
         }
         const ul = document.createElement("ul");
-        ul.classList.add(this.#className + "__list");
+        ul.classList.add(`${this.#className}__list`);
         nav.append(ul);
         ul.append(this.#getLinkItem(1));
         if (this.page > this.thresholdForEllispsis + 1) {
@@ -1253,7 +1253,7 @@
           return;
         }
         const div = document.createElement("div");
-        div.classList.add(this.#className + "__prev");
+        div.classList.add(`${this.#className}__prev`);
         const button = this.#getButtonElement(this.page - 1);
         if (button instanceof HTMLAnchorElement) {
           button.rel = "prev";
@@ -1272,7 +1272,7 @@
           return;
         }
         const div = document.createElement("div");
-        div.classList.add(this.#className + "__next");
+        div.classList.add(`${this.#className}__next`);
         const button = this.#getButtonElement(this.page + 1);
         if (button instanceof HTMLAnchorElement) {
           button.rel = "next";
@@ -1303,17 +1303,17 @@
             });
           }
         }
-        button.classList.add(this.#className + "__link");
+        button.classList.add(`${this.#className}__link`);
         return button;
       }
       #getLinkItem(page) {
         const li = document.createElement("li");
-        li.classList.add(this.#className + "__item");
+        li.classList.add(`${this.#className}__item`);
         const button = this.#getButtonElement(page);
         button.ariaLabel = window.WoltLabLanguage.getPhrase("wcf.page.pageNo", { pageNo: page });
         if (page === this.page) {
           button.ariaCurrent = "page";
-          button.classList.add(this.#className + "__link--current");
+          button.classList.add(`${this.#className}__link--current`);
         }
         button.textContent = page.toString();
         li.append(button);
@@ -1346,7 +1346,7 @@
       }
       #getEllipsesItem() {
         const li = document.createElement("li");
-        li.classList.add(this.#className + "__item", this.#className + "__item--ellipses");
+        li.classList.add(`${this.#className}__item`, `${this.#className}__item--ellipses`);
         const button = document.createElement("button");
         button.type = "button";
         button.title = window.WoltLabLanguage.getPhrase("wcf.page.jumpTo");
