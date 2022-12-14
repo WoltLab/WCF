@@ -221,7 +221,7 @@ final class LinkHandler extends SingletonFactory
         }
         $routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
         if (!$isRaw && $url !== '') {
-            $routeURL .= (\strpos($routeURL, '?') === false) ? '?' : '&';
+            $routeURL .= \str_contains($routeURL, '?') ? '&' : '?';
         }
 
         // encode certain characters
