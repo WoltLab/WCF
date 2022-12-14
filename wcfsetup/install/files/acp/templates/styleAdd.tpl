@@ -45,6 +45,21 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
+				{if $style->hasDarkMode}
+					<li>
+						{if $isDarkMode}
+							<a href="{link controller='StyleEdit' id=$style->styleID}{/link}" class="button">
+								{icon name='palette'}
+								<span>{lang}wcf.acp.style.editLightMode{/lang}</span>
+							</a>
+						{else}
+							<a href="{link controller='StyleEdit' id=$style->styleID isDarkMode=1}{/link}" class="button">
+								{icon name='palette'}
+								<span>{lang}wcf.acp.style.editDarkMode{/lang}</span>
+							</a>
+						{/if}
+					</li>
+				{/if}
 				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
 				<li><a class="jsCopyStyle button">{icon name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}

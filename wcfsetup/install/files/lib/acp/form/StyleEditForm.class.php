@@ -56,7 +56,9 @@ class StyleEditForm extends StyleAddForm
             throw new IllegalLinkException();
         }
 
-        $this->isDarkMode = ($_REQUEST['isDarkMode'] ?? '') === '1';
+        if ($this->style->hasDarkMode) {
+            $this->isDarkMode = ($_REQUEST['isDarkMode'] ?? '') === '1';
+        }
 
         parent::readParameters();
     }
