@@ -3,7 +3,8 @@
 namespace wcf\http\attribute;
 
 /**
- * Allows accessing a controller with non-GET/HEAD/POST methods.
+ * Allows accessing a controller with non-GET/POST methods. May also
+ * be used to opt into explicit HEAD handling.
  *
  * @author Tim Duesterhus
  * @copyright 2001-2022 WoltLab GmbH
