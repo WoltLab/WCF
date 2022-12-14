@@ -160,7 +160,7 @@ final class LinkHandler extends SingletonFactory
                     throw new \InvalidArgumentException("A 'controller' must be specified for non-'wcf' links in ACP.");
                 }
             } else {
-                if (!empty($parameters['application']) && $abbreviation !== 'wcf') {
+                if ($abbreviation !== 'wcf') {
                     $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
                     if ($application === null) {
                         throw new \RuntimeException("Unknown abbreviation '" . $abbreviation . "'.");
