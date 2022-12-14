@@ -114,7 +114,8 @@ final class StyleCompiler extends SingletonFactory
         string $styleName,
         string $imagePath,
         array $variables,
-        ?string $customCustomSCSSFile = null
+        ?string $customCustomSCSSFile = null,
+        bool $supportsDarkMode = false,
     ): ?\Exception {
         $individualScss = '';
         if (isset($variables['individualScss'])) {
@@ -150,7 +151,7 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $files = $this->getFiles();
+        $files = $this->getFiles($supportsDarkMode);
 
         if ($customCustomSCSSFile !== null) {
             if (($customSCSSFileKey = \array_search(WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
@@ -198,10 +199,10 @@ final class StyleCompiler extends SingletonFactory
      * @return string[]
      * @since 5.3
      */
-    private function getFiles(): array
+    private function getFiles(bool $supportsDarkMode): array
     {
         if (!$this->files) {
-            $files = $this->getCoreFiles();
+            $files = $this->getCoreFiles($supportsDarkMode);
 
             // read stylesheets in dependency order
             $sql = "SELECT      filename, application
@@ -276,7 +277,7 @@ final class StyleCompiler extends SingletonFactory
 
         $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
-        foreach ($this->getFiles() as $file) {
+        foreach ($this->getFiles(!!$style->hasDarkMode) as $file) {
             $scss .= $this->prepareFile($file);
         }
         $scss .= $individualScss;
@@ -380,7 +381,7 @@ final class StyleCompiler extends SingletonFactory
      */
     public function compileACP(): void
     {
-        $files = $this->getCoreFiles();
+        $files = $this->getCoreFiles(true);
 
         // ACP uses a slightly different layout
         $files[] = WCF_DIR . 'acp/style/layout.scss';
@@ -398,7 +399,7 @@ final class StyleCompiler extends SingletonFactory
                 ORDER BY    variableID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
-        $variables = $darkModeVariables = [];
+        $variables = [];
         while ($row = $statement->fetchArray()) {
             $variables[$row['variableName']] = $row['defaultValue'];
             $variables[Style::DARK_MODE_PREFIX . $row['variableName']] = $row['defaultValueDarkMode'] ?? '';
@@ -432,7 +433,7 @@ final class StyleCompiler extends SingletonFactory
      *
      * @return string[] list of common stylesheets
      */
-    private function getCoreFiles(): array
+    private function getCoreFiles(bool $supportsDarkMode): array
     {
         $files = [];
         if ($handle = \opendir(WCF_DIR . 'style/')) {
@@ -460,6 +461,10 @@ final class StyleCompiler extends SingletonFactory
             }
 
             \closedir($handle);
+
+            if (!$supportsDarkMode) {
+                $files = \array_filter($files, fn (string $file) => !\str_ends_with($file, 'ui/darkMode.scss'));
+            }
 
             // Directory order is not deterministic in some cases,
             // also the `darkMode.scss` must be at the end.

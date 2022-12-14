@@ -104,7 +104,9 @@ class StyleEditForm extends StyleAddForm
             $this->styleTestFileDir,
             $this->styleName,
             $this->style->imagePath,
-            $variables
+            $variables,
+            null,
+            $this->style->hasDarkMode,
         );
 
         if ($result !== null) {
