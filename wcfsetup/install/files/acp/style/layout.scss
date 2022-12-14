@@ -367,7 +367,8 @@ html {
 }
 
 .pageFooterCopyright {
-	background-color: rgb(58, 109, 156);
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
 }
 
 .codemirrorToolbar {

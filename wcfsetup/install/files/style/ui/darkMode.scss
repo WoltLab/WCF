@@ -125,6 +125,13 @@
         border: 1px solid var(--wcfDropdownBorderInner);
     }
 
+    .inlineCode,
+    kbd {
+        background-color: #3b3b3b !important;
+        border-color: #858585 !important;
+        color: #dfe2e5 !important;
+    }
+
     .popover {
         border: 1px solid var(--wcfContentContainerBorder);
     }
