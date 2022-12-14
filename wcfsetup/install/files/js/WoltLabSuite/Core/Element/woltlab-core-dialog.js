@@ -44,6 +44,9 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
         }
         close() {
             this.#dialog.close();
+            this.#detachDialog();
+        }
+        #detachDialog() {
             const event = new CustomEvent("afterClose");
             this.dispatchEvent(event);
             (0, PageOverlay_1.releasePageOverlayContainer)(this.#dialog);
@@ -144,6 +147,7 @@ define(["require", "exports", "tslib", "../Dom/Util", "../Helper/PageOverlay", "
                     return;
                 }
                 this.#dispatchPrimaryEvent();
+                this.#detachDialog();
             });
             formControl.addEventListener("cancel", () => {
                 const event = new CustomEvent("cancel", { cancelable: true });

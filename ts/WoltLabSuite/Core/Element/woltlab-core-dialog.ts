@@ -74,6 +74,10 @@ export class WoltlabCoreDialogElement extends HTMLElement {
   close(): void {
     this.#dialog.close();
 
+    this.#detachDialog();
+  }
+
+  #detachDialog(): void {
     const event = new CustomEvent("afterClose");
     this.dispatchEvent(event);
 
@@ -183,6 +187,7 @@ export class WoltlabCoreDialogElement extends HTMLElement {
             // has completed. Triggering the submit again would cause
             // `validate` to run again, causing an infinite loop.
             this.#dispatchPrimaryEvent();
+
             this.close();
           }
         });
@@ -196,6 +201,8 @@ export class WoltlabCoreDialogElement extends HTMLElement {
       }
 
       this.#dispatchPrimaryEvent();
+
+      this.#detachDialog();
     });
 
     formControl.addEventListener("cancel", () => {
