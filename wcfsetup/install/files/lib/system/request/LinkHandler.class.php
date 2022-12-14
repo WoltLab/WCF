@@ -80,15 +80,10 @@ final class LinkHandler extends SingletonFactory
      * Important: The controller class is not checked if it actually exists.
      * That check happens during the runtime.
      *
-     * @param string $controllerClass
-     * @param array $parameters
-     * @param string $url
-     * @return  string
-     *
      * @throws  \InvalidArgumentException   if the passed string is no controller class name
      * @since   5.2
      */
-    public function getControllerLink($controllerClass, array $parameters = [], $url = '')
+    public function getControllerLink(string $controllerClass, array $parameters = [], string $url = ''): string
     {
         if (!$this->controllerRegex->match($controllerClass)) {
             throw new \InvalidArgumentException("Invalid controller '{$controllerClass}' passed.");
@@ -106,13 +101,8 @@ final class LinkHandler extends SingletonFactory
 
     /**
      * Returns a relative link.
-     *
-     * @param string $controller
-     * @param array $parameters
-     * @param string $url
-     * @return  string
      */
-    public function getLink($controller = null, array $parameters = [], $url = '')
+    public function getLink(?string $controller = null, array $parameters = [], string $url = ''): string
     {
         $abbreviation = 'wcf';
         $anchor = '';
@@ -278,7 +268,7 @@ final class LinkHandler extends SingletonFactory
      * @return  string      full URL of empty string if `$pageID` is invalid
      * @since   3.0
      */
-    public function getCmsLink($pageID, $languageID = -1)
+    public function getCmsLink($pageID, $languageID = -1): string
     {
         $data = null;
 
