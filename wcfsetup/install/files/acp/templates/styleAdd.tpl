@@ -599,7 +599,7 @@
 						
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
-								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png"></div>
+								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt=""></div>
 								<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
 							</div>
 						</div>

@@ -10,7 +10,7 @@ html[dir="rtl"] #spWindow { margin-left: 40px; }
 /* ### header ### */
 #spHeader > .spBoundary { display: flex; flex-wrap: wrap; padding: 30px 0; }
 #spLogo { flex: 0 0 50%; }
-#spLogo > img { height: 40px; }
+#spLogo > img { height: auto; max-height: 40px; width: auto; }
 #spSearch { flex: 0 0 50%; }
 #spSearchBox { border-width: 0; }
 #spUser { flex: 0 0 50%; }
