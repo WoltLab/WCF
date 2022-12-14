@@ -136,6 +136,12 @@
         border: 1px solid var(--wcfContentContainerBorder);
     }
 
+    .spinner {
+        background-color: #3b3b3b !important;
+        border-color: #858585 !important;
+        color: #dfe2e5 !important;
+    }
+
     .userMenu {
         border: 1px solid var(--wcfUserMenuBorder);
     }

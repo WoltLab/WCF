@@ -206,6 +206,7 @@
 .spinner {
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgb(204, 204, 204);
+	border-radius: var(--wcfBorderRadiusContainer);
 	box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
 	color: rgb(44, 62, 80);
 	left: 50%;
