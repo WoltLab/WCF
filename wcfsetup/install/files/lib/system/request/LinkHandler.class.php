@@ -202,7 +202,7 @@ final class LinkHandler extends SingletonFactory
 
         if (isset($parameters['title'])) {
             // component replacement
-            if (!empty($this->titleSearch)) {
+            if ($this->titleSearch !== []) {
                 $parameters['title'] = \str_replace($this->titleSearch, $this->titleReplace, $parameters['title']);
             }
 
