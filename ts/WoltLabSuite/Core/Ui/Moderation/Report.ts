@@ -1,3 +1,13 @@
+/**
+ * Provides the dialog to report content.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Moderation/Report
+ * @since 6.0
+ */
+
 import { dboAction } from "../../Ajax";
 import { dialogFactory } from "../../Component/Dialog";
 import { innerError } from "../../Dom/Util";
@@ -86,16 +96,28 @@ function validateButton(element: HTMLElement): boolean {
   return true;
 }
 
-export function setup(): void {
-  wheneverFirstSeen("[data-report-content]", (element: HTMLElement) => {
-    if (validateButton(element)) {
-      element.addEventListener("click", (event) => {
-        if (element.tagName === "A") {
-          event.preventDefault();
-        }
+function registerButton(element: HTMLElement): void {
+  if (validateButton(element)) {
+    element.addEventListener("click", (event) => {
+      if (element.tagName === "A" || element.dataset.isLegacyButton === "true") {
+        event.preventDefault();
+      }
 
-        void openReportDialog(element);
-      });
-    }
-  });
+      void openReportDialog(element);
+    });
+  }
+}
+
+/**
+ * @deprecated 6.0 Use the attribute `[data-report-content]` instead.
+ */
+export function registerLegacyButton(element: HTMLElement, objectType: string): void {
+  element.dataset.reportContent = objectType;
+  element.dataset.isLegacyButton = "true";
+
+  registerButton(element);
+}
+
+export function setup(): void {
+  wheneverFirstSeen("[data-report-content]", (element) => registerButton(element));
 }

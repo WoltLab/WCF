@@ -1,7 +1,16 @@
+/**
+ * Provides the dialog to report content.
+ *
+ * @author Alexander Ebert
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Ui/Moderation/Report
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "../../Dom/Util", "../../Helper/Selector", "../../Language", "../Notification"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, Selector_1, Language, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setup = void 0;
+    exports.setup = exports.registerLegacyButton = void 0;
     Language = tslib_1.__importStar(Language);
     UiNotification = tslib_1.__importStar(UiNotification);
     async function openReportDialog(element) {
@@ -66,17 +75,27 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Component/Dialog", "
         }
         return true;
     }
+    function registerButton(element) {
+        if (validateButton(element)) {
+            element.addEventListener("click", (event) => {
+                if (element.tagName === "A" || element.dataset.isLegacyButton === "true") {
+                    event.preventDefault();
+                }
+                void openReportDialog(element);
+            });
+        }
+    }
+    /**
+     * @deprecated 6.0 Use the attribute `[data-report-content]` instead.
+     */
+    function registerLegacyButton(element, objectType) {
+        element.dataset.reportContent = objectType;
+        element.dataset.isLegacyButton = "true";
+        registerButton(element);
+    }
+    exports.registerLegacyButton = registerLegacyButton;
     function setup() {
-        (0, Selector_1.wheneverFirstSeen)("[data-report-content]", (element) => {
-            if (validateButton(element)) {
-                element.addEventListener("click", (event) => {
-                    if (element.tagName === "A") {
-                        event.preventDefault();
-                    }
-                    void openReportDialog(element);
-                });
-            }
-        });
+        (0, Selector_1.wheneverFirstSeen)("[data-report-content]", (element) => registerButton(element));
     }
     exports.setup = setup;
 });
