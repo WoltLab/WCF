@@ -30,12 +30,6 @@ final class LinkHandler extends SingletonFactory
     protected $controllerRegex;
 
     /**
-     * regex object to filter title
-     * @var RegEx
-     */
-    protected $titleRegex;
-
-    /**
      * title search strings
      * @var string[]
      */
@@ -52,7 +46,6 @@ final class LinkHandler extends SingletonFactory
      */
     protected function init()
     {
-        $this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
         $this->controllerRegex = new Regex(
             '^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$'
         );
@@ -207,7 +200,10 @@ final class LinkHandler extends SingletonFactory
             }
 
             // remove illegal characters
-            $parameters['title'] = \trim($this->titleRegex->replace($parameters['title'], '-'), '-');
+            $parameters['title'] = \trim(
+                \preg_replace('/[^\p{L}\p{N}]+/u', '-', $parameters['title']),
+                '-'
+            );
 
             // trim to 80 characters
             $parameters['title'] = \rtrim(\mb_substr($parameters['title'], 0, 80), '-');
