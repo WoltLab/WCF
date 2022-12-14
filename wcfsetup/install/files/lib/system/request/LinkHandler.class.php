@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
-class LinkHandler extends SingletonFactory
+final class LinkHandler extends SingletonFactory
 {
     /**
      * regex object to extract controller data from controller class name
