@@ -13,6 +13,7 @@ use wcf\http\middleware\AddAcpSecurityHeaders;
 use wcf\http\middleware\CheckForEnterpriseNonOwnerAccess;
 use wcf\http\middleware\CheckForExpiredAppEvaluation;
 use wcf\http\middleware\CheckForOfflineMode;
+use wcf\http\middleware\CheckHttpMethod;
 use wcf\http\middleware\CheckSystemEnvironment;
 use wcf\http\middleware\CheckUserBan;
 use wcf\http\middleware\EnforceAcpAuthentication;
@@ -104,6 +105,7 @@ final class RequestHandler extends SingletonFactory
                     new AddAcpSecurityHeaders(),
                     new EnforceCacheControlPrivate(),
                     new EnforceFrameOptions(),
+                    new CheckHttpMethod(),
                     new Xsrf(),
                     new CheckSystemEnvironment(),
                     new CheckUserBan(),

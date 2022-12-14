@@ -6,7 +6,6 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
 use Laminas\Diactoros\Response\JsonResponse;
-use Laminas\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -116,9 +115,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
                 ],
             ]);
         } else {
-            return new TextResponse('The used HTTP method is not allowed.', 405, [
-                'allow' => 'POST, GET',
-            ]);
+            throw new \LogicException('Unreachable');
         }
     }
 
