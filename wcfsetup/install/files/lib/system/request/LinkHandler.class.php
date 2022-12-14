@@ -220,12 +220,12 @@ final class LinkHandler extends SingletonFactory
             $abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
         }
         $routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
-        if (!$isRaw && !empty($url)) {
+        if (!$isRaw && $url !== '') {
             $routeURL .= (\strpos($routeURL, '?') === false) ? '?' : '&';
         }
 
         // encode certain characters
-        if (!empty($url)) {
+        if ($url !== '') {
             $url = \str_replace(['[', ']'], ['%5B', '%5D'], $url);
         }
 
