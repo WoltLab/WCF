@@ -478,7 +478,7 @@ final class DatabaseTableChangeProcessor
                             if (!isset($this->foreignKeysToDrop[$tableName])) {
                                 $this->foreignKeysToDrop[$tableName] = [];
                             }
-                            $this->foreignKeysToDrop[$tableName][] = $foreignKey;
+                            $this->foreignKeysToDrop[$tableName][] = $matchingExistingForeignKey;
 
                             $this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . \implode(
                                 ',',
