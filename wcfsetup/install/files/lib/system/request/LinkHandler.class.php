@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
-class LinkHandler extends SingletonFactory
+final class LinkHandler extends SingletonFactory
 {
     /**
      * regex object to extract controller data from controller class name
@@ -28,12 +28,6 @@ class LinkHandler extends SingletonFactory
      * @since   5.2
      */
     protected $controllerRegex;
-
-    /**
-     * regex object to filter title
-     * @var RegEx
-     */
-    protected $titleRegex;
 
     /**
      * title search strings
@@ -52,7 +46,6 @@ class LinkHandler extends SingletonFactory
      */
     protected function init()
     {
-        $this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
         $this->controllerRegex = new Regex(
             '^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$'
         );
@@ -80,15 +73,10 @@ class LinkHandler extends SingletonFactory
      * Important: The controller class is not checked if it actually exists.
      * That check happens during the runtime.
      *
-     * @param string $controllerClass
-     * @param array $parameters
-     * @param string $url
-     * @return  string
-     *
      * @throws  \InvalidArgumentException   if the passed string is no controller class name
      * @since   5.2
      */
-    public function getControllerLink($controllerClass, array $parameters = [], $url = '')
+    public function getControllerLink(string $controllerClass, array $parameters = [], string $url = ''): string
     {
         if (!$this->controllerRegex->match($controllerClass)) {
             throw new \InvalidArgumentException("Invalid controller '{$controllerClass}' passed.");
@@ -106,13 +94,8 @@ class LinkHandler extends SingletonFactory
 
     /**
      * Returns a relative link.
-     *
-     * @param string $controller
-     * @param array $parameters
-     * @param string $url
-     * @return  string
      */
-    public function getLink($controller = null, array $parameters = [], $url = '')
+    public function getLink(?string $controller = null, array $parameters = [], string $url = ''): string
     {
         $abbreviation = 'wcf';
         $anchor = '';
@@ -170,7 +153,7 @@ class LinkHandler extends SingletonFactory
                     throw new \InvalidArgumentException("A 'controller' must be specified for non-'wcf' links in ACP.");
                 }
             } else {
-                if (!empty($parameters['application']) && $abbreviation !== 'wcf') {
+                if ($abbreviation !== 'wcf') {
                     $application = ApplicationHandler::getInstance()->getApplication($abbreviation);
                     if ($application === null) {
                         throw new \RuntimeException("Unknown abbreviation '" . $abbreviation . "'.");
@@ -212,12 +195,15 @@ class LinkHandler extends SingletonFactory
 
         if (isset($parameters['title'])) {
             // component replacement
-            if (!empty($this->titleSearch)) {
+            if ($this->titleSearch !== []) {
                 $parameters['title'] = \str_replace($this->titleSearch, $this->titleReplace, $parameters['title']);
             }
 
             // remove illegal characters
-            $parameters['title'] = \trim($this->titleRegex->replace($parameters['title'], '-'), '-');
+            $parameters['title'] = \trim(
+                \preg_replace('/[^\p{L}\p{N}]+/u', '-', $parameters['title']),
+                '-'
+            );
 
             // trim to 80 characters
             $parameters['title'] = \rtrim(\mb_substr($parameters['title'], 0, 80), '-');
@@ -234,12 +220,12 @@ class LinkHandler extends SingletonFactory
             $abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
         }
         $routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
-        if (!$isRaw && !empty($url)) {
-            $routeURL .= (\strpos($routeURL, '?') === false) ? '?' : '&';
+        if (!$isRaw && $url !== '') {
+            $routeURL .= \str_contains($routeURL, '?') ? '&' : '?';
         }
 
         // encode certain characters
-        if (!empty($url)) {
+        if ($url !== '') {
             $url = \str_replace(['[', ']'], ['%5B', '%5D'], $url);
         }
 
@@ -278,7 +264,7 @@ class LinkHandler extends SingletonFactory
      * @return  string      full URL of empty string if `$pageID` is invalid
      * @since   3.0
      */
-    public function getCmsLink($pageID, $languageID = -1)
+    public function getCmsLink($pageID, $languageID = -1): string
     {
         $data = null;
 

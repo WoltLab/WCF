@@ -220,24 +220,19 @@ class DynamicRequestRoute implements IRequestRoute
                 }
             }
 
-            if (!empty($link) && $lastSeparator !== null) {
+            if ($link !== '' && $lastSeparator !== null) {
                 $link .= $lastSeparator;
             }
         }
 
         if ($this->isACP() || !URL_OMIT_INDEX_PHP) {
-            if (!empty($link)) {
+            if ($link !== '') {
                 $link = 'index.php?' . $link;
             }
         }
 
-        if (!empty($components)) {
-            if (\strpos($link, '?') === false) {
-                $link .= '?';
-            } else {
-                $link .= '&';
-            }
-
+        if ($components !== []) {
+            $link .= \str_contains($link, '?') ? '&' : '?';
             $link .= \http_build_query($components, '', '&');
         }
 

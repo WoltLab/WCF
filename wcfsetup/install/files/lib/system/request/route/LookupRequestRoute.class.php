@@ -22,12 +22,12 @@ final class LookupRequestRoute implements IRequestRoute
      * list of parsed route information
      * @var array
      */
-    protected $routeData = [];
+    protected array $routeData = [];
 
     /**
      * @inheritDoc
      */
-    public function matches($requestURL)
+    public function matches($requestURL): bool
     {
         $requestURL = FileUtil::removeLeadingSlash($requestURL);
 
@@ -90,7 +90,7 @@ final class LookupRequestRoute implements IRequestRoute
     /**
      * @inheritDoc
      */
-    public function getRouteData()
+    public function getRouteData(): array
     {
         return $this->routeData;
     }
@@ -99,7 +99,7 @@ final class LookupRequestRoute implements IRequestRoute
      * @inheritDoc
      * @throws  \BadMethodCallException
      */
-    public function buildLink(array $components)
+    public function buildLink(array $components): string
     {
         throw new \BadMethodCallException(
             'LookupRequestRoute cannot build links, please verify capabilities by calling canHandle() first.'
@@ -109,7 +109,7 @@ final class LookupRequestRoute implements IRequestRoute
     /**
      * @inheritDoc
      */
-    public function canHandle(array $components)
+    public function canHandle(array $components): bool
     {
         // this route cannot build routes, it is a one-way resolver
         return false;
@@ -118,7 +118,7 @@ final class LookupRequestRoute implements IRequestRoute
     /**
      * @inheritDoc
      */
-    public function isACP()
+    public function isACP(): bool
     {
         // lookups are not supported for ACP requests
         return false;
