@@ -29,17 +29,23 @@
 		DomTraverse,
 		DomUtil,
 	) => {
+		const isDarkMode = window.getComputedStyle(document.documentElement).colorScheme === "dark";
+
 		const codemirrorCss = document.head.querySelector('link[href$="codemirror.css"]');
 		if (codemirrorCss === null) {
-			let link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css';
-			document.head.appendChild(link);
+			function addStylesheet(name) {
+				const link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = `{@$__wcf->getPath()}js/3rdParty/codemirror/${ name }.css`;
+				document.head.append(link);
+			}
 
-			link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = '{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.css';
-			document.head.appendChild(link);
+			addStylesheet("codemirror");
+			addStylesheet("addon/dialog/dialog");
+
+			if (isDarkMode) {
+				addStylesheet("theme/material-darker");
+			}
 		}
 		
 		var config = {
@@ -60,6 +66,10 @@
 			indentUnit: 4,
 			readOnly: {if !$editable|isset || $editable}false{else}true{/if}
 		};
+
+		if (isDarkMode) {
+			config.theme = "material-darker";
+		}
 		
 		document.querySelectorAll('{@$codemirrorSelector|encodeJS}').forEach((element) => {
 			{event name='javascriptInit'}
