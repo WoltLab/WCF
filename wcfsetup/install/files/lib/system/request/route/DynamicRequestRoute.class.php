@@ -231,7 +231,7 @@ class DynamicRequestRoute implements IRequestRoute
             }
         }
 
-        if (!empty($components)) {
+        if ($components !== []) {
             if (\strpos($link, '?') === false) {
                 $link .= '?';
             } else {
