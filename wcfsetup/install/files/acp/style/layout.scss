@@ -11,6 +11,8 @@ html {
 
 /* page header */
 .pageHeaderContainer {
+	background-color: transparent;
+
 	@include screen-lg {
 		.pageHeader .layoutBoundary {
 			background-color: var(--wcfHeaderMenuBackground);
