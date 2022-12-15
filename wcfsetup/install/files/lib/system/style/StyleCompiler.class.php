@@ -122,6 +122,17 @@ final class StyleCompiler extends SingletonFactory
             $individualScss = $variables['individualScss'];
             unset($variables['individualScss']);
         }
+        if (isset($variables['individualScssDarkMode'])) {
+            $individualScssDarkMode = $variables['individualScssDarkMode'];
+            unset($variables['individualScss']);
+
+            if ($individualScssDarkMode) {
+                $individualScss .= \sprintf(
+                    "\n@media (prefers-color-scheme: dark) {\n%s\n}",
+                    $individualScssDarkMode,
+                );
+            }
+        }
 
         // add style image path
         if ($imagePath) {
@@ -242,10 +253,22 @@ final class StyleCompiler extends SingletonFactory
     {
         // get style variables
         $variables = $style->getVariables();
+
         $individualScss = '';
         if (isset($variables['individualScss'])) {
             $individualScss = $variables['individualScss'];
             unset($variables['individualScss']);
+        }
+        if (isset($variables['individualScssDarkMode'])) {
+            $individualScssDarkMode = $variables['individualScssDarkMode'];
+            unset($variables['individualScss']);
+
+            if ($individualScssDarkMode) {
+                $individualScss .= \sprintf(
+                    "\n@media (prefers-color-scheme: dark) {\n%s\n}",
+                    $individualScssDarkMode,
+                );
+            }
         }
 
         // add style image path

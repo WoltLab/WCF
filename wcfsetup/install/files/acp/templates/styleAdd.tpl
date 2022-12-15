@@ -1090,6 +1090,28 @@
 							{/if}
 						</dl>
 					</section>
+
+					{if $action === 'edit' && $style->hasDarkMode}
+						<section class="section"{if $errorField == 'individualScssDarkMode'} formError{/if}>
+							<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}</h2>
+							
+							<dl class="wide">
+								<dt></dt>
+								<dd>
+									<div dir="ltr">
+										<textarea id="individualScssDarkModeCustom" rows="20" cols="40" name="individualScssDarkModeCustom">{$variables[individualScssDarkModeCustom]}</textarea>
+										<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScssDarkModeCustom]" value="{if $scrollOffsets[individualScssDarkModeCustom]|isset}{$scrollOffsets[individualScssDarkMode]}{else}0{/if}" type="hidden">
+									</div>
+									<small>{lang}wcf.acp.style.advanced.individualScssDarkMode.description{/lang}</small>
+								</dd>
+								{if $errorField == 'individualScssDarkMode'}
+									<small class="innerError">
+										{lang}wcf.acp.style.advanced.individualScssDarkMode.error{/lang}
+									</small>
+								{/if}
+							</dl>
+						</section>
+					{/if}
 					
 					<section class="section{if $errorField == 'overrideScssCustom'} formError{/if}">
 						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideScss{/lang}</h2>
@@ -1111,7 +1133,7 @@
 							</dd>
 						</dl>
 					</section>
-					{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #overrideScssCustom'}
+					{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScssCustom, #individualScssDarkModeCustom, #overrideScssCustom'}
 					
 					{event name='syntaxFieldsetsCustom'}
 				</div>
@@ -1140,6 +1162,28 @@
 				</dl>
 			</section>
 			
+			{if $action === 'edit' && $style->hasDarkMode}
+				<section class="section{if $errorField == 'individualScssDarkMode' && $isTainted} formError{/if}">
+					<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScssDarkMode{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
+					
+					<dl class="wide">
+						<dt></dt>
+						<dd>
+							<div dir="ltr">
+								<textarea id="individualScssDarkMode" rows="20" cols="40" name="individualScssDarkMode">{$variables[individualScssDarkMode]}</textarea>
+								<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScssDarkMode]" value="{if $scrollOffsets[individualScssDarkMode]|isset}{$scrollOffsets[individualScssDarkMode]}{else}0{/if}" type="hidden">
+							</div>
+							<small>{lang}wcf.acp.style.advanced.individualScssDarkMode.description{/lang}</small>
+						</dd>
+						{if $errorField == 'individualScssDarkMode' && $isTainted}
+							<small class="innerError">
+								{lang}wcf.acp.style.advanced.individualScssDarkMode.error{/lang}
+							</small>
+						{/if}
+					</dl>
+				</section>
+			{/if}
+			
 			<section class="section{if $errorField == 'overrideScss'} formError{/if}">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.overrideScss{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
@@ -1160,7 +1204,7 @@
 					</dd>
 				</dl>
 			</section>
-			{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #overrideScss' editable=$isTainted}
+			{include file='codemirror' codemirrorMode='text/x-scss' codemirrorSelector='#individualScss, #individualScssDarkMode, #overrideScss' editable=$isTainted}
 			
 			{event name='syntaxFieldsetsOriginal'}
 			

@@ -803,6 +803,7 @@ class StyleAddForm extends AbstractForm
         // set specialized variables
         $this->specialVariables = [
             'individualScss',
+            'individualScssDarkMode',
             'overrideScss',
             'pageLogoWidth',
             'pageLogoHeight',

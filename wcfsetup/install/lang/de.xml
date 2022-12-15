@@ -2848,6 +2848,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.advanced.custom"><![CDATA[Eigene Deklarationen]]></item>
 		<item name="wcf.acp.style.advanced.individualScss"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.advanced.individualScss.description"><![CDATA[Die Eingabe wird am Ende des Stils eingefügt und kann vollständig aus CSS bestehen. {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zusätzlich den Zugriff auf SCSS und alle von WoltLab Suite Core zur Verfügung gestellten Mixins.]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode"><![CDATA[Individuelles CSS und SCSS (Ergänzend für dunkles Farbschema)]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode.description"><![CDATA[Der eingegebene CSS-Code wird zusätzlich zu „Individuelles CSS und SCSS“ eingefügt und wirkt sich nur im dunklen Farbschema aus.]]></item>
 		<item name="wcf.acp.style.advanced.original"><![CDATA[Vorgegebene Deklarationen]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss"><![CDATA[Überschreiben von SCSS-Variablen]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} innerhalb dieser Eingabe beliebige SCSS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar sind. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: „$variableName: variableValue;“]]></item>

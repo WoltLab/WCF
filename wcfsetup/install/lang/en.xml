@@ -2780,6 +2780,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.advanced.custom"><![CDATA[Own Declarations]]></item>
 		<item name="wcf.acp.style.advanced.individualScss"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.advanced.individualScss.description"><![CDATA[The content will be appended to the style sheet and can contain pure <abbr title="Cascading Style Sheets">CSS</abbr>. Furthermore, you can use SCSS including all Mixins provided by WoltLab Suite Core.]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode"><![CDATA[Individual CSS and SCSS (Dark Color Scheme Only)]]></item>
+		<item name="wcf.acp.style.advanced.individualScssDarkMode.description"><![CDATA[The entered CSS code will be inserted in addition to Individual CSS and SCSS” and will only affect the dark color scheme.]]></item>
 		<item name="wcf.acp.style.advanced.original"><![CDATA[Preset Declarations]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss"><![CDATA[SCSS Variables Override]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.description"><![CDATA[Allows you to override SCSS variables not available through the style editor itself. Syntax: “$variableName: variableValue;”, referred variables must be declared prior any attempt to read their value.]]></item>
