@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, Ajax, Core, Util_1, EventHandler, UiScreen) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen", "./DarkMode"], function (require, exports, tslib_1, Ajax, Core, Util_1, EventHandler, UiScreen, DarkMode_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.showVisualEditor = exports.hideVisualEditor = exports.setup = void 0;
@@ -240,6 +240,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     function setup(options) {
         handleLayoutWidth();
         handleScss(options.isTainted);
+        (0, DarkMode_1.setup)();
         if (!options.isTainted) {
             handleProtection(options.styleId);
         }

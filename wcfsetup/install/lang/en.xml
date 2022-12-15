@@ -2774,6 +2774,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.style">
 		<item name="wcf.acp.style.add"><![CDATA[Add Style]]></item>
+		<item name="wcf.acp.style.addDarkMode.question"><![CDATA[Do you want to add a dark color scheme to this style?]]></item>
+		<item name="wcf.acp.style.addDarkMode"><![CDATA[Add Dark Color Scheme]]></item>
 		<item name="wcf.acp.style.advanced"><![CDATA[Advanced Settings]]></item>
 		<item name="wcf.acp.style.advanced.custom"><![CDATA[Own Declarations]]></item>
 		<item name="wcf.acp.style.advanced.individualScss"><![CDATA[Individual CSS and SCSS]]></item>

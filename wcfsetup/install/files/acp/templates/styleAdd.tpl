@@ -59,6 +59,17 @@
 							</a>
 						{/if}
 					</li>
+				{elseif $isTainted}
+					<li>
+						<button
+							class="button jsButtonAddDarkMode"
+							data-endpoint="{link controller='StyleAddDarkMode' id=$style->styleID}{/link}"
+							data-question="{lang}wcf.acp.style.addDarkMode.question{/lang}"
+						>
+							{icon name='palette'}
+							<span>{lang}wcf.acp.style.addDarkMode{/lang}</span>
+						</button>
+					</li>
 				{/if}
 				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button">{icon name='download'} <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
 				<li><a class="jsCopyStyle button">{icon name='copy'} <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>

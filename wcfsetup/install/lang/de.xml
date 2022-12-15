@@ -2842,6 +2842,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	</category>
 	<category name="wcf.acp.style">
 		<item name="wcf.acp.style.add"><![CDATA[Stil hinzufügen]]></item>
+		<item name="wcf.acp.style.addDarkMode"><![CDATA[Dunkles Farbschema hinzufügen]]></item>
+		<item name="wcf.acp.style.addDarkMode.question"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} für diesen Stil ein dunkles Farbschema hinzufügen?]]></item>
 		<item name="wcf.acp.style.advanced"><![CDATA[Erweiterte Einstellungen]]></item>
 		<item name="wcf.acp.style.advanced.custom"><![CDATA[Eigene Deklarationen]]></item>
 		<item name="wcf.acp.style.advanced.individualScss"><![CDATA[Individuelles CSS und SCSS]]></item>
