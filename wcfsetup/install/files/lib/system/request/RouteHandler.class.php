@@ -21,7 +21,7 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Request
  */
-class RouteHandler extends SingletonFactory
+final class RouteHandler extends SingletonFactory
 {
     /**
      * current host and protocol
