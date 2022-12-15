@@ -5,16 +5,10 @@
 			<objectname>wcf\system\breadcrumb\Breadcrumbs</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname>wcf\system\request\LinkHandler</objectname>
-		</coreobject>
-		<coreobject>
 			<objectname>wcf\system\menu\acp\ACPMenu</objectname>
 		</coreobject>
 		<coreobject>
 			<objectname>wcf\system\benchmark\Benchmark</objectname>
-		</coreobject>
-		<coreobject>
-			<objectname>wcf\system\user\authentication\UserAuthenticationFactory</objectname>
 		</coreobject>
 		<coreobject>
 			<objectname>wcf\system\MetaTagHandler</objectname>
@@ -62,4 +56,8 @@
 			<objectname>wcf\system\file\upload\UploadHandler</objectname>
 		</coreobject>
 	</import>
+	<delete>
+		<coreobject name="wcf\system\user\authentication\UserAuthenticationFactory"/>
+		<coreobject name="wcf\system\request\LinkHandler"/>
+	</delete>
 </data>
