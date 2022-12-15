@@ -232,12 +232,7 @@ class DynamicRequestRoute implements IRequestRoute
         }
 
         if ($components !== []) {
-            if (\strpos($link, '?') === false) {
-                $link .= '?';
-            } else {
-                $link .= '&';
-            }
-
+            $link .= \str_contains($link, '?') ? '&' : '?';
             $link .= \http_build_query($components, '', '&');
         }
 
