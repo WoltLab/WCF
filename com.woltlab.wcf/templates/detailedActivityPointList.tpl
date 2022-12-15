@@ -10,23 +10,21 @@
 		</thead>
 		
 		<tbody>
-			{assign var='activityPointSum' value=0}
-			{foreach from=$activityPointObjectTypes item='objectType'}
-				{if $objectType->activityPoints > 0 && $objectType->points > 0}
+			{foreach from=$entries item='entry'}
+				{if $entry['activityPoints'] > 0 && $entry['objectType']->points > 0}
 					<tr>
 						<td class="columnTitle">
-							{lang}wcf.user.activityPoint.objectType.{$objectType->objectType}{/lang}
+							{lang}wcf.user.activityPoint.objectType.{$entry['objectType']->objectType}{/lang}
 						</td>
 						<td class="columnDigits">
-							{#$objectType->items}
+							{#$entry['items']}
 						</td>
 						<td class="columnDigits">
-							{#$objectType->points}
+							{#$entry['objectType']->points}
 						</td>
 						<td class="columnDigits">
-							{#$objectType->activityPoints}
+							{#$entry['activityPoints']}
 						</td>
-						{assign var='activityPointSum' value=$activityPointSum + $objectType->activityPoints}
 					</tr>
 				{/if}
 			{/foreach}

@@ -211,18 +211,24 @@ class UserProfileAction extends UserAction implements IPopoverAction
                 " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
+        $entries = [];
         while ($row = $statement->fetchArray()) {
-            $activityPointObjectTypes[$row['objectTypeID']]->activityPoints = $row['activityPoints'];
-            $activityPointObjectTypes[$row['objectTypeID']]->items = $row['items'];
+            $entries[] = [
+                'activityPoints' => $row['activityPoints'],
+                'items' => $row['items'],
+                'objectType' => $activityPointObjectTypes[$row['objectTypeID']]
+            ];
         }
 
-        WCF::getTPL()->assign([
-            'activityPointObjectTypes' => $activityPointObjectTypes,
-            'user' => $this->userProfile,
-        ]);
-
         return [
-            'template' => WCF::getTPL()->fetch('detailedActivityPointList'),
+            'template' => WCF::getTPL()->fetch(
+                'detailedActivityPointList',
+                'wcf',
+                [
+                    'entries' => $entries,
+                    'user' => $this->userProfile,
+                ]
+            ),
             'userID' => $this->userProfile->userID,
         ];
     }
