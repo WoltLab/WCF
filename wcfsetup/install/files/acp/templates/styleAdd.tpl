@@ -63,7 +63,7 @@
 					<li>
 						<button
 							class="button jsButtonAddDarkMode"
-							data-endpoint="{link controller='StyleAddDarkMode' id=$style->styleID}{/link}"
+							data-endpoint="{link controller='StyleAddDarkMode' object=$style}{/link}"
 							data-question="{lang}wcf.acp.style.addDarkMode.question{/lang}"
 						>
 							{icon name='palette'}
