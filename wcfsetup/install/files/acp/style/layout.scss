@@ -372,7 +372,7 @@ html {
 }
 
 .codemirrorToolbar {
-	background-color: rgb(52, 73, 94);
+	background-color: var(--wcfEditorButtonBackground);
 	display: flex;
 	flex-wrap: wrap;
 
@@ -381,7 +381,7 @@ html {
 		margin-bottom: 1px;
 
 		> a {
-			color: rgb(255, 255, 255);
+			color: var(--wcfEditorButtonText);
 			display: block;
 			font-size: 12px;
 			outline: none;
@@ -390,7 +390,8 @@ html {
 			font-weight: 400;
 
 			&:hover {
-				background-color: rgb(19, 34, 48);
+				background-color: var(--wcfEditorButtonBackgroundActive);
+				color: var(--wcfEditorButtonTextActive);
 			}
 
 			.icon {
