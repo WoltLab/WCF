@@ -48,27 +48,33 @@
 							{/if}
 						</div>
 					</div>
-					<div class="userMenuContentDivider"></div>
-					<div class="userMenuContent">
-						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
-							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-pencil"></span>
-							</div>
-							<div class="userMenuItemContent">
-								<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
-							</div>
+					{hascontent}
+						<div class="userMenuContentDivider"></div>
+						<div class="userMenuContent">
+							{content}
+								{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}
+									<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
+										<div class="userMenuItemImage">
+											<span class="icon icon32 fa-pencil"></span>
+										</div>
+										<div class="userMenuItemContent">
+											<a href="{link controller='User' object=$__wcf->user editOnInit=true}{/link}" class="userMenuItemLink">{lang}wcf.user.editProfile{/lang}</a>
+										</div>
+									</div>
+								{/if}
+								{if $__wcf->session->getPermission('admin.general.canUseAcp')}
+									<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
+										<div class="userMenuItemImage">
+											<span class="icon icon32 fa-wrench"></span>
+										</div>
+										<div class="userMenuItemContent">
+											<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
+										</div>
+									</div>
+								{/if}
+							{/content}
 						</div>
-						{if $__wcf->session->getPermission('admin.general.canUseAcp')}
-						<div class="userMenuItem userMenuItemNarrow userMenuItemSingleLine">
-							<div class="userMenuItemImage">
-								<span class="icon icon32 fa-wrench"></span>
-							</div>
-							<div class="userMenuItemContent">
-								<a href="{link isACP=true}{/link}" class="userMenuItemLink">{lang}wcf.global.acp{/lang}</a>
-							</div>
-						</div>
-						{/if}
-					</div>
+					{/hascontent}
 					<div class="userMenuContentDivider"></div>
 					<div class="userMenuContent userMenuContentScrollable">
 						{foreach from=$__wcf->getUserMenu()->getUserMenuItems() item=menuItem}
