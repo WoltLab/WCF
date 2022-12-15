@@ -14,9 +14,6 @@
 			<objectname>wcf\system\benchmark\Benchmark</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname>wcf\system\user\authentication\UserAuthenticationFactory</objectname>
-		</coreobject>
-		<coreobject>
 			<objectname>wcf\system\MetaTagHandler</objectname>
 		</coreobject>
 		<coreobject>
@@ -62,4 +59,7 @@
 			<objectname>wcf\system\file\upload\UploadHandler</objectname>
 		</coreobject>
 	</import>
+	<delete>
+		<coreobject name="wcf\system\user\authentication\UserAuthenticationFactory"/>
+	</delete>
 </data>
