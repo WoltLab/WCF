@@ -401,7 +401,9 @@ class PackageInstallationDispatcher
      */
     protected function logInstallationStep(array $node = [], $log = '')
     {
-        $logEntry = "[" . TIME_NOW . "]\n";
+        $time = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+
+        $logEntry = "[" . $time->format('Y-m-d\TH:i:s.uP') . "]\n";
         if (!empty($node)) {
             $logEntry .= 'sequenceNo: ' . $node['sequenceNo'] . "\n";
             $logEntry .= 'nodeType: ' . $node['nodeType'] . "\n";
