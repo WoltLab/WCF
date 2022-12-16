@@ -5,7 +5,10 @@
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<div class="pageHeaderSearchInputContainer">
 		<div id="pageHeaderSearchType" class="pageHeaderSearchType dropdown">
-			<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect"><span class="pageHeaderSearchTypeLabel">{lang}wcf.search.type.everywhere{/lang}</span></a>
+			<a href="#" class="button dropdownToggle" id="pageHeaderSearchTypeSelect">
+				<span class="pageHeaderSearchTypeLabel">{lang}wcf.search.type.everywhere{/lang}</span>
+				{icon name='caret-down' type='solid'}
+			</a>
 			<ul class="dropdownMenu">
 				<li><a href="#" data-provider-name="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 				<li class="dropdownDivider"></li>
