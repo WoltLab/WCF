@@ -1276,10 +1276,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Public]]></item>
 		<item name="wcf.acp.option.exception_privacy.reduced"><![CDATA[Reduced]]></item>
 		<item name="wcf.acp.option.exception_privacy.private"><![CDATA[Private]]></item>
-		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
-		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
-		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
-		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Value should be absolute to Document Root, e.g. “/forum” for “https://www.woltlab.com/forum”.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[The alias “{$urlControllerReplacementError}” equals an existing controller and cannot be used.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[The alias “{$urlControllerReplacementError}” is already in use.]]></item>

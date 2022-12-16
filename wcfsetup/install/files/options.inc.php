@@ -19,9 +19,6 @@ if (\file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 }
 \define('COOKIE_PREFIX', $prefix);
 
-\define('COOKIE_PATH', '');
-\define('COOKIE_DOMAIN', '');
-
 \define('CACHE_SOURCE_TYPE', 'disk');
 \define('IMAGE_ADAPTER_TYPE', 'gd');
 \define('TIMEZONE', 'Europe/Berlin');
