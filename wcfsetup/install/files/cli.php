@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-// @codingStandardsIgnoreFile
 
 /**
  * @author        Tim Duesterhus
@@ -8,7 +7,10 @@
  * @license        GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package        WoltLabSuite\Core
  */
+
 if (\PHP_SAPI !== 'cli') {
+    \http_response_code(400);
+
     exit;
 }
 
