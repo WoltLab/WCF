@@ -120,10 +120,7 @@ final class FontAwesomeIcon implements \Stringable
     public static function isValidName(string $name): bool
     {
         if (!isset(self::$icons)) {
-            self::$icons = [];
-
-            $json = \file_get_contents(\WCF_DIR . 'icon/font-awesome/v6/icons.json');
-            self::$icons = JSON::decode($json);
+            self::$icons = require(__DIR__ . '/fa-metadata.php');
         }
 
         return isset(self::$icons[$name]);
