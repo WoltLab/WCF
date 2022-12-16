@@ -51,12 +51,12 @@ final class RebuildBootstrapper
 
             if (\count($group) === 1) {
                 $package = $group[0];
-                $result .= "        require('{$this->getBootstrapFilename($package)}'),\n";
+                $result .= "        require(__DIR__ . '/{$this->getRelativeBootstrapFilename($package)}'),\n";
             } else {
                 $result .= "        ...\$shuffle([\n";
                 \shuffle($group);
                 foreach ($group as $package) {
-                    $result .= "            require('{$this->getBootstrapFilename($package)}'),\n";
+                    $result .= "            require(__DIR__ . '/{$this->getRelativeBootstrapFilename($package)}'),\n";
                 }
                 $result .= "        ]),\n";
             }
@@ -80,6 +80,11 @@ final class RebuildBootstrapper
 
     private function getBootstrapFilename(Package $package)
     {
-        return \WCF_DIR . 'lib/bootstrap/' . $package->package . '.php';
+        return \WCF_DIR . 'lib/' . $this->getRelativeBootstrapFilename($package);
+    }
+
+    private function getRelativeBootstrapFilename(Package $package): string
+    {
+        return 'bootstrap/' . $package->package . '.php';
     }
 }
