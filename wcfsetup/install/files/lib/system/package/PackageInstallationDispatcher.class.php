@@ -397,14 +397,14 @@ class PackageInstallationDispatcher
      * Logs an installation step.
      *
      * @param array $node data of the executed node
-     * @param string $log optional additional log text
+     * @param $log optional additional log text
      */
-    protected function logInstallationStep(array $node = [], $log = '')
+    protected function logInstallationStep(array $node = [], string $log = ''): void
     {
         $time = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         $logEntry = "[" . $time->format('Y-m-d\TH:i:s.uP') . "]\n";
-        if (!empty($node)) {
+        if ($node !== []) {
             $logEntry .= 'sequenceNo: ' . $node['sequenceNo'] . "\n";
             $logEntry .= 'nodeType: ' . $node['nodeType'] . "\n";
             $logEntry .= "nodeData:\n";
@@ -415,7 +415,7 @@ class PackageInstallationDispatcher
             }
         }
 
-        if ($log) {
+        if ($log !== '') {
             $logEntry .= 'additional information: ' . $log . "\n";
         }
 
