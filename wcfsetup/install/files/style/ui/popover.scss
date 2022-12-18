@@ -30,7 +30,7 @@
 	animation-fill-mode: forwards;
 	background-color: var(--wcfContentContainerBackground);
 	border-radius: var(--wcfBorderRadius);
-	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	box-shadow: var(--wcfBoxShadow);
 	position: absolute;
 	top: 0;
 	vertical-align: middle;

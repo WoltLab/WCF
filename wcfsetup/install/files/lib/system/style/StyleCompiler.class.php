@@ -658,9 +658,10 @@ final class StyleCompiler extends SingletonFactory
 
         $variables['apiVersion'] = \str_replace('.', '', Style::API_VERSION);
 
-        // Add global defaults for the border-radius.
+        // Add some global defaults.
         $variables['wcfBorderRadius'] = '4px';
         $variables['wcfBorderRadiusContainer'] = '8px';
+        $variables['wcfBoxShadow'] = 'rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0';
 
         return $variables;
     }

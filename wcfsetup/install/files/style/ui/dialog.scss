@@ -45,7 +45,7 @@
 .dialogContainer {
 	background-color: var(--wcfContentBackground);
 	border-radius: var(--wcfBorderRadiusContainer);
-	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	box-shadow: var(--wcfBoxShadow);
 	color: var(--wcfContentText);
 	grid-area: dialog;
 	z-index: 200;
@@ -285,7 +285,7 @@
 	background-color: transparent;
 	border-radius: var(--wcfBorderRadiusContainer);
 	border-width: 0;
-	box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+	box-shadow: var(--wcfBoxShadow);
 	display: flex;
 	flex-direction: column;
 	max-height: var(--dialog-max-height);

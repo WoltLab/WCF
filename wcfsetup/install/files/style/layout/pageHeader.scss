@@ -107,6 +107,7 @@
 			background-color: var(--wcfHeaderMenuDropdownBackground);
 			border: 1px solid var(--wcfHeaderMenuDropdownBorder);
 			border-radius: var(--wcfBorderRadius);
+			box-shadow: var(--wcfBoxShadow);
 			padding: 5px 0;
 			position: absolute;
 			visibility: hidden;
@@ -556,7 +557,7 @@
 
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;
-			box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 6px rgb(0, 0, 0, 0.23);
+			box-shadow: var(--wcfBoxShadow);
 			display: flex;
 			flex-wrap: wrap;
 
