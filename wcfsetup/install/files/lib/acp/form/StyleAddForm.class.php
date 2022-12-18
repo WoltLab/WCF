@@ -747,7 +747,7 @@ class StyleAddForm extends AbstractForm
                 'textActive',
             ],
             'wcfHeaderMenu' => ['background', 'linkBackground', 'linkBackgroundActive', 'link', 'linkActive'],
-            'wcfHeaderMenuDropdown' => ['background', 'link', 'backgroundActive', 'linkActive'],
+            'wcfHeaderMenuDropdown' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
             'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
             'wcfSidebar' => ['background', 'border', 'text', 'link', 'linkActive'],
             'wcfSidebarDimmed' => ['text', 'link', 'linkActive'],
