@@ -36,8 +36,10 @@ define(["require", "exports", "tslib", "../../../Ui/Search/Input"], function (re
             });
         }
     }
-    function setup(element, geocoder) {
-        new Suggestion(element, {}, geocoder);
+    function setup(element, geocoder, callbackSelect) {
+        new Suggestion(element, {
+            callbackSelect,
+        }, geocoder);
     }
     exports.setup = setup;
 });

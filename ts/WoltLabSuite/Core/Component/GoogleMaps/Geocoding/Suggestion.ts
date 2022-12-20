@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Component/GoogleMaps/Geocoding
  */
 
-import { SearchInputOptions } from "../../../Ui/Search/Data";
+import { CallbackSelect, SearchInputOptions } from "../../../Ui/Search/Data";
 import UiSearchInput from "../../../Ui/Search/Input";
 
 class Suggestion extends UiSearchInput {
@@ -40,6 +40,16 @@ class Suggestion extends UiSearchInput {
   }
 }
 
-export function setup(element: HTMLInputElement, geocoder: google.maps.Geocoder): void {
-  new Suggestion(element, {}, geocoder);
+export function setup(
+  element: HTMLInputElement,
+  geocoder: google.maps.Geocoder,
+  callbackSelect?: CallbackSelect,
+): void {
+  new Suggestion(
+    element,
+    {
+      callbackSelect,
+    },
+    geocoder,
+  );
 }
