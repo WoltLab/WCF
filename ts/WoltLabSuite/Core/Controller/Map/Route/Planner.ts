@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Map/Route/Planner
  * @woltlabExcludeBundle all
+ * @deprecated 6.0
  */
 
 import * as AjaxStatus from "../../../Ajax/Status";
