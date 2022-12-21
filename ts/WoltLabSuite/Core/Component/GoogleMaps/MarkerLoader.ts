@@ -1,10 +1,10 @@
 import { dboAction } from "../../Ajax";
 import WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
-
-import "./woltlab-core-google-maps";
 import { dialogFactory } from "../Dialog";
 import DomUtil from "../../Dom/Util";
 import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import "./woltlab-core-google-maps";
 
 type AdditionalParameters = Record<string, unknown>;
 
@@ -28,6 +28,7 @@ class MarkerLoader {
   readonly #map: google.maps.Map;
   readonly #actionClassName: string;
   readonly #additionalParameters: AdditionalParameters;
+  readonly #clusterer: MarkerClusterer;
   #previousNorthEast: google.maps.LatLng;
   #previousSouthWest: google.maps.LatLng;
   #objectIDs: number[] = [];
@@ -36,6 +37,10 @@ class MarkerLoader {
     this.#map = map;
     this.#actionClassName = actionClassName;
     this.#additionalParameters = additionalParameters;
+
+    this.#clusterer = new MarkerClusterer({
+      map,
+    });
 
     this.#map.addListener("idle", () => {
       void this.#loadMarkers();
@@ -72,6 +77,8 @@ class MarkerLoader {
       position: new google.maps.LatLng(data.latitude, data.longitude),
       title: data.title,
     });
+
+    this.#clusterer.addMarker(marker);
 
     if (data.infoWindow) {
       const content = document.createElement("div");

@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "@googlemaps/markerclusterer", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, markerclusterer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -7,6 +7,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
         #map;
         #actionClassName;
         #additionalParameters;
+        #clusterer;
         #previousNorthEast;
         #previousSouthWest;
         #objectIDs = [];
@@ -14,6 +15,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
             this.#map = map;
             this.#actionClassName = actionClassName;
             this.#additionalParameters = additionalParameters;
+            this.#clusterer = new markerclusterer_1.MarkerClusterer({
+                map,
+            });
             this.#map.addListener("idle", () => {
                 void this.#loadMarkers();
             });
@@ -44,6 +48,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Uti
                 position: new google.maps.LatLng(data.latitude, data.longitude),
                 title: data.title,
             });
+            this.#clusterer.addMarker(marker);
             if (data.infoWindow) {
                 const content = document.createElement("div");
                 Util_1.default.setInnerHtml(content, data.infoWindow);

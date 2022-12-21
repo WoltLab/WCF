@@ -1,9 +1,6 @@
 import WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 import "./woltlab-core-google-maps";
-
-const markerClusterers = new WeakMap<WoltlabCoreGoogleMapsElement, MarkerClusterer>();
 
 export async function addMarker(
   googleMaps: WoltlabCoreGoogleMapsElement,
@@ -23,16 +20,6 @@ export async function addMarker(
   if (focus) {
     map.setCenter(marker.getPosition()!);
   }
-
-  let clusterer = markerClusterers.get(googleMaps);
-  if (clusterer === undefined) {
-    clusterer = new MarkerClusterer({
-      map,
-    });
-    markerClusterers.set(googleMaps, clusterer);
-  }
-
-  clusterer.addMarker(marker);
 }
 
 export async function addDraggableMarker(
