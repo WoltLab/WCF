@@ -1,7 +1,8 @@
-define(["require", "exports", "../../Ajax", "./woltlab-core-google-maps"], function (require, exports, Ajax_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
+    Util_1 = tslib_1.__importDefault(Util_1);
     class MarkerLoader {
         #map;
         #actionClassName;
@@ -44,12 +45,26 @@ define(["require", "exports", "../../Ajax", "./woltlab-core-google-maps"], funct
                 title: data.title,
             });
             if (data.infoWindow) {
+                const content = document.createElement("div");
+                Util_1.default.setInnerHtml(content, data.infoWindow);
                 const infoWindow = new google.maps.InfoWindow({
-                    content: data.infoWindow,
+                    content,
                 });
                 marker.addListener("click", () => {
                     infoWindow.open(this.#map, marker);
                 });
+                if (data.dialog) {
+                    let dialog;
+                    infoWindow.addListener("domready", () => {
+                        const button = content.querySelector(".jsButtonShowDialog");
+                        button?.addEventListener("click", () => {
+                            if (!dialog) {
+                                dialog = (0, Dialog_1.dialogFactory)().fromHtml(data.dialog).withoutControls();
+                            }
+                            dialog.show(button.dataset.title || button.textContent);
+                        });
+                    });
+                }
             }
             if (data.objectID) {
                 this.#objectIDs.push(data.objectID);

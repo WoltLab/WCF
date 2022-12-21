@@ -2,6 +2,9 @@ import { dboAction } from "../../Ajax";
 import WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
 
 import "./woltlab-core-google-maps";
+import { dialogFactory } from "../Dialog";
+import DomUtil from "../../Dom/Util";
+import WoltlabCoreDialogElement from "../../Element/woltlab-core-dialog";
 
 type AdditionalParameters = Record<string, unknown>;
 
@@ -71,13 +74,29 @@ class MarkerLoader {
     });
 
     if (data.infoWindow) {
+      const content = document.createElement("div");
+      DomUtil.setInnerHtml(content, data.infoWindow);
+
       const infoWindow = new google.maps.InfoWindow({
-        content: data.infoWindow,
+        content,
       });
 
       marker.addListener("click", () => {
         infoWindow.open(this.#map, marker);
       });
+
+      if (data.dialog) {
+        let dialog: WoltlabCoreDialogElement;
+        infoWindow.addListener("domready", () => {
+          const button = content.querySelector<HTMLElement>(".jsButtonShowDialog");
+          button?.addEventListener("click", () => {
+            if (!dialog) {
+              dialog = dialogFactory().fromHtml(data.dialog!).withoutControls();
+            }
+            dialog.show(button.dataset.title || button.textContent!);
+          });
+        });
+      }
     }
 
     if (data.objectID) {
