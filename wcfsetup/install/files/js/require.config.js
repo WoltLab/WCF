@@ -12,6 +12,7 @@ requirejs.config({
 		tabbable: '3rdParty/focus-trap/index.umd.min',
 		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',
+		'@googlemaps/markerclusterer': '3rdParty/googlemaps/markerclusterer/index.umd',
 	},
 	packages: [{
 		name: "codemirror",

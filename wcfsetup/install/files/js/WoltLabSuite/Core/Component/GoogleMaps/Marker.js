@@ -1,7 +1,8 @@
-define(["require", "exports", "./woltlab-core-google-maps"], function (require, exports) {
+define(["require", "exports", "@googlemaps/markerclusterer", "./woltlab-core-google-maps"], function (require, exports, markerclusterer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.addDraggableMarker = exports.addMarker = void 0;
+    const markerClusterers = new WeakMap();
     async function addMarker(googleMaps, latitude, longitude, title, focus) {
         const map = await googleMaps.getMap();
         const marker = new google.maps.Marker({
@@ -12,6 +13,14 @@ define(["require", "exports", "./woltlab-core-google-maps"], function (require, 
         if (focus) {
             map.setCenter(marker.getPosition());
         }
+        let clusterer = markerClusterers.get(googleMaps);
+        if (clusterer === undefined) {
+            clusterer = new markerclusterer_1.MarkerClusterer({
+                map,
+            });
+            markerClusterers.set(googleMaps, clusterer);
+        }
+        clusterer.addMarker(marker);
     }
     exports.addMarker = addMarker;
     async function addDraggableMarker(googleMaps, latitude, longitude) {
