@@ -6,13 +6,14 @@ import "./woltlab-core-google-maps";
 type AdditionalParameters = Record<string, unknown>;
 
 type MarkerData = {
-  dialog: string;
+  dialog?: string;
   infoWindow: string;
   items: number;
   latitude: number;
   location: string;
   longitude: number;
-  objectIDs: number[];
+  objectIDs?: number[];
+  objectID?: number;
   title: string;
 };
 
@@ -26,6 +27,7 @@ class MarkerLoader {
   readonly #additionalParameters: AdditionalParameters;
   #previousNorthEast: google.maps.LatLng;
   #previousSouthWest: google.maps.LatLng;
+  #objectIDs: number[] = [];
 
   constructor(map: google.maps.Map, actionClassName: string, additionalParameters: AdditionalParameters) {
     this.#map = map;
@@ -48,6 +50,7 @@ class MarkerLoader {
     const response = (await dboAction("getMapMarkers", this.#actionClassName)
       .payload({
         ...this.#additionalParameters,
+        excludedObjectIDs: JSON.stringify(this.#objectIDs),
         eastLongitude: northEast.lng(),
         northLatitude: northEast.lat(),
         southLatitude: southWest.lat(),
@@ -75,6 +78,14 @@ class MarkerLoader {
       marker.addListener("click", () => {
         infoWindow.open(this.#map, marker);
       });
+    }
+
+    if (data.objectID) {
+      this.#objectIDs.push(data.objectID);
+    }
+
+    if (data.objectIDs) {
+      this.#objectIDs.push(...data.objectIDs);
     }
   }
 

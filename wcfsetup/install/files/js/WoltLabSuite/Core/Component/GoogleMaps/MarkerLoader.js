@@ -8,6 +8,7 @@ define(["require", "exports", "../../Ajax", "./woltlab-core-google-maps"], funct
         #additionalParameters;
         #previousNorthEast;
         #previousSouthWest;
+        #objectIDs = [];
         constructor(map, actionClassName, additionalParameters) {
             this.#map = map;
             this.#actionClassName = actionClassName;
@@ -25,6 +26,7 @@ define(["require", "exports", "../../Ajax", "./woltlab-core-google-maps"], funct
             const response = (await (0, Ajax_1.dboAction)("getMapMarkers", this.#actionClassName)
                 .payload({
                 ...this.#additionalParameters,
+                excludedObjectIDs: JSON.stringify(this.#objectIDs),
                 eastLongitude: northEast.lng(),
                 northLatitude: northEast.lat(),
                 southLatitude: southWest.lat(),
@@ -48,6 +50,12 @@ define(["require", "exports", "../../Ajax", "./woltlab-core-google-maps"], funct
                 marker.addListener("click", () => {
                     infoWindow.open(this.#map, marker);
                 });
+            }
+            if (data.objectID) {
+                this.#objectIDs.push(data.objectID);
+            }
+            if (data.objectIDs) {
+                this.#objectIDs.push(...data.objectIDs);
             }
         }
         /**
