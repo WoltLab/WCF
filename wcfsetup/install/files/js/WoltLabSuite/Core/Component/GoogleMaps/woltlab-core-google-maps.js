@@ -86,7 +86,7 @@ define(["require", "exports"], function (require, exports) {
         }
         #validate() {
             if (!this.apiKey) {
-                //throw new TypeError("Must provide an api key.");
+                throw new TypeError("Must provide an api key.");
             }
         }
         get apiKey() {

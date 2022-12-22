@@ -100,7 +100,7 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
 
   #validate(): void {
     if (!this.apiKey) {
-      //throw new TypeError("Must provide an api key.");
+      throw new TypeError("Must provide an api key.");
     }
   }
 
