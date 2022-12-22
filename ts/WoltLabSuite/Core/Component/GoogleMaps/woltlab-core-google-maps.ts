@@ -1,3 +1,11 @@
+/**
+ * The `<woltlab-core-google-maps>` element creates a map via Google Maps.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2022 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+
 let initCalled = false;
 const callbackPromise = new Promise<void>((resolve) => {
   (window as any).woltlab_core_google_maps_callback = resolve;

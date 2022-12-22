@@ -1,3 +1,11 @@
+/**
+ * Handles a large map with many markers where (new) markers are loaded via AJAX.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Component/GoogleMaps/MarkerLoader
+ */
 define(["require", "exports", "tslib", "../../Ajax", "../Dialog", "../../Dom/Util", "@googlemaps/markerclusterer", "./woltlab-core-google-maps"], function (require, exports, tslib_1, Ajax_1, Dialog_1, Util_1, markerclusterer_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

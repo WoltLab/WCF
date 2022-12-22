@@ -1,3 +1,12 @@
+/**
+ * Provides geocoding functions for search map locations.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Component/GoogleMaps/Geocoding
+ */
+
 import { wheneverFirstSeen } from "../../Helper/Selector";
 import { setup as setupSuggestion } from "./Geocoding/Suggestion";
 import { addDraggableMarker } from "./Marker";
@@ -5,7 +14,7 @@ import type WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
 
 import "./woltlab-core-google-maps";
 
-class GoogleMapsGeocoding {
+class Geocoding {
   readonly #element: HTMLInputElement;
   readonly #geocoder: google.maps.Geocoder;
   readonly #map: WoltlabCoreGoogleMapsElement;
@@ -65,6 +74,6 @@ export function setup(): void {
     const map = document.getElementById(element.dataset.googleMapsGeocoding!) as WoltlabCoreGoogleMapsElement;
     const geocoder = await map.getGeocoder();
 
-    new GoogleMapsGeocoding(element, map, geocoder);
+    new Geocoding(element, map, geocoder);
   });
 }

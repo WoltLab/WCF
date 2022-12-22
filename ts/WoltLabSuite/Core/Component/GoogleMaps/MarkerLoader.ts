@@ -1,3 +1,12 @@
+/**
+ * Handles a large map with many markers where (new) markers are loaded via AJAX.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Component/GoogleMaps/MarkerLoader
+ */
+
 import { dboAction } from "../../Ajax";
 import WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
 import { dialogFactory } from "../Dialog";

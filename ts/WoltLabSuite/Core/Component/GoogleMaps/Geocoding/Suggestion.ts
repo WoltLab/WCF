@@ -4,7 +4,7 @@
  * @author  Marcel Werk
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module  WoltLabSuite/Core/Component/GoogleMaps/Geocoding
+ * @module  WoltLabSuite/Core/Component/GoogleMaps/Geocoding/Suggestion
  */
 
 import { CallbackSelect, SearchInputOptions } from "../../../Ui/Search/Data";

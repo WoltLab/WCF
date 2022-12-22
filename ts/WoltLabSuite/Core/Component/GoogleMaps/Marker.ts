@@ -1,3 +1,12 @@
+/**
+ * Provides functions to add markers to a map.
+ *
+ * @author  Marcel Werk
+ * @copyright  2001-2022 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Component/GoogleMaps/Marker
+ */
+
 import WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
 
 import "./woltlab-core-google-maps";
