@@ -8,12 +8,14 @@ use wcf\data\article\ArticleEditor;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\ViewableArticle;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\PageLocationManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
@@ -69,6 +71,11 @@ abstract class AbstractArticlePage extends AbstractPage
      * @var AccessibleArticleList
      */
     public $relatedArticles;
+
+    /**
+     * @var GroupedAttachmentList
+     */
+    public $attachmentList;
 
     /**
      * @inheritDoc
@@ -187,6 +194,45 @@ abstract class AbstractArticlePage extends AbstractPage
                 $parentCategory
             );
         }
+
+        // get attachments
+        $this->attachmentList = $this->article->getAttachments();
+        $this->filterEmbeddedAttachments();
+        MessageEmbeddedObjectManager::getInstance()
+            ->setActiveMessage('com.woltlab.wcf.article.content', $this->articleContentID);
+    }
+
+    /**
+     * Filters attachments embedded in the article's description from the normal listing.
+     * @since   6.0
+     */
+    protected function filterEmbeddedAttachments(): void
+    {
+        if ($this->attachmentList !== null && !empty($this->attachmentList->getObjects())) {
+            $sql = "SELECT  embeddedObjectID
+                    FROM    wcf1_message_embedded_object
+                    WHERE   messageObjectTypeID = ?
+                        AND messageID IN (
+                            SELECT  articleContentID
+                            FROM    wcf1_article_content
+                            WHERE   articleID = ?
+                        )
+                        AND embeddedObjectTypeID = ?";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([
+                ObjectTypeCache::getInstance()
+                    ->getObjectTypeIDByName('com.woltlab.wcf.message', 'com.woltlab.wcf.article.content'),
+                $this->article->articleID,
+                ObjectTypeCache::getInstance()
+                    ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', 'com.woltlab.wcf.attachment'),
+            ]);
+            $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+            foreach ($attachmentIDs as $attachmentID) {
+                if (isset($this->attachmentList->getObjects()[$attachmentID])) {
+                    $this->attachmentList->getObjects()[$attachmentID]->markAsEmbedded();
+                }
+            }
+        }
     }
 
     /**
@@ -203,6 +249,7 @@ abstract class AbstractArticlePage extends AbstractPage
             'category' => $this->category,
             'relatedArticles' => $this->relatedArticles,
             'tags' => $this->tags,
+            'attachmentList' => $this->attachmentList,
         ]);
     }
 }
