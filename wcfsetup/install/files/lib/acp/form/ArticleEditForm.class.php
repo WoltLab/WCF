@@ -68,6 +68,8 @@ class ArticleEditForm extends ArticleAddForm
         if (!$this->article->canEdit()) {
             throw new PermissionDeniedException();
         }
+
+        $this->attachmentObjectID = $this->article->articleID;
     }
 
     /**
@@ -132,7 +134,11 @@ class ArticleEditForm extends ArticleAddForm
         $this->objectAction = new ArticleAction(
             [$this->article],
             'update',
-            ['data' => \array_merge($this->additionalFields, $data), 'content' => $content]
+            [
+                'data' => \array_merge($this->additionalFields, $data),
+                'content' => $content,
+                'attachmentHandler' => $this->attachmentHandler,
+            ]
         );
         $this->objectAction->executeAction();
 

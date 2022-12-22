@@ -13,6 +13,7 @@ use wcf\data\media\ViewableMediaList;
 use wcf\data\smiley\SmileyCache;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -204,6 +205,26 @@ class ArticleAddForm extends AbstractForm
     public $labelGroupsToCategories = [];
 
     /**
+     * @var AttachmentHandler
+     */
+    public $attachmentHandler;
+
+    /**
+     * @var string
+     */
+    public $tmpHash = '';
+
+    /**
+     * @var int
+     */
+    public $attachmentObjectID = 0;
+
+    /**
+     * @var string
+     */
+    public $attachmentObjectType = 'com.woltlab.wcf.article';
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -221,6 +242,16 @@ class ArticleAddForm extends AbstractForm
 
         // labels
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
+
+        if (isset($_REQUEST['tmpHash'])) {
+            $this->tmpHash = $_REQUEST['tmpHash'];
+        } else {
+            $this->tmpHash = \sha1(\implode("\0", [
+                self::class,
+                $this->attachmentObjectID,
+                WCF::getSession()->sessionID,
+            ]));
+        }
     }
 
     /**
@@ -505,7 +536,11 @@ class ArticleAddForm extends AbstractForm
         $this->objectAction = new ArticleAction(
             [],
             'create',
-            ['data' => \array_merge($this->additionalFields, $data), 'content' => $content]
+            [
+                'data' => \array_merge($this->additionalFields, $data),
+                'content' => $content,
+                'attachmentHandler' => $this->attachmentHandler,
+            ]
         );
         /** @var Article $article */
         $article = $this->objectAction->executeAction()['returnValues'];
@@ -547,6 +582,12 @@ class ArticleAddForm extends AbstractForm
      */
     public function readData()
     {
+        $this->attachmentHandler = new AttachmentHandler(
+            $this->attachmentObjectType,
+            $this->attachmentObjectID,
+            $this->tmpHash
+        );
+
         parent::readData();
 
         $this->labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
@@ -619,6 +660,11 @@ class ArticleAddForm extends AbstractForm
             'labelIDs' => $this->labelIDs,
             'labelGroups' => $this->labelGroups,
             'labelGroupsToCategories' => $this->labelGroupsToCategories,
+            'attachmentHandler' => $this->attachmentHandler,
+            'attachmentObjectID' => $this->attachmentObjectID,
+            'attachmentObjectType' => $this->attachmentObjectType,
+            'attachmentParentObjectID' => 0,
+            'tmpHash' => $this->tmpHash,
         ]);
     }
 }
