@@ -218,7 +218,7 @@ abstract class AbstractArticlePage extends AbstractPage
                             WHERE   articleID = ?
                         )
                         AND embeddedObjectTypeID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 ObjectTypeCache::getInstance()
                     ->getObjectTypeIDByName('com.woltlab.wcf.message', 'com.woltlab.wcf.article.content'),
