@@ -30,14 +30,21 @@
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
 		<div class="row rowColGap formGrid">
-			<dl class="col-xs-12 col-md-4">
+			<dl class="col-xs-12 col-md-3">
+				<dt></dt>
+				<dd>
+					<input type="number" id="attachmentID" name="attachmentID" value="{if $attachmentID}{$attachmentID}{/if}" placeholder="{lang}wcf.global.objectID{/lang}" class="long">
+				</dd>
+			</dl>
+
+			<dl class="col-xs-12 col-md-3">
 				<dt></dt>
 				<dd>
 					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.user.username{/lang}" class="long">
 				</dd>
 			</dl>
 			
-			<dl class="col-xs-12 col-md-4">
+			<dl class="col-xs-12 col-md-3">
 				<dt></dt>
 				<dd>
 					<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.attachment.filename{/lang}" class="long">
@@ -45,7 +52,7 @@
 			</dl>
 			
 			{if $availableFileTypes|count > 1}
-				<dl class="col-xs-12 col-md-4">
+				<dl class="col-xs-12 col-md-3">
 					<dt></dt>
 					<dd>
 						<select name="fileType" id="fileType">
