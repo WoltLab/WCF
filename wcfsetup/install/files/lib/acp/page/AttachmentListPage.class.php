@@ -76,6 +76,11 @@ class AttachmentListPage extends SortablePage
     public $availableFileTypes = [];
 
     /**
+     * @var int
+     */
+    public $attachmentID = 0;
+
+    /**
      * attachment stats
      * @var array
      */
@@ -96,6 +101,9 @@ class AttachmentListPage extends SortablePage
         }
         if (!empty($_REQUEST['fileType'])) {
             $this->fileType = $_REQUEST['fileType'];
+        }
+        if (!empty($_REQUEST['attachmentID'])) {
+            $this->attachmentID = \intval($_REQUEST['attachmentID']);
         }
     }
 
@@ -137,6 +145,9 @@ class AttachmentListPage extends SortablePage
         if (!empty($this->fileType)) {
             $this->objectList->getConditionBuilder()->add('attachment.fileType LIKE ?', [$this->fileType]);
         }
+        if ($this->attachmentID) {
+            $this->objectList->getConditionBuilder()->add('attachment.attachmentID = ?', [$this->attachmentID]);
+        }
     }
 
     /**
@@ -152,6 +163,7 @@ class AttachmentListPage extends SortablePage
             'filename' => $this->filename,
             'fileType' => $this->fileType,
             'availableFileTypes' => $this->availableFileTypes,
+            'attachmentID' => $this->attachmentID,
         ]);
     }
 }
