@@ -56,19 +56,33 @@ define(["require", "exports"], function (require, exports) {
             }
             this.#validate();
             void loadGoogleMaps(this.apiKey).then(() => {
-                this.#map = new google.maps.Map(this, {
-                    zoom: this.zoom,
-                    center: {
-                        lat: this.lat,
-                        lng: this.lng,
-                    },
-                });
-                if (this.#mapLoadedResolve) {
-                    this.#mapLoadedResolve();
-                    this.#mapLoadedResolve = undefined;
+                if (this.hasAttribute("access-user-location")) {
+                    navigator.geolocation.getCurrentPosition((response) => {
+                        this.setAttribute("lat", response.coords.latitude.toString());
+                        this.setAttribute("lng", response.coords.longitude.toString());
+                        this.#initMap();
+                    }, () => {
+                        this.#initMap();
+                    });
+                }
+                else {
+                    this.#initMap();
                 }
             });
             this.#rendered = true;
+        }
+        #initMap() {
+            this.#map = new google.maps.Map(this, {
+                zoom: this.zoom,
+                center: {
+                    lat: this.lat,
+                    lng: this.lng,
+                },
+            });
+            if (this.#mapLoadedResolve) {
+                this.#mapLoadedResolve();
+                this.#mapLoadedResolve = undefined;
+            }
         }
         #validate() {
             if (!this.apiKey) {

@@ -63,21 +63,39 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
     this.#validate();
 
     void loadGoogleMaps(this.apiKey).then(() => {
-      this.#map = new google.maps.Map(this, {
-        zoom: this.zoom,
-        center: {
-          lat: this.lat,
-          lng: this.lng,
-        },
-      });
+      if (this.hasAttribute("access-user-location")) {
+        navigator.geolocation.getCurrentPosition(
+          (response) => {
+            this.setAttribute("lat", response.coords.latitude.toString());
+            this.setAttribute("lng", response.coords.longitude.toString());
 
-      if (this.#mapLoadedResolve) {
-        this.#mapLoadedResolve();
-        this.#mapLoadedResolve = undefined;
+            this.#initMap();
+          },
+          () => {
+            this.#initMap();
+          },
+        );
+      } else {
+        this.#initMap();
       }
     });
 
     this.#rendered = true;
+  }
+
+  #initMap(): void {
+    this.#map = new google.maps.Map(this, {
+      zoom: this.zoom,
+      center: {
+        lat: this.lat,
+        lng: this.lng,
+      },
+    });
+
+    if (this.#mapLoadedResolve) {
+      this.#mapLoadedResolve();
+      this.#mapLoadedResolve = undefined;
+    }
   }
 
   #validate(): void {

@@ -11,6 +11,7 @@
     zoom="{GOOGLE_MAPS_ZOOM}"
     lat="{GOOGLE_MAPS_DEFAULT_LATITUDE}"
     lng="{GOOGLE_MAPS_DEFAULT_LONGITUDE}"
+    {if !$accessUserLocation|empty}access-user-location{/if}
     {if $googleMapsHidden}hidden{/if}
 ></woltlab-core-google-maps>
 
