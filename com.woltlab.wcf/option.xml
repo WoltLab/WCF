@@ -749,35 +749,6 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 16
 17</selectoptions>
 			</option>
-			<option name="google_maps_type">
-				<categoryname>general.system.googleMaps</categoryname>
-				<optiontype>select</optiontype>
-				<defaultvalue>hybrid</defaultvalue>
-				<selectoptions>map:wcf.acp.option.google_maps_type.map
-satellite:wcf.acp.option.google_maps_type.satellite
-hybrid:wcf.acp.option.google_maps_type.hybrid
-physical:wcf.acp.option.google_maps_type.physical</selectoptions>
-			</option>
-			<option name="google_maps_enable_scale_control">
-				<categoryname>general.system.googleMaps</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="google_maps_enable_dragging">
-				<categoryname>general.system.googleMaps</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="google_maps_enable_scroll_wheel_zoom">
-				<categoryname>general.system.googleMaps</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="google_maps_enable_double_click_zoom">
-				<categoryname>general.system.googleMaps</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="google_maps_default_latitude">
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>float</optiontype>
@@ -787,11 +758,6 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>float</optiontype>
 				<defaultvalue>13.4</defaultvalue>
-			</option>
-			<option name="google_maps_access_user_location">
-				<categoryname>general.system.googleMaps</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.system.googleMaps -->
 			<!-- general.mail.general -->
@@ -1618,5 +1584,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="module_gravatar"/>
 		<option name="gravatar_default_type"/>
 		<option name="module_cookie_policy_page"/>
+		<option name="google_maps_type"/>
+		<option name="google_maps_enable_scale_control"/>
+		<option name="google_maps_enable_dragging"/>
+		<option name="google_maps_enable_scroll_wheel_zoom"/>
+		<option name="google_maps_enable_double_click_zoom"/>
+		<option name="google_maps_access_user_location"/>
 	</delete>
 </data>
