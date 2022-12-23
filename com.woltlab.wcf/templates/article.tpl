@@ -155,7 +155,7 @@
 	{event name='beforeArticleContent'}
 	
 	<div class="section articleContent" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}>
-		<div class="htmlContent">
+		<div class="section htmlContent">
 			{if MODULE_WCF_AD}
 				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.inArticle')}
 			{/if}
@@ -164,6 +164,8 @@
 			
 			{event name='htmlArticleContent'}
 		</div>
+
+		{include file='attachments' objectID=$article->articleID}
 		
 		{if !$tags|empty}
 			<ul class="tagList articleTagList">

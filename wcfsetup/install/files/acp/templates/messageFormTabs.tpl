@@ -4,12 +4,18 @@
 			<ul>
 				{content}
 					{if MODULE_SMILEY && !$smileyCategories|empty}<li data-name="smilies"><a>{icon name='face-smile'} <span>{lang}wcf.message.smilies{/lang}</span></a></li>{/if}
+					{if !$attachmentHandler|empty && $attachmentHandler->canUpload()}
+						<li data-name="attachments"><a>{icon name='paperclip'} <span>{lang}wcf.attachment.attachments{/lang}</span></a></li>
+					{/if}
 					{event name='tabMenuTabs'}
 				{/content}
 			</ul>
 		</nav>
 		
 		{if MODULE_SMILEY && !$smileyCategories|empty}{include file='messageFormSmilies'}{/if}
+		{if !$attachmentHandler|empty && $attachmentHandler->canUpload()}
+			{include file='messageFormAttachments'}
+		{/if}
 		
 		{event name='tabMenuContents'}
 	</div>

@@ -4,11 +4,11 @@ namespace wcf\data\article;
 
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
+use wcf\data\attachment\GroupedAttachmentList;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IUserContent;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
@@ -35,6 +35,7 @@ use wcf\system\WCF;
  * @property-read   int $enableComments     is `1` if comments are enabled for the article, otherwise `0`
  * @property-read   int $views          number of times the article has been viewed
  * @property-read   int $cumulativeLikes    cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
+ * @property-read   int $attachments    number of attachments in the article descriptions
  * @property-read   int $isDeleted      is 1 if the article is in trash bin, otherwise 0
  * @property-read   int $hasLabels      is `1` if labels are assigned to the article
  */
@@ -415,5 +416,21 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function getAttachments(): ?GroupedAttachmentList
+    {
+        if ($this->attachments) {
+            $attachmentList = new GroupedAttachmentList('com.woltlab.wcf.article');
+            $attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', [$this->articleID]);
+            $attachmentList->readObjects();
+
+            return $attachmentList;
+        }
+
+        return null;
     }
 }

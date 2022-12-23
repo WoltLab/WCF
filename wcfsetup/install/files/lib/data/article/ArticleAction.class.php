@@ -8,6 +8,7 @@ use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentAction;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\language\Language;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
@@ -89,6 +90,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function create()
     {
+        if (!empty($this->parameters['attachmentHandler'])) {
+            $this->parameters['data']['attachments'] = \count($this->parameters['attachmentHandler']);
+        }
+
         /** @var Article $article */
         $article = parent::create();
 
@@ -173,6 +178,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
             );
         }
 
+        if (!empty($this->parameters['attachmentHandler'])) {
+            $this->parameters['attachmentHandler']->updateObjectID($article->articleID);
+        }
+
         return $article;
     }
 
@@ -181,6 +190,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function update()
     {
+        if (!empty($this->parameters['attachmentHandler'])) {
+            $this->parameters['data']['attachments'] = \count($this->parameters['attachmentHandler']);
+        }
+
         parent::update();
 
         $isRevert = (!empty($this->parameters['isRevert']));
@@ -397,7 +410,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
      */
     public function delete()
     {
-        $usersToArticles = $articleIDs = $articleContentIDs = [];
+        $usersToArticles = $articleIDs = $articleContentIDs = $attachmentArticleIDs = [];
         foreach ($this->getObjects() as $article) {
             $articleIDs[] = $article->articleID;
             foreach ($article->getArticleContents() as $articleContent) {
@@ -409,6 +422,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     $usersToArticles[$article->userID] = 0;
                 }
                 $usersToArticles[$article->userID]--;
+            }
+
+            if ($article->attachments) {
+                $attachmentArticleIDs[] = $article->articleID;
             }
         }
 
@@ -441,6 +458,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
             );
             // update wcf1_user.articles
             ArticleEditor::updateArticleCounter($usersToArticles);
+            // delete attachments
+            if (!empty($attachmentArticleIDs)) {
+                AttachmentHandler::removeAttachments('com.woltlab.wcf.article', $attachmentArticleIDs);
+            }
         }
 
         $this->unmarkItems();
