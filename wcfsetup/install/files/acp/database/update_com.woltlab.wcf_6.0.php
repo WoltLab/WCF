@@ -14,6 +14,7 @@ use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
+use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
@@ -25,6 +26,13 @@ return [
     PartialDatabaseTable::create('wcf1_acp_template')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('packageID'),
+        ]),
+    PartialDatabaseTable::create('wcf1_article')
+        ->columns([
+            SmallintDatabaseTableColumn::create('attachments')
+                ->length(5)
+                ->notNull()
+                ->defaultValue(0),
         ]),
     PartialDatabaseTable::create('wcf1_language_item')
         ->columns([
