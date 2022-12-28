@@ -386,7 +386,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], opts: Pa
       ajax: {
         actionName: "getSearchResultList",
         className: "",
-        data: {},
+        parameters: {},
       },
       // list of excluded string values, e.g. `['ignore', 'these strings', 'when', 'searching']`
       excludedSearchValues: [],
