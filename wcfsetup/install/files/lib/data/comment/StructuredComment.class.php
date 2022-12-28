@@ -76,7 +76,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     }
 
     /**
-     * Returns timestamp of oldest response loaded.
+     * Returns timestamp of newest response loaded.
      *
      * @return  int
      */
