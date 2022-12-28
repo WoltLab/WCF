@@ -151,6 +151,27 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * @inheritDoc
      */
+    protected function import(array $row, array $data)
+    {
+        if ($row !== []) {
+            // Preserve the `points` value for activity point events.
+            if ($data['definitionID'] === $this->getDefinitionID('com.woltlab.wcf.user.activityPointEvent')) {
+                $originalAdditionalData = \unserialize($row['additionalData']);
+                $newAdditionalData = \unserialize($data['additionalData']);
+
+                if (isset($originalAdditionalData['points'])) {
+                    $newAdditionalData['points'] = $originalAdditionalData['points'];
+                    $data['additionalData'] = \serialize($newAdditionalData);
+                }
+            }
+        }
+
+        return parent::import($row, $data);
+    }
+
+    /**
+     * @inheritDoc
+     */
     protected function findExistingItem(array $data)
     {
         $sql = "SELECT  *
@@ -282,8 +303,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         // and (a) a new object type is added or (b) the existing object type is
                         // different from the edited object type
                         if (
-                            $objectType !== null && (
-                                $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                            $objectType !== null && ($formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
                                 || $this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $formField->getValue()
                                 || $this->editedEntry->getElementsByTagName('definitionname')->item(0)->nodeValue !== $definition->definitionName
                             )
@@ -826,7 +846,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     {
         return \sha1(
             $element->getElementsByTagName('name')->item(0)->nodeValue . '/'
-            . $element->getElementsByTagName('definitionname')->item(0)->nodeValue
+                . $element->getElementsByTagName('definitionname')->item(0)->nodeValue
         );
     }
 
@@ -1221,8 +1241,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
         $definitionID->description(
             'wcf.acp.pip.objectType.definitionName.'
-            . $objectTypeDefinition->definitionName
-            . '.description'
+                . $objectTypeDefinition->definitionName
+                . '.description'
         );
 
         /** @var ClassNameFormField $className */
