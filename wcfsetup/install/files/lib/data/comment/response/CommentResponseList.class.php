@@ -28,5 +28,5 @@ class CommentResponseList extends DatabaseObjectList
     /**
      * @inheritDoc
      */
-    public $sqlOrderBy = 'comment_response.time ASC';
+    public $sqlOrderBy = 'comment_response.time, comment_response.responseID';
 }

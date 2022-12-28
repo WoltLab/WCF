@@ -197,6 +197,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     {
         $this->readInteger('commentID', false, 'data');
         $this->readInteger('lastResponseTime', false, 'data');
+        $this->readInteger('lastResponseID', true, 'data');
         $this->readBoolean('loadAllResponses', true, 'data');
 
         $this->comment = new Comment($this->parameters['data']['commentID']);
@@ -224,10 +225,21 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         // get response list
         $responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
-        $responseList->getConditionBuilder()->add(
-            "comment_response.time > ?",
-            [$this->parameters['data']['lastResponseTime']]
-        );
+        if ($this->parameters['data']['lastResponseID']) {
+            $responseList->getConditionBuilder()->add(
+                "(comment_response.time > ? OR (comment_response.time = ? && comment_response.responseID > ?))",
+                [
+                    $this->parameters['data']['lastResponseTime'],
+                    $this->parameters['data']['lastResponseTime'],
+                    $this->parameters['data']['lastResponseID'],
+                ]
+            );
+        } else {
+            $responseList->getConditionBuilder()->add(
+                "comment_response.time > ?",
+                [$this->parameters['data']['lastResponseTime']]
+            );
+        }
         if (!$commentCanModerate) {
             $responseList->getConditionBuilder()->add("comment_response.isDisabled = ?", [0]);
         }
@@ -236,13 +248,17 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         }
         $responseList->readObjects();
 
-        $lastResponseTime = 0;
+        $lastResponseTime = $lastResponseID = 0;
         foreach ($responseList as $response) {
             if (!$lastResponseTime) {
                 $lastResponseTime = $response->time;
             }
+            if (!$lastResponseID) {
+                $lastResponseID = $response->responseID;
+            }
 
             $lastResponseTime = \max($lastResponseTime, $response->time);
+            $lastResponseID = \max($lastResponseID, $response->responseID);
         }
 
         // mark notifications for loaded responses as read
@@ -261,6 +277,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         return [
             'commentID' => $this->comment->commentID,
             'lastResponseTime' => $lastResponseTime,
+            'lastResponseID' => $lastResponseID,
             'template' => WCF::getTPL()->fetch('commentResponseList'),
         ];
     }

@@ -95,6 +95,20 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     }
 
     /**
+     * Returns id of newest response loaded.
+     *
+     * @since 6.0
+     */
+    public function getLastResponseID(): int
+    {
+        if ($this->responses === []) {
+            return 0;
+        }
+
+        return $this->responses[\count($this->responses) - 1]->responseID;
+    }
+
+    /**
      * Sets the user's profile.
      *
      * @deprecated  3.0
