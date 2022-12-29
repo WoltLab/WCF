@@ -60,6 +60,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
     public function validateGetSearchResultList()
     {
         $this->readString('searchString', false, 'data');
+        $this->readInteger('languageID', true);
 
         if (isset($this->parameters['data']['excludedSearchValues']) && !\is_array($this->parameters['data']['excludedSearchValues'])) {
             throw new UserInputException('excludedSearchValues');
@@ -81,6 +82,10 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
         $conditionBuilder->add("name LIKE ?", [$this->parameters['data']['searchString'] . '%']);
         if (!empty($excludedSearchValues)) {
             $conditionBuilder->add("name NOT IN (?)", [$excludedSearchValues]);
+        }
+
+        if ($this->parameters['languageID']) {
+            $conditionBuilder->add("languageID = ?", [$this->parameters['languageID']]);
         }
 
         // find tags

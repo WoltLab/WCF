@@ -532,7 +532,7 @@
 						
 						{if MODULE_TAGGING}
 							{assign var='tagSubmitFieldName' value='tags['|concat:$availableLanguage->languageID:'][]'}
-							{include file='tagInput' tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName tags=$tags[$availableLanguage->languageID] sandbox=true}
+							{include file='tagInput' tagLanguageID=$availableLanguage->languageID tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName tags=$tags[$availableLanguage->languageID] sandbox=true}
 						{/if}
 						
 						{event name='informationFieldsMultilingual'}

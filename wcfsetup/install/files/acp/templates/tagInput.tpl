@@ -15,6 +15,7 @@
 				{
 					ajax: {
 						className: 'wcf\\data\\tag\\TagAction'
+						{if !$tagLanguageID|empty}, parameters: { languageID: {@$tagLanguageID|encodeJS} }{/if}
 					},
 					maxLength: {@TAGGING_MAX_TAG_LENGTH},
 					submitFieldName: '{if $tagSubmitFieldName|isset}{@$tagSubmitFieldName}{else}tags[]{/if}'

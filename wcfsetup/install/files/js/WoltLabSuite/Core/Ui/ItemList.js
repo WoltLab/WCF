@@ -339,7 +339,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             ajax: {
                 actionName: "getSearchResultList",
                 className: "",
-                data: {},
+                parameters: {},
             },
             // list of excluded string values, e.g. `['ignore', 'these strings', 'when', 'searching']`
             excludedSearchValues: [],
