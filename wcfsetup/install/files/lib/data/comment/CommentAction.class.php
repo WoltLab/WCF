@@ -1214,18 +1214,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
         }
 
-        // load last response time
+        // This functions renders a single comment without rendering its responses.
+        // We need to prevent the setting of the data attribute for the last response time
+        // so that the loading of the responses by the user works correctly.
         if ($comment->getDecoratedObject()->responses) {
-            $sql = "SELECT      time
-                    FROM        wcf" . WCF_N . "_comment_response
-                    WHERE       commentID = ?
-                    ORDER BY    time";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
-            $statement->execute([$comment->commentID]);
-            $lastResponseTime = $statement->fetchSingleColumn();
-            if ($lastResponseTime && $lastResponseTime > 1) {
-                WCF::getTPL()->assign('commentLastResponseTime', ($lastResponseTime - 1));
-            }
+            WCF::getTPL()->assign('ignoreLastResponseTime', true);
         }
 
         WCF::getTPL()->assign([

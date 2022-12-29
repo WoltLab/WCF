@@ -76,7 +76,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     }
 
     /**
-     * Returns timestamp of oldest response loaded.
+     * Returns timestamp of newest response loaded.
      *
      * @return  int
      */
@@ -92,6 +92,20 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
         }
 
         return $lastResponseTime;
+    }
+
+    /**
+     * Returns id of newest response loaded.
+     *
+     * @since 6.0
+     */
+    public function getLastResponseID(): int
+    {
+        if ($this->responses === []) {
+            return 0;
+        }
+
+        return $this->responses[\count($this->responses) - 1]->responseID;
     }
 
     /**

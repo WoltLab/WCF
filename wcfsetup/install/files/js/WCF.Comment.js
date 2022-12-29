@@ -345,6 +345,7 @@ WCF.Comment.Handler = Class.extend({
 				data: {
 					commentID: commentID,
 					lastResponseTime: this._comments[commentID].data('lastResponseTime'),
+					lastResponseID: this._comments[commentID].data('lastResponseID'),
 					loadAllResponses: (loadAllResponses ? 1 : 0)
 				}
 			}
@@ -836,6 +837,7 @@ WCF.Comment.Handler = Class.extend({
 		
 		// update time of last response
 		$comment.data('lastResponseTime', data.returnValues.lastResponseTime);
+		$comment.data('lastResponseID', data.returnValues.lastResponseID);
 		
 		// update button state to load next responses
 		this._handleLoadNextResponses(data.returnValues.commentID);
