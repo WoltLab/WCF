@@ -60,7 +60,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         'loadComment',
         'loadComments',
         'loadResponse',
-        'getGuestDialog',
     ];
 
     /**
@@ -364,12 +363,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         }
 
         $this->readInteger('objectID', false, 'data');
-        $this->readBoolean('requireGuestDialog', true);
-
-        if (!$this->parameters['requireGuestDialog']) {
-            $this->validateUsername();
-            $this->validateCaptcha();
-        }
+        $this->validateGetGuestDialog();
 
         $this->validateMessage();
         $objectType = $this->validateObjectType();
@@ -388,19 +382,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function addComment()
     {
-        if ($this->parameters['requireGuestDialog'] || !empty($this->validationErrors)) {
-            if (!empty($this->validationErrors)) {
-                if (!empty($this->parameters['data']['username'])) {
-                    WCF::getSession()->register('username', $this->parameters['data']['username']);
-                }
-                WCF::getTPL()->assign('errorType', $this->validationErrors);
-            }
-
-            $guestDialog = $this->getGuestDialog();
-
+        $guestDialog = $this->getGuestDialog();
+        if ($guestDialog) {
             return [
-                'useCaptcha' => $guestDialog['useCaptcha'],
-                'guestDialog' => $guestDialog['template'],
+                'guestDialog' => $guestDialog,
             ];
         }
 
@@ -1112,46 +1097,41 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * Validates the 'getGuestDialog' action.
-     *
-     * @throws  PermissionDeniedException
+     * @since 6.0
      */
-    public function validateGetGuestDialog()
+    private function validateGetGuestDialog(): void
     {
-        if (WCF::getUser()->userID) {
-            throw new PermissionDeniedException();
+        if (!WCF::getUser()->userID) {
+            if (isset($this->parameters['data']['username'])) {
+                $this->validateUsername();
+                $this->validateCaptcha();
+            }
         }
-
-        try {
-            CommentHandler::enforceFloodControl();
-        } catch (NamedUserException $e) {
-            throw new UserInputException('message', $e->getMessage());
-        }
-
-        $this->readInteger('objectID', false, 'data');
-        $objectType = $this->validateObjectType();
-
-        // validate object id and permissions
-        $this->commentProcessor = $objectType->getProcessor();
-        if (!$this->commentProcessor->canAdd($this->parameters['data']['objectID'])) {
-            throw new PermissionDeniedException();
-        }
-
-        // validate message already at this point to make sure that the
-        // message is valid when submitting the dialog to avoid having to
-        // go back to the message to fix it
-        $this->validateMessage();
     }
 
     /**
      * Returns the dialog for guests when they try to write a comment letting
      * them enter a username and solving a captcha.
      *
-     * @return  array
      * @throws  SystemException
      */
-    public function getGuestDialog()
+    private function getGuestDialog(): ?string
     {
+        if (WCF::getUser()->userID) {
+            return null;
+        }
+
+        if (isset($this->parameters['data']['username']) && empty($this->validationErrors)) {
+            return null;
+        }
+
+        if (!empty($this->validationErrors)) {
+            if (!empty($this->parameters['data']['username'])) {
+                WCF::getSession()->register('username', $this->parameters['data']['username']);
+            }
+            WCF::getTPL()->assign('errorType', $this->validationErrors);
+        }
+
         $captchaObjectType = null;
 
         if (CAPTCHA_TYPE) {
@@ -1165,16 +1145,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
         }
 
-        return [
-            'useCaptcha' => $captchaObjectType !== null,
-            'template' => WCF::getTPL()->fetch('commentAddGuestDialog', 'wcf', [
-                'ajaxCaptcha' => true,
-                'captchaID' => 'commentAdd',
-                'captchaObjectType' => $captchaObjectType,
-                'supportsAsyncCaptcha' => true,
-                'username' => WCF::getSession()->getVar('username'),
-            ]),
-        ];
+        return WCF::getTPL()->fetch('commentAddGuestDialog', 'wcf', [
+            'ajaxCaptcha' => true,
+            'captchaID' => 'commentAdd',
+            'captchaObjectType' => $captchaObjectType,
+            'supportsAsyncCaptcha' => true,
+            'username' => WCF::getSession()->getVar('username'),
+        ]);
     }
 
     /**
@@ -1222,6 +1199,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         }
 
         WCF::getTPL()->assign([
+            'commentCanAdd' => $this->commentProcessor->canAdd(
+                $comment->getDecoratedObject()->objectID
+            ),
             'commentCanModerate' => $this->commentProcessor->canModerate(
                 $comment->getDecoratedObject()->objectTypeID,
                 $comment->getDecoratedObject()->objectID
