@@ -67,7 +67,7 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
         <dd><textarea id="${id}" cols="40" rows="3"></textarea></dd>
       `;
                 reason = dl.querySelector("textarea");
-                dialog.append(reason);
+                dialog.content.append(dl);
             }
             const question = Language.get("wcf.dialog.confirmation.softDelete", { title });
             dialog.show(question);

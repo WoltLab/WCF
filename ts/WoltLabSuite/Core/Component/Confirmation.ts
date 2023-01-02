@@ -82,7 +82,7 @@ class ConfirmationPrefab {
       `;
       reason = dl.querySelector("textarea")!;
 
-      dialog.append(reason);
+      dialog.content.append(dl);
     }
 
     const question = Language.get("wcf.dialog.confirmation.softDelete", { title });
