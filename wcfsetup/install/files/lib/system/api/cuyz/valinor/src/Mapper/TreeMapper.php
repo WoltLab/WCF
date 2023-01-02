@@ -13,10 +13,11 @@ interface TreeMapper
      * @template T of object
      *
      * @param string|class-string<T> $signature
-     * @return (
+     * @return T
+     * @phpstan-return (
      *     $signature is class-string<T>
      *         ? T
-     *         : mixed
+     *         : ($signature is class-string ? object : mixed)
      * )
      *
      * @throws MappingError
