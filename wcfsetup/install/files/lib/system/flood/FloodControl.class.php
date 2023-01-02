@@ -35,11 +35,11 @@ final class FloodControl extends SingletonFactory
         int $time
     ): array {
         $sql = "SELECT  COUNT(*) AS count, MIN(time) AS earliestTime
-                FROM    wcf" . WCF_N . "_flood_control
+                FROM    wcf1_flood_control
                 WHERE   objectTypeID = ?
                         AND identifier = ?
                         AND (time > ? AND time <= ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->getObjectTypeID($objectType),
             $identifier,
@@ -123,10 +123,10 @@ final class FloodControl extends SingletonFactory
     private function getLastTimeByIdentifier(string $objectType, string $identifier): ?int
     {
         $sql = "SELECT  MAX(time)
-                FROM    wcf" . WCF_N . "_flood_control
+                FROM    wcf1_flood_control
                 WHERE   objectTypeID = ?
                     AND identifier = ?";
-        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement = WCF::getDB()->prepare($sql, 1);
         $statement->execute([
             $this->getObjectTypeID($objectType),
             $identifier,
@@ -209,9 +209,9 @@ final class FloodControl extends SingletonFactory
      */
     public function prune(): void
     {
-        $sql = "DELETE FROM wcf" . WCF_N . "_flood_control
+        $sql = "DELETE FROM wcf1_flood_control
                 WHERE       time <= ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([static::PRUNE_TIME]);
     }
 
@@ -220,10 +220,10 @@ final class FloodControl extends SingletonFactory
      */
     private function registerContentByIdentifier(string $objectType, string $identifier, int $time): void
     {
-        $sql = "INSERT INTO wcf" . WCF_N . "_flood_control
+        $sql = "INSERT INTO wcf1_flood_control
                             (objectTypeID, identifier, time)
                 VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $this->getObjectTypeID($objectType),
             $identifier,
