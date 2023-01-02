@@ -14,6 +14,12 @@ if (\PHP_SAPI !== 'cli') {
     exit;
 }
 
+if (function_exists('posix_getuid') && posix_getuid() === 0) {
+    fwrite(STDERR, "Refusing to execute as root.\n");
+
+    exit(1);
+}
+
 // include config
 require_once(__DIR__ . '/app.config.inc.php');
 
