@@ -10,7 +10,6 @@
         }
     },
     "require": {
-        "chrisjean/php-ico": "^1.0.4",
         "cuyz/valinor": "^1.0.0",
         "dragonmantank/cron-expression": "^3.3.2",
         "erusev/parsedown": "^1.7.4",

@@ -4,55 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b9d6eb1585b0c790e75ff63fde1132f",
+    "content-hash": "718602caa85b4d8dfb8686d99f2ddd4f",
     "packages": [
-        {
-            "name": "chrisjean/php-ico",
-            "version": "1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/chrisbliss18/php-ico.git",
-                "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/chrisbliss18/php-ico/zipball/ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
-                "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
-                "shasum": ""
-            },
-            "require": {
-                "ext-gd": "*",
-                "php": ">=5.2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "class-php-ico.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Jean",
-                    "homepage": "https://chrisjean.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "An easy-to-use library to generate valid ICO files.",
-            "homepage": "https://github.com/chrisbliss18/php-ico",
-            "keywords": [
-                "favicon",
-                "ico"
-            ],
-            "support": {
-                "issues": "https://github.com/chrisbliss18/php-ico/issues",
-                "source": "https://github.com/chrisbliss18/php-ico"
-            },
-            "time": "2016-09-27T22:00:56+00:00"
-        },
         {
             "name": "cuyz/valinor",
             "version": "1.1.0",

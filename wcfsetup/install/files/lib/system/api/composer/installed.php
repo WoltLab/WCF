@@ -7,7 +7,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
@@ -16,15 +16,6 @@
             'reference' => NULL,
             'type' => 'project',
             'install_path' => __DIR__ . '/../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'chrisjean/php-ico' => array(
-            'pretty_version' => '1.0.4',
-            'version' => '1.0.4.0',
-            'reference' => 'ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../chrisjean/php-ico',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

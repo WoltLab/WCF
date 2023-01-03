@@ -800,7 +800,6 @@ return array(
     'Laminas\\Stdlib\\StringWrapper\\MbString' => $vendorDir . '/laminas/laminas-stdlib/src/StringWrapper/MbString.php',
     'Laminas\\Stdlib\\StringWrapper\\Native' => $vendorDir . '/laminas/laminas-stdlib/src/StringWrapper/Native.php',
     'Laminas\\Stdlib\\StringWrapper\\StringWrapperInterface' => $vendorDir . '/laminas/laminas-stdlib/src/StringWrapper/StringWrapperInterface.php',
-    'PHP_ICO' => $vendorDir . '/chrisjean/php-ico/class-php-ico.php',
     'ParagonIE\\ConstantTime\\Base32' => $vendorDir . '/paragonie/constant_time_encoding/src/Base32.php',
     'ParagonIE\\ConstantTime\\Base32Hex' => $vendorDir . '/paragonie/constant_time_encoding/src/Base32Hex.php',
     'ParagonIE\\ConstantTime\\Base64' => $vendorDir . '/paragonie/constant_time_encoding/src/Base64.php',
