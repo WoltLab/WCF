@@ -4,6 +4,7 @@
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  */
 
 let initCalled = false;
@@ -62,6 +63,8 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
     }
     this.#validate();
 
+    this.#rendered = true;
+
     void loadGoogleMaps(this.apiKey).then(() => {
       if (this.hasAttribute("access-user-location")) {
         navigator.geolocation.getCurrentPosition(
@@ -79,8 +82,6 @@ export class WoltlabCoreGoogleMapsElement extends HTMLElement {
         this.#initMap();
       }
     });
-
-    this.#rendered = true;
   }
 
   #initMap(): void {

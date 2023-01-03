@@ -12,13 +12,13 @@ import WoltlabCoreGoogleMapsElement from "./woltlab-core-google-maps";
 import "./woltlab-core-google-maps";
 
 export async function addMarker(
-  googleMaps: WoltlabCoreGoogleMapsElement,
+  element: WoltlabCoreGoogleMapsElement,
   latitude: number,
   longitude: number,
   title: string,
   focus?: boolean,
 ): Promise<void> {
-  const map = await googleMaps.getMap();
+  const map = await element.getMap();
 
   const marker = new google.maps.Marker({
     map,
@@ -31,18 +31,24 @@ export async function addMarker(
   }
 }
 
+export async function addDraggableMarker(element: WoltlabCoreGoogleMapsElement): Promise<google.maps.Marker>;
 export async function addDraggableMarker(
-  googleMaps: WoltlabCoreGoogleMapsElement,
+  element: WoltlabCoreGoogleMapsElement,
+  latitude: number,
+  longitude: number,
+): Promise<google.maps.Marker>;
+export async function addDraggableMarker(
+  element: WoltlabCoreGoogleMapsElement,
   latitude?: number,
   longitude?: number,
 ): Promise<google.maps.Marker> {
-  const map = await googleMaps.getMap();
+  const map = await element.getMap();
 
   if (latitude === undefined) {
-    latitude = googleMaps.lat;
+    latitude = element.lat;
   }
   if (longitude === undefined) {
-    longitude = googleMaps.lng;
+    longitude = element.lng;
   }
 
   const marker = new google.maps.Marker({
