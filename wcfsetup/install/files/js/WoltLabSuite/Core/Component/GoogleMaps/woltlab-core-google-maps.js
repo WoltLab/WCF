@@ -4,6 +4,7 @@
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";
@@ -55,6 +56,7 @@ define(["require", "exports"], function (require, exports) {
                 return;
             }
             this.#validate();
+            this.#rendered = true;
             void loadGoogleMaps(this.apiKey).then(() => {
                 if (this.hasAttribute("access-user-location")) {
                     navigator.geolocation.getCurrentPosition((response) => {
@@ -69,7 +71,6 @@ define(["require", "exports"], function (require, exports) {
                     this.#initMap();
                 }
             });
-            this.#rendered = true;
         }
         #initMap() {
             this.#map = new google.maps.Map(this, {
