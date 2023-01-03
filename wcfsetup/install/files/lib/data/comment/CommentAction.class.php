@@ -117,6 +117,26 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * @inheritDoc
      */
+    public function validateDelete()
+    {
+        $this->readObjects();
+
+        if ($this->getObjects() === []) {
+            throw new UserInputException('objectIDs');
+        }
+
+        foreach ($this->getObjects() as $comment) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
+            $processor = $objectType->getProcessor();
+            if (!$processor->canDeleteComment($comment->getDecoratedObject())) {
+                throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function delete()
     {
         if (empty($this->objects)) {
@@ -1046,6 +1066,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     * @deprecated 6.0 use `delete()` instead
      */
     public function validateRemove()
     {
@@ -1080,6 +1101,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Removes a comment or response.
      *
      * @return  int[]
+     * @deprecated 6.0 use `delete()` instead
      */
     public function remove()
     {
