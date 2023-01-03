@@ -16,15 +16,15 @@
 	<!-- Icons -->
 	{if PACKAGE_ID && $__wcf->getStyleHandler()->getDefaultStyle()}
 		<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconAppleTouchIcon()}">
-		<link rel="manifest" href="{@$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconManifest()}">
-		<link rel="icon" type="image/png" sizes="32x32" href="{@$__wcf->getStyleHandler()->getDefaultStyle()->getFavicon()}">
-		<meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconBrowserconfig()}">
+		<link rel="manifest" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconManifest()}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFavicon()}">
+		<meta name="msapplication-config" content="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconBrowserconfig()}">
 		<meta name="theme-color" content="{$__wcf->getStyleHandler()->getDefaultStyle()->getVariable('wcfPageThemeColor', true)}">
 	{else}	
-		<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
-		<link rel="manifest" href="{@$__wcf->getPath()}images/favicon/default.manifest.json">
-		<link rel="icon" href="{@$__wcf->getPath()}images/favicon/default.favicon.ico">
-		<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
+		<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
+		<link rel="manifest" href="{$__wcf->getPath()}images/favicon/default.manifest.json">
+		<link rel="icon" href="{$__wcf->getPath()}images/favicon/default.favicon.ico">
+		<meta name="msapplication-config" content="{$__wcf->getPath()}images/favicon/default.browserconfig.xml">
 		<meta name="theme-color" content="#3a6d9c">
 	{/if}
 
