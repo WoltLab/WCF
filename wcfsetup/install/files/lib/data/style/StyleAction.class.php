@@ -295,6 +295,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     protected function updateFavicons(Style $style)
     {
         $images = [
+            'favicon-32x32.png' => 32,
             'android-chrome-192x192.png' => 192,
             'android-chrome-256x256.png' => 256,
             'apple-touch-icon.png' => 180,
