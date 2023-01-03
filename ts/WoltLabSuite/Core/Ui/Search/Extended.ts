@@ -38,6 +38,10 @@ const enum SearchAction {
   Init,
 }
 
+type CombinedFormData = {
+  [key: string]: string | string[];
+}
+
 export class UiSearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
@@ -143,11 +147,29 @@ export class UiSearchExtended {
 
     if (searchAction !== SearchAction.Navigation) {
       this.searchParameters = [];
+      const formData: CombinedFormData = {};
       new FormData(this.form).forEach((value, key) => {
         if (value.toString().trim()) {
-          this.searchParameters.push([key, value.toString().trim()]);
+          if (formData[key] === undefined) {
+            formData[key] = value.toString().trim();
+          } else {
+            if (!Array.isArray(formData[key])) {
+              formData[key] = [formData[key] as string];
+            }
+
+            (formData[key] as Array<string>).push(value.toString().trim());
+          }
         }
       });
+      for (const [key, value] of Object.entries(formData)) {
+        if (!Array.isArray(value)) {
+          this.searchParameters.push([key, value]);
+        } else {
+          value.forEach((itemValue) => {
+            this.searchParameters.push([key + "[]", itemValue]);
+          })
+        }
+      }
     }
     const parameters = this.searchParameters.slice();
 
@@ -167,7 +189,15 @@ export class UiSearchExtended {
     const data = {};
     new FormData(this.form).forEach((value, key) => {
       if (value.toString()) {
-        data[key] = value;
+        if (data[key] === undefined) {
+          data[key] = value;
+        } else {
+          if (!Array.isArray(data[key])) {
+            data[key] = [data[key]];
+          }
+
+          (data[key] as Array<any>).push(value);
+        }
       }
     });
     if (this.activePage > 1) {

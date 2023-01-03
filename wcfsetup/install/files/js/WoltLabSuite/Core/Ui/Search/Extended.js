@@ -105,11 +105,30 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             url.search += url.search !== "" ? "&" : "?";
             if (searchAction !== 1 /* SearchAction.Navigation */) {
                 this.searchParameters = [];
+                const formData = {};
                 new FormData(this.form).forEach((value, key) => {
                     if (value.toString().trim()) {
-                        this.searchParameters.push([key, value.toString().trim()]);
+                        if (formData[key] === undefined) {
+                            formData[key] = value.toString().trim();
+                        }
+                        else {
+                            if (!Array.isArray(formData[key])) {
+                                formData[key] = [formData[key]];
+                            }
+                            formData[key].push(value.toString().trim());
+                        }
                     }
                 });
+                for (const [key, value] of Object.entries(formData)) {
+                    if (!Array.isArray(value)) {
+                        this.searchParameters.push([key, value]);
+                    }
+                    else {
+                        value.forEach((itemValue) => {
+                            this.searchParameters.push([key + "[]", itemValue]);
+                        });
+                    }
+                }
             }
             const parameters = this.searchParameters.slice();
             if (this.activePage > 1) {
@@ -127,7 +146,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             const data = {};
             new FormData(this.form).forEach((value, key) => {
                 if (value.toString()) {
-                    data[key] = value;
+                    if (data[key] === undefined) {
+                        data[key] = value;
+                    }
+                    else {
+                        if (!Array.isArray(data[key])) {
+                            data[key] = [data[key]];
+                        }
+                        data[key].push(value);
+                    }
                 }
             });
             if (this.activePage > 1) {
