@@ -38,7 +38,7 @@ class ConfirmationPrefab {
     return new ConfirmationCustom(question);
   }
 
-  async delete(title: string): Promise<boolean> {
+  async delete(title = ""): Promise<boolean> {
     const html = `<p>${getPhrase("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
     const dialog = dialogFactory()
       .fromHtml(html)
@@ -46,7 +46,12 @@ class ConfirmationPrefab {
         primary: getPhrase("wcf.dialog.button.primary.delete"),
       });
 
-    const question = getPhrase("wcf.dialog.confirmation.delete", { title });
+    let question: string;
+    if (title === "") {
+      question = getPhrase("wcf.dialog.confirmation.delete.indeterminate");
+    } else {
+      question = getPhrase("wcf.dialog.confirmation.delete", { title });
+    }
     dialog.show(question);
 
     return new Promise<boolean>((resolve) => {
@@ -55,10 +60,16 @@ class ConfirmationPrefab {
     });
   }
 
-  async restore(title: string): Promise<boolean> {
+  async restore(title = ""): Promise<boolean> {
     const dialog = dialogFactory().withoutContent().asConfirmation();
 
-    const question = getPhrase("wcf.dialog.confirmation.restore", { title });
+    let question: string;
+    if (title === "") {
+      question = getPhrase("wcf.dialog.confirmation.restore.indeterminate");
+    } else {
+      question = getPhrase("wcf.dialog.confirmation.restore", { title });
+    }
+
     dialog.show(question);
 
     return new Promise<boolean>((resolve) => {
@@ -67,7 +78,7 @@ class ConfirmationPrefab {
     });
   }
 
-  async softDelete(title: string, askForReason: boolean): Promise<ResultSoftDelete> {
+  async softDelete(title = "", askForReason = false): Promise<ResultSoftDelete> {
     const dialog = dialogFactory().withoutContent().asConfirmation();
 
     let reason: HTMLTextAreaElement | undefined = undefined;
@@ -85,7 +96,13 @@ class ConfirmationPrefab {
       dialog.content.append(dl);
     }
 
-    const question = getPhrase("wcf.dialog.confirmation.softDelete", { title });
+    let question: string;
+    if (title === "") {
+      question = getPhrase("wcf.dialog.confirmation.softDelete.indeterminate");
+    } else {
+      question = getPhrase("wcf.dialog.confirmation.softDelete", { title });
+    }
+
     dialog.show(question);
 
     return new Promise<ResultSoftDelete>((resolve) => {

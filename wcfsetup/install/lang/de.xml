@@ -3741,9 +3741,12 @@ Dateianhänge:
 		<item name="wcf.dialog.button.primary.submit"><![CDATA[Absenden]]></item>
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[Dieser Vorgang kann nicht rückgängig gemacht werden.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} „{$title}“ wirklich löschen?]]></item>
+		<item name="wcf.dialog.confirmation.delete.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} dies wirklich löschen?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ in den Papierkorb verschieben?]]></item>
+		<item name="wcf.dialog.confirmation.softDelete.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies in den Papierkorb verschieben?]]></item>
 		<item name="wcf.dialog.confirmation.softDelete.reason"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.dialog.confirmation.restore"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} „{$title}“ wiederherstellen?]]></item>
+		<item name="wcf.dialog.confirmation.restore.indeterminate"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} dies wiederherstellen?]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>

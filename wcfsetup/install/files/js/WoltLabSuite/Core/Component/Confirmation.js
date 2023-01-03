@@ -31,30 +31,42 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
         custom(question) {
             return new Custom_1.ConfirmationCustom(question);
         }
-        async delete(title) {
+        async delete(title = "") {
             const html = `<p>${(0, Language_1.getPhrase)("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
             const dialog = (0, Dialog_1.dialogFactory)()
                 .fromHtml(html)
                 .asConfirmation({
                 primary: (0, Language_1.getPhrase)("wcf.dialog.button.primary.delete"),
             });
-            const question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.delete", { title });
+            let question;
+            if (title === "") {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.delete.indeterminate");
+            }
+            else {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.delete", { title });
+            }
             dialog.show(question);
             return new Promise((resolve) => {
                 dialog.addEventListener("primary", () => resolve(true));
                 dialog.addEventListener("cancel", () => resolve(false));
             });
         }
-        async restore(title) {
+        async restore(title = "") {
             const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
-            const question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.restore", { title });
+            let question;
+            if (title === "") {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.restore.indeterminate");
+            }
+            else {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.restore", { title });
+            }
             dialog.show(question);
             return new Promise((resolve) => {
                 dialog.addEventListener("primary", () => resolve(true));
                 dialog.addEventListener("cancel", () => resolve(false));
             });
         }
-        async softDelete(title, askForReason) {
+        async softDelete(title = "", askForReason = false) {
             const dialog = (0, Dialog_1.dialogFactory)().withoutContent().asConfirmation();
             let reason = undefined;
             if (askForReason) {
@@ -68,7 +80,13 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
                 reason = dl.querySelector("textarea");
                 dialog.content.append(dl);
             }
-            const question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete", { title });
+            let question;
+            if (title === "") {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete.indeterminate");
+            }
+            else {
+                question = (0, Language_1.getPhrase)("wcf.dialog.confirmation.softDelete", { title });
+            }
             dialog.show(question);
             return new Promise((resolve) => {
                 dialog.addEventListener("primary", () => {
