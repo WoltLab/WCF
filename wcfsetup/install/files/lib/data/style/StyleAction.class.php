@@ -330,6 +330,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                         $thumbnail = null;
                     }
 
+                    if (\file_exists($style->getAssetPath() . "favicon.ico")) {
+                        \unlink($style->getAssetPath() . "favicon.ico");
+                    }
+
                     (new StyleEditor($style))->update([
                         'hasFavicon' => 1,
                     ]);
