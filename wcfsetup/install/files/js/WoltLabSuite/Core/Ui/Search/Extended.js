@@ -105,30 +105,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             url.search += url.search !== "" ? "&" : "?";
             if (searchAction !== 1 /* SearchAction.Navigation */) {
                 this.searchParameters = [];
-                const formData = {};
                 new FormData(this.form).forEach((value, key) => {
                     if (value.toString().trim()) {
-                        if (formData[key] === undefined) {
-                            formData[key] = value.toString().trim();
-                        }
-                        else {
-                            if (!Array.isArray(formData[key])) {
-                                formData[key] = [formData[key]];
-                            }
-                            formData[key].push(value.toString().trim());
-                        }
+                        this.searchParameters.push([key, value.toString().trim()]);
                     }
                 });
-                for (const [key, value] of Object.entries(formData)) {
-                    if (!Array.isArray(value)) {
-                        this.searchParameters.push([key, value]);
-                    }
-                    else {
-                        value.forEach((itemValue) => {
-                            this.searchParameters.push([key + "[]", itemValue]);
-                        });
-                    }
-                }
             }
             const parameters = this.searchParameters.slice();
             if (this.activePage > 1) {
@@ -146,12 +127,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             const data = {};
             new FormData(this.form).forEach((value, key) => {
                 if (value.toString()) {
-                    if (data[key] === undefined) {
+                    const element = this.form.elements[key];
+                    // represent values as array for select-fields with multiple-flag, multiple checkboxes
+                    const isPlainValue = !(element instanceof HTMLSelectElement && element.multiple)
+                        && !(element instanceof RadioNodeList && element[0] instanceof HTMLInputElement && element[0].type === "checkbox");
+                    if (isPlainValue) {
                         data[key] = value;
                     }
                     else {
-                        if (!Array.isArray(data[key])) {
-                            data[key] = [data[key]];
+                        if (data[key] === undefined) {
+                            data[key] = [];
                         }
                         data[key].push(value);
                     }
@@ -175,6 +160,17 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 const element = this.form.elements[key];
                 if (value && element) {
                     if (element instanceof RadioNodeList) {
+                        let valueSet = false;
+                        // a list of checkbox-inputs results in RadioNodeList, so we have to do a workaround
+                        element.forEach((childElement) => {
+                            if (childElement instanceof HTMLInputElement && childElement.type === "checkbox" && childElement.value == value) {
+                                childElement.checked = valueSet = true;
+                            }
+                        });
+                        if (valueSet) {
+                            return;
+                        }
+                        // handle date picker
                         let id = "";
                         element.forEach((childElement) => {
                             if (childElement.classList.contains("inputDatePicker")) {
@@ -185,6 +181,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                             Picker_1.default.setDate(id, new Date(value));
                             return;
                         }
+                        // set value otherwise
                         element.value = value;
                     }
                     else if (element instanceof HTMLInputElement) {
@@ -208,7 +205,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                         }
                     }
                     else if (element instanceof HTMLSelectElement) {
-                        element.value = value;
+                        if (element.multiple) {
+                            Array.from(element.options).forEach((option) => {
+                                if (option.value == value) {
+                                    option.selected = true;
+                                }
+                            });
+                        }
+                        else {
+                            element.value = value;
+                        }
                     }
                 }
             });

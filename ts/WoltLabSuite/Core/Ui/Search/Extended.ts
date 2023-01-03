@@ -38,10 +38,6 @@ const enum SearchAction {
   Init,
 }
 
-type CombinedFormData = {
-  [key: string]: string | string[];
-}
-
 export class UiSearchExtended {
   private readonly form: HTMLFormElement;
   private readonly queryInput: HTMLInputElement;
@@ -147,29 +143,11 @@ export class UiSearchExtended {
 
     if (searchAction !== SearchAction.Navigation) {
       this.searchParameters = [];
-      const formData: CombinedFormData = {};
       new FormData(this.form).forEach((value, key) => {
         if (value.toString().trim()) {
-          if (formData[key] === undefined) {
-            formData[key] = value.toString().trim();
-          } else {
-            if (!Array.isArray(formData[key])) {
-              formData[key] = [formData[key] as string];
-            }
-
-            (formData[key] as Array<string>).push(value.toString().trim());
-          }
+          this.searchParameters.push([key, value.toString().trim()]);
         }
       });
-      for (const [key, value] of Object.entries(formData)) {
-        if (!Array.isArray(value)) {
-          this.searchParameters.push([key, value]);
-        } else {
-          value.forEach((itemValue) => {
-            this.searchParameters.push([key + "[]", itemValue]);
-          })
-        }
-      }
     }
     const parameters = this.searchParameters.slice();
 
@@ -189,14 +167,19 @@ export class UiSearchExtended {
     const data = {};
     new FormData(this.form).forEach((value, key) => {
       if (value.toString()) {
-        if (data[key] === undefined) {
+        const element = this.form.elements[key] as HTMLElement;
+        // represent values as array for select-fields with multiple-flag, multiple checkboxes
+        const isPlainValue = !(element instanceof HTMLSelectElement && element.multiple)
+          && !(element instanceof RadioNodeList && element[0] instanceof HTMLInputElement && element[0].type === "checkbox");
+
+        if (isPlainValue) {
           data[key] = value;
         } else {
-          if (!Array.isArray(data[key])) {
-            data[key] = [data[key]];
+          if (data[key] === undefined) {
+            data[key] = [];
           }
 
-          (data[key] as Array<any>).push(value);
+          (data[key] as any[]).push(value);
         }
       }
     });
@@ -221,6 +204,19 @@ export class UiSearchExtended {
       const element = this.form.elements[key] as HTMLElement;
       if (value && element) {
         if (element instanceof RadioNodeList) {
+          let valueSet = false;
+
+          // a list of checkbox-inputs results in RadioNodeList, so we have to do a workaround
+          element.forEach((childElement: HTMLElement) => {
+            if (childElement instanceof HTMLInputElement && childElement.type === "checkbox" && childElement.value == value) {
+              childElement.checked = valueSet = true;
+            }
+          });
+          if (valueSet) {
+            return;
+          }
+
+          // handle date picker
           let id = "";
           element.forEach((childElement: HTMLElement) => {
             if (childElement.classList.contains("inputDatePicker")) {
@@ -232,6 +228,7 @@ export class UiSearchExtended {
             return;
           }
 
+          // set value otherwise
           element.value = value;
         } else if (element instanceof HTMLInputElement) {
           if (element.classList.contains("itemListInputShadow")) {
@@ -257,7 +254,15 @@ export class UiSearchExtended {
             element.value = value;
           }
         } else if (element instanceof HTMLSelectElement) {
-          element.value = value;
+          if (element.multiple) {
+            Array.from(element.options).forEach((option) => {
+              if (option.value == value) {
+                option.selected = true;
+              }
+            });
+          } else {
+            element.value = value;
+          }
         }
       }
     });
