@@ -1,5 +1,6 @@
 import { dboAction } from "../../Ajax";
 import DomUtil from "../../Dom/Util";
+import { wheneverFirstSeen } from "../../Helper/Selector";
 import { getPhrase } from "../../Language";
 import { CommentAdd } from "./Add";
 
@@ -25,7 +26,17 @@ class CommentHandler {
     }
   }
 
-  #initComments(): void {}
+  #initComments(): void {
+    wheneverFirstSeen("woltlab-core-comment", (element) => {
+      element.addEventListener('reply', () => {
+        console.log('reply clicked');
+      });
+
+      element.addEventListener("delete", () => {
+        element.parentElement?.remove();
+      });
+    });
+  }
 
   #initLoadNextComments(): void {
     if (this.#displayedComments < this.#totalComments) {
@@ -71,46 +82,6 @@ class CommentHandler {
     } else {
       this.#container.querySelector<HTMLElement>(".commentLoadNext")!.hidden = true;
     }
-
-    this.#initComments();
-  }
-
-  #initComment(commentId: number, comment: HTMLElement) {
-    /*if (this._container.data('canAdd')) {
-			this._initAddResponse(commentID, comment);
-		}*/
-
-    const enableButton = comment.querySelector(".jsCommentEnableButton");
-    if (enableButton) {
-      enableButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        void this.#enableComment(comment);
-      });
-    }
-
-    const deleteButton = comment.querySelector(".jsCommentDeleteButton");
-    if (deleteButton) {
-      deleteButton.addEventListener("click", (event) => {
-        event.preventDefault();
-      });
-    }
-
-    const replyButton = comment.querySelector(".jsCommentReplyButton");
-    if (replyButton) {
-      replyButton.addEventListener("click", (event) => {
-        //this._showAddResponse();
-      });
-    }
-  }
-
-  async #enableComment(comment: HTMLElement): Promise<void> {
-    await dboAction("enable", "wcf\\data\\comment\\CommentAction")
-      .objectIds([parseInt(comment.dataset.objectId!)])
-      .dispatch();
-
-    comment.dataset.isDisabled = "";
-    comment.querySelector<HTMLElement>(".jsIconDisabled")!.hidden = true;
-    comment.querySelector<HTMLElement>(".jsCommentEnableButton")!.hidden = true;
   }
 
   get #displayedComments(): number {

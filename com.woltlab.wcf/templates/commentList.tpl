@@ -15,120 +15,123 @@
 			data-last-response-id="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseID()}{else}0{/if}"
 			itemprop="comment" itemscope itemtype="http://schema.org/Comment"
 		>
-			<div class="comment__header">
-				<div class="comment__avatar">
-					{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
-				</div>
-				<div class="comment__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-					{if $comment->userID}
-						<a href="{$comment->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$comment->userID}" itemprop="url">
-							<span itemprop="name">{@$comment->getUserProfile()->getFormattedUsername()}</span>
-						</a>
-					{else}
-						<span itemprop="name">{$comment->username}</span>
-					{/if}
-				</div>
-				<div class="comment__date">
-					<meta itemprop="dateCreated" content="{@$comment->time|date:'c'}">
-					{@$comment->time|time}
-				</div>
-				<div class="comment__status">
-					{if $comment->isDisabled}
-						<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
-					{/if}
-					
-					{if $commentManager->isContentAuthor($comment)}
-						<span class="badge label">{lang}wcf.comment.objectAuthor{/lang}</span>
-					{/if}
-				</div>
-				<div class="comment__menu dropdown jsOnly">
-	                <button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
-
-	                <ul class="dropdownMenu">
-	                    {if $comment->isDisabled && $commentCanModerate}
-							<li>
-								<a href="#" class="jsCommentEnableButton">
-									{lang}wcf.comment.approve{/lang}
-								</a>
-							</li>
+			<woltlab-core-comment comment-id="{@$comment->commentID}">
+				<div class="comment__header">
+					<div class="comment__avatar">
+						{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
+					</div>
+					<div class="comment__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+						{if $comment->userID}
+							<a href="{$comment->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$comment->userID}" itemprop="url">
+								<span itemprop="name">{@$comment->getUserProfile()->getFormattedUsername()}</span>
+							</a>
+						{else}
+							<span itemprop="name">{$comment->username}</span>
 						{/if}
-						{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-							<li>
-								<a
-									href="#"
-									data-report-content="com.woltlab.wcf.comment.comment"
-									data-object-id="{$comment->commentID}"
-								>
-									{lang}wcf.moderation.report.reportContent{/lang}
-								</a>
-							</li>
+					</div>
+					<div class="comment__date">
+						<meta itemprop="dateCreated" content="{@$comment->time|date:'c'}">
+						{@$comment->time|time}
+					</div>
+					<div class="comment__status">
+						{if $comment->isDisabled}
+							<span class="badge label green comment__status--disabled">{lang}wcf.message.status.disabled{/lang}</span>
 						{/if}
-						{if $comment->isEditable()}
-							<li>
-								<a href="#" class="jsCommentEditButton">
-									{lang}wcf.global.button.edit{/lang}
-								</a>
-							</li>
+						
+						{if $commentManager->isContentAuthor($comment)}
+							<span class="badge label">{lang}wcf.comment.objectAuthor{/lang}</span>
 						{/if}
-						{if $comment->isDeletable()}
-							<li>
-								<a href="#" class="jsCommentDeleteButton">
-									{lang}wcf.global.button.delete{/lang}
-								</a>
-							</li>
-						{/if}
+					</div>
+					<div class="comment__menu dropdown" id="commentOptions{@$comment->commentID}">
+		                <button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
-						{event name='commentMenuOptions'}
-	                </ul>
-	            </div>
+		                <ul class="dropdownMenu">
+		                    {if $comment->isDisabled && $commentCanModerate}
+								<li>
+									<a href="#" class="comment__option comment__option--enable">
+										{lang}wcf.comment.approve{/lang}
+									</a>
+								</li>
+							{/if}
+							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
+								<li>
+									<a
+										href="#"
+										data-report-content="com.woltlab.wcf.comment.comment"
+										data-object-id="{$comment->commentID}"
+										class="comment__option comment__option--report"
+									>
+										{lang}wcf.moderation.report.reportContent{/lang}
+									</a>
+								</li>
+							{/if}
+							{if $comment->isEditable()}
+								<li>
+									<a href="#" class="comment__option comment__option--edit">
+										{lang}wcf.global.button.edit{/lang}
+									</a>
+								</li>
+							{/if}
+							{if $comment->isDeletable()}
+								<li>
+									<a href="#" class="comment__option comment__option--delete">
+										{lang}wcf.global.button.delete{/lang}
+									</a>
+								</li>
+							{/if}
 
-				{event name='commentHeader'}
-			</div>
+							{event name='commentMenuOptions'}
+		                </ul>
+		            </div>
 
-			{event name='commentBeforeMessage'}
-
-			<div class="comment__message">
-				<div class="htmlContent userMessage" itemprop="text">{@$comment->getFormattedMessage()}</div>
-			</div>
-
-			{event name='commentAfterMessage'}
-			
-			<div class="comment__footer">
-				<div class="comment__reactions">
-					{if MODULE_LIKE && $commentManager->supportsLike() && $likeData|isset}
-						{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}
-					{else}
-						<a href="#" class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment" data-object-id="{$comment->commentID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>
-					{/if}
+					{event name='commentHeader'}
 				</div>
 
-				<div class="comment__buttons">
-					{if $commentCanAdd}
-						<button
-							type="button"
-							class="jsCommentReplyButton"
-						>
-							<span class="invisible">{lang}wcf.comment.button.response.add{/lang}</span>
-						</button>
-					{/if}
-					
-					{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $comment->userID != $__wcf->user->userID}
-						<button
-							type="button"
-							class="reactButton jsTooltip {if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}"
-							title="{lang}wcf.reactions.react{/lang}"
-							data-reaction-type-id="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{$likeData[comment][$comment->commentID]->reactionTypeID}{else}0{/if}"
-						>
-							{icon name='face-smile'}
-							<span class="invisible">{lang}wcf.reactions.react{/lang}</span>
-						</button>
-					{/if}
+				{event name='commentBeforeMessage'}
 
-					{event name='commentButtons'}
+				<div class="comment__message">
+					<div class="htmlContent userMessage" itemprop="text">{@$comment->getFormattedMessage()}</div>
 				</div>
 
-				{event name='commentFooter'}
-			</div>
+				{event name='commentAfterMessage'}
+				
+				<div class="comment__footer">
+					<div class="comment__reactions">
+						{if MODULE_LIKE && $commentManager->supportsLike() && $likeData|isset}
+							{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}
+						{else}
+							<a href="#" class="reactionSummaryList reactionSummaryListTiny" data-object-type="com.woltlab.wcf.comment" data-object-id="{$comment->commentID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>
+						{/if}
+					</div>
+
+					<div class="comment__buttons">
+						{if $commentCanAdd}
+							<button
+								type="button"
+								class="comment__button comment__button--reply"
+							>
+								<span>{lang}wcf.comment.button.response.add{/lang}</span>
+							</button>
+						{/if}
+						
+						{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $comment->userID != $__wcf->user->userID}
+							<button
+								type="button"
+								class="comment__button comment__button--react reactButton jsTooltip {if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}"
+								title="{lang}wcf.reactions.react{/lang}"
+								data-reaction-type-id="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{$likeData[comment][$comment->commentID]->reactionTypeID}{else}0{/if}"
+							>
+								{icon name='face-smile'}
+								<span class="invisible">{lang}wcf.reactions.react{/lang}</span>
+							</button>
+						{/if}
+
+						{event name='commentButtons'}
+					</div>
+
+					{event name='commentFooter'}
+				</div>
+			</woltlab-core-comment>
 
 			{if !$ignoreLastResponseTime|empty || $comment|count}
 				<div class="comment__responses">

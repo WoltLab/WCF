@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Language", "./Add"], function (require, exports, tslib_1, Ajax_1, Util_1, Language_1, Add_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add"], function (require, exports, tslib_1, Ajax_1, Util_1, Selector_1, Language_1, Add_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -16,7 +16,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
                 new Add_1.CommentAdd(this.#container.querySelector(".commentAdd"));
             }
         }
-        #initComments() { }
+        #initComments() {
+            (0, Selector_1.wheneverFirstSeen)("woltlab-core-comment", (element) => {
+                element.addEventListener('reply', () => {
+                    console.log('reply clicked');
+                });
+                element.addEventListener("delete", () => {
+                    element.parentElement?.remove();
+                });
+            });
+        }
         #initLoadNextComments() {
             if (this.#displayedComments < this.#totalComments) {
                 if (!this.#container.querySelector(".commentLoadNext")) {
@@ -55,39 +64,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
             else {
                 this.#container.querySelector(".commentLoadNext").hidden = true;
             }
-            this.#initComments();
-        }
-        #initComment(commentId, comment) {
-            /*if (this._container.data('canAdd')) {
-                    this._initAddResponse(commentID, comment);
-                }*/
-            const enableButton = comment.querySelector(".jsCommentEnableButton");
-            if (enableButton) {
-                enableButton.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    void this.#enableComment(comment);
-                });
-            }
-            const deleteButton = comment.querySelector(".jsCommentDeleteButton");
-            if (deleteButton) {
-                deleteButton.addEventListener("click", (event) => {
-                    event.preventDefault();
-                });
-            }
-            const replyButton = comment.querySelector(".jsCommentReplyButton");
-            if (replyButton) {
-                replyButton.addEventListener("click", (event) => {
-                    //this._showAddResponse();
-                });
-            }
-        }
-        async #enableComment(comment) {
-            await (0, Ajax_1.dboAction)("enable", "wcf\\data\\comment\\CommentAction")
-                .objectIds([parseInt(comment.dataset.objectId)])
-                .dispatch();
-            comment.dataset.isDisabled = "";
-            comment.querySelector(".jsIconDisabled").hidden = true;
-            comment.querySelector(".jsCommentEnableButton").hidden = true;
         }
         get #displayedComments() {
             return this.#container.querySelectorAll(".comment").length;

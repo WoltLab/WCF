@@ -110,4 +110,7 @@ export function setup(options: BootstrapOptions): void {
   whenFirstSeen("woltlab-core-reaction-summary", () => {
     void import("./Ui/Reaction/SummaryDetails").then(({ setup }) => setup());
   });
+  whenFirstSeen("woltlab-core-comment", () => {
+    void import("./Component/Comment/woltlab-core-comment");
+  });
 }
