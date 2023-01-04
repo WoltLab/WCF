@@ -38,7 +38,7 @@ class ConfirmationPrefab {
     return new ConfirmationCustom(question);
   }
 
-  async delete(title = ""): Promise<boolean> {
+  async delete(title?: string): Promise<boolean> {
     const html = `<p>${getPhrase("wcf.dialog.confirmation.cannotBeUndone")}</p>`;
     const dialog = dialogFactory()
       .fromHtml(html)
@@ -47,7 +47,7 @@ class ConfirmationPrefab {
       });
 
     let question: string;
-    if (title === "") {
+    if (title === undefined) {
       question = getPhrase("wcf.dialog.confirmation.delete.indeterminate");
     } else {
       question = getPhrase("wcf.dialog.confirmation.delete", { title });
@@ -60,11 +60,11 @@ class ConfirmationPrefab {
     });
   }
 
-  async restore(title = ""): Promise<boolean> {
+  async restore(title?: string): Promise<boolean> {
     const dialog = dialogFactory().withoutContent().asConfirmation();
 
     let question: string;
-    if (title === "") {
+    if (title === undefined) {
       question = getPhrase("wcf.dialog.confirmation.restore.indeterminate");
     } else {
       question = getPhrase("wcf.dialog.confirmation.restore", { title });
@@ -78,7 +78,7 @@ class ConfirmationPrefab {
     });
   }
 
-  async softDelete(title = "", askForReason = false): Promise<ResultSoftDelete> {
+  async softDelete(title?: string, askForReason = false): Promise<ResultSoftDelete> {
     const dialog = dialogFactory().withoutContent().asConfirmation();
 
     let reason: HTMLTextAreaElement | undefined = undefined;
@@ -97,7 +97,7 @@ class ConfirmationPrefab {
     }
 
     let question: string;
-    if (title === "") {
+    if (title === undefined) {
       question = getPhrase("wcf.dialog.confirmation.softDelete.indeterminate");
     } else {
       question = getPhrase("wcf.dialog.confirmation.softDelete", { title });
