@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "../../Dom/Change/Listener", "./GuestDialog", "../../Core", "../../Ajax/Error"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, Listener_1, GuestDialog_1, Core, Error_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "./GuestDialog", "../../Core", "../../Ajax/Error"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, GuestDialog_1, Core, Error_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentAdd = void 0;
@@ -6,18 +6,22 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
     UiNotification = tslib_1.__importStar(UiNotification);
     EventHandler = tslib_1.__importStar(EventHandler);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
     Core = tslib_1.__importStar(Core);
     class CommentAdd {
         #container;
         #content;
         #textarea;
+        #objectTypeId;
+        #objectId;
+        #callback;
         #editor = null;
-        #loadingOverlay = null;
-        constructor(container) {
+        constructor(container, objectTypeId, objectId, callback) {
             this.#container = container;
             this.#content = this.#container.querySelector(".commentAdd__content");
             this.#textarea = this.#container.querySelector(".wysiwygTextarea");
+            this.#objectTypeId = objectTypeId;
+            this.#objectId = objectId;
+            this.#callback = callback;
             this.#initEvents();
         }
         #initEvents() {
@@ -108,12 +112,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
                 }
                 return;
             }
-            const scrollTarget = this.#insertMessage(response.template);
+            this.#callback(response.template);
+            UiNotification.show((0, Language_1.getPhrase)("wcf.global.success.add"));
             this.#reset();
             this.#hideLoadingOverlay();
-            window.setTimeout(() => {
-                UiScroll.element(scrollTarget);
-            }, 100);
         }
         /**
          * Returns the current editor instance.
@@ -136,13 +138,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
             if (this.#content.classList.contains("commentAdd__content--loading")) {
                 return;
             }
-            if (this.#loadingOverlay === null) {
-                this.#loadingOverlay = document.createElement("div");
-                this.#loadingOverlay.className = "commentAdd__loading";
-                this.#loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
-            }
+            const loadingOverlay = document.createElement("div");
+            loadingOverlay.className = "commentAdd__loading";
+            loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
             this.#content.classList.add("commentAdd__content--loading");
-            this.#content.appendChild(this.#loadingOverlay);
+            this.#content.appendChild(loadingOverlay);
         }
         /**
          * Throws an error by adding an inline error to target element.
@@ -154,23 +154,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
          * Returns the request parameters to add a comment.
          */
         #getParameters() {
-            const commentList = this.#container.closest(".commentList");
             return {
                 data: {
                     message: this.#getEditor().code.get(),
-                    objectID: ~~commentList.dataset.objectId,
-                    objectTypeID: ~~commentList.dataset.objectTypeId,
+                    objectID: this.#objectId,
+                    objectTypeID: this.#objectTypeId,
                 },
             };
-        }
-        /**
-         * Inserts the rendered message.
-         */
-        #insertMessage(template) {
-            Util_1.default.insertHtml(template, this.#container, "after");
-            UiNotification.show((0, Language_1.getPhrase)("wcf.global.success.add"));
-            Listener_1.default.trigger();
-            return this.#container.nextElementSibling;
         }
         /**
          * Resets the editor contents and notifies event listeners.

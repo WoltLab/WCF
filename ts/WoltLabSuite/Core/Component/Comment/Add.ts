@@ -5,7 +5,6 @@ import { getPhrase } from "../../Language";
 import * as EventHandler from "../../Event/Handler";
 import { RedactorEditor } from "../../Ui/Redactor/Editor";
 import DomUtil from "../../Dom/Util";
-import DomChangeListener from "../../Dom/Change/Listener";
 import { showGuestDialog } from "./GuestDialog";
 import * as Core from "../../Core";
 import { StatusNotOk } from "../../Ajax/Error";
@@ -15,17 +14,24 @@ type ResponseAddComment = {
   template?: string;
 };
 
+type CallbackInsertComment = (template: string) => void;
+
 export class CommentAdd {
   readonly #container: HTMLElement;
   readonly #content: HTMLElement;
   readonly #textarea: HTMLTextAreaElement;
+  readonly #objectTypeId: number;
+  readonly #objectId: number;
+  readonly #callback: CallbackInsertComment;
   #editor: RedactorEditor | null = null;
-  #loadingOverlay: HTMLElement | null = null;
-
-  constructor(container: HTMLElement) {
+  
+  constructor(container: HTMLElement, objectTypeId: number, objectId: number, callback: CallbackInsertComment) {
     this.#container = container;
     this.#content = this.#container.querySelector(".commentAdd__content") as HTMLElement;
     this.#textarea = this.#container.querySelector(".wysiwygTextarea") as HTMLTextAreaElement;
+    this.#objectTypeId = objectTypeId;
+    this.#objectId = objectId;
+    this.#callback = callback;
 
     this.#initEvents();
   }
@@ -134,14 +140,10 @@ export class CommentAdd {
       return;
     }
 
-    const scrollTarget = this.#insertMessage(response!.template!);
-
+    this.#callback(response!.template!);
+    UiNotification.show(getPhrase("wcf.global.success.add"));
     this.#reset();
     this.#hideLoadingOverlay();
-
-    window.setTimeout(() => {
-      UiScroll.element(scrollTarget);
-    }, 100);
   }
 
   /**
@@ -167,14 +169,11 @@ export class CommentAdd {
       return;
     }
 
-    if (this.#loadingOverlay === null) {
-      this.#loadingOverlay = document.createElement("div");
-      this.#loadingOverlay.className = "commentAdd__loading";
-      this.#loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
-    }
-
+    const loadingOverlay = document.createElement("div");
+    loadingOverlay.className = "commentAdd__loading";
+    loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
     this.#content.classList.add("commentAdd__content--loading");
-    this.#content.appendChild(this.#loadingOverlay);
+    this.#content.appendChild(loadingOverlay);
   }
 
   /**
@@ -188,28 +187,13 @@ export class CommentAdd {
    * Returns the request parameters to add a comment.
    */
   #getParameters(): ArbitraryObject {
-    const commentList = this.#container.closest(".commentList") as HTMLElement;
-
     return {
       data: {
         message: this.#getEditor().code.get(),
-        objectID: ~~commentList.dataset.objectId!,
-        objectTypeID: ~~commentList.dataset.objectTypeId!,
+        objectID: this.#objectId,
+        objectTypeID: this.#objectTypeId,
       },
     };
-  }
-
-  /**
-   * Inserts the rendered message.
-   */
-  #insertMessage(template: string): HTMLElement {
-    DomUtil.insertHtml(template, this.#container, "after");
-
-    UiNotification.show(getPhrase("wcf.global.success.add"));
-
-    DomChangeListener.trigger();
-
-    return this.#container.nextElementSibling as HTMLElement;
   }
 
   /**

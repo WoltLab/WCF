@@ -1,10 +1,13 @@
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add"], function (require, exports, tslib_1, Ajax_1, Util_1, Selector_1, Language_1, Add_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
+    Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
+    UiScroll = tslib_1.__importStar(UiScroll);
     class CommentHandler {
         #container;
+        #commentResponseAdd;
         constructor(container) {
             this.#container = container;
             this.#initComments();
@@ -13,13 +16,18 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../He
         }
         #initCommentAdd() {
             if (this.#container.dataset.canAdd) {
-                new Add_1.CommentAdd(this.#container.querySelector(".commentAdd"));
+                new Add_1.CommentAdd(this.#container.querySelector(".commentAdd"), parseInt(this.#container.dataset.objectTypeId), parseInt(this.#container.dataset.objectId), (template) => {
+                    this.#insertComment(template);
+                });
+                this.#commentResponseAdd = new Add_2.CommentResponseAdd(this.#container.querySelector(".commentResponseAdd"), (commentId, template) => {
+                    this.#insertResponse(commentId, template);
+                });
             }
         }
         #initComments() {
             (0, Selector_1.wheneverFirstSeen)("woltlab-core-comment", (element) => {
-                element.addEventListener('reply', () => {
-                    console.log('reply clicked');
+                element.addEventListener("reply", () => {
+                    this.#showAddResponse(element.parentElement, element.commentId);
                 });
                 element.addEventListener("delete", () => {
                     element.parentElement?.remove();
@@ -31,7 +39,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../He
                 if (!this.#container.querySelector(".commentLoadNext")) {
                     const li = document.createElement("li");
                     li.classList.add("commentLoadNext", "showMore");
-                    this.#container.append(li);
+                    this.#container.querySelector(".commentList").append(li);
                     const button = document.createElement("button");
                     button.type = "button";
                     button.classList.add("button", "small", "commentLoadNext__button");
@@ -56,7 +64,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../He
             })
                 .dispatch());
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
-            this.#container.insertBefore(fragment, this.#container.querySelector(".commentLoadNext"));
+            this.#container
+                .querySelector(".commentList")
+                .insertBefore(fragment, this.#container.querySelector(".commentLoadNext"));
             this.#container.dataset.lastCommentTime = response.lastCommentTime.toString();
             if (this.#displayedComments < this.#totalComments) {
                 button.disabled = false;
@@ -64,6 +74,37 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../He
             else {
                 this.#container.querySelector(".commentLoadNext").hidden = true;
             }
+        }
+        #showAddResponse(container, commentId) {
+            container.append(this.#container.querySelector(".commentResponseAdd"));
+            this.#commentResponseAdd.show(commentId);
+        }
+        #insertComment(template) {
+            Util_1.default.insertHtml(template, this.#container.querySelector(".commentAdd"), "after");
+            Listener_1.default.trigger();
+            const scrollTarget = this.#container.querySelector(".commentAdd").nextElementSibling;
+            window.setTimeout(() => {
+                UiScroll.element(scrollTarget);
+            }, 100);
+        }
+        #insertResponse(commentId, template) {
+            const li = this.#container.querySelector(`.comment[data-comment-id="${commentId}"]`);
+            let commentResponseList = li.querySelector(".commentResponseList");
+            if (!commentResponseList) {
+                const div = document.createElement("div");
+                div.classList.add("comment__responses");
+                li.append(div);
+                commentResponseList = document.createElement("ul");
+                commentResponseList.classList.add("containerList", "commentResponseList");
+                commentResponseList.dataset.responses = "1";
+                div.append(commentResponseList);
+            }
+            Util_1.default.insertHtml(template, commentResponseList, "append");
+            Listener_1.default.trigger();
+            const scrollTarget = commentResponseList.firstElementChild;
+            window.setTimeout(() => {
+                UiScroll.element(scrollTarget);
+            }, 100);
         }
         get #displayedComments() {
             return this.#container.querySelectorAll(".comment").length;
