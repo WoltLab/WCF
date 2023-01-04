@@ -550,31 +550,19 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             throw new UserInputException('message', $e->getMessage());
         }
 
-        $this->readInteger('objectID', false, 'data');
-        $this->readBoolean('requireGuestDialog', true);
-
-        if (!$this->parameters['requireGuestDialog']) {
-            $this->validateUsername();
-            $this->validateCaptcha();
-        }
-
-        $this->validateMessage(true);
-
-        // validate comment id
-        $this->validateCommentID();
-
-        // disallow responses on disabled comments
-        if ($this->comment->isDisabled) {
+        $comment = $this->getSingleObject();
+        if ($comment->isDisabled) {
             throw new PermissionDeniedException();
         }
 
-        $objectType = $this->validateObjectType();
-
-        // validate object id and permissions
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
-        if (!$this->commentProcessor->canAdd($this->parameters['data']['objectID'])) {
+        if (!$this->commentProcessor->canAdd($comment->objectID)) {
             throw new PermissionDeniedException();
         }
+
+        $this->validateGetGuestDialog();
+        $this->validateMessage(true);
     }
 
     /**
@@ -584,34 +572,29 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function addResponse()
     {
-        if ($this->parameters['requireGuestDialog'] || !empty($this->validationErrors)) {
-            if (!empty($this->parameters['data']['username'])) {
-                WCF::getSession()->register('username', $this->parameters['data']['username']);
-            }
-            WCF::getTPL()->assign('errorType', $this->validationErrors);
-
-            $guestDialog = $this->getGuestDialog();
-
+        $guestDialog = $this->getGuestDialog();
+        if ($guestDialog) {
             return [
-                'useCaptcha' => $guestDialog['useCaptcha'],
-                'guestDialog' => $guestDialog['template'],
+                'guestDialog' => $guestDialog,
             ];
         }
+
+        $comment = $this->getSingleObject();
 
         /** @var HtmlInputProcessor $htmlInputProcessor */
         $htmlInputProcessor = $this->parameters['htmlInputProcessor'];
 
         // create response
         $this->createdResponse = CommentResponseEditor::create([
-            'commentID' => $this->comment->commentID,
+            'commentID' => $comment->commentID,
             'time' => TIME_NOW,
             'userID' => WCF::getUser()->userID ?: null,
             'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
             'message' => $htmlInputProcessor->getHtml(),
             'enableHtml' => 1,
-            'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1,
+            'isDisabled' => $this->commentProcessor->canAddWithoutApproval($comment->objectID) ? 0 : 1,
         ]);
-        $this->createdResponse->setComment($this->comment);
+        $this->createdResponse->setComment($comment->getDecoratedObject());
 
         $htmlInputProcessor->setObjectID($this->createdResponse->getObjectID());
         if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
@@ -622,15 +605,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         }
 
         // update response data
-        $unfilteredResponseIDs = $this->comment->getUnfilteredResponseIDs();
+        $unfilteredResponseIDs = $comment->getUnfilteredResponseIDs();
         if (\count($unfilteredResponseIDs) < 5) {
             $unfilteredResponseIDs[] = $this->createdResponse->responseID;
         }
-        $unfilteredResponses = $this->comment->unfilteredResponses + 1;
+        $unfilteredResponses = $comment->unfilteredResponses + 1;
 
         // update comment
-        $commentEditor = new CommentEditor($this->comment);
-        $commentEditor->update([
+        $comment->update([
             'unfilteredResponseIDs' => \serialize($unfilteredResponseIDs),
             'unfilteredResponses' => $unfilteredResponses,
         ]);
@@ -664,18 +646,18 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
         }
 
-        $responses = $this->comment->responses;
+        $responses = $comment->responses;
         if (
             $this->commentProcessor->canModerate(
-                $this->parameters['data']['objectTypeID'],
-                $this->parameters['data']['objectID']
+                $comment->objectTypeID,
+                $comment->objectID
             )
         ) {
-            $responses = $this->comment->unfilteredResponses;
+            $responses = $comment->unfilteredResponses;
         }
 
         return [
-            'commentID' => $this->comment->commentID,
+            'commentID' => $comment->commentID,
             'template' => $this->renderResponse($this->createdResponse),
             'responses' => $responses + 1,
         ];
