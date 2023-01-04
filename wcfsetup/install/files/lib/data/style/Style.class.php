@@ -302,7 +302,7 @@ class Style extends DatabaseObject
      */
     public function getFavicon(): string
     {
-        return $this->getFaviconPath('favicon-32x32.png');
+        return $this->getFaviconPath('favicon-48x48.png');
     }
 
     /**
@@ -310,7 +310,7 @@ class Style extends DatabaseObject
      */
     public function getRelativeFavicon()
     {
-        return $this->getFaviconPath('favicon-32x32.png', false);
+        return $this->getFaviconPath('favicon-48x48.png', false);
     }
 
     /**
