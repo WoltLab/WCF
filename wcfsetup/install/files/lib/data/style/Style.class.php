@@ -296,13 +296,21 @@ class Style extends DatabaseObject
     }
 
     /**
-     * Returns the relative path to the favicon.
+     * Returns the absolute path to the favicon.
      *
-     * @return  string
+     * @since 6.0
+     */
+    public function getFavicon(): string
+    {
+        return $this->getFaviconPath('favicon-48x48.png');
+    }
+
+    /**
+     * @deprecated 6.0 Use Style::getFavicon() instead.
      */
     public function getRelativeFavicon()
     {
-        return $this->getFaviconPath('favicon.ico', false);
+        return $this->getFaviconPath('favicon-48x48.png', false);
     }
 
     /**

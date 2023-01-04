@@ -295,6 +295,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     protected function updateFavicons(Style $style)
     {
         $images = [
+            'favicon-48x48.png' => 48,
             'android-chrome-192x192.png' => 192,
             'android-chrome-256x256.png' => 256,
             'apple-touch-icon.png' => 180,
@@ -329,12 +330,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                         $thumbnail = null;
                     }
 
-                    // Create ICO file.
-                    $ico = @new \PHP_ICO($file->getLocation(), [
-                        [16, 16],
-                        [32, 32],
-                    ]);
-                    $ico->save_ico($style->getAssetPath() . "favicon.ico");
+                    if (\file_exists($style->getAssetPath() . "favicon.ico")) {
+                        \unlink($style->getAssetPath() . "favicon.ico");
+                    }
 
                     (new StyleEditor($style))->update([
                         'hasFavicon' => 1,
@@ -346,7 +344,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 foreach ($images as $filename => $length) {
                     \unlink($style->getAssetPath() . $filename);
                 }
-                \unlink($style->getAssetPath() . "favicon.ico");
+                if (\file_exists($style->getAssetPath() . "favicon.ico")) {
+                    \unlink($style->getAssetPath() . "favicon.ico");
+                }
+
                 \unlink($style->getAssetPath() . "manifest.json");
                 \unlink($style->getAssetPath() . "browserconfig.xml");
                 foreach (['png', 'jpg', 'gif'] as $extension) {

@@ -11,12 +11,6 @@
 <meta name="timezone" content="{$__wcf->user->getTimeZone()->getName()}">
 
 {include file='headIncludeJavaScript'}
-
-<!-- Icons -->
-<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}">
-<link rel="manifest" href="{@$__wcf->getStyleHandler()->getStyle()->getFaviconManifest()}">
-<link rel="shortcut icon" href="{$__wcf->getPath()}{$__wcf->getStyleHandler()->getStyle()->getRelativeFavicon()}">
-<meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getStyle()->getFaviconBrowserconfig()}">
-<meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfPageThemeColor', true)}">
+{include file='headIncludeIcons'}
 
 {@HEAD_CODE}
