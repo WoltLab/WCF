@@ -3,11 +3,13 @@ import * as fs from "fs";
 // This script expects you to write the output to
 // ts/WoltLabSuite/WebComponent/fa-metadata.js
 
-if (process.argv.length !== 3) {
-  throw new Error("Expected the path to the `icons.json` metadata to be the only argument.");
+if (process.argv.length !== 4) {
+  throw new Error("Expected the path to the `icons.json` metadata as argument #1 and the output format (js, php) as argument #2.");
 }
 
 const iconsJson = process.argv[2];
+const outputFormat = process.argv[3];
+
 if (!fs.existsSync(iconsJson)) {
   throw new Error(`The path '${iconsJson}' does not exist.`);
 }
@@ -39,7 +41,10 @@ Object.entries(json).forEach(([name, icon]) => {
   }
 });
 
-const output = `(() => {
+let output;
+switch (outputFormat) {
+  case 'js':
+    output = `(() => {
   const aliases = new Map(
     ${JSON.stringify(aliases)}
   );
@@ -54,7 +59,18 @@ const output = `(() => {
   window.getFontAwesome6IconMetadata = (name) => {
     return metadata.get(aliases.get(name) || name);
   };
-})();`;
+})();\n`;
+    break;
+  case 'php':
+    output = `<?php
+
+return [
+${values.map(([name]) => `    '${name}' => true,`).join("\n")}
+];\n`;
+    break;
+  default:
+    throw new Error('Invalid output format');
+}
 
 process.stdout.write(output);
 
