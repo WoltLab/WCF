@@ -32,7 +32,58 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                 element.addEventListener("delete", () => {
                     element.parentElement?.remove();
                 });
+                this.#initLoadNextResponses(element.parentElement);
             });
+        }
+        #initLoadNextResponses(comment) {
+            const displayedResponses = comment.querySelectorAll(".commentResponse").length;
+            const responses = parseInt(comment.dataset.responses);
+            if (displayedResponses < responses) {
+                const phrase = (0, Language_1.getPhrase)("wcf.comment.response.more", { count: responses - displayedResponses });
+                if (!comment.querySelector(".commentLoadNextResponses")) {
+                    const li = document.createElement("li");
+                    li.classList.add("commentLoadNextResponses");
+                    comment.querySelector(".commentResponseList").append(li);
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.classList.add("button", "small", "commentLoadNextResponses__button");
+                    button.textContent = phrase;
+                    li.append(button);
+                    button.addEventListener("click", () => {
+                        void this.#loadNextResponses(comment);
+                    });
+                }
+                else {
+                    comment.querySelector(".commentLoadNextResponses__button").textContent = phrase;
+                }
+            }
+            else {
+                comment.querySelector(".commentLoadNextResponses")?.remove();
+            }
+        }
+        async #loadNextResponses(comment, loadAllResponses = false) {
+            const button = comment.querySelector(".commentLoadNextResponses__button");
+            button.disabled = true;
+            const response = (await (0, Ajax_1.dboAction)("loadResponses", "wcf\\data\\comment\\response\\CommentResponseAction")
+                .payload({
+                data: {
+                    commentID: comment.dataset.commentId,
+                    lastResponseTime: comment.dataset.lastResponseTime,
+                    lastResponseID: comment.dataset.lastResponseId,
+                    loadAllResponses: loadAllResponses ? 1 : 0,
+                },
+            })
+                .dispatch());
+            const fragment = Util_1.default.createFragmentFromHtml(response.template);
+            fragment.querySelectorAll(".commentResponse").forEach((element) => {
+                comment.querySelector(`.commentResponse[data-response-id="${element.dataset.responseId}"]`)?.remove();
+            });
+            comment
+                .querySelector(".commentResponseList")
+                .insertBefore(fragment, this.#container.querySelector(".commentLoadNextResponses"));
+            comment.dataset.lastResponseTime = response.lastResponseTime.toString();
+            comment.dataset.lastResponseId = response.lastResponseID.toString();
+            this.#initLoadNextResponses(comment);
         }
         #initLoadNextComments() {
             if (this.#displayedComments < this.#totalComments) {

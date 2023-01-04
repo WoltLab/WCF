@@ -1,6 +1,6 @@
 <script data-relocate="true">
-	{*$(function() {
-		WCF.Language.addObject({
+	require(['Language', 'WoltLabSuite/Core/Component/Comment/Handler'], (Language, { setup }) => {
+		Language.addObject({
 			'wcf.comment.add': '{jslang}wcf.comment.add{/jslang}',
 			'wcf.comment.button.response.add': '{jslang}wcf.comment.button.response.add{/jslang}',
 			'wcf.comment.delete.confirmMessage': '{jslang}wcf.comment.delete.confirmMessage{/jslang}',
@@ -13,15 +13,8 @@
 			'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
 			'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 		});
-		
-		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{@$commentContainerID}');
-			require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
-				
-			});
-	});*}
 
-	require(['WoltLabSuite/Core/Component/Comment/Handler', ], ({ setup }) => {
-		setup('{@$commentContainerID}');
+        setup('{@$commentContainerID}');
 	});
 
 	{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike')}

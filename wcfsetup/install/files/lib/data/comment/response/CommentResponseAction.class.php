@@ -198,8 +198,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->readInteger('commentID', false, 'data');
         $this->readInteger('lastResponseTime', false, 'data');
         $this->readInteger('lastResponseID', true, 'data');
-        $this->readBoolean('loadAllResponses', true, 'data');
-
+        
         $this->comment = new Comment($this->parameters['data']['commentID']);
         if (!$this->comment->commentID) {
             throw new UserInputException('commentID');
@@ -242,9 +241,6 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         }
         if (!$commentCanModerate) {
             $responseList->getConditionBuilder()->add("comment_response.isDisabled = ?", [0]);
-        }
-        if (!$this->parameters['data']['loadAllResponses']) {
-            $responseList->sqlLimit = 50;
         }
         $responseList->readObjects();
 

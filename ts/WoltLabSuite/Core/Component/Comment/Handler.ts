@@ -13,6 +13,12 @@ type ResponseLoadComments = {
   template: string;
 };
 
+type ResponseLoadResponses = {
+  lastResponseTime: number;
+  lastResponseID: number;
+  template: string;
+};
+
 class CommentHandler {
   readonly #container: HTMLElement;
   #commentResponseAdd: CommentResponseAdd;
@@ -53,7 +59,69 @@ class CommentHandler {
       element.addEventListener("delete", () => {
         element.parentElement?.remove();
       });
+
+      this.#initLoadNextResponses(element.parentElement!);
     });
+  }
+
+  #initLoadNextResponses(comment: HTMLElement): void {
+    const displayedResponses = comment.querySelectorAll(".commentResponse").length;
+    const responses = parseInt(comment.dataset.responses!);
+
+    if (displayedResponses < responses) {
+      const phrase = getPhrase("wcf.comment.response.more", { count: responses - displayedResponses });
+
+      if (!comment.querySelector(".commentLoadNextResponses")) {
+        const li = document.createElement("li");
+        li.classList.add("commentLoadNextResponses");
+        comment.querySelector(".commentResponseList")!.append(li);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add("button", "small", "commentLoadNextResponses__button");
+        button.textContent = phrase;
+        li.append(button);
+
+        button.addEventListener("click", () => {
+          void this.#loadNextResponses(comment);
+        });
+      } else {
+        comment.querySelector(".commentLoadNextResponses__button")!.textContent = phrase;
+      }
+    } else {
+      comment.querySelector(".commentLoadNextResponses")?.remove();
+    }
+  }
+
+  async #loadNextResponses(comment: HTMLElement, loadAllResponses = false): Promise<void> {
+    const button = comment.querySelector<HTMLButtonElement>(".commentLoadNextResponses__button")!;
+    button.disabled = true;
+
+    const response = (await dboAction("loadResponses", "wcf\\data\\comment\\response\\CommentResponseAction")
+      .payload({
+        data: {
+          commentID: comment.dataset.commentId,
+          lastResponseTime: comment.dataset.lastResponseTime,
+          lastResponseID: comment.dataset.lastResponseId,
+          loadAllResponses: loadAllResponses ? 1 : 0,
+        },
+      })
+      .dispatch()) as ResponseLoadResponses;
+
+    const fragment = DomUtil.createFragmentFromHtml(response.template);
+
+    fragment.querySelectorAll<HTMLElement>(".commentResponse").forEach((element) => {
+      comment.querySelector(`.commentResponse[data-response-id="${element.dataset.responseId!}"]`)?.remove();
+    });
+
+    comment
+      .querySelector(".commentResponseList")!
+      .insertBefore(fragment, this.#container.querySelector(".commentLoadNextResponses"));
+
+    comment.dataset.lastResponseTime = response.lastResponseTime.toString();
+    comment.dataset.lastResponseId = response.lastResponseID.toString();
+
+    this.#initLoadNextResponses(comment);
   }
 
   #initLoadNextComments(): void {

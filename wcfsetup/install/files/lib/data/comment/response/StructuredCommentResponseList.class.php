@@ -67,7 +67,6 @@ class StructuredCommentResponseList extends CommentResponseList
         $this->commentManager = $commentManager;
 
         $this->getConditionBuilder()->add("comment_response.commentID = ?", [$this->comment->commentID]);
-        $this->sqlLimit = $this->commentManager->getCommentsPerPage();
     }
 
     /**
