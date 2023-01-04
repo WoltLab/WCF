@@ -13,9 +13,8 @@
 			data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
 			data-responses="{@$comment->responses}" data-last-response-time="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{@$comment->isDisabled}"
 			data-last-response-id="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseID()}{else}0{/if}"
-			itemprop="comment" itemscope itemtype="http://schema.org/Comment"
 		>
-			<woltlab-core-comment comment-id="{@$comment->commentID}">
+			<woltlab-core-comment comment-id="{@$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="comment__header">
 					<div class="comment__avatar">
 						{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
