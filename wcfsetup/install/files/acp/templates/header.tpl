@@ -17,7 +17,7 @@
 	{if PACKAGE_ID && $__wcf->getStyleHandler()->getDefaultStyle()}
 		<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconAppleTouchIcon()}">
 		<link rel="manifest" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconManifest()}">
-		<link rel="icon" type="image/png" sizes="32x32" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFavicon()}">
+		<link rel="icon" type="image/png" sizes="48x48" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFavicon()}">
 		<meta name="msapplication-config" content="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconBrowserconfig()}">
 		<meta name="theme-color" content="{$__wcf->getStyleHandler()->getDefaultStyle()->getVariable('wcfPageThemeColor', true)}">
 	{else}	
