@@ -1,8 +1,9 @@
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Ui/Dropdown/Simple", "../../Confirmation"], function (require, exports, tslib_1, Ajax_1, Simple_1, Confirmation_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Ui/Dropdown/Simple", "../../../Ui/Notification", "../../Confirmation"], function (require, exports, tslib_1, Ajax_1, Simple_1, UiNotification, Confirmation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreCommentResponseElement = void 0;
     Simple_1 = tslib_1.__importDefault(Simple_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
     class WoltlabCoreCommentResponseElement extends HTMLElement {
         connectedCallback() {
             if (this.menu) {
@@ -33,6 +34,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Ui/Dropdown/Si
                 await (0, Ajax_1.dboAction)("delete", "wcf\\data\\comment\\response\\CommentResponseAction")
                     .objectIds([this.responseId])
                     .dispatch();
+                UiNotification.show();
                 this.dispatchEvent(new CustomEvent("delete"));
             }
         }

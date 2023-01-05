@@ -11,6 +11,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         constructor(container) {
             this.#container = container;
             this.#initComments();
+            this.#initResponses();
             this.#initLoadNextComments();
             this.#initCommentAdd();
         }
@@ -33,6 +34,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     element.parentElement?.remove();
                 });
                 this.#initLoadNextResponses(element.parentElement);
+            });
+        }
+        #initResponses() {
+            (0, Selector_1.wheneverFirstSeen)("woltlab-core-comment-response", (element) => {
+                element.addEventListener("delete", () => {
+                    element.parentElement?.remove();
+                });
             });
         }
         #initLoadNextResponses(comment) {

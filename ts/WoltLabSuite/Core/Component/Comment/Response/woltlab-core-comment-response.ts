@@ -1,5 +1,6 @@
 import { dboAction } from "../../../Ajax";
 import UiDropdownSimple from "../../../Ui/Dropdown/Simple";
+import * as UiNotification from "../../../Ui/Notification";
 import { confirmationFactory } from "../../Confirmation";
 
 export class WoltlabCoreCommentResponseElement extends HTMLElement {
@@ -36,6 +37,8 @@ export class WoltlabCoreCommentResponseElement extends HTMLElement {
       await dboAction("delete", "wcf\\data\\comment\\response\\CommentResponseAction")
         .objectIds([this.responseId])
         .dispatch();
+
+      UiNotification.show();
 
       this.dispatchEvent(new CustomEvent("delete"));
     }

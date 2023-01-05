@@ -7,6 +7,7 @@ import { CommentAdd } from "./Add";
 import { CommentResponseAdd } from "./Response/Add";
 import * as UiScroll from "../../Ui/Scroll";
 import WoltlabCoreCommentElement from "./woltlab-core-comment";
+import WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
 
 type ResponseLoadComments = {
   lastCommentTime: number;
@@ -27,6 +28,7 @@ class CommentHandler {
     this.#container = container;
 
     this.#initComments();
+    this.#initResponses();
     this.#initLoadNextComments();
     this.#initCommentAdd();
   }
@@ -61,6 +63,14 @@ class CommentHandler {
       });
 
       this.#initLoadNextResponses(element.parentElement!);
+    });
+  }
+
+  #initResponses(): void {
+    wheneverFirstSeen("woltlab-core-comment-response", (element: WoltlabCoreCommentResponseElement) => {
+      element.addEventListener("delete", () => {
+        element.parentElement?.remove();
+      });
     });
   }
 
