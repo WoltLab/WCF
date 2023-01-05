@@ -11,7 +11,7 @@ use wcf\util\FileUtil;
  * Executes individual database scripts during installation.
  *
  * @author  Matthias Schmidt
- * @copyright   2001-2021 WoltLab GmbH
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
@@ -46,17 +46,6 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
         $scriptPath = $path . $this->instruction['value'];
 
         $this->updateDatabase($scriptPath);
-
-        if (@\unlink($scriptPath)) {
-            $sql = "DELETE FROM wcf1_package_installation_file_log
-                    WHERE       packageID = ?
-                            AND filename = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $this->installation->getPackageID(),
-                $this->instruction['value'],
-            ]);
-        }
     }
 
     /**
