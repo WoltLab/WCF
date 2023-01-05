@@ -21,17 +21,16 @@
 		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], (UiReactionHandler) => {
 			new UiReactionHandler('com.woltlab.wcf.comment', {
 				// selectors
-				containerSelector: '#{@$commentContainerID} li.comment',
+				containerSelector: '#{@$commentContainerID} .comment',
 				summaryListSelector: '.reactionSummaryList',
-				isButtonGroupNavigation: true
+				buttonSelector: '.comment__button--react'
 			});
 			
 			new UiReactionHandler('com.woltlab.wcf.comment.response', {
 				// selectors
 				containerSelector: '#{@$commentContainerID} .commentResponse',
 				summaryListSelector: '.reactionSummaryList',
-				isButtonGroupNavigation: true,
-				buttonSelector: '.reactButtonCommentResponse'
+				buttonSelector: '.commentResponse__button--react'
 			});
 		});
 	{/if}
