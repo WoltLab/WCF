@@ -1,7 +1,22 @@
 import { dboAction } from "../../Ajax";
+import DomUtil from "../../Dom/Util";
 import UiDropdownSimple from "../../Ui/Dropdown/Simple";
 import * as UiNotification from "../../Ui/Notification";
 import { confirmationFactory } from "../Confirmation";
+import * as UiScroll from "../../Ui/Scroll";
+import * as Environment from "../../Environment";
+import * as EventHandler from "../../Event/Handler";
+import { RedactorEditor } from "../../Ui/Redactor/Editor";
+import { getPhrase } from "../../Language";
+import { StatusNotOk } from "../../Ajax/Error";
+
+type ResponseBeginEdit = {
+  template: string;
+};
+
+type ResponseSave = {
+  message: string;
+};
 
 export class WoltlabCoreCommentElement extends HTMLElement {
   connectedCallback() {
@@ -16,6 +31,12 @@ export class WoltlabCoreCommentElement extends HTMLElement {
       deleteButton?.addEventListener("click", (event) => {
         event.preventDefault();
         void this.#delete();
+      });
+
+      const editButton = this.menu.querySelector(".comment__option--edit");
+      editButton?.addEventListener("click", (event) => {
+        event.preventDefault();
+        void this.#startEdit();
       });
     }
 
@@ -45,12 +66,158 @@ export class WoltlabCoreCommentElement extends HTMLElement {
     }
   }
 
+  async #startEdit(): Promise<void> {
+    this.menu!.querySelector<HTMLElement>(".comment__option--edit")!.hidden = true;
+
+    const { template } = (await dboAction("beginEdit", "wcf\\data\\comment\\CommentAction")
+      .objectIds([this.commentId])
+      .dispatch()) as ResponseBeginEdit;
+
+    this.#showEditor(template);
+  }
+
+  #showEditor(template: string): void {
+    this.querySelector<HTMLElement>(".htmlContent")!.hidden = true;
+
+    DomUtil.insertHtml(template, this.#editorContainer, "append");
+
+    const buttonSave = this.querySelector('button[data-type="save"]') as HTMLButtonElement;
+    buttonSave.addEventListener("click", () => {
+      void this.#saveEdit();
+    });
+
+    const buttonCancel = this.querySelector('button[data-type="cancel"]') as HTMLButtonElement;
+    buttonCancel.addEventListener("click", () => {
+      this.#cancelEdit();
+    });
+
+    EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${this.#editorId}`, (data) => {
+      data.cancel = true;
+      void this.#saveEdit();
+    });
+
+    const editorElement = document.getElementById(this.#editorId) as HTMLElement;
+    if (Environment.editor() === "redactor") {
+      window.setTimeout(() => {
+        UiScroll.element(this);
+      }, 250);
+    } else {
+      editorElement.focus();
+    }
+  }
+
+  async #saveEdit(): Promise<void> {
+    const parameters = {
+      data: {
+        message: "",
+      },
+    };
+
+    EventHandler.fire("com.woltlab.wcf.redactor2", `getText_${this.#editorId}`, parameters.data);
+
+    if (!this.#validateEdit(parameters)) {
+      return;
+    }
+
+    EventHandler.fire("com.woltlab.wcf.redactor2", `submit_${this.#editorId}`, parameters);
+
+    this.#showLoadingIndicator();
+
+    let response: ResponseSave;
+
+    try {
+      response = (await dboAction("save", "wcf\\data\\comment\\CommentAction")
+        .objectIds([this.commentId])
+        .payload(parameters)
+        .dispatch()) as ResponseSave;
+    } catch (error) {
+      if (error instanceof StatusNotOk) {
+        const json = await error.response.json();
+        if (json.code === 412 && json.returnValues) {
+          DomUtil.innerError(document.getElementById(this.#editorId)!, json.returnValues.errorType);
+        }
+      } else {
+        throw error;
+      }
+
+      this.#hideLoadingIndicator();
+      return;
+    }
+
+    DomUtil.setInnerHtml(this.querySelector<HTMLElement>(".htmlContent")!, response!.message);
+    this.#hideLoadingIndicator();
+    this.#cancelEdit();
+    UiNotification.show();
+  }
+
+  #showLoadingIndicator(): void {
+    // todo
+  }
+
+  #hideLoadingIndicator(): void {
+    // todo
+  }
+
+  /**
+   * Validates the message and invokes listeners to perform additional validation.
+   */
+  #validateEdit(parameters: ArbitraryObject): boolean {
+    this.querySelectorAll(".innerError").forEach((el) => el.remove());
+
+    // check if editor contains actual content
+    const editorElement = document.getElementById(this.#editorId)!;
+    const redactor: RedactorEditor = window.jQuery(editorElement).data("redactor");
+    if (redactor.utils.isEmpty()) {
+      DomUtil.innerError(editorElement, getPhrase("wcf.global.form.error.empty"));
+      return false;
+    }
+
+    const data = {
+      api: this,
+      parameters: parameters,
+      valid: true,
+    };
+
+    EventHandler.fire("com.woltlab.wcf.redactor2", `validate_${this.#editorId}`, data);
+
+    return data.valid;
+  }
+
+  #cancelEdit(): void {
+    this.#destroyEditor();
+
+    this.#editorContainer.remove();
+
+    this.menu!.querySelector<HTMLElement>(".comment__option--edit")!.hidden = false;
+    this.querySelector<HTMLElement>(".htmlContent")!.hidden = false;
+  }
+
+  #destroyEditor(): void {
+    EventHandler.fire("com.woltlab.wcf.redactor2", `autosaveDestroy_${this.#editorId}`);
+    EventHandler.fire("com.woltlab.wcf.redactor2", `destroy_${this.#editorId}`);
+  }
+
+  get #editorContainer(): HTMLElement {
+    let div = this.querySelector<HTMLElement>(".comment__editor");
+    if (!div) {
+      div = document.createElement("div");
+      div.classList.add("comment__editor");
+      this.querySelector(".comment__message")!.append(div);
+    }
+
+    return div;
+  }
+
   get commentId(): number {
     return parseInt(this.getAttribute("comment-id")!);
   }
 
   get menu(): HTMLElement | undefined {
     return UiDropdownSimple.getDropdownMenu(`commentOptions${this.commentId}`);
+  }
+
+  get #editorId(): string {
+    return `commentEditor${this.commentId}`;
   }
 }
 

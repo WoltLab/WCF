@@ -967,15 +967,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     {
         $this->comment = $this->getSingleObject();
 
-        // validate object type id
-        $objectType = $this->validateObjectType();
-
-        // validate object id and permissions
-        $this->commentProcessor = $objectType->getProcessor();
-        if (!$this->commentProcessor->canEditComment($this->comment->getDecoratedObject())) {
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
+        $processor = $objectType->getProcessor();
+        if (!$processor->canEditComment($this->comment->getDecoratedObject())) {
             throw new PermissionDeniedException();
         }
-
+        
         $this->setDisallowedBBCodes();
     }
 
