@@ -78,6 +78,27 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
+    public function validateDelete()
+    {
+        $this->readObjects();
+
+        if ($this->getObjects() === []) {
+            throw new UserInputException('objectIDs');
+        }
+
+        foreach ($this->getObjects() as $response) {
+            $comment = $response->getComment();
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
+            $processor = $objectType->getProcessor();
+            if (!$processor->canDeleteResponse($response->getDecoratedObject())) {
+                throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function delete()
     {
         if (empty($this->objects)) {
