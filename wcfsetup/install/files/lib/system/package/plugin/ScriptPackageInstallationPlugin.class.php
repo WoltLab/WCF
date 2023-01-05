@@ -4,15 +4,13 @@ namespace wcf\system\package\plugin;
 
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\form\FormDocument;
-use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
  * Executes individual PHP scripts during installation.
  *
  * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
@@ -55,31 +53,13 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             CacheHandler::getInstance()->flushAll();
         }
 
-        // run script
-        $result = $this->run($path . $this->instruction['value']);
-
-        // delete script
-        if (!($result instanceof FormDocument) && @\unlink($path . $this->instruction['value'])) {
-            // delete file log entry
-            $sql = "DELETE FROM wcf1_package_installation_file_log
-                    WHERE       packageID = ?
-                            AND filename = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $this->installation->getPackageID(),
-                $this->instruction['value'],
-            ]);
-        }
-
-        return $result;
+        return $this->run($path . $this->instruction['value']);
     }
 
     /**
      * Runs the script with the given path.
-     *
-     * @param string $scriptPath
      */
-    private function run($scriptPath)
+    private function run(string $scriptPath)
     {
         return include($scriptPath);
     }
