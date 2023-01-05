@@ -30,7 +30,7 @@
 					</div>
 					<div class="comment__date">
 						<meta itemprop="dateCreated" content="{@$comment->time|date:'c'}">
-						{@$comment->time|time}
+						<a href="{$comment->getLink()}">{@$comment->time|time}</a>
 					</div>
 					<div class="comment__status">
 						{if $comment->isDisabled}

@@ -27,7 +27,7 @@
 					</div>
 					<div class="commentResponse__date">
 						<meta itemprop="dateCreated" content="{@$response->time|date:'c'}">
-						{@$response->time|time}
+						<a href="{$response->getLink()}">{@$response->time|time}</a>
 					</div>
 					<div class="commentResponse__status">
 						{if $response->isDisabled}
