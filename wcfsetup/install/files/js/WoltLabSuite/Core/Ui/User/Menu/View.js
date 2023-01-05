@@ -171,7 +171,11 @@ define(["require", "exports", "tslib", "../../../Date/Util", "../../../StringUti
         }
         reset() {
             const content = this.getContent();
-            content.innerHTML = `<span class="userMenuContentStatus"><fa-icon size="24" name="spinner" solid></fa-icon></span>`;
+            content.innerHTML = `
+      <span class="userMenuContentStatus">
+        <woltlab-core-loading-indicator size="24" hide-text></woltlab-core-loading-indicator>
+      </span>
+    `;
         }
         buildElement() {
             this.element.hidden = true;
