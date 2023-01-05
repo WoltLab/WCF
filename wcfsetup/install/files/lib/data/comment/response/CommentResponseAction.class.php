@@ -298,10 +298,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     {
         $this->response = $this->getSingleObject();
 
-        // validate object type id
-        $objectType = $this->validateObjectType();
-
-        // validate object id and permissions
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->response->getComment()->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
         if (!$this->commentProcessor->canEditResponse($this->response->getDecoratedObject())) {
             throw new PermissionDeniedException();
