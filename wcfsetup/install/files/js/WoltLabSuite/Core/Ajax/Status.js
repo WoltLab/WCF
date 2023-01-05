@@ -6,11 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ajax/Status
  */
-define(["require", "exports", "tslib", "../Language"], function (require, exports, tslib_1, Language) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hide = exports.show = void 0;
-    Language = tslib_1.__importStar(Language);
     class AjaxStatus {
         _activeRequests = 0;
         _overlay;
@@ -19,14 +18,10 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             this._overlay = document.createElement("div");
             this._overlay.classList.add("spinner");
             this._overlay.setAttribute("role", "status");
-            const icon = document.createElement("fa-icon");
-            icon.size = 48;
-            icon.setIcon("spinner");
-            this._overlay.appendChild(icon);
-            const title = document.createElement("span");
-            title.textContent = Language.get("wcf.global.loading");
-            this._overlay.appendChild(title);
-            document.body.appendChild(this._overlay);
+            const loadingIndicator = document.createElement("woltlab-core-loading-indicator");
+            loadingIndicator.size = 48;
+            this._overlay.append(loadingIndicator);
+            document.body.append(this._overlay);
         }
         show() {
             this._activeRequests++;

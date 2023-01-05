@@ -210,7 +210,6 @@
 	color: rgb(44, 62, 80);
 	left: 50%;
 	opacity: 0;
-	padding: 10px;
 	position: fixed;
 	text-align: center;
 	top: 200px;
@@ -224,11 +223,6 @@
 		visibility: visible;
 
 		transition-delay: 0s;
-	}
-
-	> span:not(.icon) {
-		display: block;
-		margin-top: 5px;
 	}
 }
 
