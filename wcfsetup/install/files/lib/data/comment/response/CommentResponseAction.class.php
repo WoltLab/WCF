@@ -4,6 +4,7 @@ namespace wcf\data\comment\response;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentAction;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectType;
@@ -15,6 +16,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -461,5 +463,61 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment.response', $objectID);
 
         return $this->htmlInputProcessor;
+    }
+
+    /**
+     * @throws  PermissionDeniedException
+     * @throws  UserInputException
+     * @since   6.0
+     */
+    public function validateEnable(): void
+    {
+        $this->readObjects();
+
+        if ($this->getObjects() === []) {
+            throw new UserInputException('objectIDs');
+        }
+
+        foreach ($this->getObjects() as $response) {
+            if (!$response->isDisabled) {
+                throw new UserInputException('objectIDs');
+            }
+
+            $comment = $response->getComment();
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
+            $processor = $objectType->getProcessor();
+            if (!$processor->canModerate($objectType->objectTypeID, $comment->objectID)) {
+                throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function enable(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
+        if (empty($this->objects)) {
+            return;
+        }
+
+        foreach ($this->getObjects() as $response) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($response->getComment()->objectTypeID);
+
+            (new CommentAction([], 'triggerPublicationResponse', [
+                'commentProcessor' => $objectType->getProcessor(),
+                'objectTypeID' => $objectType->objectTypeID,
+                'responses' => [$response->getDecoratedObject()],
+            ]))->executeAction();
+        }
+
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+            'com.woltlab.wcf.comment.response',
+            $this->getObjectIDs()
+        );
     }
 }

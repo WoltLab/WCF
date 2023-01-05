@@ -842,6 +842,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      *
      * @throws  PermissionDeniedException
      * @throws  UserInputException
+     * @deprecated 6.0 use `CommentResponseAction::validateEnable()` instead
      */
     public function validateEnableResponse()
     {
@@ -864,6 +865,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Enables a response.
      *
      * @return  int[]
+     * @deprecated 6.0 use `CommentResponseAction::enable()` instead
      */
     public function enableResponse()
     {
@@ -903,7 +905,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         if (!$processor->canEditComment($this->comment->getDecoratedObject())) {
             throw new PermissionDeniedException();
         }
-        
+
         $this->setDisallowedBBCodes();
     }
 
