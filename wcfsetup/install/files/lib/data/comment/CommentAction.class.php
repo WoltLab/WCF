@@ -892,75 +892,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     }
 
     /**
-     * Validates parameters to edit a comment or a response.
-     *
-     * @throws  PermissionDeniedException
-     * @throws  UserInputException
-     */
-    public function validatePrepareEdit()
-    {
-        // validate response id
-        try {
-            $this->validateResponseID();
-        } catch (UserInputException $e) {
-            throw new UserInputException('objectIDs');
-        }
-
-        // validate object type id
-        $objectType = $this->validateObjectType();
-
-        // validate object id and permissions
-        $this->commentProcessor = $objectType->getProcessor();
-        if (!$this->commentProcessor->canEditResponse($this->response)) {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    /**
-     * Prepares editing of a comment or a response.
-     *
-     * @return  array
-     */
-    public function prepareEdit()
-    {
-        return [
-            'action' => 'prepare',
-            'message' => $this->response->message,
-            'responseID' => $this->response->responseID,
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validateEdit()
-    {
-        $this->validatePrepareEdit();
-
-        $this->validateMessage();
-    }
-
-    /**
-     * Edits a comment or response.
-     *
-     * @return  array
-     */
-    public function edit()
-    {
-        $editor = new CommentResponseEditor($this->response);
-        $editor->update([
-            'message' => $this->parameters['data']['message'],
-        ]);
-        $response = new CommentResponse($this->response->responseID);
-
-        return [
-            'action' => 'saved',
-            'message' => $response->getFormattedMessage(),
-            'responseID' => $this->response->responseID,
-        ];
-    }
-
-    /**
      * @inheritDoc
      */
     public function validateBeginEdit()
@@ -1370,6 +1301,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates comment id parameter.
      *
      * @throws  UserInputException
+     * @since 6.0 obsolete
      */
     protected function validateCommentID()
     {
@@ -1385,6 +1317,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates response id parameter.
      *
      * @throws  UserInputException
+     * @since 6.0 obsolete
      */
     protected function validateResponseID()
     {
