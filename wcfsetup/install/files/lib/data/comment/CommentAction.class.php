@@ -1301,7 +1301,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates comment id parameter.
      *
      * @throws  UserInputException
-     * @since 6.0 obsolete
+     * @deprecated 6.0 obsolete
      */
     protected function validateCommentID()
     {
@@ -1317,7 +1317,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      * Validates response id parameter.
      *
      * @throws  UserInputException
-     * @since 6.0 obsolete
+     * @deprecated 6.0 obsolete
      */
     protected function validateResponseID()
     {
