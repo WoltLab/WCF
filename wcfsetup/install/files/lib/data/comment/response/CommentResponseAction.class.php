@@ -103,7 +103,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         // update counters
         /** @var ICommentManager[] $processors */
-        $processors = $responseIDs = $updateComments = [];
+        $processors = $responseIDs = [];
         foreach ($this->getObjects() as $response) {
             $objectTypeID = $comments[$response->commentID]->objectTypeID;
 
@@ -116,12 +116,6 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
             if (!$ignoreCounters && !$response->isDisabled) {
                 $processors[$objectTypeID]->updateCounter($comments[$response->commentID]->objectID, -1);
-
-                if (!isset($updateComments[$response->commentID])) {
-                    $updateComments[$response->commentID] = 0;
-                }
-
-                $updateComments[$response->commentID]++;
             }
         }
 
@@ -133,11 +127,9 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             foreach ($comments as $comment) {
                 $commentEditor = new CommentEditor($comment);
                 $commentEditor->updateResponseIDs();
-                if (isset($updateComments[$comment->commentID])) {
-                    $commentEditor->updateCounters([
-                        'responses' => -1 * $updateComments[$comment->commentID],
-                    ]);
-                }
+                $commentEditor->updateUnfilteredResponseIDs();
+                $commentEditor->updateResponses();
+                $commentEditor->updateUnfilteredResponses();
             }
         }
 
@@ -198,7 +190,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->readInteger('commentID', false, 'data');
         $this->readInteger('lastResponseTime', false, 'data');
         $this->readInteger('lastResponseID', true, 'data');
-        
+
         $this->comment = new Comment($this->parameters['data']['commentID']);
         if (!$this->comment->commentID) {
             throw new UserInputException('commentID');
