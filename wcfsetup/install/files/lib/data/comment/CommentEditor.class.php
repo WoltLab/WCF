@@ -56,4 +56,37 @@ class CommentEditor extends DatabaseObjectEditor
 
         $this->update(['unfilteredResponseIDs' => \serialize($responseIDs)]);
     }
+
+    /**
+     * Updates the counter for responses.
+     * 
+     * @since 6.0
+     */
+    public function updateResponses(): void
+    {
+        $sql = "SELECT      COUNT(*)
+                FROM        wcf" . WCF_N . "_comment_response
+                WHERE       commentID = ?
+                        AND isDisabled = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$this->commentID, 0]);
+        
+        $this->update(['responses' => $statement->fetchSingleColumn()]);
+    }
+
+    /**
+     * Updates the counter for responses, including disabled ones.
+     * 
+     * @since 6.0
+     */
+    public function updateUnfilteredResponses(): void
+    {
+        $sql = "SELECT      COUNT(*)
+                FROM        wcf" . WCF_N . "_comment_response
+                WHERE       commentID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$this->commentID]);
+
+        $this->update(['unfilteredResponses' => $statement->fetchSingleColumn()]);
+    }
 }
