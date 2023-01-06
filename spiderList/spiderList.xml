@@ -8,9 +8,6 @@
 		<name>Abrave</name>
 		<url>http://robot.abrave.co.uk/</url>
 	</spider>
-	<spider ident="abot/">
-		<name>abot</name>
-	</spider>
 	<spider ident="Accelatech RSSCrawler">
 		<name>Accelatech</name>
 	</spider>
