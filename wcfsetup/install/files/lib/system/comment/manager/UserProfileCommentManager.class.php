@@ -7,10 +7,10 @@ use wcf\data\comment\response\CommentResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\ignore\UserIgnore;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentResponseRuntimeCache;
 use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -96,7 +96,12 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
      */
     public function getLink($objectTypeID, $objectID)
     {
-        return LinkHandler::getInstance()->getLink('User', ['id' => $objectID]);
+        $user = UserRuntimeCache::getInstance()->getObject($objectID);
+        if ($user) {
+            return $user->getLink();
+        }
+
+        return '';
     }
 
     /**

@@ -77,7 +77,12 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
      */
     public function getLink($objectTypeID, $objectID)
     {
-        return (new ArticleContent($objectID))->getLink();
+        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($objectID);
+        if ($articleContent) {
+            return $articleContent->getLink();
+        }
+
+        return '';
     }
 
     /**
