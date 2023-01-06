@@ -149,4 +149,11 @@ export function setup(options: BoostrapOptions): void {
   whenFirstSeen("woltlab-core-pagination", () => {
     void import("./Ui/Pagination/JumpToPage").then(({ setup }) => setup());
   });
+
+  whenFirstSeen("woltlab-core-google-maps", () => {
+    void import("./Component/GoogleMaps/woltlab-core-google-maps");
+  });
+  whenFirstSeen("[data-google-maps-geocoding]", () => {
+    void import("./Component/GoogleMaps/Geocoding").then(({ setup }) => setup());
+  });
 }

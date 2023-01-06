@@ -1512,21 +1512,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Map Zoom]]></item>
 		<item name="wcf.acp.option.google_maps_zoom.description"><![CDATA[The default map zoom.]]></item>
-		<item name="wcf.acp.option.google_maps_type"><![CDATA[Map Type]]></item>
-		<item name="wcf.acp.option.google_maps_type.description"><![CDATA[The default map type.]]></item>
-		<item name="wcf.acp.option.google_maps_type.hybrid"><![CDATA[Hybrid]]></item>
-		<item name="wcf.acp.option.google_maps_type.map"><![CDATA[Map]]></item>
-		<item name="wcf.acp.option.google_maps_type.satellite"><![CDATA[Satellite]]></item>
-		<item name="wcf.acp.option.google_maps_type.physical"><![CDATA[Terrain]]></item>
-		<item name="wcf.acp.option.google_maps_enable_scale_control"><![CDATA[Display map scale]]></item>
-		<item name="wcf.acp.option.google_maps_enable_dragging"><![CDATA[Enable map dragging]]></item>
-		<item name="wcf.acp.option.google_maps_enable_dragging.description"><![CDATA[You can move the map by keeping the left button of your mouse pressed.]]></item>
-		<item name="wcf.acp.option.google_maps_enable_scroll_wheel_zoom"><![CDATA[Enable zoom by scroll wheel]]></item>
-		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Enable zoom by double-clicking]]></item>
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Default Map Position (Latitude)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
-		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Use current user location]]></item>
-		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[When entering a location, the current location of the user is used as start point on the map.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Rerun Test]]></item>
@@ -7407,5 +7394,18 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.style.apiVersion.description"/>
 	<item name="wcf.acp.style.apiVersion.recommended"/>
 	<item name="wcf.acp.style.colors.description.apiVersion"/>
+	<item name="wcf.acp.option.google_maps_type"/>
+	<item name="wcf.acp.option.google_maps_type.description"/>
+	<item name="wcf.acp.option.google_maps_type.hybrid"/>
+	<item name="wcf.acp.option.google_maps_type.map"/>
+	<item name="wcf.acp.option.google_maps_type.satellite"/>
+	<item name="wcf.acp.option.google_maps_type.physical"/>
+	<item name="wcf.acp.option.google_maps_enable_scale_control"/>
+	<item name="wcf.acp.option.google_maps_enable_dragging"/>
+	<item name="wcf.acp.option.google_maps_enable_dragging.description"/>
+	<item name="wcf.acp.option.google_maps_enable_scroll_wheel_zoom"/>
+	<item name="wcf.acp.option.google_maps_enable_double_click_zoom"/>
+	<item name="wcf.acp.option.google_maps_access_user_location"/>
+	<item name="wcf.acp.option.google_maps_access_user_location.description"/>
 </delete>
 </language>

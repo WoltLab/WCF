@@ -54,3 +54,7 @@ jobs:
     - name: "Check 'reflect-metadata'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/reflect-metadata.js node_modules/reflect-metadata/Reflect.js
+    - name: "Check '@googlemaps/markerclusterer'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/googlemaps/markerclusterer/index.umd.js node_modules/@googlemaps/markerclusterer/dist/index.umd.js
+        diff -wu wcfsetup/install/files/js/3rdParty/googlemaps/markerclusterer/index.umd.js.map node_modules/@googlemaps/markerclusterer/dist/index.umd.js.map

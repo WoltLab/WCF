@@ -6,6 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Map/Route/Planner
  * @woltlabExcludeBundle all
+ * @deprecated 6.0 This feature is discontinued, opening Google Maps in a separate window already offers a route planer.
  */
 define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Util_1, Language, Dialog_1) {
     "use strict";

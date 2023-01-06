@@ -181,7 +181,7 @@ class UiSearchInput {
   /**
    * Queries the server with the provided search string.
    */
-  private search(value: string): void {
+  protected search(value: string): void {
     if (this.request) {
       this.request.abortPrevious();
     }

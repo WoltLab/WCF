@@ -550,6 +550,14 @@ class WCF
 
         // The option for the legacy cookie banner was removed in 6.0.
         \define('MODULE_COOKIE_POLICY_PAGE', 0);
+
+        // These options for the legacy google map implementation were removed in 6.0.
+        \define('GOOGLE_MAPS_TYPE', 'hybrid');
+        \define('GOOGLE_MAPS_ENABLE_SCALE_CONTROL', 0);
+        \define('GOOGLE_MAPS_ENABLE_DRAGGING', 1);
+        \define('GOOGLE_MAPS_ENABLE_SCROLL_WHEEL_ZOOM', 0);
+        \define('GOOGLE_MAPS_ENABLE_DOUBLE_CLICK_ZOOM', 1);
+        \define('GOOGLE_MAPS_ACCESS_USER_LOCATION', 1);
     }
 
     /**
