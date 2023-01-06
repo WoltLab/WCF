@@ -1,3 +1,12 @@
+/**
+ * Handles the reply feature in the comment list.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Comment/Response/Add
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax", "../../../Core", "../../../Ui/Notification", "../../../Ajax/Error", "../GuestDialog"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, Ajax_1, Core, UiNotification, Error_1, GuestDialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });

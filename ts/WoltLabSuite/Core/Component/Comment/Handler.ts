@@ -1,3 +1,13 @@
+/**
+ * Handles the comment list.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Comment/Handler
+ * @since 6.0
+ */
+
 import { dboAction } from "../../Ajax";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
@@ -189,7 +199,7 @@ class CommentHandler {
       if (!this.#container.contains(element)) {
         return;
       }
-      
+
       element.addEventListener("reply", () => {
         this.#showAddResponse(element.parentElement!, element.commentId);
       });

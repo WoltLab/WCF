@@ -1,3 +1,12 @@
+/**
+ * The `<woltlab-core-comment-response>` element represents a response in the comment list.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
+
 import { dboAction } from "../../../Ajax";
 import DomUtil from "../../../Dom/Util";
 import UiDropdownSimple from "../../../Ui/Dropdown/Simple";

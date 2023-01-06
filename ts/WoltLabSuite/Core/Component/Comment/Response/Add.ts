@@ -1,3 +1,13 @@
+/**
+ * Handles the reply feature in the comment list.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Comment/Response/Add
+ * @since 6.0
+ */
+
 import DomUtil from "../../../Dom/Util";
 import { getPhrase } from "../../../Language";
 import { RedactorEditor } from "../../../Ui/Redactor/Editor";

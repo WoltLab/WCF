@@ -1,3 +1,13 @@
+/**
+ * Handles the add comment feature in the comment list.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module WoltLabSuite/Core/Component/Comment/Add
+ * @since 6.0
+ */
+
 import { dboAction } from "../../Ajax";
 import * as UiScroll from "../../Ui/Scroll";
 import * as UiNotification from "../../Ui/Notification";
@@ -24,7 +34,7 @@ export class CommentAdd {
   readonly #objectId: number;
   readonly #callback: CallbackInsertComment;
   #editor: RedactorEditor | null = null;
-  
+
   constructor(container: HTMLElement, objectTypeId: number, objectId: number, callback: CallbackInsertComment) {
     this.#container = container;
     this.#content = this.#container.querySelector(".commentAdd__content") as HTMLElement;

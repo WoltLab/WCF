@@ -1,3 +1,11 @@
+/**
+ * The `<woltlab-core-comment-response>` element represents a response in the comment list.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2023 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
+ */
 define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Ui/Dropdown/Simple", "../../../Ui/Notification", "../../Confirmation", "../../../Environment", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ajax/Error", "../../../Language"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, Environment, EventHandler, UiScroll, Error_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
