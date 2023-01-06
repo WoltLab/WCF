@@ -10,14 +10,14 @@
         }
     },
     "require": {
-        "cuyz/valinor": "^1.0.0",
+        "cuyz/valinor": "^1.1.0",
         "dragonmantank/cron-expression": "^3.3.2",
         "erusev/parsedown": "^1.7.4",
         "ezyang/htmlpurifier": "^4.16",
         "guzzlehttp/guzzle": "^7.5",
         "guzzlehttp/psr7": "^2.4.3",
-        "laminas/laminas-diactoros": "^2.20",
-        "laminas/laminas-httphandlerrunner": "^2.4",
+        "laminas/laminas-diactoros": "^2.24",
+        "laminas/laminas-httphandlerrunner": "^2.5",
         "laminas/laminas-progressbar": "^2.11",
         "paragonie/constant_time_encoding": "^2.6.3",
         "pelago/emogrifier": "^7.0.0",
@@ -27,7 +27,7 @@
         "psr/log": "^3.0",
         "scssphp/scssphp": "^1.11",
         "sebastian/diff": "^4.0.4",
-        "symfony/polyfill-php82": "^1.26.0"
+        "symfony/polyfill-php82": "^1.27.0"
     },
     "replace": {
         "symfony/polyfill-php72": "*"
