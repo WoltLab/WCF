@@ -10,6 +10,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Comment/Add
  * @woltlabExcludeBundle tiny
+ * @deprecated 6.0 use `WoltLabSuite/Core/Component/Comment/Add` instead
  */
 
 import * as Ajax from "../../Ajax";
