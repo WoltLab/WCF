@@ -6,7 +6,7 @@ define(["require", "exports", "tslib", "../../Controller/Captcha", "../../Langua
     function showGuestDialog(template) {
         const captchaId = "commentAdd";
         const dialog = (0, Dialog_1.dialogFactory)().fromHtml(template).asPrompt();
-        dialog.show((0, Language_1.getPhrase)("wcf.global.confirmation.title"));
+        dialog.show((0, Language_1.getPhrase)("wcf.comment.guestDialog.title"));
         const usernameInput = dialog.content.querySelector("input[name=username]");
         dialog.incomplete = usernameInput.value.trim() === "";
         usernameInput.addEventListener("input", () => {

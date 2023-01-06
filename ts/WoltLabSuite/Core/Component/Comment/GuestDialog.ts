@@ -5,7 +5,7 @@ import { dialogFactory } from "../Dialog";
 export function showGuestDialog(template: string): Promise<Record<string, unknown> | undefined> {
   const captchaId = "commentAdd";
   const dialog = dialogFactory().fromHtml(template).asPrompt();
-  dialog.show(getPhrase("wcf.global.confirmation.title"));
+  dialog.show(getPhrase("wcf.comment.guestDialog.title"));
 
   const usernameInput = dialog.content.querySelector("input[name=username]") as HTMLInputElement;
   dialog.incomplete = usernameInput.value.trim() === "";

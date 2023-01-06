@@ -1,15 +1,9 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Component/Comment/Handler'], (Language, { setup }) => {
 		Language.addObject({
-			'wcf.comment.add': '{jslang}wcf.comment.add{/jslang}',
-			'wcf.comment.button.response.add': '{jslang}wcf.comment.button.response.add{/jslang}',
-			'wcf.comment.delete.confirmMessage': '{jslang}wcf.comment.delete.confirmMessage{/jslang}',
-			'wcf.comment.description': '{jslang}wcf.comment.description{/jslang}',
 			'wcf.comment.guestDialog.title': '{jslang}wcf.comment.guestDialog.title{/jslang}',
 			'wcf.comment.more': '{jslang}wcf.comment.more{/jslang}',
-			'wcf.comment.response.add': '{jslang}wcf.comment.response.add{/jslang}',
 			'wcf.comment.response.more': '{jslang}wcf.comment.response.more{/jslang}',
-			'wcf.message.error.editorAlreadyInUse': '{jslang}wcf.message.error.editorAlreadyInUse{/jslang}',
 			'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
 			'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 		});
