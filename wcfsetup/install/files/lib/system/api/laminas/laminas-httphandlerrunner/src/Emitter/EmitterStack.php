@@ -91,11 +91,10 @@ class EmitterStack extends SplStack implements EmitterInterface
     /**
      * Validate that an emitter implements EmitterInterface.
      *
-     * @param mixed $emitter
      * @throws Exception\InvalidEmitterException For non-emitter instances.
      * @psalm-assert EmitterInterface $emitter
      */
-    private function validateEmitter($emitter): void
+    private function validateEmitter(mixed $emitter): void
     {
         if (! $emitter instanceof EmitterInterface) {
             throw Exception\InvalidEmitterException::forEmitter($emitter);

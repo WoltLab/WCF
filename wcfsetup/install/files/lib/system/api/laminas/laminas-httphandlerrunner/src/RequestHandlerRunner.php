@@ -23,13 +23,6 @@ use Throwable;
  */
 final class RequestHandlerRunner implements RequestHandlerRunnerInterface
 {
-    private EmitterInterface $emitter;
-
-    /**
-     * A request handler to run as the application.
-     */
-    private RequestHandlerInterface $handler;
-
     /**
      * A factory capable of generating an error response in the scenario that
      * the $serverRequestFactory raises an exception during generation of the
@@ -55,14 +48,14 @@ final class RequestHandlerRunner implements RequestHandlerRunnerInterface
      * @param callable(Throwable):ResponseInterface $serverRequestErrorResponseGenerator
      */
     public function __construct(
-        RequestHandlerInterface $handler,
-        EmitterInterface $emitter,
+        /**
+         * A request handler to run as the application.
+         */
+        private RequestHandlerInterface $handler,
+        private EmitterInterface $emitter,
         callable $serverRequestFactory,
         callable $serverRequestErrorResponseGenerator
     ) {
-        $this->handler = $handler;
-        $this->emitter = $emitter;
-
         $this->serverRequestFactory                = $serverRequestFactory;
         $this->serverRequestErrorResponseGenerator = $serverRequestErrorResponseGenerator;
     }

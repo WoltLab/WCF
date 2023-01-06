@@ -7,7 +7,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         '__root__' => array(
@@ -92,9 +92,9 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-httphandlerrunner' => array(
-            'pretty_version' => '2.4.0',
-            'version' => '2.4.0.0',
-            'reference' => 'd15af53895fd581b5a448a09fd9a4baebc4ae6e5',
+            'pretty_version' => '2.5.0',
+            'version' => '2.5.0.0',
+            'reference' => '7a47834aaad7852816d2ec4fdbb0492163b039ae',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-httphandlerrunner',
             'aliases' => array(),
