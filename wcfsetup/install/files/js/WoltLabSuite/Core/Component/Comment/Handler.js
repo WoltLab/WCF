@@ -14,6 +14,110 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             this.#initResponses();
             this.#initLoadNextComments();
             this.#initCommentAdd();
+            this.#initHashHandling();
+        }
+        #initHashHandling() {
+            window.addEventListener("hashchange", () => {
+                this.#handleHashChange();
+            });
+            this.#handleHashChange();
+        }
+        #handleHashChange() {
+            const matches = window.location.hash.match(/^#(?:[^/]+\/)?comment(\d+)(?:\/response(\d+))?/);
+            if (matches) {
+                const comment = this.#container.querySelector(`.comment[data-comment-id="${matches[1]}"]`);
+                if (comment) {
+                    if (matches[2]) {
+                        const response = this.#container.querySelector(`.commentResponse[data-response-id="${matches[2]}"]`);
+                        if (response) {
+                            this.#scrollTo(response, true);
+                        }
+                        else {
+                            void this.#loadResponseSegment(comment, parseInt(matches[2]));
+                        }
+                    }
+                    else {
+                        this.#scrollTo(comment, true);
+                    }
+                }
+                else {
+                    void this.#loadCommentSegment(parseInt(matches[1]), matches[2] ? parseInt(matches[2]) : 0);
+                }
+            }
+        }
+        async #loadCommentSegment(commentId, responseId) {
+            let permaLinkComment = this.#container.querySelector(".commentPermalink");
+            if (permaLinkComment) {
+                permaLinkComment.remove();
+            }
+            permaLinkComment = document.createElement("li");
+            permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
+            permaLinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
+            this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
+            const response = (await (0, Ajax_1.dboAction)("loadComment", "wcf\\data\\comment\\CommentAction")
+                .objectIds([commentId])
+                .payload({
+                responseID: responseId,
+            })
+                .dispatch());
+            if (response.template === "") {
+                permaLinkComment.remove();
+                // comment id is invalid or there is a mismatch, silently ignore it
+                return;
+            }
+            Util_1.default.insertHtml(response.template, permaLinkComment, "before");
+            permaLinkComment.remove();
+            const comment = this.#container.querySelector(`.comment[data-comment-id="${commentId}"]`);
+            comment.classList.add("commentPermalink");
+            if (response.response) {
+                const permalinkResponse = document.createElement("li");
+                permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+                permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+                comment.querySelector(".commentResponseList").prepend(permalinkResponse);
+                this.#insertResponseSegment(response.response);
+            }
+            else {
+                this.#scrollTo(comment, true);
+            }
+        }
+        #insertResponseSegment(template) {
+            const permalinkResponse = this.#container.querySelector(".commentResponsePermalink");
+            Util_1.default.insertHtml(template, permalinkResponse, "before");
+            const response = permalinkResponse.previousElementSibling;
+            permalinkResponse.classList.add("commentResponsePermalink");
+            permalinkResponse.remove();
+            this.#scrollTo(response, true);
+        }
+        async #loadResponseSegment(comment, responseId) {
+            let permalinkResponse = comment.querySelector(".commentResponsePermalink");
+            if (permalinkResponse) {
+                permalinkResponse.remove();
+            }
+            permalinkResponse = document.createElement("li");
+            permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+            permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+            comment.querySelector(".commentResponseList").prepend(permalinkResponse);
+            const response = (await (0, Ajax_1.dboAction)("loadResponse", "wcf\\data\\comment\\CommentAction")
+                .payload({
+                responseID: responseId,
+            })
+                .dispatch());
+            if (response.template === "") {
+                permalinkResponse.remove();
+                // id is invalid or there is a mismatch, silently ignore it
+                return;
+            }
+            this.#insertResponseSegment(response.template);
+        }
+        #scrollTo(element, highlight = false) {
+            UiScroll.element(element, () => {
+                if (highlight) {
+                    if (element.classList.contains("comment__highlight__target")) {
+                        element.classList.remove("comment__highlight__target");
+                    }
+                    element.classList.add("comment__highlight__target");
+                }
+            });
         }
         #initCommentAdd() {
             if (this.#container.dataset.canAdd) {
@@ -27,6 +131,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         }
         #initComments() {
             (0, Selector_1.wheneverFirstSeen)("woltlab-core-comment", (element) => {
+                if (!this.#container.contains(element)) {
+                    return;
+                }
                 element.addEventListener("reply", () => {
                     this.#showAddResponse(element.parentElement, element.commentId);
                 });
@@ -38,6 +145,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         }
         #initResponses() {
             (0, Selector_1.wheneverFirstSeen)("woltlab-core-comment-response", (element) => {
+                if (!this.#container.contains(element)) {
+                    return;
+                }
                 element.addEventListener("delete", () => {
                     element.parentElement?.remove();
                 });
@@ -123,6 +233,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             })
                 .dispatch());
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
+            fragment.querySelectorAll(".comment").forEach((element) => {
+                this.#container.querySelector(`.comment[data-comment-id="${element.dataset.commentId}"]`)?.remove();
+            });
             this.#container
                 .querySelector(".commentList")
                 .insertBefore(fragment, this.#container.querySelector(".commentLoadNext"));

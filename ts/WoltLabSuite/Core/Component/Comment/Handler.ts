@@ -20,6 +20,15 @@ type ResponseLoadResponses = {
   template: string;
 };
 
+type ResponseLoadComment = {
+  template: string;
+  response?: string;
+};
+
+type ResponseLoadResponse = {
+  template: string;
+};
+
 class CommentHandler {
   readonly #container: HTMLElement;
   #commentResponseAdd: CommentResponseAdd;
@@ -31,6 +40,129 @@ class CommentHandler {
     this.#initResponses();
     this.#initLoadNextComments();
     this.#initCommentAdd();
+    this.#initHashHandling();
+  }
+
+  #initHashHandling(): void {
+    window.addEventListener("hashchange", () => {
+      this.#handleHashChange();
+    });
+
+    this.#handleHashChange();
+  }
+
+  #handleHashChange(): void {
+    const matches = window.location.hash.match(/^#(?:[^/]+\/)?comment(\d+)(?:\/response(\d+))?/);
+    if (matches) {
+      const comment = this.#container.querySelector<HTMLElement>(`.comment[data-comment-id="${matches[1]}"]`);
+      if (comment) {
+        if (matches[2]) {
+          const response = this.#container.querySelector<HTMLElement>(
+            `.commentResponse[data-response-id="${matches[2]}"]`,
+          );
+          if (response) {
+            this.#scrollTo(response, true);
+          } else {
+            void this.#loadResponseSegment(comment, parseInt(matches[2]));
+          }
+        } else {
+          this.#scrollTo(comment, true);
+        }
+      } else {
+        void this.#loadCommentSegment(parseInt(matches[1]), matches[2] ? parseInt(matches[2]) : 0);
+      }
+    }
+  }
+
+  async #loadCommentSegment(commentId: number, responseId?: number): Promise<void> {
+    let permaLinkComment = this.#container.querySelector(".commentPermalink");
+    if (permaLinkComment) {
+      permaLinkComment.remove();
+    }
+
+    permaLinkComment = document.createElement("li");
+    permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
+    permaLinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
+    this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
+
+    const response = (await dboAction("loadComment", "wcf\\data\\comment\\CommentAction")
+      .objectIds([commentId])
+      .payload({
+        responseID: responseId,
+      })
+      .dispatch()) as ResponseLoadComment;
+
+    if (response.template === "") {
+      permaLinkComment.remove();
+
+      // comment id is invalid or there is a mismatch, silently ignore it
+      return;
+    }
+
+    DomUtil.insertHtml(response.template, permaLinkComment, "before");
+    permaLinkComment.remove();
+    const comment = this.#container.querySelector<HTMLElement>(`.comment[data-comment-id="${commentId}"]`)!;
+    comment.classList.add("commentPermalink");
+
+    if (response.response) {
+      const permalinkResponse = document.createElement("li");
+      permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+      permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+      comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
+
+      this.#insertResponseSegment(response.response);
+    } else {
+      this.#scrollTo(comment, true);
+    }
+  }
+
+  #insertResponseSegment(template: string): void {
+    const permalinkResponse = this.#container.querySelector(".commentResponsePermalink")!;
+    DomUtil.insertHtml(template, permalinkResponse, "before");
+    const response = permalinkResponse.previousElementSibling as HTMLElement;
+    permalinkResponse.classList.add("commentResponsePermalink");
+    permalinkResponse.remove();
+
+    this.#scrollTo(response, true);
+  }
+
+  async #loadResponseSegment(comment: HTMLElement, responseId: number): Promise<void> {
+    let permalinkResponse = comment.querySelector(".commentResponsePermalink");
+    if (permalinkResponse) {
+      permalinkResponse.remove();
+    }
+
+    permalinkResponse = document.createElement("li");
+    permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+    permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+    comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
+
+    const response = (await dboAction("loadResponse", "wcf\\data\\comment\\CommentAction")
+      .payload({
+        responseID: responseId,
+      })
+      .dispatch()) as ResponseLoadResponse;
+
+    if (response.template === "") {
+      permalinkResponse.remove();
+
+      // id is invalid or there is a mismatch, silently ignore it
+      return;
+    }
+
+    this.#insertResponseSegment(response.template);
+  }
+
+  #scrollTo(element: HTMLElement, highlight = false): void {
+    UiScroll.element(element, () => {
+      if (highlight) {
+        if (element.classList.contains("comment__highlight__target")) {
+          element.classList.remove("comment__highlight__target");
+        }
+
+        element.classList.add("comment__highlight__target");
+      }
+    });
   }
 
   #initCommentAdd(): void {
@@ -54,6 +186,10 @@ class CommentHandler {
 
   #initComments(): void {
     wheneverFirstSeen("woltlab-core-comment", (element: WoltlabCoreCommentElement) => {
+      if (!this.#container.contains(element)) {
+        return;
+      }
+      
       element.addEventListener("reply", () => {
         this.#showAddResponse(element.parentElement!, element.commentId);
       });
@@ -68,6 +204,10 @@ class CommentHandler {
 
   #initResponses(): void {
     wheneverFirstSeen("woltlab-core-comment-response", (element: WoltlabCoreCommentResponseElement) => {
+      if (!this.#container.contains(element)) {
+        return;
+      }
+
       element.addEventListener("delete", () => {
         element.parentElement?.remove();
       });
@@ -169,6 +309,11 @@ class CommentHandler {
       .dispatch()) as ResponseLoadComments;
 
     const fragment = DomUtil.createFragmentFromHtml(response.template);
+
+    fragment.querySelectorAll<HTMLElement>(".comment").forEach((element) => {
+      this.#container.querySelector(`.comment[data-comment-id="${element.dataset.commentId!}"]`)?.remove();
+    });
+
     this.#container
       .querySelector(".commentList")!
       .insertBefore(fragment, this.#container.querySelector(".commentLoadNext"));

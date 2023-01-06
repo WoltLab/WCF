@@ -284,25 +284,27 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function validateLoadComment()
     {
-        $this->readInteger('objectID', false, 'data');
-        $this->readInteger('responseID', true, 'data');
-
-        try {
-            $this->comment = $this->getSingleObject()->getDecoratedObject();
-        } catch (UserInputException $e) {
-            /* unknown comment id, error handling takes place in `loadComment()` */
-        }
-
-        $objectType = $this->validateObjectType();
+        $this->readInteger('responseID', true);
+        $this->comment = $this->getSingleObject()->getDecoratedObject();
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
-        if (!$this->commentProcessor->isAccessible($this->parameters['data']['objectID'])) {
+        if (!$this->commentProcessor->isAccessible($this->comment->objectID)) {
+            throw new PermissionDeniedException();
+        }
+        if ($this->comment->isDisabled && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
             throw new PermissionDeniedException();
         }
 
-        if (!empty($this->parameters['data']['responseID'])) {
-            $this->response = new CommentResponse($this->parameters['data']['responseID']);
+        if (!empty($this->parameters['responseID'])) {
+            $this->response = new CommentResponse($this->parameters['responseID']);
             if (!$this->response->responseID) {
-                $this->response = null;
+                throw new UserInputException('responseID');
+            }
+            if ($this->response->commentID != $this->comment->commentID) {
+                throw new PermissionDeniedException();
+            }
+            if ($this->response->isDisabled && !$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+                throw new PermissionDeniedException();
             }
         }
     }
@@ -315,14 +317,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function loadComment()
     {
-        if ($this->comment === null) {
-            return ['template' => ''];
-        } elseif ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
-            return ['template' => ''];
-        }
-
         // mark notifications for loaded comment/response as read
-        $objectType = CommentHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID'])->objectType;
+        $objectType = CommentHandler::getInstance()->getObjectType($this->comment->objectTypeID)->objectType;
         if ($this->response === null) {
             CommentHandler::getInstance()->markNotificationsAsConfirmedForComments(
                 $objectType,
@@ -347,23 +343,24 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function validateLoadResponse()
     {
-        $this->validateLoadComment();
+        $this->readInteger('responseID', false);
+        $this->response = new CommentResponse($this->parameters['responseID']);
+        $this->comment = $this->response->getComment();
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
+        $this->commentProcessor = $objectType->getProcessor();
+        if (!$this->commentProcessor->isAccessible($this->comment->objectID)) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
-     * Returns a rendered comment.
+     * Returns a rendered response.
      *
      * @return  string[]
      * @since   3.1
      */
     public function loadResponse()
     {
-        if ($this->comment === null || $this->response === null) {
-            return ['template' => ''];
-        } elseif ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
-            return ['template' => ''];
-        }
-
         return [
             'template' => $this->renderResponse($this->response),
         ];
