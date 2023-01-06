@@ -901,6 +901,10 @@
 	<spider ident="Nederland.zoek">
 		<name>Nederland.zoek</name>
 	</spider>
+	<spider ident="Neevabot">
+		<name>Neeva</name>
+		<url>https://neeva.com/neevabot</url>
+	</spider>
 	<spider ident="NerdyBot">
 		<name>NerdyBot</name>
 		<url>http://nerdybot.com/</url>
