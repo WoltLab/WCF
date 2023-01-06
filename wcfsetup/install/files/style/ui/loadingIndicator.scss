@@ -1,0 +1,34 @@
+.loading-indicator {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    padding: var(--padding);
+}
+
+.loading-indicator[size="24"] {
+    --font-size: var(--wcfFontSizeSmall);
+    --padding: 10px;
+    --row-gap: 0;
+}
+
+.loading-indicator[size="48"] {
+    --font-size: var(--wcfFontSizeDefault);
+    --padding: 10px;
+    --row-gap: 5px;
+}
+
+.loading-indicator[size="96"] {
+    --font-size: var(--wcfFontSizeHeadline);
+    --padding: 20px;
+    --row-gap: 10px;
+}
+
+.loading-indicator__wrapper {
+    display: grid;
+    justify-items: center;
+    row-gap: var(--row-gap);
+}
+
+.loading-indicator__text {
+    font-size: var(--font-size);
+}

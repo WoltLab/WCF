@@ -14,6 +14,7 @@ type HasRegularVariant = boolean;
 type IconMetadata = [Codepoint, HasRegularVariant];
 
 type IconSize = 16 | 24 | 32 | 48 | 64 | 96 | 128 | 144;
+type LoadingIndicatorIconSize = 24 | 48 | 96;
 
 declare global {
   interface WoltLabTemplate {
@@ -86,6 +87,13 @@ declare global {
     set date(date: Date);
   }
 
+  interface WoltlabCoreLoadingIndicatorElement extends HTMLElement {
+    get size(): LoadingIndicatorIconSize;
+    set size(size: LoadingIndicatorIconSize);
+    get hideText(): boolean;
+    set hideText(hideText: boolean);
+  }
+
   interface WoltlabCoreReactionSummaryElement extends HTMLElement {
     get objectId(): number;
     get objectType(): string;
@@ -109,6 +117,7 @@ declare global {
     "woltlab-core-dialog": WoltlabCoreDialogElement;
     "woltlab-core-dialog-control": WoltlabCoreDialogControlElement;
     "woltlab-core-date-time": WoltlabCoreDateTime;
+    "woltlab-core-loading-indicator": WoltlabCoreLoadingIndicatorElement;
     "woltlab-core-pagination": WoltlabCorePaginationElement;
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
   }

@@ -7,8 +7,6 @@
  * @module  WoltLabSuite/Core/Ajax/Status
  */
 
-import * as Language from "../Language";
-
 class AjaxStatus {
   private _activeRequests = 0;
   private readonly _overlay: Element;
@@ -19,16 +17,11 @@ class AjaxStatus {
     this._overlay.classList.add("spinner");
     this._overlay.setAttribute("role", "status");
 
-    const icon = document.createElement("fa-icon");
-    icon.size = 48;
-    icon.setIcon("spinner");
-    this._overlay.appendChild(icon);
+    const loadingIndicator = document.createElement("woltlab-core-loading-indicator");
+    loadingIndicator.size = 48;
+    this._overlay.append(loadingIndicator);
 
-    const title = document.createElement("span");
-    title.textContent = Language.get("wcf.global.loading");
-    this._overlay.appendChild(title);
-
-    document.body.appendChild(this._overlay);
+    document.body.append(this._overlay);
   }
 
   show(): void {
