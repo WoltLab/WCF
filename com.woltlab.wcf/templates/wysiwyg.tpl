@@ -1,8 +1,7 @@
 {event name='beforeEditorJavaScript'}
 
-<script data-relocate="true" src="/wcf/editor/dist/bundle.js"></script>
 <script data-relocate="true">
-	require(["WoltLabSuite/Core/Component/Ckeditor"], ({ setupCkeditor }) => {
+	require(["WoltLabSuite/Core/Component/Ckeditor", "/wcf/editor/dist/bundle.js"], ({ setupCkeditor }) => {
 		const element = document.getElementById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 
 		void setupCkeditor(element);
