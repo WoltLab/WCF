@@ -2,14 +2,11 @@
 
 <script data-relocate="true" src="/wcf/editor/dist/bundle.js"></script>
 <script data-relocate="true">
-	{
+	require(["WoltLabSuite/Core/Component/Ckeditor"], ({ setupCkeditor }) => {
 		const element = document.getElementById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
-		window.CKEditor5
-			.create(element)
-			.then((editor) => {
-				window.ckeditor = editor;
-			});
-	}
+
+		void setupCkeditor(element);
+	});
 </script>
 
 <script data-relocate="true" type="invalid">

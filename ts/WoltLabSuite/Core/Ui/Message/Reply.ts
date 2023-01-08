@@ -20,7 +20,7 @@ import User from "../../User";
 import ControllerCaptcha from "../../Controller/Captcha";
 import * as UiScroll from "../Scroll";
 
-import type { Editor } from "@ckeditor/ckeditor5-core";
+import { CKEditor, getCkeditor } from "../../Component/Ckeditor";
 
 interface MessageReplyOptions {
   ajax: {
@@ -43,7 +43,7 @@ interface AjaxResponse {
 class UiMessageReply {
   protected readonly _container: HTMLElement;
   protected readonly _content: HTMLElement;
-  protected _editor: Editor | null = null;
+  protected _ckeditor?: CKEditor;
   protected _guestDialogId = "";
   protected _loadingOverlay: HTMLElement | null = null;
   protected readonly _options: MessageReplyOptions;
@@ -80,11 +80,8 @@ class UiMessageReply {
       replyButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        //this._getEditor().WoltLabReply.showEditor(true);
-
         UiScroll.element(this._container, () => {
-          //this._getEditor().WoltLabCaret.endOfEditor();
-          this._getEditor().editing.view.focus();
+          this._getCKEditor().focus();
         });
       });
     });
@@ -164,8 +161,7 @@ class UiMessageReply {
     });
 
     parameters.data = {
-      //message: this._getEditor().code.get(),
-      message: this._getEditor().data.get(),
+      message: this._getCKEditor().getHtml(),
     };
     parameters.removeQuoteIDs = this._options.quoteManager
       ? this._options.quoteManager.getQuotesMarkedForRemoval()
@@ -192,7 +188,7 @@ class UiMessageReply {
         });
     }
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data as any);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data as any);
 
     if (!User.userId && !additionalParameters) {
       parameters.requireGuestDialog = true;
@@ -217,21 +213,20 @@ class UiMessageReply {
     this._container.querySelectorAll(".innerError").forEach((el) => el.remove());
 
     // check if editor contains actual content
-    //if (this._getEditor().utils.isEmpty()) {
-    if (this._getEditor().data.get() === "") {
+    const message = this._getCKEditor().getHtml();
+    if (message === "") {
       this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
       return false;
     }
 
     const data = {
       api: this,
-      editor: this._getEditor(),
-      //message: this._getEditor().code.get(),
-      message: this._getEditor().data.get(),
+      editor: this._getCKEditor(),
+      message,
       valid: true,
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "validate_text", data);
 
     return data.valid;
   }
@@ -276,10 +271,9 @@ class UiMessageReply {
    * Resets the editor contents and notifies event listeners.
    */
   protected _reset(): void {
-    //this._getEditor().code.set("<p>\u200b</p>");
-    this._getEditor().data.set("<p>&nbsp;</p>");
+    this._getCKEditor().setHtml("<p>&nbsp;</p>");
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "reset_text");
 
     // Opera on Android does not properly blur the editor after submitting the message,
     // causing the keyboard to vanish, but the focus remains inside the editor.
@@ -300,7 +294,7 @@ class UiMessageReply {
       cancel: false,
       returnValues: data.returnValues,
     };
-    EventHandler.fire("com.woltlab.wcf.redactor2", "handleError_text", parameters);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "handleError_text", parameters);
 
     if (!parameters.cancel) {
       this.throwError(this._textarea, data.returnValues.realErrorMessage);
@@ -310,8 +304,15 @@ class UiMessageReply {
   /**
    * Returns the current editor instance.
    */
-  protected _getEditor(): Editor {
-    return (window as any).ckeditor;
+  protected _getCKEditor(): CKEditor {
+    if (this._ckeditor === undefined) {
+      this._ckeditor = getCkeditor(this._textarea);
+      if (this._ckeditor === undefined) {
+        throw new Error(`Unable to find the CKEditor instance for '${this._textarea.id}'.`);
+      }
+    }
+
+    return this._ckeditor;
   }
 
   /**
