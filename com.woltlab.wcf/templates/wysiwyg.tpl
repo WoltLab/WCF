@@ -8,7 +8,7 @@
 	});
 </script>
 
-<script data-relocate="true" type="invalid">
+<script data-relocate="true">
 	head.load([
 		{if ENABLE_DEBUG_MODE}
 			{* Imperavi *}
@@ -336,7 +336,7 @@
 			};
 			
 			$(function () {
-				$(element).redactor(config);
+				//$(element).redactor(config);
 			});
 		});
 	});
