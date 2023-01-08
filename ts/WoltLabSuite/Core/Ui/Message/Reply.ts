@@ -18,8 +18,9 @@ import UiDialog from "../Dialog";
 import * as UiNotification from "../Notification";
 import User from "../../User";
 import ControllerCaptcha from "../../Controller/Captcha";
-import { RedactorEditor } from "../Redactor/Editor";
 import * as UiScroll from "../Scroll";
+
+import type { Editor } from "@ckeditor/ckeditor5-core";
 
 interface MessageReplyOptions {
   ajax: {
@@ -42,7 +43,7 @@ interface AjaxResponse {
 class UiMessageReply {
   protected readonly _container: HTMLElement;
   protected readonly _content: HTMLElement;
-  protected _editor: RedactorEditor | null = null;
+  protected _editor: Editor | null = null;
   protected _guestDialogId = "";
   protected _loadingOverlay: HTMLElement | null = null;
   protected readonly _options: MessageReplyOptions;
@@ -79,10 +80,11 @@ class UiMessageReply {
       replyButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        this._getEditor().WoltLabReply.showEditor(true);
+        //this._getEditor().WoltLabReply.showEditor(true);
 
         UiScroll.element(this._container, () => {
-          this._getEditor().WoltLabCaret.endOfEditor();
+          //this._getEditor().WoltLabCaret.endOfEditor();
+          this._getEditor().editing.view.focus();
         });
       });
     });
@@ -161,7 +163,10 @@ class UiMessageReply {
       parameters[key.replace(/Id$/, "ID")] = value;
     });
 
-    parameters.data = { message: this._getEditor().code.get() };
+    parameters.data = {
+      //message: this._getEditor().code.get(),
+      message: this._getEditor().data.get(),
+    };
     parameters.removeQuoteIDs = this._options.quoteManager
       ? this._options.quoteManager.getQuotesMarkedForRemoval()
       : [];
@@ -212,7 +217,8 @@ class UiMessageReply {
     this._container.querySelectorAll(".innerError").forEach((el) => el.remove());
 
     // check if editor contains actual content
-    if (this._getEditor().utils.isEmpty()) {
+    //if (this._getEditor().utils.isEmpty()) {
+    if (this._getEditor().data.get() === "") {
       this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
       return false;
     }
@@ -220,7 +226,8 @@ class UiMessageReply {
     const data = {
       api: this,
       editor: this._getEditor(),
-      message: this._getEditor().code.get(),
+      //message: this._getEditor().code.get(),
+      message: this._getEditor().data.get(),
       valid: true,
     };
 
@@ -269,7 +276,8 @@ class UiMessageReply {
    * Resets the editor contents and notifies event listeners.
    */
   protected _reset(): void {
-    this._getEditor().code.set("<p>\u200b</p>");
+    //this._getEditor().code.set("<p>\u200b</p>");
+    this._getEditor().data.set("<p>&nbsp;</p>");
 
     EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
 
@@ -302,16 +310,8 @@ class UiMessageReply {
   /**
    * Returns the current editor instance.
    */
-  protected _getEditor(): RedactorEditor {
-    if (this._editor === null) {
-      if (typeof window.jQuery === "function") {
-        this._editor = window.jQuery(this._textarea).data("redactor") as RedactorEditor;
-      } else {
-        throw new Error("Unable to access editor, jQuery has not been loaded yet.");
-      }
-    }
-
-    return this._editor;
+  protected _getEditor(): Editor {
+    return (window as any).ckeditor;
   }
 
   /**
@@ -319,7 +319,7 @@ class UiMessageReply {
    * page in which case a redirect will be performed instead.
    */
   protected _insertMessage(data: AjaxResponse): void {
-    this._getEditor().WoltLabAutosave.reset();
+    //this._getEditor().WoltLabAutosave.reset();
 
     // redirect to new page
     if (data.returnValues.url) {

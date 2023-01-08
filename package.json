@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.0.15",
+    "@types/ckeditor__ckeditor5-core": "^33.0.3",
     "@types/facebook-js-sdk": "^3.3.6",
     "@types/google.maps": "^3.51.1",
     "@types/jquery": "^3.5.14",

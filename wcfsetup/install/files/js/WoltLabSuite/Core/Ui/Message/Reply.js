@@ -50,9 +50,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             document.querySelectorAll(".jsQuickReply").forEach((replyButton) => {
                 replyButton.addEventListener("click", (event) => {
                     event.preventDefault();
-                    this._getEditor().WoltLabReply.showEditor(true);
+                    //this._getEditor().WoltLabReply.showEditor(true);
                     UiScroll.element(this._container, () => {
-                        this._getEditor().WoltLabCaret.endOfEditor();
+                        //this._getEditor().WoltLabCaret.endOfEditor();
+                        this._getEditor().editing.view.focus();
                     });
                 });
             });
@@ -122,7 +123,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             Object.entries(this._container.dataset).forEach(([key, value]) => {
                 parameters[key.replace(/Id$/, "ID")] = value;
             });
-            parameters.data = { message: this._getEditor().code.get() };
+            parameters.data = {
+                //message: this._getEditor().code.get(),
+                message: this._getEditor().data.get(),
+            };
             parameters.removeQuoteIDs = this._options.quoteManager
                 ? this._options.quoteManager.getQuotesMarkedForRemoval()
                 : [];
@@ -159,14 +163,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             // remove all existing error elements
             this._container.querySelectorAll(".innerError").forEach((el) => el.remove());
             // check if editor contains actual content
-            if (this._getEditor().utils.isEmpty()) {
+            //if (this._getEditor().utils.isEmpty()) {
+            if (this._getEditor().data.get() === "") {
                 this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
                 api: this,
                 editor: this._getEditor(),
-                message: this._getEditor().code.get(),
+                //message: this._getEditor().code.get(),
+                message: this._getEditor().data.get(),
                 valid: true,
             };
             EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
@@ -207,7 +213,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          * Resets the editor contents and notifies event listeners.
          */
         _reset() {
-            this._getEditor().code.set("<p>\u200b</p>");
+            //this._getEditor().code.set("<p>\u200b</p>");
+            this._getEditor().data.set("<p>&nbsp;</p>");
             EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
             // Opera on Android does not properly blur the editor after submitting the message,
             // causing the keyboard to vanish, but the focus remains inside the editor.
@@ -236,22 +243,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          * Returns the current editor instance.
          */
         _getEditor() {
-            if (this._editor === null) {
-                if (typeof window.jQuery === "function") {
-                    this._editor = window.jQuery(this._textarea).data("redactor");
-                }
-                else {
-                    throw new Error("Unable to access editor, jQuery has not been loaded yet.");
-                }
-            }
-            return this._editor;
+            return window.ckeditor;
         }
         /**
          * Inserts the rendered message into the post list, unless the post is on the next
          * page in which case a redirect will be performed instead.
          */
         _insertMessage(data) {
-            this._getEditor().WoltLabAutosave.reset();
+            //this._getEditor().WoltLabAutosave.reset();
             // redirect to new page
             if (data.returnValues.url) {
                 if (window.location.href == data.returnValues.url) {

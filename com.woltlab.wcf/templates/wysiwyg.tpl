@@ -1,6 +1,18 @@
 {event name='beforeEditorJavaScript'}
 
+<script data-relocate="true" src="/wcf/editor/dist/bundle.js"></script>
 <script data-relocate="true">
+	{
+		const element = document.getElementById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
+		window.CKEditor5
+			.create(element)
+			.then((editor) => {
+				window.ckeditor = editor;
+			});
+	}
+</script>
+
+<script data-relocate="true" type="invalid">
 	head.load([
 		{if ENABLE_DEBUG_MODE}
 			{* Imperavi *}

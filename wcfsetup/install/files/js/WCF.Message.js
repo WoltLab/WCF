@@ -400,7 +400,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @return        string
 		 */
 		_getMessage: function () {
-			return this._textarea.redactor('code.get');
+			//return this._textarea.redactor('code.get');
+			return window.ckeditor.data.get();
 		},
 		
 		/**
