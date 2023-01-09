@@ -1,12 +1,15 @@
-import type { Editor } from "@ckeditor/ckeditor5-core";
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import { setup as setupQuotes } from "./Ckeditor/Quote";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
 class Ckeditor {
-  readonly #editor: Editor;
+  readonly #editor: ClassicEditor;
 
-  constructor(editor: Editor) {
+  constructor(editor: ClassicEditor) {
     this.#editor = editor;
+
+    setupQuotes(this);
   }
 
   focus(): void {
@@ -17,8 +20,19 @@ class Ckeditor {
     return this.#editor.data.get();
   }
 
+  insertHtml(html: string): void {
+    const viewFragment = this.#editor.data.processor.toView(html);
+    const modelFragment = this.#editor.data.toModel(viewFragment);
+
+    this.#editor.model.insertContent(modelFragment);
+  }
+
   setHtml(html: string): void {
     this.#editor.data.set(html);
+  }
+
+  get sourceElement(): HTMLElement {
+    return this.#editor.sourceElement!;
   }
 }
 

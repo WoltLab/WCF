@@ -1198,7 +1198,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			// event forwarding
 			WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function (data) {
 				//noinspection JSUnresolvedVariable
-				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
+				WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
 					author: data.quote.username,
 					content: data.quote.text,
 					isText: !data.quote.isFullQuote,
@@ -1471,7 +1471,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			var link = message.data('link');
 			var isText = !elDataBool(listItem[0], 'is-full-quote');
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
+			WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
 				author: author,
 				content: text,
 				isText: isText,
