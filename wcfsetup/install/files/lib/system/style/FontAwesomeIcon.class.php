@@ -89,11 +89,9 @@ final class FontAwesomeIcon implements \Stringable
             throw new InvalidIconFormat();
         }
 
-        self::isValidName($name);
-
         $forceSolid = $solid === 'true';
 
-        return new self($name, $forceSolid);
+        return self::fromValues($name, $forceSolid);
     }
 
     public static function fromValues(string $name, bool $forceSolid = false): self
