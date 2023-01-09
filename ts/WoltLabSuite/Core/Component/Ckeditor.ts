@@ -1,5 +1,6 @@
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
+
+import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 

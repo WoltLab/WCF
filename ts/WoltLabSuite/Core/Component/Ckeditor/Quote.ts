@@ -1,6 +1,6 @@
 import * as EventHandler from "../../Event/Handler";
 import { escapeHTML } from "../../StringUtil";
-import { CKEditor } from "../Ckeditor";
+import type { CKEditor } from "../Ckeditor";
 
 type Payload = {
   author: string;
