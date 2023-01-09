@@ -30,6 +30,7 @@ final class FontAwesomeIcon implements \Stringable
         private readonly string $name,
         private readonly bool $forceSolid
     ) {
+        self::validateName($name);
     }
 
     /**
@@ -96,8 +97,6 @@ final class FontAwesomeIcon implements \Stringable
 
     public static function fromValues(string $name, bool $forceSolid = false): self
     {
-        self::validateName($name);
-
         return new self($name, $forceSolid);
     }
 
