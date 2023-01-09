@@ -8,9 +8,6 @@
 		<name>Abrave</name>
 		<url>http://robot.abrave.co.uk/</url>
 	</spider>
-	<spider ident="abot/">
-		<name>abot</name>
-	</spider>
 	<spider ident="Accelatech RSSCrawler">
 		<name>Accelatech</name>
 	</spider>
@@ -238,6 +235,10 @@
 	<spider ident="CaRP/3.6Evolution">
 		<name>CaRP</name>
 		<url>http://www.biz360.com</url>
+	</spider>
+	<spider ident="CensysInspect">
+		<name>Censys</name>
+		<url>https://about.censys.io/</url>
 	</spider>
 	<spider ident="Checkbot">
 		<name>Checkbot</name>
@@ -896,6 +897,10 @@
 	</spider>
 	<spider ident="Nederland.zoek">
 		<name>Nederland.zoek</name>
+	</spider>
+	<spider ident="Neevabot">
+		<name>Neeva</name>
+		<url>https://neeva.com/neevabot</url>
 	</spider>
 	<spider ident="NerdyBot">
 		<name>NerdyBot</name>
