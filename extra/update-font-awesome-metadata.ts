@@ -4,7 +4,9 @@ import * as fs from "fs";
 // ts/WoltLabSuite/WebComponent/fa-metadata.js
 
 if (process.argv.length !== 4) {
-  throw new Error("Expected the path to the `icons.json` metadata as argument #1 and the output format (js, php) as argument #2.");
+  throw new Error(
+    "Expected the path to the `icons.json` metadata as argument #1 and the output format (js, php) as argument #2.",
+  );
 }
 
 const iconsJson = process.argv[2];
@@ -43,7 +45,7 @@ Object.entries(json).forEach(([name, icon]) => {
 
 let output;
 switch (outputFormat) {
-  case 'js':
+  case "js":
     output = `(() => {
   const aliases = new Map(
     ${JSON.stringify(aliases)}
@@ -61,15 +63,26 @@ switch (outputFormat) {
   };
 })();\n`;
     break;
-  case 'php':
+  case "php":
     output = `<?php
 
 return [
-${values.map(([name]) => `    '${name}' => true,`).join("\n")}
+${values
+  .map(([name]) => name)
+  .sort()
+  .map((name) => `    '${name}' => true,`)
+  .join("\n")}
+
+    /* Aliases */
+${aliases
+  .map(([alias]) => alias)
+  .sort()
+  .map((name) => `    '${name}' => true,`)
+  .join("\n")}
 ];\n`;
     break;
   default:
-    throw new Error('Invalid output format');
+    throw new Error("Invalid output format");
 }
 
 process.stdout.write(output);
