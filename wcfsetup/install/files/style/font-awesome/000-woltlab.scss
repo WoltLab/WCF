@@ -76,26 +76,26 @@ fa-icon {
 }
 
 fa-icon {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  -webkit-user-select: none;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-font-smoothing: antialiased !important;
+  -webkit-user-select: none !important;
 
-  font-family: var(--fa-font-family, "Font Awesome 6 Free");
-  font-size: var(--font-size);
-  font-style: normal;
-  font-variant: normal;
-  font-weight: var(--fa-font-weight, 400);
-  line-height: 1;
-  text-rendering: auto;
-  user-select: none;
+  font-family: var(--fa-font-family, "Font Awesome 6 Free") !important;
+  font-size: var(--font-size) !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  font-weight: var(--fa-font-weight, 400) !important;
+  line-height: 1 !important;
+  text-rendering: auto !important;
+  user-select: none !important;
 
   &[solid] {
-    font-weight: 900;
+    font-weight: 900 !important;
   }
 }
 
-.disabled fa-icon {
-  opacity: .45;
+.disabled :is(fa-brand, fa-icon) {
+  opacity: 0.45;
 }
 
 /* @deprecated 6.0 Use the new icons instead, `.icon` is now just an easy-to-spot reminder. */
