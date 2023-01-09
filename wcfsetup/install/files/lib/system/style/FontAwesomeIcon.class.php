@@ -30,6 +30,7 @@ final class FontAwesomeIcon implements \Stringable
         private readonly string $name,
         private readonly bool $forceSolid
     ) {
+        self::validateName($name);
     }
 
     /**
@@ -84,22 +85,18 @@ final class FontAwesomeIcon implements \Stringable
             throw new InvalidIconFormat();
         }
 
-        [$name, $solid] = \explode(';', $iconData);
+        [$name, $solid] = \explode(';', $iconData, 2);
         if ($solid !== 'true' && $solid !== 'false') {
             throw new InvalidIconFormat();
         }
 
-        self::isValidName($name);
-
         $forceSolid = $solid === 'true';
 
-        return new self($name, $forceSolid);
+        return self::fromValues($name, $forceSolid);
     }
 
     public static function fromValues(string $name, bool $forceSolid = false): self
     {
-        self::validateName($name);
-
         return new self($name, $forceSolid);
     }
 
@@ -109,7 +106,7 @@ final class FontAwesomeIcon implements \Stringable
             return false;
         }
 
-        [$name, $solid] = \explode(';', $iconData);
+        [$name, $solid] = \explode(';', $iconData, 2);
         if ($solid !== 'true' && $solid !== 'false') {
             return false;
         }
