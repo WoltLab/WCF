@@ -772,6 +772,20 @@ final class WCFSetup extends WCF
         $fileHandler = new SetupFileHandler();
         new Installer(WCF_DIR, SETUP_FILE, $fileHandler, 'install/files/');
 
+        // Create initial bootstrap.php including WCF's bootstrap script.
+        \file_put_contents(
+            WCF_DIR . 'lib/bootstrap.php',
+            <<<'EOT'
+            <?php
+
+            return (function() {
+                return [
+                    require(__DIR__ . '/bootstrap/com.woltlab.wcf.php'),
+                ];
+            })();
+            EOT
+        );
+
         return $this->gotoNextStep('installLanguage');
     }
 
