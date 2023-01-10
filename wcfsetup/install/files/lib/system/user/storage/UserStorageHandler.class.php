@@ -60,21 +60,21 @@ class UserStorageHandler extends SingletonFactory
             return;
         }
 
-        $tmp = [];
+        $newUserIDs = [];
         foreach ($userIDs as $userID) {
             if (!isset($this->cache[$userID])) {
-                $tmp[] = $userID;
+                $newUserIDs[] = $userID;
                 $this->cache[$userID] = [];
             }
         }
 
         // ignore users whose storage data is already loaded
-        if (empty($tmp)) {
+        if ($newUserIDs === []) {
             return;
         }
 
         $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("userID IN (?)", [$tmp]);
+        $conditions->add("userID IN (?)", [$newUserIDs]);
 
         $sql = "SELECT  *
                 FROM    wcf1_user_storage
