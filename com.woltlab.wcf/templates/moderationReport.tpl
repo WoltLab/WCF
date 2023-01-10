@@ -99,18 +99,13 @@
 	{@$reportedContent}
 </section>
 
-{include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
-
 <section id="comments" class="section sectionContainerList moderationComments">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.global.comments{/lang}{if $queue->comments} <span class="badge">{#$queue->comments}</span>{/if}</h2>
 		<p class="sectionDescription">{lang}wcf.moderation.comments.description{/lang}</p>
 	</header>
 	
-	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{if $queue->comments}{@$commentList->countObjects()}{else}0{/if}" data-last-comment-time="{@$lastCommentTime}">
-		{include file='commentListAddComment' wysiwygSelector='moderationQueueCommentListAddComment'}
-		{include file='commentList'}
-	</ul>
+	{include file='comments' commentContainerID='moderationQueueCommentList' commentObjectID=$queueID}
 </section>
 
 <script data-relocate="true">
