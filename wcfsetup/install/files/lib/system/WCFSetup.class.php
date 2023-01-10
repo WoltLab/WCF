@@ -770,7 +770,7 @@ final class WCFSetup extends WCF
         $this->initDB();
 
         $fileHandler = new SetupFileHandler();
-        new Installer(INSTALL_SCRIPT_DIR, SETUP_FILE, $fileHandler, 'install/files/');
+        new Installer(WCF_DIR, SETUP_FILE, $fileHandler, 'install/files/');
 
         return $this->gotoNextStep('installLanguage');
     }
