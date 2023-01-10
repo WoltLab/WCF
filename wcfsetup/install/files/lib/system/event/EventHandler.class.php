@@ -24,17 +24,18 @@ final class EventHandler extends SingletonFactory
     public const DEFAULT_EVENT_NAME = ':default';
 
     /**
-     * @var array<string, class-string>
+     * @var array<string, EventListener>
      */
     private array $actions = [];
 
     /**
-     * @var array<string, class-string>
+     * @var array<class-string, array<string, EventListener>>
      */
     private array $inheritedActions = [];
 
     /**
-     * @var array<string, array<class-string, object>>
+     * @template T of object
+     * @var array<string, array<class-string<T>, T>>
      */
     private array $actionsObjects = [];
 
@@ -44,7 +45,8 @@ final class EventHandler extends SingletonFactory
     private array $inheritedActionsObjects = [];
 
     /**
-     * @var array<class-string, object>
+     * @template T of object
+     * @var array<class-string<T>, T>
      */
     private array $listenerObjects = [];
 
@@ -54,7 +56,7 @@ final class EventHandler extends SingletonFactory
     private array $psr14Listeners = [];
 
     /**
-     * @var array<class-string, class-string>
+     * @var array<class-string, class-string[]>
      */
     private array $psr14ListenerClasses = [];
 
@@ -139,7 +141,7 @@ final class EventHandler extends SingletonFactory
     }
 
     /**
-     * @param   EventListener[]     $eventListeners
+     * @param   (callable[])|((IParameterizedEventListener|ILegacyEventListener)[])     $eventListeners
      * @since   5.5
      */
     private function executeListeners(
