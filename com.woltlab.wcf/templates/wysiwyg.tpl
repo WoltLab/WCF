@@ -4,7 +4,87 @@
 	require(["WoltLabSuite/Core/Component/Ckeditor", "/wcf/editor/dist/bundle.js"], ({ setupCkeditor }) => {
 		const element = document.getElementById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 
-		void setupCkeditor(element);
+		// TODO: This is awful, it’s barely readable and cumbersome
+		// because there is no auto-complete or validation from the IDE.
+		const toolbar = [
+			"heading",
+
+			"|",
+
+			"bold",
+			"italic",
+			{
+				label: "TODO: Format",
+				// TODO: Icon
+				items: [
+					"underline",
+					"strikethrough",
+					"subscript",
+					"superscript",
+					"code",
+				],
+			},
+
+			"|",
+
+			{
+				label: "TODO: List",
+				// TODO: Icon
+				items: [
+					"bulletedList",
+					"numberedList",
+				],
+			},
+
+			"alignment",
+			{if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}
+				"link",
+			{/if}
+			{if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}
+				"insertImage",
+			{/if}
+
+			{
+				label: "TODO: Insert block",
+				icon: "plus",
+				items: [
+					"insertTable",
+					"blockQuote",
+					"codeBlock",
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('spoiler')}
+						"spoiler",
+					{/if}
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('html')}
+						"htmlEmbed",
+					{/if}
+				],
+			},
+		];
+
+		let woltlabBbcode = [
+			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
+				{
+					icon: '{@$__bbcode->wysiwygIcon|encodeJS}',
+					name: '{@$__bbcode->bbcodeTag|encodeJS}',
+					label: '{@$__bbcode->getButtonLabel()|encodeJS}',
+				},
+			{/foreach}
+		];
+
+		// TODO: This removes already exisitng functionalities and perhaps
+		// should be handled on the server?
+		woltlabBbcode = woltlabBbcode.filter(({ name }) => {
+			return name !== "html" && name !== "tt" && name !== "code" && name !== "spoiler";
+		});
+
+		woltlabBbcode.forEach(({ name }) => {
+			toolbar.push(`woltlabBbcode_${ name }`);
+		});
+
+		void setupCkeditor(element, {
+			toolbar,
+			woltlabBbcode,
+		});
 	});
 </script>
 

@@ -27,10 +27,10 @@ define(["require", "exports", "./Ckeditor/Quote"], function (require, exports, Q
             return this.#editor.sourceElement;
         }
     }
-    async function setupCkeditor(element) {
+    async function setupCkeditor(element, configuration) {
         let editor = instances.get(element);
         if (editor === undefined) {
-            const cke = await window.CKEditor5.create(element);
+            const cke = await window.CKEditor5.create(element, configuration);
             editor = new Ckeditor(cke);
             instances.set(element, editor);
         }

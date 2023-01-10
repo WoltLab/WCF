@@ -1,6 +1,7 @@
 import { setup as setupQuotes } from "./Ckeditor/Quote";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -37,10 +38,10 @@ class Ckeditor {
   }
 }
 
-export async function setupCkeditor(element: HTMLElement): Promise<CKEditor> {
+export async function setupCkeditor(element: HTMLElement, configuration: EditorConfig): Promise<CKEditor> {
   let editor = instances.get(element);
   if (editor === undefined) {
-    const cke = await window.CKEditor5.create(element);
+    const cke = await window.CKEditor5.create(element, configuration);
     editor = new Ckeditor(cke);
 
     instances.set(element, editor);
