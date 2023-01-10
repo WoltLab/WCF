@@ -54,11 +54,11 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
             this.#element.dataset.googleMapsLat = lat.toString();
             this.#element.dataset.googleMapsLng = lng.toString();
             if (this.#element.hasAttribute("data-google-maps-geocoding-store") && this.#element.form) {
-                this.#store("latitude", lat);
-                this.#store("longitude", lng);
+                this.#store(this.#element.dataset.googleMapsGeocdingStore || '', lat, lng);
             }
         }
-        #store(name, value) {
+        #store(prefix, lat, lng) {
+            const name = prefix + "coordinates";
             let input = this.#element.form.querySelector(`input[name="${name}"]`);
             if (!input) {
                 input = document.createElement("input");
@@ -66,7 +66,7 @@ define(["require", "exports", "../../Helper/Selector", "./Geocoding/Suggestion",
                 input.name = name;
                 this.#element.form.append(input);
             }
-            input.value = value.toString();
+            input.value = `${lat},${lng}`;
         }
     }
     function setup() {

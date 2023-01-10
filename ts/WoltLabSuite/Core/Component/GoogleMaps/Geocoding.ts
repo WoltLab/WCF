@@ -68,12 +68,12 @@ class Geocoding {
     this.#element.dataset.googleMapsLng = lng.toString();
 
     if (this.#element.hasAttribute("data-google-maps-geocoding-store") && this.#element.form) {
-      this.#store("latitude", lat);
-      this.#store("longitude", lng);
+      this.#store(this.#element.dataset.googleMapsGeocdingStore || '', lat, lng);
     }
   }
 
-  #store(name: string, value: number): void {
+  #store(prefix: string, lat: number, lng: number): void {
+    const name = prefix + "coordinates";
     let input = this.#element.form!.querySelector<HTMLInputElement>(`input[name="${name}"]`);
     if (!input) {
       input = document.createElement("input");
@@ -82,7 +82,7 @@ class Geocoding {
       this.#element.form!.append(input);
     }
 
-    input.value = value.toString();
+    input.value = `${lat},${lng}`;
   }
 }
 
