@@ -570,7 +570,7 @@
 		<item name="wcf.acp.devtools.project.packageDate.description"><![CDATA[Das Erstellungsdatum ist das Datum, an dem diese Version des Pakets veröffentlicht wurde.]]></item>
 		<item name="wcf.acp.devtools.project.packageUrl.description"><![CDATA[Die Paket-Website liefert detaillierte Informationen zum Paket.]]></item>
 		<item name="wcf.acp.devtools.project.packageUrl"><![CDATA[Paket-Website]]></item>
-		<item name="wcf.acp.devtools.project.packageVersion.description"><![CDATA[Die Paketversion besteht aus drei durch Punkte abgetrennte Zahlen und einem optionalen, durch ein Leerzeichen abgetrennten Zusatz <kbd>Dev</kbd>, <kbd>Alpha</kbd>, <kbd>Beta</kbd>, <kbd>RC</kbd> oder <kbd>pl</kbd>, dem eine weitere Zahl folgt. Beispiele: <kbd>1.0.0</kbd>, <kbd>2.1.0 Beta 3</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.packageVersion.description"><![CDATA[Die Paketversion besteht aus drei durch Punkte abgetrennte Zahlen und einem optionalen, durch ein Leerzeichen abgetrennten Zusatz <kbd>dev</kbd>, <kbd>Alpha</kbd>, <kbd>Beta</kbd> oder <kbd>RC</kbd>, dem eine weitere Zahl folgt. Beispiele: <kbd>1.0.0</kbd>, <kbd>2.1.0 Beta 3</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.pathExists"><![CDATA[Der angegebene Pfad existiert bereits.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.parentDoesNotExist"><![CDATA[Der übergeordnete Order existiert nicht.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.cannotMakeDirectory"><![CDATA[Der angegebene Paketordner kann nicht erstellt werden.]]></item>
