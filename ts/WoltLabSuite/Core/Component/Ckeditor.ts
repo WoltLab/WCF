@@ -1,3 +1,4 @@
+import { getPossibleMentions } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
@@ -41,6 +42,18 @@ class Ckeditor {
 export async function setupCkeditor(element: HTMLElement, configuration: EditorConfig): Promise<CKEditor> {
   let editor = instances.get(element);
   if (editor === undefined) {
+    configuration.mention = {
+      feeds: [
+        {
+          feed: (query) => {
+            // TODO: The typings are outdated, cast the result to `any`.
+            return getPossibleMentions(query) as any;
+          },
+          marker: "@",
+          minimumCharacters: 3,
+        },
+      ],
+    };
     const cke = await window.CKEditor5.create(element, configuration);
     editor = new Ckeditor(cke);
 

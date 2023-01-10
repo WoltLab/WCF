@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Quote"], function (require, exports, Quote_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote"], function (require, exports, Mention_1, Quote_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -30,6 +30,18 @@ define(["require", "exports", "./Ckeditor/Quote"], function (require, exports, Q
     async function setupCkeditor(element, configuration) {
         let editor = instances.get(element);
         if (editor === undefined) {
+            configuration.mention = {
+                feeds: [
+                    {
+                        feed: (query) => {
+                            // TODO: The typings are outdated, cast the result to `any`.
+                            return (0, Mention_1.getPossibleMentions)(query);
+                        },
+                        marker: "@",
+                        minimumCharacters: 3,
+                    },
+                ],
+            };
             const cke = await window.CKEditor5.create(element, configuration);
             editor = new Ckeditor(cke);
             instances.set(element, editor);
