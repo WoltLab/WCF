@@ -1,5 +1,5 @@
 /**
- * Provides geocoding functions for search map locations.
+ * Provides geocoding functions for searching map locations.
  *
  * @author  Marcel Werk
  * @copyright  2001-2022 WoltLab GmbH
@@ -66,6 +66,23 @@ class Geocoding {
   #setLocation(lat: number, lng: number): void {
     this.#element.dataset.googleMapsLat = lat.toString();
     this.#element.dataset.googleMapsLng = lng.toString();
+
+    if (this.#element.hasAttribute("data-google-maps-geocoding-store") && this.#element.form) {
+      this.#store(this.#element.dataset.googleMapsGeocdingStore || '', lat, lng);
+    }
+  }
+
+  #store(prefix: string, lat: number, lng: number): void {
+    const name = prefix + "coordinates";
+    let input = this.#element.form!.querySelector<HTMLInputElement>(`input[name="${name}"]`);
+    if (!input) {
+      input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      this.#element.form!.append(input);
+    }
+
+    input.value = `${lat},${lng}`;
   }
 }
 
