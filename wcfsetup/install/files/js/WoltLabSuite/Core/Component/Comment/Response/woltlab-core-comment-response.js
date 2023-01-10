@@ -108,7 +108,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             }
             catch (error) {
                 if (error instanceof Error_1.StatusNotOk) {
-                    const json = await error.response.json();
+                    const json = await error.response.clone().json();
                     if (json.code === 412 && json.returnValues) {
                         Util_1.default.innerError(document.getElementById(this.#editorId), json.returnValues.errorType);
                     }

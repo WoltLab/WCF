@@ -113,7 +113,7 @@ export class CommentResponseAdd {
         .dispatch()) as ResponseAddResponse;
     } catch (error) {
       if (error instanceof StatusNotOk) {
-        const json = await error.response.json();
+        const json = await error.response.clone().json();
         if (json.code === 412 && json.returnValues) {
           this.#throwError(this.#textarea, json.returnValues.errorType);
         }

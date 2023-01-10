@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Component/Comment/Handler
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ajax/Error"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Error_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -63,27 +63,37 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
             permaLinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
             this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
-            const response = (await (0, Ajax_1.dboAction)("loadComment", "wcf\\data\\comment\\CommentAction")
-                .objectIds([commentId])
-                .payload({
-                responseID: responseId,
-            })
-                .dispatch());
-            if (response.template === "") {
-                permaLinkComment.remove();
-                // comment id is invalid or there is a mismatch, silently ignore it
-                return;
+            let ajaxResponse;
+            try {
+                ajaxResponse = (await (0, Ajax_1.dboAction)("loadComment", "wcf\\data\\comment\\CommentAction")
+                    .objectIds([commentId])
+                    .payload({
+                    responseID: responseId,
+                })
+                    .dispatch());
             }
-            Util_1.default.insertHtml(response.template, permaLinkComment, "before");
+            catch (error) {
+                if (error instanceof Error_1.StatusNotOk) {
+                    const json = await error.response.clone().json();
+                    if (json.code === 412) {
+                        // comment id is invalid or there is a mismatch, silently ignore it
+                        permaLinkComment.remove();
+                        return;
+                    }
+                }
+                throw error;
+            }
+            const { template, response } = ajaxResponse;
+            Util_1.default.insertHtml(template, permaLinkComment, "before");
             permaLinkComment.remove();
             const comment = this.#container.querySelector(`.comment[data-comment-id="${commentId}"]`);
             comment.classList.add("commentPermalink");
-            if (response.response) {
+            if (response) {
                 const permalinkResponse = document.createElement("li");
                 permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
                 permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
                 comment.querySelector(".commentResponseList").prepend(permalinkResponse);
-                this.#insertResponseSegment(response.response);
+                this.#insertResponseSegment(response);
             }
             else {
                 this.#scrollTo(comment, true);
@@ -106,15 +116,24 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
             permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
             comment.querySelector(".commentResponseList").prepend(permalinkResponse);
-            const response = (await (0, Ajax_1.dboAction)("loadResponse", "wcf\\data\\comment\\CommentAction")
-                .payload({
-                responseID: responseId,
-            })
-                .dispatch());
-            if (response.template === "") {
-                permalinkResponse.remove();
-                // id is invalid or there is a mismatch, silently ignore it
-                return;
+            let response;
+            try {
+                response = (await (0, Ajax_1.dboAction)("loadResponse", "wcf\\data\\comment\\CommentAction")
+                    .payload({
+                    responseID: responseId,
+                })
+                    .dispatch());
+            }
+            catch (error) {
+                if (error instanceof Error_1.StatusNotOk) {
+                    const json = await error.response.clone().json();
+                    if (json.code === 412) {
+                        // id is invalid or there is a mismatch, silently ignore it
+                        permalinkResponse.remove();
+                        return;
+                    }
+                }
+                throw error;
             }
             this.#insertResponseSegment(response.template);
         }

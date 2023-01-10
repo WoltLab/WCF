@@ -343,8 +343,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function validateLoadResponse()
     {
-        $this->readInteger('responseID', false);
+        $this->readInteger('responseID');
         $this->response = new CommentResponse($this->parameters['responseID']);
+        if (!$this->response->responseID) {
+            throw new UserInputException('responseID');
+        }
+
         $this->comment = $this->response->getComment();
         $objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();

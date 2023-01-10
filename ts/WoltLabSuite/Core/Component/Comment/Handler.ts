@@ -18,6 +18,7 @@ import { CommentResponseAdd } from "./Response/Add";
 import * as UiScroll from "../../Ui/Scroll";
 import WoltlabCoreCommentElement from "./woltlab-core-comment";
 import WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
+import { StatusNotOk } from "../../Ajax/Error";
 
 type ResponseLoadComments = {
   lastCommentTime: number;
@@ -95,32 +96,41 @@ class CommentHandler {
     permaLinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
     this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
 
-    const response = (await dboAction("loadComment", "wcf\\data\\comment\\CommentAction")
-      .objectIds([commentId])
-      .payload({
-        responseID: responseId,
-      })
-      .dispatch()) as ResponseLoadComment;
+    let ajaxResponse: ResponseLoadComment;
+    try {
+      ajaxResponse = (await dboAction("loadComment", "wcf\\data\\comment\\CommentAction")
+        .objectIds([commentId])
+        .payload({
+          responseID: responseId,
+        })
+        .dispatch()) as ResponseLoadComment;
+    } catch (error) {
+      if (error instanceof StatusNotOk) {
+        const json = await error.response.clone().json();
+        if (json.code === 412) {
+          // comment id is invalid or there is a mismatch, silently ignore it
+          permaLinkComment.remove();
+          return;
+        }
+      }
 
-    if (response.template === "") {
-      permaLinkComment.remove();
-
-      // comment id is invalid or there is a mismatch, silently ignore it
-      return;
+      throw error;
     }
 
-    DomUtil.insertHtml(response.template, permaLinkComment, "before");
+    const { template, response } = ajaxResponse!;
+
+    DomUtil.insertHtml(template, permaLinkComment, "before");
     permaLinkComment.remove();
     const comment = this.#container.querySelector<HTMLElement>(`.comment[data-comment-id="${commentId}"]`)!;
     comment.classList.add("commentPermalink");
 
-    if (response.response) {
+    if (response) {
       const permalinkResponse = document.createElement("li");
       permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
       permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
       comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
 
-      this.#insertResponseSegment(response.response);
+      this.#insertResponseSegment(response);
     } else {
       this.#scrollTo(comment, true);
     }
@@ -147,20 +157,27 @@ class CommentHandler {
     permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
     comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
 
-    const response = (await dboAction("loadResponse", "wcf\\data\\comment\\CommentAction")
-      .payload({
-        responseID: responseId,
-      })
-      .dispatch()) as ResponseLoadResponse;
+    let response: ResponseLoadResponse;
+    try {
+      response = (await dboAction("loadResponse", "wcf\\data\\comment\\CommentAction")
+        .payload({
+          responseID: responseId,
+        })
+        .dispatch()) as ResponseLoadResponse;
+    } catch (error) {
+      if (error instanceof StatusNotOk) {
+        const json = await error.response.clone().json();
+        if (json.code === 412) {
+          // id is invalid or there is a mismatch, silently ignore it
+          permalinkResponse.remove();
+          return;
+        }
+      }
 
-    if (response.template === "") {
-      permalinkResponse.remove();
-
-      // id is invalid or there is a mismatch, silently ignore it
-      return;
+      throw error;
     }
 
-    this.#insertResponseSegment(response.template);
+    this.#insertResponseSegment(response!.template);
   }
 
   #scrollTo(element: HTMLElement, highlight = false): void {
