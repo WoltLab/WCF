@@ -52,7 +52,7 @@ class SearchAction extends AbstractDatabaseObjectAction
      */
     public function validateSearch(): void
     {
-        $this->readString('q', true);
+        $this->readString('q');
         $this->readString('type', true);
         $this->readString('usernames', true);
         $this->readBoolean('subjectOnly', true);
@@ -61,10 +61,6 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readString('sortField', true);
         $this->readString('sortOrder', true);
         $this->readInteger('pageNo', true);
-
-        if (empty($this->parameters['q']) && empty($this->parameters['usernames'])) {
-            throw new UserInputException('q');
-        }
 
         if (!empty($this->parameters['type'])) {
             if (SearchEngine::getInstance()->getObjectType($this->parameters['type']) === null) {

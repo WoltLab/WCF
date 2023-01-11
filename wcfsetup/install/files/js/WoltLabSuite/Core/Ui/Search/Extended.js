@@ -83,7 +83,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             }
         }
         async search(searchAction) {
-            if (!this.queryInput.value.trim() && !this.form["usernames"].value) {
+            if (!this.queryInput.value.trim()) {
                 return;
             }
             this.updateQueryString(searchAction);
