@@ -34,6 +34,8 @@ type RequestBody = {
   parameters?: Payload;
 };
 
+type CallbackHandleValidationErrors = (returnValues: unknown) => boolean;
+
 let ignoreConnectionErrors: boolean | undefined = undefined;
 
 export class DboAction {
@@ -135,17 +137,7 @@ export class DboAction {
         throw new StatusNotOk(response);
       }
 
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new ExpectedJson(response);
-      }
-
-      let json: ResponseData;
-      try {
-        json = await response.json();
-      } catch (e) {
-        throw new InvalidJson(response);
-      }
+      const json = await tryParseAsJson(response);
 
       if (response.headers.get("woltlab-background-queue-check") === "yes") {
         void import("../BackgroundQueue").then((BackgroundQueue) => BackgroundQueue.invoke());
@@ -177,3 +169,44 @@ export class DboAction {
 }
 
 export default DboAction;
+
+export async function handleValidationErrors(error: Error, callback: CallbackHandleValidationErrors): Promise<void> {
+  if (!(error instanceof StatusNotOk)) {
+    throw error;
+  }
+
+  const response = error.response.clone();
+  if (response.status !== 412) {
+    throw error;
+  }
+
+  try {
+    const json = await tryParseAsJson(response);
+    if (json.returnValues) {
+      const suppressError = callback(json.returnValues);
+      if (suppressError === true) {
+        return;
+      }
+    }
+  } catch {
+    // We do not care for any errors while attempting to parse the body..
+  }
+
+  throw error;
+}
+
+async function tryParseAsJson(response: Response): Promise<ResponseData> {
+  const contentType = response.headers.get("content-type");
+  if (!contentType || !contentType.includes("application/json")) {
+    throw new ExpectedJson(response);
+  }
+
+  let json: ResponseData;
+  try {
+    json = await response.json();
+  } catch (e) {
+    throw new InvalidJson(response);
+  }
+
+  return json;
+}

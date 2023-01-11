@@ -11,20 +11,20 @@
 define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], function (require, exports, tslib_1, Error_1, AjaxStatus, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.DboAction = void 0;
+    exports.handleValidationErrors = exports.DboAction = void 0;
     AjaxStatus = tslib_1.__importStar(AjaxStatus);
     Core = tslib_1.__importStar(Core);
     let ignoreConnectionErrors = undefined;
     class DboAction {
-        actionName;
-        className;
-        _objectIDs = [];
-        _payload = {};
-        _showLoadingIndicator = true;
-        _signal = undefined;
+        #actionName;
+        #className;
+        #objectIDs = [];
+        #payload = {};
+        #showLoadingIndicator = true;
+        #signal;
         constructor(actionName, className) {
-            this.actionName = actionName;
-            this.className = className;
+            this.#actionName = actionName;
+            this.#className = className;
         }
         static prepare(actionName, className) {
             if (ignoreConnectionErrors === undefined) {
@@ -36,35 +36,35 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
             return new DboAction(actionName, className);
         }
         getAbortController() {
-            if (this._signal === undefined) {
-                this._signal = new AbortController();
+            if (this.#signal === undefined) {
+                this.#signal = new AbortController();
             }
-            return this._signal;
+            return this.#signal;
         }
         objectIds(objectIds) {
-            this._objectIDs = objectIds;
+            this.#objectIDs = objectIds;
             return this;
         }
         payload(payload) {
-            this._payload = payload;
+            this.#payload = payload;
             return this;
         }
         disableLoadingIndicator() {
-            this._showLoadingIndicator = false;
+            this.#showLoadingIndicator = false;
             return this;
         }
         async dispatch() {
             (0, Error_1.registerGlobalRejectionHandler)();
             const url = window.WSC_API_URL + "index.php?ajax-proxy/&t=" + Core.getXsrfToken();
             const body = {
-                actionName: this.actionName,
-                className: this.className,
+                actionName: this.#actionName,
+                className: this.#className,
             };
-            if (this._objectIDs) {
-                body.objectIDs = this._objectIDs;
+            if (this.#objectIDs) {
+                body.objectIDs = this.#objectIDs;
             }
-            if (this._payload) {
-                body.parameters = this._payload;
+            if (this.#payload) {
+                body.parameters = this.#payload;
             }
             const init = {
                 method: "POST",
@@ -79,12 +79,12 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
                 cache: "no-store",
                 redirect: "error",
             };
-            if (this._signal) {
-                init.signal = this._signal.signal;
+            if (this.#signal) {
+                init.signal = this.#signal.signal;
             }
             // Use a local copy to isolate the behavior in case of changes before
             // the request handling has completed.
-            const showLoadingIndicator = this._showLoadingIndicator;
+            const showLoadingIndicator = this.#showLoadingIndicator;
             if (showLoadingIndicator) {
                 AjaxStatus.show();
             }
@@ -93,17 +93,7 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
                 if (!response.ok) {
                     throw new Error_1.StatusNotOk(response);
                 }
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error_1.ExpectedJson(response);
-                }
-                let json;
-                try {
-                    json = await response.json();
-                }
-                catch (e) {
-                    throw new Error_1.InvalidJson(response);
-                }
+                const json = await tryParseAsJson(response);
                 if (response.headers.get("woltlab-background-queue-check") === "yes") {
                     void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((BackgroundQueue) => BackgroundQueue.invoke());
                 }
@@ -135,4 +125,41 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
     }
     exports.DboAction = DboAction;
     exports.default = DboAction;
+    async function handleValidationErrors(error, callback) {
+        if (!(error instanceof Error_1.StatusNotOk)) {
+            throw error;
+        }
+        const response = error.response.clone();
+        if (response.status !== 412) {
+            throw error;
+        }
+        try {
+            const json = await tryParseAsJson(response);
+            if (json.returnValues) {
+                const suppressError = callback(json.returnValues);
+                if (suppressError === true) {
+                    return;
+                }
+            }
+        }
+        catch {
+            // We do not care for any errors while attempting to parse the body..
+        }
+        throw error;
+    }
+    exports.handleValidationErrors = handleValidationErrors;
+    async function tryParseAsJson(response) {
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error_1.ExpectedJson(response);
+        }
+        let json;
+        try {
+            json = await response.json();
+        }
+        catch (e) {
+            throw new Error_1.InvalidJson(response);
+        }
+        return json;
+    }
 });
