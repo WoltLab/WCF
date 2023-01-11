@@ -7,10 +7,10 @@
  * @module  Ajax (alias)
  * @module  WoltLabSuite/Core/Ajax
  */
-define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAction"], function (require, exports, tslib_1, Request_1, Core, DboAction_1) {
+define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAction", "./Ajax/DboAction"], function (require, exports, tslib_1, Request_1, Core, DboAction_1, DboAction_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dboAction = exports.getRequestObject = exports.apiOnce = exports.api = void 0;
+    exports.handleValidationErrors = exports.dboAction = exports.getRequestObject = exports.apiOnce = exports.api = void 0;
     Request_1 = tslib_1.__importDefault(Request_1);
     Core = tslib_1.__importStar(Core);
     DboAction_1 = tslib_1.__importDefault(DboAction_1);
@@ -93,4 +93,5 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Ajax/DboAc
         return DboAction_1.default.prepare(actionName, className);
     }
     exports.dboAction = dboAction;
+    Object.defineProperty(exports, "handleValidationErrors", { enumerable: true, get: function () { return DboAction_2.handleValidationErrors; } });
 });

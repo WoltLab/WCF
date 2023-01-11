@@ -130,12 +130,9 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
             throw error;
         }
         const response = error.response.clone();
-        if (response.status !== 412) {
-            throw error;
-        }
         try {
             const json = await tryParseAsJson(response);
-            if (json.returnValues) {
+            if (isException(json) && json.code === 412) {
                 const suppressError = callback(json.returnValues);
                 if (suppressError === true) {
                     return;
@@ -148,6 +145,9 @@ define(["require", "exports", "tslib", "./Error", "./Status", "../Core"], functi
         throw error;
     }
     exports.handleValidationErrors = handleValidationErrors;
+    function isException(json) {
+        return "code" in json && "returnValues" in json;
+    }
     async function tryParseAsJson(response) {
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {

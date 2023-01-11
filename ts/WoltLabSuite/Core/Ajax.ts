@@ -107,3 +107,5 @@ export function getRequestObject(callbackObject: AjaxCallbackObject): AjaxReques
 export function dboAction(actionName: string, className: string): DboAction {
   return DboAction.prepare(actionName, className);
 }
+
+export { handleValidationErrors } from "./Ajax/DboAction";

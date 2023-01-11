@@ -34,8 +34,6 @@ type RequestBody = {
   parameters?: Payload;
 };
 
-type CallbackHandleValidationErrors = (returnValues: unknown) => boolean;
-
 let ignoreConnectionErrors: boolean | undefined = undefined;
 
 export class DboAction {
@@ -170,19 +168,30 @@ export class DboAction {
 
 export default DboAction;
 
+type ReturnValuesUserInputException = {
+  errorMessage: string;
+  errorType: string;
+  fieldName: string;
+  realErrorMessage: string;
+};
+
+type ResponseDataException = {
+  code: number;
+  returnValues: ReturnValuesUserInputException;
+};
+
+type CallbackHandleValidationErrors = (returnValues: ReturnValuesUserInputException) => boolean;
+
 export async function handleValidationErrors(error: Error, callback: CallbackHandleValidationErrors): Promise<void> {
   if (!(error instanceof StatusNotOk)) {
     throw error;
   }
 
   const response = error.response.clone();
-  if (response.status !== 412) {
-    throw error;
-  }
 
   try {
     const json = await tryParseAsJson(response);
-    if (json.returnValues) {
+    if (isException(json) && json.code === 412) {
       const suppressError = callback(json.returnValues);
       if (suppressError === true) {
         return;
@@ -193,6 +202,10 @@ export async function handleValidationErrors(error: Error, callback: CallbackHan
   }
 
   throw error;
+}
+
+function isException(json: Record<string, unknown>): json is ResponseDataException {
+  return "code" in json && "returnValues" in json;
 }
 
 async function tryParseAsJson(response: Response): Promise<ResponseData> {
