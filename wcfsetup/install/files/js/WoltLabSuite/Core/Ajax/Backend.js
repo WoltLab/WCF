@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             this.url = url;
         }
         get() {
-            return new BackendRequest(this.url, 0 /* RequestType.GET */);
+            return new GetRequest(this.url, 0 /* RequestType.GET */);
         }
         post(payload) {
             return new BackendRequest(this.url, 1 /* RequestType.POST */, payload);
@@ -32,6 +32,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         #payload;
         #abortController;
         #showLoadingIndicator = true;
+        #allowCaching = false;
         constructor(url, type, payload) {
             this.#url = url;
             this.#type = type;
@@ -45,6 +46,10 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
         }
         disableLoadingIndicator() {
             this.#showLoadingIndicator = false;
+            return this;
+        }
+        allowCaching() {
+            this.#allowCaching = true;
             return this;
         }
         async fetchAsJson() {
@@ -82,7 +87,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                 },
                 mode: "same-origin",
                 credentials: "same-origin",
-                cache: "no-store",
+                cache: this.#allowCaching ? "default" : "no-store",
                 redirect: "error",
             }, requestOptions);
             if (this.#type === 1 /* RequestType.POST */) {
@@ -142,6 +147,12 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                     LoadingIndicator.hide();
                 }
             }
+        }
+    }
+    class GetRequest extends BackendRequest {
+        allowCaching() {
+            super.allowCaching();
+            return this;
         }
     }
     function prepareRequest(url) {
