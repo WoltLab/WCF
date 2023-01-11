@@ -30,8 +30,13 @@ declare global {
 
     getFontAwesome6IconMetadata: (name: string) => IconMetadata | undefined;
 
+    HTMLParsedElement: HTMLParsedElement;
     WoltLabLanguage: typeof Language;
     WoltLabTemplate: typeof Template;
+  }
+
+  class HTMLParsedElement extends HTMLElement {
+    parsedCallback(): void;
   }
 
   interface FaIcon extends HTMLElement {

@@ -69,6 +69,10 @@ declare global {
 
   type ArbitraryObject = Record<string, unknown>;
 
+  class HTMLParsedElement extends HTMLElement {
+    parsedCallback(): void;
+  }
+
   interface FaBrand extends HTMLElement {
     size: IconSize;
   }

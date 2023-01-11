@@ -4,6 +4,10 @@ import { Template } from "./Template.js";
 window.WoltLabLanguage = Language;
 window.WoltLabTemplate = Template;
 
+import HTMLParsedElement from "./html-parsed-element";
+
+window.HTMLParsedElement = HTMLParsedElement;
+
 import "./fa-metadata.js";
 import "./fa-brand.ts";
 import "./fa-icon.ts";

@@ -58,3 +58,6 @@ jobs:
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/googlemaps/markerclusterer/index.umd.js node_modules/@googlemaps/markerclusterer/dist/index.umd.js
         diff -wu wcfsetup/install/files/js/3rdParty/googlemaps/markerclusterer/index.umd.js.map node_modules/@googlemaps/markerclusterer/dist/index.umd.js.map
+    - name: "Check 'html-parsed-element'"
+      run: |
+        diff -wu ts/WoltLabSuite/WebComponent/html-parsed-element.js node_modules/html-parsed-element/esm/index.js
