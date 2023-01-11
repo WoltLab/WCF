@@ -16,8 +16,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
     UiScroll = tslib_1.__importStar(UiScroll);
     Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
-    class WoltlabCoreCommentElement extends HTMLElement {
-        connectedCallback() {
+    class WoltlabCoreCommentElement extends HTMLParsedElement {
+        parsedCallback() {
             if (this.menu) {
                 const enableButton = this.menu.querySelector(".comment__option--enable");
                 enableButton?.addEventListener("click", (event) => {

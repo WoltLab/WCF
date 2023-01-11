@@ -27,8 +27,8 @@ type ResponseSave = {
   message: string;
 };
 
-export class WoltlabCoreCommentElement extends HTMLElement {
-  connectedCallback() {
+export class WoltlabCoreCommentElement extends HTMLParsedElement {
+  parsedCallback() {
     if (this.menu) {
       const enableButton = this.menu.querySelector(".comment__option--enable");
       enableButton?.addEventListener("click", (event) => {
