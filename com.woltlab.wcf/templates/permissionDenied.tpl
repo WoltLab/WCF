@@ -35,7 +35,13 @@
 		<h2 class="sectionTitle">{lang}wcf.user.login{/lang}</h2>
 		
 		<p>{lang}wcf.page.error.loginAvailable{/lang}</p>
-		<p style="margin-top: 20px"><a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="button">{icon name='key'} {lang}wcf.user.loginOrRegister{/lang}</a></p>
+		<p style="margin-top: 20px">
+			<a
+				href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
+				class="button"
+				rel="nofollow"
+			>{icon name='key'} {lang}wcf.user.loginOrRegister{/lang}</a>
+		</p>
 	</section>
 {/if}
 

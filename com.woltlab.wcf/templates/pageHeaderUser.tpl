@@ -221,7 +221,12 @@
 		</span>
 	</button>
 {else}
-	<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
+	<a
+		href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
+		class="userPanelLoginLink jsTooltip"
+		title="{lang}wcf.user.loginOrRegister{/lang}"
+		rel="nofollow"
+	>
 		{icon size=32 name='arrow-right-to-bracket'}
 	</a>
 {/if}
