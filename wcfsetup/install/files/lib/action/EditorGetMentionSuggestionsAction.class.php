@@ -53,9 +53,9 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
         return new JsonResponse(
             \array_map(
                 static fn (UserProfile $userProfile) => [
-                    'icon' => $userProfile->getAvatar()->getImageTag(16),
-                    'label' => $userProfile->getUsername(),
-                    'objectID' => $userProfile->getObjectID(),
+                    'avatarTag' => $userProfile->getAvatar()->getImageTag(16),
+                    'username' => $userProfile->getUsername(),
+                    'userID' => $userProfile->getObjectID(),
                 ],
                 $users
             ),

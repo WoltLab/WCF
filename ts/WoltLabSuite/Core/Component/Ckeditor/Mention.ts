@@ -3,9 +3,9 @@ import { prepareRequest } from "../../Ajax/Backend";
 import type { MentionFeedItem } from "@ckeditor/ckeditor5-mention/src/mention";
 
 type SearchResultItem = {
-  icon: string;
-  label: string;
-  objectID: string;
+  avatarTag: string;
+  username: string;
+  userID: number;
   //  type: "group" | "user";
 };
 type ResultGetSearchResultList = SearchResultItem[];
@@ -22,8 +22,9 @@ export async function getPossibleMentions(query: string): Promise<MentionFeedIte
 
   return result.map((item) => {
     return {
-      id: `@${item.label}`,
-      text: item.label,
+      id: `@${item.username}`,
+      text: item.username,
+      icon: item.avatarTag,
     };
   });
 }

@@ -12,8 +12,9 @@ define(["require", "exports", "../../Ajax/Backend"], function (require, exports,
             .fetchAsJson());
         return result.map((item) => {
             return {
-                id: `@${item.label}`,
-                text: item.label,
+                id: `@${item.username}`,
+                text: item.username,
+                icon: item.avatarTag,
             };
         });
     }
