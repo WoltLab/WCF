@@ -277,7 +277,7 @@ final class SessionHandler extends SingletonFactory
 
         \assert((self::USER_SESSION_LIFETIME / $window) < 0xFF);
 
-        return \floor(TIME_NOW / $window) & 0xFF;
+        return \intdiv(TIME_NOW, $window) & 0xFF;
     }
 
     /**
