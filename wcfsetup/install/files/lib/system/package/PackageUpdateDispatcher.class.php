@@ -28,7 +28,7 @@ use wcf\util\XML;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package
  */
-class PackageUpdateDispatcher extends SingletonFactory
+final class PackageUpdateDispatcher extends SingletonFactory
 {
     protected $hasAuthCode = false;
 
