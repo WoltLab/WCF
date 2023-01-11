@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment"], function (require, exports, Mention_1, Quote_1, Attachment_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "../Dom/Util"], function (require, exports, Mention_1, Quote_1, Attachment_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -40,6 +40,12 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
                     feed: (query) => {
                         // TODO: The typings are outdated, cast the result to `any`.
                         return (0, Mention_1.getPossibleMentions)(query);
+                    },
+                    itemRenderer: (item) => {
+                        // TODO: This is ugly.
+                        return (0, Util_1.createFragmentFromHtml)(`
+            <span>${item.icon} ${item.text}</span>
+          `).firstElementChild;
                     },
                     marker: "@",
                     minimumCharacters: 3,

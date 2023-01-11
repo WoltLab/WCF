@@ -4,6 +4,7 @@ import { setup as setupQuotes } from "./Ckeditor/Quote";
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import { uploadAttachment } from "./Ckeditor/Attachment";
+import { createFragmentFromHtml } from "../Dom/Util";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -54,6 +55,12 @@ function enableMentions(configuration: EditorConfig): void {
         feed: (query) => {
           // TODO: The typings are outdated, cast the result to `any`.
           return getPossibleMentions(query) as any;
+        },
+        itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
+          // TODO: This is ugly.
+          return createFragmentFromHtml(`
+            <span>${item.icon} ${item.text}</span>
+          `).firstElementChild as HTMLElement;
         },
         marker: "@",
         minimumCharacters: 3,

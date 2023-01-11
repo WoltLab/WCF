@@ -1,7 +1,5 @@
 import { prepareRequest } from "../../Ajax/Backend";
 
-import type { MentionFeedItem } from "@ckeditor/ckeditor5-mention/src/mention";
-
 type SearchResultItem = {
   avatarTag: string;
   username: string;
@@ -10,7 +8,13 @@ type SearchResultItem = {
 };
 type ResultGetSearchResultList = SearchResultItem[];
 
-export async function getPossibleMentions(query: string): Promise<MentionFeedItem[]> {
+type UserMention = {
+  id: string;
+  text: string;
+  icon: string
+};
+
+export async function getPossibleMentions(query: string): Promise<UserMention[]> {
   // TODO: Provide the URL as a parameter.
   const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
   url.searchParams.set("query", query);
