@@ -8,7 +8,7 @@
  * @since 6.0
  */
 
-import { dboAction } from "../../Ajax";
+import { dboAction, handleValidationErrors } from "../../Ajax";
 import * as UiScroll from "../../Ui/Scroll";
 import * as UiNotification from "../../Ui/Notification";
 import { getPhrase } from "../../Language";
@@ -127,16 +127,14 @@ export class CommentAdd {
         .disableLoadingIndicator()
         .dispatch()) as ResponseAddComment;
     } catch (error) {
-      if (error instanceof StatusNotOk) {
-        const json = await error.response.clone().json();
-        if (json.code === 412 && json.returnValues) {
-          this.#throwError(this.#textarea, json.returnValues.errorType);
-        }
-      } else {
-        throw error;
-      }
+      await handleValidationErrors(error, (returnValues) => {
+        this.#throwError(this.#textarea, returnValues.errorType);
 
-      this.#hideLoadingOverlay();
+        this.#hideLoadingOverlay();
+
+        return true;
+      });
+
       return;
     }
 

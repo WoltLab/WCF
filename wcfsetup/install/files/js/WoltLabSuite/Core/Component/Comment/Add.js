@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Component/Comment/Add
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "./GuestDialog", "../../Core", "../../Ajax/Error"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, GuestDialog_1, Core, Error_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "./GuestDialog", "../../Core"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, GuestDialog_1, Core) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentAdd = void 0;
@@ -99,16 +99,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
                     .dispatch());
             }
             catch (error) {
-                if (error instanceof Error_1.StatusNotOk) {
-                    const json = await error.response.clone().json();
-                    if (json.code === 412 && json.returnValues) {
-                        this.#throwError(this.#textarea, json.returnValues.errorType);
-                    }
-                }
-                else {
-                    throw error;
-                }
-                this.#hideLoadingOverlay();
+                await (0, Ajax_1.handleValidationErrors)(error, (returnValues) => {
+                    this.#throwError(this.#textarea, returnValues.errorType);
+                    this.#hideLoadingOverlay();
+                    return true;
+                });
                 return;
             }
             if (response.guestDialog) {
