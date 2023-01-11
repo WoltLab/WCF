@@ -178,7 +178,11 @@
 				</li>
 			{/if}
 			<li id="userLogin">
-				<a class="loginLink" href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
+				<a
+					class="loginLink"
+					href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
+					rel="nofollow"
+				>{lang}wcf.user.loginOrRegister{/lang}</a>
 			</a>
 		{/if}
 		
