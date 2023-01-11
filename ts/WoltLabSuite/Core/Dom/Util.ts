@@ -46,7 +46,7 @@ const DomUtil = {
    */
   createFragmentFromHtml(html: string): DocumentFragment {
     const tmp = document.createElement("div");
-    this.setInnerHtml(tmp, html);
+    DomUtil.setInnerHtml(tmp, html);
 
     const fragment = document.createDocumentFragment();
     while (tmp.childNodes.length) {
@@ -80,7 +80,7 @@ const DomUtil = {
 
     let id = element.id;
     if (!id) {
-      id = this.getUniqueId();
+      id = DomUtil.getUniqueId();
       element.id = id;
     }
 
@@ -118,8 +118,8 @@ const DomUtil = {
     const styles = window.getComputedStyle(element);
 
     return {
-      height: this.outerHeight(element, styles),
-      width: this.outerWidth(element, styles),
+      height: DomUtil.outerHeight(element, styles),
+      width: DomUtil.outerWidth(element, styles),
     };
   },
 
@@ -236,7 +236,7 @@ const DomUtil = {
    */
   insertHtml(html: string, referenceElement: Element, insertMethod: string): void {
     const element = document.createElement("template");
-    this.setInnerHtml(element, html);
+    DomUtil.setInnerHtml(element, html);
 
     const fragment = document.importNode(element.content, true);
     switch (insertMethod) {
@@ -423,10 +423,10 @@ const DomUtil = {
    * Shorthand function to toggle the element visibility using either `hide()` or `show()`.
    */
   toggle(element: HTMLElement): void {
-    if (this.isHidden(element)) {
-      this.show(element);
+    if (DomUtil.isHidden(element)) {
+      DomUtil.show(element);
     } else {
-      this.hide(element);
+      DomUtil.hide(element);
     }
   },
 

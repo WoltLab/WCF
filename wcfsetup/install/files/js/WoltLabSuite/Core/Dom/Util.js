@@ -41,7 +41,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         createFragmentFromHtml(html) {
             const tmp = document.createElement("div");
-            this.setInnerHtml(tmp, html);
+            DomUtil.setInnerHtml(tmp, html);
             const fragment = document.createDocumentFragment();
             while (tmp.childNodes.length) {
                 fragment.appendChild(tmp.childNodes[0]);
@@ -68,7 +68,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
             }
             let id = element.id;
             if (!id) {
-                id = this.getUniqueId();
+                id = DomUtil.getUniqueId();
                 element.id = id;
             }
             return id;
@@ -97,8 +97,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
         outerDimensions(element) {
             const styles = window.getComputedStyle(element);
             return {
-                height: this.outerHeight(element, styles),
-                width: this.outerWidth(element, styles),
+                height: DomUtil.outerHeight(element, styles),
+                width: DomUtil.outerWidth(element, styles),
             };
         },
         /**
@@ -203,7 +203,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         insertHtml(html, referenceElement, insertMethod) {
             const element = document.createElement("template");
-            this.setInnerHtml(element, html);
+            DomUtil.setInnerHtml(element, html);
             const fragment = document.importNode(element.content, true);
             switch (insertMethod) {
                 case "append":
@@ -357,11 +357,11 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          * Shorthand function to toggle the element visibility using either `hide()` or `show()`.
          */
         toggle(element) {
-            if (this.isHidden(element)) {
-                this.show(element);
+            if (DomUtil.isHidden(element)) {
+                DomUtil.show(element);
             }
             else {
-                this.hide(element);
+                DomUtil.hide(element);
             }
         },
         /**
