@@ -37,16 +37,16 @@ type RequestBody = {
 let ignoreConnectionErrors: boolean | undefined = undefined;
 
 export class DboAction {
-  private readonly actionName: string;
-  private readonly className: string;
-  private _objectIDs: number[] = [];
-  private _payload: Payload = {};
-  private _showLoadingIndicator = true;
-  private _signal: AbortController | undefined = undefined;
+  readonly #actionName: string;
+  readonly #className: string;
+  #objectIDs: number[] = [];
+  #payload: Payload = {};
+  #showLoadingIndicator = true;
+  #signal?: AbortController;
 
   private constructor(actionName: string, className: string) {
-    this.actionName = actionName;
-    this.className = className;
+    this.#actionName = actionName;
+    this.#className = className;
   }
 
   static prepare(actionName: string, className: string): DboAction {
@@ -62,27 +62,27 @@ export class DboAction {
   }
 
   getAbortController(): AbortController {
-    if (this._signal === undefined) {
-      this._signal = new AbortController();
+    if (this.#signal === undefined) {
+      this.#signal = new AbortController();
     }
 
-    return this._signal;
+    return this.#signal;
   }
 
   objectIds(objectIds: number[]): this {
-    this._objectIDs = objectIds;
+    this.#objectIDs = objectIds;
 
     return this;
   }
 
   payload(payload: Payload): this {
-    this._payload = payload;
+    this.#payload = payload;
 
     return this;
   }
 
   disableLoadingIndicator(): this {
-    this._showLoadingIndicator = false;
+    this.#showLoadingIndicator = false;
 
     return this;
   }
@@ -93,14 +93,14 @@ export class DboAction {
     const url = window.WSC_API_URL + "index.php?ajax-proxy/&t=" + Core.getXsrfToken();
 
     const body: RequestBody = {
-      actionName: this.actionName,
-      className: this.className,
+      actionName: this.#actionName,
+      className: this.#className,
     };
-    if (this._objectIDs) {
-      body.objectIDs = this._objectIDs;
+    if (this.#objectIDs) {
+      body.objectIDs = this.#objectIDs;
     }
-    if (this._payload) {
-      body.parameters = this._payload;
+    if (this.#payload) {
+      body.parameters = this.#payload;
     }
 
     const init: RequestInit = {
@@ -117,13 +117,13 @@ export class DboAction {
       redirect: "error",
     };
 
-    if (this._signal) {
-      init.signal = this._signal.signal;
+    if (this.#signal) {
+      init.signal = this.#signal.signal;
     }
 
     // Use a local copy to isolate the behavior in case of changes before
     // the request handling has completed.
-    const showLoadingIndicator = this._showLoadingIndicator;
+    const showLoadingIndicator = this.#showLoadingIndicator;
     if (showLoadingIndicator) {
       AjaxStatus.show();
     }
