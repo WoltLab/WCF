@@ -51,6 +51,7 @@ class BackendRequest {
   readonly #payload?: Payload;
   #abortController?: AbortController;
   #showLoadingIndicator = true;
+  #allowCaching = false;
 
   constructor(url: string, type: RequestType, payload?: Payload) {
     this.#url = url;
@@ -68,6 +69,12 @@ class BackendRequest {
 
   disableLoadingIndicator(): this {
     this.#showLoadingIndicator = false;
+
+    return this;
+  }
+
+  allowCaching(): this {
+    this.#allowCaching = true;
 
     return this;
   }
@@ -114,7 +121,7 @@ class BackendRequest {
         },
         mode: "same-origin",
         credentials: "same-origin",
-        cache: "no-store",
+        cache: this.#allowCaching ? "default" : "no-store",
         redirect: "error",
       },
       requestOptions,
