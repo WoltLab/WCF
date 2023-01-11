@@ -17,7 +17,6 @@ import { RedactorEditor } from "../../Ui/Redactor/Editor";
 import DomUtil from "../../Dom/Util";
 import { showGuestDialog } from "./GuestDialog";
 import * as Core from "../../Core";
-import { StatusNotOk } from "../../Ajax/Error";
 
 type ResponseAddComment = {
   guestDialog?: string;
