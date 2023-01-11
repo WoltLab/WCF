@@ -30,9 +30,9 @@ use wcf\util\XML;
  */
 final class PackageUpdateDispatcher extends SingletonFactory
 {
-    protected $hasAuthCode = false;
+    private $hasAuthCode = false;
 
-    protected $purchasedVersions = [
+    private $purchasedVersions = [
         'woltlab' => [],
         'pluginstore' => [],
     ];
@@ -103,7 +103,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
         }
     }
 
-    protected function getPurchasedVersions()
+    private function getPurchasedVersions()
     {
         $client = HttpFactory::makeClientWithTimeout(5);
         $request = new Request(
@@ -141,7 +141,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * @throws  PackageUpdateUnauthorizedException
      * @throws  SystemException
      */
-    protected function getPackageUpdateXML(PackageUpdateServer $updateServer)
+    private function getPackageUpdateXML(PackageUpdateServer $updateServer)
     {
         $settings = [];
         $authData = $updateServer->getAuthData();
@@ -261,7 +261,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * @return      array
      * @throws      SystemException
      */
-    protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content, $apiVersion)
+    private function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content, $apiVersion)
     {
         $isTrustedServer = $updateServer->isTrustedServer();
 
@@ -304,7 +304,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * @return      array
      * @throws      PackageValidationException
      */
-    protected function parsePackageUpdateXMLBlock(
+    private function parsePackageUpdateXMLBlock(
         PackageUpdateServer $updateServer,
         \DOMXPath $xpath,
         \DOMElement $package,
@@ -495,7 +495,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * @param array $allNewPackages
      * @param int $packageUpdateServerID
      */
-    protected function savePackageUpdates(array $allNewPackages, $packageUpdateServerID)
+    private function savePackageUpdates(array $allNewPackages, $packageUpdateServerID)
     {
         $excludedPackagesParameters = $requirementInserts = [];
         $sql = "INSERT INTO wcf1_package_update
@@ -821,7 +821,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * @param int $packageUpdateVersionID
      * @return  array       $updates
      */
-    protected function removeUpdateRequirements(array $updates, $packageUpdateVersionID)
+    private function removeUpdateRequirements(array $updates, $packageUpdateVersionID)
     {
         $sql = "SELECT      pur.package, pur.minversion, p.packageID
                 FROM        wcf1_package_update_requirement pur
