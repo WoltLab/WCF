@@ -30,9 +30,9 @@ use wcf\util\XML;
  */
 final class PackageUpdateDispatcher extends SingletonFactory
 {
-    private $hasAuthCode = false;
+    private bool $hasAuthCode = false;
 
-    private $purchasedVersions = [
+    private array $purchasedVersions = [
         'woltlab' => [],
         'pluginstore' => [],
     ];
@@ -41,9 +41,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * Refreshes the package database.
      *
      * @param int[] $packageUpdateServerIDs
-     * @param bool $ignoreCache
      */
-    public function refreshPackageDatabase(array $packageUpdateServerIDs = [], $ignoreCache = false)
+    public function refreshPackageDatabase(array $packageUpdateServerIDs = [], bool $ignoreCache = false)
     {
         // get update server data
         $tmp = PackageUpdateServer::getActiveUpdateServers($packageUpdateServerIDs);
@@ -137,7 +136,6 @@ final class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Fetches the package_update.xml from an update server.
      *
-     * @param PackageUpdateServer $updateServer
      * @throws  PackageUpdateUnauthorizedException
      * @throws  SystemException
      */
@@ -255,13 +253,9 @@ final class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Parses a stream containing info from a packages_update.xml.
      *
-     * @param PackageUpdateServer $updateServer
-     * @param string $content
-     * @param string $apiVersion
-     * @return      array
      * @throws      SystemException
      */
-    private function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content, $apiVersion)
+    private function parsePackageUpdateXML(PackageUpdateServer $updateServer, string $content, string $apiVersion): array
     {
         $isTrustedServer = $updateServer->isTrustedServer();
 
@@ -297,19 +291,14 @@ final class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Parses the xml structure from a packages_update.xml.
      *
-     * @param PackageUpdateServer $updateServer
-     * @param \DOMXPath $xpath
-     * @param \DOMElement $package
-     * @param string $apiVersion
-     * @return      array
      * @throws      PackageValidationException
      */
     private function parsePackageUpdateXMLBlock(
         PackageUpdateServer $updateServer,
         \DOMXPath $xpath,
         \DOMElement $package,
-        $apiVersion
-    ) {
+        string $apiVersion
+    ): array {
         // define default values
         $packageInfo = [
             'author' => '',
@@ -491,11 +480,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
     /**
      * Updates information parsed from a packages_update.xml into the database.
-     *
-     * @param array $allNewPackages
-     * @param int $packageUpdateServerID
      */
-    private function savePackageUpdates(array $allNewPackages, $packageUpdateServerID)
+    private function savePackageUpdates(array $allNewPackages, int $packageUpdateServerID): void
     {
         $excludedPackagesParameters = $requirementInserts = [];
         $sql = "INSERT INTO wcf1_package_update
@@ -679,12 +665,10 @@ final class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Returns a list of available updates for installed packages.
      *
-     * @param bool $removeRequirements
-     * @param bool $removeOlderMinorReleases
      * @return  array
      * @throws      SystemException
      */
-    public function getAvailableUpdates($removeRequirements = true, $removeOlderMinorReleases = false)
+    public function getAvailableUpdates(bool $removeRequirements = true, bool $removeOlderMinorReleases = false): array
     {
         $updates = [];
 
@@ -816,12 +800,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
     /**
      * Removes unnecessary updates of requirements from the list of available updates.
-     *
-     * @param array $updates
-     * @param int $packageUpdateVersionID
-     * @return  array       $updates
      */
-    private function removeUpdateRequirements(array $updates, $packageUpdateVersionID)
+    private function removeUpdateRequirements(array $updates, int $packageUpdateVersionID): array
     {
         $sql = "SELECT      pur.package, pur.minversion, p.packageID
                 FROM        wcf1_package_update_requirement pur
@@ -854,12 +834,9 @@ final class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Returns package update versions of the specified package.
      *
-     * @param string $package package identifier
-     * @param string $version package version
-     * @return  array       package update versions
      * @throws  SystemException
      */
-    public function getPackageUpdateVersions($package, $version = '')
+    public function getPackageUpdateVersions(string $package, string $version = ''): array
     {
         $packageUpdateServerIDs = [];
         foreach (PackageUpdateServer::getActiveUpdateServers() as $packageUpdateServer) {
@@ -898,11 +875,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
     /**
      * Returns the newest available version of a package.
-     *
-     * @param string $package package identifier
-     * @return  string      newest package version
      */
-    public function getNewestPackageVersion($package)
+    public function getNewestPackageVersion(string $package): string
     {
         // get all versions
         $versions = [];
@@ -928,12 +902,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
     /**
      * Stores the filename of a download in session.
-     *
-     * @param string $package package identifier
-     * @param string $version package version
-     * @param string $filename
      */
-    public function cacheDownload($package, $version, $filename)
+    public function cacheDownload(string $package, string $version, string $filename): void
     {
         $cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');
         if (!\is_array($cachedDownloads)) {
