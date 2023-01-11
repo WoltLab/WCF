@@ -2,7 +2,12 @@
 	{if $__wcf->user->userID}
 		<span class="userPanelAvatar" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}</span>
 	{else}
-		<a href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}" class="userPanelLoginLink jsTooltip" title="{lang}wcf.user.loginOrRegister{/lang}">
+		<a
+			href="{link controller='Login' url=$__wcf->getRequestURI()}{/link}"
+			class="userPanelLoginLink jsTooltip"
+			title="{lang}wcf.user.loginOrRegister{/lang}"
+			rel="nofollow"
+		>
 			<span class="icon icon32 fa-sign-in" aria-hidden="true"></span>
 		</a>
 	{/if}
