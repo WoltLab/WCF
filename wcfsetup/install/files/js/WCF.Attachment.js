@@ -64,6 +64,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @var Object
 	 */
 	_options: {},
+
+	/**
+	 * @var Map<number, (attachmentId: number, url: string) => void>
+	 */
+	_pendingDragAndDrop: undefined,
 	
 	/**
 	 * @see        WCF.Upload.init()
@@ -81,6 +86,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._parentObjectID = parseInt(parentObjectID);
 		this._editorId = editorId;
 		this._options = $.extend(true, this._options, options || {});
+		this._pendingDragAndDrop = new Map();
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
@@ -106,7 +112,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId, this._editorUpload.bind(this));
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId, (function (data) {
@@ -199,29 +205,28 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param        object                data
 	 */
 	_editorUpload: function (data) {
-		var replace = null;
-		
-		// show tab
-		this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
-		
-		var callbackUploadId = (function(uploadId) {
-			if (replace === null) {
-				this._autoInsert.push(uploadId);
-			}
-			else {
-				this._replaceOnLoad[uploadId] = replace;
-			}
+		data.promise = new Promise((resolve) => {
+			// show tab
+			this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
 
-			data.uploadID = uploadId;
-		}).bind(this);
-		
-		if (data.file) {
-			this._upload(undefined, data.file, undefined, callbackUploadId);
-		}
-		else {
-			this._upload(undefined, undefined, data.blob, callbackUploadId);
-			replace = data.replace || null;
-		}
+			this._upload(
+				undefined,
+				data.file,
+				undefined,
+				(uploadId) => {
+					this._pendingDragAndDrop.set(uploadId, (attachmentId, url) => {
+						if (attachmentId === 0) {
+							data.abortController.abort();
+						} else {
+							resolve({
+								attachmentId,
+								url
+							});
+						}
+					});
+				}
+			);
+		});
 	},
 	
 	/**
@@ -541,6 +546,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			// get filename and check result
 			var $filename = $li.data('filename');
 			var $internalFileID = $li.data('internalFileID');
+			let attachmentId = 0;
+			let url = "";
 			if (data.returnValues && data.returnValues.attachments[$internalFileID]) {
 				attachmentData = data.returnValues.attachments[$internalFileID];
 				
@@ -564,6 +571,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				// update attachment link
 				var $link = $('<a href=""></a>');
 				$link.text($filename).attr('href', attachmentData.url);
+				url = attachmentData.url;
 				$link[0].target = '_blank';
 				
 				if (attachmentData.isImage != 0) {
@@ -580,6 +588,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', attachmentData.attachmentID);
+				attachmentId = attachmentData.attachmentID;
 				
 				if (this._editorId) {
 					if (attachmentData.tinyURL) {
@@ -636,6 +645,13 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.' + $errorMessage) + '</small>'));
 				$li.addClass('uploadFailed');
+			}
+
+			const callbackDragAndDrop = this._pendingDragAndDrop.get(uploadID);
+			if (callbackDragAndDrop !== undefined) {
+				callbackDragAndDrop(attachmentId, url);
+
+				this._pendingDragAndDrop.delete(uploadID);
 			}
 			
 			if (WCF.inArray(uploadID, this._autoInsert)) {

@@ -3,6 +3,7 @@ import { setup as setupQuotes } from "./Ckeditor/Quote";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import { uploadAttachment } from "./Ckeditor/Attachment";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -39,21 +40,39 @@ class Ckeditor {
   }
 }
 
+function enableAttachments(element: HTMLElement, configuration: EditorConfig): void {
+  // TODO: The typings do not include our custom plugins yet.
+  (configuration as any).woltlabUpload = {
+    upload: (file: File, abortController: AbortController) => uploadAttachment(element.id, file, abortController),
+  };
+}
+
+function enableMentions(configuration: EditorConfig): void {
+  configuration.mention = {
+    feeds: [
+      {
+        feed: (query) => {
+          // TODO: The typings are outdated, cast the result to `any`.
+          return getPossibleMentions(query) as any;
+        },
+        marker: "@",
+        minimumCharacters: 3,
+      },
+    ],
+  };
+}
+
 export async function setupCkeditor(element: HTMLElement, configuration: EditorConfig): Promise<CKEditor> {
   let editor = instances.get(element);
   if (editor === undefined) {
-    configuration.mention = {
-      feeds: [
-        {
-          feed: (query) => {
-            // TODO: The typings are outdated, cast the result to `any`.
-            return getPossibleMentions(query) as any;
-          },
-          marker: "@",
-          minimumCharacters: 3,
-        },
-      ],
-    };
+    if (element.dataset.disableAttachments !== "true") {
+      enableAttachments(element, configuration);
+    }
+
+    if (element.dataset.supportMention === "true") {
+      enableMentions(configuration);
+    }
+
     const cke = await window.CKEditor5.create(element, configuration);
     editor = new Ckeditor(cke);
 

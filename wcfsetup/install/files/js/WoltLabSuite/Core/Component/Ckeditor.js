@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote"], function (require, exports, Mention_1, Quote_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment"], function (require, exports, Mention_1, Quote_1, Attachment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -27,21 +27,35 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote"], functio
             return this.#editor.sourceElement;
         }
     }
+    function enableAttachments(element, configuration) {
+        // TODO: The typings do not include our custom plugins yet.
+        configuration.woltlabUpload = {
+            upload: (file, abortController) => (0, Attachment_1.uploadAttachment)(element.id, file, abortController),
+        };
+    }
+    function enableMentions(configuration) {
+        configuration.mention = {
+            feeds: [
+                {
+                    feed: (query) => {
+                        // TODO: The typings are outdated, cast the result to `any`.
+                        return (0, Mention_1.getPossibleMentions)(query);
+                    },
+                    marker: "@",
+                    minimumCharacters: 3,
+                },
+            ],
+        };
+    }
     async function setupCkeditor(element, configuration) {
         let editor = instances.get(element);
         if (editor === undefined) {
-            configuration.mention = {
-                feeds: [
-                    {
-                        feed: (query) => {
-                            // TODO: The typings are outdated, cast the result to `any`.
-                            return (0, Mention_1.getPossibleMentions)(query);
-                        },
-                        marker: "@",
-                        minimumCharacters: 3,
-                    },
-                ],
-            };
+            if (element.dataset.disableAttachments !== "true") {
+                enableAttachments(element, configuration);
+            }
+            if (element.dataset.supportMention === "true") {
+                enableMentions(configuration);
+            }
             const cke = await window.CKEditor5.create(element, configuration);
             editor = new Ckeditor(cke);
             instances.set(element, editor);
