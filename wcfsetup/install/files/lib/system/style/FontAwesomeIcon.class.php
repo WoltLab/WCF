@@ -5,7 +5,6 @@ namespace wcf\system\style;
 use wcf\system\style\exception\InvalidIconFormat;
 use wcf\system\style\exception\InvalidIconSize;
 use wcf\system\style\exception\UnknownIcon;
-use wcf\util\JSON;
 
 /**
  * Represents an icon for Font Awesome.

@@ -303,7 +303,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         // and (a) a new object type is added or (b) the existing object type is
                         // different from the edited object type
                         if (
-                            $objectType !== null && ($formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                            $objectType !== null && (
+                                $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
                                 || $this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $formField->getValue()
                                 || $this->editedEntry->getElementsByTagName('definitionname')->item(0)->nodeValue !== $definition->definitionName
                             )

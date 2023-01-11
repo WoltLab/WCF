@@ -8,7 +8,6 @@ use phpline\internal\Log;
 use phpline\TerminalFactory;
 use wcf\data\session\SessionEditor;
 use wcf\system\cli\command\CLICommandHandler;
-use wcf\system\cli\command\CLICommandNameCompleter;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;

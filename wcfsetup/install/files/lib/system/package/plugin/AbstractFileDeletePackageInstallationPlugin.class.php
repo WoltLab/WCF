@@ -4,7 +4,6 @@ namespace wcf\system\package\plugin;
 
 use wcf\data\application\Application;
 use wcf\data\package\Package;
-use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;

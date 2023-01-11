@@ -216,7 +216,7 @@ class UserProfileAction extends UserAction implements IPopoverAction
             $entries[] = [
                 'activityPoints' => $row['activityPoints'],
                 'items' => $row['items'],
-                'objectType' => $activityPointObjectTypes[$row['objectTypeID']]
+                'objectType' => $activityPointObjectTypes[$row['objectTypeID']],
             ];
         }
 
