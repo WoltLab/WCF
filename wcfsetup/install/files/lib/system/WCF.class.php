@@ -126,7 +126,9 @@ class WCF
      * list of autoload directories
      * @var array
      */
-    protected static $autoloadDirectories = [];
+    protected static $autoloadDirectories = [
+        'wcf' => WCF_DIR . 'lib/',
+    ];
 
     /**
      * list of unique instances of each core object
@@ -181,9 +183,6 @@ class WCF
      */
     public function __construct()
     {
-        // add autoload directory
-        self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
-
         // define tmp directory
         if (!\defined('TMP_DIR')) {
             \define('TMP_DIR', FileUtil::getTempFolder());

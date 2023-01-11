@@ -54,9 +54,6 @@ class CLIWCF extends WCF
      */
     public function __construct()
     {
-        // add autoload directory
-        self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
-
         // define tmp directory
         if (!\defined('TMP_DIR')) {
             \define('TMP_DIR', FileUtil::getTempFolder());
