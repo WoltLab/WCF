@@ -113,7 +113,7 @@ export class UiSearchExtended {
   }
 
   private async search(searchAction: SearchAction): Promise<void> {
-    if (!this.queryInput.value.trim() && !this.form["usernames"].value) {
+    if (!this.queryInput.value.trim()) {
       return;
     }
 
