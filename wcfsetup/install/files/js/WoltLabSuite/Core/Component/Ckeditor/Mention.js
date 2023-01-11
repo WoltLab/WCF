@@ -1,18 +1,15 @@
-define(["require", "exports", "../../Ajax"], function (require, exports, Ajax_1) {
+define(["require", "exports", "../../Ajax/Backend"], function (require, exports, Backend_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getPossibleMentions = void 0;
     async function getPossibleMentions(query) {
-        const result = (await (0, Ajax_1.dboAction)("getSearchResultList", "wcf\\data\\user\\UserAction")
+        // TODO: Provide the URL as a parameter.
+        const url = new URL(window.WSC_API_URL + "index.php?editor-get-mention-suggestions/");
+        url.searchParams.set("query", query);
+        const result = (await (0, Backend_1.prepareRequest)(url.toString())
+            .get()
             .disableLoadingIndicator()
-            .payload({
-            data: {
-                includeUserGroups: false,
-                scope: "mention",
-                searchString: query,
-            },
-        })
-            .dispatch());
+            .fetchAsJson());
         return result.map((item) => {
             return {
                 id: `@${item.label}`,
