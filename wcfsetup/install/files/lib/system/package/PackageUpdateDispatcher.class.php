@@ -495,7 +495,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      * @param array $allNewPackages
      * @param int $packageUpdateServerID
      */
-    protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID)
+    protected function savePackageUpdates(array $allNewPackages, $packageUpdateServerID)
     {
         $excludedPackagesParameters = $requirementInserts = [];
         $sql = "INSERT INTO wcf1_package_update
