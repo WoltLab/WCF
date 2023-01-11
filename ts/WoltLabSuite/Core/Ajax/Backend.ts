@@ -33,8 +33,8 @@ class SetupRequest {
     this.url = url;
   }
 
-  get(): BackendRequest {
-    return new BackendRequest(this.url, RequestType.GET);
+  get(): GetRequest {
+    return new GetRequest(this.url, RequestType.GET);
   }
 
   post(payload?: Payload): BackendRequest {
@@ -73,7 +73,7 @@ class BackendRequest {
     return this;
   }
 
-  allowCaching(): this {
+  protected allowCaching(): this {
     this.#allowCaching = true;
 
     return this;
@@ -187,6 +187,14 @@ class BackendRequest {
         LoadingIndicator.hide();
       }
     }
+  }
+}
+
+class GetRequest extends BackendRequest {
+  public allowCaching(): this {
+    super.allowCaching();
+
+    return this;
   }
 }
 

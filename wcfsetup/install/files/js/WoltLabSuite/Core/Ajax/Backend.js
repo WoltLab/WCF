@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
             this.url = url;
         }
         get() {
-            return new BackendRequest(this.url, 0 /* RequestType.GET */);
+            return new GetRequest(this.url, 0 /* RequestType.GET */);
         }
         post(payload) {
             return new BackendRequest(this.url, 1 /* RequestType.POST */, payload);
@@ -147,6 +147,12 @@ define(["require", "exports", "tslib", "./Status", "./Error", "../Core"], functi
                     LoadingIndicator.hide();
                 }
             }
+        }
+    }
+    class GetRequest extends BackendRequest {
+        allowCaching() {
+            super.allowCaching();
+            return this;
         }
     }
     function prepareRequest(url) {
