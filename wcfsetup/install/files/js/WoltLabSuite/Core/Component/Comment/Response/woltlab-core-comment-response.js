@@ -177,7 +177,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             // The initialization of the menu can taken place after
             // `parsedCallback()` is called.
             if (menu === undefined) {
-                menu = this.querySelector(".comment__menu .dropdownMenu") || undefined;
+                menu = this.querySelector(".commentResponse__menu .dropdownMenu") || undefined;
             }
             return menu;
         }

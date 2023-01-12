@@ -3,25 +3,26 @@
 {if !$commentCanModerate|isset}{assign var=commentCanModerate value=$commentManager->canModerate($commentList->objectTypeID, $commentList->objectID)}{/if}
 {foreach from=$commentList item=comment}
 	{if $comment->isDisabled && !$commentCanModerate}
-		<li>
+		{* TODO *}
+		<div>
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
-		</li>
+		</div>
 	{else}
-		<li class="comment jsComment{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID, 2)} ignoredUserContent{/if}"
+		<div class="commentList__item jsComment{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID, 2)} ignoredUserContent{/if}"
 			data-comment-id="{@$comment->commentID}"
 			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
 			data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
 			data-responses="{@$comment->responses}" data-last-response-time="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{@$comment->isDisabled}"
 			data-last-response-id="{if $ignoreLastResponseTime|empty}{@$comment->getLastResponseID()}{else}0{/if}"
 		>
-			<woltlab-core-comment comment-id="{@$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<woltlab-core-comment class="comment" comment-id="{@$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="comment__header">
 					<div class="comment__avatar">
 						{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 					</div>
 					<div class="comment__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
 						{if $comment->userID}
-							<a href="{$comment->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$comment->userID}" itemprop="url">
+							<a href="{$comment->getUserProfile()->getLink()}" class="comment__author__link userLink" data-object-id="{@$comment->userID}" itemprop="url">
 								<span itemprop="name">{@$comment->getUserProfile()->getFormattedUsername()}</span>
 							</a>
 						{else}
@@ -30,7 +31,7 @@
 					</div>
 					<div class="comment__date">
 						<meta itemprop="dateCreated" content="{@$comment->time|date:'c'}">
-						<a href="{$comment->getLink()}">{@$comment->time|time}</a>
+						<a href="{$comment->getLink()}" class="comment__permalink">{@$comment->time|time}</a>
 					</div>
 					<div class="comment__status">
 						{if $comment->isDisabled}
@@ -107,7 +108,7 @@
 						{if $commentCanAdd}
 							<button
 								type="button"
-								class="comment__button comment__button--reply"
+								class="comment__button comment__button--reply button small"
 							>
 								<span>{lang}wcf.comment.button.response.add{/lang}</span>
 							</button>
@@ -134,11 +135,11 @@
 
 			{if !$ignoreLastResponseTime|empty || $comment|count}
 				<div class="comment__responses">
-					<ul data-responses="{if $commentCanModerate}{@$comment->unfilteredResponses}{else}{@$comment->responses}{/if}" class="containerList commentResponseList">
+					<div class="containerList commentResponseList" data-responses="{if $commentCanModerate}{@$comment->unfilteredResponses}{else}{@$comment->responses}{/if}">
 						{if $ignoreLastResponseTime|empty}{include file='commentResponseList' responseList=$comment}{/if}
-					</ul>
+					</div>
 				</div>
 			{/if}
-		</li>
+		</div>
 	{/if}
 {/foreach}

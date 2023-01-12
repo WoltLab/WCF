@@ -1,24 +1,25 @@
 {foreach from=$responseList item=response}
 	{if $response->isDisabled && !$commentCanModerate}
-		<li>
+		{* TODO *}
+		<div>
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
-		</li>
+		</div>
 	{else}
-		<li class="commentResponse jsCommentResponse{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID, 2)} ignoredUserContent{/if}"
+		<div class="commentResponse__item jsCommentResponse{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID, 2)} ignoredUserContent{/if}"
 			data-response-id="{@$response->responseID}"
 			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)}
 			data-can-edit="{if $response->isEditable()}true{else}false{/if}"
 			data-can-delete="{if $response->isDeletable()}true{else}false{/if}"
 			data-user-id="{@$response->userID}"
 		>
-			<woltlab-core-comment-response response-id="{@$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<woltlab-core-comment-response class="commentResponse" response-id="{@$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="commentResponse__header">
 					<div class="commentResponse__avatar">
 						{user object=$response->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}
 					</div>
 					<div class="commentResponse__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
 						{if $response->userID}
-							<a href="{$response->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$response->userID}" itemprop="url">
+							<a href="{$response->getUserProfile()->getLink()}" class="commentResponse__author__link userLink" data-object-id="{@$response->userID}" itemprop="url">
 								<span itemprop="name">{@$response->getUserProfile()->getFormattedUsername()}</span>
 							</a>
 						{else}
@@ -27,7 +28,7 @@
 					</div>
 					<div class="commentResponse__date">
 						<meta itemprop="dateCreated" content="{@$response->time|date:'c'}">
-						<a href="{$response->getLink()}">{@$response->time|time}</a>
+						<a href="{$response->getLink()}" class="commentResponse__permalink">{@$response->time|time}</a>
 					</div>
 					<div class="commentResponse__status">
 						{if $response->isDisabled}
@@ -39,7 +40,7 @@
 						{/if}
 					</div>
 
-					<div class="comment__menu dropdown" id="commentResponseOptions{@$response->responseID}">
+					<div class="commentResponse__menu dropdown" id="commentResponseOptions{@$response->responseID}">
 		                <button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
 		                <ul class="dropdownMenu">
@@ -120,6 +121,6 @@
 					{event name='commentResponseFooter'}
 				</div>
 			</woltlab-core-comment-response>
-		</li>
+		</div>
 	{/if}
 {/foreach}

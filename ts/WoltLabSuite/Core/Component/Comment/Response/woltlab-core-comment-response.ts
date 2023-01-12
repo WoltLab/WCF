@@ -226,7 +226,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
     // The initialization of the menu can taken place after
     // `parsedCallback()` is called.
     if (menu === undefined) {
-      menu = this.querySelector<HTMLElement>(".comment__menu .dropdownMenu") || undefined;
+      menu = this.querySelector<HTMLElement>(".commentResponse__menu .dropdownMenu") || undefined;
     }
 
     return menu;

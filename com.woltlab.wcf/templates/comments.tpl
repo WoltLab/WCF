@@ -40,10 +40,10 @@
     data-comments="{@$commentList->countObjects()}"
     data-last-comment-time="{@$lastCommentTime}"
 >
-    <ul class="commentList containerList">
+    <div class="commentList">
     	{if $commentCanAdd}
             {capture assign=_commentAddWysiwygSelector}{$commentContainerID}AddComment{/capture}
-            <li class="commentAdd">
+            <div class="commentAdd">
             	<div class="commentAdd__avatar">
             		{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}
             	</div>
@@ -76,10 +76,11 @@
             			</div>
             		</div>
             	</div>
-            </li>
+            </div>
         {/if}
+		
     	{include file='commentList'}
-    </ul>
+    </div>
 
     {if $commentCanAdd}
         {* comment response, editor instance will be re-used *}
