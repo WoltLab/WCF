@@ -71,6 +71,10 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
       onClose: () => this._dialogOnClose(),
     });
 
+    if (UiDialog.getDialog(this._dialogId)) {
+      throw new Error(`The dialogId ${this._dialogId} is already in use.`);
+    }
+
     this._formId = "";
     this._dialogContent = "";
   }
