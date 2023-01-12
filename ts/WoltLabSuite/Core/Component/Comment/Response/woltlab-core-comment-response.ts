@@ -27,8 +27,8 @@ type ResponseSave = {
   message: string;
 };
 
-export class WoltlabCoreCommentResponseElement extends HTMLElement {
-  connectedCallback() {
+export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
+  parsedCallback() {
     if (this.menu) {
       const enableButton = this.menu.querySelector(".commentResponse__option--enable");
       enableButton?.addEventListener("click", (event) => {
@@ -221,7 +221,15 @@ export class WoltlabCoreCommentResponseElement extends HTMLElement {
   }
 
   get menu(): HTMLElement | undefined {
-    return UiDropdownSimple.getDropdownMenu(`commentResponseOptions${this.responseId}`);
+    let menu = UiDropdownSimple.getDropdownMenu(`commentResponseOptions${this.responseId}`);
+
+    // The initialization of the menu can taken place after
+    // `parsedCallback()` is called.
+    if (menu === undefined) {
+      menu = this.querySelector<HTMLElement>(".comment__menu .dropdownMenu") || undefined;
+    }
+
+    return menu;
   }
 
   get #editorId(): string {

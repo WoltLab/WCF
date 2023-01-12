@@ -16,8 +16,8 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
     Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiScroll = tslib_1.__importStar(UiScroll);
-    class WoltlabCoreCommentResponseElement extends HTMLElement {
-        connectedCallback() {
+    class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
+        parsedCallback() {
             if (this.menu) {
                 const enableButton = this.menu.querySelector(".commentResponse__option--enable");
                 enableButton?.addEventListener("click", (event) => {
@@ -173,7 +173,13 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             return parseInt(this.getAttribute("response-id"));
         }
         get menu() {
-            return Simple_1.default.getDropdownMenu(`commentResponseOptions${this.responseId}`);
+            let menu = Simple_1.default.getDropdownMenu(`commentResponseOptions${this.responseId}`);
+            // The initialization of the menu can taken place after
+            // `parsedCallback()` is called.
+            if (menu === undefined) {
+                menu = this.querySelector(".comment__menu .dropdownMenu") || undefined;
+            }
+            return menu;
         }
         get #editorId() {
             return `commentResponseEditor${this.responseId}`;
