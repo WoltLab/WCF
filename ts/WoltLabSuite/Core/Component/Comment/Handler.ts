@@ -16,9 +16,10 @@ import { getPhrase } from "../../Language";
 import { CommentAdd } from "./Add";
 import { CommentResponseAdd } from "./Response/Add";
 import * as UiScroll from "../../Ui/Scroll";
-import WoltlabCoreCommentElement from "./woltlab-core-comment";
-import WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
 import { StatusNotOk } from "../../Ajax/Error";
+
+import type WoltlabCoreCommentElement from "./woltlab-core-comment";
+import type WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
 
 type ResponseLoadComments = {
   lastCommentTime: number;
@@ -218,7 +219,7 @@ class CommentHandler {
       }
 
       element.addEventListener("reply", () => {
-        this.#showAddResponse(element.parentElement!, element.commentId);
+        this.#showAddResponse(element, element.commentId);
       });
 
       element.addEventListener("delete", () => {
@@ -249,15 +250,15 @@ class CommentHandler {
       const phrase = getPhrase("wcf.comment.response.more", { count: responses - displayedResponses });
 
       if (!comment.querySelector(".commentLoadNextResponses")) {
-        const li = document.createElement("li");
-        li.classList.add("commentLoadNextResponses");
-        comment.querySelector(".commentResponseList")!.append(li);
+        const item = document.createElement("div");
+        item.classList.add("commentList__item", "commentLoadNextResponses");
+        comment.querySelector(".commentResponseList")!.append(item);
 
         const button = document.createElement("button");
         button.type = "button";
         button.classList.add("button", "small", "commentLoadNextResponses__button");
         button.textContent = phrase;
-        li.append(button);
+        item.append(button);
 
         button.addEventListener("click", () => {
           void this.#loadNextResponses(comment);
@@ -354,8 +355,9 @@ class CommentHandler {
     }
   }
 
-  #showAddResponse(container: HTMLElement, commentId: number): void {
-    container.append(this.#container.querySelector<HTMLElement>(".commentResponseAdd")!);
+  #showAddResponse(comment: WoltlabCoreCommentElement, commentId: number): void {
+    const responseAdd = this.#container.querySelector<HTMLElement>(".commentResponseAdd")!;
+    comment.insertAdjacentElement("afterend", responseAdd);
     this.#commentResponseAdd.show(commentId);
   }
 
@@ -371,15 +373,15 @@ class CommentHandler {
   }
 
   #insertResponse(commentId: number, template: string): void {
-    const li = this.#container.querySelector(`.comment[data-comment-id="${commentId}"]`)!;
-    let commentResponseList = li.querySelector<HTMLElement>(".commentResponseList");
+    const item = this.#container.querySelector(`.commentList__item[data-comment-id="${commentId}"]`)!;
+    let commentResponseList = item.querySelector<HTMLElement>(".commentResponseList");
     if (!commentResponseList) {
       const div = document.createElement("div");
       div.classList.add("comment__responses");
-      li.append(div);
+      item.append(div);
 
-      commentResponseList = document.createElement("ul");
-      commentResponseList.classList.add("containerList", "commentResponseList");
+      commentResponseList = document.createElement("div");
+      commentResponseList.classList.add("commentResponseList");
       commentResponseList.dataset.responses = "1";
       div.append(commentResponseList);
     }

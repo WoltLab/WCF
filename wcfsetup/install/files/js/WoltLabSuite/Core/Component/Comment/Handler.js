@@ -73,15 +73,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     .dispatch());
             }
             catch (error) {
-                if (error instanceof Error_1.StatusNotOk) {
-                    const json = await error.response.clone().json();
-                    if (json.code === 412) {
-                        // comment id is invalid or there is a mismatch, silently ignore it
-                        permaLinkComment.remove();
-                        return;
-                    }
-                }
-                throw error;
+                await (0, Ajax_1.handleValidationErrors)(error, () => {
+                    // The comment id is invalid or there is a mismatch, silently ignore it.
+                    permaLinkComment.remove();
+                    return true;
+                });
             }
             const { template, response } = ajaxResponse;
             Util_1.default.insertHtml(template, permaLinkComment, "before");
@@ -163,7 +159,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     return;
                 }
                 element.addEventListener("reply", () => {
-                    this.#showAddResponse(element.parentElement, element.commentId);
+                    this.#showAddResponse(element, element.commentId);
                 });
                 element.addEventListener("delete", () => {
                     element.parentElement?.remove();
@@ -187,14 +183,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             if (displayedResponses < responses) {
                 const phrase = (0, Language_1.getPhrase)("wcf.comment.response.more", { count: responses - displayedResponses });
                 if (!comment.querySelector(".commentLoadNextResponses")) {
-                    const li = document.createElement("li");
-                    li.classList.add("commentLoadNextResponses");
-                    comment.querySelector(".commentResponseList").append(li);
+                    const item = document.createElement("div");
+                    item.classList.add("commentList__item", "commentLoadNextResponses");
+                    comment.querySelector(".commentResponseList").append(item);
                     const button = document.createElement("button");
                     button.type = "button";
                     button.classList.add("button", "small", "commentLoadNextResponses__button");
                     button.textContent = phrase;
-                    li.append(button);
+                    item.append(button);
                     button.addEventListener("click", () => {
                         void this.#loadNextResponses(comment);
                     });
@@ -275,8 +271,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                 this.#container.querySelector(".commentLoadNext").hidden = true;
             }
         }
-        #showAddResponse(container, commentId) {
-            container.append(this.#container.querySelector(".commentResponseAdd"));
+        #showAddResponse(comment, commentId) {
+            const responseAdd = this.#container.querySelector(".commentResponseAdd");
+            comment.insertAdjacentElement("afterend", responseAdd);
             this.#commentResponseAdd.show(commentId);
         }
         #insertComment(template) {
@@ -288,14 +285,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             }, 100);
         }
         #insertResponse(commentId, template) {
-            const li = this.#container.querySelector(`.comment[data-comment-id="${commentId}"]`);
-            let commentResponseList = li.querySelector(".commentResponseList");
+            const item = this.#container.querySelector(`.commentList__item[data-comment-id="${commentId}"]`);
+            let commentResponseList = item.querySelector(".commentResponseList");
             if (!commentResponseList) {
                 const div = document.createElement("div");
                 div.classList.add("comment__responses");
-                li.append(div);
-                commentResponseList = document.createElement("ul");
-                commentResponseList.classList.add("containerList", "commentResponseList");
+                item.append(div);
+                commentResponseList = document.createElement("div");
+                commentResponseList.classList.add("commentResponseList");
                 commentResponseList.dataset.responses = "1";
                 div.append(commentResponseList);
             }

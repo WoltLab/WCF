@@ -1,6 +1,7 @@
 .commentList {
 	display: flex;
 	flex-direction: column;
+	padding: 10px 0;
 	row-gap: 10px;
 }
 
@@ -85,6 +86,7 @@
 	column-gap: 10px;
 	grid-template-areas: "avatar content";
 	grid-template-columns: min-content 1fr;
+	padding: 10px;
 }
 
 .commentAdd__avatar {

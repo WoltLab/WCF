@@ -43,39 +43,41 @@
     <div class="commentList">
     	{if $commentCanAdd}
             {capture assign=_commentAddWysiwygSelector}{$commentContainerID}AddComment{/capture}
-            <div class="commentAdd">
-            	<div class="commentAdd__avatar">
-            		{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}
-            	</div>
-            	
-            	<div class="commentAdd__content commentAdd__content--collapsed jsOuterEditorContainer">
-            		<button type="button" class="commentAdd__placeholder">
-            			{icon size=32 name='reply'}
-            			{lang}wcf.comment.add{/lang}
-            		</button>
-            		<div class="commentAdd__editor">
-            			{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
-            				<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>
-            			{/if}
-            			
-            			<textarea id="{$_commentAddWysiwygSelector}" name="text" class="wysiwygTextarea"
-            			          data-disable-attachments="true"
-            			          data-support-mention="true"
-            			></textarea>
-            			{include file='messageFormTabsInline'}
-            			
-            			{* in-template call for full backwards-compatibility *}
-            			{$commentList->getCommentManager()->setDisallowedBBCodes()}
-            			
-            			{include file='wysiwyg' wysiwygSelector=$_commentAddWysiwygSelector}
-            			
-            			<div class="formSubmit">
-            				<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
-            				
-            				{include file='messageFormPreviewButton' previewMessageFieldID=$_commentAddWysiwygSelector previewButtonID=$_commentAddWysiwygSelector|concat:'_PreviewButton' previewMessageObjectType='com.woltlab.wcf.comment' previewMessageObjectID=0}
-            			</div>
-            		</div>
-            	</div>
+			<div class="commentList__item">
+				<div class="commentAdd">
+					<div class="commentAdd__avatar">
+						{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
+					</div>
+					
+					<div class="commentAdd__content commentAdd__content--collapsed jsOuterEditorContainer">
+						<button type="button" class="commentAdd__placeholder">
+							{icon size=32 name='reply'}
+							{lang}wcf.comment.add{/lang}
+						</button>
+						<div class="commentAdd__editor">
+							{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
+								<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>
+							{/if}
+							
+							<textarea id="{$_commentAddWysiwygSelector}" name="text" class="wysiwygTextarea"
+									data-disable-attachments="true"
+									data-support-mention="true"
+							></textarea>
+							{include file='messageFormTabsInline'}
+							
+							{* in-template call for full backwards-compatibility *}
+							{$commentList->getCommentManager()->setDisallowedBBCodes()}
+							
+							{include file='wysiwyg' wysiwygSelector=$_commentAddWysiwygSelector}
+							
+							<div class="formSubmit">
+								<button type="button" class="button buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
+								
+								{include file='messageFormPreviewButton' previewMessageFieldID=$_commentAddWysiwygSelector previewButtonID=$_commentAddWysiwygSelector|concat:'_PreviewButton' previewMessageObjectType='com.woltlab.wcf.comment' previewMessageObjectID=0}
+							</div>
+						</div>
+					</div>
+				</div>
             </div>
         {/if}
 		
