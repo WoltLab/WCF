@@ -8,7 +8,7 @@
  * @since 6.0
  */
 
-import { dboAction } from "../../Ajax";
+import { dboAction, handleValidationErrors } from "../../Ajax";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
 import { wheneverFirstSeen } from "../../Helper/Selector";
@@ -16,7 +16,6 @@ import { getPhrase } from "../../Language";
 import { CommentAdd } from "./Add";
 import { CommentResponseAdd } from "./Response/Add";
 import * as UiScroll from "../../Ui/Scroll";
-import { StatusNotOk } from "../../Ajax/Error";
 
 import type WoltlabCoreCommentElement from "./woltlab-core-comment";
 import type WoltlabCoreCommentResponseElement from "./Response/woltlab-core-comment-response";
@@ -106,16 +105,12 @@ class CommentHandler {
         })
         .dispatch()) as ResponseLoadComment;
     } catch (error) {
-      if (error instanceof StatusNotOk) {
-        const json = await error.response.clone().json();
-        if (json.code === 412) {
-          // comment id is invalid or there is a mismatch, silently ignore it
-          permaLinkComment.remove();
-          return;
-        }
-      }
+      await handleValidationErrors(error, () => {
+        // The comment id is invalid or there is a mismatch, silently ignore it.
+        permaLinkComment!.remove();
 
-      throw error;
+        return true;
+      });
     }
 
     const { template, response } = ajaxResponse!;
@@ -166,16 +161,12 @@ class CommentHandler {
         })
         .dispatch()) as ResponseLoadResponse;
     } catch (error) {
-      if (error instanceof StatusNotOk) {
-        const json = await error.response.clone().json();
-        if (json.code === 412) {
-          // id is invalid or there is a mismatch, silently ignore it
-          permalinkResponse.remove();
-          return;
-        }
-      }
+      await handleValidationErrors(error, () => {
+        // The response id is invalid or there is a mismatch, silently ignore it.
+        permalinkResponse!.remove();
 
-      throw error;
+        return true;
+      });
     }
 
     this.#insertResponseSegment(response!.template);

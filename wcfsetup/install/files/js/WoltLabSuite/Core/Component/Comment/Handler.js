@@ -7,7 +7,7 @@
  * @module WoltLabSuite/Core/Component/Comment/Handler
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ajax/Error"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Error_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -121,15 +121,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     .dispatch());
             }
             catch (error) {
-                if (error instanceof Error_1.StatusNotOk) {
-                    const json = await error.response.clone().json();
-                    if (json.code === 412) {
-                        // id is invalid or there is a mismatch, silently ignore it
-                        permalinkResponse.remove();
-                        return;
-                    }
-                }
-                throw error;
+                await (0, Ajax_1.handleValidationErrors)(error, () => {
+                    // The response id is invalid or there is a mismatch, silently ignore it.
+                    permalinkResponse.remove();
+                    return true;
+                });
             }
             this.#insertResponseSegment(response.template);
         }
