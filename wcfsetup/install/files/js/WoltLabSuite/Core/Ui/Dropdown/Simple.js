@@ -7,16 +7,14 @@
  * @module  Ui/SimpleDropdown (alias)
  * @module  WoltLabSuite/Core/Ui/Dropdown/Simple
  */
-define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../../Helper/PageOverlay"], function (require, exports, tslib_1, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1, PageOverlay_1) {
+define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../../Helper/PageOverlay", "../../Helper/Selector"], function (require, exports, tslib_1, CallbackList_1, Core, DomTraverse, Util_1, UiAlignment, CloseOverlay_1, PageOverlay_1, Selector_1) {
     "use strict";
     CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
     Core = tslib_1.__importStar(Core);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
     UiAlignment = tslib_1.__importStar(UiAlignment);
     CloseOverlay_1 = tslib_1.__importStar(CloseOverlay_1);
-    let _availableDropdowns;
     const _callbacks = new CallbackList_1.default();
     let _didInit = false;
     const _dropdowns = new Map();
@@ -312,21 +310,11 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             _menuContainer = document.createElement("div");
             _menuContainer.className = "dropdownMenuContainer";
             (0, PageOverlay_1.getPageOverlayContainer)().append(_menuContainer);
-            _availableDropdowns = document.getElementsByClassName("dropdownToggle");
-            UiDropdownSimple.initAll();
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.closeAll());
-            Listener_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.initAll());
+            (0, Selector_1.wheneverFirstSeen)(".dropdownToggle", (button) => UiDropdownSimple.init(button, false));
             document.addEventListener("scroll", onScroll);
             // expose on window object for backward compatibility
             window.bc_wcfSimpleDropdown = this;
-        },
-        /**
-         * Loops through all possible dropdowns and registers new ones.
-         */
-        initAll() {
-            for (let i = 0, length = _availableDropdowns.length; i < length; i++) {
-                UiDropdownSimple.init(_availableDropdowns[i], false);
-            }
         },
         /**
          * Initializes a dropdown.

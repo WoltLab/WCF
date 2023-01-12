@@ -10,7 +10,6 @@
 
 import CallbackList from "../../CallbackList";
 import * as Core from "../../Core";
-import DomChangeListener from "../../Dom/Change/Listener";
 import * as DomTraverse from "../../Dom/Traverse";
 import DomUtil from "../../Dom/Util";
 import * as UiAlignment from "../Alignment";
@@ -18,8 +17,8 @@ import UiCloseOverlay, { Origin } from "../CloseOverlay";
 import { AllowFlip } from "../Alignment";
 import { NotificationAction, NotificationCallback } from "./Data";
 import { getPageOverlayContainer } from "../../Helper/PageOverlay";
+import { wheneverFirstSeen } from "../../Helper/Selector";
 
-let _availableDropdowns: HTMLCollectionOf<HTMLElement>;
 const _callbacks = new CallbackList();
 let _didInit = false;
 const _dropdowns = new Map<string, HTMLElement>();
@@ -366,26 +365,13 @@ const UiDropdownSimple = {
     _menuContainer.className = "dropdownMenuContainer";
     getPageOverlayContainer().append(_menuContainer);
 
-    _availableDropdowns = document.getElementsByClassName("dropdownToggle") as HTMLCollectionOf<HTMLElement>;
-
-    UiDropdownSimple.initAll();
-
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.closeAll());
-    DomChangeListener.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.initAll());
+    wheneverFirstSeen(".dropdownToggle", (button) => UiDropdownSimple.init(button, false));
 
     document.addEventListener("scroll", onScroll);
 
     // expose on window object for backward compatibility
     window.bc_wcfSimpleDropdown = this;
-  },
-
-  /**
-   * Loops through all possible dropdowns and registers new ones.
-   */
-  initAll(): void {
-    for (let i = 0, length = _availableDropdowns.length; i < length; i++) {
-      UiDropdownSimple.init(_availableDropdowns[i], false);
-    }
   },
 
   /**
