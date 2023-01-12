@@ -222,7 +222,15 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
   }
 
   get menu(): HTMLElement | undefined {
-    return UiDropdownSimple.getDropdownMenu(`commentOptions${this.commentId}`);
+    let menu = UiDropdownSimple.getDropdownMenu(`commentOptions${this.commentId}`);
+
+    // The initialization of the menu can taken place after
+    // `parsedCallback()` is called.
+    if (menu === undefined) {
+      menu = this.querySelector<HTMLElement>(".comment__menu .dropdownMenu") || undefined;
+    }
+
+    return menu;
   }
 
   get #editorId(): string {

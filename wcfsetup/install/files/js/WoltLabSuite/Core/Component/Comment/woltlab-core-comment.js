@@ -173,7 +173,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
             return parseInt(this.getAttribute("comment-id"));
         }
         get menu() {
-            return Simple_1.default.getDropdownMenu(`commentOptions${this.commentId}`);
+            let menu = Simple_1.default.getDropdownMenu(`commentOptions${this.commentId}`);
+            // The initialization of the menu can taken place after
+            // `parsedCallback()` is called.
+            if (menu === undefined) {
+                menu = this.querySelector(".comment__menu .dropdownMenu") || undefined;
+            }
+            return menu;
         }
         get #editorId() {
             return `commentEditor${this.commentId}`;
