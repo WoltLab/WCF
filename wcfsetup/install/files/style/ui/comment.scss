@@ -6,10 +6,14 @@
 
 .commentList__item:not(:first-child) {
 	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 10px;
 }
 
 .comment {
-	display: block;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	row-gap: 10px;
 }
 
 .comment__header {
@@ -19,7 +23,6 @@
 		"avatar author status menu"
 		"avatar date status menu";
 	grid-template-columns: min-content 1fr min-content min-content;
-	padding: 10px 10px 0 10px;
 }
 
 .comment__footer {
@@ -27,7 +30,6 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
-	padding: 10px;
 }
 
 .comment__avatar {
@@ -65,11 +67,7 @@
 }
 
 .comment__message {
-	padding: 10px 10px 10px 52px;
-}
-
-.comment__footer {
-	padding: 0 10px 10px 10px;
+	padding-left: 42px;
 }
 
 .comment__reactions {
@@ -139,7 +137,7 @@
 }
 
 .comment__responses {
-	padding-left: 42px;
+	padding: 10px 0 0 42px;
 }
 
 .commentResponseList {
@@ -150,10 +148,14 @@
 
 .commentResponseList__item {
 	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 10px;
 }
 
 .commentResponse {
-	display: block;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	row-gap: 10px;
 }
 
 .commentResponse__header {
@@ -163,7 +165,6 @@
 		"avatar author status menu"
 		"avatar date status menu";
 	grid-template-columns: min-content 1fr min-content min-content;
-	padding: 10px 10px 0 10px;
 }
 
 .commentResponse__footer {
@@ -171,7 +172,6 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
-	padding: 0 10px 10px 10px;
 }
 
 .commentResponse__avatar {
@@ -209,7 +209,7 @@
 }
 
 .commentResponse__message {
-	padding: 10px 10px 10px 52px;
+	padding-left: 42px;
 }
 
 .commentResponse__reactions {
