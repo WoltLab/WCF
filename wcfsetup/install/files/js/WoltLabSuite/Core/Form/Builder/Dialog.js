@@ -47,6 +47,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             this._options.dialog = Core.extend(this._options.dialog || {}, {
                 onClose: () => this._dialogOnClose(),
             });
+            if (Dialog_1.default.getDialog(this._dialogId)) {
+                throw new Error(`The dialogId ${this._dialogId} is already in use.`);
+            }
             this._formId = "";
             this._dialogContent = "";
         }
