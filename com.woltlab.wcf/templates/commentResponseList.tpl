@@ -5,7 +5,7 @@
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
 		</div>
 	{else}
-		<div class="commentResponse__item jsCommentResponse{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID, 2)} ignoredUserContent{/if}"
+		<div class="commentResponseList__item jsCommentResponse{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID, 2)} ignoredUserContent{/if}"
 			data-response-id="{@$response->responseID}"
 			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)}
 			data-can-edit="{if $response->isEditable()}true{else}false{/if}"
@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="commentResponse__menu dropdown" id="commentResponseOptions{@$response->responseID}">
-		                <button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+		                <button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
 		                <ul class="dropdownMenu">
 		                    {if $response->isDisabled && $commentCanModerate}

@@ -18,7 +18,7 @@
 			<woltlab-core-comment class="comment" comment-id="{@$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="comment__header">
 					<div class="comment__avatar">
-						{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
+						{user object=$comment->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}
 					</div>
 					<div class="comment__author" itemprop="author" itemscope itemtype="http://schema.org/Person">
 						{if $comment->userID}
@@ -43,7 +43,7 @@
 						{/if}
 					</div>
 					<div class="comment__menu dropdown" id="commentOptions{@$comment->commentID}">
-		                <button type="button" class="button small dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
+		                <button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis-vertical'}</button>
 
 		                <ul class="dropdownMenu">
 		                    {if $comment->isDisabled && $commentCanModerate}
@@ -135,7 +135,7 @@
 
 			{if !$ignoreLastResponseTime|empty || $comment|count}
 				<div class="comment__responses">
-					<div class="containerList commentResponseList" data-responses="{if $commentCanModerate}{@$comment->unfilteredResponses}{else}{@$comment->responses}{/if}">
+					<div class="commentResponseList" data-responses="{if $commentCanModerate}{@$comment->unfilteredResponses}{else}{@$comment->responses}{/if}">
 						{if $ignoreLastResponseTime|empty}{include file='commentResponseList' responseList=$comment}{/if}
 					</div>
 				</div>

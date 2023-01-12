@@ -1,13 +1,14 @@
 .commentList {
 	display: flex;
 	flex-direction: column;
-	row-gap: 20px;
+	row-gap: 10px;
+}
+
+.commentList__item:not(:first-child) {
+	border-top: 1px solid var(--wcfContentBorderInner);
 }
 
 .comment {
-	background-color: var(--wcfContentBackground);
-	border-radius: 4px;
-	box-shadow: 0 0 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
 	display: block;
 }
 
@@ -18,7 +19,7 @@
 		"avatar author status menu"
 		"avatar date status menu";
 	grid-template-columns: min-content 1fr min-content min-content;
-	padding: 15px 20px 0 20px;
+	padding: 10px 10px 0 10px;
 }
 
 .comment__footer {
@@ -26,10 +27,11 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
-	margin-top: 10px;
+	padding: 10px;
 }
 
 .comment__avatar {
+	align-self: center;
 	grid-area: avatar;
 }
 
@@ -58,16 +60,16 @@
 }
 
 .comment__menu {
+	align-self: center;
 	grid-area: menu;
 }
 
 .comment__message {
-	margin: 20px;
+	padding: 10px 10px 10px 52px;
 }
 
 .comment__footer {
-	border-top: 1px solid var(--wcfContentBorderInner);
-	padding: 10px 20px;
+	padding: 0 10px 10px 10px;
 }
 
 .comment__reactions {
@@ -137,31 +139,20 @@
 }
 
 .comment__responses {
-	margin: 20px 20px 20px 60px;
-	position: relative;
-}
-
-.comment__responses::before {
-	background-color: var(--wcfContentBorderInner);
-	border-radius: 4px;
-	bottom: 15px;
-	content: "";
-	left: -40px;
-	position: absolute;
-	top: 0;
-	width: 10px;
+	padding-left: 42px;
 }
 
 .commentResponseList {
 	display: flex;
 	flex-direction: column;
-	row-gap: 20px;
+	row-gap: 10px;
+}
+
+.commentResponseList__item {
+	border-top: 1px solid var(--wcfContentBorderInner);
 }
 
 .commentResponse {
-	background-color: var(--wcfContentBackground);
-	border-radius: 4px;
-	box-shadow: 0 0 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
 	display: block;
 }
 
@@ -172,7 +163,7 @@
 		"avatar author status menu"
 		"avatar date status menu";
 	grid-template-columns: min-content 1fr min-content min-content;
-	padding: 15px 20px 0 20px;
+	padding: 10px 10px 0 10px;
 }
 
 .commentResponse__footer {
@@ -180,7 +171,7 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
-	margin-top: 10px;
+	padding: 0 10px 10px 10px;
 }
 
 .commentResponse__avatar {
@@ -213,11 +204,12 @@
 }
 
 .commentResponse__menu {
+	align-self: center;
 	grid-area: menu;
 }
 
 .commentResponse__message {
-	margin: 20px;
+	padding: 10px 10px 10px 52px;
 }
 
 .commentResponse__reactions {
