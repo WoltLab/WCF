@@ -226,11 +226,20 @@
 
 .commentResponseAdd {
 	border-top: 1px solid var(--wcfContentBorderInner);
-	padding-top: 10px;
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas: "avatar content";
+	grid-template-columns: min-content 1fr;
+	padding: 10px;
 	margin-left: 42px;
 }
 
+.commentResponseAdd__avatar {
+	grid-area: avatar;
+}
+
 .commentResponseAdd__content--loading {
+	grid-area: content;
 	height: 150px;
 	position: relative;
 
