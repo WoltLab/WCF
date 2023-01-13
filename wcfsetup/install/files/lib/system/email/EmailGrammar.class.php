@@ -16,11 +16,8 @@ final class EmailGrammar
 {
     /**
      * Returns a regular expression matching the given type in RFC 5322.
-     *
-     * @param string $type
-     * @return  string
      */
-    public static function getGrammar($type)
+    public static function getGrammar(string $type): string
     {
         switch ($type) {
             case 'VCHAR':
@@ -82,11 +79,8 @@ final class EmailGrammar
 
     /**
      * Encode text using quoted printable encoding.
-     *
-     * @param string $header Header to encode
-     * @return  string          Encoded header
      */
-    public static function encodeQuotedPrintableHeader($header, bool $isAtom = true)
+    public static function encodeQuotedPrintableHeader(string $header, bool $isAtom = true): string
     {
         $addChunkHeader = static function ($chunk) {
             return \sprintf(
@@ -207,11 +201,8 @@ final class EmailGrammar
      * Return text either unmodified, if it matches the 'atom' grammar,
      * in double quotes or encoded in quoted printable. Depending on which
      * encoding is necessary.
-     *
-     * @param string $header Header to encode
-     * @return  string          Encoded header
      */
-    public static function encodeHeader($header)
+    public static function encodeHeader(string $header): string
     {
         if (!\preg_match('(^' . self::getGrammar('atom') . '$)', $header)) {
             if (($encoded = self::encodeQuotedPrintableHeader($header)) === $header) {
