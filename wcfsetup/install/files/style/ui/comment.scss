@@ -31,7 +31,6 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
-	padding-left: 42px;
 }
 
 .comment__avatar {
@@ -65,10 +64,6 @@
 
 .comment__menu {
 	grid-area: menu;
-}
-
-.comment__message {
-	padding-left: 42px;
 }
 
 .comment__reactions {
@@ -140,7 +135,8 @@
 }
 
 .comment__responses {
-	padding: 10px 0 0 42px;
+	padding-top: 10px;
+	padding-left: 20px;
 }
 
 .commentResponseList {
@@ -175,7 +171,6 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
-	padding-left: 42px;
 }
 
 .commentResponse__avatar {
@@ -211,10 +206,6 @@
 	grid-area: menu;
 }
 
-.commentResponse__message {
-	padding-left: 42px;
-}
-
 .commentResponse__reactions {
 	grid-area: reactions;
 }
@@ -232,15 +223,18 @@
 	grid-template-areas: "avatar content";
 	grid-template-columns: min-content 1fr;
 	padding: 10px;
-	margin-left: 42px;
+	margin-left: 20px;
 }
 
 .commentResponseAdd__avatar {
 	grid-area: avatar;
 }
 
-.commentResponseAdd__content--loading {
+.commentResponseAdd__content {
 	grid-area: content;
+}
+
+.commentResponseAdd__content--loading {
 	height: 150px;
 	position: relative;
 
@@ -275,4 +269,48 @@
 .comment.comment__highlight__target,
 .commentResponse.comment__highlight__target {
 	animation: wcfCommentHighlight 0.96s linear;
+}
+
+@include screen-sm-up {
+	.comment__message {
+		padding-left: 42px;
+	}
+
+	.comment__footer {
+		padding-left: 42px;
+	}
+
+	.comment__responses {
+		padding-left: 42px;
+	}
+
+	.commentResponse__message {
+		padding-left: 42px;
+	}
+
+	.commentResponse__footer {
+		padding-left: 42px;
+	}
+
+	.commentResponseAdd {
+		margin-left: 42px;
+	}
+}
+
+@include screen-xs {
+	.commentAdd:not(.commentAdd--collapsed) {
+		column-gap: 0;
+
+		.commentAdd__avatar {
+			display: none;
+		}
+	}
+
+	.commentResponseAdd {
+		column-gap: 0;
+	}
+
+	.commentResponseAdd__avatar {
+		display: none;
+	}
 }

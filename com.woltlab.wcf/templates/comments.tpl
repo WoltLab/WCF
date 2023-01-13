@@ -44,7 +44,7 @@
     	{if $commentCanAdd}
             {capture assign=_commentAddWysiwygSelector}{$commentContainerID}AddComment{/capture}
 			<div class="commentList__item">
-				<div class="commentAdd">
+				<div class="commentAdd commentAdd--collapsed">
 					<div class="commentAdd__avatar">
 						{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
 					</div>

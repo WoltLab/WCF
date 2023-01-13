@@ -42,6 +42,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
                 if (this.#content.classList.contains("commentAdd__content--collapsed")) {
                     event.preventDefault();
                     this.#content.classList.remove("commentAdd__content--collapsed");
+                    this.#container.classList.remove("commentAdd--collapsed");
                     this.#placeholder.hidden = true;
                     this.#editorContainer.hidden = false;
                     this.#focusEditor();
@@ -182,6 +183,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
                 document.activeElement.blur();
             }
             this.#content.classList.add("commentAdd__content--collapsed");
+            this.#container.classList.add("commentAdd--collapsed");
             this.#editorContainer.hidden = true;
             this.#placeholder.hidden = false;
         }

@@ -55,6 +55,7 @@ export class CommentAdd {
         event.preventDefault();
 
         this.#content.classList.remove("commentAdd__content--collapsed");
+        this.#container.classList.remove("commentAdd--collapsed");
         this.#placeholder.hidden = true;
         this.#editorContainer.hidden = false;
 
@@ -222,6 +223,7 @@ export class CommentAdd {
     }
 
     this.#content.classList.add("commentAdd__content--collapsed");
+    this.#container.classList.add("commentAdd--collapsed");
     this.#editorContainer.hidden = true;
     this.#placeholder.hidden = false;
   }
