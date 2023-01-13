@@ -1,5 +1,5 @@
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Component/Comment/Handler'], (Language, { setup }) => {
+	require(['Language', 'WoltLabSuite/Core/Component/Comment/List'], (Language, { setup }) => {
 		Language.addObject({
 			'wcf.comment.guestDialog.title': '{jslang}wcf.comment.guestDialog.title{/jslang}',
 			'wcf.comment.more': '{jslang}wcf.comment.more{/jslang}',

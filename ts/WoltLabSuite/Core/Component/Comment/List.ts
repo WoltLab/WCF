@@ -4,7 +4,7 @@
  * @author Marcel Werk
  * @copyright 2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module WoltLabSuite/Core/Component/Comment/Handler
+ * @module WoltLabSuite/Core/Component/Comment/List
  * @since 6.0
  */
 
@@ -40,7 +40,7 @@ type ResponseLoadResponse = {
   template: string;
 };
 
-class CommentHandler {
+class CommentList {
   readonly #container: HTMLElement;
   #commentResponseAdd: CommentResponseAdd;
 
@@ -399,9 +399,9 @@ class CommentHandler {
 export function setup(elementId: string): void {
   const element = document.getElementById(elementId);
   if (!element) {
-    console.debug(`[Comment.Handler] Unable to find container identified by '${elementId}'`);
+    console.debug(`Unable to find the container identified by '${elementId}'`);
     return;
   }
 
-  new CommentHandler(element);
+  new CommentList(element);
 }
