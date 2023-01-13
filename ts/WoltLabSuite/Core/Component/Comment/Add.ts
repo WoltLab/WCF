@@ -184,7 +184,7 @@ export class CommentAdd {
 
     const loadingOverlay = document.createElement("div");
     loadingOverlay.className = "commentAdd__loading";
-    loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
+    loadingOverlay.innerHTML = '<woltlab-core-loading-indicator size="96" hide-text></woltlab-core-loading-indicator>';
     this.#content.classList.add("commentAdd__content--loading");
     this.#content.appendChild(loadingOverlay);
   }

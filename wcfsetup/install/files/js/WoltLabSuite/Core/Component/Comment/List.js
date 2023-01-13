@@ -61,7 +61,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             }
             permaLinkComment = document.createElement("li");
             permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
-            permaLinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
+            permaLinkComment.innerHTML =
+                '<woltlab-core-loading-indicator size="48" hide-text></woltlab-core-loading-indicator>';
             this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
             let ajaxResponse;
             try {
@@ -87,7 +88,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             if (response) {
                 const permalinkResponse = document.createElement("li");
                 permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
-                permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+                permalinkResponse.innerHTML =
+                    '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
                 comment.querySelector(".commentResponseList").prepend(permalinkResponse);
                 this.#insertResponseSegment(response);
             }
@@ -110,7 +112,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             }
             permalinkResponse = document.createElement("li");
             permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
-            permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+            permalinkResponse.innerHTML =
+                '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
             comment.querySelector(".commentResponseList").prepend(permalinkResponse);
             let response;
             try {

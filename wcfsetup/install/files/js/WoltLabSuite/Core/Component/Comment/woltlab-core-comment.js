@@ -125,10 +125,22 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
             UiNotification.show();
         }
         #showLoadingIndicator() {
-            // todo
+            let div = this.querySelector(".comment__loading");
+            if (!div) {
+                div = document.createElement("div");
+                div.classList.add("comment__loading");
+                div.innerHTML = '<woltlab-core-loading-indicator size="96" hide-text></woltlab-core-loading-indicator>';
+                this.querySelector(".comment__message").append(div);
+            }
+            this.#editorContainer.hidden = true;
+            div.hidden = false;
         }
         #hideLoadingIndicator() {
-            // todo
+            this.#editorContainer.hidden = false;
+            const div = this.querySelector(".comment__loading");
+            if (div) {
+                div.hidden = true;
+            }
         }
         /**
          * Validates the message and invokes listeners to perform additional validation.

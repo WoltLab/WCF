@@ -196,7 +196,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             }
             const loadingOverlay = document.createElement("div");
             loadingOverlay.className = "commentResponseAdd__loading";
-            loadingOverlay.innerHTML = '<fa-icon size="96" name="spinner" solid></fa-icon>';
+            loadingOverlay.innerHTML = '<woltlab-core-loading-indicator size="24" hide-text></woltlab-core-loading-indicator>';
             this.#content.classList.add("commentResponseAdd__content--loading");
             this.#content.appendChild(loadingOverlay);
         }

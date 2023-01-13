@@ -93,7 +93,8 @@ class CommentList {
 
     permaLinkComment = document.createElement("li");
     permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
-    permaLinkComment.innerHTML = '<fa-icon size="48" name="spinner" solid></fa-icon>';
+    permaLinkComment.innerHTML =
+      '<woltlab-core-loading-indicator size="48" hide-text></woltlab-core-loading-indicator>';
     this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
 
     let ajaxResponse: ResponseLoadComment;
@@ -123,7 +124,8 @@ class CommentList {
     if (response) {
       const permalinkResponse = document.createElement("li");
       permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
-      permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+      permalinkResponse.innerHTML =
+        '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
       comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
 
       this.#insertResponseSegment(response);
@@ -150,7 +152,8 @@ class CommentList {
 
     permalinkResponse = document.createElement("li");
     permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
-    permalinkResponse.innerHTML = '<fa-icon size="32" name="spinner" solid></fa-icon>';
+    permalinkResponse.innerHTML =
+      '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
     comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
 
     let response: ResponseLoadResponse;
