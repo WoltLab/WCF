@@ -238,7 +238,7 @@ export class CommentResponseAdd {
 
     const loadingOverlay = document.createElement("div");
     loadingOverlay.className = "commentResponseAdd__loading";
-    loadingOverlay.innerHTML = '<woltlab-core-loading-indicator size="24" hide-text></woltlab-core-loading-indicator>';
+    loadingOverlay.innerHTML = '<woltlab-core-loading-indicator size="96" hide-text></woltlab-core-loading-indicator>';
     this.#content.classList.add("commentResponseAdd__content--loading");
     this.#content.appendChild(loadingOverlay);
   }
