@@ -88,11 +88,7 @@
         {* comment response, editor instance will be re-used *}
         {capture assign=_commentResponseWysiwygSelector}{$commentContainerID}AddCommentResponse{/capture}
         <div class="commentResponseAdd" hidden>
-        	<div class="commentResponseAdd__avatar">
-        		{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}
-        	</div>
-        	
-            <div class="commentResponseAdd__content jsOuterEditorContainer">
+        	<div class="commentResponseAdd__content jsOuterEditorContainer">
             	<div class="commentResponseAdd__editor">
             		{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
             			<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>

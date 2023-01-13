@@ -268,8 +268,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             }
         }
         #showAddResponse(comment, commentId) {
-            const responseAdd = this.#container.querySelector(".commentResponseAdd");
-            comment.insertAdjacentElement("afterend", responseAdd);
+            comment.parentElement.append(this.#commentResponseAdd.container);
             this.#commentResponseAdd.show(commentId);
         }
         #insertComment(template) {

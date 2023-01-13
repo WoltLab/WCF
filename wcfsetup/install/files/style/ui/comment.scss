@@ -224,6 +224,12 @@
 	gap: 10px;
 }
 
+.commentResponseAdd {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 10px;
+	margin-left: 42px;
+}
+
 .commentResponseAdd__content--loading {
 	height: 150px;
 	position: relative;

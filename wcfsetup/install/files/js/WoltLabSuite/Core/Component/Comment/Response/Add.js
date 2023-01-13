@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
     Core = tslib_1.__importStar(Core);
     UiNotification = tslib_1.__importStar(UiNotification);
     class CommentResponseAdd {
-        #container;
+        container;
         #content;
         #textarea;
         #callback;
@@ -25,14 +25,14 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
         #editor = null;
         #commentId;
         constructor(container, callback) {
-            this.#container = container;
-            this.#content = this.#container.querySelector(".commentResponseAdd__content");
-            this.#textarea = this.#container.querySelector(".wysiwygTextarea");
+            this.container = container;
+            this.#content = this.container.querySelector(".commentResponseAdd__content");
+            this.#textarea = this.container.querySelector(".wysiwygTextarea");
             this.#callback = callback;
             this.#initEvents();
         }
         #initEvents() {
-            const submitButton = this.#container.querySelector('button[data-type="save"]');
+            const submitButton = this.container.querySelector('button[data-type="save"]');
             submitButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 void this.#submit();
@@ -44,14 +44,14 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             }
             this.#setContent(this.#messageCache.get(commentId) || "");
             this.#commentId = commentId;
-            this.#container.hidden = false;
+            this.container.hidden = false;
         }
         /**
          * Validates the message and invokes listeners to perform additional validation.
          */
         #validate() {
             // remove all existing error elements
-            this.#container.querySelectorAll(".innerError").forEach((el) => el.remove());
+            this.container.querySelectorAll(".innerError").forEach((el) => el.remove());
             // check if editor contains actual content
             if (this.#getEditor().utils.isEmpty()) {
                 this.#throwError(this.#textarea, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
@@ -122,7 +122,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
                 document.activeElement.blur();
             }
             this.#messageCache.delete(this.#commentId);
-            this.#container.hidden = true;
+            this.container.hidden = true;
         }
         /**
          * Throws an error by adding an inline error to target element.
@@ -168,7 +168,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
          */
         #focusEditor() {
             window.setTimeout(() => {
-                UiScroll.element(this.#container, () => {
+                UiScroll.element(this.container, () => {
                     const element = window.jQuery(this.#textarea);
                     const editor = element.redactor("core.editor")[0];
                     if (editor !== document.activeElement) {

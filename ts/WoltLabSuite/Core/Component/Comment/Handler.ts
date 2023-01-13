@@ -347,8 +347,8 @@ class CommentHandler {
   }
 
   #showAddResponse(comment: WoltlabCoreCommentElement, commentId: number): void {
-    const responseAdd = this.#container.querySelector<HTMLElement>(".commentResponseAdd")!;
-    comment.insertAdjacentElement("afterend", responseAdd);
+    comment.parentElement!.append(this.#commentResponseAdd.container);
+
     this.#commentResponseAdd.show(commentId);
   }
 

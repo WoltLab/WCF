@@ -27,7 +27,7 @@ type ResponseAddResponse = {
 type CallbackInsertResponse = (commentId: number, template: string) => void;
 
 export class CommentResponseAdd {
-  readonly #container: HTMLElement;
+  readonly container: HTMLElement;
   readonly #content: HTMLElement;
   readonly #textarea: HTMLTextAreaElement;
   readonly #callback: CallbackInsertResponse;
@@ -36,16 +36,16 @@ export class CommentResponseAdd {
   #commentId: number;
 
   constructor(container: HTMLElement, callback: CallbackInsertResponse) {
-    this.#container = container;
-    this.#content = this.#container.querySelector(".commentResponseAdd__content") as HTMLElement;
-    this.#textarea = this.#container.querySelector(".wysiwygTextarea") as HTMLTextAreaElement;
+    this.container = container;
+    this.#content = this.container.querySelector(".commentResponseAdd__content") as HTMLElement;
+    this.#textarea = this.container.querySelector(".wysiwygTextarea") as HTMLTextAreaElement;
     this.#callback = callback;
 
     this.#initEvents();
   }
 
   #initEvents(): void {
-    const submitButton = this.#container.querySelector('button[data-type="save"]') as HTMLButtonElement;
+    const submitButton = this.container.querySelector('button[data-type="save"]') as HTMLButtonElement;
     submitButton.addEventListener("click", (event) => {
       event.preventDefault();
 
@@ -61,7 +61,7 @@ export class CommentResponseAdd {
     this.#setContent(this.#messageCache.get(commentId) || "");
     this.#commentId = commentId;
 
-    this.#container.hidden = false;
+    this.container.hidden = false;
   }
 
   /**
@@ -69,7 +69,7 @@ export class CommentResponseAdd {
    */
   #validate(): boolean {
     // remove all existing error elements
-    this.#container.querySelectorAll(".innerError").forEach((el) => el.remove());
+    this.container.querySelectorAll(".innerError").forEach((el) => el.remove());
 
     // check if editor contains actual content
     if (this.#getEditor().utils.isEmpty()) {
@@ -154,7 +154,7 @@ export class CommentResponseAdd {
     }
 
     this.#messageCache.delete(this.#commentId);
-    this.#container.hidden = true;
+    this.container.hidden = true;
   }
 
   /**
@@ -207,7 +207,7 @@ export class CommentResponseAdd {
    */
   #focusEditor(): void {
     window.setTimeout(() => {
-      UiScroll.element(this.#container, () => {
+      UiScroll.element(this.container, () => {
         const element = window.jQuery(this.#textarea);
         const editor = (element.redactor("core.editor") as any)[0];
         if (editor !== document.activeElement) {
