@@ -14,8 +14,7 @@
 			"bold",
 			"italic",
 			{
-				label: "TODO: Format",
-				// TODO: Icon
+				label: "woltlabToolbarGroup_format",
 				items: [
 					"underline",
 					"strikethrough",
@@ -28,8 +27,7 @@
 			"|",
 
 			{
-				label: "TODO: List",
-				// TODO: Icon
+				label: "woltlabToolbarGroup_list",
 				items: [
 					"bulletedList",
 					"numberedList",
@@ -61,6 +59,17 @@
 			},
 		];
 
+		const woltlabToolbarGroup = {
+			"format": {
+				icon: "ellipsis;false",
+				label: "TODO: Format text",
+			},
+			"list": {
+				icon: "list;false",
+				label: "TODO: Insert list",
+			},
+		};
+
 		let woltlabBbcode = [
 			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 				{
@@ -84,6 +93,7 @@
 		void setupCkeditor(element, {
 			toolbar,
 			woltlabBbcode,
+			woltlabToolbarGroup,
 		});
 	});
 </script>
