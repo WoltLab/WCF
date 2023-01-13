@@ -19,25 +19,31 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
     class CommentAdd {
         #container;
         #content;
+        #editorContainer;
         #textarea;
         #objectTypeId;
         #objectId;
+        #placeholder;
         #callback;
         #editor = null;
         constructor(container, objectTypeId, objectId, callback) {
             this.#container = container;
             this.#content = this.#container.querySelector(".commentAdd__content");
+            this.#editorContainer = this.#container.querySelector(".commentAdd__editor");
             this.#textarea = this.#container.querySelector(".wysiwygTextarea");
             this.#objectTypeId = objectTypeId;
             this.#objectId = objectId;
+            this.#placeholder = this.#container.querySelector(".commentAdd__placeholder");
             this.#callback = callback;
             this.#initEvents();
         }
         #initEvents() {
-            this.#content.addEventListener("click", (event) => {
+            this.#placeholder.addEventListener("click", (event) => {
                 if (this.#content.classList.contains("commentAdd__content--collapsed")) {
                     event.preventDefault();
                     this.#content.classList.remove("commentAdd__content--collapsed");
+                    this.#placeholder.hidden = true;
+                    this.#editorContainer.hidden = false;
                     this.#focusEditor();
                 }
             });
@@ -176,6 +182,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
                 document.activeElement.blur();
             }
             this.#content.classList.add("commentAdd__content--collapsed");
+            this.#editorContainer.hidden = true;
+            this.#placeholder.hidden = false;
         }
         /**
          * Hides the loading spinner.

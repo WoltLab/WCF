@@ -54,7 +54,7 @@
 							{icon size=32 name='reply'}
 							{lang}wcf.comment.add{/lang}
 						</button>
-						<div class="commentAdd__editor">
+						<div class="commentAdd__editor" hidden>
 							{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
 								<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.moderation.info{/lang}</p>
 							{/if}

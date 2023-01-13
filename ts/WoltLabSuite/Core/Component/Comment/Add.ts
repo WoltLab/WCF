@@ -28,29 +28,35 @@ type CallbackInsertComment = (template: string) => void;
 export class CommentAdd {
   readonly #container: HTMLElement;
   readonly #content: HTMLElement;
+  readonly #editorContainer: HTMLElement;
   readonly #textarea: HTMLTextAreaElement;
   readonly #objectTypeId: number;
   readonly #objectId: number;
+  readonly #placeholder: HTMLButtonElement;
   readonly #callback: CallbackInsertComment;
   #editor: RedactorEditor | null = null;
 
   constructor(container: HTMLElement, objectTypeId: number, objectId: number, callback: CallbackInsertComment) {
     this.#container = container;
     this.#content = this.#container.querySelector(".commentAdd__content") as HTMLElement;
+    this.#editorContainer = this.#container.querySelector(".commentAdd__editor") as HTMLElement;
     this.#textarea = this.#container.querySelector(".wysiwygTextarea") as HTMLTextAreaElement;
     this.#objectTypeId = objectTypeId;
     this.#objectId = objectId;
+    this.#placeholder = this.#container.querySelector(".commentAdd__placeholder") as HTMLButtonElement;
     this.#callback = callback;
 
     this.#initEvents();
   }
 
   #initEvents(): void {
-    this.#content.addEventListener("click", (event) => {
+    this.#placeholder.addEventListener("click", (event) => {
       if (this.#content.classList.contains("commentAdd__content--collapsed")) {
         event.preventDefault();
 
         this.#content.classList.remove("commentAdd__content--collapsed");
+        this.#placeholder.hidden = true;
+        this.#editorContainer.hidden = false;
 
         this.#focusEditor();
       }
@@ -216,6 +222,8 @@ export class CommentAdd {
     }
 
     this.#content.classList.add("commentAdd__content--collapsed");
+    this.#editorContainer.hidden = true;
+    this.#placeholder.hidden = false;
   }
 
   /**
