@@ -15,14 +15,14 @@
 		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], (UiReactionHandler) => {
 			new UiReactionHandler('com.woltlab.wcf.comment', {
 				// selectors
-				containerSelector: '#{@$commentContainerID} .comment',
+				containerSelector: '#{@$commentContainerID} .commentList__item',
 				summaryListSelector: '.reactionSummaryList',
 				buttonSelector: '.comment__button--react'
 			});
 			
 			new UiReactionHandler('com.woltlab.wcf.comment.response', {
 				// selectors
-				containerSelector: '#{@$commentContainerID} .commentResponse',
+				containerSelector: '#{@$commentContainerID} .commentResponseList__item',
 				summaryListSelector: '.reactionSummaryList',
 				buttonSelector: '.commentResponse__button--react'
 			});

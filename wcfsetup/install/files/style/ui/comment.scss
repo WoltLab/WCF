@@ -31,6 +31,7 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
+	padding-left: 42px;
 }
 
 .comment__avatar {
@@ -174,6 +175,7 @@
 	column-gap: 10px;
 	grid-template-areas: "reactions buttons";
 	grid-template-columns: 1fr min-content;
+	padding-left: 42px;
 }
 
 .commentResponse__avatar {
