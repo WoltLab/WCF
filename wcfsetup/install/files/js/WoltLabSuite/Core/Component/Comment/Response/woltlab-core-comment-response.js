@@ -46,7 +46,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             }
         }
         async #delete() {
-            const result = await (0, Confirmation_1.confirmationFactory)().delete("todo");
+            const result = await (0, Confirmation_1.confirmationFactory)().delete();
             if (result) {
                 await (0, Ajax_1.dboAction)("delete", "wcf\\data\\comment\\response\\CommentResponseAction")
                     .objectIds([this.responseId])

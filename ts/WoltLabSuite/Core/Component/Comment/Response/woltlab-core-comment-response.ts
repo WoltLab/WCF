@@ -62,7 +62,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
   }
 
   async #delete(): Promise<void> {
-    const result = await confirmationFactory().delete("todo");
+    const result = await confirmationFactory().delete();
     if (result) {
       await dboAction("delete", "wcf\\data\\comment\\response\\CommentResponseAction")
         .objectIds([this.responseId])
