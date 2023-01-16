@@ -106,13 +106,13 @@
 						{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $response->userID != $__wcf->user->userID}
 							<button
 								type="button"
-								class="commentResponse__button commentResponse__button--react jsTooltip {if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}"
+								class="commentResponse__button commentResponse__button--react jsTooltip button small {if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}"
 								title="{lang}wcf.reactions.react{/lang}"
 								data-reaction-type-id="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{$likeData[response][$response->responseID]->reactionTypeID}{else}0{/if}"
 							>
 								{icon name='face-smile'}
 								<span class="invisible">{lang}wcf.reactions.react{/lang}</span>
-							</button>		
+							</button>
 						{/if}
 						
 						{event name='commentResponseButtons'}
