@@ -16,7 +16,7 @@
 							{/if}
 						</h3>
 					</div>
-					{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
+					{if $style->styleDescription}<small>{lang __optional=true}{@$style->styleDescription}{/lang}</small>{/if}
 				</div>
 			</div>
 		</li>

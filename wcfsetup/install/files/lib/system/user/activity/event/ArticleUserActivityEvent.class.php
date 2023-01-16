@@ -21,6 +21,10 @@ class ArticleUserActivityEvent extends SingletonFactory implements IUserActivity
      */
     public function prepare(array $events)
     {
+        if (!\MODULE_ARTICLE) {
+            return;
+        }
+
         $objectIDs = [];
         foreach ($events as $event) {
             $objectIDs[] = $event->objectID;

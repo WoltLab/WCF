@@ -22,6 +22,10 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
      */
     public function prepare(array $events)
     {
+        if (!\MODULE_ARTICLE) {
+            return;
+        }
+
         $articleIDs = [];
         foreach ($events as $event) {
             $articleIDs[] = $event->objectID;

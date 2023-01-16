@@ -23,6 +23,10 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
      */
     public function prepare(array $events)
     {
+        if (!\MODULE_ARTICLE) {
+            return;
+        }
+
         $commentIDs = [];
         foreach ($events as $event) {
             $commentIDs[] = $event->objectID;
