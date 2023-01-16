@@ -552,13 +552,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         }
 
         $comment = $this->getSingleObject();
-        if ($comment->isDisabled) {
-            throw new PermissionDeniedException();
-        }
-
         $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
         if (!$this->commentProcessor->canAdd($comment->objectID)) {
+            throw new PermissionDeniedException();
+        }
+
+        if ($comment->isDisabled && !$this->commentProcessor->canModerate($comment->objectTypeID, $comment->objectID)) {
             throw new PermissionDeniedException();
         }
 
