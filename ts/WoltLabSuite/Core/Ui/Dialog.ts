@@ -411,11 +411,18 @@ const UiDialog = {
     const resizeObserver = new ResizeObserver((entries) => {
       if (dialog.getAttribute("aria-hidden") === "false") {
         for (const entry of entries) {
-          const contentBoxSize: ResizeObserverSize = Array.isArray(entry.contentBoxSize)
-            ? entry.contentBoxSize[0]
-            : entry.contentBoxSize;
+          let width: number;
+          if (entry.contentBoxSize) {
+            const contentBoxSize: ResizeObserverSize = Array.isArray(entry.contentBoxSize)
+              ? entry.contentBoxSize[0]
+              : entry.contentBoxSize;
+            width = contentBoxSize.inlineSize;
+          } else {
+            // Safari < 15.4 supports only the older spec.
+            width = entry.contentRect.width;
+          }
 
-          const offset = Math.floor(contentBoxSize.inlineSize / 2);
+          const offset = Math.floor(width / 2);
           dialog.style.setProperty("--translate-x", `-${offset}px`);
         }
       }
