@@ -1,7 +1,6 @@
 {foreach from=$responseList item=response}
 	{if $response->isDisabled && !$commentCanModerate}
-		{* TODO *}
-		<div>
+		<div class="commentResponseList__item">
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
 		</div>
 	{else}

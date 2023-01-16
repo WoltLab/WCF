@@ -3,8 +3,7 @@
 {if !$commentCanModerate|isset}{assign var=commentCanModerate value=$commentManager->canModerate($commentList->objectTypeID, $commentList->objectID)}{/if}
 {foreach from=$commentList item=comment}
 	{if $comment->isDisabled && !$commentCanModerate}
-		{* TODO *}
-		<div>
+		<div class="commentList__item">
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
 		</div>
 	{else}
