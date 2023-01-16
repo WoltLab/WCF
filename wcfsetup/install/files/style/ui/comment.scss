@@ -59,10 +59,15 @@
 }
 
 .comment__status {
+    align-self: start;
+    column-gap: 5px;
+	display: flex;
 	grid-area: status;
+    padding-top: 2px
 }
 
 .comment__menu {
+	align-self: start;
 	grid-area: menu;
 }
 
@@ -199,10 +204,15 @@
 }
 
 .commentResponse__status {
+	align-self: start;
+    column-gap: 5px;
+	display: flex;
 	grid-area: status;
+    padding-top: 2px
 }
 
 .commentResponse__menu {
+	align-self: start;
 	grid-area: menu;
 }
 
