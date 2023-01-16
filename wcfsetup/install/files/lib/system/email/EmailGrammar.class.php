@@ -125,36 +125,43 @@ final class EmailGrammar
         // Use 70 as a nice round number that leaves some buffer space.
         $maximumLength = 70;
 
-        // If the raw data already exceeds the maximum length we always encode
-        // to keep the encoder simple. Otherwise we must carefully handle spaces
-        // across linebreaks without encoding, while the encoder already contains
-        // the necessary logic.
-        $needEncoding = \strlen($header) > $maximumLength;
+        $needEncoding = false;
 
-        if (!$needEncoding) {
-            // Check if the raw data contains characters that need to be encoded.
-            // If it does we simply encode *everything*, instead of attempting to
-            // encode just the words with special characters.
-            //
-            // This keeps the encoder simple with regard to handling of spaces, as
-            // spaces in-between two encoded words will be ignored (and thus must
-            // be part of the encoded data), whereas spaces in other places will
-            // actually result in spaces.
-            $words = \explode(' ', $header);
-            foreach ($words as $word) {
-                for ($i = 0, $characterCount = \strlen($word); $i < $characterCount; $i++) {
-                    $character = $word[$i];
+        // Check if the raw data contains characters that need to be encoded.
+        // If it does we simply encode *everything*, instead of attempting to
+        // encode just the words with special characters.
+        //
+        // This keeps the encoder simple with regard to handling of spaces, as
+        // spaces in-between two encoded words will be ignored (and thus must
+        // be part of the encoded data), whereas spaces in other places will
+        // actually result in spaces.
+        $words = \explode(' ', $header);
+        foreach ($words as $word) {
+            if (\strlen($word) > $maximumLength) {
+                // If a single word already exceeds the maximum length we always encode
+                // to keep the encoder simple. Otherwise we must carefully handle spaces
+                // across linebreaks without encoding, while the encoder already contains
+                // the necessary logic.
+                $needEncoding = true;
+                break;
+            }
 
-                    if ($mustBeEncoded($character)) {
-                        $needEncoding = true;
-                        break 2;
-                    }
+            for ($i = 0, $characterCount = \strlen($word); $i < $characterCount; $i++) {
+                $character = $word[$i];
+
+                if ($mustBeEncoded($character)) {
+                    $needEncoding = true;
+                    break 2;
                 }
             }
         }
 
         $result = '';
         if ($needEncoding) {
+            // If encoding is necessary, we iterate each character and encode it,
+            // inserting line breaks, whenever the maximum line length would be
+            // exceeded.
+
             $line = '';
             for ($i = 0, $characterCount = \strlen($header); $i < $characterCount; $i++) {
                 $character = $header[$i];
@@ -190,8 +197,32 @@ final class EmailGrammar
             }
             $result .= $addChunkHeader($line);
         } else {
-            // If no encoding is required we can simply pass through the original input.
-            $result = $header;
+            // If no encoding is necessary, we iterate each word, inserting line breaks,
+            // whenever the maximum line length would be exceeded. These line breaks will
+            // then be normalized to a space when parsed by the MUA.
+
+            $line = '';
+            foreach ($words as $word) {
+                if (\strlen($line . ' ' . $word) > $maximumLength) {
+                    if ($result !== '') {
+                        $result .= "\r\n  ";
+                    }
+                    $result .= $line;
+                    $line = '';
+                }
+
+                if ($line !== '') {
+                    $line .= ' ';
+                }
+
+                $line .= $word;
+            }
+
+            // Add the final line.
+            if ($result !== '') {
+                $result .= "\r\n  ";
+            }
+            $result .= $line;
         }
 
         return $result;
