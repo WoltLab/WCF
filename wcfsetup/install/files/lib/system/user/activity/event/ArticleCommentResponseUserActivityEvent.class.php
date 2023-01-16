@@ -24,6 +24,10 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
      */
     public function prepare(array $events)
     {
+        if (!\MODULE_ARTICLE) {
+            return;
+        }
+
         $this->readResponseData($events);
 
         // fetch articles
