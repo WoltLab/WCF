@@ -34,10 +34,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         #handleHashChange() {
             const matches = window.location.hash.match(/^#(?:[^/]+\/)?comment(\d+)(?:\/response(\d+))?/);
             if (matches) {
-                const comment = this.#container.querySelector(`.comment[data-comment-id="${matches[1]}"]`);
+                const comment = this.#container.querySelector(`.commentList__item[data-comment-id="${matches[1]}"]`);
                 if (comment) {
                     if (matches[2]) {
-                        const response = this.#container.querySelector(`.commentResponse[data-response-id="${matches[2]}"]`);
+                        const response = this.#container.querySelector(`.commentResponseList__item[data-response-id="${matches[2]}"]`);
                         if (response) {
                             this.#scrollTo(response, true);
                         }
@@ -59,8 +59,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             if (permaLinkComment) {
                 permaLinkComment.remove();
             }
-            permaLinkComment = document.createElement("li");
-            permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
+            permaLinkComment = document.createElement("div");
+            permaLinkComment.classList.add("commentList__item", "commentPermalink", "commentPermalink--loading");
             permaLinkComment.innerHTML =
                 '<woltlab-core-loading-indicator size="48" hide-text></woltlab-core-loading-indicator>';
             this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
@@ -83,11 +83,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             const { template, response } = ajaxResponse;
             Util_1.default.insertHtml(template, permaLinkComment, "before");
             permaLinkComment.remove();
-            const comment = this.#container.querySelector(`.comment[data-comment-id="${commentId}"]`);
+            const comment = this.#container.querySelector(`.commentList__item[data-comment-id="${commentId}"]`);
             comment.classList.add("commentPermalink");
             if (response) {
-                const permalinkResponse = document.createElement("li");
-                permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+                const permalinkResponse = document.createElement("div");
+                permalinkResponse.classList.add("commentResponseList__item", "commentResponsePermalink", "commentResponsePermalink--loading");
                 permalinkResponse.innerHTML =
                     '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
                 comment.querySelector(".commentResponseList").prepend(permalinkResponse);
@@ -110,8 +110,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             if (permalinkResponse) {
                 permalinkResponse.remove();
             }
-            permalinkResponse = document.createElement("li");
-            permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+            permalinkResponse = document.createElement("div");
+            permalinkResponse.classList.add("commentResponseList__item", "commentResponsePermalink", "commentResponsePermalink--loading");
             permalinkResponse.innerHTML =
                 '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
             comment.querySelector(".commentResponseList").prepend(permalinkResponse);
@@ -183,7 +183,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                 const phrase = (0, Language_1.getPhrase)("wcf.comment.response.more", { count: responses - displayedResponses });
                 if (!comment.querySelector(".commentLoadNextResponses")) {
                     const item = document.createElement("div");
-                    item.classList.add("commentList__item", "commentLoadNextResponses");
+                    item.classList.add("commentResponseList__item", "commentLoadNextResponses");
                     comment.querySelector(".commentResponseList").append(item);
                     const button = document.createElement("button");
                     button.type = "button";
@@ -216,8 +216,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             })
                 .dispatch());
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
-            fragment.querySelectorAll(".commentResponse").forEach((element) => {
-                comment.querySelector(`.commentResponse[data-response-id="${element.dataset.responseId}"]`)?.remove();
+            fragment.querySelectorAll(".commentResponseList__item").forEach((element) => {
+                comment.querySelector(`.commentResponseList__item[data-response-id="${element.dataset.responseId}"]`)?.remove();
             });
             comment
                 .querySelector(".commentResponseList")
@@ -229,14 +229,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
         #initLoadNextComments() {
             if (this.#displayedComments < this.#totalComments) {
                 if (!this.#container.querySelector(".commentLoadNext")) {
-                    const li = document.createElement("li");
-                    li.classList.add("commentLoadNext", "showMore");
-                    this.#container.querySelector(".commentList").append(li);
+                    const div = document.createElement("div");
+                    div.classList.add("commentList__item", "commentLoadNext");
+                    this.#container.querySelector(".commentList").append(div);
                     const button = document.createElement("button");
                     button.type = "button";
                     button.classList.add("button", "small", "commentLoadNext__button");
                     button.textContent = (0, Language_1.getPhrase)("wcf.comment.more");
-                    li.append(button);
+                    div.append(button);
                     button.addEventListener("click", () => {
                         void this.#loadNextComments();
                     });
@@ -256,8 +256,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             })
                 .dispatch());
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
-            fragment.querySelectorAll(".comment").forEach((element) => {
-                this.#container.querySelector(`.comment[data-comment-id="${element.dataset.commentId}"]`)?.remove();
+            fragment.querySelectorAll(".commentList__item").forEach((element) => {
+                this.#container.querySelector(`.commentList__item[data-comment-id="${element.dataset.commentId}"]`)?.remove();
             });
             this.#container
                 .querySelector(".commentList")

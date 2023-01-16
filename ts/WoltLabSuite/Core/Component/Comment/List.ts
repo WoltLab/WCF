@@ -65,11 +65,11 @@ class CommentList {
   #handleHashChange(): void {
     const matches = window.location.hash.match(/^#(?:[^/]+\/)?comment(\d+)(?:\/response(\d+))?/);
     if (matches) {
-      const comment = this.#container.querySelector<HTMLElement>(`.comment[data-comment-id="${matches[1]}"]`);
+      const comment = this.#container.querySelector<HTMLElement>(`.commentList__item[data-comment-id="${matches[1]}"]`);
       if (comment) {
         if (matches[2]) {
           const response = this.#container.querySelector<HTMLElement>(
-            `.commentResponse[data-response-id="${matches[2]}"]`,
+            `.commentResponseList__item[data-response-id="${matches[2]}"]`,
           );
           if (response) {
             this.#scrollTo(response, true);
@@ -91,8 +91,8 @@ class CommentList {
       permaLinkComment.remove();
     }
 
-    permaLinkComment = document.createElement("li");
-    permaLinkComment.classList.add("commentPermalink", "commentPermalink--loading");
+    permaLinkComment = document.createElement("div");
+    permaLinkComment.classList.add("commentList__item", "commentPermalink", "commentPermalink--loading");
     permaLinkComment.innerHTML =
       '<woltlab-core-loading-indicator size="48" hide-text></woltlab-core-loading-indicator>';
     this.#container.querySelector(".commentList")?.prepend(permaLinkComment);
@@ -118,12 +118,16 @@ class CommentList {
 
     DomUtil.insertHtml(template, permaLinkComment, "before");
     permaLinkComment.remove();
-    const comment = this.#container.querySelector<HTMLElement>(`.comment[data-comment-id="${commentId}"]`)!;
+    const comment = this.#container.querySelector<HTMLElement>(`.commentList__item[data-comment-id="${commentId}"]`)!;
     comment.classList.add("commentPermalink");
 
     if (response) {
-      const permalinkResponse = document.createElement("li");
-      permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+      const permalinkResponse = document.createElement("div");
+      permalinkResponse.classList.add(
+        "commentResponseList__item",
+        "commentResponsePermalink",
+        "commentResponsePermalink--loading",
+      );
       permalinkResponse.innerHTML =
         '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
       comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
@@ -150,8 +154,12 @@ class CommentList {
       permalinkResponse.remove();
     }
 
-    permalinkResponse = document.createElement("li");
-    permalinkResponse.classList.add("commentResponsePermalink", "commentResponsePermalink--loading");
+    permalinkResponse = document.createElement("div");
+    permalinkResponse.classList.add(
+      "commentResponseList__item",
+      "commentResponsePermalink",
+      "commentResponsePermalink--loading",
+    );
     permalinkResponse.innerHTML =
       '<woltlab-core-loading-indicator size="32" hide-text></woltlab-core-loading-indicator>';
     comment.querySelector(".commentResponseList")!.prepend(permalinkResponse);
@@ -245,7 +253,7 @@ class CommentList {
 
       if (!comment.querySelector(".commentLoadNextResponses")) {
         const item = document.createElement("div");
-        item.classList.add("commentList__item", "commentLoadNextResponses");
+        item.classList.add("commentResponseList__item", "commentLoadNextResponses");
         comment.querySelector(".commentResponseList")!.append(item);
 
         const button = document.createElement("button");
@@ -282,8 +290,8 @@ class CommentList {
 
     const fragment = DomUtil.createFragmentFromHtml(response.template);
 
-    fragment.querySelectorAll<HTMLElement>(".commentResponse").forEach((element) => {
-      comment.querySelector(`.commentResponse[data-response-id="${element.dataset.responseId!}"]`)?.remove();
+    fragment.querySelectorAll<HTMLElement>(".commentResponseList__item").forEach((element) => {
+      comment.querySelector(`.commentResponseList__item[data-response-id="${element.dataset.responseId!}"]`)?.remove();
     });
 
     comment
@@ -299,15 +307,15 @@ class CommentList {
   #initLoadNextComments(): void {
     if (this.#displayedComments < this.#totalComments) {
       if (!this.#container.querySelector(".commentLoadNext")) {
-        const li = document.createElement("li");
-        li.classList.add("commentLoadNext", "showMore");
-        this.#container.querySelector(".commentList")!.append(li);
+        const div = document.createElement("div");
+        div.classList.add("commentList__item", "commentLoadNext");
+        this.#container.querySelector(".commentList")!.append(div);
 
         const button = document.createElement("button");
         button.type = "button";
         button.classList.add("button", "small", "commentLoadNext__button");
         button.textContent = getPhrase("wcf.comment.more");
-        li.append(button);
+        div.append(button);
 
         button.addEventListener("click", () => {
           void this.#loadNextComments();
@@ -332,8 +340,8 @@ class CommentList {
 
     const fragment = DomUtil.createFragmentFromHtml(response.template);
 
-    fragment.querySelectorAll<HTMLElement>(".comment").forEach((element) => {
-      this.#container.querySelector(`.comment[data-comment-id="${element.dataset.commentId!}"]`)?.remove();
+    fragment.querySelectorAll<HTMLElement>(".commentList__item").forEach((element) => {
+      this.#container.querySelector(`.commentList__item[data-comment-id="${element.dataset.commentId!}"]`)?.remove();
     });
 
     this.#container
