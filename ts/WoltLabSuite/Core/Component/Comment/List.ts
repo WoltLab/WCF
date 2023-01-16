@@ -364,10 +364,11 @@ class CommentList {
   }
 
   #insertComment(template: string): void {
-    DomUtil.insertHtml(template, this.#container.querySelector(".commentAdd")!, "after");
+    const referenceElement = this.#container.querySelector(".commentAdd")!.parentElement!;
+    DomUtil.insertHtml(template, referenceElement, "after");
     DomChangeListener.trigger();
 
-    const scrollTarget = this.#container.querySelector(".commentAdd")!.nextElementSibling as HTMLElement;
+    const scrollTarget = referenceElement.nextElementSibling as HTMLElement;
 
     window.setTimeout(() => {
       UiScroll.element(scrollTarget);

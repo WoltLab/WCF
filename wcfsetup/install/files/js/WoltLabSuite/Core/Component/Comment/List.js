@@ -275,9 +275,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             this.#commentResponseAdd.show(commentId);
         }
         #insertComment(template) {
-            Util_1.default.insertHtml(template, this.#container.querySelector(".commentAdd"), "after");
+            const referenceElement = this.#container.querySelector(".commentAdd").parentElement;
+            Util_1.default.insertHtml(template, referenceElement, "after");
             Listener_1.default.trigger();
-            const scrollTarget = this.#container.querySelector(".commentAdd").nextElementSibling;
+            const scrollTarget = referenceElement.nextElementSibling;
             window.setTimeout(() => {
                 UiScroll.element(scrollTarget);
             }, 100);
