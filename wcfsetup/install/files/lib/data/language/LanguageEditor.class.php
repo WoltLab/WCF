@@ -290,6 +290,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add('packageID = ?', [$packageID]);
         $conditions->add('languageItem IN (?)', [$languageItems]);
+        $conditions->add('languageID = ?', [$this->languageID]);
         $sql = "DELETE FROM wcf1_language_item
                 {$conditions}";
         $statement = WCF::getDB()->prepare($sql);
