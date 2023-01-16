@@ -9,7 +9,7 @@
 					<div class="containerHeadline">
 						<h3>{$style->styleName}{if $style->styleID == $__wcf->getStyleHandler()->getStyle()->styleID} <span class="icon icon16 fa-check-circle" title="{lang}wcf.style.currentStyle{/lang}"></span>{/if}</h3>
 					</div>
-					{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
+					{if $style->styleDescription}<small>{lang __optional=true}{@$style->styleDescription}{/lang}</small>{/if}
 				</div>
 			</div>
 		</li>
