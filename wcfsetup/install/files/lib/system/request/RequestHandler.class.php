@@ -19,6 +19,7 @@ use wcf\http\middleware\CheckUserBan;
 use wcf\http\middleware\EnforceAcpAuthentication;
 use wcf\http\middleware\EnforceCacheControlPrivate;
 use wcf\http\middleware\EnforceFrameOptions;
+use wcf\http\middleware\EnforceNoCacheForTemporaryRedirects;
 use wcf\http\middleware\HandleStartupErrors;
 use wcf\http\middleware\HandleValinorMappingErrors;
 use wcf\http\middleware\JsonBody;
@@ -104,6 +105,7 @@ final class RequestHandler extends SingletonFactory
                     new PreventMimeSniffing(),
                     new AddAcpSecurityHeaders(),
                     new EnforceCacheControlPrivate(),
+                    new EnforceNoCacheForTemporaryRedirects(),
                     new EnforceFrameOptions(),
                     new CheckHttpMethod(),
                     new Xsrf(),
