@@ -9,7 +9,12 @@
 
 define('INSTALL_SCRIPT', __FILE__);
 define('INSTALL_SCRIPT_DIR', dirname(__FILE__).'/');
+
+define('WCF_DIR', INSTALL_SCRIPT_DIR);
+define('RELATIVE_WCF_DIR', './');
+
 define('SETUP_FILE', INSTALL_SCRIPT_DIR . 'WCFSetup.tar.gz');
+
 define('NO_IMPORTS', 1);
 
 $neededFilesPattern = [

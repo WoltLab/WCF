@@ -87,8 +87,6 @@ final class WCFSetup extends WCF
 
         static::getDeveloperMode();
         static::getLanguageSelection();
-        \define('WCF_DIR', INSTALL_SCRIPT_DIR);
-        \define('RELATIVE_WCF_DIR', './');
         $this->initLanguage();
         $this->initTPL();
         /** @noinspection PhpUndefinedMethodInspection */
