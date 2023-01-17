@@ -263,6 +263,10 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
             return 'css';
         }
 
+        if (\preg_match('/(^|\n)HTTP\\/[0-9]\\.[0-9] [0-9]{3}/', $content)) {
+            return 'http';
+        }
+
         return '';
     }
 
