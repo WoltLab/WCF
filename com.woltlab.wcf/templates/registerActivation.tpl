@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'activationCode'} class="formError"{/if}>
 			<dt><label for="activationCode">{lang}wcf.user.activationCode{/lang}</label></dt>
 			<dd>
-				<input type="text" id="activationCode" maxlength="40" name="activationCode" value="{@$activationCode}" required class="medium">
+				<input type="text" id="activationCode" maxlength="40" name="activationCode" value="{$activationCode}" required class="medium">
 				{if $errorField == 'activationCode'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
