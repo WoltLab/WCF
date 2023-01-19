@@ -19,7 +19,7 @@
 		</div>
 	{/if}
 	<p class="button jsMediaSelectButton jsMediaSelectButton_{$field->getPrefixedId()}" data-store="{$field->getPrefixedId()}"{if $field->isImageOnly()} data-display="{$field->getPrefixedId()}_preview"{/if}>{lang}wcf.media.choose{if $field->isImageOnly()}Image{else}File{/if}{/lang}</p>
-	<input type="hidden" name="{$field->getPrefixedId()}" id="{$field->getPrefixedId()}"{if $field->getValue()} value="{@$field->getValue()}"{/if}>
+	<input type="hidden" name="{$field->getPrefixedId()}" id="{$field->getPrefixedId()}"{if $field->getValue()} value="{$field->getValue()}"{/if}>
 	
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
