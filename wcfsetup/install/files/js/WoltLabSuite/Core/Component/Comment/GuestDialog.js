@@ -27,17 +27,34 @@ define(["require", "exports", "tslib", "../../Controller/Captcha", "../../Langua
             }
         });
         return new Promise((resolve) => {
+            let captchaData = undefined;
+            dialog.addEventListener("validate", (event) => {
+                if (Captcha_1.default.has(captchaId)) {
+                    captchaData = Captcha_1.default.getData(captchaId);
+                    Captcha_1.default.delete(captchaId);
+                    if (captchaData instanceof Promise) {
+                        event.detail.push(new Promise((resolve) => {
+                            void captchaData
+                                .then(() => {
+                                resolve(true);
+                            })
+                                .catch(() => {
+                                resolve(false);
+                            });
+                        }));
+                        event.preventDefault();
+                    }
+                }
+            });
             dialog.addEventListener("primary", () => {
                 const parameters = {
                     data: {
                         username: usernameInput.value,
                     },
                 };
-                if (Captcha_1.default.has(captchaId)) {
-                    const data = Captcha_1.default.getData(captchaId);
-                    Captcha_1.default.delete(captchaId);
-                    if (data instanceof Promise) {
-                        void data.then((data) => {
+                if (captchaData !== undefined) {
+                    if (captchaData instanceof Promise) {
+                        void captchaData.then((data) => {
                             resolve({
                                 ...parameters,
                                 ...data,
@@ -47,7 +64,7 @@ define(["require", "exports", "tslib", "../../Controller/Captcha", "../../Langua
                     else {
                         resolve({
                             ...parameters,
-                            ...data,
+                            ...captchaData,
                         });
                     }
                 }
