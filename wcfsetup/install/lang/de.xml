@@ -2824,6 +2824,9 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Einige Verzeichnisse werden zur Laufzeit durch die Software beschrieben, der PHP-Benutzer muss Schreibrechte haben.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Unterstützte Formate der GD-Bibliothek]]></item>
 		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[Die GD-Bibliothek muss inklusive der Unterstützung der Formate „jpeg“, „png“ und „webp“ installiert sein.]]></item>
+		<item name="wcf.acp.systemCheck.php.opcache"><![CDATA[OPcache]]></item>
+		<item name="wcf.acp.systemCheck.php.opcache.description"><![CDATA[PHPs OPcache beschleunigt die Bearbeitung von Anfragen, indem der vorverarbeitete Programmcode gecached wird. Bei aktiviertem OPcache müssen die Verwaltungsfunktionen <kbd>opcache_reset()</kbd> und <kbd>opcache_invalidate()</kbd> zur Verfügung stehen, damit der Cache nach einer Aktualisierung des Programmcodes zuverlässig neu aufgebaut werden kann.]]></item>
+		<item name="wcf.acp.systemCheck.php.opcache.broken"><![CDATA[Fehlerhaft – die Verwaltungsfunktionen sind nicht verfügbar]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
