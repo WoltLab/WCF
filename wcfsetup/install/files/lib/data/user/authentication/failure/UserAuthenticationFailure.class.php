@@ -12,7 +12,6 @@ use wcf\util\UserUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Authentication\Failure
  *
  * @property-read   int $failureID      unique if of the user authentication failure
  * @property-read   string $environment        environment in which the user authentication failure occurred, possible values: 'user' or 'admin'

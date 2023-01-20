@@ -14,7 +14,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Poll
  *
  * @property-read   int $pollID         unique id of the poll
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.poll` object type

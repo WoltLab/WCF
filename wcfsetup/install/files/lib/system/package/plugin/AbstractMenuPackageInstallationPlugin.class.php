@@ -29,7 +29,6 @@ use wcf\util\Url;
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Package\Plugin
  */
 abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
     IIdempotentPackageInstallationPlugin

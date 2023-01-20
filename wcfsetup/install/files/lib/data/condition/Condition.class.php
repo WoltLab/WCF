@@ -11,7 +11,6 @@ use wcf\data\object\type\ObjectTypeCache;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Condition
  *
  * @property-read   int $conditionID        unique id of the condition
  * @property-read   int $objectTypeID       id of the condition object type (of different condition object type definitions)

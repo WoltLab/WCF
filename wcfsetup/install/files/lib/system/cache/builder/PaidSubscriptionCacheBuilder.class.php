@@ -10,7 +10,6 @@ use wcf\data\paid\subscription\PaidSubscriptionList;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Cache\Builder
  */
 class PaidSubscriptionCacheBuilder extends AbstractCacheBuilder
 {

@@ -11,7 +11,6 @@ use wcf\system\user\authentication\event\UserLoggedIn;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Event\Listener
  * @since   5.5
  */
 final class UserLoginCancelLostPasswordListener

@@ -12,7 +12,6 @@ use wcf\util\StringUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Template\Group
  *
  * @property-read   int $templateGroupID        unique id of the template group
  * @property-read   int|null $parentTemplateGroupID      id of the template group's parent template group or `null` if the template group has no parent template group

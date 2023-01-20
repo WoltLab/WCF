@@ -10,7 +10,6 @@ use wcf\system\style\FontManager;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Background\Job
  * @since   5.4
  */
 final class DownloadGoogleFontBackgroundJob extends AbstractBackgroundJob

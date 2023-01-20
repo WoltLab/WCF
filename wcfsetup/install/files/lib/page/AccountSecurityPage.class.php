@@ -16,7 +16,6 @@ use wcf\system\WCF;
  * @author  Tim Duesterhus, Joshua Ruesweg
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Page
  * @since       5.4
  */
 class AccountSecurityPage extends AbstractPage

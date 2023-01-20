@@ -36,7 +36,6 @@ use wcf\util\UserUtil;
  * @author  Marcel Werk
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Form
  */
 class RegisterForm extends UserAddForm
 {

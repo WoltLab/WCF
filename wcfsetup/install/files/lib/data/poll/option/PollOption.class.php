@@ -11,7 +11,6 @@ use wcf\data\poll\Poll;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Poll\Poll
  *
  * @property-read   int $optionID   unique id of the poll option
  * @property-read   int $pollID     id of the poll the option belongs to

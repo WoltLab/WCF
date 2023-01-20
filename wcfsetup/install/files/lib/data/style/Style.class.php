@@ -14,7 +14,6 @@ use wcf\util\ImageUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Style
  *
  * @property-read   int $styleID        unique id of the style
  * @property-read   int $packageID      id of the package which delivers the style

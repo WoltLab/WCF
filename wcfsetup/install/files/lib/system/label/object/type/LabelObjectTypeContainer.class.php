@@ -10,7 +10,6 @@ use wcf\data\object\type\ObjectTypeCache;
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Label\Object\Type
  */
 final class LabelObjectTypeContainer implements \Countable, \Iterator
 {

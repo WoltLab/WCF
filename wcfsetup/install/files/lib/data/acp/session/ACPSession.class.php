@@ -11,7 +11,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Acp\Session
  *
  * @property-read   string $sessionID      unique textual identifier of the acp session
  * @property-read   int|null $userID         id of the user the acp session belongs to or `null` if the acp session belongs to a guest

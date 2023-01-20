@@ -14,7 +14,6 @@ use wcf\system\request\IRouteController;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Group\Assignment
  *
  * @property-read   int $assignmentID       unique id of the automatic user group assignment
  * @property-read   int $groupID        id of the user group to which users are automatically assigned

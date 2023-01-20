@@ -19,7 +19,6 @@ use wcf\system\Regex;
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Io
  * @since   5.3
  */
 final class HttpFactory

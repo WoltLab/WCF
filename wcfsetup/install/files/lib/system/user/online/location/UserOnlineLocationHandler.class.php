@@ -11,7 +11,6 @@ use wcf\system\SingletonFactory;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Online\Location
  * @deprecated  3.0
  */
 class UserOnlineLocationHandler extends SingletonFactory

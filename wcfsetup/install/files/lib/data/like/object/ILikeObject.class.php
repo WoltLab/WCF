@@ -14,7 +14,6 @@ use wcf\data\object\type\ObjectType;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Like\Object
  */
 interface ILikeObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject
 {

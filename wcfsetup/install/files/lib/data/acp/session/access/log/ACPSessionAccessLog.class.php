@@ -11,7 +11,6 @@ use wcf\util\UserUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Acp\Session\Access\Log
  *
  * @property-read   int $sessionAccessLogID unique id of the acp session access log entry
  * @property-read   int $sessionLogID       id of the acp session log entry the access log entry belongs to

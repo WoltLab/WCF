@@ -12,7 +12,6 @@ use wcf\system\SingletonFactory;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data
  *
  * @property-read   string|null $className  name of the PHP class whose object(s) act as processor
  */

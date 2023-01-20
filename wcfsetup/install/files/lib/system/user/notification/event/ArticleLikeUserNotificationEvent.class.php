@@ -16,7 +16,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license WoltLab License <http://www.woltlab.com/license-agreement.html>
- * @package WoltLabSuite\Core\System\User\Notification\Event
  * @since   5.3
  *
  * @method  LikeUserNotificationObject  getUserNotificationObject()

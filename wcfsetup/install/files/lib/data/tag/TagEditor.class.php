@@ -11,7 +11,6 @@ use wcf\system\WCF;
  * @author  Tim Duesterhus, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Tag
  *
  * @method static Tag create(array $parameters = [])
  * @method      Tag getDecoratedObject()

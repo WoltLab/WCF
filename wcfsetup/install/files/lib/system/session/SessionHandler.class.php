@@ -30,7 +30,6 @@ use wcf\util\UserUtil;
  * @author  Tim Duesterhus, Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Session
  *
  * @property-read   string $sessionID      unique textual identifier of the session
  * @property-read   int|null $userID         id of the user the session belongs to or `null` if the session belongs to a guest

@@ -13,7 +13,6 @@ use wcf\util\StringUtil;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Util\Exception
  * @since   3.0
  * @deprecated  5.3 This exception is intimately tied to HTTPRequest which is deprecated.
  */

@@ -11,7 +11,6 @@ use wcf\data\comment\response\ViewableCommentResponseList;
  * @author  Matthias Schmidt
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Cache\Runtime
  * @since   5.5
  *
  * @method  ViewableCommentResponse[]   getCachedObjects()

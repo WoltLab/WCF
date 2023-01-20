@@ -12,7 +12,6 @@ use wcf\system\SingletonFactory;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Cache\Runtime
  * @since   3.0
  */
 abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntimeCache

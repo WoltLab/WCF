@@ -17,7 +17,6 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Comment\Response
  *
  * @property-read   int $responseID unique id of the comment response
  * @property-read   int $commentID  id of the comment the comment response belongs to

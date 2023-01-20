@@ -12,7 +12,6 @@ use wcf\system\html\node\HtmlNodeUnfurlLink;
  * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Message\Embedded\Object
  * @since       5.4
  */
 class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler

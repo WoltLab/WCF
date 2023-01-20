@@ -16,7 +16,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Group
  *
  * @property-read   int $groupID        unique id of the user group
  * @property-read   string $groupName      name of the user group or name of language

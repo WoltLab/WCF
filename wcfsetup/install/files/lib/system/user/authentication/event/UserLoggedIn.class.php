@@ -17,7 +17,6 @@ use wcf\system\event\IEvent;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Authentication\Event
  * @since   5.5
  */
 final class UserLoggedIn implements IEvent

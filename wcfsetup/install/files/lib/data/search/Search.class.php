@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Search
  *
  * @property-read   int $searchID   unique id of the search
  * @property-read   int|null $userID     id of the user who has done the search or `null` if a guest has done the search

@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Template\Listener
  *
  * @property-read   int $listenerID     unique id of the template listener
  * @property-read   int $packageID      id of the package which delivers the template listener

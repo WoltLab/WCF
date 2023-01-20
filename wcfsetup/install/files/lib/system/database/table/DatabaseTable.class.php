@@ -15,7 +15,6 @@ use wcf\system\database\table\index\DatabaseTableIndex;
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Database\Table
  * @since   5.2
  */
 class DatabaseTable

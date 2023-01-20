@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Acp\Search\Provider
  *
  * @property-read   int $providerID     unique id of the ACP search provider
  * @property-read   int $packageID      id of the package which delivers the ACP search provider

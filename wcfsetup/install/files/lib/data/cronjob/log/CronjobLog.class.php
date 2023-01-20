@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Cronjob\Log
  *
  * @property-read   int $cronjobLogID   unique id of the cronjob execution log
  * @property-read   int $cronjobID  id of the cronjob the log belongs to

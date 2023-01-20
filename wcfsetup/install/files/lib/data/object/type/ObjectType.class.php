@@ -18,7 +18,6 @@ use wcf\system\SingletonFactory;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Object\Type
  *
  * @property-read   int $objectTypeID       unique id of the object type
  * @property-read   int $definitionID       id of the object type definition the object type belongs to

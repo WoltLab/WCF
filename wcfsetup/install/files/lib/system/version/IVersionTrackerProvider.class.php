@@ -11,7 +11,6 @@ use wcf\data\object\type\IObjectTypeProvider;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Version
  * @since   3.1
  */
 interface IVersionTrackerProvider extends IObjectTypeProvider

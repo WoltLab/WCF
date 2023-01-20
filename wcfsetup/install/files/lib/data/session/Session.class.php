@@ -10,7 +10,6 @@ use wcf\data\acp\session\ACPSession;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Session
  *
  * @property-read   int|null $pageID         id of the latest page visited
  * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to

@@ -21,7 +21,6 @@ use wcf\util\ClassUtil;
  * @author      Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Condition\User
  * @since       5.3
  */
 class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondition implements

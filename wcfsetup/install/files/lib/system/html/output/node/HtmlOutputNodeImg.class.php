@@ -22,7 +22,6 @@ use wcf\util\Url;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
 class HtmlOutputNodeImg extends AbstractHtmlOutputNode

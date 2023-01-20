@@ -18,7 +18,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Form
  * @since   5.2
  */
 abstract class AbstractFormBuilderForm extends AbstractForm

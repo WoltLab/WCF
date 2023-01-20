@@ -18,7 +18,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Notification\Event
  * @since   3.1
  *
  * @method  PaidSubscriptionUserUserNotificationObject  getUserNotificationObject()

@@ -26,7 +26,6 @@ use wcf\util\DateUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Template\Plugin
  * @since   3.1
  */
 class DateIntervalFunctionTemplatePlugin implements IFunctionTemplatePlugin

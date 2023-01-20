@@ -11,7 +11,6 @@ use wcf\util\FileUtil;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Io
  */
 class Zip extends File implements IArchive
 {

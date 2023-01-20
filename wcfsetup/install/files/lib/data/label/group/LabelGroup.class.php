@@ -12,7 +12,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Label\Group
  *
  * @property-read   int $groupID        unique id of the label group
  * @property-read   string $groupName      name of the label group or name of language item which contains the label text

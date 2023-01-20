@@ -13,7 +13,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Moderation\Queue
  *
  * @property-read   int $queueID        unique id of the moderation queue entry
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.moderation.type` object type

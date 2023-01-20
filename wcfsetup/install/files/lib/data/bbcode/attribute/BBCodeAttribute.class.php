@@ -11,7 +11,6 @@ use wcf\data\DatabaseObject;
  * @author  Tim Duesterhus, Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Bbcode\Attribute
  *
  * @property-read   int $attributeID        unique id of the bbcode attribute
  * @property-read   int $bbcodeID       id of the bbcode the attribute belongs to

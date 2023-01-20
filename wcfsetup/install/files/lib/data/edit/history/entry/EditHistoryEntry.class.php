@@ -11,7 +11,6 @@ use wcf\data\object\type\ObjectTypeCache;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Edit\History\Entry
  *
  * @property-read   int $entryID        unique id of the edit history entry
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.edit.historySavingObject` object type

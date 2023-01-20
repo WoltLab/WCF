@@ -17,7 +17,6 @@ use wcf\util\FileUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package
  *
  * @property-read   int $packageID      unique id of the package
  * @property-read   string $package        unique textual identifier of the package

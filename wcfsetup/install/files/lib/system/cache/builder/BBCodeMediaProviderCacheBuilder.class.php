@@ -10,7 +10,6 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProviderList;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Cache\Builder
  */
 class BBCodeMediaProviderCacheBuilder extends AbstractCacheBuilder
 {

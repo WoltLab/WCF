@@ -12,7 +12,6 @@ use wcf\system\WCF;
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Reaction\Type
  * @since   5.2
  *
  * @property-read   int $reactionTypeID     unique id of the reaction type

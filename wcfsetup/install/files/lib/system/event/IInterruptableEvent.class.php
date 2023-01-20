@@ -12,7 +12,6 @@ namespace wcf\system\event;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Event
  * @since   5.5
  */
 interface IInterruptableEvent extends IEvent

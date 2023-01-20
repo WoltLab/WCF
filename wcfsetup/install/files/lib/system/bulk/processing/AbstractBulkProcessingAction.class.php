@@ -10,7 +10,6 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Bulk\Processing
  * @since   3.0
  */
 abstract class AbstractBulkProcessingAction extends AbstractObjectTypeProcessor implements IBulkProcessingAction

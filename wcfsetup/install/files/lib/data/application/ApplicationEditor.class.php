@@ -12,7 +12,6 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Application
  *
  * @method static Application create(array $parameters = [])
  * @method      Application getDecoratedObject()

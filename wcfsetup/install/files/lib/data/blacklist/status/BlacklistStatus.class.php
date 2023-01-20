@@ -16,7 +16,6 @@ use wcf\util\JSON;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\Data\Blacklist\Status
  *
  * @property-read string $date ISO 8601 date (UTC)
  * @property-read int $delta1 Is 1 if the first delta (00:00-05:59 UTC) of the day has been fetched, otherwise 0

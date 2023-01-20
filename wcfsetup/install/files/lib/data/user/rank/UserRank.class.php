@@ -14,7 +14,6 @@ use wcf\util\StringUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Rank
  *
  * @property-read   int $rankID         unique id of the user rank
  * @property-read   int $groupID        id of the user group to which the user rank belongs

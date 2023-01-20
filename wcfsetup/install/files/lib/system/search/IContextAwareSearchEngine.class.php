@@ -14,7 +14,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Search
  * @since 6.0
  */
 interface IContextAwareSearchEngine extends ISearchEngine

@@ -25,7 +25,6 @@ use wcf\util\Url;
  * @author  Tim Duesterhus, Matthias Schmidt
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
  * @since   3.0
  */
 final class ImageProxyAction extends AbstractAction

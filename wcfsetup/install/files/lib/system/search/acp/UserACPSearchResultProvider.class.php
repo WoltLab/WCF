@@ -14,7 +14,6 @@ use wcf\system\WCF;
  * @author  Joshua Ruesweg, Matthias Schmidt
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Search\Acp
  */
 class UserACPSearchResultProvider implements IACPSearchResultProvider
 {

@@ -17,7 +17,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Paid\Subscription
  *
  * @property-read   int $subscriptionID         unique id of the paid subscription
  * @property-read   string $title              title of the paid subscription or name of language item which contains the title

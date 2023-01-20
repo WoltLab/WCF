@@ -12,7 +12,6 @@ use wcf\data\ITitledObject;
  * @author  Marcel Werk, Oliver Kliebisch
  * @copyright   2001-2019 WoltLab GmbH, Oliver Kliebisch
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Notification\Object
  */
 interface IUserNotificationObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject
 {

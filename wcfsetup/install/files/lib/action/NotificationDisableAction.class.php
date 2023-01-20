@@ -13,7 +13,6 @@ use wcf\util\StringUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
  * @deprecated  5.3 Replaced by NotificationUnsubscribeForm
  */
 final class NotificationDisableAction extends AbstractAction

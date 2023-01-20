@@ -13,7 +13,6 @@ use wcf\system\form\builder\IFormParentNode;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Form\Builder\Container
  * @since   5.2
  */
 interface IFormContainer extends IFormChildNode, IFormElement, IFormParentNode

@@ -13,7 +13,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Paid\Subscription\User
  *
  * @property-read   int $subscriptionUserID     unique id of the paid subscription-user-association
  * @property-read   int $subscriptionID         id of the paid subscription the paid subscription-user-association belongs to

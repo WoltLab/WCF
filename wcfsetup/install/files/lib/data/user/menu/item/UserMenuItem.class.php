@@ -18,7 +18,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Menu\Item
  *
  * @property-read   int $menuItemID     unique id of the user menu item
  * @property-read   int $packageID      id of the package the which delivers the user menu item

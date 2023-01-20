@@ -14,7 +14,6 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Language
  *
  * @property-read   int $languageID     unique id of the language
  * @property-read   string $languageCode       code of the language according to ISO 639-1

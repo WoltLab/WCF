@@ -16,7 +16,6 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Comment
  *
  * @property-read   int $commentID      unique id of the comment
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.comment.commentableContent` object type

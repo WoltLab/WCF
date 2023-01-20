@@ -24,7 +24,6 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author      Olaf Braun, Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Event\Listener
  * @since       5.3
  */
 abstract class AbstractEventListener implements IParameterizedEventListener

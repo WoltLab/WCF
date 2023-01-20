@@ -9,7 +9,6 @@ namespace wcf\system\search\exception;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Search\Exception
  * @since   5.5
  */
 final class SearchFailed extends \RuntimeException

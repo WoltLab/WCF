@@ -11,7 +11,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package\Installation\Queue
  *
  * @property-read   int $queueID        unique id of the package installation queue entry
  * @property-read   int $parentQueueID      id of the package installation queue entry's parent entry or `0` if it has no parent entry

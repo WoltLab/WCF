@@ -30,7 +30,6 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Package\Plugin
  */
 class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
     IGuiPackageInstallationPlugin

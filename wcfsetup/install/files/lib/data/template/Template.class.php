@@ -13,7 +13,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Template
  *
  * @property-read   int $templateID     unique id of the template
  * @property-read   int $packageID      id of the package which delivers the template

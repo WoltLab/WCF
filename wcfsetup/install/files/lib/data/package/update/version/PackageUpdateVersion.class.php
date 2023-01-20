@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package\Update\Version
  *
  * @property-read   int $packageUpdateVersionID     unique id of the package update version
  * @property-read   int $packageUpdateID        id of the package update the package update version belongs to

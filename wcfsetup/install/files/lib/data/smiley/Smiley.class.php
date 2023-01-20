@@ -13,7 +13,6 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Smiley
  *
  * @property-read   int $smileyID   unique id of the smiley
  * @property-read   int $packageID  id of the package which delivers the smiley
