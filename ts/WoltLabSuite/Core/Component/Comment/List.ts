@@ -196,7 +196,7 @@ class CommentList {
   }
 
   #initCommentAdd(): void {
-    if (this.#container.dataset.canAdd) {
+    if (this.#container.dataset.canAdd === "true") {
       new CommentAdd(
         this.#container.querySelector(".commentAdd")!,
         parseInt(this.#container.dataset.objectTypeId!),

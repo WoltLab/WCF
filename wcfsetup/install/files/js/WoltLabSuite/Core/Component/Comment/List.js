@@ -143,7 +143,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             });
         }
         #initCommentAdd() {
-            if (this.#container.dataset.canAdd) {
+            if (this.#container.dataset.canAdd === "true") {
                 new Add_1.CommentAdd(this.#container.querySelector(".commentAdd"), parseInt(this.#container.dataset.objectTypeId), parseInt(this.#container.dataset.objectId), (template) => {
                     this.#insertComment(template);
                 });
