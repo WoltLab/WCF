@@ -69,10 +69,10 @@
 							*}{foreach from=$diff item='line'}{*
 								*}{if $line[0] == ' '}{*
 									*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
-									*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
+									*}<li value="{$lineNo}" style="margin: 0">{$line[1]}</li>{*
 								*}{elseif $line[0] == '-'}{*
 									*}{assign var=removeOffset value=$removeOffset + 1}{assign var=lineNo value=$lineNo + 1}{*
-									*}<li value="{@$lineNo}" style="background-color: lightpink;margin: 0">{$line[1]}</li>{*
+									*}<li value="{$lineNo}" style="background-color: lightpink;margin: 0">{$line[1]}</li>{*
 								*}{elseif $line[0] == '+'}{*
 									*}{assign var=removeOffset value=$removeOffset - 1}{*
 									*}{if $removeOffset < 0}<li style="list-style-type: none;margin: 0">&nbsp;</li>{/if}{*
@@ -100,12 +100,12 @@
 										*}{@'<li style="list-style-type: none;margin: 0">&nbsp;</li>'|str_repeat:$removeOffset}{*
 									*}{/if}{*
 									*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
-									*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
+									*}<li value="{$lineNo}" style="margin: 0">{$line[1]}</li>{*
 								*}{elseif $line[0] == '-'}{*
 									*}{assign var=removeOffset value=$removeOffset + 1}{*
 								*}{elseif $line[0] == '+'}{*
 									*}{assign var=removeOffset value=$removeOffset - 1}{assign var=lineNo value=$lineNo + 1}{*
-									*}<li value="{@$lineNo}" style="background-color: lightgreen; margin: 0">{$line[1]}</li>{*
+									*}<li value="{$lineNo}" style="background-color: lightgreen; margin: 0">{$line[1]}</li>{*
 								*}{/if}{*
 							*}{/foreach}{*
 						*}</ol>{*

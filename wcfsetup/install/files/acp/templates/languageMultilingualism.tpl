@@ -38,7 +38,7 @@
 			<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
 			<dd class="floated">
 				{foreach from=$languages item='language'}
-					<label><input type="checkbox" name="languageIDs[]" value="{@$language->languageID}"{if $language->languageID == $defaultLanguageID} checked disabled{elseif $language->languageID|in_array:$languageIDs} checked{/if}> {$language}</label>
+					<label><input type="checkbox" name="languageIDs[]" value="{$language->languageID}"{if $language->languageID == $defaultLanguageID} checked disabled{elseif $language->languageID|in_array:$languageIDs} checked{/if}> {$language}</label>
 				{/foreach}
 				
 				{if $errorField == 'languageIDs'}

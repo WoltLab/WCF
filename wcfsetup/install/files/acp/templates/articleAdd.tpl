@@ -146,7 +146,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$categoryNodeList item=category}
-						<option value="{@$category->categoryID}"{if !$category->categoryID|in_array:$accessibleCategoryIDs} disabled{elseif $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
+						<option value="{$category->categoryID}"{if !$category->categoryID|in_array:$accessibleCategoryIDs} disabled{elseif $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'categoryID'}
@@ -184,7 +184,7 @@
 							<noscript>
 								<select name="labelIDs[{@$labelGroup->groupID}]">
 									{foreach from=$labelGroup item=label}
-										<option value="{@$label->labelID}">{$label->getTitle()}</option>
+										<option value="{$label->labelID}">{$label->getTitle()}</option>
 									{/foreach}
 								</select>
 							</noscript>
@@ -286,7 +286,7 @@
 							{/if}
 						</div>
 						<p class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.media.chooseImage{/lang}</p>
-						<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if}>
+						<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{$imageID[0]}"{/if}>
 						{if $errorField == 'image'}
 							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
 						{/if}
@@ -311,7 +311,7 @@
 							{/if}
 						</div>
 						<p class="button jsMediaSelectButton" data-store="teaserImageID0" data-display="teaserImageDisplay">{lang}wcf.media.chooseImage{/lang}</p>
-						<input type="hidden" name="teaserImageID[0]" id="teaserImageID0"{if $teaserImageID[0]|isset} value="{@$teaserImageID[0]}"{/if}>
+						<input type="hidden" name="teaserImageID[0]" id="teaserImageID0"{if $teaserImageID[0]|isset} value="{$teaserImageID[0]}"{/if}>
 						{if $errorField == 'teaserImage'}
 							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
 						{/if}
@@ -443,7 +443,7 @@
 										{/if}
 									</div>
 									<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</p>
-									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if}>
+									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
 									{if $errorField == 'image'|concat:$availableLanguage->languageID}
 										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
 									{/if}
@@ -468,7 +468,7 @@
 										{/if}
 									</div>
 									<p class="button jsMediaSelectButton" data-store="teaserImageID{@$availableLanguage->languageID}" data-display="teaserImageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</p>
-									<input type="hidden" name="teaserImageID[{@$availableLanguage->languageID}]" id="teaserImageID{@$availableLanguage->languageID}"{if $teaserImageID[$availableLanguage->languageID]|isset} value="{@$teaserImageID[$availableLanguage->languageID]}"{/if}>
+									<input type="hidden" name="teaserImageID[{@$availableLanguage->languageID}]" id="teaserImageID{@$availableLanguage->languageID}"{if $teaserImageID[$availableLanguage->languageID]|isset} value="{$teaserImageID[$availableLanguage->languageID]}"{/if}>
 									{if $errorField == 'teaserImage'|concat:$availableLanguage->languageID}
 										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
 									{/if}
@@ -588,7 +588,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<button type="button" id="buttonMessagePreview" class="button jsOnly">{lang}wcf.global.button.preview{/lang}</button>
-		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="isMultilingual" value="{$isMultilingual}">
 		<input type="hidden" name="timeNowReference" value="{@TIME_NOW}">
 		{csrfToken}
 	</div>

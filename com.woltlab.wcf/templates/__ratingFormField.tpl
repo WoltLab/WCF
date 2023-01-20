@@ -21,7 +21,7 @@
 <noscript>
 	<select name="{$field->getPrefixedId()}" {if $field->isImmutable()} disabled{/if}>
 		{foreach from=$field->getRatings() item=rating}
-			<option value="{@$rating}">{@$rating}</option>
+			<option value="{$rating}">{@$rating}</option>
 		{/foreach}
 	</select>
 </noscript>

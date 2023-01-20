@@ -36,7 +36,7 @@
 					<select name="languageID" id="languageID">
 						<option value="0">{lang}wcf.user.language{/lang}</option>
 						{foreach from=$availableLanguages item=availableLanguage}
-							<option value="{@$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
+							<option value="{$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
 						{/foreach}
 					</select>
 				</dd>
@@ -48,7 +48,7 @@
 					<select name="languageCategoryID" id="languageCategoryID">
 						<option value="0">{lang}wcf.acp.language.category{/lang}</option>
 						{foreach from=$availableLanguageCategories item=availableLanguageCategory}
-							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected{/if}>{$availableLanguageCategory->languageCategory}</option>
+							<option value="{$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected{/if}>{$availableLanguageCategory->languageCategory}</option>
 						{/foreach}
 					</select>
 				</dd>

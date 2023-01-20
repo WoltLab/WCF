@@ -114,7 +114,7 @@
 							<option value="0">{lang}wcf.acp.page.parentPage.none{/lang}</option>
 
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID || ($action === 'edit' && $pageNode->pageID == $page->pageID)} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								<option value="{$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID || ($action === 'edit' && $pageNode->pageID == $page->pageID)} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'parentPageID'}
@@ -134,7 +134,7 @@
 					<dd>
 						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
 							{foreach from=$availableApplications item=availableApplication}
-								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+								<option value="{$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'applicationPackageID'}
@@ -157,7 +157,7 @@
 								{assign var='_overrideApplicationPackageID' value=$overrideApplicationPackageID}
 								{if !$_overrideApplicationPackageID}{assign var='_overrideApplicationPackageID' value=$page->applicationPackageID}{/if}
 								{foreach from=$availableApplications item=availableApplication}
-									<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $_overrideApplicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+									<option value="{$availableApplication->packageID}"{if $availableApplication->packageID == $_overrideApplicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'overrideApplicationPackageID'}
@@ -275,7 +275,7 @@
 								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 
 								{foreach from=$menuItemNodeList item=menuItemNode}
-									<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentMenuItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</option>
+									<option value="{$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentMenuItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'parentMenuItemID'}
@@ -481,7 +481,7 @@
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
 									<label>
-										<input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}>
+										<input type="checkbox" name="boxIDs[]" value="{$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}>
 										{$availableBox->name}
 										{if $availableBox->isDisabled}
 											<span class="jsTooltip" title="{lang}wcf.acp.box.isDisabled{/lang}">
@@ -532,7 +532,7 @@
 
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="isMultilingual" value="{$isMultilingual}">
 		<input type="hidden" name="pageType" value="{$pageType}">
 		{csrfToken}
 	</div>

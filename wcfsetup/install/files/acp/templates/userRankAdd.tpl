@@ -112,7 +112,7 @@
 		<dl{if $errorField == 'repeatImage'} class="formError"{/if}>
 			<dt><label for="repeatImage">{lang}wcf.acp.user.rank.repeatImage{/lang}</label></dt>
 			<dd>
-				<input type="number" id="repeatImage" name="repeatImage" value="{@$repeatImage}" min="1" class="tiny">
+				<input type="number" id="repeatImage" name="repeatImage" value="{$repeatImage}" min="1" class="tiny">
 				{if $errorField == 'rankImage'}
 					<small class="innerError">
 						{lang}wcf.acp.user.rank.repeatImage.error.{@$errorType}{/lang}
@@ -146,7 +146,7 @@
 			<dd>
 				<select id="groupID" name="groupID">
 					{foreach from=$availableGroups item=group}
-						<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group->getTitle()}</option>
+						<option value="{$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'groupID'}
@@ -183,7 +183,7 @@
 		<dl{if $errorField == 'requiredPoints'} class="formError"{/if}>
 			<dt><label for="requiredPoints">{lang}wcf.acp.user.rank.requiredPoints{/lang}</label></dt>
 			<dd>
-				<input type="number" id="requiredPoints" name="requiredPoints" value="{@$requiredPoints}" min="0" class="tiny">
+				<input type="number" id="requiredPoints" name="requiredPoints" value="{$requiredPoints}" min="0" class="tiny">
 				{if $errorField == 'requiredPoints'}
 					<small class="innerError">
 						{lang}wcf.acp.user.rank.requiredPoints.error.{@$errorType}{/lang}

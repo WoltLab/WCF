@@ -75,7 +75,7 @@
 			<dl>
 				<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
 				<dd>
-					<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny">
+					<input type="number" id="itemsPerPage" name="itemsPerPage" value="{$itemsPerPage}" class="tiny">
 				</dd>
 			</dl>
 			

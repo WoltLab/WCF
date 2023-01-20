@@ -21,7 +21,7 @@
 							<option value="0">{lang}wcf.label.none{/lang}</option>
 							<option value="-1">{lang}wcf.label.withoutSelection{/lang}</option>
 							{foreach from=$labelGroup item=label}
-								<option value="{@$label->labelID}"{if $labelIDs[$labelGroup->groupID]|isset && $labelIDs[$labelGroup->groupID] == $label->labelID} selected{/if}>{$label->getTitle()}</option>
+								<option value="{$label->labelID}"{if $labelIDs[$labelGroup->groupID]|isset && $labelIDs[$labelGroup->groupID] == $label->labelID} selected{/if}>{$label->getTitle()}</option>
 							{/foreach}
 						</select>
 					{/foreach}

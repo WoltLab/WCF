@@ -8,7 +8,7 @@
 				<option value="">{lang}wcf.search.type.everywhere{/lang}</option>
 				{foreach from=$objectTypes key=objectTypeName item=objectType}
 					{if $objectType->isAccessible()}
-						<option value="{@$objectTypeName}">{lang}wcf.search.type.{@$objectTypeName}{/lang}</option>
+						<option value="{$objectTypeName}">{lang}wcf.search.type.{@$objectTypeName}{/lang}</option>
 					{/if}
 				{/foreach}
 			</select>

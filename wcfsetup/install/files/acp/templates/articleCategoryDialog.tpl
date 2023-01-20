@@ -6,7 +6,7 @@
 				<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 				
 				{foreach from=$categoryNodeList item=category}
-					<option value="{@$category->categoryID}">{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
+					<option value="{$category->categoryID}">{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
 				{/foreach}
 			</select>
 		</dd>

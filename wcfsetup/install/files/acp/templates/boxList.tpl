@@ -51,7 +51,7 @@
 					<select name="position" id="boxPosition">
 						<option value="0">{lang}wcf.acp.box.position{/lang}</option>
 						{foreach from=$availablePositions item=availablePosition}
-							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+							<option value="{$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 						{/foreach}
 					</select>
 				</dd>

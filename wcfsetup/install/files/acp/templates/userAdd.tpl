@@ -454,7 +454,7 @@
 										</dt>
 										<dd>
 											{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-												<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {@$availableLanguage}</label>
+												<label><input type="checkbox" name="visibleLanguages[]" value="{$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {@$availableLanguage}</label>
 											{/foreach}
 										</dd>
 									</dl>
@@ -468,7 +468,7 @@
 										<select id="styleID" name="styleID">
 											<option value="0">{lang}wcf.global.defaultValue{/lang}</option>
 											{foreach from=$availableStyles item=style}
-												<option value="{@$style->styleID}"{if $style->styleID == $styleID} selected{/if}>{$style->styleName}</option>
+												<option value="{$style->styleID}"{if $style->styleID == $styleID} selected{/if}>{$style->styleName}</option>
 											{/foreach}
 										</select>
 										{if $errorField === 'styleID'}
@@ -844,7 +844,7 @@
 {if $action === 'edit' && $ownerGroupID}
 	<script data-relocate="true">
 		(() => {
-			const input = document.querySelector('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
+			const input = document.querySelector('input[name="groupIDs[]"][value="{$ownerGroupID}"]');
 			if (input) {
 				const icon = document.createElement("span");
 				icon.innerHTML = '<fa-icon name="shield-halved"></fa-icon>';

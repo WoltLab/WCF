@@ -41,7 +41,7 @@
 					<select id="languageID" name="languageID"{if $action == 'edit'} disabled{/if}>
 						{content}
 							{foreach from=$availableLanguages item=language}
-								<option value="{@$language->languageID}"{if $languageID == $language->languageID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>
+								<option value="{$language->languageID}"{if $languageID == $language->languageID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>
 							{/foreach}
 						{/content}
 					</select>

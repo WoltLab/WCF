@@ -204,7 +204,7 @@
 					<select name="assignedUserID" id="assignedUserID">
 						<option value="-1"{if $assignedUserID == -1} selected{/if}>{lang}wcf.moderation.filterByUser.allEntries{/lang}</option>
 						<option value="0"{if $assignedUserID == 0} selected{/if}>{lang}wcf.moderation.filterByUser.nobody{/lang}</option>
-						<option value="{@$__wcf->getUser()->userID}"{if $assignedUserID == $__wcf->getUser()->userID} selected{/if}>{lang}wcf.moderation.filterByUser.myself{/lang}</option>
+						<option value="{$__wcf->getUser()->userID}"{if $assignedUserID == $__wcf->getUser()->userID} selected{/if}>{lang}wcf.moderation.filterByUser.myself{/lang}</option>
 						
 						{event name='filterAssignedUser'}
 					</select>
