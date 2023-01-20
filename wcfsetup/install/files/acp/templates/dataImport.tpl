@@ -75,7 +75,7 @@
 					<dd>
 						<select name="exporterName" id="exporterName">
 							{foreach from=$availableExporters key=availableExporterName item=availableExporter}
-								<option value="{@$availableExporterName}">{lang}wcf.acp.dataImport.exporter.{@$availableExporterName}{/lang}</option>
+								<option value="{$availableExporterName}">{lang}wcf.acp.dataImport.exporter.{@$availableExporterName}{/lang}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'exporterName'}
@@ -112,10 +112,10 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd class="jsImportCollection">
-						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+						<label><input type="checkbox" name="selectedData[]" value="{$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 						<p>
 							{foreach from=$objectTypes item=objectTypeName}
-								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+								<label><input type="checkbox" name="selectedData[]" value="{$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 							{/foreach}
 						</p>
 					</dd>

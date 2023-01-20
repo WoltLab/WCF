@@ -44,7 +44,7 @@
 						<noscript>
 							<select name="languageID" id="languageID">
 								{foreach from=$availableLanguages item=language}
-									<option value="{@$language->languageID}"{if $language->languageID == $languageID} selected{/if}>{$language}</option>
+									<option value="{$language->languageID}"{if $language->languageID == $languageID} selected{/if}>{$language}</option>
 								{/foreach}
 							</select>
 						</noscript>
@@ -57,7 +57,7 @@
 						<dd class="floated">
 						{content}
 							{foreach from=$availableContentLanguages item=language}
-								<label><input name="contentLanguageIDs[]" type="checkbox" value="{@$language->languageID}"{if $language->languageID|in_array:$contentLanguageIDs} checked{/if}> {$language}</label>
+								<label><input name="contentLanguageIDs[]" type="checkbox" value="{$language->languageID}"{if $language->languageID|in_array:$contentLanguageIDs} checked{/if}> {$language}</label>
 							{/foreach}
 						{/content}
 						<small>{lang}wcf.user.visibleLanguages.description{/lang}</small></dd>
@@ -78,7 +78,7 @@
 						<select id="styleID" name="styleID">
 							<option value="0">{lang}wcf.global.defaultValue{/lang}</option>
 							{foreach from=$availableStyles item=style}
-								<option value="{@$style->styleID}"{if $style->styleID == $styleID} selected{/if}>{$style->styleName}</option>
+								<option value="{$style->styleID}"{if $style->styleID == $styleID} selected{/if}>{$style->styleName}</option>
 							{/foreach}
 						</select>
 						<small>{lang}wcf.user.style.description{/lang}</small>

@@ -46,7 +46,7 @@
 				<label for="pollMaxVotes_{$wysiwygSelector}">{lang}wcf.poll.maxVotes{/lang}</label>
 			</dt>
 			<dd>
-				<input type="number" name="pollMaxVotes" id="pollMaxVotes_{$wysiwygSelector}" value="{@$pollMaxVotes}" min="1" class="tiny">
+				<input type="number" name="pollMaxVotes" id="pollMaxVotes_{$wysiwygSelector}" value="{$pollMaxVotes}" min="1" class="tiny">
 			</dd>
 		</dl>
 		<dl>

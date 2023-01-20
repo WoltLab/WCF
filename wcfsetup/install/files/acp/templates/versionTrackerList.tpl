@@ -126,7 +126,7 @@
 							<button type="button" class="jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->versionID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}">
 								{icon name='arrow-rotate-left'}
 							</button>
-							<input type="radio" name="oldID" value="{@$edit->versionID}"{if $oldID == $edit->versionID} checked{/if}> <input type="radio" name="newID" value="{@$edit->versionID}"{if $newID == $edit->versionID} checked{/if}>
+							<input type="radio" name="oldID" value="{$edit->versionID}"{if $oldID == $edit->versionID} checked{/if}> <input type="radio" name="newID" value="{$edit->versionID}"{if $newID == $edit->versionID} checked{/if}>
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{#($tpl[foreach][edit][total] - $tpl[foreach][edit][iteration] + 1)}</td>

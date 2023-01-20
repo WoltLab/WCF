@@ -38,7 +38,7 @@
 				<select name="destinationUserID" id="destinationUserID">
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$users item=user}
-						<option value="{@$user->userID}">{$user->username}</option>
+						<option value="{$user->userID}">{$user->username}</option>
 					{/foreach}
 				</select>
 				

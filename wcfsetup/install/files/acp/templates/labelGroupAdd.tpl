@@ -105,7 +105,7 @@
 								{foreach from=$container item=objectType}
 									<li class="{if $objectType->isCategory()} category{/if}"{if $objectType->getDepth()} style="padding-left: {$objectType->getDepth() * 20}px"{/if} data-depth="{@$objectType->getDepth()}">
 										<span>{$objectType->getLabel()}</span>
-										<label><input id="checkbox_{@$container->getObjectTypeID()}_{@$objectType->getObjectID()}" type="checkbox" name="objectTypes[{@$container->getObjectTypeID()}][]" value="{@$objectType->getObjectID()}"{if $objectType->getOptionValue()} checked{/if}></label>
+										<label><input id="checkbox_{@$container->getObjectTypeID()}_{@$objectType->getObjectID()}" type="checkbox" name="objectTypes[{@$container->getObjectTypeID()}][]" value="{$objectType->getObjectID()}"{if $objectType->getOptionValue()} checked{/if}></label>
 									</li>
 								{/foreach}
 							</ul>

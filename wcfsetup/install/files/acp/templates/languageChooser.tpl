@@ -8,7 +8,7 @@
 			<noscript>
 				<select name="{@$__languageChooserPrefix}languageID" id="{@$__languageChooserPrefix}languageID">
 					{foreach from=$languages item=_language}
-						<option value="{@$_language->languageID}">{$_language}</option>
+						<option value="{$_language->languageID}">{$_language}</option>
 					{/foreach}
 				</select>
 			</noscript>

@@ -75,7 +75,7 @@
 						{assign var='__firstLocationID' value=$locationGroup|key}
 						<optgroup label="{$locationGroupLabel}" data-category-name="{@$locationObjectTypes[$__firstLocationID]->categoryname}">
 							{foreach from=$locationGroup key='locationID' item='location'}
-								<option value="{@$locationID}"{if $locationObjectTypes[$locationID]->page} data-page="{$locationObjectTypes[$locationID]->page}"{/if}{if $objectTypeID == $locationID} selected{/if}>{$location}</option>
+								<option value="{$locationID}"{if $locationObjectTypes[$locationID]->page} data-page="{$locationObjectTypes[$locationID]->page}"{/if}{if $objectTypeID == $locationID} selected{/if}>{$location}</option>
 							{/foreach}
 						</optgroup>
 					{/foreach}

@@ -49,7 +49,7 @@
 					<select id="groupID" name="groupID"{if $action == 'edit'} disabled{/if}>
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$labelGroupList item=group}
-							<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
+							<option value="{$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
 						{/foreach}
 					</select>
 					<small>{lang}wcf.acp.label.group.permanentSelection{/lang}</small>

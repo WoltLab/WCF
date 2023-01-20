@@ -47,7 +47,7 @@
 						{foreach from=$actions key=_packageID item=$availableActions}
 							{assign var=_package value=$packages[$_packageID]}
 							
-							<option value="{@$_package->packageID}"{if $action == $_package->packageID} selected{/if}>{lang package=$_package}wcf.acp.modificationLog.action.allPackageActions{/lang}</option>
+							<option value="{$_package->packageID}"{if $action == $_package->packageID} selected{/if}>{lang package=$_package}wcf.acp.modificationLog.action.allPackageActions{/lang}</option>
 							{foreach from=$availableActions key=actionName item=actionLabel}
 								<option value="{$actionName}"{if $action === $actionName} selected{/if}>{@'&nbsp;'|str_repeat:4}{$actionLabel}</option>
 							{/foreach}

@@ -77,7 +77,7 @@
 						<dd>
 							<select name="position" id="position">
 								{foreach from=$availablePositions item=availablePosition}
-									<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+									<option value="{$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 								{/foreach}
 							</select>
 							
@@ -96,7 +96,7 @@
 					<dl>
 						<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 						<dd>
-							<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
+							<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
 						</dd>
 					</dl>
 					

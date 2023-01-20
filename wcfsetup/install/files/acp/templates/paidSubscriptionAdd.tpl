@@ -94,7 +94,7 @@
 				<dt>{lang}wcf.acp.paidSubscription.excludedSubscriptions{/lang}</dt>
 				<dd>
 					{foreach from=$availableSubscriptions item=availableSubscription}
-						<label><input type="checkbox" name="excludedSubscriptionIDs[]" value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID|in_array:$excludedSubscriptionIDs} checked{/if}> {$availableSubscription->getTitle()}</label>
+						<label><input type="checkbox" name="excludedSubscriptionIDs[]" value="{$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID|in_array:$excludedSubscriptionIDs} checked{/if}> {$availableSubscription->getTitle()}</label>
 					{/foreach}
 					<small>{lang}wcf.acp.paidSubscription.excludedSubscriptions.description{/lang}</small>
 				</dd>
@@ -136,7 +136,7 @@
 		<dl id="subscriptionLengthDL"{if $errorField == 'subscriptionLength'} class="formError"{/if}>
 			<dt><label for="subscriptionLength">{lang}wcf.acp.paidSubscription.subscriptionLength{/lang}</label></dt>
 			<dd>
-				<input type="number" id="subscriptionLength" name="subscriptionLength" value="{@$subscriptionLength}" class="tiny"{if !$canChangePaymentOptions} readonly{/if}>
+				<input type="number" id="subscriptionLength" name="subscriptionLength" value="{$subscriptionLength}" class="tiny"{if !$canChangePaymentOptions} readonly{/if}>
 				<select name="subscriptionLengthUnit" id="subscriptionLengthUnit"{if !$canChangePaymentOptions} disabled{/if}>
 					<option value="D"{if $subscriptionLengthUnit == 'D'} selected{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.D{/lang}</option>
 					<option value="M"{if $subscriptionLengthUnit == 'M'} selected{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.M{/lang}</option>
@@ -166,7 +166,7 @@
 			<dt><label>{lang}wcf.acp.paidSubscription.userGroups{/lang}</label></dt>
 			<dd>
 				{foreach from=$availableUserGroups item=userGroup}
-					<label><input type="checkbox" name="groupIDs[]" value="{@$userGroup->groupID}"{if $userGroup->groupID|in_array:$groupIDs} checked{/if}> {$userGroup->getTitle()}</label>
+					<label><input type="checkbox" name="groupIDs[]" value="{$userGroup->groupID}"{if $userGroup->groupID|in_array:$groupIDs} checked{/if}> {$userGroup->getTitle()}</label>
 				{/foreach}
 				{if $errorField == 'groupIDs'}
 					<small class="innerError">

@@ -4,7 +4,7 @@
 			<option>{lang}wcf.global.language.noSelection{/lang}</option>
 		{/if}
 		{foreach from=$field->getContentLanguages() item=contentLanguage}
-			<option value="{@$contentLanguage->languageID}">{$contentLanguage}</option>
+			<option value="{$contentLanguage->languageID}">{$contentLanguage}</option>
 		{/foreach}
 	</select>
 </noscript>

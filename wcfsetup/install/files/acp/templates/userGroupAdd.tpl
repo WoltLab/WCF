@@ -118,7 +118,7 @@
 		<dl{if $errorType.priority|isset} class="formError"{/if}>
 			<dt><label for="priority">{lang}wcf.acp.group.priority{/lang}</label></dt>
 			<dd>
-				<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" max="8388607">
+				<input type="number" id="priority" name="priority" value="{$priority}" class="tiny" max="8388607">
 				{if $errorType.priority|isset}
 					<small class="innerError">
 						{lang}wcf.acp.group.priority.error.{@$errorType.priority}{/lang}
@@ -225,7 +225,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="action" value="{@$action}">
+		<input type="hidden" name="action" value="{$action}">
 		{csrfToken}
 	</div>
 </form>
@@ -257,7 +257,7 @@
 					});
 				});
 			{elseif $ownerGroupID}
-				var input = elBySel('input[name="values[admin.user.accessibleGroups][]"][value="{@$ownerGroupID}"]');
+				var input = elBySel('input[name="values[admin.user.accessibleGroups][]"][value="{$ownerGroupID}"]');
 				if (input) {
 					elRemove(input.closest('label'));
 				}

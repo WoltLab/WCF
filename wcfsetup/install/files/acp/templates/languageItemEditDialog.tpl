@@ -43,7 +43,7 @@
 	</section>
 {/if}
 
-<input type="hidden" name="languageItemID" id="overlayLanguageItemID" value="{@$item->languageItemID}">
+<input type="hidden" name="languageItemID" id="overlayLanguageItemID" value="{$item->languageItemID}">
 
 <div class="formSubmit">
 	<button type="button" class="button buttonPrimary jsSubmitLanguageItem" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>

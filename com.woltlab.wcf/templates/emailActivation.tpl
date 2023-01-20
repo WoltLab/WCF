@@ -7,7 +7,7 @@
 		<dl{if $errorField == 'u'} class="formError"{/if}>
 			<dt><label for="userID">{lang}wcf.user.userID{/lang}</label></dt>
 			<dd>
-				<input type="text" id="userID" name="u" value="{@$u}" required class="medium">
+				<input type="text" id="userID" name="u" value="{$u}" required class="medium">
 				{if $errorField == 'u'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -23,7 +23,7 @@
 		<dl{if $errorField == 'a'} class="formError"{/if}>
 			<dt><label for="activationCode">{lang}wcf.user.activationCode{/lang}</label></dt>
 			<dd>
-				<input type="text" id="activationCode" maxlength="9" name="a" value="{@$a}" required class="medium">
+				<input type="text" id="activationCode" maxlength="9" name="a" value="{$a}" required class="medium">
 				{if $errorField == 'a'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

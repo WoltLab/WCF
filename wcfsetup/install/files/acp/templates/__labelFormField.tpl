@@ -18,7 +18,7 @@
 <noscript>
 	<select name="{$field->getPrefixedId()}[{@$field->getLabelGroup()->groupID}]">
 		{foreach from=$field->getLabelGroup() item=label}
-			<option value="{@$label->labelID}">{$label->getTitle()}</option>
+			<option value="{$label->labelID}">{$label->getTitle()}</option>
 		{/foreach}
 	</select>
 </noscript>

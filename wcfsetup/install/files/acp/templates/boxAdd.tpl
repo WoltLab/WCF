@@ -127,7 +127,7 @@
 						<dd>
 							<select name="boxControllerID" id="boxControllerID">
 								{foreach from=$availableBoxControllers item=availableBoxController}
-									<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
+									<option value="{$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
 								{/foreach}
 							</select>
 
@@ -149,7 +149,7 @@
 					<dd>
 						<select name="position" id="position">
 							{foreach from=$availablePositions item=availablePosition}
-								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+								<option value="{$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 							{/foreach}
 						</select>
 
@@ -168,7 +168,7 @@
 				<dl>
 					<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 					<dd>
-						<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
+						<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
 					</dd>
 				</dl>
 
@@ -227,7 +227,7 @@
 								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 
 								{foreach from=$pageNodeList item=pageNode}
-									<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+									<option value="{$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'linkPageID'}
@@ -301,7 +301,7 @@
 									{/if}
 								</div>
 								<p class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.media.chooseImage{/lang}</p>
-								<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if}>
+								<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{$imageID[0]}"{/if}>
 								{if $errorField == 'image'}
 									<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
 								{/if}
@@ -377,7 +377,7 @@
 													{/if}
 												</div>
 												<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</p>
-												<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if}>
+												<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{$imageID[$availableLanguage->languageID]}"{/if}>
 												{if $errorField == 'image'|concat:$availableLanguage->languageID}
 													<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
 												{/if}
@@ -512,7 +512,7 @@
 
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="isMultilingual" value="{$isMultilingual}">
 		<input type="hidden" name="boxType" value="{$boxType}">
 		{csrfToken}
 	</div>

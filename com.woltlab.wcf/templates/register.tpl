@@ -174,7 +174,7 @@
 					<noscript>
 						<select name="languageID" id="languageID">
 							{foreach from=$availableLanguages item=language}
-								<option value="{@$language->languageID}"{if $language->languageID == $languageID} selected{/if}>{$language}</option>
+								<option value="{$language->languageID}"{if $language->languageID == $languageID} selected{/if}>{$language}</option>
 							{/foreach}
 						</select>
 					</noscript>
@@ -187,7 +187,7 @@
 					<dd class="floated">
 					{content}
 						{foreach from=$availableContentLanguages item=language}
-							<label><input name="visibleLanguages[]" type="checkbox" value="{@$language->languageID}"{if $language->languageID|in_array:$visibleLanguages} checked{/if}> {$language}</label>
+							<label><input name="visibleLanguages[]" type="checkbox" value="{$language->languageID}"{if $language->languageID|in_array:$visibleLanguages} checked{/if}> {$language}</label>
 						{/foreach}
 					{/content}
 					<small>{lang}wcf.user.visibleLanguages.description{/lang}</small></dd>

@@ -62,7 +62,7 @@
 						<select id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_pip">
 							<option value="" selected disabled>{lang}wcf.acp.devtools.project.instruction.packageInstallationPlugin{/lang}</option>
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
-								<option value="{@$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
+								<option value="{$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -82,7 +82,7 @@
 						<select id="{$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_application">
 							<option value="" selected disabled>{lang}wcf.acp.devtools.project.instruction.application{/lang}</option>
 							{foreach from=$apps item=app}
-								<option value="{@$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
+								<option value="{$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -129,7 +129,7 @@
 						<select name="pip">
 							<option value="" selected>{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$packageInstallationPlugins item=packageInstallationPlugin}
-								<option value="{@$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
+								<option value="{$packageInstallationPlugin->pluginName}">{@$packageInstallationPlugin->pluginName}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -149,7 +149,7 @@
 						<select name="application">
 							<option value="" selected>{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$apps item=app}
-								<option value="{@$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
+								<option value="{$app->getAbbreviation()}">{@$app->getAbbreviation()}</option>
 							{/foreach}
 						</select>
 					</dd>

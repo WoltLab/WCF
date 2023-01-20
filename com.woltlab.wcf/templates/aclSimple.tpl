@@ -60,7 +60,7 @@
 						<button type="button" class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
 							<fa-icon name="xmark"></fa-icon>
 						</button>
-						<input type="hidden" name="{@$__aclInputName}[group][]" value="{@$aclGroup->groupID}">
+						<input type="hidden" name="{@$__aclInputName}[group][]" value="{$aclGroup->groupID}">
 					</li>
 				{/foreach}
 				{foreach from=$aclValues[user] item=aclUser}
@@ -70,7 +70,7 @@
 						<button type="button" class="aclItemDeleteButton jsTooltip" title="{lang}wcf.global.button.delete{/lang}">
 							<fa-icon name="xmark"></fa-icon>
 						</button>
-						<input type="hidden" name="{@$__aclInputName}[user][]" value="{@$aclUser->userID}">
+						<input type="hidden" name="{@$__aclInputName}[user][]" value="{$aclUser->userID}">
 					</li>
 				{/foreach}
 			</ul>

@@ -84,7 +84,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="action" value="{@$action}">
+		<input type="hidden" name="action" value="{$action}">
 		{csrfToken}
 	</div>
 </form>

@@ -72,7 +72,7 @@
 					
 					{foreach from=$menuItemNodeList item=menuItemNode}
 						<option
-							value="{@$menuItemNode->itemID}"
+							value="{$menuItemNode->itemID}"
 							{if $menuItemNode->itemID == $parentItemID} selected{/if}
 							{if $action === 'edit' && $menuItemNode->itemID == $itemID} disabled{/if}
 						>
@@ -113,7 +113,7 @@
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
-				<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0">
+				<input type="number" name="showOrder" id="showOrder" value="{$showOrder}" class="tiny" min="0">
 			</dd>
 		</dl>
 		
@@ -148,7 +148,7 @@
 					
 					{foreach from=$pageNodeList item=pageNode}
 						{if !$pageNode->requireObjectID || $pageHandlers[$pageNode->pageID]|isset}
-							<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+							<option value="{$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 						{/if}
 					{/foreach}
 				</select>
@@ -208,7 +208,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}">
-		{if $action == 'add'}<input type="hidden" name="menuID" value="{@$menuID}">{/if}
+		{if $action == 'add'}<input type="hidden" name="menuID" value="{$menuID}">{/if}
 		{csrfToken}
 	</div>
 </form>

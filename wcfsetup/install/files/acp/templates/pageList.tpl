@@ -51,7 +51,7 @@
 					<select name="applicationPackageID" id="applicationPackageID">
 						<option value="0">{lang}wcf.acp.page.application{/lang}</option>
 						{foreach from=$availableApplications item=availableApplication}
-							<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+							<option value="{$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
 						{/foreach}
 					</select>
 				</dd>
