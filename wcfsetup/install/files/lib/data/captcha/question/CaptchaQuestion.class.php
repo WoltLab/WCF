@@ -13,7 +13,6 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Captcha\Question
  *
  * @property-read   int $questionID unique id of the captcha question
  * @property-read   string $question   question of the captcha or name of language item which contains the question

@@ -14,7 +14,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Paid\Subscription\Transaction\Log
  *
  * @property-read   int $logID              unique id of the paid subscription transaction log entry
  * @property-read   int|null $subscriptionUserID     id of the paid subscription-user-association or `null` if no such association exists

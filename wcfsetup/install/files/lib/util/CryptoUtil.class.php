@@ -13,7 +13,6 @@ use wcf\util\exception\CryptoException;
  * @author  Tim Duesterhus, Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Util
  * @since   3.0
  */
 final class CryptoUtil

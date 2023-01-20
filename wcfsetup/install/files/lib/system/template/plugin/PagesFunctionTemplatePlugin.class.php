@@ -23,7 +23,6 @@ use wcf\util\StringUtil;
  * @author Marcel Werk
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Template\Plugin
  * @deprecated 6.0 Migrate to `<woltlab-core-pagination>`
  */
 final class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin

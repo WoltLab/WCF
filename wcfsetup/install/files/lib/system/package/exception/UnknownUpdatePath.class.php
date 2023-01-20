@@ -11,7 +11,6 @@ use wcf\system\WCF;
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Package\Exception
  * @since 5.5
  */
 final class UnknownUpdatePath extends \Exception

@@ -12,7 +12,6 @@ use wcf\util\StringUtil;
  * @author  Joshua Ruesweg
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Option\User
  * @since       5.4
  */
 class LabeledUrlUserOptionOutput implements IUserOptionOutput

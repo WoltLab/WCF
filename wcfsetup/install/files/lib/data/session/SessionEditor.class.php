@@ -10,7 +10,6 @@ use wcf\data\acp\session\ACPSessionEditor;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Session
  *
  * @method  Session     getDecoratedObject()
  * @method static  Session     create(array $parameters = [])

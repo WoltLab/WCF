@@ -13,7 +13,6 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Avatar
  *
  * @property-read int $avatarID unique id of the user avatar
  * @property-read string $avatarName name of the original avatar file

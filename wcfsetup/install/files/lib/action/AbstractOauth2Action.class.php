@@ -24,7 +24,6 @@ use wcf\util\JSON;
  * @author  Tim Duesterhus
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
  * @since 5.4
  */
 abstract class AbstractOauth2Action extends AbstractAction

@@ -15,7 +15,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Condition
  * @since   5.3
  */
 class UserCoverPhotoCondition extends AbstractSelectCondition implements

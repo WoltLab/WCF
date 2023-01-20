@@ -18,7 +18,6 @@ use Psr\Http\Message\StreamInterface;
  * @author  Tim Duesterhus
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Http
  * @since   6.0
  */
 final class LegacyPlaceholderResponse implements ResponseInterface

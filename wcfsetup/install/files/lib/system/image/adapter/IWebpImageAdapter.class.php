@@ -9,7 +9,6 @@ namespace wcf\system\image\adapter;
  * @author Alexander Ebert
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Image\Adapter
  * @since 5.4
  */
 interface IWebpImageAdapter extends IImageAdapter

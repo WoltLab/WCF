@@ -15,7 +15,6 @@ use wcf\util\Url;
  * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\Data\Unfurl\Url
  * @since       5.4
  *
  * @property-read int $urlID

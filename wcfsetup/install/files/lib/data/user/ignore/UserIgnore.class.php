@@ -11,7 +11,6 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Ignore
  *
  * @property-read   int $ignoreID       unique id of the ignore relation
  * @property-read   int $userID         id of the ignoring user

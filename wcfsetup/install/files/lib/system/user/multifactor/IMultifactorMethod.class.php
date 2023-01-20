@@ -10,7 +10,6 @@ use wcf\system\form\builder\IFormDocument;
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\System\User\Multifactor
  * @since   5.4
  */
 interface IMultifactorMethod

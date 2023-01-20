@@ -10,7 +10,6 @@ use wcf\data\DatabaseObjectList;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Group\Assignment
  *
  * @method  UserGroupAssignment     current()
  * @method  UserGroupAssignment[]       getObjects()

@@ -17,7 +17,6 @@ use wcf\util\Url;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package\Update\Server
  *
  * @property-read   int $packageUpdateServerID      unique id of the package update server
  * @property-read   string $serverURL          url of the package update server

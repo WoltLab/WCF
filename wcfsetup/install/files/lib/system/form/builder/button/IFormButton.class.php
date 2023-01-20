@@ -11,7 +11,6 @@ use wcf\system\form\builder\IFormElement;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Form\Builder\Button
  * @since   5.2
  */
 interface IFormButton extends IFormChildNode, IFormElement

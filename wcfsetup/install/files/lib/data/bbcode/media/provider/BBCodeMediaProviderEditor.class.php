@@ -12,7 +12,6 @@ use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
  * @method static BBCodeMediaProvider create(array $parameters = [])
  * @method      BBCodeMediaProvider getDecoratedObject()

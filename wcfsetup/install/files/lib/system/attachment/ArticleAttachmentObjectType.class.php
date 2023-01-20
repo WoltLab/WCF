@@ -12,7 +12,6 @@ use wcf\system\WCF;
  * @author      Marcel Werk
  * @copyright   2001-2022 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Attachment
  * @since       6.0
  *
  * @method      Article     getObject($objectID)

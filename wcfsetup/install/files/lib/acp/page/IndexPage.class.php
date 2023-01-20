@@ -20,7 +20,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Acp\Page
  */
 class IndexPage extends AbstractPage
 {

@@ -8,7 +8,6 @@ namespace wcf\system\email\exception;
  * @author  Tim Duesterhus
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Email\Transport\Exception
  * @since   6.0
  */
 final class UserDeleted extends \Exception

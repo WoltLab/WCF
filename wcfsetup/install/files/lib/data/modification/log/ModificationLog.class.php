@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Modification\Log
  *
  * @property-read   int $logID          unique id of the modification log entry
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.modifiableContent` object type

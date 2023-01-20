@@ -14,7 +14,6 @@ use wcf\util\StringUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Bbcode
  * @deprecated  5.2 Use the HTML based message processing instead.
  */
 class MessageParser extends BBCodeParser

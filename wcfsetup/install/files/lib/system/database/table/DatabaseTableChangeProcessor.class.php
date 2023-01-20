@@ -22,7 +22,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Database\Table
  * @since   5.2
  */
 final class DatabaseTableChangeProcessor

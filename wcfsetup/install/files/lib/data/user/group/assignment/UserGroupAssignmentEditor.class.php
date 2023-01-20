@@ -14,7 +14,6 @@ use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Group\Assignment
  *
  * @method static UserGroupAssignment create(array $parameters = [])
  * @method      UserGroupAssignment getDecoratedObject()

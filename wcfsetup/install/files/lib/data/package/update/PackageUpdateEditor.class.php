@@ -10,7 +10,6 @@ use wcf\data\DatabaseObjectEditor;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package\Update
  *
  * @method static PackageUpdate   create(array $parameters = [])
  * @method      PackageUpdate   getDecoratedObject()

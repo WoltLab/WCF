@@ -12,7 +12,6 @@ use wcf\util\DOMUtil;
  * @author      Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       5.3
  */
 class HtmlInputNodeSmall extends AbstractHtmlInputNode

@@ -10,7 +10,6 @@ use wcf\data\DatabaseObject;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Language\Item
  *
  * @property-read   int $languageItemID         unique id of the language item
  * @property-read   int $languageID         id of the language the language item belongs to

@@ -11,7 +11,6 @@ use wcf\system\moderation\queue\AbstractCommentCommentModerationQueueHandler;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Moderation\Queue
  */
 class CommentCommentModerationQueueReportHandler extends AbstractCommentCommentModerationQueueHandler implements
     IModerationQueueReportHandler

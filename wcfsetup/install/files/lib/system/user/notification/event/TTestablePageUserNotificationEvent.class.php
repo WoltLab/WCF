@@ -18,7 +18,6 @@ use wcf\system\user\notification\TestableUserNotificationEventHandler;
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Notification\Event
  * @since   5.2
  */
 trait TTestablePageUserNotificationEvent

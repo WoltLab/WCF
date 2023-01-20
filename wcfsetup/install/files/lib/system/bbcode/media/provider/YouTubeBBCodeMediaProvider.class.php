@@ -10,7 +10,6 @@ use wcf\util\Url;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Bbcode\Media\Provider
  * @since   3.1
  */
 class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider

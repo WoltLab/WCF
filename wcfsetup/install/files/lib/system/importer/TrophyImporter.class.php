@@ -14,7 +14,6 @@ use wcf\util\StringUtil;
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Importer
  * @since   3.1
  */
 class TrophyImporter extends AbstractImporter

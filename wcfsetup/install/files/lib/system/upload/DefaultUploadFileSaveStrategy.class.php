@@ -22,7 +22,6 @@ use wcf\util\FileUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Upload
  * @since   3.0
  */
 class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy

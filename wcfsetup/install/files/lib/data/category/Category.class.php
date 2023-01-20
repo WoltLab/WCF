@@ -19,7 +19,6 @@ use wcf\system\WCF;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Category
  *
  * @property-read   int $categoryID     unique id of the category
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.category` object type

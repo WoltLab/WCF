@@ -12,7 +12,6 @@ use wcf\system\package\event\PackageInstallationPluginSynced;
  * @author Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Event\Listener
  * @since 6.0
  */
 final class PipSyncedPhrasePreloadListener

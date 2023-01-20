@@ -8,7 +8,6 @@ namespace wcf\system\option;
  * @author  Joshua Ruesweg
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Option
  * @since       5.4
  */
 class LabeledUrlOptionType extends TextOptionType

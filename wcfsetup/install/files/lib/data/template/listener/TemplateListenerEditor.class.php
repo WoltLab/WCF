@@ -13,7 +13,6 @@ use wcf\system\language\LanguageFactory;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Template\Listener
  *
  * @method static TemplateListener    create(array $parameters = [])
  * @method      TemplateListener    getDecoratedObject()

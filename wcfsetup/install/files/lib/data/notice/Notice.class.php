@@ -16,7 +16,6 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Notice
  *
  * @property-read   int $noticeID       unique id of the notice
  * @property-read   string $noticeName     name of the notice shown in ACP

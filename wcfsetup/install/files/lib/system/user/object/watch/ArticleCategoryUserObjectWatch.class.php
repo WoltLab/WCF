@@ -14,7 +14,6 @@ use wcf\system\user\storage\UserStorageHandler;
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Object\Watch
  */
 class ArticleCategoryUserObjectWatch extends AbstractObjectTypeProcessor implements IUserObjectWatch
 {

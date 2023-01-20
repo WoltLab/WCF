@@ -13,7 +13,6 @@ use wcf\util\UserUtil;
  * @author  Joshua Ruesweg, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Condition
  */
 class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements IContentCondition
 {

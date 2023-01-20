@@ -8,7 +8,6 @@ namespace wcf\data;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data
  * @since   5.3
  */
 interface IPopoverAction

@@ -12,7 +12,6 @@ use wcf\system\user\storage\UserStorageHandler;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Rank
  *
  * @method static UserRank    create(array $parameters = [])
  * @method      UserRank    getDecoratedObject()

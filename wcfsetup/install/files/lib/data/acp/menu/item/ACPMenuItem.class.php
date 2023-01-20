@@ -15,7 +15,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Acp\Menu\Item
  *
  * @property-read   int $menuItemID     unique id of the ACP menu item
  * @property-read   int $packageID      id of the package which delivers the ACP menu item

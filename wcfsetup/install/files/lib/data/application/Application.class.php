@@ -17,7 +17,6 @@ use wcf\util\FileUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Application
  *
  * @property-read   int $packageID  id of the package which delivers the application
  * @property-read   string $domainName domain used to access the application (may not contain path components, see `$domainPath`)

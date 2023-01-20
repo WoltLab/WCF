@@ -11,7 +11,6 @@ use wcf\system\package\plugin\IPackageInstallationPlugin;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package\Installation\Plugin
  *
  * @property-read   string $pluginName unique name and textual identifier of the package installation plugin
  * @property-read   int|null $packageID  id of the package the which delivers the package installation plugin

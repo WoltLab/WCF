@@ -10,7 +10,6 @@ use wcf\data\user\User;
  * @author  Markus Bartz
  * @copyright   2011 Markus Bartz
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Authentication
  */
 class EmailUserAuthentication extends DefaultUserAuthentication
 {

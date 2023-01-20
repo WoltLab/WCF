@@ -19,7 +19,6 @@ use wcf\util\HeaderUtil;
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Form
  * @since   5.4
  */
 class ReauthenticationForm extends AbstractFormBuilderForm

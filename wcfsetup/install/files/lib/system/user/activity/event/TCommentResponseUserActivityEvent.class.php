@@ -17,7 +17,6 @@ use wcf\system\cache\runtime\ViewableCommentRuntimeCache;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\User\Activity\Event
  * @since   5.3
  */
 trait TCommentResponseUserActivityEvent

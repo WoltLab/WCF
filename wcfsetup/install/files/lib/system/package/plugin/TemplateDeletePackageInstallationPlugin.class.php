@@ -10,7 +10,6 @@ use wcf\data\application\Application;
  * @author  Matthias Schmidt
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Package\Plugin
  * @since   5.5
  */
 final class TemplateDeletePackageInstallationPlugin extends AbstractTemplateDeletePackageInstallationPlugin

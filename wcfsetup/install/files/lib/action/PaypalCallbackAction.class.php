@@ -15,7 +15,6 @@ use wcf\system\payment\type\IPaymentType;
  * @author  Marcel Werk
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Action
  * @see https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNImplementation/
  */
 final class PaypalCallbackAction extends AbstractAction

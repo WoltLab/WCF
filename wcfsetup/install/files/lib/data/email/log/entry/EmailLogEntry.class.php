@@ -13,7 +13,6 @@ use wcf\system\email\Email;
  * @author  Tim Duesterhus
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Email\Log\Entry
  *
  * @property-read   int    $entryID      unique id of the log entry
  * @property-read   int    $time         timestamp when the delivery job was created

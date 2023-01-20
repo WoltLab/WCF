@@ -25,7 +25,6 @@ use wcf\util\Url;
  * @author Tim Duesterhus, Alexander Ebert
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Style
  */
 final class StyleCompiler extends SingletonFactory
 {

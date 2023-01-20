@@ -12,7 +12,6 @@ use wcf\data\TDatabaseObjectPermissions;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Event\Listener
  *
  * @property-read   int $listenerID     unique id of the event listener
  * @property-read   int $packageID      id of the package which delivers the event listener

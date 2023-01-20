@@ -18,7 +18,6 @@ use wcf\util\HeaderUtil;
  * @author  Tim Duesterhus
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Http\Middleware
  * @since   6.0
  */
 final class EnforceNoCacheForTemporaryRedirects implements MiddlewareInterface

@@ -11,7 +11,6 @@ use wcf\data\package\PackageCache;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Acp\Template
  *
  * @property-read   int $templateID unique id of the acp template
  * @property-read   int|null $packageID  id of the package which delivers the acp template

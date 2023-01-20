@@ -17,7 +17,6 @@ use wcf\util\StringUtil;
  * @author  Tim Duesterhus
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Email\Transport
  * @since   3.0
  */
 final class SmtpEmailTransport implements IStatusReportingEmailTransport

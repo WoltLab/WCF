@@ -11,7 +11,6 @@ namespace wcf\system\exception;
  * @author    Tim Duesterhus, Alexander Ebert
  * @copyright    2001-2019 WoltLab GmbH
  * @license    GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package    WoltLabSuite\Core\System\Exception
  * @deprecated    3.0 - Fatal Exceptions are logged automatically.
  */
 class LoggedException extends \Exception

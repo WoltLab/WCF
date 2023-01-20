@@ -13,7 +13,6 @@ use wcf\util\IpAddress;
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\Data\Blacklist\Entry
  *
  * @property-read string $type One of 'email', 'ipv4', 'ipv6' or 'username'
  * @property-read string $hash SHA256 hash of the original value

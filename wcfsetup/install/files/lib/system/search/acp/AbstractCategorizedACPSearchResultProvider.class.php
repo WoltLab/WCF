@@ -12,7 +12,6 @@ use wcf\system\exception\SystemException;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Search\Acp
  */
 abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSearchResultProvider
 {

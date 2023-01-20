@@ -17,7 +17,6 @@ use wcf\util\Url;
  * @author  Tim Duesterhus
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
  * @property-read   int $providerID unique id of the bbcode media provider
  * @property-read   string $title      title of the bbcode media provider (shown in acp)

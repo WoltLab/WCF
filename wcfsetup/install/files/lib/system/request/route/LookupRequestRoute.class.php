@@ -13,7 +13,6 @@ use wcf\util\FileUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Request
  * @since   3.0
  */
 final class LookupRequestRoute implements IRequestRoute

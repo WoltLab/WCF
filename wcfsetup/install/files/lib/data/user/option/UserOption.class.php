@@ -13,7 +13,6 @@ use wcf\system\WCF;
  * @author  Joshua Ruesweg, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Option
  *
  * @property-read   string $defaultValue       default value of the user option
  * @property-read   int $required       is `1` if the user option has to be filled out, otherwise `0`

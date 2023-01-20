@@ -9,7 +9,6 @@ namespace wcf\system\package\plugin;
  * @author  Joshua Ruesweg
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Package\Plugin
  * @since 5.5
  */
 interface IUniqueNameXMLPackageInstallationPlugin

@@ -25,7 +25,6 @@ use wcf\util\UserUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User
  *
  * @property-read   int $userID             unique id of the user
  * @property-read   string $username           name of the user

@@ -16,7 +16,6 @@ use wcf\system\form\builder\TObjectTypeFormNode;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Form\Builder\Field\Acl
  * @since   5.2
  */
 class AclFormField extends AbstractFormField implements IObjectTypeFormNode

@@ -10,7 +10,6 @@ use wcf\data\DatabaseObjectEditor;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Paid\Subscription\User
  *
  * @method static PaidSubscriptionUser    create(array $parameters = [])
  * @method      PaidSubscriptionUser    getDecoratedObject()

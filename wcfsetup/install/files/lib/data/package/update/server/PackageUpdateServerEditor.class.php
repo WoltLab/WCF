@@ -12,7 +12,6 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Package\Update\Server
  *
  * @method static PackageUpdateServer create(array $parameters = [])
  * @method      PackageUpdateServer getDecoratedObject()

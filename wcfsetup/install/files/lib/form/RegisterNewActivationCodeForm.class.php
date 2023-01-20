@@ -23,7 +23,6 @@ use wcf\util\UserRegistrationUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Form
  */
 class RegisterNewActivationCodeForm extends AbstractForm
 {

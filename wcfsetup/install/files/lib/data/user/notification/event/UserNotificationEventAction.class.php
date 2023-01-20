@@ -16,7 +16,6 @@ use wcf\system\WCF;
  * @author  Marcel Werk, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Notification\Event
  *
  * @method  UserNotificationEventEditor[]   getObjects()
  * @method  UserNotificationEventEditor getSingleObject()

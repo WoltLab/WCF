@@ -19,7 +19,6 @@ use wcf\util\JSON;
  * @author  Tim Duesterhus
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Template\Plugin
  * @since 5.5
  */
 class JsonModifierTemplatePlugin implements IModifierTemplatePlugin

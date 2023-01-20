@@ -10,7 +10,6 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\User\Group\Option\Category
  *
  * @method  UserGroupOptionCategory         create()
  * @method  UserGroupOptionCategoryEditor[]     getObjects()

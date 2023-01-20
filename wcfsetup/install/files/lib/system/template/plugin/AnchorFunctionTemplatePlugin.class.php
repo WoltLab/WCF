@@ -36,7 +36,6 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Template\Plugin
  * @since   5.3
  */
 class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin

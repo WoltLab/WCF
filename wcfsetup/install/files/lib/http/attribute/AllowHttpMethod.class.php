@@ -9,7 +9,6 @@ namespace wcf\http\attribute;
  * @author Tim Duesterhus
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Http\Attribute
  * @since 6.0
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]

@@ -13,7 +13,6 @@ use wcf\util\ArrayUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Tag
  *
  * @property-read   int $tagID      unique id of the tag
  * @property-read   int $languageID id of the language the tag belongs to

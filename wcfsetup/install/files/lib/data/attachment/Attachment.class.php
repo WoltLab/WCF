@@ -17,7 +17,6 @@ use wcf\util\FileUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\Data\Attachment
  *
  * @property-read   int $attachmentID       unique id of the attachment
  * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.attachment.objectType` object type

@@ -11,7 +11,6 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
  * @author      Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       5.3
  */
 class HtmlOutputNodeKbd extends AbstractHtmlOutputNode

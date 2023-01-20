@@ -13,7 +13,6 @@ use wcf\util\FileUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core\System\Package\Plugin
  */
 class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
 {
