@@ -199,11 +199,17 @@ abstract class AbstractPage implements IPage
         // call assignVariables event
         EventHandler::getInstance()->fireAction($this, 'assignVariables');
 
+        $classParts = \explode('\\', static::class);
+        $controllerName = \preg_replace('~(Form|Page)$~', '', \array_pop($classParts));
+        $controllerApplication = \array_shift($classParts);
+
         // assign parameters
         WCF::getTPL()->assign([
             'action' => $this->action,
             'templateName' => $this->templateName,
             'templateNameApplication' => $this->templateNameApplication,
+            'controllerName' => $controllerName,
+            'controllerApplication' => $controllerApplication,
             'canonicalURL' => $this->canonicalURL,
         ]);
     }
