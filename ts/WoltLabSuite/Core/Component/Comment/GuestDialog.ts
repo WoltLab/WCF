@@ -30,29 +30,7 @@ export function showGuestDialog(template: string): Promise<Record<string, unknow
   });
 
   return new Promise((resolve) => {
-    let captchaData: Promise<ArbitraryObject> | ArbitraryObject | undefined = undefined;
-    dialog.addEventListener("validate", (event) => {
-      if (ControllerCaptcha.has(captchaId)) {
-        captchaData = ControllerCaptcha.getData(captchaId) as Promise<ArbitraryObject> | ArbitraryObject;
-        ControllerCaptcha.delete(captchaId);
-
-        if (captchaData instanceof Promise) {
-          event.detail.push(
-            new Promise((resolve) => {
-              void (captchaData as Promise<ArbitraryObject>)
-                .then(() => {
-                  resolve(true);
-                })
-                .catch(() => {
-                  resolve(false);
-                });
-            }),
-          );
-
-          event.preventDefault();
-        }
-      }
-    });
+    const captchaData = ControllerCaptcha.setupDialog(dialog, captchaId);
 
     dialog.addEventListener("primary", () => {
       const parameters = {
@@ -61,23 +39,12 @@ export function showGuestDialog(template: string): Promise<Record<string, unknow
         },
       };
 
-      if (captchaData !== undefined) {
-        if (captchaData instanceof Promise) {
-          void captchaData.then((data) => {
-            resolve({
-              ...parameters,
-              ...data,
-            });
-          });
-        } else {
-          resolve({
-            ...parameters,
-            ...captchaData,
-          });
-        }
-      } else {
-        resolve(parameters);
-      }
+      void captchaData.then((data) => {
+        resolve({
+          ...parameters,
+          ...data,
+        });
+      });
     });
 
     dialog.addEventListener("cancel", () => {

@@ -49,6 +49,43 @@ define(["require", "exports"], function (require, exports) {
             }
             return _captchas.get(captchaId)();
         },
+        setupDialog(dialog, captchaId) {
+            let captchaData = undefined;
+            dialog.addEventListener("validate", (event) => {
+                if (ControllerCaptcha.has(captchaId)) {
+                    captchaData = ControllerCaptcha.getData(captchaId);
+                    ControllerCaptcha.delete(captchaId);
+                    if (captchaData instanceof Promise) {
+                        event.detail.push(new Promise((resolve) => {
+                            void captchaData
+                                .then(() => {
+                                resolve(true);
+                            })
+                                .catch(() => {
+                                resolve(false);
+                            });
+                        }));
+                        event.preventDefault();
+                    }
+                }
+            });
+            return new Promise((resolve) => {
+                dialog.addEventListener("primary", () => {
+                    if (captchaData === undefined) {
+                        resolve({});
+                        return;
+                    }
+                    if (captchaData instanceof Promise) {
+                        void captchaData.then((data) => {
+                            resolve(data);
+                        });
+                    }
+                    else {
+                        resolve(captchaData);
+                    }
+                });
+            });
+        },
     };
     return ControllerCaptcha;
 });
