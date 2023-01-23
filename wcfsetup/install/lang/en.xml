@@ -2755,6 +2755,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Some directories are being written to during the normal operation. The user that runs the PHP process must have write access.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Supported formats of the GD library]]></item>
 		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[The GD library must be installed with support for the formats “jpeg”, “png” and “webp”.]]></item>
+		<item name="wcf.acp.systemCheck.php.opcache"><![CDATA[OPcache]]></item>
+		<item name="wcf.acp.systemCheck.php.opcache.description"><![CDATA[PHP’s OPcache improves request processing performance by caching the preprocessed application code. If OPcache is enabled the management functions <kbd>opcache_reset()</kbd> and <kbd>opcache_invalidate()</kbd> need to be available to be able to reliably reset the cache when the application code is updated.]]></item>
+		<item name="wcf.acp.systemCheck.php.opcache.broken"><![CDATA[Broken – the management functions are unavailable]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>

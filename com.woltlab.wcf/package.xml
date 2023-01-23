@@ -50,14 +50,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="5.5.7">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-	</instructions>
-	<instructions type="update" fromversion="5.5.8 dev 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
+	<instructions type="update" fromversion="5.5.8">
+		<!-- Run wcfsetup/install/files/acp/update_com.woltlab.wcf_5.5.9_systemId.php -->
 	</instructions>
 </package>
