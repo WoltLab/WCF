@@ -128,13 +128,14 @@ class UserCollapsibleContentHandler extends SingletonFactory
 
     /**
      * Marks content as collapsed.
-     *
-     * @param int $objectTypeID
-     * @param string $objectID
      */
-    public function markAsCollapsed($objectTypeID, $objectID)
+    public function markAsCollapsed(int $objectTypeID, string $objectID, ?int $userID = null): void
     {
-        if (WCF::getUser()->userID) {
+        if ($userID === null) {
+            $userID = WCF::getUser()->userID;
+        }
+
+        if ($userID) {
             $sql = "SELECT  *
                     FROM    wcf" . WCF_N . "_user_collapsible_content
                     WHERE   objectTypeID = ?
@@ -144,7 +145,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
             $statement->execute([
                 $objectTypeID,
                 $objectID,
-                WCF::getUser()->userID,
+                $userID,
             ]);
             $row = $statement->fetchArray();
 
@@ -156,12 +157,12 @@ class UserCollapsibleContentHandler extends SingletonFactory
                 $statement->execute([
                     $objectTypeID,
                     $objectID,
-                    WCF::getUser()->userID,
+                    $userID,
                 ]);
             }
 
             // reset storage
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'collapsedContent-' . $objectTypeID);
+            UserStorageHandler::getInstance()->reset([$userID], 'collapsedContent-' . $objectTypeID);
         } else {
             $collapsedContent = WCF::getSession()->getVar('collapsedContent');
             if ($collapsedContent === null || !\is_array($collapsedContent)) {
@@ -179,13 +180,14 @@ class UserCollapsibleContentHandler extends SingletonFactory
 
     /**
      * Marks content as opened, thus removing the collapsed marking.
-     *
-     * @param int $objectTypeID
-     * @param string $objectID
      */
-    public function markAsOpened($objectTypeID, $objectID)
+    public function markAsOpened(int $objectTypeID, string $objectID, ?int $userID = null): void
     {
-        if (WCF::getUser()->userID) {
+        if ($userID === null) {
+            $userID = WCF::getUser()->userID;
+        }
+
+        if ($userID) {
             $sql = "DELETE FROM wcf" . WCF_N . "_user_collapsible_content
                     WHERE       objectTypeID = ?
                             AND objectID = ?
@@ -194,11 +196,11 @@ class UserCollapsibleContentHandler extends SingletonFactory
             $statement->execute([
                 $objectTypeID,
                 $objectID,
-                WCF::getUser()->userID,
+                $userID,
             ]);
 
             // reset storage
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'collapsedContent-' . $objectTypeID);
+            UserStorageHandler::getInstance()->reset([$userID], 'collapsedContent-' . $objectTypeID);
         } else {
             $collapsedContent = WCF::getSession()->getVar('collapsedContent');
             if ($collapsedContent === null || !\is_array($collapsedContent)) {
