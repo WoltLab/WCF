@@ -2,9 +2,6 @@
 
 namespace wcf\action;
 
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\Mapper\TreeMapper;
-use CuyZ\Valinor\MapperBuilder;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,6 +9,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
@@ -26,30 +24,18 @@ use wcf\system\WCF;
 /**
  * Assigns a user to a moderation queue entry.
  *
- * @author  Tim Duesterhus
- * @copyright   2001-2022 WoltLab GmbH
+ * @author Tim Duesterhus
+ * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.0
  */
 final class ModerationQueueAssignUserAction implements RequestHandlerInterface
 {
-    private const PARAMETERS = <<<'EOT'
-        array {
-            id: positive-int
-        }
-        EOT;
-
-    private TreeMapper $mapper;
-
     private readonly ObjectTypeCache $objectTypeCache;
 
     public function __construct()
     {
         $this->objectTypeCache = ObjectTypeCache::getInstance();
-
-        $this->mapper = (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->enableFlexibleCasting()
-            ->mapper();
     }
 
     /**
@@ -57,9 +43,13 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $parameters = $this->mapper->map(
-            self::PARAMETERS,
-            Source::array($request->getQueryParams())
+        $parameters = Helper::mapRequestParameters(
+            $request->getQueryParams(),
+            <<<'EOT'
+                array {
+                    id: positive-int
+                }
+                EOT
         );
 
         $moderationQueue = new ModerationQueue($parameters['id']);
