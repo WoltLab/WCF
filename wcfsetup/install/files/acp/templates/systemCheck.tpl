@@ -120,6 +120,20 @@
 			<small>{lang}wcf.acp.systemCheck.php.sha256.description{/lang}</small>
 		</dd>
 	</dl>
+
+	<dl{if $results[php][opcache] === false} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.php.opcache{/lang}</dt>
+		<dd>
+			{if $results[php][opcache] === true}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{elseif $results[php][opcache] === null}
+				{@$statusSufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.php.opcache.broken{/lang}
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.php.opcache.description{/lang}</small>
+		</dd>
+	</dl>
 	
 	<dl{if !$results[php][gd][result]} class="formError"{/if}>
 		<dt>{lang}wcf.acp.systemCheck.php.gd{/lang}</dt>

@@ -147,6 +147,7 @@ class SystemCheckPage extends AbstractPage
                 'value' => '0',
             ],
             'sha256' => false,
+            'opcache' => null,
             'version' => [
                 'result' => 'unsupported',
                 'value' => '0.0.0',
@@ -321,7 +322,20 @@ class SystemCheckPage extends AbstractPage
             $this->results['php']['sha256'] = \in_array('sha256', \hash_algos());
         }
 
-        $this->results['status']['php'] = empty($this->results['php']['extension']) && $this->results['php']['sha256'];
+        try {
+            // Attempt to reset ourselves to perform a functional check.
+            WCF::resetZendOpcache(__FILE__);
+
+            if (\extension_loaded('Zend Opcache') && @\ini_get('opcache.enable')) {
+                $this->results['php']['opcache'] = \function_exists('opcache_reset') && \function_exists('opcache_invalidate');
+            }
+        } catch (\Exception $e) {
+            $this->results['php']['opcache'] = false;
+        }
+
+        $this->results['status']['php'] = empty($this->results['php']['extension'])
+            && $this->results['php']['sha256']
+            && $this->results['php']['opcache'] !== false;
     }
 
     protected function validatePhpMemoryLimit()
