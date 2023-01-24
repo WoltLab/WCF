@@ -22,7 +22,7 @@ interface PasteFromClipboard {
   blob: Blob;
 }
 
-class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
+export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _mediaToInsert = new Map<number, Media>();
   protected _mediaToInsertByClipboard = false;
   protected _uploadData: OnDropPayload | PasteFromClipboard | null = null;
@@ -49,6 +49,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
       }
     });
 
+    // TODO: Implement the drag & drop support for media.
     /*
     if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
       const editorId = this._options.editor.$editor[0].dataset.elementId as string;
@@ -209,8 +210,6 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     if (this._options.callbackInsert !== null) {
       this._options.callbackInsert(this._mediaToInsert, MediaInsertType.Separate, thumbnailSize);
     } else {
-      //this._options.editor!.buffer.set();
-
       this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
     }
 
@@ -358,4 +357,4 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   }
 }
 
-export = MediaManagerEditor;
+export default MediaManagerEditor;

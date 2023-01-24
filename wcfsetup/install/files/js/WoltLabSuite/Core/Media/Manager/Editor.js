@@ -8,6 +8,8 @@
  */
 define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.MediaManagerEditor = void 0;
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
@@ -33,6 +35,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                     this._click(event);
                 }
             });
+            // TODO: Implement the drag & drop support for media.
             /*
             if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
               const editorId = this._options.editor.$editor[0].dataset.elementId as string;
@@ -175,7 +178,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                 this._options.callbackInsert(this._mediaToInsert, "separate" /* MediaInsertType.Separate */, thumbnailSize);
             }
             else {
-                //this._options.editor!.buffer.set();
                 this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
             }
             if (this._mediaToInsertByClipboard) {
@@ -297,5 +299,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
       </a>`;
         }
     }
-    return MediaManagerEditor;
+    exports.MediaManagerEditor = MediaManagerEditor;
+    exports.default = MediaManagerEditor;
 });
