@@ -7,13 +7,14 @@
  * @module WoltLabSuite/Core/Component/Comment/List
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "../../Ui/Reaction/Handler"], function (require, exports, tslib_1, Ajax_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, Handler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     UiScroll = tslib_1.__importStar(UiScroll);
+    Handler_1 = tslib_1.__importDefault(Handler_1);
     class CommentList {
         #container;
         #commentResponseAdd;
@@ -24,6 +25,20 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
             this.#initLoadNextComments();
             this.#initCommentAdd();
             this.#initHashHandling();
+            this.#initReactions();
+        }
+        #initReactions() {
+            if (this.#container.dataset.enableReactions !== "true") {
+                return;
+            }
+            new Handler_1.default("com.woltlab.wcf.comment", {
+                containerSelector: `#${this.#container.id} .commentList__item`,
+                buttonSelector: ".comment__button--react",
+            });
+            new Handler_1.default("com.woltlab.wcf.comment.response", {
+                containerSelector: `#${this.#container.id} .commentResponseList__item`,
+                buttonSelector: ".commentResponse__button--react",
+            });
         }
         #initHashHandling() {
             window.addEventListener("hashchange", () => {

@@ -10,24 +10,6 @@
 
         setup('{@$commentContainerID}');
 	});
-
-	{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike')}
-		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], (UiReactionHandler) => {
-			new UiReactionHandler('com.woltlab.wcf.comment', {
-				// selectors
-				containerSelector: '#{@$commentContainerID} .commentList__item',
-				summaryListSelector: '.reactionSummaryList',
-				buttonSelector: '.comment__button--react'
-			});
-			
-			new UiReactionHandler('com.woltlab.wcf.comment.response', {
-				// selectors
-				containerSelector: '#{@$commentContainerID} .commentResponseList__item',
-				summaryListSelector: '.reactionSummaryList',
-				buttonSelector: '.commentResponse__button--react'
-			});
-		});
-	{/if}
 </script>
 
 {event name='javascriptInclude'}
@@ -39,6 +21,7 @@
     data-object-type-id="{@$commentObjectTypeID}"
     data-comments="{@$commentList->countObjects()}"
     data-last-comment-time="{@$lastCommentTime}"
+	data-enable-reactions="{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && ($__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike'))}true{else}false{/if}"
 >
     <div class="commentList">
     	{if $commentCanAdd}
