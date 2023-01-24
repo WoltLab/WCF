@@ -809,6 +809,7 @@ return array(
     'Pelago\\Emogrifier\\HtmlProcessor\\HtmlPruner' => $vendorDir . '/pelago/emogrifier/src/HtmlProcessor/HtmlPruner.php',
     'Pelago\\Emogrifier\\Utilities\\ArrayIntersector' => $vendorDir . '/pelago/emogrifier/src/Utilities/ArrayIntersector.php',
     'Pelago\\Emogrifier\\Utilities\\CssConcatenator' => $vendorDir . '/pelago/emogrifier/src/Utilities/CssConcatenator.php',
+    'Psr\\Clock\\ClockInterface' => $vendorDir . '/psr/clock/src/ClockInterface.php',
     'Psr\\EventDispatcher\\EventDispatcherInterface' => $vendorDir . '/psr/event-dispatcher/src/EventDispatcherInterface.php',
     'Psr\\EventDispatcher\\ListenerProviderInterface' => $vendorDir . '/psr/event-dispatcher/src/ListenerProviderInterface.php',
     'Psr\\EventDispatcher\\StoppableEventInterface' => $vendorDir . '/psr/event-dispatcher/src/StoppableEventInterface.php',
