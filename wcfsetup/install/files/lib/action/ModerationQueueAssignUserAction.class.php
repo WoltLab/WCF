@@ -43,7 +43,7 @@ final class ModerationQueueAssignUserAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $parameters = Helper::mapRequestParameters(
+        $parameters = Helper::mapQueryString(
             $request->getQueryParams(),
             <<<'EOT'
                 array {

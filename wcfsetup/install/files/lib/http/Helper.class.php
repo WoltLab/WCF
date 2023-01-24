@@ -37,7 +37,7 @@ final class Helper
      *
      * @throws MappingError
      */
-    public static function mapRequestParameters(array $sourceParameters, string $schema): mixed
+    public static function mapQueryString(array $sourceParameters, string $schema): mixed
     {
         $mapper = (new MapperBuilder())
             ->allowSuperfluousKeys()
