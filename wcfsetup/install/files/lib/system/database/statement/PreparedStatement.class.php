@@ -207,6 +207,7 @@ class PreparedStatement
      *
      * @template T of DatabaseObject
      * @param class-string<T> $className
+     * @return T
      */
     public function fetchObject($className)
     {
