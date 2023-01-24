@@ -205,8 +205,8 @@ class PreparedStatement
     /**
      * Fetches the next row from a result set in a database object.
      *
-     * @param string $className
-     * @return  DatabaseObject
+     * @template T of DatabaseObject
+     * @param class-string<T> $className
      */
     public function fetchObject($className)
     {
@@ -225,8 +225,9 @@ class PreparedStatement
      * Note: It is not possible to fetch further rows after calling
      * this method!
      *
-     * @param string $className
-     * @return  DatabaseObject|null
+     * @template T of DatabaseObject
+     * @param class-string<T> $className
+     * @return  T|null
      * @since       5.3
      */
     public function fetchSingleObject($className)
@@ -242,9 +243,10 @@ class PreparedStatement
     /**
      * Fetches the all rows from a result set into database objects.
      *
-     * @param string $className
+     * @template T of DatabaseObject
+     * @param class-string<T> $className
      * @param string|null $keyProperty
-     * @return  DatabaseObject[]
+     * @return  T[]
      */
     public function fetchObjects($className, $keyProperty = null)
     {
