@@ -2,15 +2,13 @@
 
 namespace wcf\action;
 
-use CuyZ\Valinor\Mapper\Source\Source;
-use CuyZ\Valinor\Mapper\TreeMapper;
-use CuyZ\Valinor\MapperBuilder;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
+use wcf\http\Helper;
 
 /**
  * Suggests users that may be mentioned.
@@ -23,27 +21,15 @@ use wcf\data\user\UserProfileList;
  */
 final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
 {
-    private const PARAMETERS = <<<'EOT'
-        array {
-            query: string
-        }
-        EOT;
-
-    private readonly TreeMapper $mapper;
-
-    public function __construct()
-    {
-        $this->mapper = (new MapperBuilder())
-            ->allowSuperfluousKeys()
-            ->enableFlexibleCasting()
-            ->mapper();
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $parameters = $this->mapper->map(
-            self::PARAMETERS,
-            Source::array($request->getQueryParams())
+        $parameters = Helper::mapQueryParameters(
+            $request->getQueryParams(),
+            <<<'EOT'
+                    array {
+                        query: string
+                    }
+                    EOT,
         );
 
         $users = $this->getUsers($parameters);
