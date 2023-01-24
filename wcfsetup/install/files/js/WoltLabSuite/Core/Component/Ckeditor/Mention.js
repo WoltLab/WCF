@@ -8,6 +8,7 @@ define(["require", "exports", "../../Ajax/Backend"], function (require, exports,
         url.searchParams.set("query", query);
         const result = (await (0, Backend_1.prepareRequest)(url.toString())
             .get()
+            .allowCaching()
             .disableLoadingIndicator()
             .fetchAsJson());
         return result.map((item) => {

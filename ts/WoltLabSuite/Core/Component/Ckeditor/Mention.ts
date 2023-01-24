@@ -21,6 +21,7 @@ export async function getPossibleMentions(query: string): Promise<UserMention[]>
 
   const result = (await prepareRequest(url.toString())
     .get()
+    .allowCaching()
     .disableLoadingIndicator()
     .fetchAsJson()) as ResultGetSearchResultList;
 
