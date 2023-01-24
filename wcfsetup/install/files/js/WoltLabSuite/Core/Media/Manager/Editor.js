@@ -6,49 +6,54 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
     "use strict";
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
-    EventHandler = tslib_1.__importStar(EventHandler);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     Clipboard = tslib_1.__importStar(Clipboard);
     Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerEditor extends Base_1.default {
-        _activeButton;
-        _buttons;
-        _mediaToInsert;
-        _mediaToInsertByClipboard;
-        _uploadData;
-        _uploadId;
+        _mediaToInsert = new Map();
+        _mediaToInsertByClipboard = false;
+        _uploadData = null;
+        _uploadId = null;
         constructor(options) {
             options = Core.extend({
                 callbackInsert: null,
             }, options);
             super(options);
             this._forceClipboard = true;
-            this._activeButton = null;
-            const context = this._options.editor ? this._options.editor.core.toolbar()[0] : undefined;
-            this._buttons = (context || window.document).getElementsByClassName(this._options.buttonClass || "jsMediaEditorButton");
-            Array.from(this._buttons).forEach((button) => {
-                button.addEventListener("click", (ev) => this._click(ev));
+            this._options.ckeditor?.sourceElement.addEventListener("bbcode", (event) => {
+                const bbcode = event.detail;
+                if (bbcode === "media") {
+                    event.preventDefault();
+                    this._click(event);
+                }
             });
-            this._mediaToInsert = new Map();
-            this._mediaToInsertByClipboard = false;
-            this._uploadData = null;
-            this._uploadId = null;
+            /*
             if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
-                const editorId = this._options.editor.$editor[0].dataset.elementId;
-                const uuid1 = EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, (data) => this._editorUpload(data));
-                const uuid2 = EventHandler.add("com.woltlab.wcf.redactor2", `pasteFromClipboard_${editorId}`, (data) => this._editorUpload(data));
-                EventHandler.add("com.woltlab.wcf.redactor2", `destroy_${editorId}`, () => {
-                    EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid1);
-                    EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid2);
-                });
-                EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => this._mediaUploaded(data));
+              const editorId = this._options.editor.$editor[0].dataset.elementId as string;
+        
+              const uuid1 = EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, (data: OnDropPayload) =>
+                this._editorUpload(data),
+              );
+              const uuid2 = EventHandler.add(
+                "com.woltlab.wcf.redactor2",
+                `pasteFromClipboard_${editorId}`,
+                (data: OnDropPayload) => this._editorUpload(data),
+              );
+        
+              EventHandler.add("com.woltlab.wcf.redactor2", `destroy_${editorId}`, () => {
+                EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid1);
+                EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid2);
+              });
+        
+              EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => this._mediaUploaded(data));
             }
+            */
         }
         _addButtonEventListeners() {
             super._addButtonEventListeners();
@@ -107,10 +112,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                     };
                 },
             });
-        }
-        _click(event) {
-            this._activeButton = event.currentTarget;
-            super._click(event);
         }
         _dialogShow() {
             super._dialogShow();
@@ -174,7 +175,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 this._options.callbackInsert(this._mediaToInsert, "separate" /* MediaInsertType.Separate */, thumbnailSize);
             }
             else {
-                this._options.editor.buffer.set();
+                //this._options.editor!.buffer.set();
                 this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
             }
             if (this._mediaToInsertByClipboard) {
@@ -191,6 +192,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
          * Inserts a single media item into the editor.
          */
         _insertMediaItem(thumbnailSize, media) {
+            const ckeditor = this._options.ckeditor;
             if (media.isImage) {
                 let available = "";
                 ["small", "medium", "large", "original"].some((size) => {
@@ -210,14 +212,10 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 if (thumbnailSize !== "original") {
                     link = media[thumbnailSize + "ThumbnailLink"];
                 }
-                Core.interactWithRedactor(() => {
-                    this._options.editor.insert.html(`<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`);
-                });
+                ckeditor.insertHtml(`<img src="${link}" class="woltlabSuiteMedia" data-media-id="${media.mediaID}" data-media-size="${thumbnailSize}">`);
             }
             else {
-                Core.interactWithRedactor(() => {
-                    this._options.editor.insert.text(`[wsm='${media.mediaID}'][/wsm]`);
-                });
+                ckeditor.insertText(`[wsm='${media.mediaID}'][/wsm]`);
             }
         }
         /**

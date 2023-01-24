@@ -55,6 +55,9 @@
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('html')}
 						"htmlEmbed",
 					{/if}
+					{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+						"woltlabBbcode_media",
+					{/if}
 				],
 			},
 		];
@@ -71,6 +74,16 @@
 		};
 
 		let woltlabBbcode = [
+			// TODO: This implicitly causes the button to be present twice, because
+			// 		 the bbcode plugin does not check if the button already exists.
+			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+				{
+					icon: "file-circle-plus;false",
+					name: "media",
+					label: "TODO: woltlab media bbcode"
+				},
+			{/if}
+
 			{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 				{
 					icon: '{@$__bbcode->wysiwygIcon|encodeJS}',
@@ -83,7 +96,10 @@
 		// TODO: This removes already exisitng functionalities and perhaps
 		// should be handled on the server?
 		woltlabBbcode = woltlabBbcode.filter(({ name }) => {
-			return name !== "html" && name !== "tt" && name !== "code" && name !== "spoiler";
+			return name !== "html"
+				&& name !== "tt"
+				&& name !== "code"
+				&& name !== "spoiler";
 		});
 
 		woltlabBbcode.forEach(({ name }) => {
@@ -94,6 +110,14 @@
 			toolbar,
 			woltlabBbcode,
 			woltlabToolbarGroup,
+		}).then((ckeditor) => {
+			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+				require(["WoltLabSuite/Core/Media/Manager/Editor"], (MediaManager) => {
+					new MediaManager({
+						ckeditor,
+					});
+				});
+			{/if}
 		});
 	});
 </script>

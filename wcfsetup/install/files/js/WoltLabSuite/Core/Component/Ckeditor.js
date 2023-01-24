@@ -20,6 +20,11 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             const modelFragment = this.#editor.data.toModel(viewFragment);
             this.#editor.model.insertContent(modelFragment);
         }
+        insertText(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            this.insertHtml(div.innerHTML);
+        }
         setHtml(html) {
             this.#editor.data.set(html);
         }

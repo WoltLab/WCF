@@ -32,6 +32,13 @@ class Ckeditor {
     this.#editor.model.insertContent(modelFragment);
   }
 
+  insertText(text: string): void {
+    const div = document.createElement("div");
+    div.textContent = text;
+
+    this.insertHtml(div.innerHTML);
+  }
+
   setHtml(html: string): void {
     this.#editor.data.set(html);
   }
