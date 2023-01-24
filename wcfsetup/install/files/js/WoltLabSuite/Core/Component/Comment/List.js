@@ -94,6 +94,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     permaLinkComment.remove();
                     return true;
                 });
+                return;
             }
             const { template, response } = ajaxResponse;
             Util_1.default.insertHtml(template, permaLinkComment, "before");
@@ -144,6 +145,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Change/Listener"
                     permalinkResponse.remove();
                     return true;
                 });
+                return;
             }
             this.#insertResponseSegment(response.template);
         }

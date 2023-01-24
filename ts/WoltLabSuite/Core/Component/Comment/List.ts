@@ -130,9 +130,11 @@ class CommentList {
 
         return true;
       });
+
+      return;
     }
 
-    const { template, response } = ajaxResponse!;
+    const { template, response } = ajaxResponse;
 
     DomUtil.insertHtml(template, permaLinkComment, "before");
     permaLinkComment.remove();
@@ -196,9 +198,11 @@ class CommentList {
 
         return true;
       });
+
+      return;
     }
 
-    this.#insertResponseSegment(response!.template);
+    this.#insertResponseSegment(response.template);
   }
 
   #scrollTo(element: HTMLElement, highlight = false): void {
