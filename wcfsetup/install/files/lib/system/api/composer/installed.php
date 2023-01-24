@@ -7,7 +7,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
@@ -139,6 +139,15 @@
             'reference' => '547b8c814794aec871e3c98b1c712f416755f4eb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../pelago/emogrifier',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'psr/event-dispatcher' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => 'dbefd12671e8a14ec7f180cab83036ed26714bb0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/event-dispatcher',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
