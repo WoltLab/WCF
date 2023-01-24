@@ -7,7 +7,7 @@
  * @since 6.0
  */
 
-import { dboAction } from "../../Ajax";
+import { dboAction, handleValidationErrors } from "../../Ajax";
 import DomUtil from "../../Dom/Util";
 import UiDropdownSimple from "../../Ui/Dropdown/Simple";
 import * as UiNotification from "../../Ui/Notification";
@@ -17,7 +17,6 @@ import * as Environment from "../../Environment";
 import * as EventHandler from "../../Event/Handler";
 import { RedactorEditor } from "../../Ui/Redactor/Editor";
 import { getPhrase } from "../../Language";
-import { StatusNotOk } from "../../Ajax/Error";
 
 type ResponseBeginEdit = {
   template: string;
@@ -140,14 +139,11 @@ export class WoltlabCoreCommentElement extends HTMLParsedElement {
         .payload(parameters)
         .dispatch()) as ResponseSave;
     } catch (error) {
-      if (error instanceof StatusNotOk) {
-        const json = await error.response.clone().json();
-        if (json.code === 412 && json.returnValues) {
-          DomUtil.innerError(document.getElementById(this.#editorId)!, json.returnValues.errorType);
-        }
-      } else {
-        throw error;
-      }
+      await handleValidationErrors(error, ({ errorType }) => {
+        DomUtil.innerError(document.getElementById(this.#editorId)!, errorType);
+
+        return true;
+      });
 
       this.#hideLoadingIndicator();
       return;
