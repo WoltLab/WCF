@@ -2,6 +2,9 @@
 
 namespace wcf\http;
 
+use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\MapperBuilder;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -21,6 +24,30 @@ final class Helper
     public static function isAjaxRequest(ServerRequestInterface $request): bool
     {
         return $request->getHeaderLine('x-requested-with') === 'XMLHttpRequest';
+    }
+
+    /**
+     * Validates query parameters against the provided schema. Unknown
+     * keys are skipped and values are gracefully converted into the
+     * requested types.
+     *
+     * The returned array will contain only the values specified in the
+     * schema. Missing parameters or values that cannot be casted to the
+     * requested type will yield a `MappingError`.
+     *
+     * @throws MappingError
+     */
+    public static function mapQueryParameters(array $queryParameters, string $schema): mixed
+    {
+        $mapper = (new MapperBuilder())
+            ->allowSuperfluousKeys()
+            ->enableFlexibleCasting()
+            ->mapper();
+
+        return $mapper->map(
+            $schema,
+            Source::array($queryParameters)
+        );
     }
 
     /**
