@@ -51,6 +51,27 @@ final class Helper
     }
 
     /**
+     * Validates body parameters against the provided schema. Expects
+     * the data source to be JSON and thus values to be of the correct
+     * data type. Unknown keys will be rejected.
+     *
+     * Missing parameters or values that cannot be casted to the requested
+     * type will yield a `MappingError`.
+     *
+     * @throws MappingError
+     */
+    public static function mapRequestBody(array $bodyParameters, string $schema): mixed
+    {
+        $mapper = (new MapperBuilder())
+            ->mapper();
+
+        return $mapper->map(
+            $schema,
+            Source::array($bodyParameters)
+        );
+    }
+
+    /**
      * Forbid creation of Helper objects.
      */
     private function __construct()
