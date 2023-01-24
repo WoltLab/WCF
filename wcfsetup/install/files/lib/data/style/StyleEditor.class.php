@@ -547,12 +547,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
                 $knownTemplates = [];
                 if ($style !== null && $style->templateGroupID) {
-                    $sql = "SELECT  templateName
-                            FROM    wcf" . WCF_N . "_template
+                    $sql = "SELECT  *
+                            FROM    wcf1_template
                             WHERE   templateGroupID = ?";
-                    $statement = WCF::getDB()->prepareStatement($sql);
+                    $statement = WCF::getDB()->prepare($sql);
                     $statement->execute([$style->templateGroupID]);
-                    $knownTemplates = $statement->fetchAll(\PDO::FETCH_COLUMN);
+                    foreach ($statement->fetchObjects(Template::class) as $template) {
+                        $knownTemplates[$template->application . '-' . $template->templateName] = new TemplateEditor($template);
+                    }
                 }
 
                 // copy templates
@@ -586,7 +588,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                             $templatesTar->extract($template['index'], $templatesDir . $template['filename']);
 
                             $templateName = \str_replace('.tpl', '', $template['filename']);
-                            if (!\in_array($templateName, $knownTemplates)) {
+
+                            if (isset($knownTemplates[Package::getAbbreviation($package) . '-' . $templateName])) {
+                                $knownTemplates[Package::getAbbreviation($package) . '-' . $templateName]->update([
+                                    'lastModificationTime' => TIME_NOW
+                                ]);
+                            } else {
                                 TemplateEditor::create([
                                     'application' => Package::getAbbreviation($package),
                                     'packageID' => $row['packageID'],
