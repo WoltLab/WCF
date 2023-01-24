@@ -27,7 +27,7 @@ final class Helper
     }
 
     /**
-     * Validates source parameters against the provided schema. Unknown
+     * Validates query parameters against the provided schema. Unknown
      * keys are skipped and values are gracefully converted into the
      * requested types.
      *
@@ -37,7 +37,7 @@ final class Helper
      *
      * @throws MappingError
      */
-    public static function mapQueryString(array $sourceParameters, string $schema): mixed
+    public static function mapQueryParameters(array $queryParameters, string $schema): mixed
     {
         $mapper = (new MapperBuilder())
             ->allowSuperfluousKeys()
@@ -46,7 +46,7 @@ final class Helper
 
         return $mapper->map(
             $schema,
-            Source::array($sourceParameters)
+            Source::array($queryParameters)
         );
     }
 
