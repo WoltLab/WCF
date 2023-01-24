@@ -48,8 +48,8 @@ final class EditorGetMentionSuggestionsAction implements RequestHandlerInterface
             200,
             [
                 'cache-control' => [
-                    'max-age=300'
-                ]
+                    'max-age=300',
+                ],
             ]
         );
     }
