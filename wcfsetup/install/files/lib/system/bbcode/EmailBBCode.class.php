@@ -16,7 +16,7 @@ final class EmailBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $email = '';
         if (isset($openingTag['attributes'][0])) {

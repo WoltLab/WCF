@@ -36,7 +36,7 @@ final class AttachmentBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         // get attachment id
         $attachmentID = 0;

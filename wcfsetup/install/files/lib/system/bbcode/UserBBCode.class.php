@@ -19,7 +19,7 @@ final class UserBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $userID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
         if (!$userID) {
