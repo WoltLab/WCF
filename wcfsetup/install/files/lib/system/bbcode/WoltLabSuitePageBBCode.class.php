@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.0
  */
-class WoltLabSuitePageBBCode extends AbstractBBCode
+final class WoltLabSuitePageBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc

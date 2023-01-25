@@ -9,7 +9,7 @@ namespace wcf\system\bbcode;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class TdBBCode extends AbstractBBCode
+final class TdBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc

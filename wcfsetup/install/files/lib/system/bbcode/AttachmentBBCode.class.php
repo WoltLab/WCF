@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class AttachmentBBCode extends AbstractBBCode
+final class AttachmentBBCode extends AbstractBBCode
 {
     /**
      * list of attachments

@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.0
  */
-class WoltLabSuiteMediaBBCode extends AbstractBBCode
+final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 {
     /**
      * forces media links to be linked to the frontend
