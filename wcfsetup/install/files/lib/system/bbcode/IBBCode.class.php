@@ -16,11 +16,7 @@ interface IBBCode extends IDatabaseObjectProcessor
     /**
      * Returns the parsed bbcode tag.
      *
-     * @param array $openingTag
      * @param string $content
-     * @param array $closingTag
-     * @param BBCodeParser $parser
-     * @return  string
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser);
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string;
 }

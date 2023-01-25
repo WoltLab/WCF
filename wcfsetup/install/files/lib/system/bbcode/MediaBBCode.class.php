@@ -12,12 +12,12 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class MediaBBCode extends AbstractBBCode
+final class MediaBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $content = StringUtil::trim($openingTag['attributes'][0]);
 

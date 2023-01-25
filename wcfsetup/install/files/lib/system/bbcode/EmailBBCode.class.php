@@ -11,12 +11,12 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class EmailBBCode extends AbstractBBCode
+final class EmailBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $email = '';
         if (isset($openingTag['attributes'][0])) {

@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class AttachmentBBCode extends AbstractBBCode
+final class AttachmentBBCode extends AbstractBBCode
 {
     /**
      * list of attachments
@@ -36,7 +36,7 @@ class AttachmentBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         // get attachment id
         $attachmentID = 0;

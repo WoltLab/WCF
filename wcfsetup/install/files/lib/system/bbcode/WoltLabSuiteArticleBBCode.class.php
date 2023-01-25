@@ -16,12 +16,12 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.2
  */
-class WoltLabSuiteArticleBBCode extends AbstractBBCode
+final class WoltLabSuiteArticleBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $objectID = 0;
         if (isset($openingTag['attributes'][0])) {

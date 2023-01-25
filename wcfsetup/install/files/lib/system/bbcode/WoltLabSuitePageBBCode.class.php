@@ -14,12 +14,12 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.0
  */
-class WoltLabSuitePageBBCode extends AbstractBBCode
+final class WoltLabSuitePageBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $pageID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
         if (!$pageID) {

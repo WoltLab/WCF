@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       3.0
  */
-class WoltLabSuiteMediaBBCode extends AbstractBBCode
+final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 {
     /**
      * forces media links to be linked to the frontend
@@ -28,7 +28,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $mediaID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
         if (!$mediaID) {

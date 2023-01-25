@@ -13,12 +13,12 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.2
  */
-class GroupBBCode extends AbstractBBCode
+final class GroupBBCode extends AbstractBBCode
 {
     /**
      * @inheritDoc
      */
-    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser)
+    public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser): string
     {
         $groupID = (!empty($openingTag['attributes'][0])) ? \intval($openingTag['attributes'][0]) : 0;
         $group = UserGroup::getGroupByID($groupID);
