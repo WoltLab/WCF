@@ -110,10 +110,14 @@
 			toolbar,
 			woltlabBbcode,
 			woltlabToolbarGroup,
+		}, {
+			attachment: element.dataset.disableAttachments !== "true",
+			media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
+			mention: element.dataset.supportMention === "true",
 		}).then((ckeditor) => {
 			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
-				require(["WoltLabSuite/Core/Media/Manager/Editor"], (MediaManager) => {
-					new MediaManager({
+				require(["WoltLabSuite/Core/Media/Manager/Editor"], ({ MediaManagerEditor }) => {
+					new MediaManagerEditor({
 						ckeditor,
 					});
 				});

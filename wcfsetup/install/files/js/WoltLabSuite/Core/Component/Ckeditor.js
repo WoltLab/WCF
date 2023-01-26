@@ -1,12 +1,15 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "../Dom/Util"], function (require, exports, Mention_1, Quote_1, Attachment_1, Util_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "../Dom/Util", "./Ckeditor/Media"], function (require, exports, Mention_1, Quote_1, Attachment_1, Util_1, Media_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
     const instances = new WeakMap();
     class Ckeditor {
         #editor;
-        constructor(editor) {
+        #features;
+        constructor(editor, features) {
             this.#editor = editor;
+            Object.freeze(features);
+            this.#features = features;
             (0, Quote_1.setup)(this);
         }
         focus() {
@@ -28,6 +31,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         setHtml(html) {
             this.#editor.data.set(html);
         }
+        get features() {
+            return this.#features;
+        }
         get sourceElement() {
             return this.#editor.sourceElement;
         }
@@ -36,6 +42,12 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         // TODO: The typings do not include our custom plugins yet.
         configuration.woltlabUpload = {
             upload: (file, abortController) => (0, Attachment_1.uploadAttachment)(element.id, file, abortController),
+        };
+    }
+    function enableMedia(element, configuration) {
+        // TODO: The typings do not include our custom plugins yet.
+        configuration.woltlabUpload = {
+            upload: (file, abortController) => (0, Media_1.uploadMedia)(element.id, file, abortController),
         };
     }
     function enableMentions(configuration) {
@@ -58,17 +70,20 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             ],
         };
     }
-    async function setupCkeditor(element, configuration) {
+    async function setupCkeditor(element, configuration, features) {
         let editor = instances.get(element);
         if (editor === undefined) {
-            if (element.dataset.disableAttachments !== "true") {
+            if (features.attachment) {
                 enableAttachments(element, configuration);
             }
-            if (element.dataset.supportMention === "true") {
+            else if (features.media) {
+                enableMedia(element, configuration);
+            }
+            if (features.mention) {
                 enableMentions(configuration);
             }
             const cke = await window.CKEditor5.create(element, configuration);
-            editor = new Ckeditor(cke);
+            editor = new Ckeditor(cke, features);
             instances.set(element, editor);
         }
         return editor;

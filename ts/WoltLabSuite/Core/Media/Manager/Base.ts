@@ -55,7 +55,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   protected _mediaManagerMediaList: HTMLElement | null = null;
   protected _pagination: UiPagination | null = null;
   protected _search: MediaManagerSearch | null = null;
-  protected _upload: any = null;
+  protected _upload: MediaUpload | null = null;
   protected readonly _options: TOptions;
 
   constructor(options: Partial<TOptions>) {

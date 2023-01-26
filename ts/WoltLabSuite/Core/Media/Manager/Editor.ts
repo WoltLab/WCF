@@ -10,22 +10,18 @@
 import MediaManager from "./Base";
 import * as Core from "../../Core";
 import { Media, MediaInsertType, MediaManagerEditorOptions, MediaUploadSuccessEventData } from "../Data";
-//import * as EventHandler from "../../Event/Handler";
+import * as EventHandler from "../../Event/Handler";
 import * as DomTraverse from "../../Dom/Traverse";
 import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
 import * as Clipboard from "../../Controller/Clipboard";
-import { OnDropPayload } from "../../Ui/Redactor/DragAndDrop";
 import DomUtil from "../../Dom/Util";
-
-interface PasteFromClipboard {
-  blob: Blob;
-}
+import type { MediaDragAndDropEventData } from "../../Component/Ckeditor/Media";
 
 export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _mediaToInsert = new Map<number, Media>();
   protected _mediaToInsertByClipboard = false;
-  protected _uploadData: OnDropPayload | PasteFromClipboard | null = null;
+  protected _uploadData?: MediaDragAndDropEventData;
   protected _uploadId: number | null = null;
 
   constructor(options: Partial<MediaManagerEditorOptions>) {
@@ -49,28 +45,15 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
       }
     });
 
-    // TODO: Implement the drag & drop support for media.
-    /*
-    if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
-      const editorId = this._options.editor.$editor[0].dataset.elementId as string;
-
-      const uuid1 = EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, (data: OnDropPayload) =>
-        this._editorUpload(data),
-      );
-      const uuid2 = EventHandler.add(
-        "com.woltlab.wcf.redactor2",
-        `pasteFromClipboard_${editorId}`,
-        (data: OnDropPayload) => this._editorUpload(data),
-      );
-
-      EventHandler.add("com.woltlab.wcf.redactor2", `destroy_${editorId}`, () => {
-        EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid1);
-        EventHandler.remove("com.woltlab.wcf.redactor2", `dragAndDrop_${editorId}`, uuid2);
-      });
-
-      EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => this._mediaUploaded(data));
+    if (this._options.ckeditor !== undefined) {
+      const ckeditor = this._options.ckeditor;
+      if (!ckeditor.features.attachment) {
+        const editorId = ckeditor.sourceElement.id;
+        EventHandler.add("com.woltlab.wcf.ckeditor5", `dragAndDrop_${editorId}`, (data: MediaDragAndDropEventData) => {
+          this._editorUpload(data);
+        });
+      }
     }
-    */
   }
 
   protected _addButtonEventListeners(): void {
@@ -144,22 +127,37 @@ export class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> 
 
     // check if data needs to be uploaded
     if (this._uploadData) {
-      const fileUploadData = this._uploadData as OnDropPayload;
-      if (fileUploadData.file) {
-        this._upload.uploadFile(fileUploadData.file);
-      } else {
-        const blobUploadData = this._uploadData as PasteFromClipboard;
-        this._uploadId = this._upload.uploadBlob(blobUploadData.blob);
+      if (this._upload !== null) {
+        const uploadId = this._upload.uploadFile(this._uploadData.file);
+        this._uploadData.promise = new Promise((resolve) => {
+          const uuid = EventHandler.add(
+            "com.woltlab.wcf.media.upload",
+            "success",
+            (data: MediaUploadSuccessEventData) => {
+              if (data.uploadId !== uploadId) {
+                return;
+              }
+
+              EventHandler.remove("com.woltlab.wcf.media.upload", "success", uuid);
+
+              resolve({
+                mediaId: data.media[0].mediaID,
+                mediaSize: "original",
+                url: data.media[0].link,
+              });
+            },
+          );
+        });
       }
 
-      this._uploadData = null;
+      this._uploadData = undefined;
     }
   }
 
   /**
    * Handles pasting and dragging and dropping files into the editor.
    */
-  protected _editorUpload(data: OnDropPayload): void {
+  protected _editorUpload(data: MediaDragAndDropEventData): void {
     this._uploadData = data;
 
     UiDialog.open(this);

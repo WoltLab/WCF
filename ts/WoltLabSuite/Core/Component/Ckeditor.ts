@@ -5,14 +5,25 @@ import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiced
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import { uploadAttachment } from "./Ckeditor/Attachment";
 import { createFragmentFromHtml } from "../Dom/Util";
+import { uploadMedia } from "./Ckeditor/Media";
+
+type Features = {
+  attachment: boolean;
+  media: boolean;
+  mention: boolean;
+};
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
 class Ckeditor {
   readonly #editor: ClassicEditor;
+  readonly #features: Features;
 
-  constructor(editor: ClassicEditor) {
+  constructor(editor: ClassicEditor, features: Features) {
     this.#editor = editor;
+
+    Object.freeze(features);
+    this.#features = features;
 
     setupQuotes(this);
   }
@@ -43,6 +54,10 @@ class Ckeditor {
     this.#editor.data.set(html);
   }
 
+  get features(): Features {
+    return this.#features;
+  }
+
   get sourceElement(): HTMLElement {
     return this.#editor.sourceElement!;
   }
@@ -52,6 +67,13 @@ function enableAttachments(element: HTMLElement, configuration: EditorConfig): v
   // TODO: The typings do not include our custom plugins yet.
   (configuration as any).woltlabUpload = {
     upload: (file: File, abortController: AbortController) => uploadAttachment(element.id, file, abortController),
+  };
+}
+
+function enableMedia(element: HTMLElement, configuration: EditorConfig): void {
+  // TODO: The typings do not include our custom plugins yet.
+  (configuration as any).woltlabUpload = {
+    upload: (file: File, abortController: AbortController) => uploadMedia(element.id, file, abortController),
   };
 }
 
@@ -76,19 +98,25 @@ function enableMentions(configuration: EditorConfig): void {
   };
 }
 
-export async function setupCkeditor(element: HTMLElement, configuration: EditorConfig): Promise<CKEditor> {
+export async function setupCkeditor(
+  element: HTMLElement,
+  configuration: EditorConfig,
+  features: Features,
+): Promise<CKEditor> {
   let editor = instances.get(element);
   if (editor === undefined) {
-    if (element.dataset.disableAttachments !== "true") {
+    if (features.attachment) {
       enableAttachments(element, configuration);
+    } else if (features.media) {
+      enableMedia(element, configuration);
     }
 
-    if (element.dataset.supportMention === "true") {
+    if (features.mention) {
       enableMentions(configuration);
     }
 
     const cke = await window.CKEditor5.create(element, configuration);
-    editor = new Ckeditor(cke);
+    editor = new Ckeditor(cke, features);
 
     instances.set(element, editor);
   }
