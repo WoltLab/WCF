@@ -118,6 +118,24 @@ export async function setupCkeditor(
     const cke = await window.CKEditor5.create(element, configuration);
     editor = new Ckeditor(cke, features);
 
+    if (features.attachment || features.media) {
+      editor.sourceElement.addEventListener("woltlabUpload", (event: CustomEvent<DataTransfer>) => {
+        event.preventDefault();
+        console.log(event.detail);
+        for (const file of event.detail.files) {
+          if (file === null) {
+            continue;
+          }
+
+          if (features.attachment) {
+            void uploadAttachment(element.id, file, new AbortController());
+          } else if (features.media) {
+            void uploadMedia(element.id, file, new AbortController());
+          }
+        }
+      });
+    }
+
     instances.set(element, editor);
   }
 
