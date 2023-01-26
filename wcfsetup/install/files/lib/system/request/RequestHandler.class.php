@@ -2,6 +2,7 @@
 
 namespace wcf\system\request;
 
+use Laminas\Diactoros\Exception\ExceptionInterface as DiactorosException;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
@@ -82,17 +83,28 @@ final class RequestHandler extends SingletonFactory
                 }
             }
 
-            $psrRequest = ServerRequestFactory::fromGlobals(
-                null, // $_SERVER
-                null, // $_GET
-                null, // $_POST
-                null, // $_COOKIE
-                null, // $_FILES
-                FilterUsingXForwardedHeaders::trustProxies(
-                    ['*'],
-                    [FilterUsingXForwardedHeaders::HEADER_PROTO]
-                )
-            );
+            try {
+                $psrRequest = ServerRequestFactory::fromGlobals(
+                    null, // $_SERVER
+                    null, // $_GET
+                    null, // $_POST
+                    null, // $_COOKIE
+                    null, // $_FILES
+                    FilterUsingXForwardedHeaders::trustProxies(
+                        ['*'],
+                        [FilterUsingXForwardedHeaders::HEADER_PROTO]
+                    )
+                );
+            } catch (DiactorosException $e) {
+                if (\ENABLE_DEBUG_MODE) {
+                    throw $e;
+                }
+
+                \header('HTTP/1.1 500 Internal Server Error');
+
+                // Intentionally not localized, because this must never happen for well-formed requests.
+                throw new NamedUserException('Failed to parse the incoming request.', 0, $e);
+            }
 
             $builtRequest = $this->buildRequest($psrRequest, $application);
 
