@@ -13,7 +13,7 @@ type AttachmentData = {
 };
 
 type DragAndDropEventData = {
-  abortController: AbortController;
+  abortController?: AbortController;
   file: File;
   promise?: Promise<AttachmentData>;
 };
@@ -21,7 +21,7 @@ type DragAndDropEventData = {
 export function uploadAttachment(
   elementId: string,
   file: File,
-  abortController: AbortController,
+  abortController?: AbortController,
 ): Promise<UploadResult> {
   const data: DragAndDropEventData = { abortController, file };
   EventHandler.fire("com.woltlab.wcf.ckeditor5", `dragAndDrop_${elementId}`, data);

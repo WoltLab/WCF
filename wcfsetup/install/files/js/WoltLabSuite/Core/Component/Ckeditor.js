@@ -87,16 +87,15 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             if (features.attachment || features.media) {
                 editor.sourceElement.addEventListener("woltlabUpload", (event) => {
                     event.preventDefault();
-                    console.log(event.detail);
                     for (const file of event.detail.files) {
                         if (file === null) {
                             continue;
                         }
                         if (features.attachment) {
-                            void (0, Attachment_1.uploadAttachment)(element.id, file, new AbortController());
+                            void (0, Attachment_1.uploadAttachment)(element.id, file);
                         }
                         else if (features.media) {
-                            void (0, Media_1.uploadMedia)(element.id, file, new AbortController());
+                            void (0, Media_1.uploadMedia)(element.id, file);
                         }
                     }
                 });

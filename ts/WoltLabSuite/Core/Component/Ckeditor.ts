@@ -121,16 +121,16 @@ export async function setupCkeditor(
     if (features.attachment || features.media) {
       editor.sourceElement.addEventListener("woltlabUpload", (event: CustomEvent<DataTransfer>) => {
         event.preventDefault();
-        console.log(event.detail);
+
         for (const file of event.detail.files) {
           if (file === null) {
             continue;
           }
 
           if (features.attachment) {
-            void uploadAttachment(element.id, file, new AbortController());
+            void uploadAttachment(element.id, file);
           } else if (features.media) {
-            void uploadMedia(element.id, file, new AbortController());
+            void uploadMedia(element.id, file);
           }
         }
       });
