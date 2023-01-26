@@ -1,10 +1,11 @@
 import { getMentionConfiguration } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
-import { uploadAttachment } from "./Ckeditor/Attachment";
+import { setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
 import { uploadMedia } from "./Ckeditor/Media";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
 
 type Features = {
   attachment: boolean;
@@ -53,12 +54,48 @@ class Ckeditor {
     this.#editor.data.set(html);
   }
 
+  removeAll(model: string, attributes: Record<string, string | number | boolean>): void {
+    this.#editor.model.change((writer) => {
+      const elements = findModelForRemoval(this.#editor.model.document.getRoot()!, model, attributes);
+      for (const element of elements) {
+        writer.remove(element);
+      }
+    });
+  }
+
   get features(): Features {
     return this.#features;
   }
 
   get sourceElement(): HTMLElement {
     return this.#editor.sourceElement!;
+  }
+}
+
+function* findModelForRemoval(
+  element: CkeElement,
+  model: string,
+  attributes: Record<string, string | number | boolean>,
+): Generator<CkeElement> {
+  if (element.is("element", model)) {
+    let isMatch = true;
+    Object.entries(attributes).forEach(([key, value]) => {
+      if (!element.hasAttribute(key)) {
+        isMatch = false;
+      } else if (element.getAttribute(key) !== value) isMatch = false;
+    });
+
+    if (isMatch) {
+      yield element;
+
+      return;
+    }
+  }
+
+  for (const child of element.getChildren()) {
+    if (child.is("element")) {
+      yield* findModelForRemoval(child, model, attributes);
+    }
   }
 }
 
@@ -101,6 +138,10 @@ export async function setupCkeditor(
 
     const cke = await window.CKEditor5.create(element, configuration);
     editor = new Ckeditor(cke, features);
+
+    if (features.attachment) {
+      setupRemoveAttachment(editor);
+    }
 
     instances.set(element, editor);
   }

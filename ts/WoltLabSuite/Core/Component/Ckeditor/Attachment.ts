@@ -1,4 +1,5 @@
 import * as EventHandler from "../../Event/Handler";
+import type { CKEditor } from "../Ckeditor";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -36,4 +37,15 @@ export function uploadAttachment(
       });
     });
   });
+}
+
+export function setupRemoveAttachment(ckeditor: CKEditor): void {
+  EventHandler.add(
+    "com.woltlab.wcf.ckeditor5",
+    `removeEmbeddedAttachment_${ckeditor.sourceElement.id}`,
+    ({ attachmentId }) => {
+      ckeditor.removeAll("imageBlock", { attachmentId });
+      ckeditor.removeAll("imageInline", { attachmentId });
+    },
+  );
 }

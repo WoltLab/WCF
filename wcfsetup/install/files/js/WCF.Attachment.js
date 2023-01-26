@@ -113,7 +113,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.ckeditor5', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId, this._editorUpload.bind(this));
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId, (function (data) {
 				if (!data.tmpHashes || !Array.isArray(data.tmpHashes)) {
@@ -189,8 +188,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'submit_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'reset_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId);
-				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.ckeditor5', 'dragAndDrop_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId);
 				
 				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
@@ -321,7 +319,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		if (this._editorId && data.button) {
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'deleteAttachment_' + this._editorId, {
+			WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'removeEmbeddedAttachment_' + this._editorId, {
 				attachmentId: data.button.data('objectID')
 			});
 		}
@@ -808,6 +806,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		this._removeLimitError({});
+
+		WCF.System.Event.fireEvent('com.woltlab.wcf.ckeditor5', 'removeEmbeddedAttachment_' + this._editorId, {
+			attachmentId: objectId
+		});
 	},
 	
 	/**

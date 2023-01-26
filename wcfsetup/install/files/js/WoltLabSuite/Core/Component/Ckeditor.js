@@ -31,11 +31,40 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         setHtml(html) {
             this.#editor.data.set(html);
         }
+        removeAll(model, attributes) {
+            this.#editor.model.change((writer) => {
+                const elements = findModelForRemoval(this.#editor.model.document.getRoot(), model, attributes);
+                for (const element of elements) {
+                    writer.remove(element);
+                }
+            });
+        }
         get features() {
             return this.#features;
         }
         get sourceElement() {
             return this.#editor.sourceElement;
+        }
+    }
+    function* findModelForRemoval(element, model, attributes) {
+        if (element.is("element", model)) {
+            let isMatch = true;
+            Object.entries(attributes).forEach(([key, value]) => {
+                if (!element.hasAttribute(key)) {
+                    isMatch = false;
+                }
+                else if (element.getAttribute(key) !== value)
+                    isMatch = false;
+            });
+            if (isMatch) {
+                yield element;
+                return;
+            }
+        }
+        for (const child of element.getChildren()) {
+            if (child.is("element")) {
+                yield* findModelForRemoval(child, model, attributes);
+            }
         }
     }
     function enableAttachments(element, configuration) {
@@ -69,6 +98,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             }
             const cke = await window.CKEditor5.create(element, configuration);
             editor = new Ckeditor(cke, features);
+            if (features.attachment) {
+                (0, Attachment_1.setupRemoveAttachment)(editor);
+            }
             instances.set(element, editor);
         }
         return editor;
