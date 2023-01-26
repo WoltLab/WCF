@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "../Dom/Util", "./Ckeditor/Media"], function (require, exports, Mention_1, Quote_1, Attachment_1, Util_1, Media_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -51,24 +51,7 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
         };
     }
     function enableMentions(configuration) {
-        configuration.mention = {
-            feeds: [
-                {
-                    feed: (query) => {
-                        // TODO: The typings are outdated, cast the result to `any`.
-                        return (0, Mention_1.getPossibleMentions)(query);
-                    },
-                    itemRenderer: (item) => {
-                        // TODO: This is ugly.
-                        return (0, Util_1.createFragmentFromHtml)(`
-            <span>${item.icon} ${item.text}</span>
-          `).firstElementChild;
-                    },
-                    marker: "@",
-                    minimumCharacters: 3,
-                },
-            ],
-        };
+        configuration.mention = (0, Mention_1.getMentionConfiguration)();
     }
     async function setupCkeditor(element, configuration, features) {
         let editor = instances.get(element);

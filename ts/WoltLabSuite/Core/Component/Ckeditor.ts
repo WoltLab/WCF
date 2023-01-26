@@ -1,11 +1,10 @@
-import { getPossibleMentions } from "./Ckeditor/Mention";
+import { getMentionConfiguration } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
+import { uploadAttachment } from "./Ckeditor/Attachment";
+import { uploadMedia } from "./Ckeditor/Media";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
-import { uploadAttachment } from "./Ckeditor/Attachment";
-import { createFragmentFromHtml } from "../Dom/Util";
-import { uploadMedia } from "./Ckeditor/Media";
 
 type Features = {
   attachment: boolean;
@@ -78,24 +77,7 @@ function enableMedia(element: HTMLElement, configuration: EditorConfig): void {
 }
 
 function enableMentions(configuration: EditorConfig): void {
-  configuration.mention = {
-    feeds: [
-      {
-        feed: (query) => {
-          // TODO: The typings are outdated, cast the result to `any`.
-          return getPossibleMentions(query) as any;
-        },
-        itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
-          // TODO: This is ugly.
-          return createFragmentFromHtml(`
-            <span>${item.icon} ${item.text}</span>
-          `).firstElementChild as HTMLElement;
-        },
-        marker: "@",
-        minimumCharacters: 3,
-      },
-    ],
-  };
+  configuration.mention = getMentionConfiguration();
 }
 
 export async function setupCkeditor(
