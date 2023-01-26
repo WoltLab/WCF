@@ -65,14 +65,16 @@ class Ckeditor {
 function enableAttachments(element: HTMLElement, configuration: EditorConfig): void {
   // TODO: The typings do not include our custom plugins yet.
   (configuration as any).woltlabUpload = {
-    upload: (file: File, abortController: AbortController) => uploadAttachment(element.id, file, abortController),
+    uploadImage: (file: File, abortController: AbortController) => uploadAttachment(element.id, file, abortController),
+    uploadOther: (file: File) => uploadAttachment(element.id, file),
   };
 }
 
 function enableMedia(element: HTMLElement, configuration: EditorConfig): void {
   // TODO: The typings do not include our custom plugins yet.
   (configuration as any).woltlabUpload = {
-    upload: (file: File, abortController: AbortController) => uploadMedia(element.id, file, abortController),
+    uploadImage: (file: File, abortController: AbortController) => uploadMedia(element.id, file, abortController),
+    uploadOther: (file: File) => uploadMedia(element.id, file),
   };
 }
 
@@ -99,24 +101,6 @@ export async function setupCkeditor(
 
     const cke = await window.CKEditor5.create(element, configuration);
     editor = new Ckeditor(cke, features);
-
-    if (features.attachment || features.media) {
-      editor.sourceElement.addEventListener("woltlabUpload", (event: CustomEvent<DataTransfer>) => {
-        event.preventDefault();
-
-        for (const file of event.detail.files) {
-          if (file === null) {
-            continue;
-          }
-
-          if (features.attachment) {
-            void uploadAttachment(element.id, file);
-          } else if (features.media) {
-            void uploadMedia(element.id, file);
-          }
-        }
-      });
-    }
 
     instances.set(element, editor);
   }

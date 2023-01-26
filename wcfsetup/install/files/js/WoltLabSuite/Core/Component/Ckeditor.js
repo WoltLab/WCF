@@ -41,13 +41,15 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
     function enableAttachments(element, configuration) {
         // TODO: The typings do not include our custom plugins yet.
         configuration.woltlabUpload = {
-            upload: (file, abortController) => (0, Attachment_1.uploadAttachment)(element.id, file, abortController),
+            uploadImage: (file, abortController) => (0, Attachment_1.uploadAttachment)(element.id, file, abortController),
+            uploadOther: (file) => (0, Attachment_1.uploadAttachment)(element.id, file),
         };
     }
     function enableMedia(element, configuration) {
         // TODO: The typings do not include our custom plugins yet.
         configuration.woltlabUpload = {
-            upload: (file, abortController) => (0, Media_1.uploadMedia)(element.id, file, abortController),
+            uploadImage: (file, abortController) => (0, Media_1.uploadMedia)(element.id, file, abortController),
+            uploadOther: (file) => (0, Media_1.uploadMedia)(element.id, file),
         };
     }
     function enableMentions(configuration) {
@@ -67,22 +69,6 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             }
             const cke = await window.CKEditor5.create(element, configuration);
             editor = new Ckeditor(cke, features);
-            if (features.attachment || features.media) {
-                editor.sourceElement.addEventListener("woltlabUpload", (event) => {
-                    event.preventDefault();
-                    for (const file of event.detail.files) {
-                        if (file === null) {
-                            continue;
-                        }
-                        if (features.attachment) {
-                            void (0, Attachment_1.uploadAttachment)(element.id, file);
-                        }
-                        else if (features.media) {
-                            void (0, Media_1.uploadMedia)(element.id, file);
-                        }
-                    }
-                });
-            }
             instances.set(element, editor);
         }
         return editor;
