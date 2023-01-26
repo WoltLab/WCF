@@ -5,7 +5,7 @@ namespace wcf\acp\action;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\page\CacheListPage;
-use wcf\action\AbstractAction;
+use wcf\action\AbstractSecureAction;
 use wcf\system\cache\command\ClearCache;
 use wcf\system\request\LinkHandler;
 
@@ -16,7 +16,7 @@ use wcf\system\request\LinkHandler;
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class CacheClearAction extends AbstractAction
+final class CacheClearAction extends AbstractSecureAction
 {
     /**
      * @inheritDoc

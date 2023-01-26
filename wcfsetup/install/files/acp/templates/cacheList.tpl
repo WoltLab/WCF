@@ -16,7 +16,11 @@
 			<ul>
 				{content}
 					{if $cacheData.files}
-						<li><a onclick="WCF.System.Confirmation.show('{jslang}wcf.acp.cache.clear.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button">{icon name='xmark'} <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+						<li>
+							<a onclick="WCF.System.Confirmation.show('{jslang}wcf.acp.cache.clear.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}t={csrfToken type='url'}{/link}" class="button">
+								{icon name='xmark'} <span>{lang}wcf.acp.cache.button.clear{/lang}</span>
+							</a>
+						</li>
 					{/if}
 					
 					{event name='contentHeaderNavigation'}
@@ -106,7 +110,11 @@
 			<ul>
 				{content}
 					{if $cacheData.files}
-						<li><a onclick="WCF.System.Confirmation.show('{jslang}wcf.acp.cache.clear.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button">{icon name='xmark'} <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+						<li>
+							<a onclick="WCF.System.Confirmation.show('{jslang}wcf.acp.cache.clear.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}t={csrfToken type='url'}{/link}" class="button">
+								{icon name='xmark'} <span>{lang}wcf.acp.cache.button.clear{/lang}</span>
+							</a>
+						</li>
 					{/if}
 					
 					{event name='contentFooterNavigation'}
