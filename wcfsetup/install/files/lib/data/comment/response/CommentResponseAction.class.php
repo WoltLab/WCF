@@ -4,6 +4,7 @@ namespace wcf\data\comment\response;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentAction;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectType;
@@ -15,6 +16,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -77,6 +79,27 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
+    public function validateDelete()
+    {
+        $this->readObjects();
+
+        if ($this->getObjects() === []) {
+            throw new UserInputException('objectIDs');
+        }
+
+        foreach ($this->getObjects() as $response) {
+            $comment = $response->getComment();
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
+            $processor = $objectType->getProcessor();
+            if (!$processor->canDeleteResponse($response->getDecoratedObject())) {
+                throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function delete()
     {
         if (empty($this->objects)) {
@@ -102,7 +125,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         // update counters
         /** @var ICommentManager[] $processors */
-        $processors = $responseIDs = $updateComments = [];
+        $processors = $responseIDs = [];
         foreach ($this->getObjects() as $response) {
             $objectTypeID = $comments[$response->commentID]->objectTypeID;
 
@@ -115,12 +138,6 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
             if (!$ignoreCounters && !$response->isDisabled) {
                 $processors[$objectTypeID]->updateCounter($comments[$response->commentID]->objectID, -1);
-
-                if (!isset($updateComments[$response->commentID])) {
-                    $updateComments[$response->commentID] = 0;
-                }
-
-                $updateComments[$response->commentID]++;
             }
         }
 
@@ -132,11 +149,9 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             foreach ($comments as $comment) {
                 $commentEditor = new CommentEditor($comment);
                 $commentEditor->updateResponseIDs();
-                if (isset($updateComments[$comment->commentID])) {
-                    $commentEditor->updateCounters([
-                        'responses' => -1 * $updateComments[$comment->commentID],
-                    ]);
-                }
+                $commentEditor->updateUnfilteredResponseIDs();
+                $commentEditor->updateResponses();
+                $commentEditor->updateUnfilteredResponses();
             }
         }
 
@@ -197,7 +212,6 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->readInteger('commentID', false, 'data');
         $this->readInteger('lastResponseTime', false, 'data');
         $this->readInteger('lastResponseID', true, 'data');
-        $this->readBoolean('loadAllResponses', true, 'data');
 
         $this->comment = new Comment($this->parameters['data']['commentID']);
         if (!$this->comment->commentID) {
@@ -242,9 +256,6 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         if (!$commentCanModerate) {
             $responseList->getConditionBuilder()->add("comment_response.isDisabled = ?", [0]);
         }
-        if (!$this->parameters['data']['loadAllResponses']) {
-            $responseList->sqlLimit = 50;
-        }
         $responseList->readObjects();
 
         $lastResponseTime = $lastResponseID = 0;
@@ -288,10 +299,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     {
         $this->response = $this->getSingleObject();
 
-        // validate object type id
-        $objectType = $this->validateObjectType();
-
-        // validate object id and permissions
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->response->getComment()->objectTypeID);
         $this->commentProcessor = $objectType->getProcessor();
         if (!$this->commentProcessor->canEditResponse($this->response->getDecoratedObject())) {
             throw new PermissionDeniedException();
@@ -454,5 +462,61 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         $this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment.response', $objectID);
 
         return $this->htmlInputProcessor;
+    }
+
+    /**
+     * @throws  PermissionDeniedException
+     * @throws  UserInputException
+     * @since   6.0
+     */
+    public function validateEnable(): void
+    {
+        $this->readObjects();
+
+        if ($this->getObjects() === []) {
+            throw new UserInputException('objectIDs');
+        }
+
+        foreach ($this->getObjects() as $response) {
+            if (!$response->isDisabled) {
+                throw new UserInputException('objectIDs');
+            }
+
+            $comment = $response->getComment();
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID);
+            $processor = $objectType->getProcessor();
+            if (!$processor->canModerate($objectType->objectTypeID, $comment->objectID)) {
+                throw new PermissionDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @since 6.0
+     */
+    public function enable(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
+        if (empty($this->objects)) {
+            return;
+        }
+
+        foreach ($this->getObjects() as $response) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectType($response->getComment()->objectTypeID);
+
+            (new CommentAction([], 'triggerPublicationResponse', [
+                'commentProcessor' => $objectType->getProcessor(),
+                'objectTypeID' => $objectType->objectTypeID,
+                'responses' => [$response->getDecoratedObject()],
+            ]))->executeAction();
+        }
+
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+            'com.woltlab.wcf.comment.response',
+            $this->getObjectIDs()
+        );
     }
 }

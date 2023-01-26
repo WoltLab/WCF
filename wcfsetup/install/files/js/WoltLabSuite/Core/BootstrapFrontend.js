@@ -84,6 +84,12 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-reaction-summary", () => {
             void new Promise((resolve_2, reject_2) => { require(["./Ui/Reaction/SummaryDetails"], resolve_2, reject_2); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment", () => {
+            void new Promise((resolve_3, reject_3) => { require(["./Component/Comment/woltlab-core-comment"], resolve_3, reject_3); }).then(tslib_1.__importStar);
+        });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-comment-response", () => {
+            void new Promise((resolve_4, reject_4) => { require(["./Component/Comment/Response/woltlab-core-comment-response"], resolve_4, reject_4); }).then(tslib_1.__importStar);
+        });
     }
     exports.setup = setup;
 });

@@ -79,9 +79,13 @@ class RecaptchaHandler implements ICaptchaHandler
     {
         if (isset($_POST['recaptcha-type'])) {
             $this->challenge = $_POST['recaptcha-type'];
+        } else if (isset($_POST['parameters']['recaptcha-type'])) {
+            $this->challenge = $_POST['parameters']['recaptcha-type'];
         }
         if (isset($_POST['g-recaptcha-response'])) {
             $this->response = $_POST['g-recaptcha-response'];
+        } else if (isset($_POST['parameters']['g-recaptcha-response'])) {
+            $this->response = $_POST['parameters']['g-recaptcha-response'];
         }
     }
 

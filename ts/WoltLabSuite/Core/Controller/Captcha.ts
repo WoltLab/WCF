@@ -7,6 +7,8 @@
  * @module  WoltLabSuite/Core/Controller/Captcha
  */
 
+import type WoltlabCoreDialogElement from "../Element/woltlab-core-dialog";
+
 type CallbackCaptcha = () => unknown;
 
 const _captchas = new Map<string, CallbackCaptcha>();
@@ -57,6 +59,49 @@ const ControllerCaptcha = {
     }
 
     return _captchas.get(captchaId)!();
+  },
+
+  setupDialog(dialog: WoltlabCoreDialogElement, captchaId: string): Promise<ArbitraryObject> {
+    let captchaData: Promise<ArbitraryObject> | ArbitraryObject | undefined = undefined;
+    dialog.addEventListener("validate", (event) => {
+      if (ControllerCaptcha.has(captchaId)) {
+        captchaData = ControllerCaptcha.getData(captchaId) as Promise<ArbitraryObject> | ArbitraryObject;
+        ControllerCaptcha.delete(captchaId);
+
+        if (captchaData instanceof Promise) {
+          event.detail.push(
+            new Promise((resolve) => {
+              void (captchaData as Promise<ArbitraryObject>)
+                .then(() => {
+                  resolve(true);
+                })
+                .catch(() => {
+                  resolve(false);
+                });
+            }),
+          );
+
+          event.preventDefault();
+        }
+      }
+    });
+
+    return new Promise((resolve) => {
+      dialog.addEventListener("primary", () => {
+        if (captchaData === undefined) {
+          resolve({});
+          return;
+        }
+
+        if (captchaData instanceof Promise) {
+          void captchaData.then((data) => {
+            resolve(data);
+          });
+        } else {
+          resolve(captchaData);
+        }
+      });
+    });
   },
 };
 

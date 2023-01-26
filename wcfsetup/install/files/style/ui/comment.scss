@@ -1,206 +1,267 @@
 .commentList {
-	> li {
-		&:hover {
-			background-color: transparent;
+	display: flex;
+	flex-direction: column;
+	padding: 10px 0;
+	row-gap: 10px;
+}
 
-			.buttonGroupNavigation {
-				opacity: 0;
-			}
-		}
+.commentList__item:not(:first-child) {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 10px;
+}
 
-		&.jsCommentAdd {
-			padding-right: 0;
-		}
+.comment {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	row-gap: 10px;
+}
+
+.comment__header {
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas:
+		"avatar author status menu"
+		"avatar date status menu";
+	grid-template-columns: min-content 1fr min-content min-content;
+}
+
+.comment__footer {
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas: "reactions buttons";
+	grid-template-columns: 1fr min-content;
+}
+
+.comment__avatar {
+	align-self: center;
+	grid-area: avatar;
+}
+
+.comment__author {
+	align-self: end;
+	display: flex;
+	grid-area: author;
+}
+
+.comment__author__link {
+	color: inherit;
+}
+
+.comment__date {
+	display: flex;
+	grid-area: date;
+}
+
+.comment__permalink {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+}
+
+.comment__status {
+    align-self: start;
+    column-gap: 5px;
+	display: flex;
+	grid-area: status;
+    padding-top: 2px
+}
+
+.comment__menu {
+	align-self: start;
+	grid-area: menu;
+}
+
+.comment__reactions {
+	align-self: center;
+	grid-area: reactions;
+}
+
+.comment__buttons {
+	grid-area: buttons;
+	display: flex;
+	gap: 10px;
+}
+
+.commentAdd {
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas: "avatar content";
+	grid-template-columns: min-content 1fr;
+	padding: 10px;
+}
+
+.commentAdd__avatar {
+	grid-area: avatar;
+}
+
+.commentAdd__content {
+	grid-area: content;
+}
+
+.commentAdd__placeholder {
+	display: none;
+}
+
+.commentAdd__content--collapsed {
+	overflow: hidden;
+	position: relative;
+
+	.commentAdd__placeholder {
+		align-items: center;
+		background-color: var(--wcfSidebarBackground);
+		column-gap: 10px;
+		color: var(--wcfSidebarText);
+		display: flex;
+		padding: 10px 20px;
+		width: 100%;
 	}
 
-	.commentContent {
-		&:hover {
-			.buttonGroupNavigation {
-				opacity: 1;
-			}
-		}
-
-		+ .commentOptionContainer {
-			.commentResponseAdd {
-				border-top: 1px solid var(--wcfContentBorderInner);
-				padding-top: 20px;
-				margin-top: 20px;
-			}
-		}
-
-		.wcfLikeCounter {
-			@include wcfFontSmall;
-		}
-
-		> .userMessage {
-			margin-top: 10px;
-			padding-bottom: 5px;
-
-			/* slightly indent code and quote boxes at the root of the
-			   message container, allows some space for shadows */
-			> .codeBox,
-			> .quoteBox {
-				margin-left: 5px;
-				margin-right: 5px;
-			}
-		}
+	.commentAdd__editor {
+		left: 200%;
+		position: absolute;
+		top: -100%;
 	}
+}
 
-	.commentResponseList {
-		&:not(:empty) {
-			margin-top: 20px;
-		}
+.commentAdd__content--loading {
+	height: 150px;
+	position: relative;
 
-		> li {
-			&:first-child,
-			&:last-child {
-				border-color: var(--wcfContentBorderInner);
-			}
-		}
-	}
-
-	.commentOptionContainer {
-		margin-top: 10px;
-	}
-
-	.commentResponseAdd {
-		padding: 10px 20px 0 20px;
-	}
-
-	textarea + .button {
-		margin-top: 2px;
-	}
-
-	.comment[data-is-disabled="1"] .jsCommentShowAddResponse {
+	.commentAdd__editor {
 		display: none;
 	}
 
-	/* prevents the author avatar link to be stretched downwards */
-	.comment > .box48 > a:first-child {
-		align-self: flex-start;
-	}
-
-	@include screen-sm-up {
-		.jsCommentResponseAdd {
-			padding-left: 20px;
-		}
-	}
-
-	/* hide avatar on smartphones to give more room to the editor */
-	@include screen-xs {
-		.jsCommentAdd > .userAvatarImage,
-		.jsCommentResponseAdd > .userAvatarImage {
-			display: none;
-		}
-	}
-
-	/* mobile drop-down menus are sometimes cut off due to the overflow */
-	@include screen-md-down {
-		.commentContentContainer {
-			overflow: visible;
-		}
+	.commentAdd__loading {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
 	}
 }
 
-.commentListAddComment {
-	&.collapsed {
-		overflow: hidden;
-		position: relative;
+.comment__responses {
+	padding-top: 10px;
+	padding-left: 20px;
+}
 
-		.commentListAddCommentPlaceholder {
-			align-items: center;
-			background-color: var(--wcfSidebarBackground);
-			column-gap: 10px;
-			color: var(--wcfSidebarText);
-			display: flex;
-			padding: 10px 20px;
-			width: 100%;
-		}
+.commentResponseList {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
 
-		.commentListAddCommentEditorContainer {
-			left: 200%;
-			position: absolute;
-			top: -100%;
-		}
-	}
+.commentResponseList__item {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 10px;
+}
 
-	&:not(.collapsed) .commentListAddCommentPlaceholder {
+.commentResponse {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	row-gap: 10px;
+}
+
+.commentResponse__header {
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas:
+		"avatar author status menu"
+		"avatar date status menu";
+	grid-template-columns: min-content 1fr min-content min-content;
+}
+
+.commentResponse__footer {
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas: "reactions buttons";
+	grid-template-columns: 1fr min-content;
+}
+
+.commentResponse__avatar {
+	align-self: center;
+	grid-area: avatar;
+}
+
+.commentResponse__author {
+	align-self: end;
+	display: flex;
+	grid-area: author;
+}
+
+.commentResponse__author__link {
+	color: inherit;
+}
+
+.commentResponse__date {
+	display: flex;
+	grid-area: date;
+}
+
+.commentResponse__permalink {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+}
+
+.commentResponse__status {
+	align-self: start;
+    column-gap: 5px;
+	display: flex;
+	grid-area: status;
+    padding-top: 2px
+}
+
+.commentResponse__menu {
+	align-self: start;
+	grid-area: menu;
+}
+
+.commentResponse__reactions {
+	grid-area: reactions;
+}
+
+.commentResponse__buttons {
+	grid-area: buttons;
+	display: flex;
+	gap: 10px;
+}
+
+.commentResponseAdd {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	display: grid;
+	column-gap: 10px;
+	grid-template-areas: "avatar content";
+	grid-template-columns: min-content 1fr;
+	padding: 10px;
+	margin-left: 20px;
+}
+
+.commentResponseAdd__avatar {
+	grid-area: avatar;
+}
+
+.commentResponseAdd__content {
+	grid-area: content;
+}
+
+.commentResponseAdd__content--loading {
+	height: 150px;
+	position: relative;
+
+	.commentResponseAdd__editor {
 		display: none;
 	}
 
-	&.loading {
-		height: 150px;
-		position: relative;
-
-		> .commentListAddCommentEditorContainer {
-			display: none;
-		}
-
-		> .commentLoadingOverlay {
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			transform: translateX(-50%) translateY(-50%);
-		}
+	.commentResponseAdd__loading {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
 	}
 }
 
-.commentListAddCommentResponse {
-	&.loading {
-		height: 150px;
-		position: relative;
-
-		> .commentListAddCommentResponseEditorContainer {
-			display: none;
-		}
-
-		> .commentLoadingOverlay {
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			transform: translateX(-50%) translateY(-50%);
-		}
-	}
-}
-
-.commentListAddCommentEditorContainer > .jsCommentAddRequiresApproval {
-	margin-top: 0;
-}
-
-.commentResponseAdd > div > .jsCommentAddRequiresApproval {
-	margin-top: 0;
-
-	& + textarea {
-		margin-top: 20px;
-	}
-}
-
-.commentEditorContainer {
-	> .icon {
-		left: calc(50% - 24px);
-		position: relative;
-	}
-
-	~ .commentContent,
-	~ .commentOptionContainer {
-		display: none;
-	}
-}
-
-.commentResponse .commentEditorContainer {
-	~ .containerHeadline,
-	~ .userMessage,
-	~ .buttonGroupNavigation {
-		display: none;
-	}
-}
-
-.commentListAddComment,
-.commentEditorContainer {
-	.formSubmit {
-		/* reduced margin, now in sync with the container padding */
-		margin-top: 20px;
-	}
+.commentList > li:hover {
+	background-color: transparent;
 }
 
 @keyframes wcfCommentHighlight {
@@ -215,50 +276,51 @@
 	}
 }
 
-.commentPermalinkContainer,
-.commentResponsePermalinkContainer {
-	border-bottom-color: var(--wcfContentBorder) !important;
-
-	&.loading > .icon {
-		left: calc(50% - 24px);
-		position: relative;
-	}
-
-	&:not(.loading) {
-		//opacity: 0;
-	}
-
-	&.fadeIn {
-		/*opacity: 1;
-		transition: opacity .24s linear;*/
-	}
-}
-
-.comment.commentHighlightTarget .commentContent:not(.commentResponseContent),
-.commentResponse.commentHighlightTarget .commentResponseContent {
+.comment.comment__highlight__target,
+.commentResponse.comment__highlight__target {
 	animation: wcfCommentHighlight 0.96s linear;
 }
 
-.commentScrollTarget {
-	display: block;
-	height: 0;
-	position: absolute;
+@include screen-sm-up {
+	.comment__message {
+		padding-left: 42px;
+	}
+
+	.comment__footer {
+		padding-left: 42px;
+	}
+
+	.comment__responses {
+		padding-left: 42px;
+	}
+
+	.commentResponse__message {
+		padding-left: 42px;
+	}
+
+	.commentResponse__footer {
+		padding-left: 42px;
+	}
+
+	.commentResponseAdd {
+		margin-left: 42px;
+	}
 }
 
-.jsEnableComment > .invisible,
-.jsEnableResponse > .invisible {
-	display: inline;
-}
+@include screen-xs {
+	.commentAdd:not(.commentAdd--collapsed) {
+		column-gap: 0;
 
-.commentModerationDisabledComment {
-	margin: 0 -20px;
-}
+		.commentAdd__avatar {
+			display: none;
+		}
+	}
 
-/* Prevent images in comments in the sidebar box from becoming too large */
-.sidebarCommentContent {
-	img {
-		height: auto;
-		max-width: 100%;
-		max-height: 300px;
+	.commentResponseAdd {
+		column-gap: 0;
+	}
+
+	.commentResponseAdd__avatar {
+		display: none;
 	}
 }
