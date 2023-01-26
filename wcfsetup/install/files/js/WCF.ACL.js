@@ -113,8 +113,6 @@ if (COMPILER_TARGET_DEFAULT) {
 			// set elements
 			this._containerElements = {
 				aclList: $aclList,
-				denyAll: null,
-				grantAll: null,
 				permissionList: $permissionList,
 				searchInput: $searchInput
 			};
@@ -293,17 +291,6 @@ if (COMPILER_TARGET_DEFAULT) {
 				$count++;
 			}
 			
-			// add a "full access" permission if there are more than one option
-			if ($count > 1) {
-				var $listItem = $('<li class="aclFullAccess"><span>' + WCF.Language.get('wcf.acl.option.fullAccess') + '</span></li>').prependTo(this._containerElements.permissionList);
-				this._containerElements.grantAll = $('<input type="checkbox" id="grantAll_' + this._container.attr('id') + '" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
-				this._containerElements.denyAll = $('<input type="checkbox" id="denyAll_' + this._container.attr('id') + '" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
-				
-				// bind events
-				this._containerElements.grantAll.data('type', 'grant').change($.proxy(this._changeAll, this));
-				this._containerElements.denyAll.data('type', 'deny').change($.proxy(this._changeAll, this));
-			}
-			
 			if ($.getLength($structure)) {
 				for (var $categoryName in $structure) {
 					var $listItems = $structure[$categoryName];
@@ -407,25 +394,9 @@ if (COMPILER_TARGET_DEFAULT) {
 			if ($checkbox.is(':checked')) {
 				if ($type === 'deny') {
 					$('#grant' + $optionID).prop('checked', false);
-					
-					if (this._containerElements.grantAll !== null) {
-						this._containerElements.grantAll.prop('checked', false);
-					}
 				}
 				else {
 					$('#deny' + $optionID).prop('checked', false);
-					
-					if (this._containerElements.denyAll !== null) {
-						this._containerElements.denyAll.prop('checked', false);
-					}
-				}
-			}
-			else {
-				if ($type === 'deny' && this._containerElements.denyAll !== null) {
-					this._containerElements.denyAll.prop('checked', false);
-				}
-				else if ($type === 'grant' && this._containerElements.grantAll !== null) {
-					this._containerElements.grantAll.prop('checked', false);
 				}
 			}
 			
@@ -440,77 +411,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 				}
 			}, this));
-			if ($type == 'deny') {
-				if (this._containerElements.denyAll !== null) {
-					if ($allChecked) this._containerElements.denyAll.prop('checked', true);
-					else this._containerElements.denyAll.prop('checked', false);
-				}
-			}
-			else {
-				if (this._containerElements.grantAll !== null) {
-					if ($allChecked) this._containerElements.grantAll.prop('checked', true);
-					else this._containerElements.grantAll.prop('checked', false);
-				}
-			}
-		},
-		
-		/**
-		 * Toggles all options between deny and grant.
-		 *
-		 * @param        object                event
-		 */
-		_changeAll: function (event) {
-			var $checkbox = $(event.currentTarget);
-			var $type = $checkbox.data('type');
-			
-			if ($checkbox.is(':checked')) {
-				if ($type === 'deny') {
-					this._containerElements.grantAll.prop('checked', false);
-					
-					this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function (index, item) {
-						var $item = $(item);
-						
-						if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll_' + this._container.attr('id')) {
-							$item.prop('checked', true).trigger('change');
-						}
-					}, this));
-				}
-				else {
-					this._containerElements.denyAll.prop('checked', false);
-					
-					this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function (index, item) {
-						var $item = $(item);
-						
-						if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll_' + this._container.attr('id')) {
-							$item.prop('checked', true).trigger('change');
-						}
-					}, this));
-				}
-			}
-			else {
-				if ($type === 'deny') {
-					this._containerElements.grantAll.prop('checked', false);
-					
-					this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function (index, item) {
-						var $item = $(item);
-						
-						if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll_' + this._container.attr('id')) {
-							$item.prop('checked', false).trigger('change');
-						}
-					}, this));
-				}
-				else {
-					this._containerElements.denyAll.prop('checked', false);
-					
-					this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function (index, item) {
-						var $item = $(item);
-						
-						if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll_' + this._container.attr('id')) {
-							$item.prop('checked', false).trigger('change');
-						}
-					}, this));
-				}
-			}
 		},
 		
 		/**
@@ -556,20 +456,18 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._values[$type][$objectID] = {};
 			this._containerElements.permissionList.find("input[type='checkbox']").each((function (index, checkbox) {
 				var $checkbox = $(checkbox);
-				if ($checkbox.attr('id') != 'grantAll_' + this._container.attr('id') && $checkbox.attr('id') != 'denyAll_' + this._container.attr('id')) {
-					var $optionValue = ($checkbox.data('type') === 'deny') ? 0 : 1;
-					var $optionID = $checkbox.data('optionID');
+				var $optionValue = ($checkbox.data('type') === 'deny') ? 0 : 1;
+				var $optionID = $checkbox.data('optionID');
+				
+				if ($checkbox.is(':checked')) {
+					// store value
+					this._values[$type][$objectID][$optionID] = $optionValue;
 					
-					if ($checkbox.is(':checked')) {
-						// store value
-						this._values[$type][$objectID][$optionID] = $optionValue;
-						
-						// reset value afterwards
-						$checkbox.prop('checked', false);
-					}
-					else if (this._values[$type] && this._values[$type][$objectID] && this._values[$type][$objectID][$optionID] && this._values[$type][$objectID][$optionID] == $optionValue) {
-						delete this._values[$type][$objectID][$optionID];
-					}
+					// reset value afterwards
+					$checkbox.prop('checked', false);
+				}
+				else if (this._values[$type] && this._values[$type][$objectID] && this._values[$type][$objectID][$optionID] && this._values[$type][$objectID][$optionID] == $optionValue) {
+					delete this._values[$type][$objectID][$optionID];
 				}
 			}).bind(this));
 		},
@@ -641,7 +539,6 @@ else {
 		_click: function() {},
 		_select: function() {},
 		_change: function() {},
-		_changeAll: function() {},
 		_setupPermissions: function() {},
 		_savePermissions: function() {},
 		submit: function() {},
