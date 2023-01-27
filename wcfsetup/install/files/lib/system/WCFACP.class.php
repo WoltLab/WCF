@@ -23,15 +23,13 @@ class WCFACP extends WCF
 {
     /**
      * rescue mode
-     * @var bool
      */
-    protected static $inRescueMode;
+    protected static bool $inRescueMode;
 
     /**
      * URL to WCF within rescue mode
-     * @var string
      */
-    protected static $rescueModePageURL;
+    protected static string $rescueModePageURL;
 
     /** @noinspection PhpMissingParentConstructorInspection */
 
@@ -70,7 +68,7 @@ class WCFACP extends WCF
      */
     public static function inRescueMode(): bool
     {
-        if (self::$inRescueMode === null) {
+        if (!isset(self::$inRescueMode)) {
             self::$inRescueMode = false;
 
             if (\PACKAGE_ID && isset($_SERVER['HTTP_HOST'])) {
