@@ -482,7 +482,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      */
     private function savePackageUpdates(array $allNewPackages, int $packageUpdateServerID): void
     {
-        $excludedPackagesParameters = $requirementInserts = [];
+        $excludedPackagesParameters = $requirementInserts = $fromversionInserts = [];
         $sql = "INSERT INTO wcf1_package_update
                             (packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
                 VALUES      (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -613,52 +613,46 @@ final class PackageUpdateDispatcher extends SingletonFactory
             }
         }
 
-        if (!empty($requirementInserts)) {
-            $sql = "INSERT INTO wcf1_package_update_requirement
-                                (packageUpdateVersionID, package, minversion)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-            WCF::getDB()->beginTransaction();
-            foreach ($requirementInserts as $requirement) {
-                $statement->execute([
-                    $requirement['packageUpdateVersionID'],
-                    $requirement['package'],
-                    $requirement['minversion'],
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
+        $sql = "INSERT INTO wcf1_package_update_requirement
+                            (packageUpdateVersionID, package, minversion)
+                VALUES      (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        WCF::getDB()->beginTransaction();
+        foreach ($requirementInserts as $requirement) {
+            $statement->execute([
+                $requirement['packageUpdateVersionID'],
+                $requirement['package'],
+                $requirement['minversion'],
+            ]);
         }
+        WCF::getDB()->commitTransaction();
 
-        if (!empty($excludedPackagesParameters)) {
-            $sql = "INSERT INTO wcf1_package_update_exclusion
-                                (packageUpdateVersionID, excludedPackage, excludedPackageVersion)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-            WCF::getDB()->beginTransaction();
-            foreach ($excludedPackagesParameters as $excludedPackage) {
-                $statement->execute([
-                    $excludedPackage['packageUpdateVersionID'],
-                    $excludedPackage['excludedPackage'],
-                    $excludedPackage['excludedPackageVersion'],
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
+        $sql = "INSERT INTO wcf1_package_update_exclusion
+                            (packageUpdateVersionID, excludedPackage, excludedPackageVersion)
+                VALUES      (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        WCF::getDB()->beginTransaction();
+        foreach ($excludedPackagesParameters as $excludedPackage) {
+            $statement->execute([
+                $excludedPackage['packageUpdateVersionID'],
+                $excludedPackage['excludedPackage'],
+                $excludedPackage['excludedPackageVersion'],
+            ]);
         }
+        WCF::getDB()->commitTransaction();
 
-        if (!empty($fromversionInserts)) {
-            $sql = "INSERT INTO wcf1_package_update_fromversion
-                                (packageUpdateVersionID, fromversion)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-            WCF::getDB()->beginTransaction();
-            foreach ($fromversionInserts as $fromversion) {
-                $statement->execute([
-                    $fromversion['packageUpdateVersionID'],
-                    $fromversion['fromversion'],
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
+        $sql = "INSERT INTO wcf1_package_update_fromversion
+                            (packageUpdateVersionID, fromversion)
+                VALUES      (?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        WCF::getDB()->beginTransaction();
+        foreach ($fromversionInserts as $fromversion) {
+            $statement->execute([
+                $fromversion['packageUpdateVersionID'],
+                $fromversion['fromversion'],
+            ]);
         }
+        WCF::getDB()->commitTransaction();
     }
 
     /**
