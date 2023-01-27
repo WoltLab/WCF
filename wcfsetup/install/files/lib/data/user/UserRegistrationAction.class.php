@@ -16,7 +16,7 @@ class UserRegistrationAction extends UserAction
     /**
      * @inheritDoc
      */
-    protected $allowGuestAccess = ['validateEmailAddress', 'validatePassword', 'validateUsername'];
+    protected $allowGuestAccess = ['validateEmailAddress', 'validateUsername'];
 
     /**
      * Validates the validate username function.
@@ -32,16 +32,6 @@ class UserRegistrationAction extends UserAction
     public function validateValidateEmailAddress()
     {
         $this->readString('email');
-    }
-
-    /**
-     * Validates the validate password function.
-     *
-     * @deprecated 5.3
-     */
-    public function validateValidatePassword()
-    {
-        $this->readString('password');
     }
 
     /**
@@ -91,16 +81,6 @@ class UserRegistrationAction extends UserAction
             ];
         }
 
-        return [
-            'isValid' => true,
-        ];
-    }
-
-    /**
-     * @deprecated  5.3 - Always returns isValid = true.
-     */
-    public function validatePassword()
-    {
         return [
             'isValid' => true,
         ];

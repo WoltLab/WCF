@@ -847,43 +847,6 @@ WCF.User.Registration.Validation.EmailAddress = WCF.User.Registration.Validation
 });
 
 /**
- * Password validation for registration.
- * 
- * @see	WCF.User.Registration.Validation
- * @deprecated 5.3
- */
-WCF.User.Registration.Validation.Password = WCF.User.Registration.Validation.extend({
-	/**
-	 * @see	WCF.User.Registration.Validation._actionName
-	 */
-	_actionName: 'validatePassword',
-	
-	/**
-	 * @see	WCF.User.Registration.Validation._className
-	 */
-	_className: 'wcf\\data\\user\\UserRegistrationAction',
-	
-	/**
-	 * @see	WCF.User.Registration.Validation._getParameters()
-	 */
-	_getParameters: function() {
-		return {
-			password: this._element.val()
-		};
-	},
-	
-	/**
-	 * @see	WCF.User.Registration.Validation._setErrorMessages()
-	 */
-	_setErrorMessages: function() {
-		this._errorMessages = {
-			ajaxError: 'wcf.user.password.error.',
-			notEqual: WCF.Language.get('wcf.user.confirmPassword.error.notEqual')
-		};
-	}
-});
-
-/**
  * Toggles input fields for lost password form.
  */
 WCF.User.Registration.LostPassword = Class.extend({
