@@ -315,10 +315,8 @@ class WCF
 
     /**
      * Calls the show method on the given exception.
-     *
-     * @param \Throwable $e
      */
-    final public static function handleException($e)
+    final public static function handleException(\Throwable $e)
     {
         // backwards compatibility
         if ($e instanceof IPrintableException) {
