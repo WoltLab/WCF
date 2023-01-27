@@ -44,61 +44,61 @@ final class SessionHandler extends SingletonFactory
     /**
      * prevents update on shutdown
      */
-    protected bool $doNotUpdate = false;
+    private bool $doNotUpdate = false;
 
     /**
      * disables page tracking
      */
-    protected bool $disableTracking = false;
+    private bool $disableTracking = false;
 
     /**
      * group data and permissions
      * @var mixed[][]
      */
-    protected $groupData;
+    private $groupData;
 
     /**
      * true if within ACP or WCFSetup
      */
-    protected bool $isACP = false;
+    private bool $isACP = false;
 
     /**
      * language id for active user
      * @var int
      */
-    protected $languageID = 0;
+    private $languageID = 0;
 
     /**
      * @var string
      */
     private string $sessionID;
 
-    protected ?LegacySession $legacySession = null;
+    private ?LegacySession $legacySession = null;
 
     /**
      * user object
      * @var User
      */
-    protected User $user;
+    private User $user;
 
     /**
      * session variables
      * @var array
      */
-    protected $variables = [];
+    private $variables = [];
 
     /**
      * indicates if session variables changed and must be saved upon shutdown
      */
-    protected bool $variablesChanged = false;
+    private bool $variablesChanged = false;
 
-    protected bool $firstVisit = false;
+    private bool $firstVisit = false;
 
     /**
      * list of names of permissions only available for users
      * @var string[]
      */
-    protected $usersOnlyPermissions = [];
+    private $usersOnlyPermissions = [];
 
     private string $xsrfToken;
 
@@ -399,7 +399,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Initializes security token.
      */
-    protected function initSecurityToken(): void
+    private function initSecurityToken(): void
     {
         $xsrfToken = '';
         if (!empty($_COOKIE['XSRF-TOKEN'])) {
@@ -516,7 +516,7 @@ final class SessionHandler extends SingletonFactory
      * Tries to read existing session identified by the given session id. Returns whether
      * a session could be found.
      */
-    protected function getExistingSession(string $sessionID): bool
+    private function getExistingSession(string $sessionID): bool
     {
         $sql = "SELECT  *
                 FROM    wcf1_user_session
@@ -623,7 +623,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Creates a new session.
      */
-    protected function create(): void
+    private function create(): void
     {
         $this->sessionID = Hex::encode(\random_bytes(20));
 
@@ -755,7 +755,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Loads group data from cache.
      */
-    protected function loadGroupData()
+    private function loadGroupData()
     {
         if ($this->groupData !== null) {
             return;
@@ -928,7 +928,7 @@ final class SessionHandler extends SingletonFactory
      * @param User $user
      * @throws  DatabaseException
      */
-    protected function changeUserVirtual(User $user): void
+    private function changeUserVirtual(User $user): void
     {
         // We must delete the old session to not carry over any state across different users.
         $this->delete();
@@ -1275,7 +1275,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns the spider id for given user agent.
      */
-    protected function getSpiderID(string $userAgent): ?int
+    private function getSpiderID(string $userAgent): ?int
     {
         $data = SpiderCacheBuilder::getInstance()->getData(['fastLookup' => true]);
         $userAgent = \strtolower($userAgent);
