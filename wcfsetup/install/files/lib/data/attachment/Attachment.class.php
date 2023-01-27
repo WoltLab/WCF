@@ -329,15 +329,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 
     /**
      * Returns the storage path.
-     *
-     * @return  string
      */
-    public static function getStorage()
+    public static function getStorage(): string
     {
-        if (ATTACHMENT_STORAGE) {
-            return FileUtil::addTrailingSlash(ATTACHMENT_STORAGE);
-        }
-
         return WCF_DIR . 'attachments/';
     }
 
