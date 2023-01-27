@@ -23,8 +23,10 @@
 		<file>acp/images/wcfLogo.png</file>
 		<file>acp/images/wcfLogo2.svg</file>
 		<file>acp/images/wcfLogoWhite.svg</file>
+		<file>acp/install.php</file>
 		<file>acp/js/WCF.ACP.User.js</file>
 		<file>acp/js/wcombined.min.js</file>
+		<file>acp/post_install.php</file>
 		<file>acp/pre_update_com.woltlab.wcf_2.1.php</file>
 		<file>acp/rebuild_attachments_com.woltlab.wcf_2.1.4.php</file>
 		<file>acp/rebuild_comments_com.woltlab.wcf_2.1.php</file>
@@ -205,6 +207,7 @@
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</file>
 		<file>acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</file>
+		<file>acp/update_com.woltlab.wcf_5.5.9_systemId.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_boxConditions.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_boxCondtions.php</file>
 		<file>acp/update_com.woltlab.wcf_5.5_checkSystemRequirements.php</file>
@@ -420,6 +423,7 @@
 		<file>icon/folderNew.svg</file>
 		<file>icon/folderNewColored.svg</file>
 		<file>icon/folderNewInverse.svg</file>
+		<file>icon/font-awesome/v6/icons.json</file>
 		<file>icon/forbidden.svg</file>
 		<file>icon/forbiddenColored.svg</file>
 		<file>icon/forbiddenInverse.svg</file>
@@ -682,6 +686,8 @@
 		<file>images/colorPickerGradient.png</file>
 		<file>images/favicon.ico</file>
 		<file>images/favicon/corsProxy.php</file>
+		<file>images/favicon/default.favicon-32x32.png</file>
+		<file>images/grayscale-filter.svg</file>
 		<file>images/imageViewer/blank.png</file>
 		<file>images/imageViewer/menu.png</file>
 		<file>images/reaction/reactionIcon.svg</file>
@@ -1150,6 +1156,8 @@
 		<file>js/3rdParty/jquery.ui.touch-punch.js</file>
 		<file>js/3rdParty/jquery.ui.touch-punch.min.js</file>
 		<file>js/3rdParty/less.min.js</file>
+		<file>js/3rdParty/polyfill/focus-visible.LICENSE.md</file>
+		<file>js/3rdParty/polyfill/focus-visible.js</file>
 		<file>js/3rdParty/polyfill/promise.LICENSE</file>
 		<file>js/3rdParty/polyfill/promise.js</file>
 		<file>js/3rdParty/polyfill/promise.min.js</file>
@@ -1397,6 +1405,8 @@
 		<file>js/WoltLabSuite/Core/Bbcode/FromHtml.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/Parser.js</file>
 		<file>js/WoltLabSuite/Core/Bbcode/ToHtml.js</file>
+		<file>js/WoltLabSuite/Core/Component/Comment/CommentList.js</file>
+		<file>js/WoltLabSuite/Core/Component/Comment/Handler.js</file>
 		<file>js/WoltLabSuite/Core/Component/Confirmation/Delete.js</file>
 		<file>js/WoltLabSuite/Core/Component/Confirmation/Prefab.js</file>
 		<file>js/WoltLabSuite/Core/Component/Confirmation/SoftDelete.js</file>
@@ -1431,6 +1441,10 @@
 		<file>js/WoltLabSuite/Core/Template.grammar.jison</file>
 		<file>js/WoltLabSuite/Core/Template.grammar.js</file>
 		<file>js/WoltLabSuite/Core/Template/Compiler.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Comment/Add.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Comment/Edit.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Comment/Response/Add.js</file>
+		<file>js/WoltLabSuite/Core/Ui/Comment/Response/Edit.js</file>
 		<file>js/WoltLabSuite/Core/Ui/InlineEditor.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/Header/Fixed.js</file>
 		<file>js/WoltLabSuite/Core/Ui/Page/JumpToTop.js</file>
@@ -1450,6 +1464,7 @@
 		<file>js/WoltLabSuite/WebComponent/fa-brand.js</file>
 		<file>js/WoltLabSuite/WebComponent/fa-icon.js</file>
 		<file>js/WoltLabSuite/WebComponent/fa-metadata.js</file>
+		<file>js/WoltLabSuite/WebComponent/google-maps.js</file>
 		<file>js/WoltLabSuite/WebComponent/reaction-summary.js</file>
 		<file>js/WoltLabSuite/WebComponent/woltlab-core-date-time.js</file>
 		<file>js/WoltLabSuite/WebComponent/woltlab-core-time.js</file>
@@ -1505,6 +1520,7 @@
 		<file>lib/action/ClipboardProxyAction.class.php</file>
 		<file>lib/action/GravatarDownloadAction.class.php</file>
 		<file>lib/action/PollAction.class.php</file>
+		<file>lib/bootstrap.php</file>
 		<file>lib/data/DatabaseObjectAction.class.php</file>
 		<file>lib/data/EditableCachedObject.class.php</file>
 		<file>lib/data/EditableObject.class.php</file>
@@ -1597,6 +1613,11 @@
 		<file>lib/page/PrivacyPolicyPage.class.php</file>
 		<file>lib/page/util/InlineCalendar.class.php</file>
 		<file>lib/system/api/bin/pscss.bat</file>
+		<file>lib/system/api/chrisjean/php-ico/README.md</file>
+		<file>lib/system/api/chrisjean/php-ico/changelog</file>
+		<file>lib/system/api/chrisjean/php-ico/class-php-ico.php</file>
+		<file>lib/system/api/chrisjean/php-ico/composer.json</file>
+		<file>lib/system/api/chrisjean/php-ico/license.txt</file>
 		<file>lib/system/api/composer/include_paths.php</file>
 		<file>lib/system/api/container-interop/container-interop/.gitignore</file>
 		<file>lib/system/api/container-interop/container-interop/LICENSE</file>
@@ -1644,20 +1665,31 @@
 		<file>lib/system/api/cuyz/valinor/src/Definition/CombinedAttributes.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/DoctrineAnnotations.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/EmptyAttributes.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidParameterIndex.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/InvalidReflectionParameter.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/MethodNotFound.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/ParameterNotFound.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Definition/Exception/PropertyNotFound.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Cache/Compiler/Exception/IncompatibleAttributes.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/CombinedAttributesRepository.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Definition/Repository/Reflection/DoctrineAnnotationsRepository.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/BackwardCompatibilityDateTimeConstructor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/CannotParseToBackwardCompatibilityDateTime.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/MissingMethodArgument.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/MissingPropertyArgument.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/SourceIsNotAnArray.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Exception/TooManyObjectBuilderFactoryAttributes.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/Factory/AttributeObjectBuilderFactory.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Object/FilledArguments.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Source/Exception/JsonExtensionNotEnabled.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Builder/ShellVisitorNodeBuilder.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/CannotGetParentOfRootShell.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/DuplicatedNodeChild.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/InvalidEnumValue.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/NewShellTypeDoesNotMatch.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/ShapedArrayElementMissing.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/ShellHasNoValue.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Exception/UnresolvableShellType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/Formatter/PlaceHolderMessageFormatter.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/MessagesFlattener.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Message/ThrowableMessage.php</file>
@@ -1665,6 +1697,12 @@
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/AttributeShellVisitor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/Tree/Visitor/ShellVisitor.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Mapper/TreeMapperContainer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToAccessOutboundToken.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/TryingToReadFinishedStream.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Exception/Stream/WrongTokenType.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Factory/Specifications/HandleClassGenericSpecification.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/ClassGenericLexer.php</file>
+		<file>lib/system/api/cuyz/valinor/src/Type/Parser/Lexer/Token/GenericClassNameToken.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveObjectType.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/CannotResolveTypeFromUnion.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Type/Resolver/Exception/UnionTypeDoesNotAllowNull.php</file>
@@ -2751,6 +2789,7 @@
 		<file>lib/system/template/plugin/EncodeJSONModifierTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/FetchCompilerTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/IconCompilerTemplatePlugin.class.php</file>
+		<file>lib/system/template/plugin/SmallpagesFunctionTemplatePlugin.class.php</file>
 		<file>lib/system/template/plugin/StaticlangTemplatePluginCompiler.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginBlockLink.class.php</file>
 		<file>lib/system/template/plugin/TemplatePluginCompilerAppend.class.php</file>
