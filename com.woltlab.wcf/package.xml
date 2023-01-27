@@ -55,6 +55,7 @@
 tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_6.0_checkSystemRequirements.php \
 	acp/update_com.woltlab.wcf_6.0_checkCache.php \
+	acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php \
 	acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php \
 	acp/database/update_com.woltlab.wcf_6.0_pre.php \
 	acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php
@@ -64,6 +65,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!-- Checks that need to happen before the upgrade starts. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkSystemRequirements.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkCache.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkAttachmentStorage.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkForMultiDomainSetup.php</instruction>
 		<!--instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_checkUpdateServers.php</instruction-->
 
