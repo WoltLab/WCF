@@ -327,14 +327,12 @@ class WCF
             exit;
         }
 
-        if (\ob_get_level()) {
-            // discard any output generated before the exception occurred, prevents exception
-            // being hidden inside HTML elements and therefore not visible in browser output
-            //
-            // ob_get_level() can return values > 1, if the PHP setting `output_buffering` is on
-            while (\ob_get_level()) {
-                \ob_end_clean();
-            }
+        // discard any output generated before the exception occurred, prevents exception
+        // being hidden inside HTML elements and therefore not visible in browser output
+        //
+        // ob_get_level() can return values > 1, if the PHP setting `output_buffering` is on
+        while (\ob_get_level()) {
+            \ob_end_clean();
         }
 
         @\header('HTTP/1.1 500 Internal Server Error');
