@@ -99,6 +99,8 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<instruction type="userMenu" />
 		<instruction type="userOption" />
 
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.0_favicon.php</instruction>
+
 		<!-- Clean Up. -->
 		<instruction type="fileDelete" />
 		<instruction type="templateDelete" />
