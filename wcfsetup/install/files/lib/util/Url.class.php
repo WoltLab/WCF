@@ -165,6 +165,8 @@ final class Url implements \ArrayAccess
      * optional wildcard prefix (`*.`).
      *
      * @since 5.4
+     * @param string[] $hostnames
+     * @return callable(string):bool
      */
     public static function getHostnameMatcher(array $hostnames): callable
     {
@@ -187,7 +189,7 @@ final class Url implements \ArrayAccess
             }
         }
 
-        return static function ($hostname) use ($hosts) {
+        return static function (string $hostname) use ($hosts): bool {
             static $validHosts = [];
 
             $hostname = \mb_strtolower($hostname);
