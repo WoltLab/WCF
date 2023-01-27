@@ -86,7 +86,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
         $this->depth = $depth;
     }
 
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
@@ -101,10 +101,8 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
 
     /**
      * Returns true if this element is the last sibling.
-     *
-     * @return        bool
      */
-    public function isLastSibling()
+    public function isLastSibling(): bool
     {
         foreach ($this->getParent() as $key => $child) {
             if ($child === $this) {
@@ -117,10 +115,8 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
 
     /**
      * Returns the number of open parent nodes.
-     *
-     * @return        int
      */
-    public function getOpenParentNodes()
+    public function getOpenParentNodes(): int
     {
         $element = $this;
         $i = 0;
@@ -136,7 +132,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -144,7 +140,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->children[$this->position]);
     }
@@ -152,7 +148,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -176,7 +172,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function getChildren()
+    public function getChildren(): \RecursiveIterator
     {
         return $this->children[$this->position];
     }
@@ -184,7 +180,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return \count($this->children) > 0;
     }
