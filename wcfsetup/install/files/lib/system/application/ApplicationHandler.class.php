@@ -35,7 +35,7 @@ class ApplicationHandler extends SingletonFactory
      * list of page URLs
      * @var string[]
      */
-    protected $pageURLs = [];
+    protected array $pageURLs = [];
 
     /**
      * Initializes cache.
@@ -50,10 +50,9 @@ class ApplicationHandler extends SingletonFactory
      * primary application if the abbreviation is `wcf` or `null` if no such
      * application exists.
      *
-     * @param string $abbreviation package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
-     * @return  Application|null
+     * @param $abbreviation package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
      */
-    public function getApplication($abbreviation)
+    public function getApplication(string $abbreviation): ?Application
     {
         if (isset($this->cache['abbreviation'][$abbreviation])) {
             $packageID = $this->cache['abbreviation'][$abbreviation];
@@ -70,11 +69,9 @@ class ApplicationHandler extends SingletonFactory
      * Returns an application delivered by the package with the given id or `null`
      * if no such application exists.
      *
-     * @param int $packageID package id
-     * @return  Application|null    application object
      * @since   3.0
      */
-    public function getApplicationByID($packageID)
+    public function getApplicationByID(int $packageID): ?Application
     {
         return $this->cache['application'][$packageID] ?? null;
     }
@@ -82,20 +79,16 @@ class ApplicationHandler extends SingletonFactory
     /**
      * Returns pseudo-application representing WCF used for special cases,
      * e.g. cross-domain files requestable through the webserver.
-     *
-     * @return  Application
      */
-    public function getWCF()
+    public function getWCF(): Application
     {
         return $this->getApplicationByID(1);
     }
 
     /**
      * Returns the currently active application.
-     *
-     * @return  Application
      */
-    public function getActiveApplication()
+    public function getActiveApplication(): Application
     {
         // work-around during WCFSetup
         if (!PACKAGE_ID) {
@@ -139,7 +132,7 @@ class ApplicationHandler extends SingletonFactory
      *
      * @return  Application[]
      */
-    public function getDependentApplications()
+    public function getDependentApplications(): array
     {
         $applications = $this->getApplications();
         foreach ($applications as $key => $application) {
@@ -157,18 +150,15 @@ class ApplicationHandler extends SingletonFactory
      *
      * @return  Application[]
      */
-    public function getApplications()
+    public function getApplications(): array
     {
         return $this->cache['application'];
     }
 
     /**
      * Returns abbreviation for a given package id or `null` if application is unknown.
-     *
-     * @param int $packageID unique package id
-     * @return  string|null
      */
-    public function getAbbreviation($packageID)
+    public function getAbbreviation(int $packageID): ?string
     {
         foreach ($this->cache['abbreviation'] as $abbreviation => $applicationID) {
             if ($packageID == $applicationID) {
@@ -185,18 +175,15 @@ class ApplicationHandler extends SingletonFactory
      * @return      string[]
      * @since       3.1
      */
-    public function getAbbreviations()
+    public function getAbbreviations(): array
     {
         return \array_keys($this->cache['abbreviation']);
     }
 
     /**
      * Returns true if given $url is an internal URL.
-     *
-     * @param string $url
-     * @return  bool
      */
-    public function isInternalURL($url)
+    public function isInternalURL(string $url): bool
     {
         if (empty($this->pageURLs)) {
             $internalHostnames = ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)));
@@ -220,11 +207,10 @@ class ApplicationHandler extends SingletonFactory
     /**
      * Always returns false.
      *
-     * @return      bool
      * @since       3.1
      * @deprecated  5.4
      */
-    public function isMultiDomainSetup()
+    public function isMultiDomainSetup(): bool
     {
         return false;
     }
@@ -233,7 +219,7 @@ class ApplicationHandler extends SingletonFactory
      * @since 5.2
      * @deprecated 5.5 - This function is a noop. The 'active' status is determined live.
      */
-    public function rebuildActiveApplication()
+    public function rebuildActiveApplication(): void
     {
     }
 
@@ -248,7 +234,7 @@ class ApplicationHandler extends SingletonFactory
     /**
      * Rebuilds cookie domain/path for all applications.
      */
-    public static function rebuild()
+    public static function rebuild(): void
     {
         $applicationList = new ApplicationList();
         $applicationList->readObjects();
