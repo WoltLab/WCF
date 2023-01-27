@@ -356,7 +356,7 @@ class WCF
      * @param int $line
      * @throws  ErrorException
      */
-    final public static function handleError($severity, $message, $file, $line)
+    final public static function handleError($severity, $message, $file, $line): void
     {
         // this is necessary for the shut-up operator
         if (!(\error_reporting() & $severity)) {
@@ -369,7 +369,7 @@ class WCF
     /**
      * Loads the database configuration and creates a new connection to the database.
      */
-    protected function initDB()
+    protected function initDB(): void
     {
         // get configuration
         $dbHost = $dbUser = $dbPassword = $dbName = '';
@@ -393,7 +393,7 @@ class WCF
     /**
      * Loads the options file, automatically created if not exists.
      */
-    protected function loadOptions()
+    protected function loadOptions(): void
     {
         $this->defineLegacyOptions();
 
@@ -557,7 +557,7 @@ class WCF
     /**
      * Starts the session system.
      */
-    protected function initSession()
+    protected function initSession(): void
     {
         $factory = new SessionFactory();
         $factory->load();
@@ -568,7 +568,7 @@ class WCF
     /**
      * Initialises the language engine.
      */
-    protected function initLanguage()
+    protected function initLanguage(): void
     {
         if (isset($_GET['l']) && !self::getUser()->userID) {
             self::getSession()->setLanguageID(\intval($_GET['l']));
@@ -581,7 +581,7 @@ class WCF
     /**
      * Initialises the template engine.
      */
-    protected function initTPL()
+    protected function initTPL(): void
     {
         self::$tplObj = TemplateEngine::getInstance();
         self::getTPL()->setLanguageID(self::getLanguage()->languageID);
@@ -593,7 +593,7 @@ class WCF
     /**
      * Initializes the user's style.
      */
-    protected function initStyle()
+    protected function initStyle(): void
     {
         if (self::getSession()->getUser()->userID) {
             $styleID = self::getSession()->getUser()->styleID ?: 0;
@@ -608,7 +608,7 @@ class WCF
     /**
      * Initializes applications.
      */
-    protected function initApplications()
+    protected function initApplications(): void
     {
         // step 1) load all applications
         $loadedApplications = [];
@@ -656,12 +656,10 @@ class WCF
     /**
      * Loads an application.
      *
-     * @param Application $application
-     * @param bool $isDependentApplication
      * @return  IApplication
      * @throws  SystemException
      */
-    protected function loadApplication(Application $application, $isDependentApplication = false)
+    protected function loadApplication(Application $application, bool $isDependentApplication = false)
     {
         $package = PackageCache::getInstance()->getPackage($application->packageID);
         // package cache might be outdated
@@ -749,7 +747,6 @@ class WCF
     /**
      * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
      *
-     * @param Application $application
      * @return  IApplication
      */
     public static function getApplicationObject(Application $application)
@@ -760,20 +757,17 @@ class WCF
     /**
      * Returns the invoked application.
      *
-     * @return      Application
      * @since   3.1
      */
-    public static function getActiveApplication()
+    public static function getActiveApplication(): Application
     {
         return ApplicationHandler::getInstance()->getActiveApplication();
     }
 
     /**
      * Loads an application on runtime, do not use this outside the package installation.
-     *
-     * @param int $packageID
      */
-    public static function loadRuntimeApplication($packageID)
+    public static function loadRuntimeApplication(int $packageID): void
     {
         $package = new Package($packageID);
         $application = new Application($packageID);
@@ -788,7 +782,7 @@ class WCF
     /**
      * Initializes core object cache.
      */
-    protected function initCoreObjects()
+    protected function initCoreObjects(): void
     {
         // ignore core objects if installing WCF
         if (PACKAGE_ID == 0) {
@@ -801,7 +795,7 @@ class WCF
     /**
      * Assigns some default variables to the template engine.
      */
-    protected function assignDefaultTemplateVariables()
+    protected function assignDefaultTemplateVariables(): void
     {
         $wcf = $this;
 
@@ -835,11 +829,10 @@ class WCF
     /**
      * Wrapper for the getter methods of this class.
      *
-     * @param string $name
      * @return  mixed       value
      * @throws  SystemException
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
@@ -851,20 +844,16 @@ class WCF
 
     /**
      * Returns true if current application (WCF) is treated as active and was invoked directly.
-     *
-     * @return  bool
      */
-    public function isActiveApplication()
+    public function isActiveApplication(): bool
     {
         return ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1;
     }
 
     /**
      * Changes the active language.
-     *
-     * @param int $languageID
      */
-    final public static function setLanguage($languageID)
+    final public static function setLanguage(int $languageID): void
     {
         if (!$languageID || LanguageFactory::getInstance()->getLanguage($languageID) === null) {
             $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
@@ -883,10 +872,9 @@ class WCF
     /**
      * Includes the required util or exception classes automatically.
      *
-     * @param string $className
      * @see     spl_autoload_register()
      */
-    final public static function autoload($className)
+    final public static function autoload(string $className): void
     {
         $namespaces = \explode('\\', $className);
         if (isset($namespaces[1])) {
@@ -911,7 +899,7 @@ class WCF
     /**
      * @inheritDoc
      */
-    final public function __call($name, array $arguments)
+    final public function __call(string $name, array $arguments)
     {
         // bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020
         if (!\method_exists($this, $name)) {
@@ -924,12 +912,11 @@ class WCF
     /**
      * Returns dynamically loaded core objects.
      *
-     * @param string $name
      * @param array $arguments
      * @return  object
      * @throws  SystemException
      */
-    final public static function __callStatic($name, array $arguments)
+    final public static function __callStatic(string $name, array $arguments)
     {
         $className = \preg_replace('~^get~', '', $name);
 
@@ -956,21 +943,17 @@ class WCF
     /**
      * Searches for cached core object definition.
      *
-     * @param string $className
      * @return  string|null
      */
-    final protected static function getCoreObject($className)
+    final protected static function getCoreObject(string $className)
     {
         return self::$coreObjectCache[$className] ?? null;
     }
 
     /**
      * Returns true if the debug mode is enabled, otherwise false.
-     *
-     * @param bool $ignoreACP
-     * @return  bool
      */
-    public static function debugModeIsEnabled($ignoreACP = false)
+    public static function debugModeIsEnabled(bool $ignoreACP = false): bool
     {
         // ACP override
         if (!$ignoreACP && self::$overrideDebugMode) {
@@ -984,10 +967,8 @@ class WCF
 
     /**
      * Returns true if benchmarking is enabled, otherwise false.
-     *
-     * @return  bool
      */
-    public static function benchmarkIsEnabled()
+    public static function benchmarkIsEnabled(): bool
     {
         // benchmarking is enabled by default
         if (!\defined('ENABLE_BENCHMARK') || ENABLE_BENCHMARK) {
@@ -999,11 +980,8 @@ class WCF
 
     /**
      * Returns domain path for given application.
-     *
-     * @param string $abbreviation
-     * @return  string
      */
-    public static function getPath($abbreviation = 'wcf')
+    public static function getPath(string $abbreviation = 'wcf'): string
     {
         // workaround during WCFSetup
         if (!PACKAGE_ID) {
@@ -1020,7 +998,7 @@ class WCF
     /**
      * @deprecated 6.0 - This was a workaround for multi-domain setups.
      */
-    public static function getActivePath()
+    public static function getActivePath(): string
     {
         if (!PACKAGE_ID) {
             return self::getPath();
@@ -1036,17 +1014,15 @@ class WCF
     /**
      * @deprecated 5.5 - Put a '#' followed by the fragment as the anchor's href. Make sure to |rawurlencode any variables that may contain special characters.
      */
-    public function getAnchor($fragment)
+    public function getAnchor($fragment): string
     {
         return StringUtil::encodeHTML(self::getRequestURI() . '#' . $fragment);
     }
 
     /**
      * Returns the currently active page or null if unknown.
-     *
-     * @return  Page|null
      */
-    public static function getActivePage()
+    public static function getActivePage(): ?Page
     {
         if (self::getActiveRequest() === null) {
             return null;
@@ -1066,20 +1042,16 @@ class WCF
 
     /**
      * Returns the currently active request.
-     *
-     * @return Request
      */
-    public static function getActiveRequest()
+    public static function getActiveRequest(): ?Request
     {
         return RequestHandler::getInstance()->getActiveRequest();
     }
 
     /**
      * Returns the URI of the current page.
-     *
-     * @return  string
      */
-    public static function getRequestURI()
+    public static function getRequestURI(): string
     {
         return \preg_replace(
             '~^(https?://[^/]+)(?:/.*)?$~',
@@ -1090,10 +1062,8 @@ class WCF
 
     /**
      * Resets Zend Opcache cache if installed and enabled.
-     *
-     * @param string $script
      */
-    public static function resetZendOpcache($script = '')
+    public static function resetZendOpcache(string $script = ''): void
     {
         if (self::$zendOpcacheEnabled === null) {
             self::$zendOpcacheEnabled = false;
@@ -1114,10 +1084,8 @@ class WCF
 
     /**
      * Returns style handler.
-     *
-     * @return  StyleHandler
      */
-    public function getStyleHandler()
+    public function getStyleHandler(): StyleHandler
     {
         return StyleHandler::getInstance();
     }
@@ -1125,20 +1093,17 @@ class WCF
     /**
      * Returns box handler.
      *
-     * @return  BoxHandler
      * @since   3.0
      */
-    public function getBoxHandler()
+    public function getBoxHandler(): BoxHandler
     {
         return BoxHandler::getInstance();
     }
 
     /**
      * Returns number of available updates.
-     *
-     * @return  int
      */
-    public function getAvailableUpdates()
+    public function getAvailableUpdates(): int
     {
         $data = PackageUpdateCacheBuilder::getInstance()->getData();
 
@@ -1147,10 +1112,8 @@ class WCF
 
     /**
      * Returns a 8 character prefix for editor autosave.
-     *
-     * @return  string
      */
-    public function getAutosavePrefix()
+    public function getAutosavePrefix(): string
     {
         return \substr(\sha1(\preg_replace('~^https~', 'http', self::getPath())), 0, 8);
     }
@@ -1158,7 +1121,7 @@ class WCF
     /**
      * @deprecated 6.0 Use ActiveStyle::getRelativeFavicon() directly.
      */
-    public function getFavicon()
+    public function getFavicon(): string
     {
         $favicon = StyleHandler::getInstance()->getStyle()->getRelativeFavicon();
 
@@ -1168,7 +1131,7 @@ class WCF
     /**
      * @deprecated 6.0 This method always returns true.
      */
-    public function useDesktopNotifications()
+    public function useDesktopNotifications(): bool
     {
         return true;
     }
@@ -1198,10 +1161,8 @@ class WCF
 
     /**
      * Returns true if currently active request represents the landing page.
-     *
-     * @return  bool
      */
-    public static function isLandingPage()
+    public static function isLandingPage(): bool
     {
         if (self::getActiveRequest() === null) {
             return false;
@@ -1215,7 +1176,7 @@ class WCF
      *
      * @throws  \RuntimeException   if any relevant file or directory is not writable
      */
-    public static function checkWritability()
+    public static function checkWritability(): void
     {
         $nonWritablePaths = [];
 

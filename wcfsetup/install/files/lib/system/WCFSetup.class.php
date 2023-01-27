@@ -12,6 +12,7 @@ use wcf\data\package\Package;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cache\builder\LanguageCacheBuilder;
+use wcf\system\database\Database;
 use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\database\util\SQLParser;
@@ -101,7 +102,7 @@ final class WCFSetup extends WCF
     /**
      * Sets the status of the developer mode.
      */
-    protected static function getDeveloperMode()
+    protected static function getDeveloperMode(): void
     {
         if (isset($_GET['dev'])) {
             self::$developerMode = \intval($_GET['dev']);
@@ -113,7 +114,7 @@ final class WCFSetup extends WCF
     /**
      * Sets the selected language.
      */
-    protected static function getLanguageSelection()
+    protected static function getLanguageSelection(): void
     {
         self::$availableLanguages = self::getAvailableLanguages();
 
@@ -130,7 +131,7 @@ final class WCFSetup extends WCF
     /**
      * Initialises the language engine.
      */
-    protected function initLanguage()
+    protected function initLanguage(): void
     {
         self::$languageObj = new SetupLanguage(null, ['languageCode' => self::$selectedLanguageCode]);
     }
@@ -138,7 +139,7 @@ final class WCFSetup extends WCF
     /**
      * Initialises the template engine.
      */
-    protected function initTPL()
+    protected function initTPL(): void
     {
         self::$tplObj = SetupTemplateEngine::getInstance();
         self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
@@ -168,7 +169,7 @@ final class WCFSetup extends WCF
      *
      * @return  string[]
      */
-    protected static function getAvailableLanguages()
+    protected static function getAvailableLanguages(): array
     {
         $languages = [];
         foreach (\glob(TMP_DIR . 'setup/lang/*.xml') as $file) {
@@ -189,7 +190,7 @@ final class WCFSetup extends WCF
     /**
      * Calculates the current state of the progress bar.
      */
-    protected function calcProgress(int $currentStep)
+    protected function calcProgress(int $currentStep): void
     {
         $lastStep = \intval(\file_get_contents(\TMP_DIR . 'lastStep'));
         if ($lastStep > $currentStep) {
@@ -209,7 +210,7 @@ final class WCFSetup extends WCF
     /**
      * Throws an exception if it appears that the 'unzipFiles' step already ran.
      */
-    protected function assertNotUnzipped()
+    protected function assertNotUnzipped(): void
     {
         if (
             \is_file(INSTALL_SCRIPT_DIR . 'lib/system/WCF.class.php')
@@ -441,10 +442,8 @@ final class WCFSetup extends WCF
 
     /**
      * Returns true if memory_limit is set to at least 128 MB
-     *
-     * @return  bool
      */
-    protected function compareMemoryLimit()
+    protected function compareMemoryLimit(): bool
     {
         $memoryLimit = \ini_get('memory_limit');
 
@@ -669,10 +668,9 @@ final class WCFSetup extends WCF
      * Checks if in the chosen database are tables in conflict with the wcf tables
      * which will be created in the next step.
      *
-     * @param \wcf\system\database\Database $db
-     * @return  string[]    list of already existing tables
+     * @return  list<string>    list of already existing tables
      */
-    protected function getConflictedTables($db)
+    protected function getConflictedTables(Database $db): array
     {
         // get content of the sql structure file
         $sql = \file_get_contents(TMP_DIR . 'setup/db/install.sql');

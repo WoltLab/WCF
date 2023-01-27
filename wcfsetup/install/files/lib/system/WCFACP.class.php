@@ -67,10 +67,8 @@ class WCFACP extends WCF
 
     /**
      * Returns true if ACP is currently in rescue mode.
-     *
-     * @return  bool
      */
-    public static function inRescueMode()
+    public static function inRescueMode(): bool
     {
         if (self::$inRescueMode === null) {
             self::$inRescueMode = false;
@@ -100,10 +98,8 @@ class WCFACP extends WCF
 
     /**
      * Returns URL for rescue mode page.
-     *
-     * @return  string
      */
-    public static function getRescueModePageURL()
+    public static function getRescueModePageURL(): string
     {
         if (self::inRescueMode()) {
             return self::$rescueModePageURL;
@@ -115,7 +111,7 @@ class WCFACP extends WCF
     /**
      * Does the user authentication.
      */
-    protected function initAuth()
+    protected function initAuth(): void
     {
         // this is a work-around since neither RequestHandler
         // nor RouteHandler are populated right now
@@ -135,7 +131,7 @@ class WCFACP extends WCF
     /**
      * @since 6.0
      */
-    public static function overrideDebugMode()
+    public static function overrideDebugMode(): void
     {
         self::$overrideDebugMode = true;
     }
@@ -143,7 +139,7 @@ class WCFACP extends WCF
     /**
      * @inheritDoc
      */
-    protected function initSession()
+    protected function initSession(): void
     {
         self::$sessionObj = SessionHandler::getInstance();
 
@@ -154,7 +150,7 @@ class WCFACP extends WCF
     /**
      * @inheritDoc
      */
-    protected function initTPL()
+    protected function initTPL(): void
     {
         self::$tplObj = ACPTemplateEngine::getInstance();
         self::getTPL()->setLanguageID(self::getLanguage()->languageID);
@@ -164,7 +160,7 @@ class WCFACP extends WCF
     /**
      * @inheritDoc
      */
-    protected function assignDefaultTemplateVariables()
+    protected function assignDefaultTemplateVariables(): void
     {
         parent::assignDefaultTemplateVariables();
 

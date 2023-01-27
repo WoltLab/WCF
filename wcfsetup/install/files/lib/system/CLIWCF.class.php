@@ -89,7 +89,7 @@ class CLIWCF extends WCF
     /**
      * @inheritDoc
      */
-    public static function destruct()
+    public static function destruct(): void
     {
         if (empty($_ENV['WCF_SESSION_ID'])) {
             self::getSession()->delete();
@@ -99,7 +99,7 @@ class CLIWCF extends WCF
     /**
      * @inheritDoc
      */
-    final public static function handleCLIException($e)
+    final public static function handleCLIException($e): never
     {
         exit($e->getMessage() . "\n" . $e->getTraceAsString());
     }
@@ -107,7 +107,7 @@ class CLIWCF extends WCF
     /**
      * Initializes parsing of command line options.
      */
-    protected function initArgv()
+    protected function initArgv(): void
     {
         // initialise ArgvParser
         self::$argvParser = new ArgvParser([
@@ -165,7 +165,7 @@ class CLIWCF extends WCF
     /**
      * Initializes PHPLine.
      */
-    protected function initPHPLine()
+    protected function initPHPLine(): void
     {
         $terminal = TerminalFactory::get();
         self::$consoleReader = new ConsoleReader("WoltLab Suite", null, null, $terminal);
@@ -207,7 +207,7 @@ class CLIWCF extends WCF
     /**
      * Does the user authentification.
      */
-    protected function initAuth()
+    protected function initAuth(): void
     {
         self::getReader()->setHistoryEnabled(false);
         if (!empty($_ENV['WCF_SESSION_ID'])) {
@@ -264,7 +264,7 @@ class CLIWCF extends WCF
     /**
      * Initializes command handling.
      */
-    protected function initCommands()
+    protected function initCommands(): void
     {
         // Workaround to load commands for CLICommandHandler::getCommand().
         CLICommandHandler::getCommands();
