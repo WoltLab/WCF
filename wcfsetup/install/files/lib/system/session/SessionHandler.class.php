@@ -125,10 +125,9 @@ final class SessionHandler extends SingletonFactory
     /**
      * Provides access to session data.
      *
-     * @param string $key
      * @return  mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         switch ($key) {
             case 'sessionID':
