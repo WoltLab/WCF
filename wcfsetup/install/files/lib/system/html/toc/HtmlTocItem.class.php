@@ -156,7 +156,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): self
     {
         return $this->children[$this->position];
     }
@@ -164,7 +164,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator
     /**
      * @inheritDoc
      */
-    public function key()
+    public function key(): int
     {
         return $this->position;
     }
