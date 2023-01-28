@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -74,6 +74,17 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             uploadOther: (file) => (0, Attachment_1.uploadAttachment)(element.id, file),
         };
     }
+    function enableAutosave(autosave, configuration) {
+        (0, Autosave_1.removeExpiredDrafts)();
+        configuration.autosave = {
+            save(editor) {
+                (0, Autosave_1.saveDraft)(autosave, editor.data.get());
+                return Promise.resolve();
+            },
+            // TODO: This should be longer, because exporting the data is potentially expensive.
+            waitingTime: 2000,
+        };
+    }
     function enableMedia(element, configuration) {
         // TODO: The typings do not include our custom plugins yet.
         configuration.woltlabUpload = {
@@ -95,6 +106,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             }
             if (features.mention) {
                 enableMentions(configuration);
+            }
+            if (features.autosave !== "") {
+                enableAutosave(features.autosave, configuration);
             }
             const cke = await window.CKEditor5.create(element, configuration);
             editor = new Ckeditor(cke, features);

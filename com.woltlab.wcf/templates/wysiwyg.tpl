@@ -112,6 +112,7 @@
 			woltlabToolbarGroup,
 		}, {
 			attachment: element.dataset.disableAttachments !== "true",
+			autosave: element.dataset.autosave || "",
 			media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 			mention: element.dataset.supportMention === "true",
 		}).then((ckeditor) => {

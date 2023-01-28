@@ -2,6 +2,7 @@ import { getMentionConfiguration } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
 import { setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
 import { uploadMedia } from "./Ckeditor/Media";
+import { removeExpiredDrafts, saveDraft } from "./Ckeditor/Autosave";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
@@ -9,6 +10,7 @@ import type CkeElement from "@ckeditor/ckeditor5-engine/src/model/element";
 
 type Features = {
   attachment: boolean;
+  autosave: string;
   media: boolean;
   mention: boolean;
 };
@@ -107,6 +109,20 @@ function enableAttachments(element: HTMLElement, configuration: EditorConfig): v
   };
 }
 
+function enableAutosave(autosave: string, configuration: EditorConfig): void {
+  removeExpiredDrafts();
+
+  configuration.autosave = {
+    save(editor) {
+      saveDraft(autosave, editor.data.get());
+
+      return Promise.resolve();
+    },
+    // TODO: This should be longer, because exporting the data is potentially expensive.
+    waitingTime: 2_000,
+  };
+}
+
 function enableMedia(element: HTMLElement, configuration: EditorConfig): void {
   // TODO: The typings do not include our custom plugins yet.
   (configuration as any).woltlabUpload = {
@@ -134,6 +150,10 @@ export async function setupCkeditor(
 
     if (features.mention) {
       enableMentions(configuration);
+    }
+
+    if (features.autosave !== "") {
+      enableAutosave(features.autosave, configuration);
     }
 
     const cke = await window.CKEditor5.create(element, configuration);
