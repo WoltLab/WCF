@@ -3,22 +3,28 @@
 namespace wcf\acp\form;
 
 use wcf\data\language\Language;
-use wcf\data\language\LanguageEditor;
-use wcf\form\AbstractForm;
-use wcf\system\exception\UserInputException;
+use wcf\data\language\LanguageAction;
+use wcf\form\AbstractFormBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the language add form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @property    LanguageAction  $objectAction
+ *
+ * @author  Florian Gail, Marcel Werk
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class LanguageAddForm extends AbstractForm
+class LanguageAddForm extends AbstractFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -26,58 +32,24 @@ class LanguageAddForm extends AbstractForm
     public $activeMenuItem = 'wcf.acp.menu.link.language.list';
 
     /**
-     * country code
-     * @var string
-     */
-    public $countryCode = '';
-
-    /**
      * @inheritDoc
      */
     public $neededPermissions = ['admin.language.canManageLanguage'];
 
     /**
-     * language object
-     * @var Language
+     * @inheritDoc
      */
-    public $language;
+    public $objectActionClass = LanguageAction::class;
 
     /**
-     * language name
-     * @var string
+     * @inheritDoc
      */
-    public $languageName = '';
-
-    /**
-     * language code
-     * @var string
-     */
-    public $languageCode = '';
-
-    /**
-     * list of available languages
-     * @var Language[]
-     */
-    public $languages = [];
-
-    /**
-     * source language object
-     * @var Language
-     */
-    public $sourceLanguage;
-
-    /**
-     * source language id
-     * @var int
-     */
-    public $sourceLanguageID = 0;
+    public $objectEditLinkController = LanguageEditForm::class;
 
     /**
      * @var string[]
      */
     public array $locales;
-
-    public string $locale = '';
 
     /**
      * @inheritDoc
@@ -103,149 +75,124 @@ class LanguageAddForm extends AbstractForm
     /**
      * @inheritDoc
      */
-    public function readFormParameters()
+    protected function createForm()
     {
-        parent::readFormParameters();
+        parent::createForm();
 
-        if (isset($_POST['countryCode'])) {
-            $this->countryCode = StringUtil::trim($_POST['countryCode']);
-        }
-        if (isset($_POST['languageName'])) {
-            $this->languageName = StringUtil::trim($_POST['languageName']);
-        }
-        if (isset($_POST['languageCode'])) {
-            $this->languageCode = StringUtil::trim($_POST['languageCode']);
-        }
-        if (isset($_POST['sourceLanguageID'])) {
-            $this->sourceLanguageID = \intval($_POST['sourceLanguageID']);
-        }
-        if (isset($_POST['locale'])) {
-            $this->locale = $_POST['locale'];
-        }
-    }
+        $locales = [
+            '' => WCF::getLanguage()->get('wcf.global.noSelection'),
+            ...$this->locales,
+        ];
 
-    /**
-     * @inheritDoc
-     */
-    public function validate()
-    {
-        parent::validate();
+        $this->form->appendChildren([
+            FormContainer::create('data')
+                ->appendChildren([
+                    TextFormField::create('languageName')
+                        ->label('wcf.global.name')
+                        ->description('wcf.acp.language.name.description')
+                        ->maximumLength(255)
+                        ->required(),
+                    TextFormField::create('languageCode')
+                        ->label('wcf.acp.language.code')
+                        ->description('wcf.acp.language.code.description')
+                        ->maximumLength(20)
+                        ->required()
+                        ->addValidator(new FormFieldValidator('unique', function (TextFormField $formField) {
+                            if ($formField->getValidationErrors() !== []) {
+                                return;
+                            }
 
-        // language name
-        if (empty($this->languageName)) {
-            throw new UserInputException('languageName');
-        }
+                            if (
+                                $this->formObject instanceof Language
+                                && \mb_strtolower($this->formObject->languageCode) === $formField->getValue()
+                            ) {
+                                return;
+                            }
 
-        // country code
-        if (empty($this->countryCode)) {
-            throw new UserInputException('countryCode');
-        }
+                            if (LanguageFactory::getInstance()->getLanguageByCode($formField->getValue())) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'notUnique',
+                                    'wcf.acp.language.add.languageCode.error.notUnique'
+                                ));
+                            }
+                        })),
+                    TextFormField::create('countryCode')
+                        ->label('wcf.acp.language.countryCode')
+                        ->description('wcf.acp.language.countryCode.description')
+                        ->maximumLength(10)
+                        ->required(),
+                    SingleSelectionFormField::create('locale')
+                        ->label('wcf.acp.language.locale')
+                        ->description('wcf.acp.language.locale.description')
+                        ->options($locales)
+                        ->addValidator(new FormFieldValidator(
+                            'locale',
+                            static function (SingleSelectionFormField $formField) {
+                                if ($formField->getValue() === '') {
+                                    return;
+                                }
 
-        // language code
-        $this->validateLanguageCode();
+                                if ($formField->getValidationErrors() !== []) {
+                                    return;
+                                }
 
-        // source language id
-        $this->validateSource();
+                                $languageCodeField = $formField->getDocument()->getNodeById('languageCode');
+                                \assert($languageCodeField instanceof TextFormField);
 
-        if (!isset($this->locales[$this->locale])) {
-            throw new UserInputException('locale');
-        }
-    }
-
-    /**
-     * Validates the language code.
-     */
-    protected function validateLanguageCode()
-    {
-        if (empty($this->languageCode)) {
-            throw new UserInputException('languageCode');
-        }
-        if (LanguageFactory::getInstance()->getLanguageByCode($this->languageCode)) {
-            throw new UserInputException('languageCode', 'notUnique');
-        }
-    }
-
-    /**
-     * Validates given source language.
-     */
-    protected function validateSource()
-    {
-        if (empty($this->sourceLanguageID)) {
-            throw new UserInputException('sourceLanguageID');
-        }
-
-        // get language
-        $this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
-        if (!$this->sourceLanguage->languageID) {
-            throw new UserInputException('sourceLanguageID');
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
-
-        $this->language = LanguageEditor::create(\array_merge($this->additionalFields, [
-            'countryCode' => \mb_strtolower($this->countryCode),
-            'languageName' => $this->languageName,
-            'languageCode' => \mb_strtolower($this->languageCode),
-            'locale' => $this->locale,
-        ]));
-        $languageEditor = new LanguageEditor($this->sourceLanguage);
-        $languageEditor->copy($this->language);
-
-        // copy content
-        LanguageEditor::copyLanguageContent($this->sourceLanguage->languageID, $this->language->languageID);
-
-        // reset caches
-        LanguageFactory::getInstance()->clearCache();
-        LanguageFactory::getInstance()->deleteLanguageCache();
-
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                LanguageEditForm::class,
-                ['id' => $this->language->languageID]
-            ),
+                                [$languageCode] = \explode('_', $formField->getValue());
+                                if ($languageCodeField->getValue() !== $languageCode) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'languageCodeMismatch',
+                                            'wcf.acp.language.add.locale.error.languageCodeMismatch',
+                                            [
+                                                'locale' => $formField->getValue(),
+                                            ]
+                                        )
+                                    );
+                                }
+                            }
+                        )),
+                    SingleSelectionFormField::create('sourceLanguageID')
+                        ->label('wcf.acp.language.add.source')
+                        ->description('wcf.acp.language.add.source.description')
+                        ->options(LanguageFactory::getInstance()->getLanguages())
+                        ->available($this->formAction === IFormDocument::FORM_MODE_CREATE)
+                        ->required(),
+                ]),
         ]);
-
-        // reset values
-        $this->countryCode = $this->languageCode = $this->languageName = $this->locale = '';
-        $this->sourceLanguageID = 0;
     }
 
     /**
      * @inheritDoc
      */
-    public function readData()
+    public function buildForm()
     {
-        parent::readData();
+        parent::buildForm();
 
-        $this->languages = LanguageFactory::getInstance()->getLanguages();
-    }
+        $this->form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'lowercase',
+            static function (IFormDocument $document, array $parameters) {
+                $parameters['data']['languageCode'] = \mb_strtolower($parameters['data']['languageCode']);
+                $parameters['data']['countryCode'] = \mb_strtolower($parameters['data']['countryCode']);
 
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
+                return $parameters;
+            }
+        ));
+        $this->form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'sourceLanguage',
+            function (IFormDocument $document, array $parameters) {
+                if ($this->formAction !== IFormDocument::FORM_MODE_CREATE) {
+                    return $parameters;
+                }
 
-        WCF::getTPL()->assign([
-            'countryCode' => $this->countryCode,
-            'languageName' => $this->languageName,
-            'languageCode' => $this->languageCode,
-            'sourceLanguageID' => $this->sourceLanguageID,
-            'languages' => $this->languages,
-            'locale' => $this->locale,
-            'locales' => $this->locales,
-            'action' => 'add',
-        ]);
+                if (isset($parameters['data']['sourceLanguageID'])) {
+                    $parameters['sourceLanguageID'] = $parameters['data']['sourceLanguageID'];
+                    unset($parameters['data']['sourceLanguageID']);
+                }
+
+                return $parameters;
+            }
+        ));
     }
 }

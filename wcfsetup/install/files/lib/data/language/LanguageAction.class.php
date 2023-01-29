@@ -6,16 +6,16 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
  * Executes language-related actions.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Alexander Ebert, Florian Gail
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @method  Language        create()
  * @method  LanguageEditor[]    getObjects()
  * @method  LanguageEditor      getSingleObject()
  */
@@ -53,6 +53,28 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
      * @inheritDoc
      */
     protected $requireACP = ['create', 'delete', 'setAsDefault', 'update'];
+
+    /**
+     * @inheritDoc
+     * @return  Language
+     */
+    public function create()
+    {
+        $object = parent::create();
+        \assert($object instanceof Language);
+
+        if (isset($this->parameters['sourceLanguageID']) && $this->parameters['sourceLanguageID']) {
+            $sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->parameters['sourceLanguageID']);
+
+            LanguageEditor::copyLanguageContent($sourceLanguage->getObjectID(), $object->getObjectID());
+            (new LanguageEditor($sourceLanguage))->copy($object);
+
+            LanguageFactory::getInstance()->clearCache();
+            LanguageFactory::getInstance()->deleteLanguageCache();
+        }
+
+        return $object;
+    }
 
     /**
      * Validates permission to set a language as default.

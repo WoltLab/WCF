@@ -2,27 +2,26 @@
 
 namespace wcf\acp\form;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\language\Language;
-use wcf\data\language\LanguageEditor;
-use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\language\LanguageFactory;
-use wcf\system\WCF;
 
 /**
  * Shows the language edit form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @property    Language    $formObject
+ *
+ * @author  Florian Gail
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class LanguageEditForm extends LanguageAddForm
 {
     /**
-     * language id
-     * @var int
+     * @inheritDoc
      */
-    public $languageID = 0;
+    public $formAction = 'edit';
 
     /**
      * @inheritDoc
@@ -31,79 +30,22 @@ class LanguageEditForm extends LanguageAddForm
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->languageID = \intval($_REQUEST['id']);
-        }
-        $this->language = new Language($this->languageID);
-        if (!$this->language->languageID) {
+        try {
+            $queryParameters = Helper::mapQueryParameters(
+                $_GET,
+                <<<'EOT'
+                    array {
+                        id: positive-int
+                    }
+                    EOT
+            );
+            $this->formObject = new Language($queryParameters['id']);
+
+            if (!$this->formObject->getObjectID()) {
+                throw new IllegalLinkException();
+            }
+        } catch (MappingError) {
             throw new IllegalLinkException();
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validateLanguageCode()
-    {
-        if ($this->language->languageCode != \mb_strtolower($this->languageCode)) {
-            parent::validateLanguageCode();
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function validateSource()
-    {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        AbstractForm::save();
-
-        $editor = new LanguageEditor($this->language);
-        $editor->update(\array_merge($this->additionalFields, [
-            'countryCode' => \mb_strtolower($this->countryCode),
-            'languageName' => $this->languageName,
-            'languageCode' => \mb_strtolower($this->languageCode),
-            'locale' => $this->locale,
-        ]));
-        LanguageFactory::getInstance()->clearCache();
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readData()
-    {
-        parent::readData();
-
-        if (!\count($_POST)) {
-            $this->countryCode = $this->language->countryCode;
-            $this->languageName = $this->language->languageName;
-            $this->languageCode = $this->language->languageCode;
-            $this->locale = $this->language->locale;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'languageID' => $this->languageID,
-            'language' => $this->language,
-            'action' => 'edit',
-        ]);
     }
 }
