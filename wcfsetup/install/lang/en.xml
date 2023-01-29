@@ -960,6 +960,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[The language code is already in use by an installed language.]]></item>
+        <item name="wcf.acp.language.add.locale.error.languageCodeMismatch"><![CDATA[The selected region (<kbd>{$locale}</kbd>) does not match the language code.]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Blueprint]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Language-Code]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can look up the language code at <a href="https://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">https://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>

@@ -981,6 +981,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Sprache hinzufügen]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Dieser Sprachcode wird bereits von einer anderen im System installierten Sprache verwendet.]]></item>
+		<item name="wcf.acp.language.add.locale.error.languageCodeMismatch"><![CDATA[Die ausgewählte Region (<kbd>{$locale}</kbd>) entspricht nicht dem angegebenen Sprachcode.]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Vorlage]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} unter <a href="https://de.wikipedia.org/wiki/ISO_639-1" class="externalURL">https://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
