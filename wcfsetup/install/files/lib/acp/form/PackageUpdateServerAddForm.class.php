@@ -3,22 +3,31 @@
 namespace wcf\acp\form;
 
 use Laminas\Diactoros\Uri;
+use wcf\data\IStorableObject;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\data\package\update\server\PackageUpdateServerList;
-use wcf\form\AbstractForm;
-use wcf\system\exception\UserInputException;
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\form\AbstractFormBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\UrlFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 
 /**
  * Shows the server add form.
  *
- * @author  Marcel Werk
+ * @property    PackageUpdateServerAction   $objectAction
+ *
+ * @author  Florian Gail, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class PackageUpdateServerAddForm extends AbstractForm
+class PackageUpdateServerAddForm extends AbstractFormBuilderForm
 {
     /**
      * @inheritDoc
@@ -31,153 +40,176 @@ class PackageUpdateServerAddForm extends AbstractForm
     public $neededPermissions = ['admin.configuration.package.canEditServer'];
 
     /**
-     * server url
-     * @var string
+     * @inheritDoc
      */
-    public $serverURL = '';
-
-    /**
-     * server login username
-     * @var string
-     */
-    public $loginUsername = '';
-
-    /**
-     * server login password
-     * @var string
-     */
-    public $loginPassword = '';
+    public $objectActionClass = PackageUpdateServerAction::class;
 
     /**
      * @inheritDoc
      */
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
+    public $objectEditLinkController = PackageUpdateServerEditForm::class;
 
-        if (isset($_POST['serverURL'])) {
-            $this->serverURL = StringUtil::trim($_POST['serverURL']);
+    /**
+     * @inheritDoc
+     */
+    protected function createForm()
+    {
+        parent::createForm();
+
+        $passwordPlaceholder = '';
+        if (
+            $this->formAction !== IFormDocument::FORM_MODE_CREATE
+            && $this->formObject instanceof PackageUpdateServer
+            && $this->formObject->loginUsername !== ''
+        ) {
+            $passwordPlaceholder = 'wcf.acp.updateServer.loginPassword.noChange';
         }
-        if (isset($_POST['loginUsername'])) {
-            $this->loginUsername = $_POST['loginUsername'];
-        }
-        if (isset($_POST['loginPassword'])) {
-            $this->loginPassword = $_POST['loginPassword'];
-        }
+
+        $this->form->appendChildren([
+            FormContainer::create('data')
+                ->appendChildren([
+                    UrlFormField::create('serverURL')
+                        ->label('wcf.acp.updateServer.serverURL')
+                        ->required()
+                        ->maximumLength(255)
+                        ->immutable($this->formAction !== IFormDocument::FORM_MODE_CREATE)
+                        ->addValidator(new FormFieldValidator('valid', function (UrlFormField $formField) {
+                            if ($formField->getValidationErrors() !== []) {
+                                return;
+                            }
+
+                            try {
+                                $url = new Uri($formField->getValue());
+
+                                if (!$url->getHost()) {
+                                    $formField->addValidationError(new FormFieldValidationError(
+                                        'invalid',
+                                        'wcf.acp.updateServer.serverURL.error.invalid',
+                                    ));
+                                }
+                                if ($url->getHost() !== 'localhost') {
+                                    if ($url->getScheme() !== 'https') {
+                                        $formField->addValidationError(new FormFieldValidationError(
+                                            'invalidScheme',
+                                            'wcf.acp.updateServer.serverURL.error.invalidScheme',
+                                        ));
+                                    }
+                                    if ($url->getPort()) {
+                                        $formField->addValidationError(new FormFieldValidationError(
+                                            'nonStandardPort',
+                                            'wcf.acp.updateServer.serverURL.error.nonStandardPort',
+                                        ));
+                                    }
+                                }
+                                if ($url->getUserInfo()) {
+                                    $formField->addValidationError(new FormFieldValidationError(
+                                        'userinfo',
+                                        'wcf.acp.updateServer.serverURL.error.userinfo',
+                                    ));
+                                }
+                                if (\str_ends_with(\strtolower($url->getHost()), '.woltlab.com')) {
+                                    $formField->addValidationError(new FormFieldValidationError(
+                                        'woltlab',
+                                        'wcf.acp.updateServer.serverURL.error.woltlab',
+                                    ));
+                                }
+                            } catch (\InvalidArgumentException) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'invalid',
+                                    'wcf.acp.updateServer.serverURL.error.invalid',
+                                ));
+                            }
+
+                            if (
+                                ($duplicate = $this->getDuplicateServer((string)$url))
+                                && (
+                                    $this->formAction === IFormDocument::FORM_MODE_CREATE
+                                    || (
+                                        $this->formObject instanceof PackageUpdateServer
+                                        && $this->formObject->getObjectID() !== $duplicate->getObjectID()
+                                    )
+                                )
+                            ) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'duplicate',
+                                    'wcf.acp.updateServer.serverURL.error.duplicate',
+                                    [
+                                        'duplicate' => $duplicate,
+                                    ]
+                                ));
+                            }
+                        })),
+                    TextFormField::create('loginUsername')
+                        ->label('wcf.acp.updateServer.loginUsername')
+                        ->description('wcf.acp.updateServer.loginUsername.description')
+                        ->maximumLength(255),
+                    PasswordFormField::create('loginPassword')
+                        ->label('wcf.acp.updateServer.loginPassword')
+                        ->description('wcf.acp.updateServer.loginPassword.description')
+                        ->placeholder($passwordPlaceholder)
+                        ->maximumLength(255)
+                        ->addDependency(
+                            NonEmptyFormFieldDependency::create('loginUsername')
+                                ->fieldId('loginUsername')
+                        ),
+                ]),
+        ]);
     }
 
     /**
      * @inheritDoc
      */
-    public function validate()
+    public function buildForm()
     {
-        parent::validate();
+        parent::buildForm();
 
-        $this->validateServerURL();
-    }
-
-    /**
-     * Validates the server URL.
-     *
-     * @since       5.3
-     */
-    protected function validateServerURL()
-    {
-        if (empty($this->serverURL)) {
-            throw new UserInputException('serverURL');
-        }
-
-        try {
-            $url = new Uri($this->serverURL);
-            $this->serverURL = (string)$url;
-
-            if (!$url->getHost()) {
-                throw new UserInputException('serverURL', 'invalid');
-            }
-            if ($url->getHost() !== 'localhost') {
-                if ($url->getScheme() !== 'https') {
-                    throw new UserInputException('serverURL', 'invalidScheme');
+        $this->form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'password',
+            function (IFormDocument $document, array $parameters) {
+                if ($this->formAction === IFormDocument::FORM_MODE_CREATE) {
+                    return $parameters;
                 }
-                if ($url->getPort()) {
-                    throw new UserInputException('serverURL', 'nonStandardPort');
-                }
-            }
-            if ($url->getUserInfo()) {
-                throw new UserInputException('serverURL', 'userinfo');
-            }
-            if (\str_ends_with(\strtolower($url->getHost()), '.woltlab.com')) {
-                throw new UserInputException('serverURL', 'woltlab');
-            }
-        } catch (\InvalidArgumentException) {
-            throw new UserInputException('serverURL', 'invalid');
-        }
 
-        if (($duplicate = $this->findDuplicateServer())) {
-            throw new UserInputException('serverURL', [
-                'duplicate' => $duplicate,
-            ]);
-        }
+                $username = $parameters['data']['loginUsername'];
+                \assert($this->formObject instanceof PackageUpdateServer);
+
+                if ($username === '') {
+                    $parameters['data']['loginUsername'] = '';
+                    $parameters['data']['loginPassword'] = '';
+                } elseif (
+                    $username === $this->formObject->loginUsername
+                    && $parameters['data']['loginPassword'] === ''
+                ) {
+                    unset($parameters['data']['loginPassword']);
+                }
+
+                return $parameters;
+            },
+            static function (IFormDocument $document, array $data, IStorableObject $object) {
+                \assert($object instanceof PackageUpdateServer);
+
+                $data['loginPassword'] = '';
+
+                return $data;
+            }
+        ));
     }
 
     /**
      * Returns the first package update server with a matching serverURL.
      *
-     * @since       5.3
+     * @since       6.0
      */
-    protected function findDuplicateServer()
+    protected function getDuplicateServer(string $serverUrl): ?PackageUpdateServer
     {
         $packageServerList = new PackageUpdateServerList();
         $packageServerList->readObjects();
         foreach ($packageServerList as $packageServer) {
-            if ($packageServer->serverURL == $this->serverURL) {
+            if ($packageServer->serverURL == $serverUrl) {
                 return $packageServer;
             }
         }
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
-
-        // save server
-        $this->objectAction = new PackageUpdateServerAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'serverURL' => $this->serverURL,
-                'loginUsername' => $this->loginUsername,
-                'loginPassword' => $this->loginPassword,
-            ]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-        $this->saved();
-
-        // reset values
-        $this->serverURL = $this->loginUsername = $this->loginPassword = '';
-
-        // show success message
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                PackageUpdateServerEditForm::class,
-                ['id' => $returnValues['returnValues']->packageUpdateServerID]
-            ),
-        ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'serverURL' => $this->serverURL,
-            'loginUsername' => $this->loginUsername,
-            'loginPassword' => $this->loginPassword,
-            'action' => 'add',
-        ]);
+        return null;
     }
 }

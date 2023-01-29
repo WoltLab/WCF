@@ -14,57 +14,10 @@
 	</nav>
 </header>
 
-{if $packageUpdateServer|isset && $packageUpdateServer->errorMessage}
-	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$packageUpdateServer->errorMessage}</p>
+{if $formObject|isset && $formObject->errorMessage}
+	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$formObject->errorMessage}</p>
 {/if}
 
-{include file='formNotice'}
-
-<form method="post" action="{if $action == 'add'}{link controller='PackageUpdateServerAdd'}{/link}{else}{link controller='PackageUpdateServerEdit' id=$packageUpdateServerID}{/link}{/if}">
-	<div class="section">
-		<dl{if $errorField == 'serverURL'} class="formError"{/if}>
-			<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
-			<dd>
-				<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required autofocus class="long"{if $action != 'add'} readonly{/if}>
-				{if $errorField == 'serverURL'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{elseif $errorType[duplicate]|isset}
-							{lang}wcf.acp.updateServer.serverURL.error.duplicate{/lang}
-						{else}
-							{lang}wcf.acp.updateServer.serverURL.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
-			<dd>
-				<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="medium">
-				<small>{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
-			<dd>
-				<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" autocomplete="off"{if $action != 'add' && $loginUsername} placeholder="{lang}wcf.acp.updateServer.loginPassword.noChange{/lang}"{/if}>
-				<small>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</small>
-			</dd>
-		</dl>
-		
-		{event name='dataFields'}
-	</div>
-	
-	{event name='sections'}
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		{csrfToken}
-	</div>
-</form>
+{@$form->getHtml()}
 
 {include file='footer'}
