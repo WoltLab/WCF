@@ -3,40 +3,31 @@
 namespace wcf\acp\form;
 
 use wcf\data\captcha\question\CaptchaQuestionAction;
-use wcf\data\captcha\question\CaptchaQuestionEditor;
-use wcf\form\AbstractForm;
-use wcf\system\exception\UserInputException;
-use wcf\system\language\I18nHandler;
+use wcf\form\AbstractFormBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\Regex;
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Shows the form to create a new captcha question.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * @property    CaptchaQuestionAction   $objectAction
+ *
+ * @author  Florian Gail, Matthias Schmidt
+ * @copyright   2001-2023 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class CaptchaQuestionAddForm extends AbstractForm
+class CaptchaQuestionAddForm extends AbstractFormBuilderForm
 {
     /**
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.captcha.question.add';
-
-    /**
-     * invalid regex in answers
-     * @var string
-     */
-    public $invalidRegex = '';
-
-    /**
-     * 1 if the question is disabled
-     * @var int
-     */
-    public $isDisabled = 0;
 
     /**
      * @inheritDoc
@@ -46,155 +37,80 @@ class CaptchaQuestionAddForm extends AbstractForm
     /**
      * @inheritDoc
      */
-    public function assignVariables()
+    public $objectActionClass = CaptchaQuestionAction::class;
+
+    /**
+     * @inheritDoc
+     */
+    public $objectEditLinkController = CaptchaQuestionEditForm::class;
+
+    /**
+     * @inheritDoc
+     */
+    protected function createForm()
     {
-        parent::assignVariables();
+        parent::createForm();
 
-        I18nHandler::getInstance()->assignVariables();
+        $this->form->appendChildren([
+            FormContainer::create('data')
+                ->appendChildren([
+                    TextFormField::create('question')
+                        ->label('wcf.acp.captcha.question.question')
+                        ->maximumLength(255)
+                        ->required()
+                        ->i18n()
+                        ->languageItemPattern('wcf.captcha.question.question.question\d+'),
+                    MultilineTextFormField::create('answers')
+                        ->label('wcf.acp.captcha.question.answers')
+                        ->description('wcf.acp.captcha.question.answers.description')
+                        ->required()
+                        ->i18n()
+                        ->languageItemPattern('wcf.captcha.question.answers.question\d+')
+                        ->addValidator(new FormFieldValidator('regex', function (MultilineTextFormField $formField) {
+                            if ($formField->getValidationErrors() !== []) {
+                                return;
+                            }
 
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'isDisabled' => $this->isDisabled,
-            'invalidRegex' => $this->invalidRegex,
+                            if ($formField->hasI18nValues()) {
+                                $answers = [];
+                                foreach ($formField->getValue() as $value) {
+                                    $answers = \array_merge($answers, \explode("\n", StringUtil::unifyNewlines($value)));
+                                }
+                            } else {
+                                $answers = \explode("\n", StringUtil::unifyNewlines($formField->getValue()));
+                            }
+
+                            foreach ($answers as $answer) {
+                                if (!$this->validateAnswer($answer)) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'invalidRegex',
+                                            'wcf.acp.captcha.question.answers.error.invalidRegex',
+                                            [
+                                                'invalidRegex' => $answer,
+                                            ]
+                                        )
+                                    );
+                                }
+                            }
+                        })),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.acp.captcha.question.isDisabled'),
+                ]),
         ]);
     }
 
     /**
-     * @inheritDoc
+     * Validates the given answer-text.
      */
-    public function readFormParameters()
+    private function validateAnswer(string $text): bool
     {
-        parent::readFormParameters();
-
-        I18nHandler::getInstance()->readValues();
-
-        if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = 1;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        I18nHandler::getInstance()->register('question');
-        I18nHandler::getInstance()->register('answers');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save()
-    {
-        parent::save();
-
-        $this->objectAction = new CaptchaQuestionAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'answers' => I18nHandler::getInstance()->isPlainValue('answers') ? I18nHandler::getInstance()->getValue('answers') : '',
-                'isDisabled' => $this->isDisabled,
-                'question' => I18nHandler::getInstance()->isPlainValue('question') ? I18nHandler::getInstance()->getValue('question') : '',
-            ]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-        $questionID = $returnValues['returnValues']->questionID;
-
-        // set i18n values
-        $questionUpdates = [];
-        if (!I18nHandler::getInstance()->isPlainValue('question')) {
-            I18nHandler::getInstance()->save(
-                'question',
-                'wcf.captcha.question.question.question' . $questionID,
-                'wcf.captcha.question',
-                1
-            );
-
-            $questionUpdates['question'] = 'wcf.captcha.question.question.question' . $questionID;
-        }
-        if (!I18nHandler::getInstance()->isPlainValue('answers')) {
-            I18nHandler::getInstance()->save(
-                'answers',
-                'wcf.captcha.question.answers.question' . $questionID,
-                'wcf.captcha.question',
-                1
-            );
-
-            $questionUpdates['answers'] = 'wcf.captcha.question.answers.question' . $questionID;
+        if (!\mb_substr($text, 0, 1) == '~' || !\mb_substr($text, -1, 1) == '~') {
+            return true;
         }
 
-        if (!empty($questionUpdates)) {
-            $questionEditor = new CaptchaQuestionEditor($returnValues['returnValues']);
-            $questionEditor->update($questionUpdates);
-        }
+        $regexLength = \mb_strlen($text) - 2;
 
-        $this->saved();
-
-        // reset values
-        I18nHandler::getInstance()->reset();
-        $this->isDisabled = 0;
-
-        // show success message
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                CaptchaQuestionEditForm::class,
-                ['id' => $questionID]
-            ),
-        ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate()
-    {
-        parent::validate();
-
-        // validate question
-        if (!I18nHandler::getInstance()->validateValue('question')) {
-            if (I18nHandler::getInstance()->isPlainValue('question')) {
-                throw new UserInputException('question');
-            } else {
-                throw new UserInputException('question', 'multilingual');
-            }
-        }
-
-        // validate answers
-        if (!I18nHandler::getInstance()->validateValue('answers')) {
-            if (I18nHandler::getInstance()->isPlainValue('answers')) {
-                throw new UserInputException('answers');
-            } else {
-                throw new UserInputException('answers', 'multilingual');
-            }
-        }
-
-        if (I18nHandler::getInstance()->isPlainValue('answers')) {
-            $answers = \explode("\n", StringUtil::unifyNewlines(I18nHandler::getInstance()->getValue('answers')));
-            foreach ($answers as $answer) {
-                if (\mb_substr($answer, 0, 1) == '~' && \mb_substr($answer, -1, 1) == '~') {
-                    $regexLength = \mb_strlen($answer) - 2;
-                    if (!$regexLength || !Regex::compile(\mb_substr($answer, 1, $regexLength))->isValid()) {
-                        $this->invalidRegex = $answer;
-
-                        throw new UserInputException('answers', 'invalidRegex');
-                    }
-                }
-            }
-        }
-        foreach (I18nHandler::getInstance()->getValues('answers') as $languageAnswers) {
-            $answers = \explode("\n", StringUtil::unifyNewlines($languageAnswers));
-            foreach ($answers as $answer) {
-                if (\mb_substr($answer, 0, 1) == '~' && \mb_substr($answer, -1, 1) == '~') {
-                    $regexLength = \mb_strlen($answer) - 2;
-                    if (!$regexLength || !Regex::compile(\mb_substr($answer, 1, $regexLength))->isValid()) {
-                        $this->invalidRegex = $answer;
-
-                        throw new UserInputException('answers', 'invalidRegex');
-                    }
-                }
-            }
-        }
+        return $regexLength && Regex::compile(\mb_substr($text, 1, $regexLength))->isValid();
     }
 }
