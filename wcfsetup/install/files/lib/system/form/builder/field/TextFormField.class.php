@@ -24,6 +24,7 @@ class TextFormField extends AbstractFormField implements
     IInputModeFormField,
     IMaximumLengthFormField,
     IMinimumLengthFormField,
+    INullableFormField,
     IPatternFormField,
     IPlaceholderFormField
 {
@@ -38,6 +39,7 @@ class TextFormField extends AbstractFormField implements
     }
     use TMaximumLengthFormField;
     use TMinimumLengthFormField;
+    use TNullableFormField;
     use TPatternFormField;
     use TPlaceholderFormField;
 
