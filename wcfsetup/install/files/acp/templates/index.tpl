@@ -90,6 +90,11 @@
 			
 			{event name='softwareFields'}
 			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.software.databaseName{/lang}</dt>
+				<dd>{$databaseName}</dd>
+			</dl>
+
 			{if WCF_N != 1}
 				<dl>
 					<dt>{lang}wcf.acp.index.system.software.databaseNumber{/lang}</dt>

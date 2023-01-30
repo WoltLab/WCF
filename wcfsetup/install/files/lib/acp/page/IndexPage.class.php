@@ -174,10 +174,16 @@ class IndexPage extends AbstractPage
             }
         }
 
+        $sql = "SELECT DATABASE()";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+        $databaseName = $statement->fetchSingleColumn();
+
         WCF::getTPL()->assign([
             'recaptchaWithoutKey' => $recaptchaWithoutKey,
             'recaptchaKeyLink' => $recaptchaKeyLink,
             'server' => $this->server,
+            'databaseName' => $databaseName,
             'usersAwaitingApproval' => $usersAwaitingApproval,
             'evaluationExpired' => $evaluationExpired,
             'evaluationPending' => $evaluationPending,
