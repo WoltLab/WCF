@@ -42,7 +42,7 @@ final class RebuildBootstrapper
         $result .= "\n";
 
         foreach ($groups as $group) {
-            $group = \array_filter($group, $this->bootstrapExists(...));
+            $group = \array_values(\array_filter($group, $this->bootstrapExists(...)));
 
             if ($group === []) {
                 continue;
