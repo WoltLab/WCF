@@ -1354,17 +1354,17 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="message_public_highlighters">
 				<categoryname>message.general</categoryname>
 				<optiontype>highlighters</optiontype>
-				<defaultvalue>html
-css
-php
-javascript
-java
-c
+				<defaultvalue>c
 cpp
 csharp
+css
+go
+html
+java
+javascript
+php
 ruby
-rust
-go</defaultvalue>
+rust</defaultvalue>
 			</option>
 			<option name="message_enable_user_consent">
 				<categoryname>message.general</categoryname>
