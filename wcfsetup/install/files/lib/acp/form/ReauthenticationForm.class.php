@@ -14,10 +14,13 @@ use wcf\system\WCF;
  */
 class ReauthenticationForm extends \wcf\form\ReauthenticationForm
 {
-    public function assignVariables()
+    public function __run()
     {
-        parent::assignVariables();
+        WCF::getTPL()->assign([
+            '__wcfAcpIsLogin' => true,
+            '__isLogin' => true,
+        ]);
 
-        WCF::getTPL()->assign(['__wcfAcpIsLogin' => true]);
+        parent::__run();
     }
 }

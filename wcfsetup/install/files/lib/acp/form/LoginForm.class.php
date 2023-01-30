@@ -59,6 +59,16 @@ class LoginForm extends AbstractCaptchaForm
      */
     public $useCaptcha = false;
 
+    public function __run()
+    {
+        WCF::getTPL()->assign([
+            '__wcfAcpIsLogin' => true,
+            '__isLogin' => true,
+        ]);
+
+        parent::__run();
+    }
+
     /**
      * @inheritDoc
      */
@@ -270,7 +280,6 @@ class LoginForm extends AbstractCaptchaForm
             'username' => $this->username,
             'password' => $this->password,
             'url' => $this->url,
-            '__wcfAcpIsLogin' => true,
         ]);
     }
 }

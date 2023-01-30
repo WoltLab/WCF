@@ -80,6 +80,11 @@ final class RescueModeForm extends AbstractCaptchaForm
             );
         }
 
+        WCF::getTPL()->assign([
+            '__wcfAcpIsLogin' => true,
+            '__isLogin' => true,
+        ]);
+
         return parent::__run();
     }
 
