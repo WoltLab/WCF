@@ -21,6 +21,6 @@ class ReauthenticationForm extends \wcf\form\ReauthenticationForm
             '__isLogin' => true,
         ]);
 
-        parent::__run();
+        return parent::__run();
     }
 }

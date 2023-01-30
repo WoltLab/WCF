@@ -66,7 +66,7 @@ class LoginForm extends AbstractCaptchaForm
             '__isLogin' => true,
         ]);
 
-        parent::__run();
+        return parent::__run();
     }
 
     /**
