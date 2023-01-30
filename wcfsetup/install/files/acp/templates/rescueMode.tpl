@@ -172,4 +172,4 @@
 })();
 </script>
 
-{include file='footer' __isRescueMode=true}
+{include file='footer'}
