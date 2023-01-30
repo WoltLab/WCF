@@ -936,6 +936,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
 		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
 		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Datenbank-Installationsnummer]]></item>
+		<item name="wcf.acp.index.system.software.databaseName"><![CDATA[Datenbankname]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Betriebssystem]]></item>
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
