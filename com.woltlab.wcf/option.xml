@@ -1362,9 +1362,15 @@ go
 html
 java
 javascript
+json
 php
+python
 ruby
-rust</defaultvalue>
+rust
+sql
+typescript
+xml
+yaml</defaultvalue>
 			</option>
 			<option name="message_enable_user_consent">
 				<categoryname>message.general</categoryname>
