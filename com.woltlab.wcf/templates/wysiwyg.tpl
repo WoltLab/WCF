@@ -2,6 +2,8 @@
 
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Component/Ckeditor", "/wcf/editor/dist/bundle.js"], ({ setupCkeditor }) => {
+		{jsphrase name='wcf.editor.restoreDraft'}
+
 		const element = document.getElementById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 
 		// TODO: This is awful, it’s barely readable and cumbersome

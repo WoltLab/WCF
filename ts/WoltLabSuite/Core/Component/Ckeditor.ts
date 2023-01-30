@@ -2,7 +2,7 @@ import { getMentionConfiguration } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
 import { setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
 import { uploadMedia } from "./Ckeditor/Media";
-import { removeExpiredDrafts, saveDraft } from "./Ckeditor/Autosave";
+import { removeExpiredDrafts, saveDraft, setupRestoreDraft } from "./Ckeditor/Autosave";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
@@ -161,6 +161,10 @@ export async function setupCkeditor(
 
     if (features.attachment) {
       setupRemoveAttachment(editor);
+    }
+
+    if (features.autosave) {
+      setupRestoreDraft(cke, features.autosave);
     }
 
     instances.set(element, editor);

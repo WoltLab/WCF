@@ -3674,6 +3674,7 @@ Attachments:
 		<item name="wcf.dialog.button.primary"><![CDATA[OK]]></item>
 		<item name="wcf.dialog.button.primary.confirm"><![CDATA[Confirm]]></item>
 		<item name="wcf.dialog.button.primary.delete"><![CDATA[Delete]]></item>
+		<item name="wcf.dialog.button.primary.restore"><![CDATA[Restore]]></item>
 		<item name="wcf.dialog.button.primary.submit"><![CDATA[Submit]]></item>
 		<item name="wcf.dialog.confirmation.cannotBeUndone"><![CDATA[This process cannot be undone.]]></item>
 		<item name="wcf.dialog.confirmation.delete"><![CDATA[Are you sure you want to delete “{$title}”?]]></item>
@@ -3794,6 +3795,8 @@ Attachments:
 		<item name="wcf.editor.table.insertRowAbove"><![CDATA[Insert row above]]></item>
 		<item name="wcf.editor.table.insertRowBelow"><![CDATA[Insert row below]]></item>
 		<item name="wcf.editor.table.rows"><![CDATA[Rows]]></item>
+
+		<item name="wcf.editor.restoreDraft"><![CDATA[Do you want to restore the saved draft?]]></item>
 	</category>
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>

@@ -115,6 +115,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             if (features.attachment) {
                 (0, Attachment_1.setupRemoveAttachment)(editor);
             }
+            if (features.autosave) {
+                (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
+            }
             instances.set(element, editor);
         }
         return editor;

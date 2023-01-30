@@ -5,3 +5,38 @@
 
     @extend .htmlContent;
 }
+
+.ckeditor5__restoreDraft {
+    position: relative;
+}
+
+.ckeditor5_restoreDraft__wrapper {
+    align-items: center;
+    background-color: rgb(0 0 0 / 34%);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+}
+
+.ckeditor5__restoreDraft__dialog {
+    background-color: var(--wcfContentBackground);
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 20%) 0 12px 28px 0, rgb(0 0 0 / 10%) 0 2px 4px 0;
+    color: var(--wcfContentText);
+    max-width: 400px;
+    padding: 20px;
+}
+
+.ckeditor5__restoreDraft__question {
+    font-size: var(--wcfFontSizeHeadline);
+    font-weight: 600;
+    line-height: 1.28;
+}
+
+.ckeditor5__restoreDraft__buttons {
+    column-gap: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 20px;
+}
