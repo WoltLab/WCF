@@ -26,6 +26,8 @@ final class FloodControl extends SingletonFactory
      * Returns the number of contents by a certain identifier type within a certain period of
      * time `($time-$interval, $time]` and the earliest time within the period at which content
      * was created.
+     *
+     * @return array{count: int, earliestTime: int}
      */
     private function countContentByIdentifier(
         string $objectType,
@@ -53,6 +55,8 @@ final class FloodControl extends SingletonFactory
      * Returns the number of contents the active user created of the given type within a certain
      * period of time `($time-$interval, $time]` and the earliest time within the period at which
      * content was created.
+     *
+     * @return array{count: int, earliestTime: int}
      */
     public function countContent(string $objectType, \DateInterval $interval, int $time = TIME_NOW): array
     {
@@ -67,6 +71,8 @@ final class FloodControl extends SingletonFactory
      * Returns the number of contents a guest created of the given type within a certain period
      * of time `($time-$interval, $time]` and the earliest time within the period at which
      * content was created.
+     *
+     * @return array{count: int, earliestTime: int}
      */
     public function countGuestContent(
         string $objectType,
@@ -86,6 +92,8 @@ final class FloodControl extends SingletonFactory
      * Returns the number of contents a user created of the given type within a certain period
      * of time `($time-$interval, $time]` and the earliest time within the period at which
      * content was created.
+     *
+     * @return array{count: int, earliestTime: int}
      */
     public function countUserContent(
         string $objectType,
