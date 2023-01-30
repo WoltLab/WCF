@@ -9,5 +9,8 @@
 window.Prism = window.Prism || {};
 window.Prism.manual = true;
 define(['prism/prism'], function () {
+    window.Prism.hooks.add('wrap', (env) => {
+        env.classes = env.classes.map((c) => `prism-${c}`);
+    });
     return Prism;
 });
