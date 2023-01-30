@@ -229,11 +229,16 @@ final class RescueModeForm extends AbstractForm
     /**
      * @inheritDoc
      */
+    protected function validateSecurityToken()
+    {
+        // The XSRF validation is not functional in this very slimmed down template.
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function validate()
     {
-        // bypass security token validation
-        $_POST['t'] = WCF::getSession()->getSecurityToken();
-
         parent::validate();
 
         // error handling
