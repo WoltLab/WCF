@@ -10,7 +10,7 @@ use wcf\data\application\ApplicationList;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
-use wcf\form\AbstractCaptchaForm;
+use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -32,7 +32,7 @@ use wcf\util\UserUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class RescueModeForm extends AbstractCaptchaForm
+final class RescueModeForm extends AbstractForm
 {
     /**
      * @var Application[]
@@ -60,11 +60,6 @@ final class RescueModeForm extends AbstractCaptchaForm
      * @var string
      */
     public $username = '';
-
-    /**
-     * @inheritDoc
-     */
-    public $useCaptcha = false;
 
     public $domainName = '';
 
@@ -100,23 +95,6 @@ final class RescueModeForm extends AbstractCaptchaForm
             $failures = UserAuthenticationFailure::countIPFailures(UserUtil::getIpAddress());
             if (USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
                 throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked'));
-            }
-            if (USER_AUTHENTICATION_FAILURE_IP_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_IP_CAPTCHA) {
-                $this->useCaptcha = true;
-            } elseif (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
-                if (isset($_POST['username'])) {
-                    $user = User::getUserByUsername(StringUtil::trim($_POST['username']));
-                    if (!$user->userID) {
-                        $user = User::getUserByEmail(StringUtil::trim($_POST['username']));
-                    }
-
-                    if ($user->userID) {
-                        $failures = UserAuthenticationFailure::countUserFailures($user->userID);
-                        if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
-                            $this->useCaptcha = true;
-                        }
-                    }
-                }
             }
         }
 
@@ -244,10 +222,6 @@ final class RescueModeForm extends AbstractCaptchaForm
                     ],
                 ]);
                 $action->executeAction();
-
-                if ($this->captchaObjectType) {
-                    $this->captchaObjectType->getProcessor()->reset();
-                }
             }
         }
     }

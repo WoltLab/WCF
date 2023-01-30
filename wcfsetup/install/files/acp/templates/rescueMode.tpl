@@ -87,8 +87,6 @@
 		</dl>
 	</section>
 	
-	{include file='captcha' supportsAsyncCaptcha=true}
-
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.rescueMode.domain{/lang}</h2>
