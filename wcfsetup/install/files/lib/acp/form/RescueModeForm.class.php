@@ -10,10 +10,11 @@ use wcf\data\application\ApplicationList;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
-use wcf\form\AbstractCaptchaForm;
+use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\Regex;
 use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
@@ -32,7 +33,7 @@ use wcf\util\UserUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class RescueModeForm extends AbstractCaptchaForm
+final class RescueModeForm extends AbstractForm
 {
     /**
      * @var Application[]
@@ -61,12 +62,13 @@ final class RescueModeForm extends AbstractCaptchaForm
      */
     public $username = '';
 
-    /**
-     * @inheritDoc
-     */
-    public $useCaptcha = false;
-
     public $domainName = '';
+
+    private const ALLOWED_ATTEMPTS_PER_10M = 3;
+
+    private const ALLOWED_ATTEMPTS_PER_1D = 10;
+
+    private const ALLOWED_ATTEMPTS_PER_1D_GLOBAL = 30;
 
     /**
      * @inheritDoc
@@ -101,23 +103,32 @@ final class RescueModeForm extends AbstractCaptchaForm
             if (USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
                 throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked'));
             }
-            if (USER_AUTHENTICATION_FAILURE_IP_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_IP_CAPTCHA) {
-                $this->useCaptcha = true;
-            } elseif (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
-                if (isset($_POST['username'])) {
-                    $user = User::getUserByUsername(StringUtil::trim($_POST['username']));
-                    if (!$user->userID) {
-                        $user = User::getUserByEmail(StringUtil::trim($_POST['username']));
-                    }
+        }
 
-                    if ($user->userID) {
-                        $failures = UserAuthenticationFailure::countUserFailures($user->userID);
-                        if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
-                            $this->useCaptcha = true;
-                        }
-                    }
-                }
-            }
+        // Check flood control.
+        $floodExceeded = false;
+        $floodControl = FloodControl::getInstance();
+
+        $floodExceeded = $floodExceeded || $floodControl->countGuestContent(
+            'com.woltlab.wcf.rescueMode',
+            UserUtil::getIpAddress(),
+            new \DateInterval('PT10M')
+        )['count'] >= self::ALLOWED_ATTEMPTS_PER_10M;
+
+        $floodExceeded = $floodExceeded || $floodControl->countGuestContent(
+            'com.woltlab.wcf.rescueMode',
+            UserUtil::getIpAddress(),
+            new \DateInterval('P1D')
+        )['count'] >= self::ALLOWED_ATTEMPTS_PER_1D;
+
+        $floodExceeded = $floodExceeded || $floodControl->countGuestContent(
+            'com.woltlab.wcf.rescueMode',
+            'global',
+            new \DateInterval('P1D')
+        )['count'] >= self::ALLOWED_ATTEMPTS_PER_1D_GLOBAL;
+        
+        if ($floodExceeded) {
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.page.error.flood'));
         }
 
         // read applications
@@ -229,9 +240,17 @@ final class RescueModeForm extends AbstractCaptchaForm
     {
         parent::submit();
 
-        // save authentication failure
-        if (ENABLE_USER_AUTHENTICATION_FAILURE) {
-            if ($this->errorField == 'username' || $this->errorField == 'password') {
+        if ($this->errorField == 'username' || $this->errorField == 'password') {
+            FloodControl::getInstance()->registerGuestContent(
+                'com.woltlab.wcf.rescueMode',
+                UserUtil::getIpAddress()
+            );
+            FloodControl::getInstance()->registerGuestContent(
+                'com.woltlab.wcf.rescueMode',
+                'global'
+            );
+
+            if (ENABLE_USER_AUTHENTICATION_FAILURE) {
                 $action = new UserAuthenticationFailureAction([], 'create', [
                     'data' => [
                         'environment' => 'admin',
@@ -244,10 +263,6 @@ final class RescueModeForm extends AbstractCaptchaForm
                     ],
                 ]);
                 $action->executeAction();
-
-                if ($this->captchaObjectType) {
-                    $this->captchaObjectType->getProcessor()->reset();
-                }
             }
         }
     }
@@ -255,11 +270,16 @@ final class RescueModeForm extends AbstractCaptchaForm
     /**
      * @inheritDoc
      */
+    protected function validateSecurityToken()
+    {
+        // The XSRF validation is not functional in this very slimmed down template.
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function validate()
     {
-        // bypass security token validation
-        $_POST['t'] = WCF::getSession()->getSecurityToken();
-
         parent::validate();
 
         // error handling
