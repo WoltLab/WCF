@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.user.login' __isLogin=true}
+{include file='header' pageTitle='wcf.user.login'}
 
 <div id="login" class="acpLoginForm" style="display: none">
 	<form method="post" action="{link controller='Login'}{/link}">

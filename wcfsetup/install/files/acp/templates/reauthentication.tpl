@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.user.reauthentication' __isLogin=true}
+{include file='header' pageTitle='wcf.user.reauthentication'}
 
 {*
 <header class="contentHeader">
