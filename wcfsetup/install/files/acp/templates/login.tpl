@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.user.login'}
 
 <div id="login" class="acpLoginForm" style="display: none">
-	<form method="post" action="{link controller='Login'}{/link}">
+	<form method="post" action="{link controller='Login' url=$url}{/link}">
 		{if !$errorField|empty && $errorField == 'cookie'}
 			<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
 		{else}
@@ -42,7 +42,6 @@
 		
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-			<input type="hidden" name="url" value="{$url}">
 			{csrfToken}
 		</div>
 	</form>
