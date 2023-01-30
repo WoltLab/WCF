@@ -295,12 +295,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'symfony/polyfill-php72' => array(
-            'dev_requirement' => false,
-            'replaced' => array(
-                0 => '*',
-            ),
-        ),
         'symfony/polyfill-php82' => array(
             'pretty_version' => 'v1.27.0',
             'version' => '1.27.0.0',
