@@ -14,6 +14,7 @@ use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\Regex;
 use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
@@ -63,6 +64,12 @@ final class RescueModeForm extends AbstractForm
 
     public $domainName = '';
 
+    private const ALLOWED_ATTEMPTS_PER_10M = 3;
+
+    private const ALLOWED_ATTEMPTS_PER_1D = 10;
+
+    private const ALLOWED_ATTEMPTS_PER_1D_GLOBAL = 30;
+
     /**
      * @inheritDoc
      */
@@ -96,6 +103,32 @@ final class RescueModeForm extends AbstractForm
             if (USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
                 throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked'));
             }
+        }
+
+        // Check flood control.
+        $floodExceeded = false;
+        $floodControl = FloodControl::getInstance();
+
+        $floodExceeded = $floodExceeded || $floodControl->countGuestContent(
+            'com.woltlab.wcf.rescueMode',
+            UserUtil::getIpAddress(),
+            new \DateInterval('PT10M')
+        )['count'] >= self::ALLOWED_ATTEMPTS_PER_10M;
+
+        $floodExceeded = $floodExceeded || $floodControl->countGuestContent(
+            'com.woltlab.wcf.rescueMode',
+            UserUtil::getIpAddress(),
+            new \DateInterval('P1D')
+        )['count'] >= self::ALLOWED_ATTEMPTS_PER_1D;
+
+        $floodExceeded = $floodExceeded || $floodControl->countGuestContent(
+            'com.woltlab.wcf.rescueMode',
+            'global',
+            new \DateInterval('P1D')
+        )['count'] >= self::ALLOWED_ATTEMPTS_PER_1D_GLOBAL;
+        
+        if ($floodExceeded) {
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.page.error.flood'));
         }
 
         // read applications
@@ -207,9 +240,17 @@ final class RescueModeForm extends AbstractForm
     {
         parent::submit();
 
-        // save authentication failure
-        if (ENABLE_USER_AUTHENTICATION_FAILURE) {
-            if ($this->errorField == 'username' || $this->errorField == 'password') {
+        if ($this->errorField == 'username' || $this->errorField == 'password') {
+            FloodControl::getInstance()->registerGuestContent(
+                'com.woltlab.wcf.rescueMode',
+                UserUtil::getIpAddress()
+            );
+            FloodControl::getInstance()->registerGuestContent(
+                'com.woltlab.wcf.rescueMode',
+                'global'
+            );
+
+            if (ENABLE_USER_AUTHENTICATION_FAILURE) {
                 $action = new UserAuthenticationFailureAction([], 'create', [
                     'data' => [
                         'environment' => 'admin',
