@@ -11,8 +11,10 @@ use wcf\data\language\item\LanguageItemList;
 use wcf\data\page\PageEditor;
 use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
+use wcf\system\language\event\CopyLanguageContent;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -1054,5 +1056,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         PageEditor::resetCache();
+
+        EventHandler::getInstance()->fire(new CopyLanguageContent(
+            new Language($sourceLanguageID),
+            new Language($destinationLanguageID)
+        ));
     }
 }
