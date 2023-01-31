@@ -69,8 +69,6 @@ declare global {
   interface JQuery {
     sortable(...args: any[]): unknown;
 
-    redactor(...args: any[]): unknown;
-
     messageTabMenu(...args: any[]): unknown;
   }
 

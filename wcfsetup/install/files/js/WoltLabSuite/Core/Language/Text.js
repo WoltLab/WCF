@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./Input"], function (require, exports, tslib_1, LanguageInput) {
+define(["require", "exports", "tslib", "./Input", "../Component/Ckeditor"], function (require, exports, tslib_1, LanguageInput, Ckeditor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
@@ -14,17 +14,13 @@ define(["require", "exports", "tslib", "./Input"], function (require, exports, t
      * Refreshes the editor content on language switch.
      */
     function callbackSelect(element) {
-        if (window.jQuery !== undefined) {
-            window.jQuery(element).redactor("code.set", element.value);
-        }
+        (0, Ckeditor_1.getCkeditor)(element).setHtml(element.value);
     }
     /**
      * Refreshes the input element value on submit.
      */
     function callbackSubmit(element) {
-        if (window.jQuery !== undefined) {
-            element.value = window.jQuery(element).redactor("code.get");
-        }
+        element.value = (0, Ckeditor_1.getCkeditor)(element).getHtml();
     }
     /**
      * Initializes an WYSIWYG input field.

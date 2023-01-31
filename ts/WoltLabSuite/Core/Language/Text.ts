@@ -8,23 +8,20 @@
 
 import { I18nValues, InputOrTextarea, Languages } from "./Input";
 import * as LanguageInput from "./Input";
+import { getCkeditor } from "../Component/Ckeditor";
 
 /**
  * Refreshes the editor content on language switch.
  */
 function callbackSelect(element: InputOrTextarea): void {
-  if (window.jQuery !== undefined) {
-    window.jQuery(element).redactor("code.set", element.value);
-  }
+  getCkeditor(element)!.setHtml(element.value);
 }
 
 /**
  * Refreshes the input element value on submit.
  */
 function callbackSubmit(element: InputOrTextarea): void {
-  if (window.jQuery !== undefined) {
-    element.value = window.jQuery(element).redactor("code.get") as string;
-  }
+  element.value = getCkeditor(element)!.getHtml();
 }
 
 /**
