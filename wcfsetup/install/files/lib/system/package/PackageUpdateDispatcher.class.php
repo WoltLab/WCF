@@ -9,9 +9,11 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\HttpFactory;
+use wcf\system\package\event\PackageUpdateListChanged;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -98,6 +100,11 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
         if ($refreshedPackageLists) {
             PackageUpdateCacheBuilder::getInstance()->reset();
+            foreach ($updateServers as $updateServer) {
+                EventHandler::getInstance()->fire(
+                    new PackageUpdateListChanged($updateServer)
+                );
+            }
         }
     }
 
