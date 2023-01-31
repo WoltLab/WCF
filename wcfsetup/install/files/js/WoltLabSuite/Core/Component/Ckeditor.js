@@ -39,6 +39,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
                 }
             });
         }
+        get element() {
+            return this.#editor.ui.element;
+        }
         get features() {
             return this.#features;
         }

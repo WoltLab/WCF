@@ -248,7 +248,7 @@ WCF.Message.FormGuard = Class.extend({
 
 if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * Provides previews for Redactor message fields.
+	 * Provides previews for CKEditor 5 message fields.
 	 *
 	 * @param        string                className
 	 * @param        string                messageFieldID
@@ -322,6 +322,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				failure: $.proxy(this._failure, this),
 				success: $.proxy(this._success, this)
 			});
+
+			this._ckeditorApi = undefined;
+			require(["WoltLabSuite/Core/Component/Ckeditor"], (Ckeditor) => {
+				this._ckeditorApi = Ckeditor;
+			})
 		},
 		
 		/**
@@ -349,7 +354,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 				}
 
-				elInnerError(this._textarea.redactor("core.editor")[0], WCF.Language.get("wcf.global.form.error.empty"));
+				elInnerError(this._getCkeditor().element, WCF.Language.get("wcf.global.form.error.empty"));
 				return;
 			}
 			
@@ -395,13 +400,21 @@ if (COMPILER_TARGET_DEFAULT) {
 		},
 		
 		/**
-		 * Returns parsed message from Redactor or null if editor was not accessible.
+		 * Returns parsed message from CKEditor 5 or null if the editor was not accessible.
 		 *
 		 * @return        string
 		 */
 		_getMessage: function () {
-			// Disabled for now, there is a collision within `require()`.
-			return null;
+			const editor = this._getCkeditor();
+			if (editor === undefined) {
+				return null;
+			}
+
+			return editor.getHtml();
+		},
+
+		_getCkeditor(){
+			return this._ckeditorApi.getCkeditorById(this._messageFieldID);
 		},
 		
 		/**

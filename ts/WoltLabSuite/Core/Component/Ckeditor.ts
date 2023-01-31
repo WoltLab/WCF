@@ -65,6 +65,10 @@ class Ckeditor {
     });
   }
 
+  get element(): HTMLElement {
+    return this.#editor.ui.element!;
+  }
+
   get features(): Features {
     return this.#features;
   }
