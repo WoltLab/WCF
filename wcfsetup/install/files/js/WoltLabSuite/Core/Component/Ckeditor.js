@@ -28,6 +28,9 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             div.textContent = text;
             this.insertHtml(div.innerHTML);
         }
+        isVisible() {
+            return this.#editor.ui.element.clientWidth !== 0;
+        }
         setHtml(html) {
             this.#editor.data.set(html);
         }

@@ -52,6 +52,10 @@ class Ckeditor {
     this.insertHtml(div.innerHTML);
   }
 
+  isVisible(): boolean {
+    return this.#editor.ui.element!.clientWidth !== 0;
+  }
+
   setHtml(html: string): void {
     this.#editor.data.set(html);
   }

@@ -413,8 +413,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			return editor.getHtml();
 		},
 
-		_getCkeditor(){
-			return this._ckeditorApi.getCkeditorById(this._messageFieldID);
+		_getCkeditor(messageFieldId){
+			return this._ckeditorApi.getCkeditorById(messageFieldId ? messageFieldId : this._messageFieldID);
 		},
 		
 		/**
@@ -574,7 +574,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				messageField = elById(messageFieldId);
 				
 				// Check if the editor instance has an offset parent. If it is null, the editor is invisible.
-				if (elBySel('.redactor-layer[data-element-id="' + messageField.id + '"]').offsetParent !== null) {
+				if (this._getCkeditor(messageFieldId).isVisible()) {
 					this._messageFieldID = messageFieldId;
 					this._textarea = $(messageField);
 					break;
