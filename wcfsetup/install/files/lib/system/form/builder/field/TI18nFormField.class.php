@@ -278,6 +278,10 @@ trait TI18nFormField
      */
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true)
     {
+        if ($this instanceof IImmutableFormField && $this->isImmutable()) {
+            $loadValues = true;
+        }
+
         if ($loadValues && isset($data[$this->getObjectProperty()])) {
             $value = $data[$this->getObjectProperty()];
 
