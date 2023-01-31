@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui/Dropdown/Simple", "../../Ui/Notification", "../Confirmation", "../../Ui/Scroll", "../../Environment", "../../Event/Handler", "../../Language"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, UiScroll, Environment, EventHandler, Language_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui/Dropdown/Simple", "../../Ui/Notification", "../Confirmation", "../../Ui/Scroll", "../../Event/Handler", "../../Language", "../Ckeditor"], function (require, exports, tslib_1, Ajax_1, Util_1, Simple_1, UiNotification, Confirmation_1, UiScroll, EventHandler, Language_1, Ckeditor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.WoltlabCoreCommentElement = void 0;
@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
     Simple_1 = tslib_1.__importDefault(Simple_1);
     UiNotification = tslib_1.__importStar(UiNotification);
     UiScroll = tslib_1.__importStar(UiScroll);
-    Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     class WoltlabCoreCommentElement extends HTMLParsedElement {
         parsedCallback() {
@@ -77,15 +76,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
                 data.cancel = true;
                 void this.#saveEdit();
             });
-            const editorElement = document.getElementById(this.#editorId);
-            if (Environment.editor() === "redactor") {
-                window.setTimeout(() => {
-                    UiScroll.element(this);
-                }, 250);
-            }
-            else {
-                editorElement.focus();
-            }
+            window.setTimeout(() => {
+                UiScroll.element(this);
+            }, 250);
         }
         async #saveEdit() {
             const parameters = {
@@ -142,11 +135,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../Ui
          */
         #validateEdit(parameters) {
             this.querySelectorAll(".innerError").forEach((el) => el.remove());
-            // check if editor contains actual content
-            const editorElement = document.getElementById(this.#editorId);
-            const redactor = window.jQuery(editorElement).data("redactor");
-            if (redactor.utils.isEmpty()) {
-                Util_1.default.innerError(editorElement, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
+            const editor = (0, Ckeditor_1.getCkeditorById)(this.#editorId);
+            if (editor.getHtml() === "") {
+                Util_1.default.innerError(editor.element, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {

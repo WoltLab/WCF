@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "./GuestDialog", "../../Core"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, GuestDialog_1, Core) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../Ui/Notification", "../../Language", "../../Event/Handler", "../../Dom/Util", "./GuestDialog", "../../Core", "../Ckeditor"], function (require, exports, tslib_1, Ajax_1, UiScroll, UiNotification, Language_1, EventHandler, Util_1, GuestDialog_1, Core, Ckeditor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentAdd = void 0;
@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
         #objectId;
         #placeholder;
         #callback;
-        #editor = null;
+        #editor;
         constructor(container, objectTypeId, objectId, callback) {
             this.#container = container;
             this.#content = this.#container.querySelector(".commentAdd__content");
@@ -59,11 +59,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
         #focusEditor() {
             window.setTimeout(() => {
                 UiScroll.element(this.#container, () => {
-                    const element = window.jQuery(this.#textarea);
-                    const editor = element.redactor("core.editor")[0];
-                    if (editor !== document.activeElement) {
-                        element.redactor("WoltLabCaret.endOfEditor");
-                    }
+                    this.#getEditor().focus();
                 });
             }, 0);
         }
@@ -73,18 +69,18 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
         #validate() {
             // remove all existing error elements
             this.#container.querySelectorAll(".innerError").forEach((el) => el.remove());
-            // check if editor contains actual content
-            if (this.#getEditor().utils.isEmpty()) {
+            const message = this.#getEditor().getHtml();
+            if (message === "") {
                 this.#throwError(this.#textarea, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 return false;
             }
             const data = {
                 api: this,
                 editor: this.#getEditor(),
-                message: this.#getEditor().code.get(),
+                message,
                 valid: true,
             };
-            EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "validate_text", data);
             return data.valid;
         }
         /**
@@ -96,7 +92,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
             }
             this.#showLoadingOverlay();
             const parameters = this.#getParameters();
-            EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", "submit_text", parameters.data);
             let response;
             try {
                 response = (await (0, Ajax_1.dboAction)("addComment", "wcf\\data\\comment\\CommentAction")
@@ -131,13 +127,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
          * Returns the current editor instance.
          */
         #getEditor() {
-            if (this.#editor === null) {
-                if (typeof window.jQuery === "function") {
-                    this.#editor = window.jQuery(this.#textarea).data("redactor");
-                }
-                else {
-                    throw new Error("Unable to access editor, jQuery has not been loaded yet.");
-                }
+            if (this.#editor === undefined) {
+                this.#editor = (0, Ckeditor_1.getCkeditor)(this.#textarea);
             }
             return this.#editor;
         }
@@ -166,7 +157,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
         #getParameters() {
             return {
                 data: {
-                    message: this.#getEditor().code.get(),
+                    message: this.#getEditor().getHtml(),
                     objectID: this.#objectId,
                     objectTypeID: this.#objectTypeId,
                 },
@@ -176,8 +167,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Ui/Scroll", "../../U
          * Resets the editor contents and notifies event listeners.
          */
         #reset() {
-            this.#getEditor().code.set("<p>\u200b</p>");
-            EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+            this.#getEditor().reset();
             if (document.activeElement instanceof HTMLElement) {
                 document.activeElement.blur();
             }

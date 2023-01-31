@@ -9,7 +9,6 @@
 
 import DomUtil from "../../../Dom/Util";
 import { getPhrase } from "../../../Language";
-import { RedactorEditor } from "../../../Ui/Redactor/Editor";
 import * as EventHandler from "../../../Event/Handler";
 import * as UiScroll from "../../../Ui/Scroll";
 import { dboAction } from "../../../Ajax";
@@ -17,6 +16,7 @@ import * as Core from "../../../Core";
 import * as UiNotification from "../../../Ui/Notification";
 import { StatusNotOk } from "../../../Ajax/Error";
 import { showGuestDialog } from "../GuestDialog";
+import { CKEditor, getCkeditor } from "../../Ckeditor";
 
 type ResponseAddResponse = {
   guestDialog?: string;
@@ -31,7 +31,7 @@ export class CommentResponseAdd {
   readonly #textarea: HTMLTextAreaElement;
   readonly #callback: CallbackInsertResponse;
   readonly #messageCache = new Map<number, string>();
-  #editor: RedactorEditor | null = null;
+  #editor?: CKEditor;
   #commentId: number;
 
   constructor(container: HTMLElement, callback: CallbackInsertResponse) {
@@ -70,8 +70,8 @@ export class CommentResponseAdd {
     // remove all existing error elements
     this.container.querySelectorAll(".innerError").forEach((el) => el.remove());
 
-    // check if editor contains actual content
-    if (this.#getEditor().utils.isEmpty()) {
+    const message = this.#getEditor().getHtml();
+    if (message === "") {
       this.#throwError(this.#textarea, getPhrase("wcf.global.form.error.empty"));
       return false;
     }
@@ -79,11 +79,11 @@ export class CommentResponseAdd {
     const data = {
       api: this,
       editor: this.#getEditor(),
-      message: this.#getEditor().code.get(),
+      message,
       valid: true,
     };
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", "validate_text", data);
 
     return data.valid;
   }
@@ -100,7 +100,7 @@ export class CommentResponseAdd {
 
     const parameters = this.#getParameters();
 
-    EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data as any);
+    EventHandler.fire("com.woltlab.wcf.ckeditor", "submit_text", parameters.data as any);
 
     let response: ResponseAddResponse;
 
@@ -144,9 +144,7 @@ export class CommentResponseAdd {
    * Resets the editor contents and notifies event listeners.
    */
   #reset(): void {
-    this.#getEditor().code.set("<p>\u200b</p>");
-
-    EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+    this.#getEditor().reset();
 
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -166,13 +164,9 @@ export class CommentResponseAdd {
   /**
    * Returns the current editor instance.
    */
-  #getEditor(): RedactorEditor {
-    if (this.#editor === null) {
-      if (typeof window.jQuery === "function") {
-        this.#editor = window.jQuery(this.#textarea).data("redactor") as RedactorEditor;
-      } else {
-        throw new Error("Unable to access editor, jQuery has not been loaded yet.");
-      }
+  #getEditor(): CKEditor {
+    if (this.#editor === undefined) {
+      this.#editor = getCkeditor(this.#textarea)!;
     }
 
     return this.#editor;
@@ -182,15 +176,14 @@ export class CommentResponseAdd {
    * Retrieves the current content from the editor.
    */
   #getContent(): string {
-    return window.jQuery(this.#textarea).redactor("code.get") as string;
+    return this.#getEditor().getHtml();
   }
 
   /**
    * Sets the content and places the caret at the end of the editor.
    */
   #setContent(html: string): void {
-    window.jQuery(this.#textarea).redactor("code.set", html);
-    window.jQuery(this.#textarea).redactor("WoltLabCaret.endOfEditor");
+    this.#getEditor().setHtml(html);
 
     // the error message can appear anywhere in the container, not exclusively after the textarea
     const innerError = this.#textarea.parentElement!.querySelector(".innerError");
@@ -207,11 +200,7 @@ export class CommentResponseAdd {
   #focusEditor(): void {
     window.setTimeout(() => {
       UiScroll.element(this.container, () => {
-        const element = window.jQuery(this.#textarea);
-        const editor = (element.redactor("core.editor") as any)[0];
-        if (editor !== document.activeElement) {
-          element.redactor("WoltLabCaret.endOfEditor");
-        }
+        this.#getEditor().focus();
       });
     }, 0);
   }
@@ -222,7 +211,7 @@ export class CommentResponseAdd {
   #getParameters(): ArbitraryObject {
     return {
       data: {
-        message: this.#getEditor().code.get(),
+        message: this.#getContent(),
       },
     };
   }
