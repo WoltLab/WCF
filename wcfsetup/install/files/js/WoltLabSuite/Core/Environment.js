@@ -8,9 +8,8 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.touch = exports.platform = exports.editor = exports.browser = exports.setup = void 0;
+    exports.touch = exports.platform = exports.browser = exports.setup = void 0;
     let _browser = "other";
-    let _editor = "none";
     let _platform = "desktop";
     let _touch = false;
     /**
@@ -56,7 +55,6 @@ define(["require", "exports"], function (require, exports) {
         if (_platform === "desktop" && (ua.indexOf("mobile") !== -1 || ua.indexOf("tablet") !== -1)) {
             _platform = "mobile";
         }
-        _editor = "redactor";
         _touch =
             "ontouchstart" in window ||
                 ("msMaxTouchPoints" in window.navigator && window.navigator.msMaxTouchPoints > 0) ||
@@ -81,13 +79,6 @@ define(["require", "exports"], function (require, exports) {
         return _browser;
     }
     exports.browser = browser;
-    /**
-     * Returns the available editor's name or an empty string.
-     */
-    function editor() {
-        return _editor;
-    }
-    exports.editor = editor;
     /**
      * Returns the browser platform.
      *

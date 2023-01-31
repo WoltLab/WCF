@@ -5,13 +5,12 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Environment", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Environment, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../Event/Handler", "../../Language", "../Dropdown/Reusable", "../Notification", "../Screen", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, EventHandler, Language, UiDropdownReusable, UiNotification, UiScreen, UiScroll) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
-    Environment = tslib_1.__importStar(Environment);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
     UiDropdownReusable = tslib_1.__importStar(UiDropdownReusable);
@@ -313,18 +312,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             // hide message header and footer
             Util_1.default.hide(elementData.messageHeader);
             Util_1.default.hide(elementData.messageFooter);
-            if (Environment.editor() === "redactor") {
-                window.setTimeout(() => {
-                    if (this._options.quoteManager) {
-                        this._options.quoteManager.setAlternativeEditor(id);
-                    }
-                    UiScroll.element(activeElement);
-                }, 250);
-            }
-            else {
-                const editorElement = document.getElementById(id);
-                editorElement.focus();
-            }
+            window.setTimeout(() => {
+                if (this._options.quoteManager) {
+                    this._options.quoteManager.setAlternativeEditor(id);
+                }
+                UiScroll.element(activeElement);
+            }, 250);
         }
         /**
          * Restores the message view.

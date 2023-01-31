@@ -11,7 +11,6 @@ import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../Ajax/
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
-import * as Environment from "../../Environment";
 import * as EventHandler from "../../Event/Handler";
 import * as Language from "../../Language";
 import { NotificationAction } from "../Dropdown/Data";
@@ -403,18 +402,13 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     DomUtil.hide(elementData.messageHeader);
     DomUtil.hide(elementData.messageFooter);
 
-    if (Environment.editor() === "redactor") {
-      window.setTimeout(() => {
-        if (this._options.quoteManager) {
-          this._options.quoteManager.setAlternativeEditor(id);
-        }
+    window.setTimeout(() => {
+      if (this._options.quoteManager) {
+        this._options.quoteManager.setAlternativeEditor(id);
+      }
 
-        UiScroll.element(activeElement);
-      }, 250);
-    } else {
-      const editorElement = document.getElementById(id) as HTMLElement;
-      editorElement.focus();
-    }
+      UiScroll.element(activeElement);
+    }, 250);
   }
 
   /**
