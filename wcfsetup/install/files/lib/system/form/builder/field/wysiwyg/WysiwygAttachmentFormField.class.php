@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class WysiwygAttachmentFormField extends AbstractFormField
+final class WysiwygAttachmentFormField extends AbstractFormField
 {
     use TWysiwygFormNode;
 

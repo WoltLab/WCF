@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class RatingFormField extends AbstractFormField implements
+final class RatingFormField extends AbstractFormField implements
     IImmutableFormField,
     IMaximumFormField,
     IMinimumFormField,

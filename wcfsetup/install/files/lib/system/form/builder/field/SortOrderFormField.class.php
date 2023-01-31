@@ -13,7 +13,7 @@ namespace wcf\system\form\builder\field;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class SortOrderFormField extends SingleSelectionFormField
+final class SortOrderFormField extends SingleSelectionFormField
 {
     use TDefaultIdFormField;
 

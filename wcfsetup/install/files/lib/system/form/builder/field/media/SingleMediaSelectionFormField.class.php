@@ -16,7 +16,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class SingleMediaSelectionFormField extends AbstractFormField implements IImmutableFormField
+final class SingleMediaSelectionFormField extends AbstractFormField implements IImmutableFormField
 {
     use TImmutableFormField;
 

@@ -12,7 +12,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.5
  */
-class ColorFormField extends AbstractFormField implements IImmutableFormField
+final class ColorFormField extends AbstractFormField implements IImmutableFormField
 {
     use TImmutableFormField;
 

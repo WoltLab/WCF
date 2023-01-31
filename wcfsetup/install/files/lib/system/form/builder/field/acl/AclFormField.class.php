@@ -18,7 +18,7 @@ use wcf\system\form\builder\TObjectTypeFormNode;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class AclFormField extends AbstractFormField implements IObjectTypeFormNode
+final class AclFormField extends AbstractFormField implements IObjectTypeFormNode
 {
     use TObjectTypeFormNode;
 

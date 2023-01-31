@@ -18,7 +18,7 @@ use wcf\system\form\builder\IFormDocument;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class SimpleAclFormField extends AbstractFormField
+final class SimpleAclFormField extends AbstractFormField
 {
     /**
      * @inheritDoc

@@ -27,7 +27,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.4
  */
-class UserPasswordField extends AbstractFormField implements
+final class UserPasswordField extends AbstractFormField implements
     IAttributeFormField,
     IAutoCompleteFormField,
     IAutoFocusFormField,

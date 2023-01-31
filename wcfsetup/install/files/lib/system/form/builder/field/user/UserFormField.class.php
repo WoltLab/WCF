@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class UserFormField extends AbstractFormField implements
+final class UserFormField extends AbstractFormField implements
     IAutoFocusFormField,
     IImmutableFormField,
     IMultipleFormField,

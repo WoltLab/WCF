@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class DevtoolsProjectInstructionsFormField extends AbstractFormField
+final class DevtoolsProjectInstructionsFormField extends AbstractFormField
 {
     use TDefaultIdFormField;
 

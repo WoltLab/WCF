@@ -14,7 +14,7 @@ use wcf\system\user\multifactor\Helper;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.4
  */
-class CodeFormField extends TextFormField
+final class CodeFormField extends TextFormField
 {
     use TDefaultIdFormField;
 
