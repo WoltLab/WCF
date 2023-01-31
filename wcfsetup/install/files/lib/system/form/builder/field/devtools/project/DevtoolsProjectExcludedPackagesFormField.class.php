@@ -14,7 +14,7 @@ use wcf\system\form\builder\field\TDefaultIdFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class DevtoolsProjectExcludedPackagesFormField extends AbstractFormField
+final class DevtoolsProjectExcludedPackagesFormField extends AbstractFormField
 {
     use TDefaultIdFormField;
 

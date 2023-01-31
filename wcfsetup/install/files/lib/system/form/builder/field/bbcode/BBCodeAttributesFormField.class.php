@@ -15,7 +15,7 @@ use wcf\system\Regex;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class BBCodeAttributesFormField extends AbstractFormField
+final class BBCodeAttributesFormField extends AbstractFormField
 {
     use TDefaultIdFormField;
 

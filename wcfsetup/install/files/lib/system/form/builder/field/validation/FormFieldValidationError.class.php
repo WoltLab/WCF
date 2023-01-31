@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class FormFieldValidationError implements IFormFieldValidationError
+final class FormFieldValidationError implements IFormFieldValidationError
 {
     /**
      * additional error information, also used to resolve error message from language item

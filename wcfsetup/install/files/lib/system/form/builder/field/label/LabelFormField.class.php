@@ -21,7 +21,7 @@ use wcf\system\label\LabelHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
+final class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
 {
     use TObjectTypeFormNode;
 

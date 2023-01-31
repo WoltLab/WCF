@@ -12,7 +12,7 @@ use wcf\system\form\builder\field\IFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class FormFieldValidator implements IFormFieldValidator
+final class FormFieldValidator implements IFormFieldValidator
 {
     /**
      * id of the validator that has to be unique for each field

@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class UserGroupOptionFormField extends ItemListFormField implements IPackagesFormField
+final class UserGroupOptionFormField extends ItemListFormField implements IPackagesFormField
 {
     use TDefaultIdFormField;
     use TPackagesFormField;

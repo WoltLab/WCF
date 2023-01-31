@@ -15,7 +15,7 @@ use wcf\util\CryptoUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.4
  */
-class SecretFormField extends AbstractFormField
+final class SecretFormField extends AbstractFormField
 {
     use TDefaultIdFormField;
 

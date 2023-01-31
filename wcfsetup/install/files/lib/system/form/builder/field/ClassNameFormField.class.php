@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class ClassNameFormField extends TextFormField
+final class ClassNameFormField extends TextFormField
 {
     use TDefaultIdFormField;
 

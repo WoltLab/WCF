@@ -17,7 +17,7 @@ use wcf\system\language\LanguageFactory;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-class ContentLanguageFormField extends AbstractFormField implements IImmutableFormField
+final class ContentLanguageFormField extends AbstractFormField implements IImmutableFormField
 {
     use TDefaultIdFormField;
     use TImmutableFormField;
