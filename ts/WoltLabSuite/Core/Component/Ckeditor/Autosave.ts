@@ -36,7 +36,7 @@ function getRestoreDialog(): HTMLElement {
   return dialog;
 }
 
-function deleteDraft(identifier: string): void {
+export function deleteDraft(identifier: string): void {
   try {
     window.localStorage.removeItem(getLocalStorageKey(identifier));
   } catch {

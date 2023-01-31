@@ -1,4 +1,4 @@
-define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1) {
+define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Autosave", "../Event/Handler"], function (require, exports, Mention_1, Quote_1, Attachment_1, Media_1, Autosave_1, Handler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCkeditorById = exports.getCkeditor = exports.setupCkeditor = void 0;
@@ -11,6 +11,11 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
             Object.freeze(features);
             this.#features = features;
             (0, Quote_1.setup)(this);
+        }
+        discardDraft() {
+            if (this.#features.autosave) {
+                (0, Autosave_1.deleteDraft)(this.#features.autosave);
+            }
         }
         focus() {
             this.#editor.editing.view.focus();
@@ -41,6 +46,11 @@ define(["require", "exports", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckedi
                     writer.remove(element);
                 }
             });
+        }
+        reset() {
+            this.setHtml("");
+            const identifier = this.sourceElement.id;
+            (0, Handler_1.fire)("com.woltlab.wcf.ckeditor5", `reset_${identifier}`);
         }
         get element() {
             return this.#editor.ui.element;

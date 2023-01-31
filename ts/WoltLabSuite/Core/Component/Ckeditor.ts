@@ -2,7 +2,8 @@ import { getMentionConfiguration } from "./Ckeditor/Mention";
 import { setup as setupQuotes } from "./Ckeditor/Quote";
 import { setupRemoveAttachment, uploadAttachment } from "./Ckeditor/Attachment";
 import { uploadMedia } from "./Ckeditor/Media";
-import { removeExpiredDrafts, saveDraft, setupRestoreDraft } from "./Ckeditor/Autosave";
+import { deleteDraft, removeExpiredDrafts, saveDraft, setupRestoreDraft } from "./Ckeditor/Autosave";
+import { fire as fireEvent } from "../Event/Handler";
 
 import type ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import type { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
@@ -28,6 +29,12 @@ class Ckeditor {
     this.#features = features;
 
     setupQuotes(this);
+  }
+
+  discardDraft(): void {
+    if (this.#features.autosave) {
+      deleteDraft(this.#features.autosave);
+    }
   }
 
   focus(): void {
@@ -67,6 +74,13 @@ class Ckeditor {
         writer.remove(element);
       }
     });
+  }
+
+  reset(): void {
+    this.setHtml("");
+
+    const identifier = this.sourceElement.id;
+    fireEvent("com.woltlab.wcf.ckeditor5", `reset_${identifier}`);
   }
 
   get element(): HTMLElement {

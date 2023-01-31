@@ -209,16 +209,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          * Resets the editor contents and notifies event listeners.
          */
         _reset() {
-            this._getCKEditor().setHtml("<p>&nbsp;</p>");
-            EventHandler.fire("com.woltlab.wcf.ckeditor5", "reset_text");
-            // Opera on Android does not properly blur the editor after submitting the message,
-            // causing the keyboard to vanish, but the focus remains inside the editor.
-            window.setTimeout(() => {
-                const editor = document.activeElement?.closest(".redactor-layer");
-                if (editor && editor instanceof HTMLElement) {
-                    editor.blur();
-                }
-            }, 50);
+            this._getCKEditor().reset();
         }
         /**
          * Handles errors occurred during server processing.
@@ -251,7 +242,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
          * page in which case a redirect will be performed instead.
          */
         _insertMessage(data) {
-            //this._getEditor().WoltLabAutosave.reset();
+            this._getCKEditor().discardDraft();
             // redirect to new page
             if (data.returnValues.url) {
                 if (window.location.href == data.returnValues.url) {

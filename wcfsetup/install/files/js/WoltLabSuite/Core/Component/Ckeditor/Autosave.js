@@ -1,7 +1,7 @@
 define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"], function (require, exports, Core_1, Language_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.removeExpiredDrafts = exports.setupRestoreDraft = exports.saveDraft = void 0;
+    exports.removeExpiredDrafts = exports.setupRestoreDraft = exports.saveDraft = exports.deleteDraft = void 0;
     function getLocalStorageKey(identifier) {
         return `${(0, Core_1.getStoragePrefix)()}ckeditor5-${identifier}`;
     }
@@ -33,6 +33,7 @@ define(["require", "exports", "../../Core", "../../Language", "../../StringUtil"
             // We cannot do anything meaningful if this fails.
         }
     }
+    exports.deleteDraft = deleteDraft;
     function saveDraft(identifier, html) {
         if (html === "") {
             deleteDraft(identifier);

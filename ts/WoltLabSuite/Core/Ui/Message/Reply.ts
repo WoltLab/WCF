@@ -271,18 +271,7 @@ class UiMessageReply {
    * Resets the editor contents and notifies event listeners.
    */
   protected _reset(): void {
-    this._getCKEditor().setHtml("<p>&nbsp;</p>");
-
-    EventHandler.fire("com.woltlab.wcf.ckeditor5", "reset_text");
-
-    // Opera on Android does not properly blur the editor after submitting the message,
-    // causing the keyboard to vanish, but the focus remains inside the editor.
-    window.setTimeout(() => {
-      const editor = document.activeElement?.closest(".redactor-layer");
-      if (editor && editor instanceof HTMLElement) {
-        editor.blur();
-      }
-    }, 50);
+    this._getCKEditor().reset();
   }
 
   /**
@@ -320,7 +309,7 @@ class UiMessageReply {
    * page in which case a redirect will be performed instead.
    */
   protected _insertMessage(data: AjaxResponse): void {
-    //this._getEditor().WoltLabAutosave.reset();
+    this._getCKEditor().discardDraft();
 
     // redirect to new page
     if (data.returnValues.url) {
