@@ -6,9 +6,8 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "../../Event/Handler"], function (require, exports, tslib_1, EventHandler) {
+define(["require", "exports", "../../Component/Ckeditor"], function (require, exports, Ckeditor_1) {
     "use strict";
-    EventHandler = tslib_1.__importStar(EventHandler);
     class UiSmileyInsert {
         container;
         editorId;
@@ -72,9 +71,20 @@ define(["require", "exports", "tslib", "../../Event/Handler"], function (require
             }
         }
         insert(img) {
-            EventHandler.fire("com.woltlab.wcf.redactor2", "insertSmiley_" + this.editorId, {
-                img,
-            });
+            const ckeditor = (0, Ckeditor_1.getCkeditorById)(this.editorId);
+            if (ckeditor === undefined) {
+                throw new Error(`Unable to find the CKEditor instance for '${this.editorId}'.`);
+            }
+            const insertImage = document.createElement("img");
+            insertImage.classList.add("smiley");
+            insertImage.src = img.src;
+            insertImage.alt = img.alt;
+            insertImage.height = img.height;
+            insertImage.width = img.width;
+            if (img.srcset) {
+                insertImage.srcset = img.srcset;
+            }
+            ckeditor.insertHtml(insertImage.outerHTML);
         }
     }
     return UiSmileyInsert;

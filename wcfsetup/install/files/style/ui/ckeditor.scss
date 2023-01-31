@@ -1,3 +1,4 @@
+/* Integration of CKEditor 5 into WoltLab Suite Core */
 .ck.ck-content.ck-editor__editable {
     max-height: 500px;
     min-height: 200px;
@@ -5,6 +6,12 @@
 
     @extend .htmlContent;
 }
+
+.ck.ck-content.ck-editor__editable .image-inline {
+    vertical-align: middle;
+}
+
+/* Dialog overlay to restore a draft */
 
 .ckeditor5__restoreDraft {
     position: relative;
