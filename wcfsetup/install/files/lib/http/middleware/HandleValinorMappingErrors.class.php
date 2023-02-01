@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\system\valinor\formatter\PrependPath;
 
 /**
  * Catches Valinor's MappingErrors and returns a HTTP 400 Bad Request.
@@ -29,18 +30,20 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (MappingError $e) {
-            $messages = Messages::flattenFromNode($e->node());
+            $messages = Messages::flattenFromNode($e->node())
+                ->formatWith(new PrependPath());
 
             return new JsonResponse(
                 [
+                    'message' => "Could not map type '{$e->node()->type()}'.",
                     'errors' => \array_map(
                         static fn (NodeMessage $m) => $m->toString(),
-                        \iterator_to_array($messages)
+                        \iterator_to_array($messages, false)
                     ),
                 ],
                 400,
                 [],
-                JsonResponse::DEFAULT_JSON_FLAGS | \JSON_PRETTY_PRINT
+                \JSON_PRETTY_PRINT
             );
         }
     }
