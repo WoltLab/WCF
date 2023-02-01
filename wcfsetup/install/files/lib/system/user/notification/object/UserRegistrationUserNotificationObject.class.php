@@ -26,7 +26,7 @@ class UserRegistrationUserNotificationObject extends DatabaseObjectDecorator imp
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }

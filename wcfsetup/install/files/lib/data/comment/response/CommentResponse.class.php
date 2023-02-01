@@ -130,7 +130,7 @@ class CommentResponse extends DatabaseObject implements IMessage
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         /** @var ICommentManager $processor */
         $processor = CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor();
@@ -141,7 +141,7 @@ class CommentResponse extends DatabaseObject implements IMessage
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle(
             $this->getComment()->objectTypeID,

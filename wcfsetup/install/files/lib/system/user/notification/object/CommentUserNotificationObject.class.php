@@ -25,7 +25,7 @@ class CommentUserNotificationObject extends DatabaseObjectDecorator implements I
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return '';
     }

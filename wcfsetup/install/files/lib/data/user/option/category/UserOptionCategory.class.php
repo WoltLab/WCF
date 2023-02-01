@@ -36,7 +36,7 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.user.option.category.' . $this->categoryName);
     }

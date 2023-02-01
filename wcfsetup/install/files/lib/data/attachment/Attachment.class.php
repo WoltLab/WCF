@@ -60,7 +60,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         // Do not use `LinkHandler::getControllerLink()` or `forceFrontend` as attachment
         // links can be opened in the frontend and in the ACP.
@@ -246,7 +246,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->filename;
     }

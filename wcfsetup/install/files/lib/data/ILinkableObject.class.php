@@ -13,8 +13,6 @@ interface ILinkableObject
 {
     /**
      * Returns the link to the object.
-     *
-     * @return  string
      */
-    public function getLink();
+    public function getLink(): string;
 }

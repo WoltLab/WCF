@@ -135,7 +135,7 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
     }
@@ -143,7 +143,7 @@ class PageContent extends DatabaseObject implements ITitledLinkObject
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

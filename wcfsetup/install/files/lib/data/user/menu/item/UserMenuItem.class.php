@@ -90,7 +90,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
      * @inheritDoc
      * @since   5.2
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->menuItem);
     }

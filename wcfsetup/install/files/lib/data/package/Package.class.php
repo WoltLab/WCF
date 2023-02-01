@@ -80,7 +80,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getControllerLink(PackagePage::class, [
             'object' => $this,
@@ -90,7 +90,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getName();
     }

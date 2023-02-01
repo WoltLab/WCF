@@ -517,7 +517,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->groupName);
     }

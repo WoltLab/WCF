@@ -24,7 +24,7 @@ class LabelGroup extends DatabaseObject implements IRouteController
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->groupName);
     }

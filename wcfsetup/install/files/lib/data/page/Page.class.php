@@ -171,7 +171,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         if ($this->controller) {
             $controllerParts = \explode('\\', $this->controller);
@@ -198,7 +198,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return PageCache::getInstance()->getPageTitle($this->pageID);
     }

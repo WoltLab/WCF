@@ -72,7 +72,7 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }
@@ -104,7 +104,7 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }

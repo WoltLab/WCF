@@ -27,7 +27,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
     }
@@ -35,7 +35,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getDecoratedObject()->getTitle();
     }

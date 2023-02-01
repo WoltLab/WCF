@@ -25,7 +25,7 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return '';
     }

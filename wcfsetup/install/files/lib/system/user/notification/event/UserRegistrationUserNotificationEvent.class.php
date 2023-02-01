@@ -28,7 +28,7 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
@@ -78,7 +78,7 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->author->getLink();
     }

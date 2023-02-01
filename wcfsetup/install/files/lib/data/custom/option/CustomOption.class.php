@@ -59,7 +59,7 @@ abstract class CustomOption extends Option implements ITitledObject
      * @inheritDoc
      * @since   5.2
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->optionTitle);
     }

@@ -66,7 +66,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return ModerationQueueManager::getInstance()->getLink($this->objectTypeID, $this->queueID);
     }
@@ -74,7 +74,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->affectedObject === null ? '' : $this->affectedObject->getTitle();
     }

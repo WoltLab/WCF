@@ -176,7 +176,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getLink();
@@ -186,11 +186,9 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
     }
 
     /**
-     * Returns the article's title.
-     *
-     * @return      string
+     * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getTitle();

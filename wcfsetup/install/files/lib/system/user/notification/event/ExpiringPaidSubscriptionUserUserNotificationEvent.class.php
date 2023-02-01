@@ -30,7 +30,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink('PaidSubscriptionList', ['forceFrontend' => true]);
     }
@@ -68,7 +68,7 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->getLanguage()->get('wcf.paidSubscription.expiringSubscription.notification.title');
     }

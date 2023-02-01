@@ -31,7 +31,7 @@ class LikeableCommentResponse extends AbstractLikeObject implements IReactionObj
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->message;
     }

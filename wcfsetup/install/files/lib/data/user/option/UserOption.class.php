@@ -119,7 +119,7 @@ class UserOption extends Option implements ITitledObject
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get('wcf.user.option.' . $this->optionName);
     }
