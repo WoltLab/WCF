@@ -5,11 +5,16 @@ namespace wcf\http\middleware;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\Mapper\Tree\Message\NodeMessage;
+use GuzzleHttp\Psr7\Header;
+use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\system\valinor\formatter\PrependPath;
+use wcf\system\WCF;
 
 /**
  * Catches Valinor's MappingErrors and returns a HTTP 400 Bad Request.
@@ -29,19 +34,59 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (MappingError $e) {
-            $messages = Messages::flattenFromNode($e->node());
+            $message = "Could not map type '{$e->node()->type()}'.";
+            $errors = Messages::flattenFromNode($e->node())
+                ->formatWith(new PrependPath());
 
-            return new JsonResponse(
-                [
-                    'errors' => \array_map(
-                        static fn (NodeMessage $m) => $m->toString(),
-                        \iterator_to_array($messages)
+            if ($this->prefersJson($request)) {
+                return new JsonResponse(
+                    [
+                        'message' => $message,
+                        'errors' => \array_map(
+                            static fn (NodeMessage $m) => $m->toString(),
+                            \iterator_to_array($errors, false)
+                        ),
+                    ],
+                    400,
+                    [],
+                    \JSON_PRETTY_PRINT
+                );
+            } else {
+                // TODO: Create a more generically reusable template for this type of error message.
+                return new HtmlResponse(
+                    WCF::getTPL()->fetchStream(
+                        'userException',
+                        'wcf',
+                        [
+                            'name' => $e::class,
+                            'file' => $e->getFile(),
+                            'line' => $e->getLine(),
+                            'message' => $message,
+                            'stacktrace' => $e->getTraceAsString(),
+                            'templateName' => 'userException',
+                            'templateNameApplication' => 'wcf',
+                            'exceptionClassName' => $e::class,
+                        ]
                     ),
-                ],
-                400,
-                [],
-                JsonResponse::DEFAULT_JSON_FLAGS | \JSON_PRETTY_PRINT
-            );
+                    400
+                );
+            }
         }
+    }
+
+    // TODO: Move this into a reusable function.
+    private function prefersJson(MessageInterface $m)
+    {
+        if (!$m->hasHeader('accept')) {
+            return false;
+        }
+
+        $headers = Header::parse($m->getHeaderLine('accept'));
+        
+        \usort($headers, static function ($a, $b) {
+            return ($b['q'] ?? 1) <=> ($a['q'] ?? 1);
+        });
+
+        return isset($headers[0][0]) && $headers[0][0] === 'application/json';
     }
 }
