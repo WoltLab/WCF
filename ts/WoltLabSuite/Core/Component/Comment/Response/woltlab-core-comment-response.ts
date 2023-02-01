@@ -97,7 +97,7 @@ export class WoltlabCoreCommentResponseElement extends HTMLParsedElement {
       this.#cancelEdit();
     });
 
-    EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${this.#editorId}`, (data) => {
+    EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${this.#editorId}`, (data) => {
       data.cancel = true;
       void this.#saveEdit();
     });

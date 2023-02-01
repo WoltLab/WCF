@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             buttonCancel.addEventListener("click", () => {
                 this.#cancelEdit();
             });
-            EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${this.#editorId}`, (data) => {
+            EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${this.#editorId}`, (data) => {
                 data.cancel = true;
                 void this.#saveEdit();
             });

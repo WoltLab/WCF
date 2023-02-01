@@ -392,7 +392,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const buttonCancel = formSubmit.querySelector('button[data-type="cancel"]') as HTMLButtonElement;
     buttonCancel.addEventListener("click", () => this._restoreMessage());
 
-    EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${id}`, (data: { cancel: boolean }) => {
+    EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${id}`, (data: { cancel: boolean }) => {
       data.cancel = true;
 
       this._save();
@@ -581,7 +581,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
     this._updateHistory(this._getHash(this._getObjectId(activeElement)));
 
-    EventHandler.fire("com.woltlab.wcf.redactor", `autosaveDestroy_${editorId}`);
+    EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${editorId}`);
 
     UiNotification.show();
 
@@ -659,10 +659,10 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
 
   _ajaxFailure(data: ResponseData): boolean {
     const elementData = this._elements.get(this._activeElement!)!;
-    const editor = elementData.messageBodyEditor!.querySelector(".redactor-layer") as HTMLElement;
+    const cke = elementData.messageBodyEditor!.querySelector(".ck.ck-editor") as HTMLElement;
 
     // handle errors occurring on editor load
-    if (editor === null) {
+    if (cke === null) {
       this._restoreMessage();
 
       return true;
@@ -674,7 +674,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       return true;
     }
 
-    DomUtil.innerError(editor, data.returnValues.realErrorMessage);
+    DomUtil.innerError(cke, data.returnValues.realErrorMessage);
 
     return false;
   }

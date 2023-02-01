@@ -43,28 +43,7 @@ async function compile(destination, files, overrides) {
 	}
 
 	//
-	// step 2) Redactor II + plugins
-	//
-	const redactorCombined = "redactor.combined.min.js";
-	process.chdir("3rdParty/redactor2/");
-
-	console.time(redactorCombined);
-	{
-		let files = ["redactor.js"];
-		fs.readdirSync("./plugins/").forEach((file) => {
-			file = `plugins/${file}`;
-			let stat = fs.statSync(file);
-			if (stat.isFile() && !stat.isSymbolicLink()) {
-				files.push(file);
-			}
-		});
-
-		await compile(redactorCombined, files);
-	}
-	console.timeEnd(redactorCombined);
-
-	//
-	// step3) build rjs
+	// step 2) build rjs
 	//
 	process.chdir("../../");
 
@@ -105,7 +84,7 @@ async function compile(destination, files, overrides) {
 	}
 
 	//
-	// step 4) legacy ACP scripts
+	// step 3) legacy ACP scripts
 	//
 	process.chdir("../acp/js/");
 

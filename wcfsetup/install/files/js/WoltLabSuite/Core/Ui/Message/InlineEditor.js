@@ -305,7 +305,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             buttonSave.addEventListener("click", () => this._save());
             const buttonCancel = formSubmit.querySelector('button[data-type="cancel"]');
             buttonCancel.addEventListener("click", () => this._restoreMessage());
-            EventHandler.add("com.woltlab.wcf.redactor", `submitEditor_${id}`, (data) => {
+            EventHandler.add("com.woltlab.wcf.ckeditor5", `submitEditor_${id}`, (data) => {
                 data.cancel = true;
                 this._save();
             });
@@ -455,7 +455,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             }
             this._restoreMessage();
             this._updateHistory(this._getHash(this._getObjectId(activeElement)));
-            EventHandler.fire("com.woltlab.wcf.redactor", `autosaveDestroy_${editorId}`);
+            EventHandler.fire("com.woltlab.wcf.ckeditor5", `autosaveDestroy_${editorId}`);
             UiNotification.show();
             if (this._options.quoteManager) {
                 this._options.quoteManager.clearAlternativeEditor();
@@ -520,9 +520,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         }
         _ajaxFailure(data) {
             const elementData = this._elements.get(this._activeElement);
-            const editor = elementData.messageBodyEditor.querySelector(".redactor-layer");
+            const cke = elementData.messageBodyEditor.querySelector(".ck.ck-editor");
             // handle errors occurring on editor load
-            if (editor === null) {
+            if (cke === null) {
                 this._restoreMessage();
                 return true;
             }
@@ -530,7 +530,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             if (!data || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
                 return true;
             }
-            Util_1.default.innerError(editor, data.returnValues.realErrorMessage);
+            Util_1.default.innerError(cke, data.returnValues.realErrorMessage);
             return false;
         }
         _ajaxSuccess(data) {
